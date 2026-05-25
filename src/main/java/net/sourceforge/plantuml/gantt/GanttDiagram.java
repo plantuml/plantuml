@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.gantt.core.TaskGroup;
 import net.sourceforge.plantuml.gantt.core.TaskImpl;
 import net.sourceforge.plantuml.gantt.core.TaskInstant;
 import net.sourceforge.plantuml.gantt.core.TaskSeparator;
+import net.sourceforge.plantuml.gantt.core.TimeRange;
 import net.sourceforge.plantuml.gantt.data.DayCalendarData;
 import net.sourceforge.plantuml.gantt.data.DisplayConfigData;
 import net.sourceforge.plantuml.gantt.data.GanttModelData;
@@ -554,6 +555,11 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	public HColorSet getIHtmlColorSet() {
 		return this.timelineStyle.getColorSet();
+	}
+
+	public CommandExecutionResult addWorkingTimeRange(TimeRange timeRange) {
+		System.out.println("Adding working timeRange " + timeRange);
+		return CommandExecutionResult.ok();
 	}
 
 }

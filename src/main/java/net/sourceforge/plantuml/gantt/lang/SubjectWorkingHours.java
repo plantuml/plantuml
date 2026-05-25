@@ -60,13 +60,10 @@ public class SubjectWorkingHours implements Subject<GanttDiagram> {
 
 	@Override
 	public Failable<TimeRange> getMe(GanttDiagram gantt, UMatcher arg) {
-		System.out.println("arg=" + arg);
-		final String start = arg.get("START", 0); // 8:00
-		final String end = arg.get("END", 0); // 12:00
+		final String start = arg.get("START", 0);
+		final String end = arg.get("END", 0);
 		return Failable.ok(new TimeRange(start, end));
 	}
-
-	// From 8:00 to 12:00 are working hours
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionSubject() {
@@ -88,8 +85,7 @@ public class SubjectWorkingHours implements Subject<GanttDiagram> {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final TimeRange timeRange = (TimeRange) subject;
-				System.out.println("HOP! timeRange=" + timeRange);
-				return CommandExecutionResult.ok();
+				return gantt.addWorkingTimeRange(timeRange);
 			}
 		});
 
