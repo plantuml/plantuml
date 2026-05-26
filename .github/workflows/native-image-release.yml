@@ -1,0 +1,194 @@
+name: Native Image - Release
+
+# Dedicated workflow for VERSIONED releases (triggered via workflow_call from
+# ci.yml when do_release is true). Deliberately a near-duplicate of
+# native-image-snapshot.yml -- kept separate (not parameterized) so each path
+# is dead simple to read and debug.
+#
+# The only difference with the snapshot workflow is the produced zip filename:
+# here the real version (read via `gradle properties`, same method as the
+# build_artifacts job in ci.yml) is used instead of "SNAPSHOT",
+# e.g. native-plantuml-windows-amd64-1.2026.5.zip
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build_windows_amd64:
+    name: 'Build Native Image windows-amd64 (release)'
+    runs-on: windows-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: liberica
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: gradle
+
+      - name: Force tmp dir on RUNNER_TEMP for Java
+        shell: pwsh
+        run: |
+          echo "JAVA_TOOL_OPTIONS=-Djava.io.tmpdir=$env:RUNNER_TEMP" >> $env:GITHUB_ENV
+
+      - name: Read release version (same method as build_artifacts)
+        shell: bash
+        run: |
+          RELEASE_VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> "$GITHUB_ENV"
+          echo "RELEASE_VERSION is ${RELEASE_VERSION}"
+
+      - name: Patch build metadata (version / git commit / timestamp)
+        shell: pwsh
+        run: ./gradlew --no-daemon patchCompilationInfo
+
+      - name: Build native image (plantuml-natif)
+        shell: pwsh
+        run: ./gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+
+      - name: Run sample diagram test (ASCII)
+        shell: pwsh
+        run: |
+          "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml.exe -pipe -ttxt
+
+      - name: Archive Windows build
+        shell: bash
+        run: |
+          zip -j "native-plantuml-windows-amd64-${RELEASE_VERSION}.zip" plantuml-natif/build/native/nativeCompile/*
+
+      - name: Upload build artifact (Windows)
+        uses: actions/upload-artifact@v7
+        with:
+          name: windows-amd64
+          path: native-plantuml-windows-amd64-*.zip
+
+  build_linux_amd64:
+    name: 'Build Native Image linux-amd64 (release)'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: liberica
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: gradle
+
+      - name: Read release version (same method as build_artifacts)
+        run: |
+          RELEASE_VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> "$GITHUB_ENV"
+          echo "RELEASE_VERSION is ${RELEASE_VERSION}"
+
+      - name: Patch build metadata (version / git commit / timestamp)
+        run: ./gradlew --no-daemon patchCompilationInfo
+
+      - name: Build native image (plantuml-natif)
+        run: ./gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+
+      - name: Run sample diagram test (ASCII)
+        run: |
+          echo "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml -pipe -ttxt
+
+      - name: Archive Linux build
+        run: |
+          zip -j "native-plantuml-linux-amd64-${RELEASE_VERSION}.zip" plantuml-natif/build/native/nativeCompile/*
+
+      - name: Upload build artifact (Linux)
+        uses: actions/upload-artifact@v7
+        with:
+          name: linux-amd64
+          path: native-plantuml-linux-amd64-*.zip
+
+  build_linux_arm64:
+    name: 'Build Native Image linux-arm64 (release)'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: liberica
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: gradle
+
+      - name: Read release version (same method as build_artifacts)
+        run: |
+          RELEASE_VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> "$GITHUB_ENV"
+          echo "RELEASE_VERSION is ${RELEASE_VERSION}"
+
+      - name: Patch build metadata (version / git commit / timestamp)
+        run: ./gradlew --no-daemon patchCompilationInfo
+
+      - name: Build native image (plantuml-natif)
+        run: ./gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+
+      - name: Run sample diagram test (ASCII)
+        run: |
+          echo "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml -pipe -ttxt
+
+      - name: Archive Linux build
+        run: |
+          zip -j "native-plantuml-linux-arm64-${RELEASE_VERSION}.zip" plantuml-natif/build/native/nativeCompile/*
+
+      - name: Upload build artifact (Linux)
+        uses: actions/upload-artifact@v7
+        with:
+          name: linux-arm64
+          path: native-plantuml-linux-arm64-*.zip
+
+  build_macos_arm64:
+    name: 'Build Native Image macos-arm64 (release)'
+    runs-on: macos-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: liberica
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: gradle
+
+      - name: Read release version (same method as build_artifacts)
+        run: |
+          RELEASE_VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> "$GITHUB_ENV"
+          echo "RELEASE_VERSION is ${RELEASE_VERSION}"
+
+      - name: Patch build metadata (version / git commit / timestamp)
+        run: ./gradlew --no-daemon patchCompilationInfo
+
+      - name: Build native image (plantuml-natif)
+        run: ./gradlew --no-daemon :plantuml-natif:nativeCompile -x test
+
+      - name: Run sample diagram test (ASCII)
+        run: |
+          echo "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml -pipe -ttxt
+
+      - name: Archive macOS build
+        run: |
+          zip -j "native-plantuml-macos-arm64-${RELEASE_VERSION}.zip" plantuml-natif/build/native/nativeCompile/*
+
+      - name: Upload build artifact (macOS)
+        uses: actions/upload-artifact@v7
+        with:
+          name: macos-arm64
+          path: native-plantuml-macos-arm64-*.zip

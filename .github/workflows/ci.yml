@@ -283,10 +283,18 @@ jobs:
 
 
   upload:
+    # `upload` depends on two mutually-exclusive native jobs (snapshot XOR release):
+    # one of them is ALWAYS skipped, which by default would skip `upload` too.
+    # !cancelled() overrides that default; build_artifacts must have succeeded
+    # (its jars/poms are what the release scripts copy); and the (snapshot ||
+    # release) check ensures at least one native build actually ran and succeeded
+    # -- which also implies we are in a release or snapshot run.
     if: |
-      needs.workflow_config.outputs.do_release == 'true' ||
-      needs.workflow_config.outputs.do_snapshot_release == 'true'
-    needs: [ workflow_config, build_artifacts, test_linux, jdk8, create_native_image_snapshot ]
+      !cancelled()
+      && needs.build_artifacts.result == 'success'
+      && (needs.create_native_image_snapshot.result == 'success'
+          || needs.create_native_image_release.result == 'success')
+    needs: [ workflow_config, build_artifacts, test_linux, jdk8, create_native_image_snapshot, create_native_image_release ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -544,6 +552,12 @@ jobs:
     needs: [ workflow_config, jdk8 ]
     if: needs.workflow_config.outputs.do_snapshot_release == 'true'
     uses: ./.github/workflows/native-image-snapshot.yml
+    secrets: inherit
+
+  create_native_image_release:
+    needs: [ workflow_config, jdk8, build_artifacts ]
+    if: needs.workflow_config.outputs.do_release == 'true'
+    uses: ./.github/workflows/native-image-release.yml
     secrets: inherit
 
   trigger_plantuml_eclipse_release:
