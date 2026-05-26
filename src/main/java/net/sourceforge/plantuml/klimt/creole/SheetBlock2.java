@@ -102,6 +102,10 @@ final public class SheetBlock2 implements TextBlock, Atom, WithPorts {
 			final double width = calculateDimension(ug.getStringBounder()).getWidth();
 			final double dx = (block.getMinimumWidth() - width) / 2;
 			ug = ug.apply(UTranslate.dx(dx));
+		} else if (getHorizontalAlignment() == HorizontalAlignment.RIGHT && block.getMinimumWidth() > 0) {
+			final double width = calculateDimension(ug.getStringBounder()).getWidth();
+			final double dx = block.getMinimumWidth() - width;
+			ug = ug.apply(UTranslate.dx(dx));
 		}
 		block.drawU(ug);
 	}

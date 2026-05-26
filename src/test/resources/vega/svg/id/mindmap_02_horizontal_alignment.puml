@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startmindmap
+<style>
+  Node {
+    MinimumWidth    100
+    SameClassWidth  true
+  }
+  .Test1 {
+    HorizontalAlignment Right
+  }
+  .Test2 {
+    HorizontalAlignment Center
+  }
+</style>
+* Root
+ * Node 1 <<Test1>>
+ * Node 2 <<Test2>>
+@endmindmap
