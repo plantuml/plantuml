@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -44,12 +46,12 @@ import net.sourceforge.plantuml.timingdiagram.graphic.PanelsClock;
 
 public class PlayerClock extends Player {
 
-	private final int period;
-	private final int pulse;
-	private final int offset;
+	private final BigDecimal period;
+	private final BigDecimal pulse;
+	private final BigDecimal offset;
 
-	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, int period, int pulse, int offset,
-			boolean compact, Stereotype stereotype) {
+	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, BigDecimal period, BigDecimal pulse,
+			BigDecimal offset, boolean compact, Stereotype stereotype) {
 		super(title, skinParam, ruler, compact, stereotype, null, SName.clock, 30);
 		this.period = period;
 		this.pulse = pulse;
@@ -78,7 +80,7 @@ public class PlayerClock extends Player {
 		throw new UnsupportedOperationException();
 	}
 
-	public final int getPeriod() {
+	public final BigDecimal getPeriod() {
 		return period;
 	}
 
