@@ -17912,9 +17912,9 @@
                 <ConcreteClasses>12</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>10</Ce>
+                <Ce>11</Ce>
                 <A>0.08</A>
-                <I>0.91</I>
+                <I>0.92</I>
                 <D>0.01</D>
                 <V>1</V>
             </Stats>
@@ -17966,6 +17966,7 @@
 
             <DependsUpon>
                 <Package>java.lang</Package>
+                <Package>java.math</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>

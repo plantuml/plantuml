@@ -12048,10 +12048,10 @@ Stats:
     Abstract Classes: 1
 
     Ca: 1
-    Ce: 10
+    Ce: 11
 
     A: 0.08
-    I: 0.91
+    I: 0.92
     D: 0.01
 
 Abstract Classes:
@@ -12073,6 +12073,7 @@ Concrete Classes:
 
 Depends Upon:
     java.lang
+    java.math
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.klimt.color
@@ -14877,7 +14878,7 @@ java.io,0,0,74,0,0,0,1,1
 java.lang,0,0,227,0,0,0,1,1
 java.lang.annotation,0,0,5,0,0,0,1,1
 java.lang.reflect,0,0,4,0,0,0,1,1
-java.math,0,0,5,0,0,0,1,1
+java.math,0,0,6,0,0,0,1,1
 java.net,0,0,5,0,0,0,1,1
 java.nio,0,0,1,0,0,0,1,1
 java.nio.charset,0,0,18,0,0,0,1,1
@@ -15097,7 +15098,7 @@ net.sourceforge.plantuml.tim.builtin,68,1,0,14,0.01,1,0.01,1
 net.sourceforge.plantuml.tim.expression,17,3,3,3,0.18,0.5,0.32,1
 net.sourceforge.plantuml.tim.iterator,16,3,1,8,0.19,0.89,0.08,1
 net.sourceforge.plantuml.timingdiagram,25,4,2,25,0.16,0.93,0.09,1
-net.sourceforge.plantuml.timingdiagram.command,13,1,1,10,0.08,0.91,0.01,1
+net.sourceforge.plantuml.timingdiagram.command,13,1,1,11,0.08,0.92,0.01,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,15,0.18,0.94,0.11,1
 net.sourceforge.plantuml.url,4,0,30,4,0,0.12,0.88,1
 net.sourceforge.plantuml.utils,18,5,61,21,0.28,0.26,0.47,1

@@ -53,18 +53,18 @@ public class PlayerBinary extends Player {
 	private static final String LOW_STRING = &quot;0&quot;;
 	private static final String HIGH_STRING = &quot;1&quot;;
 
-<span class="nc" id="L56">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L57">	private final SortedMap&lt;TimeTick, ChangeState&gt; values = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L56">	private final List&lt;TimeConstraint&gt; constraints = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L57">	private final SortedMap&lt;TimeTick, ChangeState&gt; values = new TreeMap&lt;&gt;();</span>
 	private ChangeState initialState;
 
 	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-<span class="nc" id="L61">		super(code, skinParam, ruler, compact, stereotype, null, SName.binary, 30);</span>
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L61">		super(code, skinParam, ruler, compact, stereotype, null, SName.binary, 30);</span>
+<span class="fc" id="L62">	}</span>
 
 	@Override
 	protected Panels buildPlayerPanels() {
-<span class="nc" id="L66">		return new PanelsBinary(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), values, constraints,</span>
-<span class="nc" id="L67">				initialState, getNotes());</span>
+<span class="fc" id="L66">		return new PanelsBinary(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), values, constraints,</span>
+<span class="fc" id="L67">				initialState, getNotes());</span>
 
 	}
 
@@ -75,24 +75,24 @@ public class PlayerBinary extends Player {
 
 	@Override
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
-<span class="nc" id="L78">		final ChangeState cs = new ChangeState(now, comment, color, convert(states));</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (now == null)</span>
+<span class="fc" id="L78">		final ChangeState cs = new ChangeState(now, comment, color, convert(states));</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (now == null)</span>
 <span class="nc" id="L80">			this.initialState = cs;</span>
 		else
-<span class="nc" id="L82">			this.values.put(now, cs);</span>
+<span class="fc" id="L82">			this.values.put(now, cs);</span>
 
-<span class="nc" id="L84">	}</span>
+<span class="fc" id="L84">	}</span>
 
 	private String[] convert(String[] states) {
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (states.length == 1)</span>
-<span class="nc" id="L88">			return new String[] { convert(states[0]) };</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (states.length == 1)</span>
+<span class="fc" id="L88">			return new String[] { convert(states[0]) };</span>
 <span class="nc" id="L89">		return new String[] { convert(states[0]), convert(states[1]) };</span>
 	}
 
 	private String convert(String value) {
-<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (&quot;1&quot;.equals(value) || &quot;high&quot;.equalsIgnoreCase(value))</span>
-<span class="nc" id="L94">			return HIGH_STRING;</span>
-<span class="nc" id="L95">		return LOW_STRING;</span>
+<span class="pc bpc" id="L93" title="1 of 4 branches missed.">		if (&quot;1&quot;.equals(value) || &quot;high&quot;.equalsIgnoreCase(value))</span>
+<span class="fc" id="L94">			return HIGH_STRING;</span>
+<span class="fc" id="L95">		return LOW_STRING;</span>
 	}
 
 	@Override

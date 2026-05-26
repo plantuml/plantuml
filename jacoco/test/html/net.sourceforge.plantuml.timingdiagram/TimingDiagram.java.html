@@ -315,15 +315,15 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 <span class="nc" id="L315">		return player;</span>
 	}
 
-	public PlayerClock createPlayerClock(String code, String full, int period, int pulse, int offset, boolean compact,
-			Stereotype stereotype) {
-<span class="nc" id="L320">		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset, compactByDefault,</span>
+	public PlayerClock createPlayerClock(String code, String full, BigDecimal period, BigDecimal pulse,
+			BigDecimal offset, boolean compact, Stereotype stereotype) {
+<span class="fc" id="L320">		final PlayerClock player = new PlayerClock(full, getSkinParam(), ruler, period, pulse, offset, compactByDefault,</span>
 				stereotype);
-<span class="nc" id="L322">		players.put(code, player);</span>
-<span class="nc" id="L323">		clocks.put(code, player);</span>
-<span class="nc" id="L324">		final TimeTick tick = new TimeTick(new BigDecimal(period), TimingFormat.DECIMAL);</span>
-<span class="nc" id="L325">		ruler.addTime(tick);</span>
-<span class="nc" id="L326">		return player;</span>
+<span class="fc" id="L322">		players.put(code, player);</span>
+<span class="fc" id="L323">		clocks.put(code, player);</span>
+<span class="fc" id="L324">		final TimeTick tick = new TimeTick(period, TimingFormat.DECIMAL);</span>
+<span class="fc" id="L325">		ruler.addTime(tick);</span>
+<span class="fc" id="L326">		return player;</span>
 	}
 
 	public PlayerAnalog createPlayerAnalog(String code, String full, boolean compact, Stereotype stereotype) {
@@ -333,9 +333,9 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 	}
 
 	public Player createPlayerBinary(String code, String full, boolean compact, Stereotype stereotype) {
-<span class="nc" id="L336">		final Player player = new PlayerBinary(full, getSkinParam(), ruler, compactByDefault, stereotype);</span>
-<span class="nc" id="L337">		players.put(code, player);</span>
-<span class="nc" id="L338">		return player;</span>
+<span class="fc" id="L336">		final Player player = new PlayerBinary(full, getSkinParam(), ruler, compactByDefault, stereotype);</span>
+<span class="fc" id="L337">		players.put(code, player);</span>
+<span class="fc" id="L338">		return player;</span>
 	}
 
 	public TimeMessage createTimeMessage(Player player1, TimeTick time1, Player player2, TimeTick time2, String label) {
@@ -374,7 +374,7 @@ public class TimingDiagram extends TitledDiagram implements Clocks {
 <span class="nc bnc" id="L374" title="All 2 branches missed.">		if (clock == null)</span>
 <span class="nc" id="L375">			return null;</span>
 
-<span class="nc" id="L377">		return new TimeTick(new BigDecimal(nb * clock.getPeriod()), TimingFormat.DECIMAL);</span>
+<span class="nc" id="L377">		return new TimeTick(clock.getPeriod().multiply(BigDecimal.valueOf(nb)), TimingFormat.DECIMAL);</span>
 	}
 
 	public void setLastPlayer(Player player) {

@@ -48,17 +48,17 @@ public abstract class PanelsNoLeft extends Panels {
 
 	protected PanelsNoLeft(TimingRuler ruler, ISkinParam skinParam, int suggestedHeight, Style style,
 			List&lt;TimingNote&gt; notes, List&lt;TimeConstraint&gt; constraints) {
-<span class="nc" id="L51">		super(ruler, skinParam, suggestedHeight, style, notes, constraints);</span>
-<span class="nc" id="L52">	}</span>
+<span class="fc" id="L51">		super(ruler, skinParam, suggestedHeight, style, notes, constraints);</span>
+<span class="fc" id="L52">	}</span>
 
 	@Override
 	public final void drawLeftPanel(UGraphic ug, double fullAvailableWidth) {
 		// no-op
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
 	public final double getLeftPanelWidth(StringBounder stringBounder) {
-<span class="nc" id="L61">		return LEFT_PANEL_MIN_WIDTH;</span>
+<span class="fc" id="L61">		return LEFT_PANEL_MIN_WIDTH;</span>
 	}
 
 }

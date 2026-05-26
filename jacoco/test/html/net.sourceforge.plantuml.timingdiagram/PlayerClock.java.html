@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.timingdiagram;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -44,42 +46,42 @@ import net.sourceforge.plantuml.timingdiagram.graphic.PanelsClock;
 
 public class PlayerClock extends Player {
 
-	private final int period;
-	private final int pulse;
-	private final int offset;
+	private final BigDecimal period;
+	private final BigDecimal pulse;
+	private final BigDecimal offset;
 
-	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, int period, int pulse, int offset,
-			boolean compact, Stereotype stereotype) {
-<span class="nc" id="L53">		super(title, skinParam, ruler, compact, stereotype, null, SName.clock, 30);</span>
-<span class="nc" id="L54">		this.period = period;</span>
-<span class="nc" id="L55">		this.pulse = pulse;</span>
-<span class="nc" id="L56">		this.offset = offset;</span>
-<span class="nc" id="L57">	}</span>
+	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, BigDecimal period, BigDecimal pulse,
+			BigDecimal offset, boolean compact, Stereotype stereotype) {
+<span class="fc" id="L55">		super(title, skinParam, ruler, compact, stereotype, null, SName.clock, 30);</span>
+<span class="fc" id="L56">		this.period = period;</span>
+<span class="fc" id="L57">		this.pulse = pulse;</span>
+<span class="fc" id="L58">		this.offset = offset;</span>
+<span class="fc" id="L59">	}</span>
 
 	@Override
 	protected Panels buildPlayerPanels() {
-<span class="nc" id="L61">		return new PanelsClock(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), period, pulse, offset,</span>
+<span class="fc" id="L63">		return new PanelsClock(getRuler(), getSkinParam(), getSuggestedHeight(), getStyle(), period, pulse, offset,</span>
 				null);
 
 	}
 
 	@Override
 	public void defineState(String stateCode, String label) {
-<span class="nc" id="L68">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L70">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void setState(TimeTick now, String comment, Colors color, String... states) {
-<span class="nc" id="L73">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L75">		throw new UnsupportedOperationException();</span>
 	}
 
 	@Override
 	public void createConstraint(TimeTick tick1, TimeTick tick2, String message, ArrowConfiguration config) {
-<span class="nc" id="L78">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L80">		throw new UnsupportedOperationException();</span>
 	}
 
-	public final int getPeriod() {
-<span class="nc" id="L82">		return period;</span>
+	public final BigDecimal getPeriod() {
+<span class="nc" id="L84">		return period;</span>
 	}
 
 }
