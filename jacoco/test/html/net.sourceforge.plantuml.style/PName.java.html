@@ -70,11 +70,11 @@ package net.sourceforge.plantuml.style;
 <span class="fc" id="L70">	Width;</span>
 
 	public static PName getFromName(String name, StyleScheme scheme) {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		for (PName prop : values())</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		for (PName prop : values())</span>
 <span class="fc bfc" id="L74" title="All 2 branches covered.">			if (prop.name().equalsIgnoreCase(name))</span>
 <span class="fc" id="L75">				return prop;</span>
 
-<span class="nc" id="L77">		return null;</span>
+<span class="fc" id="L77">		return null;</span>
 	}
 
 }

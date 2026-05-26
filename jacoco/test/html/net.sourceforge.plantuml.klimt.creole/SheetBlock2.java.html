@@ -98,31 +98,35 @@ final public class SheetBlock2 implements TextBlock, Atom, WithPorts {
 <span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (stencil != null)</span>
 <span class="fc" id="L99">			ug = UGraphicStencil.create(ug, stencil, defaultStroke);</span>
 
-<span class="pc bpc" id="L101" title="1 of 4 branches missed.">		if (getHorizontalAlignment() == HorizontalAlignment.CENTER &amp;&amp; block.getMinimumWidth() &gt; 0) {</span>
-<span class="nc" id="L102">			final double width = calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="nc" id="L103">			final double dx = (block.getMinimumWidth() - width) / 2;</span>
-<span class="nc" id="L104">			ug = ug.apply(UTranslate.dx(dx));</span>
+<span class="fc bfc" id="L101" title="All 4 branches covered.">		if (getHorizontalAlignment() == HorizontalAlignment.CENTER &amp;&amp; block.getMinimumWidth() &gt; 0) {</span>
+<span class="fc" id="L102">			final double width = calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="fc" id="L103">			final double dx = (block.getMinimumWidth() - width) / 2;</span>
+<span class="fc" id="L104">			ug = ug.apply(UTranslate.dx(dx));</span>
+<span class="fc bfc" id="L105" title="All 4 branches covered.">		} else if (getHorizontalAlignment() == HorizontalAlignment.RIGHT &amp;&amp; block.getMinimumWidth() &gt; 0) {</span>
+<span class="fc" id="L106">			final double width = calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="fc" id="L107">			final double dx = block.getMinimumWidth() - width;</span>
+<span class="fc" id="L108">			ug = ug.apply(UTranslate.dx(dx));</span>
 		}
-<span class="fc" id="L106">		block.drawU(ug);</span>
-<span class="fc" id="L107">	}</span>
+<span class="fc" id="L110">		block.drawU(ug);</span>
+<span class="fc" id="L111">	}</span>
 
 	public double getStartingAltitude(StringBounder stringBounder) {
-<span class="nc" id="L110">		return 0;</span>
+<span class="nc" id="L114">		return 0;</span>
 	}
 
 	@Override
 	public XRectangle2D getInnerPosition(CharSequence member, StringBounder stringBounder) {
-<span class="nc" id="L115">		return block.getInnerPosition(member, stringBounder);</span>
+<span class="nc" id="L119">		return block.getInnerPosition(member, stringBounder);</span>
 	}
 
 	@Override
 	public Ports getPorts(StringBounder stringBounder) {
-<span class="nc" id="L120">		return new Ports();</span>
+<span class="nc" id="L124">		return new Ports();</span>
 	}
 
 	@Override
 	public List&lt;Neutron&gt; getNeutrons() {
-<span class="nc" id="L125">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L129">		throw new UnsupportedOperationException();</span>
 	}
 
 }

@@ -207,8 +207,8 @@ public class FtileBoxOld extends AbstractFtile {
 
 <span class="fc bfc" id="L208" title="All 2 branches covered.">		if (horizontalAlignment == HorizontalAlignment.LEFT)</span>
 <span class="fc" id="L209">			tb.drawU(ug);</span>
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		else if (horizontalAlignment == HorizontalAlignment.RIGHT)</span>
-<span class="nc" id="L211">			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - tbWidth(stringBounder), 0)));</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		else if (horizontalAlignment == HorizontalAlignment.RIGHT)</span>
+<span class="fc" id="L211">			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - tbWidth(stringBounder), 0)));</span>
 <span class="pc bpc" id="L212" title="1 of 2 branches missed.">		else if (horizontalAlignment == HorizontalAlignment.CENTER)</span>
 <span class="fc" id="L213">			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - tbWidth(stringBounder)) / 2, 0)));</span>
 

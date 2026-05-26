@@ -130,7 +130,7 @@ public class StyleParser {
 <span class="fc" id="L130">					final String valueString = variables.value(readValue(peeker));</span>
 <span class="fc" id="L131">					final String keyString = token.getData();</span>
 <span class="fc" id="L132">					final PName key = PName.getFromName(keyString, scheme);</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">					if (key == null) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">					if (key == null) {</span>
 						// System.err.println(&quot;Error with key &quot; + keyString);
 					} else {
 <span class="fc bfc" id="L136" title="All 2 branches covered.">						final Value value = scheme == StyleScheme.REGULAR ? //</span>

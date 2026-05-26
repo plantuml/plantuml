@@ -436,11 +436,11 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 	}
 
 	public Display removeEndingStereotype() {
-<span class="nc" id="L439">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1), 0);</span>
-<span class="nc bnc" id="L440" title="All 2 branches missed.">		if (m.matches()) {</span>
-<span class="nc" id="L441">			final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;(this.displayData);</span>
-<span class="nc" id="L442">			result.set(result.size() - 1, m.group(1));</span>
-<span class="nc" id="L443">			return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
+<span class="fc" id="L439">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1), 0);</span>
+<span class="pc bpc" id="L440" title="1 of 2 branches missed.">		if (m.matches()) {</span>
+<span class="fc" id="L441">			final List&lt;CharSequence&gt; result = new ArrayList&lt;&gt;(this.displayData);</span>
+<span class="fc" id="L442">			result.set(result.size() - 1, m.group(1));</span>
+<span class="fc" id="L443">			return new Display(showStereotype, result, this.naturalHorizontalAlignment, this.isNull,</span>
 					this.defaultCreoleMode);
 		}
 <span class="nc" id="L446">		return this;</span>
@@ -450,8 +450,8 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 
 	public Stereotype getEndingStereotype() {
 <span class="fc" id="L452">		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1), 0);</span>
-<span class="pc bpc" id="L453" title="1 of 2 branches missed.">		if (m.matches())</span>
-<span class="nc" id="L454">			return Stereotype.build(m.group(2));</span>
+<span class="fc bfc" id="L453" title="All 2 branches covered.">		if (m.matches())</span>
+<span class="fc" id="L454">			return Stereotype.build(m.group(2));</span>
 
 <span class="fc" id="L456">		return null;</span>
 	}

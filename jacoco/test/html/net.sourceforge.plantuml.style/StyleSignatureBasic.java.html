@@ -102,17 +102,17 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public StyleSignatureBasic addStereotype(Stereotype stereo) {
-<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (stereo == null)</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (stereo == null)</span>
 <span class="fc" id="L106">			return this;</span>
 
-<span class="nc" id="L108">		final Set&lt;String&gt; result = new HashSet&lt;&gt;(stereotypes);</span>
+<span class="fc" id="L108">		final Set&lt;String&gt; result = new HashSet&lt;&gt;(stereotypes);</span>
 
-<span class="nc" id="L110">		final List&lt;String&gt; labels = stereo.getLabels(Guillemet.NONE);</span>
+<span class="fc" id="L110">		final List&lt;String&gt; labels = stereo.getLabels(Guillemet.NONE);</span>
 
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		for (String s : labels)</span>
-<span class="nc" id="L113">			result.add(clean(s));</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (String s : labels)</span>
+<span class="fc" id="L113">			result.add(clean(s));</span>
 
-<span class="nc" id="L115">		return new StyleSignatureBasic(key, result);</span>
+<span class="fc" id="L115">		return new StyleSignatureBasic(key, result);</span>
 	}
 
 	@Override
@@ -298,7 +298,7 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public boolean isEmpty() {
-<span class="pc bpc" id="L301" title="1 of 4 branches missed.">		return key.snames.isEmpty() &amp;&amp; stereotypes.isEmpty();</span>
+<span class="fc bfc" id="L301" title="All 4 branches covered.">		return key.snames.isEmpty() &amp;&amp; stereotypes.isEmpty();</span>
 	}
 
 	public StyleKey getKey() {

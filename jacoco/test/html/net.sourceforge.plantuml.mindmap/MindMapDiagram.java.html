@@ -114,8 +114,8 @@ public class MindMapDiagram extends TitledDiagram {
 	public CommandExecutionResult addIdea(HColor backColor, int level, Display label, IdeaShape shape,
 			boolean direction) {
 <span class="fc" id="L116">		final Stereotype stereotype = label.getEndingStereotype();</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L118">			label = label.removeEndingStereotype();</span>
+<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (stereotype != null)</span>
+<span class="fc" id="L118">			label = label.removeEndingStereotype();</span>
 
 <span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (last().isFull(level))</span>
 <span class="nc" id="L121">			this.mindmaps.add(new MindMap(getSkinParam()));</span>
@@ -141,11 +141,11 @@ public class MindMapDiagram extends TitledDiagram {
 <span class="fc" id="L141">			type = type.replace('\t', ' ').trim();</span>
 
 <span class="fc" id="L143">		type = type.replace('\t', ' ');</span>
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (type.contains(&quot; &quot;) == false)</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		if (type.contains(&quot; &quot;) == false)</span>
 <span class="fc" id="L145">			return type.length() - 1;</span>
 
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (type.endsWith(first))</span>
-<span class="nc" id="L148">			return type.length() - first.length();</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (type.endsWith(first))</span>
+<span class="fc" id="L148">			return type.length() - first.length();</span>
 
 <span class="nc bnc" id="L150" title="All 2 branches missed.">		if (type.trim().length() == 1)</span>
 <span class="nc" id="L151">			return type.length() - 1;</span>
