@@ -555,7 +555,7 @@ jobs:
     secrets: inherit
 
   create_native_image_release:
-    needs: [ workflow_config, jdk8, build_artifacts ]
+    needs: [ workflow_config, jdk8 ]
     if: needs.workflow_config.outputs.do_release == 'true'
     uses: ./.github/workflows/native-image-release.yml
     secrets: inherit
