@@ -376,7 +376,7 @@ jobs:
       - name: Create snapshot
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
         env:
-          RELEASE_VERSION: ${{ needs.build_artifacts.outputs.RELEASE_VERSION }}
+          RELEASE_VERSION: ${{ needs.build_artifacts.outputs.release_version }}
           GITHUB_TOKEN: ${{ github.token }}
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
@@ -391,7 +391,7 @@ jobs:
       - name: Create release in GitHub and OSSRH
         if: needs.workflow_config.outputs.do_release == 'true'
         env:
-          RELEASE_VERSION: ${{ needs.build_artifacts.outputs.RELEASE_VERSION }}
+          RELEASE_VERSION: ${{ needs.build_artifacts.outputs.release_version }}
           GITHUB_TOKEN: ${{ github.token }}
           TAG: ${{ github.event.ref }}
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
