@@ -16,7 +16,7 @@ on:
 
 jobs:
   build_windows_amd64:
-    name: 'Build Native Image windows-amd64 (release)'
+    name: 'windows-amd64 (release)'
     runs-on: windows-latest
     timeout-minutes: 90
 
@@ -57,9 +57,9 @@ jobs:
           "Alice -> Bob : it works!" | ./plantuml-natif/build/native/nativeCompile/plantuml.exe -pipe -ttxt
 
       - name: Archive Windows build
-        shell: bash
+        shell: pwsh
         run: |
-          zip -j "native-plantuml-windows-amd64-${RELEASE_VERSION}.zip" plantuml-natif/build/native/nativeCompile/*
+          Compress-Archive -Path "plantuml-natif/build/native/nativeCompile/*" -DestinationPath "native-plantuml-windows-amd64-${env:RELEASE_VERSION}.zip"
 
       - name: Upload build artifact (Windows)
         uses: actions/upload-artifact@v7
@@ -68,7 +68,7 @@ jobs:
           path: native-plantuml-windows-amd64-*.zip
 
   build_linux_amd64:
-    name: 'Build Native Image linux-amd64 (release)'
+    name: 'linux-amd64 (release)'
     runs-on: ubuntu-latest
     timeout-minutes: 90
 
@@ -110,7 +110,7 @@ jobs:
           path: native-plantuml-linux-amd64-*.zip
 
   build_linux_arm64:
-    name: 'Build Native Image linux-arm64 (release)'
+    name: 'linux-arm64 (release)'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 90
 
@@ -152,7 +152,7 @@ jobs:
           path: native-plantuml-linux-arm64-*.zip
 
   build_macos_arm64:
-    name: 'Build Native Image macos-arm64 (release)'
+    name: 'macos-arm64 (release)'
     runs-on: macos-latest
     timeout-minutes: 90
 
