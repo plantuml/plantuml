@@ -108,6 +108,16 @@ public final class TeaVmScriptLoader {
 	@JSBody(params = "lines", script = "return lines.join('\\n');")
 	public static native String joinLines(JSObject lines);
 
+	/**
+	 * Serializes a JS object into a JSON string using the native
+	 * {@code JSON.stringify}.
+	 *
+	 * @param obj a JS object
+	 * @return the JSON string representation, or null if the object is null
+	 */
+	@JSBody(params = "obj", script = "return obj == null ? null : JSON.stringify(obj);")
+	public static native String stringify(JSObject obj);
+
 	@JSBody(params = "url", script = "var st = window.__pl_script_state && window.__pl_script_state[url];"
 			+ "return !!(st && st.state === 'loaded');")
 	private static native boolean isLoaded(String url);

@@ -43,6 +43,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
@@ -69,7 +70,7 @@ public class PathSystem {
 		return new PathSystem(new NFolderRegular(Paths.get("")));
 	}
 
-	public String getTeaVMStdlibJson(String path) {
+	public JsonValue getTeaVMStdlibJson(String path) {
 		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
 		// return null;
 		path = path.replaceAll("\\.json$", "");
@@ -81,7 +82,8 @@ public class PathSystem {
 		final JSObject data = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB_JSON(libname, filepath);
 		if (data == null)
 			return null;
-		return TeaVmScriptLoader.joinLines(data);
+		final String json = TeaVmScriptLoader.stringify(data);
+		return Json.parse(json);
 		// ::done
 	}
 

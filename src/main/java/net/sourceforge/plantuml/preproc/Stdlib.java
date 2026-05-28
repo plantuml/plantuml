@@ -54,6 +54,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
+import org.teavm.jso.JSObject;
+
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
@@ -118,7 +120,7 @@ public class Stdlib {
 			return null;
 
 		if (TeaVM.isTeaVM()) {
-			final String json = PathSystem.fetch().getTeaVMStdlibJson(fullname);
+			final JSObject json = PathSystem.fetch().getTeaVMStdlibJson(fullname);
 			return json.getBytes(java.nio.charset.StandardCharsets.UTF_8);
 		}
 
