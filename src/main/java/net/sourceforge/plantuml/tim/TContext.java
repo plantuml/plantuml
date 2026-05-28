@@ -217,8 +217,8 @@ public class TContext {
 		functionsSet.addFunction(new FunctionExists());
 		if (!TeaVM.isTeaVM()) {
 			functionsSet.addFunction(new GetAllStdlib());
-			functionsSet.addFunction(new GetAllTheme());
 		}
+		functionsSet.addFunction(new GetAllTheme());
 		functionsSet.addFunction(new GetCurrentTheme());
 		functionsSet.addFunction(new GetJsonKey());
 		functionsSet.addFunction(new GetJsonType());
