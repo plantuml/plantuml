@@ -125,9 +125,17 @@ public final class EmbeddedResources {
 			&quot;IHsKQmFja0dyb3VuZENvbG9yICNjY2ZmMDIKfQp9Cn0KbndkaWFnRGlhZ3JhbSB7Cm5ldHdvcmsgewpCYWNrR3JvdW5kQ29sb3Ig&quot; +
 			&quot;IzU1NQp9Cmdyb3VwIHsKQmFja0dyb3VuZENvbG9yICMyCn0KfQp9&quot;;
 
+	private static final String STRICT_SKIN_B64 =
+			&quot;cm9vdCB7ClNoYWRvd2luZyAwLjAKfQplbGVtZW50IHsKU2hhZG93aW5nIDAuMAp9&quot;;
+
 	public static InputStream openPlantumlSkin() {
-<span class="nc" id="L129">		byte[] data = Base64.getDecoder().decode(PLANTUML_SKIN_B64);</span>
-<span class="nc" id="L130">		return new ByteArrayInputStream(data);</span>
+<span class="nc" id="L132">		byte[] data = Base64.getDecoder().decode(PLANTUML_SKIN_B64);</span>
+<span class="nc" id="L133">		return new ByteArrayInputStream(data);</span>
+	}
+
+	public static InputStream openStrictSkin() {
+<span class="nc" id="L137">		byte[] data = Base64.getDecoder().decode(STRICT_SKIN_B64);</span>
+<span class="nc" id="L138">		return new ByteArrayInputStream(data);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -103,10 +103,10 @@ loadScripts(document, 'script');</script>
  java net.sourceforge.plantuml.teavm.EmbeddedResourcesGenerator
  </pre>
 
- The generated class exposes <code>openPlantumlSkin()</code> which returns an
- <code>InputStream</code> over the embedded skin bytes, so it works inside a
- TeaVM-compiled context where <code>ClassLoader.getResourceAsStream()</code> is not
- available.</div>
+ The generated class exposes <code>openPlantumlSkin()</code> and
+ <code>openStrictSkin()</code> which return an <code>InputStream</code> over the embedded
+ skin bytes, so it works inside a TeaVM-compiled context where
+ <code>ClassLoader.getResourceAsStream()</code> is not available.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
