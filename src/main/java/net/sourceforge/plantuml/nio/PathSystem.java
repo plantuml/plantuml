@@ -69,7 +69,23 @@ public class PathSystem {
 		return new PathSystem(new NFolderRegular(Paths.get("")));
 	}
 
-	public InputStream getTeaVMInputStream(String path) {
+	public String getTeaVMStdlibJson(String path) {
+		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// return null;
+		path = path.replaceAll("\\.json$", "");
+		final String full = path.toLowerCase();
+		final String libname = full.substring(0, full.indexOf('/'));
+		final String filepath = full.substring(libname.length() + 1);
+		TeaVmScriptLoader.loadOnceSync(libname + ".min.js");
+
+		final JSObject data = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB_JSON(libname, filepath);
+		if (data == null)
+			return null;
+		return TeaVmScriptLoader.joinLines(data);
+		// ::done
+	}
+
+	public InputStream getTeaVMStdlibInputStream(String path) {
 		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
 		// return null;
 		final String full = path.substring(1, path.length() - 1).toLowerCase();

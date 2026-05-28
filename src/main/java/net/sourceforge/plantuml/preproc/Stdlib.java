@@ -57,20 +57,15 @@ import java.util.stream.Collectors;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.spm.SpmChannel;
 import net.sourceforge.plantuml.svg.parser.ISvgSpriteParser;
 import net.sourceforge.plantuml.svg.parser.SvgSpriteParserFactory;
+import net.sourceforge.plantuml.teavm.TeaVM;
+import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 import net.sourceforge.plantuml.utils.Log;
 
 public class Stdlib {
-
-	// ::uncomment when __TEAVM__
-//	public static InputStream getResourceAsStream(String fullname) {
-//			return null;
-//	}
-	// ::done
-
-	// ::comment when __TEAVM__
 
 	private static final ConcurrentMap<String, Stdlib> all = new ConcurrentHashMap<>();
 
@@ -117,9 +112,15 @@ public class Stdlib {
 	}
 
 	public static byte[] getJsonResource(String fullname) {
+		BrowserLog.consoleLog(Stdlib.class, "getJsonResource=" + fullname);
 		final int last = fullname.indexOf('/');
 		if (last == -1)
 			return null;
+
+		if (TeaVM.isTeaVM()) {
+			final String json = PathSystem.fetch().getTeaVMStdlibJson(fullname);
+			return json.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+		}
 
 		try {
 			final Stdlib folder = retrieve(fullname.substring(0, last));
@@ -443,8 +444,5 @@ public class Stdlib {
 	public String getName() {
 		return name;
 	}
-
-	// ::done
-
 
 }
