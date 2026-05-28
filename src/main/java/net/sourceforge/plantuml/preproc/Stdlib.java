@@ -54,9 +54,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
-import org.teavm.jso.JSObject;
-
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.nio.PathSystem;
@@ -113,15 +113,14 @@ public class Stdlib {
 		}
 	}
 
-	public static byte[] getJsonResource(String fullname) {
+	public static JsonValue getJsonResource(String fullname) {
 		BrowserLog.consoleLog(Stdlib.class, "getJsonResource=" + fullname);
 		final int last = fullname.indexOf('/');
 		if (last == -1)
 			return null;
 
 		if (TeaVM.isTeaVM()) {
-			final JSObject json = PathSystem.fetch().getTeaVMStdlibJson(fullname);
-			return json.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+			return PathSystem.fetch().getTeaVMStdlibJson(fullname);
 		}
 
 		try {
@@ -129,7 +128,8 @@ public class Stdlib {
 			if (folder == null || folder.info.size() == 0)
 				return null;
 
-			return folder.loadJsonResource(fullname.substring(last + 1));
+			return Json.parse(new String(folder.loadJsonResource(fullname.substring(last + 1)),
+					java.nio.charset.StandardCharsets.UTF_8));
 
 		} catch (IOException e) {
 			Logme.error(e);

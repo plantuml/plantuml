@@ -43,6 +43,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
