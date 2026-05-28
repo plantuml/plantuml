@@ -125,8 +125,16 @@ public final class EmbeddedResources {
 			"IHsKQmFja0dyb3VuZENvbG9yICNjY2ZmMDIKfQp9Cn0KbndkaWFnRGlhZ3JhbSB7Cm5ldHdvcmsgewpCYWNrR3JvdW5kQ29sb3Ig" +
 			"IzU1NQp9Cmdyb3VwIHsKQmFja0dyb3VuZENvbG9yICMyCn0KfQp9";
 
+	private static final String STRICT_SKIN_B64 =
+			"cm9vdCB7ClNoYWRvd2luZyAwLjAKfQplbGVtZW50IHsKU2hhZG93aW5nIDAuMAp9";
+
 	public static InputStream openPlantumlSkin() {
 		byte[] data = Base64.getDecoder().decode(PLANTUML_SKIN_B64);
+		return new ByteArrayInputStream(data);
+	}
+
+	public static InputStream openStrictSkin() {
+		byte[] data = Base64.getDecoder().decode(STRICT_SKIN_B64);
 		return new ByteArrayInputStream(data);
 	}
 }

@@ -103,6 +103,7 @@ import net.sourceforge.plantuml.style.parser.StyleParsingException;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
+import net.sourceforge.plantuml.teavm.EmbeddedResources;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -224,7 +225,11 @@ public class SkinParam implements ISkinParam {
 			muteStyle(converter.getStyles());
 		}
 		if ("style".equalsIgnoreCase(key) && "strictuml".equalsIgnoreCase(value)) {
-			final InputStream internalIs = StyleLoader.class.getResourceAsStream("/skin/strictuml.skin");
+			final InputStream internalIs;
+			if (TeaVM.isTeaVM())
+				internalIs = EmbeddedResources.openStrictSkin();
+			else
+				internalIs = StyleLoader.class.getResourceAsStream("/skin/strictuml.skin");
 			final StyleBuilder styleBuilder = this.getCurrentStyleBuilder();
 			try {
 				final BlocLines lines = BlocLines.load(internalIs, null);
