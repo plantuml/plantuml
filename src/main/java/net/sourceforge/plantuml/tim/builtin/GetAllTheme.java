@@ -50,8 +50,7 @@ import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class GetAllTheme extends SimpleReturnFunction {
-	
-	
+
 	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%get_all_theme", 0);
 
 	public TFunctionSignature getSignature() {
@@ -68,9 +67,9 @@ public class GetAllTheme extends SimpleReturnFunction {
 			Map<String, TValue> named) throws EaterException {
 		final JsonArray result = new JsonArray();
 		try {
-			for (String theme : ThemeUtils.getAllThemeNames()) {
+			for (String theme : ThemeUtils.getAllThemeNames())
 				result.add(theme);
-			}
+
 			return TValue.fromJson(result);
 		} catch (IOException e) {
 			Logme.error(e);

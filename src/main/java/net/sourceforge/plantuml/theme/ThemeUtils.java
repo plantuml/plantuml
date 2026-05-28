@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.utils.Log;
@@ -66,8 +67,6 @@ public class ThemeUtils {
 	private static final String THEME_FILE_SUFFIX = ".puml";
 
 	private static final String THEME_PATH = "themes";
-
-	// ::comment when __TEAVM__
 
 	public static Theme loadTheme(PathSystem pathSystem, String name, String from, StringLocated location)
 			throws IOException, EaterException {
@@ -145,15 +144,18 @@ public class ThemeUtils {
 
 	public static List<String> getAllThemeNames() throws IOException {
 		final List<String> result = new ArrayList<>();
-		final Collection<String> filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));
-		for (String f : filenames)
-			if (f.startsWith(THEME_FILE_PREFIX) && f.endsWith(THEME_FILE_SUFFIX))
-				result.add(f.substring(THEME_FILE_PREFIX.length(), f.length() - THEME_FILE_SUFFIX.length()));
+		if (TeaVM.isTeaVM()) {
+			result.addAll(new ThemeList().getAll());
+		} else {
+			final Collection<String> filenames = Objects.requireNonNull(ResourcesUtils.getJarFile(THEME_PATH, false));
+			for (String f : filenames)
+				if (f.startsWith(THEME_FILE_PREFIX) && f.endsWith(THEME_FILE_SUFFIX))
+					result.add(f.substring(THEME_FILE_PREFIX.length(), f.length() - THEME_FILE_SUFFIX.length()));
+		}
 
 		Collections.sort(result);
 		return result;
 	}
-	// ::done
 
 	public static String getFilename(String filename) {
 		return THEME_FILE_PREFIX + filename + THEME_FILE_SUFFIX;
