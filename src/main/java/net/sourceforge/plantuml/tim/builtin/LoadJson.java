@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.tim.builtin;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -51,6 +50,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
@@ -94,8 +94,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
  * @author Aljoscha Rittner
  */
 public class LoadJson extends SimpleReturnFunction {
-	
-	
+
 	private static final TFunctionSignature SIGNATURE = new TFunctionSignature("%load_json", 3);
 
 	private static final String VALUE_CHARSET_DEFAULT = "UTF-8";
@@ -116,12 +115,11 @@ public class LoadJson extends SimpleReturnFunction {
 			Map<String, TValue> named) throws EaterException {
 		final String path = values.get(0).toString();
 		try {
-			String data = loadStringData(path, getCharset(values));
+			JsonValue data = loadJsonData(path, getCharset(values));
 			if (data == null)
-				data = getDefaultJson(values);
+				data = Json.parse(getDefaultJson(values));
 
-			JsonValue jsonValue = Json.parse(data);
-			return TValue.fromJson(jsonValue);
+			return TValue.fromJson(data);
 		} catch (ParseException pe) {
 			Logme.error(pe);
 			throw new EaterException("JSON parse issue in source " + path + " on location " + pe.getLocation(),
@@ -167,14 +165,19 @@ public class LoadJson extends SimpleReturnFunction {
 	 * @return the decoded String from the data source
 	 * @throws EaterException if something went wrong on reading data
 	 */
-	private String loadStringData(String path, String charset) throws EaterException, UnsupportedEncodingException {
+	private JsonValue loadJsonData(String path, String charset) throws EaterException, UnsupportedEncodingException {
 
-		byte[] byteData = null;
 		if (path.startsWith("<") || path.startsWith(">")) {
 			path = path.substring(1, path.length() - 1);
-			final String json = new String(Stdlib.getJsonResource(path), StandardCharsets.UTF_8);
-			return json;
-		} else if (path.startsWith("http://") || path.startsWith("https://")) {
+			return Stdlib.getJsonResource(path);
+		}
+
+		if (TeaVM.isTeaVM())
+			return null;
+
+		byte[] byteData = null;
+
+		if (path.startsWith("http://") || path.startsWith("https://")) {
 			final SURL url = SURL.create(path);
 			if (url != null)
 				byteData = url.getBytes();
@@ -194,7 +197,7 @@ public class LoadJson extends SimpleReturnFunction {
 		if (byteData == null || byteData.length == 0)
 			return null; // no length, no data (we want the default)
 
-		return new String(byteData, charset);
+		return Json.parse(new String(byteData, charset));
 
 	}
 }

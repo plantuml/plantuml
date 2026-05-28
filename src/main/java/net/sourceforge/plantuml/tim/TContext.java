@@ -241,9 +241,7 @@ public class TContext {
 		functionsSet.addFunction(new JsonSet());
 		functionsSet.addFunction(new LeftAlign());
 		functionsSet.addFunction(new Lighten());
-		if (!TeaVM.isTeaVM()) {
-			functionsSet.addFunction(new LoadJson());
-		}
+		functionsSet.addFunction(new LoadJson());
 		// functionsSet.addFunction(new LoadJsonLegacy());
 		functionsSet.addFunction(new LogicalAnd());
 		functionsSet.addFunction(new LogicalNand());
@@ -810,7 +808,7 @@ public class TContext {
 				final String stdlibPath = what.substring(1, what.length() - 1);
 				saveImportedFiles = this.pathSystem;
 				if (TeaVM.isTeaVM()) {
-					final InputStream is = this.pathSystem.getTeaVMInputStream(what);
+					final InputStream is = this.pathSystem.getTeaVMStdlibInputStream(what);
 					if (is != null)
 						reader = ReadLineReader.create(new InputStreamReader(is), what);
 				} else {

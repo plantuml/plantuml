@@ -59,6 +59,17 @@ public final class TeaVmScriptLoader {
 	public static native JSObject getRaw_PLANTUML_STDLIB(String namespace, String path);
 
 	/**
+	 * 
+	 * @param namespace
+	 * @param path
+	 * @return
+	 */
+	@JSBody(params = { "namespace",
+			"path" }, script = "var ns = window.PLANTUML_STDLIB_JSON && window.PLANTUML_STDLIB_JSON[namespace];"
+					+ "return (ns && ns[path]) || null;")
+	public static native JSObject getRaw_PLANTUML_STDLIB_JSON(String namespace, String path);
+
+	/**
 	 * Retrieves the JSON info object for a loaded stdlib library.
 	 * <p>
 	 * This reads from {@code window.PLANTUML_STDLIB_INFO[namespace]}, which is
@@ -75,8 +86,8 @@ public final class TeaVmScriptLoader {
 	/**
 	 * Returns the keys of a JS object as a comma-separated string.
 	 * <p>
-	 * Useful for iterating over properties of a JSObject from Java side,
-	 * since TeaVM does not allow direct enumeration of JS object keys.
+	 * Useful for iterating over properties of a JSObject from Java side, since
+	 * TeaVM does not allow direct enumeration of JS object keys.
 	 *
 	 * @param obj a JS object
 	 * @return comma-separated keys, or empty string if null/empty
@@ -96,6 +107,16 @@ public final class TeaVmScriptLoader {
 
 	@JSBody(params = "lines", script = "return lines.join('\\n');")
 	public static native String joinLines(JSObject lines);
+
+	/**
+	 * Serializes a JS object into a JSON string using the native
+	 * {@code JSON.stringify}.
+	 *
+	 * @param obj a JS object
+	 * @return the JSON string representation, or null if the object is null
+	 */
+	@JSBody(params = "obj", script = "return obj == null ? null : JSON.stringify(obj);")
+	public static native String stringify(JSObject obj);
 
 	@JSBody(params = "url", script = "var st = window.__pl_script_state && window.__pl_script_state[url];"
 			+ "return !!(st && st.state === 'loaded');")
