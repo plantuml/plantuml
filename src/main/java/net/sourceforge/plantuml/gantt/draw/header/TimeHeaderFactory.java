@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt.draw.header;
 
-import java.time.LocalDate;
-
 import net.sourceforge.plantuml.gantt.data.DayCalendarData;
 import net.sourceforge.plantuml.gantt.data.TimeBoundsData;
 import net.sourceforge.plantuml.gantt.data.TimeScaleConfigData;

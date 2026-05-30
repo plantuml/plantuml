@@ -52,7 +52,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.utils.I18nTimeData;
 
 class TimeHeaderMonthly extends TimeHeaderCalendar {
 
@@ -175,7 +174,7 @@ class TimeHeaderMonthly extends TimeHeaderCalendar {
 	}
 
 	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
-		final TextBlock small = getTextBlockSLOW(I18nTimeData.shortName(monthYear.getMonth(), locale()), fc);
+		final TextBlock small = getTextBlockSLOW(TimeStringUtils.shortName(monthYear.getMonth(), locale()), fc);
 		final TextBlock big = getTextBlockSLOW(TimeStringUtils.longName(monthYear, locale()), fc);
 		printCentered(ug, false, start, end, small, big);
 	}
