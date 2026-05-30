@@ -119,9 +119,9 @@
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.openiconic</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
             </UsedBy>
@@ -184,9 +184,9 @@
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.crash</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.stereo</Package>
             </UsedBy>
         </Package>
@@ -1882,10 +1882,10 @@
                 <TotalClasses>38</TotalClasses>
                 <ConcreteClasses>25</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
-                <Ca>97</Ca>
+                <Ca>96</Ca>
                 <Ce>33</Ce>
                 <A>0.34</A>
-                <I>0.25</I>
+                <I>0.26</I>
                 <D>0.4</D>
                 <V>1</V>
             </Stats>
@@ -2060,7 +2060,6 @@
                 <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.cheneer</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.code</Package>
@@ -2087,6 +2086,7 @@
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
                 <Package>net.sourceforge.plantuml.font</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.golem</Package>
                 <Package>net.sourceforge.plantuml.graphml</Package>
@@ -2115,7 +2115,6 @@
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
@@ -4840,99 +4839,6 @@
             </UsedBy>
         </Package>
 
-        <Package name="net.sourceforge.plantuml.chronology">
-            <Stats>
-                <TotalClasses>12</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
-                <AbstractClasses>1</AbstractClasses>
-                <Ca>0</Ca>
-                <Ce>31</Ce>
-                <A>0.08</A>
-                <I>1</I>
-                <D>0.08</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="TimeHeader2.java">
-                    net.sourceforge.plantuml.chronology.TimeHeader2
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="ChronologyDiagram.java">
-                    net.sourceforge.plantuml.chronology.ChronologyDiagram
-                </Class>
-                <Class sourceFile="ChronologyDiagram.java">
-                    net.sourceforge.plantuml.chronology.ChronologyDiagram$1
-                </Class>
-                <Class sourceFile="ChronologyDiagramFactory.java">
-                    net.sourceforge.plantuml.chronology.ChronologyDiagramFactory
-                </Class>
-                <Class sourceFile="ComplementHour.java">
-                    net.sourceforge.plantuml.chronology.ComplementHour
-                </Class>
-                <Class sourceFile="SentenceHappensChronology.java">
-                    net.sourceforge.plantuml.chronology.SentenceHappensChronology
-                </Class>
-                <Class sourceFile="SubjectChronologyTask.java">
-                    net.sourceforge.plantuml.chronology.SubjectChronologyTask
-                </Class>
-                <Class sourceFile="TaskChronology.java">
-                    net.sourceforge.plantuml.chronology.TaskChronology
-                </Class>
-                <Class sourceFile="TimeHeaderChronology.java">
-                    net.sourceforge.plantuml.chronology.TimeHeaderChronology
-                </Class>
-                <Class sourceFile="TimeHeaderChronology.java">
-                    net.sourceforge.plantuml.chronology.TimeHeaderChronology$Pending
-                </Class>
-                <Class sourceFile="TimeHeaderParameters2.java">
-                    net.sourceforge.plantuml.chronology.TimeHeaderParameters2
-                </Class>
-                <Class sourceFile="TimeScaleChronology.java">
-                    net.sourceforge.plantuml.chronology.TimeScaleChronology
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.text</Package>
-                <Package>java.time</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml</Package>
-                <Package>net.sourceforge.plantuml.command</Package>
-                <Package>net.sourceforge.plantuml.core</Package>
-                <Package>net.sourceforge.plantuml.klimt</Package>
-                <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.creole</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
-                <Package>net.sourceforge.plantuml.klimt.geom</Package>
-                <Package>net.sourceforge.plantuml.klimt.shape</Package>
-                <Package>net.sourceforge.plantuml.klimt.sprite</Package>
-                <Package>net.sourceforge.plantuml.nio</Package>
-                <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
-                <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-                <Package>net.sourceforge.plantuml.project.time</Package>
-                <Package>net.sourceforge.plantuml.project.timescale</Package>
-                <Package>net.sourceforge.plantuml.real</Package>
-                <Package>net.sourceforge.plantuml.regex</Package>
-                <Package>net.sourceforge.plantuml.skin</Package>
-                <Package>net.sourceforge.plantuml.stereo</Package>
-                <Package>net.sourceforge.plantuml.style</Package>
-                <Package>net.sourceforge.plantuml.url</Package>
-            </DependsUpon>
-
-            <UsedBy>
-            </UsedBy>
-        </Package>
-
         <Package name="net.sourceforge.plantuml.classdiagram">
             <Stats>
                 <TotalClasses>3</TotalClasses>
@@ -5311,11 +5217,11 @@
                 <TotalClasses>51</TotalClasses>
                 <ConcreteClasses>45</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>59</Ca>
+                <Ca>58</Ca>
                 <Ce>37</Ce>
                 <A>0.12</A>
                 <I>0.39</I>
-                <D>0.5</D>
+                <D>0.49</D>
                 <V>1</V>
             </Stats>
 
@@ -5530,7 +5436,6 @@
                 <Package>net.sourceforge.plantuml.chart.command</Package>
                 <Package>net.sourceforge.plantuml.cheneer</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command.note</Package>
@@ -5549,6 +5454,9 @@
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
                 <Package>net.sourceforge.plantuml.font</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.hcl</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
@@ -5562,9 +5470,6 @@
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.packetdiag.command</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
@@ -5726,11 +5631,11 @@
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>79</Ca>
+                <Ca>78</Ca>
                 <Ce>40</Ce>
                 <A>0.17</A>
                 <I>0.34</I>
-                <D>0.5</D>
+                <D>0.49</D>
                 <V>1</V>
             </Stats>
 
@@ -5836,7 +5741,6 @@
                 <Package>net.sourceforge.plantuml.chart.command</Package>
                 <Package>net.sourceforge.plantuml.cheneer</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
@@ -5860,6 +5764,9 @@
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
                 <Package>net.sourceforge.plantuml.font</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.hcl</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
@@ -5876,9 +5783,6 @@
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
@@ -5964,7 +5868,7 @@
             <UsedBy>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.ditaa</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
             </UsedBy>
         </Package>
@@ -6759,7 +6663,7 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.command</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
             </UsedBy>
         </Package>
@@ -8006,6 +7910,1044 @@
             </UsedBy>
         </Package>
 
+        <Package name="net.sourceforge.plantuml.gantt">
+            <Stats>
+                <TotalClasses>16</TotalClasses>
+                <ConcreteClasses>14</ConcreteClasses>
+                <AbstractClasses>2</AbstractClasses>
+                <Ca>8</Ca>
+                <Ce>31</Ce>
+                <A>0.12</A>
+                <I>0.79</I>
+                <D>0.08</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="GanttStyle.java">
+                    net.sourceforge.plantuml.gantt.GanttStyle
+                </Class>
+                <Class sourceFile="PValue.java">
+                    net.sourceforge.plantuml.gantt.PValue
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Completion.java">
+                    net.sourceforge.plantuml.gantt.Completion
+                </Class>
+                <Class sourceFile="DayStatus.java">
+                    net.sourceforge.plantuml.gantt.DayStatus
+                </Class>
+                <Class sourceFile="DaysAsDates.java">
+                    net.sourceforge.plantuml.gantt.DaysAsDates$MyIterator
+                </Class>
+                <Class sourceFile="Failable.java">
+                    net.sourceforge.plantuml.gantt.Failable
+                </Class>
+                <Class sourceFile="GArrows.java">
+                    net.sourceforge.plantuml.gantt.GArrows
+                </Class>
+                <Class sourceFile="GanttArrow.java">
+                    net.sourceforge.plantuml.gantt.GanttArrow
+                </Class>
+                <Class sourceFile="GanttConstraintMode.java">
+                    net.sourceforge.plantuml.gantt.GanttConstraintMode
+                </Class>
+                <Class sourceFile="GanttDiagram.java">
+                    net.sourceforge.plantuml.gantt.GanttDiagram
+                </Class>
+                <Class sourceFile="GanttDiagramFactory.java">
+                    net.sourceforge.plantuml.gantt.GanttDiagramFactory
+                </Class>
+                <Class sourceFile="GanttDiagramMainBlock.java">
+                    net.sourceforge.plantuml.gantt.GanttDiagramMainBlock
+                </Class>
+                <Class sourceFile="GanttLayout.java">
+                    net.sourceforge.plantuml.gantt.GanttLayout
+                </Class>
+                <Class sourceFile="LabelPosition.java">
+                    net.sourceforge.plantuml.gantt.LabelPosition
+                </Class>
+                <Class sourceFile="LabelStrategy.java">
+                    net.sourceforge.plantuml.gantt.LabelStrategy
+                </Class>
+                <Class sourceFile="Today.java">
+                    net.sourceforge.plantuml.gantt.Today
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>java.util.regex</Package>
+                <Package>net.sourceforge.plantuml</Package>
+                <Package>net.sourceforge.plantuml.command</Package>
+                <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.crash</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
+                <Package>net.sourceforge.plantuml.gantt.ngm.math</Package>
+                <Package>net.sourceforge.plantuml.gantt.solver</Package>
+                <Package>net.sourceforge.plantuml.gantt.time</Package>
+                <Package>net.sourceforge.plantuml.gantt.timescale</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.log</Package>
+                <Package>net.sourceforge.plantuml.nio</Package>
+                <Package>net.sourceforge.plantuml.preproc</Package>
+                <Package>net.sourceforge.plantuml.real</Package>
+                <Package>net.sourceforge.plantuml.stereo</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
+                <Package>net.sourceforge.plantuml.gantt.solver</Package>
+                <Package>net.sourceforge.plantuml.gantt.timescale</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.command">
+            <Stats>
+                <TotalClasses>14</TotalClasses>
+                <ConcreteClasses>14</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>19</Ce>
+                <A>0</A>
+                <I>0.95</I>
+                <D>0.05</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CommandFootboxGantt.java">
+                    net.sourceforge.plantuml.gantt.command.CommandFootboxGantt
+                </Class>
+                <Class sourceFile="CommandGanttArrow2.java">
+                    net.sourceforge.plantuml.gantt.command.CommandGanttArrow2
+                </Class>
+                <Class sourceFile="CommandGroupEnd.java">
+                    net.sourceforge.plantuml.gantt.command.CommandGroupEnd
+                </Class>
+                <Class sourceFile="CommandGroupStart.java">
+                    net.sourceforge.plantuml.gantt.command.CommandGroupStart
+                </Class>
+                <Class sourceFile="CommandHideClosed.java">
+                    net.sourceforge.plantuml.gantt.command.CommandHideClosed
+                </Class>
+                <Class sourceFile="CommandHideResourceFootbox.java">
+                    net.sourceforge.plantuml.gantt.command.CommandHideResourceFootbox
+                </Class>
+                <Class sourceFile="CommandHideResourceName.java">
+                    net.sourceforge.plantuml.gantt.command.CommandHideResourceName
+                </Class>
+                <Class sourceFile="CommandLabelOnColumn.java">
+                    net.sourceforge.plantuml.gantt.command.CommandLabelOnColumn
+                </Class>
+                <Class sourceFile="CommandLanguage.java">
+                    net.sourceforge.plantuml.gantt.command.CommandLanguage
+                </Class>
+                <Class sourceFile="CommandPrintBetween.java">
+                    net.sourceforge.plantuml.gantt.command.CommandPrintBetween
+                </Class>
+                <Class sourceFile="CommandPrintScale.java">
+                    net.sourceforge.plantuml.gantt.command.CommandPrintScale
+                </Class>
+                <Class sourceFile="CommandSeparator.java">
+                    net.sourceforge.plantuml.gantt.command.CommandSeparator
+                </Class>
+                <Class sourceFile="CommandTaskCompleteDefault.java">
+                    net.sourceforge.plantuml.gantt.command.CommandTaskCompleteDefault
+                </Class>
+                <Class sourceFile="NaturalGanttCommand.java">
+                    net.sourceforge.plantuml.gantt.command.NaturalGanttCommand
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>com.plantuml.ubrex</Package>
+                <Package>com.plantuml.ubrex.builder</Package>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.command</Package>
+                <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.descdiagram.command</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
+                <Package>net.sourceforge.plantuml.gantt.ulang</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.regex</Package>
+                <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
+                <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.utils</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.core">
+            <Stats>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
+                <AbstractClasses>3</AbstractClasses>
+                <Ca>9</Ca>
+                <Ce>12</Ce>
+                <A>0.27</A>
+                <I>0.57</I>
+                <D>0.16</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="AbstractTask.java">
+                    net.sourceforge.plantuml.gantt.core.AbstractTask
+                </Class>
+                <Class sourceFile="Moment.java">
+                    net.sourceforge.plantuml.gantt.core.Moment
+                </Class>
+                <Class sourceFile="Task.java">
+                    net.sourceforge.plantuml.gantt.core.Task
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="GArrowType.java">
+                    net.sourceforge.plantuml.gantt.core.GArrowType
+                </Class>
+                <Class sourceFile="GSide.java">
+                    net.sourceforge.plantuml.gantt.core.GSide
+                </Class>
+                <Class sourceFile="MomentImpl.java">
+                    net.sourceforge.plantuml.gantt.core.MomentImpl
+                </Class>
+                <Class sourceFile="PrintScale.java">
+                    net.sourceforge.plantuml.gantt.core.PrintScale
+                </Class>
+                <Class sourceFile="Resource.java">
+                    net.sourceforge.plantuml.gantt.core.Resource
+                </Class>
+                <Class sourceFile="TaskAttribute.java">
+                    net.sourceforge.plantuml.gantt.core.TaskAttribute
+                </Class>
+                <Class sourceFile="TaskCode.java">
+                    net.sourceforge.plantuml.gantt.core.TaskCode
+                </Class>
+                <Class sourceFile="TaskGroup.java">
+                    net.sourceforge.plantuml.gantt.core.TaskGroup
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
+                <Package>net.sourceforge.plantuml.gantt.ngm.math</Package>
+                <Package>net.sourceforge.plantuml.gantt.time</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole</Package>
+                <Package>net.sourceforge.plantuml.stereo</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
+                <Package>net.sourceforge.plantuml.url</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
+                <Package>net.sourceforge.plantuml.gantt.ngm.math</Package>
+                <Package>net.sourceforge.plantuml.gantt.solver</Package>
+                <Package>net.sourceforge.plantuml.gantt.timescale</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.data">
+            <Stats>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>19</Ce>
+                <A>0</A>
+                <I>0.86</I>
+                <D>0.14</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="DisplayConfigData.java">
+                    net.sourceforge.plantuml.gantt.data.DisplayConfigData
+                </Class>
+                <Class sourceFile="GanttModelData.java">
+                    net.sourceforge.plantuml.gantt.data.GanttModelData
+                </Class>
+                <Class sourceFile="TaskDrawRegistryData.java">
+                    net.sourceforge.plantuml.gantt.data.TaskDrawRegistryData
+                </Class>
+                <Class sourceFile="TimeBoundsData.java">
+                    net.sourceforge.plantuml.gantt.data.TimeBoundsData
+                </Class>
+                <Class sourceFile="TimeScaleConfigData.java">
+                    net.sourceforge.plantuml.gantt.data.TimeScaleConfigData
+                </Class>
+                <Class sourceFile="TimelineStyleData.java">
+                    net.sourceforge.plantuml.gantt.data.TimelineStyleData
+                </Class>
+                <Class sourceFile="WeekConfigData.java">
+                    net.sourceforge.plantuml.gantt.data.WeekConfigData
+                </Class>
+                <Class sourceFile="WorkingHours.java">
+                    net.sourceforge.plantuml.gantt.data.WorkingHours
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.time.temporal</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+                <Package>net.sourceforge.plantuml.gantt.time</Package>
+                <Package>net.sourceforge.plantuml.gantt.timescale</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.real</Package>
+                <Package>net.sourceforge.plantuml.skin</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.draw">
+            <Stats>
+                <TotalClasses>9</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
+                <AbstractClasses>2</AbstractClasses>
+                <Ca>4</Ca>
+                <Ce>25</Ce>
+                <A>0.22</A>
+                <I>0.86</I>
+                <D>0.08</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="ResourceDraw.java">
+                    net.sourceforge.plantuml.gantt.draw.ResourceDraw
+                </Class>
+                <Class sourceFile="TaskDraw.java">
+                    net.sourceforge.plantuml.gantt.draw.TaskDraw
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="PathUtils.java">
+                    net.sourceforge.plantuml.gantt.draw.PathUtils
+                </Class>
+                <Class sourceFile="RectangleTask.java">
+                    net.sourceforge.plantuml.gantt.draw.RectangleTask
+                </Class>
+                <Class sourceFile="TaskDrawDiamond.java">
+                    net.sourceforge.plantuml.gantt.draw.TaskDrawDiamond
+                </Class>
+                <Class sourceFile="TaskDrawGroup.java">
+                    net.sourceforge.plantuml.gantt.draw.TaskDrawGroup
+                </Class>
+                <Class sourceFile="TaskDrawRegular.java">
+                    net.sourceforge.plantuml.gantt.draw.TaskDrawRegular
+                </Class>
+                <Class sourceFile="TaskDrawSeparator.java">
+                    net.sourceforge.plantuml.gantt.draw.TaskDrawSeparator
+                </Class>
+                <Class sourceFile="WeeklyHeaderStrategy.java">
+                    net.sourceforge.plantuml.gantt.draw.WeeklyHeaderStrategy
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
+                <Package>net.sourceforge.plantuml.gantt.ngm.math</Package>
+                <Package>net.sourceforge.plantuml.gantt.time</Package>
+                <Package>net.sourceforge.plantuml.gantt.timescale</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.creole</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.klimt.sprite</Package>
+                <Package>net.sourceforge.plantuml.real</Package>
+                <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
+                <Package>net.sourceforge.plantuml.stereo</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
+                <Package>net.sourceforge.plantuml.svek.image</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.url</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.draw.header">
+            <Stats>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
+                <AbstractClasses>2</AbstractClasses>
+                <Ca>2</Ca>
+                <Ce>15</Ce>
+                <A>0.33</A>
+                <I>0.88</I>
+                <D>0.22</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="HeaderPiece.java">
+                    net.sourceforge.plantuml.gantt.draw.header.HeaderPiece
+                </Class>
+                <Class sourceFile="TimeHeaderCalendar.java">
+                    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderCalendar
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="TimeHeader.java">
+                    net.sourceforge.plantuml.gantt.draw.header.TimeHeader$Pending
+                </Class>
+                <Class sourceFile="TimeHeader.java">
+                    net.sourceforge.plantuml.gantt.draw.header.TimeHeader$TextBlockKey
+                </Class>
+                <Class sourceFile="TimeHeaderFactory.java">
+                    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderFactory$1
+                </Class>
+                <Class sourceFile="TimeHeaderVariant.java">
+                    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderVariant
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.ngm.math</Package>
+                <Package>net.sourceforge.plantuml.gantt.time</Package>
+                <Package>net.sourceforge.plantuml.gantt.timescale</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.lang">
+            <Stats>
+                <TotalClasses>80</TotalClasses>
+                <ConcreteClasses>77</ConcreteClasses>
+                <AbstractClasses>3</AbstractClasses>
+                <Ca>4</Ca>
+                <Ce>16</Ce>
+                <A>0.04</A>
+                <I>0.8</I>
+                <D>0.16</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="Something.java">
+                    net.sourceforge.plantuml.gantt.lang.Something
+                </Class>
+                <Class sourceFile="Subject.java">
+                    net.sourceforge.plantuml.gantt.lang.Subject
+                </Class>
+                <Class sourceFile="TimeResolution.java">
+                    net.sourceforge.plantuml.gantt.lang.TimeResolution
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="CenterBorderColor.java">
+                    net.sourceforge.plantuml.gantt.lang.CenterBorderColor
+                </Class>
+                <Class sourceFile="ComplementAnything.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementAnything
+                </Class>
+                <Class sourceFile="ComplementBeforeOrAfterOrAtTaskStartOrEnd.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementBeforeOrAfterOrAtTaskStartOrEnd
+                </Class>
+                <Class sourceFile="ComplementClose.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementClose
+                </Class>
+                <Class sourceFile="ComplementCompleted.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementCompleted
+                </Class>
+                <Class sourceFile="ComplementDate.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementDate
+                </Class>
+                <Class sourceFile="ComplementDate.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementDate$Type
+                </Class>
+                <Class sourceFile="ComplementDayOfWeek.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementDayOfWeek
+                </Class>
+                <Class sourceFile="ComplementDeleted.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementDeleted
+                </Class>
+                <Class sourceFile="ComplementFromTo.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementFromTo
+                </Class>
+                <Class sourceFile="ComplementInColors.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementInColors
+                </Class>
+                <Class sourceFile="ComplementInColors2.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementInColors2
+                </Class>
+                <Class sourceFile="ComplementInColorsFromTo.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementInColorsFromTo
+                </Class>
+                <Class sourceFile="ComplementIntervals.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementIntervals
+                </Class>
+                <Class sourceFile="ComplementIntervalsSmart.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementIntervalsSmart
+                </Class>
+                <Class sourceFile="ComplementNamed.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementNamed
+                </Class>
+                <Class sourceFile="ComplementOpen.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementOpen
+                </Class>
+                <Class sourceFile="ComplementUrl.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementUrl
+                </Class>
+                <Class sourceFile="ComplementWithColorLink.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementWithColorLink
+                </Class>
+                <Class sourceFile="ComplementWorkingHours.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementWorkingHours
+                </Class>
+                <Class sourceFile="PairOfSomething.java">
+                    net.sourceforge.plantuml.gantt.lang.PairOfSomething
+                </Class>
+                <Class sourceFile="SubjectDayAsDate.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDayAsDate
+                </Class>
+                <Class sourceFile="SubjectDayAsDate.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDayAsDate$1
+                </Class>
+                <Class sourceFile="SubjectDayAsDate.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDayAsDate$2
+                </Class>
+                <Class sourceFile="SubjectDayAsDate.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDayAsDate$3
+                </Class>
+                <Class sourceFile="SubjectDayOfWeek.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDayOfWeek
+                </Class>
+                <Class sourceFile="SubjectDayOfWeek.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDayOfWeek$1
+                </Class>
+                <Class sourceFile="SubjectDayOfWeek.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDayOfWeek$2
+                </Class>
+                <Class sourceFile="SubjectDayOfWeek.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDayOfWeek$3
+                </Class>
+                <Class sourceFile="SubjectDaysAsDates.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDaysAsDates$1
+                </Class>
+                <Class sourceFile="SubjectDaysAsDates.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDaysAsDates$2
+                </Class>
+                <Class sourceFile="SubjectDaysAsDates.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDaysAsDates$3
+                </Class>
+                <Class sourceFile="SubjectDaysAsDates.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectDaysAsDates$4
+                </Class>
+                <Class sourceFile="SubjectGantt.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectGantt
+                </Class>
+                <Class sourceFile="SubjectGantt.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectGantt$1
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectResource
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectResource$1
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectResource$2
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectResource$3
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectResource$4
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectResource$5
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectResource$6
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectResource$7
+                </Class>
+                <Class sourceFile="SubjectResource.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectResource$8
+                </Class>
+                <Class sourceFile="SubjectSeparator.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectSeparator
+                </Class>
+                <Class sourceFile="SubjectSeparator.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectSeparator$1
+                </Class>
+                <Class sourceFile="SubjectSeparator.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectSeparator$2
+                </Class>
+                <Class sourceFile="SubjectSeparator.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectSeparator$3
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$1
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$11
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$12
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$13
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$15
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$16
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$17
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$18
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$19
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$2
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$20
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$21
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$22
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$3
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$4
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$5
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$6
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$7
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$8
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$9
+                </Class>
+                <Class sourceFile="SubjectToday.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectToday
+                </Class>
+                <Class sourceFile="SubjectToday.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectToday$1
+                </Class>
+                <Class sourceFile="SubjectToday.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectToday$2
+                </Class>
+                <Class sourceFile="SubjectWorkingHours.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectWorkingHours
+                </Class>
+                <Class sourceFile="SubjectWorkingHours.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectWorkingHours$1
+                </Class>
+                <Class sourceFile="TwoNames.java">
+                    net.sourceforge.plantuml.gantt.lang.TwoNames
+                </Class>
+                <Class sourceFile="Verbs.java">
+                    net.sourceforge.plantuml.gantt.lang.Verbs
+                </Class>
+                <Class sourceFile="Words.java">
+                    net.sourceforge.plantuml.gantt.lang.Words
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>com.plantuml.ubrex</Package>
+                <Package>com.plantuml.ubrex.builder</Package>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.command</Package>
+                <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.time</Package>
+                <Package>net.sourceforge.plantuml.gantt.ulang</Package>
+                <Package>net.sourceforge.plantuml.klimt.color</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.stereo</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
+                <Package>net.sourceforge.plantuml.url</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.ngm">
+            <Stats>
+                <TotalClasses>4</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
+                <Ca>2</Ca>
+                <Ce>3</Ce>
+                <A>0.25</A>
+                <I>0.6</I>
+                <D>0.15</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="NGMTask.java">
+                    net.sourceforge.plantuml.gantt.ngm.NGMTask
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="NGMAllocation.java">
+                    net.sourceforge.plantuml.gantt.ngm.NGMAllocation
+                </Class>
+                <Class sourceFile="NGMTaskFixedDuration.java">
+                    net.sourceforge.plantuml.gantt.ngm.NGMTaskFixedDuration
+                </Class>
+                <Class sourceFile="NGMTaskFixedTotalEffort.java">
+                    net.sourceforge.plantuml.gantt.ngm.NGMTaskFixedTotalEffort
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>net.sourceforge.plantuml.gantt.ngm.math</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt.ngm.math</Package>
+                <Package>net.sourceforge.plantuml.gantt.solver</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.ngm.math">
+            <Stats>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>9</ConcreteClasses>
+                <AbstractClasses>2</AbstractClasses>
+                <Ca>5</Ca>
+                <Ce>6</Ce>
+                <A>0.18</A>
+                <I>0.55</I>
+                <D>0.27</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="AbstractPiecewiseConstant.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.AbstractPiecewiseConstant
+                </Class>
+                <Class sourceFile="PiecewiseConstant.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstant
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="AbstractPiecewiseConstant.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.AbstractPiecewiseConstant$1
+                </Class>
+                <Class sourceFile="Combiner.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.Combiner
+                </Class>
+                <Class sourceFile="LoadIntegrator.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.LoadIntegrator
+                </Class>
+                <Class sourceFile="PiecewiseConstantHours.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstantHours
+                </Class>
+                <Class sourceFile="PiecewiseConstantSpecificDays.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstantSpecificDays
+                </Class>
+                <Class sourceFile="PiecewiseConstantTimeWindow.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstantTimeWindow
+                </Class>
+                <Class sourceFile="PiecewiseConstantUtils.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstantUtils
+                </Class>
+                <Class sourceFile="PiecewiseConstantWeekday.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstantWeekday
+                </Class>
+                <Class sourceFile="TimeDirection.java">
+                    net.sourceforge.plantuml.gantt.ngm.math.TimeDirection
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>java.util.function</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.ngm</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+                <Package>net.sourceforge.plantuml.gantt.ngm</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.solver">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>7</Ce>
+                <A>0</A>
+                <I>0.88</I>
+                <D>0.12</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="ImpossibleSolvingException.java">
+                    net.sourceforge.plantuml.gantt.solver.ImpossibleSolvingException
+                </Class>
+                <Class sourceFile="Solver.java">
+                    net.sourceforge.plantuml.gantt.solver.Solver
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.ngm</Package>
+                <Package>net.sourceforge.plantuml.gantt.time</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.time">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>8</Ca>
+                <Ce>2</Ce>
+                <A>0</A>
+                <I>0.2</I>
+                <D>0.8</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="WeekNumberStrategy.java">
+                    net.sourceforge.plantuml.gantt.time.WeekNumberStrategy
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
+                <Package>net.sourceforge.plantuml.gantt.solver</Package>
+                <Package>net.sourceforge.plantuml.gantt.timescale</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.timescale">
+            <Stats>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
+                <Ca>4</Ca>
+                <Ce>6</Ce>
+                <A>0.12</A>
+                <I>0.6</I>
+                <D>0.27</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="TimeScale.java">
+                    net.sourceforge.plantuml.gantt.timescale.TimeScale
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="PiecewiseTimeProjection.java">
+                    net.sourceforge.plantuml.gantt.timescale.PiecewiseTimeProjection
+                </Class>
+                <Class sourceFile="PiecewiseTimeType.java">
+                    net.sourceforge.plantuml.gantt.timescale.PiecewiseTimeType
+                </Class>
+                <Class sourceFile="PixelInstant.java">
+                    net.sourceforge.plantuml.gantt.timescale.PixelInstant
+                </Class>
+                <Class sourceFile="TimeScaleCompressed.java">
+                    net.sourceforge.plantuml.gantt.timescale.TimeScaleCompressed
+                </Class>
+                <Class sourceFile="TimeScaleDaily.java">
+                    net.sourceforge.plantuml.gantt.timescale.TimeScaleDaily
+                </Class>
+                <Class sourceFile="TimeScaleDailyHideClosed.java">
+                    net.sourceforge.plantuml.gantt.timescale.TimeScaleDailyHideClosed
+                </Class>
+                <Class sourceFile="TimeScaleWink.java">
+                    net.sourceforge.plantuml.gantt.timescale.TimeScaleWink
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.time</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="net.sourceforge.plantuml.gantt.ulang">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
         <Package name="net.sourceforge.plantuml.gitlog">
             <Stats>
                 <TotalClasses>9</TotalClasses>
@@ -8657,7 +9599,6 @@
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
@@ -8672,6 +9613,10 @@
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.golem</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
@@ -8704,9 +9649,6 @@
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
                 <Package>net.sourceforge.plantuml.sdot</Package>
@@ -8798,7 +9740,7 @@
                 <TotalClasses>30</TotalClasses>
                 <ConcreteClasses>29</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>95</Ca>
+                <Ca>94</Ca>
                 <Ce>10</Ce>
                 <A>0.03</A>
                 <I>0.1</I>
@@ -8934,7 +9876,6 @@
                 <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.chart.command</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.command.note</Package>
@@ -8952,6 +9893,12 @@
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.golem</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
@@ -8980,12 +9927,6 @@
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
@@ -9090,11 +10031,11 @@
                 <TotalClasses>19</TotalClasses>
                 <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>66</Ca>
+                <Ca>65</Ca>
                 <Ce>12</Ce>
                 <A>0.21</A>
-                <I>0.15</I>
-                <D>0.64</D>
+                <I>0.16</I>
+                <D>0.63</D>
                 <V>1</V>
             </Stats>
 
@@ -9190,7 +10131,6 @@
                 <Package>net.sourceforge.plantuml.board</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.command.note</Package>
@@ -9206,6 +10146,9 @@
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
@@ -9219,9 +10162,6 @@
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
@@ -9541,7 +10481,7 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>79</Ca>
+                <Ca>78</Ca>
                 <Ce>14</Ce>
                 <A>0.36</A>
                 <I>0.15</I>
@@ -9628,7 +10568,6 @@
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
@@ -9644,6 +10583,11 @@
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.golem</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
@@ -9671,11 +10615,6 @@
                 <Package>net.sourceforge.plantuml.openpdf</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
@@ -10293,7 +11232,7 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>87</Ca>
+                <Ca>86</Ca>
                 <Ce>9</Ce>
                 <A>0.27</A>
                 <I>0.09</I>
@@ -10366,7 +11305,6 @@
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
@@ -10385,6 +11323,10 @@
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.golem</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
@@ -10415,10 +11357,6 @@
                 <Package>net.sourceforge.plantuml.openpdf</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
@@ -10448,7 +11386,7 @@
                 <TotalClasses>34</TotalClasses>
                 <ConcreteClasses>28</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>89</Ca>
+                <Ca>88</Ca>
                 <Ce>9</Ce>
                 <A>0.18</A>
                 <I>0.09</I>
@@ -10592,7 +11530,6 @@
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
@@ -10612,6 +11549,10 @@
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.golem</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
@@ -10639,10 +11580,6 @@
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
@@ -10844,7 +11781,6 @@
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.crash</Package>
@@ -10863,6 +11799,10 @@
                 <Package>net.sourceforge.plantuml.emoji</Package>
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.golem</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
@@ -10894,9 +11834,6 @@
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
@@ -10925,11 +11862,11 @@
                 <TotalClasses>22</TotalClasses>
                 <ConcreteClasses>20</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>13</Ca>
+                <Ca>12</Ca>
                 <Ce>26</Ce>
                 <A>0.09</A>
-                <I>0.67</I>
-                <D>0.24</D>
+                <I>0.68</I>
+                <D>0.22</D>
                 <V>1</V>
             </Stats>
 
@@ -11036,14 +11973,13 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.definition</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
@@ -11143,13 +12079,13 @@
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.elk.proxy</Package>
                 <Package>net.sourceforge.plantuml.ftp</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.graphml</Package>
                 <Package>net.sourceforge.plantuml.hcl</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.g2d</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.math</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.security.authentication.oauth</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
@@ -11378,7 +12314,7 @@
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>41</Ca>
+                <Ca>40</Ca>
                 <Ce>5</Ce>
                 <A>0.67</A>
                 <I>0.11</I>
@@ -11418,7 +12354,6 @@
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.cheneer</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
@@ -11428,6 +12363,7 @@
                 <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.hcl</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
@@ -11438,7 +12374,6 @@
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.security</Package>
@@ -12198,11 +13133,11 @@
                 <TotalClasses>17</TotalClasses>
                 <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>61</Ca>
+                <Ca>60</Ca>
                 <Ce>15</Ce>
                 <A>0.18</A>
                 <I>0.2</I>
-                <D>0.63</D>
+                <D>0.62</D>
                 <V>1</V>
             </Stats>
 
@@ -12292,7 +13227,6 @@
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.cheneer</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.crash</Package>
@@ -12309,6 +13243,7 @@
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
                 <Package>net.sourceforge.plantuml.font</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.hcl</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
@@ -12323,7 +13258,6 @@
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
@@ -12413,1128 +13347,16 @@
             </UsedBy>
         </Package>
 
-        <Package name="net.sourceforge.plantuml.project">
-            <Stats>
-                <TotalClasses>17</TotalClasses>
-                <ConcreteClasses>15</ConcreteClasses>
-                <AbstractClasses>2</AbstractClasses>
-                <Ca>9</Ca>
-                <Ce>31</Ce>
-                <A>0.12</A>
-                <I>0.77</I>
-                <D>0.11</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="GanttStyle.java">
-                    net.sourceforge.plantuml.project.GanttStyle
-                </Class>
-                <Class sourceFile="PValue.java">
-                    net.sourceforge.plantuml.project.PValue
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="Completion.java">
-                    net.sourceforge.plantuml.project.Completion
-                </Class>
-                <Class sourceFile="DayStatus.java">
-                    net.sourceforge.plantuml.project.DayStatus
-                </Class>
-                <Class sourceFile="DaysAsDates.java">
-                    net.sourceforge.plantuml.project.DaysAsDates$MyIterator
-                </Class>
-                <Class sourceFile="Failable.java">
-                    net.sourceforge.plantuml.project.Failable
-                </Class>
-                <Class sourceFile="GArrows.java">
-                    net.sourceforge.plantuml.project.GArrows
-                </Class>
-                <Class sourceFile="GanttArrow.java">
-                    net.sourceforge.plantuml.project.GanttArrow
-                </Class>
-                <Class sourceFile="GanttConstraintMode.java">
-                    net.sourceforge.plantuml.project.GanttConstraintMode
-                </Class>
-                <Class sourceFile="GanttDiagram.java">
-                    net.sourceforge.plantuml.project.GanttDiagram
-                </Class>
-                <Class sourceFile="GanttDiagramFactory.java">
-                    net.sourceforge.plantuml.project.GanttDiagramFactory
-                </Class>
-                <Class sourceFile="GanttDiagramMainBlock.java">
-                    net.sourceforge.plantuml.project.GanttDiagramMainBlock
-                </Class>
-                <Class sourceFile="GanttLayout.java">
-                    net.sourceforge.plantuml.project.GanttLayout
-                </Class>
-                <Class sourceFile="LabelPosition.java">
-                    net.sourceforge.plantuml.project.LabelPosition
-                </Class>
-                <Class sourceFile="LabelStrategy.java">
-                    net.sourceforge.plantuml.project.LabelStrategy
-                </Class>
-                <Class sourceFile="OpenClose.java">
-                    net.sourceforge.plantuml.project.OpenClose
-                </Class>
-                <Class sourceFile="Today.java">
-                    net.sourceforge.plantuml.project.Today
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.util</Package>
-                <Package>java.util.regex</Package>
-                <Package>net.sourceforge.plantuml</Package>
-                <Package>net.sourceforge.plantuml.command</Package>
-                <Package>net.sourceforge.plantuml.core</Package>
-                <Package>net.sourceforge.plantuml.crash</Package>
-                <Package>net.sourceforge.plantuml.klimt</Package>
-                <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.creole</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
-                <Package>net.sourceforge.plantuml.klimt.geom</Package>
-                <Package>net.sourceforge.plantuml.klimt.shape</Package>
-                <Package>net.sourceforge.plantuml.log</Package>
-                <Package>net.sourceforge.plantuml.nio</Package>
-                <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
-                <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-                <Package>net.sourceforge.plantuml.project.solver</Package>
-                <Package>net.sourceforge.plantuml.project.time</Package>
-                <Package>net.sourceforge.plantuml.project.timescale</Package>
-                <Package>net.sourceforge.plantuml.real</Package>
-                <Package>net.sourceforge.plantuml.stereo</Package>
-                <Package>net.sourceforge.plantuml.style</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.chronology</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
-                <Package>net.sourceforge.plantuml.project.solver</Package>
-                <Package>net.sourceforge.plantuml.project.timescale</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.command">
-            <Stats>
-                <TotalClasses>15</TotalClasses>
-                <ConcreteClasses>15</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>2</Ca>
-                <Ce>19</Ce>
-                <A>0</A>
-                <I>0.9</I>
-                <D>0.1</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="CommandFootboxGantt.java">
-                    net.sourceforge.plantuml.project.command.CommandFootboxGantt
-                </Class>
-                <Class sourceFile="CommandGanttArrow2.java">
-                    net.sourceforge.plantuml.project.command.CommandGanttArrow2
-                </Class>
-                <Class sourceFile="CommandGroupEnd.java">
-                    net.sourceforge.plantuml.project.command.CommandGroupEnd
-                </Class>
-                <Class sourceFile="CommandGroupStart.java">
-                    net.sourceforge.plantuml.project.command.CommandGroupStart
-                </Class>
-                <Class sourceFile="CommandHideClosed.java">
-                    net.sourceforge.plantuml.project.command.CommandHideClosed
-                </Class>
-                <Class sourceFile="CommandHideResourceFootbox.java">
-                    net.sourceforge.plantuml.project.command.CommandHideResourceFootbox
-                </Class>
-                <Class sourceFile="CommandHideResourceName.java">
-                    net.sourceforge.plantuml.project.command.CommandHideResourceName
-                </Class>
-                <Class sourceFile="CommandLabelOnColumn.java">
-                    net.sourceforge.plantuml.project.command.CommandLabelOnColumn
-                </Class>
-                <Class sourceFile="CommandLanguage.java">
-                    net.sourceforge.plantuml.project.command.CommandLanguage
-                </Class>
-                <Class sourceFile="CommandPrintBetween.java">
-                    net.sourceforge.plantuml.project.command.CommandPrintBetween
-                </Class>
-                <Class sourceFile="CommandPrintScale.java">
-                    net.sourceforge.plantuml.project.command.CommandPrintScale
-                </Class>
-                <Class sourceFile="CommandSeparator.java">
-                    net.sourceforge.plantuml.project.command.CommandSeparator
-                </Class>
-                <Class sourceFile="CommandTaskCompleteDefault.java">
-                    net.sourceforge.plantuml.project.command.CommandTaskCompleteDefault
-                </Class>
-                <Class sourceFile="NaturalCommand.java">
-                    net.sourceforge.plantuml.project.command.NaturalCommand
-                </Class>
-                <Class sourceFile="NaturalGanttCommand.java">
-                    net.sourceforge.plantuml.project.command.NaturalGanttCommand
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>com.plantuml.ubrex</Package>
-                <Package>com.plantuml.ubrex.builder</Package>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml.command</Package>
-                <Package>net.sourceforge.plantuml.core</Package>
-                <Package>net.sourceforge.plantuml.descdiagram.command</Package>
-                <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.geom</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
-                <Package>net.sourceforge.plantuml.project.ulang</Package>
-                <Package>net.sourceforge.plantuml.regex</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
-                <Package>net.sourceforge.plantuml.text</Package>
-                <Package>net.sourceforge.plantuml.utils</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.chronology</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.core">
-            <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>8</ConcreteClasses>
-                <AbstractClasses>3</AbstractClasses>
-                <Ca>9</Ca>
-                <Ce>12</Ce>
-                <A>0.27</A>
-                <I>0.57</I>
-                <D>0.16</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="AbstractTask.java">
-                    net.sourceforge.plantuml.project.core.AbstractTask
-                </Class>
-                <Class sourceFile="Moment.java">
-                    net.sourceforge.plantuml.project.core.Moment
-                </Class>
-                <Class sourceFile="Task.java">
-                    net.sourceforge.plantuml.project.core.Task
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="GArrowType.java">
-                    net.sourceforge.plantuml.project.core.GArrowType
-                </Class>
-                <Class sourceFile="GSide.java">
-                    net.sourceforge.plantuml.project.core.GSide
-                </Class>
-                <Class sourceFile="MomentImpl.java">
-                    net.sourceforge.plantuml.project.core.MomentImpl
-                </Class>
-                <Class sourceFile="PrintScale.java">
-                    net.sourceforge.plantuml.project.core.PrintScale
-                </Class>
-                <Class sourceFile="Resource.java">
-                    net.sourceforge.plantuml.project.core.Resource
-                </Class>
-                <Class sourceFile="TaskAttribute.java">
-                    net.sourceforge.plantuml.project.core.TaskAttribute
-                </Class>
-                <Class sourceFile="TaskCode.java">
-                    net.sourceforge.plantuml.project.core.TaskCode
-                </Class>
-                <Class sourceFile="TaskGroup.java">
-                    net.sourceforge.plantuml.project.core.TaskGroup
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml.klimt.creole</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
-                <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-                <Package>net.sourceforge.plantuml.project.time</Package>
-                <Package>net.sourceforge.plantuml.stereo</Package>
-                <Package>net.sourceforge.plantuml.style</Package>
-                <Package>net.sourceforge.plantuml.url</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.chronology</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
-                <Package>net.sourceforge.plantuml.project.solver</Package>
-                <Package>net.sourceforge.plantuml.project.timescale</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.data">
-            <Stats>
-                <TotalClasses>7</TotalClasses>
-                <ConcreteClasses>7</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>3</Ca>
-                <Ce>17</Ce>
-                <A>0</A>
-                <I>0.85</I>
-                <D>0.15</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="DisplayConfigData.java">
-                    net.sourceforge.plantuml.project.data.DisplayConfigData
-                </Class>
-                <Class sourceFile="GanttModelData.java">
-                    net.sourceforge.plantuml.project.data.GanttModelData
-                </Class>
-                <Class sourceFile="TaskDrawRegistryData.java">
-                    net.sourceforge.plantuml.project.data.TaskDrawRegistryData
-                </Class>
-                <Class sourceFile="TimeBoundsData.java">
-                    net.sourceforge.plantuml.project.data.TimeBoundsData
-                </Class>
-                <Class sourceFile="TimeScaleConfigData.java">
-                    net.sourceforge.plantuml.project.data.TimeScaleConfigData
-                </Class>
-                <Class sourceFile="TimelineStyleData.java">
-                    net.sourceforge.plantuml.project.data.TimelineStyleData
-                </Class>
-                <Class sourceFile="WeekConfigData.java">
-                    net.sourceforge.plantuml.project.data.WeekConfigData
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.time.temporal</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
-                <Package>net.sourceforge.plantuml.klimt.geom</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-                <Package>net.sourceforge.plantuml.project.time</Package>
-                <Package>net.sourceforge.plantuml.project.timescale</Package>
-                <Package>net.sourceforge.plantuml.real</Package>
-                <Package>net.sourceforge.plantuml.skin</Package>
-                <Package>net.sourceforge.plantuml.style</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.draw">
-            <Stats>
-                <TotalClasses>9</TotalClasses>
-                <ConcreteClasses>7</ConcreteClasses>
-                <AbstractClasses>2</AbstractClasses>
-                <Ca>5</Ca>
-                <Ce>25</Ce>
-                <A>0.22</A>
-                <I>0.83</I>
-                <D>0.06</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="ResourceDraw.java">
-                    net.sourceforge.plantuml.project.draw.ResourceDraw
-                </Class>
-                <Class sourceFile="TaskDraw.java">
-                    net.sourceforge.plantuml.project.draw.TaskDraw
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="PathUtils.java">
-                    net.sourceforge.plantuml.project.draw.PathUtils
-                </Class>
-                <Class sourceFile="RectangleTask.java">
-                    net.sourceforge.plantuml.project.draw.RectangleTask
-                </Class>
-                <Class sourceFile="TaskDrawDiamond.java">
-                    net.sourceforge.plantuml.project.draw.TaskDrawDiamond
-                </Class>
-                <Class sourceFile="TaskDrawGroup.java">
-                    net.sourceforge.plantuml.project.draw.TaskDrawGroup
-                </Class>
-                <Class sourceFile="TaskDrawRegular.java">
-                    net.sourceforge.plantuml.project.draw.TaskDrawRegular
-                </Class>
-                <Class sourceFile="TaskDrawSeparator.java">
-                    net.sourceforge.plantuml.project.draw.TaskDrawSeparator
-                </Class>
-                <Class sourceFile="WeeklyHeaderStrategy.java">
-                    net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml.klimt</Package>
-                <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.creole</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
-                <Package>net.sourceforge.plantuml.klimt.geom</Package>
-                <Package>net.sourceforge.plantuml.klimt.shape</Package>
-                <Package>net.sourceforge.plantuml.klimt.sprite</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
-                <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-                <Package>net.sourceforge.plantuml.project.time</Package>
-                <Package>net.sourceforge.plantuml.project.timescale</Package>
-                <Package>net.sourceforge.plantuml.real</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
-                <Package>net.sourceforge.plantuml.stereo</Package>
-                <Package>net.sourceforge.plantuml.style</Package>
-                <Package>net.sourceforge.plantuml.svek.image</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
-                <Package>net.sourceforge.plantuml.url</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.chronology</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.draw.header">
-            <Stats>
-                <TotalClasses>5</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
-                <AbstractClasses>2</AbstractClasses>
-                <Ca>2</Ca>
-                <Ce>15</Ce>
-                <A>0.4</A>
-                <I>0.88</I>
-                <D>0.28</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="HeaderPiece.java">
-                    net.sourceforge.plantuml.project.draw.header.HeaderPiece
-                </Class>
-                <Class sourceFile="TimeHeaderCalendar.java">
-                    net.sourceforge.plantuml.project.draw.header.TimeHeaderCalendar
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="TimeHeader.java">
-                    net.sourceforge.plantuml.project.draw.header.TimeHeader$Pending
-                </Class>
-                <Class sourceFile="TimeHeader.java">
-                    net.sourceforge.plantuml.project.draw.header.TimeHeader$TextBlockKey
-                </Class>
-                <Class sourceFile="TimeHeaderFactory.java">
-                    net.sourceforge.plantuml.project.draw.header.TimeHeaderFactory$1
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml.klimt</Package>
-                <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.font</Package>
-                <Package>net.sourceforge.plantuml.klimt.shape</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-                <Package>net.sourceforge.plantuml.project.time</Package>
-                <Package>net.sourceforge.plantuml.project.timescale</Package>
-                <Package>net.sourceforge.plantuml.style</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.lang">
-            <Stats>
-                <TotalClasses>106</TotalClasses>
-                <ConcreteClasses>105</ConcreteClasses>
-                <AbstractClasses>1</AbstractClasses>
-                <Ca>5</Ca>
-                <Ce>17</Ce>
-                <A>0.01</A>
-                <I>0.77</I>
-                <D>0.22</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="Sentence.java">
-                    net.sourceforge.plantuml.project.lang.Sentence
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="CenterBorderColor.java">
-                    net.sourceforge.plantuml.project.lang.CenterBorderColor
-                </Class>
-                <Class sourceFile="ComplementDate.java">
-                    net.sourceforge.plantuml.project.lang.ComplementDate$Type
-                </Class>
-                <Class sourceFile="ComplementDeleted.java">
-                    net.sourceforge.plantuml.project.lang.ComplementDeleted
-                </Class>
-                <Class sourceFile="ComplementEmpty.java">
-                    net.sourceforge.plantuml.project.lang.ComplementEmpty
-                </Class>
-                <Class sourceFile="SentenceAnd.java">
-                    net.sourceforge.plantuml.project.lang.SentenceAnd
-                </Class>
-                <Class sourceFile="SentenceAndAnd.java">
-                    net.sourceforge.plantuml.project.lang.SentenceAndAnd
-                </Class>
-                <Class sourceFile="SentenceEnds.java">
-                    net.sourceforge.plantuml.project.lang.SentenceEnds
-                </Class>
-                <Class sourceFile="SentenceHappens.java">
-                    net.sourceforge.plantuml.project.lang.SentenceHappens
-                </Class>
-                <Class sourceFile="SentenceHappensDate.java">
-                    net.sourceforge.plantuml.project.lang.SentenceHappensDate
-                </Class>
-                <Class sourceFile="SentenceIsColored.java">
-                    net.sourceforge.plantuml.project.lang.SentenceIsColored
-                </Class>
-                <Class sourceFile="SentenceIsColoredForCompletion.java">
-                    net.sourceforge.plantuml.project.lang.SentenceIsColoredForCompletion
-                </Class>
-                <Class sourceFile="SentenceIsDeleted.java">
-                    net.sourceforge.plantuml.project.lang.SentenceIsDeleted
-                </Class>
-                <Class sourceFile="SentenceIsDisplayedAs.java">
-                    net.sourceforge.plantuml.project.lang.SentenceIsDisplayedAs
-                </Class>
-                <Class sourceFile="SentenceIsForTask.java">
-                    net.sourceforge.plantuml.project.lang.SentenceIsForTask
-                </Class>
-                <Class sourceFile="SentenceLinksTo.java">
-                    net.sourceforge.plantuml.project.lang.SentenceLinksTo
-                </Class>
-                <Class sourceFile="SentencePausesAbsoluteDate.java">
-                    net.sourceforge.plantuml.project.lang.SentencePausesAbsoluteDate
-                </Class>
-                <Class sourceFile="SentencePausesAbsoluteIntervals.java">
-                    net.sourceforge.plantuml.project.lang.SentencePausesAbsoluteIntervals
-                </Class>
-                <Class sourceFile="SentencePausesAbsoluteIntervalsSmart.java">
-                    net.sourceforge.plantuml.project.lang.SentencePausesAbsoluteIntervalsSmart
-                </Class>
-                <Class sourceFile="SentencePausesDayOfWeek.java">
-                    net.sourceforge.plantuml.project.lang.SentencePausesDayOfWeek
-                </Class>
-                <Class sourceFile="SentenceRequire.java">
-                    net.sourceforge.plantuml.project.lang.SentenceRequire
-                </Class>
-                <Class sourceFile="SentenceTaskEndsAbsolute.java">
-                    net.sourceforge.plantuml.project.lang.SentenceTaskEndsAbsolute
-                </Class>
-                <Class sourceFile="SentenceTaskEndsOnlyRelative.java">
-                    net.sourceforge.plantuml.project.lang.SentenceTaskEndsOnlyRelative
-                </Class>
-                <Class sourceFile="SentenceTaskStarts.java">
-                    net.sourceforge.plantuml.project.lang.SentenceTaskStarts
-                </Class>
-                <Class sourceFile="SentenceTaskStartsAbsolute.java">
-                    net.sourceforge.plantuml.project.lang.SentenceTaskStartsAbsolute
-                </Class>
-                <Class sourceFile="SentenceTaskStartsOnlyRelative.java">
-                    net.sourceforge.plantuml.project.lang.SentenceTaskStartsOnlyRelative
-                </Class>
-                <Class sourceFile="SentenceTaskStartsWithColor.java">
-                    net.sourceforge.plantuml.project.lang.SentenceTaskStartsWithColor
-                </Class>
-                <Class sourceFile="SubjectDayAsDate.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate
-                </Class>
-                <Class sourceFile="SubjectDayAsDate.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate$1
-                </Class>
-                <Class sourceFile="SubjectDayAsDate.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate$2
-                </Class>
-                <Class sourceFile="SubjectDayAsDate.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate$3
-                </Class>
-                <Class sourceFile="SubjectDayAsDate.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate$Close
-                </Class>
-                <Class sourceFile="SubjectDayAsDate.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate$InColor
-                </Class>
-                <Class sourceFile="SubjectDayAsDate.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayAsDate$Open
-                </Class>
-                <Class sourceFile="SubjectDayOfWeek.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$1
-                </Class>
-                <Class sourceFile="SubjectDayOfWeek.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$2
-                </Class>
-                <Class sourceFile="SubjectDayOfWeek.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$3
-                </Class>
-                <Class sourceFile="SubjectDayOfWeek.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$AreClose
-                </Class>
-                <Class sourceFile="SubjectDayOfWeek.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$AreOpen
-                </Class>
-                <Class sourceFile="SubjectDayOfWeek.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDayOfWeek$InColor
-                </Class>
-                <Class sourceFile="SubjectDaysAsDates.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$1
-                </Class>
-                <Class sourceFile="SubjectDaysAsDates.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$2
-                </Class>
-                <Class sourceFile="SubjectDaysAsDates.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$3
-                </Class>
-                <Class sourceFile="SubjectDaysAsDates.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$4
-                </Class>
-                <Class sourceFile="SubjectDaysAsDates.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$Close
-                </Class>
-                <Class sourceFile="SubjectDaysAsDates.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$InColor
-                </Class>
-                <Class sourceFile="SubjectDaysAsDates.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$Named
-                </Class>
-                <Class sourceFile="SubjectDaysAsDates.java">
-                    net.sourceforge.plantuml.project.lang.SubjectDaysAsDates$Open
-                </Class>
-                <Class sourceFile="SubjectLinks.java">
-                    net.sourceforge.plantuml.project.lang.SubjectLinks
-                </Class>
-                <Class sourceFile="SubjectLinks.java">
-                    net.sourceforge.plantuml.project.lang.SubjectLinks$InColor
-                </Class>
-                <Class sourceFile="SubjectProject.java">
-                    net.sourceforge.plantuml.project.lang.SubjectProject
-                </Class>
-                <Class sourceFile="SubjectProject.java">
-                    net.sourceforge.plantuml.project.lang.SubjectProject$1
-                </Class>
-                <Class sourceFile="SubjectProject.java">
-                    net.sourceforge.plantuml.project.lang.SubjectProject$Starts
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$1
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$2
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$3
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$4
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$5
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$6
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$7
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$8
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$IsOffAfterDate
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$IsOffBeforeDate
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$IsOffDate
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$IsOffDates
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$IsOffDayOfWeek
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$IsOnDate
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$IsOnDates
-                </Class>
-                <Class sourceFile="SubjectResource.java">
-                    net.sourceforge.plantuml.project.lang.SubjectResource$WorksOn
-                </Class>
-                <Class sourceFile="SubjectSeparator.java">
-                    net.sourceforge.plantuml.project.lang.SubjectSeparator
-                </Class>
-                <Class sourceFile="SubjectSeparator.java">
-                    net.sourceforge.plantuml.project.lang.SubjectSeparator$1
-                </Class>
-                <Class sourceFile="SubjectSeparator.java">
-                    net.sourceforge.plantuml.project.lang.SubjectSeparator$2
-                </Class>
-                <Class sourceFile="SubjectSeparator.java">
-                    net.sourceforge.plantuml.project.lang.SubjectSeparator$3
-                </Class>
-                <Class sourceFile="SubjectSeparator.java">
-                    net.sourceforge.plantuml.project.lang.SubjectSeparator$Just
-                </Class>
-                <Class sourceFile="SubjectSeparator.java">
-                    net.sourceforge.plantuml.project.lang.SubjectSeparator$JustAfter
-                </Class>
-                <Class sourceFile="SubjectSeparator.java">
-                    net.sourceforge.plantuml.project.lang.SubjectSeparator$JustBefore
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$1
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$11
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$12
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$13
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$15
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$16
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$17
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$18
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$19
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$2
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$20
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$21
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$22
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$3
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$4
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$5
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$6
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$7
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$8
-                </Class>
-                <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.project.lang.SubjectTask$9
-                </Class>
-                <Class sourceFile="SubjectToday.java">
-                    net.sourceforge.plantuml.project.lang.SubjectToday
-                </Class>
-                <Class sourceFile="SubjectToday.java">
-                    net.sourceforge.plantuml.project.lang.SubjectToday$1
-                </Class>
-                <Class sourceFile="SubjectToday.java">
-                    net.sourceforge.plantuml.project.lang.SubjectToday$2
-                </Class>
-                <Class sourceFile="SubjectToday.java">
-                    net.sourceforge.plantuml.project.lang.SubjectToday$InColor
-                </Class>
-                <Class sourceFile="SubjectToday.java">
-                    net.sourceforge.plantuml.project.lang.SubjectToday$IsDate
-                </Class>
-                <Class sourceFile="TwoNames.java">
-                    net.sourceforge.plantuml.project.lang.TwoNames
-                </Class>
-                <Class sourceFile="Verbs.java">
-                    net.sourceforge.plantuml.project.lang.Verbs
-                </Class>
-                <Class sourceFile="Words.java">
-                    net.sourceforge.plantuml.project.lang.Words
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>com.plantuml.ubrex</Package>
-                <Package>com.plantuml.ubrex.builder</Package>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml.command</Package>
-                <Package>net.sourceforge.plantuml.core</Package>
-                <Package>net.sourceforge.plantuml.klimt.color</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.time</Package>
-                <Package>net.sourceforge.plantuml.project.ulang</Package>
-                <Package>net.sourceforge.plantuml.regex</Package>
-                <Package>net.sourceforge.plantuml.stereo</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
-                <Package>net.sourceforge.plantuml.url</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.chronology</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.ngm">
-            <Stats>
-                <TotalClasses>4</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
-                <AbstractClasses>1</AbstractClasses>
-                <Ca>2</Ca>
-                <Ce>3</Ce>
-                <A>0.25</A>
-                <I>0.6</I>
-                <D>0.15</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="NGMTask.java">
-                    net.sourceforge.plantuml.project.ngm.NGMTask
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="NGMAllocation.java">
-                    net.sourceforge.plantuml.project.ngm.NGMAllocation
-                </Class>
-                <Class sourceFile="NGMTaskFixedDuration.java">
-                    net.sourceforge.plantuml.project.ngm.NGMTaskFixedDuration
-                </Class>
-                <Class sourceFile="NGMTaskFixedTotalEffort.java">
-                    net.sourceforge.plantuml.project.ngm.NGMTaskFixedTotalEffort
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-                <Package>net.sourceforge.plantuml.project.solver</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.ngm.math">
-            <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>9</ConcreteClasses>
-                <AbstractClasses>2</AbstractClasses>
-                <Ca>6</Ca>
-                <Ce>5</Ce>
-                <A>0.18</A>
-                <I>0.45</I>
-                <D>0.36</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="AbstractPiecewiseConstant.java">
-                    net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant
-                </Class>
-                <Class sourceFile="PiecewiseConstant.java">
-                    net.sourceforge.plantuml.project.ngm.math.PiecewiseConstant
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="AbstractPiecewiseConstant.java">
-                    net.sourceforge.plantuml.project.ngm.math.AbstractPiecewiseConstant$1
-                </Class>
-                <Class sourceFile="Combiner.java">
-                    net.sourceforge.plantuml.project.ngm.math.Combiner
-                </Class>
-                <Class sourceFile="LoadIntegrator.java">
-                    net.sourceforge.plantuml.project.ngm.math.LoadIntegrator
-                </Class>
-                <Class sourceFile="PiecewiseConstantHours.java">
-                    net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantHours
-                </Class>
-                <Class sourceFile="PiecewiseConstantSpecificDays.java">
-                    net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantSpecificDays
-                </Class>
-                <Class sourceFile="PiecewiseConstantTimeWindow.java">
-                    net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantTimeWindow
-                </Class>
-                <Class sourceFile="PiecewiseConstantUtils.java">
-                    net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantUtils
-                </Class>
-                <Class sourceFile="PiecewiseConstantWeekday.java">
-                    net.sourceforge.plantuml.project.ngm.math.PiecewiseConstantWeekday
-                </Class>
-                <Class sourceFile="TimeDirection.java">
-                    net.sourceforge.plantuml.project.ngm.math.TimeDirection
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.util</Package>
-                <Package>java.util.function</Package>
-                <Package>net.sourceforge.plantuml.project.ngm</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.chronology</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-                <Package>net.sourceforge.plantuml.project.ngm</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.solver">
-            <Stats>
-                <TotalClasses>2</TotalClasses>
-                <ConcreteClasses>2</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>1</Ca>
-                <Ce>7</Ce>
-                <A>0</A>
-                <I>0.88</I>
-                <D>0.12</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="ImpossibleSolvingException.java">
-                    net.sourceforge.plantuml.project.solver.ImpossibleSolvingException
-                </Class>
-                <Class sourceFile="Solver.java">
-                    net.sourceforge.plantuml.project.solver.Solver
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.ngm</Package>
-                <Package>net.sourceforge.plantuml.project.time</Package>
-                <Package>net.sourceforge.plantuml.teavm</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.project</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.time">
-            <Stats>
-                <TotalClasses>1</TotalClasses>
-                <ConcreteClasses>1</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>9</Ca>
-                <Ce>2</Ce>
-                <A>0</A>
-                <I>0.18</I>
-                <D>0.82</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="WeekNumberStrategy.java">
-                    net.sourceforge.plantuml.project.time.WeekNumberStrategy
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.chronology</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
-                <Package>net.sourceforge.plantuml.project.solver</Package>
-                <Package>net.sourceforge.plantuml.project.timescale</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.timescale">
-            <Stats>
-                <TotalClasses>5</TotalClasses>
-                <ConcreteClasses>4</ConcreteClasses>
-                <AbstractClasses>1</AbstractClasses>
-                <Ca>5</Ca>
-                <Ce>6</Ce>
-                <A>0.2</A>
-                <I>0.55</I>
-                <D>0.25</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-                <Class sourceFile="TimeScale.java">
-                    net.sourceforge.plantuml.project.timescale.TimeScale
-                </Class>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="TimeScaleCompressed.java">
-                    net.sourceforge.plantuml.project.timescale.TimeScaleCompressed
-                </Class>
-                <Class sourceFile="TimeScaleDaily.java">
-                    net.sourceforge.plantuml.project.timescale.TimeScaleDaily
-                </Class>
-                <Class sourceFile="TimeScaleDailyHideClosed.java">
-                    net.sourceforge.plantuml.project.timescale.TimeScaleDailyHideClosed
-                </Class>
-                <Class sourceFile="TimeScaleWink.java">
-                    net.sourceforge.plantuml.project.timescale.TimeScaleWink
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.time</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>net.sourceforge.plantuml.chronology</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
-            </UsedBy>
-        </Package>
-
-        <Package name="net.sourceforge.plantuml.project.ulang">
-            <error>No stats available: package referenced, but not analyzed.</error>
-        </Package>
-
         <Package name="net.sourceforge.plantuml.real">
             <Stats>
                 <TotalClasses>8</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>4</AbstractClasses>
-                <Ca>5</Ca>
+                <Ca>4</Ca>
                 <Ce>3</Ce>
                 <A>0.5</A>
-                <I>0.38</I>
-                <D>0.12</D>
+                <I>0.43</I>
+                <D>0.07</D>
                 <V>1</V>
             </Stats>
 
@@ -13575,10 +13397,9 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>net.sourceforge.plantuml.chronology</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
             </UsedBy>
         </Package>
@@ -13588,11 +13409,11 @@
                 <TotalClasses>9</TotalClasses>
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>41</Ca>
+                <Ca>39</Ca>
                 <Ce>6</Ce>
                 <A>0.22</A>
                 <I>0.13</I>
-                <D>0.65</D>
+                <D>0.64</D>
                 <V>1</V>
             </Stats>
 
@@ -13645,7 +13466,6 @@
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.chart.command</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.command.note</Package>
@@ -13657,6 +13477,7 @@
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.command</Package>
@@ -13666,8 +13487,6 @@
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
@@ -14611,7 +14430,7 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.command</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
             </UsedBy>
         </Package>
@@ -14820,7 +14639,7 @@
             </DependsUpon>
 
             <UsedBy>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.xmi</Package>
             </UsedBy>
@@ -15072,11 +14891,11 @@
                 <TotalClasses>34</TotalClasses>
                 <ConcreteClasses>29</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>40</Ca>
+                <Ca>39</Ca>
                 <Ce>26</Ce>
                 <A>0.15</A>
-                <I>0.39</I>
-                <D>0.46</D>
+                <I>0.4</I>
+                <D>0.45</D>
                 <V>1</V>
             </Stats>
 
@@ -15226,7 +15045,6 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
                 <Package>net.sourceforge.plantuml.asciiart</Package>
                 <Package>net.sourceforge.plantuml.bpm</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
@@ -15239,12 +15057,12 @@
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.tikz</Package>
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
                 <Package>net.sourceforge.plantuml.nwdiag.core</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
@@ -15616,7 +15434,7 @@
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>36</Ca>
+                <Ca>35</Ca>
                 <Ce>10</Ce>
                 <A>0</A>
                 <I>0.22</I>
@@ -15663,17 +15481,16 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.legacy</Package>
                 <Package>net.sourceforge.plantuml.mindmap</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
@@ -15697,7 +15514,7 @@
                 <TotalClasses>23</TotalClasses>
                 <ConcreteClasses>16</ConcreteClasses>
                 <AbstractClasses>7</AbstractClasses>
-                <Ca>69</Ca>
+                <Ca>68</Ca>
                 <Ce>17</Ce>
                 <A>0.3</A>
                 <I>0.2</I>
@@ -15815,7 +15632,6 @@
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.chart</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.command.note</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
@@ -15830,6 +15646,11 @@
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.help</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
@@ -15846,11 +15667,6 @@
                 <Package>net.sourceforge.plantuml.openiconic</Package>
                 <Package>net.sourceforge.plantuml.packetdiag</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
-                <Package>net.sourceforge.plantuml.project</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.data</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.draw.header</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
                 <Package>net.sourceforge.plantuml.salt.factory</Package>
@@ -16608,8 +16424,8 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
                 <Package>net.sourceforge.plantuml.skin.rose</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
@@ -16984,6 +16800,9 @@
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.flashcode</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
+                <Package>net.sourceforge.plantuml.gantt.solver</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.golem</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
@@ -17001,9 +16820,6 @@
                 <Package>net.sourceforge.plantuml.nwdiag</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.openpdf</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
-                <Package>net.sourceforge.plantuml.project.solver</Package>
                 <Package>net.sourceforge.plantuml.real</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.salt.factory</Package>
@@ -17142,6 +16958,7 @@
                 <Package>net.sourceforge.plantuml.donors</Package>
                 <Package>net.sourceforge.plantuml.error</Package>
                 <Package>net.sourceforge.plantuml.filesdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
                 <Package>net.sourceforge.plantuml.gitlog</Package>
                 <Package>net.sourceforge.plantuml.jaws</Package>
                 <Package>net.sourceforge.plantuml.jsondiagram</Package>
@@ -17151,7 +16968,6 @@
                 <Package>net.sourceforge.plantuml.klimt.sprite</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
@@ -18084,7 +17900,7 @@
                 <TotalClasses>4</TotalClasses>
                 <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>30</Ca>
+                <Ca>29</Ca>
                 <Ce>4</Ce>
                 <A>0</A>
                 <I>0.12</I>
@@ -18124,12 +17940,14 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</Package>
                 <Package>net.sourceforge.plantuml.api</Package>
-                <Package>net.sourceforge.plantuml.chronology</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.command.note</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.descdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.draw</Package>
+                <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.atom</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole.command</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
@@ -18139,9 +17957,6 @@
                 <Package>net.sourceforge.plantuml.klimt.drawing.tikz</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.openpdf</Package>
-                <Package>net.sourceforge.plantuml.project.core</Package>
-                <Package>net.sourceforge.plantuml.project.draw</Package>
-                <Package>net.sourceforge.plantuml.project.lang</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
@@ -18275,6 +18090,7 @@
                 <Package>net.sourceforge.plantuml.ebnf</Package>
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.flowdiagram</Package>
+                <Package>net.sourceforge.plantuml.gantt.command</Package>
                 <Package>net.sourceforge.plantuml.graphml</Package>
                 <Package>net.sourceforge.plantuml.jaws</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
@@ -18291,7 +18107,6 @@
                 <Package>net.sourceforge.plantuml.packetdiag.command</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.preproc2</Package>
-                <Package>net.sourceforge.plantuml.project.command</Package>
                 <Package>net.sourceforge.plantuml.regexdiagram</Package>
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
@@ -20039,13 +19854,6 @@
             <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
-        <Package Name="net.sourceforge.plantuml.chronology">
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-            <Package>net.sourceforge.plantuml.klimt.shape</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-        </Package>
-
         <Package Name="net.sourceforge.plantuml.classdiagram">
             <Package>net.sourceforge.plantuml.klimt</Package>
             <Package>net.sourceforge.plantuml.klimt.color</Package>
@@ -20328,6 +20136,95 @@
         <Package Name="net.sourceforge.plantuml.ftp">
             <Package>net.sourceforge.plantuml.log</Package>
             <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt">
+            <Package>net.sourceforge.plantuml.gantt.core</Package>
+            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.command">
+            <Package>net.sourceforge.plantuml.core</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.core">
+            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.data">
+            <Package>net.sourceforge.plantuml.gantt.core</Package>
+            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.draw">
+            <Package>net.sourceforge.plantuml.gantt.core</Package>
+            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.draw.header">
+            <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+            <Package>net.sourceforge.plantuml.klimt</Package>
+            <Package>net.sourceforge.plantuml.klimt.color</Package>
+            <Package>net.sourceforge.plantuml.klimt.awt</Package>
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.lang">
+            <Package>net.sourceforge.plantuml.gantt.core</Package>
+            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.ngm">
+            <Package>net.sourceforge.plantuml.gantt.ngm.math</Package>
+            <Package>net.sourceforge.plantuml.gantt.ngm</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.ngm.math">
+            <Package>net.sourceforge.plantuml.gantt.ngm</Package>
+            <Package>net.sourceforge.plantuml.gantt.ngm.math</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.solver">
+            <Package>net.sourceforge.plantuml.teavm</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.shape</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+        </Package>
+
+        <Package Name="net.sourceforge.plantuml.gantt.timescale">
+            <Package>net.sourceforge.plantuml.gantt</Package>
+            <Package>net.sourceforge.plantuml.gantt.core</Package>
+            <Package>net.sourceforge.plantuml.url</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.klimt.shape</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
@@ -20685,95 +20582,6 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.preproc2">
-            <Package>net.sourceforge.plantuml.preproc</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-            <Package>net.sourceforge.plantuml.klimt.shape</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project">
-            <Package>net.sourceforge.plantuml.preproc</Package>
-            <Package>net.sourceforge.plantuml.text</Package>
-            <Package>net.sourceforge.plantuml</Package>
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-            <Package>net.sourceforge.plantuml.klimt.shape</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.command">
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-            <Package>net.sourceforge.plantuml.klimt.shape</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.core">
-            <Package>net.sourceforge.plantuml.url</Package>
-            <Package>net.sourceforge.plantuml.klimt.geom</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-            <Package>net.sourceforge.plantuml.klimt.shape</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.data">
-            <Package>net.sourceforge.plantuml.project.core</Package>
-            <Package>net.sourceforge.plantuml.url</Package>
-            <Package>net.sourceforge.plantuml.klimt.geom</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-            <Package>net.sourceforge.plantuml.klimt.shape</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.draw">
-            <Package>net.sourceforge.plantuml.klimt.sprite</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-            <Package>net.sourceforge.plantuml.klimt.shape</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.draw.header">
-            <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-            <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-            <Package>net.sourceforge.plantuml.klimt.shape</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.lang">
-            <Package>net.sourceforge.plantuml.core</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-            <Package>net.sourceforge.plantuml.klimt.shape</Package>
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.ngm">
-            <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-            <Package>net.sourceforge.plantuml.project.ngm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.ngm.math">
-            <Package>net.sourceforge.plantuml.project.ngm</Package>
-            <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.solver">
-            <Package>net.sourceforge.plantuml.project.ngm</Package>
-            <Package>net.sourceforge.plantuml.project.ngm.math</Package>
-            <Package>net.sourceforge.plantuml.project.ngm</Package>
-        </Package>
-
-        <Package Name="net.sourceforge.plantuml.project.timescale">
-            <Package>net.sourceforge.plantuml.project</Package>
             <Package>net.sourceforge.plantuml.preproc</Package>
             <Package>net.sourceforge.plantuml.text</Package>
             <Package>net.sourceforge.plantuml</Package>

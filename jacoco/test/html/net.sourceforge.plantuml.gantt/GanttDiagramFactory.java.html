@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GanttDiagramFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt</a> &gt; <span class="el_source">GanttDiagramFactory.java</span></div><h1>GanttDiagramFactory.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt;
+
+import java.util.List;
+
+import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.command.Command;
+import net.sourceforge.plantuml.command.CommonCommands;
+import net.sourceforge.plantuml.command.PSystemCommandFactory;
+import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.gantt.command.CommandColorTask;
+import net.sourceforge.plantuml.gantt.command.CommandFootboxGantt;
+import net.sourceforge.plantuml.gantt.command.CommandGanttArrow;
+import net.sourceforge.plantuml.gantt.command.CommandGanttArrow2;
+import net.sourceforge.plantuml.gantt.command.CommandGroupEnd;
+import net.sourceforge.plantuml.gantt.command.CommandGroupStart;
+import net.sourceforge.plantuml.gantt.command.CommandHideClosed;
+import net.sourceforge.plantuml.gantt.command.CommandHideResourceFootbox;
+import net.sourceforge.plantuml.gantt.command.CommandHideResourceName;
+import net.sourceforge.plantuml.gantt.command.CommandLabelOnColumn;
+import net.sourceforge.plantuml.gantt.command.CommandLanguage;
+import net.sourceforge.plantuml.gantt.command.CommandNoteBottom;
+import net.sourceforge.plantuml.gantt.command.CommandPrintBetween;
+import net.sourceforge.plantuml.gantt.command.CommandPrintScale;
+import net.sourceforge.plantuml.gantt.command.CommandSeparator;
+import net.sourceforge.plantuml.gantt.command.CommandTaskCompleteDefault;
+import net.sourceforge.plantuml.gantt.command.CommandWeekNumberStrategy;
+import net.sourceforge.plantuml.gantt.command.NaturalGanttCommand;
+import net.sourceforge.plantuml.gantt.lang.SubjectDayAsDate;
+import net.sourceforge.plantuml.gantt.lang.SubjectDayOfWeek;
+import net.sourceforge.plantuml.gantt.lang.SubjectDaysAsDates;
+import net.sourceforge.plantuml.gantt.lang.SubjectGantt;
+import net.sourceforge.plantuml.gantt.lang.SubjectResource;
+import net.sourceforge.plantuml.gantt.lang.SubjectSeparator;
+import net.sourceforge.plantuml.gantt.lang.SubjectTask;
+import net.sourceforge.plantuml.gantt.lang.SubjectToday;
+import net.sourceforge.plantuml.gantt.lang.SubjectWorkingHours;
+import net.sourceforge.plantuml.nio.PathSystem;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+
+public class GanttDiagramFactory extends PSystemCommandFactory {
+
+	public GanttDiagramFactory() {
+<span class="fc" id="L79">		super(DiagramType.GANTT);</span>
+<span class="fc" id="L80">	}</span>
+
+	@Override
+	protected void initCommandsList(List&lt;Command&gt; cmds) {
+<span class="fc" id="L84">		CommonCommands.addTitleCommands(cmds);</span>
+<span class="fc" id="L85">		CommonCommands.addCommonCommands2(cmds);</span>
+<span class="fc" id="L86">		CommonCommands.addCommonScaleCommands(cmds);</span>
+
+<span class="fc" id="L88">		addLanguageCommands(cmds);</span>
+
+<span class="fc" id="L90">		cmds.add(new CommandGanttArrow());</span>
+<span class="fc" id="L91">		cmds.add(new CommandGanttArrow2());</span>
+<span class="fc" id="L92">		cmds.add(new CommandColorTask());</span>
+<span class="fc" id="L93">		cmds.add(new CommandSeparator());</span>
+<span class="fc" id="L94">		cmds.add(new CommandWeekNumberStrategy());</span>
+<span class="fc" id="L95">		cmds.add(new CommandGroupStart());</span>
+<span class="fc" id="L96">		cmds.add(new CommandGroupEnd());</span>
+
+<span class="fc" id="L98">		cmds.add(new CommandLanguage());</span>
+<span class="fc" id="L99">		cmds.add(new CommandPrintScale());</span>
+<span class="fc" id="L100">		cmds.add(new CommandPrintBetween());</span>
+<span class="fc" id="L101">		cmds.add(new CommandNoteBottom());</span>
+<span class="fc" id="L102">		cmds.add(new CommandFootboxGantt());</span>
+<span class="fc" id="L103">		cmds.add(new CommandLabelOnColumn());</span>
+<span class="fc" id="L104">		cmds.add(new CommandHideResourceName());</span>
+<span class="fc" id="L105">		cmds.add(new CommandHideResourceFootbox());</span>
+<span class="fc" id="L106">		cmds.add(new CommandHideClosed());</span>
+<span class="fc" id="L107">		cmds.add(new CommandTaskCompleteDefault());</span>
+<span class="fc" id="L108">	}</span>
+
+	private void addLanguageCommands(List&lt;Command&gt; cmd) {
+<span class="fc" id="L111">		cmd.add(new NaturalGanttCommand(SubjectGantt.ME));</span>
+<span class="fc" id="L112">		cmd.add(new NaturalGanttCommand(SubjectToday.ME));</span>
+<span class="fc" id="L113">		cmd.add(new NaturalGanttCommand(SubjectTask.ME));</span>
+<span class="fc" id="L114">		cmd.add(new NaturalGanttCommand(SubjectResource.ME));</span>
+<span class="fc" id="L115">		cmd.add(new NaturalGanttCommand(SubjectDaysAsDates.ME));</span>
+<span class="fc" id="L116">		cmd.add(new NaturalGanttCommand(SubjectDayOfWeek.ME));</span>
+<span class="fc" id="L117">		cmd.add(new NaturalGanttCommand(SubjectDayAsDate.ME));</span>
+<span class="fc" id="L118">		cmd.add(new NaturalGanttCommand(SubjectSeparator.ME));</span>
+<span class="fc" id="L119">		cmd.add(new NaturalGanttCommand(SubjectWorkingHours.ME));</span>
+<span class="fc" id="L120">	}</span>
+
+	@Override
+	public GanttDiagram createEmptyDiagram(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+<span class="fc" id="L125">		return new GanttDiagram(source, preprocessing);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

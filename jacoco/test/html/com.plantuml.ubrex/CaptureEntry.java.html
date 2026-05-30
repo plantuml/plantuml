@@ -56,9 +56,15 @@ class CaptureEntry {
 <span class="fc" id="L56">		return new CaptureEntry(prefix + &quot;/&quot; + key, value);</span>
 	}
 
+	public CaptureEntry withoutPrefixedKey(String prefix) {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (key.startsWith(prefix + &quot;/&quot;) == false)</span>
+<span class="nc" id="L61">			return null;</span>
+<span class="nc" id="L62">		return new CaptureEntry(key.substring(prefix.length() + 1), value);</span>
+	}
+
 	@Override
 	public String toString() {
-<span class="fc" id="L61">		return key + &quot;=&quot; + value;</span>
+<span class="nc" id="L67">		return key + &quot;=&quot; + value;</span>
 	}
 
 }

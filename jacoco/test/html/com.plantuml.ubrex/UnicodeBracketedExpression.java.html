@@ -70,7 +70,7 @@ public interface UnicodeBracketedExpression {
 
 					@Override
 					public String toString() {
-<span class="fc" id="L73">						return acceptepMatch + &quot; &quot; + shallWePass.toString();</span>
+<span class="nc" id="L73">						return acceptepMatch + &quot; &quot; + shallWePass.toString();</span>
 					}
 
 					@Override
@@ -100,6 +100,11 @@ public interface UnicodeBracketedExpression {
 					@Override
 					public List&lt;String&gt; findFirstValuesByKeyPrefix(String keyPrefix) {
 <span class="fc" id="L102">						return shallWePass.findFirstValuesByKeyPrefix(keyPrefix);</span>
+					}
+
+					@Override
+					public Capture extractByPrefix(String key) {
+<span class="nc" id="L107">						return shallWePass.extractByPrefix(key);</span>
 					}
 
 				};

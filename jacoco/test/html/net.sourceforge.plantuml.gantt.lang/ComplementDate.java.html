@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComplementDate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt.lang</a> &gt; <span class="el_source">ComplementDate.java</span></div><h1>ComplementDate.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.lang;
+
+import java.time.LocalDate;
+
+import com.plantuml.ubrex.Capture;
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
+
+import net.sourceforge.plantuml.gantt.Failable;
+import net.sourceforge.plantuml.gantt.GanttDiagram;
+
+public class ComplementDate implements Something&lt;GanttDiagram&gt; {
+
+	private final Type type;
+
+<span class="fc" id="L55">	static enum Type {</span>
+<span class="fc" id="L56">		ANY, ONLY_RELATIVE, ONLY_ABSOLUTE;</span>
+	}
+
+<span class="fc" id="L59">	private ComplementDate(Type type) {</span>
+<span class="fc" id="L60">		this.type = type;</span>
+<span class="fc" id="L61">	}</span>
+
+	public static ComplementDate any() {
+<span class="fc" id="L64">		return new ComplementDate(Type.ANY);</span>
+	}
+
+	public static ComplementDate onlyRelative() {
+<span class="fc" id="L68">		return new ComplementDate(Type.ONLY_RELATIVE);</span>
+	}
+
+	public static ComplementDate onlyAbsolute() {
+<span class="fc" id="L72">		return new ComplementDate(Type.ONLY_ABSOLUTE);</span>
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+<span class="fc" id="L77">		final DayPattern dayPattern = new DayPattern(&quot;&quot;);</span>
+<span class="fc bfc" id="L78" title="All 3 branches covered.">		switch (type) {</span>
+		case ONLY_ABSOLUTE:
+<span class="fc" id="L80">			return dayPattern.toUbrex();</span>
+		case ONLY_RELATIVE:
+<span class="fc" id="L82">			return new UBrexOr(toUbrexD(), toUbrexE());</span>
+		}
+<span class="fc" id="L84">		return new UBrexOr(dayPattern.toUbrex(), toUbrexD(), toUbrexE());</span>
+	}
+
+	private UBrexPart toUbrexD() {
+<span class="fc" id="L88">		return UBrexConcat.build( //</span>
+				new UBrexNamed(&quot;DCOUNT&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
+<span class="fc" id="L90">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexLeaf(&quot;day〇?s&quot;), //
+<span class="fc" id="L92">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexLeaf(&quot;after&quot;), //
+<span class="fc" id="L94">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexLeaf(&quot;start&quot;) //
+		);
+	}
+
+	private UBrexPart toUbrexE() {
+<span class="fc" id="L100">		return UBrexConcat.build( //</span>
+				new UBrexLeaf(&quot;「dD」+&quot;), //
+				new UBrexNamed(&quot;ECOUNT&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)));
+	}
+
+	@Override
+	public Failable&lt;LocalDate&gt; getMe(GanttDiagram gantt, UMatcher arg) {
+<span class="fc" id="L107">		final DayPattern dayPattern = new DayPattern(&quot;&quot;);</span>
+<span class="fc" id="L108">		final LocalDate result = dayPattern.getDay(arg);</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (result != null)</span>
+<span class="fc" id="L110">			return Failable.ok(result);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (arg.get(&quot;DCOUNT&quot;, 0) != null)</span>
+<span class="fc" id="L112">			return Failable.ok(resultD(gantt, arg));</span>
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot;, 0) != null)</span>
+<span class="nc" id="L115">			return Failable.ok(resultE(gantt, arg));</span>
+
+<span class="nc" id="L117">		throw new IllegalStateException();</span>
+	}
+
+	public Failable&lt;LocalDate&gt; getMe(GanttDiagram gantt, Capture arg) {
+<span class="nc" id="L121">		final DayPattern dayPattern = new DayPattern(&quot;&quot;);</span>
+<span class="nc" id="L122">		final LocalDate result = dayPattern.getDay(arg);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L124">			return Failable.ok(result);</span>
+
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (arg.get(&quot;DCOUNT&quot;) != null)</span>
+<span class="nc" id="L127">			return Failable.ok(resultD(gantt, arg));</span>
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot;) != null)</span>
+<span class="nc" id="L130">			return Failable.ok(resultE(gantt, arg));</span>
+
+<span class="nc" id="L132">		throw new IllegalStateException();</span>
+	}
+
+	private LocalDate resultD(GanttDiagram gantt, UMatcher arg) {
+<span class="fc" id="L136">		final int day = Integer.parseInt(arg.get(&quot;DCOUNT&quot;, 0));</span>
+<span class="fc" id="L137">		return gantt.getMinDay().plusDays(day);</span>
+	}
+
+	private LocalDate resultD(GanttDiagram gantt, Capture arg) {
+<span class="nc" id="L141">		final int day = Integer.parseInt(arg.get(&quot;DCOUNT&quot;));</span>
+<span class="nc" id="L142">		return gantt.getMinDay().plusDays(day);</span>
+	}
+
+	private LocalDate resultE(GanttDiagram gantt, UMatcher arg) {
+<span class="nc" id="L146">		final int day = Integer.parseInt(arg.get(&quot;ECOUNT&quot;, 0));</span>
+<span class="nc" id="L147">		return gantt.getMinDay().plusDays(day);</span>
+	}
+
+	private LocalDate resultE(GanttDiagram gantt, Capture arg) {
+<span class="nc" id="L151">		final int day = Integer.parseInt(arg.get(&quot;ECOUNT&quot;));</span>
+<span class="nc" id="L152">		return gantt.getMinDay().plusDays(day);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

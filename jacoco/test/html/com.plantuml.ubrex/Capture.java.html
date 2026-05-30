@@ -48,7 +48,7 @@ public class Capture {
 
 	@Override
 	public String toString() {
-<span class="fc" id="L51">		return entries.toString();</span>
+<span class="nc" id="L51">		return entries.toString();</span>
 	}
 
 	public Capture withEntry(String key, String value) {
@@ -83,5 +83,23 @@ public class Capture {
 <span class="nc" id="L83">				return findValuesByKey(entry.getKey());</span>
 <span class="fc" id="L84">		return null;</span>
 	}
+
+	public Capture extractByPrefix(String keyPrefix) {
+<span class="nc" id="L88">		SafeList&lt;CaptureEntry&gt; result = EMPTY.entries;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (CaptureEntry entry : this.entries) {</span>
+<span class="nc" id="L90">			final CaptureEntry tmp = entry.withoutPrefixedKey(keyPrefix);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (tmp != null)</span>
+<span class="nc" id="L92">				result = result.add(tmp);</span>
+<span class="nc" id="L93">		}</span>
+<span class="nc" id="L94">		return new Capture(result);</span>
+	}
+
+	public String get(String key) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (CaptureEntry entry : this.entries)</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (entry.getKey().equals(key))</span>
+<span class="nc" id="L100">				return entry.getValue();</span>
+<span class="nc" id="L101">		return null;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

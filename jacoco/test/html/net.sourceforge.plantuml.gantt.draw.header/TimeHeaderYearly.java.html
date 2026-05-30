@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeHeaderYearly.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt.draw.header</a> &gt; <span class="el_source">TimeHeaderYearly.java</span></div><h1>TimeHeaderYearly.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.draw.header;
+
+import java.time.LocalDate;
+import java.time.YearMonth;
+
+import net.sourceforge.plantuml.gantt.data.DayCalendarData;
+import net.sourceforge.plantuml.gantt.data.TimeBoundsData;
+import net.sourceforge.plantuml.gantt.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.gantt.data.TimelineStyleData;
+import net.sourceforge.plantuml.gantt.data.WeekConfigData;
+import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.gantt.timescale.TimeScale;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.SName;
+
+class TimeHeaderYearly extends TimeHeaderCalendar {
+
+	public TimeHeaderYearly(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
+<span class="fc" id="L58">		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);</span>
+<span class="fc" id="L59">	}</span>
+
+	@Override
+	public double getTimeHeaderHeight(StringBounder stringBounder) {
+<span class="fc" id="L63">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="fc" id="L64">		return h1 + 3;</span>
+	}
+
+	@Override
+	public double getTimeFooterHeight(StringBounder stringBounder) {
+<span class="fc" id="L69">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="fc" id="L70">		return h1 + 3;</span>
+	}
+
+	@Override
+	public double getFullHeaderHeight(StringBounder stringBounder) {
+<span class="fc" id="L75">		return getTimeHeaderHeight(stringBounder);</span>
+	}
+
+	@Override
+	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
+<span class="fc" id="L80">		drawYears(ug);</span>
+<span class="fc" id="L81">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="fc" id="L82">		drawHline(ug, 0);</span>
+<span class="fc" id="L83">		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));</span>
+<span class="fc" id="L84">	}</span>
+
+	@Override
+	public void drawTimeFooter(UGraphic ug) {
+		// ug = ug.apply(UTranslate.dy(3));
+<span class="fc" id="L89">		drawYears(ug);</span>
+<span class="fc" id="L90">		drawHline(ug, 0);</span>
+<span class="fc" id="L91">		drawHline(ug, getTimeFooterHeight(ug.getStringBounder()));</span>
+<span class="fc" id="L92">	}</span>
+
+	private void drawYears(final UGraphic ug) {
+<span class="fc" id="L95">		final double h1 = timelineStyle.getFontSizeYear();</span>
+
+<span class="fc" id="L97">		final FontConfiguration fc = getFontConfigurationSLOW(SName.year, true, openFontColor());</span>
+
+<span class="fc" id="L99">		YearMonth last = null;</span>
+<span class="fc" id="L100">		double lastChange = -1;</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="fc" id="L102">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="fc" id="L103">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="fc bfc" id="L104" title="All 4 branches covered.">			if (last == null || wink.monthYear().getYear() != last.getYear()) {</span>
+<span class="fc" id="L105">				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">				if (last != null)</span>
+<span class="fc" id="L107">					printYear(ug, last, lastChange, x1, fc);</span>
+
+<span class="fc" id="L109">				lastChange = x1;</span>
+<span class="fc" id="L110">				last = wink.monthYear();</span>
+			}
+		}
+<span class="fc" id="L113">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (x1 &gt; lastChange)</span>
+<span class="fc" id="L115">			printYear(ug, last, lastChange, x1, fc);</span>
+
+<span class="fc" id="L117">		final double end = x1;</span>
+<span class="fc" id="L118">		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);</span>
+<span class="fc" id="L119">	}</span>
+
+	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
+<span class="fc" id="L122">		final TextBlock small = getTextBlockSLOW(&quot;&quot; + monthYear.getYear(), fc);</span>
+<span class="fc" id="L123">		printCentered(ug, true, start, end, small);</span>
+<span class="fc" id="L124">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

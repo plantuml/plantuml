@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskDrawRegular.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt.draw</a> &gt; <span class="el_source">TaskDrawRegular.java</span></div><h1>TaskDrawRegular.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.draw;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.TreeSet;
+
+import net.sourceforge.plantuml.gantt.GanttConstraint;
+import net.sourceforge.plantuml.gantt.LabelStrategy;
+import net.sourceforge.plantuml.gantt.core.GArrowType;
+import net.sourceforge.plantuml.gantt.core.GSide;
+import net.sourceforge.plantuml.gantt.core.Task;
+import net.sourceforge.plantuml.gantt.core.TaskImpl;
+import net.sourceforge.plantuml.gantt.data.TaskDrawRegistryData;
+import net.sourceforge.plantuml.gantt.lang.CenterBorderColor;
+import net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstant;
+import net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstantUtils;
+import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.gantt.timescale.TimeScale;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
+import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+
+public class TaskDrawRegular extends AbstractTaskDraw {
+
+	private final TimePoint end;
+	private final boolean oddStart;
+	private final boolean oddEnd;
+	private final Collection&lt;LocalDate&gt; paused;
+	private final Collection&lt;GanttConstraint&gt; constraints;
+
+	public TaskDrawRegular(HColorSet colorSet, TimeScale timeScale, Real y, String prettyDisplay, TimePoint start,
+			TimePoint end, boolean oddStart, boolean oddEnd, ISkinParam skinParam, Task task, TaskDrawRegistryData toTaskDraw,
+			Collection&lt;GanttConstraint&gt; constraints, StyleBuilder styleBuilder) {
+<span class="fc" id="L87">		super(colorSet, timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);</span>
+<span class="fc" id="L88">		this.constraints = constraints;</span>
+<span class="fc" id="L89">		this.end = end;</span>
+<span class="fc" id="L90">		this.oddStart = oddStart;</span>
+<span class="fc" id="L91">		this.oddEnd = oddEnd;</span>
+<span class="fc" id="L92">		this.paused = new TreeSet&lt;&gt;(((TaskImpl) task).getAllPaused());</span>
+<span class="fc" id="L93">		final PiecewiseConstant defaultPlan = ((TaskImpl) task).getDefaultPlan();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		for (TimePoint tmp = start; tmp.compareTo(end) &lt;= 0; tmp = tmp.increment())</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			if (PiecewiseConstantUtils.isZeroOnDay(defaultPlan, tmp.toDay()))</span>
+<span class="fc" id="L96">				this.paused.add(tmp.toDay());</span>
+
+<span class="fc" id="L98">	}</span>
+
+	@Override
+	public double getShapeHeight(StringBounder stringBounder) {
+<span class="fc" id="L102">		final Style style = getStyle();</span>
+<span class="fc" id="L103">		final ClockwiseTopRightBottomLeft padding = style.getPadding();</span>
+<span class="fc" id="L104">		return padding.getTop() + getTitle().calculateDimension(stringBounder).getHeight() + padding.getBottom();</span>
+	}
+
+	@Override
+	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double colTitles, double colBars) {
+<span class="fc" id="L109">		final TextBlock title = getTitle();</span>
+<span class="fc" id="L110">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L111">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
+
+<span class="fc" id="L113">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
+<span class="fc" id="L114">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L115">		final ClockwiseTopRightBottomLeft padding = style.getPadding();</span>
+
+<span class="fc" id="L117">		ug = ug.apply(UTranslate.dy(margin.getTop() + padding.getTop()));</span>
+
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">		if (labelStrategy.titleInFirstColumn()) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">			if (labelStrategy.rightAligned())</span>
+<span class="nc" id="L121">				title.drawU(ug.apply(UTranslate.dx(colTitles - dim.getWidth() - margin.getRight())));</span>
+			else
+<span class="nc" id="L123">				title.drawU(ug.apply(UTranslate.dx(margin.getLeft())));</span>
+<span class="nc" id="L124">			return;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		} else if (labelStrategy.titleInLastColumn()) {</span>
+<span class="nc" id="L126">			title.drawU(ug.apply(UTranslate.dx(colBars + margin.getLeft())));</span>
+<span class="nc" id="L127">			return;</span>
+		}
+
+<span class="fc" id="L130">		final double pos1 = timeScale.getPosition(start) + 6;</span>
+<span class="fc" id="L131">		final double pos2 = timeScale.getPosition(end) - 6;</span>
+		final double pos;
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		if (pos2 - pos1 &gt; dim.getWidth())</span>
+<span class="fc" id="L134">			pos = pos1;</span>
+		else
+<span class="fc" id="L136">			pos = getOutPosition(pos2);</span>
+<span class="fc" id="L137">		title.drawU(ug.apply(UTranslate.dx(pos)));</span>
+<span class="fc" id="L138">	}</span>
+
+	@Override
+	protected TextBlock getTitle() {
+<span class="fc" id="L142">		return Display.getWithNewlines(getPragma(), prettyDisplay).create(getFontConfiguration(),</span>
+				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+	}
+
+	private double getOutPosition(double pos2) {
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (isThereRightArrow())</span>
+<span class="nc" id="L148">			return pos2 + 18;</span>
+
+<span class="fc" id="L150">		return pos2 + 8;</span>
+	}
+
+	private boolean isThereRightArrow() {
+<span class="fc bfc" id="L154" title="All 2 branches covered.">		for (GanttConstraint constraint : constraints)</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">			if (constraint.isThereRightArrow(getTask()))</span>
+<span class="nc" id="L156">				return true;</span>
+
+<span class="fc" id="L158">		return false;</span>
+	}
+
+	@Override
+	public double getLabelOverflow(StringBounder stringBounder, double barsWidth) {
+<span class="fc" id="L163">		double overflow = 0;</span>
+
+<span class="fc" id="L165">		final TextBlock title = getTitle();</span>
+<span class="fc" id="L166">		final XDimension2D dim = title.calculateDimension(stringBounder);</span>
+
+<span class="fc" id="L168">		final double pos1 = timeScale.getPosition(start) + 6;</span>
+<span class="fc" id="L169">		final double pos2 = timeScale.getPosition(end) - 6;</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (pos2 - pos1 &lt;= dim.getWidth()) {</span>
+<span class="fc" id="L171">			final double labelEnd = getOutPosition(pos2) + dim.getWidth();</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">			if (labelEnd &gt; barsWidth)</span>
+<span class="fc" id="L173">				overflow = labelEnd - barsWidth;</span>
+		}
+
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (note != null) {</span>
+<span class="fc" id="L177">			final double noteEnd = timeScale.getPosition(start) + getOpaleNote().calculateDimension(stringBounder).getWidth();</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">			if (noteEnd - barsWidth &gt; overflow)</span>
+<span class="fc" id="L179">				overflow = noteEnd - barsWidth;</span>
+		}
+
+<span class="fc" id="L182">		return overflow;</span>
+	}
+
+	@Override
+	StyleSignature getStyleSignature() {
+<span class="fc" id="L187">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task)</span>
+<span class="fc" id="L188">				.withTOBECHANGED(getTask().getStereotype());</span>
+	}
+
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L192">		final double startPos = timeScale.getPosition(start);</span>
+<span class="fc" id="L193">		drawNote(ug.apply((new UTranslate(startPos, getYNotePosition(ug.getStringBounder())))));</span>
+
+<span class="fc" id="L195">		drawShape(ug);</span>
+<span class="fc" id="L196">	}</span>
+
+	private double getYNotePosition(StringBounder stringBounder) {
+<span class="fc" id="L199">		final Style style = getStyle();</span>
+<span class="fc" id="L200">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L201">		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();</span>
+	}
+
+	@Override
+	public double getHeightMax(StringBounder stringBounder) {
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (note == null)</span>
+<span class="fc" id="L207">			return getFullHeightTask(stringBounder);</span>
+
+<span class="fc" id="L209">		return getYNotePosition(stringBounder) + getOpaleNote().calculateDimension(stringBounder).getHeight();</span>
+	}
+
+	public FingerPrint getFingerPrint(StringBounder stringBounder) {
+<span class="fc" id="L213">		final double h = getFullHeightTask(stringBounder);</span>
+<span class="fc" id="L214">		final double startPos = timeScale.getPosition(start);</span>
+<span class="fc" id="L215">		final double endPos = timeScale.getPosition(end);</span>
+<span class="fc" id="L216">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), endPos - startPos, h);</span>
+	}
+
+	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
+<span class="fc bfc" id="L220" title="All 2 branches covered.">		if (note == null)</span>
+<span class="fc" id="L221">			return null;</span>
+
+<span class="fc" id="L223">		final XDimension2D dim = getOpaleNote().calculateDimension(stringBounder);</span>
+<span class="fc" id="L224">		final double startPos = timeScale.getPosition(start);</span>
+		// final double endPos = timeScale.getEndingPosition(end);
+<span class="fc" id="L226">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue() + getYNotePosition(stringBounder),</span>
+<span class="fc" id="L227">				dim.getWidth(), dim.getHeight());</span>
+	}
+
+	private UGraphic applyColors(UGraphic ug) {
+<span class="fc" id="L231">		final CenterBorderColor col = this.getColors();</span>
+<span class="pc bpc" id="L232" title="1 of 4 branches missed.">		if (col != null &amp;&amp; col.isOk())</span>
+<span class="fc" id="L233">			return col.apply(ug);</span>
+
+<span class="fc" id="L235">		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());</span>
+	}
+
+	@Override
+	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
+		double x;
+<span class="fc bfc" id="L241" title="All 2 branches covered.">		if (side == GSide.LEFT)</span>
+<span class="fc" id="L242">			x = timeScale.getPosition(start);</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		else if (side == GSide.RIGHT)</span>
+<span class="fc" id="L244">			x = timeScale.getPosition(end);</span>
+<span class="pc bpc" id="L245" title="2 of 4 branches missed.">		else if (side == GSide.TOP_LEFT || side == GSide.BOTTOM_LEFT) {</span>
+<span class="nc" id="L246">			x = timeScale.getPosition(start) + 8;</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">			if (x &gt; timeScale.getPosition(end))</span>
+<span class="nc" id="L248">				x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
+<span class="pc bpc" id="L249" title="2 of 4 branches missed.">		} else if (side == GSide.TOP_RIGHT || side == GSide.BOTTOM_RIGHT) {</span>
+<span class="fc" id="L250">			x = timeScale.getPosition(end) - 8;</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">			if (x &lt; timeScale.getPosition(start) + timeScale.getWidth(start))</span>
+<span class="nc" id="L252">				x = timeScale.getPosition(end) - 8;</span>
+			// x = (timeScale.getPosition(end) + timeScale.getPosition(end) +
+			// timeScale.getWidth(end)) / 2;
+		} else
+<span class="nc" id="L256">			throw new IllegalArgumentException();</span>
+
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		if (arrowType == GArrowType.OUTGOING) {</span>
+<span class="fc" id="L259">			final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
+<span class="fc" id="L260">			final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="pc bpc" id="L261" title="1 of 2 branches missed.">			if (side == GSide.LEFT)</span>
+<span class="nc" id="L262">				x += margin.getLeft();</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">			else if (side == GSide.RIGHT)</span>
+<span class="nc" id="L264">				x -= margin.getLeft();</span>
+		}
+
+<span class="fc" id="L267">		return x;</span>
+	}
+
+	public void drawShape(UGraphic ug) {
+<span class="fc" id="L271">		ug = applyColors(ug);</span>
+<span class="fc" id="L272">		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());</span>
+<span class="fc" id="L273">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+
+<span class="fc" id="L275">		final double startPos = timeScale.getPosition(start) + margin.getLeft();</span>
+<span class="fc" id="L276">		final double endPos = timeScale.getPosition(end) - margin.getRight();</span>
+
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L279">			ug.startUrl(url);</span>
+
+<span class="fc" id="L281">		ug = ug.apply(UTranslate.dy(margin.getTop()));</span>
+
+<span class="fc" id="L283">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="fc" id="L285">		final double round = style.value(PName.RoundCorner).asDouble();</span>
+
+<span class="fc" id="L287">		final Collection&lt;Segment&gt; off = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L288" title="All 2 branches covered.">		for (LocalDate day : paused) {</span>
+<span class="fc" id="L289">			final TimePoint pause = TimePoint.ofStartOfDay(day);</span>
+<span class="fc" id="L290">			final double x1 = timeScale.getPosition(pause);</span>
+<span class="fc" id="L291">			final double x2 = timeScale.getPosition(pause) + timeScale.getWidth(pause);</span>
+<span class="fc" id="L292">			off.add(new Segment(x1, x2));</span>
+<span class="fc" id="L293">		}</span>
+
+<span class="fc" id="L295">		final HColor backUndone = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.undone)</span>
+<span class="fc" id="L296">				.getMergedStyle(getStyleBuilder()).value(PName.BackGroundColor).asColor(getColorSet());</span>
+
+<span class="fc" id="L298">		final RectangleTask rectangleTask = new RectangleTask(startPos, endPos, round, getCompletion(), off);</span>
+
+<span class="fc" id="L300">		rectangleTask.draw(ug, getShapeHeight(stringBounder), backUndone, oddStart, oddEnd);</span>
+
+<span class="pc bpc" id="L302" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L303">			ug.closeUrl();</span>
+
+<span class="fc" id="L305">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

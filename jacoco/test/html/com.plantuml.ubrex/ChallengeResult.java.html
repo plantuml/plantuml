@@ -47,7 +47,7 @@ public class ChallengeResult {
 
 	@Override
 	public String toString() {
-<span class="fc" id="L50">		return &quot;fullCaptureLength=&quot; + fullCaptureLength + &quot; &quot; + capture;</span>
+<span class="nc" id="L50">		return &quot;fullCaptureLength=&quot; + fullCaptureLength + &quot; &quot; + capture;</span>
 	}
 
 	public ChallengeResult(int result) {
@@ -73,6 +73,10 @@ public class ChallengeResult {
 
 	public Capture getCapture() {
 <span class="fc" id="L75">		return capture;</span>
+	}
+
+	public Capture extractByPrefix(String key) {
+<span class="nc" id="L79">		return capture.extractByPrefix(key);</span>
 	}
 
 }

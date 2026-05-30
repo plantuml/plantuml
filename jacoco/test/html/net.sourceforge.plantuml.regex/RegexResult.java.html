@@ -46,71 +46,75 @@ public class RegexResult {
 	private final Map&lt;String, RegexPartialMatch&gt; data;
 	private final UMatcher matcher;
 
-<span class="fc" id="L49">	public RegexResult(Map&lt;String, RegexPartialMatch&gt; data) {</span>
-<span class="fc" id="L50">		this.data = Collections.unmodifiableMap(data);</span>
-<span class="fc" id="L51">		this.matcher = null;</span>
-<span class="fc" id="L52">	}</span>
+	public UMatcher getUMatcher() {
+<span class="nc" id="L50">		return matcher;</span>
+	}
 
-<span class="fc" id="L54">	public RegexResult(UMatcher matcher) {</span>
-<span class="fc" id="L55">		this.data = Collections.emptyMap();</span>
-<span class="fc" id="L56">		this.matcher = matcher;</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L53">	public RegexResult(Map&lt;String, RegexPartialMatch&gt; data) {</span>
+<span class="fc" id="L54">		this.data = Collections.unmodifiableMap(data);</span>
+<span class="fc" id="L55">		this.matcher = null;</span>
+<span class="fc" id="L56">	}</span>
+
+<span class="fc" id="L58">	public RegexResult(UMatcher matcher) {</span>
+<span class="fc" id="L59">		this.data = Collections.emptyMap();</span>
+<span class="fc" id="L60">		this.matcher = matcher;</span>
+<span class="fc" id="L61">	}</span>
 
 	@Override
 	public String toString() {
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">		if (matcher != null)</span>
-<span class="nc" id="L62">			return matcher.toString();</span>
-<span class="fc" id="L63">		return data.toString();</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (matcher != null)</span>
+<span class="nc" id="L66">			return matcher.toString();</span>
+<span class="nc" id="L67">		return data.toString();</span>
 	}
 
 	public RegexPartialMatch get(String key) {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (matcher != null)</span>
-<span class="nc" id="L68">			throw new UnsupportedOperationException();</span>
-<span class="fc" id="L69">		return data.get(key);</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (matcher != null)</span>
+<span class="nc" id="L72">			throw new UnsupportedOperationException();</span>
+<span class="fc" id="L73">		return data.get(key);</span>
 	}
 
 	public String get(String key, int num) {
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (matcher != null) {</span>
-<span class="fc" id="L74">			final List&lt;String&gt; list = matcher.getCapture(key);</span>
-<span class="pc bpc" id="L75" title="1 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
-<span class="fc" id="L76">				return null;</span>
-<span class="fc" id="L77">			return list.get(num);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (matcher != null) {</span>
+<span class="fc" id="L78">			final List&lt;String&gt; list = matcher.getCapture(key);</span>
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
+<span class="fc" id="L80">				return null;</span>
+<span class="fc" id="L81">			return list.get(num);</span>
 
 		}
-<span class="fc" id="L80">		final RegexPartialMatch reg = data.get(key);</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (reg == null)</span>
-<span class="fc" id="L82">			return null;</span>
+<span class="fc" id="L84">		final RegexPartialMatch reg = data.get(key);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (reg == null)</span>
+<span class="fc" id="L86">			return null;</span>
 
-<span class="fc" id="L84">		return reg.get(num);</span>
+<span class="fc" id="L88">		return reg.get(num);</span>
 	}
 
 	public String getLazzy(String key, int num) {
-<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (matcher != null) {</span>
-<span class="fc" id="L89">			final List&lt;String&gt; list = matcher.findFirstValuesByKeyPrefix(key);</span>
-<span class="pc bpc" id="L90" title="3 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
-<span class="fc" id="L91">				return null;</span>
-<span class="nc" id="L92">			return list.get(num);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		if (matcher != null) {</span>
+<span class="fc" id="L93">			final List&lt;String&gt; list = matcher.findFirstValuesByKeyPrefix(key);</span>
+<span class="pc bpc" id="L94" title="3 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
+<span class="fc" id="L95">				return null;</span>
+<span class="nc" id="L96">			return list.get(num);</span>
 		}
 
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		for (Map.Entry&lt;String, RegexPartialMatch&gt; ent : data.entrySet()) {</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">			if (ent.getKey().startsWith(key) == false)</span>
-<span class="fc" id="L97">				continue;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (Map.Entry&lt;String, RegexPartialMatch&gt; ent : data.entrySet()) {</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">			if (ent.getKey().startsWith(key) == false)</span>
+<span class="fc" id="L101">				continue;</span>
 
-<span class="fc" id="L99">			final RegexPartialMatch match = ent.getValue();</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">			if (num &gt;= match.size())</span>
-<span class="nc" id="L101">				continue;</span>
+<span class="fc" id="L103">			final RegexPartialMatch match = ent.getValue();</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">			if (num &gt;= match.size())</span>
+<span class="nc" id="L105">				continue;</span>
 
-<span class="fc bfc" id="L103" title="All 2 branches covered.">			if (match.get(num) != null)</span>
-<span class="fc" id="L104">				return ent.getValue().get(num);</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">			if (match.get(num) != null)</span>
+<span class="fc" id="L108">				return ent.getValue().get(num);</span>
 
-<span class="fc" id="L106">		}</span>
-<span class="fc" id="L107">		return null;</span>
+<span class="fc" id="L110">		}</span>
+<span class="fc" id="L111">		return null;</span>
 	}
 
 	public int size() {
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (matcher != null)</span>
-<span class="nc" id="L112">			throw new UnsupportedOperationException();</span>
-<span class="nc" id="L113">		return data.size();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (matcher != null)</span>
+<span class="nc" id="L116">			throw new UnsupportedOperationException();</span>
+<span class="nc" id="L117">		return data.size();</span>
 	}
 
 }

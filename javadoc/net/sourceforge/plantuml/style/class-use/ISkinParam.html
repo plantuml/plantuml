@@ -135,6 +135,10 @@ loadScripts(document, 'script');</script>
  <a href="http://alphadoc.plantuml.com/doc/markdown/en/files-diagram" target="_top">
  [Tree] Files diagram</a>.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.data">net.sourceforge.plantuml.gantt.data</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.draw">net.sourceforge.plantuml.gantt.draw</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gitlog">net.sourceforge.plantuml.gitlog</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
@@ -176,10 +180,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Provides classes used to manage 
  Positioning Calculation.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.data">net.sourceforge.plantuml.project.data</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.draw">net.sourceforge.plantuml.project.draw</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.sdot">net.sourceforge.plantuml.sdot</a></div>
 <div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
@@ -1474,6 +1474,100 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="net.sourceforge.plantuml.gantt.data">
+<h2>Uses of <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a> in <a href="../../gantt/data/package-summary.html">net.sourceforge.plantuml.gantt.data</a></h2>
+<div class="caption"><span>Methods in <a href="../../gantt/data/package-summary.html">net.sourceforge.plantuml.gantt.data</a> that return <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimelineStyleData.</span><code><a href="../../gantt/data/TimelineStyleData.html#getSkinParam()" class="member-name-link">getSkinParam</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../../gantt/data/package-summary.html">net.sourceforge.plantuml.gantt.data</a> with parameters of type <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../gantt/data/TimelineStyleData.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.gantt.GanttStyle,net.sourceforge.plantuml.klimt.color.HColorSet)" class="member-name-link">TimelineStyleData</a><wbr>(<a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+ <a href="../../gantt/GanttStyle.html" title="interface in net.sourceforge.plantuml.gantt">GanttStyle</a>&nbsp;ganttStyle,
+ <a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.gantt.draw">
+<h2>Uses of <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a> in <a href="../../gantt/draw/package-summary.html">net.sourceforge.plantuml.gantt.draw</a></h2>
+<div class="caption"><span>Constructors in <a href="../../gantt/draw/package-summary.html">net.sourceforge.plantuml.gantt.draw</a> with parameters of type <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../gantt/draw/AbstractTaskDraw.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.gantt.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.core.Task,net.sourceforge.plantuml.gantt.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">AbstractTaskDraw</a><wbr>(<a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+ <a href="../../gantt/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.gantt.timescale">TimeScale</a>&nbsp;timeScale,
+ <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
+ <a href="../../gantt/time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start,
+ <a href="../../gantt/core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task,
+ <a href="../../gantt/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.gantt.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
+ <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../gantt/draw/TaskDrawDiamond.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.gantt.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.core.Task,net.sourceforge.plantuml.gantt.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawDiamond</a><wbr>(<a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+ <a href="../../gantt/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.gantt.timescale">TimeScale</a>&nbsp;timeScale,
+ <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
+ <a href="../../gantt/time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start,
+ <a href="../../gantt/core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task,
+ <a href="../../gantt/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.gantt.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
+ <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../gantt/draw/TaskDrawGroup.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.gantt.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.core.Task,net.sourceforge.plantuml.gantt.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawGroup</a><wbr>(<a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+ <a href="../../gantt/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.gantt.timescale">TimeScale</a>&nbsp;timeScale,
+ <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
+ <a href="../../gantt/time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start,
+ <a href="../../gantt/time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;end,
+ <a href="../../gantt/core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task,
+ <a href="../../gantt/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.gantt.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
+ <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../gantt/draw/TaskDrawRegular.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.gantt.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.time.TimePoint,boolean,boolean,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.gantt.core.Task,net.sourceforge.plantuml.gantt.data.TaskDrawRegistryData,java.util.Collection,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">TaskDrawRegular</a><wbr>(<a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
+ <a href="../../gantt/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.gantt.timescale">TimeScale</a>&nbsp;timeScale,
+ <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
+ <a href="../../gantt/time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;start,
+ <a href="../../gantt/time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;end,
+ boolean&nbsp;oddStart,
+ boolean&nbsp;oddEnd,
+ <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+ <a href="../../gantt/core/Task.html" title="interface in net.sourceforge.plantuml.gantt.core">Task</a>&nbsp;task,
+ <a href="../../gantt/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.gantt.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../gantt/GanttConstraint.html" title="class in net.sourceforge.plantuml.gantt">GanttConstraint</a>&gt;&nbsp;constraints,
+ <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../gantt/draw/TaskDrawSeparator.html#%3Cinit%3E(java.lang.String,net.sourceforge.plantuml.gantt.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.time.LocalDate,java.time.LocalDate,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawSeparator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../../gantt/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.gantt.timescale">TimeScale</a>&nbsp;timeScale,
+ <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;minDay,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;maxDay,
+ <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="net.sourceforge.plantuml.gitlog">
 <h2>Uses of <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a> in <a href="../../gitlog/package-summary.html">net.sourceforge.plantuml.gitlog</a></h2>
 <div class="caption"><span>Constructors in <a href="../../gitlog/package-summary.html">net.sourceforge.plantuml.gitlog</a> with parameters of type <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span></div>
@@ -1762,100 +1856,6 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="../../posimo/LabelImage.html#%3Cinit%3E(net.sourceforge.plantuml.abel.Link,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">LabelImage</a><wbr>(<a href="../../abel/Link.html" title="class in net.sourceforge.plantuml.abel">Link</a>&nbsp;link,
  <a href="../../skin/rose/Rose.html" title="class in net.sourceforge.plantuml.skin.rose">Rose</a>&nbsp;rose,
  <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;param)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="net.sourceforge.plantuml.project.data">
-<h2>Uses of <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a> in <a href="../../project/data/package-summary.html">net.sourceforge.plantuml.project.data</a></h2>
-<div class="caption"><span>Methods in <a href="../../project/data/package-summary.html">net.sourceforge.plantuml.project.data</a> that return <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimelineStyleData.</span><code><a href="../../project/data/TimelineStyleData.html#getSkinParam()" class="member-name-link">getSkinParam</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-<div class="caption"><span>Constructors in <a href="../../project/data/package-summary.html">net.sourceforge.plantuml.project.data</a> with parameters of type <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../project/data/TimelineStyleData.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.project.GanttStyle,net.sourceforge.plantuml.klimt.color.HColorSet)" class="member-name-link">TimelineStyleData</a><wbr>(<a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
- <a href="../../project/GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a>&nbsp;ganttStyle,
- <a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="net.sourceforge.plantuml.project.draw">
-<h2>Uses of <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a> in <a href="../../project/draw/package-summary.html">net.sourceforge.plantuml.project.draw</a></h2>
-<div class="caption"><span>Constructors in <a href="../../project/draw/package-summary.html">net.sourceforge.plantuml.project.draw</a> with parameters of type <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../project/draw/AbstractTaskDraw.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">AbstractTaskDraw</a><wbr>(<a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
- <a href="../../project/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
- <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
- <a href="../../project/time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
- <a href="../../project/core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
- <a href="../../project/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
- <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
- <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../project/draw/TaskDrawDiamond.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawDiamond</a><wbr>(<a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
- <a href="../../project/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
- <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
- <a href="../../project/time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
- <a href="../../project/core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
- <a href="../../project/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
- <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
- <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../project/draw/TaskDrawGroup.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawGroup</a><wbr>(<a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
- <a href="../../project/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
- <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
- <a href="../../project/time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
- <a href="../../project/time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;end,
- <a href="../../project/core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
- <a href="../../project/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
- <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
- <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../project/draw/TaskDrawRegular.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColorSet,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.TimePoint,net.sourceforge.plantuml.project.time.TimePoint,boolean,boolean,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.data.TaskDrawRegistryData,java.util.Collection,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">TaskDrawRegular</a><wbr>(<a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a>&nbsp;colorSet,
- <a href="../../project/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
- <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
- <a href="../../project/time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;start,
- <a href="../../project/time/TimePoint.html" title="class in net.sourceforge.plantuml.project.time">TimePoint</a>&nbsp;end,
- boolean&nbsp;oddStart,
- boolean&nbsp;oddEnd,
- <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
- <a href="../../project/core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
- <a href="../../project/data/TaskDrawRegistryData.html" title="class in net.sourceforge.plantuml.project.data">TaskDrawRegistryData</a>&nbsp;toTaskDraw,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../project/GanttConstraint.html" title="class in net.sourceforge.plantuml.project">GanttConstraint</a>&gt;&nbsp;constraints,
- <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../project/draw/TaskDrawSeparator.html#%3Cinit%3E(java.lang.String,net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.time.LocalDate,java.time.LocalDate,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">TaskDrawSeparator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- <a href="../../project/timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
- <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;minDay,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;maxDay,
- <a href="../StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
- <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

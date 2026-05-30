@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeHeaderQuarterly.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt.draw.header</a> &gt; <span class="el_source">TimeHeaderQuarterly.java</span></div><h1>TimeHeaderQuarterly.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.draw.header;
+
+import java.time.LocalDate;
+import java.time.YearMonth;
+
+import net.sourceforge.plantuml.gantt.data.DayCalendarData;
+import net.sourceforge.plantuml.gantt.data.TimeBoundsData;
+import net.sourceforge.plantuml.gantt.data.TimeScaleConfigData;
+import net.sourceforge.plantuml.gantt.data.TimelineStyleData;
+import net.sourceforge.plantuml.gantt.data.WeekConfigData;
+import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.gantt.timescale.TimeScale;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.SName;
+
+class TimeHeaderQuarterly extends TimeHeaderCalendar {
+
+	public TimeHeaderQuarterly(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
+			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {
+<span class="nc" id="L59">		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);</span>
+<span class="nc" id="L60">	}</span>
+
+	@Override
+	public double getTimeHeaderHeight(StringBounder stringBounder) {
+<span class="nc" id="L64">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L65">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L66">		return h1 + h2 + 5;</span>
+	}
+
+	@Override
+	public double getTimeFooterHeight(StringBounder stringBounder) {
+<span class="nc" id="L71">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L72">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L73">		return h1 + h2 + 5;</span>
+	}
+
+	@Override
+	public double getFullHeaderHeight(StringBounder stringBounder) {
+<span class="nc" id="L78">		return getTimeHeaderHeight(stringBounder);</span>
+	}
+
+	@Override
+	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
+<span class="nc" id="L83">		drawYears(ug);</span>
+<span class="nc" id="L84">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L85">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+<span class="nc" id="L86">		drawQuarters(ug.apply(UTranslate.dy(h1 + 2)));</span>
+<span class="nc" id="L87">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="nc" id="L88">		drawHline(ug, 0);</span>
+<span class="nc" id="L89">		drawHline(ug, h1 + 2);</span>
+<span class="nc" id="L90">		drawHline(ug, h1 + 2 + h2 + 2);</span>
+		// drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
+<span class="nc" id="L92">	}</span>
+
+	@Override
+	public void drawTimeFooter(UGraphic ug) {
+<span class="nc" id="L96">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L97">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+		// ug = ug.apply(UTranslate.dy(3));
+<span class="nc" id="L99">		drawQuarters(ug);</span>
+<span class="nc" id="L100">		drawYears(ug.apply(UTranslate.dy(h2 + 2)));</span>
+<span class="nc" id="L101">		drawHline(ug, 0);</span>
+<span class="nc" id="L102">		drawHline(ug, h2 + 2);</span>
+<span class="nc" id="L103">		drawHline(ug, h1 + 2 + h2 + 2);</span>
+//		drawHline(ug, getTimeFooterHeight(ug.getStringBounder()));
+<span class="nc" id="L105">	}</span>
+
+	private void drawYears(final UGraphic ug) {
+<span class="nc" id="L108">		final FontConfiguration fcMonth = getFontConfigurationSLOW(SName.month, true, openFontColor());</span>
+
+<span class="nc" id="L110">		final double h1 = timelineStyle.getFontSizeYear();</span>
+<span class="nc" id="L111">		YearMonth last = null;</span>
+<span class="nc" id="L112">		double lastChange = -1;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L114">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L115">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc bnc" id="L116" title="All 4 branches missed.">			if (last == null || wink.monthYear().getYear() != last.getYear()) {</span>
+<span class="nc" id="L117">				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">				if (last != null)</span>
+<span class="nc" id="L119">					printYear(ug, last, lastChange, x1, fcMonth);</span>
+
+<span class="nc" id="L121">				lastChange = x1;</span>
+<span class="nc" id="L122">				last = wink.monthYear();</span>
+			}
+		}
+<span class="nc" id="L125">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
+<span class="nc" id="L127">			printYear(ug, last, lastChange, x1, fcMonth);</span>
+
+<span class="nc" id="L129">		final double end = x1;</span>
+<span class="nc" id="L130">		drawVline(ug.apply(getLineColor()), end, 0, h1 + 2);</span>
+<span class="nc" id="L131">	}</span>
+
+	private void drawQuarters(UGraphic ug) {
+<span class="nc" id="L134">		final double h2 = timelineStyle.getFontSizeMonth();</span>
+
+<span class="nc" id="L136">		final FontConfiguration fcDay = getFontConfigurationSLOW(SName.day, false, openFontColor());</span>
+
+<span class="nc" id="L138">		String last = null;</span>
+<span class="nc" id="L139">		double lastChange = -1;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt; 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L141">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L142">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (quarter(wink).equals(last) == false) {</span>
+<span class="nc" id="L144">				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">				if (last != null)</span>
+<span class="nc" id="L146">					printQuarter(ug, last, lastChange, x1, fcDay);</span>
+
+<span class="nc" id="L148">				lastChange = x1;</span>
+<span class="nc" id="L149">				last = quarter(wink);</span>
+			}
+		}
+<span class="nc" id="L152">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (x1 &gt; lastChange)</span>
+<span class="nc" id="L154">			printQuarter(ug, last, lastChange, x1, fcDay);</span>
+
+<span class="nc" id="L156">		final double end = x1;</span>
+<span class="nc" id="L157">		drawVline(ug.apply(getLineColor()), end, 0, h2 + 2);</span>
+<span class="nc" id="L158">	}</span>
+
+	private String quarter(TimePoint day) {
+<span class="nc" id="L161">		return &quot;Q&quot; + ((day.month().ordinal() + 3) / 3);</span>
+	}
+
+	private void printYear(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
+<span class="nc" id="L165">		final TextBlock small = getTextBlockSLOW(&quot;&quot; + monthYear.getYear(), fc);</span>
+<span class="nc" id="L166">		printCentered(ug, false, start, end, small);</span>
+<span class="nc" id="L167">	}</span>
+
+	private void printQuarter(UGraphic ug, String quarter, double start, double end, FontConfiguration fc) {
+<span class="nc" id="L170">		final TextBlock small = getTextBlockSLOW(quarter, fc);</span>
+<span class="nc" id="L171">		printCentered(ug, false, start, end, small);</span>
+<span class="nc" id="L172">	}</span>
+
+	private void printLeft(UGraphic ug, TextBlock text, double start) {
+<span class="nc" id="L175">		text.drawU(ug.apply(UTranslate.dx(start)));</span>
+<span class="nc" id="L176">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

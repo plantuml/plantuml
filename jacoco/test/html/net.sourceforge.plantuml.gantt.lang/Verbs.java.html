@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Verbs.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt.lang</a> &gt; <span class="el_source">Verbs.java</span></div><h1>Verbs.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.lang;
+
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexPart;
+
+public class Verbs {
+
+	private final UBrexPart ubrex;
+
+	public UBrexPart toUnicodeBracketedExpression() {
+<span class="fc" id="L46">		return ubrex;</span>
+	}
+
+<span class="fc" id="L49">	public Verbs(UBrexLeaf ubrex) {</span>
+<span class="fc" id="L50">		this.ubrex = ubrex;</span>
+<span class="fc" id="L51">	}</span>
+
+<span class="fc" id="L53">	public static Verbs are = new Verbs(new UBrexLeaf(&quot;are&quot;));</span>
+<span class="fc" id="L54">	public static Verbs areColored = new Verbs(new UBrexLeaf(&quot;are 〇+〴s colo〇?ured&quot;));</span>
+<span class="fc" id="L55">	public static Verbs displayOnSameRowAs = new Verbs(new UBrexLeaf(&quot;display〇?s 〇+〴s on 〇+〴s same 〇+〴s row 〇+〴s as&quot;));</span>
+<span class="fc" id="L56">	public static Verbs ends = new Verbs(new UBrexLeaf(&quot;ends&quot;));</span>
+<span class="fc" id="L57">	public static Verbs happens = new Verbs(new UBrexLeaf(&quot;happens&quot;));</span>
+<span class="fc" id="L58">	public static Verbs is = new Verbs(new UBrexLeaf(&quot;is&quot;));</span>
+<span class="fc" id="L59">	public static Verbs isColored = new Verbs(new UBrexLeaf(&quot;is 〇+〴s colo〇?ured&quot;));</span>
+<span class="fc" id="L60">	public static Verbs isDeleted = new Verbs(new UBrexLeaf(&quot;is 〇+〴s deleted&quot;));</span>
+<span class="fc" id="L61">	public static Verbs isDisplayedAs = new Verbs(new UBrexLeaf(&quot;is 〇+〴s displayed 〇+〴s as&quot;));</span>
+<span class="fc" id="L62">	public static Verbs isOff = new Verbs(new UBrexLeaf(&quot;is 〇+〴s off&quot;));</span>
+<span class="fc" id="L63">	public static Verbs isOn = new Verbs(new UBrexLeaf(&quot;is 〇+〴s on&quot;));</span>
+<span class="fc" id="L64">	public static Verbs isOrAre = new Verbs(new UBrexLeaf(&quot;【is┇are】&quot;));</span>
+<span class="fc" id="L65">	public static Verbs isOrAreNamed = new Verbs(new UBrexLeaf(&quot;【is┇are】〇+〴s named&quot;));</span>
+<span class="fc" id="L66">	public static Verbs just = new Verbs(new UBrexLeaf(&quot;just&quot;));</span>
+<span class="fc" id="L67">	public static Verbs linksTo = new Verbs(new UBrexLeaf(&quot;links 〇+〴s to&quot;));</span>
+<span class="fc" id="L68">	public static Verbs occurs = new Verbs(new UBrexLeaf(&quot;occurs&quot;));</span>
+<span class="fc" id="L69">	public static Verbs pauses = new Verbs(new UBrexLeaf(&quot;pauses&quot;));</span>
+<span class="fc" id="L70">	public static Verbs requires = new Verbs(new UBrexLeaf(&quot;【lasts┇requires】&quot;));</span>
+<span class="fc" id="L71">	public static Verbs starts = new Verbs(new UBrexLeaf(&quot;starts&quot;));</span>
+<span class="fc" id="L72">	public static Verbs worksOn = new Verbs(new UBrexLeaf(&quot;works 〇+〴s on&quot;));</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

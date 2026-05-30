@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubjectDaysAsDates.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt.lang</a> &gt; <span class="el_source">SubjectDaysAsDates.java</span></div><h1>SubjectDaysAsDates.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.lang;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.gantt.DaysAsDates;
+import net.sourceforge.plantuml.gantt.Failable;
+import net.sourceforge.plantuml.gantt.GanttDiagram;
+import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.gantt.ulang.VerbPhraseAction;
+import net.sourceforge.plantuml.klimt.color.HColor;
+
+public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
+
+<span class="fc" id="L60">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectDaysAsDates();</span>
+
+	private SubjectDaysAsDates() {
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionSubject() {
+<span class="fc" id="L67">		return new UBrexOr(toUBrexB(), toUBrexE(), andUBrex(), thenUBrex());</span>
+	}
+
+	private UBrexPart toUBrexB() {
+<span class="fc" id="L71">		return UBrexConcat.build( //</span>
+<span class="fc" id="L72">				TimeResolution.toUbrexB_YYYY_MM_DD(&quot;BYEAR1&quot;, &quot;BMONTH1&quot;, &quot;BDAY1&quot;), //</span>
+<span class="fc" id="L73">				Words.uexactly(Words.TO), //</span>
+<span class="fc" id="L74">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L75">				TimeResolution.toUbrexB_YYYY_MM_DD(&quot;BYEAR2&quot;, &quot;BMONTH2&quot;, &quot;BDAY2&quot;) //</span>
+		);
+	}
+
+	private UBrexPart toUBrexE() {
+<span class="fc" id="L80">		return UBrexConcat.build( //</span>
+				new UBrexLeaf(&quot;「dD」+&quot;), //
+<span class="fc" id="L82">				new UBrexNamed(&quot;ECOUNT1&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), Words.uexactly(Words.TO), //</span>
+<span class="fc" id="L83">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexLeaf(&quot;「dD」+&quot;), //
+				new UBrexNamed(&quot;ECOUNT2&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)) //
+		);
+	}
+
+	private UBrexPart andUBrex() {
+<span class="fc" id="L90">		return UBrexConcat.build( //</span>
+<span class="fc" id="L91">				TimeResolution.toUbrexB_YYYY_MM_DD(&quot;BYEAR3&quot;, &quot;BMONTH3&quot;, &quot;BDAY3&quot;), //</span>
+<span class="fc" id="L92">				Words.uexactly(Words.AND), //</span>
+<span class="fc" id="L93">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexNamed(&quot;COUNT_AND&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
+<span class="fc" id="L95">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexLeaf(&quot;day〇?s&quot;) //
+		);
+	}
+
+	private UBrexPart thenUBrex() {
+<span class="fc" id="L101">		return UBrexConcat.build( //</span>
+				new UBrexLeaf(&quot;then&quot;), //
+<span class="fc" id="L103">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexNamed(&quot;COUNT_THEN&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
+<span class="fc" id="L105">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexLeaf(&quot;day〇?s&quot;) //
+		);
+	}
+
+	@Override
+	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram gantt, UMatcher arg) {
+<span class="fc" id="L112">		final String countAnd = arg.get(&quot;COUNT_AND&quot;, 0);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (countAnd != null) {</span>
+<span class="fc" id="L114">			final TimePoint date3 = getDate(gantt, arg, &quot;3&quot;);</span>
+<span class="fc" id="L115">			final int nb = Integer.parseInt(countAnd);</span>
+<span class="fc" id="L116">			return Failable.ok(new DaysAsDates(gantt, date3.toDay(), nb));</span>
+		}
+<span class="fc" id="L118">		final String countThen = arg.get(&quot;COUNT_THEN&quot;, 0);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">		if (countThen != null) {</span>
+<span class="fc" id="L120">			final TimePoint date3 = gantt.getThenDate();</span>
+<span class="fc" id="L121">			final int nb = Integer.parseInt(countThen);</span>
+<span class="fc" id="L122">			return Failable.ok(new DaysAsDates(gantt, date3.toDay(), nb));</span>
+		}
+<span class="fc" id="L124">		final TimePoint date1 = getDate(gantt, arg, &quot;1&quot;);</span>
+<span class="fc" id="L125">		final TimePoint date2 = getDate(gantt, arg, &quot;2&quot;);</span>
+<span class="fc" id="L126">		return Failable.ok(new DaysAsDates(date1.toDay(), date2.toDay()));</span>
+	}
+
+	private TimePoint getDate(GanttDiagram gantt, UMatcher arg, String suffix) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (arg.get(&quot;BDAY&quot; + suffix, 0) != null) {</span>
+<span class="fc" id="L131">			final int day = Integer.parseInt(arg.get(&quot;BDAY&quot; + suffix, 0));</span>
+<span class="fc" id="L132">			final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot; + suffix, 0));</span>
+<span class="fc" id="L133">			final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot; + suffix, 0));</span>
+<span class="fc" id="L134">			return TimePoint.ofStartOfDay(year, month, day);</span>
+		}
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot; + suffix, 0) != null) {</span>
+<span class="nc" id="L137">			final int day = Integer.parseInt(arg.get(&quot;ECOUNT&quot; + suffix, 0));</span>
+<span class="nc" id="L138">			return gantt.getMinTimePoint().addDays(day);</span>
+		}
+<span class="nc" id="L140">		throw new IllegalStateException();</span>
+	}
+
+	@Override
+	public Collection&lt;VerbPhraseAction&gt; getVerbPhrases() {
+<span class="fc" id="L145">		final List&lt;VerbPhraseAction&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L146">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementClose()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc bnc" id="L149" title="All 2 branches missed.">				for (LocalDate d : (DaysAsDates) subject)</span>
+<span class="nc" id="L150">					gantt.closeDayAsDate(d, (String) complement);</span>
+
+<span class="nc" id="L152">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L156">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementOpen()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc bnc" id="L159" title="All 2 branches missed.">				for (LocalDate d : (DaysAsDates) subject)</span>
+<span class="nc" id="L160">					gantt.openDayAsDate(d, (String) complement);</span>
+
+<span class="nc" id="L162">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L166">		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L169">				final HColor color = ((CenterBorderColor) complement).getCenter();</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">				for (LocalDate d : (DaysAsDates) subject)</span>
+<span class="fc" id="L171">					gantt.colorDay(d, color);</span>
+
+<span class="fc" id="L173">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L177">		result.add(new VerbPhraseAction(Verbs.isOrAreNamed, new ComplementNamed()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L180">				final String name = (String) complement;</span>
+<span class="fc" id="L181">				final DaysAsDates days = (DaysAsDates) subject;</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">				for (LocalDate d : days)</span>
+<span class="fc" id="L183">					gantt.nameDay(d, name);</span>
+
+<span class="fc" id="L185">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+//		result.add(new VerbPhraseAction(Verbs.isOrAre, new ComplementInColors2()) {
+//			@Override
+//			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+//				final HColor color = ((CenterBorderColor) complement).getCenter();
+//				project.colorDay((LocalDate) subject, color);
+//				return CommandExecutionResult.ok();
+//			}
+//		});
+
+<span class="fc" id="L198">		return result;</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

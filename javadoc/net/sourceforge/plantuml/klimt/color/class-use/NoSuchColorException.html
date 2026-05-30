@@ -95,29 +95,29 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/ebnf" target="_top">
  EBNF (Extended Backus–Naur Form) Diagram</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.klimt.color">net.sourceforge.plantuml.klimt.color</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.command">net.sourceforge.plantuml.gantt.command</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.klimt.color">net.sourceforge.plantuml.klimt.color</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/color" target="_top">
  Color</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.klimt.creole">net.sourceforge.plantuml.klimt.creole</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.klimt.creole">net.sourceforge.plantuml.klimt.creole</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/creole" target="_top">
  Creole</a> (markup language).</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.mindmap">net.sourceforge.plantuml.mindmap</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.mindmap">net.sourceforge.plantuml.mindmap</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/mindmap-diagram" target="_top">
  Mindmap Diagram</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.objectdiagram.command">net.sourceforge.plantuml.objectdiagram.command</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.packetdiag.command">net.sourceforge.plantuml.packetdiag.command</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.objectdiagram.command">net.sourceforge.plantuml.objectdiagram.command</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.command">net.sourceforge.plantuml.project.command</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.packetdiag.command">net.sourceforge.plantuml.packetdiag.command</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.regexdiagram">net.sourceforge.plantuml.regexdiagram</a></div>
 <div class="col-last odd-row-color">
@@ -818,6 +818,39 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="net.sourceforge.plantuml.gantt.command">
+<h2>Uses of <a href="../NoSuchColorException.html" title="class in net.sourceforge.plantuml.klimt.color">NoSuchColorException</a> in <a href="../../../gantt/command/package-summary.html">net.sourceforge.plantuml.gantt.command</a></h2>
+<div class="caption"><span>Methods in <a href="../../../gantt/command/package-summary.html">net.sourceforge.plantuml.gantt.command</a> that throw <a href="../NoSuchColorException.html" title="class in net.sourceforge.plantuml.klimt.color">NoSuchColorException</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">NaturalGanttCommand.</span><code><a href="../../../gantt/command/NaturalGanttCommand.html#execute(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">execute</a><wbr>(<a href="../../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+ <a href="../../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
+ <a href="../../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="../../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandColorTask.</span><code><a href="../../../gantt/command/CommandColorTask.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+ <a href="../../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
+ <a href="../../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="../../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandTaskCompleteDefault.</span><code><a href="../../../gantt/command/CommandTaskCompleteDefault.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+ <a href="../../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
+ <a href="../../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="../../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandNoteBottom.</span><code><a href="../../../gantt/command/CommandNoteBottom.html#executeNow(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+ <a href="../../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
+ <a href="../../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="net.sourceforge.plantuml.klimt.color">
 <h2>Uses of <a href="../NoSuchColorException.html" title="class in net.sourceforge.plantuml.klimt.color">NoSuchColorException</a> in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.color</a></h2>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.color</a> that throw <a href="../NoSuchColorException.html" title="class in net.sourceforge.plantuml.klimt.color">NoSuchColorException</a></span></div>
@@ -1004,39 +1037,6 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">CommandScaleInterval.</span><code><a href="../../../packetdiag/command/CommandScaleInterval.html#executeArg(net.sourceforge.plantuml.packetdiag.PacketDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../../packetdiag/PacketDiagram.html" title="class in net.sourceforge.plantuml.packetdiag">PacketDiagram</a>&nbsp;system,
  <a href="../../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
- <a href="../../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="net.sourceforge.plantuml.project.command">
-<h2>Uses of <a href="../NoSuchColorException.html" title="class in net.sourceforge.plantuml.klimt.color">NoSuchColorException</a> in <a href="../../../project/command/package-summary.html">net.sourceforge.plantuml.project.command</a></h2>
-<div class="caption"><span>Methods in <a href="../../../project/command/package-summary.html">net.sourceforge.plantuml.project.command</a> that throw <a href="../NoSuchColorException.html" title="class in net.sourceforge.plantuml.klimt.color">NoSuchColorException</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">NaturalGanttCommand.</span><code><a href="../../../project/command/NaturalGanttCommand.html#execute(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">execute</a><wbr>(<a href="../../../project/GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&nbsp;diagram,
- <a href="../../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
- <a href="../../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected <a href="../../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandColorTask.</span><code><a href="../../../project/command/CommandColorTask.html#executeArg(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../../project/GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&nbsp;diagram,
- <a href="../../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
- <a href="../../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
- <a href="../../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected <a href="../../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandTaskCompleteDefault.</span><code><a href="../../../project/command/CommandTaskCompleteDefault.html#executeArg(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../../project/GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&nbsp;diagram,
- <a href="../../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
- <a href="../../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
- <a href="../../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected <a href="../../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandNoteBottom.</span><code><a href="../../../project/command/CommandNoteBottom.html#executeNow(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../../../project/GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&nbsp;diagram,
- <a href="../../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
  <a href="../../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>

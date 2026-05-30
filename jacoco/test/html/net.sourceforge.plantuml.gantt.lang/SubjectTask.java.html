@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubjectTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt.lang</a> &gt; <span class="el_source">SubjectTask.java</span></div><h1>SubjectTask.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.lang;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOneOrMore;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
+
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.gantt.Completion;
+import net.sourceforge.plantuml.gantt.DaysAsDates;
+import net.sourceforge.plantuml.gantt.Failable;
+import net.sourceforge.plantuml.gantt.GanttConstraint;
+import net.sourceforge.plantuml.gantt.GanttDiagram;
+import net.sourceforge.plantuml.gantt.Load;
+import net.sourceforge.plantuml.gantt.core.Task;
+import net.sourceforge.plantuml.gantt.core.TaskAttribute;
+import net.sourceforge.plantuml.gantt.core.TaskCode;
+import net.sourceforge.plantuml.gantt.core.TaskInstant;
+import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.gantt.ulang.VerbPhraseAction;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.Url;
+
+public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
+
+<span class="fc" id="L74">	public static final Subject&lt;GanttDiagram&gt; ME = new SubjectTask();</span>
+	public static final String REGEX_TASK_CODE = &quot;\\[([^\\[\\]]+?)\\]&quot;;
+
+	public static UBrexPart taskCode(String name) {
+<span class="fc" id="L78">		return UBrexConcat.build( //</span>
+				new UBrexLeaf(&quot;[&quot;), //
+				new UBrexNamed(name, new UBrexLeaf(&quot;〇+「〤[]」&quot;)), //
+				new UBrexLeaf(&quot;]&quot;));
+	}
+
+	private SubjectTask() {
+	}
+
+	@Override
+	public Collection&lt;VerbPhraseAction&gt; getVerbPhrases() {
+<span class="fc" id="L89">		final List&lt;VerbPhraseAction&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L90">		result.add(new VerbPhraseAction(Verbs.requires, Words.uzeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),</span>
+<span class="fc" id="L91">				new ComplementDuration()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L94">				final Task task = (Task) subject;</span>
+<span class="fc" id="L95">				final Load duration = (Load) complement;</span>
+<span class="fc" id="L96">				task.setLoad(duration);</span>
+<span class="fc" id="L97">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L101">		result.add(new VerbPhraseAction(Verbs.starts,</span>
+<span class="fc" id="L102">				new PairOfSomething&lt;&gt;(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementWithColorLink())) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L105">				final Task task = (Task) subject;</span>
+				final TaskInstant when;
+
+<span class="nc" id="L108">				final Object[] pairs = (Object[]) complement;</span>
+<span class="nc" id="L109">				when = (TaskInstant) pairs[0];</span>
+<span class="nc" id="L110">				final CenterBorderColor complement22 = (CenterBorderColor) pairs[1];</span>
+
+<span class="nc" id="L112">				task.setStart(when.getInstantPrecise());</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">				if (when.isTask()) {</span>
+<span class="nc" id="L114">					final HColor color = complement22.getCenter();</span>
+<span class="nc" id="L115">					final GanttConstraint link = new GanttConstraint(gantt.getIHtmlColorSet(),</span>
+<span class="nc" id="L116">							gantt.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color);</span>
+<span class="nc" id="L117">					link.applyStyle(complement22.getStyle());</span>
+<span class="nc" id="L118">					gantt.addContraint(link);</span>
+				}
+<span class="nc" id="L120">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L124">		result.add(new VerbPhraseAction(Verbs.starts, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L127">				final Task task = (Task) subject;</span>
+				final TaskInstant when;
+<span class="fc" id="L129">				HColor color = null;</span>
+<span class="fc" id="L130">				when = (TaskInstant) complement;</span>
+<span class="fc" id="L131">				task.setStart(when.getInstantPrecise());</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">				if (when.isTask())</span>
+<span class="fc" id="L133">					gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(),</span>
+<span class="fc" id="L134">							gantt.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color));</span>
+
+<span class="fc" id="L136">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L140">		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L141">				ComplementDate.onlyRelative()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L144">				final Task task = (Task) subject;</span>
+<span class="nc" id="L145">				final LocalDate start = (LocalDate) complement;</span>
+
+<span class="nc" id="L147">				task.setStart(TimePoint.ofStartOfDay(start));</span>
+<span class="nc" id="L148">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L152">		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L153">				ComplementDate.any()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L156">				final Task task = (Task) subject;</span>
+<span class="fc" id="L157">				final LocalDate start = (LocalDate) complement;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">				if (gantt.getMinDay().equals(TimePoint.epoch()))</span>
+<span class="nc" id="L159">					return CommandExecutionResult.error(&quot;No starting date for the project&quot;);</span>
+
+<span class="fc" id="L161">				task.setStart(TimePoint.ofStartOfDay(start));</span>
+<span class="fc" id="L162">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L166">		result.add(new VerbPhraseAction(Verbs.isColored, new ComplementInColors()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L169">				final Task task = (Task) subject;</span>
+<span class="fc" id="L170">				final CenterBorderColor colors = (CenterBorderColor) complement;</span>
+<span class="fc" id="L171">				task.setColors(colors);</span>
+<span class="fc" id="L172">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L176">		result.add(new VerbPhraseAction(Verbs.isColored, Words.uexactly2(Words.FOR, Words.COMPLETION),</span>
+<span class="fc" id="L177">				new ComplementInColorsFromTo()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L180">				final Task task = (Task) subject;</span>
+<span class="nc" id="L181">				final CenterBorderColor[] colors = (CenterBorderColor[]) complement;</span>
+<span class="nc" id="L182">				task.setColors(colors);</span>
+<span class="nc" id="L183">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L187">		result.add(new VerbPhraseAction(Verbs.happens, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L188">				ComplementDate.any()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L191">				final Task task = (Task) subject;</span>
+<span class="fc" id="L192">				task.setLoad(Load.ofDays(1));</span>
+<span class="fc" id="L193">				final LocalDate start = (LocalDate) complement;</span>
+<span class="fc" id="L194">				task.setStart(TimePoint.ofStartOfDay(start));</span>
+<span class="fc" id="L195">				task.setDiamond(true);</span>
+<span class="fc" id="L196">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L200">		result.add(new VerbPhraseAction(Verbs.happens, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L201">				new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L204">				final Task task = (Task) subject;</span>
+<span class="fc" id="L205">				task.setLoad(Load.ofDays(1));</span>
+<span class="fc" id="L206">				task.setDiamond(true);</span>
+<span class="fc" id="L207">				final TaskInstant when = (TaskInstant) complement;</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">				if (when.getAttribute() == TaskAttribute.END)</span>
+<span class="fc" id="L209">					task.setStart(when.getInstantPrecise().decrement());</span>
+				else
+<span class="fc" id="L211">					task.setStart(when.getInstantPrecise());</span>
+<span class="fc" id="L212">				return CommandExecutionResult.ok();</span>
+
+			}
+		});
+
+<span class="fc" id="L217">		result.add(new VerbPhraseAction(Verbs.occurs, new ComplementFromTo()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L220">				final Task task = (Task) subject;</span>
+<span class="fc" id="L221">				final TwoNames bothNames = (TwoNames) complement;</span>
+<span class="fc" id="L222">				final String name1 = bothNames.getName1();</span>
+<span class="fc" id="L223">				final String name2 = bothNames.getName2();</span>
+<span class="fc" id="L224">				final Task from = gantt.getExistingTask(name1);</span>
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">				if (from == null)</span>
+<span class="nc" id="L226">					return CommandExecutionResult.error(&quot;No such &quot; + name1 + &quot; task&quot;);</span>
+
+<span class="fc" id="L228">				final Task to = gantt.getExistingTask(name2);</span>
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">				if (to == null)</span>
+<span class="nc" id="L230">					return CommandExecutionResult.error(&quot;No such &quot; + name2 + &quot; task&quot;);</span>
+
+<span class="fc" id="L232">				task.setStart(from.getStart());</span>
+<span class="fc" id="L233">				task.setEnd(to.getEnd());</span>
+<span class="fc" id="L234">				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),</span>
+						new TaskInstant(from, TaskAttribute.START), new TaskInstant(task, TaskAttribute.START)));
+<span class="fc" id="L236">				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),</span>
+						new TaskInstant(to, TaskAttribute.END), new TaskInstant(task, TaskAttribute.END)));
+<span class="fc" id="L238">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L242">		result.add(new VerbPhraseAction(Verbs.ends, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L245">				final Task task = (Task) subject;</span>
+<span class="fc" id="L246">				final TaskInstant when = (TaskInstant) complement;</span>
+<span class="fc" id="L247">				task.setEnd(when.getInstantPrecise());</span>
+<span class="fc" id="L248">				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),</span>
+						when, new TaskInstant(task, TaskAttribute.END)));
+<span class="fc" id="L250">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L254">		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L255">				ComplementDate.onlyRelative()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L258">				final Task task = (Task) subject;</span>
+<span class="nc" id="L259">				final LocalDate end = (LocalDate) complement;</span>
+
+<span class="nc" id="L261">				task.setEnd(TimePoint.ofEndOfDayMinusOneSecond(end).increment());</span>
+<span class="nc" id="L262">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L266">		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),</span>
+<span class="fc" id="L267">				ComplementDate.any()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L270">				final Task task = (Task) subject;</span>
+<span class="fc" id="L271">				final LocalDate end = (LocalDate) complement;</span>
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">				if (gantt.getMinDay().equals(TimePoint.epoch()))</span>
+<span class="nc" id="L273">					return CommandExecutionResult.error(&quot;No starting date for the project&quot;);</span>
+<span class="fc" id="L274">				task.setEnd(TimePoint.ofStartOfDay(end).increment());</span>
+
+<span class="fc" id="L276">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L280">		result.add(new VerbPhraseAction(Verbs.displayOnSameRowAs, new ComplementNamed()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="fc" id="L283">				final Task task1 = (Task) subject;</span>
+<span class="fc" id="L284">				final Task task2 = gantt.getExistingTask((String) complement);</span>
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">				if (task2 == null)</span>
+<span class="nc" id="L286">					return CommandExecutionResult.error(&quot;No such task &quot; + task2);</span>
+
+<span class="fc" id="L288">				task1.putInSameRowAs(task2);</span>
+<span class="fc" id="L289">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L293">		result.add(new VerbPhraseAction(Verbs.is, new ComplementDeleted()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L296">				final Task task = (Task) subject;</span>
+<span class="nc" id="L297">				return gantt.deleteTask(task);</span>
+			}
+		});
+
+<span class="fc" id="L301">		result.add(new VerbPhraseAction(Verbs.is, new ComplementCompleted()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L304">				final Task task = (Task) subject;</span>
+<span class="nc" id="L305">				final Completion completed = (Completion) complement;</span>
+<span class="nc" id="L306">				task.setCompletion(completed.getCompletion());</span>
+<span class="nc" id="L307">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L311">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L312">				new ComplementIntervals()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L315">				final Task task = (Task) subject;</span>
+<span class="nc" id="L316">				final DaysAsDates pauses = (DaysAsDates) complement;</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">				for (LocalDate day : pauses)</span>
+<span class="nc" id="L318">					task.addPause(day);</span>
+
+<span class="nc" id="L320">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L324">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L325">				new ComplementIntervalsSmart()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L328">				final Task task = (Task) subject;</span>
+<span class="nc" id="L329">				final DaysAsDates pauses = (DaysAsDates) complement;</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">				for (LocalDate day : pauses)</span>
+<span class="nc" id="L331">					task.addPause(day);</span>
+<span class="nc" id="L332">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L336">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L337">				ComplementDate.any()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L340">				final Task task = (Task) subject;</span>
+<span class="nc" id="L341">				final LocalDate pause = (LocalDate) complement;</span>
+<span class="nc" id="L342">				task.addPause(pause);</span>
+<span class="nc" id="L343">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L347">		result.add(new VerbPhraseAction(Verbs.pauses, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),</span>
+<span class="fc" id="L348">				new ComplementDayOfWeek()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L351">				final Task task = (Task) subject;</span>
+<span class="nc" id="L352">				final DayOfWeek pause = (DayOfWeek) complement;</span>
+<span class="nc" id="L353">				task.addPause(pause);</span>
+<span class="nc" id="L354">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L358">		result.add(new VerbPhraseAction(Verbs.linksTo, new ComplementUrl()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L361">				final Task task = (Task) subject;</span>
+<span class="nc" id="L362">				final Url url = (Url) complement;</span>
+<span class="nc" id="L363">				task.setUrl(url);</span>
+<span class="nc" id="L364">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L368">		result.add(new VerbPhraseAction(Verbs.isDisplayedAs, new ComplementAnything()) {</span>
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+<span class="nc" id="L371">				final Task task = (Task) subject;</span>
+<span class="nc" id="L372">				final String displayString = (String) complement;</span>
+<span class="nc" id="L373">				task.setDisplay(displayString);</span>
+<span class="nc" id="L374">				return CommandExecutionResult.ok();</span>
+			}
+		});
+
+<span class="fc" id="L378">		return result;</span>
+
+	}
+
+	@Override
+	public UBrexPart toUnicodeBracketedExpressionSubject() {
+<span class="fc" id="L384">		return new UBrexOr( //</span>
+<span class="fc" id="L385">				new UBrexNamed(&quot;IT&quot;, Words.usingle(Words.IT)), //</span>
+<span class="fc" id="L386">				UBrexConcat.build( //</span>
+<span class="fc" id="L387">						new UBrexOptional(UBrexConcat.build( //</span>
+<span class="fc" id="L388">								new UBrexNamed(&quot;THEN&quot;, Words.usingle(Words.THEN)), //</span>
+<span class="fc" id="L389">								UBrexLeaf.spaceOneOrMore())), //</span>
+<span class="fc" id="L390">						SubjectTask.taskCode(&quot;SUBJECT&quot;), //</span>
+<span class="fc" id="L391">						StereotypePattern.uoptional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L392">						new UBrexOptional(UBrexConcat.build( //</span>
+<span class="fc" id="L393">								Words.uexactly(Words.AS), //</span>
+<span class="fc" id="L394">								UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L395">								SubjectTask.taskCode(&quot;SHORTNAME&quot;))), //</span>
+<span class="fc" id="L396">						new UBrexOptional(UBrexConcat.build( //</span>
+<span class="fc" id="L397">								Words.uexactly(Words.ON), //</span>
+<span class="fc" id="L398">								UBrexLeaf.spaceOneOrMore(), //</span>
+								new UBrexNamed(&quot;RESOURCE&quot;, new UBrexOneOrMore( //
+<span class="fc" id="L400">										UBrexConcat.build( //</span>
+												new UBrexLeaf(&quot;{〇+「〤{}」}&quot;), //
+<span class="fc" id="L402">												UBrexLeaf.spaceZeroOrMore() //</span>
+										)))) //
+						) //
+				));
+	}
+
+	@Override
+	public Failable&lt;Task&gt; getMe(GanttDiagram gantt, UMatcher arg) {
+		final Task result;
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">		if (arg.get(&quot;IT&quot;, 0) != null) {</span>
+<span class="nc" id="L412">			result = gantt.getIt();</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L414">				return Failable.error(&quot;Not sure what are you refering to?&quot;);</span>
+		} else {
+<span class="fc" id="L416">			final String subject = arg.get(&quot;SUBJECT&quot;, 0);</span>
+<span class="fc" id="L417">			final String shortName = arg.get(&quot;SHORTNAME&quot;, 0);</span>
+<span class="fc" id="L418">			final String then = arg.get(&quot;THEN&quot;, 0);</span>
+<span class="fc" id="L419">			final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+
+<span class="fc" id="L421">			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">			result = gantt.getOrCreateTask(code, then != null);</span>
+
+<span class="pc bpc" id="L424" title="1 of 2 branches missed.">			if (stereotype != null)</span>
+<span class="nc" id="L425">				result.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
+
+<span class="fc" id="L427">			gantt.setIt(result);</span>
+		}
+
+<span class="pc bpc" id="L430" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L431">			throw new IllegalStateException();</span>
+
+<span class="fc" id="L433">		final String resource = arg.get(&quot;RESOURCE&quot;, 0);</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">		if (resource != null) {</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">			for (final StringTokenizer st = new StringTokenizer(resource, &quot;{}&quot;); st.hasMoreTokens();) {</span>
+<span class="fc" id="L436">				final String part = st.nextToken().trim();</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">				if (part.length() &gt; 0) {</span>
+<span class="fc" id="L438">					final boolean ok = gantt.affectResource(result, part);</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">					if (ok == false)</span>
+<span class="nc" id="L440">						return Failable.error(&quot;Bad argument for resource&quot;);</span>
+
+				}
+<span class="fc" id="L443">			}</span>
+
+		}
+<span class="fc" id="L446">		return Failable.ok(result);</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -860,41 +860,6 @@ Total Classes: 2
 "net.sourceforge.plantuml.cheneer.command" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.cheneer.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.chronology" %lighten("red", 92) {
-Total Classes: 12
-}
-"net.sourceforge.plantuml.chronology" --> "java.lang"
-"net.sourceforge.plantuml.chronology" --> "java.text"
-"net.sourceforge.plantuml.chronology" --> "java.time"
-"net.sourceforge.plantuml.chronology" --> "java.util"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.command"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.klimt"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.klimt.creole"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.klimt.sprite"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.nio"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.project"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.project.command"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.project.core"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.project.draw"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.project.lang"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.project.ngm.math"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.project.time"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.project.timescale"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.real"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.skin"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.stereo"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.style"
-"net.sourceforge.plantuml.chronology" --> "net.sourceforge.plantuml.url"
-
 class "net.sourceforge.plantuml.classdiagram" %lighten("red", 67) {
 Total Classes: 3
 }
@@ -966,7 +931,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.code.deflate" --> "java.lang"
 "net.sourceforge.plantuml.code.deflate" --> "java.util"
 
-class "net.sourceforge.plantuml.command" %lighten("red", 50) {
+class "net.sourceforge.plantuml.command" %lighten("red", 51) {
 Total Classes: 51
 }
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex"
@@ -1041,7 +1006,7 @@ Total Classes: 8
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.core" %lighten("red", 50) {
+class "net.sourceforge.plantuml.core" %lighten("red", 51) {
 Total Classes: 12
 }
 "net.sourceforge.plantuml.core" --> "java.awt"
@@ -1604,6 +1569,219 @@ Total Classes: 2
 "net.sourceforge.plantuml.ftp" --> "java.lang"
 "net.sourceforge.plantuml.ftp" --> "net.sourceforge.plantuml.log"
 
+class "net.sourceforge.plantuml.gantt" %lighten("red", 92) {
+Total Classes: 16
+}
+"net.sourceforge.plantuml.gantt" --> "java.lang"
+"net.sourceforge.plantuml.gantt" --> "java.time"
+"net.sourceforge.plantuml.gantt" --> "java.util"
+"net.sourceforge.plantuml.gantt" --> "java.util.regex"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.command"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.crash"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.command"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.data"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.draw"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.draw.header"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.lang"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.ngm.math"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.solver"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.time"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.gantt.timescale"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.klimt"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.klimt.creole"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.log"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.nio"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.preproc"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.real"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.stereo"
+"net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.style"
+
+class "net.sourceforge.plantuml.gantt.command" %lighten("red", 95) {
+Total Classes: 14
+}
+"net.sourceforge.plantuml.gantt.command" --> "com.plantuml.ubrex"
+"net.sourceforge.plantuml.gantt.command" --> "com.plantuml.ubrex.builder"
+"net.sourceforge.plantuml.gantt.command" --> "java.lang"
+"net.sourceforge.plantuml.gantt.command" --> "java.time"
+"net.sourceforge.plantuml.gantt.command" --> "java.util"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.command"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.descdiagram.command"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.gantt"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.gantt.draw"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.gantt.lang"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.gantt.ulang"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.regex"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.sequencediagram.command"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.text"
+"net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.utils"
+
+class "net.sourceforge.plantuml.gantt.core" %lighten("red", 84) {
+Total Classes: 11
+}
+"net.sourceforge.plantuml.gantt.core" --> "java.lang"
+"net.sourceforge.plantuml.gantt.core" --> "java.time"
+"net.sourceforge.plantuml.gantt.core" --> "java.util"
+"net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.gantt"
+"net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.gantt.draw"
+"net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.gantt.lang"
+"net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.gantt.ngm.math"
+"net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.gantt.time"
+"net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.klimt.creole"
+"net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.stereo"
+"net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.style"
+"net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.url"
+
+class "net.sourceforge.plantuml.gantt.data" %lighten("red", 86) {
+Total Classes: 8
+}
+"net.sourceforge.plantuml.gantt.data" --> "java.lang"
+"net.sourceforge.plantuml.gantt.data" --> "java.time"
+"net.sourceforge.plantuml.gantt.data" --> "java.time.temporal"
+"net.sourceforge.plantuml.gantt.data" --> "java.util"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.gantt"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.gantt.draw"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.gantt.draw.header"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.gantt.time"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.gantt.timescale"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.klimt"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.real"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.skin"
+"net.sourceforge.plantuml.gantt.data" --> "net.sourceforge.plantuml.style"
+
+class "net.sourceforge.plantuml.gantt.draw" %lighten("red", 92) {
+Total Classes: 9
+}
+"net.sourceforge.plantuml.gantt.draw" --> "java.lang"
+"net.sourceforge.plantuml.gantt.draw" --> "java.time"
+"net.sourceforge.plantuml.gantt.draw" --> "java.util"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.gantt"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.gantt.data"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.gantt.lang"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.gantt.ngm.math"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.gantt.time"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.gantt.timescale"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.klimt"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.klimt.creole"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.klimt.sprite"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.real"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.sequencediagram.graphic"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.stereo"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.style"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.svek.image"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.url"
+
+class "net.sourceforge.plantuml.gantt.draw.header" %lighten("red", 78) {
+Total Classes: 6
+}
+"net.sourceforge.plantuml.gantt.draw.header" --> "java.lang"
+"net.sourceforge.plantuml.gantt.draw.header" --> "java.time"
+"net.sourceforge.plantuml.gantt.draw.header" --> "java.util"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.gantt"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.gantt.data"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.gantt.ngm.math"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.gantt.time"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.gantt.timescale"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.klimt"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.style"
+
+class "net.sourceforge.plantuml.gantt.lang" %lighten("red", 84) {
+Total Classes: 80
+}
+"net.sourceforge.plantuml.gantt.lang" --> "com.plantuml.ubrex"
+"net.sourceforge.plantuml.gantt.lang" --> "com.plantuml.ubrex.builder"
+"net.sourceforge.plantuml.gantt.lang" --> "java.lang"
+"net.sourceforge.plantuml.gantt.lang" --> "java.time"
+"net.sourceforge.plantuml.gantt.lang" --> "java.util"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.command"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.gantt"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.gantt.time"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.gantt.ulang"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.klimt.color"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.stereo"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.teavm"
+"net.sourceforge.plantuml.gantt.lang" --> "net.sourceforge.plantuml.url"
+
+class "net.sourceforge.plantuml.gantt.ngm" %lighten("red", 85) {
+Total Classes: 4
+}
+"net.sourceforge.plantuml.gantt.ngm" --> "java.lang"
+"net.sourceforge.plantuml.gantt.ngm" --> "java.time"
+"net.sourceforge.plantuml.gantt.ngm" --> "net.sourceforge.plantuml.gantt.ngm.math"
+
+class "net.sourceforge.plantuml.gantt.ngm.math" %lighten("red", 73) {
+Total Classes: 11
+}
+"net.sourceforge.plantuml.gantt.ngm.math" --> "java.lang"
+"net.sourceforge.plantuml.gantt.ngm.math" --> "java.time"
+"net.sourceforge.plantuml.gantt.ngm.math" --> "java.util"
+"net.sourceforge.plantuml.gantt.ngm.math" --> "java.util.function"
+"net.sourceforge.plantuml.gantt.ngm.math" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt.ngm.math" --> "net.sourceforge.plantuml.gantt.ngm"
+
+class "net.sourceforge.plantuml.gantt.solver" %lighten("red", 88) {
+Total Classes: 2
+}
+"net.sourceforge.plantuml.gantt.solver" --> "java.lang"
+"net.sourceforge.plantuml.gantt.solver" --> "java.util"
+"net.sourceforge.plantuml.gantt.solver" --> "net.sourceforge.plantuml.gantt"
+"net.sourceforge.plantuml.gantt.solver" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt.solver" --> "net.sourceforge.plantuml.gantt.ngm"
+"net.sourceforge.plantuml.gantt.solver" --> "net.sourceforge.plantuml.gantt.time"
+"net.sourceforge.plantuml.gantt.solver" --> "net.sourceforge.plantuml.teavm"
+
+class "net.sourceforge.plantuml.gantt.time" %lighten("red", 20) {
+Total Classes: 1
+}
+"net.sourceforge.plantuml.gantt.time" --> "java.lang"
+"net.sourceforge.plantuml.gantt.time" --> "java.time"
+
+class "net.sourceforge.plantuml.gantt.timescale" %lighten("red", 73) {
+Total Classes: 8
+}
+"net.sourceforge.plantuml.gantt.timescale" --> "java.lang"
+"net.sourceforge.plantuml.gantt.timescale" --> "java.time"
+"net.sourceforge.plantuml.gantt.timescale" --> "java.util"
+"net.sourceforge.plantuml.gantt.timescale" --> "net.sourceforge.plantuml.gantt"
+"net.sourceforge.plantuml.gantt.timescale" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt.timescale" --> "net.sourceforge.plantuml.gantt.time"
+
+class "net.sourceforge.plantuml.gantt.ulang"{
+
+}
+
 class "net.sourceforge.plantuml.gitlog" %lighten("red", 100) {
 Total Classes: 9
 }
@@ -1811,7 +1989,7 @@ Total Classes: 11
 "net.sourceforge.plantuml.klimt.compress" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.klimt.compress" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.creole" %lighten("red", 36) {
+class "net.sourceforge.plantuml.klimt.creole" %lighten("red", 37) {
 Total Classes: 19
 }
 "net.sourceforge.plantuml.klimt.creole" --> "java.lang"
@@ -2103,7 +2281,7 @@ Total Classes: 41
 "net.sourceforge.plantuml.klimt.shape" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.klimt.shape" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.sprite" %lighten("red", 76) {
+class "net.sourceforge.plantuml.klimt.sprite" %lighten("red", 78) {
 Total Classes: 22
 }
 "net.sourceforge.plantuml.klimt.sprite" --> "java.io"
@@ -2411,7 +2589,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.posimo" --> "net.sourceforge.plantuml.skin.rose"
 "net.sourceforge.plantuml.posimo" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.preproc" %lighten("red", 37) {
+class "net.sourceforge.plantuml.preproc" %lighten("red", 38) {
 Total Classes: 17
 }
 "net.sourceforge.plantuml.preproc" --> "java.io"
@@ -2442,225 +2620,14 @@ Total Classes: 10
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.preproc2" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.project" %lighten("red", 89) {
-Total Classes: 17
-}
-"net.sourceforge.plantuml.project" --> "java.lang"
-"net.sourceforge.plantuml.project" --> "java.time"
-"net.sourceforge.plantuml.project" --> "java.util"
-"net.sourceforge.plantuml.project" --> "java.util.regex"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.command"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.crash"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.klimt"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.klimt.creole"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.log"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.nio"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.command"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.core"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.data"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.draw"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.draw.header"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.lang"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.ngm.math"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.solver"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.time"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.project.timescale"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.real"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.stereo"
-"net.sourceforge.plantuml.project" --> "net.sourceforge.plantuml.style"
-
-class "net.sourceforge.plantuml.project.command" %lighten("red", 90) {
-Total Classes: 15
-}
-"net.sourceforge.plantuml.project.command" --> "com.plantuml.ubrex"
-"net.sourceforge.plantuml.project.command" --> "com.plantuml.ubrex.builder"
-"net.sourceforge.plantuml.project.command" --> "java.lang"
-"net.sourceforge.plantuml.project.command" --> "java.time"
-"net.sourceforge.plantuml.project.command" --> "java.util"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.command"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.descdiagram.command"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.project"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.project.core"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.project.draw"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.project.lang"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.project.ulang"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.sequencediagram.command"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.text"
-"net.sourceforge.plantuml.project.command" --> "net.sourceforge.plantuml.utils"
-
-class "net.sourceforge.plantuml.project.core" %lighten("red", 84) {
-Total Classes: 11
-}
-"net.sourceforge.plantuml.project.core" --> "java.lang"
-"net.sourceforge.plantuml.project.core" --> "java.time"
-"net.sourceforge.plantuml.project.core" --> "java.util"
-"net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.klimt.creole"
-"net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.project"
-"net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.project.draw"
-"net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.project.lang"
-"net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.project.ngm.math"
-"net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.project.time"
-"net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.stereo"
-"net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.style"
-"net.sourceforge.plantuml.project.core" --> "net.sourceforge.plantuml.url"
-
-class "net.sourceforge.plantuml.project.data" %lighten("red", 85) {
-Total Classes: 7
-}
-"net.sourceforge.plantuml.project.data" --> "java.lang"
-"net.sourceforge.plantuml.project.data" --> "java.time"
-"net.sourceforge.plantuml.project.data" --> "java.time.temporal"
-"net.sourceforge.plantuml.project.data" --> "java.util"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.project"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.project.core"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.project.draw"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.project.draw.header"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.project.time"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.project.timescale"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.real"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.skin"
-"net.sourceforge.plantuml.project.data" --> "net.sourceforge.plantuml.style"
-
-class "net.sourceforge.plantuml.project.draw" %lighten("red", 94) {
-Total Classes: 9
-}
-"net.sourceforge.plantuml.project.draw" --> "java.lang"
-"net.sourceforge.plantuml.project.draw" --> "java.time"
-"net.sourceforge.plantuml.project.draw" --> "java.util"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.klimt"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.klimt.creole"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.klimt.sprite"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.project"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.project.core"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.project.data"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.project.lang"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.project.ngm.math"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.project.time"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.project.timescale"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.real"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.sequencediagram.graphic"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.stereo"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.style"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.svek.image"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.teavm"
-"net.sourceforge.plantuml.project.draw" --> "net.sourceforge.plantuml.url"
-
-class "net.sourceforge.plantuml.project.draw.header" %lighten("red", 72) {
-Total Classes: 5
-}
-"net.sourceforge.plantuml.project.draw.header" --> "java.lang"
-"net.sourceforge.plantuml.project.draw.header" --> "java.time"
-"net.sourceforge.plantuml.project.draw.header" --> "java.util"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.core"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.data"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.ngm.math"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.time"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.project.timescale"
-"net.sourceforge.plantuml.project.draw.header" --> "net.sourceforge.plantuml.style"
-
-class "net.sourceforge.plantuml.project.lang" %lighten("red", 78) {
-Total Classes: 106
-}
-"net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex"
-"net.sourceforge.plantuml.project.lang" --> "com.plantuml.ubrex.builder"
-"net.sourceforge.plantuml.project.lang" --> "java.lang"
-"net.sourceforge.plantuml.project.lang" --> "java.time"
-"net.sourceforge.plantuml.project.lang" --> "java.util"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.command"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.klimt.color"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project.core"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project.time"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.project.ulang"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.stereo"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.teavm"
-"net.sourceforge.plantuml.project.lang" --> "net.sourceforge.plantuml.url"
-
-class "net.sourceforge.plantuml.project.ngm" %lighten("red", 85) {
-Total Classes: 4
-}
-"net.sourceforge.plantuml.project.ngm" --> "java.lang"
-"net.sourceforge.plantuml.project.ngm" --> "java.time"
-"net.sourceforge.plantuml.project.ngm" --> "net.sourceforge.plantuml.project.ngm.math"
-
-class "net.sourceforge.plantuml.project.ngm.math" %lighten("red", 64) {
-Total Classes: 11
-}
-"net.sourceforge.plantuml.project.ngm.math" --> "java.lang"
-"net.sourceforge.plantuml.project.ngm.math" --> "java.time"
-"net.sourceforge.plantuml.project.ngm.math" --> "java.util"
-"net.sourceforge.plantuml.project.ngm.math" --> "java.util.function"
-"net.sourceforge.plantuml.project.ngm.math" --> "net.sourceforge.plantuml.project.ngm"
-
-class "net.sourceforge.plantuml.project.solver" %lighten("red", 88) {
-Total Classes: 2
-}
-"net.sourceforge.plantuml.project.solver" --> "java.lang"
-"net.sourceforge.plantuml.project.solver" --> "java.util"
-"net.sourceforge.plantuml.project.solver" --> "net.sourceforge.plantuml.project"
-"net.sourceforge.plantuml.project.solver" --> "net.sourceforge.plantuml.project.core"
-"net.sourceforge.plantuml.project.solver" --> "net.sourceforge.plantuml.project.ngm"
-"net.sourceforge.plantuml.project.solver" --> "net.sourceforge.plantuml.project.time"
-"net.sourceforge.plantuml.project.solver" --> "net.sourceforge.plantuml.teavm"
-
-class "net.sourceforge.plantuml.project.time" %lighten("red", 18) {
-Total Classes: 1
-}
-"net.sourceforge.plantuml.project.time" --> "java.lang"
-"net.sourceforge.plantuml.project.time" --> "java.time"
-
-class "net.sourceforge.plantuml.project.timescale" %lighten("red", 75) {
-Total Classes: 5
-}
-"net.sourceforge.plantuml.project.timescale" --> "java.lang"
-"net.sourceforge.plantuml.project.timescale" --> "java.time"
-"net.sourceforge.plantuml.project.timescale" --> "java.util"
-"net.sourceforge.plantuml.project.timescale" --> "net.sourceforge.plantuml.project"
-"net.sourceforge.plantuml.project.timescale" --> "net.sourceforge.plantuml.project.core"
-"net.sourceforge.plantuml.project.timescale" --> "net.sourceforge.plantuml.project.time"
-
-class "net.sourceforge.plantuml.project.ulang"{
-
-}
-
-class "net.sourceforge.plantuml.real" %lighten("red", 88) {
+class "net.sourceforge.plantuml.real" %lighten("red", 93) {
 Total Classes: 8
 }
 "net.sourceforge.plantuml.real" --> "java.lang"
 "net.sourceforge.plantuml.real" --> "java.util"
 "net.sourceforge.plantuml.real" --> "net.sourceforge.plantuml.teavm"
 
-class "net.sourceforge.plantuml.regex" %lighten("red", 35) {
+class "net.sourceforge.plantuml.regex" %lighten("red", 36) {
 Total Classes: 9
 }
 "net.sourceforge.plantuml.regex" --> "com.plantuml.ubrex"
@@ -2930,7 +2897,7 @@ Total Classes: 50
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.teavm"
 
-class "net.sourceforge.plantuml.skin" %lighten("red", 54) {
+class "net.sourceforge.plantuml.skin" %lighten("red", 55) {
 Total Classes: 34
 }
 "net.sourceforge.plantuml.skin" --> "java.io"
