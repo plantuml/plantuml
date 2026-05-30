@@ -418,7 +418,12 @@ jobs:
   # manifest list in the `docker_merge` job below.
   docker_build:
     needs: [ workflow_config, upload, test_linux ]
-    if: needs.workflow_config.outputs.do_release == 'true'
+    # Same caveat as trigger_plantuml_eclipse_release: `upload` succeeds only via
+    # !cancelled(), so depend on it explicitly rather than the implicit success check.
+    if: |
+      !cancelled()
+      && needs.workflow_config.outputs.do_release == 'true'
+      && needs.upload.result == 'success'
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
@@ -493,7 +498,10 @@ jobs:
   # publish it under the real semver tags, to Docker Hub and GHCR.
   docker_merge:
     needs: [ workflow_config, docker_build ]
-    if: needs.workflow_config.outputs.do_release == 'true'
+    if: |
+      !cancelled()
+      && needs.workflow_config.outputs.do_release == 'true'
+      && needs.docker_build.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Download digests
@@ -562,7 +570,14 @@ jobs:
 
   trigger_plantuml_eclipse_release:
     needs: [ workflow_config, upload, build_artifacts ]
-    if: needs.workflow_config.outputs.do_release == 'true'
+    # `upload` runs via !cancelled() (it traverses a skipped native job), so a
+    # plain `if: do_release == 'true'` here is silently skipped because the
+    # implicit "all needs succeeded" check fails. Re-introduce !cancelled() and
+    # gate explicitly on upload having actually succeeded.
+    if: |
+      !cancelled()
+      && needs.workflow_config.outputs.do_release == 'true'
+      && needs.upload.result == 'success'
     #if: needs.workflow_config.outputs.do_release == 'true' || needs.workflow_config.outputs.do_snapshot_release == 'true'
     uses: ./.github/workflows/trigger-plantuml-eclipse-release.yml
     with:
