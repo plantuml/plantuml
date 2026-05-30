@@ -22,37 +22,16 @@ from 2018/04/17 to 2018/04/19 is closed
 
 @startgantt
 Project starts 2025-05-25
-saturday are closed
-sunday are closed
-
 From 8:00 to 12:00 are working hours
-From 14:00 to 18:00 are working hours
 [Task 1] starts 2025-05-25
-[Task 2] starts 2025-05-25
-[Task 3] starts 2025-05-25
-[Task 4] starts 2025-05-25
-[Task 5] starts 2025-05-25
-[Task 6] starts 2025-05-25
-[Task 7] starts 2025-05-25
-[Task 8] starts 2025-05-25
-[Task 9] starts 2025-05-25
-[Task 1] requires 1 hours
-[Task 2] requires 2 hours
-[Task 3] requires 3 hours
-[Task 4] requires 4 hours
-[Task 5] requires 5 hours
-[Task 6] requires 6 hours
-[Task 7] requires 7 hours
-[Task 8] requires 8 hours
-[Task 9] requires 9 hours
-[Task 10] requires 100 hours
+[Task 1] requires 6 days
 @endgantt
 
 
 
 
  */
-public class Test_0 {
+public class Test_1 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();
