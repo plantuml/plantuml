@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.url;
 
 import java.util.List;
 
+import com.plantuml.ubrex.Capture;
 import com.plantuml.ubrex.TextNavigator;
 import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.UnicodeBracketedExpression;
@@ -207,6 +208,11 @@ public class UbrexUrlBuilder {
 
 		@Override
 		public List<String> findFirstValuesByKeyPrefix(String keyPrefix) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Capture extractByPrefix(String key) {
 			throw new UnsupportedOperationException();
 		}
 	}

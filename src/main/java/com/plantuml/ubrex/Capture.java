@@ -83,4 +83,22 @@ public class Capture {
 				return findValuesByKey(entry.getKey());
 		return null;
 	}
+
+	public Capture extractByPrefix(String keyPrefix) {
+		SafeList<CaptureEntry> result = EMPTY.entries;
+		for (CaptureEntry entry : this.entries) {
+			final CaptureEntry tmp = entry.withoutPrefixedKey(keyPrefix);
+			if (tmp != null)
+				result = result.add(tmp);
+		}
+		return new Capture(result);
+	}
+
+	public String get(String key) {
+		for (CaptureEntry entry : this.entries)
+			if (entry.getKey().equals(key))
+				return entry.getValue();
+		return null;
+	}
+
 }

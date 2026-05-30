@@ -102,6 +102,11 @@ public interface UnicodeBracketedExpression {
 						return shallWePass.findFirstValuesByKeyPrefix(keyPrefix);
 					}
 
+					@Override
+					public Capture extractByPrefix(String key) {
+						return shallWePass.extractByPrefix(key);
+					}
+
 				};
 			}
 		};
