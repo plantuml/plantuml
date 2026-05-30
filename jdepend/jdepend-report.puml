@@ -1569,8 +1569,8 @@ Total Classes: 2
 "net.sourceforge.plantuml.ftp" --> "java.lang"
 "net.sourceforge.plantuml.ftp" --> "net.sourceforge.plantuml.log"
 
-class "net.sourceforge.plantuml.gantt" %lighten("red", 92) {
-Total Classes: 16
+class "net.sourceforge.plantuml.gantt" %lighten("red", 91) {
+Total Classes: 17
 }
 "net.sourceforge.plantuml.gantt" --> "java.lang"
 "net.sourceforge.plantuml.gantt" --> "java.time"

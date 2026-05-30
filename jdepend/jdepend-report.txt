@@ -5261,8 +5261,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 16
-    Concrete Classes: 14
+    Total Classes: 17
+    Concrete Classes: 15
     Abstract Classes: 2
 
     Ca: 8
@@ -5270,7 +5270,7 @@ Stats:
 
     A: 0.12
     I: 0.79
-    D: 0.08
+    D: 0.09
 
 Abstract Classes:
     net.sourceforge.plantuml.gantt.GanttStyle
@@ -5290,6 +5290,7 @@ Concrete Classes:
     net.sourceforge.plantuml.gantt.GanttLayout
     net.sourceforge.plantuml.gantt.LabelPosition
     net.sourceforge.plantuml.gantt.LabelStrategy
+    net.sourceforge.plantuml.gantt.OpenClose
     net.sourceforge.plantuml.gantt.Today
 
 Depends Upon:
@@ -14838,7 +14839,7 @@ net.sourceforge.plantuml.flashcode,3,1,0,3,0.33,1,0.33,1
 net.sourceforge.plantuml.flowdiagram,6,0,0,19,0,1,0,1
 net.sourceforge.plantuml.font,2,0,0,7,0,1,0,1
 net.sourceforge.plantuml.ftp,2,0,0,3,0,1,0,1
-net.sourceforge.plantuml.gantt,16,2,8,31,0.12,0.79,0.08,1
+net.sourceforge.plantuml.gantt,17,2,8,31,0.12,0.79,0.09,1
 net.sourceforge.plantuml.gantt.command,14,0,1,19,0,0.95,0.05,1
 net.sourceforge.plantuml.gantt.core,11,3,9,12,0.27,0.57,0.16,1
 net.sourceforge.plantuml.gantt.data,8,0,3,19,0,0.86,0.14,1

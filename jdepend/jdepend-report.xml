@@ -7912,14 +7912,14 @@
 
         <Package name="net.sourceforge.plantuml.gantt">
             <Stats>
-                <TotalClasses>16</TotalClasses>
-                <ConcreteClasses>14</ConcreteClasses>
+                <TotalClasses>17</TotalClasses>
+                <ConcreteClasses>15</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>8</Ca>
                 <Ce>31</Ce>
                 <A>0.12</A>
                 <I>0.79</I>
-                <D>0.08</D>
+                <D>0.09</D>
                 <V>1</V>
             </Stats>
 
@@ -7971,6 +7971,9 @@
                 </Class>
                 <Class sourceFile="LabelStrategy.java">
                     net.sourceforge.plantuml.gantt.LabelStrategy
+                </Class>
+                <Class sourceFile="OpenClose.java">
+                    net.sourceforge.plantuml.gantt.OpenClose
                 </Class>
                 <Class sourceFile="Today.java">
                     net.sourceforge.plantuml.gantt.Today
