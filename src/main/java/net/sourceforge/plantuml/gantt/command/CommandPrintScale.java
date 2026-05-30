@@ -81,7 +81,8 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String scaleString = arg.get("SCALE", 0);
 		final PrintScale scale = PrintScale.fromString(scaleString);
 		diagram.setPrintScale(scale);

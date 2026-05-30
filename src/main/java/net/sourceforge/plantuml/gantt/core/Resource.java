@@ -88,7 +88,7 @@ public class Resource {
 	public void addCloseDay(LocalDate day) {
 		openClose.close(day);
 	}
-	
+
 	public void addForceOnDay(LocalDate day) {
 		openClose.open(day);
 	}

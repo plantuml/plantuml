@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.gantt.draw.header;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
 
 import net.sourceforge.plantuml.gantt.data.DayCalendarData;
 import net.sourceforge.plantuml.gantt.data.TimeBoundsData;
@@ -45,7 +44,7 @@ import net.sourceforge.plantuml.gantt.data.TimelineStyleData;
 import net.sourceforge.plantuml.gantt.data.WeekConfigData;
 import net.sourceforge.plantuml.gantt.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
-import net.sourceforge.plantuml.gantt.time.TimeStringUtils;
+import net.sourceforge.plantuml.gantt.time.TimePointFormat;
 import net.sourceforge.plantuml.gantt.timescale.TimeScale;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -53,7 +52,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.SName;
-import net.sourceforge.plantuml.utils.I18nTimeData;
 
 class TimeHeaderWeekly extends TimeHeaderCalendar {
 
@@ -62,19 +60,19 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
 	}
 
-	private double getH1(StringBounder stringBounder) {
+	private double getH1() {
 		final double h = timelineStyle.getFontSizeMonth() + 4;
 		return h;
 	}
 
-	private double getH2(StringBounder stringBounder) {
+	private double getH2() {
 		final double h = timelineStyle.getFontSizeDay() + 1;
-		return getH1(stringBounder) + h;
+		return getH1() + h;
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		return getH2(stringBounder);
+		return getH2();
 	}
 
 	@Override
@@ -106,7 +104,7 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 		printNamedDays(ug);
 
 		drawHline(ug, 0);
-		drawHline(ug, getH1(ug.getStringBounder()));
+		drawHline(ug, getH1());
 		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
 	}
 
@@ -120,23 +118,23 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printMonths(final UGraphic ug) {
 		final FontConfiguration fc = getFontConfigurationSLOW(SName.month, true, openFontColor());
 
-		YearMonth last = null;
+		TimePoint last = null;
 		double lastChangeMonth = -1;
 
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
-			if (wink.monthYear().equals(last) == false) {
-				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));
+			if (last == null || wink.monthYear().equals(last.monthYear()) == false) {
+				drawVline(ug.apply(getLineColor()), x1, 0, getH1());
 				if (last != null)
 					printMonth(ug, last, lastChangeMonth, x1, fc);
 
 				lastChangeMonth = x1;
-				last = wink.monthYear();
+				last = wink;
 			}
 		}
 		final double end = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
-		drawVline(ug.apply(getLineColor()), end, 0, getH1(ug.getStringBounder()));
+		drawVline(ug.apply(getLineColor()), end, 0, getH1());
 		final double x1 = end;
 		if (last != null && x1 > lastChangeMonth)
 			printMonth(ug, last, lastChangeMonth, x1, fc);
@@ -148,12 +146,12 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			if (wink.toDayOfWeek() == weekConfigData.getWeekNumberStrategy().getFirstDayOfWeek())
-				drawVline(ug.apply(getLineColor()), getTimeScale().getPosition(wink), getH1(ug.getStringBounder()),
+				drawVline(ug.apply(getLineColor()), getTimeScale().getPosition(wink), getH1(),
 						totalHeightWithoutFooter);
 		}
 
 		final double end = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
-		drawVline(ug.apply(getLineColor()), end, getH1(ug.getStringBounder()), totalHeightWithoutFooter);
+		drawVline(ug.apply(getLineColor()), end, getH1(), totalHeightWithoutFooter);
 		super.printVerticalSeparators(ug, totalHeightWithoutFooter);
 	}
 
@@ -172,16 +170,15 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 				else
 					num = "" + wink.getWeekOfYear(weekConfigData.getWeekNumberStrategy());
 				final TextBlock textBlock = getTextBlockSLOW(num, fc);
-				printLeft(ug.apply(UTranslate.dy(getH1(ug.getStringBounder()))), textBlock,
+				printLeft(ug.apply(UTranslate.dy(getH1())), textBlock,
 						getTimeScale().getPosition(wink) + 5);
 			}
 		}
 	}
 
-	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
-		final TextBlock small = getTextBlockSLOW(I18nTimeData.shortName(monthYear.getMonth(), locale()), fc);
-		final TextBlock big = getTextBlockSLOW(TimeStringUtils.shortNameYYYY(monthYear, locale()), fc);
-		printCentered(ug, false, start, end, small, big);
+	private void printMonth(UGraphic ug, TimePoint monthYear, double start, double end, FontConfiguration fc) {
+		printCentered(ug, false, start, end, monthYear, fc, TimePointFormat.MONTH_SHORT,
+				TimePointFormat.MONTH_YEAR_SHORT);
 	}
 
 	private void printLeft(UGraphic ug, TextBlock text, double start) {

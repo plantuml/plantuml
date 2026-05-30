@@ -5,6 +5,7 @@
     <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="32" x="160" y="39"/>
     <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="32" x="272" y="39"/>
     <rect fill="#FFA500" height="30" style="stroke:none;stroke-width:1;" width="16" x="384" y="39"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="85.6" x="157.2" y="9.3333">December 2018</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="0.5" y="21.7778">We</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="18.1667" y="21.7778">Th</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="9.4167" x="35.2917" y="21.7778">Fr</text>
@@ -55,7 +56,6 @@
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="354.4167" y="33.7778">27</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="370.4167" y="33.7778">28</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="386.4167" y="33.7778">29</text>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="85.6" x="157.2" y="9.3333">December 2018</text>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="39" y2="69"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="39" y2="69"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="39" y2="69"/>

@@ -82,7 +82,7 @@ public abstract class AbstractTask implements Task {
 	public String getDisplayString() {
 		return this.displayString;
 	}
-	
+
 	@Override
 	public Stereotype getStereotype() {
 		return stereotype;
@@ -92,6 +92,5 @@ public abstract class AbstractTask implements Task {
 	public final void setStereotype(Stereotype stereotype) {
 		this.stereotype = stereotype;
 	}
-
 
 }

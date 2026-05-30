@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt.draw.header;
 
-import java.time.LocalDate;
-
 import net.sourceforge.plantuml.gantt.data.DayCalendarData;
 import net.sourceforge.plantuml.gantt.data.TimeBoundsData;
 import net.sourceforge.plantuml.gantt.data.TimeScaleConfigData;
@@ -83,8 +81,9 @@ public class TimeHeaderFactory {
 		if (dayCalendar.hasWorkingTimeRanges()) {
 			final WorkingHours workingHours = dayCalendar.buildWorkingHours(dayWidth, closeFactor);
 			return new TimeHeaderVariant(
-					new VariantTimeScale(timeBounds.getMinDay(), timeBounds.getMaxDay(), workingHours), weekConfig,
-					dayCalendar, timeBounds, scaleConfig, timelineStyle, workingHours);
+					new VariantTimeScale(timeBounds.getMinDay(), timeBounds.getMaxDay(), workingHours,
+							dayCalendar.getOpenClose()),
+					weekConfig, dayCalendar, timeBounds, scaleConfig, timelineStyle, workingHours);
 		}
 
 		switch (scaleConfig.getPrintScale()) {

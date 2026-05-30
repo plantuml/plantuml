@@ -47,7 +47,6 @@ import java.util.Locale;
 
 import net.sourceforge.plantuml.gantt.PValue;
 import net.sourceforge.plantuml.gantt.core.PrintScale;
-import net.sourceforge.plantuml.utils.I18nTimeData;
 
 public class TimePoint implements Comparable<TimePoint>, PValue {
 
@@ -106,7 +105,7 @@ public class TimePoint implements Comparable<TimePoint>, PValue {
 	}
 
 	public String toStringShort(Locale locale) {
-		return I18nTimeData.shortName(monthYear().getMonth(), locale) + " " + getDayOfMonth();
+		return TimePointFormat.MONTH_SHORT.format(this, locale) + " " + getDayOfMonth();
 	}
 
 	public int getWeekOfYear(WeekNumberStrategy strategy) {
@@ -136,6 +135,10 @@ public class TimePoint implements Comparable<TimePoint>, PValue {
 
 	public int year() {
 		return monthYear().getYear();
+	}
+
+	public String quarter() {
+		return "Q" + ((month().ordinal() + 3) / 3);
 	}
 
 	@Override

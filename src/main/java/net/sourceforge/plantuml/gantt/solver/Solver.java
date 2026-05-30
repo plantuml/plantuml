@@ -75,7 +75,8 @@ public class Solver {
 		if (values.size() > 2)
 			removeFirstElement();
 
-		if (TeaVM.a()) assert values.size() <= 2;
+		if (TeaVM.a())
+			assert values.size() <= 2;
 
 	}
 

@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.gantt.draw.header;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
 public interface HeaderPiece {
-	
+
 	public double getHeight(Object ctx);
 
 	public void drawU(UGraphic ug, Object ctx);

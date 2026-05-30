@@ -82,8 +82,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	private final Collection<GanttConstraint> constraints;
 
 	public TaskDrawRegular(HColorSet colorSet, TimeScale timeScale, Real y, String prettyDisplay, TimePoint start,
-			TimePoint end, boolean oddStart, boolean oddEnd, ISkinParam skinParam, Task task, TaskDrawRegistryData toTaskDraw,
-			Collection<GanttConstraint> constraints, StyleBuilder styleBuilder) {
+			TimePoint end, boolean oddStart, boolean oddEnd, ISkinParam skinParam, Task task,
+			TaskDrawRegistryData toTaskDraw, Collection<GanttConstraint> constraints, StyleBuilder styleBuilder) {
 		super(colorSet, timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinParam);
 		this.constraints = constraints;
 		this.end = end;
@@ -174,7 +174,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		}
 
 		if (note != null) {
-			final double noteEnd = timeScale.getPosition(start) + getOpaleNote().calculateDimension(stringBounder).getWidth();
+			final double noteEnd = timeScale.getPosition(start)
+					+ getOpaleNote().calculateDimension(stringBounder).getWidth();
 			if (noteEnd - barsWidth > overflow)
 				overflow = noteEnd - barsWidth;
 		}

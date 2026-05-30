@@ -54,7 +54,7 @@ public class PiecewiseTimeProjection {
 	public PixelInstant getEnd() {
 		return end;
 	}
-	
+
 	public boolean contains(TimePoint instant) {
 		final TimePoint startInstant = start.getInstant();
 		final TimePoint endInstant = end.getInstant();

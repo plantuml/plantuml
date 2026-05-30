@@ -41,11 +41,15 @@ import java.time.LocalDateTime;
 /**
  * Represents a fixed-duration task in the New Gantt Model (NGM).
  *
- * <p>In a fixed-duration task, the calendar span between start and end is
+ * <p>
+ * In a fixed-duration task, the calendar span between start and end is
  * intrinsic and does not change. The load becomes a derived quantity that
- * depends on the workload allocation.</p>
+ * depends on the workload allocation.
+ * </p>
  *
- * <p>Example: "Crossing the Atlantic takes 7 days regardless of crew size".</p>
+ * <p>
+ * Example: "Crossing the Atlantic takes 7 days regardless of crew size".
+ * </p>
  *
  * @see NGMTask
  */

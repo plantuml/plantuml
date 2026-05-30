@@ -76,7 +76,7 @@ public class DayPattern {
 				TimeResolution.toUbrexB_YYYY_MM_DD(yearKeyB, monthKeyB, dayKeyB),
 				TimeResolution.toUbrexC_MONTH_DD_YYYY(yearKeyC, monthKeyC, dayKeyC));
 	}
-	
+
 	public LocalDate getDay(Capture arg) {
 		if (arg.get(dayKeyA) != null)
 			return resultA(arg);
@@ -88,7 +88,6 @@ public class DayPattern {
 			return resultC(arg);
 		return null;
 	}
-
 
 	public LocalDate getDay(UMatcher arg) {
 		if (arg.get(dayKeyA, 0) != null)
@@ -144,6 +143,5 @@ public class DayPattern {
 		final int year = Integer.parseInt(arg.get(yearKeyC, 0));
 		return LocalDate.of(year, month, day);
 	}
-
 
 }

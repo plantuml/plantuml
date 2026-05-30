@@ -558,7 +558,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	}
 
 	public CommandExecutionResult addWorkingTimeRange(TimeRange timeRange) {
-	    this.dayCalendar.addWorkingTimeRange(timeRange);
-	    return CommandExecutionResult.ok();
+		this.dayCalendar.addWorkingTimeRange(timeRange);
+		return CommandExecutionResult.ok();
 	}
 }

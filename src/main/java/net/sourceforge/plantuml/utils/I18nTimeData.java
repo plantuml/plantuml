@@ -5,10 +5,104 @@ import java.time.Month;
 import java.util.Locale;
 
 // Generated — do not edit
-// Build by I18nDataTimeGenerator
+// Build by I18nTimeDataGenerator
 public class I18nTimeData {
 
-	public static String shortName(DayOfWeek dayOfWeek, Locale locale) {
+	public static String dayOfWeekLong(DayOfWeek dayOfWeek, Locale locale) {
+		final String lang = locale.getLanguage();
+		switch (lang) {
+		case "de":
+			switch (dayOfWeek) {
+			case MONDAY: return "Montag";
+			case TUESDAY: return "Dienstag";
+			case WEDNESDAY: return "Mittwoch";
+			case THURSDAY: return "Donnerstag";
+			case FRIDAY: return "Freitag";
+			case SATURDAY: return "Samstag";
+			case SUNDAY: return "Sonntag";
+			}
+			break;
+		case "es":
+			switch (dayOfWeek) {
+			case MONDAY: return "lunes";
+			case TUESDAY: return "martes";
+			case WEDNESDAY: return "miércoles";
+			case THURSDAY: return "jueves";
+			case FRIDAY: return "viernes";
+			case SATURDAY: return "sábado";
+			case SUNDAY: return "domingo";
+			}
+			break;
+		case "fr":
+			switch (dayOfWeek) {
+			case MONDAY: return "lundi";
+			case TUESDAY: return "mardi";
+			case WEDNESDAY: return "mercredi";
+			case THURSDAY: return "jeudi";
+			case FRIDAY: return "vendredi";
+			case SATURDAY: return "samedi";
+			case SUNDAY: return "dimanche";
+			}
+			break;
+		case "ja":
+			switch (dayOfWeek) {
+			case MONDAY: return "月曜日";
+			case TUESDAY: return "火曜日";
+			case WEDNESDAY: return "水曜日";
+			case THURSDAY: return "木曜日";
+			case FRIDAY: return "金曜日";
+			case SATURDAY: return "土曜日";
+			case SUNDAY: return "日曜日";
+			}
+			break;
+		case "ko":
+			switch (dayOfWeek) {
+			case MONDAY: return "월요일";
+			case TUESDAY: return "화요일";
+			case WEDNESDAY: return "수요일";
+			case THURSDAY: return "목요일";
+			case FRIDAY: return "금요일";
+			case SATURDAY: return "토요일";
+			case SUNDAY: return "일요일";
+			}
+			break;
+		case "ru":
+			switch (dayOfWeek) {
+			case MONDAY: return "понедельник";
+			case TUESDAY: return "вторник";
+			case WEDNESDAY: return "среда";
+			case THURSDAY: return "четверг";
+			case FRIDAY: return "пятница";
+			case SATURDAY: return "суббота";
+			case SUNDAY: return "воскресенье";
+			}
+			break;
+		case "zh":
+			switch (dayOfWeek) {
+			case MONDAY: return "星期一";
+			case TUESDAY: return "星期二";
+			case WEDNESDAY: return "星期三";
+			case THURSDAY: return "星期四";
+			case FRIDAY: return "星期五";
+			case SATURDAY: return "星期六";
+			case SUNDAY: return "星期日";
+			}
+			break;
+		}
+		// Fallback: English long form
+		switch (dayOfWeek) {
+		case MONDAY: return "Monday";
+		case TUESDAY: return "Tuesday";
+		case WEDNESDAY: return "Wednesday";
+		case THURSDAY: return "Thursday";
+		case FRIDAY: return "Friday";
+		case SATURDAY: return "Saturday";
+		case SUNDAY: return "Sunday";
+		}
+		throw new IllegalArgumentException();
+	}
+
+	public static String dayOfWeekShort(DayOfWeek dayOfWeek, Locale locale) {
 		final String lang = locale.getLanguage();
 		switch (lang) {
 		case "de":
@@ -102,7 +196,7 @@ public class I18nTimeData {
 		throw new IllegalArgumentException();
 	}
 
-	public static String shortName(Month month, Locale locale) {
+	public static String monthShort(Month month, Locale locale) {
 		final String lang = locale.getLanguage();
 		switch (lang) {
 		case "de":
@@ -236,7 +330,7 @@ public class I18nTimeData {
 		throw new IllegalArgumentException();
 	}
 
-	public static String longName(Month month, Locale locale) {
+	public static String monthLong(Month month, Locale locale) {
 		final String lang = locale.getLanguage();
 		switch (lang) {
 		case "de":

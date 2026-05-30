@@ -83,11 +83,13 @@ public class I18nTimeDataGenerator {
 
 		try (PrintStream out = new PrintStream(new FileOutputStream(output), false, StandardCharsets.UTF_8.name())) {
 			emitHeader(out);
-			emitDayOfWeekMethod(out);
+			emitDayOfWeekLongMethod(out);
 			out.println();
-			emitMonthMethod(out);
+			emitDayOfWeekShortMethod(out);
 			out.println();
-			emitMonthLongNameMethod(out);
+			emitMonthShortMethod(out);
+			out.println();
+			emitMonthLongMethod(out);
 			emitFooter(out);
 		}
 
@@ -102,7 +104,7 @@ public class I18nTimeDataGenerator {
 		out.println("import java.util.Locale;");
 		out.println();
 		out.println("// Generated \u2014 do not edit");
-		out.println("// Build by I18nDataTimeGenerator");
+		out.println("// Build by I18nTimeDataGenerator");
 		out.println("public class I18nTimeData {");
 		out.println();
 	}
@@ -111,8 +113,37 @@ public class I18nTimeDataGenerator {
 		out.println("}");
 	}
 
-	private static void emitDayOfWeekMethod(PrintStream out) {
-		out.println("\tpublic static String shortName(DayOfWeek dayOfWeek, Locale locale) {");
+	private static void emitDayOfWeekLongMethod(PrintStream out) {
+		out.println("\tpublic static String dayOfWeekLong(DayOfWeek dayOfWeek, Locale locale) {");
+		out.println("\t\tfinal String lang = locale.getLanguage();");
+		out.println("\t\tswitch (lang) {");
+		for (String lang : LANGUAGES) {
+			if ("en".equals(lang))
+				continue;
+			final Locale loc = Locale.forLanguageTag(lang);
+			out.println("\t\tcase \"" + lang + "\":");
+			out.println("\t\t\tswitch (dayOfWeek) {");
+			for (DayOfWeek d : DayOfWeek.values()) {
+				final String longName = dayLongName(d, loc);
+				out.println("\t\t\tcase " + d.name() + ": return \"" + escape(longName) + "\";");
+			}
+			out.println("\t\t\t}");
+			out.println("\t\t\tbreak;");
+		}
+		out.println("\t\t}");
+		out.println("\t\t// Fallback: English long form");
+		out.println("\t\tswitch (dayOfWeek) {");
+		for (DayOfWeek d : DayOfWeek.values()) {
+			final String longName = dayLongName(d, Locale.ENGLISH);
+			out.println("\t\tcase " + d.name() + ": return \"" + escape(longName) + "\";");
+		}
+		out.println("\t\t}");
+		out.println("\t\tthrow new IllegalArgumentException();");
+		out.println("\t}");
+	}
+
+	private static void emitDayOfWeekShortMethod(PrintStream out) {
+		out.println("\tpublic static String dayOfWeekShort(DayOfWeek dayOfWeek, Locale locale) {");
 		out.println("\t\tfinal String lang = locale.getLanguage();");
 		out.println("\t\tswitch (lang) {");
 		for (String lang : LANGUAGES) {
@@ -141,8 +172,8 @@ public class I18nTimeDataGenerator {
 		out.println("\t}");
 	}
 
-	private static void emitMonthMethod(PrintStream out) {
-		out.println("\tpublic static String shortName(Month month, Locale locale) {");
+	private static void emitMonthShortMethod(PrintStream out) {
+		out.println("\tpublic static String monthShort(Month month, Locale locale) {");
 		out.println("\t\tfinal String lang = locale.getLanguage();");
 		out.println("\t\tswitch (lang) {");
 		for (String lang : LANGUAGES) {
@@ -170,8 +201,8 @@ public class I18nTimeDataGenerator {
 		out.println("\t}");
 	}
 
-	private static void emitMonthLongNameMethod(PrintStream out) {
-		out.println("\tpublic static String longName(Month month, Locale locale) {");
+	private static void emitMonthLongMethod(PrintStream out) {
+		out.println("\tpublic static String monthLong(Month month, Locale locale) {");
 		out.println("\t\tfinal String lang = locale.getLanguage();");
 		out.println("\t\tswitch (lang) {");
 		for (String lang : LANGUAGES) {
@@ -216,6 +247,12 @@ public class I18nTimeDataGenerator {
 		if (s.length() > 2)
 			return s.substring(0, 2);
 		return s;
+	}
+
+	private static String dayLongName(DayOfWeek d, Locale locale) {
+		if (locale == Locale.ENGLISH || "en".equals(locale.getLanguage()))
+			return capitalize(d.name());
+		return d.getDisplayName(TextStyle.FULL_STANDALONE, locale);
 	}
 
 	private static String monthShortName(Month m, Locale locale) {

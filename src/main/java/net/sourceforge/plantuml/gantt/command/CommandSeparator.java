@@ -59,7 +59,8 @@ public class CommandSeparator extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String comment = arg.get("COMMENT", 1);
 		diagram.addSeparator(comment);
 		return CommandExecutionResult.ok();

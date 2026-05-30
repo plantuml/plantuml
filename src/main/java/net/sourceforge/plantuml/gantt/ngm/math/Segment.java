@@ -415,7 +415,6 @@ public final class Segment {
 		}
 	}
 
-
 	public LocalDateTime computeClampedStart(LocalDateTime current) {
 		if (direction == TimeDirection.FORWARD)
 			return current.isAfter(startExclusive()) ? current : startExclusive();

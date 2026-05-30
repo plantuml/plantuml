@@ -42,10 +42,10 @@ import java.util.Iterator;
  * A piecewise constant function defined on a {@link LocalDateTime} axis.
  *
  * <p>
- * This abstraction is intended to model human workload allocation over time.
- * In many planning scenarios, a person's effective contribution is constant
- * over a given period (for example, a week, a sprint, or a contractual interval),
- * and may change only at discrete boundaries.
+ * This abstraction is intended to model human workload allocation over time. In
+ * many planning scenarios, a person's effective contribution is constant over a
+ * given period (for example, a week, a sprint, or a contractual interval), and
+ * may change only at discrete boundaries.
  * </p>
  *
  */
@@ -54,19 +54,20 @@ public interface PiecewiseConstant {
 	Segment segmentAt(LocalDateTime instant, TimeDirection direction);
 
 	/**
-	 * Returns an iterator over segments in ascending chronological order, starting from
-	 * the segment that contains the given instant.
+	 * Returns an iterator over segments in ascending chronological order, starting
+	 * from the segment that contains the given instant.
 	 *
 	 * <p>
-	 * <strong>Important:</strong> The first segment returned by this iterator is the segment
-	 * that contains {@code instant}, but this segment does <strong>not necessarily start</strong>
-	 * at {@code instant}. The segment may have started before {@code instant} and
-	 * extends beyond it. Subsequent segments follow in chronological order.
+	 * <strong>Important:</strong> The first segment returned by this iterator is
+	 * the segment that contains {@code instant}, but this segment does <strong>not
+	 * necessarily start</strong> at {@code instant}. The segment may have started
+	 * before {@code instant} and extends beyond it. Subsequent segments follow in
+	 * chronological order.
 	 * </p>
 	 *
 	 * <p>
-	 * This method is intended for efficient forward traversal when computing or aggregating
-	 * workload over time windows without materializing all segments.
+	 * This method is intended for efficient forward traversal when computing or
+	 * aggregating workload over time windows without materializing all segments.
 	 * </p>
 	 *
 	 * <p>
@@ -75,11 +76,9 @@ public interface PiecewiseConstant {
 	 * </p>
 	 *
 	 * @param instant the instant from which to begin iteration; the first segment
-	 *                      returned will be the one containing this instant
+	 *                returned will be the one containing this instant
 	 * @return an iterator over segments containing and following the given instant
 	 */
 	Iterator<Segment> iterateSegmentsFrom(LocalDateTime instant, TimeDirection direction);
-	
-	
 
 }

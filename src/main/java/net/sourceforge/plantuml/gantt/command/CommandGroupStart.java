@@ -64,7 +64,8 @@ public class CommandGroupStart extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String name = arg.get("NAME", 0);
 		return diagram.addGroup(TaskCode.fromId(name));
 	}

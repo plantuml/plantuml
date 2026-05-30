@@ -37,36 +37,41 @@ package net.sourceforge.plantuml.gantt.timescale;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
+import net.sourceforge.plantuml.gantt.OpenClose;
 import net.sourceforge.plantuml.gantt.data.WorkingHours;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 
 public class VariantTimeScale implements TimeScale {
 
-	final private LocalDate min;
-	final private LocalDate max;
-	final private WorkingHours workingHours;
+	private final LocalDate min;
+	private final LocalDate max;
+	private final WorkingHours workingHours;
+	private final OpenClose openClose;
 
-	public VariantTimeScale(LocalDate min, LocalDate max, WorkingHours workingHours) {
+	public VariantTimeScale(LocalDate min, LocalDate max, WorkingHours workingHours, OpenClose openClose) {
 		this.min = min;
 		this.max = max;
 		this.workingHours = workingHours;
-		System.out.println("VariantTimeScale " + workingHours);
+		this.openClose = openClose;
 	}
 
 	@Override
 	public double getPosition(TimePoint instant) {
 		final LocalDateTime timeOnly = instant.toLocalDateTime();
 		final LocalDate dateOnly = instant.toDay();
-		final long daysBetween = ChronoUnit.DAYS.between(min, dateOnly);
-		return daysBetween * workingHours.getWorkingDurationForOneDay()
-				+ workingHours.getPartialDayWidth(timeOnly.toLocalTime());
+		double tmp = 0;
+		for (LocalDate dd = min; dd.isBefore(dateOnly); dd = dd.plusDays(1))
+			tmp += workingHours.getWorkingDurationForOneDay(openClose.isClosed(dd));
+
+		return tmp + workingHours.getPartialDayWidth(timeOnly.toLocalTime());
 	}
 
 	@Override
 	public double getWidth(TimePoint instant) {
-		return workingHours.getWorkingDurationForOneDay();
+		System.err.println("VariantTimeScale::instant=" + instant + " " + instant.toDay());
+		final boolean isClosed = openClose.isClosed(instant.toDay());
+		return workingHours.getWorkingDurationForOneDay(isClosed);
 	}
 
 	@Override

@@ -180,8 +180,8 @@ public final class Fraction implements Comparable<Fraction> {
 	}
 
 	/**
-	 * Multiplies this fraction by a long integer, avoiding the overhead of
-	 * creating an intermediate {@link Fraction} object.
+	 * Multiplies this fraction by a long integer, avoiding the overhead of creating
+	 * an intermediate {@link Fraction} object.
 	 *
 	 * @param scalar the integer to multiply with
 	 * @return the product of this fraction and the scalar

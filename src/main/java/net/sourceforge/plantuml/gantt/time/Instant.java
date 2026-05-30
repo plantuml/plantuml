@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.gantt.time;
 import net.sourceforge.plantuml.gantt.PValue;
 
 public class Instant implements Comparable<Instant>, PValue {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final long ms;
 

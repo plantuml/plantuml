@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.gantt.draw.header;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.gantt.data.TimeScaleConfigData;
 import net.sourceforge.plantuml.gantt.data.TimelineStyleData;
 import net.sourceforge.plantuml.gantt.data.WeekConfigData;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.gantt.time.TimePointFormat;
 import net.sourceforge.plantuml.gantt.timescale.TimeScale;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -236,18 +238,15 @@ public abstract class TimeHeader {
 		return getFontConfiguration(font, bold, color);
 	}
 
-	protected final void printCentered(UGraphic ug, TextBlock text, double start, double end) {
-		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();
-		final double available = end - start;
-		final double diff = Math.max(0, available - width);
-		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));
+	protected Locale locale() {
+		return null;
 	}
 
-	protected final void printCentered(UGraphic ug, boolean hideIfTooBig, double start, double end,
-			TextBlock... texts) {
+	protected final void printCentered(UGraphic ug, boolean hideIfTooBig, double start, double end, TimePoint when,
+			FontConfiguration fc, TimePointFormat... format) {
 		final double available = end - start;
-		for (int i = texts.length - 1; i >= 0; i--) {
-			final TextBlock text = texts[i];
+		for (int i = format.length - 1; i >= 0; i--) {
+			final TextBlock text = getTextBlockSLOW(format[i].format(when, locale()), fc);
 			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();
 			if ((i == 0 && hideIfTooBig == false) || width <= available) {
 				final double diff = Math.max(0, available - width);
@@ -255,6 +254,7 @@ public abstract class TimeHeader {
 				return;
 			}
 		}
+
 	}
 
 	protected final void drawRectangle(UGraphic ug, double height, double x1, double x2) {

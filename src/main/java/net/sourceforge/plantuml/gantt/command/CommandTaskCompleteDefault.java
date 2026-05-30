@@ -69,8 +69,8 @@ public class CommandTaskCompleteDefault extends SingleLineCommand2<GanttDiagram>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 
 		final int value = Integer.parseInt(arg.get("VALUE", 0));
 		if (value > 100)

@@ -45,7 +45,7 @@ public enum GSide {
 	public boolean isTop() {
 		return this == TOP_LEFT || this == TOP_RIGHT;
 	}
-	
+
 	public GSide reverseBottomTop() {
 		if (this == BOTTOM_LEFT)
 			return TOP_LEFT;
