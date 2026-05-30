@@ -5,14 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.gantt.OpenClose;
 import net.sourceforge.plantuml.gantt.core.TimeRange;
+import net.sourceforge.plantuml.gantt.core.TimeRanges;
 import net.sourceforge.plantuml.gantt.data.WorkingHours;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 
@@ -28,7 +27,7 @@ class VariantTimeScaleTest2 {
 		double dayWidth = 240.0;
 		double closeFactor = 0.1;
 
-		final List<TimeRange> ranges = new ArrayList<>();
+		final TimeRanges ranges = new TimeRanges();
 		ranges.add(new TimeRange(LocalTime.of(8, 0), LocalTime.of(12, 0)));
 		ranges.add(new TimeRange(LocalTime.of(14, 0), LocalTime.of(18, 0)));
 		workingHours = new WorkingHours(ranges, dayWidth, closeFactor);

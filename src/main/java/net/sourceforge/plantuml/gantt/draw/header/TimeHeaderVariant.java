@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.gantt.timescale.VariantTimeScale;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
-import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -91,8 +90,9 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-		final double h = timelineStyle.getFontSizeDay();
-		return h + 6;
+//		final double h = timelineStyle.getFontSizeDay();
+//		return h + 6;
+		return 0;
 	}
 
 	private double getHeaderNameDayHeight() {
@@ -274,11 +274,10 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 
 	private void drawNonWorkingPeriod(UGraphic ug, double height) {
 		// double height = timelineStyle.getFontSizeDay() * 2 + 6;
-		final HColor backColor = HColorSet.instance().getColorOrWhite("#FFE5E5");
-		// final HColor backColor = HColorSet.instance().getColorOrWhite("#F4FFFF");
+		final HColor backColor = closedBackgroundColor();
 
 		ug = ug.apply(backColor).apply(backColor.bg());
-		ug = ug.apply(UTranslate.dy(getH1()));
+		ug = ug.apply(UTranslate.dy(getH3()));
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);

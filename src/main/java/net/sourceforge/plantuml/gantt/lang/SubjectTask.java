@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.gantt.lang;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,11 +58,11 @@ import net.sourceforge.plantuml.gantt.DaysAsDates;
 import net.sourceforge.plantuml.gantt.Failable;
 import net.sourceforge.plantuml.gantt.GanttConstraint;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
-import net.sourceforge.plantuml.gantt.Load;
 import net.sourceforge.plantuml.gantt.core.Task;
 import net.sourceforge.plantuml.gantt.core.TaskAttribute;
 import net.sourceforge.plantuml.gantt.core.TaskCode;
 import net.sourceforge.plantuml.gantt.core.TaskInstant;
+import net.sourceforge.plantuml.gantt.ngm.Load;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 import net.sourceforge.plantuml.gantt.ulang.VerbPhraseAction;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -189,7 +190,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
-				task.setLoad(Load.ofDays(1));
+				task.setLoad(Load.of(Duration.ofDays(1)));
 				final LocalDate start = (LocalDate) complement;
 				task.setStart(TimePoint.ofStartOfDay(start));
 				task.setDiamond(true);
@@ -202,7 +203,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
 				final Task task = (Task) subject;
-				task.setLoad(Load.ofDays(1));
+				task.setLoad(Load.of(Duration.ofDays(1)));
 				task.setDiamond(true);
 				final TaskInstant when = (TaskInstant) complement;
 				if (when.getAttribute() == TaskAttribute.END)

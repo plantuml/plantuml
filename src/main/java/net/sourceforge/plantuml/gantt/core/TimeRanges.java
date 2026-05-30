@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,40 +30,56 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.gantt;
+package net.sourceforge.plantuml.gantt.core;
 
-import net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
-public class Load implements PValue {
+public class TimeRanges implements Iterable<TimeRange> {
 
-	private final NGMTotalEffort effort;
+	private final List<TimeRange> timeRanges = new ArrayList<>();
 
-	private Load(NGMTotalEffort effort) {
-		this.effort = effort;
+	public TimeRanges(TimeRange... data) {
+		for (TimeRange tr : data)
+			timeRanges.add(tr);
 	}
 
-	public static Load of(NGMTotalEffort totalEffort) {
-		return new Load(totalEffort);
+	public boolean hasWorkingTimeRanges() {
+		return timeRanges.size() > 0;
 	}
 
-	public static Load ofDays(int days) {
-		return new Load(NGMTotalEffort.ofDays(days));
-	}
-
-	public static Load ofDaysAndHours(int days, int hours) {
-		return new Load(NGMTotalEffort.ofDaysAndHours(days, hours));
+	public void add(TimeRange timeRange) {
+		this.timeRanges.add(timeRange);
 	}
 
 	@Override
 	public String toString() {
-		return "(" + effort + ")";
+		return timeRanges.toString();
 	}
 
-	public final NGMTotalEffort getEffort() {
-		return effort;
+	@Override
+	public Iterator<TimeRange> iterator() {
+		return Collections.unmodifiableCollection(timeRanges).iterator();
+	}
+
+	public Duration totalWorkingDuration() {
+		Duration working = Duration.ZERO;
+		for (TimeRange range : this)
+			working = working.plus(Duration.between(range.getStart(), range.getEnd()));
+		return working;
+	}
+
+	public Duration durationOfDays(int totalDays) {
+		if (hasWorkingTimeRanges())
+			return totalWorkingDuration().multipliedBy(totalDays);
+
+		return Duration.ofDays(totalDays);
 	}
 
 }

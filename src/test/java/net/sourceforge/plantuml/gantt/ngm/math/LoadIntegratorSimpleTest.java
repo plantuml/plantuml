@@ -3,12 +3,13 @@ package net.sourceforge.plantuml.gantt.ngm.math;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort;
+import net.sourceforge.plantuml.gantt.ngm.Load;
 
 public class LoadIntegratorSimpleTest {
 
@@ -21,7 +22,7 @@ public class LoadIntegratorSimpleTest {
 		final LocalDateTime start = LocalDateTime.of(2025, 1, 6, 9, 0);
 		
 		// Given: Total load to consume is 1 day worth of work (Fraction.ONE = 1 full day)
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(1);
+		Load totalLoad = Load.of(Duration.ofDays(1));
 
 		// When: Computing the end date-time after integrating the load
 		final LocalDateTime actualEnd = new LoadIntegrator(load, totalLoad).computeEnd(start);
@@ -44,7 +45,7 @@ public class LoadIntegratorSimpleTest {
 		final LocalDateTime start = LocalDateTime.of(2025, 1, 3, 12, 0);
 		
 		// Given: Total load to consume is 1 day worth of work
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(1);
+		Load totalLoad = Load.of(Duration.ofDays(1));
 
 		// When: Computing the end date-time after integrating the load
 		final LocalDateTime actualEnd = new LoadIntegrator(load, totalLoad).computeEnd(start);
@@ -75,7 +76,7 @@ public class LoadIntegratorSimpleTest {
 		final LocalDateTime start = LocalDateTime.of(2025, 2, 10, 0, 0);
 		
 		// Given: Total load to consume is 1.5 days worth of work (3/2)
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofHours(36);
+		Load totalLoad = Load.of(Duration.ofHours(36));
 
 		// When: Computing the end date-time after integrating the load
 		final LocalDateTime actualEnd = new LoadIntegrator(load, totalLoad).computeEnd(start);
@@ -101,7 +102,7 @@ public class LoadIntegratorSimpleTest {
 		final LocalDateTime start = LocalDateTime.of(2025, 3, 15, 6, 0);
 		
 		// Given: Total load to consume is 1/8 of a day (0.125 days = 3 hours of work)
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofHours(3);
+		Load totalLoad = Load.of(Duration.ofHours(3));
 
 		// When: Computing the end date-time after integrating the load
 		final LocalDateTime actualEnd = new LoadIntegrator(load, totalLoad).computeEnd(start);

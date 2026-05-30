@@ -3,6 +3,7 @@ package net.sourceforge.plantuml.gantt.ngm.math;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort;
+import net.sourceforge.plantuml.gantt.ngm.Load;
 
 /**
  * Tests for the LoadIntegrator class, verifying correct integration of
@@ -48,7 +49,7 @@ class LoadIntegratorTest {
 				.withDay(LocalDate.of(2024, 12, 26), Fraction.ZERO); // Friday
 
 		LocalDateTime start = LocalDateTime.of(2024, 12, 20, 9, 0); // Friday Dec 20
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(5);
+		Load totalLoad = Load.of(Duration.ofDays(5));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -75,7 +76,7 @@ class LoadIntegratorTest {
 		PiecewiseConstant loadFunction = Combiner.product(vacation, fiveDaysWeek);
 
 		LocalDateTime start = LocalDateTime.of(2024, 12, 20, 9, 0); // Friday Dec 20
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(5);
+		Load totalLoad = Load.of(Duration.ofDays(5));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -93,7 +94,7 @@ class LoadIntegratorTest {
 				.withDay(LocalDate.of(2025, 1, 1), Fraction.ZERO); // New Year's Day off
 
 		LocalDateTime start = LocalDateTime.of(2024, 12, 30, 14, 30);
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(3);
+		Load totalLoad = Load.of(Duration.ofDays(3));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -116,7 +117,7 @@ class LoadIntegratorTest {
 				.withDay(LocalDate.of(2024, 7, 4), Fraction.ZERO);
 
 		LocalDateTime start = LocalDateTime.of(2024, 7, 1, 8, 0);
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(3);
+		Load totalLoad = Load.of(Duration.ofDays(3));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -140,7 +141,7 @@ class LoadIntegratorTest {
 				.withDay(LocalDate.of(2024, 9, 20), conferenceLoad);
 
 		LocalDateTime start = LocalDateTime.of(2024, 9, 13, 10, 0); // Friday before conference
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(4);
+		Load totalLoad = Load.of(Duration.ofDays(4));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -166,7 +167,7 @@ class LoadIntegratorTest {
 				.with(DayOfWeek.FRIDAY, Fraction.ONE);
 
 		LocalDateTime start = LocalDateTime.of(2024, 11, 18, 9, 0); // Monday
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(5); // 1 work week
+		Load totalLoad = Load.of(Duration.ofDays(5)); // 1 work week
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -193,7 +194,7 @@ class LoadIntegratorTest {
 				.with(DayOfWeek.FRIDAY, Fraction.ONE);
 
 		LocalDateTime start = LocalDateTime.of(2024, 10, 7, 13, 30); // Monday
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(6); // 6 working days = 2 weeks
+		Load totalLoad = Load.of(Duration.ofDays(6)); // 6 working days = 2 weeks
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -214,7 +215,7 @@ class LoadIntegratorTest {
 				.with(DayOfWeek.WEDNESDAY, enhancedLoad).with(DayOfWeek.THURSDAY, enhancedLoad);
 
 		LocalDateTime start = LocalDateTime.of(2024, 8, 5, 7, 0); // Monday
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(10);
+		Load totalLoad = Load.of(Duration.ofDays(10));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -236,7 +237,7 @@ class LoadIntegratorTest {
 				.with(DayOfWeek.SATURDAY, Fraction.ONE).with(DayOfWeek.SUNDAY, Fraction.ONE);
 
 		LocalDateTime start = LocalDateTime.of(2024, 5, 13, 10, 0); // Monday
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(7);
+		Load totalLoad = Load.of(Duration.ofDays(7));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -265,7 +266,7 @@ class LoadIntegratorTest {
 				.with(DayOfWeek.FRIDAY, normal);
 
 		LocalDateTime start = LocalDateTime.of(2024, 6, 3, 6, 0); // Monday
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(6);
+		Load totalLoad = Load.of(Duration.ofDays(6));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -293,7 +294,7 @@ class LoadIntegratorTest {
 		PiecewiseConstantWeekday loadFunction = PiecewiseConstantWeekday.of(Fraction.ONE);
 
 		LocalDateTime start = LocalDateTime.of(2024, 3, 15, 14, 45); // 2:45 PM
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(3);
+		Load totalLoad = Load.of(Duration.ofDays(3));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -310,7 +311,7 @@ class LoadIntegratorTest {
 		PiecewiseConstantSpecificDays loadFunction = PiecewiseConstantSpecificDays.of(tinyLoad);
 
 		LocalDateTime start = LocalDateTime.of(2024, 2, 1, 8, 0);
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(1);
+		Load totalLoad = Load.of(Duration.ofDays(1));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -325,7 +326,7 @@ class LoadIntegratorTest {
 		PiecewiseConstantWeekday loadFunction = PiecewiseConstantWeekday.of(Fraction.ONE);
 
 		LocalDateTime start = LocalDateTime.of(2024, 2, 27, 9, 0); // 2024 is leap year
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(5);
+		Load totalLoad = Load.of(Duration.ofDays(5));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -348,7 +349,7 @@ class LoadIntegratorTest {
 				.withDay(LocalDate.of(2024, 4, 19), Fraction.ZERO).withDay(LocalDate.of(2024, 4, 22), Fraction.ZERO);
 
 		LocalDateTime start = LocalDateTime.of(2024, 4, 1, 9, 0);
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(15);
+		Load totalLoad = Load.of(Duration.ofDays(15));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime end = integrator.computeEnd(start);
@@ -394,7 +395,7 @@ class LoadIntegratorTest {
 				.withDay(LocalDate.of(2024, 12, 26), Fraction.ZERO); // Friday
 
 		LocalDateTime end = LocalDateTime.of(2024, 12, 29, 9, 0); // work finishes Friday Dec 29
-		NGMTotalEffort totalLoad = NGMTotalEffort.ofDays(5);
+		Load totalLoad = Load.of(Duration.ofDays(5));
 
 		LoadIntegrator integrator = new LoadIntegrator(loadFunction, totalLoad);
 		LocalDateTime start = integrator.computeStart(end);

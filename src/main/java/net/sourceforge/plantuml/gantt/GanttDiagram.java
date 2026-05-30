@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.gantt;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -560,5 +561,14 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 	public CommandExecutionResult addWorkingTimeRange(TimeRange timeRange) {
 		this.dayCalendar.addWorkingTimeRange(timeRange);
 		return CommandExecutionResult.ok();
+	}
+
+	public Duration durationOfDays(int totalDays) {
+		return dayCalendar.durationOfDays(totalDays);
+	}
+
+	public Duration durationOfDaysAndHours(int totalDays, int totalHours) {
+		final Duration result = durationOfDays(totalDays);
+		return result.plus(Duration.ofHours(totalHours));
 	}
 }

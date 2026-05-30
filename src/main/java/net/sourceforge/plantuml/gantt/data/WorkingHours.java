@@ -37,21 +37,20 @@ package net.sourceforge.plantuml.gantt.data;
 
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.List;
 
 import net.sourceforge.plantuml.gantt.core.TimeRange;
+import net.sourceforge.plantuml.gantt.core.TimeRanges;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class WorkingHours {
 
-	private final List<TimeRange> workingTimeRanges;
+	private final TimeRanges workingTimeRanges;
 	private final double dayWidth;
 	private final double closeFactor;
 
-	public WorkingHours(List<TimeRange> workingTimeRanges, double dayWidth, double closeFactor) {
+	public WorkingHours(TimeRanges workingTimeRanges, double dayWidth, double closeFactor) {
 		this.workingTimeRanges = workingTimeRanges;
 		this.dayWidth = dayWidth;
 		this.closeFactor = closeFactor;
@@ -66,9 +65,7 @@ public class WorkingHours {
 		if (isClosed)
 			return widthForClosedHours(Duration.ofHours(24));
 
-		Duration working = Duration.ZERO;
-		for (TimeRange range : workingTimeRanges)
-			working = working.plus(Duration.between(range.getStart(), range.getEnd()));
+		final Duration working = workingTimeRanges.totalWorkingDuration();
 		final Duration pause = Duration.ofHours(24).minus(working);
 		return widthForWorkingHours(working) + widthForClosedHours(pause);
 	}

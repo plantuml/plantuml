@@ -7,11 +7,11 @@ import net.sourceforge.plantuml.gantt.ngm.math.LoadIntegrator;
 
 public class NGMTaskFixedTotalEffort extends NGMTask {
 
-	private NGMTotalEffort totalEffort;
+	private Load totalEffort;
 	private LocalDateTime start;
 	private LocalDateTime end;
 
-	public NGMTaskFixedTotalEffort(NGMAllocation allocation, LocalDateTime start, NGMTotalEffort totalEffort) {
+	public NGMTaskFixedTotalEffort(NGMAllocation allocation, LocalDateTime start, Load totalEffort) {
 		super(allocation);
 		this.totalEffort = totalEffort;
 		this.start = start;
@@ -41,7 +41,7 @@ public class NGMTaskFixedTotalEffort extends NGMTask {
 	}
 
 	@Override
-	public void setEffort(NGMTotalEffort effort) {
+	public void setEffort(Load effort) {
 		this.totalEffort = effort;
 		this.end = new LoadIntegrator(allocation.getLoadFunction(), totalEffort).computeEnd(start);
 	}
@@ -52,7 +52,7 @@ public class NGMTaskFixedTotalEffort extends NGMTask {
 	}
 
 	@Override
-	public NGMTotalEffort getTotalEffort() {
+	public Load getTotalEffort() {
 		return totalEffort;
 	}
 

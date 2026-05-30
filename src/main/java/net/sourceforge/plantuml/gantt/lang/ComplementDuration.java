@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
+import java.time.Duration;
+
 import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -44,7 +46,7 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.gantt.Failable;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
-import net.sourceforge.plantuml.gantt.Load;
+import net.sourceforge.plantuml.gantt.ngm.Load;
 
 public class ComplementDuration implements Something<GanttDiagram> {
 
@@ -84,7 +86,7 @@ public class ComplementDuration implements Something<GanttDiagram> {
 		final int totalDays = firstDaysAndHours[0] + secondDaysAndHours[0];
 		final int totalHours = firstDaysAndHours[1] + secondDaysAndHours[1];
 
-		return Failable.ok(Load.ofDaysAndHours(totalDays, totalHours));
+		return Failable.ok(Load.of(gantt.durationOfDaysAndHours(totalDays, totalHours)));
 	}
 
 	private int[] toDaysAndHours(GanttDiagram gantt, int value, String unit) {

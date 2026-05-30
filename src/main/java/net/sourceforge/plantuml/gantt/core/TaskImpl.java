@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.gantt.core;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,8 +51,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.plantuml.gantt.GanttDiagram;
-import net.sourceforge.plantuml.gantt.Load;
 import net.sourceforge.plantuml.gantt.lang.CenterBorderColor;
+import net.sourceforge.plantuml.gantt.ngm.Load;
 import net.sourceforge.plantuml.gantt.ngm.NGMAllocation;
 import net.sourceforge.plantuml.gantt.ngm.math.Combiner;
 import net.sourceforge.plantuml.gantt.ngm.math.Fraction;
@@ -99,7 +100,7 @@ public class TaskImpl extends AbstractTask implements Task {
 
 		this.solver = new Solver();
 		setStart(startingDay);
-		setLoad(Load.ofDays(1));
+		setLoad(Load.of(gantt.durationOfDays(1)));
 	}
 
 	public PiecewiseConstant getDefaultPlan() {

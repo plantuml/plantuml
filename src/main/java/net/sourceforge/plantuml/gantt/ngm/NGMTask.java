@@ -46,7 +46,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * <ul>
- * <li><b>Total effort</b> — an {@link NGMTotalEffort} expressing the total
+ * <li><b>Total effort</b> — an {@link Load} expressing the total
  * amount of work associated with the task, typically in person-time (for
  * example, person-seconds or person-hours).</li>
  *
@@ -230,7 +230,7 @@ public abstract class NGMTask {
 	 */
 	public abstract Duration getDuration();
 
-	public abstract void setEffort(NGMTotalEffort effort);
+	public abstract void setEffort(Load effort);
 
 	/**
 	 * Returns the total effort associated with this task.
@@ -261,7 +261,7 @@ public abstract class NGMTask {
 	 *
 	 * @return the intrinsic or computed total effort of the task
 	 */
-	public abstract NGMTotalEffort getTotalEffort();
+	public abstract Load getTotalEffort();
 
 	/**
 	 * Returns the constant allocation applied to the task.
@@ -366,7 +366,7 @@ public abstract class NGMTask {
 	 * @return a new fixed-total-effort task (when implemented)
 	 */
 	public static NGMTask withFixedTotalEffort(NGMAllocation allocation, LocalDateTime start,
-			NGMTotalEffort totalEffort) {
+			Load totalEffort) {
 		return new NGMTaskFixedTotalEffort(allocation, start, totalEffort);
 	}
 

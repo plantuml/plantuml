@@ -36,18 +36,18 @@
 package net.sourceforge.plantuml.gantt.data;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.gantt.OpenClose;
 import net.sourceforge.plantuml.gantt.core.TimeRange;
+import net.sourceforge.plantuml.gantt.core.TimeRanges;
 import net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -65,7 +65,7 @@ public class DayCalendarData {
 	private final Map<DayOfWeek, HColor> colorDaysOfWeek = new HashMap<>();
 	private final Set<LocalDate> verticalSeparatorBefore = new HashSet<>();
 	private final Map<String, OpenClose> openCloseForTask = new HashMap<>();
-	private final List<TimeRange> workingTimeRanges = new ArrayList<>();
+	private final TimeRanges workingTimeRanges = new TimeRanges();
 
 	public boolean isOpen(LocalDate day) {
 		return openClose.getLoadAtDUMMY(day) > 0;
@@ -147,7 +147,11 @@ public class DayCalendarData {
 	}
 
 	public boolean hasWorkingTimeRanges() {
-		return workingTimeRanges.size() > 0;
+		return workingTimeRanges.hasWorkingTimeRanges();
+	}
+
+	public Duration durationOfDays(int totalDays) {
+		return workingTimeRanges.durationOfDays(totalDays);
 	}
 
 }

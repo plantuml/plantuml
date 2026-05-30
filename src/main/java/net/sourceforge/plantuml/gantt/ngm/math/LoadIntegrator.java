@@ -39,12 +39,12 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 
-import net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort;
+import net.sourceforge.plantuml.gantt.ngm.Load;
 
 public class LoadIntegrator {
 
 	private final PiecewiseConstant loadFunction;
-	private final NGMTotalEffort totalLoad;
+	private final Load totalLoad;
 
 	/**
 	 * Creates a new {@code LoadIntegrator}.
@@ -53,7 +53,7 @@ public class LoadIntegrator {
 	 *                     defines the load rate at any given time
 	 * @param totalLoad    the total amount of load to be consumed
 	 */
-	public LoadIntegrator(PiecewiseConstant loadFunction, NGMTotalEffort totalLoad) {
+	public LoadIntegrator(PiecewiseConstant loadFunction, Load totalLoad) {
 		this.loadFunction = loadFunction;
 		this.totalLoad = totalLoad;
 	}

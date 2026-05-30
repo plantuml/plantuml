@@ -35,18 +35,18 @@
  */
 package net.sourceforge.plantuml.gantt.solver;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.plantuml.gantt.Load;
 import net.sourceforge.plantuml.gantt.PValue;
 import net.sourceforge.plantuml.gantt.core.TaskAttribute;
+import net.sourceforge.plantuml.gantt.ngm.Load;
 import net.sourceforge.plantuml.gantt.ngm.NGMAllocation;
 import net.sourceforge.plantuml.gantt.ngm.NGMTask;
-import net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
@@ -95,7 +95,7 @@ public class Solver {
 			if (attribute == TaskAttribute.START)
 				return computeStart(allocation);
 
-			return Load.ofDays(1);
+			return Load.of(Duration.ofDays(1));
 			// throw new UnsupportedOperationException(attribute.toString());
 		}
 		return result;
@@ -103,7 +103,7 @@ public class Solver {
 
 	private TimePoint computeEnd(NGMAllocation allocation) {
 		final TimePoint start = (TimePoint) values.get(TaskAttribute.START);
-		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();
+		final Load fullLoad = (Load) values.get(TaskAttribute.LOAD);
 		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, start.toLocalDateTime(), fullLoad);
 		final LocalDateTime result = task.getEnd();
 		return TimePoint.of(result);
@@ -111,7 +111,7 @@ public class Solver {
 
 	private TimePoint computeStart(NGMAllocation allocation) {
 		final TimePoint end = (TimePoint) values.get(TaskAttribute.END);
-		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();
+		final Load fullLoad = (Load) values.get(TaskAttribute.LOAD);
 		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, end.toLocalDateTime(), fullLoad);
 		task.setEnd(end.toLocalDateTime());
 		final LocalDateTime result = task.getStart();

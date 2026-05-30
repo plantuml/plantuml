@@ -95,12 +95,12 @@ public class NGMTaskFixedDuration extends NGMTask {
 	}
 
 	@Override
-	public NGMTotalEffort getTotalEffort() {
+	public Load getTotalEffort() {
 		throw new UnsupportedOperationException("Work In Progress");
 	}
 
 	@Override
-	public void setEffort(NGMTotalEffort effort) {
+	public void setEffort(Load effort) {
 		throw new UnsupportedOperationException("Work In Progress");
 	}
 
