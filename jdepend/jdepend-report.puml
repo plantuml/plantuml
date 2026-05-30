@@ -3256,7 +3256,7 @@ Total Classes: 5
 "net.sourceforge.plantuml.text" --> "net.sourceforge.plantuml.regex"
 
 class "net.sourceforge.plantuml.theme" %lighten("red", 86) {
-Total Classes: 1
+Total Classes: 2
 }
 "net.sourceforge.plantuml.theme" --> "java.io"
 "net.sourceforge.plantuml.theme" --> "java.lang"

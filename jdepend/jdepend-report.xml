@@ -17173,8 +17173,8 @@
 
         <Package name="net.sourceforge.plantuml.theme">
             <Stats>
-                <TotalClasses>1</TotalClasses>
-                <ConcreteClasses>1</ConcreteClasses>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>6</Ce>
@@ -17190,6 +17190,9 @@
             <ConcreteClasses>
                 <Class sourceFile="Theme.java">
                     net.sourceforge.plantuml.theme.Theme
+                </Class>
+                <Class sourceFile="ThemeList.java">
+                    net.sourceforge.plantuml.theme.ThemeList
                 </Class>
             </ConcreteClasses>
 
