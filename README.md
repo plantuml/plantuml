@@ -1,3 +1,11 @@
+> [!TIP]
+> 🧩 **New!** Render PlantUML diagrams directly inside GitHub with [our official browser extension](https://github.com/plantuml/plantuml-for-github) &mdash; No server. No tokens. No tracking. Zero permissions but clipboard.
+>
+> [![Add to Chrome](https://img.shields.io/badge/Add%20to%20Chrome-4285F4?style=flat-square&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/plantuml-for-github/lbokhidfopkdehkmlmpaabacljoediic) [![Add to Firefox](https://img.shields.io/badge/Add%20to%20Firefox-FF7139?style=flat-square&logo=firefoxbrowser&logoColor=white)](https://addons.mozilla.org/en-US/firefox/addon/plantuml-for-github/)
+>
+> 💬 Want native PlantUML support in GitHub? Upvote and join the discussion: [Support for PlantUML diagrams](https://github.com/orgs/community/discussions/10111)
+
+
 # 🌱 PlantUML
 
 Generate UML diagrams from textual descriptions.
