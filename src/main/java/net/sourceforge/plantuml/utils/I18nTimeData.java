@@ -5,7 +5,7 @@ import java.time.Month;
 import java.util.Locale;
 
 // Generated — do not edit
-// Build by I18nDataTimeGenerator
+// Build by I18nTimeDataGenerator
 public class I18nTimeData {
 
 	public static String dayOfWeekShort(DayOfWeek dayOfWeek, Locale locale) {

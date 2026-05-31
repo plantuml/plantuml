@@ -83,11 +83,11 @@ public class I18nTimeDataGenerator {
 
 		try (PrintStream out = new PrintStream(new FileOutputStream(output), false, StandardCharsets.UTF_8.name())) {
 			emitHeader(out);
-			emitDayOfWeekMethod(out);
+			emitDayOfWeekShortMethod(out);
 			out.println();
-			emitMonthMethod(out);
+			emitMonthShortMethod(out);
 			out.println();
-			emitMonthLongNameMethod(out);
+			emitMonthLongMethod(out);
 			emitFooter(out);
 		}
 
@@ -102,7 +102,7 @@ public class I18nTimeDataGenerator {
 		out.println("import java.util.Locale;");
 		out.println();
 		out.println("// Generated \u2014 do not edit");
-		out.println("// Build by I18nDataTimeGenerator");
+		out.println("// Build by I18nTimeDataGenerator");
 		out.println("public class I18nTimeData {");
 		out.println();
 	}
@@ -111,8 +111,8 @@ public class I18nTimeDataGenerator {
 		out.println("}");
 	}
 
-	private static void emitDayOfWeekMethod(PrintStream out) {
-		out.println("\tpublic static String shortName(DayOfWeek dayOfWeek, Locale locale) {");
+	private static void emitDayOfWeekShortMethod(PrintStream out) {
+		out.println("\tpublic static String dayOfWeekShort(DayOfWeek dayOfWeek, Locale locale) {");
 		out.println("\t\tfinal String lang = locale.getLanguage();");
 		out.println("\t\tswitch (lang) {");
 		for (String lang : LANGUAGES) {
@@ -141,8 +141,8 @@ public class I18nTimeDataGenerator {
 		out.println("\t}");
 	}
 
-	private static void emitMonthMethod(PrintStream out) {
-		out.println("\tpublic static String shortName(Month month, Locale locale) {");
+	private static void emitMonthShortMethod(PrintStream out) {
+		out.println("\tpublic static String monthShort(Month month, Locale locale) {");
 		out.println("\t\tfinal String lang = locale.getLanguage();");
 		out.println("\t\tswitch (lang) {");
 		for (String lang : LANGUAGES) {
@@ -170,8 +170,8 @@ public class I18nTimeDataGenerator {
 		out.println("\t}");
 	}
 
-	private static void emitMonthLongNameMethod(PrintStream out) {
-		out.println("\tpublic static String longName(Month month, Locale locale) {");
+	private static void emitMonthLongMethod(PrintStream out) {
+		out.println("\tpublic static String monthLong(Month month, Locale locale) {");
 		out.println("\t\tfinal String lang = locale.getLanguage();");
 		out.println("\t\tswitch (lang) {");
 		for (String lang : LANGUAGES) {
