@@ -221,7 +221,7 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 			final double x2 = getTimeScale().getPosition(wink.increment());
 			final FontConfiguration fc = getFc(wink);
 
-			printCentered(ug, getTextBlockSLOW(TimeStringUtils.shortName(wink.toDayOfWeek(), locale()), fc), x1, x2);
+			printCentered(ug, getTextBlockSLOW(TimeStringUtils.shortDayOfWeek(wink.toDayOfWeek(), locale()), fc), x1, x2);
 		}
 	}
 	

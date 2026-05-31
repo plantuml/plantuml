@@ -8,7 +8,7 @@ import java.util.Locale;
 // Build by I18nDataTimeGenerator
 public class I18nTimeData {
 
-	public static String shortName(DayOfWeek dayOfWeek, Locale locale) {
+	public static String shortDayOfWeek(DayOfWeek dayOfWeek, Locale locale) {
 		final String lang = locale.getLanguage();
 		switch (lang) {
 		case "de":
@@ -102,7 +102,7 @@ public class I18nTimeData {
 		throw new IllegalArgumentException();
 	}
 
-	public static String shortName(Month month, Locale locale) {
+	public static String shortMonth(Month month, Locale locale) {
 		final String lang = locale.getLanguage();
 		switch (lang) {
 		case "de":
@@ -236,7 +236,7 @@ public class I18nTimeData {
 		throw new IllegalArgumentException();
 	}
 
-	public static String longName(Month month, Locale locale) {
+	public static String longMonth(Month month, Locale locale) {
 		final String lang = locale.getLanguage();
 		switch (lang) {
 		case "de":

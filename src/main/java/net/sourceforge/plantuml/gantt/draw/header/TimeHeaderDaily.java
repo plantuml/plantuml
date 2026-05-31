@@ -153,7 +153,7 @@ class TimeHeaderDaily extends TimeHeaderCalendar {
 			final double x2 = getTimeScale().getPosition(wink.increment());
 			final FontConfiguration fc = getFc(wink);
 
-			printCentered(ug, getTextBlockSLOW(TimeStringUtils.shortName(wink.toDayOfWeek(), locale()), fc), x1, x2);
+			printCentered(ug, getTextBlockSLOW(TimeStringUtils.shortDayOfWeek(wink.toDayOfWeek(), locale()), fc), x1, x2);
 		}
 	}
 
@@ -219,9 +219,9 @@ class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
-		final TextBlock tiny = getTextBlockSLOW(TimeStringUtils.shortName(monthYear.getMonth(), locale()), fc);
-		final TextBlock small = getTextBlockSLOW(TimeStringUtils.longName(monthYear, locale()), fc);
-		final TextBlock big = getTextBlockSLOW(TimeStringUtils.longNameYYYY(monthYear, locale()), fc);
+		final TextBlock tiny = getTextBlockSLOW(TimeStringUtils.shortMonth(monthYear.getMonth(), locale()), fc);
+		final TextBlock small = getTextBlockSLOW(TimeStringUtils.longMonth(monthYear, locale()), fc);
+		final TextBlock big = getTextBlockSLOW(TimeStringUtils.longMonthYear(monthYear, locale()), fc);
 		printCentered(ug, false, start, end, tiny, small, big);
 	}
 
