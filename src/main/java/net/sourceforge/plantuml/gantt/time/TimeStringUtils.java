@@ -44,24 +44,24 @@ import net.sourceforge.plantuml.utils.I18nTimeData;
 
 public abstract class TimeStringUtils {
 
-	public static String shortDayOfWeek(DayOfWeek dayOfWeek, Locale locale) {
-		return I18nTimeData.shortDayOfWeek(dayOfWeek, locale);
+	public static String dayOfWeekShort(DayOfWeek dayOfWeek, Locale locale) {
+		return I18nTimeData.dayOfWeekShort(dayOfWeek, locale);
 	}
 
-	public static String shortMonthYear(YearMonth yearMonth, Locale locale) {
-		return I18nTimeData.shortMonth(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
+	public static String monthYearShort(YearMonth yearMonth, Locale locale) {
+		return I18nTimeData.monthShort(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
 	}
 
-	public static String longMonth(YearMonth yearMonth, Locale locale) {
-		return I18nTimeData.longMonth(yearMonth.getMonth(), locale);
+	public static String monthYearLong(YearMonth yearMonth, Locale locale) {
+		return I18nTimeData.monthLong(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
 	}
 
-	public static String longMonthYear(YearMonth yearMonth, Locale locale) {
-		return I18nTimeData.longMonth(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
+	public static String monthLong(YearMonth yearMonth, Locale locale) {
+		return I18nTimeData.monthLong(yearMonth.getMonth(), locale);
 	}
 
-	public static String shortMonth(Month month, Locale locale) {
-		return I18nTimeData.shortMonth(month, locale);
+	public static String monthShort(Month month, Locale locale) {
+		return I18nTimeData.monthShort(month, locale);
 	}
 
 }

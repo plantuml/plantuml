@@ -178,8 +178,8 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
-		final TextBlock small = getTextBlockSLOW(TimeStringUtils.shortMonth(monthYear.getMonth(), locale()), fc);
-		final TextBlock big = getTextBlockSLOW(TimeStringUtils.shortMonthYear(monthYear, locale()), fc);
+		final TextBlock small = getTextBlockSLOW(TimeStringUtils.monthShort(monthYear.getMonth(), locale()), fc);
+		final TextBlock big = getTextBlockSLOW(TimeStringUtils.monthYearShort(monthYear, locale()), fc);
 		printCentered(ug, false, start, end, small, big);
 	}
 
