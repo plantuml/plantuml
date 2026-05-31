@@ -220,7 +220,7 @@ class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
 		final TextBlock tiny = getTextBlockSLOW(TimeStringUtils.monthShort(monthYear.getMonth(), locale()), fc);
-		final TextBlock small = getTextBlockSLOW(TimeStringUtils.monthLong(monthYear, locale()), fc);
+		final TextBlock small = getTextBlockSLOW(TimeStringUtils.monthLong(monthYear.getMonth(), locale()), fc);
 		final TextBlock big = getTextBlockSLOW(TimeStringUtils.monthYearLong(monthYear, locale()), fc);
 		printCentered(ug, false, start, end, tiny, small, big);
 	}

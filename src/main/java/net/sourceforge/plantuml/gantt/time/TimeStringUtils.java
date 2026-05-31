@@ -56,8 +56,8 @@ public abstract class TimeStringUtils {
 		return I18nTimeData.monthLong(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
 	}
 
-	public static String monthLong(YearMonth yearMonth, Locale locale) {
-		return I18nTimeData.monthLong(yearMonth.getMonth(), locale);
+	public static String monthLong(Month month, Locale locale) {
+		return I18nTimeData.monthLong(month, locale);
 	}
 
 	public static String monthShort(Month month, Locale locale) {
