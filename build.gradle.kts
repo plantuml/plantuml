@@ -642,6 +642,13 @@ gitProperties {
 	dateFormat = "yyyy-MM-dd'T'HH:mm:ssX"
 }
 
+// gradle-git-properties adds its output dir to the main resources, so every Jar
+// task (jar, sourcesJar, javadocJar) consumes git.properties. Declare the
+// producer dependency explicitly, as required by Gradle's task validation.
+tasks.withType<Jar>().configureEach {
+	dependsOn("generateGitProperties")
+}
+
 tasks.named("generateGitProperties") {
 	doLast {
 		val propsFile = gitPropertiesFile.get().asFile
