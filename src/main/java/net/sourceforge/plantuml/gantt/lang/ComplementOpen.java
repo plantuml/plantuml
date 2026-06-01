@@ -52,8 +52,7 @@ public class ComplementOpen implements Something<GanttDiagram> {
 		return new UBrexNamed("OPEN", //
 				UBrexConcat.build( //
 						new UBrexLeaf("open〇?e〇?d"), //
-						new UBrexOptional(
-								UBrexConcat.build(new UBrexLeaf("∙for∙"), SubjectTask.taskCode("FOO")))));
+						new UBrexOptional(UBrexConcat.build(new UBrexLeaf("∙for∙"), SubjectTask.taskCode("FOO")))));
 	}
 
 	@Override

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.gantt.draw.header;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
 
 import net.sourceforge.plantuml.gantt.data.DayCalendarData;
 import net.sourceforge.plantuml.gantt.data.TimeBoundsData;
@@ -45,7 +44,7 @@ import net.sourceforge.plantuml.gantt.data.TimelineStyleData;
 import net.sourceforge.plantuml.gantt.data.WeekConfigData;
 import net.sourceforge.plantuml.gantt.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
-import net.sourceforge.plantuml.gantt.time.TimeStringUtils;
+import net.sourceforge.plantuml.gantt.time.TimePointFormat;
 import net.sourceforge.plantuml.gantt.timescale.TimeScale;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -119,19 +118,19 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private void printMonths(final UGraphic ug) {
 		final FontConfiguration fc = getFontConfigurationSLOW(SName.month, true, openFontColor());
 
-		YearMonth last = null;
+		TimePoint last = null;
 		double lastChangeMonth = -1;
 
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
-			if (wink.monthYear().equals(last) == false) {
+			if (last == null || wink.monthYear().equals(last.monthYear()) == false) {
 				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));
 				if (last != null)
 					printMonth(ug, last, lastChangeMonth, x1, fc);
 
 				lastChangeMonth = x1;
-				last = wink.monthYear();
+				last = wink;
 			}
 		}
 		final double end = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
@@ -177,10 +176,9 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 		}
 	}
 
-	private void printMonth(UGraphic ug, YearMonth monthYear, double start, double end, FontConfiguration fc) {
-		final TextBlock small = getTextBlockSLOW(TimeStringUtils.monthShort(monthYear.getMonth(), locale()), fc);
-		final TextBlock big = getTextBlockSLOW(TimeStringUtils.monthYearShort(monthYear, locale()), fc);
-		printCentered(ug, false, start, end, small, big);
+	private void printMonth(UGraphic ug, TimePoint monthYear, double start, double end, FontConfiguration fc) {
+		printCentered(ug, false, start, end, monthYear, fc, TimePointFormat.MONTH_SHORT,
+				TimePointFormat.MONTH_YEAR_SHORT);
 	}
 
 	private void printLeft(UGraphic ug, TextBlock text, double start) {

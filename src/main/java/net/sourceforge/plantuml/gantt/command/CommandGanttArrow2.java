@@ -74,7 +74,8 @@ public class CommandGanttArrow2 extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 
 		final String name1 = arg.get("TASK1", 0);
 		final String name2 = arg.get("TASK2", 0);

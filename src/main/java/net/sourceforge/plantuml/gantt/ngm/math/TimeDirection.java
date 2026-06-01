@@ -39,17 +39,16 @@ import java.time.LocalDateTime;
 
 public enum TimeDirection {
 	FORWARD, BACKWARD;
-	
-    public LocalDateTime adjustBySeconds(LocalDateTime time, long seconds) {
-        switch (this) {
-            case FORWARD:
-                return time.plusSeconds(seconds);
-            case BACKWARD:
-                return time.minusSeconds(seconds);
-            default:
-                throw new IllegalStateException();
-        }
-    }
-	
-	
+
+	public LocalDateTime adjustBySeconds(LocalDateTime time, long seconds) {
+		switch (this) {
+		case FORWARD:
+			return time.plusSeconds(seconds);
+		case BACKWARD:
+			return time.minusSeconds(seconds);
+		default:
+			throw new IllegalStateException();
+		}
+	}
+
 }

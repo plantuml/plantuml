@@ -35,33 +35,42 @@
  */
 package net.sourceforge.plantuml.gantt.time;
 
-import java.time.DayOfWeek;
-import java.time.Month;
-import java.time.YearMonth;
 import java.util.Locale;
 
 import net.sourceforge.plantuml.utils.I18nTimeData;
 
-public abstract class TimeStringUtils {
+public enum TimePointFormat {
 
-	public static String dayOfWeekShort(DayOfWeek dayOfWeek, Locale locale) {
-		return I18nTimeData.dayOfWeekShort(dayOfWeek, locale);
-	}
+	DAY_OF_WEEK_SHORT, MONTH_YEAR_SHORT, MONTH_YEAR_LONG, MONTH_LONG, MONTH_SHORT, YEAR, QUARTER, DAY_OF_MONTH;
 
-	public static String monthYearShort(YearMonth yearMonth, Locale locale) {
-		return I18nTimeData.monthShort(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
-	}
+	public String format(TimePoint when, Locale locale) {
+		switch (this) {
+		case DAY_OF_MONTH:
+			return "" + when.getDayOfMonth();
 
-	public static String monthYearLong(YearMonth yearMonth, Locale locale) {
-		return I18nTimeData.monthLong(yearMonth.getMonth(), locale) + " " + yearMonth.getYear();
-	}
+		case QUARTER:
+			return "" + when.quarter();
 
-	public static String monthLong(Month month, Locale locale) {
-		return I18nTimeData.monthLong(month, locale);
-	}
+		case YEAR:
+			return "" + when.year();
 
-	public static String monthShort(Month month, Locale locale) {
-		return I18nTimeData.monthShort(month, locale);
+		case DAY_OF_WEEK_SHORT:
+			return I18nTimeData.dayOfWeekShort(when.toDayOfWeek(), locale);
+
+		case MONTH_LONG:
+			return I18nTimeData.monthLong(when.month(), locale);
+
+		case MONTH_SHORT:
+			return I18nTimeData.monthShort(when.month(), locale);
+
+		case MONTH_YEAR_SHORT:
+			return I18nTimeData.monthShort(when.month(), locale) + " " + when.year();
+
+		case MONTH_YEAR_LONG:
+			return I18nTimeData.monthLong(when.month(), locale) + " " + when.year();
+
+		}
+		throw new IllegalStateException();
 	}
 
 }

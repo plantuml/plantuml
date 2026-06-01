@@ -165,7 +165,8 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 			overflow = labelEnd - barsWidth;
 
 		if (note != null) {
-			final double noteEnd = timeScale.getPosition(start) + getOpaleNote().calculateDimension(stringBounder).getWidth();
+			final double noteEnd = timeScale.getPosition(start)
+					+ getOpaleNote().calculateDimension(stringBounder).getWidth();
 			if (noteEnd - barsWidth > overflow)
 				overflow = noteEnd - barsWidth;
 		}

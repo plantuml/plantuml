@@ -86,9 +86,8 @@ public class Failable<O> {
 	public int getScore() {
 		if (error == null)
 			throw new IllegalStateException();
-		
+
 		return score;
 	}
-
 
 }

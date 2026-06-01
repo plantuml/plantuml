@@ -60,8 +60,8 @@ import java.time.LocalDateTime;
  *
  * <p>
  * These three quantities must remain conceptually independent. Confusing them
- * leads to incorrect scheduling behavior. The goal of NGM is to provide a
- * clean and unambiguous task model using {@code java.time} and explicit
+ * leads to incorrect scheduling behavior. The goal of NGM is to provide a clean
+ * and unambiguous task model using {@code java.time} and explicit
  * resource-allocation logic.
  * </p>
  *
@@ -109,10 +109,9 @@ import java.time.LocalDateTime;
  * <h3>Factory methods</h3>
  *
  * <p>
- * The static factory methods
- * {@link #withFixedDuration} and
- * {@link #withFixedTotalEffort} create concrete
- * implementations representing these two behaviors.
+ * The static factory methods {@link #withFixedDuration} and
+ * {@link #withFixedTotalEffort} create concrete implementations representing
+ * these two behaviors.
  * </p>
  */
 public abstract class NGMTask {

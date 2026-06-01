@@ -59,6 +59,7 @@ abstract class TimeHeaderCalendar extends TimeHeader {
 		super(timeScale, weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle);
 	}
 
+	@Override
 	protected final Locale locale() {
 		return weekConfigData.getLocale();
 	}

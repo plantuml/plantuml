@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.gantt.data.TimelineStyleData;
 import net.sourceforge.plantuml.gantt.data.WeekConfigData;
 import net.sourceforge.plantuml.gantt.data.WorkingHours;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
-import net.sourceforge.plantuml.gantt.time.TimeStringUtils;
+import net.sourceforge.plantuml.gantt.time.TimePointFormat;
 import net.sourceforge.plantuml.gantt.timescale.VariantTimeScale;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -62,7 +62,8 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle,
 			WorkingHours workingHours) {
 		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
-		// super(timeScale, weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle);
+		// super(timeScale, weekConfigData, dayCalendar, timeBounds, scaleConfig,
+		// timelineStyle);
 		this.workingHours = workingHours;
 	}
 
@@ -209,7 +210,7 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 			}
 		}
 	}
-	
+
 	private void drawTextsDayOfWeek(UGraphic ug) {
 
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
@@ -221,10 +222,11 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 			final double x2 = getTimeScale().getPosition(wink.increment());
 			final FontConfiguration fc = getFc(wink);
 
-			printCentered(ug, getTextBlockSLOW(TimeStringUtils.dayOfWeekShort(wink.toDayOfWeek(), locale()), fc), x1, x2);
+			printCentered(ug, false, x1, x2, wink, fc, TimePointFormat.DAY_OF_WEEK_SHORT);
+
 		}
 	}
-	
+
 	private FontConfiguration fc1;
 	private FontConfiguration fc2;
 
@@ -240,16 +242,11 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 		return fc2;
 	}
 
-	
 	private boolean isHidden(TimePoint wink) {
 		if (scaleConfig.isHideClosed() && dayCalendar.getOpenClose().isClosed(wink.toDay()))
 			return true;
 		return false;
 	}
-
-
-
-
 
 	@Override
 	public void drawTimeHeaderInternal(UGraphic ug, double totalHeightWithoutFooter) {
@@ -259,7 +256,7 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 		workingHours.drawOneDay(ug, 8);
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 //		drawSimpleDayCounter(ug);
-		
+
 	}
 
 }

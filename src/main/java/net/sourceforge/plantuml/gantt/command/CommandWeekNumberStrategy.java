@@ -70,7 +70,8 @@ public class CommandWeekNumberStrategy extends SingleLineCommand2<GanttDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 
 		final DayOfWeek weekDay = DayOfWeekUtils.fromString(arg.get("WEEKDAY", 0));
 		final String num = arg.get("NUM", 0);

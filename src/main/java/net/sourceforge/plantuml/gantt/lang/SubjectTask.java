@@ -130,8 +130,8 @@ public class SubjectTask implements Subject<GanttDiagram> {
 				when = (TaskInstant) complement;
 				task.setStart(when.getInstantPrecise());
 				if (when.isTask())
-					gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(),
-							gantt.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color));
+					gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),
+							when, new TaskInstant(task, TaskAttribute.START), color));
 
 				return CommandExecutionResult.ok();
 			}
@@ -245,8 +245,8 @@ public class SubjectTask implements Subject<GanttDiagram> {
 				final Task task = (Task) subject;
 				final TaskInstant when = (TaskInstant) complement;
 				task.setEnd(when.getInstantPrecise());
-				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),
-						when, new TaskInstant(task, TaskAttribute.END)));
+				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(), when,
+						new TaskInstant(task, TaskAttribute.END)));
 				return CommandExecutionResult.ok();
 			}
 		});

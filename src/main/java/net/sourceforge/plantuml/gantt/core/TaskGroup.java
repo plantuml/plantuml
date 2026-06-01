@@ -71,7 +71,6 @@ public class TaskGroup extends AbstractTask implements Task {
 		throw new UnsupportedOperationException();
 	}
 
-
 	@Override
 	public TimePoint getEnd() {
 		TimePoint max = null;

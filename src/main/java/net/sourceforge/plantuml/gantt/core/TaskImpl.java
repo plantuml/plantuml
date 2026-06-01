@@ -119,14 +119,14 @@ public class TaskImpl extends AbstractTask implements Task {
 			for (LocalDate date : pausedDay)
 				closedDays.put(date, Fraction.ZERO);
 
-			final PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE, closedDays);
+			final PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE,
+					closedDays);
 
 			result = Combiner.product(weekPattern, specificDaysClosed);
 		}
 
 		return result;
 	}
-
 
 	public PiecewiseConstant asPiecewiseConstant() {
 		if (cachedPiecewiseConstant != null)
