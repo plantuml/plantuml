@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.utils.I18nTimeData;
 
 public enum TimePointFormat {
 
-	DAY_OF_WEEK_SHORT, MONTH_YEAR_SHORT, MONTH_YEAR_LONG, MONTH_LONG, MONTH_SHORT, YEAR, QUARTER, DAY_OF_MONTH;
+	DAY_OF_WEEK_SHORT, DAY_OF_WEEK_LONG, MONTH_YEAR_SHORT, MONTH_YEAR_LONG, MONTH_LONG, MONTH_SHORT, YEAR, QUARTER, DAY_OF_MONTH;
 
 	public String format(TimePoint when, Locale locale) {
 		switch (this) {
@@ -53,6 +53,9 @@ public enum TimePointFormat {
 
 		case YEAR:
 			return "" + when.year();
+
+		case DAY_OF_WEEK_LONG:
+			return I18nTimeData.dayOfWeekLong(when.toDayOfWeek(), locale);
 
 		case DAY_OF_WEEK_SHORT:
 			return I18nTimeData.dayOfWeekShort(when.toDayOfWeek(), locale);

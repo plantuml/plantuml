@@ -60,19 +60,19 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
 	}
 
-	private double getH1(StringBounder stringBounder) {
+	private double getH1() {
 		final double h = timelineStyle.getFontSizeMonth() + 4;
 		return h;
 	}
 
-	private double getH2(StringBounder stringBounder) {
+	private double getH2() {
 		final double h = timelineStyle.getFontSizeDay() + 1;
-		return getH1(stringBounder) + h;
+		return getH1() + h;
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		return getH2(stringBounder);
+		return getH2();
 	}
 
 	@Override
@@ -104,7 +104,7 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 		printNamedDays(ug);
 
 		drawHline(ug, 0);
-		drawHline(ug, getH1(ug.getStringBounder()));
+		drawHline(ug, getH1());
 		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
 	}
 
@@ -125,7 +125,7 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
 			if (last == null || wink.monthYear().equals(last.monthYear()) == false) {
-				drawVline(ug.apply(getLineColor()), x1, 0, getH1(ug.getStringBounder()));
+				drawVline(ug.apply(getLineColor()), x1, 0, getH1());
 				if (last != null)
 					printMonth(ug, last, lastChangeMonth, x1, fc);
 
@@ -134,7 +134,7 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 			}
 		}
 		final double end = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
-		drawVline(ug.apply(getLineColor()), end, 0, getH1(ug.getStringBounder()));
+		drawVline(ug.apply(getLineColor()), end, 0, getH1());
 		final double x1 = end;
 		if (last != null && x1 > lastChangeMonth)
 			printMonth(ug, last, lastChangeMonth, x1, fc);
@@ -146,12 +146,12 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			if (wink.toDayOfWeek() == weekConfigData.getWeekNumberStrategy().getFirstDayOfWeek())
-				drawVline(ug.apply(getLineColor()), getTimeScale().getPosition(wink), getH1(ug.getStringBounder()),
+				drawVline(ug.apply(getLineColor()), getTimeScale().getPosition(wink), getH1(),
 						totalHeightWithoutFooter);
 		}
 
 		final double end = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
-		drawVline(ug.apply(getLineColor()), end, getH1(ug.getStringBounder()), totalHeightWithoutFooter);
+		drawVline(ug.apply(getLineColor()), end, getH1(), totalHeightWithoutFooter);
 		super.printVerticalSeparators(ug, totalHeightWithoutFooter);
 	}
 
@@ -170,7 +170,7 @@ class TimeHeaderWeekly extends TimeHeaderCalendar {
 				else
 					num = "" + wink.getWeekOfYear(weekConfigData.getWeekNumberStrategy());
 				final TextBlock textBlock = getTextBlockSLOW(num, fc);
-				printLeft(ug.apply(UTranslate.dy(getH1(ug.getStringBounder()))), textBlock,
+				printLeft(ug.apply(UTranslate.dy(getH1())), textBlock,
 						getTimeScale().getPosition(wink) + 5);
 			}
 		}

@@ -62,8 +62,6 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle,
 			WorkingHours workingHours) {
 		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
-		// super(timeScale, weekConfigData, dayCalendar, timeBounds, scaleConfig,
-		// timelineStyle);
 		this.workingHours = workingHours;
 	}
 
@@ -72,10 +70,14 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
 	}
 
+	private double getH1() {
+		final double h = timelineStyle.getFontSizeDay();
+		return h + 2;
+	}
+
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h = timelineStyle.getFontSizeDay();
-		return h + 6;
+		return getH1();
 	}
 
 	@Override
@@ -222,7 +224,8 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 			final double x2 = getTimeScale().getPosition(wink.increment());
 			final FontConfiguration fc = getFc(wink);
 
-			printCentered(ug, false, x1, x2, wink, fc, TimePointFormat.DAY_OF_WEEK_SHORT);
+			printCentered(ug, false, x1, x2, wink, fc, TimePointFormat.DAY_OF_WEEK_SHORT,
+					TimePointFormat.DAY_OF_WEEK_LONG);
 
 		}
 	}

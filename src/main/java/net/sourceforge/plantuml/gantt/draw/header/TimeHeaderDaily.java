@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.SName;
 
 class TimeHeaderDaily extends TimeHeaderCalendar {
@@ -59,24 +58,24 @@ class TimeHeaderDaily extends TimeHeaderCalendar {
 		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
 	}
 
-	private double getH1(StringBounder stringBounder) {
+	private double getH1() {
 		final double h = timelineStyle.getFontSizeMonth() + 2;
 		return h;
 	}
 
-	private double getH2(StringBounder stringBounder) {
+	private double getH2() {
 		final double h = timelineStyle.getFontSizeDay() + 2;
-		return getH1(stringBounder) + h;
+		return getH1() + h;
 	}
 
-	private double getH3(StringBounder stringBounder) {
+	private double getH3() {
 		final double h = timelineStyle.getFontSizeDay() + 3;
-		return getH2(stringBounder) + h;
+		return getH2() + h;
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		return getH3(stringBounder);
+		return getH3();
 	}
 
 	@Override
@@ -103,8 +102,8 @@ class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
-		drawTextsDayOfWeek(ug.apply(UTranslate.dy(getH1(ug.getStringBounder()))));
-		drawTextDayOfMonth(ug.apply(UTranslate.dy(getH2(ug.getStringBounder()))));
+		drawTextsDayOfWeek(ug.apply(UTranslate.dy(getH1())));
+		drawTextDayOfMonth(ug.apply(UTranslate.dy(getH2())));
 		drawMonths(ug);
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 

@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.SName;
 
 class TimeHeaderMonthly extends TimeHeaderCalendar {
@@ -59,19 +58,19 @@ class TimeHeaderMonthly extends TimeHeaderCalendar {
 		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);
 	}
 
-	private double getH1(StringBounder stringBounder) {
+	private double getH1() {
 		final double h = timelineStyle.getFontSizeYear() + 2;
 		return h;
 	}
 
-	private double getH2(StringBounder stringBounder) {
+	private double getH2() {
 		final double h = timelineStyle.getFontSizeMonth() + 2;
-		return getH1(stringBounder) + h;
+		return getH1() + h;
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		return getH2(stringBounder);
+		return getH2();
 	}
 
 	@Override
@@ -89,8 +88,8 @@ class TimeHeaderMonthly extends TimeHeaderCalendar {
 	@Override
 	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawYears(ug);
-		final double h1 = getH1(ug.getStringBounder());
-		final double h2 = getH2(ug.getStringBounder());
+		final double h1 = getH1();
+		final double h2 = getH2();
 		drawMonths(ug.apply(UTranslate.dy(h1)));
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 
