@@ -194,14 +194,13 @@ class ImageWindow extends JFrame {
 
 		final boolean zoomChecked = prefs.getBoolean(KEY_ZOOM_FIT, false);
 		zoomFitButt.setSelected(zoomChecked);
-		if (zoomChecked) {
+		if (zoomChecked)
 			sizeMode = SizeMode.ZOOM_FIT;
-		}
+
 		final boolean widthZoomChecked = prefs.getBoolean(KEY_WIDTH_FIT, false);
 		widthFitButt.setSelected(widthZoomChecked);
-		if (widthZoomChecked) {
+		if (widthZoomChecked)
 			sizeMode = SizeMode.WIDTH_FIT;
-		}
 
 		this.setFocusable(true);
 		this.addKeyListener(new KeyAdapter() {
@@ -280,23 +279,23 @@ class ImageWindow extends JFrame {
 		prefs.putBoolean(KEY_ZOOM_FIT, selectedZoom);
 		prefs.putBoolean(KEY_WIDTH_FIT, selectedWidth);
 		zoomFactor = 0;
-		if (selectedZoom) {
+		if (selectedZoom)
 			sizeMode = SizeMode.ZOOM_FIT;
-		} else if (selectedWidth) {
+		else if (selectedWidth)
 			sizeMode = SizeMode.WIDTH_FIT;
-		} else {
+		else
 			sizeMode = SizeMode.FULL_SIZE;
-		}
+
 		refreshImage(false);
 	}
 
 	private void updateSimpleLine() {
-		if (index < 0) {
+		if (index < 0)
 			index = 0;
-		}
-		if (index > listModel.getSize() - 1) {
+
+		if (index > listModel.getSize() - 1)
 			index = listModel.getSize() - 1;
-		}
+
 		simpleLine = (SimpleLine) listModel.getElementAt(index);
 		setTitle(simpleLine.toString());
 		refreshImage(false);
@@ -313,9 +312,9 @@ class ImageWindow extends JFrame {
 
 	private ScrollablePicture buildScrollablePicture() {
 		final GeneratedImage generatedImage = simpleLine.getGeneratedImage();
-		if (generatedImage == null) {
+		if (generatedImage == null)
 			return null;
-		}
+
 		final File png = generatedImage.getPngFile();
 		PortableImage image = null;
 		try {
@@ -340,14 +339,13 @@ class ImageWindow extends JFrame {
 			final TextBlock error = GraphicStrings.createForError(Arrays.asList(msg), false);
 			try {
 				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				TextBlockExporter.builder(error, new FileFormatOption(FileFormat.PNG), false).build()
-						.exportTo(baos);
+				TextBlockExporter.builder(error, new FileFormatOption(FileFormat.PNG), false).build().exportTo(baos);
 				image = SImageIO.read(baos.toByteArray());
 			} catch (IOException e) {
 				Logme.error(e);
 			}
 		}
-		final ImageIcon imageIcon = new ImageIcon(image.toString(), simpleLine.toString());
+		final ImageIcon imageIcon = new ImageIcon(image.getBufferedImage(), simpleLine.toString());
 		final ScrollablePicture scrollablePicture = new ScrollablePicture(imageIcon, 1);
 
 		scrollablePicture.addMouseListener(new MouseAdapter() {
@@ -391,9 +389,9 @@ class ImageWindow extends JFrame {
 
 	private void copy() {
 		final GeneratedImage generatedImage = simpleLine.getGeneratedImage();
-		if (generatedImage == null) {
+		if (generatedImage == null)
 			return;
-		}
+
 		try {
 			final File png = generatedImage.getPngFile();
 			final Image image = SImageIO.read(png).getBufferedImage();
