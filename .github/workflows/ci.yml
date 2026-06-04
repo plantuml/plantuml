@@ -403,6 +403,7 @@ jobs:
           chmod +x .github/scripts/print-gradle-properties-and-release-version.sh
           .github/scripts/print-gradle-properties-and-release-version.sh
           .github/scripts/release.sh
+          gradle patchCompilationInfo
           gradle --debug publish
           NS="net.sourceforge.plantuml"
           AUTH="$(printf '%s' "$CENTRAL_USERNAME:$CENTRAL_PASSWORD" | base64 | tr -d '\n')"
