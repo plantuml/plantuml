@@ -33,26 +33,39 @@
  * 
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.mcp;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import net.sourceforge.plantuml.BlockUml;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.core.DiagramDescription;
 
-public interface Command<D extends Diagram> {
+public class DiagramRenderer {
 
-	CommandExecutionResult execute(D diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException;
+	public McpResult render(String source, String format) throws IOException {
+		if (source.startsWith("@start") == false)
+			return McpResult.noAtStart();
 
-	default String explain(BlocLines lines) {
-		return "WIP: cannot explain " + getClass();
-	}
+		final SourceStringReader ss = new SourceStringReader(source, UTF_8);
+		final List<BlockUml> blocks = ss.getBlocks();
+		if (blocks.size() != 1)
+			return McpResult.badInput();
 
-	CommandControl isValid(BlocLines lines);
+		final BlockUml blockUml = blocks.get(0);
+		final Diagram diagram = blockUml.getDiagram();
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		final DiagramDescription dr = ss.outputImage(baos, 0, new FileFormatOption(FileFormat.SVG));
 
-	boolean isEligibleFor(ParserPass pass);
-
-	default boolean isCommandForbidden(BlocLines lines) {
-		return false;
+		final String svg = new String(baos.toByteArray(), UTF_8);
+		return new McpResult(diagram, svg);
 	}
 
 }

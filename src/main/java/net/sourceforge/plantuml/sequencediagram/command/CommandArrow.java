@@ -202,6 +202,11 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return "Creating message";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 

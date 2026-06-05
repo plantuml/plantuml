@@ -106,8 +106,10 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 	}
 
 	private CommandControl isValidBracket(BlocLines lines) {
-		if (TeaVM.a()) assert lines.size() == 2;
-		if (TeaVM.a()) assert syntaxWithFinalBracket();
+		if (TeaVM.a())
+			assert lines.size() == 2;
+		if (TeaVM.a())
+			assert syntaxWithFinalBracket();
 		if (myTrim(lines.getAt(1)).equals("{") == false)
 			return CommandControl.NOT_OK;
 
@@ -119,9 +121,37 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return CommandControl.OK;
 	}
 
+	@Override
+	final public String explain(BlocLines lines) {
+		if (syntaxWithFinalBracket() && lines.size() == 2) {
+			if (TeaVM.a())
+				assert myTrim(lines.getAt(1)).equals("{");
+			lines = BlocLines.singleString(lines.getFirst().getString() + " {");
+		}
+
+		if (lines.size() != 1)
+			throw new IllegalArgumentException();
+
+		final StringLocated first = lines.getFirst();
+		final String line = myTrim(first);
+		if (isForbidden(line))
+			return null;
+
+		final RegexResult arg = pattern.matcher(line);
+		if (arg == null)
+			return null;
+
+		return explainArg(first.getLocation(), arg);
+	}
+
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return "wip explainArg in " + getClass();
+	}
+
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
 		if (syntaxWithFinalBracket() && lines.size() == 2) {
-			if (TeaVM.a()) assert myTrim(lines.getAt(1)).equals("{");
+			if (TeaVM.a())
+				assert myTrim(lines.getAt(1)).equals("{");
 			lines = BlocLines.singleString(lines.getFirst().getString() + " {");
 		}
 		if (lines.size() != 1)
@@ -150,8 +180,8 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return false;
 	}
 
-	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException;
+	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException;
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {

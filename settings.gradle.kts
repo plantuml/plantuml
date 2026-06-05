@@ -43,3 +43,11 @@ if (javaVersion.isCompatibleWith(JavaVersion.VERSION_11)) {
 } else {
     println("Skipping plantuml-natif as it requires Java 11 or higher")
 }
+
+// TeaVM headless JS build powering the Node-based PlantUML MCP server
+// (plantuml-mcp-js). Like the other TeaVM-related tooling, it requires Java 11+.
+if (javaVersion.isCompatibleWith(JavaVersion.VERSION_11)) {
+    include("plantuml-mcp-js")
+} else {
+    println("Skipping plantuml-mcp-js as it requires Java 11 or higher")
+}

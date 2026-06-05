@@ -40,3 +40,4 @@ build/
 
 # other
 tmp
+node_modules/

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,29 +30,58 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import java.util.Collections;
+import java.util.List;
+
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-public interface Command<D extends Diagram> {
+public class Explanation {
 
-	CommandExecutionResult execute(D diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException;
+	private final List<String> input;
+	private final String explain;
+	private final LineLocation location;
 
-	default String explain(BlocLines lines) {
-		return "WIP: cannot explain " + getClass();
+	public Explanation(BlocLines blocLines, String explain) {
+
+		if (blocLines == null) {
+			this.input = Collections.emptyList();
+			this.location = null;
+		} else {
+			this.input = blocLines.asList();
+			this.location = blocLines.getLocation();
+
+		}
+		this.explain = explain;
 	}
 
-	CommandControl isValid(BlocLines lines);
+	public static Explanation ofError(String error) {
+		return new Explanation(null, error);
+	}
 
-	boolean isEligibleFor(ParserPass pass);
+	@Override
+	public String toString() {
+		if (input == null)
+			return explain;
 
-	default boolean isCommandForbidden(BlocLines lines) {
-		return false;
+		return input + " ==> " + explain;
+	}
+
+	public List<String> getInput() {
+		return Collections.unmodifiableList(input);
+	}
+
+	public String getExplain() {
+		return explain;
+	}
+
+	public LineLocation getLocation() {
+		return location;
 	}
 
 }

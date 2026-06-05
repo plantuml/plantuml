@@ -85,6 +85,11 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return "Creation participant in sequence diagram";
+	}
+
+	@Override
 	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 		final String code = arg.get("CODE", 0);

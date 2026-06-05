@@ -35,7 +35,10 @@
  */
 package net.sourceforge.plantuml.api;
 
+import java.util.List;
+
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.command.Explanation;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -48,5 +51,10 @@ public interface PSystemFactory {
 			PreprocessingArtifact preprocessing);
 
 	DiagramType getDiagramType();
+
+	default List<Explanation> explain(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+		throw new UnsupportedOperationException("wip " + getClass());
+	}
 
 }

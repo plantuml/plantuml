@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.command;
 
+import java.util.List;
+
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.Previous;
@@ -59,9 +61,15 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
+	public List<Explanation> explain(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+		throw new UnsupportedOperationException("wip " + getClass());
+	}
+
+	@Override
 	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-		
+
 		source = source.removeInitialNoise();
 
 		if (source.getTotalLineCount() != 3)

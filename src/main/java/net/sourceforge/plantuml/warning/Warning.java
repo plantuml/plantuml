@@ -51,6 +51,10 @@ public final class Warning {
 		return message;
 	}
 
+	public String asSingleLine() {
+		return String.join("\n", message);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
