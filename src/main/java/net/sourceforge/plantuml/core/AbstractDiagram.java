@@ -179,6 +179,10 @@ public abstract class AbstractDiagram implements Diagram {
 		}
 	}
 
+	public String explain(Command cmd, BlocLines lines) {
+		return cmd.explain(lines);
+	}
+
 	@Override
 	public boolean hasUrl() {
 		return false;

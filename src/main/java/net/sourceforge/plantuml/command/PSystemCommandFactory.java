@@ -72,6 +72,36 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
+	public List<Explanation> explain(PathSystem pathSystem, UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
+		final List<Explanation> result = new ArrayList<>();
+		AbstractDiagram sys = createEmptyDiagram(pathSystem, source, previous, preprocessing);
+
+		IteratorCounter2 it = source.iterator2();
+		final StringLocated startLine = it.next();
+		if (StartUtils.isStartDirective(startLine.getString()) == false)
+			throw new UnsupportedOperationException();
+
+		final Set<ParserPass> requiredPass = sys.getRequiredPass();
+
+		for (ParserPass pass : requiredPass) {
+			while (it.hasNext()) {
+				if (StartUtils.isEndDirective(it.peek().getString())) {
+					it = source.iterator2();
+					it.next();
+					// For next pass
+					break;
+				}
+				result.add(explainFewLines(sys, source, it, pass, preprocessing));
+			}
+
+		}
+
+		return result;
+
+	}
+
+	@Override
 	final public AbstractDiagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
 
@@ -157,6 +187,19 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 			sys = result.getNewDiagram();
 
 		return sys;
+
+	}
+
+	private Explanation explainFewLines(AbstractDiagram sys, UmlSource source, final IteratorCounter2 it,
+			ParserPass currentPass, PreprocessingArtifact preprocessing) {
+		final Step step = getCandidate(it);
+		if (step == null)
+			return null;
+
+		if (step.command.isEligibleFor(currentPass) == false)
+			return null;
+
+		return new Explanation(step.blocLines, sys.explain(step.command, step.blocLines));
 
 	}
 

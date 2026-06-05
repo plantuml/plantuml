@@ -68,6 +68,14 @@ public class BlocLines implements Iterable<StringLocated> {
 		return sb.toString();
 	}
 
+	public List<String> asList() {
+		final List<String> result = new ArrayList<>();
+		for (StringLocated line : lines)
+			result.add(line.getString());
+
+		return Collections.unmodifiableList(result);
+	}
+
 	@JawsStrange
 	public BlocLines expandsNewline(boolean reallyExpands) {
 		if (reallyExpands == false)

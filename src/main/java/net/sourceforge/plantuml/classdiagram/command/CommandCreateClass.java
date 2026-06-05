@@ -79,11 +79,11 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateClass.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "VISIBILITY",
-						"(" + VisibilityModifier.regexForVisibilityCharacter() + ")?"), //
+				new RegexLeaf(1, "VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacter() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, //
-						"TYPE", "(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|circle|diamond|protocol|struct|exception|metaclass|stereotype|dataclass|record|map)"), //
+						"TYPE",
+						"(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|circle|diamond|protocol|struct|exception|metaclass|stereotype|dataclass|record|map)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.nameAndCodeForClassWithGeneric(), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
@@ -100,11 +100,11 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 				new RegexOptional(new RegexConcat(new RegexLeaf("##"),
 						new RegexLeaf(2, "LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf(3,
-								"EXTENDS", "(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf(3, "EXTENDS",
+								"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
-						new RegexLeaf(3,
-								"IMPLEMENTS", "(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+						new RegexLeaf(3, "IMPLEMENTS",
+								"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\{"),
 						RegexLeaf.spaceZeroOrMore(), new RegexLeaf("\\}"))), //
 				RegexLeaf.end());
@@ -115,8 +115,56 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		final String typeString = StringUtils.goUpperCase(arg.get("TYPE", 0));
+		sb.append("Creating ").append(typeString.toLowerCase());
+
+		final String idShort = arg.getLazzy("CODE", 0);
+		if (idShort != null)
+			sb.append(" '").append(idShort).append("'");
+
+		final String displayString = arg.getLazzy("DISPLAY", 0);
+		if (displayString != null)
+			sb.append(" displayed as \"").append(displayString).append("\"");
+
+		final String visibilityString = arg.get("VISIBILITY", 0);
+		if (visibilityString != null)
+			sb.append(", visibility '").append(visibilityString).append("'");
+
+		final String genericOption = arg.getLazzy("DISPLAY", 1);
+		final String generic = genericOption != null ? genericOption : arg.get("GENERIC", 0);
+		if (generic != null)
+			sb.append(", generic <").append(generic).append(">");
+
+		final String stereo = arg.get("STEREO", 0);
+		if (stereo != null)
+			sb.append(", stereotype ").append(stereo);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		if (arg.get("LINECOLOR", 1) != null)
+			sb.append(", line color ").append(arg.get("LINECOLOR", 1));
+
+		final String extends_ = arg.get("EXTENDS", 1);
+		if (extends_ != null)
+			sb.append(", extends ").append(extends_);
+
+		final String implements_ = arg.get("IMPLEMENTS", 1);
+		if (implements_ != null)
+			sb.append(", implements ").append(implements_);
+
+		return sb.toString();
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String typeString = StringUtils.goUpperCase(arg.get("TYPE", 0));
 		final LeafType type = LeafType.getLeafType(typeString);
 		final String visibilityString = arg.get("VISIBILITY", 0);
@@ -140,7 +188,8 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		if (entity == null) {
 			Display display = Display.getWithNewlines(diagram.getPragma(), displayString);
 			if (Display.isNull(display))
-				display = Display.getWithNewlines(diagram.getPragma(), quark.get().getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
+				display = Display.getWithNewlines(diagram.getPragma(), quark.get().getName())
+						.withCreoleMode(CreoleMode.SIMPLE_LINE);
 			entity = diagram.reallyCreateLeaf(location, quark.get(), display, type, null);
 		} else {
 			if (entity.muteToType(type, null) == false)

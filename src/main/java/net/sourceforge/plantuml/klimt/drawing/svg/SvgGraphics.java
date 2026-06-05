@@ -42,7 +42,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -1097,8 +1096,10 @@ public class SvgGraphics {
 		return new String(Base64Coder.encode(data));
 	}
 
+	
+	
 	private String toBase64(String s) {
-		final byte data[] = s.getBytes(Charset.forName("UTF8"));
+		final byte data[] = s.getBytes(java.nio.charset.StandardCharsets.UTF_8);
 		return new String(Base64Coder.encode(data));
 	}
 

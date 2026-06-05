@@ -33,26 +33,34 @@
  * 
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.mcp;
 
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.utils.BlocLines;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
-public interface Command<D extends Diagram> {
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
-	CommandExecutionResult execute(D diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException;
+import net.sourceforge.plantuml.BlockUml;
+import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.command.Explanation;
 
-	default String explain(BlocLines lines) {
-		return "WIP: cannot explain " + getClass();
-	}
+public class DiagramExplainer {
 
-	CommandControl isValid(BlocLines lines);
+	public List<Explanation> explain(String source) throws IOException {
+		if (source.startsWith("@start") == false)
+			return Arrays.asList(
+					Explanation.ofError("The input must start with a @start... directive (for example @startuml)"));
 
-	boolean isEligibleFor(ParserPass pass);
+		final SourceStringReader ss = new SourceStringReader(source, UTF_8);
+		final List<BlockUml> blocks = ss.getBlocks();
+		if (blocks.size() != 1)
+			return Arrays.asList(Explanation.ofError("Expected exactly one diagram in the source"));
 
-	default boolean isCommandForbidden(BlocLines lines) {
-		return false;
+		final BlockUml blockUml = blocks.get(0);
+
+		return blockUml.explain();
+
 	}
 
 }
