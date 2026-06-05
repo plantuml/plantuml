@@ -48,6 +48,8 @@ import net.sourceforge.plantuml.gantt.time.TimePointFormat;
 import net.sourceforge.plantuml.gantt.timescale.VariantTimeScale;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -71,13 +73,20 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 	}
 
 	private double getH1() {
-		final double h = timelineStyle.getFontSizeDay();
-		return h + 2;
+		return timelineStyle.getFontSizeMonth() + 2;
+	}
+
+	private double getH2() {
+		return getH1() + timelineStyle.getFontSizeDay() + 2;
+	}
+
+	private double getH3() {
+		return getH2() + timelineStyle.getFontSizeDay() + 3;
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		return getH1();
+		return getH3();
 	}
 
 	@Override
@@ -146,8 +155,7 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 
 	private void drawSmallVlinesDay(UGraphic ug, double totalHeightWithoutFooter) {
 		ug = ug.apply(getLineColor());
-		ug = ug.apply(UTranslate.dy(6));
-		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
+		final ULine vbar = ULine.vline(totalHeightWithoutFooter);
 		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) <= 0; day = increment(day)) {
 			final TimePoint wink = TimePoint.ofStartOfDay(day);
 			final double x1 = getTimeScale().getPosition(wink);
@@ -253,13 +261,75 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeHeaderInternal(UGraphic ug, double totalHeightWithoutFooter) {
-		drawTextsDayOfWeek(ug);
+		drawNonWorkingPeriod(ug, totalHeightWithoutFooter);
+		drawMonths(ug);
+		drawTextsDayOfWeek(ug.apply(UTranslate.dy(getH1())));
+		drawTextDayOfMonth(ug.apply(UTranslate.dy(getH2())));
 //		// drawColorsBackground(ug, totalHeightWithoutFooter);
-		drawSmallVlinesDay(ug, totalHeightWithoutFooter);
-		workingHours.drawOneDay(ug, 8);
-		printVerticalSeparators(ug, totalHeightWithoutFooter);
+		drawSmallVlinesDay(ug.apply(UTranslate.dy(getH1())), totalHeightWithoutFooter);
+		// printVerticalSeparators(ug, totalHeightWithoutFooter);
 //		drawSimpleDayCounter(ug);
 
+	}
+
+	private void drawNonWorkingPeriod(UGraphic ug, double height) {
+		// double height = timelineStyle.getFontSizeDay() * 2 + 6;
+		final HColor backColor = HColorSet.instance().getColorOrWhite("#FFE5E5");
+		// final HColor backColor = HColorSet.instance().getColorOrWhite("#F4FFFF");
+
+		ug = ug.apply(backColor).apply(backColor.bg());
+		ug = ug.apply(UTranslate.dy(getH1()));
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
+			final double x1 = getTimeScale().getPosition(wink);
+
+			workingHours.drawOneDay(ug.apply(UTranslate.dx(x1)), height);
+		}
+
+	}
+
+	private void drawTextDayOfMonth(UGraphic ug) {
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
+
+			if (isHidden(wink))
+				continue;
+			final double x1 = getTimeScale().getPosition(wink);
+			final double x2 = getTimeScale().getPosition(wink.increment());
+			final FontConfiguration fc = getFc(wink);
+
+			printCentered(ug, false, x1, x2, wink, fc, TimePointFormat.DAY_OF_MONTH);
+		}
+	}
+
+	private void drawMonths(final UGraphic ug) {
+
+		final FontConfiguration fc = getFontConfigurationSLOW(SName.month, true, openFontColor());
+
+		TimePoint last = null;
+		double lastChangeMonth = -1;
+		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) <= 0; day = day.plusDays(1)) {
+			final TimePoint wink = TimePoint.ofStartOfDay(day);
+			if (isHidden(wink))
+				continue;
+			final double x1 = getTimeScale().getPosition(wink);
+			if (last == null || wink.monthYear().equals(last.monthYear()) == false) {
+				if (last != null)
+					printMonth(ug, last, lastChangeMonth, x1, fc);
+
+				lastChangeMonth = x1;
+				last = wink;
+			}
+		}
+		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));
+		if (x1 > lastChangeMonth)
+			printMonth(ug, last, lastChangeMonth, x1, fc);
+
+	}
+
+	private void printMonth(UGraphic ug, TimePoint monthYear, double start, double end, FontConfiguration fc) {
+		printCentered(ug, false, start, end, monthYear, fc, TimePointFormat.MONTH_SHORT, TimePointFormat.MONTH_LONG,
+				TimePointFormat.MONTH_YEAR_LONG);
 	}
 
 }

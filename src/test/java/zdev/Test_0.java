@@ -22,6 +22,9 @@ from 2018/04/17 to 2018/04/19 is closed
 
 @startgantt
 Project starts 2025-05-25
+saturday are closed
+sunday are closed
+
 From 8:00 to 12:00 are working hours
 From 14:00 to 18:00 are working hours
 [Task 1] starts 2025-05-25
@@ -42,6 +45,7 @@ From 14:00 to 18:00 are working hours
 [Task 7] requires 7 hours
 [Task 8] requires 8 hours
 [Task 9] requires 9 hours
+[Task 10] requires 100 hours
 @endgantt
 
 

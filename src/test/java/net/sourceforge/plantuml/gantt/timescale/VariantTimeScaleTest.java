@@ -10,6 +10,7 @@ import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import net.sourceforge.plantuml.gantt.OpenClose;
 import net.sourceforge.plantuml.gantt.core.TimeRange;
 import net.sourceforge.plantuml.gantt.data.WorkingHours;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
@@ -29,8 +30,8 @@ class VariantTimeScaleTest {
 		workingHours = new WorkingHours(
 				Collections.singletonList(new TimeRange(LocalTime.of(9, 0), LocalTime.of(19, 0))), dayWidth,
 				closeFactor);
-		timeScale = new VariantTimeScale(min, max, workingHours);
-		assertEquals(114, workingHours.getWorkingDurationForOneDay(), 0.01);
+		timeScale = new VariantTimeScale(min, max, workingHours, new OpenClose());
+		assertEquals(114, workingHours.getWorkingDurationForOneDay(false), 0.01);
 
 	}
 

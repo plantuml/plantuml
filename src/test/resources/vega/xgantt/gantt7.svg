@@ -5,6 +5,8 @@
     <rect fill="#90EE90" height="15" style="stroke:none;stroke-width:1;" width="224" x="176" y="55"/>
     <rect fill="#ADD8E6" height="15" style="stroke:none;stroke-width:1;" width="224" x="400" y="55"/>
     <rect fill="#90EE90" height="15" style="stroke:none;stroke-width:1;" width="240" x="624" y="55"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="85.6" x="165.2" y="9.3333">November 2018</text>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="85.6" x="597.2" y="9.3333">December 2018</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="13.9167" x="1.0417" y="21.7778">Mo</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.6667" x="18.1667" y="21.7778">Tu</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="15" x="32.5" y="21.7778">We</text>
@@ -113,8 +115,6 @@
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="818.4167" y="33.7778">26</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="834.4167" y="33.7778">27</text>
     <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.1667" x="850.4167" y="33.7778">28</text>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="85.6" x="165.2" y="9.3333">November 2018</text>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="85.6" x="597.2" y="9.3333">December 2018</text>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="55" y2="70"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="16" x2="16" y1="55" y2="70"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="32" x2="32" y1="55" y2="70"/>

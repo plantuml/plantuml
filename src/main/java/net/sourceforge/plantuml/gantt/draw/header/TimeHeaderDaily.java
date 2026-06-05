@@ -59,18 +59,15 @@ class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private double getH1() {
-		final double h = timelineStyle.getFontSizeMonth() + 2;
-		return h;
+		return timelineStyle.getFontSizeMonth() + 2;
 	}
 
 	private double getH2() {
-		final double h = timelineStyle.getFontSizeDay() + 2;
-		return getH1() + h;
+		return getH1() + timelineStyle.getFontSizeDay() + 2;
 	}
 
 	private double getH3() {
-		final double h = timelineStyle.getFontSizeDay() + 3;
-		return getH2() + h;
+		return getH2() + timelineStyle.getFontSizeDay() + 3;
 	}
 
 	@Override
@@ -102,9 +99,9 @@ class TimeHeaderDaily extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeHeaderInternal(final UGraphic ug, double totalHeightWithoutFooter) {
+		drawMonths(ug);
 		drawTextsDayOfWeek(ug.apply(UTranslate.dy(getH1())));
 		drawTextDayOfMonth(ug.apply(UTranslate.dy(getH2())));
-		drawMonths(ug);
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 
 		printNamedDays(ug);

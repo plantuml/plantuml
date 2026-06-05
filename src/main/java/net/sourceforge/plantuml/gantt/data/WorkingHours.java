@@ -62,7 +62,10 @@ public class WorkingHours {
 		return workingTimeRanges.toString();
 	}
 
-	public double getWorkingDurationForOneDay() {
+	public double getWorkingDurationForOneDay(boolean isClosed) {
+		if (isClosed)
+			return widthForClosedHours(Duration.ofHours(24));
+
 		Duration working = Duration.ZERO;
 		for (TimeRange range : workingTimeRanges)
 			working = working.plus(Duration.between(range.getStart(), range.getEnd()));
@@ -101,7 +104,6 @@ public class WorkingHours {
 	}
 
 	public void drawOneDay(UGraphic ug, double height) {
-		ug = ug.apply(HColors.RED).apply(HColors.RED.bg());
 		double current = getPartialDayWidth(LocalTime.MIDNIGHT);
 		for (TimeRange range : this.workingTimeRanges) {
 			final double start = getPartialDayWidth(range.getStart());
