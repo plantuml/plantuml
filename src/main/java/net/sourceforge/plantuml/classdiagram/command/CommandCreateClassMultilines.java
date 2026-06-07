@@ -88,8 +88,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 		EXTENDS, IMPLEMENTS
 	};
 
-	private final static Lazy<Pattern2> END = new Lazy<>(
-			() -> Pattern2.cmpile("^[%s]*\\}[%s]*$"));
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^[%s]*\\}[%s]*$"));
 
 	public CommandCreateClassMultilines() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
@@ -97,14 +96,14 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateClassMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf(1, "VISIBILITY",
-						"(" + VisibilityModifier.regexForVisibilityCharacter() + ")?"), //
+				new RegexLeaf(1, "VISIBILITY", "(" + VisibilityModifier.regexForVisibilityCharacter() + ")?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "TYPE",
 						"(interface|enum|annotation|abstract[%s]+class|static[%s]+class|abstract|class|entity|protocol|struct|exception|metaclass|stereotype|dataclass|record)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.nameAndCodeForClassWithGeneric(), //
-				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
+				new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
+						new RegexLeaf(1, "GENERIC", "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(4, "TAGS1", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
@@ -114,14 +113,19 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexConcat(new RegexLeaf("##"), new RegexLeaf(2, "LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
-				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf(3, "EXTENDS",
-						"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"),
-						new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
+				new RegexOptional(new RegexConcat(new RegexLeaf("##"),
+						new RegexLeaf(2, "LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
+				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
+						new RegexLeaf(3, "EXTENDS",
+								"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"),
+						new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
+								new RegexLeaf(1, "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
 				)), //
-				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf(3, "IMPLEMENTS",
-						"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"),
-						new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(1, "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
+				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
+						new RegexLeaf(3, "IMPLEMENTS",
+								"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"),
+						new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
+								new RegexLeaf(1, "\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
@@ -137,6 +141,70 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: the first line carries the class declaration, the
+		// remaining lines (if any, before the closing '}') are the body, i.e. the
+		// fields and methods.
+		lines = lines.trimSmart(1);
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Creating a class";
+
+		final StringBuilder sb = new StringBuilder();
+
+		final String typeString = StringUtils.goUpperCase(line0.get("TYPE", 0));
+		sb.append("Creating ").append(typeString.toLowerCase());
+
+		final String idShort = line0.getLazzy("CODE", 0);
+		if (idShort != null)
+			sb.append(" '").append(idShort).append("'");
+
+		final String displayString = line0.getLazzy("DISPLAY", 0);
+		if (displayString != null)
+			sb.append(" displayed as \"").append(displayString).append("\"");
+
+		final String visibilityString = line0.get("VISIBILITY", 0);
+		if (visibilityString != null)
+			sb.append(", visibility '").append(visibilityString).append("'");
+
+		final String genericOption = line0.getLazzy("DISPLAY", 1);
+		final String generic = genericOption != null ? genericOption : line0.get("GENERIC", 0);
+		if (generic != null)
+			sb.append(", generic <").append(generic).append(">");
+
+		final String stereo = line0.get("STEREO", 0);
+		if (stereo != null)
+			sb.append(", stereotype ").append(stereo);
+
+		if (line0.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (line0.get("COLOR", 0) != null)
+			sb.append(", background color ").append(line0.get("COLOR", 0));
+
+		if (line0.get("LINECOLOR", 1) != null)
+			sb.append(", line color ").append(line0.get("LINECOLOR", 1));
+
+		final String extends_ = line0.get("EXTENDS", 1);
+		if (extends_ != null)
+			sb.append(", extends ").append(extends_);
+
+		final String implements_ = line0.get("IMPLEMENTS", 1);
+		if (implements_ != null)
+			sb.append(", implements ").append(implements_);
+
+		if (typeString.contains("STATIC"))
+			sb.append(", static");
+
+		// Body: lines between the opening '{' line and the closing '}'.
+		final int bodyCount = lines.size() > 1 ? lines.size() - 1 : 0;
+		if (bodyCount > 0)
+			sb.append(", with ").append(bodyCount).append(bodyCount == 1 ? " body line" : " body lines");
+
+		return sb.toString();
 	}
 
 	@Override
@@ -253,7 +321,8 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 			return;
 
 		for (String tag : tags.split("[ ]+")) {
-			if (TeaVM.a()) assert tag.startsWith("$");
+			if (TeaVM.a())
+				assert tag.startsWith("$");
 			tag = tag.substring(1);
 			entity.addStereotag(new Stereotag(tag));
 		}

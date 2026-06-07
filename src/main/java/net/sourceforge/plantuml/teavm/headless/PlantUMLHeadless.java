@@ -6,8 +6,11 @@ import java.util.List;
 import org.teavm.jso.JSExport;
 import org.teavm.jso.JSObject;
 
+import net.sourceforge.plantuml.command.Explanation;
+import net.sourceforge.plantuml.mcp.DiagramExplainer;
 import net.sourceforge.plantuml.mcp.McpResult;
 import net.sourceforge.plantuml.mcp.SyntaxChecker;
+import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.version.Version;
 
 /**
@@ -100,6 +103,60 @@ public class PlantUMLHeadless {
 		return errorJson(result);
 //		return errorJson(result.getErrorLineNumber(), result.getErrorMessage(), result.getErrorLine(),
 //				result.getLineCount());
+	}
+
+	/**
+	 * Explains how a single PlantUML diagram is parsed, line by line.
+	 *
+	 * <p>
+	 * The result is a JSON array of objects, each with the shape:
+	 *
+	 * <pre>
+	 * {
+	 *   "input": ["Alice -> Bob"],
+	 *   "explain": "Message from 'Alice' to 'Bob'",
+	 *   "line": 2
+	 * }
+	 * </pre>
+	 *
+	 * where {@code input} is the source line(s) that produced the explanation,
+	 * {@code explain} is the human-readable text, and {@code line} is the 1-based
+	 * line number (omitted when no location applies).
+	 *
+	 * @param source the raw PlantUML source (a single {@code @start.../@end...}
+	 *               diagram)
+	 * @return a JSON array string describing the explanations; never {@code null}
+	 */
+	@JSExport
+	public static String explain(String source) {
+		final List<Explanation> explanations;
+		try {
+			explanations = new DiagramExplainer().explain(source);
+		} catch (IOException e) {
+			final JSObject array = TeaVmJson.newArray();
+			TeaVmJson.pushObject(array,
+					explanationToJson(null, "Could not read the diagram source: " + e.getMessage(), -1));
+			return TeaVmJson.stringify(array);
+		}
+
+		final JSObject array = TeaVmJson.newArray();
+		for (int i = 0; i < explanations.size(); i++) {
+			final Explanation explanation = explanations.get(i);
+			final LineLocation location = explanation.getLocation();
+			// getPosition() is 0-based; the public contract exposes a 1-based line.
+			final int line = location == null ? -1 : location.getPosition() + 1;
+			TeaVmJson.pushObject(array, explanationToJson(explanation.getInput(), explanation.getExplain(), line));
+		}
+		return TeaVmJson.stringify(array);
+	}
+
+	private static JSObject explanationToJson(List<String> input, String explain, int line) {
+		final JSObject json = TeaVmJson.newObject();
+		TeaVmJson.putObject(json, "input", input == null ? TeaVmJson.newArray() : toJsArray(input));
+		TeaVmJson.putString(json, "explain", explain);
+		if (line > 0)
+			TeaVmJson.putInt(json, "lineNumber", line);
+		return json;
 	}
 
 	private static String okJson(McpResult result) {

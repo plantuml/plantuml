@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.chart.ChartDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
+import net.sourceforge.plantuml.command.Explanation;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -216,6 +217,40 @@ public class PSystemBuilder2 {
 			return false;
 
 		return true;
+	}
+
+	/**
+	 * Explains, line by line, how the given preprocessed source is parsed.
+	 *
+	 * <p>
+	 * TeaVM counterpart of {@link net.sourceforge.plantuml.PSystemBuilder#explain}.
+	 * It builds the {@link UmlSource} the same way as
+	 * {@link #createDiagramFromPreprocessed(List, PreprocessingArtifact)}, finds
+	 * the first factory that produces a valid diagram for the detected type, and
+	 * delegates to its {@code explain}. {@code pathSystem} and {@code previous}
+	 * are {@code null} here, as everywhere else in this builder.
+	 *
+	 * @param source        the preprocessed source lines
+	 * @param preprocessing the preprocessing artifact
+	 * @return the list of explanations, or {@code null} if no factory matched
+	 */
+	@DuplicateCode(reference = "PSystemBuilder")
+	public List<Explanation> explain(List<StringLocated> source, PreprocessingArtifact preprocessing) {
+		final UmlSource umlSource = UmlSource.create(source, false);
+		umlSource.patchBase64();
+
+		final Collection<DiagramType> diagramTypes = umlSource.getDiagramTypes();
+
+		for (PSystemFactory systemFactory : factories) {
+			if (diagramTypes.contains(systemFactory.getDiagramType()) == false)
+				continue;
+
+			final Diagram sys = systemFactory.createSystem(null, umlSource, null, preprocessing);
+			if (isOk(sys))
+				return systemFactory.explain(null, umlSource, null, preprocessing);
+		}
+
+		return null;
 	}
 
 	private List<String> clean(String[] tab) {

@@ -203,7 +203,88 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 
 	@Override
 	protected String explainArg(LineLocation location, RegexResult arg) {
-		return "Creating message";
+		final StringBuilder sb = new StringBuilder();
+
+		// The two endpoints. Each side may be written as a bare code, a quoted
+		// long name, or a "long" as code / code as "long" combination; surface
+		// whichever form is present (see getOrCreateParticipant).
+		final String part1 = endpoint(arg, "PART1");
+		final String part2 = endpoint(arg, "PART2");
+
+		sb.append("Message from '").append(part1).append("' to '").append(part2).append("'");
+
+		// Direction of definition: an "x"-less left dressing (<, \, /) means the
+		// arrow is defined right-to-left (executeArg's reverseDefine).
+		final String dressing1 = getDressing(arg, "ARROW_DRESSING1");
+		final String dressing2 = getDressing(arg, "ARROW_DRESSING2");
+		if (contains(dressing1, "<", "\\", "/") && dressing1.contains("x") == false)
+			sb.append(" (defined right-to-left)");
+
+		// Body style: more than one dash worth of body means a dotted arrow.
+		if (getLength(arg) > 1)
+			sb.append(", dotted");
+
+		// Async heads (>>, //, \\), crosses (x) and circle decorations (o).
+		if (contains(dressing1, "<<", "\\\\", "//") || contains(dressing2, ">>", "\\\\", "//"))
+			sb.append(", async");
+		if (dressing1.contains("x") || dressing2.contains("x"))
+			sb.append(", with a cross head");
+		if (dressing1.contains("o") || dressing2.contains("o"))
+			sb.append(", with a circle decoration");
+
+//		final String arrowStyle = arg.getLazzy("ARROW_STYLE", 0);
+//		if (arrowStyle != null && arrowStyle.isEmpty() == false)
+//			sb.append(", style [").append(arrowStyle).append("]");
+//
+//		final String message = arg.get("MESSAGE", 0);
+//		if (message != null && message.isEmpty() == false)
+//			sb.append(", labelled \"").append(message).append("\"");
+
+		// Activation specifier (++, --, **, !!, ...) drives the life line.
+		final String activation = arg.get("ACTIVATION", 0);
+		if (activation != null && activation.isEmpty() == false)
+			sb.append(", activation '").append(activation).append("'");
+
+		final String lifeColor = arg.get("LIFECOLOR", 0);
+		if (lifeColor != null && lifeColor.isEmpty() == false)
+			sb.append(", life line color ").append(lifeColor);
+
+		final String stereotype = arg.get("STEREOTYPE", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("PARALLEL", 0) != null)
+			sb.append(", parallel");
+
+		final String multicast = arg.get("MULTICAST", 0);
+		if (multicast != null && multicast.trim().isEmpty() == false)
+			sb.append(", multicast to").append(multicast.replace("&", " "));
+
+		if (arg.get("ANCHOR", 1) != null)
+			sb.append(", anchor '").append(arg.get("ANCHOR", 1)).append("'");
+
+		return sb.toString();
+	}
+
+	/**
+	 * Renders the participant on side {@code n} ("PART1" or "PART2") as it was
+	 * written, mirroring the cases handled by
+	 * {@link #getOrCreateParticipant(LineLocation, SequenceDiagram, RegexResult, String)}:
+	 * bare code, quoted long name, "long" as code, or code as "long".
+	 */
+	private static String endpoint(RegexResult arg, String n) {
+		if (arg.get(n + "CODE", 0) != null)
+			return arg.get(n + "CODE", 0);
+		if (arg.get(n + "LONG", 0) != null)
+			return arg.get(n + "LONG", 0);
+		if (arg.get(n + "LONGCODE", 0) != null)
+			return arg.get(n + "LONGCODE", 1);
+		if (arg.get(n + "CODELONG", 0) != null)
+			return arg.get(n + "CODELONG", 0);
+		return "?";
 	}
 
 	@Override

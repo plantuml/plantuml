@@ -10,6 +10,7 @@
 // Tools:
 //   - plantuml_version : returns the embedded PlantUML version.
 //   - check_syntax     : validates a single diagram without rendering it.
+//   - diagram_explain  : explains how a single diagram is parsed, line by line.
 //
 // IMPORTANT: stdout is the MCP transport channel in stdio mode. Never write
 // anything but JSON-RPC to it. All diagnostics go to stderr.
@@ -116,6 +117,38 @@ server.tool(
     }
     return {
       isError,
+      content: [{ type: "text", text: json }],
+    };
+  }
+);
+
+server.tool(
+  "diagram_explain",
+  "Explains how a single PlantUML diagram is parsed, line by line. " +
+    "Returns a JSON array of objects, each containing: 'input' (the source " +
+    "line(s) that produced the explanation), 'explain' (a human-readable " +
+    "explanation), and 'line' (1-based line number, when available).",
+  {
+    source: z
+      .string()
+      .describe(
+        "The PlantUML source to explain, including @start.../@end... (a single diagram)"
+      ),
+  },
+  async ({ source }) => {
+    // engine.explain returns a JSON array string built on the Java side.
+    const json = engine.explain(source);
+    try {
+      JSON.parse(json);
+    } catch (e) {
+      return {
+        isError: true,
+        content: [
+          { type: "text", text: `Engine returned invalid JSON: ${String(e)}` },
+        ],
+      };
+    }
+    return {
       content: [{ type: "text", text: json }],
     };
   }

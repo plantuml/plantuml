@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public abstract class CommandMultilines2<S extends Diagram> implements Command<S> {
 
@@ -118,6 +119,19 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		} catch (NoSuchColorException e) {
 			return CommandExecutionResult.badColor();
 		}
+	}
+
+	@Override
+	final public String explain(BlocLines lines) {
+		lines = lines.cleanList(strategy);
+		if (syntaxWithFinalBracket())
+			lines = lines.eventuallyMoveBracket();
+
+		return explainNow(lines);
+	}
+
+	protected String explainNow(BlocLines lines) {
+		return "wip explainNow in " + getClass();
 	}
 
 	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines, ParserPass currentPass)
