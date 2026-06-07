@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public final class LimitFinder extends UGraphicNo {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	@Override
 	public UGraphic apply(UChange change) {
@@ -89,9 +89,15 @@ public final class LimitFinder extends UGraphicNo {
 	private UClip clip;
 
 	public static LimitFinder create(StringBounder stringBounder, boolean initToZero) {
-		final LimitFinder result = new LimitFinder(stringBounder, UTranslate.none(), MinMaxMutable.getEmpty(initToZero));
+		final LimitFinder result = new LimitFinder(stringBounder, UTranslate.none(),
+				MinMaxMutable.getEmpty(initToZero));
 		result.clip = null;
 		return result;
+	}
+
+	@Override
+	public boolean matchesProperty(String propertyName) {
+		return getStringBounder().matchesProperty(propertyName);
 	}
 
 	private LimitFinder(StringBounder stringBounder, UTranslate translate, MinMaxMutable minmax) {
