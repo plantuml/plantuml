@@ -10,6 +10,7 @@ plugins {
 	java
 	`maven-publish`
 	signing
+	alias(libs.plugins.teavm)
 }
 
 group = "net.sourceforge.plantuml"
@@ -29,6 +30,16 @@ dependencies {
 	testImplementation(libs.junit.jupiter)
 	testImplementation(libs.jlatexmath)
 	testImplementation(libs.xmlunit.core)
+	teavm(teavm.libs.jsoApis)
+}
+
+teavm {
+	js {
+		mainClass.set("net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser")
+		moduleType.set(org.teavm.gradle.api.JSModuleType.ES2015)
+		obfuscated.set(true)
+		optimization.set(org.teavm.gradle.api.OptimizationLevel.BALANCED)
+	}
 }
 
 repositories {

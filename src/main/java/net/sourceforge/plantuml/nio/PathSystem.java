@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 public class PathSystem {
 
 	public static PathSystem fetch() {
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::comment when JAVA8
 		if (TeaVM.isTeaVM())
 			return new PathSystem(null);
 		// ::done
@@ -72,7 +72,7 @@ public class PathSystem {
 	}
 
 	public JsonValue getTeaVMStdlibJson(String path) {
-		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::revert when JAVA8
 		// return null;
 		path = path.replaceAll("\\.json$", "");
 		final String full = path.toLowerCase();
@@ -89,7 +89,7 @@ public class PathSystem {
 	}
 
 	public InputStream getTeaVMStdlibInputStream(String path) {
-		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::revert when JAVA8
 		// return null;
 		final String full = path.substring(1, path.length() - 1).toLowerCase();
 		String libname = full.substring(0, full.indexOf('/'));
@@ -113,7 +113,7 @@ public class PathSystem {
 		// ::done
 	}
 
-	// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+	// ::comment when JAVA8
 	private Map<String, String> getInfo(final String libname) {
 		final JSObject info = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB_INFO(libname);
 		final Map<String, String> map = new HashMap<>();
@@ -138,7 +138,7 @@ public class PathSystem {
 	}
 
 	public PathSystem changeCurrentDirectory(NFolder newCurrentDir) {
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::comment when JAVA8
 		if (TeaVM.isTeaVM())
 			return this;
 		// ::done
@@ -147,7 +147,7 @@ public class PathSystem {
 	}
 
 	public PathSystem changeCurrentDirectory(SFile newCurrentDir) throws IOException {
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::comment when JAVA8
 		if (TeaVM.isTeaVM())
 			return this;
 		// ::done
@@ -164,7 +164,7 @@ public class PathSystem {
 	}
 
 	public PathSystem withCurrentDir(NFolder parentFile) {
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::comment when JAVA8
 		if (TeaVM.isTeaVM())
 			return this;
 		// ::done
