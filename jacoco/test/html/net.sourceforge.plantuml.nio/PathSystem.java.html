@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.teavm.browser.TeaVmScriptLoader;
 public class PathSystem {
 
 	public static PathSystem fetch() {
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::comment when JAVA8
 <span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
 <span class="nc" id="L69">			return new PathSystem(null);</span>
 		// ::done
@@ -72,7 +72,7 @@ public class PathSystem {
 	}
 
 	public JsonValue getTeaVMStdlibJson(String path) {
-		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::revert when JAVA8
 		// return null;
 <span class="nc" id="L77">		path = path.replaceAll(&quot;\\.json$&quot;, &quot;&quot;);</span>
 <span class="nc" id="L78">		final String full = path.toLowerCase();</span>
@@ -89,7 +89,7 @@ public class PathSystem {
 	}
 
 	public InputStream getTeaVMStdlibInputStream(String path) {
-		// ::revert when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::revert when JAVA8
 		// return null;
 <span class="nc" id="L94">		final String full = path.substring(1, path.length() - 1).toLowerCase();</span>
 <span class="nc" id="L95">		String libname = full.substring(0, full.indexOf('/'));</span>
@@ -113,7 +113,7 @@ public class PathSystem {
 		// ::done
 	}
 
-	// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+	// ::comment when JAVA8
 	private Map&lt;String, String&gt; getInfo(final String libname) {
 <span class="nc" id="L118">		final JSObject info = TeaVmScriptLoader.getRaw_PLANTUML_STDLIB_INFO(libname);</span>
 <span class="nc" id="L119">		final Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
@@ -138,7 +138,7 @@ public class PathSystem {
 <span class="fc" id="L138">	}</span>
 
 	public PathSystem changeCurrentDirectory(NFolder newCurrentDir) {
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::comment when JAVA8
 <span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
 <span class="nc" id="L143">			return this;</span>
 		// ::done
@@ -147,7 +147,7 @@ public class PathSystem {
 	}
 
 	public PathSystem changeCurrentDirectory(SFile newCurrentDir) throws IOException {
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::comment when JAVA8
 <span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
 <span class="nc" id="L152">			return this;</span>
 		// ::done
@@ -164,7 +164,7 @@ public class PathSystem {
 	}
 
 	public PathSystem withCurrentDir(NFolder parentFile) {
-		// ::comment when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__ JAVA8
+		// ::comment when JAVA8
 <span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
 <span class="nc" id="L169">			return this;</span>
 		// ::done
