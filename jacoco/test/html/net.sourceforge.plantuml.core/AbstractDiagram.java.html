@@ -179,25 +179,29 @@ public abstract class AbstractDiagram implements Diagram {
 		}
 	}
 
+	public String explain(Command cmd, BlocLines lines) {
+<span class="fc" id="L183">		return cmd.explain(lines);</span>
+	}
+
 	@Override
 	public boolean hasUrl() {
-<span class="nc" id="L184">		return false;</span>
+<span class="nc" id="L188">		return false;</span>
 	}
 
 	public HColor calculateBackColor() {
-<span class="fc" id="L188">		return null;</span>
+<span class="fc" id="L192">		return null;</span>
 	}
 
 	final public void setScale(Scale scale) {
-<span class="fc" id="L192">		this.scale = scale;</span>
-<span class="fc" id="L193">	}</span>
+<span class="fc" id="L196">		this.scale = scale;</span>
+<span class="fc" id="L197">	}</span>
 
 	final public Scale getScale() {
-<span class="fc" id="L196">		return scale;</span>
+<span class="fc" id="L200">		return scale;</span>
 	}
 
 	protected ColorMapper muteColorMapper(ColorMapper init) {
-<span class="fc" id="L200">		return init;</span>
+<span class="fc" id="L204">		return init;</span>
 	}
 
 	/**
@@ -206,64 +210,64 @@ public abstract class AbstractDiagram implements Diagram {
 	 * TextBlock export path.
 	 */
 	protected ImageData exportXmi(OutputStream os, FileFormat fileFormat) throws IOException {
-<span class="nc" id="L209">		return null;</span>
+<span class="nc" id="L213">		return null;</span>
 	}
 
 	/** @see #exportXmi */
 	protected ImageData exportScxml(OutputStream os) throws IOException {
-<span class="nc" id="L214">		return null;</span>
+<span class="nc" id="L218">		return null;</span>
 	}
 
 	/** @see #exportXmi */
 	protected ImageData exportGraphml(OutputStream os) throws IOException {
-<span class="nc" id="L219">		return null;</span>
+<span class="nc" id="L223">		return null;</span>
 	}
 
 	/** @see #exportXmi */
 	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
-<span class="fc" id="L224">		return null;</span>
+<span class="fc" id="L228">		return null;</span>
 	}
 
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc" id="L228">		return ClockwiseTopRightBottomLeft.same(0);</span>
+<span class="fc" id="L232">		return ClockwiseTopRightBottomLeft.same(0);</span>
 	}
 
 	@Override
 	public Display getTitleDisplay() {
-<span class="fc" id="L233">		return Display.NULL;</span>
+<span class="fc" id="L237">		return Display.NULL;</span>
 	}
 
 	@Override
 	public Set&lt;ParserPass&gt; getRequiredPass() {
-<span class="fc" id="L238">		return EnumSet.of(ParserPass.ONE);</span>
+<span class="fc" id="L242">		return EnumSet.of(ParserPass.ONE);</span>
 	}
 
 	public void startingPass(ParserPass pass) {
-<span class="fc" id="L242">	}</span>
+<span class="fc" id="L246">	}</span>
 
 	final public PreprocessingArtifact getPreprocessingArtifact() {
-<span class="fc" id="L245">		return preprocessing;</span>
+<span class="fc" id="L249">		return preprocessing;</span>
 	}
 
 	@Override
 	public void addWarning(Warning warning) {
-<span class="nc" id="L250">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L254">		throw new UnsupportedOperationException();</span>
 
 	}
 
 	@Override
 	public Collection&lt;Warning&gt; getWarnings() {
-<span class="nc" id="L256">		return preprocessing.getWarnings();</span>
+<span class="nc" id="L260">		return preprocessing.getWarnings();</span>
 	}
 
 	@Override
 	public InstallationRequirement getInstallationRequirement() {
-<span class="nc" id="L261">		return InstallationRequirement.NONE;</span>
+<span class="nc" id="L265">		return InstallationRequirement.NONE;</span>
 	}
 
 	@Override
 	public Throwable getRootCause() {
-<span class="fc" id="L266">		return null;</span>
+<span class="fc" id="L270">		return null;</span>
 	}
 
 }

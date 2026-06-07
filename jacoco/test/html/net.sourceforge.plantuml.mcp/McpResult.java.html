@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>McpResult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.mcp</a> &gt; <span class="el_source">McpResult.java</span></div><h1>McpResult.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.mcp;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.warning.Warning;
+
+public class McpResult {
+
+	private boolean ok;
+	private String diagramType;
+	private int lineCount;
+<span class="fc" id="L52">	private final List&lt;String&gt; warnings = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L53">	private int errorLine = -1;</span>
+	private String errorMessage;
+	private String errorContext;
+	private String svg;
+
+<span class="fc" id="L58">	private McpResult() {</span>
+<span class="fc" id="L59">	}</span>
+
+<span class="fc" id="L61">	public McpResult(final Diagram diagram) {</span>
+<span class="fc" id="L62">		this.lineCount = diagram.getSource().getTotalLineCount();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (diagram instanceof PSystemError) {</span>
+<span class="fc" id="L64">			this.ok = false;</span>
+<span class="fc" id="L65">			final PSystemError error = (PSystemError) diagram;</span>
+<span class="fc" id="L66">			final ErrorUml firstError = error.getFirstError();</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (firstError != null) {</span>
+				// getPosition() is 0-based; the public contract exposes a 1-based line.
+<span class="fc" id="L69">				this.errorLine = firstError.getPosition() + 1;</span>
+<span class="fc" id="L70">				this.errorMessage = firstError.getError();</span>
+			}
+<span class="fc" id="L72">		} else {</span>
+<span class="fc" id="L73">			this.ok = true;</span>
+<span class="fc" id="L74">			this.diagramType = diagram.getClass().getSimpleName();</span>
+		}
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (diagram instanceof TitledDiagram) {</span>
+<span class="fc" id="L78">			final TitledDiagram titledDiagram = (TitledDiagram) diagram;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">			for (Warning w : titledDiagram.getWarnings())</span>
+<span class="fc" id="L80">				this.warnings.add(w.asSingleLine());</span>
+		}
+<span class="fc" id="L82">	}</span>
+
+	public McpResult(Diagram diagram, String svg) {
+<span class="nc" id="L85">		this(diagram);</span>
+<span class="nc" id="L86">		this.svg = svg;</span>
+<span class="nc" id="L87">	}</span>
+
+	public static McpResult badInput() {
+<span class="nc" id="L90">		final McpResult result = new McpResult();</span>
+<span class="nc" id="L91">		result.errorMessage = &quot;Expected exactly one diagram in the source&quot;;</span>
+<span class="nc" id="L92">		return result;</span>
+	}
+
+	public static McpResult noAtStart() {
+<span class="fc" id="L96">		final McpResult result = new McpResult();</span>
+<span class="fc" id="L97">		result.errorMessage = &quot;The input must start with a @start... directive (for example @startuml)&quot;;</span>
+<span class="fc" id="L98">		return result;</span>
+	}
+
+	/**
+	 * @return {@code true} if the source parsed without error
+	 */
+	public boolean isOk() {
+<span class="fc" id="L105">		return ok;</span>
+	}
+
+	/**
+	 * @return the detected diagram type when OK (e.g. &quot;SequenceDiagram&quot;), or
+	 *         {@code null} when not applicable
+	 */
+	public String getDiagramType() {
+<span class="fc" id="L113">		return diagramType;</span>
+	}
+
+	/**
+	 * @return the number of source lines of the checked diagram
+	 */
+	public int getLineCount() {
+<span class="fc" id="L120">		return lineCount;</span>
+	}
+
+	/**
+	 * @return the non-fatal warnings, never {@code null} (possibly empty)
+	 */
+	public List&lt;String&gt; getWarnings() {
+<span class="fc" id="L127">		return warnings;</span>
+	}
+
+	/**
+	 * @return the 1-based line of the error, or -1 when {@link #isOk()} is
+	 *         {@code true}
+	 */
+	public int getErrorLine() {
+<span class="fc" id="L135">		return errorLine;</span>
+	}
+
+	/**
+	 * @return the error message, or {@code null} when {@link #isOk()} is
+	 *         {@code true}
+	 */
+	public String getErrorMessage() {
+<span class="fc" id="L143">		return errorMessage;</span>
+	}
+
+	/**
+	 * @return the offending source line, or {@code null} when not available
+	 */
+	public String getErrorContext() {
+<span class="nc" id="L150">		return errorContext;</span>
+	}
+
+	public String getSvg() {
+<span class="nc" id="L154">		return svg;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

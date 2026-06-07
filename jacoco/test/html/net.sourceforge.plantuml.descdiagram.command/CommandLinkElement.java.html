@@ -265,17 +265,17 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 
 <span class="pc bpc" id="L266" title="1 of 2 branches missed.">		if (diagram.isGroup(quark))</span>
 <span class="nc" id="L267">			return quark.getData();</span>
-<span class="pc bpc" id="L268" title="1 of 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">		if (quark.getData() != null)</span>
 <span class="fc" id="L269">			return quark.getData();</span>
-<span class="nc" id="L270">		final Display display = Display.getWithNewlines(diagram.getPragma(), quark.getName());</span>
+<span class="fc" id="L270">		final Display display = Display.getWithNewlines(diagram.getPragma(), quark.getName());</span>
 
-<span class="nc bnc" id="L272" title="All 2 branches missed.">		if (codeChar == '(') {</span>
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		if (codeChar == '(') {</span>
 <span class="nc bnc" id="L273" title="All 2 branches missed.">			if (endWithSlash)</span>
 <span class="nc" id="L274">				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE_BUSINESS,</span>
 						USymbols.USECASE_BUSINESS);
 			else
 <span class="nc" id="L277">				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE, USymbols.USECASE);</span>
-<span class="nc bnc" id="L278" title="All 2 branches missed.">		} else if (codeChar == ':') {</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">		} else if (codeChar == ':') {</span>
 <span class="nc bnc" id="L279" title="All 2 branches missed.">			if (endWithSlash)</span>
 <span class="nc" id="L280">				return diagram.reallyCreateLeaf(location, quark, display, LeafType.DESCRIPTION,</span>
 <span class="nc" id="L281">						ActorStyle.STICKMAN_BUSINESS.toUSymbol());</span>
@@ -283,12 +283,12 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 <span class="nc" id="L283">				return diagram.reallyCreateLeaf(location, quark, display, LeafType.DESCRIPTION,</span>
 <span class="nc" id="L284">						diagram.getSkinParam().actorStyle().toUSymbol());</span>
 
-<span class="nc bnc" id="L286" title="All 2 branches missed.">		} else if (codeChar == '[') {</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">		} else if (codeChar == '[') {</span>
 <span class="nc" id="L287">			final USymbol sym = diagram.getSkinParam().componentStyle().toUSymbol();</span>
 <span class="nc" id="L288">			return diagram.reallyCreateLeaf(location, quark, display, LeafType.DESCRIPTION, sym);</span>
 		}
 
-<span class="nc" id="L291">		return diagram.reallyCreateLeaf(location, quark, display, LeafType.STILL_UNKNOWN, null);</span>
+<span class="fc" id="L291">		return diagram.reallyCreateLeaf(location, quark, display, LeafType.STILL_UNKNOWN, null);</span>
 	}
 
 }

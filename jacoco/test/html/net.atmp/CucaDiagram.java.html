@@ -380,8 +380,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 
 	public final boolean isGroup(String code) {
 <span class="fc" id="L382">		final Quark&lt;Entity&gt; quark = this.firstWithName(code);</span>
-<span class="pc bpc" id="L383" title="1 of 2 branches missed.">		if (quark == null)</span>
-<span class="nc" id="L384">			return false;</span>
+<span class="fc bfc" id="L383" title="All 2 branches covered.">		if (quark == null)</span>
+<span class="fc" id="L384">			return false;</span>
 <span class="fc" id="L385">		return isGroup(quark);</span>
 	}
 

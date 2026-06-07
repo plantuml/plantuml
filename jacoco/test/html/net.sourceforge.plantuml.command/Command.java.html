@@ -43,12 +43,16 @@ public interface Command&lt;D extends Diagram&gt; {
 
 	CommandExecutionResult execute(D diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException;
 
+	default String explain(BlocLines lines) {
+<span class="nc" id="L47">		return &quot;WIP: cannot explain &quot; + getClass();</span>
+	}
+
 	CommandControl isValid(BlocLines lines);
 
 	boolean isEligibleFor(ParserPass pass);
 
 	default boolean isCommandForbidden(BlocLines lines) {
-<span class="fc" id="L51">		return false;</span>
+<span class="fc" id="L55">		return false;</span>
 	}
 
 }

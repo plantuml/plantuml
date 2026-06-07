@@ -140,6 +140,7 @@ net.sourceforge.plantuml.klimt.sprite
 net.sourceforge.plantuml.licensing
 net.sourceforge.plantuml.log
 net.sourceforge.plantuml.math
+net.sourceforge.plantuml.mcp
 net.sourceforge.plantuml.mda
 net.sourceforge.plantuml.mindmap
 net.sourceforge.plantuml.nio
@@ -196,6 +197,7 @@ net.sourceforge.plantuml.swing
 net.sourceforge.plantuml.syntax
 net.sourceforge.plantuml.teavm
 net.sourceforge.plantuml.teavm.browser
+net.sourceforge.plantuml.teavm.headless
 net.sourceforge.plantuml.telnet
 net.sourceforge.plantuml.text
 net.sourceforge.plantuml.theme

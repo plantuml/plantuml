@@ -66,8 +66,8 @@ public class CommandSkinParam extends SingleLineCommand2&lt;TitledDiagram&gt; {
 			ParserPass currentPass) {
 		try {
 <span class="fc" id="L68">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">			if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
-<span class="nc" id="L70">				diagram.addWarning(new Warning(&quot;Please use '!option handwritten true' to enable handwritten &quot;));</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
+<span class="fc" id="L70">				diagram.addWarning(new Warning(&quot;Please use '!option handwritten true' to enable handwritten &quot;));</span>
 
 <span class="pc bpc" id="L72" title="1 of 2 branches missed.">			if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name))</span>
 <span class="nc" id="L73">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam ParticipantPadding&quot;));</span>

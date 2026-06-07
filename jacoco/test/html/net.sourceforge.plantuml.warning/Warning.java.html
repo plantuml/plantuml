@@ -51,17 +51,21 @@ public final class Warning {
 <span class="nc" id="L51">		return message;</span>
 	}
 
+	public String asSingleLine() {
+<span class="fc" id="L55">		return String.join(&quot;\n&quot;, message);</span>
+	}
+
 	@Override
 	public boolean equals(Object o) {
-<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (this == o)</span>
-<span class="nc" id="L57">			return true;</span>
-<span class="nc" id="L58">		final Warning warning = (Warning) o;</span>
-<span class="nc" id="L59">		return Objects.equals(message, warning.message);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (this == o)</span>
+<span class="nc" id="L61">			return true;</span>
+<span class="nc" id="L62">		final Warning warning = (Warning) o;</span>
+<span class="nc" id="L63">		return Objects.equals(message, warning.message);</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L64">		return Objects.hash(message);</span>
+<span class="fc" id="L68">		return Objects.hash(message);</span>
 	}
 
 }

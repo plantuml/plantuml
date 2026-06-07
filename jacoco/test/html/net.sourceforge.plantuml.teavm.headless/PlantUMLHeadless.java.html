@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlantUMLHeadless.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.headless</a> &gt; <span class="el_source">PlantUMLHeadless.java</span></div><h1>PlantUMLHeadless.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.teavm.headless;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.util.List;
+
+import org.teavm.jso.JSExport;
+
+import net.sourceforge.plantuml.BlockUml;
+import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.error.PSystemError;
+import net.sourceforge.plantuml.version.Version;
+import net.sourceforge.plantuml.warning.Warning;
+
+/**
+ * Headless TeaVM entry point for the PlantUML MCP server (Node/stdio).
+ *
+ * &lt;p&gt;
+ * Unlike {@link net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser}, this
+ * class exposes no DOM- or Graphviz-dependent code: just plain
+ * text-returning functions usable from a plain Node process, with no browser
+ * and no Java runtime.
+ *
+ * &lt;p&gt;
+ * The exported functions return their result as a JSON string. Building the
+ * JSON here (in Java) keeps all formatting logic on the JVM side (testable with
+ * a normal JVM) and lets the Node wrapper simply {@code JSON.parse} the result.
+ * It also avoids pulling any JSON library into the TeaVM graph.
+ *
+ * &lt;p&gt;
+ * Tools so far:
+ * &lt;ul&gt;
+ * &lt;li&gt;{@link #version()} &amp;mdash; the embedded PlantUML version (validates the
+ * full chain: TeaVM build -&amp;gt; JS artifact -&amp;gt; Node wrapper -&amp;gt; MCP stdio
+ * transport -&amp;gt; tool discovery by the client).&lt;/li&gt;
+ * &lt;li&gt;{@link #checkSyntax(String)} &amp;mdash; parses a single diagram and reports a
+ * structured diagnostic, without rendering. Mirrors the Java
+ * {@code net.sourceforge.plantuml.mcp.SyntaxChecker}/{@code McpResult}
+ * behaviour, but is self-contained and DOM-free.&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+<span class="nc" id="L45">public class PlantUMLHeadless {</span>
+	// ::remove file when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
+	// ::remove file when JAVA8
+
+	/**
+	 * Returns the full description of the embedded PlantUML version.
+	 *
+	 * @return the version string, as produced by {@link Version#fullDescription()}
+	 */
+	@JSExport
+	public static String version() {
+<span class="nc" id="L56">		return Version.fullDescription();</span>
+	}
+
+	/**
+	 * Checks the syntax of a single PlantUML diagram, without rendering it.
+	 *
+	 * &lt;p&gt;
+	 * The result is a JSON object with the following shape:
+	 *
+	 * &lt;pre&gt;
+	 * {
+	 *   &quot;valid&quot;: true,
+	 *   &quot;diagramType&quot;: &quot;SequenceDiagram&quot;,
+	 *   &quot;lineCount&quot;: 4,
+	 *   &quot;warnings&quot;: [&quot;...&quot;]
+	 * }
+	 * &lt;/pre&gt;
+	 *
+	 * or, on failure:
+	 *
+	 * &lt;pre&gt;
+	 * {
+	 *   &quot;valid&quot;: false,
+	 *   &quot;lineCount&quot;: 4,
+	 *   &quot;warnings&quot;: [],
+	 *   &quot;errorLine&quot;: 2,
+	 *   &quot;errorMessage&quot;: &quot;...&quot;
+	 * }
+	 * &lt;/pre&gt;
+	 *
+	 * @param source the raw PlantUML source (a single {@code @start.../@end...}
+	 *               diagram)
+	 * @return a JSON string describing the diagnostic; never {@code null}
+	 */
+	@JSExport
+	public static String checkSyntax(String source) {
+<span class="nc bnc" id="L92" title="All 4 branches missed.">		if (source == null || source.startsWith(&quot;@start&quot;) == false)</span>
+<span class="nc" id="L93">			return errorJson(-1,</span>
+					&quot;The input must start with a @start... directive (for example @startuml)&quot;, 0);
+
+<span class="nc" id="L96">		final SourceStringReader ss = new SourceStringReader(source, UTF_8);</span>
+<span class="nc" id="L97">		final List&lt;BlockUml&gt; blocks = ss.getBlocks();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (blocks.size() != 1)</span>
+<span class="nc" id="L99">			return errorJson(-1, &quot;Expected exactly one diagram in the source&quot;, 0);</span>
+
+<span class="nc" id="L101">		final Diagram diagram = blocks.get(0).getDiagram();</span>
+<span class="nc" id="L102">		final int lineCount = diagram.getSource().getTotalLineCount();</span>
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (diagram instanceof PSystemError) {</span>
+<span class="nc" id="L105">			final PSystemError error = (PSystemError) diagram;</span>
+<span class="nc" id="L106">			final ErrorUml firstError = error.getFirstError();</span>
+<span class="nc" id="L107">			int errorLine = -1;</span>
+<span class="nc" id="L108">			String errorMessage = null;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">			if (firstError != null) {</span>
+				// getPosition() is 0-based; the public contract exposes a 1-based line.
+<span class="nc" id="L111">				errorLine = firstError.getPosition() + 1;</span>
+<span class="nc" id="L112">				errorMessage = firstError.getError();</span>
+			}
+<span class="nc" id="L114">			return errorJson(errorLine, errorMessage, lineCount);</span>
+		}
+
+<span class="nc" id="L117">		final String diagramType = diagram.getClass().getSimpleName();</span>
+<span class="nc" id="L118">		return okJson(diagramType, lineCount, warningsOf(diagram));</span>
+	}
+
+	private static List&lt;String&gt; warningsOf(Diagram diagram) {
+<span class="nc" id="L122">		final List&lt;String&gt; result = new java.util.ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram) {</span>
+<span class="nc" id="L124">			final TitledDiagram titledDiagram = (TitledDiagram) diagram;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">			for (Warning w : titledDiagram.getWarnings())</span>
+<span class="nc" id="L126">				result.add(w.asSingleLine());</span>
+		}
+<span class="nc" id="L128">		return result;</span>
+	}
+
+	private static String okJson(String diagramType, int lineCount, List&lt;String&gt; warnings) {
+<span class="nc" id="L132">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L133">		sb.append('{');</span>
+<span class="nc" id="L134">		sb.append(&quot;\&quot;valid\&quot;:true&quot;);</span>
+<span class="nc" id="L135">		sb.append(&quot;,\&quot;diagramType\&quot;:&quot;).append(jsonString(diagramType));</span>
+<span class="nc" id="L136">		sb.append(&quot;,\&quot;lineCount\&quot;:&quot;).append(lineCount);</span>
+<span class="nc" id="L137">		sb.append(&quot;,\&quot;warnings\&quot;:&quot;).append(jsonStringArray(warnings));</span>
+<span class="nc" id="L138">		sb.append('}');</span>
+<span class="nc" id="L139">		return sb.toString();</span>
+	}
+
+	private static String errorJson(int errorLine, String errorMessage, int lineCount) {
+<span class="nc" id="L143">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L144">		sb.append('{');</span>
+<span class="nc" id="L145">		sb.append(&quot;\&quot;valid\&quot;:false&quot;);</span>
+<span class="nc" id="L146">		sb.append(&quot;,\&quot;lineCount\&quot;:&quot;).append(lineCount);</span>
+<span class="nc" id="L147">		sb.append(&quot;,\&quot;warnings\&quot;:[]&quot;);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (errorLine &gt; 0)</span>
+<span class="nc" id="L149">			sb.append(&quot;,\&quot;errorLine\&quot;:&quot;).append(errorLine);</span>
+<span class="nc" id="L150">		sb.append(&quot;,\&quot;errorMessage\&quot;:&quot;).append(jsonString(errorMessage));</span>
+<span class="nc" id="L151">		sb.append('}');</span>
+<span class="nc" id="L152">		return sb.toString();</span>
+	}
+
+	private static String jsonStringArray(List&lt;String&gt; values) {
+<span class="nc" id="L156">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L157">		sb.append('[');</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		for (int i = 0; i &lt; values.size(); i++) {</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">			if (i &gt; 0)</span>
+<span class="nc" id="L160">				sb.append(',');</span>
+<span class="nc" id="L161">			sb.append(jsonString(values.get(i)));</span>
+		}
+<span class="nc" id="L163">		sb.append(']');</span>
+<span class="nc" id="L164">		return sb.toString();</span>
+	}
+
+	/**
+	 * Renders a Java string as a JSON string literal (quotes included), or the
+	 * literal {@code null} when the value is {@code null}. Escapes the characters
+	 * required by the JSON spec.
+	 */
+	private static String jsonString(String value) {
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L174">			return &quot;null&quot;;</span>
+<span class="nc" id="L175">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L176">		sb.append('&quot;');</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		for (int i = 0; i &lt; value.length(); i++) {</span>
+<span class="nc" id="L178">			final char c = value.charAt(i);</span>
+<span class="nc bnc" id="L179" title="All 6 branches missed.">			switch (c) {</span>
+			case '&quot;':
+<span class="nc" id="L181">				sb.append(&quot;\\\&quot;&quot;);</span>
+<span class="nc" id="L182">				break;</span>
+			case '\\':
+<span class="nc" id="L184">				sb.append(&quot;\\\\&quot;);</span>
+<span class="nc" id="L185">				break;</span>
+			case '\n':
+<span class="nc" id="L187">				sb.append(&quot;\\n&quot;);</span>
+<span class="nc" id="L188">				break;</span>
+			case '\r':
+<span class="nc" id="L190">				sb.append(&quot;\\r&quot;);</span>
+<span class="nc" id="L191">				break;</span>
+			case '\t':
+<span class="nc" id="L193">				sb.append(&quot;\\t&quot;);</span>
+<span class="nc" id="L194">				break;</span>
+			default:
+<span class="nc bnc" id="L196" title="All 2 branches missed.">				if (c &lt; 0x20)</span>
+<span class="nc" id="L197">					sb.append(String.format(&quot;\\u%04x&quot;, (int) c));</span>
+				else
+<span class="nc" id="L199">					sb.append(c);</span>
+			}
+		}
+<span class="nc" id="L202">		sb.append('&quot;');</span>
+<span class="nc" id="L203">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
