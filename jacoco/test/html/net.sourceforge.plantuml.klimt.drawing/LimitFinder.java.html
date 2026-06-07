@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public final class LimitFinder extends UGraphicNo {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	@Override
 	public UGraphic apply(UChange change) {
@@ -89,160 +89,166 @@ public final class LimitFinder extends UGraphicNo {
 	private UClip clip;
 
 	public static LimitFinder create(StringBounder stringBounder, boolean initToZero) {
-<span class="fc" id="L92">		final LimitFinder result = new LimitFinder(stringBounder, UTranslate.none(), MinMaxMutable.getEmpty(initToZero));</span>
-<span class="fc" id="L93">		result.clip = null;</span>
-<span class="fc" id="L94">		return result;</span>
+<span class="fc" id="L92">		final LimitFinder result = new LimitFinder(stringBounder, UTranslate.none(),</span>
+<span class="fc" id="L93">				MinMaxMutable.getEmpty(initToZero));</span>
+<span class="fc" id="L94">		result.clip = null;</span>
+<span class="fc" id="L95">		return result;</span>
+	}
+
+	@Override
+	public boolean matchesProperty(String propertyName) {
+<span class="fc" id="L100">		return getStringBounder().matchesProperty(propertyName);</span>
 	}
 
 	private LimitFinder(StringBounder stringBounder, UTranslate translate, MinMaxMutable minmax) {
-<span class="fc" id="L98">		super(stringBounder, translate);</span>
-<span class="fc" id="L99">		this.minmax = minmax;</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L104">		super(stringBounder, translate);</span>
+<span class="fc" id="L105">		this.minmax = minmax;</span>
+<span class="fc" id="L106">	}</span>
 
 	@Override
 	public void draw(UShape shape) {
-<span class="fc" id="L104">		final double x = getTranslate().getDx();</span>
-<span class="fc" id="L105">		final double y = getTranslate().getDy();</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
-<span class="fc" id="L107">			drawText(x, y, (UText) shape);</span>
-<span class="fc bfc" id="L108" title="All 2 branches covered.">		} else if (shape instanceof ULine) {</span>
-<span class="fc" id="L109">			drawULine(x, y, (ULine) shape);</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		} else if (shape instanceof UEllipse) {</span>
-<span class="fc" id="L111">			drawEllipse(x, y, (UEllipse) shape);</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">		} else if (shape instanceof UPolygon) {</span>
-<span class="fc" id="L113">			drawUPolygon(x, y, (UPolygon) shape);</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
-<span class="fc" id="L115">			drawUPath(x, y, (UPath) shape);</span>
-<span class="fc bfc" id="L116" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
-<span class="fc" id="L117">			drawRectangle(x, y, (URectangle) shape);</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		} else if (shape instanceof DotPath) {</span>
-<span class="nc" id="L119">			drawDotPath(x, y, (DotPath) shape);</span>
-<span class="fc bfc" id="L120" title="All 2 branches covered.">		} else if (shape instanceof UImage) {</span>
-<span class="nc" id="L121">			drawImage(x, y, (UImage) shape);</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		} else if (shape instanceof UImageSvg) {</span>
-<span class="nc" id="L123">			drawImageSvg(x, y, (UImageSvg) shape);</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		} else if (shape instanceof UImageTikz) {</span>
-<span class="nc" id="L125">			drawImageTikz(x, y, (UImageTikz) shape);</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		} else if (shape instanceof UEmpty) {</span>
-<span class="fc" id="L128">			drawEmpty(x, y, (UEmpty) shape);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (shape instanceof TextBlock) {</span>
-<span class="nc" id="L130">			final TextBlock tb = (TextBlock) shape;</span>
-<span class="nc" id="L131">			tb.drawU(this);</span>
-<span class="nc bnc" id="L132" title="All 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
+<span class="fc" id="L110">		final double x = getTranslate().getDx();</span>
+<span class="fc" id="L111">		final double y = getTranslate().getDy();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
+<span class="fc" id="L113">			drawText(x, y, (UText) shape);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		} else if (shape instanceof ULine) {</span>
+<span class="fc" id="L115">			drawULine(x, y, (ULine) shape);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		} else if (shape instanceof UEllipse) {</span>
+<span class="fc" id="L117">			drawEllipse(x, y, (UEllipse) shape);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		} else if (shape instanceof UPolygon) {</span>
+<span class="fc" id="L119">			drawUPolygon(x, y, (UPolygon) shape);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
+<span class="fc" id="L121">			drawUPath(x, y, (UPath) shape);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
+<span class="fc" id="L123">			drawRectangle(x, y, (URectangle) shape);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		} else if (shape instanceof DotPath) {</span>
+<span class="nc" id="L125">			drawDotPath(x, y, (DotPath) shape);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		} else if (shape instanceof UImage) {</span>
+<span class="nc" id="L127">			drawImage(x, y, (UImage) shape);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		} else if (shape instanceof UImageSvg) {</span>
+<span class="nc" id="L129">			drawImageSvg(x, y, (UImageSvg) shape);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		} else if (shape instanceof UImageTikz) {</span>
+<span class="nc" id="L131">			drawImageTikz(x, y, (UImageTikz) shape);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		} else if (shape instanceof UEmpty) {</span>
+<span class="fc" id="L134">			drawEmpty(x, y, (UEmpty) shape);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		} else if (shape instanceof TextBlock) {</span>
+<span class="nc" id="L136">			final TextBlock tb = (TextBlock) shape;</span>
+<span class="nc" id="L137">			tb.drawU(this);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
 			// To be done
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		} else if (shape instanceof CenteredText) {</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		} else if (shape instanceof CenteredText) {</span>
 			// Ignored
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		} else if (shape instanceof SpecialText) {</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		} else if (shape instanceof SpecialText) {</span>
 			// Ignored
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		} else if (shape instanceof CopyForegroundColorToBackgroundColor) {</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		} else if (shape instanceof CopyForegroundColorToBackgroundColor) {</span>
 			// Ignored
-<span class="nc bnc" id="L140" title="All 2 branches missed.">		} else if (shape instanceof UPixel) {</span>
-<span class="nc" id="L141">			addPoint(x, y);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		} else if (shape instanceof UPixel) {</span>
+<span class="nc" id="L147">			addPoint(x, y);</span>
 		} else {
-<span class="nc" id="L143">			throw new UnsupportedOperationException(shape.getClass().getName());</span>
+<span class="nc" id="L149">			throw new UnsupportedOperationException(shape.getClass().getName());</span>
 		}
-<span class="fc" id="L145">	}</span>
-
-	private void addPoint(double x, double y) {
-<span class="pc bpc" id="L148" title="3 of 4 branches missed.">		if (clip == null || clip.isInside(x, y))</span>
-<span class="fc" id="L149">			minmax.addPoint(x, y);</span>
-
 <span class="fc" id="L151">	}</span>
 
+	private void addPoint(double x, double y) {
+<span class="pc bpc" id="L154" title="3 of 4 branches missed.">		if (clip == null || clip.isInside(x, y))</span>
+<span class="fc" id="L155">			minmax.addPoint(x, y);</span>
+
+<span class="fc" id="L157">	}</span>
+
 	private void drawEmpty(double x, double y, UEmpty shape) {
-<span class="fc" id="L154">		addPoint(x, y);</span>
-<span class="fc" id="L155">		addPoint(x + shape.getWidth(), y + shape.getHeight());</span>
-<span class="fc" id="L156">	}</span>
+<span class="fc" id="L160">		addPoint(x, y);</span>
+<span class="fc" id="L161">		addPoint(x + shape.getWidth(), y + shape.getHeight());</span>
+<span class="fc" id="L162">	}</span>
 
 	private void drawUPath(double x, double y, UPath shape) {
-<span class="fc" id="L159">		addPoint(x + shape.getMinX(), y + shape.getMinY());</span>
-<span class="fc" id="L160">		addPoint(x + shape.getMaxX(), y + shape.getMaxY());</span>
-<span class="fc" id="L161">	}</span>
+<span class="fc" id="L165">		addPoint(x + shape.getMinX(), y + shape.getMinY());</span>
+<span class="fc" id="L166">		addPoint(x + shape.getMaxX(), y + shape.getMaxY());</span>
+<span class="fc" id="L167">	}</span>
 
 	private final static double HACK_X_FOR_POLYGON = 10;
 
 	private void drawUPolygon(double x, double y, UPolygon shape) {
-<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (shape.getPoints().size() == 0)</span>
-<span class="nc" id="L167">			return;</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (shape.getPoints().size() == 0)</span>
+<span class="nc" id="L173">			return;</span>
 
-<span class="fc" id="L169">		addPoint(x + shape.getMinX() - HACK_X_FOR_POLYGON, y + shape.getMinY());</span>
-<span class="fc" id="L170">		addPoint(x + shape.getMaxX() + HACK_X_FOR_POLYGON, y + shape.getMaxY());</span>
-<span class="fc" id="L171">	}</span>
+<span class="fc" id="L175">		addPoint(x + shape.getMinX() - HACK_X_FOR_POLYGON, y + shape.getMinY());</span>
+<span class="fc" id="L176">		addPoint(x + shape.getMaxX() + HACK_X_FOR_POLYGON, y + shape.getMaxY());</span>
+<span class="fc" id="L177">	}</span>
 
 	private void drawULine(double x, double y, ULine shape) {
-<span class="fc" id="L174">		addPoint(x, y);</span>
-<span class="fc" id="L175">		addPoint(x + shape.getDX(), y + shape.getDY());</span>
-<span class="fc" id="L176">	}</span>
-
-	private void drawRectangle(double x, double y, URectangle shape) {
-<span class="fc" id="L179">		addPoint(x - 1, y - 1);</span>
-<span class="fc" id="L180">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
-<span class="fc" id="L181">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
+<span class="fc" id="L180">		addPoint(x, y);</span>
+<span class="fc" id="L181">		addPoint(x + shape.getDX(), y + shape.getDY());</span>
 <span class="fc" id="L182">	}</span>
 
+	private void drawRectangle(double x, double y, URectangle shape) {
+<span class="fc" id="L185">		addPoint(x - 1, y - 1);</span>
+<span class="fc" id="L186">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
+<span class="fc" id="L187">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
+<span class="fc" id="L188">	}</span>
+
 	private void drawDotPath(double x, double y, DotPath shape) {
-<span class="nc" id="L185">		final MinMax shapeMinMax = shape.getMinMax();</span>
-<span class="nc" id="L186">		addPoint(x + shapeMinMax.getMinX(), y + shapeMinMax.getMinY());</span>
-<span class="nc" id="L187">		addPoint(x + shapeMinMax.getMaxX(), y + shapeMinMax.getMaxY());</span>
-<span class="nc" id="L188">	}</span>
+<span class="nc" id="L191">		final MinMax shapeMinMax = shape.getMinMax();</span>
+<span class="nc" id="L192">		addPoint(x + shapeMinMax.getMinX(), y + shapeMinMax.getMinY());</span>
+<span class="nc" id="L193">		addPoint(x + shapeMinMax.getMaxX(), y + shapeMinMax.getMaxY());</span>
+<span class="nc" id="L194">	}</span>
 
 	private void drawImage(double x, double y, UImage shape) {
-<span class="fc" id="L191">		addPoint(x, y);</span>
-<span class="nc" id="L192">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
-<span class="nc" id="L193">	}</span>
+<span class="fc" id="L197">		addPoint(x, y);</span>
+<span class="nc" id="L198">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="nc" id="L199">	}</span>
 
 	private void drawImageSvg(double x, double y, UImageSvg shape) {
-<span class="nc" id="L196">		addPoint(x, y);</span>
-<span class="nc" id="L197">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
-<span class="nc" id="L198">	}</span>
+<span class="nc" id="L202">		addPoint(x, y);</span>
+<span class="nc" id="L203">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="nc" id="L204">	}</span>
 
 	private void drawImageTikz(double x, double y, UImageTikz shape) {
-<span class="nc" id="L201">		addPoint(x, y);</span>
-<span class="nc" id="L202">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
-<span class="nc" id="L203">	}</span>
+<span class="nc" id="L207">		addPoint(x, y);</span>
+<span class="nc" id="L208">		addPoint(x + shape.getWidth() - 1, y + shape.getHeight() - 1);</span>
+<span class="nc" id="L209">	}</span>
 
 	private void drawEllipse(double x, double y, UEllipse shape) {
-<span class="fc" id="L206">		addPoint(x, y);</span>
-<span class="fc" id="L207">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
-<span class="fc" id="L208">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
-<span class="fc" id="L209">	}</span>
+<span class="fc" id="L212">		addPoint(x, y);</span>
+<span class="fc" id="L213">		addPoint(x + shape.getWidth() - 1 + shape.getDeltaShadow() * 2,</span>
+<span class="fc" id="L214">				y + shape.getHeight() - 1 + shape.getDeltaShadow() * 2);</span>
+<span class="fc" id="L215">	}</span>
 
 	private void drawText(double x, double y, UText text) {
-<span class="fc" id="L212">		final XDimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
-<span class="fc" id="L213">				text.getText());</span>
-<span class="fc" id="L214">		y -= dim.getHeight() - 1.5;</span>
-<span class="fc" id="L215">		addPoint(x, y);</span>
-<span class="fc" id="L216">		addPoint(x, y + dim.getHeight());</span>
-<span class="fc" id="L217">		addPoint(x + dim.getWidth(), y);</span>
-<span class="fc" id="L218">		addPoint(x + dim.getWidth(), y + dim.getHeight());</span>
-<span class="fc" id="L219">	}</span>
+<span class="fc" id="L218">		final XDimension2D dim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
+<span class="fc" id="L219">				text.getText());</span>
+<span class="fc" id="L220">		y -= dim.getHeight() - 1.5;</span>
+<span class="fc" id="L221">		addPoint(x, y);</span>
+<span class="fc" id="L222">		addPoint(x, y + dim.getHeight());</span>
+<span class="fc" id="L223">		addPoint(x + dim.getWidth(), y);</span>
+<span class="fc" id="L224">		addPoint(x + dim.getWidth(), y + dim.getHeight());</span>
+<span class="fc" id="L225">	}</span>
 
 	public ColorMapper getColorMapper() {
-<span class="nc" id="L222">		return ColorMapper.IDENTITY;</span>
+<span class="nc" id="L228">		return ColorMapper.IDENTITY;</span>
 	}
 
 	public double getMaxX() {
-<span class="nc" id="L226">		return minmax.getMaxX();</span>
+<span class="nc" id="L232">		return minmax.getMaxX();</span>
 	}
 
 	public double getMaxY() {
-<span class="nc" id="L230">		return minmax.getMaxY();</span>
+<span class="nc" id="L236">		return minmax.getMaxY();</span>
 	}
 
 	public double getMinX() {
-<span class="nc" id="L234">		return minmax.getMinX();</span>
+<span class="nc" id="L240">		return minmax.getMinX();</span>
 	}
 
 	public double getMinY() {
-<span class="nc" id="L238">		return minmax.getMinY();</span>
+<span class="nc" id="L244">		return minmax.getMinY();</span>
 	}
 
 	public MinMax getMinMax() {
-<span class="pc bpc" id="L242" title="1 of 2 branches missed.">		if (minmax.isInfinity())</span>
-<span class="nc" id="L243">			return MinMax.getEmpty(true);</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">		if (minmax.isInfinity())</span>
+<span class="nc" id="L249">			return MinMax.getEmpty(true);</span>
 
-<span class="fc" id="L245">		return MinMax.fromMutable(minmax);</span>
+<span class="fc" id="L251">		return MinMax.fromMutable(minmax);</span>
 	}
 
 }
