@@ -297,6 +297,17 @@ tasks.register("npmPackage") {
 			into(pkgDir)
 		}
 
+		// LICENSE file. npm auto-includes a file named LICENSE if present in the
+		// package dir; since the whole point of this release is the MIT license,
+		// ship the full text (copied from mit-license.txt, renamed to LICENSE).
+		copy {
+			from(layout.projectDirectory) {
+				include("mit-license.txt")
+				rename { "LICENSE" }
+			}
+			into(pkgDir)
+		}
+
 		// package.json
 		val packageJson = """
 			{
@@ -309,7 +320,10 @@ tasks.register("npmPackage") {
 			  "exports": {
 			    ".": "./plantuml.js",
 			    "./plantuml.js": "./plantuml.js",
-			    "./viz-global.js": "./viz-global.js"
+			    "./viz-global.js": "./viz-global.js",
+			    "./emoji.js": "./emoji.js",
+			    "./openiconic.js": "./openiconic.js",
+			    "./package.json": "./package.json"
 			  },
 			  "files": [
 			    "plantuml.js",
@@ -327,7 +341,8 @@ tasks.register("npmPackage") {
 			    "github-integration-poc.html",
 			    "github-integration-web-worker-poc.html",
 			    "GITHUB_INTEGRATION.md",
-			    "README.md"
+			    "README.md",
+			    "LICENSE"
 			  ],
 			  "keywords": [
 			    "plantuml",
@@ -349,7 +364,7 @@ tasks.register("npmPackage") {
 			  },
 			  "author": "Arnaud Roques",
 			  "license": "MIT",
-			  "sideEffects": false
+			  "sideEffects": ["./viz-global.js"]
 			}
 		""".trimIndent()
 		file("$pkgDir/package.json").writeText(packageJson + "\n")
@@ -416,6 +431,11 @@ tasks.register("npmPackage") {
 			## License
 
 			[MIT](https://opensource.org/license/mit/).
+
+			**Versions ≥ 1.2026.6 are MIT-licensed; earlier versions are
+			GPL-3.0-or-later.** npm only displays the license of the latest version,
+			so if you are pinned to an older release, check the license of that
+			specific version.
 		""".trimIndent()
 		file("$pkgDir/README.md").writeText(readme + "\n")
 
