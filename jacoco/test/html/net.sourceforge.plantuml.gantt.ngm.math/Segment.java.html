@@ -415,12 +415,11 @@ public final class Segment {
 		}
 	}
 
-
 	public LocalDateTime computeClampedStart(LocalDateTime current) {
-<span class="fc bfc" id="L420" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
-<span class="fc bfc" id="L421" title="All 2 branches covered.">			return current.isAfter(startExclusive()) ? current : startExclusive();</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">		if (direction == TimeDirection.FORWARD)</span>
+<span class="fc bfc" id="L420" title="All 2 branches covered.">			return current.isAfter(startExclusive()) ? current : startExclusive();</span>
 		else
-<span class="fc bfc" id="L423" title="All 2 branches covered.">			return current.isBefore(startExclusive()) ? current : startExclusive();</span>
+<span class="fc bfc" id="L422" title="All 2 branches covered.">			return current.isBefore(startExclusive()) ? current : startExclusive();</span>
 	}
 
 }

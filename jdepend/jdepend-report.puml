@@ -1690,8 +1690,8 @@ Total Classes: 9
 "net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.gantt.draw" --> "net.sourceforge.plantuml.url"
 
-class "net.sourceforge.plantuml.gantt.draw.header" %lighten("red", 78) {
-Total Classes: 6
+class "net.sourceforge.plantuml.gantt.draw.header" %lighten("red", 92) {
+Total Classes: 10
 }
 "net.sourceforge.plantuml.gantt.draw.header" --> "java.lang"
 "net.sourceforge.plantuml.gantt.draw.header" --> "java.time"

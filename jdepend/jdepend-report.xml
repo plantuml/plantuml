@@ -8336,14 +8336,14 @@
 
         <Package name="net.sourceforge.plantuml.gantt.draw.header">
             <Stats>
-                <TotalClasses>6</TotalClasses>
-                <ConcreteClasses>4</ConcreteClasses>
+                <TotalClasses>10</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>2</Ca>
                 <Ce>15</Ce>
-                <A>0.33</A>
+                <A>0.2</A>
                 <I>0.88</I>
-                <D>0.22</D>
+                <D>0.08</D>
                 <V>1</V>
             </Stats>
 
@@ -8363,11 +8363,23 @@
                 <Class sourceFile="TimeHeader.java">
                     net.sourceforge.plantuml.gantt.draw.header.TimeHeader$TextBlockKey
                 </Class>
+                <Class sourceFile="TimeHeaderDaily.java">
+                    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderDaily
+                </Class>
                 <Class sourceFile="TimeHeaderFactory.java">
                     net.sourceforge.plantuml.gantt.draw.header.TimeHeaderFactory$1
                 </Class>
+                <Class sourceFile="TimeHeaderMonthly.java">
+                    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderMonthly
+                </Class>
+                <Class sourceFile="TimeHeaderQuarterly.java">
+                    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderQuarterly
+                </Class>
                 <Class sourceFile="TimeHeaderVariant.java">
                     net.sourceforge.plantuml.gantt.draw.header.TimeHeaderVariant
+                </Class>
+                <Class sourceFile="TimeHeaderYearly.java">
+                    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderYearly
                 </Class>
             </ConcreteClasses>
 
@@ -20250,11 +20262,6 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.draw.header">
-            <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-            <Package>net.sourceforge.plantuml.klimt</Package>
-            <Package>net.sourceforge.plantuml.klimt.color</Package>
-            <Package>net.sourceforge.plantuml.klimt.awt</Package>
-            <Package>net.sourceforge.plantuml.teavm</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
             <Package>net.sourceforge.plantuml.klimt.shape</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>

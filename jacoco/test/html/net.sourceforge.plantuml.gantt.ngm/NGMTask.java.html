@@ -60,8 +60,8 @@ import java.time.LocalDateTime;
  *
  * &lt;p&gt;
  * These three quantities must remain conceptually independent. Confusing them
- * leads to incorrect scheduling behavior. The goal of NGM is to provide a
- * clean and unambiguous task model using {@code java.time} and explicit
+ * leads to incorrect scheduling behavior. The goal of NGM is to provide a clean
+ * and unambiguous task model using {@code java.time} and explicit
  * resource-allocation logic.
  * &lt;/p&gt;
  *
@@ -109,10 +109,9 @@ import java.time.LocalDateTime;
  * &lt;h3&gt;Factory methods&lt;/h3&gt;
  *
  * &lt;p&gt;
- * The static factory methods
- * {@link #withFixedDuration} and
- * {@link #withFixedTotalEffort} create concrete
- * implementations representing these two behaviors.
+ * The static factory methods {@link #withFixedDuration} and
+ * {@link #withFixedTotalEffort} create concrete implementations representing
+ * these two behaviors.
  * &lt;/p&gt;
  */
 public abstract class NGMTask {
@@ -123,9 +122,9 @@ public abstract class NGMTask {
 	 * Creates a new task with a fixed workload allocation.
 	 *
 	 */
-<span class="fc" id="L126">	protected NGMTask(NGMAllocation allocation) {</span>
-<span class="fc" id="L127">		this.allocation = allocation;</span>
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L125">	protected NGMTask(NGMAllocation allocation) {</span>
+<span class="fc" id="L126">		this.allocation = allocation;</span>
+<span class="fc" id="L127">	}</span>
 
 	/**
 	 * Returns the current start instant of the task.
@@ -294,7 +293,7 @@ public abstract class NGMTask {
 	 * @return the constant FTE allocation applied to the task
 	 */
 	public NGMAllocation getAllocation() {
-<span class="nc" id="L297">		return allocation;</span>
+<span class="nc" id="L296">		return allocation;</span>
 	}
 
 	/**
@@ -330,7 +329,7 @@ public abstract class NGMTask {
 	 * @return a new fixed-duration task
 	 */
 	public static NGMTask withFixedDuration(NGMAllocation allocation, Duration duration) {
-<span class="fc" id="L333">		return new NGMTaskFixedDuration(allocation, duration);</span>
+<span class="fc" id="L332">		return new NGMTaskFixedDuration(allocation, duration);</span>
 	}
 
 	/**
@@ -368,7 +367,7 @@ public abstract class NGMTask {
 	 */
 	public static NGMTask withFixedTotalEffort(NGMAllocation allocation, LocalDateTime start,
 			NGMTotalEffort totalEffort) {
-<span class="fc" id="L371">		return new NGMTaskFixedTotalEffort(allocation, start, totalEffort);</span>
+<span class="fc" id="L370">		return new NGMTaskFixedTotalEffort(allocation, start, totalEffort);</span>
 	}
 
 }

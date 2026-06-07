@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.gantt.core;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 
 public interface Moment {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public TimePoint getStart();
 

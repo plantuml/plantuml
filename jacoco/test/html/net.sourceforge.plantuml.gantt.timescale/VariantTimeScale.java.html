@@ -37,41 +37,46 @@ package net.sourceforge.plantuml.gantt.timescale;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
+import net.sourceforge.plantuml.gantt.OpenClose;
 import net.sourceforge.plantuml.gantt.data.WorkingHours;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 
 public class VariantTimeScale implements TimeScale {
 
-	final private LocalDate min;
-	final private LocalDate max;
-	final private WorkingHours workingHours;
+	private final LocalDate min;
+	private final LocalDate max;
+	private final WorkingHours workingHours;
+	private final OpenClose openClose;
 
-<span class="fc" id="L51">	public VariantTimeScale(LocalDate min, LocalDate max, WorkingHours workingHours) {</span>
-<span class="fc" id="L52">		this.min = min;</span>
-<span class="fc" id="L53">		this.max = max;</span>
-<span class="fc" id="L54">		this.workingHours = workingHours;</span>
-<span class="fc" id="L55">		System.out.println(&quot;VariantTimeScale &quot; + workingHours);</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L52">	public VariantTimeScale(LocalDate min, LocalDate max, WorkingHours workingHours, OpenClose openClose) {</span>
+<span class="fc" id="L53">		this.min = min;</span>
+<span class="fc" id="L54">		this.max = max;</span>
+<span class="fc" id="L55">		this.workingHours = workingHours;</span>
+<span class="fc" id="L56">		this.openClose = openClose;</span>
+<span class="fc" id="L57">	}</span>
 
 	@Override
 	public double getPosition(TimePoint instant) {
-<span class="fc" id="L60">		final LocalDateTime timeOnly = instant.toLocalDateTime();</span>
-<span class="fc" id="L61">		final LocalDate dateOnly = instant.toDay();</span>
-<span class="fc" id="L62">		final long daysBetween = ChronoUnit.DAYS.between(min, dateOnly);</span>
-<span class="fc" id="L63">		return daysBetween * workingHours.getWorkingDurationForOneDay()</span>
-<span class="fc" id="L64">				+ workingHours.getPartialDayWidth(timeOnly.toLocalTime());</span>
+<span class="fc" id="L61">		final LocalDateTime timeOnly = instant.toLocalDateTime();</span>
+<span class="fc" id="L62">		final LocalDate dateOnly = instant.toDay();</span>
+<span class="fc" id="L63">		double tmp = 0;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		for (LocalDate dd = min; dd.isBefore(dateOnly); dd = dd.plusDays(1))</span>
+<span class="fc" id="L65">			tmp += workingHours.getWorkingDurationForOneDay(openClose.isClosed(dd));</span>
+
+<span class="fc" id="L67">		return tmp + workingHours.getPartialDayWidth(timeOnly.toLocalTime());</span>
 	}
 
 	@Override
 	public double getWidth(TimePoint instant) {
-<span class="nc" id="L69">		return workingHours.getWorkingDurationForOneDay();</span>
+<span class="nc" id="L72">		System.err.println(&quot;VariantTimeScale::instant=&quot; + instant + &quot; &quot; + instant.toDay());</span>
+<span class="nc" id="L73">		final boolean isClosed = openClose.isClosed(instant.toDay());</span>
+<span class="nc" id="L74">		return workingHours.getWorkingDurationForOneDay(isClosed);</span>
 	}
 
 	@Override
 	public boolean isBreaking(TimePoint instant) {
-<span class="nc" id="L74">		return false;</span>
+<span class="nc" id="L79">		return false;</span>
 	}
 
 }

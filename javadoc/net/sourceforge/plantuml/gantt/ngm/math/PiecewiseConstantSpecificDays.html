@@ -134,8 +134,8 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(net.sourceforge.plantuml.gantt.ngm.math.Fraction,java.util.Map)" class="member-name-link">of</a><wbr>(<a href="Fraction.html" title="class in net.sourceforge.plantuml.gantt.ngm.math">Fraction</a>&nbsp;defaultValue,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>,<wbr><a href="Fraction.html" title="class in net.sourceforge.plantuml.gantt.ngm.math">Fraction</a>&gt;&nbsp;dayToFraction)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates a PiecewiseConstantSpecificDays with the given default value and
- a pre-built day-to-fraction mapping.</div>
+<div class="block">Creates a PiecewiseConstantSpecificDays with the given default value and a
+ pre-built day-to-fraction mapping.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Segment.html" title="class in net.sourceforge.plantuml.gantt.ngm.math">Segment</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#segmentAt(java.time.LocalDateTime,net.sourceforge.plantuml.gantt.ngm.math.TimeDirection)" class="member-name-link">segmentAt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;instant,
@@ -186,13 +186,13 @@ loadScripts(document, 'script');</script>
 <h3>of</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="PiecewiseConstantSpecificDays.html" title="class in net.sourceforge.plantuml.gantt.ngm.math">PiecewiseConstantSpecificDays</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="Fraction.html" title="class in net.sourceforge.plantuml.gantt.ngm.math">Fraction</a>&nbsp;defaultValue,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>,<wbr><a href="Fraction.html" title="class in net.sourceforge.plantuml.gantt.ngm.math">Fraction</a>&gt;&nbsp;dayToFraction)</span></div>
-<div class="block">Creates a PiecewiseConstantSpecificDays with the given default value and
- a pre-built day-to-fraction mapping.
+<div class="block">Creates a PiecewiseConstantSpecificDays with the given default value and a
+ pre-built day-to-fraction mapping.
 
  <p>
  This factory method avoids the O(N²) cost of chaining N calls to
- <a href="#withDay(java.time.LocalDate,net.sourceforge.plantuml.gantt.ngm.math.Fraction)"><code>withDay(LocalDate, Fraction)</code></a>, each of which copies the internal
- map. Instead, the caller builds the map once and passes it in.
+ <a href="#withDay(java.time.LocalDate,net.sourceforge.plantuml.gantt.ngm.math.Fraction)"><code>withDay(LocalDate, Fraction)</code></a>, each of which copies the internal map.
+ Instead, the caller builds the map once and passes it in.
  </p></div>
 <dl class="notes">
 <dt>Parameters:</dt>

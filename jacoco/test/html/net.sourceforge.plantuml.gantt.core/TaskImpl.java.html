@@ -119,14 +119,14 @@ public class TaskImpl extends AbstractTask implements Task {
 <span class="nc bnc" id="L119" title="All 2 branches missed.">			for (LocalDate date : pausedDay)</span>
 <span class="nc" id="L120">				closedDays.put(date, Fraction.ZERO);</span>
 
-<span class="nc" id="L122">			final PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE, closedDays);</span>
+<span class="nc" id="L122">			final PiecewiseConstantSpecificDays specificDaysClosed = PiecewiseConstantSpecificDays.of(Fraction.ONE,</span>
+					closedDays);
 
-<span class="nc" id="L124">			result = Combiner.product(weekPattern, specificDaysClosed);</span>
+<span class="nc" id="L125">			result = Combiner.product(weekPattern, specificDaysClosed);</span>
 		}
 
-<span class="fc" id="L127">		return result;</span>
+<span class="fc" id="L128">		return result;</span>
 	}
-
 
 	public PiecewiseConstant asPiecewiseConstant() {
 <span class="fc bfc" id="L132" title="All 2 branches covered.">		if (cachedPiecewiseConstant != null)</span>

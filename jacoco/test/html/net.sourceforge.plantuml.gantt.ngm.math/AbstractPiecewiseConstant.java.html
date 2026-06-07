@@ -44,9 +44,9 @@ import java.util.Iterator;
  *
  * &lt;p&gt;
  * This class provides a implementation of
- * {@link #iterateSegmentsFrom(LocalDateTime, TimeDirection)} that lazily iterates over
- * successive {@link Segment segments}, starting from the segment that contains
- * a given instant.
+ * {@link #iterateSegmentsFrom(LocalDateTime, TimeDirection)} that lazily
+ * iterates over successive {@link Segment segments}, starting from the segment
+ * that contains a given instant.
  * &lt;/p&gt;
  *
  * &lt;p&gt;
@@ -63,8 +63,8 @@ import java.util.Iterator;
  * &lt;/ul&gt;
  *
  * &lt;p&gt;
- * &lt;strong&gt;Important:&lt;/strong&gt; Implementations of
- * {@link #iterateSegmentsFrom} must guarantee that the returned segment:
+ * &lt;strong&gt;Important:&lt;/strong&gt; Implementations of {@link #iterateSegmentsFrom}
+ * must guarantee that the returned segment:
  * &lt;/p&gt;
  * &lt;ul&gt;
  * &lt;li&gt;contains the provided instant,&lt;/li&gt;
@@ -88,7 +88,7 @@ import java.util.Iterator;
 			// Current iteration position.
 			// This represents the start instant of the next segment to be returned.
 <span class="fc" id="L90">			private LocalDateTime current = instant;</span>
-			
+
 <span class="fc" id="L92">			private int counter = 9999;</span>
 
 			@Override
@@ -97,7 +97,7 @@ import java.util.Iterator;
 <span class="pc bpc" id="L97" title="1 of 2 branches missed.">				if (counter &lt;= 0)</span>
 <span class="nc" id="L98">					throw new IllegalStateException(&quot;Infinite loop detected in PiecewiseConstant iteration&quot;);</span>
 <span class="fc" id="L99">				counter--;</span>
-				
+
 				// Retrieve the (possibly larger) segment that contains the original instant.
 				// Implementations of segmentAt(...) are expected to return a segment
 				// that fully covers the given instant.

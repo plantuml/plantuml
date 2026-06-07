@@ -52,20 +52,19 @@ import net.sourceforge.plantuml.gantt.GanttDiagram;
 <span class="fc" id="L52">		return new UBrexNamed(&quot;OPEN&quot;, //</span>
 <span class="fc" id="L53">				UBrexConcat.build( //</span>
 						new UBrexLeaf(&quot;open〇?e〇?d&quot;), //
-						new UBrexOptional(
-<span class="fc" id="L56">								UBrexConcat.build(new UBrexLeaf(&quot;∙for∙&quot;), SubjectTask.taskCode(&quot;FOO&quot;)))));</span>
+<span class="fc" id="L55">						new UBrexOptional(UBrexConcat.build(new UBrexLeaf(&quot;∙for∙&quot;), SubjectTask.taskCode(&quot;FOO&quot;)))));</span>
 	}
 
 	@Override
 	public Failable&lt;String&gt; getMe(GanttDiagram diagram, UMatcher arg) {
-<span class="fc" id="L61">		final String value = arg.get(&quot;OPEN&quot;, 0);</span>
-<span class="fc" id="L62">		final int x = value.indexOf('[');</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (x &gt; 0) {</span>
-<span class="fc" id="L64">			final int y = value.lastIndexOf(']');</span>
-<span class="fc" id="L65">			final String s = value.substring(x + 1, y);</span>
-<span class="fc" id="L66">			return Failable.ok(s);</span>
+<span class="fc" id="L60">		final String value = arg.get(&quot;OPEN&quot;, 0);</span>
+<span class="fc" id="L61">		final int x = value.indexOf('[');</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (x &gt; 0) {</span>
+<span class="fc" id="L63">			final int y = value.lastIndexOf(']');</span>
+<span class="fc" id="L64">			final String s = value.substring(x + 1, y);</span>
+<span class="fc" id="L65">			return Failable.ok(s);</span>
 		}
-<span class="fc" id="L68">		return Failable.ok(&quot;&quot;);</span>
+<span class="fc" id="L67">		return Failable.ok(&quot;&quot;);</span>
 	}
 
 }

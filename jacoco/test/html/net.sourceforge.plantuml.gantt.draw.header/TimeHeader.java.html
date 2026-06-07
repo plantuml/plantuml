@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.gantt.draw.header;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -47,6 +48,7 @@ import net.sourceforge.plantuml.gantt.data.TimeScaleConfigData;
 import net.sourceforge.plantuml.gantt.data.TimelineStyleData;
 import net.sourceforge.plantuml.gantt.data.WeekConfigData;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
+import net.sourceforge.plantuml.gantt.time.TimePointFormat;
 import net.sourceforge.plantuml.gantt.timescale.TimeScale;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -76,49 +78,49 @@ public abstract class TimeHeader {
 	protected final WeekConfigData weekConfigData;
 
 	public TimeHeader(TimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
-<span class="fc" id="L79">			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {</span>
-<span class="fc" id="L80">		this.weekConfigData = weekConfigData;</span>
-<span class="fc" id="L81">		this.dayCalendar = dayCalendar;</span>
-<span class="fc" id="L82">		this.timeBounds = timeBounds;</span>
-<span class="fc" id="L83">		this.scaleConfig = scaleConfig;</span>
-<span class="fc" id="L84">		this.timelineStyle = timelineStyle;</span>
-<span class="fc" id="L85">		this.timeScale = timeScale;</span>
-<span class="fc" id="L86">	}</span>
+<span class="fc" id="L81">			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {</span>
+<span class="fc" id="L82">		this.weekConfigData = weekConfigData;</span>
+<span class="fc" id="L83">		this.dayCalendar = dayCalendar;</span>
+<span class="fc" id="L84">		this.timeBounds = timeBounds;</span>
+<span class="fc" id="L85">		this.scaleConfig = scaleConfig;</span>
+<span class="fc" id="L86">		this.timelineStyle = timelineStyle;</span>
+<span class="fc" id="L87">		this.timeScale = timeScale;</span>
+<span class="fc" id="L88">	}</span>
 
 	public HColor getColor(TimePoint wink) {
-<span class="fc" id="L89">		return dayCalendar.getDayColor(wink);</span>
+<span class="fc" id="L91">		return dayCalendar.getDayColor(wink);</span>
 	}
 
 	public HColor getColor(DayOfWeek dayOfWeek) {
-<span class="fc" id="L93">		return dayCalendar.getDayOfWeekColor(dayOfWeek);</span>
+<span class="fc" id="L95">		return dayCalendar.getDayOfWeekColor(dayOfWeek);</span>
 	}
 
 	protected final boolean isBold(LocalDate wink) {
-<span class="fc" id="L97">		return dayCalendar.hasSeparatorBefore(wink);</span>
+<span class="fc" id="L99">		return dayCalendar.hasSeparatorBefore(wink);</span>
 	}
 
 	protected final LocalDate getMinDay() {
-<span class="fc" id="L101">		return timeBounds.getMinDay();</span>
+<span class="fc" id="L103">		return timeBounds.getMinDay();</span>
 	}
 
 	protected final LocalDate getMaxDay() {
-<span class="fc" id="L105">		return timeBounds.getMaxDay();</span>
+<span class="fc" id="L107">		return timeBounds.getMaxDay();</span>
 	}
 
 	protected final HColor closedBackgroundColor() {
-<span class="fc" id="L109">		return timelineStyle.getClosedBackgroundColor();</span>
+<span class="fc" id="L111">		return timelineStyle.getClosedBackgroundColor();</span>
 	}
 
 	protected final HColor closedFontColor() {
-<span class="fc" id="L113">		return timelineStyle.getClosedFontColor();</span>
+<span class="fc" id="L115">		return timelineStyle.getClosedFontColor();</span>
 	}
 
 	protected final HColor openFontColor() {
-<span class="fc" id="L117">		return timelineStyle.getOpenFontColor();</span>
+<span class="fc" id="L119">		return timelineStyle.getOpenFontColor();</span>
 	}
 
 	protected final HColor getLineColor() {
-<span class="fc" id="L121">		return timelineStyle.getLineColor();</span>
+<span class="fc" id="L123">		return timelineStyle.getLineColor();</span>
 	}
 
 	public abstract double getTimeHeaderHeight(StringBounder stringBounder);
@@ -132,129 +134,127 @@ public abstract class TimeHeader {
 	public abstract void drawTimeFooter(UGraphic ug);
 
 	public final TimeScale getTimeScale() {
-<span class="fc" id="L135">		return timeScale;</span>
+<span class="fc" id="L137">		return timeScale;</span>
 	}
 
 	protected final void drawHline(UGraphic ug, double y) {
-<span class="fc" id="L139">		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(timeBounds.getMinDay()));</span>
-<span class="fc" id="L140">		final double xmax = getTimeScale().getPosition(TimePoint.ofStartOfDay(timeBounds.getMaxDay()).addDays(1));</span>
-<span class="fc" id="L141">		final ULine hline = ULine.hline(xmax - xmin);</span>
-<span class="fc" id="L142">		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);</span>
-<span class="fc" id="L143">	}</span>
+<span class="fc" id="L141">		final double xmin = getTimeScale().getPosition(TimePoint.ofStartOfDay(timeBounds.getMinDay()));</span>
+<span class="fc" id="L142">		final double xmax = getTimeScale().getPosition(TimePoint.ofStartOfDay(timeBounds.getMaxDay()).addDays(1));</span>
+<span class="fc" id="L143">		final ULine hline = ULine.hline(xmax - xmin);</span>
+<span class="fc" id="L144">		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);</span>
+<span class="fc" id="L145">	}</span>
 
 	protected final void drawVline(UGraphic ug, double x, double y1, double y2) {
-<span class="fc" id="L146">		final ULine vbar = ULine.vline(y2 - y1);</span>
-<span class="fc" id="L147">		ug.apply(new UTranslate(x, y1)).draw(vbar);</span>
-<span class="fc" id="L148">	}</span>
+<span class="fc" id="L148">		final ULine vbar = ULine.vline(y2 - y1);</span>
+<span class="fc" id="L149">		ug.apply(new UTranslate(x, y1)).draw(vbar);</span>
+<span class="fc" id="L150">	}</span>
 
 	final protected FontConfiguration getFontConfiguration(UFont font, boolean bold, HColor color) {
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		if (bold)</span>
-<span class="fc" id="L152">			font = font.withFontFace(UFontFace.bold());</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (bold)</span>
+<span class="fc" id="L154">			font = font.withFontFace(UFontFace.bold());</span>
 
-<span class="fc" id="L154">		return FontConfiguration.create(font, color, color, null);</span>
+<span class="fc" id="L156">		return FontConfiguration.create(font, color, color, null);</span>
 	}
 
 	protected abstract boolean isZeroOnDay(TimePoint instant);
 
 	protected final void drawColorsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
-<span class="fc" id="L161">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
-<span class="fc" id="L162">		Pending pending = null;</span>
+<span class="fc" id="L163">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
+<span class="fc" id="L164">		Pending pending = null;</span>
 
-<span class="fc bfc" id="L164" title="All 2 branches covered.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
-<span class="fc" id="L165">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="fc" id="L166">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="fc" id="L167">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
-<span class="fc" id="L168">			HColor back = getColor(wink);</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="fc" id="L167">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="fc" id="L168">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="fc" id="L169">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
+<span class="fc" id="L170">			HColor back = getColor(wink);</span>
 			// Day of week should be stronger than period of time (back color).
-<span class="fc" id="L170">			final HColor backDoW = getColor(wink.toDayOfWeek());</span>
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">			if (backDoW != null)</span>
-<span class="nc" id="L172">				back = backDoW;</span>
+<span class="fc" id="L172">			final HColor backDoW = getColor(wink.toDayOfWeek());</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">			if (backDoW != null)</span>
+<span class="nc" id="L174">				back = backDoW;</span>
 
-<span class="fc bfc" id="L174" title="All 4 branches covered.">			if (back == null &amp;&amp; isZeroOnDay(wink))</span>
-<span class="fc" id="L175">				back = closedBackgroundColor();</span>
+<span class="fc bfc" id="L176" title="All 4 branches covered.">			if (back == null &amp;&amp; isZeroOnDay(wink))</span>
+<span class="fc" id="L177">				back = closedBackgroundColor();</span>
 
-<span class="fc bfc" id="L177" title="All 2 branches covered.">			if (back == null) {</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">				if (pending != null)</span>
-<span class="fc" id="L179">					pending.draw(ug, height);</span>
-<span class="fc" id="L180">				pending = null;</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (back == null) {</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">				if (pending != null)</span>
+<span class="fc" id="L181">					pending.draw(ug, height);</span>
+<span class="fc" id="L182">				pending = null;</span>
 			} else {
-<span class="fc bfc" id="L182" title="All 4 branches covered.">				if (pending != null &amp;&amp; pending.color.equals(back) == false) {</span>
-<span class="fc" id="L183">					pending.draw(ug, height);</span>
-<span class="fc" id="L184">					pending = null;</span>
+<span class="fc bfc" id="L184" title="All 4 branches covered.">				if (pending != null &amp;&amp; pending.color.equals(back) == false) {</span>
+<span class="fc" id="L185">					pending.draw(ug, height);</span>
+<span class="fc" id="L186">					pending = null;</span>
 				}
-<span class="fc bfc" id="L186" title="All 2 branches covered.">				if (pending == null)</span>
-<span class="fc" id="L187">					pending = new Pending(back, x1, x2);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">				if (pending == null)</span>
+<span class="fc" id="L189">					pending = new Pending(back, x1, x2);</span>
 				else
-<span class="fc" id="L189">					pending.x2 = x2;</span>
+<span class="fc" id="L191">					pending.x2 = x2;</span>
 
 			}
 		}
 
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (pending != null)</span>
-<span class="fc" id="L195">			pending.draw(ug, height);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (pending != null)</span>
+<span class="fc" id="L197">			pending.draw(ug, height);</span>
 
-<span class="fc" id="L197">	}</span>
+<span class="fc" id="L199">	}</span>
 
 	private static final class TextBlockKey {
 		private final String text;
 		private final FontConfiguration fontConfiguration;
 		private final int hash;
 
-<span class="fc" id="L204">		TextBlockKey(String text, FontConfiguration fontConfiguration) {</span>
-<span class="fc" id="L205">			this.text = text;</span>
-<span class="fc" id="L206">			this.fontConfiguration = fontConfiguration;</span>
-<span class="fc" id="L207">			this.hash = Objects.hash(text, fontConfiguration);</span>
-<span class="fc" id="L208">		}</span>
+<span class="fc" id="L206">		TextBlockKey(String text, FontConfiguration fontConfiguration) {</span>
+<span class="fc" id="L207">			this.text = text;</span>
+<span class="fc" id="L208">			this.fontConfiguration = fontConfiguration;</span>
+<span class="fc" id="L209">			this.hash = Objects.hash(text, fontConfiguration);</span>
+<span class="fc" id="L210">		}</span>
 
 		@Override
 		public int hashCode() {
-<span class="fc" id="L212">			return hash;</span>
+<span class="fc" id="L214">			return hash;</span>
 		}
 
 		@Override
 		public boolean equals(Object obj) {
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">			if (this == obj)</span>
-<span class="nc" id="L218">				return true;</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">			if (obj instanceof TextBlockKey == false)</span>
-<span class="nc" id="L220">				return false;</span>
-<span class="fc" id="L221">			final TextBlockKey other = (TextBlockKey) obj;</span>
-<span class="pc bpc" id="L222" title="2 of 4 branches missed.">			return text.equals(other.text) &amp;&amp; fontConfiguration.equals(other.fontConfiguration);</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">			if (this == obj)</span>
+<span class="nc" id="L220">				return true;</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">			if (obj instanceof TextBlockKey == false)</span>
+<span class="nc" id="L222">				return false;</span>
+<span class="fc" id="L223">			final TextBlockKey other = (TextBlockKey) obj;</span>
+<span class="pc bpc" id="L224" title="2 of 4 branches missed.">			return text.equals(other.text) &amp;&amp; fontConfiguration.equals(other.fontConfiguration);</span>
 		}
 	}
 
-<span class="fc" id="L226">	private final Map&lt;TextBlockKey, TextBlock&gt; cache = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L228">	private final Map&lt;TextBlockKey, TextBlock&gt; cache = new HashMap&lt;&gt;();</span>
 
 	protected final TextBlock getTextBlockSLOW(String text, FontConfiguration fontConfiguration) {
-<span class="fc" id="L229">		final TextBlockKey key = new TextBlockKey(text, fontConfiguration);</span>
-<span class="fc" id="L230">		return cache.computeIfAbsent(key, k -&gt; Display.getWithNewlines(getPragma(), text).create(fontConfiguration,</span>
+<span class="fc" id="L231">		final TextBlockKey key = new TextBlockKey(text, fontConfiguration);</span>
+<span class="fc" id="L232">		return cache.computeIfAbsent(key, k -&gt; Display.getWithNewlines(getPragma(), text).create(fontConfiguration,</span>
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty()));
 	}
 
 	protected final FontConfiguration getFontConfigurationSLOW(SName param, boolean bold, HColor color) {
-<span class="fc" id="L235">		final UFont font = timelineStyle.getFont(param);</span>
-<span class="fc" id="L236">		return getFontConfiguration(font, bold, color);</span>
+<span class="fc" id="L237">		final UFont font = timelineStyle.getFont(param);</span>
+<span class="fc" id="L238">		return getFontConfiguration(font, bold, color);</span>
 	}
 
-	protected final void printCentered(UGraphic ug, TextBlock text, double start, double end) {
-<span class="fc" id="L240">		final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="fc" id="L241">		final double available = end - start;</span>
-<span class="fc" id="L242">		final double diff = Math.max(0, available - width);</span>
-<span class="fc" id="L243">		text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
-<span class="fc" id="L244">	}</span>
+	protected Locale locale() {
+<span class="nc" id="L242">		return null;</span>
+	}
 
-	protected final void printCentered(UGraphic ug, boolean hideIfTooBig, double start, double end,
-			TextBlock... texts) {
-<span class="fc" id="L248">		final double available = end - start;</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		for (int i = texts.length - 1; i &gt;= 0; i--) {</span>
-<span class="fc" id="L250">			final TextBlock text = texts[i];</span>
-<span class="fc" id="L251">			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
-<span class="fc bfc" id="L252" title="All 6 branches covered.">			if ((i == 0 &amp;&amp; hideIfTooBig == false) || width &lt;= available) {</span>
-<span class="fc" id="L253">				final double diff = Math.max(0, available - width);</span>
-<span class="fc" id="L254">				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
-<span class="fc" id="L255">				return;</span>
+	protected final void printCentered(UGraphic ug, boolean hideIfTooBig, double start, double end, TimePoint when,
+			FontConfiguration fc, TimePointFormat... format) {
+<span class="fc" id="L247">		final double available = end - start;</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		for (int i = format.length - 1; i &gt;= 0; i--) {</span>
+<span class="fc" id="L249">			final TextBlock text = getTextBlockSLOW(format[i].format(when, locale()), fc);</span>
+<span class="fc" id="L250">			final double width = text.calculateDimension(ug.getStringBounder()).getWidth();</span>
+<span class="fc bfc" id="L251" title="All 6 branches covered.">			if ((i == 0 &amp;&amp; hideIfTooBig == false) || width &lt;= available) {</span>
+<span class="fc" id="L252">				final double diff = Math.max(0, available - width);</span>
+<span class="fc" id="L253">				text.drawU(ug.apply(UTranslate.dx(start + diff / 2)));</span>
+<span class="fc" id="L254">				return;</span>
 			}
 		}
+
 <span class="fc" id="L258">	}</span>
 
 	protected final void drawRectangle(UGraphic ug, double height, double x1, double x2) {

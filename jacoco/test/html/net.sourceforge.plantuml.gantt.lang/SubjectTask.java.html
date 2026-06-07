@@ -130,8 +130,8 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 <span class="fc" id="L130">				when = (TaskInstant) complement;</span>
 <span class="fc" id="L131">				task.setStart(when.getInstantPrecise());</span>
 <span class="fc bfc" id="L132" title="All 2 branches covered.">				if (when.isTask())</span>
-<span class="fc" id="L133">					gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(),</span>
-<span class="fc" id="L134">							gantt.getCurrentStyleBuilder(), when, new TaskInstant(task, TaskAttribute.START), color));</span>
+<span class="fc" id="L133">					gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),</span>
+							when, new TaskInstant(task, TaskAttribute.START), color));
 
 <span class="fc" id="L136">				return CommandExecutionResult.ok();</span>
 			}
@@ -245,8 +245,8 @@ public class SubjectTask implements Subject&lt;GanttDiagram&gt; {
 <span class="fc" id="L245">				final Task task = (Task) subject;</span>
 <span class="fc" id="L246">				final TaskInstant when = (TaskInstant) complement;</span>
 <span class="fc" id="L247">				task.setEnd(when.getInstantPrecise());</span>
-<span class="fc" id="L248">				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(),</span>
-						when, new TaskInstant(task, TaskAttribute.END)));
+<span class="fc" id="L248">				gantt.addContraint(new GanttConstraint(gantt.getIHtmlColorSet(), gantt.getCurrentStyleBuilder(), when,</span>
+						new TaskInstant(task, TaskAttribute.END)));
 <span class="fc" id="L250">				return CommandExecutionResult.ok();</span>
 			}
 		});

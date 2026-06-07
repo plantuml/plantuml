@@ -56,40 +56,39 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteBottom extends CommandMultilines2&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L59">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="fc" id="L60">			() -&gt; Pattern2.cmpile(&quot;^end[%s]*note$&quot;));</span>
+<span class="fc" id="L59">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^end[%s]*note$&quot;));</span>
 
 	public CommandNoteBottom() {
-<span class="fc" id="L63">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L62">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L63">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L67">		return RegexConcat.build(CommandNoteBottom.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">		return RegexConcat.build(CommandNoteBottom.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(note)&quot;), //
-<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(bottom)&quot;), //
-<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L72">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L73">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L74">				RegexLeaf.end());</span>
+<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L72">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L73">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(GanttDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L80">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc" id="L81">		lines = lines.subExtract(1, 1);</span>
-<span class="fc" id="L82">		lines = lines.removeEmptyColumns();</span>
-<span class="fc" id="L83">		final Display strings = lines.toDisplay();</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (strings.size() == 0)</span>
-<span class="nc" id="L85">			return CommandExecutionResult.error(&quot;No note defined&quot;);</span>
+<span class="fc" id="L79">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L80">		lines = lines.subExtract(1, 1);</span>
+<span class="fc" id="L81">		lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L82">		final Display strings = lines.toDisplay();</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (strings.size() == 0)</span>
+<span class="nc" id="L84">			return CommandExecutionResult.error(&quot;No note defined&quot;);</span>
 
-<span class="fc" id="L87">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L88">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L90">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="fc" id="L86">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L87">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L89">			stereotype = Stereotype.build(stereotypeString);</span>
 
-<span class="fc" id="L92">		return diagram.addNote(strings, stereotype);</span>
+<span class="fc" id="L91">		return diagram.addNote(strings, stereotype);</span>
 
 	}
 

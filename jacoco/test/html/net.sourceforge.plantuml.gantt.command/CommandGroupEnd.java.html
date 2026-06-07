@@ -62,8 +62,9 @@ public class CommandGroupEnd extends SingleLineCommand2&lt;GanttDiagram&gt; {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L66">		return diagram.endGroup();</span>
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L67">		return diagram.endGroup();</span>
 	}
 
 }

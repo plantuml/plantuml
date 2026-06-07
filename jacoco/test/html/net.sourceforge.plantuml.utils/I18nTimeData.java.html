@@ -5,369 +5,463 @@ import java.time.Month;
 import java.util.Locale;
 
 // Generated — do not edit
-// Build by I18nDataTimeGenerator
+// Build by I18nTimeDataGenerator
 <span class="nc" id="L9">public class I18nTimeData {</span>
 
-	public static String shortName(DayOfWeek dayOfWeek, Locale locale) {
-<span class="fc" id="L12">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L13" title="7 of 8 branches missed.">		switch (lang) {</span>
+	public static String dayOfWeekLong(DayOfWeek dayOfWeek, Locale locale) {
+<span class="nc" id="L12">		final String lang = locale.getLanguage();</span>
+<span class="nc bnc" id="L13" title="All 8 branches missed.">		switch (lang) {</span>
 		case &quot;de&quot;:
 <span class="nc bnc" id="L15" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
-<span class="nc" id="L16">			case MONDAY: return &quot;Mo&quot;;</span>
-<span class="nc" id="L17">			case TUESDAY: return &quot;Di&quot;;</span>
-<span class="nc" id="L18">			case WEDNESDAY: return &quot;Mi&quot;;</span>
-<span class="nc" id="L19">			case THURSDAY: return &quot;Do&quot;;</span>
-<span class="nc" id="L20">			case FRIDAY: return &quot;Fr&quot;;</span>
-<span class="nc" id="L21">			case SATURDAY: return &quot;Sa&quot;;</span>
-<span class="nc" id="L22">			case SUNDAY: return &quot;So&quot;;</span>
+<span class="nc" id="L16">			case MONDAY: return &quot;Montag&quot;;</span>
+<span class="nc" id="L17">			case TUESDAY: return &quot;Dienstag&quot;;</span>
+<span class="nc" id="L18">			case WEDNESDAY: return &quot;Mittwoch&quot;;</span>
+<span class="nc" id="L19">			case THURSDAY: return &quot;Donnerstag&quot;;</span>
+<span class="nc" id="L20">			case FRIDAY: return &quot;Freitag&quot;;</span>
+<span class="nc" id="L21">			case SATURDAY: return &quot;Samstag&quot;;</span>
+<span class="nc" id="L22">			case SUNDAY: return &quot;Sonntag&quot;;</span>
 			}
 <span class="nc" id="L24">			break;</span>
 		case &quot;es&quot;:
 <span class="nc bnc" id="L26" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
-<span class="nc" id="L27">			case MONDAY: return &quot;lu&quot;;</span>
-<span class="nc" id="L28">			case TUESDAY: return &quot;ma&quot;;</span>
-<span class="nc" id="L29">			case WEDNESDAY: return &quot;mi&quot;;</span>
-<span class="nc" id="L30">			case THURSDAY: return &quot;ju&quot;;</span>
-<span class="nc" id="L31">			case FRIDAY: return &quot;vi&quot;;</span>
-<span class="nc" id="L32">			case SATURDAY: return &quot;sá&quot;;</span>
-<span class="nc" id="L33">			case SUNDAY: return &quot;do&quot;;</span>
+<span class="nc" id="L27">			case MONDAY: return &quot;lunes&quot;;</span>
+<span class="nc" id="L28">			case TUESDAY: return &quot;martes&quot;;</span>
+<span class="nc" id="L29">			case WEDNESDAY: return &quot;miércoles&quot;;</span>
+<span class="nc" id="L30">			case THURSDAY: return &quot;jueves&quot;;</span>
+<span class="nc" id="L31">			case FRIDAY: return &quot;viernes&quot;;</span>
+<span class="nc" id="L32">			case SATURDAY: return &quot;sábado&quot;;</span>
+<span class="nc" id="L33">			case SUNDAY: return &quot;domingo&quot;;</span>
 			}
 <span class="nc" id="L35">			break;</span>
 		case &quot;fr&quot;:
 <span class="nc bnc" id="L37" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
-<span class="nc" id="L38">			case MONDAY: return &quot;lu&quot;;</span>
-<span class="nc" id="L39">			case TUESDAY: return &quot;ma&quot;;</span>
-<span class="nc" id="L40">			case WEDNESDAY: return &quot;me&quot;;</span>
-<span class="nc" id="L41">			case THURSDAY: return &quot;je&quot;;</span>
-<span class="nc" id="L42">			case FRIDAY: return &quot;ve&quot;;</span>
-<span class="nc" id="L43">			case SATURDAY: return &quot;sa&quot;;</span>
-<span class="nc" id="L44">			case SUNDAY: return &quot;di&quot;;</span>
+<span class="nc" id="L38">			case MONDAY: return &quot;lundi&quot;;</span>
+<span class="nc" id="L39">			case TUESDAY: return &quot;mardi&quot;;</span>
+<span class="nc" id="L40">			case WEDNESDAY: return &quot;mercredi&quot;;</span>
+<span class="nc" id="L41">			case THURSDAY: return &quot;jeudi&quot;;</span>
+<span class="nc" id="L42">			case FRIDAY: return &quot;vendredi&quot;;</span>
+<span class="nc" id="L43">			case SATURDAY: return &quot;samedi&quot;;</span>
+<span class="nc" id="L44">			case SUNDAY: return &quot;dimanche&quot;;</span>
 			}
 <span class="nc" id="L46">			break;</span>
 		case &quot;ja&quot;:
 <span class="nc bnc" id="L48" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
-<span class="nc" id="L49">			case MONDAY: return &quot;月&quot;;</span>
-<span class="nc" id="L50">			case TUESDAY: return &quot;火&quot;;</span>
-<span class="nc" id="L51">			case WEDNESDAY: return &quot;水&quot;;</span>
-<span class="nc" id="L52">			case THURSDAY: return &quot;木&quot;;</span>
-<span class="nc" id="L53">			case FRIDAY: return &quot;金&quot;;</span>
-<span class="nc" id="L54">			case SATURDAY: return &quot;土&quot;;</span>
-<span class="nc" id="L55">			case SUNDAY: return &quot;日&quot;;</span>
+<span class="nc" id="L49">			case MONDAY: return &quot;月曜日&quot;;</span>
+<span class="nc" id="L50">			case TUESDAY: return &quot;火曜日&quot;;</span>
+<span class="nc" id="L51">			case WEDNESDAY: return &quot;水曜日&quot;;</span>
+<span class="nc" id="L52">			case THURSDAY: return &quot;木曜日&quot;;</span>
+<span class="nc" id="L53">			case FRIDAY: return &quot;金曜日&quot;;</span>
+<span class="nc" id="L54">			case SATURDAY: return &quot;土曜日&quot;;</span>
+<span class="nc" id="L55">			case SUNDAY: return &quot;日曜日&quot;;</span>
 			}
 <span class="nc" id="L57">			break;</span>
 		case &quot;ko&quot;:
 <span class="nc bnc" id="L59" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
-<span class="nc" id="L60">			case MONDAY: return &quot;월&quot;;</span>
-<span class="nc" id="L61">			case TUESDAY: return &quot;화&quot;;</span>
-<span class="nc" id="L62">			case WEDNESDAY: return &quot;수&quot;;</span>
-<span class="nc" id="L63">			case THURSDAY: return &quot;목&quot;;</span>
-<span class="nc" id="L64">			case FRIDAY: return &quot;금&quot;;</span>
-<span class="nc" id="L65">			case SATURDAY: return &quot;토&quot;;</span>
-<span class="nc" id="L66">			case SUNDAY: return &quot;일&quot;;</span>
+<span class="nc" id="L60">			case MONDAY: return &quot;월요일&quot;;</span>
+<span class="nc" id="L61">			case TUESDAY: return &quot;화요일&quot;;</span>
+<span class="nc" id="L62">			case WEDNESDAY: return &quot;수요일&quot;;</span>
+<span class="nc" id="L63">			case THURSDAY: return &quot;목요일&quot;;</span>
+<span class="nc" id="L64">			case FRIDAY: return &quot;금요일&quot;;</span>
+<span class="nc" id="L65">			case SATURDAY: return &quot;토요일&quot;;</span>
+<span class="nc" id="L66">			case SUNDAY: return &quot;일요일&quot;;</span>
 			}
 <span class="nc" id="L68">			break;</span>
 		case &quot;ru&quot;:
 <span class="nc bnc" id="L70" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
-<span class="nc" id="L71">			case MONDAY: return &quot;пн&quot;;</span>
-<span class="nc" id="L72">			case TUESDAY: return &quot;вт&quot;;</span>
-<span class="nc" id="L73">			case WEDNESDAY: return &quot;ср&quot;;</span>
-<span class="nc" id="L74">			case THURSDAY: return &quot;чт&quot;;</span>
-<span class="nc" id="L75">			case FRIDAY: return &quot;пт&quot;;</span>
-<span class="nc" id="L76">			case SATURDAY: return &quot;сб&quot;;</span>
-<span class="nc" id="L77">			case SUNDAY: return &quot;вс&quot;;</span>
+<span class="nc" id="L71">			case MONDAY: return &quot;понедельник&quot;;</span>
+<span class="nc" id="L72">			case TUESDAY: return &quot;вторник&quot;;</span>
+<span class="nc" id="L73">			case WEDNESDAY: return &quot;среда&quot;;</span>
+<span class="nc" id="L74">			case THURSDAY: return &quot;четверг&quot;;</span>
+<span class="nc" id="L75">			case FRIDAY: return &quot;пятница&quot;;</span>
+<span class="nc" id="L76">			case SATURDAY: return &quot;суббота&quot;;</span>
+<span class="nc" id="L77">			case SUNDAY: return &quot;воскресенье&quot;;</span>
 			}
 <span class="nc" id="L79">			break;</span>
 		case &quot;zh&quot;:
 <span class="nc bnc" id="L81" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
-<span class="nc" id="L82">			case MONDAY: return &quot;周一&quot;;</span>
-<span class="nc" id="L83">			case TUESDAY: return &quot;周二&quot;;</span>
-<span class="nc" id="L84">			case WEDNESDAY: return &quot;周三&quot;;</span>
-<span class="nc" id="L85">			case THURSDAY: return &quot;周四&quot;;</span>
-<span class="nc" id="L86">			case FRIDAY: return &quot;周五&quot;;</span>
-<span class="nc" id="L87">			case SATURDAY: return &quot;周六&quot;;</span>
-<span class="nc" id="L88">			case SUNDAY: return &quot;周日&quot;;</span>
-			}
-			break;
-		}
-		// Fallback: English short form (first two letters of enum name)
-<span class="pc bpc" id="L93" title="1 of 8 branches missed.">		switch (dayOfWeek) {</span>
-<span class="fc" id="L94">		case MONDAY: return &quot;Mo&quot;;</span>
-<span class="fc" id="L95">		case TUESDAY: return &quot;Tu&quot;;</span>
-<span class="fc" id="L96">		case WEDNESDAY: return &quot;We&quot;;</span>
-<span class="fc" id="L97">		case THURSDAY: return &quot;Th&quot;;</span>
-<span class="fc" id="L98">		case FRIDAY: return &quot;Fr&quot;;</span>
-<span class="fc" id="L99">		case SATURDAY: return &quot;Sa&quot;;</span>
-<span class="fc" id="L100">		case SUNDAY: return &quot;Su&quot;;</span>
-		}
-<span class="nc" id="L102">		throw new IllegalArgumentException();</span>
-	}
-
-	public static String shortName(Month month, Locale locale) {
-<span class="fc" id="L106">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L107" title="7 of 8 branches missed.">		switch (lang) {</span>
-		case &quot;de&quot;:
-<span class="nc bnc" id="L109" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L110">			case JANUARY: return &quot;Jan&quot;;</span>
-<span class="nc" id="L111">			case FEBRUARY: return &quot;Feb&quot;;</span>
-<span class="nc" id="L112">			case MARCH: return &quot;Mär&quot;;</span>
-<span class="nc" id="L113">			case APRIL: return &quot;Apr&quot;;</span>
-<span class="nc" id="L114">			case MAY: return &quot;Mai&quot;;</span>
-<span class="nc" id="L115">			case JUNE: return &quot;Jun&quot;;</span>
-<span class="nc" id="L116">			case JULY: return &quot;Jul&quot;;</span>
-<span class="nc" id="L117">			case AUGUST: return &quot;Aug&quot;;</span>
-<span class="nc" id="L118">			case SEPTEMBER: return &quot;Sep&quot;;</span>
-<span class="nc" id="L119">			case OCTOBER: return &quot;Okt&quot;;</span>
-<span class="nc" id="L120">			case NOVEMBER: return &quot;Nov&quot;;</span>
-<span class="nc" id="L121">			case DECEMBER: return &quot;Dez&quot;;</span>
-			}
-<span class="nc" id="L123">			break;</span>
-		case &quot;es&quot;:
-<span class="nc bnc" id="L125" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L126">			case JANUARY: return &quot;ene&quot;;</span>
-<span class="nc" id="L127">			case FEBRUARY: return &quot;feb&quot;;</span>
-<span class="nc" id="L128">			case MARCH: return &quot;mar&quot;;</span>
-<span class="nc" id="L129">			case APRIL: return &quot;abr&quot;;</span>
-<span class="nc" id="L130">			case MAY: return &quot;may&quot;;</span>
-<span class="nc" id="L131">			case JUNE: return &quot;jun&quot;;</span>
-<span class="nc" id="L132">			case JULY: return &quot;jul&quot;;</span>
-<span class="nc" id="L133">			case AUGUST: return &quot;ago&quot;;</span>
-<span class="nc" id="L134">			case SEPTEMBER: return &quot;sept&quot;;</span>
-<span class="nc" id="L135">			case OCTOBER: return &quot;oct&quot;;</span>
-<span class="nc" id="L136">			case NOVEMBER: return &quot;nov&quot;;</span>
-<span class="nc" id="L137">			case DECEMBER: return &quot;dic&quot;;</span>
-			}
-<span class="nc" id="L139">			break;</span>
-		case &quot;fr&quot;:
-<span class="nc bnc" id="L141" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L142">			case JANUARY: return &quot;janv.&quot;;</span>
-<span class="nc" id="L143">			case FEBRUARY: return &quot;févr.&quot;;</span>
-<span class="nc" id="L144">			case MARCH: return &quot;mars&quot;;</span>
-<span class="nc" id="L145">			case APRIL: return &quot;avr.&quot;;</span>
-<span class="nc" id="L146">			case MAY: return &quot;mai&quot;;</span>
-<span class="nc" id="L147">			case JUNE: return &quot;juin&quot;;</span>
-<span class="nc" id="L148">			case JULY: return &quot;juil.&quot;;</span>
-<span class="nc" id="L149">			case AUGUST: return &quot;août&quot;;</span>
-<span class="nc" id="L150">			case SEPTEMBER: return &quot;sept.&quot;;</span>
-<span class="nc" id="L151">			case OCTOBER: return &quot;oct.&quot;;</span>
-<span class="nc" id="L152">			case NOVEMBER: return &quot;nov.&quot;;</span>
-<span class="nc" id="L153">			case DECEMBER: return &quot;déc.&quot;;</span>
-			}
-<span class="nc" id="L155">			break;</span>
-		case &quot;ja&quot;:
-<span class="nc bnc" id="L157" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L158">			case JANUARY: return &quot;1月&quot;;</span>
-<span class="nc" id="L159">			case FEBRUARY: return &quot;2月&quot;;</span>
-<span class="nc" id="L160">			case MARCH: return &quot;3月&quot;;</span>
-<span class="nc" id="L161">			case APRIL: return &quot;4月&quot;;</span>
-<span class="nc" id="L162">			case MAY: return &quot;5月&quot;;</span>
-<span class="nc" id="L163">			case JUNE: return &quot;6月&quot;;</span>
-<span class="nc" id="L164">			case JULY: return &quot;7月&quot;;</span>
-<span class="nc" id="L165">			case AUGUST: return &quot;8月&quot;;</span>
-<span class="nc" id="L166">			case SEPTEMBER: return &quot;9月&quot;;</span>
-<span class="nc" id="L167">			case OCTOBER: return &quot;10月&quot;;</span>
-<span class="nc" id="L168">			case NOVEMBER: return &quot;11月&quot;;</span>
-<span class="nc" id="L169">			case DECEMBER: return &quot;12月&quot;;</span>
-			}
-<span class="nc" id="L171">			break;</span>
-		case &quot;ko&quot;:
-<span class="nc bnc" id="L173" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L174">			case JANUARY: return &quot;1월&quot;;</span>
-<span class="nc" id="L175">			case FEBRUARY: return &quot;2월&quot;;</span>
-<span class="nc" id="L176">			case MARCH: return &quot;3월&quot;;</span>
-<span class="nc" id="L177">			case APRIL: return &quot;4월&quot;;</span>
-<span class="nc" id="L178">			case MAY: return &quot;5월&quot;;</span>
-<span class="nc" id="L179">			case JUNE: return &quot;6월&quot;;</span>
-<span class="nc" id="L180">			case JULY: return &quot;7월&quot;;</span>
-<span class="nc" id="L181">			case AUGUST: return &quot;8월&quot;;</span>
-<span class="nc" id="L182">			case SEPTEMBER: return &quot;9월&quot;;</span>
-<span class="nc" id="L183">			case OCTOBER: return &quot;10월&quot;;</span>
-<span class="nc" id="L184">			case NOVEMBER: return &quot;11월&quot;;</span>
-<span class="nc" id="L185">			case DECEMBER: return &quot;12월&quot;;</span>
-			}
-<span class="nc" id="L187">			break;</span>
-		case &quot;ru&quot;:
-<span class="nc bnc" id="L189" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L190">			case JANUARY: return &quot;янв.&quot;;</span>
-<span class="nc" id="L191">			case FEBRUARY: return &quot;февр.&quot;;</span>
-<span class="nc" id="L192">			case MARCH: return &quot;март&quot;;</span>
-<span class="nc" id="L193">			case APRIL: return &quot;апр.&quot;;</span>
-<span class="nc" id="L194">			case MAY: return &quot;май&quot;;</span>
-<span class="nc" id="L195">			case JUNE: return &quot;июнь&quot;;</span>
-<span class="nc" id="L196">			case JULY: return &quot;июль&quot;;</span>
-<span class="nc" id="L197">			case AUGUST: return &quot;авг.&quot;;</span>
-<span class="nc" id="L198">			case SEPTEMBER: return &quot;сент.&quot;;</span>
-<span class="nc" id="L199">			case OCTOBER: return &quot;окт.&quot;;</span>
-<span class="nc" id="L200">			case NOVEMBER: return &quot;нояб.&quot;;</span>
-<span class="nc" id="L201">			case DECEMBER: return &quot;дек.&quot;;</span>
-			}
-<span class="nc" id="L203">			break;</span>
-		case &quot;zh&quot;:
-<span class="nc bnc" id="L205" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L206">			case JANUARY: return &quot;1月&quot;;</span>
-<span class="nc" id="L207">			case FEBRUARY: return &quot;2月&quot;;</span>
-<span class="nc" id="L208">			case MARCH: return &quot;3月&quot;;</span>
-<span class="nc" id="L209">			case APRIL: return &quot;4月&quot;;</span>
-<span class="nc" id="L210">			case MAY: return &quot;5月&quot;;</span>
-<span class="nc" id="L211">			case JUNE: return &quot;6月&quot;;</span>
-<span class="nc" id="L212">			case JULY: return &quot;7月&quot;;</span>
-<span class="nc" id="L213">			case AUGUST: return &quot;8月&quot;;</span>
-<span class="nc" id="L214">			case SEPTEMBER: return &quot;9月&quot;;</span>
-<span class="nc" id="L215">			case OCTOBER: return &quot;10月&quot;;</span>
-<span class="nc" id="L216">			case NOVEMBER: return &quot;11月&quot;;</span>
-<span class="nc" id="L217">			case DECEMBER: return &quot;12月&quot;;</span>
-			}
-			break;
-		}
-		// Fallback: English short form (first three letters of enum name)
-<span class="pc bpc" id="L222" title="2 of 13 branches missed.">		switch (month) {</span>
-<span class="fc" id="L223">		case JANUARY: return &quot;Jan&quot;;</span>
-<span class="fc" id="L224">		case FEBRUARY: return &quot;Feb&quot;;</span>
-<span class="fc" id="L225">		case MARCH: return &quot;Mar&quot;;</span>
-<span class="fc" id="L226">		case APRIL: return &quot;Apr&quot;;</span>
-<span class="fc" id="L227">		case MAY: return &quot;May&quot;;</span>
-<span class="fc" id="L228">		case JUNE: return &quot;Jun&quot;;</span>
-<span class="fc" id="L229">		case JULY: return &quot;Jul&quot;;</span>
-<span class="nc" id="L230">		case AUGUST: return &quot;Aug&quot;;</span>
-<span class="fc" id="L231">		case SEPTEMBER: return &quot;Sep&quot;;</span>
-<span class="fc" id="L232">		case OCTOBER: return &quot;Oct&quot;;</span>
-<span class="fc" id="L233">		case NOVEMBER: return &quot;Nov&quot;;</span>
-<span class="fc" id="L234">		case DECEMBER: return &quot;Dec&quot;;</span>
-		}
-<span class="nc" id="L236">		throw new IllegalArgumentException();</span>
-	}
-
-	public static String longName(Month month, Locale locale) {
-<span class="fc" id="L240">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L241" title="7 of 8 branches missed.">		switch (lang) {</span>
-		case &quot;de&quot;:
-<span class="nc bnc" id="L243" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L244">			case JANUARY: return &quot;Januar&quot;;</span>
-<span class="nc" id="L245">			case FEBRUARY: return &quot;Februar&quot;;</span>
-<span class="nc" id="L246">			case MARCH: return &quot;März&quot;;</span>
-<span class="nc" id="L247">			case APRIL: return &quot;April&quot;;</span>
-<span class="nc" id="L248">			case MAY: return &quot;Mai&quot;;</span>
-<span class="nc" id="L249">			case JUNE: return &quot;Juni&quot;;</span>
-<span class="nc" id="L250">			case JULY: return &quot;Juli&quot;;</span>
-<span class="nc" id="L251">			case AUGUST: return &quot;August&quot;;</span>
-<span class="nc" id="L252">			case SEPTEMBER: return &quot;September&quot;;</span>
-<span class="nc" id="L253">			case OCTOBER: return &quot;Oktober&quot;;</span>
-<span class="nc" id="L254">			case NOVEMBER: return &quot;November&quot;;</span>
-<span class="nc" id="L255">			case DECEMBER: return &quot;Dezember&quot;;</span>
-			}
-<span class="nc" id="L257">			break;</span>
-		case &quot;es&quot;:
-<span class="nc bnc" id="L259" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L260">			case JANUARY: return &quot;enero&quot;;</span>
-<span class="nc" id="L261">			case FEBRUARY: return &quot;febrero&quot;;</span>
-<span class="nc" id="L262">			case MARCH: return &quot;marzo&quot;;</span>
-<span class="nc" id="L263">			case APRIL: return &quot;abril&quot;;</span>
-<span class="nc" id="L264">			case MAY: return &quot;mayo&quot;;</span>
-<span class="nc" id="L265">			case JUNE: return &quot;junio&quot;;</span>
-<span class="nc" id="L266">			case JULY: return &quot;julio&quot;;</span>
-<span class="nc" id="L267">			case AUGUST: return &quot;agosto&quot;;</span>
-<span class="nc" id="L268">			case SEPTEMBER: return &quot;septiembre&quot;;</span>
-<span class="nc" id="L269">			case OCTOBER: return &quot;octubre&quot;;</span>
-<span class="nc" id="L270">			case NOVEMBER: return &quot;noviembre&quot;;</span>
-<span class="nc" id="L271">			case DECEMBER: return &quot;diciembre&quot;;</span>
-			}
-<span class="nc" id="L273">			break;</span>
-		case &quot;fr&quot;:
-<span class="nc bnc" id="L275" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L276">			case JANUARY: return &quot;janvier&quot;;</span>
-<span class="nc" id="L277">			case FEBRUARY: return &quot;février&quot;;</span>
-<span class="nc" id="L278">			case MARCH: return &quot;mars&quot;;</span>
-<span class="nc" id="L279">			case APRIL: return &quot;avril&quot;;</span>
-<span class="nc" id="L280">			case MAY: return &quot;mai&quot;;</span>
-<span class="nc" id="L281">			case JUNE: return &quot;juin&quot;;</span>
-<span class="nc" id="L282">			case JULY: return &quot;juillet&quot;;</span>
-<span class="nc" id="L283">			case AUGUST: return &quot;août&quot;;</span>
-<span class="nc" id="L284">			case SEPTEMBER: return &quot;septembre&quot;;</span>
-<span class="nc" id="L285">			case OCTOBER: return &quot;octobre&quot;;</span>
-<span class="nc" id="L286">			case NOVEMBER: return &quot;novembre&quot;;</span>
-<span class="nc" id="L287">			case DECEMBER: return &quot;décembre&quot;;</span>
-			}
-<span class="nc" id="L289">			break;</span>
-		case &quot;ja&quot;:
-<span class="nc bnc" id="L291" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L292">			case JANUARY: return &quot;1月&quot;;</span>
-<span class="nc" id="L293">			case FEBRUARY: return &quot;2月&quot;;</span>
-<span class="nc" id="L294">			case MARCH: return &quot;3月&quot;;</span>
-<span class="nc" id="L295">			case APRIL: return &quot;4月&quot;;</span>
-<span class="nc" id="L296">			case MAY: return &quot;5月&quot;;</span>
-<span class="nc" id="L297">			case JUNE: return &quot;6月&quot;;</span>
-<span class="nc" id="L298">			case JULY: return &quot;7月&quot;;</span>
-<span class="nc" id="L299">			case AUGUST: return &quot;8月&quot;;</span>
-<span class="nc" id="L300">			case SEPTEMBER: return &quot;9月&quot;;</span>
-<span class="nc" id="L301">			case OCTOBER: return &quot;10月&quot;;</span>
-<span class="nc" id="L302">			case NOVEMBER: return &quot;11月&quot;;</span>
-<span class="nc" id="L303">			case DECEMBER: return &quot;12月&quot;;</span>
-			}
-<span class="nc" id="L305">			break;</span>
-		case &quot;ko&quot;:
-<span class="nc bnc" id="L307" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L308">			case JANUARY: return &quot;1월&quot;;</span>
-<span class="nc" id="L309">			case FEBRUARY: return &quot;2월&quot;;</span>
-<span class="nc" id="L310">			case MARCH: return &quot;3월&quot;;</span>
-<span class="nc" id="L311">			case APRIL: return &quot;4월&quot;;</span>
-<span class="nc" id="L312">			case MAY: return &quot;5월&quot;;</span>
-<span class="nc" id="L313">			case JUNE: return &quot;6월&quot;;</span>
-<span class="nc" id="L314">			case JULY: return &quot;7월&quot;;</span>
-<span class="nc" id="L315">			case AUGUST: return &quot;8월&quot;;</span>
-<span class="nc" id="L316">			case SEPTEMBER: return &quot;9월&quot;;</span>
-<span class="nc" id="L317">			case OCTOBER: return &quot;10월&quot;;</span>
-<span class="nc" id="L318">			case NOVEMBER: return &quot;11월&quot;;</span>
-<span class="nc" id="L319">			case DECEMBER: return &quot;12월&quot;;</span>
-			}
-<span class="nc" id="L321">			break;</span>
-		case &quot;ru&quot;:
-<span class="nc bnc" id="L323" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L324">			case JANUARY: return &quot;январь&quot;;</span>
-<span class="nc" id="L325">			case FEBRUARY: return &quot;февраль&quot;;</span>
-<span class="nc" id="L326">			case MARCH: return &quot;март&quot;;</span>
-<span class="nc" id="L327">			case APRIL: return &quot;апрель&quot;;</span>
-<span class="nc" id="L328">			case MAY: return &quot;май&quot;;</span>
-<span class="nc" id="L329">			case JUNE: return &quot;июнь&quot;;</span>
-<span class="nc" id="L330">			case JULY: return &quot;июль&quot;;</span>
-<span class="nc" id="L331">			case AUGUST: return &quot;август&quot;;</span>
-<span class="nc" id="L332">			case SEPTEMBER: return &quot;сентябрь&quot;;</span>
-<span class="nc" id="L333">			case OCTOBER: return &quot;октябрь&quot;;</span>
-<span class="nc" id="L334">			case NOVEMBER: return &quot;ноябрь&quot;;</span>
-<span class="nc" id="L335">			case DECEMBER: return &quot;декабрь&quot;;</span>
-			}
-<span class="nc" id="L337">			break;</span>
-		case &quot;zh&quot;:
-<span class="nc bnc" id="L339" title="All 13 branches missed.">			switch (month) {</span>
-<span class="nc" id="L340">			case JANUARY: return &quot;一月&quot;;</span>
-<span class="nc" id="L341">			case FEBRUARY: return &quot;二月&quot;;</span>
-<span class="nc" id="L342">			case MARCH: return &quot;三月&quot;;</span>
-<span class="nc" id="L343">			case APRIL: return &quot;四月&quot;;</span>
-<span class="nc" id="L344">			case MAY: return &quot;五月&quot;;</span>
-<span class="nc" id="L345">			case JUNE: return &quot;六月&quot;;</span>
-<span class="nc" id="L346">			case JULY: return &quot;七月&quot;;</span>
-<span class="nc" id="L347">			case AUGUST: return &quot;八月&quot;;</span>
-<span class="nc" id="L348">			case SEPTEMBER: return &quot;九月&quot;;</span>
-<span class="nc" id="L349">			case OCTOBER: return &quot;十月&quot;;</span>
-<span class="nc" id="L350">			case NOVEMBER: return &quot;十一月&quot;;</span>
-<span class="nc" id="L351">			case DECEMBER: return &quot;十二月&quot;;</span>
+<span class="nc" id="L82">			case MONDAY: return &quot;星期一&quot;;</span>
+<span class="nc" id="L83">			case TUESDAY: return &quot;星期二&quot;;</span>
+<span class="nc" id="L84">			case WEDNESDAY: return &quot;星期三&quot;;</span>
+<span class="nc" id="L85">			case THURSDAY: return &quot;星期四&quot;;</span>
+<span class="nc" id="L86">			case FRIDAY: return &quot;星期五&quot;;</span>
+<span class="nc" id="L87">			case SATURDAY: return &quot;星期六&quot;;</span>
+<span class="nc" id="L88">			case SUNDAY: return &quot;星期日&quot;;</span>
 			}
 			break;
 		}
 		// Fallback: English long form
-<span class="pc bpc" id="L356" title="7 of 13 branches missed.">		switch (month) {</span>
-<span class="fc" id="L357">		case JANUARY: return &quot;January&quot;;</span>
-<span class="nc" id="L358">		case FEBRUARY: return &quot;February&quot;;</span>
-<span class="nc" id="L359">		case MARCH: return &quot;March&quot;;</span>
-<span class="nc" id="L360">		case APRIL: return &quot;April&quot;;</span>
-<span class="nc" id="L361">		case MAY: return &quot;May&quot;;</span>
-<span class="nc" id="L362">		case JUNE: return &quot;June&quot;;</span>
-<span class="fc" id="L363">		case JULY: return &quot;July&quot;;</span>
-<span class="nc" id="L364">		case AUGUST: return &quot;August&quot;;</span>
-<span class="fc" id="L365">		case SEPTEMBER: return &quot;September&quot;;</span>
-<span class="fc" id="L366">		case OCTOBER: return &quot;October&quot;;</span>
-<span class="fc" id="L367">		case NOVEMBER: return &quot;November&quot;;</span>
-<span class="fc" id="L368">		case DECEMBER: return &quot;December&quot;;</span>
+<span class="nc bnc" id="L93" title="All 8 branches missed.">		switch (dayOfWeek) {</span>
+<span class="nc" id="L94">		case MONDAY: return &quot;Monday&quot;;</span>
+<span class="nc" id="L95">		case TUESDAY: return &quot;Tuesday&quot;;</span>
+<span class="nc" id="L96">		case WEDNESDAY: return &quot;Wednesday&quot;;</span>
+<span class="nc" id="L97">		case THURSDAY: return &quot;Thursday&quot;;</span>
+<span class="nc" id="L98">		case FRIDAY: return &quot;Friday&quot;;</span>
+<span class="nc" id="L99">		case SATURDAY: return &quot;Saturday&quot;;</span>
+<span class="nc" id="L100">		case SUNDAY: return &quot;Sunday&quot;;</span>
 		}
-<span class="nc" id="L370">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L102">		throw new IllegalArgumentException();</span>
+	}
+
+	public static String dayOfWeekShort(DayOfWeek dayOfWeek, Locale locale) {
+<span class="fc" id="L106">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L107" title="7 of 8 branches missed.">		switch (lang) {</span>
+		case &quot;de&quot;:
+<span class="nc bnc" id="L109" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
+<span class="nc" id="L110">			case MONDAY: return &quot;Mo&quot;;</span>
+<span class="nc" id="L111">			case TUESDAY: return &quot;Di&quot;;</span>
+<span class="nc" id="L112">			case WEDNESDAY: return &quot;Mi&quot;;</span>
+<span class="nc" id="L113">			case THURSDAY: return &quot;Do&quot;;</span>
+<span class="nc" id="L114">			case FRIDAY: return &quot;Fr&quot;;</span>
+<span class="nc" id="L115">			case SATURDAY: return &quot;Sa&quot;;</span>
+<span class="nc" id="L116">			case SUNDAY: return &quot;So&quot;;</span>
+			}
+<span class="nc" id="L118">			break;</span>
+		case &quot;es&quot;:
+<span class="nc bnc" id="L120" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
+<span class="nc" id="L121">			case MONDAY: return &quot;lu&quot;;</span>
+<span class="nc" id="L122">			case TUESDAY: return &quot;ma&quot;;</span>
+<span class="nc" id="L123">			case WEDNESDAY: return &quot;mi&quot;;</span>
+<span class="nc" id="L124">			case THURSDAY: return &quot;ju&quot;;</span>
+<span class="nc" id="L125">			case FRIDAY: return &quot;vi&quot;;</span>
+<span class="nc" id="L126">			case SATURDAY: return &quot;sá&quot;;</span>
+<span class="nc" id="L127">			case SUNDAY: return &quot;do&quot;;</span>
+			}
+<span class="nc" id="L129">			break;</span>
+		case &quot;fr&quot;:
+<span class="nc bnc" id="L131" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
+<span class="nc" id="L132">			case MONDAY: return &quot;lu&quot;;</span>
+<span class="nc" id="L133">			case TUESDAY: return &quot;ma&quot;;</span>
+<span class="nc" id="L134">			case WEDNESDAY: return &quot;me&quot;;</span>
+<span class="nc" id="L135">			case THURSDAY: return &quot;je&quot;;</span>
+<span class="nc" id="L136">			case FRIDAY: return &quot;ve&quot;;</span>
+<span class="nc" id="L137">			case SATURDAY: return &quot;sa&quot;;</span>
+<span class="nc" id="L138">			case SUNDAY: return &quot;di&quot;;</span>
+			}
+<span class="nc" id="L140">			break;</span>
+		case &quot;ja&quot;:
+<span class="nc bnc" id="L142" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
+<span class="nc" id="L143">			case MONDAY: return &quot;月&quot;;</span>
+<span class="nc" id="L144">			case TUESDAY: return &quot;火&quot;;</span>
+<span class="nc" id="L145">			case WEDNESDAY: return &quot;水&quot;;</span>
+<span class="nc" id="L146">			case THURSDAY: return &quot;木&quot;;</span>
+<span class="nc" id="L147">			case FRIDAY: return &quot;金&quot;;</span>
+<span class="nc" id="L148">			case SATURDAY: return &quot;土&quot;;</span>
+<span class="nc" id="L149">			case SUNDAY: return &quot;日&quot;;</span>
+			}
+<span class="nc" id="L151">			break;</span>
+		case &quot;ko&quot;:
+<span class="nc bnc" id="L153" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
+<span class="nc" id="L154">			case MONDAY: return &quot;월&quot;;</span>
+<span class="nc" id="L155">			case TUESDAY: return &quot;화&quot;;</span>
+<span class="nc" id="L156">			case WEDNESDAY: return &quot;수&quot;;</span>
+<span class="nc" id="L157">			case THURSDAY: return &quot;목&quot;;</span>
+<span class="nc" id="L158">			case FRIDAY: return &quot;금&quot;;</span>
+<span class="nc" id="L159">			case SATURDAY: return &quot;토&quot;;</span>
+<span class="nc" id="L160">			case SUNDAY: return &quot;일&quot;;</span>
+			}
+<span class="nc" id="L162">			break;</span>
+		case &quot;ru&quot;:
+<span class="nc bnc" id="L164" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
+<span class="nc" id="L165">			case MONDAY: return &quot;пн&quot;;</span>
+<span class="nc" id="L166">			case TUESDAY: return &quot;вт&quot;;</span>
+<span class="nc" id="L167">			case WEDNESDAY: return &quot;ср&quot;;</span>
+<span class="nc" id="L168">			case THURSDAY: return &quot;чт&quot;;</span>
+<span class="nc" id="L169">			case FRIDAY: return &quot;пт&quot;;</span>
+<span class="nc" id="L170">			case SATURDAY: return &quot;сб&quot;;</span>
+<span class="nc" id="L171">			case SUNDAY: return &quot;вс&quot;;</span>
+			}
+<span class="nc" id="L173">			break;</span>
+		case &quot;zh&quot;:
+<span class="nc bnc" id="L175" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
+<span class="nc" id="L176">			case MONDAY: return &quot;周一&quot;;</span>
+<span class="nc" id="L177">			case TUESDAY: return &quot;周二&quot;;</span>
+<span class="nc" id="L178">			case WEDNESDAY: return &quot;周三&quot;;</span>
+<span class="nc" id="L179">			case THURSDAY: return &quot;周四&quot;;</span>
+<span class="nc" id="L180">			case FRIDAY: return &quot;周五&quot;;</span>
+<span class="nc" id="L181">			case SATURDAY: return &quot;周六&quot;;</span>
+<span class="nc" id="L182">			case SUNDAY: return &quot;周日&quot;;</span>
+			}
+			break;
+		}
+		// Fallback: English short form (first two letters of enum name)
+<span class="pc bpc" id="L187" title="1 of 8 branches missed.">		switch (dayOfWeek) {</span>
+<span class="fc" id="L188">		case MONDAY: return &quot;Mo&quot;;</span>
+<span class="fc" id="L189">		case TUESDAY: return &quot;Tu&quot;;</span>
+<span class="fc" id="L190">		case WEDNESDAY: return &quot;We&quot;;</span>
+<span class="fc" id="L191">		case THURSDAY: return &quot;Th&quot;;</span>
+<span class="fc" id="L192">		case FRIDAY: return &quot;Fr&quot;;</span>
+<span class="fc" id="L193">		case SATURDAY: return &quot;Sa&quot;;</span>
+<span class="fc" id="L194">		case SUNDAY: return &quot;Su&quot;;</span>
+		}
+<span class="nc" id="L196">		throw new IllegalArgumentException();</span>
+	}
+
+	public static String monthShort(Month month, Locale locale) {
+<span class="fc" id="L200">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L201" title="7 of 8 branches missed.">		switch (lang) {</span>
+		case &quot;de&quot;:
+<span class="nc bnc" id="L203" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L204">			case JANUARY: return &quot;Jan&quot;;</span>
+<span class="nc" id="L205">			case FEBRUARY: return &quot;Feb&quot;;</span>
+<span class="nc" id="L206">			case MARCH: return &quot;Mär&quot;;</span>
+<span class="nc" id="L207">			case APRIL: return &quot;Apr&quot;;</span>
+<span class="nc" id="L208">			case MAY: return &quot;Mai&quot;;</span>
+<span class="nc" id="L209">			case JUNE: return &quot;Jun&quot;;</span>
+<span class="nc" id="L210">			case JULY: return &quot;Jul&quot;;</span>
+<span class="nc" id="L211">			case AUGUST: return &quot;Aug&quot;;</span>
+<span class="nc" id="L212">			case SEPTEMBER: return &quot;Sep&quot;;</span>
+<span class="nc" id="L213">			case OCTOBER: return &quot;Okt&quot;;</span>
+<span class="nc" id="L214">			case NOVEMBER: return &quot;Nov&quot;;</span>
+<span class="nc" id="L215">			case DECEMBER: return &quot;Dez&quot;;</span>
+			}
+<span class="nc" id="L217">			break;</span>
+		case &quot;es&quot;:
+<span class="nc bnc" id="L219" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L220">			case JANUARY: return &quot;ene&quot;;</span>
+<span class="nc" id="L221">			case FEBRUARY: return &quot;feb&quot;;</span>
+<span class="nc" id="L222">			case MARCH: return &quot;mar&quot;;</span>
+<span class="nc" id="L223">			case APRIL: return &quot;abr&quot;;</span>
+<span class="nc" id="L224">			case MAY: return &quot;may&quot;;</span>
+<span class="nc" id="L225">			case JUNE: return &quot;jun&quot;;</span>
+<span class="nc" id="L226">			case JULY: return &quot;jul&quot;;</span>
+<span class="nc" id="L227">			case AUGUST: return &quot;ago&quot;;</span>
+<span class="nc" id="L228">			case SEPTEMBER: return &quot;sept&quot;;</span>
+<span class="nc" id="L229">			case OCTOBER: return &quot;oct&quot;;</span>
+<span class="nc" id="L230">			case NOVEMBER: return &quot;nov&quot;;</span>
+<span class="nc" id="L231">			case DECEMBER: return &quot;dic&quot;;</span>
+			}
+<span class="nc" id="L233">			break;</span>
+		case &quot;fr&quot;:
+<span class="nc bnc" id="L235" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L236">			case JANUARY: return &quot;janv.&quot;;</span>
+<span class="nc" id="L237">			case FEBRUARY: return &quot;févr.&quot;;</span>
+<span class="nc" id="L238">			case MARCH: return &quot;mars&quot;;</span>
+<span class="nc" id="L239">			case APRIL: return &quot;avr.&quot;;</span>
+<span class="nc" id="L240">			case MAY: return &quot;mai&quot;;</span>
+<span class="nc" id="L241">			case JUNE: return &quot;juin&quot;;</span>
+<span class="nc" id="L242">			case JULY: return &quot;juil.&quot;;</span>
+<span class="nc" id="L243">			case AUGUST: return &quot;août&quot;;</span>
+<span class="nc" id="L244">			case SEPTEMBER: return &quot;sept.&quot;;</span>
+<span class="nc" id="L245">			case OCTOBER: return &quot;oct.&quot;;</span>
+<span class="nc" id="L246">			case NOVEMBER: return &quot;nov.&quot;;</span>
+<span class="nc" id="L247">			case DECEMBER: return &quot;déc.&quot;;</span>
+			}
+<span class="nc" id="L249">			break;</span>
+		case &quot;ja&quot;:
+<span class="nc bnc" id="L251" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L252">			case JANUARY: return &quot;1月&quot;;</span>
+<span class="nc" id="L253">			case FEBRUARY: return &quot;2月&quot;;</span>
+<span class="nc" id="L254">			case MARCH: return &quot;3月&quot;;</span>
+<span class="nc" id="L255">			case APRIL: return &quot;4月&quot;;</span>
+<span class="nc" id="L256">			case MAY: return &quot;5月&quot;;</span>
+<span class="nc" id="L257">			case JUNE: return &quot;6月&quot;;</span>
+<span class="nc" id="L258">			case JULY: return &quot;7月&quot;;</span>
+<span class="nc" id="L259">			case AUGUST: return &quot;8月&quot;;</span>
+<span class="nc" id="L260">			case SEPTEMBER: return &quot;9月&quot;;</span>
+<span class="nc" id="L261">			case OCTOBER: return &quot;10月&quot;;</span>
+<span class="nc" id="L262">			case NOVEMBER: return &quot;11月&quot;;</span>
+<span class="nc" id="L263">			case DECEMBER: return &quot;12月&quot;;</span>
+			}
+<span class="nc" id="L265">			break;</span>
+		case &quot;ko&quot;:
+<span class="nc bnc" id="L267" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L268">			case JANUARY: return &quot;1월&quot;;</span>
+<span class="nc" id="L269">			case FEBRUARY: return &quot;2월&quot;;</span>
+<span class="nc" id="L270">			case MARCH: return &quot;3월&quot;;</span>
+<span class="nc" id="L271">			case APRIL: return &quot;4월&quot;;</span>
+<span class="nc" id="L272">			case MAY: return &quot;5월&quot;;</span>
+<span class="nc" id="L273">			case JUNE: return &quot;6월&quot;;</span>
+<span class="nc" id="L274">			case JULY: return &quot;7월&quot;;</span>
+<span class="nc" id="L275">			case AUGUST: return &quot;8월&quot;;</span>
+<span class="nc" id="L276">			case SEPTEMBER: return &quot;9월&quot;;</span>
+<span class="nc" id="L277">			case OCTOBER: return &quot;10월&quot;;</span>
+<span class="nc" id="L278">			case NOVEMBER: return &quot;11월&quot;;</span>
+<span class="nc" id="L279">			case DECEMBER: return &quot;12월&quot;;</span>
+			}
+<span class="nc" id="L281">			break;</span>
+		case &quot;ru&quot;:
+<span class="nc bnc" id="L283" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L284">			case JANUARY: return &quot;янв.&quot;;</span>
+<span class="nc" id="L285">			case FEBRUARY: return &quot;февр.&quot;;</span>
+<span class="nc" id="L286">			case MARCH: return &quot;март&quot;;</span>
+<span class="nc" id="L287">			case APRIL: return &quot;апр.&quot;;</span>
+<span class="nc" id="L288">			case MAY: return &quot;май&quot;;</span>
+<span class="nc" id="L289">			case JUNE: return &quot;июнь&quot;;</span>
+<span class="nc" id="L290">			case JULY: return &quot;июль&quot;;</span>
+<span class="nc" id="L291">			case AUGUST: return &quot;авг.&quot;;</span>
+<span class="nc" id="L292">			case SEPTEMBER: return &quot;сент.&quot;;</span>
+<span class="nc" id="L293">			case OCTOBER: return &quot;окт.&quot;;</span>
+<span class="nc" id="L294">			case NOVEMBER: return &quot;нояб.&quot;;</span>
+<span class="nc" id="L295">			case DECEMBER: return &quot;дек.&quot;;</span>
+			}
+<span class="nc" id="L297">			break;</span>
+		case &quot;zh&quot;:
+<span class="nc bnc" id="L299" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L300">			case JANUARY: return &quot;1月&quot;;</span>
+<span class="nc" id="L301">			case FEBRUARY: return &quot;2月&quot;;</span>
+<span class="nc" id="L302">			case MARCH: return &quot;3月&quot;;</span>
+<span class="nc" id="L303">			case APRIL: return &quot;4月&quot;;</span>
+<span class="nc" id="L304">			case MAY: return &quot;5月&quot;;</span>
+<span class="nc" id="L305">			case JUNE: return &quot;6月&quot;;</span>
+<span class="nc" id="L306">			case JULY: return &quot;7月&quot;;</span>
+<span class="nc" id="L307">			case AUGUST: return &quot;8月&quot;;</span>
+<span class="nc" id="L308">			case SEPTEMBER: return &quot;9月&quot;;</span>
+<span class="nc" id="L309">			case OCTOBER: return &quot;10月&quot;;</span>
+<span class="nc" id="L310">			case NOVEMBER: return &quot;11月&quot;;</span>
+<span class="nc" id="L311">			case DECEMBER: return &quot;12月&quot;;</span>
+			}
+			break;
+		}
+		// Fallback: English short form (first three letters of enum name)
+<span class="pc bpc" id="L316" title="5 of 13 branches missed.">		switch (month) {</span>
+<span class="fc" id="L317">		case JANUARY: return &quot;Jan&quot;;</span>
+<span class="fc" id="L318">		case FEBRUARY: return &quot;Feb&quot;;</span>
+<span class="fc" id="L319">		case MARCH: return &quot;Mar&quot;;</span>
+<span class="fc" id="L320">		case APRIL: return &quot;Apr&quot;;</span>
+<span class="fc" id="L321">		case MAY: return &quot;May&quot;;</span>
+<span class="fc" id="L322">		case JUNE: return &quot;Jun&quot;;</span>
+<span class="nc" id="L323">		case JULY: return &quot;Jul&quot;;</span>
+<span class="nc" id="L324">		case AUGUST: return &quot;Aug&quot;;</span>
+<span class="nc" id="L325">		case SEPTEMBER: return &quot;Sep&quot;;</span>
+<span class="fc" id="L326">		case OCTOBER: return &quot;Oct&quot;;</span>
+<span class="fc" id="L327">		case NOVEMBER: return &quot;Nov&quot;;</span>
+<span class="nc" id="L328">		case DECEMBER: return &quot;Dec&quot;;</span>
+		}
+<span class="nc" id="L330">		throw new IllegalArgumentException();</span>
+	}
+
+	public static String monthLong(Month month, Locale locale) {
+<span class="fc" id="L334">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L335" title="7 of 8 branches missed.">		switch (lang) {</span>
+		case &quot;de&quot;:
+<span class="nc bnc" id="L337" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L338">			case JANUARY: return &quot;Januar&quot;;</span>
+<span class="nc" id="L339">			case FEBRUARY: return &quot;Februar&quot;;</span>
+<span class="nc" id="L340">			case MARCH: return &quot;März&quot;;</span>
+<span class="nc" id="L341">			case APRIL: return &quot;April&quot;;</span>
+<span class="nc" id="L342">			case MAY: return &quot;Mai&quot;;</span>
+<span class="nc" id="L343">			case JUNE: return &quot;Juni&quot;;</span>
+<span class="nc" id="L344">			case JULY: return &quot;Juli&quot;;</span>
+<span class="nc" id="L345">			case AUGUST: return &quot;August&quot;;</span>
+<span class="nc" id="L346">			case SEPTEMBER: return &quot;September&quot;;</span>
+<span class="nc" id="L347">			case OCTOBER: return &quot;Oktober&quot;;</span>
+<span class="nc" id="L348">			case NOVEMBER: return &quot;November&quot;;</span>
+<span class="nc" id="L349">			case DECEMBER: return &quot;Dezember&quot;;</span>
+			}
+<span class="nc" id="L351">			break;</span>
+		case &quot;es&quot;:
+<span class="nc bnc" id="L353" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L354">			case JANUARY: return &quot;enero&quot;;</span>
+<span class="nc" id="L355">			case FEBRUARY: return &quot;febrero&quot;;</span>
+<span class="nc" id="L356">			case MARCH: return &quot;marzo&quot;;</span>
+<span class="nc" id="L357">			case APRIL: return &quot;abril&quot;;</span>
+<span class="nc" id="L358">			case MAY: return &quot;mayo&quot;;</span>
+<span class="nc" id="L359">			case JUNE: return &quot;junio&quot;;</span>
+<span class="nc" id="L360">			case JULY: return &quot;julio&quot;;</span>
+<span class="nc" id="L361">			case AUGUST: return &quot;agosto&quot;;</span>
+<span class="nc" id="L362">			case SEPTEMBER: return &quot;septiembre&quot;;</span>
+<span class="nc" id="L363">			case OCTOBER: return &quot;octubre&quot;;</span>
+<span class="nc" id="L364">			case NOVEMBER: return &quot;noviembre&quot;;</span>
+<span class="nc" id="L365">			case DECEMBER: return &quot;diciembre&quot;;</span>
+			}
+<span class="nc" id="L367">			break;</span>
+		case &quot;fr&quot;:
+<span class="nc bnc" id="L369" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L370">			case JANUARY: return &quot;janvier&quot;;</span>
+<span class="nc" id="L371">			case FEBRUARY: return &quot;février&quot;;</span>
+<span class="nc" id="L372">			case MARCH: return &quot;mars&quot;;</span>
+<span class="nc" id="L373">			case APRIL: return &quot;avril&quot;;</span>
+<span class="nc" id="L374">			case MAY: return &quot;mai&quot;;</span>
+<span class="nc" id="L375">			case JUNE: return &quot;juin&quot;;</span>
+<span class="nc" id="L376">			case JULY: return &quot;juillet&quot;;</span>
+<span class="nc" id="L377">			case AUGUST: return &quot;août&quot;;</span>
+<span class="nc" id="L378">			case SEPTEMBER: return &quot;septembre&quot;;</span>
+<span class="nc" id="L379">			case OCTOBER: return &quot;octobre&quot;;</span>
+<span class="nc" id="L380">			case NOVEMBER: return &quot;novembre&quot;;</span>
+<span class="nc" id="L381">			case DECEMBER: return &quot;décembre&quot;;</span>
+			}
+<span class="nc" id="L383">			break;</span>
+		case &quot;ja&quot;:
+<span class="nc bnc" id="L385" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L386">			case JANUARY: return &quot;1月&quot;;</span>
+<span class="nc" id="L387">			case FEBRUARY: return &quot;2月&quot;;</span>
+<span class="nc" id="L388">			case MARCH: return &quot;3月&quot;;</span>
+<span class="nc" id="L389">			case APRIL: return &quot;4月&quot;;</span>
+<span class="nc" id="L390">			case MAY: return &quot;5月&quot;;</span>
+<span class="nc" id="L391">			case JUNE: return &quot;6月&quot;;</span>
+<span class="nc" id="L392">			case JULY: return &quot;7月&quot;;</span>
+<span class="nc" id="L393">			case AUGUST: return &quot;8月&quot;;</span>
+<span class="nc" id="L394">			case SEPTEMBER: return &quot;9月&quot;;</span>
+<span class="nc" id="L395">			case OCTOBER: return &quot;10月&quot;;</span>
+<span class="nc" id="L396">			case NOVEMBER: return &quot;11月&quot;;</span>
+<span class="nc" id="L397">			case DECEMBER: return &quot;12月&quot;;</span>
+			}
+<span class="nc" id="L399">			break;</span>
+		case &quot;ko&quot;:
+<span class="nc bnc" id="L401" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L402">			case JANUARY: return &quot;1월&quot;;</span>
+<span class="nc" id="L403">			case FEBRUARY: return &quot;2월&quot;;</span>
+<span class="nc" id="L404">			case MARCH: return &quot;3월&quot;;</span>
+<span class="nc" id="L405">			case APRIL: return &quot;4월&quot;;</span>
+<span class="nc" id="L406">			case MAY: return &quot;5월&quot;;</span>
+<span class="nc" id="L407">			case JUNE: return &quot;6월&quot;;</span>
+<span class="nc" id="L408">			case JULY: return &quot;7월&quot;;</span>
+<span class="nc" id="L409">			case AUGUST: return &quot;8월&quot;;</span>
+<span class="nc" id="L410">			case SEPTEMBER: return &quot;9월&quot;;</span>
+<span class="nc" id="L411">			case OCTOBER: return &quot;10월&quot;;</span>
+<span class="nc" id="L412">			case NOVEMBER: return &quot;11월&quot;;</span>
+<span class="nc" id="L413">			case DECEMBER: return &quot;12월&quot;;</span>
+			}
+<span class="nc" id="L415">			break;</span>
+		case &quot;ru&quot;:
+<span class="nc bnc" id="L417" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L418">			case JANUARY: return &quot;январь&quot;;</span>
+<span class="nc" id="L419">			case FEBRUARY: return &quot;февраль&quot;;</span>
+<span class="nc" id="L420">			case MARCH: return &quot;март&quot;;</span>
+<span class="nc" id="L421">			case APRIL: return &quot;апрель&quot;;</span>
+<span class="nc" id="L422">			case MAY: return &quot;май&quot;;</span>
+<span class="nc" id="L423">			case JUNE: return &quot;июнь&quot;;</span>
+<span class="nc" id="L424">			case JULY: return &quot;июль&quot;;</span>
+<span class="nc" id="L425">			case AUGUST: return &quot;август&quot;;</span>
+<span class="nc" id="L426">			case SEPTEMBER: return &quot;сентябрь&quot;;</span>
+<span class="nc" id="L427">			case OCTOBER: return &quot;октябрь&quot;;</span>
+<span class="nc" id="L428">			case NOVEMBER: return &quot;ноябрь&quot;;</span>
+<span class="nc" id="L429">			case DECEMBER: return &quot;декабрь&quot;;</span>
+			}
+<span class="nc" id="L431">			break;</span>
+		case &quot;zh&quot;:
+<span class="nc bnc" id="L433" title="All 13 branches missed.">			switch (month) {</span>
+<span class="nc" id="L434">			case JANUARY: return &quot;一月&quot;;</span>
+<span class="nc" id="L435">			case FEBRUARY: return &quot;二月&quot;;</span>
+<span class="nc" id="L436">			case MARCH: return &quot;三月&quot;;</span>
+<span class="nc" id="L437">			case APRIL: return &quot;四月&quot;;</span>
+<span class="nc" id="L438">			case MAY: return &quot;五月&quot;;</span>
+<span class="nc" id="L439">			case JUNE: return &quot;六月&quot;;</span>
+<span class="nc" id="L440">			case JULY: return &quot;七月&quot;;</span>
+<span class="nc" id="L441">			case AUGUST: return &quot;八月&quot;;</span>
+<span class="nc" id="L442">			case SEPTEMBER: return &quot;九月&quot;;</span>
+<span class="nc" id="L443">			case OCTOBER: return &quot;十月&quot;;</span>
+<span class="nc" id="L444">			case NOVEMBER: return &quot;十一月&quot;;</span>
+<span class="nc" id="L445">			case DECEMBER: return &quot;十二月&quot;;</span>
+			}
+			break;
+		}
+		// Fallback: English long form
+<span class="pc bpc" id="L450" title="7 of 13 branches missed.">		switch (month) {</span>
+<span class="fc" id="L451">		case JANUARY: return &quot;January&quot;;</span>
+<span class="nc" id="L452">		case FEBRUARY: return &quot;February&quot;;</span>
+<span class="nc" id="L453">		case MARCH: return &quot;March&quot;;</span>
+<span class="nc" id="L454">		case APRIL: return &quot;April&quot;;</span>
+<span class="nc" id="L455">		case MAY: return &quot;May&quot;;</span>
+<span class="nc" id="L456">		case JUNE: return &quot;June&quot;;</span>
+<span class="fc" id="L457">		case JULY: return &quot;July&quot;;</span>
+<span class="nc" id="L458">		case AUGUST: return &quot;August&quot;;</span>
+<span class="fc" id="L459">		case SEPTEMBER: return &quot;September&quot;;</span>
+<span class="fc" id="L460">		case OCTOBER: return &quot;October&quot;;</span>
+<span class="fc" id="L461">		case NOVEMBER: return &quot;November&quot;;</span>
+<span class="fc" id="L462">		case DECEMBER: return &quot;December&quot;;</span>
+		}
+<span class="nc" id="L464">		throw new IllegalArgumentException();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

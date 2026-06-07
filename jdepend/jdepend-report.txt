@@ -5565,16 +5565,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 6
-    Concrete Classes: 4
+    Total Classes: 10
+    Concrete Classes: 8
     Abstract Classes: 2
 
     Ca: 2
     Ce: 15
 
-    A: 0.33
+    A: 0.2
     I: 0.88
-    D: 0.22
+    D: 0.08
 
 Abstract Classes:
     net.sourceforge.plantuml.gantt.draw.header.HeaderPiece
@@ -5583,8 +5583,12 @@ Abstract Classes:
 Concrete Classes:
     net.sourceforge.plantuml.gantt.draw.header.TimeHeader$Pending
     net.sourceforge.plantuml.gantt.draw.header.TimeHeader$TextBlockKey
+    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderDaily
     net.sourceforge.plantuml.gantt.draw.header.TimeHeaderFactory$1
+    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderMonthly
+    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderQuarterly
     net.sourceforge.plantuml.gantt.draw.header.TimeHeaderVariant
+    net.sourceforge.plantuml.gantt.draw.header.TimeHeaderYearly
 
 Depends Upon:
     java.lang
@@ -13922,11 +13926,6 @@ net.sourceforge.plantuml.gantt.draw
 
 net.sourceforge.plantuml.gantt.draw.header
     |
-    |   net.sourceforge.plantuml.klimt.drawing
-    |   net.sourceforge.plantuml.klimt
-    |   net.sourceforge.plantuml.klimt.color
-    |   net.sourceforge.plantuml.klimt.awt
-    |   net.sourceforge.plantuml.teavm
     |-> net.sourceforge.plantuml.klimt.font
     |   net.sourceforge.plantuml.klimt.shape
     |-> net.sourceforge.plantuml.klimt.font
@@ -14911,7 +14910,7 @@ net.sourceforge.plantuml.gantt.command,14,0,1,19,0,0.95,0.05,1
 net.sourceforge.plantuml.gantt.core,11,3,9,12,0.27,0.57,0.16,1
 net.sourceforge.plantuml.gantt.data,8,0,3,19,0,0.86,0.14,1
 net.sourceforge.plantuml.gantt.draw,9,2,4,25,0.22,0.86,0.08,1
-net.sourceforge.plantuml.gantt.draw.header,6,2,2,15,0.33,0.88,0.22,1
+net.sourceforge.plantuml.gantt.draw.header,10,2,2,15,0.2,0.88,0.08,1
 net.sourceforge.plantuml.gantt.lang,80,3,4,16,0.04,0.8,0.16,1
 net.sourceforge.plantuml.gantt.ngm,4,1,2,3,0.25,0.6,0.15,1
 net.sourceforge.plantuml.gantt.ngm.math,11,2,5,6,0.18,0.55,0.27,1

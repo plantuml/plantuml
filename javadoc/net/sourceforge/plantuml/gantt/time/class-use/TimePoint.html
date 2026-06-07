@@ -57,9 +57,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt">net.sourceforge.plantuml.gantt</a></div>
 <div class="col-last even-row-color">
-<div class="block">Provides classes used to manage 
- <a href="https://plantuml.com/gantt-diagram" target="_top">
- Gantt Diagram</a>.</div>
+<div class="block">Provides classes used to manage
+ <a href="https://plantuml.com/gantt-diagram" target="_top"> Gantt
+ Diagram</a>.</div>
 </div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.core">net.sourceforge.plantuml.gantt.core</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
@@ -356,6 +356,15 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>protected abstract boolean</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../draw/header/TimeHeader.html#isZeroOnDay(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">isZeroOnDay</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;instant)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected final void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../draw/header/TimeHeader.html#printCentered(net.sourceforge.plantuml.klimt.drawing.UGraphic,boolean,double,double,net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.klimt.font.FontConfiguration,net.sourceforge.plantuml.gantt.time.TimePointFormat...)" class="member-name-link">printCentered</a><wbr>(<a href="../../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+ boolean&nbsp;hideIfTooBig,
+ double&nbsp;start,
+ double&nbsp;end,
+ <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;when,
+ <a href="../../../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a>&nbsp;fc,
+ <a href="../TimePointFormat.html" title="enum class in net.sourceforge.plantuml.gantt.time">TimePointFormat</a>...&nbsp;format)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -442,14 +451,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>int</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#compareTo(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">compareTo</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;other)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#max(net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">max</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;d1,
- <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;d2)</code></div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimePointFormat.</span><code><a href="../TimePointFormat.html#format(net.sourceforge.plantuml.gantt.time.TimePoint,java.util.Locale)" class="member-name-link">format</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;when,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Locale.html" title="class or interface in java.util" class="external-link">Locale</a>&nbsp;locale)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#min(net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">min</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;d1,
+<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#max(net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">max</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;d1,
  <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;d2)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#min(net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">min</a><wbr>(<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;d1,
+ <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;d2)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

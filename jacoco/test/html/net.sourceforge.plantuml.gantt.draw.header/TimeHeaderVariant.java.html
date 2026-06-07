@@ -44,10 +44,12 @@ import net.sourceforge.plantuml.gantt.data.TimelineStyleData;
 import net.sourceforge.plantuml.gantt.data.WeekConfigData;
 import net.sourceforge.plantuml.gantt.data.WorkingHours;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
-import net.sourceforge.plantuml.gantt.time.TimeStringUtils;
+import net.sourceforge.plantuml.gantt.time.TimePointFormat;
 import net.sourceforge.plantuml.gantt.timescale.VariantTimeScale;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -61,30 +63,40 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 	public TimeHeaderVariant(VariantTimeScale timeScale, WeekConfigData weekConfigData, DayCalendarData dayCalendar,
 			TimeBoundsData timeBounds, TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle,
 			WorkingHours workingHours) {
-<span class="nc" id="L64">		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);</span>
-		// super(timeScale, weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle);
-<span class="nc" id="L66">		this.workingHours = workingHours;</span>
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L66">		super(weekConfigData, dayCalendar, timeBounds, scaleConfig, timelineStyle, timeScale);</span>
+<span class="nc" id="L67">		this.workingHours = workingHours;</span>
+<span class="nc" id="L68">	}</span>
 
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
-<span class="nc" id="L71">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
+<span class="nc" id="L72">		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();</span>
+	}
+
+	private double getH1() {
+<span class="nc" id="L76">		return timelineStyle.getFontSizeMonth() + 2;</span>
+	}
+
+	private double getH2() {
+<span class="nc" id="L80">		return getH1() + timelineStyle.getFontSizeDay() + 2;</span>
+	}
+
+	private double getH3() {
+<span class="nc" id="L84">		return getH2() + timelineStyle.getFontSizeDay() + 3;</span>
 	}
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-<span class="nc" id="L76">		final double h = timelineStyle.getFontSizeDay();</span>
-<span class="nc" id="L77">		return h + 6;</span>
+<span class="nc" id="L89">		return getH3();</span>
 	}
 
 	@Override
 	public double getTimeFooterHeight(StringBounder stringBounder) {
-<span class="nc" id="L82">		final double h = timelineStyle.getFontSizeDay();</span>
-<span class="nc" id="L83">		return h + 6;</span>
+<span class="nc" id="L94">		final double h = timelineStyle.getFontSizeDay();</span>
+<span class="nc" id="L95">		return h + 6;</span>
 	}
 
 	private double getHeaderNameDayHeight() {
-<span class="nc" id="L87">		return 0;</span>
+<span class="nc" id="L99">		return 0;</span>
 	}
 
 //	private int delta = 0;
@@ -112,7 +124,7 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 	private LocalDate increment(LocalDate day/* , PrintScale printScale */) {
 //		if (printScale == PrintScale.WEEKLY)
 //			return day.plusDays(7);
-<span class="nc" id="L115">		return day.plusDays(1);</span>
+<span class="nc" id="L127">		return day.plusDays(1);</span>
 	}
 
 //	private void initDelta(LocalDate day) {
@@ -142,15 +154,14 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 //	}
 
 	private void drawSmallVlinesDay(UGraphic ug, double totalHeightWithoutFooter) {
-<span class="nc" id="L145">		ug = ug.apply(getLineColor());</span>
-<span class="nc" id="L146">		ug = ug.apply(UTranslate.dy(6));</span>
-<span class="nc" id="L147">		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) &lt;= 0; day = increment(day)) {</span>
-<span class="nc" id="L149">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L150">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc" id="L151">			ug.apply(UTranslate.dx(x1)).draw(vbar);</span>
+<span class="nc" id="L157">		ug = ug.apply(getLineColor());</span>
+<span class="nc" id="L158">		final ULine vbar = ULine.vline(totalHeightWithoutFooter);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay().plusDays(1)) &lt;= 0; day = increment(day)) {</span>
+<span class="nc" id="L160">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L161">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc" id="L162">			ug.apply(UTranslate.dx(x1)).draw(vbar);</span>
 		}
-<span class="nc" id="L153">	}</span>
+<span class="nc" id="L164">	}</span>
 
 //	@Override
 //	protected boolean isZeroOnDay(TimePoint instant) {
@@ -170,20 +181,20 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-<span class="nc" id="L173">		ug = ug.apply(UTranslate.dy(3));</span>
+<span class="nc" id="L184">		ug = ug.apply(UTranslate.dy(3));</span>
 		// drawSimpleDayCounter(ug);
-<span class="nc" id="L175">	}</span>
+<span class="nc" id="L186">	}</span>
 
 	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
-<span class="nc" id="L179">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
-<span class="nc" id="L180">		Pending pending = null;</span>
+<span class="nc" id="L190">		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());</span>
+<span class="nc" id="L191">		Pending pending = null;</span>
 
-<span class="nc bnc" id="L182" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
-<span class="nc" id="L183">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
-<span class="nc" id="L184">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc" id="L185">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
-<span class="nc" id="L186">			HColor back = getColor(wink);</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L194">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L195">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc" id="L196">			final double x2 = getTimeScale().getPosition(wink) + getTimeScale().getWidth(wink);</span>
+<span class="nc" id="L197">			HColor back = getColor(wink);</span>
 //			// Day of week should be stronger than period of time (back color).
 //			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
 //			if (backDoW != null) {
@@ -192,75 +203,134 @@ class TimeHeaderVariant extends TimeHeaderCalendar {
 //			if (back == null &amp;&amp; defaultPlan.getLoadAt(wink) == 0) {
 //				back = closedBackgroundColor();
 //			}
-<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (back == null) {</span>
-<span class="nc bnc" id="L196" title="All 2 branches missed.">				if (pending != null)</span>
-<span class="nc" id="L197">					pending.draw(ug, height);</span>
-<span class="nc" id="L198">				pending = null;</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (back == null) {</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">				if (pending != null)</span>
+<span class="nc" id="L208">					pending.draw(ug, height);</span>
+<span class="nc" id="L209">				pending = null;</span>
 			} else {
-<span class="nc bnc" id="L200" title="All 4 branches missed.">				if (pending != null &amp;&amp; pending.color.equals(back) == false) {</span>
-<span class="nc" id="L201">					pending.draw(ug, height);</span>
-<span class="nc" id="L202">					pending = null;</span>
+<span class="nc bnc" id="L211" title="All 4 branches missed.">				if (pending != null &amp;&amp; pending.color.equals(back) == false) {</span>
+<span class="nc" id="L212">					pending.draw(ug, height);</span>
+<span class="nc" id="L213">					pending = null;</span>
 				}
-<span class="nc bnc" id="L204" title="All 2 branches missed.">				if (pending == null)</span>
-<span class="nc" id="L205">					pending = new Pending(back, x1, x2);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">				if (pending == null)</span>
+<span class="nc" id="L216">					pending = new Pending(back, x1, x2);</span>
 				else
-<span class="nc" id="L207">					pending.x2 = x2;</span>
+<span class="nc" id="L218">					pending.x2 = x2;</span>
 
 			}
 		}
-<span class="nc" id="L211">	}</span>
-	
+<span class="nc" id="L222">	}</span>
+
 	private void drawTextsDayOfWeek(UGraphic ug) {
 
-<span class="nc bnc" id="L215" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
-<span class="nc" id="L216">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L227">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
 
-<span class="nc bnc" id="L218" title="All 2 branches missed.">			if (isHidden(wink))</span>
-<span class="nc" id="L219">				continue;</span>
-<span class="nc" id="L220">			final double x1 = getTimeScale().getPosition(wink);</span>
-<span class="nc" id="L221">			final double x2 = getTimeScale().getPosition(wink.increment());</span>
-<span class="nc" id="L222">			final FontConfiguration fc = getFc(wink);</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">			if (isHidden(wink))</span>
+<span class="nc" id="L230">				continue;</span>
+<span class="nc" id="L231">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc" id="L232">			final double x2 = getTimeScale().getPosition(wink.increment());</span>
+<span class="nc" id="L233">			final FontConfiguration fc = getFc(wink);</span>
 
-<span class="nc" id="L224">			printCentered(ug, getTextBlockSLOW(TimeStringUtils.shortName(wink.toDayOfWeek(), locale()), fc), x1, x2);</span>
+<span class="nc" id="L235">			printCentered(ug, false, x1, x2, wink, fc, TimePointFormat.DAY_OF_WEEK_SHORT,</span>
+					TimePointFormat.DAY_OF_WEEK_LONG);
+
 		}
-<span class="nc" id="L226">	}</span>
-	
+<span class="nc" id="L239">	}</span>
+
 	private FontConfiguration fc1;
 	private FontConfiguration fc2;
 
 	private FontConfiguration getFc(TimePoint wink) {
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (isZeroOnDay(wink)) {</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">			if (fc1 == null)</span>
-<span class="nc" id="L234">				fc1 = getFontConfigurationSLOW(SName.day, false, closedFontColor());</span>
-<span class="nc" id="L235">			return fc1;</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		if (isZeroOnDay(wink)) {</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">			if (fc1 == null)</span>
+<span class="nc" id="L247">				fc1 = getFontConfigurationSLOW(SName.day, false, closedFontColor());</span>
+<span class="nc" id="L248">			return fc1;</span>
 		}
 
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (fc2 == null)</span>
-<span class="nc" id="L239">			fc2 = getFontConfigurationSLOW(SName.day, false, openFontColor());</span>
-<span class="nc" id="L240">		return fc2;</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">		if (fc2 == null)</span>
+<span class="nc" id="L252">			fc2 = getFontConfigurationSLOW(SName.day, false, openFontColor());</span>
+<span class="nc" id="L253">		return fc2;</span>
 	}
 
-	
 	private boolean isHidden(TimePoint wink) {
-<span class="nc bnc" id="L245" title="All 4 branches missed.">		if (scaleConfig.isHideClosed() &amp;&amp; dayCalendar.getOpenClose().isClosed(wink.toDay()))</span>
-<span class="nc" id="L246">			return true;</span>
-<span class="nc" id="L247">		return false;</span>
+<span class="nc bnc" id="L257" title="All 4 branches missed.">		if (scaleConfig.isHideClosed() &amp;&amp; dayCalendar.getOpenClose().isClosed(wink.toDay()))</span>
+<span class="nc" id="L258">			return true;</span>
+<span class="nc" id="L259">		return false;</span>
 	}
-
-
-
-
 
 	@Override
 	public void drawTimeHeaderInternal(UGraphic ug, double totalHeightWithoutFooter) {
-<span class="nc" id="L256">		drawTextsDayOfWeek(ug);</span>
+<span class="nc" id="L264">		drawNonWorkingPeriod(ug, totalHeightWithoutFooter);</span>
+<span class="nc" id="L265">		drawMonths(ug);</span>
+<span class="nc" id="L266">		drawTextsDayOfWeek(ug.apply(UTranslate.dy(getH1())));</span>
+<span class="nc" id="L267">		drawTextDayOfMonth(ug.apply(UTranslate.dy(getH2())));</span>
 //		// drawColorsBackground(ug, totalHeightWithoutFooter);
-<span class="nc" id="L258">		drawSmallVlinesDay(ug, totalHeightWithoutFooter);</span>
-<span class="nc" id="L259">		workingHours.drawOneDay(ug, 8);</span>
-<span class="nc" id="L260">		printVerticalSeparators(ug, totalHeightWithoutFooter);</span>
+<span class="nc" id="L269">		drawSmallVlinesDay(ug.apply(UTranslate.dy(getH1())), totalHeightWithoutFooter);</span>
+		// printVerticalSeparators(ug, totalHeightWithoutFooter);
 //		drawSimpleDayCounter(ug);
-		
-<span class="nc" id="L263">	}</span>
+
+<span class="nc" id="L273">	}</span>
+
+	private void drawNonWorkingPeriod(UGraphic ug, double height) {
+		// double height = timelineStyle.getFontSizeDay() * 2 + 6;
+<span class="nc" id="L277">		final HColor backColor = HColorSet.instance().getColorOrWhite(&quot;#FFE5E5&quot;);</span>
+		// final HColor backColor = HColorSet.instance().getColorOrWhite(&quot;#F4FFFF&quot;);
+
+<span class="nc" id="L280">		ug = ug.apply(backColor).apply(backColor.bg());</span>
+<span class="nc" id="L281">		ug = ug.apply(UTranslate.dy(getH1()));</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L283">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc" id="L284">			final double x1 = getTimeScale().getPosition(wink);</span>
+
+<span class="nc" id="L286">			workingHours.drawOneDay(ug.apply(UTranslate.dx(x1)), height);</span>
+		}
+
+<span class="nc" id="L289">	}</span>
+
+	private void drawTextDayOfMonth(UGraphic ug) {
+<span class="nc bnc" id="L292" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L293">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+
+<span class="nc bnc" id="L295" title="All 2 branches missed.">			if (isHidden(wink))</span>
+<span class="nc" id="L296">				continue;</span>
+<span class="nc" id="L297">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc" id="L298">			final double x2 = getTimeScale().getPosition(wink.increment());</span>
+<span class="nc" id="L299">			final FontConfiguration fc = getFc(wink);</span>
+
+<span class="nc" id="L301">			printCentered(ug, false, x1, x2, wink, fc, TimePointFormat.DAY_OF_MONTH);</span>
+		}
+<span class="nc" id="L303">	}</span>
+
+	private void drawMonths(final UGraphic ug) {
+
+<span class="nc" id="L307">		final FontConfiguration fc = getFontConfigurationSLOW(SName.month, true, openFontColor());</span>
+
+<span class="nc" id="L309">		TimePoint last = null;</span>
+<span class="nc" id="L310">		double lastChangeMonth = -1;</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">		for (LocalDate day = getMinDay(); day.compareTo(getMaxDay()) &lt;= 0; day = day.plusDays(1)) {</span>
+<span class="nc" id="L312">			final TimePoint wink = TimePoint.ofStartOfDay(day);</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			if (isHidden(wink))</span>
+<span class="nc" id="L314">				continue;</span>
+<span class="nc" id="L315">			final double x1 = getTimeScale().getPosition(wink);</span>
+<span class="nc bnc" id="L316" title="All 4 branches missed.">			if (last == null || wink.monthYear().equals(last.monthYear()) == false) {</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">				if (last != null)</span>
+<span class="nc" id="L318">					printMonth(ug, last, lastChangeMonth, x1, fc);</span>
+
+<span class="nc" id="L320">				lastChangeMonth = x1;</span>
+<span class="nc" id="L321">				last = wink;</span>
+			}
+		}
+<span class="nc" id="L324">		final double x1 = getTimeScale().getPosition(TimePoint.ofStartOfDay(getMaxDay().plusDays(1)));</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		if (x1 &gt; lastChangeMonth)</span>
+<span class="nc" id="L326">			printMonth(ug, last, lastChangeMonth, x1, fc);</span>
+
+<span class="nc" id="L328">	}</span>
+
+	private void printMonth(UGraphic ug, TimePoint monthYear, double start, double end, FontConfiguration fc) {
+<span class="nc" id="L331">		printCentered(ug, false, start, end, monthYear, fc, TimePointFormat.MONTH_SHORT, TimePointFormat.MONTH_LONG,</span>
+				TimePointFormat.MONTH_YEAR_LONG);
+<span class="nc" id="L333">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

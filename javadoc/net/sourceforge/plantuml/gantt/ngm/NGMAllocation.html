@@ -95,36 +95,40 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Represents the resource allocation applied to a task over time.
 
- <p>An allocation describes how much workforce capacity is assigned to a task
- at any given instant. Unlike a simple constant fraction, an allocation can
- vary over time, which is modeled using a <a href="math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.gantt.ngm.math"><code>PiecewiseConstant</code></a> function.
+ <p>
+ An allocation describes how much workforce capacity is assigned to a task at
+ any given instant. Unlike a simple constant fraction, an allocation can vary
+ over time, which is modeled using a <a href="math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.gantt.ngm.math"><code>PiecewiseConstant</code></a> function.
 
- <p>The allocation value at any instant is expressed as a <a href="math/Fraction.html" title="class in net.sourceforge.plantuml.gantt.ngm.math"><code>Fraction</code></a>,
+ <p>
+ The allocation value at any instant is expressed as a <a href="math/Fraction.html" title="class in net.sourceforge.plantuml.gantt.ngm.math"><code>Fraction</code></a>,
  representing the number of "full-time equivalent" (FTE) resources effectively
  working at that moment.
 
  <h3 id="examples-of-allocation-patterns-heading">Examples of allocation patterns</h3>
  <ul>
-   <li><code>1</code> — One full-time person (100% capacity)</li>
-   <li><code>2</code> — Two full-time persons working simultaneously</li>
-   <li><code>1/2</code> — One person working at 50% capacity</li>
-   <li><code>0</code> at certain times — No work during weekends, holidays,
-       or outside working hours</li>
+ <li><code>1</code> — One full-time person (100% capacity)</li>
+ <li><code>2</code> — Two full-time persons working simultaneously</li>
+ <li><code>1/2</code> — One person working at 50% capacity</li>
+ <li><code>0</code> at certain times — No work during weekends, holidays, or
+ outside working hours</li>
  </ul>
 
  <h3 id="time-varying-allocation-heading">Time-varying allocation</h3>
- <p>By wrapping a <a href="math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.gantt.ngm.math"><code>PiecewiseConstant</code></a>, this class can represent complex
+ <p>
+ By wrapping a <a href="math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.gantt.ngm.math"><code>PiecewiseConstant</code></a>, this class can represent complex
  real-world scenarios such as:
  <ul>
-   <li>A person who only works Monday to Friday (weekday calendar)</li>
-   <li>A person who works mornings only (08:00-12:00)</li>
-   <li>A person who is unavailable during specific holidays</li>
-   <li>A combination of the above (using <code>Combiner.product()</code>)</li>
+ <li>A person who only works Monday to Friday (weekday calendar)</li>
+ <li>A person who works mornings only (08:00-12:00)</li>
+ <li>A person who is unavailable during specific holidays</li>
+ <li>A combination of the above (using <code>Combiner.product()</code>)</li>
  </ul>
 
- <p>The <a href="math/LoadIntegrator.html" title="class in net.sourceforge.plantuml.gantt.ngm.math"><code>LoadIntegrator</code></a> uses this allocation function to compute
- how long a fixed-effort task will take, by integrating the allocation
- over time until the required effort is consumed.</div>
+ <p>
+ The <a href="math/LoadIntegrator.html" title="class in net.sourceforge.plantuml.gantt.ngm.math"><code>LoadIntegrator</code></a> uses this allocation function to compute how long
+ a fixed-effort task will take, by integrating the allocation over time until
+ the required effort is consumed.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -186,11 +190,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMAllocation</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.gantt.ngm.math">PiecewiseConstant</a>&nbsp;loadFunction)</span></div>
 <div class="block">Creates an allocation from a time-varying load function.
 
- <p>This is the most flexible factory method, allowing any <a href="math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.gantt.ngm.math"><code>PiecewiseConstant</code></a>
- to define the allocation pattern.</div>
+ <p>
+ This is the most flexible factory method, allowing any
+ <a href="math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.gantt.ngm.math"><code>PiecewiseConstant</code></a> to define the allocation pattern.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>loadFunction</code> - the piecewise constant function defining allocation over time</dd>
+<dd><code>loadFunction</code> - the piecewise constant function defining allocation over
+                     time</dd>
 <dt>Returns:</dt>
 <dd>a new NGMAllocation wrapping the given function</dd>
 </dl>
@@ -202,9 +208,10 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMAllocation</a></span>&nbsp;<span class="element-name">fullTime</span>()</div>
 <div class="block">Creates a constant full-time allocation (100% at all times).
 
- <p>This represents one person working full-time with no calendar constraints.
- Work can happen 24/7. Useful for simple calculations or as a baseline
- before applying calendar constraints via <code>Combiner.product()</code>.</div>
+ <p>
+ This represents one person working full-time with no calendar constraints.
+ Work can happen 24/7. Useful for simple calculations or as a baseline before
+ applying calendar constraints via <code>Combiner.product()</code>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a new NGMAllocation representing constant 100% availability</dd>
@@ -217,8 +224,10 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="math/PiecewiseConstant.html" title="interface in net.sourceforge.plantuml.gantt.ngm.math">PiecewiseConstant</a></span>&nbsp;<span class="element-name">getLoadFunction</span>()</div>
 <div class="block">Returns the underlying load function.
 
- <p>This function can be used with <a href="math/LoadIntegrator.html" title="class in net.sourceforge.plantuml.gantt.ngm.math"><code>LoadIntegrator</code></a>
- to compute task durations based on effort and allocation.</div>
+ <p>
+ This function can be used with
+ <a href="math/LoadIntegrator.html" title="class in net.sourceforge.plantuml.gantt.ngm.math"><code>LoadIntegrator</code></a> to compute
+ task durations based on effort and allocation.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the piecewise constant function representing the allocation over time</dd>

@@ -65,8 +65,8 @@ public class CommandColorTask extends SingleLineCommand2&lt;GanttDiagram&gt; {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 
 <span class="nc" id="L71">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
 <span class="nc" id="L72">		final Task task = diagram.getExistingTask(code);</span>

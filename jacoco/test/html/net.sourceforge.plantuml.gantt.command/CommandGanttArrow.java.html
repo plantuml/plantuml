@@ -69,23 +69,24 @@ public class CommandGanttArrow extends SingleLineCommand2&lt;GanttDiagram&gt; {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 
-<span class="nc" id="L74">		final String code1 = arg.get(&quot;CODE1&quot;, 0);</span>
-<span class="nc" id="L75">		final String code2 = arg.get(&quot;CODE2&quot;, 0);</span>
-<span class="nc" id="L76">		final Task task1 = diagram.getExistingTask(code1);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (task1 == null) {</span>
-<span class="nc" id="L78">			return CommandExecutionResult.error(&quot;No such task &quot; + code1);</span>
+<span class="nc" id="L75">		final String code1 = arg.get(&quot;CODE1&quot;, 0);</span>
+<span class="nc" id="L76">		final String code2 = arg.get(&quot;CODE2&quot;, 0);</span>
+<span class="nc" id="L77">		final Task task1 = diagram.getExistingTask(code1);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (task1 == null) {</span>
+<span class="nc" id="L79">			return CommandExecutionResult.error(&quot;No such task &quot; + code1);</span>
 		}
-<span class="nc" id="L80">		final Task task2 = diagram.getExistingTask(code2);</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (task2 == null) {</span>
-<span class="nc" id="L82">			return CommandExecutionResult.error(&quot;No such task &quot; + code2);</span>
+<span class="nc" id="L81">		final Task task2 = diagram.getExistingTask(code2);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (task2 == null) {</span>
+<span class="nc" id="L83">			return CommandExecutionResult.error(&quot;No such task &quot; + code2);</span>
 		}
 
-<span class="nc" id="L85">		final GanttConstraint link = diagram.forceTaskOrder(task1, task2);</span>
-<span class="nc" id="L86">		link.applyStyle(arg.get(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="nc" id="L86">		final GanttConstraint link = diagram.forceTaskOrder(task1, task2);</span>
+<span class="nc" id="L87">		link.applyStyle(arg.get(&quot;ARROW_STYLE&quot;, 0));</span>
 
-<span class="nc" id="L88">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L89">		return CommandExecutionResult.ok();</span>
 	}
 
 }

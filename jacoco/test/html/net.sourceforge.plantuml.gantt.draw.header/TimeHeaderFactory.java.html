@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.gantt.draw.header;
 
-import java.time.LocalDate;
-
 import net.sourceforge.plantuml.gantt.data.DayCalendarData;
 import net.sourceforge.plantuml.gantt.data.TimeBoundsData;
 import net.sourceforge.plantuml.gantt.data.TimeScaleConfigData;
@@ -63,53 +61,54 @@ public class TimeHeaderFactory {
 	private final WeekConfigData weekConfig;
 
 	public TimeHeaderFactory(WeekConfigData weekConfig, DayCalendarData dayCalendar, TimeBoundsData timeBounds,
-<span class="fc" id="L66">			TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {</span>
-<span class="fc" id="L67">		this.weekConfig = weekConfig;</span>
-<span class="fc" id="L68">		this.timeBounds = timeBounds;</span>
-<span class="fc" id="L69">		this.dayCalendar = dayCalendar;</span>
-<span class="fc" id="L70">		this.scaleConfig = scaleConfig;</span>
-<span class="fc" id="L71">		this.timelineStyle = timelineStyle;</span>
-<span class="fc" id="L72">	}</span>
+<span class="fc" id="L64">			TimeScaleConfigData scaleConfig, TimelineStyleData timelineStyle) {</span>
+<span class="fc" id="L65">		this.weekConfig = weekConfig;</span>
+<span class="fc" id="L66">		this.timeBounds = timeBounds;</span>
+<span class="fc" id="L67">		this.dayCalendar = dayCalendar;</span>
+<span class="fc" id="L68">		this.scaleConfig = scaleConfig;</span>
+<span class="fc" id="L69">		this.timelineStyle = timelineStyle;</span>
+<span class="fc" id="L70">	}</span>
 
 	// ========================================================================
 	// Public API
 	// ========================================================================
 
 	public TimeHeader createTimeHeader() {
-<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (timeBounds.getMinDay().equals(TimePoint.epoch()))</span>
-<span class="fc" id="L80">			return new TimeHeaderSimple(createSimpleScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (timeBounds.getMinDay().equals(TimePoint.epoch()))</span>
+<span class="fc" id="L78">			return new TimeHeaderSimple(createSimpleScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
 					timelineStyle);
 
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (dayCalendar.hasWorkingTimeRanges()) {</span>
-<span class="nc" id="L84">			final WorkingHours workingHours = dayCalendar.buildWorkingHours(dayWidth, closeFactor);</span>
-<span class="nc" id="L85">			return new TimeHeaderVariant(</span>
-<span class="nc" id="L86">					new VariantTimeScale(timeBounds.getMinDay(), timeBounds.getMaxDay(), workingHours), weekConfig,</span>
-					dayCalendar, timeBounds, scaleConfig, timelineStyle, workingHours);
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (dayCalendar.hasWorkingTimeRanges()) {</span>
+<span class="nc" id="L82">			final WorkingHours workingHours = dayCalendar.buildWorkingHours(dayWidth, closeFactor);</span>
+<span class="nc" id="L83">			return new TimeHeaderVariant(</span>
+<span class="nc" id="L84">					new VariantTimeScale(timeBounds.getMinDay(), timeBounds.getMaxDay(), workingHours,</span>
+<span class="nc" id="L85">							dayCalendar.getOpenClose()),</span>
+					weekConfig, dayCalendar, timeBounds, scaleConfig, timelineStyle, workingHours);
 		}
 
-<span class="pc bpc" id="L90" title="3 of 6 branches missed.">		switch (scaleConfig.getPrintScale()) {</span>
+<span class="pc bpc" id="L89" title="3 of 6 branches missed.">		switch (scaleConfig.getPrintScale()) {</span>
 		case DAILY:
-<span class="fc" id="L92">			return new TimeHeaderDaily(createDailyScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+<span class="fc" id="L91">			return new TimeHeaderDaily(createDailyScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
 					timelineStyle);
 
 		case WEEKLY:
-<span class="fc" id="L96">			return new TimeHeaderWeekly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+<span class="fc" id="L95">			return new TimeHeaderWeekly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
 					timelineStyle);
 
 		case MONTHLY:
-<span class="nc" id="L100">			return new TimeHeaderMonthly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+<span class="nc" id="L99">			return new TimeHeaderMonthly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
 					timelineStyle);
 
 		case QUARTERLY:
-<span class="nc" id="L104">			return new TimeHeaderQuarterly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+<span class="nc" id="L103">			return new TimeHeaderQuarterly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
 					timelineStyle);
 
 		case YEARLY:
-<span class="fc" id="L108">			return new TimeHeaderYearly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
+<span class="fc" id="L107">			return new TimeHeaderYearly(createCompressedScale(), weekConfig, dayCalendar, timeBounds, scaleConfig,</span>
 					timelineStyle);
 
 		default:
-<span class="nc" id="L112">			throw new IllegalStateException(&quot;Unsupported print scale: &quot; + scaleConfig.getPrintScale());</span>
+<span class="nc" id="L111">			throw new IllegalStateException(&quot;Unsupported print scale: &quot; + scaleConfig.getPrintScale());</span>
 		}
 	}
 
@@ -118,19 +117,19 @@ public class TimeHeaderFactory {
 	// ========================================================================
 
 	private TimeScale createSimpleScale() {
-<span class="fc" id="L121">		return new TimeScaleWink(getCellWidth(), getEffectiveScale(), scaleConfig.getPrintScale());</span>
+<span class="fc" id="L120">		return new TimeScaleWink(getCellWidth(), getEffectiveScale(), scaleConfig.getPrintScale());</span>
 	}
 
 	private TimeScale createDailyScale() {
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (scaleConfig.isHideClosed())</span>
-<span class="nc" id="L126">			return new TimeScaleDailyHideClosed(getCellWidth(), getStart(), getEffectiveScale(),</span>
-<span class="nc" id="L127">					dayCalendar.getOpenClose());</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (scaleConfig.isHideClosed())</span>
+<span class="nc" id="L125">			return new TimeScaleDailyHideClosed(getCellWidth(), getStart(), getEffectiveScale(),</span>
+<span class="nc" id="L126">					dayCalendar.getOpenClose());</span>
 
-<span class="fc" id="L129">		return new TimeScaleDaily(getCellWidth(), getStart(), getEffectiveScale(), timeBounds.getPrintStart());</span>
+<span class="fc" id="L128">		return new TimeScaleDaily(getCellWidth(), getStart(), getEffectiveScale(), timeBounds.getPrintStart());</span>
 	}
 
 	private TimeScale createCompressedScale() {
-<span class="fc" id="L133">		return new TimeScaleCompressed(getCellWidth(), getStart(), getEffectiveScale(), timeBounds.getPrintStart());</span>
+<span class="fc" id="L132">		return new TimeScaleCompressed(getCellWidth(), getStart(), getEffectiveScale(), timeBounds.getPrintStart());</span>
 	}
 
 	// ========================================================================
@@ -138,15 +137,15 @@ public class TimeHeaderFactory {
 	// ========================================================================
 
 	private TimePoint getStart() {
-<span class="fc" id="L141">		return TimePoint.ofStartOfDay(timeBounds.getMinDay());</span>
+<span class="fc" id="L140">		return TimePoint.ofStartOfDay(timeBounds.getMinDay());</span>
 	}
 
 	private double getEffectiveScale() {
-<span class="fc" id="L145">		return scaleConfig.getEffectiveScale();</span>
+<span class="fc" id="L144">		return scaleConfig.getEffectiveScale();</span>
 	}
 
 	private double getCellWidth() {
-<span class="fc" id="L149">		return timelineStyle.getCellWidth();</span>
+<span class="fc" id="L148">		return timelineStyle.getCellWidth();</span>
 	}
 
 }

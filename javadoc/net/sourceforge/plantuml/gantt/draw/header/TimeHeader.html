@@ -235,21 +235,20 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isZeroOnDay(net.sourceforge.plantuml.gantt.time.TimePoint)" class="member-name-link">isZeroOnDay</a><wbr>(<a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;instant)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openFontColor()" class="member-name-link">openFontColor</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Locale.html" title="class or interface in java.util" class="external-link">Locale</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#locale()" class="member-name-link">locale</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printCentered(net.sourceforge.plantuml.klimt.drawing.UGraphic,boolean,double,double,net.sourceforge.plantuml.klimt.shape.TextBlock...)" class="member-name-link">printCentered</a><wbr>(<a href="../../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openFontColor()" class="member-name-link">openFontColor</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printCentered(net.sourceforge.plantuml.klimt.drawing.UGraphic,boolean,double,double,net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.klimt.font.FontConfiguration,net.sourceforge.plantuml.gantt.time.TimePointFormat...)" class="member-name-link">printCentered</a><wbr>(<a href="../../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  boolean&nbsp;hideIfTooBig,
  double&nbsp;start,
  double&nbsp;end,
- <a href="../../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>...&nbsp;texts)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printCentered(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.klimt.shape.TextBlock,double,double)" class="member-name-link">printCentered</a><wbr>(<a href="../../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
- <a href="../../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;text,
- double&nbsp;start,
- double&nbsp;end)</code></div>
+ <a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;when,
+ <a href="../../../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a>&nbsp;fc,
+ <a href="../../time/TimePointFormat.html" title="enum class in net.sourceforge.plantuml.gantt.time">TimePointFormat</a>...&nbsp;format)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printVerticalSeparators(net.sourceforge.plantuml.klimt.drawing.UGraphic,double)" class="member-name-link">printVerticalSeparators</a><wbr>(<a href="../../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
@@ -473,22 +472,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="printCentered(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.klimt.shape.TextBlock,double,double)">
-<h3>printCentered</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printCentered</span><wbr><span class="parameters">(<a href="../../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
- <a href="../../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;text,
- double&nbsp;start,
- double&nbsp;end)</span></div>
+<section class="detail" id="locale()">
+<h3>locale</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Locale.html" title="class or interface in java.util" class="external-link">Locale</a></span>&nbsp;<span class="element-name">locale</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="printCentered(net.sourceforge.plantuml.klimt.drawing.UGraphic,boolean,double,double,net.sourceforge.plantuml.klimt.shape.TextBlock...)">
+<section class="detail" id="printCentered(net.sourceforge.plantuml.klimt.drawing.UGraphic,boolean,double,double,net.sourceforge.plantuml.gantt.time.TimePoint,net.sourceforge.plantuml.klimt.font.FontConfiguration,net.sourceforge.plantuml.gantt.time.TimePointFormat...)">
 <h3>printCentered</h3>
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">printCentered</span><wbr><span class="parameters">(<a href="../../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  boolean&nbsp;hideIfTooBig,
  double&nbsp;start,
  double&nbsp;end,
- <a href="../../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>...&nbsp;texts)</span></div>
+ <a href="../../time/TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&nbsp;when,
+ <a href="../../../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a>&nbsp;fc,
+ <a href="../../time/TimePointFormat.html" title="enum class in net.sourceforge.plantuml.gantt.time">TimePointFormat</a>...&nbsp;format)</span></div>
 </section>
 </li>
 <li>

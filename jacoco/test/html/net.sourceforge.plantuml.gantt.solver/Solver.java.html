@@ -75,46 +75,47 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="fc bfc" id="L75" title="All 2 branches covered.">		if (values.size() &gt; 2)</span>
 <span class="fc" id="L76">			removeFirstElement();</span>
 
-<span class="pc bpc" id="L78" title="2 of 4 branches missed.">		if (TeaVM.a()) assert values.size() &lt;= 2;</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">			assert values.size() &lt;= 2;</span>
 
-<span class="fc" id="L80">	}</span>
+<span class="fc" id="L81">	}</span>
 
 	private void removeFirstElement() {
-<span class="fc" id="L83">		final Iterator&lt;Entry&lt;TaskAttribute, PValue&gt;&gt; it = values.entrySet().iterator();</span>
-<span class="fc" id="L84">		it.next();</span>
-<span class="fc" id="L85">		it.remove();</span>
-<span class="fc" id="L86">	}</span>
+<span class="fc" id="L84">		final Iterator&lt;Entry&lt;TaskAttribute, PValue&gt;&gt; it = values.entrySet().iterator();</span>
+<span class="fc" id="L85">		it.next();</span>
+<span class="fc" id="L86">		it.remove();</span>
+<span class="fc" id="L87">	}</span>
 
 	public final PValue getData(NGMAllocation allocation, TaskAttribute attribute) {
-<span class="fc" id="L89">		PValue result = values.get(attribute);</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (attribute == TaskAttribute.END)</span>
-<span class="fc" id="L92">				return computeEnd(allocation);</span>
+<span class="fc" id="L90">		PValue result = values.get(attribute);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (result == null) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (attribute == TaskAttribute.END)</span>
+<span class="fc" id="L93">				return computeEnd(allocation);</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (attribute == TaskAttribute.START)</span>
-<span class="fc" id="L95">				return computeStart(allocation);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (attribute == TaskAttribute.START)</span>
+<span class="fc" id="L96">				return computeStart(allocation);</span>
 
-<span class="nc" id="L97">			return Load.ofDays(1);</span>
+<span class="nc" id="L98">			return Load.ofDays(1);</span>
 			// throw new UnsupportedOperationException(attribute.toString());
 		}
-<span class="fc" id="L100">		return result;</span>
+<span class="fc" id="L101">		return result;</span>
 	}
 
 	private TimePoint computeEnd(NGMAllocation allocation) {
-<span class="fc" id="L104">		final TimePoint start = (TimePoint) values.get(TaskAttribute.START);</span>
-<span class="fc" id="L105">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
-<span class="fc" id="L106">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, start.toLocalDateTime(), fullLoad);</span>
-<span class="fc" id="L107">		final LocalDateTime result = task.getEnd();</span>
-<span class="fc" id="L108">		return TimePoint.of(result);</span>
+<span class="fc" id="L105">		final TimePoint start = (TimePoint) values.get(TaskAttribute.START);</span>
+<span class="fc" id="L106">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
+<span class="fc" id="L107">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, start.toLocalDateTime(), fullLoad);</span>
+<span class="fc" id="L108">		final LocalDateTime result = task.getEnd();</span>
+<span class="fc" id="L109">		return TimePoint.of(result);</span>
 	}
 
 	private TimePoint computeStart(NGMAllocation allocation) {
-<span class="fc" id="L112">		final TimePoint end = (TimePoint) values.get(TaskAttribute.END);</span>
-<span class="fc" id="L113">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
-<span class="fc" id="L114">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, end.toLocalDateTime(), fullLoad);</span>
-<span class="fc" id="L115">		task.setEnd(end.toLocalDateTime());</span>
-<span class="fc" id="L116">		final LocalDateTime result = task.getStart();</span>
-<span class="fc" id="L117">		return TimePoint.of(result);</span>
+<span class="fc" id="L113">		final TimePoint end = (TimePoint) values.get(TaskAttribute.END);</span>
+<span class="fc" id="L114">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
+<span class="fc" id="L115">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, end.toLocalDateTime(), fullLoad);</span>
+<span class="fc" id="L116">		task.setEnd(end.toLocalDateTime());</span>
+<span class="fc" id="L117">		final LocalDateTime result = task.getStart();</span>
+<span class="fc" id="L118">		return TimePoint.of(result);</span>
 	}
 
 }

@@ -45,36 +45,40 @@ import net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstantWeekday;
 /**
  * Represents the resource allocation applied to a task over time.
  *
- * &lt;p&gt;An allocation describes how much workforce capacity is assigned to a task
- * at any given instant. Unlike a simple constant fraction, an allocation can
- * vary over time, which is modeled using a {@link PiecewiseConstant} function.
+ * &lt;p&gt;
+ * An allocation describes how much workforce capacity is assigned to a task at
+ * any given instant. Unlike a simple constant fraction, an allocation can vary
+ * over time, which is modeled using a {@link PiecewiseConstant} function.
  *
- * &lt;p&gt;The allocation value at any instant is expressed as a {@link Fraction},
+ * &lt;p&gt;
+ * The allocation value at any instant is expressed as a {@link Fraction},
  * representing the number of &quot;full-time equivalent&quot; (FTE) resources effectively
  * working at that moment.
  *
  * &lt;h3&gt;Examples of allocation patterns&lt;/h3&gt;
  * &lt;ul&gt;
- *   &lt;li&gt;&lt;code&gt;1&lt;/code&gt; — One full-time person (100% capacity)&lt;/li&gt;
- *   &lt;li&gt;&lt;code&gt;2&lt;/code&gt; — Two full-time persons working simultaneously&lt;/li&gt;
- *   &lt;li&gt;&lt;code&gt;1/2&lt;/code&gt; — One person working at 50% capacity&lt;/li&gt;
- *   &lt;li&gt;&lt;code&gt;0&lt;/code&gt; at certain times — No work during weekends, holidays,
- *       or outside working hours&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;1&lt;/code&gt; — One full-time person (100% capacity)&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;2&lt;/code&gt; — Two full-time persons working simultaneously&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;1/2&lt;/code&gt; — One person working at 50% capacity&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;0&lt;/code&gt; at certain times — No work during weekends, holidays, or
+ * outside working hours&lt;/li&gt;
  * &lt;/ul&gt;
  *
  * &lt;h3&gt;Time-varying allocation&lt;/h3&gt;
- * &lt;p&gt;By wrapping a {@link PiecewiseConstant}, this class can represent complex
+ * &lt;p&gt;
+ * By wrapping a {@link PiecewiseConstant}, this class can represent complex
  * real-world scenarios such as:
  * &lt;ul&gt;
- *   &lt;li&gt;A person who only works Monday to Friday (weekday calendar)&lt;/li&gt;
- *   &lt;li&gt;A person who works mornings only (08:00-12:00)&lt;/li&gt;
- *   &lt;li&gt;A person who is unavailable during specific holidays&lt;/li&gt;
- *   &lt;li&gt;A combination of the above (using {@code Combiner.product()})&lt;/li&gt;
+ * &lt;li&gt;A person who only works Monday to Friday (weekday calendar)&lt;/li&gt;
+ * &lt;li&gt;A person who works mornings only (08:00-12:00)&lt;/li&gt;
+ * &lt;li&gt;A person who is unavailable during specific holidays&lt;/li&gt;
+ * &lt;li&gt;A combination of the above (using {@code Combiner.product()})&lt;/li&gt;
  * &lt;/ul&gt;
  *
- * &lt;p&gt;The {@link LoadIntegrator} uses this allocation function to compute
- * how long a fixed-effort task will take, by integrating the allocation
- * over time until the required effort is consumed.
+ * &lt;p&gt;
+ * The {@link LoadIntegrator} uses this allocation function to compute how long
+ * a fixed-effort task will take, by integrating the allocation over time until
+ * the required effort is consumed.
  *
  * @see PiecewiseConstant
  * @see net.sourceforge.plantuml.gantt.ngm.math.LoadIntegrator
@@ -84,60 +88,68 @@ public class NGMAllocation {
 	/**
 	 * The time-varying allocation function.
 	 * 
-	 * &lt;p&gt;At any given {@link LocalDateTime}, this function returns a {@link Fraction}
+	 * &lt;p&gt;
+	 * At any given {@link LocalDateTime}, this function returns a {@link Fraction}
 	 * representing the effective FTE allocation at that instant.
 	 * 
-	 * &lt;p&gt;A value of {@code Fraction.ONE} means full-time work.
-	 * A value of {@code Fraction.ZERO} means no work (e.g., weekend, holiday, night).
+	 * &lt;p&gt;
+	 * A value of {@code Fraction.ONE} means full-time work. A value of
+	 * {@code Fraction.ZERO} means no work (e.g., weekend, holiday, night).
 	 */
 	private final PiecewiseConstant loadFunction;
 
 	/**
 	 * Private constructor. Use factory methods to create instances.
 	 *
-	 * @param loadFunction the piecewise constant function defining the allocation over time
+	 * @param loadFunction the piecewise constant function defining the allocation
+	 *                     over time
 	 */
-<span class="fc" id="L100">	private NGMAllocation(PiecewiseConstant loadFunction) {</span>
-<span class="fc" id="L101">		this.loadFunction = loadFunction;</span>
-<span class="fc" id="L102">	}</span>
+<span class="fc" id="L107">	private NGMAllocation(PiecewiseConstant loadFunction) {</span>
+<span class="fc" id="L108">		this.loadFunction = loadFunction;</span>
+<span class="fc" id="L109">	}</span>
 
 	/**
 	 * Creates an allocation from a time-varying load function.
 	 *
-	 * &lt;p&gt;This is the most flexible factory method, allowing any {@link PiecewiseConstant}
-	 * to define the allocation pattern.
+	 * &lt;p&gt;
+	 * This is the most flexible factory method, allowing any
+	 * {@link PiecewiseConstant} to define the allocation pattern.
 	 *
-	 * @param loadFunction the piecewise constant function defining allocation over time
+	 * @param loadFunction the piecewise constant function defining allocation over
+	 *                     time
 	 * @return a new NGMAllocation wrapping the given function
 	 */
 	public static NGMAllocation of(PiecewiseConstant loadFunction) {
-<span class="fc" id="L114">		return new NGMAllocation(loadFunction);</span>
+<span class="fc" id="L123">		return new NGMAllocation(loadFunction);</span>
 	}
 
 	/**
 	 * Creates a constant full-time allocation (100% at all times).
 	 *
-	 * &lt;p&gt;This represents one person working full-time with no calendar constraints.
-	 * Work can happen 24/7. Useful for simple calculations or as a baseline
-	 * before applying calendar constraints via {@code Combiner.product()}.
+	 * &lt;p&gt;
+	 * This represents one person working full-time with no calendar constraints.
+	 * Work can happen 24/7. Useful for simple calculations or as a baseline before
+	 * applying calendar constraints via {@code Combiner.product()}.
 	 *
 	 * @return a new NGMAllocation representing constant 100% availability
 	 */
 	public static NGMAllocation fullTime() {
 		// Full-time: 1/1 at all times, all days of the week
-<span class="fc" id="L128">		return new NGMAllocation(PiecewiseConstantWeekday.of(Fraction.ONE));</span>
+<span class="fc" id="L138">		return new NGMAllocation(PiecewiseConstantWeekday.of(Fraction.ONE));</span>
 	}
 
 	/**
 	 * Returns the underlying load function.
 	 *
-	 * &lt;p&gt;This function can be used with {@link net.sourceforge.plantuml.gantt.ngm.math.LoadIntegrator}
-	 * to compute task durations based on effort and allocation.
+	 * &lt;p&gt;
+	 * This function can be used with
+	 * {@link net.sourceforge.plantuml.gantt.ngm.math.LoadIntegrator} to compute
+	 * task durations based on effort and allocation.
 	 *
 	 * @return the piecewise constant function representing the allocation over time
 	 */
 	public PiecewiseConstant getLoadFunction() {
-<span class="fc" id="L140">		return loadFunction;</span>
+<span class="fc" id="L152">		return loadFunction;</span>
 	}
 
 }

@@ -69,8 +69,8 @@ public class CommandTaskCompleteDefault extends SingleLineCommand2&lt;GanttDiagr
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 
 <span class="nc" id="L75">		final int value = Integer.parseInt(arg.get(&quot;VALUE&quot;, 0));</span>
 <span class="nc bnc" id="L76" title="All 2 branches missed.">		if (value &gt; 100)</span>

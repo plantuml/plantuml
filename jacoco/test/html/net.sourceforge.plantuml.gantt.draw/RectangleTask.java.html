@@ -83,148 +83,151 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L83">			return;</span>
 		}
 
-<span class="nc bnc" id="L86" title="All 4 branches missed.">		if (TeaVM.a()) assert segments.size() == 1;</span>
-<span class="nc bnc" id="L87" title="All 4 branches missed.">		if (TeaVM.a()) assert round &gt; 0;</span>
-<span class="nc" id="L88">		final Segment segment = segments.get(0);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (TeaVM.a())</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">			assert segments.size() == 1;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (TeaVM.a())</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			assert round &gt; 0;</span>
+<span class="nc" id="L90">		final Segment segment = segments.get(0);</span>
 
-<span class="nc" id="L90">		final double width = segment.getLength();</span>
-<span class="nc" id="L91">		final URectangle partial = URectangle.build(width, height).rounded(round);</span>
-<span class="nc bnc" id="L92" title="All 4 branches missed.">		if (completion == 100 || completion == 0) {</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">			if (completion == 0)</span>
-<span class="nc" id="L94">				ug = ug.apply(documentBackground.bg());</span>
-<span class="nc bnc" id="L95" title="All 4 branches missed.">			if (oddStart &amp;&amp; !oddEnd)</span>
-<span class="nc" id="L96">				ug.apply(UTranslate.dx(segment.getPos1())).draw(PathUtils.UtoRight(width, height, round));</span>
-<span class="nc bnc" id="L97" title="All 4 branches missed.">			else if (!oddStart &amp;&amp; oddEnd)</span>
-<span class="nc" id="L98">				ug.apply(UTranslate.dx(segment.getPos1())).draw(PathUtils.UtoLeft(width, height, round));</span>
+<span class="nc" id="L92">		final double width = segment.getLength();</span>
+<span class="nc" id="L93">		final URectangle partial = URectangle.build(width, height).rounded(round);</span>
+<span class="nc bnc" id="L94" title="All 4 branches missed.">		if (completion == 100 || completion == 0) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (completion == 0)</span>
+<span class="nc" id="L96">				ug = ug.apply(documentBackground.bg());</span>
+<span class="nc bnc" id="L97" title="All 4 branches missed.">			if (oddStart &amp;&amp; !oddEnd)</span>
+<span class="nc" id="L98">				ug.apply(UTranslate.dx(segment.getPos1())).draw(PathUtils.UtoRight(width, height, round));</span>
+<span class="nc bnc" id="L99" title="All 4 branches missed.">			else if (!oddStart &amp;&amp; oddEnd)</span>
+<span class="nc" id="L100">				ug.apply(UTranslate.dx(segment.getPos1())).draw(PathUtils.UtoLeft(width, height, round));</span>
 			else
-<span class="nc" id="L100">				ug.apply(UTranslate.dx(segment.getPos1())).draw(partial);</span>
+<span class="nc" id="L102">				ug.apply(UTranslate.dx(segment.getPos1())).draw(partial);</span>
 		} else {
-<span class="nc" id="L102">			final double x1 = width * completion / 100;</span>
-<span class="nc" id="L103">			ug.apply(HColors.none()).apply(UTranslate.dx(segment.getPos1())).draw(PathUtils.UtoLeft(x1, height, round));</span>
-<span class="nc" id="L104">			ug.apply(documentBackground.bg()).apply(HColors.none()).apply(UTranslate.dx(segment.getPos1() + x1))</span>
-<span class="nc" id="L105">					.draw(PathUtils.UtoRight(width * (100 - completion) / 100, height, round));</span>
-<span class="nc" id="L106">			ug.apply(HColors.none().bg()).apply(UTranslate.dx(segment.getPos1())).draw(partial);</span>
+<span class="nc" id="L104">			final double x1 = width * completion / 100;</span>
+<span class="nc" id="L105">			ug.apply(HColors.none()).apply(UTranslate.dx(segment.getPos1())).draw(PathUtils.UtoLeft(x1, height, round));</span>
+<span class="nc" id="L106">			ug.apply(documentBackground.bg()).apply(HColors.none()).apply(UTranslate.dx(segment.getPos1() + x1))</span>
+<span class="nc" id="L107">					.draw(PathUtils.UtoRight(width * (100 - completion) / 100, height, round));</span>
+<span class="nc" id="L108">			ug.apply(HColors.none().bg()).apply(UTranslate.dx(segment.getPos1())).draw(partial);</span>
 		}
 
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L111">	}</span>
 
 	private void drawWithRound(UGraphic ug, double height, HColor documentBackground) {
 
-<span class="nc" id="L113">		final Segment first = segments.get(0);</span>
-<span class="nc" id="L114">		ug.apply(UTranslate.dx(first.getPos1())).draw(PathUtils.UtoLeft(first.getLength(), height, round));</span>
+<span class="nc" id="L115">		final Segment first = segments.get(0);</span>
+<span class="nc" id="L116">		ug.apply(UTranslate.dx(first.getPos1())).draw(PathUtils.UtoLeft(first.getLength(), height, round));</span>
 
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		for (int i = 1; i &lt; segments.size() - 1; i++) {</span>
-<span class="nc" id="L117">			final Segment segment = segments.get(i);</span>
-<span class="nc" id="L118">			drawPartly(segment.getLength() * completion / 100, ug, segment, height, documentBackground, i, false,</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (int i = 1; i &lt; segments.size() - 1; i++) {</span>
+<span class="nc" id="L119">			final Segment segment = segments.get(i);</span>
+<span class="nc" id="L120">			drawPartly(segment.getLength() * completion / 100, ug, segment, height, documentBackground, i, false,</span>
 					false);
 		}
 
-<span class="nc" id="L122">		final Segment last = segments.get(segments.size() - 1);</span>
-<span class="nc" id="L123">		ug.apply(UTranslate.dx(last.getPos1())).draw(PathUtils.UtoRight(last.getLength(), height, round));</span>
+<span class="nc" id="L124">		final Segment last = segments.get(segments.size() - 1);</span>
+<span class="nc" id="L125">		ug.apply(UTranslate.dx(last.getPos1())).draw(PathUtils.UtoRight(last.getLength(), height, round));</span>
 
-<span class="nc" id="L125">		drawIntermediateDotted(ug, height);</span>
-<span class="nc" id="L126">	}</span>
+<span class="nc" id="L127">		drawIntermediateDotted(ug, height);</span>
+<span class="nc" id="L128">	}</span>
 
 	private void drawWithoutRound(UGraphic ug, double height, HColor documentBackground, boolean oddStart,
 			boolean oddEnd) {
 
-<span class="fc" id="L131">		final double sumWidth = getFullSegmentsLength();</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		final double lim = completion == 100 ? sumWidth : sumWidth * completion / 100;</span>
-<span class="pc bpc" id="L133" title="2 of 6 branches missed.">		if (segments.size() == 1 &amp;&amp; !oddStart &amp;&amp; !oddEnd) {</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			drawFull(completion == 100 ? -1 : lim, ug, segments.get(0), height, documentBackground);</span>
-<span class="fc" id="L135">			return;</span>
+<span class="fc" id="L133">		final double sumWidth = getFullSegmentsLength();</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		final double lim = completion == 100 ? sumWidth : sumWidth * completion / 100;</span>
+<span class="pc bpc" id="L135" title="2 of 6 branches missed.">		if (segments.size() == 1 &amp;&amp; !oddStart &amp;&amp; !oddEnd) {</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			drawFull(completion == 100 ? -1 : lim, ug, segments.get(0), height, documentBackground);</span>
+<span class="fc" id="L137">			return;</span>
 		}
-<span class="fc" id="L137">		double current = 0;</span>
+<span class="fc" id="L139">		double current = 0;</span>
 
-<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (int i = 0; i &lt; segments.size(); i++) {</span>
-<span class="fc" id="L140">			final Segment segment = segments.get(i);</span>
-<span class="fc" id="L141">			final double next = current + segment.getLength();</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		for (int i = 0; i &lt; segments.size(); i++) {</span>
+<span class="fc" id="L142">			final Segment segment = segments.get(i);</span>
+<span class="fc" id="L143">			final double next = current + segment.getLength();</span>
 			final double widthCompletion;
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">			if (lim &gt;= next)</span>
-<span class="fc" id="L144">				widthCompletion = -1;</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">			else if (current &gt;= lim)</span>
-<span class="nc" id="L146">				widthCompletion = 0;</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			if (lim &gt;= next)</span>
+<span class="fc" id="L146">				widthCompletion = -1;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			else if (current &gt;= lim)</span>
+<span class="nc" id="L148">				widthCompletion = 0;</span>
 			else {
-<span class="nc bnc" id="L148" title="All 6 branches missed.">				if (TeaVM.a()) assert current &lt; lim &amp;&amp; lim &lt; next;</span>
-<span class="nc" id="L149">				widthCompletion = lim - current;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				if (TeaVM.a())</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">					assert current &lt; lim &amp;&amp; lim &lt; next;</span>
+<span class="nc" id="L152">				widthCompletion = lim - current;</span>
 			}
 
-<span class="pc bpc" id="L152" title="2 of 6 branches missed.">			drawPartly(widthCompletion, ug, segment, height, documentBackground, i, !oddStart &amp;&amp; i == 0,</span>
-<span class="fc bfc" id="L153" title="All 2 branches covered.">					!oddEnd &amp;&amp; i == segments.size() - 1);</span>
+<span class="pc bpc" id="L155" title="2 of 6 branches missed.">			drawPartly(widthCompletion, ug, segment, height, documentBackground, i, !oddStart &amp;&amp; i == 0,</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">					!oddEnd &amp;&amp; i == segments.size() - 1);</span>
 
-<span class="fc" id="L155">			current = next;</span>
+<span class="fc" id="L158">			current = next;</span>
 		}
-<span class="fc" id="L157">		drawIntermediateDotted(ug, height);</span>
-<span class="fc" id="L158">	}</span>
+<span class="fc" id="L160">		drawIntermediateDotted(ug, height);</span>
+<span class="fc" id="L161">	}</span>
 
 	private double getFullSegmentsLength() {
-<span class="fc" id="L161">		double result = 0;</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">		for (Segment seg : segments)</span>
-<span class="fc" id="L163">			result += seg.getLength();</span>
-<span class="fc" id="L164">		return result;</span>
+<span class="fc" id="L164">		double result = 0;</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		for (Segment seg : segments)</span>
+<span class="fc" id="L166">			result += seg.getLength();</span>
+<span class="fc" id="L167">		return result;</span>
 	}
 
 	private void drawIntermediateDotted(UGraphic ug, double height) {
-<span class="fc" id="L168">		ug = ug.apply(new UStroke(2, 3, 1));</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">		for (int i = 0; i &lt; segments.size() - 1; i++) {</span>
-<span class="fc" id="L170">			final double v1 = segments.get(i).getPos2() + 3;</span>
-<span class="fc" id="L171">			final double v2 = segments.get(i + 1).getPos1() - 3;</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">			if (v2 &gt; v1)</span>
-<span class="fc" id="L173">				draw2hlines(ug.apply(UTranslate.dx(v1)), height, ULine.hline(v2 - v1));</span>
+<span class="fc" id="L171">		ug = ug.apply(new UStroke(2, 3, 1));</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">		for (int i = 0; i &lt; segments.size() - 1; i++) {</span>
+<span class="fc" id="L173">			final double v1 = segments.get(i).getPos2() + 3;</span>
+<span class="fc" id="L174">			final double v2 = segments.get(i + 1).getPos1() - 3;</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (v2 &gt; v1)</span>
+<span class="fc" id="L176">				draw2hlines(ug.apply(UTranslate.dx(v1)), height, ULine.hline(v2 - v1));</span>
 
 		}
-<span class="fc" id="L176">	}</span>
+<span class="fc" id="L179">	}</span>
 
 	private void drawFull(double widthCompletion, UGraphic ug, final Segment segment, double height,
 			HColor documentBackground) {
-<span class="fc" id="L180">		double width = segment.getLength();</span>
-<span class="fc" id="L181">		ug = ug.apply(UTranslate.dx(segment.getPos1()));</span>
-<span class="fc" id="L182">		drawBackgroundRect(widthCompletion, ug.apply(HColors.none()), documentBackground, width, height);</span>
-<span class="fc" id="L183">		final URectangle rect = URectangle.build(width, height);</span>
-<span class="fc" id="L184">		ug.apply(HColors.none().bg()).draw(rect);</span>
-<span class="fc" id="L185">	}</span>
+<span class="fc" id="L183">		double width = segment.getLength();</span>
+<span class="fc" id="L184">		ug = ug.apply(UTranslate.dx(segment.getPos1()));</span>
+<span class="fc" id="L185">		drawBackgroundRect(widthCompletion, ug.apply(HColors.none()), documentBackground, width, height);</span>
+<span class="fc" id="L186">		final URectangle rect = URectangle.build(width, height);</span>
+<span class="fc" id="L187">		ug.apply(HColors.none().bg()).draw(rect);</span>
+<span class="fc" id="L188">	}</span>
 
 	private void drawPartly(double widthCompletion, UGraphic ug, final Segment segment, double height,
 			HColor documentBackground, int i, boolean withStartVline, boolean withEndVline) {
 
-<span class="pc bpc" id="L190" title="1 of 4 branches missed.">		if (withStartVline &amp;&amp; withEndVline)</span>
-<span class="nc" id="L191">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L193" title="1 of 4 branches missed.">		if (withStartVline &amp;&amp; withEndVline)</span>
+<span class="nc" id="L194">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L193">		double widthBack = segment.getLength();</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (i != segments.size() - 1)</span>
-<span class="fc" id="L195">			widthBack++;</span>
+<span class="fc" id="L196">		double widthBack = segment.getLength();</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">		if (i != segments.size() - 1)</span>
+<span class="fc" id="L198">			widthBack++;</span>
 
-<span class="fc" id="L197">		ug = ug.apply(UTranslate.dx(segment.getPos1()));</span>
+<span class="fc" id="L200">		ug = ug.apply(UTranslate.dx(segment.getPos1()));</span>
 
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (widthBack &gt; 0)</span>
-<span class="fc" id="L200">			drawBackgroundRect(widthCompletion, ug.apply(HColors.none()), documentBackground, widthBack, height);</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		if (widthBack &gt; 0)</span>
+<span class="fc" id="L203">			drawBackgroundRect(widthCompletion, ug.apply(HColors.none()), documentBackground, widthBack, height);</span>
 
-<span class="fc" id="L202">		ug = ug.apply(HColors.none().bg());</span>
+<span class="fc" id="L205">		ug = ug.apply(HColors.none().bg());</span>
 
-<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (withStartVline)</span>
-<span class="fc" id="L205">			ug.draw(PathUtils.UtoLeft(segment.getLength(), height, 0));</span>
-<span class="fc bfc" id="L206" title="All 2 branches covered.">		else if (withEndVline)</span>
-<span class="fc" id="L207">			ug.apply(UTranslate.dx(segment.getLength() - segment.getLength()))</span>
-<span class="fc" id="L208">					.draw(PathUtils.UtoRight(segment.getLength(), height, 0));</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		if (withStartVline)</span>
+<span class="fc" id="L208">			ug.draw(PathUtils.UtoLeft(segment.getLength(), height, 0));</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		else if (withEndVline)</span>
+<span class="fc" id="L210">			ug.apply(UTranslate.dx(segment.getLength() - segment.getLength()))</span>
+<span class="fc" id="L211">					.draw(PathUtils.UtoRight(segment.getLength(), height, 0));</span>
 		else
-<span class="fc" id="L210">			draw2hlines(ug, height, ULine.hline(segment.getLength()));</span>
+<span class="fc" id="L213">			draw2hlines(ug, height, ULine.hline(segment.getLength()));</span>
 
-<span class="fc" id="L212">	}</span>
+<span class="fc" id="L215">	}</span>
 
 	private void drawBackgroundRect(double widthCompletion, UGraphic ug, HColor documentBackground, double width,
 			double height) {
-<span class="pc bpc" id="L216" title="3 of 4 branches missed.">		if (widthCompletion == -1 || widthCompletion == 0) {</span>
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">			if (widthCompletion == 0)</span>
-<span class="nc" id="L218">				ug = ug.apply(documentBackground.bg());</span>
-<span class="fc" id="L219">			final URectangle rect = URectangle.build(width, height);</span>
-<span class="fc" id="L220">			ug.draw(rect);</span>
-<span class="fc" id="L221">		} else {</span>
-<span class="nc" id="L222">			final URectangle rect1 = URectangle.build(widthCompletion, height);</span>
-<span class="nc" id="L223">			ug.draw(rect1);</span>
-<span class="nc" id="L224">			final URectangle rect2 = URectangle.build(width - widthCompletion, height);</span>
-<span class="nc" id="L225">			ug.apply(documentBackground.bg()).apply(UTranslate.dx(widthCompletion)).draw(rect2);</span>
+<span class="pc bpc" id="L219" title="3 of 4 branches missed.">		if (widthCompletion == -1 || widthCompletion == 0) {</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">			if (widthCompletion == 0)</span>
+<span class="nc" id="L221">				ug = ug.apply(documentBackground.bg());</span>
+<span class="fc" id="L222">			final URectangle rect = URectangle.build(width, height);</span>
+<span class="fc" id="L223">			ug.draw(rect);</span>
+<span class="fc" id="L224">		} else {</span>
+<span class="nc" id="L225">			final URectangle rect1 = URectangle.build(widthCompletion, height);</span>
+<span class="nc" id="L226">			ug.draw(rect1);</span>
+<span class="nc" id="L227">			final URectangle rect2 = URectangle.build(width - widthCompletion, height);</span>
+<span class="nc" id="L228">			ug.apply(documentBackground.bg()).apply(UTranslate.dx(widthCompletion)).draw(rect2);</span>
 		}
-<span class="fc" id="L227">	}</span>
+<span class="fc" id="L230">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

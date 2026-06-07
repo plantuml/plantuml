@@ -165,116 +165,117 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 <span class="fc" id="L165">			overflow = labelEnd - barsWidth;</span>
 
 <span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (note != null) {</span>
-<span class="nc" id="L168">			final double noteEnd = timeScale.getPosition(start) + getOpaleNote().calculateDimension(stringBounder).getWidth();</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">			if (noteEnd - barsWidth &gt; overflow)</span>
-<span class="nc" id="L170">				overflow = noteEnd - barsWidth;</span>
+<span class="nc" id="L168">			final double noteEnd = timeScale.getPosition(start)</span>
+<span class="nc" id="L169">					+ getOpaleNote().calculateDimension(stringBounder).getWidth();</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			if (noteEnd - barsWidth &gt; overflow)</span>
+<span class="nc" id="L171">				overflow = noteEnd - barsWidth;</span>
 		}
 
-<span class="fc" id="L173">		return overflow;</span>
+<span class="fc" id="L174">		return overflow;</span>
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
 
-<span class="fc" id="L179">		final double x1 = timeScale.getPosition(start);</span>
-<span class="fc" id="L180">		drawNote(ug.apply(new UTranslate(x1, getYNotePosition(ug.getStringBounder()))));</span>
+<span class="fc" id="L180">		final double x1 = timeScale.getPosition(start);</span>
+<span class="fc" id="L181">		drawNote(ug.apply(new UTranslate(x1, getYNotePosition(ug.getStringBounder()))));</span>
 
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L183">			ug.startUrl(url);</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L184">			ug.startUrl(url);</span>
 
-<span class="fc" id="L185">		final String displayString = getTask().getDisplayString();</span>
+<span class="fc" id="L186">		final String displayString = getTask().getDisplayString();</span>
 
-<span class="fc" id="L187">		final Style style = getStyle();</span>
-<span class="fc" id="L188">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
-<span class="fc" id="L189">		ug = ug.apply(UTranslate.dy(margin.getTop()));</span>
+<span class="fc" id="L188">		final Style style = getStyle();</span>
+<span class="fc" id="L189">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L190">		ug = ug.apply(UTranslate.dy(margin.getTop()));</span>
 
-<span class="fc" id="L191">		ug = ug.apply(UTranslate.dx(x1));</span>
+<span class="fc" id="L192">		ug = ug.apply(UTranslate.dx(x1));</span>
 
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		if (displayString == null) {</span>
-<span class="fc" id="L194">			final double x2 = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
-<span class="fc" id="L195">			final double width = getDiamondHeight();</span>
-<span class="fc" id="L196">			final double delta = x2 - x1 - width;</span>
-<span class="fc" id="L197">			ug = ug.apply(UTranslate.dx(delta / 2));</span>
-<span class="fc" id="L198">			drawShape(applyColors(ug));</span>
-<span class="fc" id="L199">		} else {</span>
-<span class="nc" id="L200">			final TextBlock draw = Display.getWithNewlines(getPragma(), displayString).create(getFontConfiguration(),</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (displayString == null) {</span>
+<span class="fc" id="L195">			final double x2 = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
+<span class="fc" id="L196">			final double width = getDiamondHeight();</span>
+<span class="fc" id="L197">			final double delta = x2 - x1 - width;</span>
+<span class="fc" id="L198">			ug = ug.apply(UTranslate.dx(delta / 2));</span>
+<span class="fc" id="L199">			drawShape(applyColors(ug));</span>
+<span class="fc" id="L200">		} else {</span>
+<span class="nc" id="L201">			final TextBlock draw = Display.getWithNewlines(getPragma(), displayString).create(getFontConfiguration(),</span>
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
-<span class="nc" id="L202">			draw.drawU(ug);</span>
+<span class="nc" id="L203">			draw.drawU(ug);</span>
 		}
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L205">			ug.closeUrl();</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L206">			ug.closeUrl();</span>
 
-<span class="fc" id="L207">	}</span>
+<span class="fc" id="L208">	}</span>
 
 	private UGraphic applyColors(UGraphic ug) {
-<span class="fc" id="L210">		final CenterBorderColor col = this.getColors();</span>
-<span class="pc bpc" id="L211" title="3 of 4 branches missed.">		if (col != null &amp;&amp; col.isOk())</span>
-<span class="nc" id="L212">			return col.apply(ug);</span>
+<span class="fc" id="L211">		final CenterBorderColor col = this.getColors();</span>
+<span class="pc bpc" id="L212" title="3 of 4 branches missed.">		if (col != null &amp;&amp; col.isOk())</span>
+<span class="nc" id="L213">			return col.apply(ug);</span>
 
-<span class="fc" id="L214">		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());</span>
+<span class="fc" id="L215">		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());</span>
 	}
 
 	private void drawShape(UGraphic ug) {
-<span class="fc" id="L218">		ug.draw(getDiamond());</span>
-<span class="fc" id="L219">	}</span>
+<span class="fc" id="L219">		ug.draw(getDiamond());</span>
+<span class="fc" id="L220">	}</span>
 
 	@Override
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder) {
-<span class="fc" id="L223">		return null;</span>
+<span class="fc" id="L224">		return null;</span>
 	}
 
 	@Override
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {
-<span class="fc" id="L228">		final double h = getFullHeightTask(stringBounder);</span>
-<span class="fc" id="L229">		final double startPos = timeScale.getPosition(start);</span>
-<span class="fc" id="L230">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), startPos + h,</span>
-<span class="fc" id="L231">				getY(stringBounder).getCurrentValue() + h);</span>
+<span class="fc" id="L229">		final double h = getFullHeightTask(stringBounder);</span>
+<span class="fc" id="L230">		final double startPos = timeScale.getPosition(start);</span>
+<span class="fc" id="L231">		return new FingerPrint(startPos, getY(stringBounder).getCurrentValue(), startPos + h,</span>
+<span class="fc" id="L232">				getY(stringBounder).getCurrentValue() + h);</span>
 	}
 
 	private UShape getDiamond() {
-<span class="fc" id="L235">		final double h = getDiamondHeight();</span>
-<span class="fc" id="L236">		final UPolygon result = new UPolygon();</span>
-<span class="fc" id="L237">		result.addPoint(h / 2, 0);</span>
-<span class="fc" id="L238">		result.addPoint(h, h / 2);</span>
-<span class="fc" id="L239">		result.addPoint(h / 2, h);</span>
-<span class="fc" id="L240">		result.addPoint(0, h / 2);</span>
-<span class="fc" id="L241">		return result;</span>
+<span class="fc" id="L236">		final double h = getDiamondHeight();</span>
+<span class="fc" id="L237">		final UPolygon result = new UPolygon();</span>
+<span class="fc" id="L238">		result.addPoint(h / 2, 0);</span>
+<span class="fc" id="L239">		result.addPoint(h, h / 2);</span>
+<span class="fc" id="L240">		result.addPoint(h / 2, h);</span>
+<span class="fc" id="L241">		result.addPoint(0, h / 2);</span>
+<span class="fc" id="L242">		return result;</span>
 	}
 
 	@Override
 	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
 		double x;
-<span class="fc bfc" id="L247" title="All 2 branches covered.">		if (side == GSide.LEFT)</span>
-<span class="fc" id="L248">			x = timeScale.getPosition(start);</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		else if (side == GSide.RIGHT)</span>
-<span class="fc" id="L250">			x = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		if (side == GSide.LEFT)</span>
+<span class="fc" id="L249">			x = timeScale.getPosition(start);</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">		else if (side == GSide.RIGHT)</span>
+<span class="fc" id="L251">			x = timeScale.getPosition(start) + timeScale.getWidth(start);</span>
 		else
-<span class="nc" id="L252">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
+<span class="nc" id="L253">			x = (timeScale.getPosition(start) + timeScale.getPosition(start) + timeScale.getWidth(start)) / 2;</span>
 
-<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (arrowType == GArrowType.OUTGOING) {</span>
-<span class="fc" id="L255">			final double width = getDiamondHeight();</span>
-<span class="fc bfc" id="L256" title="All 2 branches covered.">			if (side == GSide.LEFT)</span>
-<span class="fc" id="L257">				x += width / 2;</span>
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">			else if (side == GSide.RIGHT)</span>
-<span class="fc" id="L259">				x -= width / 2;</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (arrowType == GArrowType.OUTGOING) {</span>
+<span class="fc" id="L256">			final double width = getDiamondHeight();</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">			if (side == GSide.LEFT)</span>
+<span class="fc" id="L258">				x += width / 2;</span>
+<span class="pc bpc" id="L259" title="1 of 2 branches missed.">			else if (side == GSide.RIGHT)</span>
+<span class="fc" id="L260">				x -= width / 2;</span>
 		}
-<span class="fc" id="L261">		return x;</span>
+<span class="fc" id="L262">		return x;</span>
 	}
 
 	@Override
 	public double getY(StringBounder stringBounder, GSide side) {
-<span class="fc" id="L266">		final Style style = getStyle();</span>
-<span class="fc" id="L267">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
+<span class="fc" id="L267">		final Style style = getStyle();</span>
+<span class="fc" id="L268">		final ClockwiseTopRightBottomLeft margin = style.getMargin();</span>
 
-<span class="fc" id="L269">		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L270">		final double y2 = y1 + getShapeHeight(stringBounder);</span>
+<span class="fc" id="L270">		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L271">		final double y2 = y1 + getShapeHeight(stringBounder);</span>
 
-<span class="fc" id="L272">		final String displayString = getTask().getDisplayString();</span>
+<span class="fc" id="L273">		final String displayString = getTask().getDisplayString();</span>
 
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (displayString == null)</span>
-<span class="fc" id="L275">			return y1 + getDiamondHeight() / 2;</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">		if (displayString == null)</span>
+<span class="fc" id="L276">			return y1 + getDiamondHeight() / 2;</span>
 
-<span class="nc" id="L277">		return (y1 + y2) / 2;</span>
+<span class="nc" id="L278">		return (y1 + y2) / 2;</span>
 
 	}
 

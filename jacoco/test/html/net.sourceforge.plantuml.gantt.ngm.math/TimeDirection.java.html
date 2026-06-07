@@ -39,18 +39,17 @@ import java.time.LocalDateTime;
 
 <span class="fc" id="L40">public enum TimeDirection {</span>
 <span class="fc" id="L41">	FORWARD, BACKWARD;</span>
-	
-    public LocalDateTime adjustBySeconds(LocalDateTime time, long seconds) {
-<span class="pc bpc" id="L44" title="1 of 3 branches missed.">        switch (this) {</span>
-            case FORWARD:
-<span class="fc" id="L46">                return time.plusSeconds(seconds);</span>
-            case BACKWARD:
-<span class="fc" id="L48">                return time.minusSeconds(seconds);</span>
-            default:
-<span class="nc" id="L50">                throw new IllegalStateException();</span>
-        }
-    }
-	
-	
+
+	public LocalDateTime adjustBySeconds(LocalDateTime time, long seconds) {
+<span class="pc bpc" id="L44" title="1 of 3 branches missed.">		switch (this) {</span>
+		case FORWARD:
+<span class="fc" id="L46">			return time.plusSeconds(seconds);</span>
+		case BACKWARD:
+<span class="fc" id="L48">			return time.minusSeconds(seconds);</span>
+		default:
+<span class="nc" id="L50">			throw new IllegalStateException();</span>
+		}
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
