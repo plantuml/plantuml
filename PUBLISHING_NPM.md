@@ -9,19 +9,45 @@ The unscoped name `plantuml` on npm is **owned by an unrelated third party**
 (`agirorn`, an MIT-licensed Java/Graphviz wrapper), so we publish under the
 `@plantuml` org scope that we control.
 
+## Licence: MIT
+
+The published package is built from the **MIT licence flavor** of PlantUML, not
+the GPL one. The package is therefore assembled by the `plantuml-mit`
+subproject, and its `package.json` declares `"license": "MIT"`.
+
+This is a deliberate choice: an MIT-licensed engine removes the main friction
+for embedding the browser renderer in commercial and closed-source projects.
+The MIT build is functionally equivalent to the GPL build for browser
+rendering; the only intentional difference is that the Sudoku diagram
+(the single GPL-bound component reachable from the browser entrypoint) is
+excluded from the MIT flavor.
+
+> The root project still produces a GPL JS build for the project site / demo
+> (via the root `npmPackage` and `teavm` tasks). That build is **not** what gets
+> published to npm — it is independent and untouched by this procedure.
+
 ## What gets published
 
-The Gradle `npmPackage` task assembles a small, self-contained package in
-`build/npm-plantuml/`. It contains:
+The Gradle `:plantuml-mit:npmPackage` task assembles a small, self-contained
+package in `plantuml-mit/build/npm-plantuml/`. It contains:
 
-- `plantuml.js` -- the TeaVM-compiled engine (the only file produced by the
-  TeaVM compilation; everything else is copied from `src/main/resources/teavm`)
+- `plantuml.js` -- the TeaVM-compiled MIT engine. The TeaVM plugin names the
+  raw output after the subproject artifact (`plantuml-mit.js`); the task copies
+  it into the package **renamed to `plantuml.js`** so that the demo pages, the
+  `import` statements in `main.js`, and existing CDN URLs all keep working
+  unchanged. All references to the engine in the bundle are relative imports
+  from the HTML/JS files, never a self-reference baked into the `.js`, so
+  renaming at copy time is sufficient.
 - `viz-global.js` -- the Graphviz / Viz.js layout engine (required at runtime)
 - `emoji.js`, `openiconic.js`
 - the demo pages: `index.html`, `index-basic.html`, `index-basic-dark.html`,
   `index-collection.html`, `main.js`, `main.css`, the two
   `github-integration-*-poc.html` files and `GITHUB_INTEGRATION.md`
 - generated `package.json` and `README.md`
+
+The companion files (everything except `plantuml.js`) are copied verbatim from
+the shared `src/main/resources/teavm` tree in the root project, so the MIT and
+GPL bundles stay in sync automatically.
 
 The heavy optional sprite bundles (`ibm.min.js`, `tupadr3.min.js`,
 `material*.min.js`, `awslib*.min.js`, ...) are **deliberately excluded**: they
@@ -51,28 +77,45 @@ All commands are PowerShell-compatible (Windows). Note the quotes around the
 
 ### 1. Assemble the package
 
-For a **stable** npm release while the project itself is still a beta, force the
-npm version explicitly:
+The `plantuml-mit` subproject is only included in the build when the licence
+subprojects are enabled, i.e. when the `ci` flag is set (locally) or the `CI`
+environment variable is present. Without it, Gradle reports
+`project 'plantuml-mit' not found`. Pass `-Pci` to enable it:
 
 ```powershell
 cd C:\github\plantuml
-.\gradlew npmPackage "-PnpmVersion=1.2026.5"
+.\gradlew :plantuml-mit:npmPackage -Pci "-PnpmVersion=1.2026.6"
 ```
 
+For a **stable** npm release while the project itself is still a beta, force the
+npm version explicitly with `-PnpmVersion` as above.
+
 If you omit `-PnpmVersion`, the npm version is derived from the Gradle project
-version (e.g. `1.2026.5beta1` -> `1.2026.5-beta.1`, a semver prerelease).
+version (e.g. `1.2026.6beta1` -> `1.2026.6-beta.1`, a semver prerelease).
 
 The task prints the resolved name, version and the exact publish command.
 
 ### 2. Preview the tarball (publishes nothing)
 
 ```powershell
-cd build\npm-plantuml
+cd plantuml-mit\build\npm-plantuml
 npm pack --dry-run
 ```
 
-Check the file list (should be ~17 files, no heavy `*.min.js` stdlib bundles)
-and the resulting filename / version.
+Check the file list (should be ~17 files, no heavy `*.min.js` stdlib bundles),
+that `plantuml.js` is present (not `plantuml-mit.js`), and the resulting
+filename / version.
+
+As an extra sanity check that you are shipping the MIT build (the Sudoku
+component is excluded from it), confirm there is no `sudoku` reference in the
+engine:
+
+```powershell
+Select-String -Path plantuml.js -Pattern sudoku -CaseSensitive |
+  Measure-Object | Select-Object -ExpandProperty Count
+```
+
+This must print `0` for the MIT build (the GPL build would print `1`).
 
 ### 3. Confirm you are logged in
 
@@ -92,7 +135,7 @@ npm publish --access public
 ```
 
 For a **prerelease** version (semver containing a `-`), publish under the `beta`
-dist-tag so it is not installed by default:
+dist-tag so it is not installed by default and does not become `latest`:
 
 ```powershell
 npm publish --tag beta --access public
@@ -115,15 +158,15 @@ The CDNs sync from npm within a few minutes:
 
 - **Versions are immutable.** npm does not allow republishing an existing
   version, and unpublishing is heavily restricted. Bump the version for any new
-  publish.
+  publish. (`1.2026.5` is already published, so the next release must be higher.)
 - **Tell users to pin a version** in CDN URLs (e.g.
-  `https://unpkg.com/@plantuml/core@1.2026.5/plantuml.js`) rather than relying on
+  `https://unpkg.com/@plantuml/core@1.2026.6/plantuml.js`) rather than relying on
   the floating `latest` tag, to avoid surprise breakage on updates.
 - **Overrides:** `-PnpmName=...` changes the package name, `-PnpmVersion=...`
   changes the published version. Both are optional; the defaults are
   `@plantuml/core` and the Gradle-derived version.
-- The output directory `build/npm-plantuml/` is under `build/`, which is
-  git-ignored, so nothing is committed.
+- The output directory `plantuml-mit/build/npm-plantuml/` is under `build/`,
+  which is git-ignored, so nothing is committed.
 
 ## Public API (quick reference)
 
