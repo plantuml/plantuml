@@ -202,54 +202,60 @@ public class BlockUml {
 	}
 
 	public List&lt;Explanation&gt; explain() {
-<span class="fc" id="L205">		return PSystemBuilder.getInstance().explain(pathSystem, data, rawSource, previous, preprocessingArtifact);</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		if (preprocessorError)</span>
+<span class="nc" id="L206">			return Collections.singletonList(Explanation.ofError(&quot;Preprocessor error&quot;));</span>
+
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
+<span class="fc" id="L209">			return PSystemBuilder.getInstance().explain(pathSystem, data, rawSource, previous, preprocessingArtifact);</span>
+
+<span class="nc" id="L211">		return PSystemBuilder2.getInstance().explain(data, preprocessingArtifact);</span>
 	}
 
 	public final List&lt;StringLocated&gt; getData() {
-<span class="fc" id="L209">		return data;</span>
+<span class="fc" id="L215">		return data;</span>
 	}
 
 	private String internalEtag() {
 		try {
-<span class="nc" id="L214">			final AsciiEncoder coder = new AsciiEncoder();</span>
-<span class="nc" id="L215">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
-<span class="nc bnc" id="L216" title="All 2 branches missed.">			for (StringLocated s : data)</span>
-<span class="nc" id="L217">				msgDigest.update(s.getString().getBytes(UTF_8));</span>
+<span class="nc" id="L220">			final AsciiEncoder coder = new AsciiEncoder();</span>
+<span class="nc" id="L221">			final MessageDigest msgDigest = MessageDigest.getInstance(&quot;MD5&quot;);</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">			for (StringLocated s : data)</span>
+<span class="nc" id="L223">				msgDigest.update(s.getString().getBytes(UTF_8));</span>
 
-<span class="nc" id="L219">			final byte[] digest = msgDigest.digest();</span>
-<span class="nc" id="L220">			return coder.encode(digest);</span>
-<span class="nc" id="L221">		} catch (Exception e) {</span>
-<span class="nc" id="L222">			Logme.error(e);</span>
-<span class="nc" id="L223">			return &quot;NOETAG&quot;;</span>
+<span class="nc" id="L225">			final byte[] digest = msgDigest.digest();</span>
+<span class="nc" id="L226">			return coder.encode(digest);</span>
+<span class="nc" id="L227">		} catch (Exception e) {</span>
+<span class="nc" id="L228">			Logme.error(e);</span>
+<span class="nc" id="L229">			return &quot;NOETAG&quot;;</span>
 		}
 	}
 
 	public String etag() {
-<span class="nc" id="L228">		return Version.etag() + internalEtag();</span>
+<span class="nc" id="L234">		return Version.etag() + internalEtag();</span>
 	}
 
 	public long lastModified() {
-<span class="nc" id="L232">		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;</span>
+<span class="nc" id="L238">		return (Version.compileTime() / 1000L / 60) * 1000L * 60 + Version.beta() * 1000L * 3600;</span>
 	}
 
 	public boolean isStartDef(String name) {
-<span class="nc" id="L236">		final String signature = &quot;@startdef(id=&quot; + name + &quot;)&quot;;</span>
-<span class="nc" id="L237">		return data.get(0).getString().equalsIgnoreCase(signature);</span>
+<span class="nc" id="L242">		final String signature = &quot;@startdef(id=&quot; + name + &quot;)&quot;;</span>
+<span class="nc" id="L243">		return data.get(0).getString().equalsIgnoreCase(signature);</span>
 	}
 
 	public List&lt;String&gt; getDefinition(boolean withHeader) {
-<span class="fc" id="L241">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">		for (StringLocated s : data)</span>
-<span class="fc" id="L243">			result.add(s.getString());</span>
+<span class="fc" id="L247">		final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">		for (StringLocated s : data)</span>
+<span class="fc" id="L249">			result.add(s.getString());</span>
 
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (withHeader)</span>
-<span class="fc" id="L246">			return Collections.unmodifiableList(result);</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (withHeader)</span>
+<span class="fc" id="L252">			return Collections.unmodifiableList(result);</span>
 
-<span class="nc" id="L248">		return Collections.unmodifiableList(result.subList(1, result.size() - 1));</span>
+<span class="nc" id="L254">		return Collections.unmodifiableList(result.subList(1, result.size() - 1));</span>
 	}
 
 	public Defines getLocalDefines() {
-<span class="nc" id="L252">		return localDefines;</span>
+<span class="nc" id="L258">		return localDefines;</span>
 	}
 
 }

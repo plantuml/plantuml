@@ -151,8 +151,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Checks the syntax of a single PlantUML diagram, without rendering it.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#version()" class="member-name-link">version</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#explain(java.lang.String)" class="member-name-link">explain</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;source)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Explains how a single PlantUML diagram is parsed, line by line.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#version()" class="member-name-link">version</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns the full description of the embedded PlantUML version.</div>
 </div>
 </div>
@@ -233,6 +238,35 @@ loadScripts(document, 'script');</script>
                diagram)</dd>
 <dt>Returns:</dt>
 <dd>a JSON string describing the diagnostic; never <code>null</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="explain(java.lang.String)">
+<h3>explain</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">explain</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;source)</span></div>
+<div class="block">Explains how a single PlantUML diagram is parsed, line by line.
+
+ <p>
+ The result is a JSON array of objects, each with the shape:
+
+ <pre>
+ {
+   "input": ["Alice -&gt; Bob"],
+   "explain": "Message from 'Alice' to 'Bob'",
+   "line": 2
+ }
+ </pre>
+
+ where <code>input</code> is the source line(s) that produced the explanation,
+ <code>explain</code> is the human-readable text, and <code>line</code> is the 1-based
+ line number (omitted when no location applies).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>source</code> - the raw PlantUML source (a single <code>@start.../@end...</code>
+               diagram)</dd>
+<dt>Returns:</dt>
+<dd>a JSON array string describing the explanations; never <code>null</code></dd>
 </dl>
 </section>
 </li>

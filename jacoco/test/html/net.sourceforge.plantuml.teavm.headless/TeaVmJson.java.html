@@ -89,6 +89,10 @@ public final class TeaVmJson {
 	@JSBody(params = { &quot;arr&quot;, &quot;value&quot; }, script = &quot;arr.push(value);&quot;)
 	public static native void push(JSObject arr, String value);
 
+	/** Appends a nested object/array to a JS array. */
+	@JSBody(params = { &quot;arr&quot;, &quot;value&quot; }, script = &quot;arr.push(value);&quot;)
+	public static native void pushObject(JSObject arr, JSObject value);
+
 	/**
 	 * Serializes a JS object/array to a JSON string with the native
 	 * {@code JSON.stringify}.

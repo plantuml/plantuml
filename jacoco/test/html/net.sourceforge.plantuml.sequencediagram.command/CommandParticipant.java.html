@@ -86,69 +86,117 @@ public abstract class CommandParticipant extends SingleLineCommand2&lt;SequenceD
 
 	@Override
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="fc" id="L89">		return &quot;Creation participant in sequence diagram&quot;;</span>
+<span class="fc" id="L89">		final StringBuilder sb = new StringBuilder();</span>
+
+		// A participant that already exists is not recreated: executeArg just
+		// moves it to the last position. Reflect that early-return case.
+<span class="fc" id="L93">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+
+		// 'create participant', 'create actor', etc. set CREATE; a bare 'create'
+		// keyword shows up in TYPE. Either way the participant is created and
+		// activated with a CREATE life event.
+<span class="fc" id="L98">		final String typeCreate = arg.get(&quot;CREATE&quot;, 0);</span>
+<span class="fc" id="L99">		final String typeString = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="pc bpc" id="L100" title="3 of 6 branches missed.">		final boolean create = typeCreate != null || (typeString != null &amp;&amp; typeString.equalsIgnoreCase(&quot;create&quot;));</span>
+
+		final String type;
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (typeCreate != null)</span>
+<span class="nc" id="L104">			type = typeCreate;</span>
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">		else if (typeString != null &amp;&amp; typeString.equalsIgnoreCase(&quot;create&quot;) == false)</span>
+<span class="fc" id="L106">			type = typeString;</span>
+		else
+<span class="nc" id="L108">			type = &quot;participant&quot;;</span>
+
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		sb.append(create ? &quot;Creating &quot; : &quot;Declaring &quot;).append(type.toLowerCase());</span>
+
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (code != null)</span>
+<span class="fc" id="L113">			sb.append(&quot; '&quot;).append(code).append(&quot;'&quot;);</span>
+
+<span class="fc" id="L115">		final String displayString = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (displayString != null)</span>
+<span class="nc" id="L117">			sb.append(&quot; displayed as \&quot;&quot;).append(displayString).append(&quot;\&quot;&quot;);</span>
+
+<span class="fc" id="L119">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (orderString != null)</span>
+<span class="nc" id="L121">			sb.append(&quot;, order &quot;).append(orderString);</span>
+
+<span class="fc" id="L123">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L125">			sb.append(&quot;, stereotype &quot;).append(stereo);</span>
+
+<span class="fc" id="L127">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L129">			sb.append(&quot;, background color &quot;).append(color);</span>
+
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L132">			sb.append(&quot;, with a URL link&quot;);</span>
+
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (create)</span>
+<span class="nc" id="L135">			sb.append(&quot; (created on the spot, with a CREATE life event)&quot;);</span>
+
+<span class="fc" id="L137">		return sb.toString();</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L95">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (diagram.participantsContainsKey(code)) {</span>
-<span class="nc" id="L97">			diagram.putParticipantInLast(code);</span>
-<span class="nc" id="L98">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L143">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (diagram.participantsContainsKey(code)) {</span>
+<span class="nc" id="L145">			diagram.putParticipantInLast(code);</span>
+<span class="nc" id="L146">			return CommandExecutionResult.ok();</span>
 		}
 
-<span class="fc" id="L101">		Display strings = Display.NULL;</span>
-<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (arg.get(&quot;FULL&quot;, 0) != null)</span>
-<span class="fc" id="L103">			strings = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;FULL&quot;, 0));</span>
+<span class="fc" id="L149">		Display strings = Display.NULL;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (arg.get(&quot;FULL&quot;, 0) != null)</span>
+<span class="fc" id="L151">			strings = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;FULL&quot;, 0));</span>
 		// strings = Display.create(arg.get(&quot;FULL&quot;, 0));
 
-<span class="fc" id="L106">		final String typeString1 = arg.get(&quot;TYPE&quot;, 0);</span>
-<span class="fc" id="L107">		final String typeCreate1 = arg.get(&quot;CREATE&quot;, 0);</span>
+<span class="fc" id="L154">		final String typeString1 = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="fc" id="L155">		final String typeCreate1 = arg.get(&quot;CREATE&quot;, 0);</span>
 		final ParticipantType type;
 		final boolean create;
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (typeCreate1 != null) {</span>
-<span class="nc" id="L111">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeCreate1));</span>
-<span class="nc" id="L112">			create = true;</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		} else if (typeString1.equalsIgnoreCase(&quot;CREATE&quot;)) {</span>
-<span class="nc" id="L114">			type = ParticipantType.PARTICIPANT;</span>
-<span class="nc" id="L115">			create = true;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (typeCreate1 != null) {</span>
+<span class="nc" id="L159">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeCreate1));</span>
+<span class="nc" id="L160">			create = true;</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		} else if (typeString1.equalsIgnoreCase(&quot;CREATE&quot;)) {</span>
+<span class="nc" id="L162">			type = ParticipantType.PARTICIPANT;</span>
+<span class="nc" id="L163">			create = true;</span>
 		} else {
-<span class="fc" id="L117">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeString1));</span>
-<span class="fc" id="L118">			create = false;</span>
+<span class="fc" id="L165">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeString1));</span>
+<span class="fc" id="L166">			create = false;</span>
 		}
-<span class="fc" id="L120">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		final int order = orderString == null ? 0 : Integer.parseInt(orderString);</span>
-<span class="fc" id="L122">		final Participant participant = diagram.createNewParticipant(location, type, code, strings, order);</span>
+<span class="fc" id="L168">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		final int order = orderString == null ? 0 : Integer.parseInt(orderString);</span>
+<span class="fc" id="L170">		final Participant participant = diagram.createNewParticipant(location, type, code, strings, order);</span>
 
-<span class="fc" id="L124">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L172">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
-<span class="nc" id="L127">			final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L128">			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();</span>
-<span class="nc" id="L129">			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);</span>
-<span class="nc" id="L130">			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,</span>
-<span class="nc" id="L131">					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
+<span class="nc" id="L175">			final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L176">			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();</span>
+<span class="nc" id="L177">			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);</span>
+<span class="nc" id="L178">			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,</span>
+<span class="nc" id="L179">					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);</span>
 		}
-<span class="fc" id="L133">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="fc" id="L134">		participant.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="fc" id="L181">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L182">		participant.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
 
-<span class="fc" id="L137">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">		if (urlString != null) {</span>
-<span class="fc" id="L139">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="fc" id="L140">			final Url url = urlBuilder.getUrl(urlString);</span>
-<span class="fc" id="L141">			participant.setUrl(url);</span>
-		}
-
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (create) {</span>
-<span class="nc" id="L145">			final String error = diagram.activate(participant, LifeEventType.CREATE, null);</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">			if (error != null)</span>
-<span class="nc" id="L147">				return CommandExecutionResult.error(error);</span>
-
+<span class="fc" id="L185">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (urlString != null) {</span>
+<span class="fc" id="L187">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="fc" id="L188">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="fc" id="L189">			participant.setUrl(url);</span>
 		}
 
-<span class="fc" id="L151">		return CommandExecutionResult.ok();</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (create) {</span>
+<span class="nc" id="L193">			final String error = diagram.activate(participant, LifeEventType.CREATE, null);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			if (error != null)</span>
+<span class="nc" id="L195">				return CommandExecutionResult.error(error);</span>
+
+		}
+
+<span class="fc" id="L199">		return CommandExecutionResult.ok();</span>
 	}
 
 }

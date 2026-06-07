@@ -114,12 +114,18 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createDiagramFromPreprocessed(java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createDiagramFromPreprocessed</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;source,
  <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PSystemBuilder2.html" title="class in net.sourceforge.plantuml.teavm">PSystemBuilder2</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reset()" class="member-name-link">reset</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../command/Explanation.html" title="class in net.sourceforge.plantuml.command">Explanation</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#explain(java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">explain</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;source,
+ <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Explains, line by line, how the given preprocessed source is parsed.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PSystemBuilder2.html" title="class in net.sourceforge.plantuml.teavm">PSystemBuilder2</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reset()" class="member-name-link">reset</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -160,6 +166,29 @@ loadScripts(document, 'script');</script>
 <h3>createDiagramFromPreprocessed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></span>&nbsp;<span class="element-name">createDiagramFromPreprocessed</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;source,
  <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="explain(java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">
+<h3>explain</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../command/Explanation.html" title="class in net.sourceforge.plantuml.command">Explanation</a>&gt;</span>&nbsp;<span class="element-name">explain</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;source,
+ <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</span></div>
+<div class="block">Explains, line by line, how the given preprocessed source is parsed.
+
+ <p>
+ TeaVM counterpart of <a href="../PSystemBuilder.html#explain(net.sourceforge.plantuml.nio.PathSystem,java.util.List,java.util.List,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)"><code>PSystemBuilder.explain(net.sourceforge.plantuml.nio.PathSystem, java.util.List&lt;net.sourceforge.plantuml.text.StringLocated&gt;, java.util.List&lt;net.sourceforge.plantuml.text.StringLocated&gt;, net.sourceforge.plantuml.Previous, net.sourceforge.plantuml.preproc.PreprocessingArtifact)</code></a>.
+ It builds the <a href="../core/UmlSource.html" title="class in net.sourceforge.plantuml.core"><code>UmlSource</code></a> the same way as
+ <a href="#createDiagramFromPreprocessed(java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)"><code>createDiagramFromPreprocessed(List, PreprocessingArtifact)</code></a>, finds
+ the first factory that produces a valid diagram for the detected type, and
+ delegates to its <code>explain</code>. <code>pathSystem</code> and <code>previous</code>
+ are <code>null</code> here, as everywhere else in this builder.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>source</code> - the preprocessed source lines</dd>
+<dd><code>preprocessing</code> - the preprocessing artifact</dd>
+<dt>Returns:</dt>
+<dd>the list of explanations, or <code>null</code> if no factory matched</dd>
+</dl>
 </section>
 </li>
 </ul>
