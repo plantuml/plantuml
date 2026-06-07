@@ -50,9 +50,10 @@ public class McpResult {
 	private String diagramType;
 	private int lineCount;
 	private final List<String> warnings = new ArrayList<>();
-	private int errorLine = -1;
-	private String errorMessage;
-	private String errorContext;
+	private int errorLineNumber = -1;
+	private String errorLine = "";
+	private String errorMessage = "";
+	private String errorContext = "";
 	private String svg;
 
 	private McpResult() {
@@ -66,7 +67,8 @@ public class McpResult {
 			final ErrorUml firstError = error.getFirstError();
 			if (firstError != null) {
 				// getPosition() is 0-based; the public contract exposes a 1-based line.
-				this.errorLine = firstError.getPosition() + 1;
+				this.errorLineNumber = firstError.getPosition() + 1;
+				this.errorLine = firstError.getLine().getString() == null ? "" : firstError.getLine().getString();
 				this.errorMessage = firstError.getError();
 			}
 		} else {
@@ -131,8 +133,8 @@ public class McpResult {
 	 * @return the 1-based line of the error, or -1 when {@link #isOk()} is
 	 *         {@code true}
 	 */
-	public int getErrorLine() {
-		return errorLine;
+	public int getErrorLineNumber() {
+		return errorLineNumber;
 	}
 
 	/**
@@ -141,6 +143,10 @@ public class McpResult {
 	 */
 	public String getErrorMessage() {
 		return errorMessage;
+	}
+
+	public String getErrorLine() {
+		return errorLine;
 	}
 
 	/**

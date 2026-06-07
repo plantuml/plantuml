@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.StartUtils;
 import net.sourceforge.plantuml.version.IteratorCounter2;
 
@@ -77,7 +76,7 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 
 		final IteratorCounter2 it = source.iterator2();
 		if (source.isEmpty()) {
-			final LineLocation location = it.next().getLocation();
+			final StringLocated location = it.next();
 			return buildEmptyError(source, location, it.getTrace(), preprocessing);
 		}
 
@@ -86,16 +85,15 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 			throw new UnsupportedOperationException();
 
 		if (it.hasNext() == false)
-			return buildEmptyError(source, startLine.getLocation(), it.getTrace(), preprocessing);
+			return buildEmptyError(source, startLine, it.getTrace(), preprocessing);
 
 		final StringLocated s = it.next();
 		if (StartUtils.isEndDirective(s.getString()))
-			return buildEmptyError(source, s.getLocation(), it.getTrace(), preprocessing);
+			return buildEmptyError(source, s, it.getTrace(), preprocessing);
 
 		final Diagram sys = executeLine(source, s.getString(), preprocessing);
 		if (sys == null) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(),
-					getDiagramType());
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s, getDiagramType());
 			// return PSystemErrorUtils.buildV1(source, err, null);
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
 		}

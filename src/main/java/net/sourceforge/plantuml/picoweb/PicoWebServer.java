@@ -82,7 +82,6 @@ import net.sourceforge.plantuml.utils.LineLocationImpl;
 import net.sourceforge.plantuml.version.Version;
 
 public class PicoWebServer implements Runnable {
-	
 
 	private final Socket connect;
 	static boolean enableStop;
@@ -287,9 +286,8 @@ public class PicoWebServer implements Runnable {
 
 		if (ssr.getBlocks().size() == 0) {
 			system = PSystemErrorUtils.buildV2(null,
-					new ErrorUml(SYNTAX_ERROR, "No valid @start/@end found, please check the version", 0,
-							new LineLocationImpl("", null), null),
-					null, Collections.<StringLocated>emptyList(), new PreprocessingArtifact());
+					new ErrorUml(SYNTAX_ERROR, "No valid @start/@end found, please check the version"), null,
+					Collections.<StringLocated>emptyList(), new PreprocessingArtifact());
 			imageData = ssr.noValidStartFound(os, option.getFileFormatOption());
 		} else {
 			system = ssr.getBlocks().get(0).getDiagram();

@@ -141,8 +141,19 @@ Alice ->
 which returns the offending line and message:
 
 ```json
-{ "valid": false, "lineCount": 3, "warnings": [], "errorLine": 2, "errorMessage": "..." }
+{
+  "valid": false,
+  "lineCount": 3,
+  "warnings": [],
+  "errorLineNumber": 2,
+  "errorMessage": "...",
+  "errorLine": "Alice ->"
+}
 ```
+
+The failure fields are: `errorLineNumber` (the 1-based line number),
+`errorMessage` (what went wrong), `errorLine` (the offending source line, when
+available), and `errorContext`.
 
 > **Note:** in a local (non-CI) build, the version string contains unresolved
 > placeholders such as `PlantUML version $version$ / $git.commit.id$ [...]`.
@@ -204,7 +215,7 @@ Running the task:
 ./gradlew :plantuml-mcp-js:npmPackage
 ```
 
-produces `plantuml-mcp-js/build/npm-mcp-js/` containing exactly four files:
+produces `plantuml-mcp-js/build/npm-mcp-js/` containing exactly five files:
 
 ```
 build/npm-mcp-js/
@@ -213,13 +224,15 @@ build/npm-mcp-js/
   |                   build/generated/teavm/js/plantuml-mcp-js.js)
   +- package.json    (copied from the subproject, as-is)
   +- README.md       (this file, copied as-is)
+  +- LICENSE         (copied from the subproject, as-is; MIT)
 ```
 
 The engine is renamed to `engine.js` and placed next to `server.js`, which is
 why `server.js` loads `./engine.js` first (and only falls back to the raw
 `build/generated/teavm/js/` output for local `node server.js` runs from the
 checkout). The `"files"` allow-list in `package.json` lists `server.js`,
-`engine.js` and `README.md`, so the published tarball is self-contained.
+`engine.js`, `README.md` and `LICENSE`, so the published tarball is
+self-contained.
 
 Because `build/` is git-ignored, the assembled directory never pollutes the
 repository.
@@ -268,8 +281,8 @@ repository.
    ```
 
 4. **Preview the tarball** without publishing — this lists exactly what would
-   ship. Verify `server.js`, `engine.js`, `package.json` and `README.md` are
-   all present:
+   ship. Verify `server.js`, `engine.js`, `package.json`, `README.md` and
+   `LICENSE` are all present:
    ```sh
    npm pack --dry-run
    ```

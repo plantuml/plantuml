@@ -86,14 +86,13 @@ public abstract class PSystemBasicFactory<P extends Diagram> extends PSystemAbst
 			first = false;
 			if (StartUtils.isEndDirective(s.getString())) {
 				if (source.getTotalLineCount() == 2 && source.isStartDef() == false)
-					return buildEmptyError(source, s.getLocation(), it.getTrace(), preprocessing);
+					return buildEmptyError(source, s, it.getTrace(), preprocessing);
 
 				return system;
 			}
 			system = executeLine(source, system, s.getString(), preprocessing);
 			if (system == null) {
-				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(),
-						getDiagramType());
+				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s, getDiagramType());
 				// return PSystemErrorUtils.buildV1(source, err, null);
 				return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
 			}

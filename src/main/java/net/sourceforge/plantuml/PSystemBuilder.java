@@ -252,7 +252,7 @@ public class PSystemBuilder {
 				if (PSystemDotFactory.isGraphvizDotHeader(secondLine)) {
 					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
 							"This looks like a DOT diagram. Please use @startdot instead of @startuml.", 100,
-							source.get(1).getLocation(), DiagramType.SEQUENCE);
+							source.get(1), DiagramType.SEQUENCE);
 
 					return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
 							preprocessing);
@@ -260,14 +260,14 @@ public class PSystemBuilder {
 				} else if (secondLine.trim().equals("ditaa")) {
 					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
 							"This looks like a DITAA diagram. Please use @startditaa instead of @startuml.", 100,
-							source.get(1).getLocation(), DiagramType.SEQUENCE);
+							source.get(1), DiagramType.SEQUENCE);
 
 					return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
 							preprocessing);
 				} else if (secondLine.trim().equals("nwdiag {")) {
 					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
 							"This looks like a network diagram. Please use @startnwdiag instead of @startuml.", 100,
-							source.get(1).getLocation(), DiagramType.SEQUENCE);
+							source.get(1), DiagramType.SEQUENCE);
 
 					return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
 							preprocessing);
@@ -289,8 +289,7 @@ public class PSystemBuilder {
 				} catch (Throwable t) {
 					final StringLocated s = source.get(0);
 					final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
-							"Fatal crash error, you should send a mail to plantuml@gmail.com with: " + t, 0,
-							s.getLocation(), null);
+							"Fatal crash error, you should send a mail to plantuml@gmail.com with: " + t, 0, s, null);
 					errors.add(PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), source,
 							preprocessing, t));
 				}

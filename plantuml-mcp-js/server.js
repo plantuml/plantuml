@@ -87,7 +87,9 @@ server.tool(
   "Checks the syntax of a single PlantUML diagram without rendering it. " +
     "Returns a JSON object containing: 'valid' (boolean), 'diagramType' (if " +
     "valid), 'lineCount', 'warnings' (list of non-fatal warnings), and on " +
-    "failure 'errorLine' (1-based) and 'errorMessage'.",
+    "failure 'errorLineNumber' (1-based line number), 'errorMessage', " +
+    "'errorLine' (the offending source line, when available), and " +
+    "'errorContext'.",
   {
     source: z
       .string()

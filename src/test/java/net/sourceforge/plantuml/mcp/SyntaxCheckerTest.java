@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
  * They are expected to fail until {@link SyntaxChecker#check(String)} and
  * {@link McpResult} are implemented.
  */
-class CheckSyntaxTest {
+class SyntaxCheckerTest {
 
 	private final SyntaxChecker checker = new SyntaxChecker();
 
@@ -48,8 +48,8 @@ class CheckSyntaxTest {
 	void test_valid_sequence_reports_no_error() throws IOException {
 		final String source = "@startuml\nAlice -> Bob\n@enduml";
 		final McpResult result = checker.check(source);
-		assertEquals(-1, result.getErrorLine());
-		assertNull(result.getErrorMessage());
+		assertEquals(-1, result.getErrorLineNumber());
+		assertEquals("", result.getErrorMessage());
 	}
 
 	@Test
@@ -89,6 +89,7 @@ class CheckSyntaxTest {
 		final String source = "@startuml\nAlice -> Bob\n%%% not valid %%%\n@enduml";
 		final McpResult result = checker.check(source);
 		assertFalse(result.isOk());
+		assertEquals("%%% not valid %%%", result.getErrorLine());
 	}
 
 	@Test
@@ -97,6 +98,7 @@ class CheckSyntaxTest {
 		final McpResult result = checker.check(source);
 		assertNotNull(result.getErrorMessage());
 		assertFalse(result.getErrorMessage().isEmpty());
+		assertEquals("%%% not valid %%%", result.getErrorLine());
 	}
 
 	@Test
@@ -105,7 +107,8 @@ class CheckSyntaxTest {
 		// must report 2, not the 0-based position that the core uses internally.
 		final String source = "@startuml\n%%% not valid %%%\n@enduml";
 		final McpResult result = checker.check(source);
-		assertEquals(2, result.getErrorLine());
+		assertEquals(2, result.getErrorLineNumber());
+		assertEquals("%%% not valid %%%", result.getErrorLine());
 	}
 
 	@Test
