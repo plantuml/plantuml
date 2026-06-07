@@ -174,7 +174,7 @@ public class PSystemBuilder2 {
 <span class="nc bnc" id="L174" title="All 2 branches missed.">			if (secondLine.trim().equals(&quot;nwdiag {&quot;)) {</span>
 <span class="nc" id="L175">				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
 						&quot;This looks like a network diagram. Please use @startnwdiag instead of @startuml.&quot;, 100,
-<span class="nc" id="L177">						source.get(1).getLocation(), DiagramType.SEQUENCE);</span>
+<span class="nc" id="L177">						source.get(1), DiagramType.SEQUENCE);</span>
 
 <span class="nc" id="L179">				return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
 						preprocessing);

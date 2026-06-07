@@ -38,57 +38,72 @@ package net.sourceforge.plantuml;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ErrorUml {
 
 	private final String error;
 	private final ErrorUmlType errorType;
-	private final LineLocation lineLocation;
+	private final StringLocated line;
 	private final int score;
 	private final DiagramType diagramType;
 
-<span class="fc" id="L51">	public ErrorUml(ErrorUmlType type, String error, int score, LineLocation lineLocation, DiagramType diagramType) {</span>
-<span class="fc" id="L52">		this.score = score;</span>
-<span class="fc" id="L53">		this.error = Objects.requireNonNull(error);</span>
-<span class="fc" id="L54">		this.errorType = Objects.requireNonNull(type);</span>
-<span class="fc" id="L55">		this.lineLocation = lineLocation;</span>
-<span class="fc" id="L56">		this.diagramType = diagramType;</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L52">	public ErrorUml(ErrorUmlType type, String error, int score, StringLocated line, DiagramType diagramType) {</span>
+<span class="fc" id="L53">		this.score = score;</span>
+<span class="fc" id="L54">		this.error = Objects.requireNonNull(error);</span>
+<span class="fc" id="L55">		this.errorType = Objects.requireNonNull(type);</span>
+<span class="fc" id="L56">		this.line = line;</span>
+<span class="fc" id="L57">		this.diagramType = diagramType;</span>
+<span class="fc" id="L58">	}</span>
+
+<span class="nc" id="L60">	public ErrorUml(ErrorUmlType type, String error) {</span>
+<span class="nc" id="L61">		this.score = 0;</span>
+<span class="nc" id="L62">		this.error = Objects.requireNonNull(error);</span>
+<span class="nc" id="L63">		this.errorType = Objects.requireNonNull(type);</span>
+<span class="nc" id="L64">		this.line = null;</span>
+<span class="nc" id="L65">		this.diagramType = null;</span>
+<span class="nc" id="L66">	}</span>
 
 	public int score() {
-<span class="fc" id="L60">		return score;</span>
+<span class="fc" id="L69">		return score;</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="nc" id="L65">		final ErrorUml this2 = (ErrorUml) obj;</span>
-<span class="nc bnc" id="L66" title="All 4 branches missed.">		return this.errorType == this2.errorType &amp;&amp; this.getPosition() == this2.getPosition()</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">				&amp;&amp; this.error.equals(this2.error);</span>
+<span class="nc" id="L74">		final ErrorUml this2 = (ErrorUml) obj;</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">		return this.errorType == this2.errorType &amp;&amp; this.getPosition() == this2.getPosition()</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">				&amp;&amp; this.error.equals(this2.error);</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L72">		return error.hashCode() + errorType.hashCode() + getPosition();</span>
+<span class="nc" id="L81">		return error.hashCode() + errorType.hashCode() + getPosition();</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L77">		return errorType.toString() + &quot; &quot; + getPosition() + &quot; &quot; + error;</span>
+<span class="nc" id="L86">		return errorType.toString() + &quot; &quot; + getPosition() + &quot; &quot; + error;</span>
 	}
 
 	public final String getError() {
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (diagramType != null)</span>
-<span class="fc" id="L82">			return error + &quot; (Assumed diagram type: &quot; + diagramType.humanReadableName() + &quot;)&quot;;</span>
-<span class="fc" id="L83">		return error;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (diagramType != null)</span>
+<span class="fc" id="L91">			return error + &quot; (Assumed diagram type: &quot; + diagramType.humanReadableName() + &quot;)&quot;;</span>
+<span class="fc" id="L92">		return error;</span>
 	}
 
 	public final int getPosition() {
-<span class="fc" id="L87">		return lineLocation.getPosition();</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (line == null)</span>
+<span class="nc" id="L97">			return 0;</span>
+<span class="fc" id="L98">		return line.getLocation().getPosition();</span>
 	}
 
 	public final LineLocation getLineLocation() {
-<span class="fc" id="L91">		return lineLocation;</span>
+<span class="fc" id="L102">		return line.getLocation();</span>
+	}
+
+	public final StringLocated getLine() {
+<span class="fc" id="L106">		return line;</span>
 	}
 
 }

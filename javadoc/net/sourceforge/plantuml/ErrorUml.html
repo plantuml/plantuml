@@ -104,12 +104,15 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.ErrorUmlType,java.lang.String,int,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.core.DiagramType)" class="member-name-link">ErrorUml</a><wbr>(<a href="ErrorUmlType.html" title="enum class in net.sourceforge.plantuml">ErrorUmlType</a>&nbsp;type,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.ErrorUmlType,java.lang.String)" class="member-name-link">ErrorUml</a><wbr>(<a href="ErrorUmlType.html" title="enum class in net.sourceforge.plantuml">ErrorUmlType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;error)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.ErrorUmlType,java.lang.String,int,net.sourceforge.plantuml.text.StringLocated,net.sourceforge.plantuml.core.DiagramType)" class="member-name-link">ErrorUml</a><wbr>(<a href="ErrorUmlType.html" title="enum class in net.sourceforge.plantuml">ErrorUmlType</a>&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;error,
  int&nbsp;score,
- <a href="utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;lineLocation,
+ <a href="text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&nbsp;line,
  <a href="core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a>&nbsp;diagramType)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -130,21 +133,24 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getError()" class="member-name-link">getError</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLineLocation()" class="member-name-link">getLineLocation</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLine()" class="member-name-link">getLine</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPosition()" class="member-name-link">getPosition</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLineLocation()" class="member-name-link">getLineLocation</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPosition()" class="member-name-link">getPosition</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#score()" class="member-name-link">score</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#score()" class="member-name-link">score</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -163,13 +169,20 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.ErrorUmlType,java.lang.String,int,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.core.DiagramType)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.ErrorUmlType,java.lang.String,int,net.sourceforge.plantuml.text.StringLocated,net.sourceforge.plantuml.core.DiagramType)">
 <h3>ErrorUml</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ErrorUml</span><wbr><span class="parameters">(<a href="ErrorUmlType.html" title="enum class in net.sourceforge.plantuml">ErrorUmlType</a>&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;error,
  int&nbsp;score,
- <a href="utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;lineLocation,
+ <a href="text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&nbsp;line,
  <a href="core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a>&nbsp;diagramType)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.ErrorUmlType,java.lang.String)">
+<h3>ErrorUml</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ErrorUml</span><wbr><span class="parameters">(<a href="ErrorUmlType.html" title="enum class in net.sourceforge.plantuml">ErrorUmlType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;error)</span></div>
 </section>
 </li>
 </ul>
@@ -232,6 +245,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getLineLocation()">
 <h3>getLineLocation</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a></span>&nbsp;<span class="element-name">getLineLocation</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getLine()">
+<h3>getLine</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a></span>&nbsp;<span class="element-name">getLine</span>()</div>
 </section>
 </li>
 </ul>

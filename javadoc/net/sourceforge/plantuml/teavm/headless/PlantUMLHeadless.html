@@ -97,15 +97,17 @@ loadScripts(document, 'script');</script>
 
  <p>
  Unlike <a href="../browser/PlantUMLBrowser.html" title="class in net.sourceforge.plantuml.teavm.browser"><code>PlantUMLBrowser</code></a>, this
- class exposes no DOM- or Graphviz-dependent code: just plain
- text-returning functions usable from a plain Node process, with no browser
- and no Java runtime.
+ class exposes no DOM- or Graphviz-dependent code: just plain text-returning
+ functions usable from a plain Node process, with no browser and no Java
+ runtime.
 
  <p>
- The exported functions return their result as a JSON string. Building the
- JSON here (in Java) keeps all formatting logic on the JVM side (testable with
- a normal JVM) and lets the Node wrapper simply <code>JSON.parse</code> the result.
- It also avoids pulling any JSON library into the TeaVM graph.
+ The actual work is delegated to the shared MCP classes (<a href="../../mcp/SyntaxChecker.html" title="class in net.sourceforge.plantuml.mcp"><code>SyntaxChecker</code></a>
+ / <a href="../../mcp/McpResult.html" title="class in net.sourceforge.plantuml.mcp"><code>McpResult</code></a>), so the logic is not duplicated between the Java server
+ and this JS build. This class only adapts their result to a JSON string,
+ built as a native JS object via <a href="TeaVmJson.html" title="class in net.sourceforge.plantuml.teavm.headless"><code>TeaVmJson</code></a> and serialized with
+ <code>JSON.stringify</code> (escaping handled by the platform). The Node wrapper
+ simply <code>JSON.parse</code>s the result.
 
  <p>
  Tools so far:
@@ -113,10 +115,8 @@ loadScripts(document, 'script');</script>
  <li><a href="#version()"><code>version()</code></a> &mdash; the embedded PlantUML version (validates the
  full chain: TeaVM build -&gt; JS artifact -&gt; Node wrapper -&gt; MCP stdio
  transport -&gt; tool discovery by the client).</li>
- <li><a href="#checkSyntax(java.lang.String)"><code>checkSyntax(String)</code></a> &mdash; parses a single diagram and reports a
- structured diagnostic, without rendering. Mirrors the Java
- <code>net.sourceforge.plantuml.mcp.SyntaxChecker</code>/<code>McpResult</code>
- behaviour, but is self-contained and DOM-free.</li>
+ <li><a href="#checkSyntax(java.lang.String)"><code>checkSyntax(String)</code></a> &mdash; parses a single diagram and reports
+ a structured diagnostic, without rendering.</li>
  </ul></div>
 </section>
 <section class="summary">
@@ -223,7 +223,8 @@ loadScripts(document, 'script');</script>
    "lineCount": 4,
    "warnings": [],
    "errorLine": 2,
-   "errorMessage": "..."
+   "errorMessage": "...",
+   "errorContext": "the offending source line"
  }
  </pre></div>
 <dl class="notes">

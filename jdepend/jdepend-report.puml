@@ -1480,7 +1480,7 @@ Total Classes: 1
 }
 "net.sourceforge.plantuml.emoji.data" --> "java.lang"
 
-class "net.sourceforge.plantuml.error" %lighten("red", 50) {
+class "net.sourceforge.plantuml.error" %lighten("red", 55) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.error" --> "java.lang"
@@ -2356,6 +2356,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml.error"
+"net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml.warning"
 
 class "net.sourceforge.plantuml.mda" %lighten("red", 80) {
@@ -3220,13 +3221,7 @@ class "net.sourceforge.plantuml.teavm.headless" %lighten("red", 100) {
 Total Classes: 1
 }
 "net.sourceforge.plantuml.teavm.headless" --> "java.lang"
-"net.sourceforge.plantuml.teavm.headless" --> "java.nio.charset"
-"net.sourceforge.plantuml.teavm.headless" --> "java.util"
-"net.sourceforge.plantuml.teavm.headless" --> "net.sourceforge.plantuml"
-"net.sourceforge.plantuml.teavm.headless" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.teavm.headless" --> "net.sourceforge.plantuml.error"
-"net.sourceforge.plantuml.teavm.headless" --> "net.sourceforge.plantuml.version"
-"net.sourceforge.plantuml.teavm.headless" --> "net.sourceforge.plantuml.warning"
+"net.sourceforge.plantuml.teavm.headless" --> "org.teavm.jso"
 
 class "net.sourceforge.plantuml.telnet" %lighten("red", 100) {
 Total Classes: 1
@@ -3234,7 +3229,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.telnet" --> "java.lang"
 "net.sourceforge.plantuml.telnet" --> "java.net"
 
-class "net.sourceforge.plantuml.text" %lighten("red", 30) {
+class "net.sourceforge.plantuml.text" %lighten("red", 29) {
 Total Classes: 5
 }
 "net.sourceforge.plantuml.text" --> "java.lang"
@@ -3407,7 +3402,7 @@ Total Classes: 18
 "net.sourceforge.plantuml.utils" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.utils" --> "net.sourceforge.plantuml.text"
 
-class "net.sourceforge.plantuml.version" %lighten("red", 84) {
+class "net.sourceforge.plantuml.version" %lighten("red", 88) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.version" --> "java.io"
@@ -3435,7 +3430,7 @@ Total Classes: 7
 "net.sourceforge.plantuml.vizjs" --> "net.sourceforge.plantuml.dot"
 "net.sourceforge.plantuml.vizjs" --> "net.sourceforge.plantuml.log"
 
-class "net.sourceforge.plantuml.warning" %lighten("red", 72) {
+class "net.sourceforge.plantuml.warning" %lighten("red", 75) {
 Total Classes: 2
 }
 "net.sourceforge.plantuml.warning" --> "java.lang"

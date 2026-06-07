@@ -50,59 +50,61 @@ public class McpResult {
 	private String diagramType;
 	private int lineCount;
 <span class="fc" id="L52">	private final List&lt;String&gt; warnings = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L53">	private int errorLine = -1;</span>
-	private String errorMessage;
-	private String errorContext;
+<span class="fc" id="L53">	private int errorLineNumber = -1;</span>
+<span class="fc" id="L54">	private String errorLine = &quot;&quot;;</span>
+<span class="fc" id="L55">	private String errorMessage = &quot;&quot;;</span>
+<span class="fc" id="L56">	private String errorContext = &quot;&quot;;</span>
 	private String svg;
 
-<span class="fc" id="L58">	private McpResult() {</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L59">	private McpResult() {</span>
+<span class="fc" id="L60">	}</span>
 
-<span class="fc" id="L61">	public McpResult(final Diagram diagram) {</span>
-<span class="fc" id="L62">		this.lineCount = diagram.getSource().getTotalLineCount();</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (diagram instanceof PSystemError) {</span>
-<span class="fc" id="L64">			this.ok = false;</span>
-<span class="fc" id="L65">			final PSystemError error = (PSystemError) diagram;</span>
-<span class="fc" id="L66">			final ErrorUml firstError = error.getFirstError();</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">			if (firstError != null) {</span>
+<span class="fc" id="L62">	public McpResult(final Diagram diagram) {</span>
+<span class="fc" id="L63">		this.lineCount = diagram.getSource().getTotalLineCount();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (diagram instanceof PSystemError) {</span>
+<span class="fc" id="L65">			this.ok = false;</span>
+<span class="fc" id="L66">			final PSystemError error = (PSystemError) diagram;</span>
+<span class="fc" id="L67">			final ErrorUml firstError = error.getFirstError();</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">			if (firstError != null) {</span>
 				// getPosition() is 0-based; the public contract exposes a 1-based line.
-<span class="fc" id="L69">				this.errorLine = firstError.getPosition() + 1;</span>
-<span class="fc" id="L70">				this.errorMessage = firstError.getError();</span>
+<span class="fc" id="L70">				this.errorLineNumber = firstError.getPosition() + 1;</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">				this.errorLine = firstError.getLine().getString() == null ? &quot;&quot; : firstError.getLine().getString();</span>
+<span class="fc" id="L72">				this.errorMessage = firstError.getError();</span>
 			}
-<span class="fc" id="L72">		} else {</span>
-<span class="fc" id="L73">			this.ok = true;</span>
-<span class="fc" id="L74">			this.diagramType = diagram.getClass().getSimpleName();</span>
+<span class="fc" id="L74">		} else {</span>
+<span class="fc" id="L75">			this.ok = true;</span>
+<span class="fc" id="L76">			this.diagramType = diagram.getClass().getSimpleName();</span>
 		}
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (diagram instanceof TitledDiagram) {</span>
-<span class="fc" id="L78">			final TitledDiagram titledDiagram = (TitledDiagram) diagram;</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">			for (Warning w : titledDiagram.getWarnings())</span>
-<span class="fc" id="L80">				this.warnings.add(w.asSingleLine());</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (diagram instanceof TitledDiagram) {</span>
+<span class="fc" id="L80">			final TitledDiagram titledDiagram = (TitledDiagram) diagram;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			for (Warning w : titledDiagram.getWarnings())</span>
+<span class="fc" id="L82">				this.warnings.add(w.asSingleLine());</span>
 		}
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L84">	}</span>
 
 	public McpResult(Diagram diagram, String svg) {
-<span class="nc" id="L85">		this(diagram);</span>
-<span class="nc" id="L86">		this.svg = svg;</span>
-<span class="nc" id="L87">	}</span>
+<span class="nc" id="L87">		this(diagram);</span>
+<span class="nc" id="L88">		this.svg = svg;</span>
+<span class="nc" id="L89">	}</span>
 
 	public static McpResult badInput() {
-<span class="nc" id="L90">		final McpResult result = new McpResult();</span>
-<span class="nc" id="L91">		result.errorMessage = &quot;Expected exactly one diagram in the source&quot;;</span>
-<span class="nc" id="L92">		return result;</span>
+<span class="nc" id="L92">		final McpResult result = new McpResult();</span>
+<span class="nc" id="L93">		result.errorMessage = &quot;Expected exactly one diagram in the source&quot;;</span>
+<span class="nc" id="L94">		return result;</span>
 	}
 
 	public static McpResult noAtStart() {
-<span class="fc" id="L96">		final McpResult result = new McpResult();</span>
-<span class="fc" id="L97">		result.errorMessage = &quot;The input must start with a @start... directive (for example @startuml)&quot;;</span>
-<span class="fc" id="L98">		return result;</span>
+<span class="fc" id="L98">		final McpResult result = new McpResult();</span>
+<span class="fc" id="L99">		result.errorMessage = &quot;The input must start with a @start... directive (for example @startuml)&quot;;</span>
+<span class="fc" id="L100">		return result;</span>
 	}
 
 	/**
 	 * @return {@code true} if the source parsed without error
 	 */
 	public boolean isOk() {
-<span class="fc" id="L105">		return ok;</span>
+<span class="fc" id="L107">		return ok;</span>
 	}
 
 	/**
@@ -110,29 +112,29 @@ public class McpResult {
 	 *         {@code null} when not applicable
 	 */
 	public String getDiagramType() {
-<span class="fc" id="L113">		return diagramType;</span>
+<span class="fc" id="L115">		return diagramType;</span>
 	}
 
 	/**
 	 * @return the number of source lines of the checked diagram
 	 */
 	public int getLineCount() {
-<span class="fc" id="L120">		return lineCount;</span>
+<span class="fc" id="L122">		return lineCount;</span>
 	}
 
 	/**
 	 * @return the non-fatal warnings, never {@code null} (possibly empty)
 	 */
 	public List&lt;String&gt; getWarnings() {
-<span class="fc" id="L127">		return warnings;</span>
+<span class="fc" id="L129">		return warnings;</span>
 	}
 
 	/**
 	 * @return the 1-based line of the error, or -1 when {@link #isOk()} is
 	 *         {@code true}
 	 */
-	public int getErrorLine() {
-<span class="fc" id="L135">		return errorLine;</span>
+	public int getErrorLineNumber() {
+<span class="fc" id="L137">		return errorLineNumber;</span>
 	}
 
 	/**
@@ -140,18 +142,22 @@ public class McpResult {
 	 *         {@code true}
 	 */
 	public String getErrorMessage() {
-<span class="fc" id="L143">		return errorMessage;</span>
+<span class="fc" id="L145">		return errorMessage;</span>
+	}
+
+	public String getErrorLine() {
+<span class="fc" id="L149">		return errorLine;</span>
 	}
 
 	/**
 	 * @return the offending source line, or {@code null} when not available
 	 */
 	public String getErrorContext() {
-<span class="nc" id="L150">		return errorContext;</span>
+<span class="nc" id="L156">		return errorContext;</span>
 	}
 
 	public String getSvg() {
-<span class="nc" id="L154">		return svg;</span>
+<span class="nc" id="L160">		return svg;</span>
 	}
 
 }

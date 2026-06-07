@@ -1218,11 +1218,11 @@ Stats:
     Concrete Classes: 25
     Abstract Classes: 13
 
-    Ca: 97
+    Ca: 96
     Ce: 33
 
     A: 0.34
-    I: 0.25
+    I: 0.26
     D: 0.4
 
 Abstract Classes:
@@ -1390,7 +1390,6 @@ Used By:
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.swing
     net.sourceforge.plantuml.syntax
-    net.sourceforge.plantuml.teavm.headless
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.tim
     net.sourceforge.plantuml.timingdiagram
@@ -3589,11 +3588,11 @@ Stats:
     Concrete Classes: 10
     Abstract Classes: 2
 
-    Ca: 80
+    Ca: 79
     Ce: 40
 
     A: 0.17
-    I: 0.33
+    I: 0.34
     D: 0.5
 
 Abstract Classes:
@@ -3727,7 +3726,6 @@ Used By:
     net.sourceforge.plantuml.sudoku
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.syntax
-    net.sourceforge.plantuml.teavm.headless
     net.sourceforge.plantuml.timingdiagram
     net.sourceforge.plantuml.timingdiagram.command
     net.sourceforge.plantuml.version
@@ -5005,12 +5003,12 @@ Stats:
     Concrete Classes: 3
     Abstract Classes: 0
 
-    Ca: 6
+    Ca: 5
     Ce: 6
 
     A: 0
-    I: 0.5
-    D: 0.5
+    I: 0.55
+    D: 0.45
 
 Abstract Classes:
 
@@ -5033,7 +5031,6 @@ Used By:
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.mcp
     net.sourceforge.plantuml.syntax
-    net.sourceforge.plantuml.teavm.headless
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.file
@@ -8302,7 +8299,7 @@ Stats:
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 9
+    Ce: 10
 
     A: 0
     I: 1
@@ -8325,6 +8322,7 @@ Depends Upon:
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.error
+    net.sourceforge.plantuml.text
     net.sourceforge.plantuml.warning
 
 Used By:
@@ -11474,7 +11472,7 @@ Stats:
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 8
+    Ce: 2
 
     A: 0
     I: 1
@@ -11483,17 +11481,11 @@ Stats:
 Abstract Classes:
 
 Concrete Classes:
-    net.sourceforge.plantuml.teavm.headless.PlantUMLHeadless
+    net.sourceforge.plantuml.teavm.headless.TeaVmJson
 
 Depends Upon:
     java.lang
-    java.nio.charset
-    java.util
-    net.sourceforge.plantuml
-    net.sourceforge.plantuml.core
-    net.sourceforge.plantuml.error
-    net.sourceforge.plantuml.version
-    net.sourceforge.plantuml.warning
+    org.teavm.jso
 
 Used By:
     Not used by any packages.
@@ -11535,12 +11527,12 @@ Stats:
     Concrete Classes: 4
     Abstract Classes: 1
 
-    Ca: 38
+    Ca: 39
     Ce: 4
 
     A: 0.2
-    I: 0.1
-    D: 0.7
+    I: 0.09
+    D: 0.71
 
 Abstract Classes:
     net.sourceforge.plantuml.text.SvgCharSizeHack
@@ -11578,6 +11570,7 @@ Used By:
     net.sourceforge.plantuml.klimt.creole.legacy
     net.sourceforge.plantuml.klimt.drawing.g2d
     net.sourceforge.plantuml.klimt.sprite
+    net.sourceforge.plantuml.mcp
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.preproc2
     net.sourceforge.plantuml.regex
@@ -12293,12 +12286,12 @@ Stats:
     Concrete Classes: 6
     Abstract Classes: 1
 
-    Ca: 6
+    Ca: 5
     Ce: 14
 
     A: 0.14
-    I: 0.7
-    D: 0.16
+    I: 0.74
+    D: 0.12
 
 Abstract Classes:
     net.sourceforge.plantuml.version.IteratorCounter2
@@ -12331,7 +12324,6 @@ Used By:
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.donors
     net.sourceforge.plantuml.eggs
-    net.sourceforge.plantuml.teavm.headless
     net.sourceforge.plantuml.tim.builtin
     net.sourceforge.plantuml.xmi
 
@@ -12382,12 +12374,12 @@ Stats:
     Concrete Classes: 1
     Abstract Classes: 1
 
-    Ca: 7
+    Ca: 6
     Ce: 2
 
     A: 0.5
-    I: 0.22
-    D: 0.28
+    I: 0.25
+    D: 0.25
 
 Abstract Classes:
     net.sourceforge.plantuml.warning.WarningHandler
@@ -12406,7 +12398,6 @@ Used By:
     net.sourceforge.plantuml.preproc
     net.sourceforge.plantuml.sequencediagram
     net.sourceforge.plantuml.skin
-    net.sourceforge.plantuml.teavm.headless
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.wbs
@@ -14569,13 +14560,6 @@ net.sourceforge.plantuml.teavm
     |   net.sourceforge.plantuml.klimt.shape
     |-> net.sourceforge.plantuml.klimt.font
 
-net.sourceforge.plantuml.teavm.headless
-    |
-    |   net.sourceforge.plantuml.core
-    |-> net.sourceforge.plantuml.klimt.font
-    |   net.sourceforge.plantuml.klimt.shape
-    |-> net.sourceforge.plantuml.klimt.font
-
 net.sourceforge.plantuml.text
     |
     |   net.sourceforge.plantuml
@@ -14817,14 +14801,14 @@ java.lang.reflect,0,0,4,0,0,0,1,1
 java.math,0,0,6,0,0,0,1,1
 java.net,0,0,5,0,0,0,1,1
 java.nio,0,0,1,0,0,0,1,1
-java.nio.charset,0,0,20,0,0,0,1,1
+java.nio.charset,0,0,19,0,0,0,1,1
 java.nio.file,0,0,3,0,0,0,1,1
 java.security,0,0,3,0,0,0,1,1
 java.security.spec,0,0,2,0,0,0,1,1
 java.text,0,0,5,0,0,0,1,1
 java.time,0,0,12,0,0,0,1,1
 java.time.temporal,0,0,1,0,0,0,1,1
-java.util,0,0,172,0,0,0,1,1
+java.util,0,0,171,0,0,0,1,1
 java.util.concurrent,0,0,6,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,2,0,0,0,1,1
@@ -14850,7 +14834,7 @@ jcckit.renderer,1,0,1,4,0,0.8,0.2,1
 jcckit.transformation,1,1,1,3,1,0.75,0.75,1
 jcckit.util,7,2,5,2,0.29,0.29,0.43,1
 net.atmp,3,0,19,10,0,0.34,0.66,1
-net.sourceforge.plantuml,38,13,97,33,0.34,0.25,0.4,1
+net.sourceforge.plantuml,38,13,96,33,0.34,0.26,0.4,1
 net.sourceforge.plantuml.abel,30,8,31,18,0.27,0.37,0.37,1
 net.sourceforge.plantuml.activitydiagram,2,0,2,12,0,0.86,0.14,1
 net.sourceforge.plantuml.activitydiagram.command,9,0,1,14,0,0.93,0.07,1
@@ -14889,7 +14873,7 @@ net.sourceforge.plantuml.code.deflate,5,1,1,3,0.2,0.75,0.05,1
 net.sourceforge.plantuml.command,48,3,59,35,0.06,0.37,0.57,1
 net.sourceforge.plantuml.command.note,11,1,4,17,0.09,0.81,0.1,1
 net.sourceforge.plantuml.command.note.sequence,8,0,1,9,0,0.9,0.1,1
-net.sourceforge.plantuml.core,12,2,80,40,0.17,0.33,0.5,1
+net.sourceforge.plantuml.core,12,2,79,40,0.17,0.34,0.5,1
 net.sourceforge.plantuml.crash,6,0,4,19,0,0.83,0.17,1
 net.sourceforge.plantuml.cruise,3,3,0,7,1,1,1,1
 net.sourceforge.plantuml.cucadiagram,30,6,9,21,0.2,0.7,0.1,1
@@ -14915,7 +14899,7 @@ net.sourceforge.plantuml.elk.proxy.graph,6,0,3,3,0,0.5,0.5,1
 net.sourceforge.plantuml.elk.proxy.graph.util,1,0,1,3,0,0.75,0.25,1
 net.sourceforge.plantuml.emoji,5,1,1,13,0.2,0.93,0.13,1
 net.sourceforge.plantuml.emoji.data,1,0,0,1,0,1,0,1
-net.sourceforge.plantuml.error,3,0,6,6,0,0.5,0.5,1
+net.sourceforge.plantuml.error,3,0,5,6,0,0.55,0.45,1
 net.sourceforge.plantuml.file,1,0,1,3,0,0.75,0.25,1
 net.sourceforge.plantuml.filesdiagram,4,0,0,15,0,1,0,1
 net.sourceforge.plantuml.flashcode,3,1,0,3,0.33,1,0.33,1
@@ -14969,7 +14953,7 @@ net.sourceforge.plantuml.klimt.sprite,22,2,12,26,0.09,0.68,0.22,1
 net.sourceforge.plantuml.licensing,7,0,0,5,0,1,0,1
 net.sourceforge.plantuml.log,2,0,26,4,0,0.13,0.87,1
 net.sourceforge.plantuml.math,13,1,3,18,0.08,0.86,0.07,1
-net.sourceforge.plantuml.mcp,4,0,0,9,0,1,0,1
+net.sourceforge.plantuml.mcp,4,0,0,10,0,1,0,1
 net.sourceforge.plantuml.mda,2,0,1,4,0,0.8,0.2,1
 net.sourceforge.plantuml.mindmap,12,1,1,22,0.08,0.96,0.04,1
 net.sourceforge.plantuml.nio,3,2,38,5,0.67,0.12,0.22,1
@@ -15025,9 +15009,9 @@ net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
 net.sourceforge.plantuml.teavm,19,1,42,14,0.05,0.25,0.7,1
 net.sourceforge.plantuml.teavm.browser,3,3,1,2,1,0.67,0.67,1
-net.sourceforge.plantuml.teavm.headless,1,0,0,8,0,1,0,1
+net.sourceforge.plantuml.teavm.headless,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
-net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
+net.sourceforge.plantuml.text,5,1,39,4,0.2,0.09,0.71,1
 net.sourceforge.plantuml.theme,2,0,1,6,0,0.86,0.14,1
 net.sourceforge.plantuml.tikz,0,0,1,0,0,0,1,1
 net.sourceforge.plantuml.tim,38,4,3,14,0.11,0.82,0.07,1
@@ -15039,9 +15023,9 @@ net.sourceforge.plantuml.timingdiagram.command,13,1,1,11,0.08,0.92,0.01,1
 net.sourceforge.plantuml.timingdiagram.graphic,17,3,1,15,0.18,0.94,0.11,1
 net.sourceforge.plantuml.url,4,0,29,4,0,0.12,0.88,1
 net.sourceforge.plantuml.utils,18,5,61,21,0.28,0.26,0.47,1
-net.sourceforge.plantuml.version,7,1,6,14,0.14,0.7,0.16,1
+net.sourceforge.plantuml.version,7,1,5,14,0.14,0.74,0.12,1
 net.sourceforge.plantuml.vizjs,7,0,0,6,0,1,0,1
-net.sourceforge.plantuml.warning,2,1,7,2,0.5,0.22,0.28,1
+net.sourceforge.plantuml.warning,2,1,6,2,0.5,0.25,0.25,1
 net.sourceforge.plantuml.wbs,10,2,1,23,0.2,0.96,0.16,1
 net.sourceforge.plantuml.webp,8,0,0,2,0,1,0,1
 net.sourceforge.plantuml.windowsdot,1,0,1,4,0,0.8,0.2,1
@@ -15055,7 +15039,7 @@ net.sourceforge.plantuml.zopfli,19,0,1,2,0,0.67,0.33,1
 org.stathissideris.ascii2image.core,10,0,2,7,0,0.78,0.22,1
 org.stathissideris.ascii2image.graphics,6,0,2,11,0,0.85,0.15,1
 org.stathissideris.ascii2image.text,9,0,2,5,0,0.71,0.29,1
-org.teavm.jso,0,0,2,0,0,0,1,1
+org.teavm.jso,0,0,3,0,0,0,1,1
 org.teavm.jso.dom.xml,0,0,1,0,0,0,1,1
 org.w3c.dom,0,0,6,0,0,0,1,1
 org.xml.sax,0,0,2,0,0,0,1,1

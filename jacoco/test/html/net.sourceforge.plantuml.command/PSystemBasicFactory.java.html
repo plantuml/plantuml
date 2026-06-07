@@ -86,19 +86,18 @@ public abstract class PSystemBasicFactory&lt;P extends Diagram&gt; extends PSyst
 <span class="fc" id="L86">			first = false;</span>
 <span class="fc bfc" id="L87" title="All 2 branches covered.">			if (StartUtils.isEndDirective(s.getString())) {</span>
 <span class="pc bpc" id="L88" title="3 of 4 branches missed.">				if (source.getTotalLineCount() == 2 &amp;&amp; source.isStartDef() == false)</span>
-<span class="nc" id="L89">					return buildEmptyError(source, s.getLocation(), it.getTrace(), preprocessing);</span>
+<span class="nc" id="L89">					return buildEmptyError(source, s, it.getTrace(), preprocessing);</span>
 
 <span class="fc" id="L91">				return system;</span>
 			}
 <span class="fc" id="L93">			system = executeLine(source, system, s.getString(), preprocessing);</span>
 <span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (system == null) {</span>
-<span class="nc" id="L95">				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, &quot;Syntax Error?&quot;, 0, s.getLocation(),</span>
-<span class="nc" id="L96">						getDiagramType());</span>
+<span class="nc" id="L95">				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, &quot;Syntax Error?&quot;, 0, s, getDiagramType());</span>
 				// return PSystemErrorUtils.buildV1(source, err, null);
-<span class="nc" id="L98">				return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);</span>
+<span class="nc" id="L97">				return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);</span>
 			}
-<span class="fc" id="L100">		}</span>
-<span class="nc" id="L101">		return system;</span>
+<span class="fc" id="L99">		}</span>
+<span class="nc" id="L100">		return system;</span>
 	}
 
 }

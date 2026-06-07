@@ -48,13 +48,12 @@ public class PSystemErrorPreprocessor extends PSystemError {
 	public PSystemErrorPreprocessor(List&lt;StringLocated&gt; input, List&lt;StringLocated&gt; trace,
 			PreprocessingArtifact preprocessing) {
 <span class="fc" id="L50">		super(UmlSource.create(input,</span>
-<span class="fc" id="L51">				DiagramType.findStartTypes(input.get(0).getString()).contains(DiagramType.SEQUENCE)),</span>
-				preprocessing);
-<span class="fc" id="L53">		this.trace = trace;</span>
-<span class="fc" id="L54">		this.singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getLastLine().getPreprocessorError(), 0,</span>
-<span class="fc" id="L55">				getLastLine().getLocation(), null);</span>
+<span class="fc" id="L51">				DiagramType.findStartTypes(input.get(0).getString()).contains(DiagramType.SEQUENCE)), preprocessing);</span>
+<span class="fc" id="L52">		this.trace = trace;</span>
+<span class="fc" id="L53">		this.singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getLastLine().getPreprocessorError(), 0,</span>
+<span class="fc" id="L54">				getLastLine(), null);</span>
 
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L56">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
