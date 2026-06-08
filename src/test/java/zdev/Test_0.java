@@ -18,18 +18,11 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-You can use this file to put a test you are working on.
-Here is a simple example:
+@startgantt
+printscale weekly
+[Analysis] on {BA:20%} requires 1 week
+@endgantt
 
-@startuml
-alice->bob: this is a test
-@enduml
-
-So you can edit this file, but please do not push any modification in the "main" branch.
-Put your own tests on your own branches.
-
-However, if your test are interesting, you can add them to the "pdiff" project.
-See https://github.com/plantuml/pdiff
 
  */
 public class Test_0 {
