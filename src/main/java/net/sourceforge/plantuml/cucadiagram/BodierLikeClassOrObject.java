@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -92,7 +93,7 @@ public class BodierLikeClassOrObject extends BodierAbstract {
 	private boolean isBodyEnhanced() {
 		for (CharSequence s : rawBody)
 			if (BodyEnhanced1.isBlockSeparator(s) || CreoleParser.isTableLine(s.toString())
-					|| Parser.isTreeStart(s.toString()))
+					|| Parser.isTreeStart(s.toString()) || EmbeddedDiagram.getEmbeddedType(s) != null)
 				return true;
 
 		return false;
