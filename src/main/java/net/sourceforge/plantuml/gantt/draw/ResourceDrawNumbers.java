@@ -85,6 +85,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 
 		double startingPosition = -1;
 		int totalLoad = 0;
+		int activeDays = 0;
 		boolean isRed = false;
 		for (TimePoint i = min; i.compareTo(maxTimePointPrintedEndOfDay) <= 0; i = i.increment()) {
 			final boolean isBreaking = timeScale.isBreaking(i);
@@ -92,9 +93,12 @@ public class ResourceDrawNumbers implements ResourceDraw {
 			if (load > 100)
 				isRed = true;
 			totalLoad += load;
+			if (load > 0)
+				activeDays++;
 			if (isBreaking) {
 				if (totalLoad > 0) {
-					final TextBlock value = getTextBlock(totalLoad, isRed);
+					final int displayedLoad = (int) Math.round((double) totalLoad / activeDays);
+					final TextBlock value = getTextBlock(displayedLoad, isRed);
 					if (startingPosition == -1)
 						startingPosition = timeScale.getPosition(i);
 					final double endingPosition = timeScale.getPosition(i) + timeScale.getWidth(i);
@@ -104,6 +108,7 @@ public class ResourceDrawNumbers implements ResourceDraw {
 				}
 				startingPosition = -1;
 				totalLoad = 0;
+				activeDays = 0;
 				isRed = false;
 			} else {
 				if (startingPosition == -1)
