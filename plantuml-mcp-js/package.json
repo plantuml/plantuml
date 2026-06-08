@@ -1,6 +1,6 @@
 {
   "name": "@plantuml/mcp-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pure Node/JS Model Context Protocol (MCP) server for PlantUML, powered by the TeaVM-compiled engine. No Java runtime required.",
   "type": "module",
   "bin": {
@@ -13,7 +13,8 @@
   "files": [
     "server.js",
     "engine.js",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "keywords": [
     "plantuml",
@@ -31,7 +32,7 @@
     "url": "https://github.com/plantuml/plantuml/issues"
   },
   "author": "Arnaud Roques",
-  "license": "GPL-3.0-or-later",
+  "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "zod": "^3.23.0"
