@@ -67,6 +67,29 @@ To avoid surprise updates, pin a specific version:
 }
 ```
 
+For Claude Desktop, edit the `claude_desktop_config.json` file:
+
+
+```json
+{
+  "globalShortcut": "",
+  "coworkUserFilesPath": "...",
+  "mcpServers": {
+    "plantuml": {
+      "command": "npx",
+      "args": ["-y", "@plantuml/mcp-js"]
+    }
+  },
+  "preferences": {
+  ...
+```
+
+After saving the file, you must **completely quit and restart Claude Desktop**
+for the server to be picked up — closing the window is not enough. On Windows,
+right-click the Claude icon in the system tray and choose **Quit**; on macOS,
+use **Claude → Quit** (Cmd+Q). Simply reopening the window will not reload the
+configuration.
+
 This works in any MCP client that supports the **stdio** transport (LM Studio,
 Claude Desktop, and others). The configuration format varies slightly by client,
 but the `command` / `args` pair is the same. After adding it, restart or reload
