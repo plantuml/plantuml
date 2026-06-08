@@ -77,7 +77,9 @@ public class Version {
 	}
 
 	public static long compileTime() {
-		return 1768736672346L;
+		if (CompilationInfo.COMPILE_TIMESTAMP == 0L)
+			return System.currentTimeMillis();
+		return CompilationInfo.COMPILE_TIMESTAMP;
 	}
 
 	public static String compileTimeString() {
