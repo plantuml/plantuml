@@ -63,11 +63,18 @@ public class CommandSkin extends SingleLineCommand2&lt;TitledDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Loads a named skin (like 'rose') that changes the overall look of
+		// the diagram (see TitledDiagram.loadSkin).
+<span class="nc" id="L69">		return &quot;Loading the skin '&quot; + arg.get(&quot;SKIN&quot;, 0) + &quot;'&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		try {
-<span class="fc" id="L68">			return diagram.loadSkin(arg.get(&quot;SKIN&quot;, 0));</span>
-<span class="nc" id="L69">		} catch (IOException e) {</span>
-<span class="nc" id="L70">			return CommandExecutionResult.error(&quot;Skin read error&quot;);</span>
+<span class="fc" id="L75">			return diagram.loadSkin(arg.get(&quot;SKIN&quot;, 0));</span>
+<span class="nc" id="L76">		} catch (IOException e) {</span>
+<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;Skin read error&quot;);</span>
 		}
 	}
 }

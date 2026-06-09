@@ -59,9 +59,19 @@ public class CommandAutoNewpage extends SingleLineCommand2&lt;SequenceDiagram&gt
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Intent: start a new page automatically every VALUE messages. Note
+		// that SequenceDiagram.setAutonewpage() is currently a no-op, so this
+		// command is parsed but has no effect on the rendering.
+<span class="nc" id="L66">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
+<span class="nc" id="L67">		return &quot;Requesting a new page automatically every &quot; + value</span>
+				+ &quot; messages (currently ignored by the rendering engine)&quot;;
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L63">		diagram.setAutonewpage(Integer.parseInt(arg.get(&quot;VALUE&quot;, 0)));</span>
-<span class="nc" id="L64">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L73">		diagram.setAutonewpage(Integer.parseInt(arg.get(&quot;VALUE&quot;, 0)));</span>
+<span class="nc" id="L74">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

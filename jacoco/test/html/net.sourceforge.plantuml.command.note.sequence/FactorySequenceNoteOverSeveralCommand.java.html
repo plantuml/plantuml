@@ -124,30 +124,99 @@ import net.sourceforge.plantuml.utils.LineLocation;
 <span class="fc" id="L124">		return new SingleLineCommand2&lt;SequenceDiagram&gt;(getRegexConcatSingleLine()) {</span>
 
 			@Override
+			protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L128">				return explainInternal(arg, arg.get(&quot;NOTE&quot;, 0));</span>
+			}
+
+			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L129">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="nc" id="L130">				return executeInternal(location, diagram, arg, diagram.manageVariable(display));</span>
+<span class="nc" id="L134">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="nc" id="L135">				return executeInternal(location, diagram, arg, diagram.manageVariable(display));</span>
 			}
 
 		};
 	}
 
-<span class="fc" id="L136">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L137">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?(note|hnote|rnote)$&quot;));</span>
+	/**
+	 * Builds the explanation shared by the single line and the multiline
+	 * flavors, mirroring the fields read by
+	 * {@link #executeInternal(LineLocation, SequenceDiagram, RegexResult, Display)}.
+	 */
+	private String explainInternal(RegexResult arg, String label) {
+<span class="nc" id="L147">		final StringBuilder sb = new StringBuilder();</span>
+
+		// The style keyword selects the note shape; the note spans from one
+		// participant to the other.
+<span class="nc" id="L151">		final String style = StringUtils.goLowerCase(arg.get(&quot;STYLE&quot;, 0));</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (&quot;hnote&quot;.equals(style))</span>
+<span class="nc" id="L153">			sb.append(&quot;Adding a hexagonal note&quot;);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		else if (&quot;rnote&quot;.equals(style))</span>
+<span class="nc" id="L155">			sb.append(&quot;Adding a rectangular note&quot;);</span>
+		else
+<span class="nc" id="L157">			sb.append(&quot;Adding a note&quot;);</span>
+
+<span class="nc" id="L159">		final String p1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;P1&quot;, 0));</span>
+<span class="nc" id="L160">		final String p2 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;P2&quot;, 0));</span>
+<span class="nc" id="L161">		sb.append(&quot; over '&quot;).append(p1).append(&quot;' and '&quot;).append(p2).append(&quot;'&quot;);</span>
+
+<span class="nc bnc" id="L163" title="All 4 branches missed.">		if (label != null &amp;&amp; label.isEmpty() == false)</span>
+<span class="nc" id="L164">			sb.append(&quot; labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+
+		// The stereotype may be written before 'over' or after the second
+		// participant (STEREO1/STEREO2), hence the lazzy lookup.
+<span class="nc" id="L168">		final String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L170">			sb.append(&quot;, stereotype &quot;).append(stereo);</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L173">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L176">			sb.append(&quot;, with a URL link&quot;);</span>
+
+		// A leading '/' vertically merges this note with the previous one.
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (arg.get(&quot;VMERGE&quot;, 0) != null)</span>
+<span class="nc" id="L180">			sb.append(&quot;, merged with the previous note&quot;);</span>
+
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (arg.get(&quot;PARALLEL&quot;, 0) != null)</span>
+<span class="nc" id="L183">			sb.append(&quot;, parallel&quot;);</span>
+
+<span class="nc" id="L185">		return sb.toString();</span>
+	}
+
+<span class="fc" id="L188">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L189">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?(note|hnote|rnote)$&quot;));</span>
 
 	public Command&lt;SequenceDiagram&gt; createMultiLine(boolean withBracket) {
-<span class="fc" id="L140">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
-<span class="fc" id="L141">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {</span>
+<span class="fc" id="L192">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
+<span class="fc" id="L193">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {</span>
+
+			@Override
+			protected String explainNow(BlocLines lines) {
+				// Mirror executeNow: the first line carries the declaration, the
+				// lines up to the closing 'end note' are the text of the note.
+<span class="nc" id="L199">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">				if (line0 == null)</span>
+<span class="nc" id="L201">					return &quot;Adding a note&quot;;</span>
+
+<span class="nc" id="L203">				final StringBuilder sb = new StringBuilder(explainInternal(line0, null));</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">				final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">				if (bodyCount &gt; 0)</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">					sb.append(&quot;, with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;)</span>
+<span class="nc" id="L207">							.append(&quot; of text&quot;);</span>
+
+<span class="nc" id="L209">				return sb.toString();</span>
+			}
 
 			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L146">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L147">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="nc" id="L148">				lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L149">				final Display display = lines.toDisplay();</span>
-<span class="nc" id="L150">				return executeInternal(lines.getLocation(), diagram, line0, diagram.manageVariable(display));</span>
+<span class="nc" id="L215">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L216">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="nc" id="L217">				lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L218">				final Display display = lines.toDisplay();</span>
+<span class="nc" id="L219">				return executeInternal(lines.getLocation(), diagram, line0, diagram.manageVariable(display));</span>
 			}
 
 		};
@@ -155,36 +224,36 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram,
 			final RegexResult line0, Display display) throws NoSuchColorException {
-<span class="nc" id="L158">		final Participant p1 = diagram.getOrCreateParticipant(location,</span>
-<span class="nc" id="L159">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;P1&quot;, 0)));</span>
-<span class="nc" id="L160">		final Participant p2 = diagram.getOrCreateParticipant(location,</span>
-<span class="nc" id="L161">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;P2&quot;, 0)));</span>
+<span class="nc" id="L227">		final Participant p1 = diagram.getOrCreateParticipant(location,</span>
+<span class="nc" id="L228">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;P1&quot;, 0)));</span>
+<span class="nc" id="L229">		final Participant p2 = diagram.getOrCreateParticipant(location,</span>
+<span class="nc" id="L230">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;P2&quot;, 0)));</span>
 
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (display.size() &gt; 0) {</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">			final boolean tryMerge = line0.get(&quot;VMERGE&quot;, 0) != null;</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">			final boolean parallel = line0.get(&quot;PARALLEL&quot;, 0) != null;</span>
-<span class="nc" id="L166">			final Note note = new Note(p1, p2, display, diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L167">			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L168">			final String stereotypeString = line0.getLazzy(&quot;STEREO&quot;, 0);</span>
-<span class="nc bnc" id="L169" title="All 2 branches missed.">			if (stereotypeString != null) {</span>
-<span class="nc" id="L170">				final Stereotype stereotype = Stereotype.build(stereotypeString);</span>
-<span class="nc" id="L171">				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (display.size() &gt; 0) {</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">			final boolean tryMerge = line0.get(&quot;VMERGE&quot;, 0) != null;</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">			final boolean parallel = line0.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="nc" id="L235">			final Note note = new Note(p1, p2, display, diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L236">			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L237">			final String stereotypeString = line0.getLazzy(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">			if (stereotypeString != null) {</span>
+<span class="nc" id="L239">				final Stereotype stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L240">				colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
 						ColorParam.noteBorder);
-<span class="nc" id="L173">				note.setStereotype(stereotype);</span>
+<span class="nc" id="L242">				note.setStereotype(stereotype);</span>
 			}
-<span class="nc" id="L175">			note.setColors(colors);</span>
-<span class="nc" id="L176">			note.setNoteStyle(NoteStyle.getNoteStyle(line0.get(&quot;STYLE&quot;, 0)));</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">			if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
-<span class="nc" id="L178">				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L179">				final Url urlLink = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
-<span class="nc" id="L180">				note.setUrl(urlLink);</span>
+<span class="nc" id="L244">			note.setColors(colors);</span>
+<span class="nc" id="L245">			note.setNoteStyle(NoteStyle.getNoteStyle(line0.get(&quot;STYLE&quot;, 0)));</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">			if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
+<span class="nc" id="L247">				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L248">				final Url urlLink = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
+<span class="nc" id="L249">				note.setUrl(urlLink);</span>
 			}
-<span class="nc bnc" id="L182" title="All 2 branches missed.">			if (parallel)</span>
-<span class="nc" id="L183">				note.goParallel();</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">			if (parallel)</span>
+<span class="nc" id="L252">				note.goParallel();</span>
 
-<span class="nc" id="L185">			diagram.addNote(note, tryMerge);</span>
+<span class="nc" id="L254">			diagram.addNote(note, tryMerge);</span>
 		}
-<span class="nc" id="L187">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L256">		return CommandExecutionResult.ok();</span>
 	}
 
 }

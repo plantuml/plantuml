@@ -65,12 +65,28 @@ public class CommandNewpage extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L69">		final StringBuilder sb = new StringBuilder();</span>
+
+		// Splits the diagram into several images. The optional label is used
+		// as the title of the new page. Note that this command is a no-op once
+		// 'ignore newpage' has been issued (see SequenceDiagram.newpage).
+<span class="nc" id="L74">		sb.append(&quot;Starting a new page&quot;);</span>
+
+<span class="nc" id="L76">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (label != null)</span>
+<span class="nc" id="L78">			sb.append(&quot; titled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L80">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L70">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(diagram.getPragma(), label);</span>
-<span class="fc" id="L72">		diagram.newpage(strings);</span>
-<span class="fc" id="L73">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L86">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(diagram.getPragma(), label);</span>
+<span class="fc" id="L88">		diagram.newpage(strings);</span>
+<span class="fc" id="L89">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

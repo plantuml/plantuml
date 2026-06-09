@@ -59,10 +59,21 @@ public class CommandAutoactivate extends SingleLineCommand2&lt;SequenceDiagram&g
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Toggles the auto-activation mode: when on, every incoming message
+		// automatically activates the target life line, and every dotted
+		// (return) message deactivates the source one.
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (&quot;on&quot;.equalsIgnoreCase(arg.get(&quot;ON&quot;, 0)))</span>
+<span class="nc" id="L67">			return &quot;Turning auto-activation on&quot;;</span>
+
+<span class="nc" id="L69">		return &quot;Turning auto-activation off&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location,
 			RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L64">		sequenceDiagram.setAutoactivate(&quot;on&quot;.equalsIgnoreCase(arg.get(&quot;ON&quot;, 0)));</span>
-<span class="nc" id="L65">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L75">		sequenceDiagram.setAutoactivate(&quot;on&quot;.equalsIgnoreCase(arg.get(&quot;ON&quot;, 0)));</span>
+<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

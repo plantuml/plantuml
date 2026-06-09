@@ -65,17 +65,38 @@ public class CommandActivate2 extends SingleLineCommand2&lt;SequenceDiagram&gt; 
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L69">		final StringBuilder sb = new StringBuilder();</span>
+
+		// Shorthand syntax: 'Bob++' activates and 'Bob--' deactivates the
+		// participant's life line (see executeArg).
+<span class="nc" id="L73">		final boolean activate = arg.get(&quot;TYPE&quot;, 0).equals(&quot;++&quot;);</span>
+<span class="nc" id="L74">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (activate)</span>
+<span class="nc" id="L77">			sb.append(&quot;Activating the life line of '&quot;).append(name).append(&quot;' (shorthand '++')&quot;);</span>
+		else
+<span class="nc" id="L79">			sb.append(&quot;Deactivating the life line of '&quot;).append(name).append(&quot;' (shorthand '--')&quot;);</span>
+
+<span class="nc" id="L81">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L83">			sb.append(&quot;, background color &quot;).append(color);</span>
+
+<span class="nc" id="L85">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		final LifeEventType type = arg.get(&quot;TYPE&quot;, 0).equals(&quot;++&quot;) ? LifeEventType.ACTIVATE : LifeEventType.DEACTIVATE;</span>
-<span class="nc" id="L71">		final Participant p = diagram.getOrCreateParticipant(location, arg.get(&quot;NAME&quot;, 0));</span>
-<span class="nc" id="L72">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L73">		final String error = diagram.activate(p, type,</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (error == null) {</span>
-<span class="nc" id="L76">			return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		final LifeEventType type = arg.get(&quot;TYPE&quot;, 0).equals(&quot;++&quot;) ? LifeEventType.ACTIVATE : LifeEventType.DEACTIVATE;</span>
+<span class="nc" id="L92">		final Participant p = diagram.getOrCreateParticipant(location, arg.get(&quot;NAME&quot;, 0));</span>
+<span class="nc" id="L93">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L94">		final String error = diagram.activate(p, type,</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (error == null) {</span>
+<span class="nc" id="L97">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L78">		return CommandExecutionResult.error(error);</span>
+<span class="nc" id="L99">		return CommandExecutionResult.error(error);</span>
 	}
 
 }

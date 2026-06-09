@@ -60,9 +60,16 @@ public class CommandAutonumberStop extends SingleLineCommand2&lt;SequenceDiagram
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// No argument to capture: the numbering is suspended but its current
+		// value is kept, so 'autonumber resume' continues where it stopped.
+<span class="nc" id="L66">		return &quot;Stopping automatic numbering of messages&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L64">		diagram.autonumberStop();</span>
-<span class="nc" id="L65">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L71">		diagram.autonumberStop();</span>
+<span class="nc" id="L72">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

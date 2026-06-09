@@ -143,6 +143,13 @@ implements <a href="Command.html" title="interface in net.sourceforge.plantuml.c
  <a href="../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#explain(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explain</a><wbr>(<a href="../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="CommandControl.html" title="enum class in net.sourceforge.plantuml.command">CommandControl</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#finalVerification()" class="member-name-link">finalVerification</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -166,7 +173,7 @@ implements <a href="Command.html" title="interface in net.sourceforge.plantuml.c
 <code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.command.Command">Methods inherited from interface&nbsp;net.sourceforge.plantuml.command.<a href="Command.html" title="interface in net.sourceforge.plantuml.command">Command</a></h3>
-<code><a href="Command.html#explain(net.sourceforge.plantuml.utils.BlocLines)">explain</a>, <a href="Command.html#isCommandForbidden(net.sourceforge.plantuml.utils.BlocLines)">isCommandForbidden</a></code></div>
+<code><a href="Command.html#isCommandForbidden(net.sourceforge.plantuml.utils.BlocLines)">isCommandForbidden</a></code></div>
 </section>
 </li>
 </ul>
@@ -219,6 +226,23 @@ implements <a href="Command.html" title="interface in net.sourceforge.plantuml.c
 <section class="detail" id="finalVerification()">
 <h3>finalVerification</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="CommandControl.html" title="enum class in net.sourceforge.plantuml.command">CommandControl</a></span>&nbsp;<span class="element-name">finalVerification</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="explain(net.sourceforge.plantuml.utils.BlocLines)">
+<h3>explain</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">explain</span><wbr><span class="parameters">(<a href="../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Command.html#explain(net.sourceforge.plantuml.utils.BlocLines)">explain</a></code>&nbsp;in interface&nbsp;<code><a href="Command.html" title="interface in net.sourceforge.plantuml.command">Command</a>&lt;<a href="UBrexSingleLineCommand2.html" title="type parameter in UBrexSingleLineCommand2">S</a> extends <a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a>&gt;</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)">
+<h3>explainArg</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">explainArg</span><wbr><span class="parameters">(<a href="../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</span></div>
 </section>
 </li>
 <li>

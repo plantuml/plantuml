@@ -62,10 +62,25 @@ public class CommandDivider extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L66">		final StringBuilder sb = new StringBuilder();</span>
+
+		// '== Label ==' inserts a divider spanning the whole diagram width,
+		// typically used to separate steps or phases.
+<span class="nc" id="L70">		sb.append(&quot;Inserting a divider&quot;);</span>
+
+<span class="nc" id="L72">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L73" title="All 4 branches missed.">		if (label != null &amp;&amp; label.isEmpty() == false)</span>
+<span class="nc" id="L74">			sb.append(&quot; labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L76">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L66">		final Display strings = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
-<span class="fc" id="L67">		diagram.divider(strings);</span>
-<span class="fc" id="L68">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L81">		final Display strings = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="fc" id="L82">		diagram.divider(strings);</span>
+<span class="fc" id="L83">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

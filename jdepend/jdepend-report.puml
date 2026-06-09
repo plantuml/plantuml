@@ -928,8 +928,8 @@ Total Classes: 5
 "net.sourceforge.plantuml.code.deflate" --> "java.lang"
 "net.sourceforge.plantuml.code.deflate" --> "java.util"
 
-class "net.sourceforge.plantuml.command" %lighten("red", 43.00000000000001) {
-Total Classes: 48
+class "net.sourceforge.plantuml.command" %lighten("red", 43.99999999999999) {
+Total Classes: 47
 }
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex.builder"
@@ -988,9 +988,10 @@ Total Classes: 11
 "net.sourceforge.plantuml.command.note" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.command.note" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.command.note.sequence" %lighten("red", 90) {
+class "net.sourceforge.plantuml.command.note.sequence" %lighten("red", 91) {
 Total Classes: 8
 }
+"net.sourceforge.plantuml.command.note.sequence" --> "java.lang"
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.core"
@@ -2830,9 +2831,8 @@ Total Classes: 24
 "net.sourceforge.plantuml.sequencediagram" --> "net.sourceforge.plantuml.warning"
 
 class "net.sourceforge.plantuml.sequencediagram.command" %lighten("red", 88) {
-Total Classes: 30
+Total Classes: 28
 }
-"net.sourceforge.plantuml.sequencediagram.command" --> "java.io"
 "net.sourceforge.plantuml.sequencediagram.command" --> "java.lang"
 "net.sourceforge.plantuml.sequencediagram.command" --> "java.util"
 "net.sourceforge.plantuml.sequencediagram.command" --> "java.util.regex"

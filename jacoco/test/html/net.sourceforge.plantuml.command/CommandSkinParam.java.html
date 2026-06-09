@@ -62,26 +62,48 @@ public class CommandSkinParam extends SingleLineCommand2&lt;TitledDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L66">		final StringBuilder sb = new StringBuilder();</span>
+
+<span class="nc" id="L68">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L69">		sb.append(&quot;Setting the skin parameter '&quot;).append(name).append(&quot;' to '&quot;).append(arg.get(&quot;VALUE&quot;, 0))</span>
+<span class="nc" id="L70">				.append(&quot;'&quot;);</span>
+
+		// Mirror the deprecation warnings emitted by executeArg.
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
+<span class="nc" id="L74">			sb.append(&quot; (deprecated: use '!option handwritten true' instead)&quot;);</span>
+<span class="nc bnc" id="L75" title="All 4 branches missed.">		else if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name) || &quot;padding&quot;.equalsIgnoreCase(name))</span>
+<span class="nc" id="L76">			sb.append(&quot; (deprecated: use CSS style instead)&quot;);</span>
+
+		// The TYPE keyword is captured but not read by executeArg, so the
+		// 'skinparamlocked' variant behaves like a plain 'skinparam'.
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (&quot;skinparamlocked&quot;.equalsIgnoreCase(arg.get(&quot;TYPE&quot;, 0)))</span>
+<span class="nc" id="L81">			sb.append(&quot; (the 'skinparamlocked' variant is treated like a plain 'skinparam')&quot;);</span>
+
+<span class="nc" id="L83">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		try {
-<span class="fc" id="L68">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">			if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
-<span class="fc" id="L70">				diagram.addWarning(new Warning(&quot;Please use '!option handwritten true' to enable handwritten &quot;));</span>
+<span class="fc" id="L90">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
+<span class="fc" id="L92">				diagram.addWarning(new Warning(&quot;Please use '!option handwritten true' to enable handwritten &quot;));</span>
 
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">			if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name))</span>
-<span class="nc" id="L73">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam ParticipantPadding&quot;));</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name))</span>
+<span class="nc" id="L95">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam ParticipantPadding&quot;));</span>
 
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (&quot;padding&quot;.equalsIgnoreCase(name))</span>
-<span class="nc" id="L76">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam padding&quot;));</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">			if (&quot;padding&quot;.equalsIgnoreCase(name))</span>
+<span class="nc" id="L98">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam padding&quot;));</span>
 
-<span class="fc" id="L78">			diagram.setParam(name, arg.get(&quot;VALUE&quot;, 0));</span>
-<span class="fc" id="L79">			diagram.setSkinParamUsed(true);</span>
+<span class="fc" id="L100">			diagram.setParam(name, arg.get(&quot;VALUE&quot;, 0));</span>
+<span class="fc" id="L101">			diagram.setSkinParamUsed(true);</span>
 
-<span class="fc" id="L81">			return CommandExecutionResult.ok();</span>
-<span class="nc" id="L82">		} catch (NoStyleAvailableException e) {</span>
+<span class="fc" id="L103">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L104">		} catch (NoStyleAvailableException e) {</span>
 			// Logme.error(e);
-<span class="nc" id="L84">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
+<span class="nc" id="L106">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
 		}
 
 	}

@@ -63,25 +63,49 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket&lt;Titl
 <span class="fc" id="L63">		return COMMENT_SINGLE_LINE.matcher(line, 0).matches();</span>
 	}
 
+	@Override
+	public String explain(BlocLines lines) {
+		// CommandMultilinesBracket does not dispatch explain() to a helper like
+		// CommandMultilines2.explainNow does, so it is overridden directly.
+		// Mirror execute(): the optional group of the starting line scopes the
+		// parameters, the inner lines are the settings themselves.
+<span class="nc" id="L72">		lines = lines.expandsNewline(true);</span>
+<span class="nc" id="L73">		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString(), 0);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (mStart.find() == false)</span>
+<span class="nc" id="L75">			return &quot;Setting skin parameters&quot;;</span>
+
+<span class="nc" id="L77">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L78">		final String group1 = mStart.group(1);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (group1 == null)</span>
+<span class="nc" id="L80">			sb.append(&quot;Setting skin parameters&quot;);</span>
+		else
+<span class="nc" id="L82">			sb.append(&quot;Setting the skin parameters of '&quot;).append(group1).append(&quot;'&quot;);</span>
+
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		sb.append(&quot; from a block of &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;);</span>
+
+<span class="nc" id="L87">		return sb.toString();</span>
+	}
+
 	public CommandExecutionResult execute(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
-<span class="fc" id="L67">		final SkinLoader skinLoader = new SkinLoader(diagram);</span>
+<span class="fc" id="L91">		final SkinLoader skinLoader = new SkinLoader(diagram);</span>
 
-<span class="fc" id="L69">		lines = lines.expandsNewline(true);</span>
+<span class="fc" id="L93">		lines = lines.expandsNewline(true);</span>
 
-<span class="fc" id="L71">		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString(), 0);</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (mStart.find() == false)</span>
-<span class="nc" id="L73">			return CommandExecutionResult.error(&quot;Bad syntax for skinparam&quot;);</span>
+<span class="fc" id="L95">		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString(), 0);</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (mStart.find() == false)</span>
+<span class="nc" id="L97">			return CommandExecutionResult.error(&quot;Bad syntax for skinparam&quot;);</span>
 
-<span class="fc" id="L75">		final String group1 = mStart.group(1);</span>
-<span class="fc" id="L76">		diagram.setSkinParamUsed(true);</span>
+<span class="fc" id="L99">		final String group1 = mStart.group(1);</span>
+<span class="fc" id="L100">		diagram.setSkinParamUsed(true);</span>
 
-<span class="fc" id="L78">		return skinLoader.execute(lines, group1);</span>
+<span class="fc" id="L102">		return skinLoader.execute(lines, group1);</span>
 
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

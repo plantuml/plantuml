@@ -72,26 +72,46 @@ public class CommandAutonumberResume extends SingleLineCommand2&lt;SequenceDiagr
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L76">		final StringBuilder sb = new StringBuilder();</span>
+
+		// Resumes the numbering stopped by 'autonumber stop', continuing from
+		// the current value. The increment and the format are only replaced
+		// when given (see AutoNumber.resume).
+<span class="nc" id="L81">		sb.append(&quot;Resuming automatic numbering of messages&quot;);</span>
+
+<span class="nc" id="L83">		final String inc = arg.get(&quot;INC&quot;, 0);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (inc != null)</span>
+<span class="nc" id="L85">			sb.append(&quot;, incrementing by &quot;).append(inc);</span>
+
+<span class="nc" id="L87">		final String df = arg.get(&quot;DF&quot;, 0);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (df != null)</span>
+<span class="nc" id="L89">			sb.append(&quot;, with format \&quot;&quot;).append(df).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L91">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L77">		final String df = arg.get(&quot;DF&quot;, 0);</span>
+<span class="nc" id="L97">		final String df = arg.get(&quot;DF&quot;, 0);</span>
 
-<span class="nc" id="L79">		DecimalFormat decimalFormat = null;</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (df != null) {</span>
+<span class="nc" id="L99">		DecimalFormat decimalFormat = null;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (df != null) {</span>
 			try {
-<span class="nc" id="L82">				decimalFormat = new DecimalFormat(df);</span>
-<span class="nc" id="L83">			} catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L84">				return CommandExecutionResult.error(&quot;Error in pattern : &quot; + df);</span>
-<span class="nc" id="L85">			}</span>
+<span class="nc" id="L102">				decimalFormat = new DecimalFormat(df);</span>
+<span class="nc" id="L103">			} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L104">				return CommandExecutionResult.error(&quot;Error in pattern : &quot; + df);</span>
+<span class="nc" id="L105">			}</span>
 		}
 
-<span class="nc" id="L88">		final String inc = arg.get(&quot;INC&quot;, 0);</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (inc == null) {</span>
-<span class="nc" id="L90">			diagram.getAutoNumber().resume(decimalFormat);</span>
+<span class="nc" id="L108">		final String inc = arg.get(&quot;INC&quot;, 0);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (inc == null) {</span>
+<span class="nc" id="L110">			diagram.getAutoNumber().resume(decimalFormat);</span>
 		} else {
-<span class="nc" id="L92">			diagram.getAutoNumber().resume(Integer.parseInt(inc), decimalFormat);</span>
+<span class="nc" id="L112">			diagram.getAutoNumber().resume(Integer.parseInt(inc), decimalFormat);</span>
 		}
-<span class="nc" id="L94">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L114">		return CommandExecutionResult.ok();</span>
 	}
 
 }

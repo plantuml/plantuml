@@ -60,11 +60,26 @@ public class CommandDelay extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L64">		final StringBuilder sb = new StringBuilder();</span>
+
+		// '...' (or the Unicode ellipsis) inserts a delay in the diagram,
+		// optionally labelled when written as '...label...'.
+<span class="nc" id="L68">		sb.append(&quot;Inserting a delay&quot;);</span>
+
+<span class="nc" id="L70">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (label != null)</span>
+<span class="nc" id="L72">			sb.append(&quot; labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L74">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		final Display strings = arg.get(&quot;LABEL&quot;, 0) == null ? Display.empty()</span>
-<span class="nc" id="L65">				: Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
-<span class="nc" id="L66">		diagram.delay(strings);</span>
-<span class="nc" id="L67">		return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		final Display strings = arg.get(&quot;LABEL&quot;, 0) == null ? Display.empty()</span>
+<span class="nc" id="L80">				: Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="nc" id="L81">		diagram.delay(strings);</span>
+<span class="nc" id="L82">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

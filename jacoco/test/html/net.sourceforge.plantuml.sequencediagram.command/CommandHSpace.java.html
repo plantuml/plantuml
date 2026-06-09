@@ -60,14 +60,29 @@ public class CommandHSpace extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L64">		final StringBuilder sb = new StringBuilder();</span>
+
+		// '|||' inserts extra vertical spacing between events; '||45||' gives
+		// the size in pixels (the default is 25, see SequenceDiagram.hspace).
+<span class="nc" id="L68">		sb.append(&quot;Inserting extra vertical spacing&quot;);</span>
+
+<span class="nc" id="L70">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(value))</span>
+<span class="nc" id="L72">			sb.append(&quot; of &quot;).append(value).append(&quot; pixels&quot;);</span>
+
+<span class="nc" id="L74">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L64">		final String size = arg.get(&quot;VALUE&quot;, 0);</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(size)) {</span>
-<span class="nc" id="L66">			diagram.hspace(Integer.parseInt(size));</span>
+<span class="nc" id="L79">		final String size = arg.get(&quot;VALUE&quot;, 0);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (StringUtils.isNotEmpty(size)) {</span>
+<span class="nc" id="L81">			diagram.hspace(Integer.parseInt(size));</span>
 		} else {
-<span class="nc" id="L68">			diagram.hspace();</span>
+<span class="nc" id="L83">			diagram.hspace();</span>
 		}
-<span class="nc" id="L70">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L85">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

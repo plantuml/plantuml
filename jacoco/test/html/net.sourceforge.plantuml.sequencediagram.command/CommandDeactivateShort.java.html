@@ -61,17 +61,25 @@ public class CommandDeactivateShort extends SingleLineCommand2&lt;SequenceDiagra
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// No participant given: this deactivates the target of the latest
+		// still-active activating message (see executeArg and
+		// SequenceDiagram.getActivatingMessage).
+<span class="nc" id="L68">		return &quot;Deactivating the life line activated by the latest message&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location,
 			RegexResult arg2, ParserPass currentPass) {
-<span class="nc" id="L66">		final AbstractMessage message = sequenceDiagram.getActivatingMessage();</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (message == null)</span>
-<span class="nc" id="L68">			return CommandExecutionResult.error(&quot;Nothing to deactivate.&quot;);</span>
+<span class="nc" id="L74">		final AbstractMessage message = sequenceDiagram.getActivatingMessage();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (message == null)</span>
+<span class="nc" id="L76">			return CommandExecutionResult.error(&quot;Nothing to deactivate.&quot;);</span>
 
-<span class="nc" id="L70">		final String error = sequenceDiagram.activate(message.getParticipant2(), LifeEventType.DEACTIVATE, null);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (error != null)</span>
-<span class="nc" id="L72">			return CommandExecutionResult.error(error);</span>
+<span class="nc" id="L78">		final String error = sequenceDiagram.activate(message.getParticipant2(), LifeEventType.DEACTIVATE, null);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (error != null)</span>
+<span class="nc" id="L80">			return CommandExecutionResult.error(error);</span>
 
-<span class="nc" id="L74">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L82">		return CommandExecutionResult.ok();</span>
 	}
 
 }

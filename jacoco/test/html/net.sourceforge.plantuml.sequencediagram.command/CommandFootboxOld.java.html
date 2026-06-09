@@ -61,10 +61,22 @@ public class CommandFootboxOld extends SingleLineCommand2&lt;SequenceDiagram&gt;
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Legacy syntax for 'show footbox' / 'hide footbox'. Note that 'on' is
+		// tested null-safely here, unlike in executeArg where a bare 'footbox'
+		// (TYPE is optional in the regex) would throw a NullPointerException.
+<span class="nc" id="L68">		final boolean show = &quot;on&quot;.equalsIgnoreCase(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (show)</span>
+<span class="nc" id="L70">			return &quot;Showing the participant boxes at the bottom of the diagram&quot;;</span>
+
+<span class="nc" id="L72">		return &quot;Hiding the participant boxes at the bottom of the diagram&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L65">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;on&quot;);</span>
-<span class="nc" id="L66">		diagram.setShowFootbox(footbox);</span>
-<span class="nc" id="L67">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L77">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;on&quot;);</span>
+<span class="nc" id="L78">		diagram.setShowFootbox(footbox);</span>
+<span class="nc" id="L79">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

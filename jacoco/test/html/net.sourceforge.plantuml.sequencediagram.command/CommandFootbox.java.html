@@ -57,11 +57,22 @@ public class CommandFootbox extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="fc" id="L57">	}</span>
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The footbox is the repetition of the participant heads at the bottom
+		// of the diagram.
+<span class="nc" id="L63">		final boolean show = &quot;show&quot;.equalsIgnoreCase(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (show)</span>
+<span class="nc" id="L65">			return &quot;Showing the participant boxes at the bottom of the diagram&quot;;</span>
+
+<span class="nc" id="L67">		return &quot;Hiding the participant boxes at the bottom of the diagram&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L62">		final boolean footbox = arg.get(&quot;TYPE&quot;, 0).equalsIgnoreCase(&quot;show&quot;);</span>
-<span class="fc" id="L63">		diagram.setShowFootbox(footbox);</span>
-<span class="fc" id="L64">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L73">		final boolean footbox = &quot;show&quot;.equalsIgnoreCase(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="fc" id="L74">		diagram.setShowFootbox(footbox);</span>
+<span class="fc" id="L75">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

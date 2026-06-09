@@ -106,31 +106,99 @@ import net.sourceforge.plantuml.warning.Warning;
 <span class="fc" id="L106">		return new SingleLineCommand2&lt;SequenceDiagram&gt;(getRegexConcatSingleLine()) {</span>
 
 			@Override
+			protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L110">				return explainInternal(arg, arg.get(&quot;NOTE&quot;, 0));</span>
+			}
+
+			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L111">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="fc" id="L112">				return executeInternal(diagram, arg, diagram.manageVariable(display));</span>
+<span class="fc" id="L116">				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="fc" id="L117">				return executeInternal(diagram, arg, diagram.manageVariable(display));</span>
 			}
 
 		};
 	}
+
+	/**
+	 * Builds the explanation shared by the single line and the multiline
+	 * flavors, mirroring the fields read by
+	 * {@link #executeInternal(SequenceDiagram, RegexResult, Display)}.
+	 */
+	private String explainInternal(RegexResult arg, String label) {
+<span class="nc" id="L129">		final StringBuilder sb = new StringBuilder();</span>
+
+		// Attaches the note to the latest event able to carry one, typically
+		// the latest message (see SequenceDiagram.getLastEventWithNote). Note
+		// that executeInternal silently does nothing when there is no such
+		// event.
+<span class="nc" id="L135">		final String style = StringUtils.goLowerCase(arg.get(&quot;STYLE&quot;, 0));</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (&quot;hnote&quot;.equals(style))</span>
+<span class="nc" id="L137">			sb.append(&quot;Adding a hexagonal note&quot;);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		else if (&quot;rnote&quot;.equals(style))</span>
+<span class="nc" id="L139">			sb.append(&quot;Adding a rectangular note&quot;);</span>
+		else
+<span class="nc" id="L141">			sb.append(&quot;Adding a note&quot;);</span>
+
+<span class="nc" id="L143">		final String position = StringUtils.goLowerCase(arg.get(&quot;POSITION&quot;, 0));</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (&quot;top&quot;.equals(position))</span>
+<span class="nc" id="L145">			sb.append(&quot; above the latest message&quot;);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">		else if (&quot;bottom&quot;.equals(position))</span>
+<span class="nc" id="L147">			sb.append(&quot; below the latest message&quot;);</span>
+		else
+<span class="nc" id="L149">			sb.append(&quot; on the &quot;).append(position).append(&quot; of the latest message&quot;);</span>
+
+<span class="nc bnc" id="L151" title="All 4 branches missed.">		if (label != null &amp;&amp; label.isEmpty() == false)</span>
+<span class="nc" id="L152">			sb.append(&quot; labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+
+		// The stereotype may be written before or after the position
+		// (STEREO1/STEREO2), hence the lazzy lookup.
+<span class="nc" id="L156">		final String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L158">			sb.append(&quot;, stereotype &quot;).append(stereo);</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L161">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L164">			sb.append(&quot;, with a URL link&quot;);</span>
+
+<span class="nc" id="L166">		return sb.toString();</span>
+	}
 	
-<span class="fc" id="L118">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="fc" id="L119">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
+<span class="fc" id="L169">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="fc" id="L170">			() -&gt; Pattern2.cmpile(&quot;^[%s]*end[%s]?note$&quot;));</span>
 
 
 	public Command&lt;SequenceDiagram&gt; createMultiLine(boolean withBracket) {
-<span class="fc" id="L123">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
-<span class="fc" id="L124">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {</span>
+<span class="fc" id="L174">		return new CommandMultilines2&lt;SequenceDiagram&gt;(getRegexConcatMultiLine(),</span>
+<span class="fc" id="L175">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {</span>
+
+			@Override
+			protected String explainNow(BlocLines lines) {
+				// Mirror executeNow: the first line carries the declaration, the
+				// lines up to the closing 'end note' are the text of the note.
+<span class="nc" id="L181">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">				if (line0 == null)</span>
+<span class="nc" id="L183">					return &quot;Adding a note&quot;;</span>
+
+<span class="nc" id="L185">				final StringBuilder sb = new StringBuilder(explainInternal(line0, null));</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">				final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">				if (bodyCount &gt; 0)</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">					sb.append(&quot;, with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;)</span>
+<span class="nc" id="L189">							.append(&quot; of text&quot;);</span>
+
+<span class="nc" id="L191">				return sb.toString();</span>
+			}
 
 			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L129">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc" id="L130">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="fc" id="L131">				lines = lines.removeEmptyColumns();</span>
-<span class="fc" id="L132">				final Display display = lines.toDisplay();</span>
-<span class="fc" id="L133">				return executeInternal(diagram, line0, diagram.manageVariable(display));</span>
+<span class="fc" id="L197">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L198">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="fc" id="L199">				lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L200">				final Display display = lines.toDisplay();</span>
+<span class="fc" id="L201">				return executeInternal(diagram, line0, diagram.manageVariable(display));</span>
 			}
 
 		};
@@ -138,35 +206,35 @@ import net.sourceforge.plantuml.warning.Warning;
 
 	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, Display display)
 			throws NoSuchColorException {
-<span class="fc" id="L141">		final EventWithNote event = diagram.getLastEventWithNote();</span>
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (event == null)</span>
-<span class="nc" id="L143">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L209">		final EventWithNote event = diagram.getLastEventWithNote();</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">		if (event == null)</span>
+<span class="nc" id="L211">			return CommandExecutionResult.ok();</span>
 
-<span class="fc" id="L145">		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(line0.get(&quot;POSITION&quot;, 0)));</span>
-<span class="fc" id="L146">		Url url = null;</span>
-<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
-<span class="nc" id="L148">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L149">			url = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
+<span class="fc" id="L213">		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(line0.get(&quot;POSITION&quot;, 0)));</span>
+<span class="fc" id="L214">		Url url = null;</span>
+<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
+<span class="nc" id="L216">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L217">			url = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
 		}
 
-<span class="fc" id="L152">		final NoteStyle style = NoteStyle.getNoteStyle(line0.get(&quot;STYLE&quot;, 0));</span>
-<span class="fc" id="L153">		final String backcolor0 = line0.get(&quot;COLOR&quot;, 0);</span>
-<span class="fc" id="L154">		Colors colors = Colors.empty().add(ColorType.BACK,</span>
-<span class="fc bfc" id="L155" title="All 2 branches covered.">				backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));</span>
-<span class="fc" id="L156">		final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc" id="L157">		final String stereotypeString = line0.getLazzy(&quot;STEREO&quot;, 0);</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (stereotypeString != null) {</span>
-<span class="nc" id="L159">			final Stereotype stereotype = Stereotype.build(stereotypeString);</span>
-<span class="nc" id="L160">			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
+<span class="fc" id="L220">		final NoteStyle style = NoteStyle.getNoteStyle(line0.get(&quot;STYLE&quot;, 0));</span>
+<span class="fc" id="L221">		final String backcolor0 = line0.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L222">		Colors colors = Colors.empty().add(ColorType.BACK,</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">				backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));</span>
+<span class="fc" id="L224">		final Note note = new Note(display, position, style, diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L225">		final String stereotypeString = line0.getLazzy(&quot;STEREO&quot;, 0);</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">		if (stereotypeString != null) {</span>
+<span class="nc" id="L227">			final Stereotype stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L228">			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
 					ColorParam.noteBorder);
-<span class="nc" id="L162">			note.setStereotype(stereotype);</span>
+<span class="nc" id="L230">			note.setStereotype(stereotype);</span>
 		}
-<span class="fc" id="L164">		note.setUrl(url);</span>
-<span class="fc" id="L165">		note.setColors(colors);</span>
-<span class="fc" id="L166">		final Warning warning = event.addNote(note);</span>
-<span class="fc" id="L167">		diagram.addWarning(warning);</span>
+<span class="fc" id="L232">		note.setUrl(url);</span>
+<span class="fc" id="L233">		note.setColors(colors);</span>
+<span class="fc" id="L234">		final Warning warning = event.addNote(note);</span>
+<span class="fc" id="L235">		diagram.addWarning(warning);</span>
 
-<span class="fc" id="L169">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L237">		return CommandExecutionResult.ok();</span>
 	}
 
 }

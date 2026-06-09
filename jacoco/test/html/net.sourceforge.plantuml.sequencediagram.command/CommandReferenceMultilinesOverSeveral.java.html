@@ -80,39 +80,79 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines&lt;
 <span class="fc" id="L80">				Pattern2.cmpile(&quot;^end[%s]?(ref)?$&quot;));</span>
 <span class="fc" id="L81">	}</span>
 
+	@Override
+	public String explain(BlocLines lines) {
+		// CommandMultilines does not dispatch explain() to a helper like
+		// CommandMultilines2.explainNow does, so it is overridden directly.
+		// Mirror execute(): the first line carries the declaration, the lines
+		// up to the closing 'end ref' are the text of the frame.
+<span class="nc" id="L89">		final RegexResult arg = REGEX_CONCAT.matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (arg == null)</span>
+<span class="nc" id="L91">			return &quot;Drawing a reference frame&quot;;</span>
+
+<span class="nc" id="L93">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L94">		sb.append(&quot;Drawing a reference frame over &quot;);</span>
+<span class="nc" id="L95">		final List&lt;String&gt; participants = StringUtils.splitComma(arg.get(&quot;PARTS&quot;, 0));</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (int i = 0; i &lt; participants.size(); i++) {</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (i &gt; 0)</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">				sb.append(i == participants.size() - 1 ? &quot; and &quot; : &quot;, &quot;);</span>
+<span class="nc" id="L99">			sb.append(&quot;'&quot;).append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(participants.get(i)))</span>
+<span class="nc" id="L100">					.append(&quot;'&quot;);</span>
+		}
+
+<span class="nc" id="L103">		final String color = arg.get(&quot;REF&quot;, 0);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L105">			sb.append(&quot;, background color &quot;).append(color);</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L108">			sb.append(&quot;, with a URL link&quot;);</span>
+
+		// The trailing color is parsed but never applied by execute().
+<span class="nc" id="L111">		final String unused = arg.get(&quot;UNUSED&quot;, 0);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (unused != null)</span>
+<span class="nc" id="L113">			sb.append(&quot;, second color &quot;).append(unused).append(&quot; (currently ignored)&quot;);</span>
+
+		// Body: the text lines between the 'ref over' line and 'end ref'.
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (bodyCount &gt; 0)</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">			sb.append(&quot;, with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; of text&quot;);</span>
+
+<span class="nc" id="L120">		return sb.toString();</span>
+	}
+
 	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L85">		final String firstLine = lines.getFirst().getTrimmed().getString();</span>
-<span class="nc" id="L86">		final RegexResult arg = REGEX_CONCAT.matcher(firstLine);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (arg == null)</span>
-<span class="nc" id="L88">			return CommandExecutionResult.error(&quot;Cannot parse line &quot; + firstLine);</span>
+<span class="nc" id="L125">		final String firstLine = lines.getFirst().getTrimmed().getString();</span>
+<span class="nc" id="L126">		final RegexResult arg = REGEX_CONCAT.matcher(firstLine);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (arg == null)</span>
+<span class="nc" id="L128">			return CommandExecutionResult.error(&quot;Cannot parse line &quot; + firstLine);</span>
 
-<span class="nc" id="L90">		final String s1 = arg.get(&quot;REF&quot;, 0);</span>
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		final HColor backColorElement = s1 == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s1);</span>
+<span class="nc" id="L130">		final String s1 = arg.get(&quot;REF&quot;, 0);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		final HColor backColorElement = s1 == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s1);</span>
 		// final HtmlColor backColorGeneral =
 		// HtmlColorSetSimple.instance().getColorIfValid(line0.get(1));
 
-<span class="nc" id="L95">		final List&lt;String&gt; participants = StringUtils.splitComma(arg.get(&quot;PARTS&quot;, 0));</span>
-<span class="nc" id="L96">		final List&lt;Participant&gt; p = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		for (String s : participants)</span>
-<span class="nc" id="L98">			p.add(diagram.getOrCreateParticipant(lines.getLocation(),</span>
-<span class="nc" id="L99">					StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));</span>
+<span class="nc" id="L135">		final List&lt;String&gt; participants = StringUtils.splitComma(arg.get(&quot;PARTS&quot;, 0));</span>
+<span class="nc" id="L136">		final List&lt;Participant&gt; p = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">		for (String s : participants)</span>
+<span class="nc" id="L138">			p.add(diagram.getOrCreateParticipant(lines.getLocation(),</span>
+<span class="nc" id="L139">					StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));</span>
 
-<span class="nc" id="L101">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L102">		lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L103">		final Display strings = lines.toDisplay();</span>
+<span class="nc" id="L141">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L142">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L143">		final Display strings = lines.toDisplay();</span>
 
-<span class="nc" id="L105">		final String url = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="nc" id="L106">		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L107">		Url u = null;</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (url != null)</span>
-<span class="nc" id="L109">			u = b.getUrl(url);</span>
+<span class="nc" id="L145">		final String url = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="nc" id="L146">		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L147">		Url u = null;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (url != null)</span>
+<span class="nc" id="L149">			u = b.getUrl(url);</span>
 
-<span class="nc" id="L111">		final HColor backColorGeneral = null;</span>
-<span class="nc" id="L112">		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement,</span>
-<span class="nc" id="L113">				diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L114">		diagram.addReference(ref);</span>
-<span class="nc" id="L115">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L151">		final HColor backColorGeneral = null;</span>
+<span class="nc" id="L152">		final Reference ref = new Reference(p, u, strings, backColorGeneral, backColorElement,</span>
+<span class="nc" id="L153">				diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="nc" id="L154">		diagram.addReference(ref);</span>
+<span class="nc" id="L155">		return CommandExecutionResult.ok();</span>
 	}
 
 }

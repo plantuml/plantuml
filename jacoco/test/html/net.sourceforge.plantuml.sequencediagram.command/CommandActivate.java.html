@@ -72,20 +72,49 @@ public class CommandActivate extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L76">		final StringBuilder sb = new StringBuilder();</span>
+
+		// The keyword maps directly to a LifeEventType on the participant's
+		// life line (see executeArg).
+<span class="nc" id="L80">		final String type = StringUtils.goLowerCase(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="nc" id="L81">		final String who = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;WHO&quot;, 0));</span>
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (&quot;activate&quot;.equals(type))</span>
+<span class="nc" id="L84">			sb.append(&quot;Activating the life line of '&quot;).append(who).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		else if (&quot;deactivate&quot;.equals(type))</span>
+<span class="nc" id="L86">			sb.append(&quot;Deactivating the life line of '&quot;).append(who).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		else if (&quot;destroy&quot;.equals(type))</span>
+<span class="nc" id="L88">			sb.append(&quot;Destroying the life line of '&quot;).append(who).append(&quot;'&quot;);</span>
+		else
+<span class="nc" id="L90">			sb.append(&quot;Creating '&quot;).append(who).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L92">		final String back = arg.get(&quot;BACK&quot;, 0);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (back != null)</span>
+<span class="nc" id="L94">			sb.append(&quot;, background color &quot;).append(back);</span>
+
+<span class="nc" id="L96">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (line != null)</span>
+<span class="nc" id="L98">			sb.append(&quot;, line color &quot;).append(line);</span>
+
+<span class="nc" id="L100">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L77">		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get(&quot;TYPE&quot;, 0)));</span>
-<span class="fc" id="L78">		final Participant p = diagram.getOrCreateParticipant(location,</span>
-<span class="fc" id="L79">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;WHO&quot;, 0)));</span>
-<span class="fc" id="L80">		final String back = arg.get(&quot;BACK&quot;, 0);</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		final HColor backColor = back == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(back);</span>
-<span class="fc" id="L82">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		final HColor lineColor = line == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(line);</span>
-<span class="fc" id="L84">		final String error = diagram.activate(p, type, backColor, lineColor);</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (error == null) {</span>
-<span class="fc" id="L86">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L106">		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get(&quot;TYPE&quot;, 0)));</span>
+<span class="fc" id="L107">		final Participant p = diagram.getOrCreateParticipant(location,</span>
+<span class="fc" id="L108">				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;WHO&quot;, 0)));</span>
+<span class="fc" id="L109">		final String back = arg.get(&quot;BACK&quot;, 0);</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		final HColor backColor = back == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(back);</span>
+<span class="fc" id="L111">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		final HColor lineColor = line == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(line);</span>
+<span class="fc" id="L113">		final String error = diagram.activate(p, type, backColor, lineColor);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (error == null) {</span>
+<span class="fc" id="L115">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L88">		return CommandExecutionResult.error(error);</span>
+<span class="nc" id="L117">		return CommandExecutionResult.error(error);</span>
 	}
 
 }
