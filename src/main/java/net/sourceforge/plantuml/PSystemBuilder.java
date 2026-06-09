@@ -242,37 +242,12 @@ public class PSystemBuilder {
 			umlSource.patchBase64();
 
 			final Collection<DiagramType> diagramTypes = umlSource.getDiagramTypes();
-			if (diagramTypes.contains(DiagramType.UNKNOWN))
-				return new PSystemUnsupported(umlSource, preprocessing);
 
-			// Detect misuse of @startuml for DOT or DITAA diagrams and
-			// return a helpful error
-			if (diagramTypes.contains(DiagramType.SEQUENCE) && source.size() > 1) {
-				final String secondLine = source.get(1).getString();
-				if (PSystemDotFactory.isGraphvizDotHeader(secondLine)) {
-					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
-							"This looks like a DOT diagram. Please use @startdot instead of @startuml.", 100,
-							source.get(1), DiagramType.SEQUENCE);
+			final UgDiagram basicCheck = PSystemErrorUtils.checkBasicError(diagramTypes, source, preprocessing,
+					umlSource);
+			if (basicCheck != null)
+				return basicCheck;
 
-					return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
-							preprocessing);
-
-				} else if (secondLine.trim().equals("ditaa")) {
-					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
-							"This looks like a DITAA diagram. Please use @startditaa instead of @startuml.", 100,
-							source.get(1), DiagramType.SEQUENCE);
-
-					return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
-							preprocessing);
-				} else if (secondLine.trim().equals("nwdiag {")) {
-					final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
-							"This looks like a network diagram. Please use @startnwdiag instead of @startuml.", 100,
-							source.get(1), DiagramType.SEQUENCE);
-
-					return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
-							preprocessing);
-				}
-			}
 			final List<PSystemError> errors = new ArrayList<>();
 			for (PSystemFactory systemFactory : factories) {
 				if (!diagramTypes.contains(systemFactory.getDiagramType()))

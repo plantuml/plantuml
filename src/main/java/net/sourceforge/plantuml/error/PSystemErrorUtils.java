@@ -36,15 +36,68 @@ package net.sourceforge.plantuml.error;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.ErrorUmlType;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class PSystemErrorUtils {
+
+	public static UgDiagram checkBasicError(Collection<DiagramType> diagramTypes, List<StringLocated> source,
+			PreprocessingArtifact preprocessing, final UmlSource umlSource) {
+
+		if (diagramTypes.contains(DiagramType.UNKNOWN))
+			return new PSystemUnsupported(umlSource, preprocessing);
+
+		if (diagramTypes.contains(DiagramType.SEQUENCE) && source.size() > 1) {
+			// Detect misuse of @startuml for DOT or DITAA diagrams and
+			// return a helpful error
+			final String secondLine = source.get(1).getString();
+			if (!TeaVM.isTeaVM() && PSystemDotFactory.isGraphvizDotHeader(secondLine)) {
+				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
+						"This looks like a DOT diagram. Please use @startdot instead of @startuml.", 100, source.get(1),
+						DiagramType.SEQUENCE);
+
+				return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
+						preprocessing);
+
+			} else if (!TeaVM.isTeaVM() && secondLine.trim().equals("ditaa")) {
+				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
+						"This looks like a DITAA diagram. Please use @startditaa instead of @startuml.", 100,
+						source.get(1), DiagramType.SEQUENCE);
+
+				return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
+						preprocessing);
+
+			} else if (!TeaVM.isTeaVM() && secondLine.trim().equals("salt")) {
+				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
+						"This looks like a salt diagram. Please use @startsalt instead of @startuml.", 100,
+						source.get(1), DiagramType.SEQUENCE);
+
+				return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
+						preprocessing);
+
+			} else if (secondLine.trim().equals("nwdiag {")) {
+				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
+						"This looks like a network diagram. Please use @startnwdiag instead of @startuml.", 100,
+						source.get(1), DiagramType.SEQUENCE);
+
+				return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
+						preprocessing);
+			}
+		}
+
+		return null;
+	}
 
 	public static PSystemError buildV2(UmlSource source, ErrorUml singleError, List<String> debugLines,
 			List<StringLocated> list, PreprocessingArtifact preprocessing) {

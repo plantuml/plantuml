@@ -205,10 +205,10 @@ public class BlockUml {
 		if (preprocessorError)
 			return Collections.singletonList(Explanation.ofError("Preprocessor error"));
 
-		if (!TeaVM.isTeaVM())
+		if (TeaVM.isTeaVM())
+			return PSystemBuilder2.getInstance().explain(data, preprocessingArtifact);
+		else
 			return PSystemBuilder.getInstance().explain(pathSystem, data, rawSource, previous, preprocessingArtifact);
-
-		return PSystemBuilder2.getInstance().explain(data, preprocessingArtifact);
 	}
 
 	public final List<StringLocated> getData() {

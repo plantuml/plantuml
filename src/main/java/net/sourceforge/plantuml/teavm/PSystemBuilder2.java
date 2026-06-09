@@ -38,12 +38,10 @@ package net.sourceforge.plantuml.teavm;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
-import net.sourceforge.plantuml.ErrorUml;
-import net.sourceforge.plantuml.ErrorUmlType;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
@@ -167,20 +165,11 @@ public class PSystemBuilder2 {
 		umlSource.patchBase64();
 
 		final Collection<DiagramType> diagramTypes = umlSource.getDiagramTypes();
-		if (diagramTypes.contains(DiagramType.UNKNOWN))
-			return new PSystemUnsupported(umlSource, preprocessing);
 
-		if (diagramTypes.contains(DiagramType.SEQUENCE) && source.size() > 1) {
-			final String secondLine = source.get(1).getString();
-			if (secondLine.trim().equals("nwdiag {")) {
-				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,
-						"This looks like a network diagram. Please use @startnwdiag instead of @startuml.", 100,
-						source.get(1), DiagramType.SEQUENCE);
+		final UgDiagram basicCheck = PSystemErrorUtils.checkBasicError(diagramTypes, source, preprocessing, umlSource);
+		if (basicCheck != null)
+			return null;
 
-				return PSystemErrorUtils.buildV2(umlSource, error, Collections.<String>emptyList(), source,
-						preprocessing);
-			}
-		}
 		final List<PSystemError> errors = new ArrayList<>();
 
 		if (lastFactory != null && diagramTypes.contains(lastFactory.getDiagramType())) {
@@ -227,8 +216,8 @@ public class PSystemBuilder2 {
 	 * It builds the {@link UmlSource} the same way as
 	 * {@link #createDiagramFromPreprocessed(List, PreprocessingArtifact)}, finds
 	 * the first factory that produces a valid diagram for the detected type, and
-	 * delegates to its {@code explain}. {@code pathSystem} and {@code previous}
-	 * are {@code null} here, as everywhere else in this builder.
+	 * delegates to its {@code explain}. {@code pathSystem} and {@code previous} are
+	 * {@code null} here, as everywhere else in this builder.
 	 *
 	 * @param source        the preprocessed source lines
 	 * @param preprocessing the preprocessing artifact

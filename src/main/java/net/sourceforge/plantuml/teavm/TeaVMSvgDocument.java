@@ -38,8 +38,8 @@ package net.sourceforge.plantuml.teavm;
 import org.teavm.jso.JSBody;
 import org.teavm.jso.dom.xml.Element;
 
-import net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument;
 import net.sourceforge.plantuml.klimt.drawing.svg.IElement;
+import net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument;
 
 public class TeaVMSvgDocument extends PortableSvgDocument {
 	// ::remove file when JAVA8

@@ -34,8 +34,6 @@
  */
 package net.sourceforge.plantuml.teavm;
 
-import net.sourceforge.plantuml.abel.LeafType;
-
 // ::comment when JAVA8
 // import org.teavm.interop.PlatformMarker;
 // ::done
