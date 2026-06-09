@@ -135,12 +135,18 @@ loadScripts(document, 'script');</script>
  <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;rootCause)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isDiagramError(java.lang.Class)" class="member-name-link">isDiagramError</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a>&gt;&nbsp;type)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../UgDiagram.html" title="class in net.sourceforge.plantuml">UgDiagram</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#checkBasicError(java.util.Collection,java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact,net.sourceforge.plantuml.core.UmlSource)" class="member-name-link">checkBasicError</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a>&gt;&nbsp;diagramTypes,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;source,
+ <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing,
+ <a href="../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;umlSource)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PSystemError.html" title="class in net.sourceforge.plantuml.error">PSystemError</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#merge(java.util.Collection)" class="member-name-link">merge</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="PSystemError.html" title="class in net.sourceforge.plantuml.error">PSystemError</a>&gt;&nbsp;ps)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isDiagramError(java.lang.Class)" class="member-name-link">isDiagramError</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a>&gt;&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PSystemError.html" title="class in net.sourceforge.plantuml.error">PSystemError</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#merge(java.util.Collection)" class="member-name-link">merge</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="PSystemError.html" title="class in net.sourceforge.plantuml.error">PSystemError</a>&gt;&nbsp;ps)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -172,6 +178,15 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="checkBasicError(java.util.Collection,java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact,net.sourceforge.plantuml.core.UmlSource)">
+<h3>checkBasicError</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../UgDiagram.html" title="class in net.sourceforge.plantuml">UgDiagram</a></span>&nbsp;<span class="element-name">checkBasicError</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../core/DiagramType.html" title="enum class in net.sourceforge.plantuml.core">DiagramType</a>&gt;&nbsp;diagramTypes,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;source,
+ <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing,
+ <a href="../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;umlSource)</span></div>
+</section>
+</li>
 <li>
 <section class="detail" id="buildV2(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ErrorUml,java.util.List,java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">
 <h3>buildV2</h3>

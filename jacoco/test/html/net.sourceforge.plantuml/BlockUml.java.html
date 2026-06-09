@@ -205,10 +205,10 @@ public class BlockUml {
 <span class="pc bpc" id="L205" title="1 of 2 branches missed.">		if (preprocessorError)</span>
 <span class="nc" id="L206">			return Collections.singletonList(Explanation.ofError(&quot;Preprocessor error&quot;));</span>
 
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
-<span class="fc" id="L209">			return PSystemBuilder.getInstance().explain(pathSystem, data, rawSource, previous, preprocessingArtifact);</span>
-
-<span class="nc" id="L211">		return PSystemBuilder2.getInstance().explain(data, preprocessingArtifact);</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L209">			return PSystemBuilder2.getInstance().explain(data, preprocessingArtifact);</span>
+		else
+<span class="fc" id="L211">			return PSystemBuilder.getInstance().explain(pathSystem, data, rawSource, previous, preprocessingArtifact);</span>
 	}
 
 	public final List&lt;StringLocated&gt; getData() {

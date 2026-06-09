@@ -6658,11 +6658,11 @@
                 <TotalClasses>3</TotalClasses>
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>0</Ca>
+                <Ca>1</Ca>
                 <Ce>12</Ce>
                 <A>0</A>
-                <I>1</I>
-                <D>0</D>
+                <I>0.92</I>
+                <D>0.08</D>
                 <V>1</V>
             </Stats>
 
@@ -6697,6 +6697,7 @@
             </DependsUpon>
 
             <UsedBy>
+                <Package>net.sourceforge.plantuml.error</Package>
             </UsedBy>
         </Package>
 
@@ -7595,10 +7596,10 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>5</Ca>
-                <Ce>6</Ce>
+                <Ce>8</Ce>
                 <A>0</A>
-                <I>0.55</I>
-                <D>0.45</D>
+                <I>0.62</I>
+                <D>0.38</D>
                 <V>1</V>
             </Stats>
 
@@ -7622,7 +7623,9 @@
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
+                <Package>net.sourceforge.plantuml.directdot</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
+                <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
             </DependsUpon>
 
@@ -16747,7 +16750,7 @@
                 <TotalClasses>19</TotalClasses>
                 <ConcreteClasses>18</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>42</Ca>
+                <Ca>43</Ca>
                 <Ce>14</Ce>
                 <A>0.05</A>
                 <I>0.25</I>
@@ -16845,6 +16848,7 @@
                 <Package>net.sourceforge.plantuml.crash</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
+                <Package>net.sourceforge.plantuml.error</Package>
                 <Package>net.sourceforge.plantuml.flashcode</Package>
                 <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.gantt.lang</Package>

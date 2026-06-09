@@ -1231,7 +1231,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.descdiagram.command" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.descdiagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.directdot" %lighten("red", 100) {
+class "net.sourceforge.plantuml.directdot" %lighten("red", 92) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.directdot" --> "java.io"
@@ -1480,14 +1480,16 @@ Total Classes: 1
 }
 "net.sourceforge.plantuml.emoji.data" --> "java.lang"
 
-class "net.sourceforge.plantuml.error" %lighten("red", 55) {
+class "net.sourceforge.plantuml.error" %lighten("red", 62) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.error" --> "java.lang"
 "net.sourceforge.plantuml.error" --> "java.util"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.directdot"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.preproc"
+"net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.text"
 
 class "net.sourceforge.plantuml.file" %lighten("red", 75) {

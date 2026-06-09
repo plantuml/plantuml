@@ -36,65 +36,118 @@ package net.sourceforge.plantuml.error;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.plantuml.ErrorUml;
+import net.sourceforge.plantuml.ErrorUmlType;
+import net.sourceforge.plantuml.UgDiagram;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.directdot.PSystemDotFactory;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 
-<span class="nc" id="L47">public class PSystemErrorUtils {</span>
+<span class="nc" id="L53">public class PSystemErrorUtils {</span>
+
+	public static UgDiagram checkBasicError(Collection&lt;DiagramType&gt; diagramTypes, List&lt;StringLocated&gt; source,
+			PreprocessingArtifact preprocessing, final UmlSource umlSource) {
+
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (diagramTypes.contains(DiagramType.UNKNOWN))</span>
+<span class="fc" id="L59">			return new PSystemUnsupported(umlSource, preprocessing);</span>
+
+<span class="pc bpc" id="L61" title="1 of 4 branches missed.">		if (diagramTypes.contains(DiagramType.SEQUENCE) &amp;&amp; source.size() &gt; 1) {</span>
+			// Detect misuse of @startuml for DOT or DITAA diagrams and
+			// return a helpful error
+<span class="fc" id="L64">			final String secondLine = source.get(1).getString();</span>
+<span class="pc bpc" id="L65" title="2 of 4 branches missed.">			if (!TeaVM.isTeaVM() &amp;&amp; PSystemDotFactory.isGraphvizDotHeader(secondLine)) {</span>
+<span class="nc" id="L66">				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
+<span class="nc" id="L67">						&quot;This looks like a DOT diagram. Please use @startdot instead of @startuml.&quot;, 100, source.get(1),</span>
+						DiagramType.SEQUENCE);
+
+<span class="nc" id="L70">				return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
+						preprocessing);
+
+<span class="pc bpc" id="L73" title="2 of 4 branches missed.">			} else if (!TeaVM.isTeaVM() &amp;&amp; secondLine.trim().equals(&quot;ditaa&quot;)) {</span>
+<span class="nc" id="L74">				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
+						&quot;This looks like a DITAA diagram. Please use @startditaa instead of @startuml.&quot;, 100,
+<span class="nc" id="L76">						source.get(1), DiagramType.SEQUENCE);</span>
+
+<span class="nc" id="L78">				return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
+						preprocessing);
+
+<span class="pc bpc" id="L81" title="2 of 4 branches missed.">			} else if (!TeaVM.isTeaVM() &amp;&amp; secondLine.trim().equals(&quot;salt&quot;)) {</span>
+<span class="nc" id="L82">				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
+						&quot;This looks like a salt diagram. Please use @startsalt instead of @startuml.&quot;, 100,
+<span class="nc" id="L84">						source.get(1), DiagramType.SEQUENCE);</span>
+
+<span class="nc" id="L86">				return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
+						preprocessing);
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			} else if (secondLine.trim().equals(&quot;nwdiag {&quot;)) {</span>
+<span class="nc" id="L90">				final ErrorUml error = new ErrorUml(ErrorUmlType.EXECUTION_ERROR,</span>
+						&quot;This looks like a network diagram. Please use @startnwdiag instead of @startuml.&quot;, 100,
+<span class="nc" id="L92">						source.get(1), DiagramType.SEQUENCE);</span>
+
+<span class="nc" id="L94">				return PSystemErrorUtils.buildV2(umlSource, error, Collections.&lt;String&gt;emptyList(), source,</span>
+						preprocessing);
+			}
+		}
+
+<span class="fc" id="L99">		return null;</span>
+	}
 
 	public static PSystemError buildV2(UmlSource source, ErrorUml singleError, List&lt;String&gt; debugLines,
 			List&lt;StringLocated&gt; list, PreprocessingArtifact preprocessing) {
-<span class="fc" id="L51">		return new PSystemErrorV2(source, list, singleError, preprocessing, null);</span>
+<span class="fc" id="L104">		return new PSystemErrorV2(source, list, singleError, preprocessing, null);</span>
 	}
 
 	public static PSystemError buildV2(UmlSource source, ErrorUml singleError, List&lt;String&gt; debugLines,
 			List&lt;StringLocated&gt; list, PreprocessingArtifact preprocessing, Throwable rootCause) {
-<span class="fc" id="L56">		return new PSystemErrorV2(source, list, singleError, preprocessing, rootCause);</span>
+<span class="fc" id="L109">		return new PSystemErrorV2(source, list, singleError, preprocessing, rootCause);</span>
 	}
 
 	public static PSystemError merge(Collection&lt;PSystemError&gt; ps) {
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (ps.size() == 0)</span>
-<span class="nc" id="L61">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (ps.size() == 0)</span>
+<span class="nc" id="L114">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L63">		UmlSource source = null;</span>
-<span class="fc" id="L64">		final List&lt;ErrorUml&gt; errors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L116">		UmlSource source = null;</span>
+<span class="fc" id="L117">		final List&lt;ErrorUml&gt; errors = new ArrayList&lt;&gt;();</span>
 		// final List&lt;String&gt; debugs = new ArrayList&lt;&gt;();
-<span class="fc" id="L66">		final List&lt;PSystemErrorV2&gt; errorsV2 = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">		for (PSystemError system : ps) {</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">			if (system == null)</span>
-<span class="fc" id="L69">				continue;</span>
+<span class="fc" id="L119">		final List&lt;PSystemErrorV2&gt; errorsV2 = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		for (PSystemError system : ps) {</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (system == null)</span>
+<span class="fc" id="L122">				continue;</span>
 
-<span class="pc bpc" id="L71" title="1 of 4 branches missed.">			if (system.getSource() != null &amp;&amp; source == null)</span>
-<span class="fc" id="L72">				source = system.getSource();</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">			if (system.getSource() != null &amp;&amp; source == null)</span>
+<span class="fc" id="L125">				source = system.getSource();</span>
 
-<span class="fc" id="L74">			errors.addAll(system.getErrorsUml());</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (system instanceof PSystemErrorV2)</span>
-<span class="fc" id="L76">				errorsV2.add((PSystemErrorV2) system);</span>
-<span class="fc" id="L77">		}</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (source == null)</span>
-<span class="nc" id="L79">			throw new IllegalStateException();</span>
+<span class="fc" id="L127">			errors.addAll(system.getErrorsUml());</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (system instanceof PSystemErrorV2)</span>
+<span class="fc" id="L129">				errorsV2.add((PSystemErrorV2) system);</span>
+<span class="fc" id="L130">		}</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (source == null)</span>
+<span class="nc" id="L132">			throw new IllegalStateException();</span>
 
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (errorsV2.size() &gt; 0)</span>
-<span class="fc" id="L82">			return mergeV2(errorsV2);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (errorsV2.size() &gt; 0)</span>
+<span class="fc" id="L135">			return mergeV2(errorsV2);</span>
 
-<span class="nc" id="L84">		throw new IllegalStateException();</span>
+<span class="nc" id="L137">		throw new IllegalStateException();</span>
 	}
 
 	private static PSystemErrorV2 mergeV2(List&lt;PSystemErrorV2&gt; errorsV2) {
-<span class="fc" id="L88">		PSystemErrorV2 result = null;</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (PSystemErrorV2 err : errorsV2)</span>
-<span class="fc bfc" id="L90" title="All 4 branches covered.">			if (result == null || result.score() &lt; err.score())</span>
-<span class="fc" id="L91">				result = err;</span>
+<span class="fc" id="L141">		PSystemErrorV2 result = null;</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		for (PSystemErrorV2 err : errorsV2)</span>
+<span class="fc bfc" id="L143" title="All 4 branches covered.">			if (result == null || result.score() &lt; err.score())</span>
+<span class="fc" id="L144">				result = err;</span>
 
-<span class="fc" id="L93">		return result;</span>
+<span class="fc" id="L146">		return result;</span>
 	}
 
 	public static boolean isDiagramError(Class&lt;? extends Diagram&gt; type) {
-<span class="fc" id="L97">		return PSystemError.class.isAssignableFrom(type);</span>
+<span class="fc" id="L150">		return PSystemError.class.isAssignableFrom(type);</span>
 	}
 
 }

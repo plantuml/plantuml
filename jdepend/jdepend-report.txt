@@ -4302,12 +4302,12 @@ Stats:
     Concrete Classes: 3
     Abstract Classes: 0
 
-    Ca: 0
+    Ca: 1
     Ce: 12
 
     A: 0
-    I: 1
-    D: 0
+    I: 0.92
+    D: 0.08
 
 Abstract Classes:
 
@@ -4331,7 +4331,7 @@ Depends Upon:
     net.sourceforge.plantuml.security
 
 Used By:
-    Not used by any packages.
+    net.sourceforge.plantuml.error
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.ditaa
@@ -5004,11 +5004,11 @@ Stats:
     Abstract Classes: 0
 
     Ca: 5
-    Ce: 6
+    Ce: 8
 
     A: 0
-    I: 0.55
-    D: 0.45
+    I: 0.62
+    D: 0.38
 
 Abstract Classes:
 
@@ -5022,7 +5022,9 @@ Depends Upon:
     java.util
     net.sourceforge.plantuml
     net.sourceforge.plantuml.core
+    net.sourceforge.plantuml.directdot
     net.sourceforge.plantuml.preproc
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
 
 Used By:
@@ -11346,7 +11348,7 @@ Stats:
     Concrete Classes: 18
     Abstract Classes: 1
 
-    Ca: 42
+    Ca: 43
     Ce: 14
 
     A: 0.05
@@ -11402,6 +11404,7 @@ Used By:
     net.sourceforge.plantuml.crash
     net.sourceforge.plantuml.cucadiagram
     net.sourceforge.plantuml.dot
+    net.sourceforge.plantuml.error
     net.sourceforge.plantuml.flashcode
     net.sourceforge.plantuml.gantt.draw
     net.sourceforge.plantuml.gantt.lang
@@ -14882,7 +14885,7 @@ net.sourceforge.plantuml.dedication,10,1,0,22,0.1,1,0.1,1
 net.sourceforge.plantuml.definition,2,0,0,14,0,1,0,1
 net.sourceforge.plantuml.descdiagram,8,0,3,29,0,0.91,0.09,1
 net.sourceforge.plantuml.descdiagram.command,4,0,5,17,0,0.77,0.23,1
-net.sourceforge.plantuml.directdot,3,0,0,12,0,1,0,1
+net.sourceforge.plantuml.directdot,3,0,1,12,0,0.92,0.08,1
 net.sourceforge.plantuml.ditaa,2,0,0,19,0,1,0,1
 net.sourceforge.plantuml.donors,6,0,0,18,0,1,0,1
 net.sourceforge.plantuml.dot,18,3,5,29,0.17,0.85,0.02,1
@@ -14898,7 +14901,7 @@ net.sourceforge.plantuml.elk.proxy.graph,6,0,3,3,0,0.5,0.5,1
 net.sourceforge.plantuml.elk.proxy.graph.util,1,0,1,3,0,0.75,0.25,1
 net.sourceforge.plantuml.emoji,5,1,1,13,0.2,0.93,0.13,1
 net.sourceforge.plantuml.emoji.data,1,0,0,1,0,1,0,1
-net.sourceforge.plantuml.error,3,0,5,6,0,0.55,0.45,1
+net.sourceforge.plantuml.error,3,0,5,8,0,0.62,0.38,1
 net.sourceforge.plantuml.file,1,0,1,3,0,0.75,0.25,1
 net.sourceforge.plantuml.filesdiagram,4,0,0,15,0,1,0,1
 net.sourceforge.plantuml.flashcode,3,1,0,3,0.33,1,0.33,1
@@ -15006,7 +15009,7 @@ net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
 net.sourceforge.plantuml.svg.parser,11,1,1,13,0.09,0.93,0.02,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
-net.sourceforge.plantuml.teavm,19,1,42,14,0.05,0.25,0.7,1
+net.sourceforge.plantuml.teavm,19,1,43,14,0.05,0.25,0.7,1
 net.sourceforge.plantuml.teavm.browser,3,3,1,2,1,0.67,0.67,1
 net.sourceforge.plantuml.teavm.headless,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
