@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Load.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt.ngm</a> &gt; <span class="el_source">Load.java</span></div><h1>Load.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.gantt.ngm;
+
+import java.time.Duration;
+
+import net.sourceforge.plantuml.gantt.PValue;
+import net.sourceforge.plantuml.gantt.ngm.math.Fraction;
+
+/**
+ * Represents the intrinsic amount of work required for a task, expressed
+ * internally as seconds of person-time.
+ *
+ * &lt;p&gt;
+ * This value corresponds to the total workload assuming a single full-time
+ * equivalent (1 FTE) resource works on the task. For example:
+ * &lt;ul&gt;
+ * &lt;li&gt;{@code ofHours(1)} means 1 hour of work for one person&lt;/li&gt;
+ * &lt;li&gt;{@code ofHours(8)} means 1 typical working day for one person&lt;/li&gt;
+ * &lt;li&gt;{@code ofHours(80)} means 10 working days for one person, or 5 days for
+ * two people working in parallel&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * &lt;p&gt;
+ * This class is immutable and stores only the raw workload quantity.
+ * Higher-level concepts such as resource allocation, effective duration, or
+ * calendar constraints are handled by {@link NGMAllocation} and
+ * {@link net.sourceforge.plantuml.gantt.ngm.math.LoadIntegrator}.
+ *
+ * @see NGMAllocation
+ * @see net.sourceforge.plantuml.gantt.ngm.math.LoadIntegrator
+ */
+public final class Load implements PValue {
+
+	/**
+	 * Workload expressed in seconds for a single person (1 FTE).
+	 */
+	private final Duration duration;
+
+	/**
+	 * Private constructor. Use factory methods to create instances.
+	 *
+	 * @param duration the total effort in seconds
+	 */
+<span class="fc" id="L78">	private Load(Duration duration) {</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (duration.isNegative())</span>
+<span class="nc" id="L80">			throw new IllegalArgumentException(&quot;Effort cannot be negative: &quot; + duration);</span>
+
+<span class="fc" id="L82">		this.duration = duration;</span>
+<span class="fc" id="L83">	}</span>
+
+	public static Load of(Duration duration) {
+<span class="fc" id="L86">		return new Load(duration);</span>
+	}
+
+	/**
+	 * Creates a zero effort (no work required).
+	 *
+	 * &lt;p&gt;
+	 * Useful for milestones or placeholder tasks.
+	 *
+	 * @return a new NGMTotalEffort instance representing zero effort
+	 */
+	public static Load zero() {
+<span class="fc" id="L98">		return new Load(Duration.ZERO);</span>
+	}
+
+	public Fraction toSeconds() {
+<span class="fc" id="L102">		return new Fraction(duration.toMillis() / 1000L, 1);</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="nc" id="L108">			return true;</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (!(obj instanceof Load))</span>
+<span class="nc" id="L110">			return false;</span>
+<span class="fc" id="L111">		final Load other = (Load) obj;</span>
+<span class="fc" id="L112">		return this.duration.equals(other.duration);</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L117">		return duration.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

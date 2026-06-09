@@ -35,18 +35,18 @@
  */
 package net.sourceforge.plantuml.gantt.solver;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.sourceforge.plantuml.gantt.Load;
 import net.sourceforge.plantuml.gantt.PValue;
 import net.sourceforge.plantuml.gantt.core.TaskAttribute;
+import net.sourceforge.plantuml.gantt.ngm.Load;
 import net.sourceforge.plantuml.gantt.ngm.NGMAllocation;
 import net.sourceforge.plantuml.gantt.ngm.NGMTask;
-import net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
@@ -95,7 +95,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (attribute == TaskAttribute.START)</span>
 <span class="fc" id="L96">				return computeStart(allocation);</span>
 
-<span class="nc" id="L98">			return Load.ofDays(1);</span>
+<span class="nc" id="L98">			return Load.of(Duration.ofDays(1));</span>
 			// throw new UnsupportedOperationException(attribute.toString());
 		}
 <span class="fc" id="L101">		return result;</span>
@@ -103,7 +103,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 	private TimePoint computeEnd(NGMAllocation allocation) {
 <span class="fc" id="L105">		final TimePoint start = (TimePoint) values.get(TaskAttribute.START);</span>
-<span class="fc" id="L106">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
+<span class="fc" id="L106">		final Load fullLoad = (Load) values.get(TaskAttribute.LOAD);</span>
 <span class="fc" id="L107">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, start.toLocalDateTime(), fullLoad);</span>
 <span class="fc" id="L108">		final LocalDateTime result = task.getEnd();</span>
 <span class="fc" id="L109">		return TimePoint.of(result);</span>
@@ -111,7 +111,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 
 	private TimePoint computeStart(NGMAllocation allocation) {
 <span class="fc" id="L113">		final TimePoint end = (TimePoint) values.get(TaskAttribute.END);</span>
-<span class="fc" id="L114">		final NGMTotalEffort fullLoad = ((Load) values.get(TaskAttribute.LOAD)).getEffort();</span>
+<span class="fc" id="L114">		final Load fullLoad = (Load) values.get(TaskAttribute.LOAD);</span>
 <span class="fc" id="L115">		final NGMTask task = NGMTask.withFixedTotalEffort(allocation, end.toLocalDateTime(), fullLoad);</span>
 <span class="fc" id="L116">		task.setEnd(end.toLocalDateTime());</span>
 <span class="fc" id="L117">		final LocalDateTime result = task.getStart();</span>

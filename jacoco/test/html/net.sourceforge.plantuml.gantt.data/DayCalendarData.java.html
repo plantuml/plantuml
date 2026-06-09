@@ -36,18 +36,18 @@
 package net.sourceforge.plantuml.gantt.data;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.gantt.OpenClose;
 import net.sourceforge.plantuml.gantt.core.TimeRange;
+import net.sourceforge.plantuml.gantt.core.TimeRanges;
 import net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstant;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -65,7 +65,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 <span class="fc" id="L65">	private final Map&lt;DayOfWeek, HColor&gt; colorDaysOfWeek = new HashMap&lt;&gt;();</span>
 <span class="fc" id="L66">	private final Set&lt;LocalDate&gt; verticalSeparatorBefore = new HashSet&lt;&gt;();</span>
 <span class="fc" id="L67">	private final Map&lt;String, OpenClose&gt; openCloseForTask = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L68">	private final List&lt;TimeRange&gt; workingTimeRanges = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L68">	private final TimeRanges workingTimeRanges = new TimeRanges();</span>
 
 	public boolean isOpen(LocalDate day) {
 <span class="fc bfc" id="L71" title="All 2 branches covered.">		return openClose.getLoadAtDUMMY(day) &gt; 0;</span>
@@ -147,7 +147,11 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 	}
 
 	public boolean hasWorkingTimeRanges() {
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">		return workingTimeRanges.size() &gt; 0;</span>
+<span class="fc" id="L150">		return workingTimeRanges.hasWorkingTimeRanges();</span>
+	}
+
+	public Duration durationOfDays(int totalDays) {
+<span class="fc" id="L154">		return workingTimeRanges.durationOfDays(totalDays);</span>
 	}
 
 }

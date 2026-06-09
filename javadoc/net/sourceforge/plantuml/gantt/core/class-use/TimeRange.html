@@ -61,12 +61,14 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/gantt-diagram" target="_top"> Gantt
  Diagram</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.data">net.sourceforge.plantuml.gantt.data</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.core">net.sourceforge.plantuml.gantt.core</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.lang">net.sourceforge.plantuml.gantt.lang</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.data">net.sourceforge.plantuml.gantt.data</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.ngm.math">net.sourceforge.plantuml.gantt.ngm.math</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.lang">net.sourceforge.plantuml.gantt.lang</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.ngm.math">net.sourceforge.plantuml.gantt.ngm.math</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -88,6 +90,38 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="net.sourceforge.plantuml.gantt.core">
+<h2>Uses of <a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a> in <a href="../package-summary.html">net.sourceforge.plantuml.gantt.core</a></h2>
+<div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.gantt.core</a> that return types with arguments of type <a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a><wbr>&lt;<a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeRanges.</span><code><a href="../TimeRanges.html#iterator()" class="member-name-link">iterator</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.gantt.core</a> with parameters of type <a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimeRanges.</span><code><a href="../TimeRanges.html#add(net.sourceforge.plantuml.gantt.core.TimeRange)" class="member-name-link">add</a><wbr>(<a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a>&nbsp;timeRange)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../package-summary.html">net.sourceforge.plantuml.gantt.core</a> with parameters of type <a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../TimeRanges.html#%3Cinit%3E(net.sourceforge.plantuml.gantt.core.TimeRange...)" class="member-name-link">TimeRanges</a><wbr>(<a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a>...&nbsp;data)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="net.sourceforge.plantuml.gantt.data">
 <h2>Uses of <a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a> in <a href="../../data/package-summary.html">net.sourceforge.plantuml.gantt.data</a></h2>
 <div class="caption"><span>Methods in <a href="../../data/package-summary.html">net.sourceforge.plantuml.gantt.data</a> with parameters of type <a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a></span></div>
@@ -97,17 +131,6 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DayCalendarData.</span><code><a href="../../data/DayCalendarData.html#addWorkingTimeRange(net.sourceforge.plantuml.gantt.core.TimeRange)" class="member-name-link">addWorkingTimeRange</a><wbr>(<a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a>&nbsp;timeRange)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-<div class="caption"><span>Constructor parameters in <a href="../../data/package-summary.html">net.sourceforge.plantuml.gantt.data</a> with type arguments of type <a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../data/WorkingHours.html#%3Cinit%3E(java.util.List,double,double)" class="member-name-link">WorkingHours</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../TimeRange.html" title="class in net.sourceforge.plantuml.gantt.core">TimeRange</a>&gt;&nbsp;workingTimeRanges,
- double&nbsp;dayWidth,
- double&nbsp;closeFactor)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

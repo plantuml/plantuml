@@ -40,8 +40,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.gantt.Load;
 import net.sourceforge.plantuml.gantt.lang.CenterBorderColor;
+import net.sourceforge.plantuml.gantt.ngm.Load;
 import net.sourceforge.plantuml.gantt.time.TimePoint;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.stereo.Stereotype;

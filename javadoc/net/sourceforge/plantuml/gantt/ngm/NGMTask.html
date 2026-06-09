@@ -104,7 +104,7 @@ loadScripts(document, 'script');</script>
  </p>
 
  <ul>
- <li><b>Total effort</b> — an <a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.gantt.ngm"><code>NGMTotalEffort</code></a> expressing the total
+ <li><b>Total effort</b> — an <a href="Load.html" title="class in net.sourceforge.plantuml.gantt.ngm"><code>Load</code></a> expressing the total
  amount of work associated with the task, typically in person-time (for
  example, person-seconds or person-hours).</li>
 
@@ -168,7 +168,7 @@ loadScripts(document, 'script');</script>
 
  <p>
  The static factory methods <a href="#withFixedDuration(net.sourceforge.plantuml.gantt.ngm.NGMAllocation,java.time.Duration)"><code>withFixedDuration(net.sourceforge.plantuml.gantt.ngm.NGMAllocation, java.time.Duration)</code></a> and
- <a href="#withFixedTotalEffort(net.sourceforge.plantuml.gantt.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort)"><code>withFixedTotalEffort(net.sourceforge.plantuml.gantt.ngm.NGMAllocation, java.time.LocalDateTime, net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort)</code></a> create concrete implementations representing
+ <a href="#withFixedTotalEffort(net.sourceforge.plantuml.gantt.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.gantt.ngm.Load)"><code>withFixedTotalEffort(net.sourceforge.plantuml.gantt.ngm.NGMAllocation, java.time.LocalDateTime, net.sourceforge.plantuml.gantt.ngm.Load)</code></a> create concrete implementations representing
  these two behaviors.
  </p></div>
 </section>
@@ -237,13 +237,13 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the current start instant of the task.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMTotalEffort</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTotalEffort()" class="member-name-link">getTotalEffort</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the total effort associated with this task.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setEffort(net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort)" class="member-name-link">setEffort</a><wbr>(<a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMTotalEffort</a>&nbsp;effort)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setEffort(net.sourceforge.plantuml.gantt.ngm.Load)" class="member-name-link">setEffort</a><wbr>(<a href="Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a>&nbsp;effort)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setEnd(java.time.LocalDateTime)" class="member-name-link">setEnd</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;end)</code></div>
@@ -263,9 +263,9 @@ loadScripts(document, 'script');</script>
  assigned allocation.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="NGMTask.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMTask</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withFixedTotalEffort(net.sourceforge.plantuml.gantt.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort)" class="member-name-link">withFixedTotalEffort</a><wbr>(<a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMAllocation</a>&nbsp;allocation,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withFixedTotalEffort(net.sourceforge.plantuml.gantt.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.gantt.ngm.Load)" class="member-name-link">withFixedTotalEffort</a><wbr>(<a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMAllocation</a>&nbsp;allocation,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start,
- <a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</code></div>
+ <a href="Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a>&nbsp;totalEffort)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on
  the assigned allocation.</div>
@@ -441,15 +441,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setEffort(net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort)">
+<section class="detail" id="setEffort(net.sourceforge.plantuml.gantt.ngm.Load)">
 <h3>setEffort</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setEffort</span><wbr><span class="parameters">(<a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMTotalEffort</a>&nbsp;effort)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setEffort</span><wbr><span class="parameters">(<a href="Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a>&nbsp;effort)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTotalEffort()">
 <h3>getTotalEffort</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMTotalEffort</a></span>&nbsp;<span class="element-name">getTotalEffort</span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a></span>&nbsp;<span class="element-name">getTotalEffort</span>()</div>
 <div class="block">Returns the total effort associated with this task.
 
  <p>
@@ -557,11 +557,11 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="withFixedTotalEffort(net.sourceforge.plantuml.gantt.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.gantt.ngm.NGMTotalEffort)">
+<section class="detail" id="withFixedTotalEffort(net.sourceforge.plantuml.gantt.ngm.NGMAllocation,java.time.LocalDateTime,net.sourceforge.plantuml.gantt.ngm.Load)">
 <h3>withFixedTotalEffort</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="NGMTask.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMTask</a></span>&nbsp;<span class="element-name">withFixedTotalEffort</span><wbr><span class="parameters">(<a href="NGMAllocation.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMAllocation</a>&nbsp;allocation,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;start,
- <a href="NGMTotalEffort.html" title="class in net.sourceforge.plantuml.gantt.ngm">NGMTotalEffort</a>&nbsp;totalEffort)</span></div>
+ <a href="Load.html" title="class in net.sourceforge.plantuml.gantt.ngm">Load</a>&nbsp;totalEffort)</span></div>
 <div class="block">Creates a task whose total effort is intrinsic (fixed) and does not depend on
  the assigned allocation.
 
