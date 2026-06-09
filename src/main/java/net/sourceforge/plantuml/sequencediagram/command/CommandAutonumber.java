@@ -73,6 +73,32 @@ public class CommandAutonumber extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Starts (or restarts) the automatic numbering of messages. Defaults
+		// in executeArg: start at 1, increment by 1, format "<b>0</b>".
+		sb.append("Starting automatic numbering of messages");
+
+		// The starting number may be dotted, like '1.1.1' (see DottedNumber).
+		final String start = arg.get("START", 0);
+		if (start != null)
+			sb.append(" from ").append(start);
+
+		final String step = arg.get("STEP", 0);
+		if (step != null)
+			sb.append(", incrementing by ").append(step);
+
+		// The format is a java.text.DecimalFormat pattern, possibly with
+		// creole markup, like "<b>(0)</b>".
+		final String format = arg.get("FORMAT", 0);
+		if (format != null)
+			sb.append(", with format \"").append(format).append("\"");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		DottedNumber start = DottedNumber.create("1");

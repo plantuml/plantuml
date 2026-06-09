@@ -57,6 +57,12 @@ public class CommandNope extends SingleLineCommand2<Diagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// This command matches blank lines only, and does nothing.
+		return "Empty line, doing nothing";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return CommandExecutionResult.ok();
 	}

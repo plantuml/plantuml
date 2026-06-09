@@ -77,6 +77,30 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Sends a dotted reply along the latest activating message, in the
+		// reverse direction, and deactivates the activated life line. When no
+		// activation is pending, executeArg falls back to reversing the last
+		// message, without any deactivation.
+		sb.append("Returning a dotted reply message to the caller");
+
+		final String message = arg.get("MESSAGE", 0);
+		if (message != null && message.isEmpty() == false)
+			sb.append(" labelled \"").append(message).append("\"");
+
+		final String color = arg.get("COLOR", 0);
+		if (color != null)
+			sb.append(", color ").append(color);
+
+		if (arg.get("PARALLEL", 0) != null)
+			sb.append(", parallel");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 

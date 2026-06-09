@@ -63,6 +63,30 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 		return COMMENT_SINGLE_LINE.matcher(line, 0).matches();
 	}
 
+	@Override
+	public String explain(BlocLines lines) {
+		// CommandMultilinesBracket does not dispatch explain() to a helper like
+		// CommandMultilines2.explainNow does, so it is overridden directly.
+		// Mirror execute(): the optional group of the starting line scopes the
+		// parameters, the inner lines are the settings themselves.
+		lines = lines.expandsNewline(true);
+		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString(), 0);
+		if (mStart.find() == false)
+			return "Setting skin parameters";
+
+		final StringBuilder sb = new StringBuilder();
+		final String group1 = mStart.group(1);
+		if (group1 == null)
+			sb.append("Setting skin parameters");
+		else
+			sb.append("Setting the skin parameters of '").append(group1).append("'");
+
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		sb.append(" from a block of ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines");
+
+		return sb.toString();
+	}
+
 	public CommandExecutionResult execute(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
 		final SkinLoader skinLoader = new SkinLoader(diagram);
 

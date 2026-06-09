@@ -59,6 +59,13 @@ public class CommandBoxEnd extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// No argument to capture: this closes the box opened by the last 'box'
+		// command (executeArg fails if no box is pending).
+		return "Closing the current box";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		if (diagram.isBoxPending() == false)
 			return CommandExecutionResult.error("Missing starting box");

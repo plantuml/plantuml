@@ -81,6 +81,7 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 
 	}
 
+	@Override
 	final public CommandControl isValid(BlocLines lines) {
 		if (lines.size() == 2 && syntaxWithFinalBracket())
 			return isValidBracket(lines);
@@ -108,8 +109,10 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 	}
 
 	private CommandControl isValidBracket(BlocLines lines) {
-		if (TeaVM.a()) assert lines.size() == 2;
-		if (TeaVM.a()) assert syntaxWithFinalBracket();
+		if (TeaVM.a())
+			assert lines.size() == 2;
+		if (TeaVM.a())
+			assert syntaxWithFinalBracket();
 		if (myTrim(lines.getAt(1)).equals("{") == false)
 			return CommandControl.NOT_OK;
 
@@ -121,9 +124,38 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 		return CommandControl.OK;
 	}
 
+	@Override
+	final public String explain(BlocLines lines) {
+		if (syntaxWithFinalBracket() && lines.size() == 2) {
+			if (TeaVM.a())
+				assert myTrim(lines.getAt(1)).equals("{");
+			lines = BlocLines.singleString(lines.getFirst().getString() + " {");
+		}
+		if (lines.size() != 1)
+			throw new IllegalArgumentException();
+
+		final StringLocated first = lines.getFirst();
+		final String line = myTrim(first);
+		if (isForbidden(line))
+			return null;
+
+		final UMatcher result = pattern.match(line, 0);
+
+		if (result.exactMatch() == false)
+			return null;
+
+		return explainArg(first.getLocation(), new RegexResult(result));
+	}
+
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return "WIPexplain explainArg in " + getClass();
+	}
+
+	@Override
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
 		if (syntaxWithFinalBracket() && lines.size() == 2) {
-			if (TeaVM.a()) assert myTrim(lines.getAt(1)).equals("{");
+			if (TeaVM.a())
+				assert myTrim(lines.getAt(1)).equals("{");
 			lines = BlocLines.singleString(lines.getFirst().getString() + " {");
 		}
 		if (lines.size() != 1)
@@ -134,7 +166,6 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 		if (isForbidden(line))
 			return CommandExecutionResult.error("Syntax error: " + line);
 
-		// final RegexResult arg = pattern.matcher(line);
 		final UMatcher result = pattern.match(line, 0);
 
 		if (result.exactMatch() == false)

@@ -131,7 +131,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 	}
 
 	protected String explainNow(BlocLines lines) {
-		return "wip explainNow in " + getClass();
+		return "WIPexplain explainNow in " + getClass();
 	}
 
 	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines, ParserPass currentPass)

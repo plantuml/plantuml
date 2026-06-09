@@ -145,7 +145,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 	}
 
 	protected String explainArg(LineLocation location, RegexResult arg) {
-		return "wip explainArg in " + getClass();
+		return "WIPexplain explainArg in " + getClass();
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {

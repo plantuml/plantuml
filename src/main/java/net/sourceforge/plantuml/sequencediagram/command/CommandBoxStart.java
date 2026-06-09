@@ -81,6 +81,31 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Opens a box that will enclose the participants declared until the
+		// matching 'end box'. Everything is optional but the 'box' keyword.
+		sb.append("Starting a box");
+
+		// The title may be quoted (NAME1) or unquoted (NAME2); executeArg reads
+		// whichever is present through getLazzy("NAME", 0).
+		final String title = arg.getLazzy("NAME", 0);
+		if (title != null)
+			sb.append(" titled \"").append(title).append("\"");
+
+		final String stereo = arg.get("STEREO", 0);
+		if (stereo != null)
+			sb.append(", stereotype ").append(stereo);
+
+		final String color = arg.get("COLOR", 0);
+		if (color != null)
+			sb.append(", background color ").append(color);
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 //		if (diagram.isBoxPending())

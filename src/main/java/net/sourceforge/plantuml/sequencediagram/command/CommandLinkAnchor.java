@@ -63,6 +63,23 @@ public class CommandLinkAnchor extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// '{a1} <-> {a2} : label' draws a double-headed link between two
+		// anchors previously declared on messages (the '{anchor}' prefix of
+		// arrow commands), typically to show a duration constraint.
+		sb.append("Linking anchor '").append(arg.get("ANCHOR1", 0)).append("' to anchor '")
+				.append(arg.get("ANCHOR2", 0)).append("'");
+
+		final String message = arg.get("MESSAGE", 0);
+		if (message != null && message.isEmpty() == false)
+			sb.append(", labelled \"").append(message).append("\"");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String anchor1 = arg.get("ANCHOR1", 0);
 		final String anchor2 = arg.get("ANCHOR2", 0);

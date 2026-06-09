@@ -61,6 +61,18 @@ public class CommandHideUnlinked extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Unlinked participants are those not involved in any message, note or
+		// other event; when hidden, they are removed from the diagram at the
+		// end of the parsing (see SequenceDiagram.removeHiddenParticipants).
+		final boolean hide = arg.get("HIDE", 0).equalsIgnoreCase("hide");
+		if (hide)
+			return "Hiding the participants that are not linked to any event";
+
+		return "Showing the participants that are not linked to any event";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		diagram.setHideUnlinkedData(arg.get("HIDE", 0).equalsIgnoreCase("hide"));
 		return CommandExecutionResult.ok();

@@ -76,6 +76,55 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 			.compile("^(.*\\[\\[.*\\]\\].*?|.*?)\\[(.*)\\]$");
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Mirror the massaging done by executeArg: the 'group Title [text]'
+		// syntax turns the title into a custom header and the bracket content
+		// into the label (see TRAILING_BRACKET_CONTENT_PATTERN).
+		final String keyword = StringUtils.goLowerCase(arg.get("TYPE", 0));
+		String header = keyword;
+		String comment = arg.get("COMMENT", 0);
+		if ("group".equals(keyword) && StringUtils.isEmpty(comment) == false) {
+			final Matcher m = TRAILING_BRACKET_CONTENT_PATTERN.matcher(comment);
+			if (m.find()) {
+				header = m.group(1);
+				comment = m.group(2);
+			}
+		}
+
+		// 'end' closes the current group, 'else' and 'also' add a branch to it,
+		// every other keyword opens a new group.
+		if ("end".equals(keyword))
+			sb.append("Closing the current group");
+		else if ("else".equals(keyword) || "also".equals(keyword))
+			sb.append("Adding an '").append(keyword).append("' branch to the current group");
+		else
+			sb.append("Starting a '").append(keyword).append("' group");
+
+		if (header.equals(keyword) == false)
+			sb.append(" with header \"").append(header).append("\"");
+
+		if (comment != null && comment.isEmpty() == false)
+			sb.append(", labelled \"").append(comment).append("\"");
+
+		// First color is the header background, second one (space separated)
+		// is the body background of the whole group.
+		final String colorElement = arg.get("COLORS", 0);
+		if (colorElement != null)
+			sb.append(", header color ").append(colorElement);
+
+		final String colorGeneral = arg.get("COLORS", 1);
+		if (colorGeneral != null)
+			sb.append(", background color ").append(colorGeneral);
+
+		if (arg.get("PARALLEL", 0) != null)
+			sb.append(", parallel");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 		final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();

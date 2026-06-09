@@ -62,6 +62,21 @@ public class CommandDivider extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// '== Label ==' inserts a divider spanning the whole diagram width,
+		// typically used to separate steps or phases.
+		sb.append("Inserting a divider");
+
+		final String label = arg.get("LABEL", 0);
+		if (label != null && label.isEmpty() == false)
+			sb.append(" labelled \"").append(label).append("\"");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final Display strings = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		diagram.divider(strings);

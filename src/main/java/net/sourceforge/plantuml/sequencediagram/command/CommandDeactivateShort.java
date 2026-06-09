@@ -61,6 +61,14 @@ public class CommandDeactivateShort extends SingleLineCommand2<SequenceDiagram> 
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// No participant given: this deactivates the target of the latest
+		// still-active activating message (see executeArg and
+		// SequenceDiagram.getActivatingMessage).
+		return "Deactivating the life line activated by the latest message";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location,
 			RegexResult arg2, ParserPass currentPass) {
 		final AbstractMessage message = sequenceDiagram.getActivatingMessage();

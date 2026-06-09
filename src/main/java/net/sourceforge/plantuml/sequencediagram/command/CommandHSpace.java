@@ -60,6 +60,21 @@ public class CommandHSpace extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// '|||' inserts extra vertical spacing between events; '||45||' gives
+		// the size in pixels (the default is 25, see SequenceDiagram.hspace).
+		sb.append("Inserting extra vertical spacing");
+
+		final String value = arg.get("VALUE", 0);
+		if (StringUtils.isNotEmpty(value))
+			sb.append(" of ").append(value).append(" pixels");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String size = arg.get("VALUE", 0);
 		if (StringUtils.isNotEmpty(size)) {

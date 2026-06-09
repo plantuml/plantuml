@@ -66,6 +66,27 @@ public class CommandAutonumberIncrement extends SingleLineCommand2<SequenceDiagr
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Increments one component of the current dotted autonumber (like
+		// '1.2.3') and resets the following components to 1 (see
+		// DottedNumber.incrementIntermediate).
+		final String position = arg.get("POS", 0);
+		if (position == null) {
+			// Default: the second-to-last component, or the only one.
+			sb.append("Incrementing the intermediate component of the message autonumber");
+		} else {
+			final int pos = StringUtils.goLowerCase(position.charAt(0)) - 'a';
+			sb.append("Incrementing component '").append(position).append("' (number ").append(pos + 1)
+					.append(") of the message autonumber");
+		}
+		sb.append(", resetting the following components to 1");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String position = arg.get("POS", 0);

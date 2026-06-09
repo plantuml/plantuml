@@ -60,6 +60,13 @@ public class CommandAutonumberStop extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// No argument to capture: the numbering is suspended but its current
+		// value is kept, so 'autonumber resume' continues where it stopped.
+		return "Stopping automatic numbering of messages";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		diagram.autonumberStop();
 		return CommandExecutionResult.ok();

@@ -72,6 +72,26 @@ public class CommandAutonumberResume extends SingleLineCommand2<SequenceDiagram>
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Resumes the numbering stopped by 'autonumber stop', continuing from
+		// the current value. The increment and the format are only replaced
+		// when given (see AutoNumber.resume).
+		sb.append("Resuming automatic numbering of messages");
+
+		final String inc = arg.get("INC", 0);
+		if (inc != null)
+			sb.append(", incrementing by ").append(inc);
+
+		final String df = arg.get("DF", 0);
+		if (df != null)
+			sb.append(", with format \"").append(df).append("\"");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String df = arg.get("DF", 0);

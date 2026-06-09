@@ -71,6 +71,23 @@ public class CommandUrl extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Attaches a URL link to a participant, creating it if needed. Note
+		// that executeArg does not unquote CODE, so a quoted name is kept
+		// verbatim; this explanation does the same.
+		final String code = arg.get("CODE", 0);
+		sb.append("Attaching a URL link to '").append(code).append("'");
+
+		final String url = arg.get(UrlBuilder.URL_KEY, 0);
+		if (url != null)
+			sb.append(": ").append(url);
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String code = arg.get("CODE", 0);
 		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);

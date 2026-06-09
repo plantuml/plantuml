@@ -72,6 +72,35 @@ public class CommandActivate extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// The keyword maps directly to a LifeEventType on the participant's
+		// life line (see executeArg).
+		final String type = StringUtils.goLowerCase(arg.get("TYPE", 0));
+		final String who = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("WHO", 0));
+
+		if ("activate".equals(type))
+			sb.append("Activating the life line of '").append(who).append("'");
+		else if ("deactivate".equals(type))
+			sb.append("Deactivating the life line of '").append(who).append("'");
+		else if ("destroy".equals(type))
+			sb.append("Destroying the life line of '").append(who).append("'");
+		else
+			sb.append("Creating '").append(who).append("'");
+
+		final String back = arg.get("BACK", 0);
+		if (back != null)
+			sb.append(", background color ").append(back);
+
+		final String line = arg.get("LINE", 0);
+		if (line != null)
+			sb.append(", line color ").append(line);
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get("TYPE", 0)));

@@ -65,6 +65,22 @@ public class CommandNewpage extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Splits the diagram into several images. The optional label is used
+		// as the title of the new page. Note that this command is a no-op once
+		// 'ignore newpage' has been issued (see SequenceDiagram.newpage).
+		sb.append("Starting a new page");
+
+		final String label = arg.get("LABEL", 0);
+		if (label != null)
+			sb.append(" titled \"").append(label).append("\"");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String label = arg.get("LABEL", 0);

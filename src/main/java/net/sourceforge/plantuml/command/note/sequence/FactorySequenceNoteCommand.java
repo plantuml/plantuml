@@ -122,6 +122,23 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
 
 			@Override
+			protected String explainNow(BlocLines lines) {
+				// Mirror executeNow: the first line carries the declaration, the
+				// lines up to the closing 'end note' are the text of the note.
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+				if (line0 == null)
+					return "Adding a note";
+
+				final StringBuilder sb = new StringBuilder(explainInternal(line0, null));
+				final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+				if (bodyCount > 0)
+					sb.append(", with ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines")
+							.append(" of text");
+
+				return sb.toString();
+			}
+
+			@Override
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
@@ -137,6 +154,11 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
+			protected String explainArg(LineLocation location, RegexResult arg) {
+				return explainInternal(arg, arg.get("NOTE", 0));
+			}
+
+			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
@@ -144,6 +166,57 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			}
 
 		};
+	}
+
+	/**
+	 * Builds the explanation shared by the single line and the multiline
+	 * flavors, mirroring the fields read by
+	 * {@link #executeInternal(LineLocation, SequenceDiagram, RegexResult, Display)}.
+	 */
+	private String explainInternal(RegexResult arg, String label) {
+		final StringBuilder sb = new StringBuilder();
+
+		// The style keyword selects the note shape, the position relates it to
+		// the participant.
+		final String style = StringUtils.goLowerCase(arg.get("STYLE", 0));
+		if ("hnote".equals(style))
+			sb.append("Adding a hexagonal note");
+		else if ("rnote".equals(style))
+			sb.append("Adding a rectangular note");
+		else
+			sb.append("Adding a note");
+
+		final String position = StringUtils.goLowerCase(arg.get("POSITION", 0));
+		final String participant = StringUtils
+				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0));
+		if ("over".equals(position))
+			sb.append(" over '").append(participant).append("'");
+		else
+			sb.append(" on the ").append(position).append(" of '").append(participant).append("'");
+
+		if (label != null && label.isEmpty() == false)
+			sb.append(" labelled \"").append(label).append("\"");
+
+		// The stereotype may be written before or after the position
+		// (STEREO1/STEREO2), hence the lazzy lookup, like in executeInternal.
+		final String stereo = arg.getLazzy("STEREO", 0);
+		if (stereo != null)
+			sb.append(", stereotype ").append(stereo);
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		// A leading '/' vertically merges this note with the previous one.
+		if (arg.get("VMERGE", 0) != null)
+			sb.append(", merged with the previous note");
+
+		if (arg.get("PARALLEL", 0) != null)
+			sb.append(", parallel");
+
+		return sb.toString();
 	}
 
 	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram, RegexResult arg, Display display)

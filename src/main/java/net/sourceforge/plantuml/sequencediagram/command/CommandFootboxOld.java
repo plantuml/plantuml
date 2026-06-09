@@ -61,6 +61,18 @@ public class CommandFootboxOld extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Legacy syntax for 'show footbox' / 'hide footbox'. Note that 'on' is
+		// tested null-safely here, unlike in executeArg where a bare 'footbox'
+		// (TYPE is optional in the regex) would throw a NullPointerException.
+		final boolean show = "on".equalsIgnoreCase(arg.get("TYPE", 0));
+		if (show)
+			return "Showing the participant boxes at the bottom of the diagram";
+
+		return "Hiding the participant boxes at the bottom of the diagram";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final boolean footbox = arg.get("TYPE", 0).equalsIgnoreCase("on");
 		diagram.setShowFootbox(footbox);

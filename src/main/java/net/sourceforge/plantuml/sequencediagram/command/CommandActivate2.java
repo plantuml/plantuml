@@ -65,6 +65,27 @@ public class CommandActivate2 extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Shorthand syntax: 'Bob++' activates and 'Bob--' deactivates the
+		// participant's life line (see executeArg).
+		final boolean activate = arg.get("TYPE", 0).equals("++");
+		final String name = arg.get("NAME", 0);
+
+		if (activate)
+			sb.append("Activating the life line of '").append(name).append("' (shorthand '++')");
+		else
+			sb.append("Deactivating the life line of '").append(name).append("' (shorthand '--')");
+
+		final String color = arg.get("COLOR", 0);
+		if (color != null)
+			sb.append(", background color ").append(color);
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final LifeEventType type = arg.get("TYPE", 0).equals("++") ? LifeEventType.ACTIVATE : LifeEventType.DEACTIVATE;

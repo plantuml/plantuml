@@ -69,6 +69,34 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String name = StringUtils.goLowerCase(arg.get("NAME", 0));
+		final String value = arg.get("VALUE", 0);
+
+		// Mirror the special cases of executeArg.
+		if (name.equals("svgsize")) {
+			if (value != null && value.contains(" "))
+				return "Setting the SVG size to '" + value + "'";
+
+			return "Setting the SVG size (ignored: two space-separated values are expected)";
+		}
+
+		if (name.equals("graphviz_dot"))
+			return "Selecting the layout engine (rejected at execution: "
+					+ "this directive has been renamed to '!pragma layout ...')";
+
+		if (name.equals("layout") && value != null)
+			return "Selecting the '" + value + "' layout engine";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Defining the pragma '").append(name).append("'");
+		if (value != null)
+			sb.append(" with value '").append(value).append("'");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String name = StringUtils.goLowerCase(arg.get("NAME", 0));

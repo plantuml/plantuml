@@ -61,6 +61,15 @@ public class CommandAssumeTransparent extends SingleLineCommand2<TitledDiagram> 
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Historical directive: it used to tell the engine to assume a dark or
+		// light background behind a transparent diagram, but executeArg is now
+		// a no-op and the command may be suppressed in some future.
+		return "Assuming a " + arg.get("TYPE", 0)
+				+ " background behind the transparent diagram (deprecated and currently ignored)";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		// final String type = arg.get("TYPE", 0).toUpperCase();
 		// system.getSkinParam().assumeTransparent(ThemeStyle.valueOf(type));

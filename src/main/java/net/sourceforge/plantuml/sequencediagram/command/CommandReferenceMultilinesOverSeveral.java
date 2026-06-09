@@ -80,6 +80,46 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 				Pattern2.cmpile("^end[%s]?(ref)?$"));
 	}
 
+	@Override
+	public String explain(BlocLines lines) {
+		// CommandMultilines does not dispatch explain() to a helper like
+		// CommandMultilines2.explainNow does, so it is overridden directly.
+		// Mirror execute(): the first line carries the declaration, the lines
+		// up to the closing 'end ref' are the text of the frame.
+		final RegexResult arg = REGEX_CONCAT.matcher(lines.getFirst().getTrimmed().getString());
+		if (arg == null)
+			return "Drawing a reference frame";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Drawing a reference frame over ");
+		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));
+		for (int i = 0; i < participants.size(); i++) {
+			if (i > 0)
+				sb.append(i == participants.size() - 1 ? " and " : ", ");
+			sb.append("'").append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(participants.get(i)))
+					.append("'");
+		}
+
+		final String color = arg.get("REF", 0);
+		if (color != null)
+			sb.append(", background color ").append(color);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		// The trailing color is parsed but never applied by execute().
+		final String unused = arg.get("UNUSED", 0);
+		if (unused != null)
+			sb.append(", second color ").append(unused).append(" (currently ignored)");
+
+		// Body: the text lines between the 'ref over' line and 'end ref'.
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		if (bodyCount > 0)
+			sb.append(", with ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines").append(" of text");
+
+		return sb.toString();
+	}
+
 	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String firstLine = lines.getFirst().getTrimmed().getString();

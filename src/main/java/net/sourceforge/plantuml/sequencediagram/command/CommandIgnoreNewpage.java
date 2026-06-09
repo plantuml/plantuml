@@ -59,6 +59,14 @@ public class CommandIgnoreNewpage extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// No argument to capture: from now on, every 'newpage' command is
+		// silently ignored, so the whole diagram stays on a single page (see
+		// SequenceDiagram.newpage).
+		return "Ignoring all subsequent 'newpage' commands";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		diagram.ignoreNewpage();
 		return CommandExecutionResult.ok();

@@ -81,6 +81,36 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'ref over A, B : text' draws a reference frame spanning the given
+		// participants. The list is split and unquoted exactly as in
+		// executeArg.
+		sb.append("Drawing a reference frame over ");
+		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));
+		for (int i = 0; i < participants.size(); i++) {
+			if (i > 0)
+				sb.append(i == participants.size() - 1 ? " and " : ", ");
+			sb.append("'").append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(participants.get(i)))
+					.append("'");
+		}
+
+		final String text = StringUtils.trin(arg.get("TEXT", 0));
+		if (text.isEmpty() == false)
+			sb.append(" labelled \"").append(text).append("\"");
+
+		final String color = arg.get("REF", 0);
+		if (color != null)
+			sb.append(", background color ").append(color);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String s1 = arg.get("REF", 0);

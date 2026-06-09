@@ -59,6 +59,17 @@ public class CommandAutoactivate extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Toggles the auto-activation mode: when on, every incoming message
+		// automatically activates the target life line, and every dotted
+		// (return) message deactivates the source one.
+		if ("on".equalsIgnoreCase(arg.get("ON", 0)))
+			return "Turning auto-activation on";
+
+		return "Turning auto-activation off";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location,
 			RegexResult arg, ParserPass currentPass) {
 		sequenceDiagram.setAutoactivate("on".equalsIgnoreCase(arg.get("ON", 0)));

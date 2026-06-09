@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -43,6 +44,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandExoArrowRight extends CommandExoArrowAny {
 
@@ -83,6 +85,89 @@ public class CommandExoArrowRight extends CommandExoArrowAny {
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf(1, "LABEL", "(.*)") //
 						)), RegexLeaf.end());
+	}
+
+	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Exogenous message: one endpoint is a participant, the other is the
+		// diagram border. The side and the direction are deduced from the
+		// trailing symbol ('[' or ']') and from which dressing matched, exactly
+		// as in getMessageExoType().
+		final String participant = StringUtils
+				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0));
+
+		final MessageExoType type = getMessageExoType(arg);
+		switch (type) {
+		case FROM_LEFT:
+			sb.append("Incoming message from the left border to '").append(participant).append("'");
+			break;
+		case TO_LEFT:
+			sb.append("Outgoing message from '").append(participant).append("' to the left border");
+			break;
+		case FROM_RIGHT:
+			sb.append("Incoming message from the right border to '").append(participant).append("'");
+			break;
+		case TO_RIGHT:
+			sb.append("Outgoing message from '").append(participant).append("' to the right border");
+			break;
+		default:
+			sb.append("Exogenous message with '").append(participant).append("'");
+			break;
+		}
+
+		// A '?' as trailing symbol means a short arrow (see isShortArrow()).
+		final String end = arg.get(ARROW_SUPPCIRCLE2, 0);
+		if (end != null && end.contains("?"))
+			sb.append(" (short arrow)");
+
+		// Body style: a '--' in the body means a dotted arrow.
+		final String body = arg.getLazzy("ARROW_BODYA", 0) + arg.getLazzy("ARROW_BODYB", 0);
+		if (body.contains("--"))
+			sb.append(", dotted");
+
+		// A doubled dressing (>>, //, \\) means an async head.
+		final String dressing = arg.getLazzy("ARROW_DRESSING", 0);
+		if (dressing != null && dressing.length() == 2)
+			sb.append(", async");
+
+		// A leading '<' before the body means an arrow in both directions.
+		if (arg.get("ARROW_BOTHDRESSING", 0) != null)
+			sb.append(", in both directions");
+
+		// Circle ('o') and cross ('x') decorations, on the border side
+		// (ARROW_SUPPCIRCLE2) or on the participant side (ARROW_SUPPCIRCLE1).
+		if (end != null && end.contains("o"))
+			sb.append(", with a circle decoration on the border side");
+		if (end != null && end.contains("x"))
+			sb.append(", with a cross head on the border side");
+
+		final String suppCircle1 = arg.get(ARROW_SUPPCIRCLE1, 0);
+		if (suppCircle1 != null && suppCircle1.contains("o"))
+			sb.append(", with a circle decoration on the participant side");
+		if (suppCircle1 != null && suppCircle1.contains("x"))
+			sb.append(", with a cross head on the participant side");
+
+		// Activation specifier (+, -, *, !) drives the participant's life line.
+		final String activation = arg.get("ACTIVATION", 0);
+		if (activation != null && activation.isEmpty() == false)
+			sb.append(", activation '").append(activation).append("'");
+
+		final String lifeColor = arg.get("LIFECOLOR", 0);
+		if (lifeColor != null && lifeColor.isEmpty() == false)
+			sb.append(", life line color ").append(lifeColor);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("PARALLEL", 0) != null)
+			sb.append(", parallel");
+
+		if (arg.get("ANCHOR", 1) != null)
+			sb.append(", anchor '").append(arg.get("ANCHOR", 1)).append("'");
+
+		return sb.toString();
 	}
 
 	@Override

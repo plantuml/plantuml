@@ -65,6 +65,30 @@ public class CommandSkinParamJaws extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// This command receives one or several 'skinparam { ... }' blocks
+		// folded into a single line by the Jaws preprocessing (the newlines are
+		// encoded as Jaws.BLOCK_E1_NEWLINE); executeArg unfolds them and
+		// delegates each block to CommandSkinParamMultilines.
+		final String full = arg.get("FULL", 0);
+		final String[] split = full.split("" + Jaws.BLOCK_E1_NEWLINE);
+		int blocks = 0;
+		for (String line : split)
+			if (line.trim().equals("}"))
+				blocks++;
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Setting skin parameters from ");
+		if (blocks <= 1)
+			sb.append("a 'skinparam' block");
+		else
+			sb.append(blocks).append(" 'skinparam' blocks");
+		sb.append(" of ").append(split.length).append(split.length == 1 ? " line" : " lines").append(" in total");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String full = arg.get("FULL", 0);
