@@ -41,6 +41,7 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexOr;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -61,6 +62,14 @@ public class UBrexCommandEndPartition extends UBrexSingleLineCommand2<ActivityDi
 						new UBrexLeaf("partition")), //
 				new UBrexLeaf("}"), //
 				UBrexLeaf.end())); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '}' (or 'end partition') closes the partition opened by the matching
+		// 'partition Name {' command (executeArg fails if none is open).
+		return "Closing the current partition";
 	}
 
 	@Override

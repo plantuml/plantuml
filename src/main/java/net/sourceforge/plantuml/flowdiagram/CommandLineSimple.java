@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.flowdiagram;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -63,6 +64,14 @@ public class CommandLineSimple extends SingleLineCommand2<FlowDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "LABEL", "[%g](.*)[%g]"), RegexLeaf.end());
 	}
+	
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
+	}
+
+
 
 	@Override
 	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg,

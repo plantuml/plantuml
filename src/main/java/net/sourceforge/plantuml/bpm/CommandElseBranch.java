@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.bpm;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -55,6 +56,14 @@ public class CommandElseBranch extends SingleLineCommand2<BpmDiagram> {
 				RegexLeaf.start(), //
 				new RegexLeaf("else"), RegexLeaf.end());
 	}
+	
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
+	}
+
+
 
 	@Override
 	protected CommandExecutionResult executeArg(BpmDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {

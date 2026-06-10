@@ -250,7 +250,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return sb.toString();
 	}
 
-	private String describeRelation(String head1, String head2) {
+	public static String describeRelation(String head1, String head2) {
 		// Keep the most significant decoration: '<|' wins over '<', and so on.
 		final String heads = head1 + head2;
 		if (heads.contains("|"))

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -67,6 +68,30 @@ public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'switch (test)' opens a multi-branch block: each branch starts with
+		// 'case (value)' and the block is closed by 'endswitch'.
+		sb.append("Starting a switch");
+
+		final String test = arg.get("TEST", 0);
+		if (test.length() > 0)
+			sb.append(", testing \"").append(test).append("\"");
+
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		if (stereogroup.isEmpty() == false)
+			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
+
+		// The leading color is parsed but no longer applied by executeArg.
+		if (arg.get("COLOR", 0) != null)
+			sb.append(" (the leading color is currently ignored: use a stereotype instead)");
+
+		return sb.toString();
 	}
 
 	@Override

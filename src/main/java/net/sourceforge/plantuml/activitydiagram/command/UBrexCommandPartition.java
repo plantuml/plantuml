@@ -45,6 +45,7 @@ import com.plantuml.ubrex.builder.UBrexOr;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -86,6 +87,25 @@ public class UBrexCommandPartition extends UBrexSingleLineCommand2<ActivityDiagr
 	
 	private static UBrexColorParser color() {
 		return UBrexColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'partition Name {' opens a container around the following activities
+		// (legacy activity diagram syntax), closed by '}' or 'end partition'.
+		sb.append("Starting the partition '").append(arg.get("NAME", 0)).append("'");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		final String stereotype = arg.get("STEREOTYPE", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		return sb.toString();
 	}
 
 	@Override

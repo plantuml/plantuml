@@ -35,8 +35,10 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -115,6 +117,57 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'state Name' declares (or reuses) a state. The code and the display
+		// may be written in both orders or alone, hence the lazzy lookups,
+		// like in executeArg. Some stereotypes, like <<choice>> or <<fork>>,
+		// turn the state into the corresponding pseudo-state (see
+		// Stereogroup.getLeafType).
+		sb.append("Declaring the state '").append(arg.getLazzy("CODE", 0)).append("'");
+
+		final String display = arg.getLazzy("DISPLAY", 0);
+		if (display != null)
+			sb.append(" displayed as \"").append(display).append("\"");
+
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		if (stereogroup.isEmpty() == false) {
+			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
+			final LeafType type = stereogroup.getLeafType();
+			if (type != null)
+				sb.append(" (pseudo-state type: ").append(StringUtils.goLowerCase(type.name()).replace('_', ' '))
+						.append(")");
+		}
+
+		// The stereotag may be written before or after the stereotypes
+		// (TAGS1/TAGS2), hence the lazzy lookup, like in executeArg.
+		final String tags = arg.getLazzy("TAGS", 0);
+		if (tags != null && tags.isEmpty() == false)
+			sb.append(", tagged ").append(tags);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		// '##[style]color' sets the border style and color.
+		if (arg.get("LINECOLOR", 1) != null)
+			sb.append(", line color ").append(arg.get("LINECOLOR", 1));
+
+		if (arg.get("LINECOLOR", 0) != null)
+			sb.append(", line style ").append(arg.get("LINECOLOR", 0));
+
+		final String addField = arg.get("ADDFIELD", 0);
+		if (addField != null && addField.isEmpty() == false)
+			sb.append(", with the description line \"").append(addField).append("\"");
+
+		return sb.toString();
 	}
 
 	@Override

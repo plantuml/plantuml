@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -76,6 +77,35 @@ public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'while (test) is (yes)' opens a while loop, closed by 'endwhile':
+		// the body repeats while the test holds, and 'is (...)' labels the
+		// arrow entering the body.
+		sb.append("Starting a while loop");
+
+		final String test = arg.get("TEST", 0);
+		if (test.length() > 0)
+			sb.append(", repeating while \"").append(test).append("\"");
+
+		final String yes = arg.get("YES", 0);
+		if (yes != null)
+			sb.append(", body arrow labelled \"").append(yes).append("\"");
+
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		if (stereogroup.isEmpty() == false)
+			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
+
+		// The leading color is parsed but no longer applied by executeArg.
+		if (arg.get("COLOR", 0) != null)
+			sb.append(" (the leading color is currently ignored: use a stereotype instead)");
+
+		return sb.toString();
 	}
 
 	@Override

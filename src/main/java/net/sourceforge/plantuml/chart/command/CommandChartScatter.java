@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.chart.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.chart.ChartSeries;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -85,6 +86,13 @@ public class CommandChartScatter extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,

@@ -40,6 +40,7 @@ import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -59,6 +60,14 @@ public class UBrexCommandEndif extends UBrexSingleLineCommand2<ActivityDiagram> 
 				UBrexLeaf.spaceZeroOrMore(), //
 				new UBrexLeaf("if"), //
 				UBrexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'endif' closes the enclosing 'if' (legacy activity diagram syntax);
+		// executeArg fails when no 'if' is pending.
+		return "Closing the enclosing if";
 	}
 
 	@Override

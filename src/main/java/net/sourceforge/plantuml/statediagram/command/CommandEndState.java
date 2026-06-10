@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -61,6 +62,15 @@ public class CommandEndState extends SingleLineCommand2<StateDiagram> {
 		return RegexConcat.build(CommandEndState.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, "(end[%s]?state|\\})"), //
 				RegexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '}' (or 'end state') closes the composite state or frame opened by
+		// the matching 'state Name {' or 'frame Name {' command (executeArg
+		// fails if none is open).
+		return "Closing the current composite state";
 	}
 
 	@Override

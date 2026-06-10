@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -54,7 +53,8 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	private final IRegex patternEnd;
 
 	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd, IRegex patternEnd) {
-		if (TeaVM.a()) assert patternStart.getPatternAsString().startsWith("^") && patternStart.getPatternAsString().endsWith("$");
+		if (TeaVM.a())
+			assert patternStart.getPatternAsString().startsWith("^") && patternStart.getPatternAsString().endsWith("$");
 
 		this.strategy = strategy;
 		this.starting = patternStart;
@@ -105,10 +105,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		return explainNow(lines);
 	}
 
-	@Explain
-	protected String explainNow(BlocLines lines) {
-		return "WIPexplain explainNow in " + getClass();
-	}
+	protected abstract String explainNow(BlocLines lines);
 
 	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines) throws NoSuchColorException;
 

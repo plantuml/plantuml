@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -135,6 +136,94 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	@Override
 	protected final boolean isForbidden(CharSequence line) {
 		return FORBIDDEN_PATTERN.matcher(line).matches();
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Mirror the symbol deduction of executeArg: the shape of the code or
+		// of the display ('()...', '(...)', ':...:', '[...]') overrides the
+		// keyword, and a trailing '/' selects the business variant of usecases
+		// and actors.
+		String codeRaw = arg.getLazzy("CODE", 0);
+		String displayRaw = arg.getLazzy("DISPLAY", 0);
+		final char codeChar = getCharEncoding(codeRaw);
+		final char codeDisplay = getCharEncoding(displayRaw);
+		final String symbol;
+		if (codeRaw.startsWith("()")) {
+			symbol = "interface";
+			codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(codeRaw.substring(2)));
+		} else if (codeChar == '(' || codeDisplay == '(') {
+			if (arg.get("SYMBOL", 0) != null && arg.get("SYMBOL", 0).endsWith("/"))
+				symbol = "usecase/";
+			else if (displayRaw != null && displayRaw.endsWith(")/")) {
+				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);
+				symbol = "usecase/";
+			} else if (codeRaw.endsWith(")/")) {
+				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);
+				symbol = "usecase/";
+			} else
+				symbol = "usecase";
+		} else if (codeChar == ':' || codeDisplay == ':') {
+			if (arg.get("SYMBOL", 0) != null && arg.get("SYMBOL", 0).endsWith("/"))
+				symbol = "actor/";
+			else if (displayRaw != null && displayRaw.endsWith(":/")) {
+				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);
+				symbol = "actor/";
+			} else if (codeRaw.endsWith(":/")) {
+				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);
+				symbol = "actor/";
+			} else
+				symbol = "actor";
+		} else if (codeChar == '[' || codeDisplay == '[')
+			symbol = "component";
+		else
+			symbol = arg.get("SYMBOL", 0);
+
+		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
+		sb.append("Creating the ").append(describeSymbol(symbol)).append(" '").append(idShort).append("'");
+
+		if (displayRaw != null)
+			sb.append(" displayed as \"")
+					.append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(displayRaw)).append("\"");
+
+		// The stereotype may be written inside the 'as' clause or at the end
+		// of the line, hence the lazzy lookup, like in executeArg.
+		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		final String tags = arg.getLazzy("TAGS", 0);
+		if (tags != null && tags.isEmpty() == false)
+			sb.append(", tagged ").append(tags);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		// The color written before the name (COLOR2) is parsed but never read
+		// by executeArg.
+		if (arg.get("COLOR2", 0) != null)
+			sb.append(" (the leading color ").append(arg.get("COLOR2", 0)).append(" is currently ignored)");
+
+		return sb.toString();
+	}
+
+	static String describeSymbol(String symbol) {
+		if (symbol == null)
+			return "element";
+
+		if (symbol.equalsIgnoreCase("usecase/"))
+			return "business usecase";
+
+		if (symbol.equalsIgnoreCase("actor/"))
+			return "business actor";
+
+		return StringUtils.goLowerCase(symbol);
 	}
 
 	@Override

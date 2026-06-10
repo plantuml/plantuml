@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.bpm;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -56,6 +57,12 @@ public class CommandResume extends SingleLineCommand2<BpmDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "ID", "([%pLN_.@]+)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
 	}
 
 	@Override

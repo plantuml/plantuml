@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -77,6 +78,83 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
 	protected static IRegex getLinkStereotypePattern() {
 		return StereotypePattern.optional("STEREOTYPE");
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Draws a transition between two states, created when needed. The
+		// special endpoints are decoded like in getEntityStart/getEntityEnd:
+		// '[*]' is the initial or the final pseudo-state depending on its
+		// side, '[H]' and '[H*]' are history pseudo-states, and '=name=' is a
+		// synchronization bar.
+		sb.append("Drawing a transition from ").append(describeEndpoint(arg.get("ENT1", 0), true)).append(" to ")
+				.append(describeEndpoint(arg.get("ENT2", 0), false));
+
+		final String label = arg.get("LABEL", 0);
+		if (label != null)
+			sb.append(", labelled \"").append(label).append("\"");
+
+		if (arg.get("ARROW_CROSS_START", 0) != null)
+			sb.append(", with a circled cross at the start");
+
+		if (arg.get("ARROW_CIRCLE_END", 0) != null)
+			sb.append(", with a circle decoration at the end");
+
+		final String direction = arg.get("ARROW_DIRECTION", 0);
+		if (direction != null && direction.isEmpty() == false)
+			sb.append(", oriented ").append(describeDirection(direction));
+
+		// The 'node' keyword in the style asks for the label to be drawn as an
+		// intermediate transition node (see shouldUseNodeStyle).
+		final String style = arg.getLazzy("ARROW_STYLE", 0);
+		if (style != null) {
+			sb.append(", with style '").append(style).append("'");
+			if (StringUtils.goLowerCase(style).contains("node"))
+				sb.append(" (the label is drawn as an intermediate transition node)");
+		}
+
+		if (arg.get("STEREOTYPE", 0) != null)
+			sb.append(", stereotype ").append(arg.get("STEREOTYPE", 0));
+
+		return sb.toString();
+	}
+
+	private String describeEndpoint(String code, boolean start) {
+		if (code.startsWith("[*]"))
+			return start ? "the initial pseudo-state" : "the final pseudo-state";
+
+		if (code.equalsIgnoreCase("[H]"))
+			return "the shallow history of the current state";
+
+		if (code.endsWith("[H]"))
+			return "the shallow history of '" + code.substring(0, code.length() - 3) + "'";
+
+		if (code.equalsIgnoreCase("[H*]"))
+			return "the deep history of the current state";
+
+		if (code.endsWith("[H*]"))
+			return "the deep history of '" + code.substring(0, code.length() - 4) + "'";
+
+		if (code.startsWith("=") && code.endsWith("="))
+			return "the synchronization bar '" + removeEquals(code) + "'";
+
+		return "'" + code + "'";
+	}
+
+	private String describeDirection(String direction) {
+		switch (Character.toLowerCase(direction.charAt(0))) {
+		case 'l':
+			return "to the left";
+		case 'r':
+			return "to the right";
+		case 'u':
+			return "upwards";
+		default:
+			return "downwards";
+		}
 	}
 
 	@Override

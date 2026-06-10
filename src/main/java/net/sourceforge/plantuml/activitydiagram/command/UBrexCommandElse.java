@@ -41,6 +41,7 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -55,6 +56,15 @@ public class UBrexCommandElse extends UBrexSingleLineCommand2<ActivityDiagram> {
 
 	static UnicodeBracketedExpression getRegexConcat() {
 		return UBrexConcat.build(new UBrexLeaf("else"), UBrexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'else' switches to the alternative branch of the enclosing 'if'
+		// (legacy activity diagram syntax); executeArg fails when no 'if' is
+		// pending.
+		return "Starting the 'else' branch of the enclosing if";
 	}
 
 	@Override

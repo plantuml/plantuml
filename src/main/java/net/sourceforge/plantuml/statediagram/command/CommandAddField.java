@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -71,6 +72,16 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "FIELD", "(.*)"), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'State : text' adds a description line inside the body of a state,
+		// creating it if it does not exist yet. The name may be quoted (CODE4)
+		// or not (CODE3), hence the lazzy lookup, like in executeArg.
+		return "Adding the description line \"" + arg.get("FIELD", 0) + "\" to the state '"
+				+ arg.getLazzy("CODE", 0) + "' (created if it does not exist yet)";
 	}
 
 	@Override

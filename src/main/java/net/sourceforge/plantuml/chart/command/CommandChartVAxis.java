@@ -39,6 +39,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartAxis;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -84,6 +85,13 @@ public class CommandChartVAxis extends SingleLineCommand2<ChartDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,

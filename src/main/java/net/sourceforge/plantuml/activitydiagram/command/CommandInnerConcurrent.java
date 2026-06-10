@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -57,6 +58,23 @@ public class CommandInnerConcurrent extends SingleLineCommand2<ActivityDiagram> 
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "NAME", "(.*)"), //
 				RegexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// '--' inside an inner activity block (opened by '--> {') starts a new
+		// concurrent branch (legacy activity diagram syntax); executeArg fails
+		// when no inner activity is open.
+		sb.append("Starting a new concurrent activity branch");
+
+		final String name = arg.get("NAME", 0);
+		if (name != null && name.isEmpty() == false)
+			sb.append(" labelled \"").append(name).append("\"");
+
+		return sb.toString();
 	}
 
 	@Override

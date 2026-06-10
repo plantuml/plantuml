@@ -63,7 +63,7 @@ public class CommandSwimlane2 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceOneOrMore(), //
 				ColorParser.exp7(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "SWIMLANE", "([^|]+)"), //
+				new RegexLeaf(1, "SWIMLANE", "([^|]+?)"), //
 				new RegexOptional( //
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //

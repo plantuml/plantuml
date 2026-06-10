@@ -40,6 +40,8 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.annotation.Explain;
+import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -193,6 +195,99 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				"|" + //
 				"\\((?!\\*\\))[^)]+\\)/?" + //
 				")");
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Draws a link between two elements, created when needed with a shape
+		// deduced from the notation, like in getDummy(): '()x' is an
+		// interface, '(x)' a usecase, ':x:' an actor, '[x]' a component, and a
+		// trailing '/' selects the business variant.
+		sb.append("Drawing ").append(CommandLinkClass.describeRelation(getHead(arg, "HEAD1"), getHead(arg, "HEAD2")))
+				.append(" between ").append(describeEndpoint(arg.get("ENT1", 0))).append(" and ")
+				.append(describeEndpoint(arg.get("ENT2", 0)));
+
+		// Mirror getLinkType: '.' makes the line dashed, '~' dotted and '='
+		// bold.
+		final String queue = getQueue(arg);
+		if (queue.contains("."))
+			sb.append(", dashed");
+		else if (queue.contains("~"))
+			sb.append(", dotted");
+		else if (queue.contains("="))
+			sb.append(", bold");
+
+		final String direction = arg.get("DIRECTION", 0);
+		if (direction != null && direction.isEmpty() == false)
+			sb.append(", oriented ").append(describeDirection(direction));
+
+		if (arg.get("INSIDE", 0) != null)
+			sb.append(", with a middle circle");
+
+		final String style = arg.getLazzy("ARROW_STYLE", 0);
+		if (style != null)
+			sb.append(", with style '").append(style).append("'");
+
+		final String firstLabel = arg.get("FIRST_LABEL", 0);
+		if (firstLabel != null)
+			sb.append(", label \"").append(firstLabel).append("\" on the first end");
+
+		final String secondLabel = arg.get("SECOND_LABEL", 0);
+		if (secondLabel != null)
+			sb.append(", label \"").append(secondLabel).append("\" on the second end");
+
+		final String label = arg.get("LABEL_LINK", 0);
+		if (label != null)
+			sb.append(", labelled \"").append(label).append("\"");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", line color ").append(arg.get("COLOR", 0));
+
+		if (arg.get("STEREOTYPE", 0) != null)
+			sb.append(", stereotype ").append(arg.get("STEREOTYPE", 0));
+
+		return sb.toString();
+	}
+
+	private String describeEndpoint(String ent) {
+		if (ent.startsWith("()")) {
+			final String name = StringUtils
+					.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(ent.substring(2)));
+			return "the interface '" + name + "'";
+		}
+
+		final char codeChar = ent.length() > 2 ? ent.charAt(0) : 0;
+		final boolean endWithSlash = ent.endsWith("/");
+		if (codeChar == '(') {
+			final String name = ent.substring(1, ent.length() - (endWithSlash ? 2 : 1));
+			return (endWithSlash ? "the business usecase '" : "the usecase '") + name + "'";
+		}
+
+		if (codeChar == ':') {
+			final String name = ent.substring(1, ent.length() - (endWithSlash ? 2 : 1));
+			return (endWithSlash ? "the business actor '" : "the actor '") + name + "'";
+		}
+
+		if (codeChar == '[')
+			return "the component '" + ent.substring(1, ent.length() - 1) + "'";
+
+		return "'" + StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent) + "'";
+	}
+
+	private String describeDirection(String direction) {
+		switch (Character.toLowerCase(direction.charAt(0))) {
+		case 'l':
+			return "to the left";
+		case 'r':
+			return "to the right";
+		case 'u':
+			return "upwards";
+		default:
+			return "downwards";
+		}
 	}
 
 	@Override

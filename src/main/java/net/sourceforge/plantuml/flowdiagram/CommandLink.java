@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.flowdiagram;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -61,6 +62,13 @@ public class CommandLink extends SingleLineCommand2<FlowDiagram> {
 						)), //
 				new RegexLeaf(1, "ID_DEST", "(\\w+)"), RegexLeaf.end());
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(FlowDiagram system, LineLocation location, RegexResult arg,

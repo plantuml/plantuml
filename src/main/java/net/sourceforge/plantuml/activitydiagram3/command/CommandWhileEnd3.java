@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -72,6 +73,22 @@ public class CommandWhileEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexOptional(new RegexLeaf(1, "OUT", "\\((.+?)\\)")), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'endwhile' (or 'while end') closes the while loop opened by
+		// 'while (test)'; the optional '(...)' labels the exit arrow.
+		sb.append("Closing the while loop");
+
+		final String out = arg.get("OUT", 0);
+		if (out != null)
+			sb.append(", exit arrow labelled \"").append(out).append("\"");
+
+		return sb.toString();
 	}
 
 	@Override

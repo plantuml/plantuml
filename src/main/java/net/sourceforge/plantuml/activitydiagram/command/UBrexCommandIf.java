@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -95,6 +96,76 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2<ActivityDiagram> {
 						UBrexConcat.build(new UBrexNamed("CODE", new UBrexLeaf("〇+「〴an_.」")), simple) //
 				), //
 				UBrexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Legacy activity diagram syntax: 'Source --> if "test" then' opens a
+		// branch (a diamond) linked from the given source, or from the last
+		// activity when no source is written. The condition may be quoted
+		// (IF1, with an optional 'as code') or a bare word (IF2), like in
+		// executeArg.
+		sb.append("Starting an 'if'");
+
+		if (arg.get("IF2", 0) == null) {
+			final String if1 = arg.get("IF1", 0);
+			if (if1 != null && if1.isEmpty() == false)
+				sb.append(", testing \"").append(if1).append("\"");
+			if (arg.get("ASIF1", 0) != null)
+				sb.append(" (code '").append(arg.get("ASIF1", 0)).append("')");
+		} else
+			sb.append(", testing \"").append(arg.get("IF2", 0)).append("\"");
+
+		sb.append(", linked from ").append(describeSource(arg));
+
+		final String bracket = arg.get("BRACKET", 0);
+		if (bracket != null)
+			sb.append(", arrow labelled \"").append(bracket).append("\"");
+
+		final String direction = arg.get("ARROW_DIRECTION", 0);
+		if (direction != null && direction.isEmpty() == false)
+			sb.append(", oriented ").append(describeDirection(direction));
+
+		final String style = arg.getLazzy("ARROW_STYLE", 0);
+		if (style != null)
+			sb.append(", with style '").append(style).append("'");
+
+		return sb.toString();
+	}
+
+	private String describeSource(RegexResult arg) {
+		if (arg.get("STAR", 0) != null)
+			return "the start node";
+
+		if (arg.get("BAR", 0) != null)
+			return "the synchronization bar '" + arg.get("BAR", 0) + "'";
+
+		if (arg.get("QUOTED1", 0) != null) {
+			if (arg.get("QUOTED2", 0) != null)
+				return "'" + arg.get("QUOTED2", 0) + "' displayed as \"" + arg.get("QUOTED1", 0) + "\"";
+			return "\"" + arg.get("QUOTED1", 0) + "\"";
+		}
+
+		if (arg.get("CODE", 0) != null)
+			return "'" + arg.get("CODE", 0) + "'";
+
+		return "the last activity";
+	}
+
+	private String describeDirection(String direction) {
+		switch (Character.toLowerCase(direction.charAt(0))) {
+		case 'l':
+			return "to the left";
+		case 'r':
+			return "to the right";
+		case 'u':
+			return "upwards";
+		default:
+			return "downwards";
+		}
 	}
 
 	@Override

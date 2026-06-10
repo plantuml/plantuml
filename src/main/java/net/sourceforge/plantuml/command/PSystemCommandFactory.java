@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.Previous;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -91,7 +92,9 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 					// For next pass
 					break;
 				}
-				result.add(explainFewLines(sys, source, it, pass, preprocessing));
+				final Explanation explanation = explainFewLines(sys, source, it, pass, preprocessing);
+				if (explanation != null)
+					result.add(explanation);
 			}
 
 		}
@@ -198,7 +201,11 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		if (step.command.isEligibleFor(currentPass) == false)
 			return null;
 
-		return new Explanation(step.blocLines, sys.explain(step.command, step.blocLines));
+		final String explain = sys.explain(step.command, step.blocLines);
+		if (explain == null || explain.isEmpty())
+			return null;
+
+		return new Explanation(step.blocLines, explain);
 
 	}
 

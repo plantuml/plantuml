@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.cheneer.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -84,6 +85,13 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg,
