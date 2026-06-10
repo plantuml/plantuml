@@ -73,22 +73,35 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2&lt;TitledDiagr
 	}
 
 	@Override
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: the '&lt;svg' element starts on the declaration line
+		// itself and the closing '&lt;/svg&gt;' line is part of the data, so the
+		// whole block contributes to the SVG.
+<span class="nc" id="L80">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (line0 == null)</span>
+<span class="nc" id="L82">			return &quot;Defining a sprite from an inline SVG element&quot;;</span>
+
+<span class="nc" id="L84">		return &quot;Defining the sprite '&quot; + line0.get(&quot;NAME&quot;, 0) + &quot;' from an inline SVG element of &quot; + lines.size()</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				+ (lines.size() == 1 ? &quot; line&quot; : &quot; lines&quot;);</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 
-<span class="fc" id="L79">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc" id="L80">		final String svgStart = line0.get(&quot;SVGSTART&quot;, 0);</span>
-<span class="fc" id="L81">		lines = lines.subExtract(1, 0);</span>
+<span class="fc" id="L92">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L93">		final String svgStart = line0.get(&quot;SVGSTART&quot;, 0);</span>
+<span class="fc" id="L94">		lines = lines.subExtract(1, 0);</span>
 
-<span class="fc" id="L83">		final List&lt;String&gt; svg = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L84">		svg.add(svgStart);</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		for (StringLocated sl : lines)</span>
-<span class="fc" id="L86">			svg.add(sl.getString());</span>
+<span class="fc" id="L96">		final List&lt;String&gt; svg = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L97">		svg.add(svgStart);</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		for (StringLocated sl : lines)</span>
+<span class="fc" id="L99">			svg.add(sl.getString());</span>
 
-<span class="fc" id="L88">		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg, system.getPragma(), system.getMd5map());</span>
-<span class="fc" id="L89">		system.addSprite(line0.get(&quot;NAME&quot;, 0), parser);</span>
+<span class="fc" id="L101">		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(svg, system.getPragma(), system.getMd5map());</span>
+<span class="fc" id="L102">		system.addSprite(line0.get(&quot;NAME&quot;, 0), parser);</span>
 
-<span class="fc" id="L91">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L104">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -64,14 +64,39 @@ public class UBrexCommandHideShow2 extends UBrexSingleLineCommand2&lt;CucaDiagra
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L68">		final StringBuilder sb = new StringBuilder();</span>
+
+		// UBREX twin of CommandHideShow2: hides or shows whole elements,
+		// designated by their name or by a stereotype (see
+		// CucaDiagram.hideOrShow2).
+<span class="nc" id="L73">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">		final boolean show = tmp == 's' || tmp == 'S';</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		sb.append(show ? &quot;Showing&quot; : &quot;Hiding&quot;);</span>
+
+<span class="nc" id="L77">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (what.startsWith(&quot;&lt;&lt;&quot;))</span>
+<span class="nc" id="L79">			sb.append(&quot; the elements stereotyped &quot;).append(what);</span>
+		else
+<span class="nc" id="L81">			sb.append(&quot; the elements matching '&quot;).append(what).append(&quot;'&quot;);</span>
+
+		// Only the first letter of COMMAND is read by executeArg, so the
+		// '-class' variants behave like the plain keywords.
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (arg.get(&quot;COMMAND&quot;, 0).contains(&quot;-&quot;))</span>
+<span class="nc" id="L86">			sb.append(&quot; (the '-class' suffix has no specific effect)&quot;);</span>
+
+<span class="nc" id="L88">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 
-<span class="nc" id="L70">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
-<span class="nc bnc" id="L71" title="All 4 branches missed.">		final boolean show = tmp == 's' || tmp == 'S';</span>
-<span class="nc" id="L72">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
-<span class="nc" id="L73">		diagram.hideOrShow2(what, show);</span>
-<span class="nc" id="L74">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L95">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
+<span class="nc bnc" id="L96" title="All 4 branches missed.">		final boolean show = tmp == 's' || tmp == 'S';</span>
+<span class="nc" id="L97">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
+<span class="nc" id="L98">		diagram.hideOrShow2(what, show);</span>
+<span class="nc" id="L99">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

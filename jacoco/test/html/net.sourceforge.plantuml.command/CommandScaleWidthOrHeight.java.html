@@ -62,15 +62,25 @@ public class CommandScaleWidthOrHeight extends SingleLineCommand2&lt;AbstractDia
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'scale N width' (or 'scale N height') resizes the final image so
+		// that the given dimension is exactly N pixels, keeping the aspect
+		// ratio; unlike the 'scale max' forms, it may enlarge a smaller image.
+<span class="nc" id="L69">		final boolean width = &quot;width&quot;.equalsIgnoreCase(arg.get(&quot;WIDTH&quot;, 0));</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		return &quot;Resizing the diagram so that its &quot; + (width ? &quot;width&quot; : &quot;height&quot;) + &quot; is &quot; + arg.get(&quot;VALUE&quot;, 0)</span>
+				+ &quot; pixels&quot;;
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L66">		final double size = Double.parseDouble(arg.get(&quot;VALUE&quot;, 0));</span>
-<span class="nc" id="L67">		final boolean width = &quot;width&quot;.equalsIgnoreCase(arg.get(&quot;WIDTH&quot;, 0));</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (width) {</span>
-<span class="nc" id="L69">			diagram.setScale(new ScaleWidth(size));</span>
+<span class="nc" id="L76">		final double size = Double.parseDouble(arg.get(&quot;VALUE&quot;, 0));</span>
+<span class="nc" id="L77">		final boolean width = &quot;width&quot;.equalsIgnoreCase(arg.get(&quot;WIDTH&quot;, 0));</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (width) {</span>
+<span class="nc" id="L79">			diagram.setScale(new ScaleWidth(size));</span>
 		} else {
-<span class="nc" id="L71">			diagram.setScale(new ScaleHeight(size));</span>
+<span class="nc" id="L81">			diagram.setScale(new ScaleHeight(size));</span>
 		}
-<span class="nc" id="L73">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
 	}
 
 }

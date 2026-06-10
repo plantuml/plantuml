@@ -72,68 +72,106 @@ public class CommandHideShowByVisibility extends SingleLineCommand2&lt;TitledDia
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L76">		final StringBuilder sb = new StringBuilder();</span>
+
+		// Hides or shows class members according to their visibility modifier.
+		// This command only applies to class diagrams and is silently ignored
+		// for other diagram types (see executeArg).
+<span class="nc" id="L81">		final boolean show = arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		sb.append(show ? &quot;Showing the &quot; : &quot;Hiding the &quot;);</span>
+
+		// Same tokenization as executeArgClass.
+<span class="nc" id="L85">		final StringTokenizer st = new StringTokenizer(StringUtils.goLowerCase(arg.get(&quot;VISIBILITY&quot;, 0)), &quot; ,&quot;);</span>
+<span class="nc" id="L86">		final StringBuilder visibilities = new StringBuilder();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">			if (visibilities.length() &gt; 0)</span>
+<span class="nc" id="L89">				visibilities.append(&quot;, &quot;);</span>
+<span class="nc" id="L90">			visibilities.append(st.nextToken());</span>
+		}
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (visibilities.length() &gt; 0)</span>
+<span class="nc" id="L93">			sb.append(visibilities).append(&quot; &quot;);</span>
+
+		// Same normalization as getEntityPortion: 'attributes' and 'fields'
+		// are the same portion.
+<span class="nc" id="L97">		final String portion = StringUtils.goLowerCase(arg.get(&quot;PORTION&quot;, 0));</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (portion.startsWith(&quot;met&quot;))</span>
+<span class="nc" id="L99">			sb.append(&quot;methods&quot;);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		else if (portion.startsWith(&quot;mem&quot;))</span>
+<span class="nc" id="L101">			sb.append(&quot;members (fields and methods)&quot;);</span>
+		else
+<span class="nc" id="L103">			sb.append(&quot;fields&quot;);</span>
+<span class="nc" id="L104">		sb.append(&quot; of classes&quot;);</span>
+
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (visibilities.length() == 0)</span>
+<span class="nc" id="L107">			sb.append(&quot; (no visibility modifier given: ignored at execution)&quot;);</span>
+
+<span class="nc" id="L109">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram classDiagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (classDiagram instanceof ClassDiagram) {</span>
-<span class="nc" id="L77">			return executeArgClass((ClassDiagram) classDiagram, arg);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (classDiagram instanceof ClassDiagram) {</span>
+<span class="nc" id="L115">			return executeArgClass((ClassDiagram) classDiagram, arg);</span>
 		}
 		// Just ignored
-<span class="nc" id="L80">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L118">		return CommandExecutionResult.ok();</span>
 	}
 
 	private CommandExecutionResult executeArgClass(ClassDiagram classDiagram, RegexResult arg) {
 
-<span class="nc" id="L85">		final EntityPortion portion = getEntityPortion(arg.get(&quot;PORTION&quot;, 0));</span>
+<span class="nc" id="L123">		final EntityPortion portion = getEntityPortion(arg.get(&quot;PORTION&quot;, 0));</span>
 
-<span class="nc" id="L87">		final Set&lt;VisibilityModifier&gt; visibilities = EnumSet.&lt;VisibilityModifier&gt;noneOf(VisibilityModifier.class);</span>
-<span class="nc" id="L88">		final StringTokenizer st = new StringTokenizer(StringUtils.goLowerCase(arg.get(&quot;VISIBILITY&quot;, 0)), &quot; ,&quot;);</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
-<span class="nc" id="L90">			addVisibilities(st.nextToken(), portion, visibilities);</span>
+<span class="nc" id="L125">		final Set&lt;VisibilityModifier&gt; visibilities = EnumSet.&lt;VisibilityModifier&gt;noneOf(VisibilityModifier.class);</span>
+<span class="nc" id="L126">		final StringTokenizer st = new StringTokenizer(StringUtils.goLowerCase(arg.get(&quot;VISIBILITY&quot;, 0)), &quot; ,&quot;);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L128">			addVisibilities(st.nextToken(), portion, visibilities);</span>
 		}
 
-<span class="nc" id="L93">		classDiagram.hideOrShowVisibilityModifier(visibilities, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
+<span class="nc" id="L131">		classDiagram.hideOrShowVisibilityModifier(visibilities, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));</span>
 
-<span class="nc" id="L95">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L133">		return CommandExecutionResult.ok();</span>
 	}
 
 	private void addVisibilities(String token, EntityPortion portion, Set&lt;VisibilityModifier&gt; result) {
-<span class="nc bnc" id="L99" title="All 6 branches missed.">		if (token.equals(&quot;public&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
-<span class="nc" id="L100">			result.add(VisibilityModifier.PUBLIC_FIELD);</span>
+<span class="nc bnc" id="L137" title="All 6 branches missed.">		if (token.equals(&quot;public&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
+<span class="nc" id="L138">			result.add(VisibilityModifier.PUBLIC_FIELD);</span>
 		}
-<span class="nc bnc" id="L102" title="All 6 branches missed.">		if (token.equals(&quot;public&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
-<span class="nc" id="L103">			result.add(VisibilityModifier.PUBLIC_METHOD);</span>
+<span class="nc bnc" id="L140" title="All 6 branches missed.">		if (token.equals(&quot;public&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
+<span class="nc" id="L141">			result.add(VisibilityModifier.PUBLIC_METHOD);</span>
 		}
-<span class="nc bnc" id="L105" title="All 6 branches missed.">		if (token.equals(&quot;private&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
-<span class="nc" id="L106">			result.add(VisibilityModifier.PRIVATE_FIELD);</span>
+<span class="nc bnc" id="L143" title="All 6 branches missed.">		if (token.equals(&quot;private&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
+<span class="nc" id="L144">			result.add(VisibilityModifier.PRIVATE_FIELD);</span>
 		}
-<span class="nc bnc" id="L108" title="All 6 branches missed.">		if (token.equals(&quot;private&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
-<span class="nc" id="L109">			result.add(VisibilityModifier.PRIVATE_METHOD);</span>
+<span class="nc bnc" id="L146" title="All 6 branches missed.">		if (token.equals(&quot;private&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
+<span class="nc" id="L147">			result.add(VisibilityModifier.PRIVATE_METHOD);</span>
 		}
-<span class="nc bnc" id="L111" title="All 6 branches missed.">		if (token.equals(&quot;protected&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
-<span class="nc" id="L112">			result.add(VisibilityModifier.PROTECTED_FIELD);</span>
+<span class="nc bnc" id="L149" title="All 6 branches missed.">		if (token.equals(&quot;protected&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
+<span class="nc" id="L150">			result.add(VisibilityModifier.PROTECTED_FIELD);</span>
 		}
-<span class="nc bnc" id="L114" title="All 6 branches missed.">		if (token.equals(&quot;protected&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
-<span class="nc" id="L115">			result.add(VisibilityModifier.PROTECTED_METHOD);</span>
+<span class="nc bnc" id="L152" title="All 6 branches missed.">		if (token.equals(&quot;protected&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
+<span class="nc" id="L153">			result.add(VisibilityModifier.PROTECTED_METHOD);</span>
 		}
-<span class="nc bnc" id="L117" title="All 6 branches missed.">		if (token.equals(&quot;package&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
-<span class="nc" id="L118">			result.add(VisibilityModifier.PACKAGE_PRIVATE_FIELD);</span>
+<span class="nc bnc" id="L155" title="All 6 branches missed.">		if (token.equals(&quot;package&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.FIELD)) {</span>
+<span class="nc" id="L156">			result.add(VisibilityModifier.PACKAGE_PRIVATE_FIELD);</span>
 		}
-<span class="nc bnc" id="L120" title="All 6 branches missed.">		if (token.equals(&quot;package&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
-<span class="nc" id="L121">			result.add(VisibilityModifier.PACKAGE_PRIVATE_METHOD);</span>
+<span class="nc bnc" id="L158" title="All 6 branches missed.">		if (token.equals(&quot;package&quot;) &amp;&amp; (portion == EntityPortion.MEMBER || portion == EntityPortion.METHOD)) {</span>
+<span class="nc" id="L159">			result.add(VisibilityModifier.PACKAGE_PRIVATE_METHOD);</span>
 		}
-<span class="nc" id="L123">	}</span>
+<span class="nc" id="L161">	}</span>
 
 	private EntityPortion getEntityPortion(String s) {
-<span class="nc" id="L126">		final String sub = StringUtils.goLowerCase(s.substring(0, 3));</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (sub.equals(&quot;met&quot;)) {</span>
-<span class="nc" id="L128">			return EntityPortion.METHOD;</span>
+<span class="nc" id="L164">		final String sub = StringUtils.goLowerCase(s.substring(0, 3));</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (sub.equals(&quot;met&quot;)) {</span>
+<span class="nc" id="L166">			return EntityPortion.METHOD;</span>
 		}
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (sub.equals(&quot;mem&quot;)) {</span>
-<span class="nc" id="L131">			return EntityPortion.MEMBER;</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (sub.equals(&quot;mem&quot;)) {</span>
+<span class="nc" id="L169">			return EntityPortion.MEMBER;</span>
 		}
-<span class="nc bnc" id="L133" title="All 4 branches missed.">		if (sub.equals(&quot;att&quot;) || sub.equals(&quot;fie&quot;)) {</span>
-<span class="nc" id="L134">			return EntityPortion.FIELD;</span>
+<span class="nc bnc" id="L171" title="All 4 branches missed.">		if (sub.equals(&quot;att&quot;) || sub.equals(&quot;fie&quot;)) {</span>
+<span class="nc" id="L172">			return EntityPortion.FIELD;</span>
 		}
-<span class="nc" id="L136">		throw new IllegalArgumentException();</span>
+<span class="nc" id="L174">		throw new IllegalArgumentException();</span>
 	}
 
 }

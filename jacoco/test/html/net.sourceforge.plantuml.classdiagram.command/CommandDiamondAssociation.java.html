@@ -64,16 +64,24 @@ public class CommandDiamondAssociation extends SingleLineCommand2&lt;ClassDiagra
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '&lt;&gt; name' creates a diamond shaped association node, used as a
+		// junction point between several association lines. Unlike most
+		// creation commands, executeArg fails if the name already exists.
+<span class="nc" id="L71">		return &quot;Creating the association diamond '&quot; + arg.get(&quot;CODE&quot;, 0) + &quot;'&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L68">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L69">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="nc" id="L76">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L77">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
 
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L72">			return CommandExecutionResult.error(&quot;Already existing : &quot; + quark.getName());</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L80">			return CommandExecutionResult.error(&quot;Already existing : &quot; + quark.getName());</span>
 
-<span class="nc" id="L74">		diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), &quot;&quot;), LeafType.ASSOCIATION, null);</span>
+<span class="nc" id="L82">		diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), &quot;&quot;), LeafType.ASSOCIATION, null);</span>
 
-<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L84">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

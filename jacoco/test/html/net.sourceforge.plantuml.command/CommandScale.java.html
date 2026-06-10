@@ -67,21 +67,40 @@ public class CommandScale extends SingleLineCommand2&lt;AbstractDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L71">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'scale 1.5' or 'scale 2/3' multiplies the size of the final image.
+<span class="nc" id="L74">		final String scale = arg.get(&quot;SCALE&quot;, 0);</span>
+<span class="nc" id="L75">		final String div = arg.get(&quot;DIV&quot;, 0);</span>
+<span class="nc" id="L76">		sb.append(&quot;Scaling the diagram by a factor of &quot;).append(scale);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (div != null)</span>
+<span class="nc" id="L78">			sb.append(&quot; / &quot;).append(div);</span>
+
+		// Zero is detected on the raw strings, to mirror the validation of
+		// executeArg without risking a NumberFormatException here.
+<span class="nc bnc" id="L82" title="All 6 branches missed.">		if (scale.matches(&quot;[0.]+&quot;) || (div != null &amp;&amp; div.matches(&quot;[0.]+&quot;)))</span>
+<span class="nc" id="L83">			sb.append(&quot; (rejected at execution: scale cannot be zero)&quot;);</span>
+
+<span class="nc" id="L85">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L72">		double scale = Double.parseDouble(arg.get(&quot;SCALE&quot;, 0));</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (scale == 0)</span>
-<span class="nc" id="L74">			return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
+<span class="fc" id="L91">		double scale = Double.parseDouble(arg.get(&quot;SCALE&quot;, 0));</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (scale == 0)</span>
+<span class="nc" id="L93">			return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
 
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (arg.get(&quot;DIV&quot;, 0) != null) {</span>
-<span class="nc" id="L77">			final double div = Double.parseDouble(arg.get(&quot;DIV&quot;, 0));</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">			if (div == 0)</span>
-<span class="nc" id="L79">				return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (arg.get(&quot;DIV&quot;, 0) != null) {</span>
+<span class="nc" id="L96">			final double div = Double.parseDouble(arg.get(&quot;DIV&quot;, 0));</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">			if (div == 0)</span>
+<span class="nc" id="L98">				return CommandExecutionResult.error(&quot;Scale cannot be zero&quot;);</span>
 
-<span class="nc" id="L81">			scale /= div;</span>
+<span class="nc" id="L100">			scale /= div;</span>
 		}
-<span class="fc" id="L83">		diagram.setScale(new ScaleSimple(scale));</span>
-<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L102">		diagram.setScale(new ScaleSimple(scale));</span>
+<span class="fc" id="L103">		return CommandExecutionResult.ok();</span>
 	}
 
 }

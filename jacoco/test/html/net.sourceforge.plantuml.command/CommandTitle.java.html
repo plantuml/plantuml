@@ -67,11 +67,19 @@ public class CommandTitle extends SingleLineCommand2&lt;TitledDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The title may be quoted (TITLE1) or unquoted (TITLE2); executeArg
+		// reads whichever is present through getLazzy(&quot;TITLE&quot;, 0). It is
+		// displayed centered at the top of the diagram.
+<span class="nc" id="L74">		return &quot;Setting the title of the diagram to \&quot;&quot; + arg.getLazzy(&quot;TITLE&quot;, 0) + &quot;\&quot;&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L72">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;TITLE&quot;, 0));</span>
-<span class="fc" id="L73">		diagram.setTitle(DisplayPositioned.single(location, s, HorizontalAlignment.CENTER, VerticalAlignment.TOP));</span>
-<span class="fc" id="L74">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L80">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;TITLE&quot;, 0));</span>
+<span class="fc" id="L81">		diagram.setTitle(DisplayPositioned.single(location, s, HorizontalAlignment.CENTER, VerticalAlignment.TOP));</span>
+<span class="fc" id="L82">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

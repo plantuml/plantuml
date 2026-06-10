@@ -69,15 +69,23 @@ public class CommandSpriteBase64 extends SingleLineCommand2&lt;TitledDiagram&gt;
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Defines a sprite from an inline PNG image encoded as a data URI;
+		// executeArg fails if the Base64 payload is not a decodable PNG.
+<span class="nc" id="L75">		return &quot;Defining the sprite '&quot; + arg.get(&quot;NAME&quot;, 0) + &quot;' from an inline Base64 encoded PNG image (&quot;</span>
+<span class="nc" id="L76">				+ arg.get(&quot;DATA&quot;, 0).length() + &quot; characters)&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L74">		final String base64 = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L75">		final byte[] bytes = Base64Coder.decode(base64);</span>
+<span class="nc" id="L82">		final String base64 = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="nc" id="L83">		final byte[] bytes = Base64Coder.decode(base64);</span>
 		try {
-<span class="nc" id="L77">			system.addSprite(arg.get(&quot;NAME&quot;, 0), new SpriteImage(SImageIO.read(bytes)));</span>
-<span class="nc" id="L78">			return CommandExecutionResult.ok();</span>
-<span class="nc" id="L79">		} catch (IOException e) {</span>
-<span class="nc" id="L80">			return CommandExecutionResult.error(&quot;Cannot decode Base64 PNG sprite.&quot;);</span>
+<span class="nc" id="L85">			system.addSprite(arg.get(&quot;NAME&quot;, 0), new SpriteImage(SImageIO.read(bytes)));</span>
+<span class="nc" id="L86">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L87">		} catch (IOException e) {</span>
+<span class="nc" id="L88">			return CommandExecutionResult.error(&quot;Cannot decode Base64 PNG sprite.&quot;);</span>
 		}
 	}
 

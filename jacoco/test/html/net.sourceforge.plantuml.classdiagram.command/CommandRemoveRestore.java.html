@@ -59,12 +59,31 @@ public class CommandRemoveRestore extends SingleLineCommand2&lt;CucaDiagram&gt; 
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L63">		final StringBuilder sb = new StringBuilder();</span>
+
+		// Unlike 'hide' which keeps the elements in the layout, 'remove'
+		// completely removes them from the diagram; 'restore' cancels a
+		// previous removal (see CucaDiagram.removeOrRestore).
+<span class="nc" id="L68">		final boolean restore = arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;restore&quot;);</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		sb.append(restore ? &quot;Restoring&quot; : &quot;Removing&quot;);</span>
+
+<span class="nc" id="L71">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (what.startsWith(&quot;&lt;&lt;&quot;))</span>
+<span class="nc" id="L73">			sb.append(&quot; the elements stereotyped &quot;).append(what);</span>
+		else
+<span class="nc" id="L75">			sb.append(&quot; the elements matching '&quot;).append(what).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L77">		return sb.toString();</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
-<span class="nc" id="L64">		final boolean show = arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;restore&quot;);</span>
-<span class="nc" id="L65">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
-<span class="nc" id="L66">		diagram.removeOrRestore(what, show);</span>
-<span class="nc" id="L67">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L83">		final boolean show = arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;restore&quot;);</span>
+<span class="nc" id="L84">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
+<span class="nc" id="L85">		diagram.removeOrRestore(what, show);</span>
+<span class="nc" id="L86">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

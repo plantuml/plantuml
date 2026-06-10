@@ -65,14 +65,22 @@ public class CommandSpriteSvg extends SingleLineCommand2&lt;TitledDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Defines a sprite from an inline '&lt;svg&gt;...&lt;/svg&gt;' element, parsed by
+		// the SVG sprite parser.
+<span class="nc" id="L71">		return &quot;Defining the sprite '&quot; + arg.get(&quot;NAME&quot;, 0) + &quot;' from an inline SVG element (&quot;</span>
+<span class="nc" id="L72">				+ arg.get(&quot;SVG&quot;, 0).length() + &quot; characters)&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L70">		final String svg = arg.get(&quot;SVG&quot;, 0);</span>
-<span class="nc" id="L71">		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(Collections.singletonList(svg),</span>
-<span class="nc" id="L72">				system.getPragma(), system.getMd5map());</span>
-<span class="nc" id="L73">		system.addSprite(arg.get(&quot;NAME&quot;, 0), parser);</span>
+<span class="nc" id="L78">		final String svg = arg.get(&quot;SVG&quot;, 0);</span>
+<span class="nc" id="L79">		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(Collections.singletonList(svg),</span>
+<span class="nc" id="L80">				system.getPragma(), system.getMd5map());</span>
+<span class="nc" id="L81">		system.addSprite(arg.get(&quot;NAME&quot;, 0), parser);</span>
 
-<span class="nc" id="L75">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

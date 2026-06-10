@@ -68,15 +68,27 @@ public class CommandNamespaceSeparator extends SingleLineCommand2&lt;TitledDiagr
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The namespace separator is the string splitting an element name into
+		// nested namespaces (the default is '.'); 'none' or 'null' disables
+		// this splitting, so dots become plain characters of the name.
+<span class="nc" id="L75">		final String separator = arg.get(&quot;SEPARATOR&quot;, 0);</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(separator) || &quot;null&quot;.equalsIgnoreCase(separator))</span>
+<span class="nc" id="L77">			return &quot;Disabling the namespace separator: element names are no longer split into namespaces&quot;;</span>
+
+<span class="nc" id="L79">		return &quot;Setting the namespace separator to '&quot; + separator + &quot;'&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L73">		final String s = arg.get(&quot;SEPARATOR&quot;, 0);</span>
-<span class="nc bnc" id="L74" title="All 4 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(s) || &quot;null&quot;.equalsIgnoreCase(s))</span>
-<span class="nc" id="L75">			diagram.setNamespaceSeparator(null);</span>
+<span class="nc" id="L85">		final String s = arg.get(&quot;SEPARATOR&quot;, 0);</span>
+<span class="nc bnc" id="L86" title="All 4 branches missed.">		if (&quot;none&quot;.equalsIgnoreCase(s) || &quot;null&quot;.equalsIgnoreCase(s))</span>
+<span class="nc" id="L87">			diagram.setNamespaceSeparator(null);</span>
 		else
-<span class="nc" id="L77">			diagram.setNamespaceSeparator(s);</span>
+<span class="nc" id="L89">			diagram.setNamespaceSeparator(s);</span>
 
-<span class="nc" id="L79">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L91">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -58,10 +58,19 @@ public class CommandMinwidth extends SingleLineCommand2&lt;TitledDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Intent: force a minimum width for the diagram. Note that the call to
+		// setMinwidth is commented out in executeArg, so this command is
+		// parsed but has no effect on the rendering.
+<span class="nc" id="L65">		return &quot;Setting the minimum width of the diagram to &quot; + arg.get(&quot;VALUE&quot;, 0)</span>
+				+ &quot; pixels (currently ignored by the rendering engine)&quot;;
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L62">		final int minwidth = Integer.parseInt(arg.get(&quot;VALUE&quot;, 0));</span>
+<span class="nc" id="L71">		final int minwidth = Integer.parseInt(arg.get(&quot;VALUE&quot;, 0));</span>
 		// diagram.setMinwidth(minwidth);
-<span class="nc" id="L64">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L73">		return CommandExecutionResult.ok();</span>
 	}
 
 }

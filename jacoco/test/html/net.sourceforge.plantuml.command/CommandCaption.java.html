@@ -67,11 +67,19 @@ public class CommandCaption extends SingleLineCommand2&lt;TitledDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The caption may be quoted (DISPLAY1) or unquoted (DISPLAY2);
+		// executeArg reads whichever is present through getLazzy. It is
+		// displayed centered at the bottom of the diagram.
+<span class="nc" id="L74">		return &quot;Setting the caption of the diagram to \&quot;&quot; + arg.getLazzy(&quot;DISPLAY&quot;, 0) + &quot;\&quot;&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L72">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
-<span class="fc" id="L73">		diagram.setCaption(DisplayPositioned.single(location, s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));</span>
-<span class="fc" id="L74">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L80">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;DISPLAY&quot;, 0));</span>
+<span class="fc" id="L81">		diagram.setCaption(DisplayPositioned.single(location, s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));</span>
+<span class="fc" id="L82">		return CommandExecutionResult.ok();</span>
 	}
 
 }

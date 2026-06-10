@@ -63,9 +63,17 @@ public class CommandAllowMixing extends SingleLineCommand2&lt;ClassDiagram&gt; {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'allowmixing' (or 'allow_mixing') permits the use of elements from
+		// other diagram types (actors, components, use cases...) inside a
+		// class diagram.
+<span class="nc" id="L70">		return &quot;Allowing elements from other diagram types to be mixed into this diagram&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L67">		diagram.setAllowMixing(true);</span>
-<span class="nc" id="L68">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L75">		diagram.setAllowMixing(true);</span>
+<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

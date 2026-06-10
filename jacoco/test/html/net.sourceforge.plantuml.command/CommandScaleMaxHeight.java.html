@@ -63,10 +63,17 @@ public class CommandScaleMaxHeight extends SingleLineCommand2&lt;AbstractDiagram
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'scale max N height' shrinks the final image if needed so that its
+		// height does not exceed N pixels (it never enlarges it).
+<span class="nc" id="L69">		return &quot;Limiting the height of the diagram to &quot; + arg.get(&quot;HEIGHT&quot;, 0) + &quot; pixels&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L67">		final double height = Double.parseDouble(arg.get(&quot;HEIGHT&quot;, 0));</span>
-<span class="nc" id="L68">		diagram.setScale(new ScaleMaxHeight(height));</span>
-<span class="nc" id="L69">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L74">		final double height = Double.parseDouble(arg.get(&quot;HEIGHT&quot;, 0));</span>
+<span class="nc" id="L75">		diagram.setScale(new ScaleMaxHeight(height));</span>
+<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -63,11 +63,20 @@ public class CommandScaleWidthAndHeight extends SingleLineCommand2&lt;AbstractDi
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'scale WxH' resizes the final image to fit within W x H pixels,
+		// keeping its aspect ratio; unlike 'scale max WxH', it may enlarge a
+		// smaller image.
+<span class="nc" id="L70">		return &quot;Resizing the diagram to fit within &quot; + arg.get(&quot;WIDTH&quot;, 0) + &quot; x &quot; + arg.get(&quot;HEIGHT&quot;, 0)</span>
+				+ &quot; pixels&quot;;
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L67">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
-<span class="nc" id="L68">		final double height = Double.parseDouble(arg.get(&quot;HEIGHT&quot;, 0));</span>
-<span class="nc" id="L69">		diagram.setScale(new ScaleWidthAndHeight(width, height));</span>
-<span class="nc" id="L70">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L76">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
+<span class="nc" id="L77">		final double height = Double.parseDouble(arg.get(&quot;HEIGHT&quot;, 0));</span>
+<span class="nc" id="L78">		diagram.setScale(new ScaleWidthAndHeight(width, height));</span>
+<span class="nc" id="L79">		return CommandExecutionResult.ok();</span>
 	}
 
 }

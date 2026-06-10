@@ -55,18 +55,32 @@ public class CommandMultilinesCaption extends CommandMultilines&lt;TitledDiagram
 
 <span class="fc" id="L56">	}</span>
 
+	@Override
+	public String explain(BlocLines lines) {
+		// CommandMultilines does not dispatch explain() to a helper like
+		// CommandMultilines2.explainNow does, so it is overridden directly.
+		// The lines between 'caption' and 'end caption' are the text,
+		// displayed centered at the bottom of the diagram.
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (bodyCount == 0)</span>
+<span class="nc" id="L66">			return &quot;Setting the caption of the diagram (rejected at execution: no caption defined)&quot;;</span>
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		return &quot;Setting the caption of the diagram from &quot; + bodyCount + (bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;)</span>
+				+ &quot; of text&quot;;
+	}
+
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L60">		final LineLocation location = lines.getLocation();</span>
-<span class="nc" id="L61">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L62">		lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L63">		final Display strings = lines.toDisplay();</span>
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (strings.size() &gt; 0) {</span>
-<span class="nc" id="L65">			diagram.setCaption(DisplayPositioned.single(location, strings.replaceBackslashT(),</span>
+<span class="nc" id="L74">		final LineLocation location = lines.getLocation();</span>
+<span class="nc" id="L75">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L76">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L77">		final Display strings = lines.toDisplay();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (strings.size() &gt; 0) {</span>
+<span class="nc" id="L79">			diagram.setCaption(DisplayPositioned.single(location, strings.replaceBackslashT(),</span>
 					HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
-<span class="nc" id="L67">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L81">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L69">		return CommandExecutionResult.error(&quot;No caption defined&quot;);</span>
+<span class="nc" id="L83">		return CommandExecutionResult.error(&quot;No caption defined&quot;);</span>
 	}
 
 }
