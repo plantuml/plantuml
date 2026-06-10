@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -65,6 +66,7 @@ public class CommandSkinParamJaws extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// This command receives one or several 'skinparam { ... }' blocks
 		// folded into a single line by the Jaws preprocessing (the newlines are

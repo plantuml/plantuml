@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -60,6 +61,7 @@ public class CommandDelay extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -75,7 +77,8 @@ public class CommandDelay extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final Display strings = arg.get("LABEL", 0) == null ? Display.empty()
 				: Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		diagram.delay(strings);

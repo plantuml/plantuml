@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -63,6 +64,7 @@ public class CommandHideEmptyDescription extends SingleLineCommand2<TitledDiagra
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// In state diagrams, states without any description are drawn as a
 		// simple box when this is hidden, instead of the default two
@@ -75,7 +77,8 @@ public class CommandHideEmptyDescription extends SingleLineCommand2<TitledDiagra
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final boolean hide = arg.get("HIDE", 0).equalsIgnoreCase("hide");
 		diagram.setHideEmptyDescription(hide);
 		return CommandExecutionResult.ok();

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -144,6 +145,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return explainArg(first.getLocation(), arg);
 	}
 
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		return "WIPexplain explainArg in " + getClass();
 	}

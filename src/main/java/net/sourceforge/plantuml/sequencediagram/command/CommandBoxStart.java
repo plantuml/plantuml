@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -81,6 +82,7 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -106,8 +108,8 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 //		if (diagram.isBoxPending())
 //			return CommandExecutionResult.error("Box cannot be nested");
 
@@ -123,7 +125,8 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String title = argTitle == null ? "" : argTitle;
-		diagram.boxStart(Display.getWithNewlines(diagram.getPragma(), title), colors.getColor(ColorType.BACK), stereotype);
+		diagram.boxStart(Display.getWithNewlines(diagram.getPragma(), title), colors.getColor(ColorType.BACK),
+				stereotype);
 		return CommandExecutionResult.ok();
 	}
 

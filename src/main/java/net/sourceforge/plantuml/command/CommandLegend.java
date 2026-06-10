@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
@@ -67,6 +68,7 @@ public class CommandLegend extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// The legend may be quoted (LEGEND1) or unquoted (LEGEND2); executeArg
 		// reads whichever is present through getLazzy. This single line form
@@ -76,7 +78,8 @@ public class CommandLegend extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("LEGEND", 0));
 		diagram.setLegend(DisplayPositioned.single(s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
 		return CommandExecutionResult.ok();

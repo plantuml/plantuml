@@ -42,6 +42,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -65,13 +66,14 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<TitledDiagra
 		return RegexConcat.build(CommandHideShowByVisibility.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, "COMMAND", "(hide|show)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1,
-						"VISIBILITY", "((?:public|private|protected|package)?(?:[,%s]+(?:public|private|protected|package))*)"), //
+				new RegexLeaf(1, "VISIBILITY",
+						"((?:public|private|protected|package)?(?:[,%s]+(?:public|private|protected|package))*)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "PORTION", "(members?|attributes?|fields?|methods?)"), RegexLeaf.end());
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -110,7 +112,8 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<TitledDiagra
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram classDiagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram classDiagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		if (classDiagram instanceof ClassDiagram) {
 			return executeArgClass((ClassDiagram) classDiagram, arg);
 		}

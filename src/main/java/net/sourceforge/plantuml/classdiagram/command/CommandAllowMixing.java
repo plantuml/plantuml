@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -46,7 +47,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAllowMixing extends SingleLineCommand2<ClassDiagram> {
-    // ::remove folder when __HAXE__
 
 	public CommandAllowMixing() {
 		super(getRegexConcat());
@@ -63,6 +63,7 @@ public class CommandAllowMixing extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'allowmixing' (or 'allow_mixing') permits the use of elements from
 		// other diagram types (actors, components, use cases...) inside a
@@ -71,7 +72,8 @@ public class CommandAllowMixing extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		diagram.setAllowMixing(true);
 		return CommandExecutionResult.ok();
 	}

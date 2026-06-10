@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -60,6 +61,7 @@ public class CommandHideShow2 extends SingleLineCommand2<CucaDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -84,7 +86,8 @@ public class CommandHideShow2 extends SingleLineCommand2<CucaDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 
 		final char tmp = arg.get("COMMAND", 0).charAt(0);
 		final boolean show = tmp == 's' || tmp == 'S';

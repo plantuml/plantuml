@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -63,6 +64,7 @@ public class CommandSkin extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Loads a named skin (like 'rose') that changes the overall look of
 		// the diagram (see TitledDiagram.loadSkin).
@@ -70,7 +72,8 @@ public class CommandSkin extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		try {
 			return diagram.loadSkin(arg.get("SKIN", 0));
 		} catch (IOException e) {

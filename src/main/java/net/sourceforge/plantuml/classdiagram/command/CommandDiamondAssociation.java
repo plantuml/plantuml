@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -64,6 +65,7 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// '<> name' creates a diamond shaped association node, used as a
 		// junction point between several association lines. Unlike most
@@ -72,14 +74,16 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String idShort = arg.get("CODE", 0);
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already existing : " + quark.getName());
 
-		diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), ""), LeafType.ASSOCIATION, null);
+		diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), ""),
+				LeafType.ASSOCIATION, null);
 
 		return CommandExecutionResult.ok();
 	}

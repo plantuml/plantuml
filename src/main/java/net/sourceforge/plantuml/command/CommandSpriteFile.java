@@ -43,6 +43,7 @@ import java.util.zip.ZipInputStream;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteImage;
@@ -75,6 +76,7 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("Defining the sprite '").append(arg.get("NAME", 0)).append("'");
@@ -98,7 +100,8 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String src = arg.get("FILE", 0);
 		final Sprite sprite;
 		try {

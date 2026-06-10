@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -44,7 +45,6 @@ import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public abstract class CommandMultilines2<S extends Diagram> implements Command<S> {
 
@@ -130,6 +130,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		return explainNow(lines);
 	}
 
+	@Explain
 	protected String explainNow(BlocLines lines) {
 		return "WIPexplain explainNow in " + getClass();
 	}

@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -71,8 +72,9 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 								new RegexLeaf(1, "HEADER", "@([\\d.]+)"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf(3, "ENT1", "(?:" + optionalKeywords(diagramType) + "[%s]+)?"
-						+ CommandLinkClass.getClassIdentifier() + "[%s]*(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf(3, "ENT1",
+						"(?:" + optionalKeywords(diagramType) + "[%s]+)?" + CommandLinkClass.getClassIdentifier()
+								+ "[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "FIRST_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -81,8 +83,9 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf(1, "SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(3, "ENT2", "(?:" + optionalKeywords(diagramType) + "[%s]+)?"
-						+ CommandLinkClass.getClassIdentifier() + "[%s]*(\\<\\<.*\\>\\>)?"), //
+				new RegexLeaf(3, "ENT2",
+						"(?:" + optionalKeywords(diagramType) + "[%s]+)?" + CommandLinkClass.getClassIdentifier()
+								+ "[%s]*(\\<\\<.*\\>\\>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional( //
 						new RegexConcat( //
@@ -110,6 +113,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 

@@ -40,6 +40,7 @@ import java.util.Objects;
 import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -147,6 +148,7 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 		return explainArg(first.getLocation(), new RegexResult(result));
 	}
 
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		return "WIPexplain explainArg in " + getClass();
 	}

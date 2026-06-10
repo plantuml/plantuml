@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -62,6 +63,7 @@ public class CommandPage extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -69,9 +71,8 @@ public class CommandPage extends SingleLineCommand2<TitledDiagram> {
 		// horizontally and 3 vertically.
 		final String horizontal = arg.get("NB1", 0);
 		final String vertical = arg.get("NB2", 0);
-		sb.append("Splitting the diagram into ").append(horizontal).append(" x ").append(vertical)
-				.append(" pages (").append(horizontal).append(" horizontally, ").append(vertical)
-				.append(" vertically)");
+		sb.append("Splitting the diagram into ").append(horizontal).append(" x ").append(vertical).append(" pages (")
+				.append(horizontal).append(" horizontally, ").append(vertical).append(" vertically)");
 
 		if (horizontal.matches("0+") || vertical.matches("0+"))
 			sb.append(" (rejected at execution: arguments must be positive)");
@@ -80,7 +81,8 @@ public class CommandPage extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 
 		final int horizontal = Integer.parseInt(arg.get("NB1", 0));
 		final int vertical = Integer.parseInt(arg.get("NB2", 0));

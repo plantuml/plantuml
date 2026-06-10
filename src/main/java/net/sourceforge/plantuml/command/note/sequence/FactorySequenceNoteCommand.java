@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command.note.sequence;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -112,16 +113,15 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
 	}
-	
-	private final static Lazy<Pattern2> END = new Lazy<>(
-			() -> Pattern2.cmpile("^end[%s]?(note|hnote|rnote)$"));
 
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^end[%s]?(note|hnote|rnote)$"));
 
 	public Command<SequenceDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<SequenceDiagram>(getRegexConcatMultiLine(),
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
 
 			@Override
+			@Explain
 			protected String explainNow(BlocLines lines) {
 				// Mirror executeNow: the first line carries the declaration, the
 				// lines up to the closing 'end note' are the text of the note.
@@ -154,6 +154,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
+			@Explain
 			protected String explainArg(LineLocation location, RegexResult arg) {
 				return explainInternal(arg, arg.get("NOTE", 0));
 			}
@@ -169,8 +170,8 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 	}
 
 	/**
-	 * Builds the explanation shared by the single line and the multiline
-	 * flavors, mirroring the fields read by
+	 * Builds the explanation shared by the single line and the multiline flavors,
+	 * mirroring the fields read by
 	 * {@link #executeInternal(LineLocation, SequenceDiagram, RegexResult, Display)}.
 	 */
 	private String explainInternal(RegexResult arg, String label) {
@@ -187,8 +188,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			sb.append("Adding a note");
 
 		final String position = StringUtils.goLowerCase(arg.get("POSITION", 0));
-		final String participant = StringUtils
-				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0));
+		final String participant = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0));
 		if ("over".equals(position))
 			sb.append(" over '").append(participant).append("'");
 		else
@@ -219,8 +219,8 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 		return sb.toString();
 	}
 
-	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram, RegexResult arg, Display display)
-			throws NoSuchColorException {
+	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram, RegexResult arg,
+			Display display) throws NoSuchColorException {
 		final Participant p = diagram.getOrCreateParticipant(location,
 				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0)));
 

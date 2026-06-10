@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.abel.EntityGender;
 import net.sourceforge.plantuml.abel.EntityGenderUtils;
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -71,8 +72,8 @@ public class CommandHideShowByGender extends SingleLineCommand2<TitledDiagram> {
 		return RegexConcat.build(CommandHideShowByGender.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, "COMMAND", "(hide|show)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf(1,
-						"GENDER", "(?:(class|object|interface|enum|annotation|dataclass|record|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
+				new RegexLeaf(1, "GENDER",
+						"(?:(class|object|interface|enum|annotation|dataclass|record|abstract|[%pLN_.]+|[%g][^%g]+[%g]|\\<\\<.*\\>\\>)[%s]+)*?"), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, "EMPTY", "(empty)"), //
@@ -96,11 +97,11 @@ public class CommandHideShowByGender extends SingleLineCommand2<TitledDiagram> {
 		return EntityGenderUtils.all();
 	}
 
-	private static final List<String> TYPE_KEYWORDS = Arrays.asList("class", "object", "interface", "enum",
-			"abstract", "annotation", "protocol", "struct", "exception", "metaclass", "stereotype", "dataclass",
-			"record");
+	private static final List<String> TYPE_KEYWORDS = Arrays.asList("class", "object", "interface", "enum", "abstract",
+			"annotation", "protocol", "struct", "exception", "metaclass", "stereotype", "dataclass", "record");
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 

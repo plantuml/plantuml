@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.ScaleMaxHeight;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -63,6 +64,7 @@ public class CommandScaleMaxHeight extends SingleLineCommand2<AbstractDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'scale max N height' shrinks the final image if needed so that its
 		// height does not exceed N pixels (it never enlarges it).
@@ -70,7 +72,8 @@ public class CommandScaleMaxHeight extends SingleLineCommand2<AbstractDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final double height = Double.parseDouble(arg.get("HEIGHT", 0));
 		diagram.setScale(new ScaleMaxHeight(height));
 		return CommandExecutionResult.ok();

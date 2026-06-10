@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.ScaleMaxWidthAndHeight;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -65,15 +66,16 @@ public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2<AbstractDi
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'scale max WxH' shrinks the final image if needed so that it fits
 		// within W x H pixels, keeping its aspect ratio (it never enlarges it).
-		return "Limiting the size of the diagram to " + arg.get("WIDTH", 0) + " x " + arg.get("HEIGHT", 0)
-				+ " pixels";
+		return "Limiting the size of the diagram to " + arg.get("WIDTH", 0) + " x " + arg.get("HEIGHT", 0) + " pixels";
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		final double height = Double.parseDouble(arg.get("HEIGHT", 0));
 		diagram.setScale(new ScaleMaxWidthAndHeight(width, height));

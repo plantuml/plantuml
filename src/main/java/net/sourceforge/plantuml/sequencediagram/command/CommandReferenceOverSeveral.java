@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -81,6 +82,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -111,8 +113,8 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String s1 = arg.get("REF", 0);
 		final HColor backColorElement = s1 == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s1);
 		// final HtmlColor backColorGeneral =
@@ -124,7 +126,8 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 
 		final List<Participant> p = new ArrayList<>();
 		for (String s : participants)
-			p.add(diagram.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
+			p.add(diagram.getOrCreateParticipant(location,
+					StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
 
 		final Display strings = Display.getWithNewlines(diagram.getPragma(), text);
 

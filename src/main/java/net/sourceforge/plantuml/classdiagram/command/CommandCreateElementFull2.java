@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -138,6 +139,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -162,8 +164,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 			symbol = arg.get("SYMBOL", 0);
 
 		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);
-		sb.append("Creating the ").append(symbol == null ? "element" : symbol).append(" '").append(idShort)
-				.append("'");
+		sb.append("Creating the ").append(symbol == null ? "element" : symbol).append(" '").append(idShort).append("'");
 
 		if (displayRaw != null)
 			sb.append(" displayed as \"").append(displayRaw).append("\"");

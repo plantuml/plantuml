@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.Pattern2;
@@ -73,6 +74,7 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 	}
 
 	@Override
+	@Explain
 	protected String explainNow(BlocLines lines) {
 		// Mirror executeNow: the '<svg' element starts on the declaration line
 		// itself and the closing '</svg>' line is part of the data, so the

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -65,6 +66,7 @@ public class CommandSpriteSvg extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Defines a sprite from an inline '<svg>...</svg>' element, parsed by
 		// the SVG sprite parser.

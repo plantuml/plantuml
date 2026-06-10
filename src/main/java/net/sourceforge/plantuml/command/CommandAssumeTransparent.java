@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -61,6 +62,7 @@ public class CommandAssumeTransparent extends SingleLineCommand2<TitledDiagram> 
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Historical directive: it used to tell the engine to assume a dark or
 		// light background behind a transparent diagram, but executeArg is now
@@ -70,7 +72,8 @@ public class CommandAssumeTransparent extends SingleLineCommand2<TitledDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		// final String type = arg.get("TYPE", 0).toUpperCase();
 		// system.getSkinParam().assumeTransparent(ThemeStyle.valueOf(type));
 		// This is ignored and will be suppressed in some future

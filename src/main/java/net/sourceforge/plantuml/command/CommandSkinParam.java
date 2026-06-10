@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -62,12 +63,12 @@ public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
 		final String name = arg.get("NAME", 0);
-		sb.append("Setting the skin parameter '").append(name).append("' to '").append(arg.get("VALUE", 0))
-				.append("'");
+		sb.append("Setting the skin parameter '").append(name).append("' to '").append(arg.get("VALUE", 0)).append("'");
 
 		// Mirror the deprecation warnings emitted by executeArg.
 		if ("handwritten".equalsIgnoreCase(name))

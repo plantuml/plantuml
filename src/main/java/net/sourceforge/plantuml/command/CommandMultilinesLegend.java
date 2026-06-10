@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -53,8 +54,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 
-	private final static Lazy<Pattern2> END = new Lazy<>(
-			() -> Pattern2.cmpile("^end[%s]?legend$"));
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^end[%s]?legend$"));
 
 	public static final CommandMultilinesLegend ME = new CommandMultilinesLegend();
 
@@ -78,6 +78,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainNow(BlocLines lines) {
 		// Mirror executeNow: the optional alignments are on the first line, the
 		// lines up to 'end legend' are the text of the legend (default

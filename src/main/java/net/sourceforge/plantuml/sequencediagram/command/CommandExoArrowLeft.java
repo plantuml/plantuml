@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -88,6 +89,7 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -95,8 +97,7 @@ public class CommandExoArrowLeft extends CommandExoArrowAny {
 		// diagram border. The side and the direction are deduced from the
 		// leading symbol ('[' or ']') and from which dressing matched, exactly
 		// as in getMessageExoType().
-		final String participant = StringUtils
-				.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0));
+		final String participant = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0));
 
 		final MessageExoType type = getMessageExoType(arg);
 		switch (type) {

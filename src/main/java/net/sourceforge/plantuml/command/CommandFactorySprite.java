@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.WithSprite;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteColorBuilder4096;
@@ -56,8 +57,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandFactorySprite implements SingleMultiFactoryCommand<TitledDiagram> {
 
-	private final static Lazy<Pattern2> END = new Lazy<>(
-			() -> Pattern2.cmpile("^end[%s]?sprite|\\}$"));
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^end[%s]?sprite|\\}$"));
 
 	public static final CommandFactorySprite ME = new CommandFactorySprite();
 
@@ -91,6 +91,7 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 			MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END) {
 
 		@Override
+		@Explain
 		protected String explainNow(BlocLines lines) {
 			// Mirror executeNow: same preprocessing, then the lines between the
 			// declaration and the closing '}' (or 'end sprite') are the data.
@@ -102,8 +103,7 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 			final StringBuilder sb = new StringBuilder(explainSprite(line0));
 			final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
 			if (bodyCount > 0)
-				sb.append(", with ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines")
-						.append(" of data");
+				sb.append(", with ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines").append(" of data");
 			else
 				sb.append(" (rejected at execution: no sprite data)");
 
@@ -111,7 +111,8 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 		}
 
 		@Override
-		protected CommandExecutionResult executeNow(final TitledDiagram system, BlocLines lines, ParserPass currentPass) {
+		protected CommandExecutionResult executeNow(final TitledDiagram system, BlocLines lines,
+				ParserPass currentPass) {
 			lines = lines.trim().removeEmptyLines();
 			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
@@ -129,13 +130,14 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 		return new SingleLineCommand2<TitledDiagram>(singleLine) {
 
 			@Override
+			@Explain
 			protected String explainArg(LineLocation location, RegexResult arg) {
 				return explainSprite(arg) + " from an inline data string";
 			}
 
 			@Override
-			protected CommandExecutionResult executeArg(final TitledDiagram system, LineLocation location, RegexResult arg,
-					ParserPass currentPass) {
+			protected CommandExecutionResult executeArg(final TitledDiagram system, LineLocation location,
+					RegexResult arg, ParserPass currentPass) {
 				return executeInternal(system, arg, Arrays.asList((String) arg.get("DATA", 0)));
 			}
 
@@ -143,10 +145,11 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 	}
 
 	/**
-	 * Builds the explanation shared by the single line and the multiline
-	 * flavors, mirroring the fields read by
+	 * Builds the explanation shared by the single line and the multiline flavors,
+	 * mirroring the fields read by
 	 * {@link #executeInternal(WithSprite, RegexResult, List)}.
 	 */
+	@Explain
 	private String explainSprite(RegexResult line0) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("Defining the sprite '").append(line0.get("NAME", 0)).append("'");
@@ -156,8 +159,7 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 			// from the data.
 			sb.append(", 16 gray levels, dimensions deduced from the data");
 		} else {
-			sb.append(", ").append(line0.get("DIM", 0)).append(" x ").append(line0.get("DIM", 1))
-					.append(" pixels");
+			sb.append(", ").append(line0.get("DIM", 0)).append(" x ").append(line0.get("DIM", 1)).append(" pixels");
 			if (line0.get("DIM", 4) != null) {
 				// The [WxH/color] form uses the 4096 colors encoding.
 				sb.append(", 4096 colors");

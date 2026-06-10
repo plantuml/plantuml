@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -59,6 +60,7 @@ public class CommandAutoactivate extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Toggles the auto-activation mode: when on, every incoming message
 		// automatically activates the target life line, and every dotted
@@ -70,8 +72,8 @@ public class CommandAutoactivate extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location,
-			RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		sequenceDiagram.setAutoactivate("on".equalsIgnoreCase(arg.get("ON", 0)));
 		return CommandExecutionResult.ok();
 	}

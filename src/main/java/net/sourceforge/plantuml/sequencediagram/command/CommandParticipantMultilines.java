@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -64,8 +65,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandParticipantMultilines extends CommandMultilines2<SequenceDiagram> {
 
-	private final static Lazy<Pattern2> END = new Lazy<>(
-			() -> Pattern2.cmpile("^([^\\[\\]]*)\\]$"));
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^([^\\[\\]]*)\\]$"));
 
 	public CommandParticipantMultilines() {
 		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);
@@ -88,6 +88,7 @@ public class CommandParticipantMultilines extends CommandMultilines2<SequenceDia
 	}
 
 	@Override
+	@Explain
 	protected String explainNow(BlocLines lines) {
 		// Mirror executeNow: the first line carries the participant
 		// declaration, the lines up to the closing ']' are its multiline
