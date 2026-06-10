@@ -40,9 +40,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
-import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -76,7 +74,7 @@ public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 			ParserPass currentPass) throws NoSuchColorException {
 
 		final Stereogroup stereogroup = Stereogroup.build(arg);
-		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 
 //		final String s = arg.get("COLOR", 0);
 //		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);

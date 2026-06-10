@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamondSqua
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -117,7 +118,7 @@ class FtileWhile extends AbstractFtile {
 	public static Ftile create(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test,
 			HColor borderColor, HColor backColor, Rainbow arrowColor, Display yes, FontConfiguration fontArrow,
 			FtileFactory ftileFactory, ConditionStyle conditionStyle, FontConfiguration fcTest, Instruction specialOut,
-			Ftile backward, LinkRendering incoming1, LinkRendering incoming2) {
+			Ftile backward, LinkRendering incoming1, LinkRendering incoming2) throws NoSuchColorException {
 
 		final TextBlock yesTb = yes.create(fontArrow, HorizontalAlignment.LEFT, ftileFactory.skinParam());
 		final TextBlock testTb = test.isWhite() ? TextBlockUtils.empty(0, 0)

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
@@ -51,7 +52,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 
 public interface Instruction extends Swimable {
 
-	public Ftile createFtile(FtileFactory factory);
+	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException;
 
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder);
 
@@ -61,7 +62,8 @@ public interface Instruction extends Swimable {
 
 	public LinkRendering getInLinkRendering();
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype);
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype);
 
 	public boolean containsBreak();
 

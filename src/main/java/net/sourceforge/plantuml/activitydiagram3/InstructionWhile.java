@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
@@ -116,7 +117,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	}
 
 	@Override
-	public Ftile createFtile(FtileFactory factory) {
+	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException {
 		final Ftile back = Display.isNull(backward) ? null
 				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), stereotype, null);
 		Ftile tmp = repeatList.createFtile(factory);

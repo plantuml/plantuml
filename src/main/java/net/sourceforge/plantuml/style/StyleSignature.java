@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.style;
 
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotype;
 
@@ -45,6 +46,12 @@ public interface StyleSignature {
 	public Style getMergedStyle(StyleBuilder styleBuilder);
 
 	public StyleSignature withTOBECHANGED(Stereotype stereotype);
+
+	public default StyleSignature withTOBECHANGED(Stereogroup stereogroup) {
+		if (stereogroup == null)
+			return this;
+		return withTOBECHANGED(stereogroup.buildStereotype());
+	}
 
 	public StyleSignature with(Stereostyles stereostyles);
 

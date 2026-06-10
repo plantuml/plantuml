@@ -85,7 +85,7 @@ public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 //		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
 		final Stereogroup stereogroup = Stereogroup.build(arg);
-		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 		final HColor color = colors.getColor(ColorType.BACK);
 
 		diagram.doWhile(Display.getWithNewlines(diagram.getPragma(), arg.get("TEST", 0)),

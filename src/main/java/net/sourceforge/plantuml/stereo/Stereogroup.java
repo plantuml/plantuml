@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.stereo;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -53,15 +52,18 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.style.AutomaticCounter;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.parser.StyleParser;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
-import net.sourceforge.plantuml.utils.BlocLines;
 
 public class Stereogroup {
 
 	private static final String KEY = "STEREOGROUP";
+
+	public final static Stereogroup NONE = new Stereogroup(null);
 
 	private String definition;
 
@@ -83,6 +85,10 @@ public class Stereogroup {
 
 	private Stereogroup(String definition) {
 		this.definition = definition;
+	}
+
+	public boolean isEmpty() {
+		return definition == null;
 	}
 
 	public Stereotype buildStereotype() {
@@ -137,21 +143,18 @@ public class Stereogroup {
 		return Collections.unmodifiableList(result);
 	}
 
-	public Colors getColors(HColorSet colorSet) throws NoSuchColorException {
-		for (String label : getLabels())
-			if (label.startsWith("#"))
-				return new Colors(label, colorSet, ColorType.BACK);
-
-		return Colors.empty();
-	}
-
 	public Style mute(Style style, HColorSet colorSet) throws NoSuchColorException {
-		Colors toto = getColors2(colorSet);
-
-		return style.eventuallyOverride(toto);
+		return style.eventuallyOverride(getInnerColors(colorSet));
 	}
 
-	public Colors getColors2(HColorSet colorSet) throws NoSuchColorException {
+	public HColor getHColor(StyleSignature styleSignature, PName pname, StyleBuilder styleBuilder, HColorSet colorSet)
+			throws NoSuchColorException {
+		final Style style = styleSignature.withTOBECHANGED(this).getMergedStyle(styleBuilder);
+		final Colors colors = getInnerColors(colorSet);
+		return colors.getColor(style, pname, colorSet);
+	}
+
+	public Colors getInnerColors(HColorSet colorSet) throws NoSuchColorException {
 		Colors colors = Colors.empty();
 		for (String label : getLabels()) {
 			if (label.startsWith("###")) {

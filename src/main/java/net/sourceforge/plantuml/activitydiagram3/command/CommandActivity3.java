@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
@@ -97,7 +96,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 		// Colors colors = color().getColor(arg,
 		// diagram.getSkinParam().getIHtmlColorSet());
 		final Stereogroup stereogroup = Stereogroup.build(arg);
-		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 
 		if (arg.get("IGNORED", 0) != null)
 			diagram.addWarning(new Warning("You must use stereotype at the end of the line after the ';'"));

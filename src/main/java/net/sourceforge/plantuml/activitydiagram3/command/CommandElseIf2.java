@@ -108,7 +108,7 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 //		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
 		final Stereogroup stereogroup = Stereogroup.build(arg);
-		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 
 		String test = arg.get("TEST", 0);
 		if (test.length() == 0)

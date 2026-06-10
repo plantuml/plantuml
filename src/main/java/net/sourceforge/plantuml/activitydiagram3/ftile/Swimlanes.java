@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.compress.CompressionMode;
 import net.sourceforge.plantuml.klimt.compress.SlotFinder;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -222,35 +223,43 @@ public class Swimlanes implements TextBlock, Styleable {
 		if (sizeComputed == false) {
 			sizeComputed = true;
 			if (swimlanes().size() > 1) {
-				final SlotFinder ug = SlotFinder.create(CompressionMode.ON_Y, stringBounder);
-				final TextBlock full = root.createFtile(getFtileFactory(stringBounder));
-				computeSizeInternal(ug, full);
+				try {
+					final SlotFinder ug = SlotFinder.create(CompressionMode.ON_Y, stringBounder);
+					final TextBlock full = root.createFtile(getFtileFactory(stringBounder));
+					computeSizeInternal(ug, full);
+				} catch (NoSuchColorException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
 	public final void drawU(UGraphic ug) {
-		ensureSizeComputed(ug.getStringBounder());
+		try {
+			ensureSizeComputed(ug.getStringBounder());
 
-		if (Gtile.USE_GTILE) {
-			drawGtile(ug);
-			return;
-		}
+			if (Gtile.USE_GTILE) {
+				drawGtile(ug);
+				return;
+			}
 
-		TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
-		final Style style = skinParam.getCurrentStyleBuilder()
-				.getMergedStyle(StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
-		final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));
+			TextBlock full = root.createFtile(getFtileFactory(ug.getStringBounder()));
+			final Style style = skinParam.getCurrentStyleBuilder().getMergedStyle(
+					StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.goto_));
+			final HColor gotoColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			final boolean isDebug = Boolean.parseBoolean(skinParam.options().getValue(OptionKey.DEBUG));
 
-		ug = new UGraphicForSnake(ug);
-		if (swimlanes().size() > 1) {
-			drawWhenSwimlanes(ug, full);
-		} else {
-			// BUG42
-			full = new TextBlockInterceptorUDrawable(full, gotoColor, isDebug);
-			full.drawU(ug);
-			ug.flushUg();
+			ug = new UGraphicForSnake(ug);
+			if (swimlanes().size() > 1) {
+				drawWhenSwimlanes(ug, full);
+			} else {
+				// BUG42
+				full = new TextBlockInterceptorUDrawable(full, gotoColor, isDebug);
+				full.drawU(ug);
+				ug.flushUg();
+			}
+		} catch (NoSuchColorException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -314,7 +323,8 @@ public class Swimlanes implements TextBlock, Styleable {
 
 		final XDimension2D dimensionFull = full.calculateDimension(stringBounder);
 		int i = 0;
-		if (TeaVM.a()) assert dividers.size() == swimlanes().size() + 1;
+		if (TeaVM.a())
+			assert dividers.size() == swimlanes().size() + 1;
 		for (Swimlane swimlane : swimlanesSpecial()) {
 			final LaneDivider divider1 = dividers.get(i);
 
@@ -419,7 +429,8 @@ public class Swimlanes implements TextBlock, Styleable {
 
 			xpos += swimlane.getActualWidth() + laneDivider.getWidth();
 		}
-		if (TeaVM.a()) assert dividers.size() == swimlanes().size() + 1;
+		if (TeaVM.a())
+			assert dividers.size() == swimlanes().size() + 1;
 	}
 
 	public double getHalfMissingSpace(StringBounder stringBounder, int i, double min) {
@@ -432,7 +443,8 @@ public class Swimlanes implements TextBlock, Styleable {
 		if (titleWidth <= swimlaneActualWidth)
 			return 5;
 
-		if (TeaVM.a()) assert titleWidth > swimlaneActualWidth;
+		if (TeaVM.a())
+			assert titleWidth > swimlaneActualWidth;
 		return Math.max(5, 5 + (titleWidth - swimlaneActualWidth) / 2);
 	}
 

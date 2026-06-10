@@ -44,9 +44,6 @@ import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.decoration.Rainbow;
-import net.sourceforge.plantuml.klimt.color.ColorParser;
-import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -54,6 +51,7 @@ import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -107,7 +105,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 			yes = split.get(1);
 		}
 
-		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor, null, null);
+		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor, Stereogroup.NONE);
 	}
 
 }

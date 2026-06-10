@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
@@ -98,7 +99,7 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 	}
 
 	@Override
-	public Ftile createFtile(FtileFactory factory) {
+	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException {
 		Ftile tmp = list.createFtile(factory);
 		if (note != null)
 			tmp = new FtileWithNotes(tmp, Collections.singleton(note), VerticalAlignment.CENTER);

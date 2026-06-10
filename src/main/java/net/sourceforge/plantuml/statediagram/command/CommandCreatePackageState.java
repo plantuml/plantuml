@@ -155,7 +155,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 		if (arg.get("LINECOLOR", 0) != null)
 			colors = colors.addLegacyStroke(arg.get("LINECOLOR", 0));
 
-		colors = colors.mergeWith(stereogroup.getColors2(colorSet));
+		colors = colors.mergeWith(stereogroup.getInnerColors(colorSet));
 
 		p.setColors(colors);
 

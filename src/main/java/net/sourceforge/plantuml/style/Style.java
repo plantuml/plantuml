@@ -192,10 +192,11 @@ public class Style {
 	 * Builds a {@link UFont} from the style properties {@code FontName},
 	 * {@code FontStyle}, {@code FontWeight} and {@code FontSize}.
 	 *
-	 * <p>{@code FontStyle} provides the base face (italic axis + weight via
-	 * keywords like {@code bold}).  If a separate {@code FontWeight} property
-	 * is present (CSS 100-900 or keywords), it overrides only the weight axis,
-	 * preserving the italic setting from {@code FontStyle}.
+	 * <p>
+	 * {@code FontStyle} provides the base face (italic axis + weight via keywords
+	 * like {@code bold}). If a separate {@code FontWeight} property is present (CSS
+	 * 100-900 or keywords), it overrides only the weight axis, preserving the
+	 * italic setting from {@code FontStyle}.
 	 *
 	 * @return a {@link UFont} for all style-driven text rendering paths
 	 */
@@ -339,6 +340,11 @@ public class Style {
 
 		ug = ug.apply(getStroke());
 		return ug;
+	}
+
+	public Colors toColors(HColorSet colorSet) {
+		return Colors.empty().applyStyle(this, colorSet);
+
 	}
 
 }

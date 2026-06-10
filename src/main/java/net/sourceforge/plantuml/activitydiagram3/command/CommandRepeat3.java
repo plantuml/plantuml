@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereogroup;
-import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -87,14 +86,12 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 		final Stereogroup stereogroup = Stereogroup.build(arg);
 		final BoxStyle boxStyle = stereogroup.getBoxStyle();
 
-		final Stereotype stereotype = stereogroup.buildStereotype();
-
 		if (arg.get("COLOR", 0) != null)
 			diagram.addWarning(new Warning("This syntax is deprecated, you must add <<" + arg.get("COLOR", 0)
 					+ ">> at the end of the line, after the ';'"));
 
-		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
-		diagram.startRepeat(label, boxStyle, colors, stereotype);
+		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
+		diagram.startRepeat(label, boxStyle, colors, stereogroup);
 
 		return CommandExecutionResult.ok();
 	}

@@ -74,7 +74,7 @@ public class CommandEndif3 extends SingleLineCommand2<ActivityDiagram3> {
 		// }
 
 		final Stereogroup stereogroup = Stereogroup.build(arg);
-		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 
 		return diagram.endif(colors);
 	}

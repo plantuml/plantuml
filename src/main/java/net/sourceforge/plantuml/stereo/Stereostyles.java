@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.Pattern2;
 
 public class Stereostyles {
-	// ::remove folder when __HAXE__
 
 	public static final Stereostyles NONE = new Stereostyles();
 

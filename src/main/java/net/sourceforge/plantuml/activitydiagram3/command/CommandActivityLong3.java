@@ -91,7 +91,7 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 
 		final Stereogroup stereogroup = Stereogroup.build(lineLast);
 		final Stereotype stereotype = stereogroup.buildStereotype();
-		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 
 		final BoxStyle style = stereogroup.getBoxStyle();
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 0);

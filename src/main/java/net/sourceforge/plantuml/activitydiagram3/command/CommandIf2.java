@@ -98,7 +98,7 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 			test = null;
 
 		final Stereogroup stereogroup = Stereogroup.build(arg);
-		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());
+		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());
 
 		final Url url;
 		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {

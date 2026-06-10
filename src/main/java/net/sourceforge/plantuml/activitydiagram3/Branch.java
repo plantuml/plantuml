@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -130,7 +131,7 @@ public class Branch {
 		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
 	}
 
-	public void updateFtile(FtileFactory factory) {
+	public void updateFtile(FtileFactory factory) throws NoSuchColorException {
 		this.ftile = factory.decorateOut(list.createFtile(factory), inlinkRendering);
 	}
 
