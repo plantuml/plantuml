@@ -219,20 +219,20 @@ public class Colors {
 	}
 
 	public Colors applyStyle(Style style, HColorSet colorSet) {
-<span class="nc" id="L222">		Colors result = this;</span>
-<span class="nc" id="L223">		Value tmp = style.value(PName.BackGroundColor);</span>
-<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (tmp != null)</span>
-<span class="nc" id="L225">			result = result.add(ColorType.BACK, tmp.asColor(colorSet));</span>
-<span class="nc" id="L226">		tmp = style.value(PName.LineColor);</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">		if (tmp != null) {</span>
-<span class="nc" id="L228">			result = result.add(ColorType.LINE, tmp.asColor(colorSet));</span>
-<span class="nc" id="L229">			result = result.add(ColorType.ARROW, tmp.asColor(colorSet));</span>
+<span class="fc" id="L222">		Colors result = this;</span>
+<span class="fc" id="L223">		Value tmp = style.value(PName.BackGroundColor);</span>
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (tmp != null)</span>
+<span class="fc" id="L225">			result = result.add(ColorType.BACK, tmp.asColor(colorSet));</span>
+<span class="fc" id="L226">		tmp = style.value(PName.LineColor);</span>
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">		if (tmp != null) {</span>
+<span class="fc" id="L228">			result = result.add(ColorType.LINE, tmp.asColor(colorSet));</span>
+<span class="fc" id="L229">			result = result.add(ColorType.ARROW, tmp.asColor(colorSet));</span>
 		}
-<span class="nc" id="L231">		tmp = style.value(PName.FontColor);</span>
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		if (tmp != null)</span>
-<span class="nc" id="L233">			result = result.add(ColorType.TEXT, tmp.asColor(colorSet));</span>
+<span class="fc" id="L231">		tmp = style.value(PName.FontColor);</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		if (tmp != null)</span>
+<span class="fc" id="L233">			result = result.add(ColorType.TEXT, tmp.asColor(colorSet));</span>
 
-<span class="nc" id="L235">		return result;</span>
+<span class="fc" id="L235">		return result;</span>
 
 	}
 

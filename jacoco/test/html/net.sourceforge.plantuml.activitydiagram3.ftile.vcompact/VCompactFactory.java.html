@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
@@ -80,135 +81,136 @@ public class VCompactFactory implements FtileFactory {
 
 	@Override
 	public StringBounder getStringBounder() {
-<span class="fc" id="L83">		return stringBounder;</span>
+<span class="fc" id="L84">		return stringBounder;</span>
 	}
 
 	public StyleBuilder getCurrentStyleBuilder() {
-<span class="nc" id="L87">		return skinParam.getCurrentStyleBuilder();</span>
+<span class="nc" id="L88">		return skinParam.getCurrentStyleBuilder();</span>
 	}
 
-<span class="fc" id="L90">	public VCompactFactory(ISkinParam skinParam, StringBounder stringBounder) {</span>
-<span class="fc" id="L91">		this.skinParam = skinParam;</span>
-<span class="fc" id="L92">		this.stringBounder = stringBounder;</span>
-<span class="fc" id="L93">	}</span>
+<span class="fc" id="L91">	public VCompactFactory(ISkinParam skinParam, StringBounder stringBounder) {</span>
+<span class="fc" id="L92">		this.skinParam = skinParam;</span>
+<span class="fc" id="L93">		this.stringBounder = stringBounder;</span>
+<span class="fc" id="L94">	}</span>
 
 	private StyleSignatureBasic getSignatureCircleEnd() {
-<span class="nc" id="L96">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end);</span>
+<span class="nc" id="L97">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.end);</span>
 	}
 
 	private StyleSignatureBasic getSignatureCircleStop() {
-<span class="fc" id="L100">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop);</span>
+<span class="fc" id="L101">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.stop);</span>
 	}
 
 	private StyleSignatureBasic getSignatureCircleSpot() {
-<span class="nc" id="L104">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot);</span>
+<span class="nc" id="L105">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.spot);</span>
 	}
 
 	private StyleSignatureBasic getSignatureCircleStart() {
-<span class="fc" id="L108">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);</span>
+<span class="fc" id="L109">		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.circle, SName.start);</span>
 	}
 
 	@Override
 	public Ftile start(Swimlane swimlane, Colors colors) {
-<span class="fc" id="L113">		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L114">		return new FtileCircleStart(skinParam(), swimlane, style, colors);</span>
+<span class="fc" id="L114">		final Style style = getSignatureCircleStart().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L115">		return new FtileCircleStart(skinParam(), swimlane, style, colors);</span>
 	}
 
 	@Override
 	public Ftile stop(Swimlane swimlane, Colors colors) {
-<span class="fc" id="L119">		final Style style = getSignatureCircleStop().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="fc" id="L120">		return new FtileCircleStop(skinParam(), swimlane, style, colors);</span>
+<span class="fc" id="L120">		final Style style = getSignatureCircleStop().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L121">		return new FtileCircleStop(skinParam(), swimlane, style, colors);</span>
 	}
 
 	@Override
 	public Ftile spot(Swimlane swimlane, String spot, HColor color) {
-<span class="nc" id="L125">		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);</span>
-<span class="nc" id="L126">		final Style style = getSignatureCircleSpot().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L127">		return new FtileCircleSpot(skinParam(), swimlane, spot, font, color, style);</span>
+<span class="nc" id="L126">		final UFont font = skinParam.getFont(null, false, FontParam.ACTIVITY);</span>
+<span class="nc" id="L127">		final Style style = getSignatureCircleSpot().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L128">		return new FtileCircleSpot(skinParam(), swimlane, spot, font, color, style);</span>
 	}
 
 	@Override
 	public Ftile end(Swimlane swimlane, Colors colors) {
-<span class="nc" id="L132">		final Style style = getSignatureCircleEnd().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L133">		return new FtileCircleEndCross(skinParam(), swimlane, style, colors);</span>
+<span class="nc" id="L133">		final Style style = getSignatureCircleEnd().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L134">		return new FtileCircleEndCross(skinParam(), swimlane, style, colors);</span>
 	}
 
 	@Override
 	public Ftile activity(Display label, Swimlane swimlane, BoxStyle boxStyle, Colors colors, Stereotype stereotype,
 			StyleBuilder styleBuilder) {
-<span class="pc bpc" id="L139" title="3 of 4 branches missed.">		if (stereotype != null &amp;&amp; stereotype.isIcon())</span>
-<span class="nc" id="L140">			return FtileBoxEmoji.create(colors.mute(skinParam), label, swimlane, stereotype, styleBuilder);</span>
+<span class="pc bpc" id="L140" title="3 of 4 branches missed.">		if (stereotype != null &amp;&amp; stereotype.isIcon())</span>
+<span class="nc" id="L141">			return FtileBoxEmoji.create(colors.mute(skinParam), label, swimlane, stereotype, styleBuilder);</span>
 
-<span class="fc" id="L142">		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle, stereotype, styleBuilder);</span>
+<span class="fc" id="L143">		return FtileBox.create(colors.mute(skinParam), label, swimlane, boxStyle, stereotype, styleBuilder);</span>
 	}
 
 	@Override
 	public Ftile addNote(Ftile ftile, Swimlane swimlane, Collection&lt;PositionedNote&gt; notes,
 			VerticalAlignment verticalAlignment) {
-<span class="nc" id="L148">		return ftile;</span>
+<span class="nc" id="L149">		return ftile;</span>
 	}
 
 	@Override
 	public Ftile addUrl(Ftile ftile, Url url) {
-<span class="nc" id="L153">		return ftile;</span>
+<span class="nc" id="L154">		return ftile;</span>
 	}
 
 	@Override
 	public Ftile assembly(Ftile tile1, Ftile tile2) {
-<span class="fc" id="L158">		return new FtileAssemblySimple(tile1, tile2);</span>
+<span class="fc" id="L159">		return new FtileAssemblySimple(tile1, tile2);</span>
 	}
 
 	@Override
-	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
-			Display startLabel, Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward,
-			boolean noOut, LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder,
-			Colors colors2, Stereotype stereotype2) {
-<span class="nc" id="L166">		return repeat;</span>
+	public Ftile repeat(Stereogroup stereotype, Stereogroup stereotype2, BoxStyle boxStyleIn, Swimlane swimlane,
+			Swimlane swimlaneOut, Display startLabel, Ftile repeat, Display test, Display yes, Display out,
+			Ftile backward, boolean noOut, LinkRendering incoming1, LinkRendering incoming2,
+			StyleBuilder currentStyleBuilder) {
+<span class="nc" id="L167">		return repeat;</span>
 	}
 
 	@Override
 	public Ftile createWhile(LinkRendering afterEndwhile, Swimlane swimlane, Ftile whileBlock, Display test,
 			Display yes, HColor color, Instruction specialOut, Ftile back, LinkRendering incoming1,
 			LinkRendering incoming2, StyleBuilder styleBuilder) {
-<span class="nc" id="L173">		return whileBlock;</span>
+<span class="nc" id="L174">		return whileBlock;</span>
 	}
 
 	@Override
 	public Ftile createIf(Swimlane swimlane, List&lt;Branch&gt; thens, Branch elseBranch, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Url url, Collection&lt;PositionedNote&gt; notes, Stereotype stereotype,
 			StyleBuilder currentStyleBuilder) {
-<span class="nc" id="L180">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L181" title="All 2 branches missed.">		for (Branch branch : thens)</span>
-<span class="nc" id="L182">			ftiles.add(branch.getFtile());</span>
+<span class="nc" id="L181">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		for (Branch branch : thens)</span>
+<span class="nc" id="L183">			ftiles.add(branch.getFtile());</span>
 
-<span class="nc" id="L184">		ftiles.add(elseBranch.getFtile());</span>
-<span class="nc" id="L185">		return new FtileForkInner(ftiles);</span>
+<span class="nc" id="L185">		ftiles.add(elseBranch.getFtile());</span>
+<span class="nc" id="L186">		return new FtileForkInner(ftiles);</span>
 	}
 
 	@Override
 	public Ftile createSwitch(Swimlane swimlane, List&lt;Branch&gt; branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest, Colors colors, Colors endColors) {
-<span class="nc" id="L191">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (Branch branch : branches)</span>
-<span class="nc" id="L193">			ftiles.add(branch.getFtile());</span>
+<span class="nc" id="L192">		final List&lt;Ftile&gt; ftiles = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		for (Branch branch : branches)</span>
+<span class="nc" id="L194">			ftiles.add(branch.getFtile());</span>
 
-<span class="nc" id="L195">		return new FtileForkInner(ftiles);</span>
+<span class="nc" id="L196">		return new FtileForkInner(ftiles);</span>
 	}
 
 	@Override
-	public Ftile createParallel(List&lt;Ftile&gt; all, ForkStyle style, String label, Swimlane in, Swimlane out, Colors colors) {
-<span class="nc" id="L200">		return new FtileForkInner(all);</span>
+	public Ftile createParallel(List&lt;Ftile&gt; all, ForkStyle style, String label, Swimlane in, Swimlane out,
+			Colors colors) {
+<span class="nc" id="L202">		return new FtileForkInner(all);</span>
 	}
 
 	@Override
 	public Ftile createGroup(Ftile list, Display name, HColor backColor, PositionedNote note, USymbol type,
 			Style style) {
-<span class="nc" id="L206">		return list;</span>
+<span class="nc" id="L208">		return list;</span>
 	}
 
 	@Override
 	public Ftile decorateIn(final Ftile ftile, final LinkRendering linkRendering) {
-<span class="nc" id="L211">		return new FtileDecorateIn(ftile, linkRendering);</span>
+<span class="nc" id="L213">		return new FtileDecorateIn(ftile, linkRendering);</span>
 	}
 
 	@Override
@@ -219,12 +221,12 @@ public class VCompactFactory implements FtileFactory {
 		// }
 		// return ftile;
 		// }
-<span class="fc" id="L222">		return new FtileDecorateOut(ftile, linkRendering);</span>
+<span class="fc" id="L224">		return new FtileDecorateOut(ftile, linkRendering);</span>
 	}
 
 	@Override
 	public ISkinParam skinParam() {
-<span class="fc" id="L227">		return skinParam;</span>
+<span class="fc" id="L229">		return skinParam;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

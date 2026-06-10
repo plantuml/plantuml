@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -49,51 +50,51 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 
 public class InstructionPartition extends AbstractInstruction implements Instruction {
 
-<span class="nc" id="L52">	private final InstructionList list = InstructionList.empty();</span>
+<span class="nc" id="L53">	private final InstructionList list = InstructionList.empty();</span>
 	private final Instruction parent;
 
-<span class="nc" id="L55">	public InstructionPartition(Instruction parent, String partitionTitle) {</span>
-<span class="nc" id="L56">		this.parent = parent;</span>
-<span class="nc" id="L57">	}</span>
+<span class="nc" id="L56">	public InstructionPartition(Instruction parent, String partitionTitle) {</span>
+<span class="nc" id="L57">		this.parent = parent;</span>
+<span class="nc" id="L58">	}</span>
 
 	public Instruction getParent() {
-<span class="nc" id="L60">		return parent;</span>
+<span class="nc" id="L61">		return parent;</span>
 	}
 
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L64">		return list.getSwimlanes();</span>
+<span class="nc" id="L65">		return list.getSwimlanes();</span>
 	}
 
 	public Swimlane getSwimlaneIn() {
-<span class="nc" id="L68">		return list.getSwimlaneIn();</span>
+<span class="nc" id="L69">		return list.getSwimlaneIn();</span>
 	}
 
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L72">		return list.getSwimlaneOut();</span>
+<span class="nc" id="L73">		return list.getSwimlaneOut();</span>
 	}
 
-	public Ftile createFtile(FtileFactory factory) {
-<span class="nc" id="L76">		return list.createFtile(factory);</span>
+	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException {
+<span class="nc" id="L77">		return list.createFtile(factory);</span>
 	}
 
 	public CommandExecutionResult add(Instruction other) {
-<span class="nc" id="L80">		return list.add(other);</span>
+<span class="nc" id="L81">		return list.add(other);</span>
 	}
 
 	public boolean kill() {
-<span class="nc" id="L84">		return list.kill();</span>
+<span class="nc" id="L85">		return list.kill();</span>
 	}
 
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L88">		return list.getInLinkRendering();</span>
+<span class="nc" id="L89">		return list.getInLinkRendering();</span>
 	}
 
 	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
-<span class="nc" id="L92">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L93">		throw new UnsupportedOperationException();</span>
 	}
 
 	public boolean containsBreak() {
-<span class="nc" id="L96">		return list.containsBreak();</span>
+<span class="nc" id="L97">		return list.containsBreak();</span>
 	}
 
 }

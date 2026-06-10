@@ -54,12 +54,16 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileDiamond;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -69,96 +73,109 @@ import net.sourceforge.plantuml.svek.ConditionStyle;
 public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 
 	public FtileFactoryDelegatorRepeat(FtileFactory factory) {
-<span class="fc" id="L72">		super(factory);</span>
-<span class="fc" id="L73">	}</span>
+<span class="fc" id="L76">		super(factory);</span>
+<span class="fc" id="L77">	}</span>
 
 	@Override
-	public Ftile repeat(BoxStyle boxStyleIn, Stereotype stereotype, Swimlane swimlane, Swimlane swimlaneOut,
-			Display startLabel, final Ftile repeat, Display test, Display yes, Display out, Colors colors,
+	public Ftile repeat(Stereogroup stereogroup1, Stereogroup stereogroup2, BoxStyle boxStyleIn, Swimlane swimlane,
+			Swimlane swimlaneOut, Display startLabel, final Ftile repeat, Display test, Display yes, Display out,
 			Ftile backward, boolean noOut, LinkRendering incoming1, LinkRendering incoming2,
-			StyleBuilder currentStyleBuilder, Colors colors2, Stereotype stereotype2) {
-<span class="fc" id="L80">		final ConditionStyle conditionStyle = skinParam().getConditionStyle();</span>
+			StyleBuilder currentStyleBuilder) throws NoSuchColorException {
 
-<span class="fc" id="L82">		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);</span>
-<span class="fc" id="L83">		final Style styleDiamond = getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype)</span>
-<span class="fc" id="L84">				.getMergedStyle(currentStyleBuilder);</span>
-<span class="fc" id="L85">		final Style styleDiamond2 = getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype2)</span>
-<span class="fc" id="L86">				.getMergedStyle(currentStyleBuilder);</span>
-<span class="fc" id="L87">		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L88">		final HColor diamondColor1 = colors.getColor(styleDiamond, PName.BackGroundColor,</span>
-<span class="fc" id="L89">				skinParam().getIHtmlColorSet());</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		final HColor diamondColor2 = colors2.isEmpty() ? diamondColor1</span>
-<span class="pc" id="L91">				: colors2.getColor(styleDiamond2, PName.BackGroundColor, skinParam().getIHtmlColorSet());</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (stereogroup1 == null)</span>
+<span class="nc" id="L86">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L93">		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L94">		final FontConfiguration fcDiamond = styleDiamond.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L95">		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(skinParam().getIHtmlColorSet());</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (stereogroup2 == null)</span>
+<span class="nc" id="L89">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L97">		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getRainbow();</span>
+<span class="fc" id="L91">		final ConditionStyle conditionStyle = skinParam().getConditionStyle();</span>
+<span class="fc" id="L92">		final HColorSet colorSet = skinParam().getIHtmlColorSet();</span>
 
-<span class="fc" id="L100">		final Ftile entry = getEntry(swimlane, startLabel, colors, boxStyleIn, stereotype);</span>
+<span class="fc" id="L94">		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);</span>
+<span class="fc" id="L95">		final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(currentStyleBuilder);</span>
 
-<span class="fc" id="L102">		Ftile result = FtileRepeat.create(swimlane, swimlaneOut, entry, repeat, test, yes, out, borderColor,</span>
-<span class="fc" id="L103">				diamondColor1, diamondColor2, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(),</span>
+<span class="fc" id="L97">		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(colorSet);</span>
+
+<span class="fc" id="L99">		final HColor diamondColor1 = stereogroup1.getHColor(getDefaultStyleDefinitionDiamond(), PName.BackGroundColor,</span>
+				currentStyleBuilder, colorSet);
+<span class="fc" id="L101">		HColor diamondColor2 = stereogroup2.getHColor(getDefaultStyleDefinitionDiamond(), PName.BackGroundColor,</span>
+				currentStyleBuilder, colorSet);
+
+<span class="pc bpc" id="L104" title="2 of 4 branches missed.">		if (stereogroup2.getInnerColors(colorSet).isEmpty() &amp;&amp; stereogroup2.isEmpty())</span>
+<span class="fc" id="L105">			diamondColor2 = diamondColor1;</span>
+
+<span class="fc" id="L107">		final Colors colorsEntry = getDefaultStyleDefinitionActivity().getMergedStyle(currentStyleBuilder)</span>
+<span class="fc" id="L108">				.toColors(colorSet).add(ColorType.BACK, diamondColor1);</span>
+
+<span class="fc" id="L110">		final Rainbow arrowColor = Rainbow.build(styleArrow, colorSet);</span>
+<span class="fc" id="L111">		final FontConfiguration fcDiamond = styleDiamond.getFontConfiguration(colorSet);</span>
+<span class="fc" id="L112">		final FontConfiguration fcArrow = styleArrow.getFontConfiguration(colorSet);</span>
+
+<span class="fc" id="L114">		final LinkRendering endRepeatLinkRendering = repeat.getOutLinkRendering();</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		final Rainbow endRepeatLinkColor = endRepeatLinkRendering == null ? null : endRepeatLinkRendering.getRainbow();</span>
+
+<span class="fc" id="L117">		final Ftile entry = getEntry(swimlane, startLabel, colorsEntry, boxStyleIn, stereogroup1.buildStereotype());</span>
+
+<span class="fc" id="L119">		Ftile result = FtileRepeat.create(swimlane, swimlaneOut, entry, repeat, test, yes, out, borderColor,</span>
+<span class="fc" id="L120">				diamondColor1, diamondColor2, arrowColor, endRepeatLinkColor, conditionStyle, this.skinParam(),</span>
 				fcDiamond, fcArrow, backward, noOut, incoming1, incoming2);
 
-<span class="fc" id="L106">		final List&lt;WeldingPoint&gt; weldingPoints = repeat.getWeldingPoints();</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (weldingPoints.size() &gt; 0) {</span>
+<span class="fc" id="L123">		final List&lt;WeldingPoint&gt; weldingPoints = repeat.getWeldingPoints();</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (weldingPoints.size() &gt; 0) {</span>
 
-<span class="nc" id="L109">			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), diamondColor2, borderColor, swimlane);</span>
-<span class="nc" id="L110">			result = assembly(FtileUtils.addHorizontalMargin(result, 10, 0), diamondBreak);</span>
-<span class="nc" id="L111">			final Genealogy genealogy = new Genealogy(result);</span>
+<span class="nc" id="L126">			final Ftile diamondBreak = new FtileDiamond(repeat.skinParam(), diamondColor2, borderColor, swimlane);</span>
+<span class="nc" id="L127">			result = assembly(FtileUtils.addHorizontalMargin(result, 10, 0), diamondBreak);</span>
+<span class="nc" id="L128">			final Genealogy genealogy = new Genealogy(result);</span>
 
-<span class="nc" id="L113">			final Collection&lt;Connection&gt; connections = new ArrayList&lt;Connection&gt;();</span>
+<span class="nc" id="L130">			final Collection&lt;Connection&gt; connections = new ArrayList&lt;Connection&gt;();</span>
 
-<span class="nc bnc" id="L115" title="All 2 branches missed.">			for (int i = 0; i &lt; weldingPoints.size(); i++) {</span>
-<span class="nc" id="L116">				final FtileBreak ftileBreak = (FtileBreak) weldingPoints.get(i);</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">				final boolean first = i == 0;</span>
-<span class="nc" id="L118">				connections.add(new Connection() {</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">			for (int i = 0; i &lt; weldingPoints.size(); i++) {</span>
+<span class="nc" id="L133">				final FtileBreak ftileBreak = (FtileBreak) weldingPoints.get(i);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">				final boolean first = i == 0;</span>
+<span class="nc" id="L135">				connections.add(new Connection() {</span>
 					public void drawU(UGraphic ug) {
-<span class="nc" id="L120">						final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());</span>
-<span class="nc" id="L121">						final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());</span>
-<span class="nc" id="L122">						final XDimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L137">						final UTranslate tr1 = genealogy.getTranslate(ftileBreak, ug.getStringBounder());</span>
+<span class="nc" id="L138">						final UTranslate tr2 = genealogy.getTranslate(diamondBreak, ug.getStringBounder());</span>
+<span class="nc" id="L139">						final XDimension2D dimDiamond = diamondBreak.calculateDimension(ug.getStringBounder());</span>
 
 						final Snake snake;
-<span class="nc bnc" id="L125" title="All 2 branches missed.">						if (first) {</span>
-<span class="nc" id="L126">							snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToRight());</span>
-<span class="nc" id="L127">							snake.addPoint(tr1.getDx(), tr1.getDy());</span>
-<span class="nc" id="L128">							snake.addPoint(0, tr1.getDy());</span>
-<span class="nc" id="L129">							snake.addPoint(0, tr2.getDy() + dimDiamond.getHeight() / 2);</span>
-<span class="nc" id="L130">							snake.addPoint(tr2.getDx(), tr2.getDy() + dimDiamond.getHeight() / 2);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">						if (first) {</span>
+<span class="nc" id="L143">							snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToRight());</span>
+<span class="nc" id="L144">							snake.addPoint(tr1.getDx(), tr1.getDy());</span>
+<span class="nc" id="L145">							snake.addPoint(0, tr1.getDy());</span>
+<span class="nc" id="L146">							snake.addPoint(0, tr2.getDy() + dimDiamond.getHeight() / 2);</span>
+<span class="nc" id="L147">							snake.addPoint(tr2.getDx(), tr2.getDy() + dimDiamond.getHeight() / 2);</span>
 						} else {
-<span class="nc" id="L132">							snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft());</span>
-<span class="nc" id="L133">							snake.addPoint(tr1.getDx(), tr1.getDy());</span>
-<span class="nc" id="L134">							snake.addPoint(0, tr1.getDy());</span>
+<span class="nc" id="L149">							snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft());</span>
+<span class="nc" id="L150">							snake.addPoint(tr1.getDx(), tr1.getDy());</span>
+<span class="nc" id="L151">							snake.addPoint(0, tr1.getDy());</span>
 						}
-<span class="nc" id="L136">						ug.draw(snake);</span>
-<span class="nc" id="L137">					}</span>
+<span class="nc" id="L153">						ug.draw(snake);</span>
+<span class="nc" id="L154">					}</span>
 
 					public Ftile getFtile1() {
-<span class="nc" id="L140">						return ftileBreak;</span>
+<span class="nc" id="L157">						return ftileBreak;</span>
 					}
 
 					public Ftile getFtile2() {
-<span class="nc" id="L144">						return diamondBreak;</span>
+<span class="nc" id="L161">						return diamondBreak;</span>
 					}
 
 				});
 			}
 
-<span class="nc" id="L150">			result = FtileUtils.addConnection(result, connections);</span>
+<span class="nc" id="L167">			result = FtileUtils.addConnection(result, connections);</span>
 
 		}
-<span class="fc" id="L153">		return result;</span>
+<span class="fc" id="L170">		return result;</span>
 	}
 
 	private Ftile getEntry(Swimlane swimlane, Display startLabel, Colors colors, BoxStyle boxStyleIn,
 			Stereotype stereotype) {
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (Display.isNull(startLabel))</span>
-<span class="fc" id="L159">			return null;</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (Display.isNull(startLabel))</span>
+<span class="fc" id="L176">			return null;</span>
 
-<span class="nc" id="L161">		return this.activity(startLabel, swimlane, boxStyleIn, colors, stereotype, null);</span>
+<span class="nc" id="L178">		return this.activity(startLabel, swimlane, boxStyleIn, colors, stereotype, null);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

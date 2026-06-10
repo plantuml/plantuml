@@ -44,9 +44,6 @@ import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.decoration.Rainbow;
-import net.sourceforge.plantuml.klimt.color.ColorParser;
-import net.sourceforge.plantuml.klimt.color.ColorType;
-import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -54,60 +51,61 @@ import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandRepeatWhile3Multilines extends CommandMultilines3&lt;ActivityDiagram3&gt; {
 
-<span class="fc" id="L62">	private final static IRegex END = new RegexConcat(//</span>
+<span class="fc" id="L60">	private final static IRegex END = new RegexConcat(//</span>
 			new RegexLeaf(1, &quot;TEST1&quot;, &quot;(.*)&quot;), new RegexLeaf(&quot;\\)&quot;), //
 			new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L65">			RegexLeaf.end());</span>
+<span class="fc" id="L63">			RegexLeaf.end());</span>
 
 	public CommandRepeatWhile3Multilines() {
-<span class="fc" id="L68">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L66">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L67">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L72">		return RegexConcat.build(CommandRepeatWhile3Multilines.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L70">		return RegexConcat.build(CommandRepeatWhile3Multilines.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;repeat&quot;), //
-<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;while&quot;), //
-<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 				new RegexLeaf(1, &quot;TEST1&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L79">				RegexLeaf.end());</span>
+<span class="fc" id="L77">				RegexLeaf.end());</span>
 	}
 
-<span class="fc" id="L82">	private static final Pattern2 IS_OR_EQUALS = Pattern2.cmpile(&quot;\\)[%s]*(is|equals?)[%s]*\\(&quot;);</span>
+<span class="fc" id="L80">	private static final Pattern2 IS_OR_EQUALS = Pattern2.cmpile(&quot;\\)[%s]*(is|equals?)[%s]*\\(&quot;);</span>
 
 	@Override
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
-<span class="nc" id="L86">		lines = lines.trim();</span>
-<span class="nc" id="L87">		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst().getString()));</span>
-<span class="nc" id="L88">		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());</span>
+<span class="nc" id="L84">		lines = lines.trim();</span>
+<span class="nc" id="L85">		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst().getString()));</span>
+<span class="nc" id="L86">		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());</span>
 
-<span class="nc" id="L90">		final String test = line0.get(&quot;TEST1&quot;, 0);</span>
-<span class="nc" id="L91">		Display testDisplay = Display.getWithNewlines(diagram.getPragma(), test);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (StringLocated s : lines.subExtract(1, 1))</span>
-<span class="nc" id="L93">			testDisplay = testDisplay.add(s.getString());</span>
+<span class="nc" id="L88">		final String test = line0.get(&quot;TEST1&quot;, 0);</span>
+<span class="nc" id="L89">		Display testDisplay = Display.getWithNewlines(diagram.getPragma(), test);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (StringLocated s : lines.subExtract(1, 1))</span>
+<span class="nc" id="L91">			testDisplay = testDisplay.add(s.getString());</span>
 
-<span class="nc" id="L95">		final String trailTest = lineLast.get(&quot;TEST1&quot;, 0);</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (StringUtils.isEmpty(trailTest) == false)</span>
-<span class="nc" id="L97">			testDisplay = testDisplay.add(trailTest);</span>
+<span class="nc" id="L93">		final String trailTest = lineLast.get(&quot;TEST1&quot;, 0);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (StringUtils.isEmpty(trailTest) == false)</span>
+<span class="nc" id="L95">			testDisplay = testDisplay.add(trailTest);</span>
 
-<span class="nc" id="L99">		Display yes = Display.NULL;// Display.getWithNewlines(&quot;arg.getLazzy(\&quot;WHEN\&quot;, 0)&quot;);</span>
-<span class="nc" id="L100">		final Display out = Display.NULL; // Display.getWithNewlines(&quot;arg.getLazzy(\&quot;OUT\&quot;, 0)&quot;);</span>
-<span class="nc" id="L101">		final Rainbow linkColor = Rainbow.none(); // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get(&quot;COLOR&quot;,</span>
+<span class="nc" id="L97">		Display yes = Display.NULL;// Display.getWithNewlines(&quot;arg.getLazzy(\&quot;WHEN\&quot;, 0)&quot;);</span>
+<span class="nc" id="L98">		final Display out = Display.NULL; // Display.getWithNewlines(&quot;arg.getLazzy(\&quot;OUT\&quot;, 0)&quot;);</span>
+<span class="nc" id="L99">		final Rainbow linkColor = Rainbow.none(); // diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get(&quot;COLOR&quot;,</span>
 		// 0));
-<span class="nc" id="L103">		final Display linkLabel = Display.NULL; // Display.getWithNewlines(&quot;arg.get(\&quot;LABEL\&quot;, 0)&quot;);</span>
-<span class="nc" id="L104">		final List&lt;Display&gt; split = testDisplay.splitMultiline(IS_OR_EQUALS);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (split.size() == 2) {</span>
-<span class="nc" id="L106">			testDisplay = split.get(0);</span>
-<span class="nc" id="L107">			yes = split.get(1);</span>
+<span class="nc" id="L101">		final Display linkLabel = Display.NULL; // Display.getWithNewlines(&quot;arg.get(\&quot;LABEL\&quot;, 0)&quot;);</span>
+<span class="nc" id="L102">		final List&lt;Display&gt; split = testDisplay.splitMultiline(IS_OR_EQUALS);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (split.size() == 2) {</span>
+<span class="nc" id="L104">			testDisplay = split.get(0);</span>
+<span class="nc" id="L105">			yes = split.get(1);</span>
 		}
 
-<span class="nc" id="L110">		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor, null, null);</span>
+<span class="nc" id="L108">		return diagram.repeatWhile(testDisplay, yes, out, linkLabel, linkColor, Stereogroup.NONE);</span>
 	}
 
 }

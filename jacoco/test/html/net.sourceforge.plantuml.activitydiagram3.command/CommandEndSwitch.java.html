@@ -67,7 +67,7 @@ public class CommandEndSwitch extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 			ParserPass currentPass) throws NoSuchColorException {
 
 <span class="nc" id="L69">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L70">		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L70">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
 <span class="nc" id="L72">		return diagram.endSwitch(colors);</span>
 	}

@@ -98,7 +98,7 @@ public class CommandIf2 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 <span class="nc" id="L98">			test = null;</span>
 
 <span class="nc" id="L100">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L101">		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L101">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
 		final Url url;
 <span class="nc bnc" id="L104" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {</span>

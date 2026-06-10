@@ -67,7 +67,7 @@ public class CommandFork3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 <span class="nc" id="L69">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L70">		final Colors colors = stereogroup.getColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L70">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
 <span class="nc" id="L72">		diagram.fork(colors);</span>
 

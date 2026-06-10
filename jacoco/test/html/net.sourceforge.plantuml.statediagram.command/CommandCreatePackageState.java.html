@@ -155,7 +155,7 @@ public class CommandCreatePackageState extends SingleLineCommand2&lt;StateDiagra
 <span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
 <span class="nc" id="L156">			colors = colors.addLegacyStroke(arg.get(&quot;LINECOLOR&quot;, 0));</span>
 
-<span class="fc" id="L158">		colors = colors.mergeWith(stereogroup.getColors2(colorSet));</span>
+<span class="fc" id="L158">		colors = colors.mergeWith(stereogroup.getInnerColors(colorSet));</span>
 
 <span class="fc" id="L160">		p.setColors(colors);</span>
 
