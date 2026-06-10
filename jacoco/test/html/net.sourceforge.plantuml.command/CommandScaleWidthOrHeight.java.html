@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.ScaleHeight;
 import net.sourceforge.plantuml.ScaleWidth;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -46,41 +47,43 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandScaleWidthOrHeight extends SingleLineCommand2&lt;AbstractDiagram&gt; {
 
-<span class="fc" id="L49">	public static final CommandScaleWidthOrHeight ME = new CommandScaleWidthOrHeight();</span>
+<span class="fc" id="L50">	public static final CommandScaleWidthOrHeight ME = new CommandScaleWidthOrHeight();</span>
 
 	private CommandScaleWidthOrHeight() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandScaleWidthOrHeight.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandScaleWidthOrHeight.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;scale&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;VALUE&quot;, &quot;([0-9.]+)&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L61">				new RegexLeaf(1, &quot;WIDTH&quot;, &quot;(width|height)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L62">				new RegexLeaf(1, &quot;WIDTH&quot;, &quot;(width|height)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'scale N width' (or 'scale N height') resizes the final image so
 		// that the given dimension is exactly N pixels, keeping the aspect
 		// ratio; unlike the 'scale max' forms, it may enlarge a smaller image.
-<span class="nc" id="L69">		final boolean width = &quot;width&quot;.equalsIgnoreCase(arg.get(&quot;WIDTH&quot;, 0));</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		return &quot;Resizing the diagram so that its &quot; + (width ? &quot;width&quot; : &quot;height&quot;) + &quot; is &quot; + arg.get(&quot;VALUE&quot;, 0)</span>
+<span class="nc" id="L71">		final boolean width = &quot;width&quot;.equalsIgnoreCase(arg.get(&quot;WIDTH&quot;, 0));</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		return &quot;Resizing the diagram so that its &quot; + (width ? &quot;width&quot; : &quot;height&quot;) + &quot; is &quot; + arg.get(&quot;VALUE&quot;, 0)</span>
 				+ &quot; pixels&quot;;
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L76">		final double size = Double.parseDouble(arg.get(&quot;VALUE&quot;, 0));</span>
-<span class="nc" id="L77">		final boolean width = &quot;width&quot;.equalsIgnoreCase(arg.get(&quot;WIDTH&quot;, 0));</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (width) {</span>
-<span class="nc" id="L79">			diagram.setScale(new ScaleWidth(size));</span>
+	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L79">		final double size = Double.parseDouble(arg.get(&quot;VALUE&quot;, 0));</span>
+<span class="nc" id="L80">		final boolean width = &quot;width&quot;.equalsIgnoreCase(arg.get(&quot;WIDTH&quot;, 0));</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (width) {</span>
+<span class="nc" id="L82">			diagram.setScale(new ScaleWidth(size));</span>
 		} else {
-<span class="nc" id="L81">			diagram.setScale(new ScaleHeight(size));</span>
+<span class="nc" id="L84">			diagram.setScale(new ScaleHeight(size));</span>
 		}
-<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L86">		return CommandExecutionResult.ok();</span>
 	}
 
 }

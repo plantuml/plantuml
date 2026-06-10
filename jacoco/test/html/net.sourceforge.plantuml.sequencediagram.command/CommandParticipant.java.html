@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -64,20 +65,20 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public abstract class CommandParticipant extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandParticipant(IRegex pattern) {
-<span class="fc" id="L67">		super(pattern);</span>
-<span class="fc" id="L68">	}</span>
+<span class="fc" id="L68">		super(pattern);</span>
+<span class="fc" id="L69">	}</span>
 
 	static IRegex getOrderRegex() {
-<span class="fc" id="L71">		return new RegexOptional( //</span>
+<span class="fc" id="L72">		return new RegexOptional( //</span>
 				new RegexConcat( //
 						new RegexLeaf(&quot;order&quot;), //
-<span class="fc" id="L74">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L75">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(1, &quot;ORDER&quot;, &quot;(-?\\d{1,7})&quot;) //
 				));
 	}
 
 	static IRegex getRegexType() {
-<span class="fc" id="L80">		return new RegexOr(//</span>
+<span class="fc" id="L81">		return new RegexOr(//</span>
 				new RegexLeaf(1, &quot;TYPE&quot;,
 						&quot;(participant|actor|create|boundary|control|entity|queue|database|collections)&quot;), //
 				new RegexLeaf(1, &quot;CREATE&quot;,
@@ -85,118 +86,119 @@ public abstract class CommandParticipant extends SingleLineCommand2&lt;SequenceD
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="fc" id="L89">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L91">		final StringBuilder sb = new StringBuilder();</span>
 
 		// A participant that already exists is not recreated: executeArg just
 		// moves it to the last position. Reflect that early-return case.
-<span class="fc" id="L93">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L95">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
 
 		// 'create participant', 'create actor', etc. set CREATE; a bare 'create'
 		// keyword shows up in TYPE. Either way the participant is created and
 		// activated with a CREATE life event.
-<span class="fc" id="L98">		final String typeCreate = arg.get(&quot;CREATE&quot;, 0);</span>
-<span class="fc" id="L99">		final String typeString = arg.get(&quot;TYPE&quot;, 0);</span>
-<span class="pc bpc" id="L100" title="3 of 6 branches missed.">		final boolean create = typeCreate != null || (typeString != null &amp;&amp; typeString.equalsIgnoreCase(&quot;create&quot;));</span>
+<span class="fc" id="L100">		final String typeCreate = arg.get(&quot;CREATE&quot;, 0);</span>
+<span class="fc" id="L101">		final String typeString = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="pc bpc" id="L102" title="3 of 6 branches missed.">		final boolean create = typeCreate != null || (typeString != null &amp;&amp; typeString.equalsIgnoreCase(&quot;create&quot;));</span>
 
 		final String type;
-<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		if (typeCreate != null)</span>
-<span class="nc" id="L104">			type = typeCreate;</span>
-<span class="pc bpc" id="L105" title="2 of 4 branches missed.">		else if (typeString != null &amp;&amp; typeString.equalsIgnoreCase(&quot;create&quot;) == false)</span>
-<span class="fc" id="L106">			type = typeString;</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">		if (typeCreate != null)</span>
+<span class="nc" id="L106">			type = typeCreate;</span>
+<span class="pc bpc" id="L107" title="2 of 4 branches missed.">		else if (typeString != null &amp;&amp; typeString.equalsIgnoreCase(&quot;create&quot;) == false)</span>
+<span class="fc" id="L108">			type = typeString;</span>
 		else
-<span class="nc" id="L108">			type = &quot;participant&quot;;</span>
+<span class="nc" id="L110">			type = &quot;participant&quot;;</span>
 
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		sb.append(create ? &quot;Creating &quot; : &quot;Declaring &quot;).append(type.toLowerCase());</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		sb.append(create ? &quot;Creating &quot; : &quot;Declaring &quot;).append(type.toLowerCase());</span>
 
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (code != null)</span>
-<span class="fc" id="L113">			sb.append(&quot; '&quot;).append(code).append(&quot;'&quot;);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (code != null)</span>
+<span class="fc" id="L115">			sb.append(&quot; '&quot;).append(code).append(&quot;'&quot;);</span>
 
-<span class="fc" id="L115">		final String displayString = arg.get(&quot;FULL&quot;, 0);</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (displayString != null)</span>
-<span class="nc" id="L117">			sb.append(&quot; displayed as \&quot;&quot;).append(displayString).append(&quot;\&quot;&quot;);</span>
+<span class="fc" id="L117">		final String displayString = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (displayString != null)</span>
+<span class="nc" id="L119">			sb.append(&quot; displayed as \&quot;&quot;).append(displayString).append(&quot;\&quot;&quot;);</span>
 
-<span class="fc" id="L119">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (orderString != null)</span>
-<span class="nc" id="L121">			sb.append(&quot;, order &quot;).append(orderString);</span>
+<span class="fc" id="L121">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (orderString != null)</span>
+<span class="nc" id="L123">			sb.append(&quot;, order &quot;).append(orderString);</span>
 
-<span class="fc" id="L123">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (stereo != null)</span>
-<span class="nc" id="L125">			sb.append(&quot;, stereotype &quot;).append(stereo);</span>
+<span class="fc" id="L125">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L127">			sb.append(&quot;, stereotype &quot;).append(stereo);</span>
 
-<span class="fc" id="L127">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L129">			sb.append(&quot;, background color &quot;).append(color);</span>
+<span class="fc" id="L129">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L131">			sb.append(&quot;, background color &quot;).append(color);</span>
 
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
-<span class="nc" id="L132">			sb.append(&quot;, with a URL link&quot;);</span>
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L134">			sb.append(&quot;, with a URL link&quot;);</span>
 
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (create)</span>
-<span class="nc" id="L135">			sb.append(&quot; (created on the spot, with a CREATE life event)&quot;);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (create)</span>
+<span class="nc" id="L137">			sb.append(&quot; (created on the spot, with a CREATE life event)&quot;);</span>
 
-<span class="fc" id="L137">		return sb.toString();</span>
+<span class="fc" id="L139">		return sb.toString();</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L143">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		if (diagram.participantsContainsKey(code)) {</span>
-<span class="nc" id="L145">			diagram.putParticipantInLast(code);</span>
-<span class="nc" id="L146">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L145">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (diagram.participantsContainsKey(code)) {</span>
+<span class="nc" id="L147">			diagram.putParticipantInLast(code);</span>
+<span class="nc" id="L148">			return CommandExecutionResult.ok();</span>
 		}
 
-<span class="fc" id="L149">		Display strings = Display.NULL;</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">		if (arg.get(&quot;FULL&quot;, 0) != null)</span>
-<span class="fc" id="L151">			strings = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;FULL&quot;, 0));</span>
+<span class="fc" id="L151">		Display strings = Display.NULL;</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (arg.get(&quot;FULL&quot;, 0) != null)</span>
+<span class="fc" id="L153">			strings = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;FULL&quot;, 0));</span>
 		// strings = Display.create(arg.get(&quot;FULL&quot;, 0));
 
-<span class="fc" id="L154">		final String typeString1 = arg.get(&quot;TYPE&quot;, 0);</span>
-<span class="fc" id="L155">		final String typeCreate1 = arg.get(&quot;CREATE&quot;, 0);</span>
+<span class="fc" id="L156">		final String typeString1 = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="fc" id="L157">		final String typeCreate1 = arg.get(&quot;CREATE&quot;, 0);</span>
 		final ParticipantType type;
 		final boolean create;
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (typeCreate1 != null) {</span>
-<span class="nc" id="L159">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeCreate1));</span>
-<span class="nc" id="L160">			create = true;</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		} else if (typeString1.equalsIgnoreCase(&quot;CREATE&quot;)) {</span>
-<span class="nc" id="L162">			type = ParticipantType.PARTICIPANT;</span>
-<span class="nc" id="L163">			create = true;</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (typeCreate1 != null) {</span>
+<span class="nc" id="L161">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeCreate1));</span>
+<span class="nc" id="L162">			create = true;</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		} else if (typeString1.equalsIgnoreCase(&quot;CREATE&quot;)) {</span>
+<span class="nc" id="L164">			type = ParticipantType.PARTICIPANT;</span>
+<span class="nc" id="L165">			create = true;</span>
 		} else {
-<span class="fc" id="L165">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeString1));</span>
-<span class="fc" id="L166">			create = false;</span>
+<span class="fc" id="L167">			type = ParticipantType.valueOf(StringUtils.goUpperCase(typeString1));</span>
+<span class="fc" id="L168">			create = false;</span>
 		}
-<span class="fc" id="L168">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">		final int order = orderString == null ? 0 : Integer.parseInt(orderString);</span>
-<span class="fc" id="L170">		final Participant participant = diagram.createNewParticipant(location, type, code, strings, order);</span>
+<span class="fc" id="L170">		final String orderString = arg.get(&quot;ORDER&quot;, 0);</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		final int order = orderString == null ? 0 : Integer.parseInt(orderString);</span>
+<span class="fc" id="L172">		final Participant participant = diagram.createNewParticipant(location, type, code, strings, order);</span>
 
-<span class="fc" id="L172">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L174">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
-<span class="nc" id="L175">			final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L176">			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();</span>
-<span class="nc" id="L177">			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);</span>
-<span class="nc" id="L178">			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,</span>
-<span class="nc" id="L179">					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (stereotype != null) {</span>
+<span class="nc" id="L177">			final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L178">			final boolean stereotypePositionTop = skinParam.stereotypePositionTop();</span>
+<span class="nc" id="L179">			final UFont font = skinParam.getFont(null, false, FontParam.CIRCLED_CHARACTER);</span>
+<span class="nc" id="L180">			participant.setStereotype(Stereotype.build(stereotype, skinParam.getCircledCharacterRadius(), font,</span>
+<span class="nc" id="L181">					diagram.getSkinParam().getIHtmlColorSet()), stereotypePositionTop);</span>
 		}
-<span class="fc" id="L181">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="fc" id="L182">		participant.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="fc" id="L183">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="fc" id="L184">		participant.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
 
-<span class="fc" id="L185">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (urlString != null) {</span>
-<span class="fc" id="L187">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="fc" id="L188">			final Url url = urlBuilder.getUrl(urlString);</span>
-<span class="fc" id="L189">			participant.setUrl(url);</span>
-		}
-
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (create) {</span>
-<span class="nc" id="L193">			final String error = diagram.activate(participant, LifeEventType.CREATE, null);</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">			if (error != null)</span>
-<span class="nc" id="L195">				return CommandExecutionResult.error(error);</span>
-
+<span class="fc" id="L187">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (urlString != null) {</span>
+<span class="fc" id="L189">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="fc" id="L190">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="fc" id="L191">			participant.setUrl(url);</span>
 		}
 
-<span class="fc" id="L199">		return CommandExecutionResult.ok();</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (create) {</span>
+<span class="nc" id="L195">			final String error = diagram.activate(participant, LifeEventType.CREATE, null);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">			if (error != null)</span>
+<span class="nc" id="L197">				return CommandExecutionResult.error(error);</span>
+
+		}
+
+<span class="fc" id="L201">		return CommandExecutionResult.ok();</span>
 	}
 
 }

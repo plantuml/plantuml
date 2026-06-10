@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -46,64 +47,64 @@ import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandSkinParam extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L49">	public static final CommandSkinParam ME = new CommandSkinParam();</span>
+<span class="fc" id="L50">	public static final CommandSkinParam ME = new CommandSkinParam();</span>
 
 	private CommandSkinParam() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandSkinParam.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandSkinParam.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(skinparam|skinparamlocked)&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([\\w.]*(?:\\&lt;\\&lt;[^&lt;&gt;]*\\&gt;\\&gt;)?[\\w.]*)&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L61">				new RegexLeaf(1, &quot;VALUE&quot;, &quot;([^{}]*)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L62">				new RegexLeaf(1, &quot;VALUE&quot;, &quot;([^{}]*)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L66">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L68">		final StringBuilder sb = new StringBuilder();</span>
 
-<span class="nc" id="L68">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L69">		sb.append(&quot;Setting the skin parameter '&quot;).append(name).append(&quot;' to '&quot;).append(arg.get(&quot;VALUE&quot;, 0))</span>
-<span class="nc" id="L70">				.append(&quot;'&quot;);</span>
+<span class="nc" id="L70">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L71">		sb.append(&quot;Setting the skin parameter '&quot;).append(name).append(&quot;' to '&quot;).append(arg.get(&quot;VALUE&quot;, 0)).append(&quot;'&quot;);</span>
 
 		// Mirror the deprecation warnings emitted by executeArg.
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
-<span class="nc" id="L74">			sb.append(&quot; (deprecated: use '!option handwritten true' instead)&quot;);</span>
-<span class="nc bnc" id="L75" title="All 4 branches missed.">		else if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name) || &quot;padding&quot;.equalsIgnoreCase(name))</span>
-<span class="nc" id="L76">			sb.append(&quot; (deprecated: use CSS style instead)&quot;);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
+<span class="nc" id="L75">			sb.append(&quot; (deprecated: use '!option handwritten true' instead)&quot;);</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">		else if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name) || &quot;padding&quot;.equalsIgnoreCase(name))</span>
+<span class="nc" id="L77">			sb.append(&quot; (deprecated: use CSS style instead)&quot;);</span>
 
 		// The TYPE keyword is captured but not read by executeArg, so the
 		// 'skinparamlocked' variant behaves like a plain 'skinparam'.
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (&quot;skinparamlocked&quot;.equalsIgnoreCase(arg.get(&quot;TYPE&quot;, 0)))</span>
-<span class="nc" id="L81">			sb.append(&quot; (the 'skinparamlocked' variant is treated like a plain 'skinparam')&quot;);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (&quot;skinparamlocked&quot;.equalsIgnoreCase(arg.get(&quot;TYPE&quot;, 0)))</span>
+<span class="nc" id="L82">			sb.append(&quot; (the 'skinparamlocked' variant is treated like a plain 'skinparam')&quot;);</span>
 
-<span class="nc" id="L83">		return sb.toString();</span>
+<span class="nc" id="L84">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		try {
-<span class="fc" id="L90">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
-<span class="fc" id="L92">				diagram.addWarning(new Warning(&quot;Please use '!option handwritten true' to enable handwritten &quot;));</span>
+<span class="fc" id="L91">			final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (&quot;handwritten&quot;.equalsIgnoreCase(name))</span>
+<span class="fc" id="L93">				diagram.addWarning(new Warning(&quot;Please use '!option handwritten true' to enable handwritten &quot;));</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name))</span>
-<span class="nc" id="L95">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam ParticipantPadding&quot;));</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (&quot;ParticipantPadding&quot;.equalsIgnoreCase(name))</span>
+<span class="nc" id="L96">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam ParticipantPadding&quot;));</span>
 
-<span class="pc bpc" id="L97" title="1 of 2 branches missed.">			if (&quot;padding&quot;.equalsIgnoreCase(name))</span>
-<span class="nc" id="L98">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam padding&quot;));</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">			if (&quot;padding&quot;.equalsIgnoreCase(name))</span>
+<span class="nc" id="L99">				diagram.addWarning(new Warning(&quot;Please use CSS style instead of skinparam padding&quot;));</span>
 
-<span class="fc" id="L100">			diagram.setParam(name, arg.get(&quot;VALUE&quot;, 0));</span>
-<span class="fc" id="L101">			diagram.setSkinParamUsed(true);</span>
+<span class="fc" id="L101">			diagram.setParam(name, arg.get(&quot;VALUE&quot;, 0));</span>
+<span class="fc" id="L102">			diagram.setSkinParamUsed(true);</span>
 
-<span class="fc" id="L103">			return CommandExecutionResult.ok();</span>
-<span class="nc" id="L104">		} catch (NoStyleAvailableException e) {</span>
+<span class="fc" id="L104">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L105">		} catch (NoStyleAvailableException e) {</span>
 			// Logme.error(e);
-<span class="nc" id="L106">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
+<span class="nc" id="L107">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
 		}
 
 	}

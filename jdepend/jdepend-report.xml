@@ -3653,8 +3653,8 @@
                 <Class sourceFile="DuplicateCode.java">
                     net.sourceforge.plantuml.annotation.DuplicateCode
                 </Class>
-                <Class sourceFile="Explanation.java">
-                    net.sourceforge.plantuml.annotation.Explanation
+                <Class sourceFile="Explain.java">
+                    net.sourceforge.plantuml.annotation.Explain
                 </Class>
                 <Class sourceFile="Fast.java">
                     net.sourceforge.plantuml.annotation.Fast

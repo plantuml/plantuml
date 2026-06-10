@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,28 +49,30 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAutonumberStop extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandAutonumberStop() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandAutonumberStop.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandAutonumberStop.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;autonumber&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;stop&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end()); //</span>
+<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// No argument to capture: the numbering is suspended but its current
 		// value is kept, so 'autonumber resume' continues where it stopped.
-<span class="nc" id="L66">		return &quot;Stopping automatic numbering of messages&quot;;</span>
+<span class="nc" id="L68">		return &quot;Stopping automatic numbering of messages&quot;;</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L71">		diagram.autonumberStop();</span>
-<span class="nc" id="L72">		return CommandExecutionResult.ok();</span>
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L74">		diagram.autonumberStop();</span>
+<span class="nc" id="L75">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

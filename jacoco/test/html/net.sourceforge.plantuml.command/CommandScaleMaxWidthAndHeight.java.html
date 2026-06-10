@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.ScaleMaxWidthAndHeight;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -45,39 +46,40 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2&lt;AbstractDiagram&gt; {
 
-<span class="fc" id="L48">	public static final CommandScaleMaxWidthAndHeight ME = new CommandScaleMaxWidthAndHeight();</span>
+<span class="fc" id="L49">	public static final CommandScaleMaxWidthAndHeight ME = new CommandScaleMaxWidthAndHeight();</span>
 
 	private CommandScaleMaxWidthAndHeight() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandScaleMaxWidthAndHeight.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandScaleMaxWidthAndHeight.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;scale&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;max&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;WIDTH&quot;, &quot;([0-9.]+)&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;[*x]&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L64">				new RegexLeaf(1, &quot;HEIGHT&quot;, &quot;([0-9.]+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				new RegexLeaf(1, &quot;HEIGHT&quot;, &quot;([0-9.]+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'scale max WxH' shrinks the final image if needed so that it fits
 		// within W x H pixels, keeping its aspect ratio (it never enlarges it).
-<span class="nc" id="L71">		return &quot;Limiting the size of the diagram to &quot; + arg.get(&quot;WIDTH&quot;, 0) + &quot; x &quot; + arg.get(&quot;HEIGHT&quot;, 0)</span>
-				+ &quot; pixels&quot;;
+<span class="nc" id="L73">		return &quot;Limiting the size of the diagram to &quot; + arg.get(&quot;WIDTH&quot;, 0) + &quot; x &quot; + arg.get(&quot;HEIGHT&quot;, 0) + &quot; pixels&quot;;</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L77">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
-<span class="nc" id="L78">		final double height = Double.parseDouble(arg.get(&quot;HEIGHT&quot;, 0));</span>
-<span class="nc" id="L79">		diagram.setScale(new ScaleMaxWidthAndHeight(width, height));</span>
-<span class="nc" id="L80">		return CommandExecutionResult.ok();</span>
+	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L79">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
+<span class="nc" id="L80">		final double height = Double.parseDouble(arg.get(&quot;HEIGHT&quot;, 0));</span>
+<span class="nc" id="L81">		diagram.setScale(new ScaleMaxWidthAndHeight(width, height));</span>
+<span class="nc" id="L82">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -44,37 +45,39 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandAssumeTransparent extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L47">	public static final CommandAssumeTransparent ME = new CommandAssumeTransparent();</span>
+<span class="fc" id="L48">	public static final CommandAssumeTransparent ME = new CommandAssumeTransparent();</span>
 
 	private CommandAssumeTransparent() {
-<span class="fc" id="L50">		super(getRegexConcat());</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L51">		super(getRegexConcat());</span>
+<span class="fc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L54">		return RegexConcat.build(CommandAssumeTransparent.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L55">		return RegexConcat.build(CommandAssumeTransparent.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;!assume&quot;), //
-<span class="fc" id="L56">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;transparent&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(dark|light)&quot;), //
-<span class="fc" id="L60">				RegexLeaf.end()); //</span>
+<span class="fc" id="L61">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Historical directive: it used to tell the engine to assume a dark or
 		// light background behind a transparent diagram, but executeArg is now
 		// a no-op and the command may be suppressed in some future.
-<span class="nc" id="L68">		return &quot;Assuming a &quot; + arg.get(&quot;TYPE&quot;, 0)</span>
+<span class="nc" id="L70">		return &quot;Assuming a &quot; + arg.get(&quot;TYPE&quot;, 0)</span>
 				+ &quot; background behind the transparent diagram (deprecated and currently ignored)&quot;;
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		// final String type = arg.get(&quot;TYPE&quot;, 0).toUpperCase();
 		// system.getSkinParam().assumeTransparent(ThemeStyle.valueOf(type));
 		// This is ignored and will be suppressed in some future
-<span class="nc" id="L77">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L80">		return CommandExecutionResult.ok();</span>
 	}
 
 }

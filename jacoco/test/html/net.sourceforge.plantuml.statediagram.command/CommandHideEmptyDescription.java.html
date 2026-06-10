@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -47,38 +48,40 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandHideEmptyDescription extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L50">	public static final CommandHideEmptyDescription ME = new CommandHideEmptyDescription();</span>
+<span class="fc" id="L51">	public static final CommandHideEmptyDescription ME = new CommandHideEmptyDescription();</span>
 
 	private CommandHideEmptyDescription() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandHideEmptyDescription.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L58">		return RegexConcat.build(CommandHideEmptyDescription.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;HIDE&quot;, &quot;(hide|show)&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;empty&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L62">				new RegexLeaf(&quot;description&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				new RegexLeaf(&quot;description&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// In state diagrams, states without any description are drawn as a
 		// simple box when this is hidden, instead of the default two
 		// compartments shape.
-<span class="nc" id="L70">		final boolean hide = arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (hide)</span>
-<span class="nc" id="L72">			return &quot;Hiding the empty description compartment of states&quot;;</span>
+<span class="nc" id="L72">		final boolean hide = arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (hide)</span>
+<span class="nc" id="L74">			return &quot;Hiding the empty description compartment of states&quot;;</span>
 
-<span class="nc" id="L74">		return &quot;Showing the empty description compartment of states&quot;;</span>
+<span class="nc" id="L76">		return &quot;Showing the empty description compartment of states&quot;;</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L79">		final boolean hide = arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;);</span>
-<span class="nc" id="L80">		diagram.setHideEmptyDescription(hide);</span>
-<span class="nc" id="L81">		return CommandExecutionResult.ok();</span>
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L82">		final boolean hide = arg.get(&quot;HIDE&quot;, 0).equalsIgnoreCase(&quot;hide&quot;);</span>
+<span class="nc" id="L83">		diagram.setHideEmptyDescription(hide);</span>
+<span class="nc" id="L84">		return CommandExecutionResult.ok();</span>
 	}
 
 }

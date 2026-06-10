@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,52 +52,53 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandActivate2 extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandActivate2() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandActivate2.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandActivate2.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([%pLN_.@]+)&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(\\+\\+|--)&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)?&quot;), //
-<span class="fc" id="L64">				RegexLeaf.end()); //</span>
+<span class="fc" id="L65">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L69">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L71">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Shorthand syntax: 'Bob++' activates and 'Bob--' deactivates the
 		// participant's life line (see executeArg).
-<span class="nc" id="L73">		final boolean activate = arg.get(&quot;TYPE&quot;, 0).equals(&quot;++&quot;);</span>
-<span class="nc" id="L74">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L75">		final boolean activate = arg.get(&quot;TYPE&quot;, 0).equals(&quot;++&quot;);</span>
+<span class="nc" id="L76">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
 
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (activate)</span>
-<span class="nc" id="L77">			sb.append(&quot;Activating the life line of '&quot;).append(name).append(&quot;' (shorthand '++')&quot;);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (activate)</span>
+<span class="nc" id="L79">			sb.append(&quot;Activating the life line of '&quot;).append(name).append(&quot;' (shorthand '++')&quot;);</span>
 		else
-<span class="nc" id="L79">			sb.append(&quot;Deactivating the life line of '&quot;).append(name).append(&quot;' (shorthand '--')&quot;);</span>
+<span class="nc" id="L81">			sb.append(&quot;Deactivating the life line of '&quot;).append(name).append(&quot;' (shorthand '--')&quot;);</span>
 
-<span class="nc" id="L81">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L83">			sb.append(&quot;, background color &quot;).append(color);</span>
+<span class="nc" id="L83">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L85">			sb.append(&quot;, background color &quot;).append(color);</span>
 
-<span class="nc" id="L85">		return sb.toString();</span>
+<span class="nc" id="L87">		return sb.toString();</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
-<span class="nc bnc" id="L91" title="All 2 branches missed.">		final LifeEventType type = arg.get(&quot;TYPE&quot;, 0).equals(&quot;++&quot;) ? LifeEventType.ACTIVATE : LifeEventType.DEACTIVATE;</span>
-<span class="nc" id="L92">		final Participant p = diagram.getOrCreateParticipant(location, arg.get(&quot;NAME&quot;, 0));</span>
-<span class="nc" id="L93">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L94">		final String error = diagram.activate(p, type,</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (error == null) {</span>
-<span class="nc" id="L97">			return CommandExecutionResult.ok();</span>
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		final LifeEventType type = arg.get(&quot;TYPE&quot;, 0).equals(&quot;++&quot;) ? LifeEventType.ACTIVATE : LifeEventType.DEACTIVATE;</span>
+<span class="nc" id="L94">		final Participant p = diagram.getOrCreateParticipant(location, arg.get(&quot;NAME&quot;, 0));</span>
+<span class="nc" id="L95">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L96">		final String error = diagram.activate(p, type,</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (error == null) {</span>
+<span class="nc" id="L99">			return CommandExecutionResult.ok();</span>
 		}
-<span class="nc" id="L99">		return CommandExecutionResult.error(error);</span>
+<span class="nc" id="L101">		return CommandExecutionResult.error(error);</span>
 	}
 
 }

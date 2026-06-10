@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -50,43 +51,44 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandNewpage extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandNewpage() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandNewpage.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L58">		return RegexConcat.build(CommandNewpage.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;@?&quot;), //
 				new RegexLeaf(&quot;newpage&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;(?:[%s]*:[%s]*|[%s]+)&quot;), //
 								new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*[%pLN_.].*)&quot;) //
-<span class="fc" id="L64">						)), RegexLeaf.end()); //</span>
+<span class="fc" id="L65">						)), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L69">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L71">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Splits the diagram into several images. The optional label is used
 		// as the title of the new page. Note that this command is a no-op once
 		// 'ignore newpage' has been issued (see SequenceDiagram.newpage).
-<span class="nc" id="L74">		sb.append(&quot;Starting a new page&quot;);</span>
+<span class="nc" id="L76">		sb.append(&quot;Starting a new page&quot;);</span>
 
-<span class="nc" id="L76">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (label != null)</span>
-<span class="nc" id="L78">			sb.append(&quot; titled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L78">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (label != null)</span>
+<span class="nc" id="L80">			sb.append(&quot; titled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L80">		return sb.toString();</span>
+<span class="nc" id="L82">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L86">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(diagram.getPragma(), label);</span>
-<span class="fc" id="L88">		diagram.newpage(strings);</span>
-<span class="fc" id="L89">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L88">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(diagram.getPragma(), label);</span>
+<span class="fc" id="L90">		diagram.newpage(strings);</span>
+<span class="fc" id="L91">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

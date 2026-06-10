@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -52,36 +53,39 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandDiamondAssociation extends SingleLineCommand2&lt;ClassDiagram&gt; {
 
 	public CommandDiamondAssociation() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandDiamondAssociation.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandDiamondAssociation.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\&lt;\\&gt;&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
-<span class="fc" id="L63">				RegexLeaf.end()); //</span>
+<span class="fc" id="L64">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// '&lt;&gt; name' creates a diamond shaped association node, used as a
 		// junction point between several association lines. Unlike most
 		// creation commands, executeArg fails if the name already exists.
-<span class="nc" id="L71">		return &quot;Creating the association diamond '&quot; + arg.get(&quot;CODE&quot;, 0) + &quot;'&quot;;</span>
+<span class="nc" id="L73">		return &quot;Creating the association diamond '&quot; + arg.get(&quot;CODE&quot;, 0) + &quot;'&quot;;</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L76">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L77">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L79">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L80">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
 
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L80">			return CommandExecutionResult.error(&quot;Already existing : &quot; + quark.getName());</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L83">			return CommandExecutionResult.error(&quot;Already existing : &quot; + quark.getName());</span>
 
-<span class="nc" id="L82">		diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), &quot;&quot;), LeafType.ASSOCIATION, null);</span>
+<span class="nc" id="L85">		diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), &quot;&quot;),</span>
+				LeafType.ASSOCIATION, null);
 
-<span class="nc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L88">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

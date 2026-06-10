@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -55,47 +56,49 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandUrl extends SingleLineCommand2&lt;AbstractEntityDiagram&gt; {
 
 	public CommandUrl() {
-<span class="fc" id="L58">		super(getRegexConcat());</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat());</span>
+<span class="fc" id="L60">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L62">		return RegexConcat.build(CommandUrl.class.getName(), //</span>
-<span class="fc" id="L63">				RegexLeaf.start(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandUrl.class.getName(), //</span>
+<span class="fc" id="L64">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;url&quot;), //
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(&quot;of|for&quot;)), //
-<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+|[%g][^%g]+[%g])&quot;), //
-<span class="fc" id="L69">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L70">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(&quot;is&quot;)), //
-<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.MANDATORY, //
-<span class="fc" id="L73">				RegexLeaf.end()); //</span>
+<span class="fc" id="L74">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Attaches a URL link to an already existing element (executeArg fails
 		// if it does not exist).
-<span class="nc" id="L80">		final String code = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;CODE&quot;, 0));</span>
-<span class="nc" id="L81">		return &quot;Attaching a URL link to '&quot; + code + &quot;': &quot; + arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="nc" id="L82">		final String code = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;CODE&quot;, 0));</span>
+<span class="nc" id="L83">		return &quot;Attaching a URL link to '&quot; + code + &quot;': &quot; + arg.get(UrlBuilder.URL_KEY, 0);</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L86">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="fc" id="L89">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
 
-<span class="fc" id="L88">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
-<span class="fc" id="L89">		final Entity entity = quark.getData();</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (entity == null)</span>
-<span class="nc" id="L91">			return CommandExecutionResult.error(quark.getName() + &quot; does not exist&quot;);</span>
+<span class="fc" id="L91">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="fc" id="L92">		final Entity entity = quark.getData();</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (entity == null)</span>
+<span class="nc" id="L94">			return CommandExecutionResult.error(quark.getName() + &quot; does not exist&quot;);</span>
 
-<span class="fc" id="L93">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="fc" id="L96">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
 
-<span class="fc" id="L95">		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="fc" id="L96">		final Url url = urlBuilder.getUrl(urlString);</span>
-<span class="fc" id="L97">		entity.addUrl(url);</span>
-<span class="fc" id="L98">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L98">		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="fc" id="L99">		final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="fc" id="L100">		entity.addUrl(url);</span>
+<span class="fc" id="L101">		return CommandExecutionResult.ok();</span>
 	}
 
 }

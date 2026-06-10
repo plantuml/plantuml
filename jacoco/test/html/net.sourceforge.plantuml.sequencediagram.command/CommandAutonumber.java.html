@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.text.DecimalFormat;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,80 +52,81 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAutonumber extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandAutonumber() {
-<span class="fc" id="L54">		super(getConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	private static RegexConcat getConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandAutonumber.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandAutonumber.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;autonumber&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;START&quot;, &quot;(\\d(?:(?:[^%pLN%s]+|\\d+)*\\d)?)?&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L64">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L65">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;STEP&quot;, &quot;(\\d+)&quot;) //
 						)), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L69">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L70">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;FORMAT&quot;, &quot;[%g]([^%g]+)[%g]&quot;) //
 						)), //
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L77">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L79">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Starts (or restarts) the automatic numbering of messages. Defaults
 		// in executeArg: start at 1, increment by 1, format &quot;&lt;b&gt;0&lt;/b&gt;&quot;.
-<span class="nc" id="L81">		sb.append(&quot;Starting automatic numbering of messages&quot;);</span>
+<span class="nc" id="L83">		sb.append(&quot;Starting automatic numbering of messages&quot;);</span>
 
 		// The starting number may be dotted, like '1.1.1' (see DottedNumber).
-<span class="nc" id="L84">		final String start = arg.get(&quot;START&quot;, 0);</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (start != null)</span>
-<span class="nc" id="L86">			sb.append(&quot; from &quot;).append(start);</span>
+<span class="nc" id="L86">		final String start = arg.get(&quot;START&quot;, 0);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (start != null)</span>
+<span class="nc" id="L88">			sb.append(&quot; from &quot;).append(start);</span>
 
-<span class="nc" id="L88">		final String step = arg.get(&quot;STEP&quot;, 0);</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (step != null)</span>
-<span class="nc" id="L90">			sb.append(&quot;, incrementing by &quot;).append(step);</span>
+<span class="nc" id="L90">		final String step = arg.get(&quot;STEP&quot;, 0);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (step != null)</span>
+<span class="nc" id="L92">			sb.append(&quot;, incrementing by &quot;).append(step);</span>
 
 		// The format is a java.text.DecimalFormat pattern, possibly with
 		// creole markup, like &quot;&lt;b&gt;(0)&lt;/b&gt;&quot;.
-<span class="nc" id="L94">		final String format = arg.get(&quot;FORMAT&quot;, 0);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (format != null)</span>
-<span class="nc" id="L96">			sb.append(&quot;, with format \&quot;&quot;).append(format).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L96">		final String format = arg.get(&quot;FORMAT&quot;, 0);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (format != null)</span>
+<span class="nc" id="L98">			sb.append(&quot;, with format \&quot;&quot;).append(format).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L98">		return sb.toString();</span>
+<span class="nc" id="L100">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L104">		DottedNumber start = DottedNumber.create(&quot;1&quot;);</span>
-<span class="fc" id="L105">		final String arg0 = arg.get(&quot;START&quot;, 0);</span>
+<span class="fc" id="L106">		DottedNumber start = DottedNumber.create(&quot;1&quot;);</span>
+<span class="fc" id="L107">		final String arg0 = arg.get(&quot;START&quot;, 0);</span>
 		// System.err.println(&quot;arg0=&quot; + arg0);
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (arg0 != null) {</span>
-<span class="nc" id="L108">			start = DottedNumber.create(arg0);</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (arg0 != null) {</span>
+<span class="nc" id="L110">			start = DottedNumber.create(arg0);</span>
 		}
 		// System.err.println(&quot;start=&quot; + start);
-<span class="fc" id="L111">		int inc = 1;</span>
-<span class="fc" id="L112">		final String arg1 = arg.get(&quot;STEP&quot;, 0);</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (arg1 != null) {</span>
-<span class="nc" id="L114">			inc = Integer.parseInt(arg1);</span>
+<span class="fc" id="L113">		int inc = 1;</span>
+<span class="fc" id="L114">		final String arg1 = arg.get(&quot;STEP&quot;, 0);</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (arg1 != null) {</span>
+<span class="nc" id="L116">			inc = Integer.parseInt(arg1);</span>
 		}
 
-<span class="fc" id="L117">		final String arg2 = arg.get(&quot;FORMAT&quot;, 0);</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		final String df = arg2 == null ? &quot;&lt;b&gt;0&lt;/b&gt;&quot; : arg2;</span>
+<span class="fc" id="L119">		final String arg2 = arg.get(&quot;FORMAT&quot;, 0);</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		final String df = arg2 == null ? &quot;&lt;b&gt;0&lt;/b&gt;&quot; : arg2;</span>
 		final DecimalFormat decimalFormat;
 		try {
-<span class="fc" id="L121">			decimalFormat = new DecimalFormat(df);</span>
-<span class="nc" id="L122">		} catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L123">			return CommandExecutionResult.error(&quot;Error in pattern : &quot; + df);</span>
-<span class="fc" id="L124">		}</span>
+<span class="fc" id="L123">			decimalFormat = new DecimalFormat(df);</span>
+<span class="nc" id="L124">		} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L125">			return CommandExecutionResult.error(&quot;Error in pattern : &quot; + df);</span>
+<span class="fc" id="L126">		}</span>
 
-<span class="fc" id="L126">		diagram.autonumberGo(start, inc, decimalFormat);</span>
-<span class="fc" id="L127">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L128">		diagram.autonumberGo(start, inc, decimalFormat);</span>
+<span class="fc" id="L129">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,49 +49,51 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandHideShow2 extends SingleLineCommand2&lt;CucaDiagram&gt; {
 
 	public CommandHideShow2() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandHideShow2.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandHideShow2.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;COMMAND&quot;, &quot;(hide|hide-class|show|show-class)&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;WHAT&quot;, &quot;([^%s]+|\\&lt;\\&lt;.*\\&gt;\\&gt;)&quot;), //
-<span class="fc" id="L59">				RegexLeaf.end());</span>
+<span class="fc" id="L60">				RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L64">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L66">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Hides or shows whole elements, designated by their name or by a
 		// stereotype (see CucaDiagram.hideOrShow2).
-<span class="nc" id="L68">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
-<span class="nc bnc" id="L69" title="All 4 branches missed.">		final boolean show = tmp == 's' || tmp == 'S';</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		sb.append(show ? &quot;Showing&quot; : &quot;Hiding&quot;);</span>
+<span class="nc" id="L70">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">		final boolean show = tmp == 's' || tmp == 'S';</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		sb.append(show ? &quot;Showing&quot; : &quot;Hiding&quot;);</span>
 
-<span class="nc" id="L72">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (what.startsWith(&quot;&lt;&lt;&quot;))</span>
-<span class="nc" id="L74">			sb.append(&quot; the elements stereotyped &quot;).append(what);</span>
+<span class="nc" id="L74">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (what.startsWith(&quot;&lt;&lt;&quot;))</span>
+<span class="nc" id="L76">			sb.append(&quot; the elements stereotyped &quot;).append(what);</span>
 		else
-<span class="nc" id="L76">			sb.append(&quot; the elements matching '&quot;).append(what).append(&quot;'&quot;);</span>
+<span class="nc" id="L78">			sb.append(&quot; the elements matching '&quot;).append(what).append(&quot;'&quot;);</span>
 
 		// Only the first letter of COMMAND is read by executeArg, so the
 		// '-class' variants behave like the plain keywords.
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (arg.get(&quot;COMMAND&quot;, 0).contains(&quot;-&quot;))</span>
-<span class="nc" id="L81">			sb.append(&quot; (the '-class' suffix has no specific effect)&quot;);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (arg.get(&quot;COMMAND&quot;, 0).contains(&quot;-&quot;))</span>
+<span class="nc" id="L83">			sb.append(&quot; (the '-class' suffix has no specific effect)&quot;);</span>
 
-<span class="nc" id="L83">		return sb.toString();</span>
+<span class="nc" id="L85">		return sb.toString();</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 
-<span class="nc" id="L89">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
-<span class="nc bnc" id="L90" title="All 4 branches missed.">		final boolean show = tmp == 's' || tmp == 'S';</span>
-<span class="nc" id="L91">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
-<span class="nc" id="L92">		diagram.hideOrShow2(what, show);</span>
-<span class="nc" id="L93">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L92">		final char tmp = arg.get(&quot;COMMAND&quot;, 0).charAt(0);</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">		final boolean show = tmp == 's' || tmp == 'S';</span>
+<span class="nc" id="L94">		final String what = arg.get(&quot;WHAT&quot;, 0).trim();</span>
+<span class="nc" id="L95">		diagram.hideOrShow2(what, show);</span>
+<span class="nc" id="L96">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

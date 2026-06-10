@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 
 import java.text.DecimalFormat;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -50,68 +51,69 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAutonumberResume extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandAutonumberResume() {
-<span class="fc" id="L53">		super(getConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(getConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	private static RegexConcat getConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandAutonumberResume.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L58">		return RegexConcat.build(CommandAutonumberResume.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;autonumber&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;resume&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L64">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L65">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;INC&quot;, &quot;(\\d+)&quot;) //
 						)), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L69">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L70">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;DF&quot;, &quot;[%g]([^%g]+)[%g]&quot;) //
-<span class="fc" id="L71">						)), RegexLeaf.end());</span>
+<span class="fc" id="L72">						)), RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L76">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L78">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Resumes the numbering stopped by 'autonumber stop', continuing from
 		// the current value. The increment and the format are only replaced
 		// when given (see AutoNumber.resume).
-<span class="nc" id="L81">		sb.append(&quot;Resuming automatic numbering of messages&quot;);</span>
+<span class="nc" id="L83">		sb.append(&quot;Resuming automatic numbering of messages&quot;);</span>
 
-<span class="nc" id="L83">		final String inc = arg.get(&quot;INC&quot;, 0);</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (inc != null)</span>
-<span class="nc" id="L85">			sb.append(&quot;, incrementing by &quot;).append(inc);</span>
+<span class="nc" id="L85">		final String inc = arg.get(&quot;INC&quot;, 0);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (inc != null)</span>
+<span class="nc" id="L87">			sb.append(&quot;, incrementing by &quot;).append(inc);</span>
 
-<span class="nc" id="L87">		final String df = arg.get(&quot;DF&quot;, 0);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (df != null)</span>
-<span class="nc" id="L89">			sb.append(&quot;, with format \&quot;&quot;).append(df).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L89">		final String df = arg.get(&quot;DF&quot;, 0);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (df != null)</span>
+<span class="nc" id="L91">			sb.append(&quot;, with format \&quot;&quot;).append(df).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L91">		return sb.toString();</span>
+<span class="nc" id="L93">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L97">		final String df = arg.get(&quot;DF&quot;, 0);</span>
+<span class="nc" id="L99">		final String df = arg.get(&quot;DF&quot;, 0);</span>
 
-<span class="nc" id="L99">		DecimalFormat decimalFormat = null;</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (df != null) {</span>
+<span class="nc" id="L101">		DecimalFormat decimalFormat = null;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (df != null) {</span>
 			try {
-<span class="nc" id="L102">				decimalFormat = new DecimalFormat(df);</span>
-<span class="nc" id="L103">			} catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L104">				return CommandExecutionResult.error(&quot;Error in pattern : &quot; + df);</span>
-<span class="nc" id="L105">			}</span>
+<span class="nc" id="L104">				decimalFormat = new DecimalFormat(df);</span>
+<span class="nc" id="L105">			} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L106">				return CommandExecutionResult.error(&quot;Error in pattern : &quot; + df);</span>
+<span class="nc" id="L107">			}</span>
 		}
 
-<span class="nc" id="L108">		final String inc = arg.get(&quot;INC&quot;, 0);</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (inc == null) {</span>
-<span class="nc" id="L110">			diagram.getAutoNumber().resume(decimalFormat);</span>
+<span class="nc" id="L110">		final String inc = arg.get(&quot;INC&quot;, 0);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (inc == null) {</span>
+<span class="nc" id="L112">			diagram.getAutoNumber().resume(decimalFormat);</span>
 		} else {
-<span class="nc" id="L112">			diagram.getAutoNumber().resume(Integer.parseInt(inc), decimalFormat);</span>
+<span class="nc" id="L114">			diagram.getAutoNumber().resume(Integer.parseInt(inc), decimalFormat);</span>
 		}
-<span class="nc" id="L114">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L116">		return CommandExecutionResult.ok();</span>
 	}
 
 }

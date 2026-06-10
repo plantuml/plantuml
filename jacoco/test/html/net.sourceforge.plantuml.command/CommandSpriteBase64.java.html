@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.sprite.SpriteImage;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -49,43 +50,44 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSpriteBase64 extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L52">	public static final CommandSpriteBase64 ME = new CommandSpriteBase64();</span>
+<span class="fc" id="L53">	public static final CommandSpriteBase64 ME = new CommandSpriteBase64();</span>
 
 	private CommandSpriteBase64() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandSpriteBase64.class.getName(), //</span>
-<span class="fc" id="L60">				RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandSpriteBase64.class.getName(), //</span>
+<span class="fc" id="L61">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;sprite&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;\\$?&quot;), //
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-.%pLN_]+)&quot;), //
-<span class="fc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;data:image/png;base64,&quot;), //
 				new RegexLeaf(1, &quot;DATA&quot;, &quot;([A-Za-z0-9+/=]+)&quot;), //
-<span class="fc" id="L68">				RegexLeaf.end());</span>
+<span class="fc" id="L69">				RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Defines a sprite from an inline PNG image encoded as a data URI;
 		// executeArg fails if the Base64 payload is not a decodable PNG.
-<span class="nc" id="L75">		return &quot;Defining the sprite '&quot; + arg.get(&quot;NAME&quot;, 0) + &quot;' from an inline Base64 encoded PNG image (&quot;</span>
-<span class="nc" id="L76">				+ arg.get(&quot;DATA&quot;, 0).length() + &quot; characters)&quot;;</span>
+<span class="nc" id="L77">		return &quot;Defining the sprite '&quot; + arg.get(&quot;NAME&quot;, 0) + &quot;' from an inline Base64 encoded PNG image (&quot;</span>
+<span class="nc" id="L78">				+ arg.get(&quot;DATA&quot;, 0).length() + &quot; characters)&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L82">		final String base64 = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L83">		final byte[] bytes = Base64Coder.decode(base64);</span>
+<span class="nc" id="L84">		final String base64 = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="nc" id="L85">		final byte[] bytes = Base64Coder.decode(base64);</span>
 		try {
-<span class="nc" id="L85">			system.addSprite(arg.get(&quot;NAME&quot;, 0), new SpriteImage(SImageIO.read(bytes)));</span>
-<span class="nc" id="L86">			return CommandExecutionResult.ok();</span>
-<span class="nc" id="L87">		} catch (IOException e) {</span>
-<span class="nc" id="L88">			return CommandExecutionResult.error(&quot;Cannot decode Base64 PNG sprite.&quot;);</span>
+<span class="nc" id="L87">			system.addSprite(arg.get(&quot;NAME&quot;, 0), new SpriteImage(SImageIO.read(bytes)));</span>
+<span class="nc" id="L88">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L89">		} catch (IOException e) {</span>
+<span class="nc" id="L90">			return CommandExecutionResult.error(&quot;Cannot decode Base64 PNG sprite.&quot;);</span>
 		}
 	}
 

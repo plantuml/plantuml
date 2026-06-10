@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -48,39 +49,40 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSpriteSvg extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L51">	public static final CommandSpriteSvg ME = new CommandSpriteSvg();</span>
+<span class="fc" id="L52">	public static final CommandSpriteSvg ME = new CommandSpriteSvg();</span>
 
 	private CommandSpriteSvg() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandSpriteSvg.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandSpriteSvg.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;sprite&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;\\$?&quot;), //
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-%pLN_]+)&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L64">				new RegexLeaf(1, &quot;SVG&quot;, &quot;(\\&lt;svg\\b.*\\&lt;/svg\\&gt;)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L65">				new RegexLeaf(1, &quot;SVG&quot;, &quot;(\\&lt;svg\\b.*\\&lt;/svg\\&gt;)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Defines a sprite from an inline '&lt;svg&gt;...&lt;/svg&gt;' element, parsed by
 		// the SVG sprite parser.
-<span class="nc" id="L71">		return &quot;Defining the sprite '&quot; + arg.get(&quot;NAME&quot;, 0) + &quot;' from an inline SVG element (&quot;</span>
-<span class="nc" id="L72">				+ arg.get(&quot;SVG&quot;, 0).length() + &quot; characters)&quot;;</span>
+<span class="nc" id="L73">		return &quot;Defining the sprite '&quot; + arg.get(&quot;NAME&quot;, 0) + &quot;' from an inline SVG element (&quot;</span>
+<span class="nc" id="L74">				+ arg.get(&quot;SVG&quot;, 0).length() + &quot; characters)&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L78">		final String svg = arg.get(&quot;SVG&quot;, 0);</span>
-<span class="nc" id="L79">		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(Collections.singletonList(svg),</span>
-<span class="nc" id="L80">				system.getPragma(), system.getMd5map());</span>
-<span class="nc" id="L81">		system.addSprite(arg.get(&quot;NAME&quot;, 0), parser);</span>
+<span class="nc" id="L80">		final String svg = arg.get(&quot;SVG&quot;, 0);</span>
+<span class="nc" id="L81">		final ISvgSpriteParser parser = SvgSpriteParserFactory.create(Collections.singletonList(svg),</span>
+<span class="nc" id="L82">				system.getPragma(), system.getMd5map());</span>
+<span class="nc" id="L83">		system.addSprite(arg.get(&quot;NAME&quot;, 0), parser);</span>
 
-<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L85">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

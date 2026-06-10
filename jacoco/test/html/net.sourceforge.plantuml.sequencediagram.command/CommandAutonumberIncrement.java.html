@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,54 +50,55 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAutonumberIncrement extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandAutonumberIncrement() {
-<span class="fc" id="L52">		super(getConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	private static RegexConcat getConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandAutonumberIncrement.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandAutonumberIncrement.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;autonumber&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;inc&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L62">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;POS&quot;, &quot;([A-Za-z])&quot;) //
 						)), //
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L70">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L72">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Increments one component of the current dotted autonumber (like
 		// '1.2.3') and resets the following components to 1 (see
 		// DottedNumber.incrementIntermediate).
-<span class="nc" id="L75">		final String position = arg.get(&quot;POS&quot;, 0);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (position == null) {</span>
+<span class="nc" id="L77">		final String position = arg.get(&quot;POS&quot;, 0);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (position == null) {</span>
 			// Default: the second-to-last component, or the only one.
-<span class="nc" id="L78">			sb.append(&quot;Incrementing the intermediate component of the message autonumber&quot;);</span>
+<span class="nc" id="L80">			sb.append(&quot;Incrementing the intermediate component of the message autonumber&quot;);</span>
 		} else {
-<span class="nc" id="L80">			final int pos = StringUtils.goLowerCase(position.charAt(0)) - 'a';</span>
-<span class="nc" id="L81">			sb.append(&quot;Incrementing component '&quot;).append(position).append(&quot;' (number &quot;).append(pos + 1)</span>
-<span class="nc" id="L82">					.append(&quot;) of the message autonumber&quot;);</span>
+<span class="nc" id="L82">			final int pos = StringUtils.goLowerCase(position.charAt(0)) - 'a';</span>
+<span class="nc" id="L83">			sb.append(&quot;Incrementing component '&quot;).append(position).append(&quot;' (number &quot;).append(pos + 1)</span>
+<span class="nc" id="L84">					.append(&quot;) of the message autonumber&quot;);</span>
 		}
-<span class="nc" id="L84">		sb.append(&quot;, resetting the following components to 1&quot;);</span>
+<span class="nc" id="L86">		sb.append(&quot;, resetting the following components to 1&quot;);</span>
 
-<span class="nc" id="L86">		return sb.toString();</span>
+<span class="nc" id="L88">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L92">		final String position = arg.get(&quot;POS&quot;, 0);</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (position == null) {</span>
-<span class="nc" id="L94">			diagram.getAutoNumber().incrementIntermediate();</span>
+<span class="nc" id="L94">		final String position = arg.get(&quot;POS&quot;, 0);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (position == null) {</span>
+<span class="nc" id="L96">			diagram.getAutoNumber().incrementIntermediate();</span>
 		} else {
-<span class="nc" id="L96">			final int pos = StringUtils.goLowerCase(position.charAt(0)) - 'a';</span>
-<span class="nc" id="L97">			diagram.getAutoNumber().incrementIntermediate(pos);</span>
+<span class="nc" id="L98">			final int pos = StringUtils.goLowerCase(position.charAt(0)) - 'a';</span>
+<span class="nc" id="L99">			diagram.getAutoNumber().incrementIntermediate(pos);</span>
 		}
-<span class="nc" id="L99">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L101">		return CommandExecutionResult.ok();</span>
 	}
 
 }

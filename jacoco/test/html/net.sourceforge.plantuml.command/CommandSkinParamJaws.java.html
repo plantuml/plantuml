@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -47,63 +48,64 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSkinParamJaws extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L50">	public static final CommandSkinParamJaws ME = new CommandSkinParamJaws();</span>
-<span class="fc" id="L51">	private final CommandSkinParamMultilines delegate = CommandSkinParamMultilines.ME;</span>
+<span class="fc" id="L51">	public static final CommandSkinParamJaws ME = new CommandSkinParamJaws();</span>
+<span class="fc" id="L52">	private final CommandSkinParamMultilines delegate = CommandSkinParamMultilines.ME;</span>
 
 	private CommandSkinParamJaws() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandSkinParamJaws.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandSkinParamJaws.class.getName(), RegexLeaf.start(), //</span>
 				new RegexRepeatedOneOrMore(&quot;FULL&quot;, //
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;TYPE&quot;, &quot;(skinparam|skinparamlocked)&quot;), //
-<span class="fc" id="L62">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;.*&quot; + Jaws.BLOCK_E1_NEWLINE + &quot;.*&quot;))), //
-<span class="fc" id="L64">				RegexLeaf.end()); //</span>
+<span class="fc" id="L65">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// This command receives one or several 'skinparam { ... }' blocks
 		// folded into a single line by the Jaws preprocessing (the newlines are
 		// encoded as Jaws.BLOCK_E1_NEWLINE); executeArg unfolds them and
 		// delegates each block to CommandSkinParamMultilines.
-<span class="nc" id="L73">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
-<span class="nc" id="L74">		final String[] split = full.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE);</span>
-<span class="nc" id="L75">		int blocks = 0;</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (String line : split)</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">			if (line.trim().equals(&quot;}&quot;))</span>
-<span class="nc" id="L78">				blocks++;</span>
+<span class="nc" id="L75">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="nc" id="L76">		final String[] split = full.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE);</span>
+<span class="nc" id="L77">		int blocks = 0;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		for (String line : split)</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			if (line.trim().equals(&quot;}&quot;))</span>
+<span class="nc" id="L80">				blocks++;</span>
 
-<span class="nc" id="L80">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L81">		sb.append(&quot;Setting skin parameters from &quot;);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (blocks &lt;= 1)</span>
-<span class="nc" id="L83">			sb.append(&quot;a 'skinparam' block&quot;);</span>
+<span class="nc" id="L82">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L83">		sb.append(&quot;Setting skin parameters from &quot;);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (blocks &lt;= 1)</span>
+<span class="nc" id="L85">			sb.append(&quot;a 'skinparam' block&quot;);</span>
 		else
-<span class="nc" id="L85">			sb.append(blocks).append(&quot; 'skinparam' blocks&quot;);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		sb.append(&quot; of &quot;).append(split.length).append(split.length == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; in total&quot;);</span>
+<span class="nc" id="L87">			sb.append(blocks).append(&quot; 'skinparam' blocks&quot;);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		sb.append(&quot; of &quot;).append(split.length).append(split.length == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; in total&quot;);</span>
 
-<span class="nc" id="L88">		return sb.toString();</span>
+<span class="nc" id="L90">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L94">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
-<span class="nc" id="L95">		BlocLines lines = BlocLines.create();</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (String line : full.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE)) {</span>
-<span class="nc" id="L97">			lines = lines.addString(line);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (line.trim().equals(&quot;}&quot;)) {</span>
-<span class="nc" id="L99">				final CommandExecutionResult res = delegate.execute(diagram, lines, currentPass);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">				if (res.isOk() == false)</span>
-<span class="nc" id="L101">					return res;</span>
-<span class="nc" id="L102">				lines = BlocLines.create();</span>
+<span class="nc" id="L96">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="nc" id="L97">		BlocLines lines = BlocLines.create();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		for (String line : full.split(&quot;&quot; + Jaws.BLOCK_E1_NEWLINE)) {</span>
+<span class="nc" id="L99">			lines = lines.addString(line);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (line.trim().equals(&quot;}&quot;)) {</span>
+<span class="nc" id="L101">				final CommandExecutionResult res = delegate.execute(diagram, lines, currentPass);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">				if (res.isOk() == false)</span>
+<span class="nc" id="L103">					return res;</span>
+<span class="nc" id="L104">				lines = BlocLines.create();</span>
 			}
 		}
-<span class="nc" id="L105">		diagram.setSkinParamUsed(true);</span>
-<span class="nc" id="L106">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L107">		diagram.setSkinParamUsed(true);</span>
+<span class="nc" id="L108">		return CommandExecutionResult.ok();</span>
 
 	}
 

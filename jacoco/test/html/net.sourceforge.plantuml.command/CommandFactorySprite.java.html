@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.WithSprite;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.note.SingleMultiFactoryCommand;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteColorBuilder4096;
@@ -56,8 +57,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public final class CommandFactorySprite implements SingleMultiFactoryCommand&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L59">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="fc" id="L60">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?sprite|\\}$&quot;));</span>
+<span class="fc" id="L60">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^end[%s]?sprite|\\}$&quot;));</span>
 
 <span class="fc" id="L62">	public static final CommandFactorySprite ME = new CommandFactorySprite();</span>
 
@@ -91,19 +91,19 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand&lt;
 <span class="fc" id="L91">			MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END) {</span>
 
 		@Override
+		@Explain
 		protected String explainNow(BlocLines lines) {
 			// Mirror executeNow: same preprocessing, then the lines between the
 			// declaration and the closing '}' (or 'end sprite') are the data.
-<span class="nc" id="L97">			lines = lines.trim().removeEmptyLines();</span>
-<span class="nc" id="L98">			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (line0 == null)</span>
-<span class="nc" id="L100">				return &quot;Defining a sprite&quot;;</span>
+<span class="nc" id="L98">			lines = lines.trim().removeEmptyLines();</span>
+<span class="nc" id="L99">			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (line0 == null)</span>
+<span class="nc" id="L101">				return &quot;Defining a sprite&quot;;</span>
 
-<span class="nc" id="L102">			final StringBuilder sb = new StringBuilder(explainSprite(line0));</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">			final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (bodyCount &gt; 0)</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">				sb.append(&quot;, with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;)</span>
-<span class="nc" id="L106">						.append(&quot; of data&quot;);</span>
+<span class="nc" id="L103">			final StringBuilder sb = new StringBuilder(explainSprite(line0));</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (bodyCount &gt; 0)</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">				sb.append(&quot;, with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; of data&quot;);</span>
 			else
 <span class="nc" id="L108">				sb.append(&quot; (rejected at execution: no sprite data)&quot;);</span>
 
@@ -111,108 +111,110 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand&lt;
 		}
 
 		@Override
-		protected CommandExecutionResult executeNow(final TitledDiagram system, BlocLines lines, ParserPass currentPass) {
-<span class="fc" id="L115">			lines = lines.trim().removeEmptyLines();</span>
-<span class="fc" id="L116">			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+		protected CommandExecutionResult executeNow(final TitledDiagram system, BlocLines lines,
+				ParserPass currentPass) {
+<span class="fc" id="L116">			lines = lines.trim().removeEmptyLines();</span>
+<span class="fc" id="L117">			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 
-<span class="fc" id="L118">			lines = lines.subExtract(1, 1);</span>
-<span class="fc" id="L119">			lines = lines.removeEmptyColumns();</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">			if (lines.size() == 0)</span>
-<span class="nc" id="L121">				return CommandExecutionResult.error(&quot;No sprite defined.&quot;);</span>
+<span class="fc" id="L119">			lines = lines.subExtract(1, 1);</span>
+<span class="fc" id="L120">			lines = lines.removeEmptyColumns();</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">			if (lines.size() == 0)</span>
+<span class="nc" id="L122">				return CommandExecutionResult.error(&quot;No sprite defined.&quot;);</span>
 
-<span class="fc" id="L123">			return executeInternal(system, line0, lines.getLinesAsStringForSprite());</span>
+<span class="fc" id="L124">			return executeInternal(system, line0, lines.getLinesAsStringForSprite());</span>
 		}
 
 	};
 
 	public Command&lt;TitledDiagram&gt; createSingleLine() {
-<span class="fc" id="L129">		return new SingleLineCommand2&lt;TitledDiagram&gt;(singleLine) {</span>
+<span class="fc" id="L130">		return new SingleLineCommand2&lt;TitledDiagram&gt;(singleLine) {</span>
 
 			@Override
+			@Explain
 			protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L133">				return explainSprite(arg) + &quot; from an inline data string&quot;;</span>
+<span class="nc" id="L135">				return explainSprite(arg) + &quot; from an inline data string&quot;;</span>
 			}
 
 			@Override
-			protected CommandExecutionResult executeArg(final TitledDiagram system, LineLocation location, RegexResult arg,
-					ParserPass currentPass) {
-<span class="nc" id="L139">				return executeInternal(system, arg, Arrays.asList((String) arg.get(&quot;DATA&quot;, 0)));</span>
+			protected CommandExecutionResult executeArg(final TitledDiagram system, LineLocation location,
+					RegexResult arg, ParserPass currentPass) {
+<span class="nc" id="L141">				return executeInternal(system, arg, Arrays.asList((String) arg.get(&quot;DATA&quot;, 0)));</span>
 			}
 
 		};
 	}
 
 	/**
-	 * Builds the explanation shared by the single line and the multiline
-	 * flavors, mirroring the fields read by
+	 * Builds the explanation shared by the single line and the multiline flavors,
+	 * mirroring the fields read by
 	 * {@link #executeInternal(WithSprite, RegexResult, List)}.
 	 */
+	@Explain
 	private String explainSprite(RegexResult line0) {
-<span class="nc" id="L151">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L152">		sb.append(&quot;Defining the sprite '&quot;).append(line0.get(&quot;NAME&quot;, 0)).append(&quot;'&quot;);</span>
+<span class="nc" id="L154">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L155">		sb.append(&quot;Defining the sprite '&quot;).append(line0.get(&quot;NAME&quot;, 0)).append(&quot;'&quot;);</span>
 
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (line0.get(&quot;DIM&quot;, 0) == null) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (line0.get(&quot;DIM&quot;, 0) == null) {</span>
 			// No [WxH/...] specification: 16 gray levels, dimensions deduced
 			// from the data.
-<span class="nc" id="L157">			sb.append(&quot;, 16 gray levels, dimensions deduced from the data&quot;);</span>
+<span class="nc" id="L160">			sb.append(&quot;, 16 gray levels, dimensions deduced from the data&quot;);</span>
 		} else {
-<span class="nc" id="L159">			sb.append(&quot;, &quot;).append(line0.get(&quot;DIM&quot;, 0)).append(&quot; x &quot;).append(line0.get(&quot;DIM&quot;, 1))</span>
-<span class="nc" id="L160">					.append(&quot; pixels&quot;);</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (line0.get(&quot;DIM&quot;, 4) != null) {</span>
+<span class="nc" id="L162">			sb.append(&quot;, &quot;).append(line0.get(&quot;DIM&quot;, 0)).append(&quot; x &quot;).append(line0.get(&quot;DIM&quot;, 1)).append(&quot; pixels&quot;);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (line0.get(&quot;DIM&quot;, 4) != null) {</span>
 				// The [WxH/color] form uses the 4096 colors encoding.
-<span class="nc" id="L163">				sb.append(&quot;, 4096 colors&quot;);</span>
+<span class="nc" id="L165">				sb.append(&quot;, 4096 colors&quot;);</span>
 			} else {
-<span class="nc" id="L165">				final String nbLevel = line0.get(&quot;DIM&quot;, 2);</span>
-<span class="nc" id="L166">				sb.append(&quot;, &quot;).append(nbLevel).append(&quot; gray levels&quot;);</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">				if (line0.get(&quot;DIM&quot;, 3) != null)</span>
-<span class="nc" id="L168">					sb.append(&quot;, compressed (z) encoding&quot;);</span>
-<span class="nc bnc" id="L169" title="All 6 branches missed.">				if (nbLevel.equals(&quot;4&quot;) == false &amp;&amp; nbLevel.equals(&quot;8&quot;) == false &amp;&amp; nbLevel.equals(&quot;16&quot;) == false)</span>
-<span class="nc" id="L170">					sb.append(&quot; (rejected at execution: only 4, 8 or 16 gray levels are allowed)&quot;);</span>
+<span class="nc" id="L167">				final String nbLevel = line0.get(&quot;DIM&quot;, 2);</span>
+<span class="nc" id="L168">				sb.append(&quot;, &quot;).append(nbLevel).append(&quot; gray levels&quot;);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				if (line0.get(&quot;DIM&quot;, 3) != null)</span>
+<span class="nc" id="L170">					sb.append(&quot;, compressed (z) encoding&quot;);</span>
+<span class="nc bnc" id="L171" title="All 6 branches missed.">				if (nbLevel.equals(&quot;4&quot;) == false &amp;&amp; nbLevel.equals(&quot;8&quot;) == false &amp;&amp; nbLevel.equals(&quot;16&quot;) == false)</span>
+<span class="nc" id="L172">					sb.append(&quot; (rejected at execution: only 4, 8 or 16 gray levels are allowed)&quot;);</span>
 			}
 		}
 
-<span class="nc" id="L174">		return sb.toString();</span>
+<span class="nc" id="L176">		return sb.toString();</span>
 	}
 
 	public Command&lt;TitledDiagram&gt; createMultiLine(boolean withBracketUnused) {
-<span class="fc" id="L178">		return commandMultiline;</span>
+<span class="fc" id="L180">		return commandMultiline;</span>
 	}
 
 	private CommandExecutionResult executeInternal(WithSprite system, RegexResult line0, final List&lt;String&gt; strings) {
 		final Sprite sprite;
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (line0.get(&quot;DIM&quot;, 0) == null) {</span>
-<span class="nc" id="L184">			sprite = SpriteGrayLevel.GRAY_16.buildSprite(-1, -1, strings);</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		if (line0.get(&quot;DIM&quot;, 0) == null) {</span>
+<span class="nc" id="L186">			sprite = SpriteGrayLevel.GRAY_16.buildSprite(-1, -1, strings);</span>
 		} else {
-<span class="fc" id="L186">			final int width = Integer.parseInt(line0.get(&quot;DIM&quot;, 0));</span>
-<span class="fc" id="L187">			final int height = Integer.parseInt(line0.get(&quot;DIM&quot;, 1));</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (line0.get(&quot;DIM&quot;, 4) == null) {</span>
-<span class="fc" id="L189">				final int nbLevel = Integer.parseInt(line0.get(&quot;DIM&quot;, 2));</span>
-<span class="pc bpc" id="L190" title="3 of 6 branches missed.">				if (nbLevel != 4 &amp;&amp; nbLevel != 8 &amp;&amp; nbLevel != 16)</span>
-<span class="nc" id="L191">					return CommandExecutionResult.error(&quot;Only 4, 8 or 16 graylevel are allowed.&quot;);</span>
+<span class="fc" id="L188">			final int width = Integer.parseInt(line0.get(&quot;DIM&quot;, 0));</span>
+<span class="fc" id="L189">			final int height = Integer.parseInt(line0.get(&quot;DIM&quot;, 1));</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">			if (line0.get(&quot;DIM&quot;, 4) == null) {</span>
+<span class="fc" id="L191">				final int nbLevel = Integer.parseInt(line0.get(&quot;DIM&quot;, 2));</span>
+<span class="pc bpc" id="L192" title="3 of 6 branches missed.">				if (nbLevel != 4 &amp;&amp; nbLevel != 8 &amp;&amp; nbLevel != 16)</span>
+<span class="nc" id="L193">					return CommandExecutionResult.error(&quot;Only 4, 8 or 16 graylevel are allowed.&quot;);</span>
 
-<span class="fc" id="L193">				final SpriteGrayLevel level = SpriteGrayLevel.get(nbLevel);</span>
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">				if (line0.get(&quot;DIM&quot;, 3) == null) {</span>
-<span class="fc" id="L195">					sprite = level.buildSprite(width, height, strings);</span>
+<span class="fc" id="L195">				final SpriteGrayLevel level = SpriteGrayLevel.get(nbLevel);</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">				if (line0.get(&quot;DIM&quot;, 3) == null) {</span>
+<span class="fc" id="L197">					sprite = level.buildSprite(width, height, strings);</span>
 				} else {
-<span class="nc" id="L197">					sprite = level.buildSpriteZ(width, height, concat(strings));</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">					if (sprite == null)</span>
-<span class="nc" id="L199">						return CommandExecutionResult.error(&quot;Cannot decode sprite.&quot;);</span>
+<span class="nc" id="L199">					sprite = level.buildSpriteZ(width, height, concat(strings));</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">					if (sprite == null)</span>
+<span class="nc" id="L201">						return CommandExecutionResult.error(&quot;Cannot decode sprite.&quot;);</span>
 
 				}
-<span class="fc" id="L202">			} else {</span>
-<span class="nc" id="L203">				sprite = SpriteColorBuilder4096.buildSprite(strings);</span>
+<span class="fc" id="L204">			} else {</span>
+<span class="nc" id="L205">				sprite = SpriteColorBuilder4096.buildSprite(strings);</span>
 			}
 		}
-<span class="fc" id="L206">		system.addSprite(line0.get(&quot;NAME&quot;, 0), sprite);</span>
-<span class="fc" id="L207">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L208">		system.addSprite(line0.get(&quot;NAME&quot;, 0), sprite);</span>
+<span class="fc" id="L209">		return CommandExecutionResult.ok();</span>
 	}
 
 	private String concat(final List&lt;String&gt; strings) {
-<span class="nc" id="L211">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L212" title="All 2 branches missed.">		for (String s : strings)</span>
-<span class="nc" id="L213">			sb.append(StringUtils.trin(s));</span>
+<span class="nc" id="L213">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		for (String s : strings)</span>
+<span class="nc" id="L215">			sb.append(StringUtils.trin(s));</span>
 
-<span class="nc" id="L215">		return sb.toString();</span>
+<span class="nc" id="L217">		return sb.toString();</span>
 	}
 
 }

@@ -43,6 +43,7 @@ import java.util.zip.ZipInputStream;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.FileUtils;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.awt.PortableImage;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteImage;
@@ -58,127 +59,129 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class CommandSpriteFile extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L61">	public static final CommandSpriteFile ME = new CommandSpriteFile();</span>
+<span class="fc" id="L62">	public static final CommandSpriteFile ME = new CommandSpriteFile();</span>
 
 	private CommandSpriteFile() {
-<span class="fc" id="L64">		super(getRegexConcat());</span>
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L65">		super(getRegexConcat());</span>
+<span class="fc" id="L66">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L68">		return RegexConcat.build(CommandSpriteFile.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L69">		return RegexConcat.build(CommandSpriteFile.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;sprite&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;\\$?&quot;), //
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([-%pLN_]+)&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L74">				new RegexLeaf(1, &quot;FILE&quot;, &quot;([^&lt;&gt;%g#]*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L74">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L75">				new RegexLeaf(1, &quot;FILE&quot;, &quot;([^&lt;&gt;%g#]*)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L79">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L80">		sb.append(&quot;Defining the sprite '&quot;).append(arg.get(&quot;NAME&quot;, 0)).append(&quot;'&quot;);</span>
+<span class="nc" id="L81">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L82">		sb.append(&quot;Defining the sprite '&quot;).append(arg.get(&quot;NAME&quot;, 0)).append(&quot;'&quot;);</span>
 
 		// Mirror the source dispatch of executeArg, without any file access:
 		// 'jar:' loads an internal sprite, '~' targets an entry inside a zip
 		// archive, otherwise the path is an SVG or raster image file.
-<span class="nc" id="L85">		final String src = arg.get(&quot;FILE&quot;, 0);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (src.startsWith(&quot;jar:&quot;))</span>
-<span class="nc" id="L87">			sb.append(&quot; from the internal sprite '&quot;).append(src.substring(4)).append(&quot;'&quot;);</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		else if (src.contains(&quot;~&quot;)) {</span>
-<span class="nc" id="L89">			final int idx = src.lastIndexOf(&quot;~&quot;);</span>
-<span class="nc" id="L90">			sb.append(&quot; from the entry '&quot;).append(src.substring(idx + 1)).append(&quot;' of the archive '&quot;)</span>
-<span class="nc" id="L91">					.append(src.substring(0, idx)).append(&quot;'&quot;);</span>
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		} else if (isSvg(src))</span>
-<span class="nc" id="L93">			sb.append(&quot; from the SVG file '&quot;).append(src).append(&quot;'&quot;);</span>
+<span class="nc" id="L87">		final String src = arg.get(&quot;FILE&quot;, 0);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (src.startsWith(&quot;jar:&quot;))</span>
+<span class="nc" id="L89">			sb.append(&quot; from the internal sprite '&quot;).append(src.substring(4)).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		else if (src.contains(&quot;~&quot;)) {</span>
+<span class="nc" id="L91">			final int idx = src.lastIndexOf(&quot;~&quot;);</span>
+<span class="nc" id="L92">			sb.append(&quot; from the entry '&quot;).append(src.substring(idx + 1)).append(&quot;' of the archive '&quot;)</span>
+<span class="nc" id="L93">					.append(src.substring(0, idx)).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		} else if (isSvg(src))</span>
+<span class="nc" id="L95">			sb.append(&quot; from the SVG file '&quot;).append(src).append(&quot;'&quot;);</span>
 		else
-<span class="nc" id="L95">			sb.append(&quot; from the image file '&quot;).append(src).append(&quot;'&quot;);</span>
+<span class="nc" id="L97">			sb.append(&quot; from the image file '&quot;).append(src).append(&quot;'&quot;);</span>
 
-<span class="nc" id="L97">		return sb.toString();</span>
+<span class="nc" id="L99">		return sb.toString();</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L102">		final String src = arg.get(&quot;FILE&quot;, 0);</span>
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L105">		final String src = arg.get(&quot;FILE&quot;, 0);</span>
 		final Sprite sprite;
 		try {
-<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (src.startsWith(&quot;jar:&quot;)) {</span>
-<span class="nc" id="L106">				final String name = src.substring(4);</span>
-<span class="nc" id="L107">				sprite = SpriteImage.fromInternal(name);</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">				if (sprite == null)</span>
-<span class="nc" id="L109">					return CommandExecutionResult.error(&quot;No such internal sprite: &quot; + name);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (src.startsWith(&quot;jar:&quot;)) {</span>
+<span class="nc" id="L109">				final String name = src.substring(4);</span>
+<span class="nc" id="L110">				sprite = SpriteImage.fromInternal(name);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">				if (sprite == null)</span>
+<span class="nc" id="L112">					return CommandExecutionResult.error(&quot;No such internal sprite: &quot; + name);</span>
 
-<span class="nc bnc" id="L111" title="All 2 branches missed.">			} else if (src.contains(&quot;~&quot;)) {</span>
-<span class="nc" id="L112">				final int idx = src.lastIndexOf(&quot;~&quot;);</span>
-<span class="nc" id="L113">				final SFile f = FileSystem.getInstance().getFile(src.substring(0, idx));</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">				if (f.exists() == false)</span>
-<span class="nc" id="L115">					return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">			} else if (src.contains(&quot;~&quot;)) {</span>
+<span class="nc" id="L115">				final int idx = src.lastIndexOf(&quot;~&quot;);</span>
+<span class="nc" id="L116">				final SFile f = FileSystem.getInstance().getFile(src.substring(0, idx));</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">				if (f.exists() == false)</span>
+<span class="nc" id="L118">					return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
 
-<span class="nc" id="L117">				final String name = src.substring(idx + 1);</span>
-<span class="nc" id="L118">				sprite = getImageFromZip(f, name);</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">				if (sprite == null)</span>
-<span class="nc" id="L120">					return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
+<span class="nc" id="L120">				final String name = src.substring(idx + 1);</span>
+<span class="nc" id="L121">				sprite = getImageFromZip(f, name);</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">				if (sprite == null)</span>
+<span class="nc" id="L123">					return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
 
-<span class="nc" id="L122">			} else {</span>
-<span class="nc" id="L123">				final SFile f = FileSystem.getInstance().getFile(src);</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">				if (f.exists() == false)</span>
-<span class="nc" id="L125">					return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
+<span class="nc" id="L125">			} else {</span>
+<span class="nc" id="L126">				final SFile f = FileSystem.getInstance().getFile(src);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">				if (f.exists() == false)</span>
+<span class="nc" id="L128">					return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
 
-<span class="nc bnc" id="L127" title="All 2 branches missed.">				if (isSvg(f.getName())) {</span>
-<span class="nc" id="L128">					final String tmp = FileUtils.readSvg(f);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">					if (tmp == null)</span>
-<span class="nc" id="L130">						return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">				if (isSvg(f.getName())) {</span>
+<span class="nc" id="L131">					final String tmp = FileUtils.readSvg(f);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">					if (tmp == null)</span>
+<span class="nc" id="L133">						return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
 
-<span class="nc" id="L132">					sprite = new SpriteSvg(tmp);</span>
-<span class="nc" id="L133">				} else {</span>
-<span class="nc" id="L134">					final PortableImage tmp = f.readRasterImageFromFile();</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">					if (tmp == null)</span>
-<span class="nc" id="L136">						return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
+<span class="nc" id="L135">					sprite = new SpriteSvg(tmp);</span>
+<span class="nc" id="L136">				} else {</span>
+<span class="nc" id="L137">					final PortableImage tmp = f.readRasterImageFromFile();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">					if (tmp == null)</span>
+<span class="nc" id="L139">						return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
 
-<span class="nc" id="L138">					sprite = new SpriteImage(tmp);</span>
+<span class="nc" id="L141">					sprite = new SpriteImage(tmp);</span>
 				}
 			}
-<span class="nc" id="L141">		} catch (IOException e) {</span>
-<span class="nc" id="L142">			Log.error(&quot;Error reading &quot; + src + &quot; &quot; + e);</span>
-<span class="nc" id="L143">			return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
-<span class="nc" id="L144">		}</span>
-<span class="nc" id="L145">		system.addSprite(arg.get(&quot;NAME&quot;, 0), sprite);</span>
-<span class="nc" id="L146">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L144">		} catch (IOException e) {</span>
+<span class="nc" id="L145">			Log.error(&quot;Error reading &quot; + src + &quot; &quot; + e);</span>
+<span class="nc" id="L146">			return CommandExecutionResult.error(&quot;Cannot read: &quot; + src);</span>
+<span class="nc" id="L147">		}</span>
+<span class="nc" id="L148">		system.addSprite(arg.get(&quot;NAME&quot;, 0), sprite);</span>
+<span class="nc" id="L149">		return CommandExecutionResult.ok();</span>
 	}
 
 	private Sprite getImageFromZip(SFile f, String name) throws IOException {
-<span class="nc" id="L150">		final InputStream tmp = f.openFile();</span>
-<span class="nc bnc" id="L151" title="All 2 branches missed.">		if (tmp == null) {</span>
-<span class="nc" id="L152">			return null;</span>
+<span class="nc" id="L153">		final InputStream tmp = f.openFile();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (tmp == null) {</span>
+<span class="nc" id="L155">			return null;</span>
 		}
-<span class="nc" id="L154">		ZipInputStream zis = null;</span>
+<span class="nc" id="L157">		ZipInputStream zis = null;</span>
 		try {
-<span class="nc" id="L156">			zis = new ZipInputStream(tmp);</span>
-<span class="nc" id="L157">			ZipEntry ze = zis.getNextEntry();</span>
+<span class="nc" id="L159">			zis = new ZipInputStream(tmp);</span>
+<span class="nc" id="L160">			ZipEntry ze = zis.getNextEntry();</span>
 
-<span class="nc bnc" id="L159" title="All 2 branches missed.">			while (ze != null) {</span>
-<span class="nc" id="L160">				final String fileName = ze.getName();</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">				if (ze.isDirectory()) {</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">				} else if (fileName.equals(name)) {</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">					if (isSvg(name))</span>
-<span class="nc" id="L164">						return new SpriteSvg(FileUtils.readSvg(zis));</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			while (ze != null) {</span>
+<span class="nc" id="L163">				final String fileName = ze.getName();</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">				if (ze.isDirectory()) {</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">				} else if (fileName.equals(name)) {</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">					if (isSvg(name))</span>
+<span class="nc" id="L167">						return new SpriteSvg(FileUtils.readSvg(zis));</span>
 					else
-<span class="nc" id="L166">						return new SpriteImage(SImageIO.read(zis));</span>
+<span class="nc" id="L169">						return new SpriteImage(SImageIO.read(zis));</span>
 
 				}
-<span class="nc" id="L169">				ze = zis.getNextEntry();</span>
-<span class="nc" id="L170">			}</span>
+<span class="nc" id="L172">				ze = zis.getNextEntry();</span>
+<span class="nc" id="L173">			}</span>
 		} finally {
-<span class="nc bnc" id="L172" title="All 2 branches missed.">			if (zis != null) {</span>
-<span class="nc" id="L173">				zis.closeEntry();</span>
-<span class="nc" id="L174">				zis.close();</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (zis != null) {</span>
+<span class="nc" id="L176">				zis.closeEntry();</span>
+<span class="nc" id="L177">				zis.close();</span>
 			}
 		}
-<span class="nc" id="L177">		return null;</span>
+<span class="nc" id="L180">		return null;</span>
 	}
 
 	private boolean isSvg(String name) {
-<span class="nc" id="L181">		return name.toLowerCase().endsWith(&quot;.svg&quot;);</span>
+<span class="nc" id="L184">		return name.toLowerCase().endsWith(&quot;.svg&quot;);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

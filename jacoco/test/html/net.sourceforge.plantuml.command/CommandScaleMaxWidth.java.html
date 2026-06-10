@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.ScaleMaxWidth;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.AbstractDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -45,35 +46,37 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandScaleMaxWidth extends SingleLineCommand2&lt;AbstractDiagram&gt; {
 
-<span class="fc" id="L48">	public static final CommandScaleMaxWidth ME = new CommandScaleMaxWidth();</span>
+<span class="fc" id="L49">	public static final CommandScaleMaxWidth ME = new CommandScaleMaxWidth();</span>
 
 	private CommandScaleMaxWidth() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandScaleMaxWidth.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandScaleMaxWidth.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;scale&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;max&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;WIDTH&quot;, &quot;([0-9.]+)&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L62">				new RegexLeaf(&quot;width&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				new RegexLeaf(&quot;width&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// 'scale max N width' shrinks the final image if needed so that its
 		// width does not exceed N pixels (it never enlarges it).
-<span class="nc" id="L69">		return &quot;Limiting the width of the diagram to &quot; + arg.get(&quot;WIDTH&quot;, 0) + &quot; pixels&quot;;</span>
+<span class="nc" id="L71">		return &quot;Limiting the width of the diagram to &quot; + arg.get(&quot;WIDTH&quot;, 0) + &quot; pixels&quot;;</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L74">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
-<span class="nc" id="L75">		diagram.setScale(new ScaleMaxWidth(width));</span>
-<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
+	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L77">		final double width = Double.parseDouble(arg.get(&quot;WIDTH&quot;, 0));</span>
+<span class="nc" id="L78">		diagram.setScale(new ScaleMaxWidth(width));</span>
+<span class="nc" id="L79">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -39,6 +39,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -50,85 +51,86 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPragma extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L53">	public static final CommandPragma ME = new CommandPragma();</span>
+<span class="fc" id="L54">	public static final CommandPragma ME = new CommandPragma();</span>
 
 	private CommandPragma() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandPragma.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandPragma.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;!pragma&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([A-Za-z_][A-Za-z_0-9]*)&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L66">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L67">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;VALUE&quot;, &quot;(.*)&quot;) //
-<span class="fc" id="L68">						)), RegexLeaf.end()); //</span>
+<span class="fc" id="L69">						)), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L73">		final String name = StringUtils.goLowerCase(arg.get(&quot;NAME&quot;, 0));</span>
-<span class="nc" id="L74">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
+<span class="nc" id="L75">		final String name = StringUtils.goLowerCase(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="nc" id="L76">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
 
 		// Mirror the special cases of executeArg.
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (name.equals(&quot;svgsize&quot;)) {</span>
-<span class="nc bnc" id="L78" title="All 4 branches missed.">			if (value != null &amp;&amp; value.contains(&quot; &quot;))</span>
-<span class="nc" id="L79">				return &quot;Setting the SVG size to '&quot; + value + &quot;'&quot;;</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (name.equals(&quot;svgsize&quot;)) {</span>
+<span class="nc bnc" id="L80" title="All 4 branches missed.">			if (value != null &amp;&amp; value.contains(&quot; &quot;))</span>
+<span class="nc" id="L81">				return &quot;Setting the SVG size to '&quot; + value + &quot;'&quot;;</span>
 
-<span class="nc" id="L81">			return &quot;Setting the SVG size (ignored: two space-separated values are expected)&quot;;</span>
+<span class="nc" id="L83">			return &quot;Setting the SVG size (ignored: two space-separated values are expected)&quot;;</span>
 		}
 
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (name.equals(&quot;graphviz_dot&quot;))</span>
-<span class="nc" id="L85">			return &quot;Selecting the layout engine (rejected at execution: &quot;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (name.equals(&quot;graphviz_dot&quot;))</span>
+<span class="nc" id="L87">			return &quot;Selecting the layout engine (rejected at execution: &quot;</span>
 					+ &quot;this directive has been renamed to '!pragma layout ...')&quot;;
 
-<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (name.equals(&quot;layout&quot;) &amp;&amp; value != null)</span>
-<span class="nc" id="L89">			return &quot;Selecting the '&quot; + value + &quot;' layout engine&quot;;</span>
+<span class="nc bnc" id="L90" title="All 4 branches missed.">		if (name.equals(&quot;layout&quot;) &amp;&amp; value != null)</span>
+<span class="nc" id="L91">			return &quot;Selecting the '&quot; + value + &quot;' layout engine&quot;;</span>
 
-<span class="nc" id="L91">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L92">		sb.append(&quot;Defining the pragma '&quot;).append(name).append(&quot;'&quot;);</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (value != null)</span>
-<span class="nc" id="L94">			sb.append(&quot; with value '&quot;).append(value).append(&quot;'&quot;);</span>
+<span class="nc" id="L93">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L94">		sb.append(&quot;Defining the pragma '&quot;).append(name).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (value != null)</span>
+<span class="nc" id="L96">			sb.append(&quot; with value '&quot;).append(value).append(&quot;'&quot;);</span>
 
-<span class="nc" id="L96">		return sb.toString();</span>
+<span class="nc" id="L98">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L102">		final String name = StringUtils.goLowerCase(arg.get(&quot;NAME&quot;, 0));</span>
-<span class="fc" id="L103">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (name.equalsIgnoreCase(&quot;svgsize&quot;)) {</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">			if (value.contains(&quot; &quot;)) {</span>
-<span class="nc" id="L106">				final StringTokenizer st = new StringTokenizer(value);</span>
-<span class="nc" id="L107">				system.getSkinParam().setSvgSize(st.nextToken(), st.nextToken());</span>
-<span class="nc" id="L108">			}</span>
+<span class="fc" id="L104">		final String name = StringUtils.goLowerCase(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="fc" id="L105">		final String value = arg.get(&quot;VALUE&quot;, 0);</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (name.equalsIgnoreCase(&quot;svgsize&quot;)) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">			if (value.contains(&quot; &quot;)) {</span>
+<span class="nc" id="L108">				final StringTokenizer st = new StringTokenizer(value);</span>
+<span class="nc" id="L109">				system.getSkinParam().setSvgSize(st.nextToken(), st.nextToken());</span>
+<span class="nc" id="L110">			}</span>
 		} else {
-<span class="fc" id="L110">			system.getPragma().define(name, value);</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
-<span class="pc bpc" id="L112" title="3 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;jdot&quot;))</span>
-<span class="nc" id="L113">					return CommandExecutionResult.error(</span>
+<span class="fc" id="L112">			system.getPragma().define(name, value);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (!TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L114" title="3 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;jdot&quot;))</span>
+<span class="nc" id="L115">					return CommandExecutionResult.error(</span>
 							&quot;This directive has been renamed to '!pragma layout smetana'. Please update your diagram.&quot;);
 
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">				if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;))</span>
-<span class="nc" id="L117">					return CommandExecutionResult.error(&quot;This directive has been renamed to '!pragma layout &quot; + value</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">				if (name.equalsIgnoreCase(&quot;graphviz_dot&quot;))</span>
+<span class="nc" id="L119">					return CommandExecutionResult.error(&quot;This directive has been renamed to '!pragma layout &quot; + value</span>
 							+ &quot;'. Please update your diagram.&quot;);
 
-<span class="pc bpc" id="L120" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;smetana&quot;))</span>
-<span class="fc" id="L121">					system.setUseSmetana(true);</span>
+<span class="pc bpc" id="L122" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;smetana&quot;))</span>
+<span class="fc" id="L123">					system.setUseSmetana(true);</span>
 
-<span class="pc bpc" id="L123" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;elk&quot;))</span>
-<span class="nc" id="L124">					system.setUseElk(true);</span>
+<span class="pc bpc" id="L125" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;elk&quot;))</span>
+<span class="nc" id="L126">					system.setUseElk(true);</span>
 
-<span class="pc bpc" id="L126" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))</span>
-<span class="nc" id="L127">					system.getSkinParam().setUseVizJs(true);</span>
+<span class="pc bpc" id="L128" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))</span>
+<span class="nc" id="L129">					system.getSkinParam().setUseVizJs(true);</span>
 			}
 
 		}
-<span class="fc" id="L131">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L133">		return CommandExecutionResult.ok();</span>
 	}
 
 }

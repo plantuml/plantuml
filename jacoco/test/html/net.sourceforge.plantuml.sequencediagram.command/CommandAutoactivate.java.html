@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,32 +49,33 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAutoactivate extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandAutoactivate() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandAutoactivate.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandAutoactivate.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;autoactivate&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L58">				new RegexLeaf(1, &quot;ON&quot;, &quot;(off|on)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L59">				new RegexLeaf(1, &quot;ON&quot;, &quot;(off|on)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Toggles the auto-activation mode: when on, every incoming message
 		// automatically activates the target life line, and every dotted
 		// (return) message deactivates the source one.
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (&quot;on&quot;.equalsIgnoreCase(arg.get(&quot;ON&quot;, 0)))</span>
-<span class="nc" id="L67">			return &quot;Turning auto-activation on&quot;;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (&quot;on&quot;.equalsIgnoreCase(arg.get(&quot;ON&quot;, 0)))</span>
+<span class="nc" id="L69">			return &quot;Turning auto-activation on&quot;;</span>
 
-<span class="nc" id="L69">		return &quot;Turning auto-activation off&quot;;</span>
+<span class="nc" id="L71">		return &quot;Turning auto-activation off&quot;;</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location,
-			RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L75">		sequenceDiagram.setAutoactivate(&quot;on&quot;.equalsIgnoreCase(arg.get(&quot;ON&quot;, 0)));</span>
-<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
+	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L77">		sequenceDiagram.setAutoactivate(&quot;on&quot;.equalsIgnoreCase(arg.get(&quot;ON&quot;, 0)));</span>
+<span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

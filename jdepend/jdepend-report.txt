@@ -2244,7 +2244,7 @@ Stats:
 Abstract Classes:
     net.sourceforge.plantuml.annotation.DeadCode
     net.sourceforge.plantuml.annotation.DuplicateCode
-    net.sourceforge.plantuml.annotation.Explanation
+    net.sourceforge.plantuml.annotation.Explain
     net.sourceforge.plantuml.annotation.Fast
     net.sourceforge.plantuml.annotation.PerformanceIssue
 

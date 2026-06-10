@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -59,92 +60,93 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandReturn extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandReturn() {
-<span class="fc" id="L62">		super(getRegexConcat());</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L63">		super(getRegexConcat());</span>
+<span class="fc" id="L64">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L66">		return RegexConcat.build(CommandReturn.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L67">		return RegexConcat.build(CommandReturn.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;PARALLEL&quot;, &quot;(&amp;[%s]*)?&quot;), //
-<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;return&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)&quot;), //
-<span class="fc" id="L74">								RegexLeaf.spaceOneOrMore() //</span>
+<span class="fc" id="L75">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
-<span class="fc" id="L76">				new RegexLeaf(1, &quot;MESSAGE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L77">				new RegexLeaf(1, &quot;MESSAGE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L81">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L83">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Sends a dotted reply along the latest activating message, in the
 		// reverse direction, and deactivates the activated life line. When no
 		// activation is pending, executeArg falls back to reversing the last
 		// message, without any deactivation.
-<span class="nc" id="L87">		sb.append(&quot;Returning a dotted reply message to the caller&quot;);</span>
+<span class="nc" id="L89">		sb.append(&quot;Returning a dotted reply message to the caller&quot;);</span>
 
-<span class="nc" id="L89">		final String message = arg.get(&quot;MESSAGE&quot;, 0);</span>
-<span class="nc bnc" id="L90" title="All 4 branches missed.">		if (message != null &amp;&amp; message.isEmpty() == false)</span>
-<span class="nc" id="L91">			sb.append(&quot; labelled \&quot;&quot;).append(message).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L91">		final String message = arg.get(&quot;MESSAGE&quot;, 0);</span>
+<span class="nc bnc" id="L92" title="All 4 branches missed.">		if (message != null &amp;&amp; message.isEmpty() == false)</span>
+<span class="nc" id="L93">			sb.append(&quot; labelled \&quot;&quot;).append(message).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L93">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L95">			sb.append(&quot;, color &quot;).append(color);</span>
+<span class="nc" id="L95">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L97">			sb.append(&quot;, color &quot;).append(color);</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (arg.get(&quot;PARALLEL&quot;, 0) != null)</span>
-<span class="nc" id="L98">			sb.append(&quot;, parallel&quot;);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (arg.get(&quot;PARALLEL&quot;, 0) != null)</span>
+<span class="nc" id="L100">			sb.append(&quot;, parallel&quot;);</span>
 
-<span class="nc" id="L100">		return sb.toString();</span>
+<span class="nc" id="L102">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="fc" id="L107">		AbstractMessage message1 = diagram.getActivatingMessage();</span>
-<span class="fc" id="L108">		boolean doDeactivation = true;</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (message1 == null) {</span>
-<span class="fc" id="L110">			final EventWithDeactivate last = diagram.getLastEventWithDeactivate();</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">			if (last instanceof Message == false)</span>
-<span class="nc" id="L112">				return CommandExecutionResult.error(&quot;Nowhere to return to.&quot;);</span>
+<span class="fc" id="L109">		AbstractMessage message1 = diagram.getActivatingMessage();</span>
+<span class="fc" id="L110">		boolean doDeactivation = true;</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (message1 == null) {</span>
+<span class="fc" id="L112">			final EventWithDeactivate last = diagram.getLastEventWithDeactivate();</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (last instanceof Message == false)</span>
+<span class="nc" id="L114">				return CommandExecutionResult.error(&quot;Nowhere to return to.&quot;);</span>
 
-<span class="fc" id="L114">			message1 = (Message) last;</span>
-<span class="fc" id="L115">			doDeactivation = false;</span>
+<span class="fc" id="L116">			message1 = (Message) last;</span>
+<span class="fc" id="L117">			doDeactivation = false;</span>
 		}
 
-<span class="fc" id="L118">		ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);</span>
-<span class="fc" id="L119">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L121">			arrow = arrow.withColor(HColorSet.instance().getColor(color));</span>
+<span class="fc" id="L120">		ArrowConfiguration arrow = message1.getArrowConfiguration().withBody(ArrowBody.DOTTED);</span>
+<span class="fc" id="L121">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L123">			arrow = arrow.withColor(HColorSet.instance().getColor(color));</span>
 
-<span class="fc" id="L123">		final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;MESSAGE&quot;, 0));</span>
+<span class="fc" id="L125">		final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;MESSAGE&quot;, 0));</span>
 		final AbstractMessage message2;
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (message1 instanceof MessageExo) {</span>
-<span class="nc" id="L126">			final MessageExo exo1 = (MessageExo) message1;</span>
-<span class="nc" id="L127">			message2 = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), exo1.getParticipant(),</span>
-<span class="nc" id="L128">					exo1.getType().reverse(), display, arrow, diagram.getNextMessageNumber(), false, location);</span>
-<span class="nc" id="L129">		} else {</span>
-<span class="fc" id="L130">			message2 = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), message1.getParticipant2(),</span>
-<span class="fc" id="L131">					message1.getParticipant1(), display, arrow, diagram.getNextMessageNumber(), location);</span>
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (parallel)</span>
-<span class="nc" id="L134">				message2.goParallel();</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (message1 instanceof MessageExo) {</span>
+<span class="nc" id="L128">			final MessageExo exo1 = (MessageExo) message1;</span>
+<span class="nc" id="L129">			message2 = new MessageExo(diagram.getSkinParam().getCurrentStyleBuilder(), exo1.getParticipant(),</span>
+<span class="nc" id="L130">					exo1.getType().reverse(), display, arrow, diagram.getNextMessageNumber(), false, location);</span>
+<span class="nc" id="L131">		} else {</span>
+<span class="fc" id="L132">			message2 = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), message1.getParticipant2(),</span>
+<span class="fc" id="L133">					message1.getParticipant1(), display, arrow, diagram.getNextMessageNumber(), location);</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			final boolean parallel = arg.get(&quot;PARALLEL&quot;, 0) != null;</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">			if (parallel)</span>
+<span class="nc" id="L136">				message2.goParallel();</span>
 
 		}
-<span class="fc" id="L137">		final CommandExecutionResult status = diagram.addMessage(message2);</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (status.isOk() == false)</span>
-<span class="nc" id="L139">			return status;</span>
+<span class="fc" id="L139">		final CommandExecutionResult status = diagram.addMessage(message2);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (status.isOk() == false)</span>
+<span class="nc" id="L141">			return status;</span>
 
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (doDeactivation) {</span>
-<span class="nc" id="L142">			final String error = diagram.activate(message1.getParticipant2(), LifeEventType.DEACTIVATE, null);</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (error != null)</span>
-<span class="nc" id="L144">				return CommandExecutionResult.error(error);</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (doDeactivation) {</span>
+<span class="nc" id="L144">			final String error = diagram.activate(message1.getParticipant2(), LifeEventType.DEACTIVATE, null);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">			if (error != null)</span>
+<span class="nc" id="L146">				return CommandExecutionResult.error(error);</span>
 
 		}
-<span class="fc" id="L147">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L149">		return CommandExecutionResult.ok();</span>
 
 	}
 }

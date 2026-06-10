@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -44,33 +45,35 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMinwidth extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L47">	public static final CommandMinwidth ME = new CommandMinwidth();</span>
+<span class="fc" id="L48">	public static final CommandMinwidth ME = new CommandMinwidth();</span>
 
 	private CommandMinwidth() {
-<span class="fc" id="L50">		super(getRegexConcat());</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc" id="L51">		super(getRegexConcat());</span>
+<span class="fc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L54">		return RegexConcat.build(CommandMinwidth.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L55">		return RegexConcat.build(CommandMinwidth.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;minwidth&quot;), //
-<span class="fc" id="L56">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L57">				new RegexLeaf(1, &quot;VALUE&quot;, &quot;(\\d+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L58">				new RegexLeaf(1, &quot;VALUE&quot;, &quot;(\\d+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Intent: force a minimum width for the diagram. Note that the call to
 		// setMinwidth is commented out in executeArg, so this command is
 		// parsed but has no effect on the rendering.
-<span class="nc" id="L65">		return &quot;Setting the minimum width of the diagram to &quot; + arg.get(&quot;VALUE&quot;, 0)</span>
+<span class="nc" id="L67">		return &quot;Setting the minimum width of the diagram to &quot; + arg.get(&quot;VALUE&quot;, 0)</span>
 				+ &quot; pixels (currently ignored by the rendering engine)&quot;;
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L71">		final int minwidth = Integer.parseInt(arg.get(&quot;VALUE&quot;, 0));</span>
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+<span class="nc" id="L74">		final int minwidth = Integer.parseInt(arg.get(&quot;VALUE&quot;, 0));</span>
 		// diagram.setMinwidth(minwidth);
-<span class="nc" id="L73">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
 	}
 
 }

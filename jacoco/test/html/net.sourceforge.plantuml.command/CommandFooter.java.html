@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -49,57 +50,58 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandFooter extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L52">	public static final CommandFooter ME = new CommandFooter();</span>
+<span class="fc" id="L53">	public static final CommandFooter ME = new CommandFooter();</span>
 
 	private CommandFooter() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandFooter.class.getName(), //</span>
-<span class="fc" id="L60">				RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandFooter.class.getName(), //</span>
+<span class="fc" id="L61">				RegexLeaf.start(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;POSITION&quot;, &quot;(left|right|center)&quot;)), //
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;footer&quot;), //
 				new RegexOr( //
-<span class="fc" id="L65">						new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;:&quot;), RegexLeaf.spaceZeroOrMore()), //</span>
-<span class="fc" id="L66">						RegexLeaf.spaceOneOrMore()), //</span>
+<span class="fc" id="L66">						new RegexConcat(RegexLeaf.spaceZeroOrMore(), new RegexLeaf(&quot;:&quot;), RegexLeaf.spaceZeroOrMore()), //</span>
+<span class="fc" id="L67">						RegexLeaf.spaceOneOrMore()), //</span>
 				new RegexOr(//
 						new RegexLeaf(1, &quot;LABEL1&quot;, &quot;[%g](.*)[%g]&quot;), //
 						new RegexLeaf(1, &quot;LABEL2&quot;, &quot;(.*[%pLN_.].*)&quot;)), //
-<span class="fc" id="L70">				RegexLeaf.end()); //</span>
+<span class="fc" id="L71">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L75">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L77">		final StringBuilder sb = new StringBuilder();</span>
 
 		// 'center footer Text' (or 'footer: Text') displays a footer under
 		// the diagram. When no position is given, the alignment comes from
 		// the current style. The label may be quoted (LABEL1) or unquoted
 		// (LABEL2), hence the lazzy lookup, like in executeArg.
-<span class="nc" id="L81">		sb.append(&quot;Setting the footer of the diagram to \&quot;&quot;).append(arg.getLazzy(&quot;LABEL&quot;, 0)).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L83">		sb.append(&quot;Setting the footer of the diagram to \&quot;&quot;).append(arg.getLazzy(&quot;LABEL&quot;, 0)).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L83">		final String position = arg.get(&quot;POSITION&quot;, 0);</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (position != null)</span>
-<span class="nc" id="L85">			sb.append(&quot;, aligned &quot;).append(position);</span>
+<span class="nc" id="L85">		final String position = arg.get(&quot;POSITION&quot;, 0);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (position != null)</span>
+<span class="nc" id="L87">			sb.append(&quot;, aligned &quot;).append(position);</span>
 
-<span class="nc" id="L87">		return sb.toString();</span>
+<span class="nc" id="L89">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L93">		final String align = arg.get(&quot;POSITION&quot;, 0);</span>
-<span class="fc" id="L94">		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (align == null)</span>
-<span class="fc" id="L96">			ha = FontParam.FOOTER.getStyleDefinition(null).getMergedStyle(diagram.getCurrentStyleBuilder())</span>
-<span class="fc" id="L97">					.getHorizontalAlignment();</span>
+<span class="fc" id="L95">		final String align = arg.get(&quot;POSITION&quot;, 0);</span>
+<span class="fc" id="L96">		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (align == null)</span>
+<span class="fc" id="L98">			ha = FontParam.FOOTER.getStyleDefinition(null).getMergedStyle(diagram.getCurrentStyleBuilder())</span>
+<span class="fc" id="L99">					.getHorizontalAlignment();</span>
 
-<span class="fc" id="L99">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;LABEL&quot;, 0));</span>
-<span class="fc" id="L100">		diagram.updateFooter(location, s, ha);</span>
+<span class="fc" id="L101">		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy(&quot;LABEL&quot;, 0));</span>
+<span class="fc" id="L102">		diagram.updateFooter(location, s, ha);</span>
 
-<span class="fc" id="L102">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L104">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

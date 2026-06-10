@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -58,73 +59,75 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandBoxStart extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 
 	public CommandBoxStart() {
-<span class="fc" id="L61">		super(getRegexConcat());</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L62">		super(getRegexConcat());</span>
+<span class="fc" id="L63">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L65">		return RegexConcat.build(CommandBoxStart.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">		return RegexConcat.build(CommandBoxStart.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;box&quot;), //
 				new RegexOptional(new RegexOr( //
 						new RegexConcat( //
-<span class="fc" id="L69">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L70">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;NAME1&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 						new RegexConcat( //
-<span class="fc" id="L72">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L73">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;NAME2&quot;, &quot;([^#]+)&quot;)))), //
-<span class="fc" id="L74">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L75">				color().getRegex(), //</span>
-<span class="fc" id="L76">				RegexLeaf.end());</span>
+<span class="fc" id="L75">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L76">				color().getRegex(), //</span>
+<span class="fc" id="L77">				RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L80">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L81">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L85">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L87">		final StringBuilder sb = new StringBuilder();</span>
 
 		// Opens a box that will enclose the participants declared until the
 		// matching 'end box'. Everything is optional but the 'box' keyword.
-<span class="nc" id="L89">		sb.append(&quot;Starting a box&quot;);</span>
+<span class="nc" id="L91">		sb.append(&quot;Starting a box&quot;);</span>
 
 		// The title may be quoted (NAME1) or unquoted (NAME2); executeArg reads
 		// whichever is present through getLazzy(&quot;NAME&quot;, 0).
-<span class="nc" id="L93">		final String title = arg.getLazzy(&quot;NAME&quot;, 0);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (title != null)</span>
-<span class="nc" id="L95">			sb.append(&quot; titled \&quot;&quot;).append(title).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L95">		final String title = arg.getLazzy(&quot;NAME&quot;, 0);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (title != null)</span>
+<span class="nc" id="L97">			sb.append(&quot; titled \&quot;&quot;).append(title).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L97">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (stereo != null)</span>
-<span class="nc" id="L99">			sb.append(&quot;, stereotype &quot;).append(stereo);</span>
+<span class="nc" id="L99">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L101">			sb.append(&quot;, stereotype &quot;).append(stereo);</span>
 
-<span class="nc" id="L101">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L103">			sb.append(&quot;, background color &quot;).append(color);</span>
+<span class="nc" id="L103">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L105">			sb.append(&quot;, background color &quot;).append(color);</span>
 
-<span class="nc" id="L105">		return sb.toString();</span>
+<span class="nc" id="L107">		return sb.toString();</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 //		if (diagram.isBoxPending())
 //			return CommandExecutionResult.error(&quot;Box cannot be nested&quot;);
 
-<span class="nc" id="L114">		final String argTitle = arg.getLazzy(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L115">		final String argColor = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L116">		final String argTitle = arg.getLazzy(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L117">		final String argColor = arg.get(&quot;COLOR&quot;, 0);</span>
 
-<span class="nc" id="L117">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L118">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (stereo != null) {</span>
-<span class="nc" id="L120">			final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L121">			stereotype = Stereotype.build(stereo);</span>
+<span class="nc" id="L119">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L120">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (stereo != null) {</span>
+<span class="nc" id="L122">			final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L123">			stereotype = Stereotype.build(stereo);</span>
 		}
 
-<span class="nc" id="L124">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		final String title = argTitle == null ? &quot;&quot; : argTitle;</span>
-<span class="nc" id="L126">		diagram.boxStart(Display.getWithNewlines(diagram.getPragma(), title), colors.getColor(ColorType.BACK), stereotype);</span>
-<span class="nc" id="L127">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L126">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		final String title = argTitle == null ? &quot;&quot; : argTitle;</span>
+<span class="nc" id="L128">		diagram.boxStart(Display.getWithNewlines(diagram.getPragma(), title), colors.getColor(ColorType.BACK),</span>
+				stereotype);
+<span class="nc" id="L130">		return CommandExecutionResult.ok();</span>
 	}
 
 }

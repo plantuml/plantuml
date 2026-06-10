@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import java.io.IOException;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,32 +50,34 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSkin extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L52">	public static final CommandSkin ME = new CommandSkin();</span>
+<span class="fc" id="L53">	public static final CommandSkin ME = new CommandSkin();</span>
 
 	private CommandSkin() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandSkin.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandSkin.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;skin&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L62">				new RegexLeaf(1, &quot;SKIN&quot;, &quot;([\\w.]+)&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				new RegexLeaf(1, &quot;SKIN&quot;, &quot;([\\w.]+)&quot;), RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		// Loads a named skin (like 'rose') that changes the overall look of
 		// the diagram (see TitledDiagram.loadSkin).
-<span class="nc" id="L69">		return &quot;Loading the skin '&quot; + arg.get(&quot;SKIN&quot;, 0) + &quot;'&quot;;</span>
+<span class="nc" id="L71">		return &quot;Loading the skin '&quot; + arg.get(&quot;SKIN&quot;, 0) + &quot;'&quot;;</span>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		try {
-<span class="fc" id="L75">			return diagram.loadSkin(arg.get(&quot;SKIN&quot;, 0));</span>
-<span class="nc" id="L76">		} catch (IOException e) {</span>
-<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;Skin read error&quot;);</span>
+<span class="fc" id="L78">			return diagram.loadSkin(arg.get(&quot;SKIN&quot;, 0));</span>
+<span class="nc" id="L79">		} catch (IOException e) {</span>
+<span class="nc" id="L80">			return CommandExecutionResult.error(&quot;Skin read error&quot;);</span>
 		}
 	}
 }
