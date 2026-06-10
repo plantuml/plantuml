@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -53,45 +54,72 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandIf4 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandIf4() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandIf4.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L61">				ColorParser.exp4(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandIf4.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">				ColorParser.exp4(), //</span>
 				new RegexLeaf(&quot;if&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 				new RegexLeaf(1, &quot;TEST&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
-<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;(is|equals?)&quot;), //
-<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 				new RegexLeaf(1, &quot;WHEN&quot;, &quot;(.+?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;then&quot;), //
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L78">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L79">				RegexLeaf.end());</span>
+<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L79">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L80">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L86">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'if (test) is (value) then' opens a conditional block, closed by
+		// 'endif'; the value labels the branch arrow. Unlike CommandIf2, the
+		// leading color is applied as the background of the diamond here.
+<span class="nc" id="L91">		sb.append(&quot;Starting an 'if'&quot;);</span>
+
+<span class="nc" id="L93">		final String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (test.length() &gt; 0)</span>
+<span class="nc" id="L95">			sb.append(&quot;, testing \&quot;&quot;).append(test).append(&quot;\&quot; is \&quot;&quot;).append(arg.get(&quot;WHEN&quot;, 0)).append(&quot;\&quot;&quot;);</span>
+		else
+<span class="nc" id="L97">			sb.append(&quot;, when the value is \&quot;&quot;).append(arg.get(&quot;WHEN&quot;, 0)).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L100">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+		// The trailing stereotype is parsed but never read by executeArg.
+<span class="nc" id="L103">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
+<span class="nc" id="L105">			sb.append(&quot; (the trailing stereotype is currently ignored)&quot;);</span>
+
+<span class="nc" id="L107">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L85">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="nc" id="L113">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
 
-<span class="nc" id="L88">		String test = arg.get(&quot;TEST&quot;, 0);</span>
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (test.length() == 0)</span>
-<span class="nc" id="L90">			test = null;</span>
+<span class="nc" id="L116">		String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (test.length() == 0)</span>
+<span class="nc" id="L118">			test = null;</span>
 
-<span class="nc" id="L92">		diagram.startIf(Display.getWithNewlines(diagram.getPragma(), test), Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;WHEN&quot;, 0)), color, null, null);</span>
+<span class="nc" id="L120">		diagram.startIf(Display.getWithNewlines(diagram.getPragma(), test), Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;WHEN&quot;, 0)), color, null, null);</span>
 
-<span class="nc" id="L94">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L122">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

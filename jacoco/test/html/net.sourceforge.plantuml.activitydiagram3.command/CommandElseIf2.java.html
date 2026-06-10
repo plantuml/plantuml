@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -59,13 +60,13 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandElseIf2 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandElseIf2() {
-<span class="fc" id="L62">		super(getRegexConcat());</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L63">		super(getRegexConcat());</span>
+<span class="fc" id="L64">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L66">		return RegexConcat.build(CommandElseIf2.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L67">				ColorParser.exp4(), //</span>
-<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L67">		return RegexConcat.build(CommandElseIf2.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L68">				ColorParser.exp4(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
@@ -73,19 +74,19 @@ public class CommandElseIf2 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 								new RegexLeaf(1, &quot;INCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
 						new RegexLeaf(1, &quot;INCOMING&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
-<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;else&quot;), //
-<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;if&quot;), //
-<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 				new RegexLeaf(1, &quot;TEST&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
-<span class="fc" id="L84">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;then&quot;), //
-<span class="fc" id="L88">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L89">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexOptional(new RegexConcat( //
 										new RegexLeaf(&quot;\\(&quot;), //
 										new RegexOptional(new RegexOr(//
@@ -96,9 +97,38 @@ public class CommandElseIf2 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 										new RegexLeaf(&quot;\\)&quot;))) //
 						)), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L100">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L101">				RegexLeaf.end());</span>
+<span class="fc" id="L100">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L101">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L102">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L108">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'elseif (test) then (label)' adds a new conditional branch to the
+		// enclosing 'if'. The optional '(...)' groups decorate the arrow
+		// coming from the previous branch (before 'else') and the 'then'
+		// arrow (after 'then').
+<span class="nc" id="L114">		sb.append(&quot;Adding an 'else if' branch to the enclosing if&quot;);</span>
+
+<span class="nc" id="L116">		final String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (test.length() &gt; 0)</span>
+<span class="nc" id="L118">			sb.append(&quot;, testing \&quot;&quot;).append(test).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L120">		CommandBackward3.appendArrow(sb, arg, &quot;WHEN&quot;, &quot;'then'&quot;);</span>
+<span class="nc" id="L121">		CommandBackward3.appendArrow(sb, arg, &quot;INCOMING&quot;, &quot;incoming&quot;);</span>
+
+<span class="nc" id="L123">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
+<span class="nc" id="L125">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+
+		// The leading color is parsed but no longer applied by executeArg.
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L129">			sb.append(&quot; (the leading color is currently ignored: use a stereotype instead)&quot;);</span>
+
+<span class="nc" id="L131">		return sb.toString();</span>
 	}
 
 	@Override
@@ -107,18 +137,18 @@ public class CommandElseIf2 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 //		final String s = arg.get(&quot;COLOR&quot;, 0);
 //		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
-<span class="nc" id="L110">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L111">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L140">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc" id="L141">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L113">		String test = arg.get(&quot;TEST&quot;, 0);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (test.length() == 0)</span>
-<span class="nc" id="L115">			test = null;</span>
+<span class="nc" id="L143">		String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (test.length() == 0)</span>
+<span class="nc" id="L145">			test = null;</span>
 
-<span class="nc" id="L117">		final LinkRendering incoming = CommandBackward3.getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
-<span class="nc" id="L118">		final LinkRendering when = CommandBackward3.getBackRendering(diagram, arg, &quot;WHEN&quot;);</span>
+<span class="nc" id="L147">		final LinkRendering incoming = CommandBackward3.getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
+<span class="nc" id="L148">		final LinkRendering when = CommandBackward3.getBackRendering(diagram, arg, &quot;WHEN&quot;);</span>
 
-<span class="nc" id="L120">		final HColor color = colors.getColor(ColorType.BACK);</span>
-<span class="nc" id="L121">		return diagram.elseIf(incoming, Display.getWithNewlines(diagram.getPragma(), test), when, color);</span>
+<span class="nc" id="L150">		final HColor color = colors.getColor(ColorType.BACK);</span>
+<span class="nc" id="L151">		return diagram.elseIf(incoming, Display.getWithNewlines(diagram.getPragma(), test), when, color);</span>
 	}
 
 }

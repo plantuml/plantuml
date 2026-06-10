@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,27 +52,35 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandLink3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandLink3() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandLink3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandLink3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;link&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L63">				RegexLeaf.end());</span>
+<span class="fc" id="L64">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'link #color' sets the color of the next arrow, like the
+		// '-[#color]-&gt;' syntax of CommandArrow3.
+<span class="nc" id="L72">		return &quot;Setting the color of the next arrow to &quot; + arg.get(&quot;COLOR&quot;, 0);</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L69">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (color != null) {</span>
-<span class="nc" id="L72">			diagram.setColorNextArrow(Rainbow.fromColor(color, null));</span>
+<span class="nc" id="L78">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (color != null) {</span>
+<span class="nc" id="L81">			diagram.setColorNextArrow(Rainbow.fromColor(color, null));</span>
 		}
-<span class="nc" id="L74">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L83">		return CommandExecutionResult.ok();</span>
 	}
 
 }

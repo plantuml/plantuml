@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,21 +49,29 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandSplitAgain3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandSplitAgain3() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandSplitAgain3.class.getName(), //</span>
-<span class="fc" id="L56">				RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandSplitAgain3.class.getName(), //</span>
+<span class="fc" id="L57">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;split&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;again&quot;), //
-<span class="fc" id="L60">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L61">				new RegexLeaf(&quot;;?&quot;), RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'split again' ends the current branch and starts the next one
+		// within the enclosing 'split'.
+<span class="nc" id="L69">		return &quot;Starting the next branch of the enclosing split&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L65">		return diagram.splitAgain();</span>
+<span class="nc" id="L74">		return diagram.splitAgain();</span>
 
 	}
 

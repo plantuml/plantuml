@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,24 +52,39 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandCircleSpot3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandCircleSpot3() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandCircleSpot3.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L59">				ColorParser.exp4(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandCircleSpot3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">				ColorParser.exp4(), //</span>
 				new RegexLeaf(1, &quot;SPOT&quot;, &quot;\\((\\S)\\)&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L62">				RegexLeaf.end());</span>
+<span class="fc" id="L63">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L69">		final StringBuilder sb = new StringBuilder();</span>
+
+		// '(X)' adds a circled character spot to the flow, typically used as a
+		// connector mark.
+<span class="nc" id="L73">		sb.append(&quot;Adding the circled character spot '&quot;).append(arg.get(&quot;SPOT&quot;, 0)).append(&quot;'&quot;);</span>
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L76">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+<span class="nc" id="L78">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L68">		String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="nc" id="L70">		diagram.addSpot(arg.get(&quot;SPOT&quot;, 0), color);</span>
-<span class="nc" id="L71">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L84">		String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="nc" id="L86">		diagram.addSpot(arg.get(&quot;SPOT&quot;, 0), color);</span>
+<span class="nc" id="L87">		return CommandExecutionResult.ok();</span>
 	}
 
 }

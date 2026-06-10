@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -56,38 +57,59 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandActivityList extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandActivityList() {
-<span class="fc" id="L59">		super(getRegexConcat());</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L60">		super(getRegexConcat());</span>
+<span class="fc" id="L61">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L63">		return RegexConcat.build(CommandActivityList.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L64">		return RegexConcat.build(CommandActivityList.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;[-*]&quot;), //
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrOne(), //</span>
-<span class="fc" id="L66">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrOne(), //</span>
+<span class="fc" id="L67">				StereotypePattern.optional(&quot;STEREO1&quot;), //</span>
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
-<span class="fc" id="L68">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
-<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				StereotypePattern.optional(&quot;STEREO2&quot;), //</span>
+<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L71">				RegexLeaf.end());</span>
+<span class="fc" id="L72">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L78">		final StringBuilder sb = new StringBuilder();</span>
+
+		// '- label' (or '* label') is a list-like shorthand: each line adds a
+		// plain activity to the current flow.
+<span class="nc" id="L82">		sb.append(&quot;Adding the activity \&quot;&quot;).append(arg.get(&quot;LABEL&quot;, 0)).append(&quot;\&quot; (list item syntax)&quot;);</span>
+
+		// The stereotype may be written before or after the label
+		// (STEREO1/STEREO2), hence the lazzy lookup, like in executeArg.
+<span class="nc" id="L86">		final String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (stereo != null)</span>
+<span class="nc" id="L88">			sb.append(&quot;, stereotyped &quot;).append(stereo);</span>
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L91">			sb.append(&quot;, with a URL link&quot;);</span>
+
+<span class="nc" id="L93">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L76">		final String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L77">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (stereo != null) {</span>
-<span class="nc" id="L79">			stereotype = Stereotype.build(stereo);</span>
+<span class="nc" id="L98">		final String stereo = arg.getLazzy(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L99">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (stereo != null) {</span>
+<span class="nc" id="L101">			stereotype = Stereotype.build(stereo);</span>
 		}
 		
 		final Url url;
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {</span>
-<span class="nc" id="L84">			url = null;</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {</span>
+<span class="nc" id="L106">			url = null;</span>
 		} else {
-<span class="nc" id="L86">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L87">			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
+<span class="nc" id="L108">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L109">			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
 		}
 		
-<span class="nc" id="L90">		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0)), BoxStyle.PLAIN, url, Colors.empty(),</span>
+<span class="nc" id="L112">		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0)), BoxStyle.PLAIN, url, Colors.empty(),</span>
 				stereotype);
 	}
 

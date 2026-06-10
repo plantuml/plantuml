@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -53,13 +54,13 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandElse3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandElse3() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandElse3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandElse3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;else&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
@@ -67,9 +68,29 @@ public class CommandElse3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 								new RegexLeaf(1, &quot;WHEN_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
 						new RegexLeaf(1, &quot;WHEN&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L72">				RegexLeaf.end());</span>
+<span class="fc" id="L73">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L79">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'else (label)' starts the alternative branch of the enclosing 'if';
+		// the optional '(...)' group labels and colors the branch arrow.
+<span class="nc" id="L83">		sb.append(&quot;Starting the 'else' branch of the enclosing if&quot;);</span>
+
+<span class="nc" id="L85">		final String when = arg.get(&quot;WHEN&quot;, 0);</span>
+<span class="nc bnc" id="L86" title="All 4 branches missed.">		if (when != null &amp;&amp; when.isEmpty() == false)</span>
+<span class="nc" id="L87">			sb.append(&quot;, labelled \&quot;&quot;).append(when).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L89">		final String color = arg.get(&quot;WHEN_COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L91">			sb.append(&quot;, branch arrow color or style '&quot;).append(color).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L93">		return sb.toString();</span>
 	}
 
 	@Override
@@ -78,8 +99,8 @@ public class CommandElse3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 		// if (getSystem().getLastEntityConsulted() == null) {
 		// return CommandExecutionResult.error(&quot;No if for this endif&quot;);
 		// }
-<span class="nc" id="L81">		final LinkRendering when = CommandBackward3.getBackRendering(diagram, arg, &quot;WHEN&quot;);</span>
-<span class="nc" id="L82">		return diagram.else2(when);</span>
+<span class="nc" id="L102">		final LinkRendering when = CommandBackward3.getBackRendering(diagram, arg, &quot;WHEN&quot;);</span>
+<span class="nc" id="L103">		return diagram.else2(when);</span>
 	}
 
 }

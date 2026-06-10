@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -57,57 +58,79 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandArrowLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt; {
 
-<span class="pc" id="L60">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);$&quot;));</span>
+<span class="pc" id="L61">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);$&quot;));</span>
 
 	public CommandArrowLong3() {
-<span class="fc" id="L63">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L64">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L65">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L67">		return RegexConcat.build(CommandArrowLong3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L68">		return RegexConcat.build(CommandArrowLong3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOr(//
 						new RegexLeaf(&quot;-&gt;&quot;), //
 						new RegexLeaf(1, &quot;COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
-<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L73">				RegexLeaf.end());</span>
+<span class="fc" id="L74">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: this command does not draw anything by itself, it
+		// sets the multiline label (and optionally the color and style) of the
+		// next arrow, that is the connection to the upcoming activity.
+<span class="nc" id="L83">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L84">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (line0 == null)</span>
+<span class="nc" id="L86">			return &quot;Labelling the next arrow&quot;;</span>
+
+<span class="nc" id="L88">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L89">		sb.append(&quot;Labelling the next arrow with &quot;).append(lines.size())</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">				.append(lines.size() == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; of text&quot;);</span>
+
+<span class="nc" id="L92">		final String color = line0.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L94">			sb.append(&quot;, with color or style '&quot;).append(color).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L96">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L79">		lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L80">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L102">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L103">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 		// final HtmlColor color =
 		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get(&quot;COLOR&quot;,
 		// 0));
 		// diagram.setColorNextArrow(Rainbow.fromColor(color));
-<span class="nc" id="L85">		final String colorString = line0.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (colorString != null) {</span>
-<span class="nc" id="L87">			Rainbow rainbow = Rainbow.build(diagram.getSkinParam(), colorString,</span>
-<span class="nc" id="L88">					diagram.getSkinParam().colorArrowSeparationSpace());</span>
-<span class="nc" id="L89">			diagram.setColorNextArrow(rainbow);</span>
+<span class="nc" id="L108">		final String colorString = line0.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (colorString != null) {</span>
+<span class="nc" id="L110">			Rainbow rainbow = Rainbow.build(diagram.getSkinParam(), colorString,</span>
+<span class="nc" id="L111">					diagram.getSkinParam().colorArrowSeparationSpace());</span>
+<span class="nc" id="L112">			diagram.setColorNextArrow(rainbow);</span>
 		}
-<span class="nc" id="L91">		lines = lines.removeStartingAndEnding(line0.get(&quot;LABEL&quot;, 0), 1);</span>
-<span class="nc" id="L92">		diagram.setLabelNextArrow(lines.toDisplay());</span>
-<span class="nc" id="L93">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L114">		lines = lines.removeStartingAndEnding(line0.get(&quot;LABEL&quot;, 0), 1);</span>
+<span class="nc" id="L115">		diagram.setLabelNextArrow(lines.toDisplay());</span>
+<span class="nc" id="L116">		return CommandExecutionResult.ok();</span>
 	}
 
 	private &lt;CS extends CharSequence&gt; void removeStarting(List&lt;CS&gt; lines, String data) {
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (lines.size() == 0) {</span>
-<span class="nc" id="L98">			return;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (lines.size() == 0) {</span>
+<span class="nc" id="L121">			return;</span>
 		}
-<span class="nc" id="L100">		lines.set(0, (CS) data);</span>
-<span class="nc" id="L101">	}</span>
+<span class="nc" id="L123">		lines.set(0, (CS) data);</span>
+<span class="nc" id="L124">	}</span>
 
 	private &lt;CS extends CharSequence&gt; void removeEnding(List&lt;CS&gt; lines) {
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (lines.size() == 0) {</span>
-<span class="nc" id="L105">			return;</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (lines.size() == 0) {</span>
+<span class="nc" id="L128">			return;</span>
 		}
-<span class="nc" id="L107">		final int n = lines.size() - 1;</span>
-<span class="nc" id="L108">		final CharSequence s = lines.get(n);</span>
-<span class="nc" id="L109">		lines.set(n, (CS) s.subSequence(0, s.length() - 1));</span>
-<span class="nc" id="L110">	}</span>
+<span class="nc" id="L130">		final int n = lines.size() - 1;</span>
+<span class="nc" id="L131">		final CharSequence s = lines.get(n);</span>
+<span class="nc" id="L132">		lines.set(n, (CS) s.subSequence(0, s.length() - 1));</span>
+<span class="nc" id="L133">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

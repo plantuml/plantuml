@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,21 +49,29 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandBreak extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandBreak() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandBreak.class.getName(), //</span>
-<span class="fc" id="L56">				RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandBreak.class.getName(), //</span>
+<span class="fc" id="L57">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;break&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L59">				RegexLeaf.end());</span>
+<span class="fc" id="L60">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'break' exits the enclosing loop (repeat or while): the flow leaves
+		// the loop without going through its normal exit condition.
+<span class="nc" id="L68">		return &quot;Breaking out of the enclosing loop&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L64">		diagram.breakInstruction();</span>
-<span class="nc" id="L65">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L73">		diagram.breakInstruction();</span>
+<span class="nc" id="L74">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -61,46 +62,84 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteLong3 extends CommandMultilines2&lt;ActivityDiagram3&gt; {
 
-<span class="fc" id="L64">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="fc" id="L65">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
+<span class="fc" id="L65">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="fc" id="L66">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
 
 	public CommandNoteLong3() {
-<span class="fc" id="L68">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L69">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L70">	}</span>
 
 	private static ColorParser color() {
-<span class="fc" id="L72">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L73">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: the first line carries the declaration, the lines
+		// up to 'end note' are the text of the note. A 'floating note' is not
+		// attached to anything; the default position is on the left.
+<span class="nc" id="L82">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (line0 == null)</span>
+<span class="nc" id="L84">			return &quot;Adding a note&quot;;</span>
+
+<span class="nc" id="L86">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (line0.get(&quot;TYPE&quot;, 0).startsWith(&quot;floating&quot;))</span>
+<span class="nc" id="L88">			sb.append(&quot;Adding a floating note&quot;);</span>
+		else
+<span class="nc" id="L90">			sb.append(&quot;Adding a note attached to the latest activity&quot;);</span>
+
+<span class="nc" id="L92">		final String position = line0.get(&quot;POSITION&quot;, 0);</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (position != null &amp;&amp; position.isEmpty() == false)</span>
+<span class="nc" id="L94">			sb.append(&quot; on the &quot;).append(position);</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (bodyCount &gt; 0)</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			sb.append(&quot;, with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; of text&quot;);</span>
+
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (line0.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L101">			sb.append(&quot;, background color &quot;).append(line0.get(&quot;COLOR&quot;, 0));</span>
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (line0.get(&quot;STEREO&quot;, 0) != null)</span>
+<span class="nc" id="L104">			sb.append(&quot;, stereotype &quot;).append(line0.get(&quot;STEREO&quot;, 0));</span>
+
+		// The stereotag is parsed but never read by executeNow.
+<span class="nc" id="L107">		final String tags = line0.get(&quot;TAGS&quot;, 0);</span>
+<span class="nc bnc" id="L108" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
+<span class="nc" id="L109">			sb.append(&quot; (the tag &quot;).append(tags).append(&quot; is currently ignored)&quot;);</span>
+
+<span class="nc" id="L111">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L78">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc" id="L79">		lines = lines.subExtract(1, 1);</span>
-<span class="fc" id="L80">		lines = lines.removeEmptyColumns();</span>
-<span class="fc" id="L81">		final NotePosition position = NotePosition.defaultLeft(line0.get(&quot;POSITION&quot;, 0));</span>
-<span class="fc" id="L82">		final NoteType type = NoteType.defaultType(line0.get(&quot;TYPE&quot;, 0));</span>
-<span class="fc" id="L83">		final Display note = lines.toDisplay();</span>
-<span class="fc" id="L84">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L117">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L118">		lines = lines.subExtract(1, 1);</span>
+<span class="fc" id="L119">		lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L120">		final NotePosition position = NotePosition.defaultLeft(line0.get(&quot;POSITION&quot;, 0));</span>
+<span class="fc" id="L121">		final NoteType type = NoteType.defaultType(line0.get(&quot;TYPE&quot;, 0));</span>
+<span class="fc" id="L122">		final Display note = lines.toDisplay();</span>
+<span class="fc" id="L123">		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="fc" id="L86">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L87">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L89">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="fc" id="L125">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L126">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L128">			stereotype = Stereotype.build(stereotypeString);</span>
 
-<span class="fc" id="L91">		return diagram.addNote(note, position, type, colors, stereotype);</span>
+<span class="fc" id="L130">		return diagram.addNote(note, position, type, colors, stereotype);</span>
 	}
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L95">		return RegexConcat.build(CommandNoteLong3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L134">		return RegexConcat.build(CommandNoteLong3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(note|floating note)&quot;), //
-<span class="fc" id="L97">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L136">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(left|right)?&quot;), //
-<span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L100">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L101">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L102">				color().getRegex(), //</span>
-<span class="fc" id="L103">				RegexLeaf.end());</span>
+<span class="fc" id="L138">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L139">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L140">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L141">				color().getRegex(), //</span>
+<span class="fc" id="L142">				RegexLeaf.end());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

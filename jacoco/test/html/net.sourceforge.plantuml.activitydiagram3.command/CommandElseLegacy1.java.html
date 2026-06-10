@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,18 +52,28 @@ public class CommandElseLegacy1 extends SingleLineCommand2&lt;ActivityDiagram3&g
     // ::remove folder when __HAXE__
 
 	public CommandElseLegacy1() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandElseLegacy1.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandElseLegacy1.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;else&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;when&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;WHEN&quot;, &quot;(.*)&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L65">				RegexLeaf.end());</span>
+<span class="fc" id="L66">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Legacy 'else when label' spelling of &quot;else (label)&quot;: starts the
+		// alternative branch of the enclosing 'if', the text after 'when'
+		// labelling the branch arrow.
+<span class="nc" id="L75">		return &quot;Starting the 'else' branch of the enclosing if, labelled \&quot;&quot; + arg.get(&quot;WHEN&quot;, 0)</span>
+				+ &quot;\&quot; (legacy 'else when' syntax)&quot;;
 	}
 
 	@Override
@@ -70,8 +81,8 @@ public class CommandElseLegacy1 extends SingleLineCommand2&lt;ActivityDiagram3&g
 		// if (getSystem().getLastEntityConsulted() == null) {
 		// return CommandExecutionResult.error(&quot;No if for this endif&quot;);
 		// }
-<span class="nc" id="L73">		final Display when = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;WHEN&quot;, 0));</span>
-<span class="nc" id="L74">		return diagram.else2(LinkRendering.none().withDisplay(when));</span>
+<span class="nc" id="L84">		final Display when = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;WHEN&quot;, 0));</span>
+<span class="nc" id="L85">		return diagram.else2(LinkRendering.none().withDisplay(when));</span>
 	}
 
 }

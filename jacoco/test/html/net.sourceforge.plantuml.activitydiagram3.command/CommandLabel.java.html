@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,23 +49,31 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandLabel extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandLabel() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandLabel.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandLabel.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;label&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([%pLN_.]+)&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L60">				RegexLeaf.end());</span>
+<span class="fc" id="L61">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'label name' declares the target of 'goto name' jumps (an
+		// experimental feature).
+<span class="nc" id="L69">		return &quot;Declaring the label '&quot; + arg.get(&quot;NAME&quot;, 0) + &quot;', target of goto jumps&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
-<span class="nc" id="L66">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L67">		return diagram.addLabel(name);</span>
+<span class="nc" id="L75">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L76">		return diagram.addLabel(name);</span>
 	}
 
 }

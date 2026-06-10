@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -53,36 +54,59 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandArrow3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandArrow3() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandArrow3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandArrow3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOr(//
 						new RegexLeaf(&quot;-&gt;&quot;), //
 						new RegexLeaf(1, &quot;COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES)), //
-<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr(//
 						new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*);&quot;), //
 						new RegexLeaf(&quot;&quot;)), //
-<span class="fc" id="L68">				RegexLeaf.end());</span>
+<span class="fc" id="L69">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// This command does not draw anything by itself: it sets the label
+		// and/or the color and style of the next arrow, that is the connection
+		// to the upcoming activity. Several colors separated by ';' make a
+		// rainbow arrow (see Rainbow).
+<span class="nc" id="L79">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L80">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		final boolean hasLabel = label != null &amp;&amp; label.length() &gt; 0;</span>
+
+<span class="nc bnc" id="L83" title="All 4 branches missed.">		if (hasLabel &amp;&amp; color != null)</span>
+<span class="nc" id="L84">			return &quot;Labelling the next arrow \&quot;&quot; + label + &quot;\&quot;, with color or style '&quot; + color + &quot;'&quot;;</span>
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (hasLabel)</span>
+<span class="nc" id="L87">			return &quot;Labelling the next arrow \&quot;&quot; + label + &quot;\&quot;&quot;;</span>
+
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L90">			return &quot;Setting the color or style of the next arrow to '&quot; + color + &quot;'&quot;;</span>
+
+<span class="nc" id="L92">		return &quot;Plain arrow, with no effect&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 
-<span class="nc" id="L75">		final String colorString = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (colorString != null) {</span>
-<span class="nc" id="L77">			final Rainbow rainbow = Rainbow.build(diagram.getSkinParam(), colorString,</span>
-<span class="nc" id="L78">					diagram.getSkinParam().colorArrowSeparationSpace());</span>
-<span class="nc" id="L79">			diagram.setColorNextArrow(rainbow);</span>
+<span class="nc" id="L99">		final String colorString = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (colorString != null) {</span>
+<span class="nc" id="L101">			final Rainbow rainbow = Rainbow.build(diagram.getSkinParam(), colorString,</span>
+<span class="nc" id="L102">					diagram.getSkinParam().colorArrowSeparationSpace());</span>
+<span class="nc" id="L103">			diagram.setColorNextArrow(rainbow);</span>
 		}
-<span class="nc" id="L81">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc bnc" id="L82" title="All 4 branches missed.">		if (label != null &amp;&amp; label.length() &gt; 0)</span>
-<span class="nc" id="L83">			diagram.setLabelNextArrow(Display.getWithNewlines(diagram.getPragma(), label));</span>
+<span class="nc" id="L105">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">		if (label != null &amp;&amp; label.length() &gt; 0)</span>
+<span class="nc" id="L107">			diagram.setLabelNextArrow(Display.getWithNewlines(diagram.getPragma(), label));</span>
 
-<span class="nc" id="L85">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L109">		return CommandExecutionResult.ok();</span>
 	}
 
 }

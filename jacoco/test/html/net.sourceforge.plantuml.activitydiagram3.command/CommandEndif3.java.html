@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,19 +52,35 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandEndif3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandEndif3() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandEndif3.class.getName(), //</span>
-<span class="fc" id="L59">				RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandEndif3.class.getName(), //</span>
+<span class="fc" id="L60">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;end&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;if&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L65">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L66">				RegexLeaf.end());</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L67">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L73">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'endif' closes the enclosing 'if': the branches merge back into a
+		// single flow.
+<span class="nc" id="L77">		sb.append(&quot;Closing the enclosing if, merging the branches&quot;);</span>
+
+<span class="nc" id="L79">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
+<span class="nc" id="L81">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+
+<span class="nc" id="L83">		return sb.toString();</span>
 	}
 
 	@Override
@@ -73,10 +90,10 @@ public class CommandEndif3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 		// return CommandExecutionResult.error(&quot;No if for this endif&quot;);
 		// }
 
-<span class="nc" id="L76">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L77">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L93">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc" id="L94">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L79">		return diagram.endif(colors);</span>
+<span class="nc" id="L96">		return diagram.endif(colors);</span>
 	}
 
 }

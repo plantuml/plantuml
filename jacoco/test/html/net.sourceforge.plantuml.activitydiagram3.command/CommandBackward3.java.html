@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -58,11 +59,11 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandBackward3() {
-<span class="fc" id="L61">		super(getRegexConcat());</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L62">		super(getRegexConcat());</span>
+<span class="fc" id="L63">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L65">		return RegexConcat.build(CommandBackward3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L66">		return RegexConcat.build(CommandBackward3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
@@ -70,15 +71,15 @@ public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 								new RegexLeaf(1, &quot;INCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
 						new RegexLeaf(1, &quot;INCOMING&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
-<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;backward&quot;), //
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;;&quot;), //
-<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L80">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L81">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(&quot;\\(&quot;), //
 						new RegexOptional(new RegexOr(//
@@ -86,44 +87,84 @@ public class CommandBackward3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 								new RegexLeaf(1, &quot;OUTCOMING_COLOR&quot;, CommandLinkElement.STYLE_COLORS_MULTIPLES))), //
 						new RegexLeaf(1, &quot;OUTCOMING&quot;, &quot;(.*?)&quot;), //
 						new RegexLeaf(&quot;\\)&quot;))), //
-<span class="fc" id="L89">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L90">				RegexLeaf.end());</span>
+<span class="fc" id="L90">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L91">				RegexLeaf.end());</span>
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L97">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'backward :label;' defines the activity drawn on the return edge of
+		// the enclosing repeat loop. The optional '(...)' groups decorate the
+		// arrows entering (before the keyword) and leaving (after the
+		// stereotypes) this activity.
+<span class="nc" id="L103">		sb.append(&quot;Defining the backward activity \&quot;&quot;).append(arg.get(&quot;LABEL&quot;, 0))</span>
+<span class="nc" id="L104">				.append(&quot;\&quot; on the return edge of the repeat loop&quot;);</span>
+
+<span class="nc" id="L106">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false) {</span>
+<span class="nc" id="L108">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+<span class="nc" id="L109">			final BoxStyle style = stereogroup.getBoxStyle();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (style != BoxStyle.PLAIN)</span>
+<span class="nc" id="L111">				sb.append(&quot; (box style: &quot;).append(style.name().toLowerCase()).append(&quot;)&quot;);</span>
+		}
+
+<span class="nc" id="L114">		appendArrow(sb, arg, &quot;INCOMING&quot;, &quot;incoming&quot;);</span>
+<span class="nc" id="L115">		appendArrow(sb, arg, &quot;OUTCOMING&quot;, &quot;outgoing&quot;);</span>
+
+<span class="nc" id="L117">		return sb.toString();</span>
+	}
+
+	static void appendArrow(StringBuilder sb, RegexResult arg, String key, String word) {
+<span class="nc" id="L121">		final String label = arg.get(key, 0);</span>
+<span class="nc" id="L122">		final String color = arg.get(key + &quot;_COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L123" title="All 4 branches missed.">		final boolean hasLabel = label != null &amp;&amp; label.isEmpty() == false;</span>
+<span class="nc bnc" id="L124" title="All 4 branches missed.">		if (hasLabel == false &amp;&amp; color == null)</span>
+<span class="nc" id="L125">			return;</span>
+
+<span class="nc" id="L127">		sb.append(&quot;, &quot;).append(word).append(&quot; arrow&quot;);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (hasLabel)</span>
+<span class="nc" id="L129">			sb.append(&quot; labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L131">			sb.append(&quot; with color or style '&quot;).append(color).append(&quot;'&quot;);</span>
+<span class="nc" id="L132">	}</span>
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L96">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L97">		final BoxStyle boxStyle = stereogroup.getBoxStyle();</span>
-<span class="nc" id="L98">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
+<span class="nc" id="L137">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc" id="L138">		final BoxStyle boxStyle = stereogroup.getBoxStyle();</span>
+<span class="nc" id="L139">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
 
-<span class="nc" id="L100">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="nc" id="L141">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 
-<span class="nc" id="L102">		final LinkRendering in = getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
-<span class="nc" id="L103">		final LinkRendering out = getBackRendering(diagram, arg, &quot;OUTCOMING&quot;);</span>
+<span class="nc" id="L143">		final LinkRendering in = getBackRendering(diagram, arg, &quot;INCOMING&quot;);</span>
+<span class="nc" id="L144">		final LinkRendering out = getBackRendering(diagram, arg, &quot;OUTCOMING&quot;);</span>
 
-<span class="nc" id="L105">		return diagram.backward(label, boxStyle, in, out, stereotype);</span>
+<span class="nc" id="L146">		return diagram.backward(label, boxStyle, in, out, stereotype);</span>
 	}
 
 	static public LinkRendering getBackRendering(ActivityDiagram3 diagram, RegexResult arg, String name)
 			throws NoSuchColorException {
 		final LinkRendering in;
-<span class="nc" id="L111">		final Rainbow incomingColor = getRainbow(name + &quot;_COLOR&quot;, diagram, arg);</span>
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (incomingColor == null)</span>
-<span class="nc" id="L113">			in = LinkRendering.none();</span>
+<span class="nc" id="L152">		final Rainbow incomingColor = getRainbow(name + &quot;_COLOR&quot;, diagram, arg);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (incomingColor == null)</span>
+<span class="nc" id="L154">			in = LinkRendering.none();</span>
 		else
-<span class="nc" id="L115">			in = LinkRendering.create(incomingColor);</span>
-<span class="nc" id="L116">		final String label = arg.get(name, 0);</span>
-<span class="nc" id="L117">		return in.withDisplay(Display.getWithNewlines(diagram.getPragma(), label));</span>
+<span class="nc" id="L156">			in = LinkRendering.create(incomingColor);</span>
+<span class="nc" id="L157">		final String label = arg.get(name, 0);</span>
+<span class="nc" id="L158">		return in.withDisplay(Display.getWithNewlines(diagram.getPragma(), label));</span>
 	}
 
 	static private Rainbow getRainbow(String key, ActivityDiagram3 diagram, RegexResult arg)
 			throws NoSuchColorException {
-<span class="nc" id="L122">		final String colorString = arg.get(key, 0);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (colorString == null) {</span>
-<span class="nc" id="L124">			return null;</span>
+<span class="nc" id="L163">		final String colorString = arg.get(key, 0);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (colorString == null) {</span>
+<span class="nc" id="L165">			return null;</span>
 		}
-<span class="nc" id="L126">		return Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam().colorArrowSeparationSpace());</span>
+<span class="nc" id="L167">		return Rainbow.build(diagram.getSkinParam(), colorString, diagram.getSkinParam().colorArrowSeparationSpace());</span>
 	}
 
 }

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -58,43 +59,76 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandNote3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandNote3() {
-<span class="fc" id="L61">		super(getRegexConcat());</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L62">		super(getRegexConcat());</span>
+<span class="fc" id="L63">	}</span>
 
 	private static ColorParser color() {
-<span class="fc" id="L65">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L66">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L69">		return RegexConcat.build(CommandNote3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L70">		return RegexConcat.build(CommandNote3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(note|floating note)&quot;), //
-<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(left|right)?&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L74">				color().getRegex(), //</span>
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L76">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L77">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">				color().getRegex(), //</span>
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L77">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L78">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L81">				RegexLeaf.end());</span>
+<span class="fc" id="L82">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L88">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'note left: text' attaches a note to the latest activity; a
+		// 'floating note' is not attached to anything. The default position is
+		// on the left.
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (arg.get(&quot;TYPE&quot;, 0).startsWith(&quot;floating&quot;))</span>
+<span class="nc" id="L94">			sb.append(&quot;Adding a floating note&quot;);</span>
+		else
+<span class="nc" id="L96">			sb.append(&quot;Adding a note attached to the latest activity&quot;);</span>
+
+<span class="nc" id="L98">		final String position = arg.get(&quot;POSITION&quot;, 0);</span>
+<span class="nc bnc" id="L99" title="All 4 branches missed.">		if (position != null &amp;&amp; position.isEmpty() == false)</span>
+<span class="nc" id="L100">			sb.append(&quot; on the &quot;).append(position);</span>
+
+<span class="nc" id="L102">		sb.append(&quot; labelled \&quot;&quot;).append(arg.get(&quot;NOTE&quot;, 0)).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L105">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (arg.get(&quot;STEREO&quot;, 0) != null)</span>
+<span class="nc" id="L108">			sb.append(&quot;, stereotype &quot;).append(arg.get(&quot;STEREO&quot;, 0));</span>
+
+		// The stereotag is parsed but never read by executeArg.
+<span class="nc" id="L111">		final String tags = arg.get(&quot;TAGS&quot;, 0);</span>
+<span class="nc bnc" id="L112" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
+<span class="nc" id="L113">			sb.append(&quot; (the tag &quot;).append(tags).append(&quot; is currently ignored)&quot;);</span>
+
+<span class="nc" id="L115">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L87">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L88">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="fc" id="L89">		final NotePosition position = NotePosition.defaultLeft(arg.get(&quot;POSITION&quot;, 0));</span>
-<span class="fc" id="L90">		final NoteType type = NoteType.defaultType(arg.get(&quot;TYPE&quot;, 0));</span>
+<span class="fc" id="L121">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L122">		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="fc" id="L123">		final NotePosition position = NotePosition.defaultLeft(arg.get(&quot;POSITION&quot;, 0));</span>
+<span class="fc" id="L124">		final NoteType type = NoteType.defaultType(arg.get(&quot;TYPE&quot;, 0));</span>
 
-<span class="fc" id="L92">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L93">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L95">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="fc" id="L126">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L127">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L129">			stereotype = Stereotype.build(stereotypeString);</span>
 
-<span class="fc" id="L97">		return diagram.addNote(note, position, type, colors, stereotype);</span>
+<span class="fc" id="L131">		return diagram.addNote(note, position, type, colors, stereotype);</span>
 	}
 
 }

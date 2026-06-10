@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,22 +50,31 @@ import net.sourceforge.plantuml.warning.Warning;
 public class CommandCloseGroupLegacy3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandCloseGroupLegacy3() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandCloseGroupLegacy3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandCloseGroupLegacy3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;CMD&quot;, &quot;(end ?group|group ?end)&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L59">				RegexLeaf.end());</span>
+<span class="fc" id="L60">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Legacy spelling of the closing '}'. Mirror the warning emitted by
+		// executeArg.
+<span class="nc" id="L68">		return &quot;Closing the current group or partition (deprecated: use '}' instead of '&quot; + arg.get(&quot;CMD&quot;, 0)</span>
+				+ &quot;')&quot;;
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L65">		diagram.addWarning(new Warning(&quot;You should use a bracket (}) instead of '&quot; + arg.get(&quot;CMD&quot;, 0) + &quot;'&quot;));</span>
+<span class="nc" id="L75">		diagram.addWarning(new Warning(&quot;You should use a bracket (}) instead of '&quot; + arg.get(&quot;CMD&quot;, 0) + &quot;'&quot;));</span>
 
-<span class="nc" id="L67">		return diagram.closeGroup();</span>
+<span class="nc" id="L77">		return diagram.closeGroup();</span>
 	}
 
 }

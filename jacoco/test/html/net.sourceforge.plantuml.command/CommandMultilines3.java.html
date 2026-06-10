@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -42,7 +43,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-<span class="fc" id="L45">public abstract class CommandMultilines3&lt;S extends Diagram&gt; implements Command&lt;S&gt; {</span>
+<span class="fc" id="L46">public abstract class CommandMultilines3&lt;S extends Diagram&gt; implements Command&lt;S&gt; {</span>
 
 	private final IRegex starting;
 
@@ -52,69 +53,80 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 	private final IRegex patternEnd;
 
-<span class="fc" id="L55">	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd, IRegex patternEnd) {</span>
-<span class="pc bpc" id="L56" title="3 of 6 branches missed.">		if (TeaVM.a()) assert patternStart.getPatternAsString().startsWith(&quot;^&quot;) &amp;&amp; patternStart.getPatternAsString().endsWith(&quot;$&quot;);</span>
+<span class="fc" id="L56">	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd, IRegex patternEnd) {</span>
+<span class="pc bpc" id="L57" title="3 of 6 branches missed.">		if (TeaVM.a()) assert patternStart.getPatternAsString().startsWith(&quot;^&quot;) &amp;&amp; patternStart.getPatternAsString().endsWith(&quot;$&quot;);</span>
 
-<span class="fc" id="L58">		this.strategy = strategy;</span>
-<span class="fc" id="L59">		this.starting = patternStart;</span>
-<span class="fc" id="L60">		this.trimEnd = trimEnd;</span>
-<span class="fc" id="L61">		this.patternEnd = patternEnd;</span>
-<span class="fc" id="L62">	}</span>
+<span class="fc" id="L59">		this.strategy = strategy;</span>
+<span class="fc" id="L60">		this.starting = patternStart;</span>
+<span class="fc" id="L61">		this.trimEnd = trimEnd;</span>
+<span class="fc" id="L62">		this.patternEnd = patternEnd;</span>
+<span class="fc" id="L63">	}</span>
 
 	final public CommandControl isValid(BlocLines lines) {
-<span class="fc" id="L65">		lines = lines.cleanList(strategy);</span>
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (isCommandForbidden(lines))</span>
-<span class="nc" id="L67">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L66">		lines = lines.cleanList(strategy);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (isCommandForbidden(lines))</span>
+<span class="nc" id="L68">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L69">		final StringLocated first = lines.getFirst();</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (first == null)</span>
-<span class="nc" id="L71">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L70">		final StringLocated first = lines.getFirst();</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">		if (first == null)</span>
+<span class="nc" id="L72">			return CommandControl.NOT_OK;</span>
 
-<span class="fc" id="L73">		final boolean result1 = starting.match(first.getTrimmed());</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (result1 == false)</span>
-<span class="fc" id="L75">			return CommandControl.NOT_OK;</span>
+<span class="fc" id="L74">		final boolean result1 = starting.match(first.getTrimmed());</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (result1 == false)</span>
+<span class="fc" id="L76">			return CommandControl.NOT_OK;</span>
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (lines.size() == 1)</span>
-<span class="fc" id="L78">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		if (lines.size() == 1)</span>
+<span class="fc" id="L79">			return CommandControl.OK_PARTIAL;</span>
 
 		final StringLocated potentialLast;
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		if (trimEnd == Trim.NONE)</span>
-<span class="fc" id="L82">			potentialLast = lines.getLast();</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		else if (trimEnd == Trim.BOTH)</span>
-<span class="nc" id="L84">			potentialLast = lines.getLast().getTrimmed();</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (trimEnd == Trim.NONE)</span>
+<span class="fc" id="L83">			potentialLast = lines.getLast();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		else if (trimEnd == Trim.BOTH)</span>
+<span class="nc" id="L85">			potentialLast = lines.getLast().getTrimmed();</span>
 		else
-<span class="nc" id="L86">			throw new IllegalStateException();</span>
+<span class="nc" id="L87">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L88">		final boolean m1 = patternEnd.match(potentialLast);</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (m1 == false)</span>
-<span class="fc" id="L90">			return CommandControl.OK_PARTIAL;</span>
+<span class="fc" id="L89">		final boolean m1 = patternEnd.match(potentialLast);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		if (m1 == false)</span>
+<span class="fc" id="L91">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="fc" id="L92">		return finalVerification();</span>
+<span class="fc" id="L93">		return finalVerification();</span>
 	}
 
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L97">		lines = lines.cleanList(strategy);</span>
-<span class="fc" id="L98">		return executeNow(system, lines);</span>
+<span class="fc" id="L98">		lines = lines.cleanList(strategy);</span>
+<span class="fc" id="L99">		return executeNow(system, lines);</span>
+	}
+
+	@Override
+	final public String explain(BlocLines lines) {
+<span class="nc" id="L104">		lines = lines.cleanList(strategy);</span>
+<span class="nc" id="L105">		return explainNow(lines);</span>
+	}
+
+	@Explain
+	protected String explainNow(BlocLines lines) {
+<span class="nc" id="L110">		return &quot;WIPexplain explainNow in &quot; + getClass();</span>
 	}
 
 	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines) throws NoSuchColorException;
 
 	protected CommandControl finalVerification() {
-<span class="fc" id="L104">		return CommandControl.OK;</span>
+<span class="fc" id="L116">		return CommandControl.OK;</span>
 	}
 
 	protected final IRegex getStartingPattern() {
-<span class="fc" id="L108">		return starting;</span>
+<span class="fc" id="L120">		return starting;</span>
 	}
 
 	protected final IRegex getEndingPattern() {
-<span class="fc" id="L112">		return patternEnd;</span>
+<span class="fc" id="L124">		return patternEnd;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

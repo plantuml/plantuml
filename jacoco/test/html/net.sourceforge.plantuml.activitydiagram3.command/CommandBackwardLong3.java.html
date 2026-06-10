@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -53,44 +54,72 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandBackwardLong3 extends CommandMultilines3&lt;ActivityDiagram3&gt; {
 
-<span class="fc" id="L56">	private final static IRegex END = new RegexConcat(//</span>
+<span class="fc" id="L57">	private final static IRegex END = new RegexConcat(//</span>
 			new RegexLeaf(1, &quot;TEXT&quot;, &quot;(.*)&quot;), //
 			new RegexLeaf(&quot;;&quot;), //
-<span class="fc" id="L59">			RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L60">			Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L61">			RegexLeaf.end());</span>
+<span class="fc" id="L60">			RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L61">			Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L62">			RegexLeaf.end());</span>
 
 	public CommandBackwardLong3() {
-<span class="fc" id="L64">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L65">	}</span>
+<span class="fc" id="L65">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L66">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L68">		return RegexConcat.build(CommandBackwardLong3.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">		return RegexConcat.build(CommandBackwardLong3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;backward&quot;), //
-<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;DATA&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L75">				RegexLeaf.end());</span>
+<span class="fc" id="L76">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: 'backward :text...' defines a multiline activity
+		// drawn on the return edge of the enclosing repeat loop. Unlike the
+		// single line form, no '(...)' arrow decoration is available here.
+<span class="nc" id="L85">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L86">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L87">		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());</span>
+<span class="nc bnc" id="L88" title="All 4 branches missed.">		if (line0 == null || lineLast == null)</span>
+<span class="nc" id="L89">			return &quot;Defining a backward activity on the return edge of the repeat loop&quot;;</span>
+
+<span class="nc" id="L91">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L92">		sb.append(&quot;Defining a backward activity of &quot;).append(lines.size())</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">				.append(lines.size() == 1 ? &quot; line&quot; : &quot; lines&quot;)</span>
+<span class="nc" id="L94">				.append(&quot; of text on the return edge of the repeat loop&quot;);</span>
+
+<span class="nc" id="L96">		final Stereogroup stereogroup = Stereogroup.build(lineLast);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false) {</span>
+<span class="nc" id="L98">			sb.append(&quot;, stereotyped &quot;).append(lineLast.get(&quot;STEREOGROUP&quot;, 0));</span>
+<span class="nc" id="L99">			final BoxStyle style = stereogroup.getBoxStyle();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (style != BoxStyle.PLAIN)</span>
+<span class="nc" id="L101">				sb.append(&quot; (box style: &quot;).append(style.name().toLowerCase()).append(&quot;)&quot;);</span>
+		}
+
+<span class="nc" id="L104">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
-<span class="nc" id="L80">		lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L81">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L82">		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());</span>
-<span class="nc" id="L83">		final Stereogroup stereogroup = Stereogroup.build(lineLast);</span>
-<span class="nc" id="L84">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
+<span class="nc" id="L109">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L110">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L111">		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());</span>
+<span class="nc" id="L112">		final Stereogroup stereogroup = Stereogroup.build(lineLast);</span>
+<span class="nc" id="L113">		final Stereotype stereotype = stereogroup.buildStereotype();</span>
 
-<span class="nc" id="L86">		final BoxStyle style = stereogroup.getBoxStyle();</span>
-<span class="nc" id="L87">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 0);</span>
-<span class="nc" id="L88">		lines = lines.overrideLastLine(lineLast.get(&quot;TEXT&quot;, 0));</span>
+<span class="nc" id="L115">		final BoxStyle style = stereogroup.getBoxStyle();</span>
+<span class="nc" id="L116">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 0);</span>
+<span class="nc" id="L117">		lines = lines.overrideLastLine(lineLast.get(&quot;TEXT&quot;, 0));</span>
 
-<span class="nc" id="L90">		final LinkRendering in = LinkRendering.none();</span>
-<span class="nc" id="L91">		final LinkRendering out = LinkRendering.none();</span>
+<span class="nc" id="L119">		final LinkRendering in = LinkRendering.none();</span>
+<span class="nc" id="L120">		final LinkRendering out = LinkRendering.none();</span>
 
-<span class="nc" id="L93">		return diagram.backward(lines.toDisplay(), style, in, out, stereotype);</span>
+<span class="nc" id="L122">		return diagram.backward(lines.toDisplay(), style, in, out, stereotype);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -50,42 +51,63 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandForkEnd3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandForkEnd3() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandForkEnd3.class.getName(), //</span>
-<span class="fc" id="L58">				RegexLeaf.start(), //</span>
+<span class="fc" id="L58">		return RegexConcat.build(CommandForkEnd3.class.getName(), //</span>
+<span class="fc" id="L59">				RegexLeaf.start(), //</span>
 				new RegexOr(&quot;STYLE&quot;, //
 						new RegexConcat( //
 								new RegexLeaf(&quot;end&quot;), //
-<span class="fc" id="L62">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;fork&quot;) //
 						), //
 						new RegexConcat( //
 								new RegexLeaf(&quot;fork&quot;), //
-<span class="fc" id="L67">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;end&quot;) //
 						), //
 						new RegexConcat( //
 								new RegexLeaf(&quot;end&quot;), //
-<span class="fc" id="L72">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;merge&quot;) //
 						) //
 				), //
-<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(\\{.+\\})?&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L79">				RegexLeaf.end());</span>
+<span class="fc" id="L80">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L86">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'end fork' (or 'fork end') joins the parallel branches with a
+		// synchronization bar; 'end merge' merges them into a diamond, without
+		// synchronization. The optional '{label}' is displayed next to the
+		// join, typically as a join specification.
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (arg.get(&quot;STYLE&quot;, 0).contains(&quot;merge&quot;))</span>
+<span class="nc" id="L93">			sb.append(&quot;Closing the enclosing fork with a merge, without synchronization&quot;);</span>
+		else
+<span class="nc" id="L95">			sb.append(&quot;Closing the enclosing fork, synchronizing the parallel branches&quot;);</span>
+
+<span class="nc" id="L97">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (label != null)</span>
+<span class="nc" id="L99">			sb.append(&quot;, labelled \&quot;&quot;).append(label.substring(1, label.length() - 1)).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L101">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L85">		final String style = arg.get(&quot;STYLE&quot;, 0);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">		final ForkStyle forkStyle = style.contains(&quot;merge&quot;) ? ForkStyle.MERGE : ForkStyle.FORK;</span>
-<span class="nc" id="L87">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc" id="L88">		return diagram.endFork(forkStyle, label);</span>
+<span class="nc" id="L107">		final String style = arg.get(&quot;STYLE&quot;, 0);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		final ForkStyle forkStyle = style.contains(&quot;merge&quot;) ? ForkStyle.MERGE : ForkStyle.FORK;</span>
+<span class="nc" id="L109">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc" id="L110">		return diagram.endFork(forkStyle, label);</span>
 	}
 
 }

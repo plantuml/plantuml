@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,33 +50,43 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandIfLegacy1 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandIfLegacy1() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandIfLegacy1.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandIfLegacy1.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;if&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 				new RegexLeaf(1, &quot;TEST&quot;, &quot;(.+?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;then&quot;), //
-<span class="fc" id="L64">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;when&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;WHEN&quot;, &quot;(.*)&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L69">				RegexLeaf.end());</span>
+<span class="fc" id="L70">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Legacy 'if (test) then when label' spelling of
+		// &quot;if (test) then (label)&quot;: opens a conditional block, closed by
+		// 'endif', the text after 'when' labelling the 'then' arrow.
+<span class="nc" id="L79">		return &quot;Starting an 'if', testing \&quot;&quot; + arg.get(&quot;TEST&quot;, 0) + &quot;\&quot;, 'then' arrow labelled \&quot;&quot;</span>
+<span class="nc" id="L80">				+ arg.get(&quot;WHEN&quot;, 0) + &quot;\&quot; (legacy 'then when' syntax)&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
-<span class="nc" id="L75">		diagram.startIf(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;TEST&quot;, 0)), Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;WHEN&quot;, 0)), null,</span>
+<span class="nc" id="L86">		diagram.startIf(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;TEST&quot;, 0)), Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;WHEN&quot;, 0)), null,</span>
 				null, null);
 
-<span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L89">		return CommandExecutionResult.ok();</span>
 	}
 
 }

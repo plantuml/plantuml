@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -52,27 +53,47 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandSwimlane extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandSwimlane() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandSwimlane.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandSwimlane.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\|&quot;), //
-<span class="fc" id="L61">				ColorParser.exp6(), //</span>
+<span class="fc" id="L62">				ColorParser.exp6(), //</span>
 				new RegexLeaf(1, &quot;SWIMLANE&quot;, &quot;([^|]+)&quot;), //
 				new RegexLeaf(&quot;\\|&quot;), //
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;([^|]+)?&quot;), //
-<span class="fc" id="L65">				RegexLeaf.end());</span>
+<span class="fc" id="L66">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L72">		final StringBuilder sb = new StringBuilder();</span>
+
+		// '|name|' switches the flow to the given swimlane, creating it on
+		// first use; the following activities are drawn inside it. An
+		// optional trailing label gives its display title.
+<span class="nc" id="L77">		sb.append(&quot;Switching to the swimlane '&quot;).append(arg.get(&quot;SWIMLANE&quot;, 0)).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L79">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L80" title="All 4 branches missed.">		if (label != null &amp;&amp; label.isEmpty() == false)</span>
+<span class="nc" id="L81">			sb.append(&quot; displayed as \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L84">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+<span class="nc" id="L86">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L71">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="fc" id="L73">		final String name = arg.get(&quot;SWIMLANE&quot;, 0);</span>
-<span class="fc" id="L74">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
-<span class="fc" id="L75">		return diagram.swimlane(name, color, label);</span>
+<span class="fc" id="L92">		final String s = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="fc" id="L94">		final String name = arg.get(&quot;SWIMLANE&quot;, 0);</span>
+<span class="fc" id="L95">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="fc" id="L96">		return diagram.swimlane(name, color, label);</span>
 	}
 
 }

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,21 +50,30 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandNolink extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandNolink() {
-<span class="nc" id="L52">		super(getRegexConcat());</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L53">		super(getRegexConcat());</span>
+<span class="nc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L56">		return RegexConcat.build(CommandNolink.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L57">		return RegexConcat.build(CommandNolink.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;nolink&quot;), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="nc" id="L59">				RegexLeaf.end());</span>
+<span class="nc" id="L60">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'nolink' suppresses the next arrow, leaving the two activities
+		// unconnected; this is implemented by setting the magic 'NOLINK'
+		// label on the next arrow.
+<span class="nc" id="L69">		return &quot;Suppressing the next arrow: the activities are not linked&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		// diagram.setColorNextArrow(color);
-<span class="nc" id="L65">		diagram.setLabelNextArrow(Display.getWithNewlines(diagram.getPragma(), &quot;NOLINK&quot;));</span>
-<span class="nc" id="L66">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L75">		diagram.setLabelNextArrow(Display.getWithNewlines(diagram.getPragma(), &quot;NOLINK&quot;));</span>
+<span class="nc" id="L76">		return CommandExecutionResult.ok();</span>
 	}
 
 }
