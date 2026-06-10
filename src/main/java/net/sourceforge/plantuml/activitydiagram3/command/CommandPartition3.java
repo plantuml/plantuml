@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileGroup;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -106,6 +107,34 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	private static ColorParser color(String id) {
 		return ColorParser.simpleColor(ColorType.BACK, id);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'partition Name {' (or package/rectangle/card/group) opens a
+		// container around the following activities, closed by '}'. Each
+		// keyword maps to a different visual symbol (see getUSymbol).
+		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
+		sb.append("Starting the ").append(StringUtils.goLowerCase(arg.get("TYPE", 0))).append(" '").append(name)
+				.append("'");
+
+		// The color may be written before or after the name; executeArg
+		// prefers the former.
+		final String color = arg.get("BACK1", 0) == null ? arg.get("BACK2", 0) : arg.get("BACK1", 0);
+		if (color != null)
+			sb.append(", background color ").append(color);
+
+		if (arg.get("STEREO", 0) != null)
+			sb.append(", stereotype ").append(arg.get("STEREO", 0));
+
+		// Mirror the warning emitted by executeArg.
+		if (arg.get("BRACKET", 0).length() == 0)
+			sb.append(" (deprecated form: add a '{' bracket at the end of the line)");
+
+		return sb.toString();
 	}
 
 	@Override

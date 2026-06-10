@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -77,6 +78,37 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'repeat' opens a repeat loop, closed by 'repeat while (test)'. The
+		// optional ':label;' is the activity drawn at the top of the loop,
+		// where the backward edge comes back.
+		sb.append("Starting a repeat loop");
+
+		final String label = arg.get("LABEL", 0);
+		if (label != null && label.isEmpty() == false)
+			sb.append(", with the activity \"").append(label).append("\" at the top");
+
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		if (stereogroup.isEmpty() == false) {
+			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
+			final BoxStyle style = stereogroup.getBoxStyle();
+			if (style != BoxStyle.PLAIN)
+				sb.append(" (box style: ").append(style.name().toLowerCase()).append(")");
+		}
+
+		// Mirror the deprecation warning emitted by executeArg; note that the
+		// leading color is parsed but no longer applied.
+		if (arg.get("COLOR", 0) != null)
+			sb.append(" (deprecated and ignored color syntax: write <<").append(arg.get("COLOR", 0))
+					.append(">> at the end of the line)");
+
+		return sb.toString();
 	}
 
 	@Override

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -77,6 +78,27 @@ public class CommandForkEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf(1, "LABEL", "(\\{.+\\})?"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'end fork' (or 'fork end') joins the parallel branches with a
+		// synchronization bar; 'end merge' merges them into a diamond, without
+		// synchronization. The optional '{label}' is displayed next to the
+		// join, typically as a join specification.
+		if (arg.get("STYLE", 0).contains("merge"))
+			sb.append("Closing the enclosing fork with a merge, without synchronization");
+		else
+			sb.append("Closing the enclosing fork, synchronizing the parallel branches");
+
+		final String label = arg.get("LABEL", 0);
+		if (label != null)
+			sb.append(", labelled \"").append(label.substring(1, label.length() - 1)).append("\"");
+
+		return sb.toString();
 	}
 
 	@Override

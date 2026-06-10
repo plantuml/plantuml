@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -71,6 +72,28 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "LABEL", "(.*)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: this command does not draw anything by itself, it
+		// sets the multiline label (and optionally the color and style) of the
+		// next arrow, that is the connection to the upcoming activity.
+		lines = lines.removeEmptyColumns();
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Labelling the next arrow";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Labelling the next arrow with ").append(lines.size())
+				.append(lines.size() == 1 ? " line" : " lines").append(" of text");
+
+		final String color = line0.get("COLOR", 0);
+		if (color != null)
+			sb.append(", with color or style '").append(color).append("'");
+
+		return sb.toString();
 	}
 
 	@Override

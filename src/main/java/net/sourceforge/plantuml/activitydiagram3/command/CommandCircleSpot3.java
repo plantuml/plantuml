@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -60,6 +61,21 @@ public class CommandCircleSpot3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf(1, "SPOT", "\\((\\S)\\)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// '(X)' adds a circled character spot to the flow, typically used as a
+		// connector mark.
+		sb.append("Adding the circled character spot '").append(arg.get("SPOT", 0)).append("'");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	@Override

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -73,6 +74,34 @@ public class CommandBackwardLong3 extends CommandMultilines3<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: 'backward :text...' defines a multiline activity
+		// drawn on the return edge of the enclosing repeat loop. Unlike the
+		// single line form, no '(...)' arrow decoration is available here.
+		lines = lines.removeEmptyColumns();
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
+		if (line0 == null || lineLast == null)
+			return "Defining a backward activity on the return edge of the repeat loop";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Defining a backward activity of ").append(lines.size())
+				.append(lines.size() == 1 ? " line" : " lines")
+				.append(" of text on the return edge of the repeat loop");
+
+		final Stereogroup stereogroup = Stereogroup.build(lineLast);
+		if (stereogroup.isEmpty() == false) {
+			sb.append(", stereotyped ").append(lineLast.get("STEREOGROUP", 0));
+			final BoxStyle style = stereogroup.getBoxStyle();
+			if (style != BoxStyle.PLAIN)
+				sb.append(" (box style: ").append(style.name().toLowerCase()).append(")");
+		}
+
+		return sb.toString();
 	}
 
 	@Override

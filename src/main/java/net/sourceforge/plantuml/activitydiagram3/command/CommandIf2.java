@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -85,6 +86,41 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'if (test) then (label)' opens a conditional block, closed by
+		// 'endif', with optional 'else' and 'elseif' branches in between.
+		sb.append("Starting an 'if'");
+
+		final String test = arg.get("TEST", 0);
+		if (test.length() > 0)
+			sb.append(", testing \"").append(test).append("\"");
+
+		final String when = arg.get("WHEN", 0);
+		if (when != null)
+			sb.append(", 'then' arrow labelled \"").append(when).append("\"");
+
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		if (stereogroup.isEmpty() == false)
+			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		// Both the stereotype right after 'if' and the leading color are
+		// parsed but silently ignored by executeArg.
+		if (arg.get("IGNORED", 0) != null)
+			sb.append(" (the stereotype after 'if' is ignored: write it after the ';')");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(" (the leading color is currently ignored: use a stereotype instead)");
+
+		return sb.toString();
 	}
 
 	@Override

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -61,6 +62,19 @@ public class CommandCase extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("\\)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'case (value)' adds a new branch to the enclosing 'switch'; the flow
+		// of the previous case ends here. An empty value, like 'case ()',
+		// gives an unlabelled branch.
+		final String test = arg.get("TEST", 0);
+		if (test.length() == 0)
+			return "Adding an unlabelled branch to the enclosing switch";
+
+		return "Adding the branch \"" + test + "\" to the enclosing switch";
 	}
 
 	@Override

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -88,6 +89,46 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 						new RegexLeaf("\\)"))), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'backward :label;' defines the activity drawn on the return edge of
+		// the enclosing repeat loop. The optional '(...)' groups decorate the
+		// arrows entering (before the keyword) and leaving (after the
+		// stereotypes) this activity.
+		sb.append("Defining the backward activity \"").append(arg.get("LABEL", 0))
+				.append("\" on the return edge of the repeat loop");
+
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		if (stereogroup.isEmpty() == false) {
+			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
+			final BoxStyle style = stereogroup.getBoxStyle();
+			if (style != BoxStyle.PLAIN)
+				sb.append(" (box style: ").append(style.name().toLowerCase()).append(")");
+		}
+
+		appendArrow(sb, arg, "INCOMING", "incoming");
+		appendArrow(sb, arg, "OUTCOMING", "outgoing");
+
+		return sb.toString();
+	}
+
+	static void appendArrow(StringBuilder sb, RegexResult arg, String key, String word) {
+		final String label = arg.get(key, 0);
+		final String color = arg.get(key + "_COLOR", 0);
+		final boolean hasLabel = label != null && label.isEmpty() == false;
+		if (hasLabel == false && color == null)
+			return;
+
+		sb.append(", ").append(word).append(" arrow");
+		if (hasLabel)
+			sb.append(" labelled \"").append(label).append("\"");
+		if (color != null)
+			sb.append(" with color or style '").append(color).append("'");
 	}
 
 	@Override

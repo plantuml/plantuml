@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -58,6 +59,14 @@ public class CommandForkAgain3 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("again"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'fork again' ends the current parallel branch and starts the next
+		// one within the enclosing 'fork'.
+		return "Starting the next parallel branch of the enclosing fork";
 	}
 
 	@Override

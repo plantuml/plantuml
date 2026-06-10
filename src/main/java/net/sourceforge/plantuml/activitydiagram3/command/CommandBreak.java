@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -57,6 +58,14 @@ public class CommandBreak extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("break"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'break' exits the enclosing loop (repeat or while): the flow leaves
+		// the loop without going through its normal exit condition.
+		return "Breaking out of the enclosing loop";
 	}
 
 	@Override

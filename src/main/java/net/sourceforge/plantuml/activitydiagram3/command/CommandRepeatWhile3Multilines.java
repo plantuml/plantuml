@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -78,6 +79,33 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 	}
 
 	private static final Pattern2 IS_OR_EQUALS = Pattern2.cmpile("\\)[%s]*(is|equals?)[%s]*\\(");
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: the test of 'repeat while (...' spans several
+		// lines, up to the closing ')'. An ') is (' separator inside splits
+		// the test from the loop-back arrow label. Unlike the single line
+		// form, no 'not (...)' exit label nor arrow decoration is available
+		// here.
+		lines = lines.trim();
+		final RegexResult line0 = getStartingPattern().matcher(StringUtils.trin(lines.getFirst().getString()));
+		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
+		if (line0 == null || lineLast == null)
+			return "Closing the repeat loop";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Closing the repeat loop, looping back while a test spanning ").append(lines.size())
+				.append(lines.size() == 1 ? " line" : " lines").append(" holds");
+
+		for (StringLocated s : lines)
+			if (IS_OR_EQUALS.matcher(s.getString(), 0).find()) {
+				sb.append(", with a loop-back arrow label after the 'is' separator");
+				break;
+			}
+
+		return sb.toString();
+	}
 
 	@Override
 	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {

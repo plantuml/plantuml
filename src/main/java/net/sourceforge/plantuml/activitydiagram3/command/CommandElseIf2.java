@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -99,6 +100,35 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'elseif (test) then (label)' adds a new conditional branch to the
+		// enclosing 'if'. The optional '(...)' groups decorate the arrow
+		// coming from the previous branch (before 'else') and the 'then'
+		// arrow (after 'then').
+		sb.append("Adding an 'else if' branch to the enclosing if");
+
+		final String test = arg.get("TEST", 0);
+		if (test.length() > 0)
+			sb.append(", testing \"").append(test).append("\"");
+
+		CommandBackward3.appendArrow(sb, arg, "WHEN", "'then'");
+		CommandBackward3.appendArrow(sb, arg, "INCOMING", "incoming");
+
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		if (stereogroup.isEmpty() == false)
+			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
+
+		// The leading color is parsed but no longer applied by executeArg.
+		if (arg.get("COLOR", 0) != null)
+			sb.append(" (the leading color is currently ignored: use a stereotype instead)");
+
+		return sb.toString();
 	}
 
 	@Override

@@ -144,6 +144,10 @@ public abstract class BoxStyle {
 		ug.draw(s);
 	}
 
+	public String name() {
+		return stereotype;
+	}
+
 }
 
 class BoxStylePlain extends BoxStyle {

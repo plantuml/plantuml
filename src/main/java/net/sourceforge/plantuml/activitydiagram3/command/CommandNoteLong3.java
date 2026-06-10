@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -70,6 +71,44 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: the first line carries the declaration, the lines
+		// up to 'end note' are the text of the note. A 'floating note' is not
+		// attached to anything; the default position is on the left.
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Adding a note";
+
+		final StringBuilder sb = new StringBuilder();
+		if (line0.get("TYPE", 0).startsWith("floating"))
+			sb.append("Adding a floating note");
+		else
+			sb.append("Adding a note attached to the latest activity");
+
+		final String position = line0.get("POSITION", 0);
+		if (position != null && position.isEmpty() == false)
+			sb.append(" on the ").append(position);
+
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		if (bodyCount > 0)
+			sb.append(", with ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines").append(" of text");
+
+		if (line0.get("COLOR", 0) != null)
+			sb.append(", background color ").append(line0.get("COLOR", 0));
+
+		if (line0.get("STEREO", 0) != null)
+			sb.append(", stereotype ").append(line0.get("STEREO", 0));
+
+		// The stereotag is parsed but never read by executeNow.
+		final String tags = line0.get("TAGS", 0);
+		if (tags != null && tags.isEmpty() == false)
+			sb.append(" (the tag ").append(tags).append(" is currently ignored)");
+
+		return sb.toString();
 	}
 
 	@Override

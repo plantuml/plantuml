@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -57,6 +58,15 @@ public class CommandNolink extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf("nolink"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'nolink' suppresses the next arrow, leaving the two activities
+		// unconnected; this is implemented by setting the magic 'NOLINK'
+		// label on the next arrow.
+		return "Suppressing the next arrow: the activities are not linked";
 	}
 
 	@Override

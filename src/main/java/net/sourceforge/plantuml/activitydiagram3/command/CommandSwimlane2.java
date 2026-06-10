@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -71,6 +72,25 @@ public class CommandSwimlane2 extends SingleLineCommand2<ActivityDiagram3> {
 								new RegexLeaf(1, "LABEL", "([^|]+)") //
 						)), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'swimlane name as Title' is the keyword spelling of '|name|':
+		// switches the flow to the given swimlane, creating it on first use.
+		sb.append("Switching to the swimlane '").append(arg.get("SWIMLANE", 0)).append("'");
+
+		final String label = arg.get("LABEL", 0);
+		if (label != null && label.isEmpty() == false)
+			sb.append(" displayed as \"").append(label).append("\"");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	@Override

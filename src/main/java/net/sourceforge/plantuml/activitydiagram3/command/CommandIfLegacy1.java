@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -67,6 +68,16 @@ public class CommandIfLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf(1, "WHEN", "(.*)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Legacy 'if (test) then when label' spelling of
+		// "if (test) then (label)": opens a conditional block, closed by
+		// 'endif', the text after 'when' labelling the 'then' arrow.
+		return "Starting an 'if', testing \"" + arg.get("TEST", 0) + "\", 'then' arrow labelled \""
+				+ arg.get("WHEN", 0) + "\" (legacy 'then when' syntax)";
 	}
 
 	@Override

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -69,6 +70,27 @@ public class CommandActivityList extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// '- label' (or '* label') is a list-like shorthand: each line adds a
+		// plain activity to the current flow.
+		sb.append("Adding the activity \"").append(arg.get("LABEL", 0)).append("\" (list item syntax)");
+
+		// The stereotype may be written before or after the label
+		// (STEREO1/STEREO2), hence the lazzy lookup, like in executeArg.
+		final String stereo = arg.getLazzy("STEREO", 0);
+		if (stereo != null)
+			sb.append(", stereotyped ").append(stereo);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		return sb.toString();
 	}
 
 	@Override

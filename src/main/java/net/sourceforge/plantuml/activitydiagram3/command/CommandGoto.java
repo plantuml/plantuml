@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -58,6 +59,14 @@ public class CommandGoto extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf(1, "NAME", "([%pLN_.]+)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'goto name' jumps to the 'label name' declared elsewhere in the
+		// diagram (an experimental feature).
+		return "Jumping to the label '" + arg.get("NAME", 0) + "'";
 	}
 
 	@Override

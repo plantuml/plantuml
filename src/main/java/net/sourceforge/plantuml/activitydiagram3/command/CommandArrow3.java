@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -66,6 +67,29 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 						new RegexLeaf(1, "LABEL", "(.*);"), //
 						new RegexLeaf("")), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// This command does not draw anything by itself: it sets the label
+		// and/or the color and style of the next arrow, that is the connection
+		// to the upcoming activity. Several colors separated by ';' make a
+		// rainbow arrow (see Rainbow).
+		final String color = arg.get("COLOR", 0);
+		final String label = arg.get("LABEL", 0);
+		final boolean hasLabel = label != null && label.length() > 0;
+
+		if (hasLabel && color != null)
+			return "Labelling the next arrow \"" + label + "\", with color or style '" + color + "'";
+
+		if (hasLabel)
+			return "Labelling the next arrow \"" + label + "\"";
+
+		if (color != null)
+			return "Setting the color or style of the next arrow to '" + color + "'";
+
+		return "Plain arrow, with no effect";
 	}
 
 	@Override

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -63,6 +64,16 @@ public class CommandElseLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 				new RegexLeaf(1, "WHEN", "(.*)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Legacy 'else when label' spelling of "else (label)": starts the
+		// alternative branch of the enclosing 'if', the text after 'when'
+		// labelling the branch arrow.
+		return "Starting the 'else' branch of the enclosing if, labelled \"" + arg.get("WHEN", 0)
+				+ "\" (legacy 'else when' syntax)";
 	}
 
 	@Override

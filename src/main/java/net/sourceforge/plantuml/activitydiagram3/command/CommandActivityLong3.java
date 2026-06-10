@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines3;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -77,6 +78,39 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow.
+		lines = lines.removeEmptyColumns();
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		final RegexResult lineLast = getEndingPattern().matcher(lines.getLast().getString());
+		if (line0 == null || lineLast == null)
+			return "Adding a multiline activity";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Adding an activity spanning ").append(lines.size())
+				.append(lines.size() == 1 ? " line" : " lines").append(" of text");
+
+		// The stereotypes written after the final ';' carry the colors and may
+		// select a box style (see Stereogroup).
+		final Stereogroup stereogroup = Stereogroup.build(lineLast);
+		if (stereogroup.isEmpty() == false) {
+			sb.append(", stereotyped ").append(lineLast.get("STEREOGROUP", 0));
+			final BoxStyle style = stereogroup.getBoxStyle();
+			if (style != BoxStyle.PLAIN)
+				sb.append(" (box style: ").append(style.name().toLowerCase()).append(")");
+		}
+
+		// Mirror the deprecation warning emitted by executeNow; note that the
+		// leading color is parsed but no longer applied.
+		if (line0.get("COLOR", 0) != null)
+			sb.append(" (deprecated and ignored color syntax: write <<").append(line0.get("COLOR", 0))
+					.append(">> after the ';')");
+
+		return sb.toString();
 	}
 
 	@Override

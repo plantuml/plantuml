@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.LinkRendering;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -70,6 +71,26 @@ public class CommandElse3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'else (label)' starts the alternative branch of the enclosing 'if';
+		// the optional '(...)' group labels and colors the branch arrow.
+		sb.append("Starting the 'else' branch of the enclosing if");
+
+		final String when = arg.get("WHEN", 0);
+		if (when != null && when.isEmpty() == false)
+			sb.append(", labelled \"").append(when).append("\"");
+
+		final String color = arg.get("WHEN_COLOR", 0);
+		if (color != null)
+			sb.append(", branch arrow color or style '").append(color).append("'");
+
+		return sb.toString();
 	}
 
 	@Override

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -79,6 +80,39 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "NOTE", "(.*)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'note left: text' attaches a note to the latest activity; a
+		// 'floating note' is not attached to anything. The default position is
+		// on the left.
+		if (arg.get("TYPE", 0).startsWith("floating"))
+			sb.append("Adding a floating note");
+		else
+			sb.append("Adding a note attached to the latest activity");
+
+		final String position = arg.get("POSITION", 0);
+		if (position != null && position.isEmpty() == false)
+			sb.append(" on the ").append(position);
+
+		sb.append(" labelled \"").append(arg.get("NOTE", 0)).append("\"");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		if (arg.get("STEREO", 0) != null)
+			sb.append(", stereotype ").append(arg.get("STEREO", 0));
+
+		// The stereotag is parsed but never read by executeArg.
+		final String tags = arg.get("TAGS", 0);
+		if (tags != null && tags.isEmpty() == false)
+			sb.append(" (the tag ").append(tags).append(" is currently ignored)");
+
+		return sb.toString();
 	}
 
 	@Override

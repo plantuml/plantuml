@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -56,6 +57,15 @@ public class CommandSplit3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.start(), //
 				new RegexLeaf("split"), //
 				new RegexLeaf(";?"), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'split' starts a set of unsynchronized branches, separated by
+		// 'split again' and closed by 'end split'; unlike 'fork', no
+		// synchronization bar is drawn.
+		return "Splitting the flow into unsynchronized branches";
 	}
 
 	@Override

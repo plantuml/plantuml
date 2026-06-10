@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -57,6 +58,15 @@ public class CommandCloseGroupLegacy3 extends SingleLineCommand2<ActivityDiagram
 				new RegexLeaf(1, "CMD", "(end ?group|group ?end)"), //
 				new RegexLeaf(";?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Legacy spelling of the closing '}'. Mirror the warning emitted by
+		// executeArg.
+		return "Closing the current group or partition (deprecated: use '}' instead of '" + arg.get("CMD", 0)
+				+ "')";
 	}
 
 	@Override
