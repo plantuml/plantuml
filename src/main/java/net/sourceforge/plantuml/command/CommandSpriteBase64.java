@@ -69,6 +69,14 @@ public class CommandSpriteBase64 extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Defines a sprite from an inline PNG image encoded as a data URI;
+		// executeArg fails if the Base64 payload is not a decodable PNG.
+		return "Defining the sprite '" + arg.get("NAME", 0) + "' from an inline Base64 encoded PNG image ("
+				+ arg.get("DATA", 0).length() + " characters)";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String base64 = arg.get("DATA", 0);

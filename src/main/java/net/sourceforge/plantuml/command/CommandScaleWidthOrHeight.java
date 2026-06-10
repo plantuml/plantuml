@@ -62,6 +62,16 @@ public class CommandScaleWidthOrHeight extends SingleLineCommand2<AbstractDiagra
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'scale N width' (or 'scale N height') resizes the final image so
+		// that the given dimension is exactly N pixels, keeping the aspect
+		// ratio; unlike the 'scale max' forms, it may enlarge a smaller image.
+		final boolean width = "width".equalsIgnoreCase(arg.get("WIDTH", 0));
+		return "Resizing the diagram so that its " + (width ? "width" : "height") + " is " + arg.get("VALUE", 0)
+				+ " pixels";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final double size = Double.parseDouble(arg.get("VALUE", 0));
 		final boolean width = "width".equalsIgnoreCase(arg.get("WIDTH", 0));

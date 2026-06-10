@@ -65,6 +65,14 @@ public class CommandScaleMaxWidthAndHeight extends SingleLineCommand2<AbstractDi
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'scale max WxH' shrinks the final image if needed so that it fits
+		// within W x H pixels, keeping its aspect ratio (it never enlarges it).
+		return "Limiting the size of the diagram to " + arg.get("WIDTH", 0) + " x " + arg.get("HEIGHT", 0)
+				+ " pixels";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		final double height = Double.parseDouble(arg.get("HEIGHT", 0));

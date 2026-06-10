@@ -177,6 +177,117 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// The relation kind is deduced from the arrow decorations, like in
+		// getLinkType(); an endpoint may be a plain entity or a '(A, B)'
+		// couple targeting an existing association (association class syntax,
+		// see the executeArgSpecial methods).
+		sb.append("Drawing ").append(describeRelation(getArrowHead1(arg), getArrowHead2(arg))).append(" between ")
+				.append(describeEndpoint(arg, "ENT1", "COUPLE1")).append(" and ")
+				.append(describeEndpoint(arg, "ENT2", "COUPLE2"));
+
+		if (notNull(arg.get("ARROW_BODY1", 0)).contains(".") || notNull(arg.get("ARROW_BODY2", 0)).contains("."))
+			sb.append(", dashed");
+
+		final String direction = arg.get("ARROW_DIRECTION", 0);
+		if (direction != null && direction.isEmpty() == false)
+			sb.append(", oriented ").append(describeDirection(direction));
+
+		if (arg.get("INSIDE", 0) != null)
+			sb.append(", with a middle circle");
+
+		final String style = arg.getLazzy("ARROW_STYLE", 0);
+		if (style != null)
+			sb.append(", with style '").append(style).append("'");
+
+		final String qualifier1 = arg.get("QUALIFIER1", 0);
+		if (qualifier1 != null)
+			sb.append(", qualifier \"").append(qualifier1).append("\" on the first end");
+
+		final String qualifier2 = arg.get("QUALIFIER2", 0);
+		if (qualifier2 != null)
+			sb.append(", qualifier \"").append(qualifier2).append("\" on the second end");
+
+		final String firstLabel = arg.get("FIRST_LABEL", 0);
+		if (firstLabel != null)
+			sb.append(", cardinality \"").append(firstLabel).append("\" on the first end");
+
+		final String secondLabel = arg.get("SECOND_LABEL", 0);
+		if (secondLabel != null)
+			sb.append(", cardinality \"").append(secondLabel).append("\" on the second end");
+
+		final String firstRole = arg.get("FIRST_ROLE", 0);
+		if (firstRole != null)
+			sb.append(", role \"").append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(firstRole))
+					.append("\" on the first end");
+
+		final String secondRole = arg.get("SECOND_ROLE", 0);
+		if (secondRole != null)
+			sb.append(", role \"").append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(secondRole))
+					.append("\" on the second end");
+
+		final String label = arg.get("LABEL_LINK", 0);
+		if (label != null)
+			sb.append(", labelled \"").append(label).append("\"");
+
+		if (arg.get("STEREOTYPE", 0) != null)
+			sb.append(", stereotype ").append(arg.get("STEREOTYPE", 0));
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", line color ").append(arg.get("COLOR", 0));
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		final String weight = arg.get("HEADER", 0);
+		if (weight != null)
+			sb.append(", weight ").append(weight);
+
+		return sb.toString();
+	}
+
+	private String describeRelation(String head1, String head2) {
+		// Keep the most significant decoration: '<|' wins over '<', and so on.
+		final String heads = head1 + head2;
+		if (heads.contains("|"))
+			return "an extension (inheritance) link";
+		if (heads.contains("*"))
+			return "a composition link";
+		if (heads.contains("o"))
+			return "an aggregation link";
+		if (heads.contains("<") || heads.contains(">"))
+			return "a directed association";
+		if (heads.isEmpty())
+			return "an association";
+		return "a link";
+	}
+
+	private String describeEndpoint(RegexResult arg, String entKey, String coupleKey) {
+		final String ent = arg.get(entKey, 0);
+		if (ent != null)
+			return "'" + StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(ent) + "'";
+
+		return "the association between '"
+				+ StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(coupleKey, 0)) + "' and '"
+				+ StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(coupleKey, 1)) + "'";
+	}
+
+	private String describeDirection(String direction) {
+		switch (StringUtils.goLowerCase(direction).charAt(0)) {
+		case 'l':
+			return "to the left";
+		case 'r':
+			return "to the right";
+		case 'u':
+			return "upwards";
+		default:
+			return "downwards";
+		}
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 		String ent1String = diagram.cleanId(arg.get("ENT1", 0));

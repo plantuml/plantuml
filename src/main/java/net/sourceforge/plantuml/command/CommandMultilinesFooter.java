@@ -54,6 +54,34 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 				Pattern2.cmpile("^end[%s]?footer$"));
 	}
 
+	@Override
+	public String explain(BlocLines lines) {
+		// CommandMultilines does not dispatch explain() to a helper like
+		// CommandMultilines2.explainNow does, so it is overridden directly.
+		// Mirror execute(): the optional alignment prefixes the 'footer'
+		// keyword, the lines up to 'end footer' are the text; when no
+		// position is given, the alignment comes from the current style.
+		lines = lines.trim();
+		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString(), 0);
+		if (m.find() == false)
+			return "Setting the footer of the diagram";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Setting the footer of the diagram");
+
+		final String align = m.group(1);
+		if (align != null)
+			sb.append(", aligned ").append(align);
+
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		if (bodyCount > 0)
+			sb.append(", from ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines").append(" of text");
+		else
+			sb.append(" (rejected at execution: empty footer)");
+
+		return sb.toString();
+	}
+
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 		final LineLocation location = lines.getLocation();

@@ -91,6 +91,26 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 			MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END) {
 
 		@Override
+		protected String explainNow(BlocLines lines) {
+			// Mirror executeNow: same preprocessing, then the lines between the
+			// declaration and the closing '}' (or 'end sprite') are the data.
+			lines = lines.trim().removeEmptyLines();
+			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+			if (line0 == null)
+				return "Defining a sprite";
+
+			final StringBuilder sb = new StringBuilder(explainSprite(line0));
+			final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+			if (bodyCount > 0)
+				sb.append(", with ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines")
+						.append(" of data");
+			else
+				sb.append(" (rejected at execution: no sprite data)");
+
+			return sb.toString();
+		}
+
+		@Override
 		protected CommandExecutionResult executeNow(final TitledDiagram system, BlocLines lines, ParserPass currentPass) {
 			lines = lines.trim().removeEmptyLines();
 			final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
@@ -109,12 +129,49 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Tit
 		return new SingleLineCommand2<TitledDiagram>(singleLine) {
 
 			@Override
+			protected String explainArg(LineLocation location, RegexResult arg) {
+				return explainSprite(arg) + " from an inline data string";
+			}
+
+			@Override
 			protected CommandExecutionResult executeArg(final TitledDiagram system, LineLocation location, RegexResult arg,
 					ParserPass currentPass) {
 				return executeInternal(system, arg, Arrays.asList((String) arg.get("DATA", 0)));
 			}
 
 		};
+	}
+
+	/**
+	 * Builds the explanation shared by the single line and the multiline
+	 * flavors, mirroring the fields read by
+	 * {@link #executeInternal(WithSprite, RegexResult, List)}.
+	 */
+	private String explainSprite(RegexResult line0) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Defining the sprite '").append(line0.get("NAME", 0)).append("'");
+
+		if (line0.get("DIM", 0) == null) {
+			// No [WxH/...] specification: 16 gray levels, dimensions deduced
+			// from the data.
+			sb.append(", 16 gray levels, dimensions deduced from the data");
+		} else {
+			sb.append(", ").append(line0.get("DIM", 0)).append(" x ").append(line0.get("DIM", 1))
+					.append(" pixels");
+			if (line0.get("DIM", 4) != null) {
+				// The [WxH/color] form uses the 4096 colors encoding.
+				sb.append(", 4096 colors");
+			} else {
+				final String nbLevel = line0.get("DIM", 2);
+				sb.append(", ").append(nbLevel).append(" gray levels");
+				if (line0.get("DIM", 3) != null)
+					sb.append(", compressed (z) encoding");
+				if (nbLevel.equals("4") == false && nbLevel.equals("8") == false && nbLevel.equals("16") == false)
+					sb.append(" (rejected at execution: only 4, 8 or 16 gray levels are allowed)");
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public Command<TitledDiagram> createMultiLine(boolean withBracketUnused) {

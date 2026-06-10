@@ -63,6 +63,13 @@ public class CommandScaleMaxWidth extends SingleLineCommand2<AbstractDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'scale max N width' shrinks the final image if needed so that its
+		// width does not exceed N pixels (it never enlarges it).
+		return "Limiting the width of the diagram to " + arg.get("WIDTH", 0) + " pixels";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		diagram.setScale(new ScaleMaxWidth(width));

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -64,6 +65,14 @@ public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				StereotypePattern.mandatory("STEREO"), //
 				RegexLeaf.end()); //
+	}
+
+	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'A <<stereotype>>' sets the stereotype of an already existing
+		// element (executeArg fails if it does not exist).
+		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
+		return "Setting the stereotype of '" + name + "' to " + arg.get("STEREO", 0);
 	}
 
 	@Override

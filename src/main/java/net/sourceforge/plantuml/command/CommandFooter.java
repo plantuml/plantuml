@@ -71,6 +71,23 @@ public class CommandFooter extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'center footer Text' (or 'footer: Text') displays a footer under
+		// the diagram. When no position is given, the alignment comes from
+		// the current style. The label may be quoted (LABEL1) or unquoted
+		// (LABEL2), hence the lazzy lookup, like in executeArg.
+		sb.append("Setting the footer of the diagram to \"").append(arg.getLazzy("LABEL", 0)).append("\"");
+
+		final String position = arg.get("POSITION", 0);
+		if (position != null)
+			sb.append(", aligned ").append(position);
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String align = arg.get("POSITION", 0);

@@ -67,6 +67,15 @@ public class CommandLegend extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The legend may be quoted (LEGEND1) or unquoted (LEGEND2); executeArg
+		// reads whichever is present through getLazzy. This single line form
+		// is always displayed centered at the bottom of the diagram, unlike
+		// the 'legend ... end legend' block which accepts alignments.
+		return "Setting the legend of the diagram to \"" + arg.getLazzy("LEGEND", 0) + "\"";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("LEGEND", 0));
 		diagram.setLegend(DisplayPositioned.single(s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));

@@ -67,6 +67,14 @@ public class CommandTitle extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The title may be quoted (TITLE1) or unquoted (TITLE2); executeArg
+		// reads whichever is present through getLazzy("TITLE", 0). It is
+		// displayed centered at the top of the diagram.
+		return "Setting the title of the diagram to \"" + arg.getLazzy("TITLE", 0) + "\"";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("TITLE", 0));

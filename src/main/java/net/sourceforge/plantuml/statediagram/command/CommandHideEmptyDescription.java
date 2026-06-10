@@ -63,6 +63,18 @@ public class CommandHideEmptyDescription extends SingleLineCommand2<TitledDiagra
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// In state diagrams, states without any description are drawn as a
+		// simple box when this is hidden, instead of the default two
+		// compartments shape.
+		final boolean hide = arg.get("HIDE", 0).equalsIgnoreCase("hide");
+		if (hide)
+			return "Hiding the empty description compartment of states";
+
+		return "Showing the empty description compartment of states";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final boolean hide = arg.get("HIDE", 0).equalsIgnoreCase("hide");
 		diagram.setHideEmptyDescription(hide);

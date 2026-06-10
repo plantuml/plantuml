@@ -64,6 +64,14 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '<> name' creates a diamond shaped association node, used as a
+		// junction point between several association lines. Unlike most
+		// creation commands, executeArg fails if the name already exists.
+		return "Creating the association diamond '" + arg.get("CODE", 0) + "'";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String idShort = arg.get("CODE", 0);
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));

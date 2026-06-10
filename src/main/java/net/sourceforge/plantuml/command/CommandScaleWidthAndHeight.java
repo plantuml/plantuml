@@ -63,6 +63,15 @@ public class CommandScaleWidthAndHeight extends SingleLineCommand2<AbstractDiagr
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'scale WxH' resizes the final image to fit within W x H pixels,
+		// keeping its aspect ratio; unlike 'scale max WxH', it may enlarge a
+		// smaller image.
+		return "Resizing the diagram to fit within " + arg.get("WIDTH", 0) + " x " + arg.get("HEIGHT", 0)
+				+ " pixels";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		final double height = Double.parseDouble(arg.get("HEIGHT", 0));

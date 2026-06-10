@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command.note.sequence;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.annotation.Explanation;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -124,11 +125,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 		};
 	}
 
-	/**
-	 * Builds the explanation shared by the single line and the multiline
-	 * flavors, mirroring the fields read by
-	 * {@link #executeInternal(SequenceDiagram, RegexResult, Display)}.
-	 */
+	@Explanation
 	private String explainInternal(RegexResult arg, String label) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -170,8 +167,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 		return sb.toString();
 	}
 
-	private final static Lazy<Pattern2> END = new Lazy<>(
-			() -> Pattern2.cmpile("^end[%s]?(note|hnote|rnote)$"));
+	private final static Lazy<Pattern2> END = new Lazy<>(() -> Pattern2.cmpile("^end[%s]?(note|hnote|rnote)$"));
 
 	public Command<SequenceDiagram> createMultiLine(boolean withBracket) {
 		return new CommandMultilines2<SequenceDiagram>(getRegexConcatMultiLine(),

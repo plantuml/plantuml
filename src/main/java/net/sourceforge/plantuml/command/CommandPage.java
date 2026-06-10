@@ -62,6 +62,24 @@ public class CommandPage extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'page 2x3' splits the diagram into a grid of pages, here 2
+		// horizontally and 3 vertically.
+		final String horizontal = arg.get("NB1", 0);
+		final String vertical = arg.get("NB2", 0);
+		sb.append("Splitting the diagram into ").append(horizontal).append(" x ").append(vertical)
+				.append(" pages (").append(horizontal).append(" horizontally, ").append(vertical)
+				.append(" vertically)");
+
+		if (horizontal.matches("0+") || vertical.matches("0+"))
+			sb.append(" (rejected at execution: arguments must be positive)");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
 		final int horizontal = Integer.parseInt(arg.get("NB1", 0));

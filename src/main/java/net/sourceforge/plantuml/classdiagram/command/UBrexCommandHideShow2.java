@@ -64,6 +64,31 @@ public class UBrexCommandHideShow2 extends UBrexSingleLineCommand2<CucaDiagram> 
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// UBREX twin of CommandHideShow2: hides or shows whole elements,
+		// designated by their name or by a stereotype (see
+		// CucaDiagram.hideOrShow2).
+		final char tmp = arg.get("COMMAND", 0).charAt(0);
+		final boolean show = tmp == 's' || tmp == 'S';
+		sb.append(show ? "Showing" : "Hiding");
+
+		final String what = arg.get("WHAT", 0).trim();
+		if (what.startsWith("<<"))
+			sb.append(" the elements stereotyped ").append(what);
+		else
+			sb.append(" the elements matching '").append(what).append("'");
+
+		// Only the first letter of COMMAND is read by executeArg, so the
+		// '-class' variants behave like the plain keywords.
+		if (arg.get("COMMAND", 0).contains("-"))
+			sb.append(" (the '-class' suffix has no specific effect)");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 

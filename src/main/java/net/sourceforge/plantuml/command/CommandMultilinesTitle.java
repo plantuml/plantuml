@@ -55,6 +55,20 @@ public class CommandMultilinesTitle extends CommandMultilines<TitledDiagram> {
 
 	}
 
+	@Override
+	public String explain(BlocLines lines) {
+		// CommandMultilines does not dispatch explain() to a helper like
+		// CommandMultilines2.explainNow does, so it is overridden directly.
+		// The lines between 'title' and 'end title' are the text, displayed
+		// centered at the top of the diagram.
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		if (bodyCount == 0)
+			return "Setting the title of the diagram (rejected at execution: no title defined)";
+
+		return "Setting the title of the diagram from " + bodyCount + (bodyCount == 1 ? " line" : " lines")
+				+ " of text";
+	}
+
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 		final LineLocation location = lines.getLocation();

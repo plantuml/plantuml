@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
@@ -65,6 +66,17 @@ public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end()); //
+	}
+
+	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'A : +field' adds a field or a method to the body of 'A', creating
+		// it as a class if it does not exist yet. Whether it is a field or a
+		// method is deduced later by the bodier, mostly from the presence of
+		// parentheses.
+		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
+		return "Adding the field or method \"" + arg.get("DATA", 0) + "\" to '" + name
+				+ "' (created as a class if it does not exist yet)";
 	}
 
 	@Override

@@ -65,6 +65,14 @@ public class CommandSpriteSvg extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Defines a sprite from an inline '<svg>...</svg>' element, parsed by
+		// the SVG sprite parser.
+		return "Defining the sprite '" + arg.get("NAME", 0) + "' from an inline SVG element ("
+				+ arg.get("SVG", 0).length() + " characters)";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String svg = arg.get("SVG", 0);

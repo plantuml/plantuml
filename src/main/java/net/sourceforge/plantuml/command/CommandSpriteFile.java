@@ -75,6 +75,29 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Defining the sprite '").append(arg.get("NAME", 0)).append("'");
+
+		// Mirror the source dispatch of executeArg, without any file access:
+		// 'jar:' loads an internal sprite, '~' targets an entry inside a zip
+		// archive, otherwise the path is an SVG or raster image file.
+		final String src = arg.get("FILE", 0);
+		if (src.startsWith("jar:"))
+			sb.append(" from the internal sprite '").append(src.substring(4)).append("'");
+		else if (src.contains("~")) {
+			final int idx = src.lastIndexOf("~");
+			sb.append(" from the entry '").append(src.substring(idx + 1)).append("' of the archive '")
+					.append(src.substring(0, idx)).append("'");
+		} else if (isSvg(src))
+			sb.append(" from the SVG file '").append(src).append("'");
+		else
+			sb.append(" from the image file '").append(src).append("'");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String src = arg.get("FILE", 0);
 		final Sprite sprite;

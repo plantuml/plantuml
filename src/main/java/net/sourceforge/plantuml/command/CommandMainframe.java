@@ -63,6 +63,14 @@ public class CommandMainframe extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'mainframe Title' (or 'mainframe: Title') draws a frame around the
+		// whole diagram, with the label in its top left pentagonal corner, as
+		// in UML 'sd' interaction frames.
+		return "Framing the whole diagram with the label \"" + arg.get("LABEL", 0) + "\"";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));

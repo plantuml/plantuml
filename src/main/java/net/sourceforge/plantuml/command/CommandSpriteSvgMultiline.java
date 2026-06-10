@@ -73,6 +73,19 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 	}
 
 	@Override
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: the '<svg' element starts on the declaration line
+		// itself and the closing '</svg>' line is part of the data, so the
+		// whole block contributes to the SVG.
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Defining a sprite from an inline SVG element";
+
+		return "Defining the sprite '" + line0.get("NAME", 0) + "' from an inline SVG element of " + lines.size()
+				+ (lines.size() == 1 ? " line" : " lines");
+	}
+
+	@Override
 	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 

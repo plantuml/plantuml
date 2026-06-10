@@ -78,6 +78,36 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 	}
 
 	@Override
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: the optional alignments are on the first line, the
+		// lines up to 'end legend' are the text of the legend (default
+		// position when not given: bottom, centered).
+		lines = lines.trimSmart(1);
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Setting the legend of the diagram";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Setting the legend of the diagram");
+
+		final String valign = line0.get("VALIGN", 0);
+		if (valign != null)
+			sb.append(", positioned at the ").append(valign);
+
+		final String align = line0.get("ALIGN", 0);
+		if (align != null)
+			sb.append(", aligned ").append(align);
+
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		if (bodyCount > 0)
+			sb.append(", from ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines").append(" of text");
+		else
+			sb.append(" (rejected at execution: no legend defined)");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 		final LineLocation location = lines.getLocation();

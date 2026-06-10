@@ -72,6 +72,44 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<TitledDiagra
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Hides or shows class members according to their visibility modifier.
+		// This command only applies to class diagrams and is silently ignored
+		// for other diagram types (see executeArg).
+		final boolean show = arg.get("COMMAND", 0).equalsIgnoreCase("show");
+		sb.append(show ? "Showing the " : "Hiding the ");
+
+		// Same tokenization as executeArgClass.
+		final StringTokenizer st = new StringTokenizer(StringUtils.goLowerCase(arg.get("VISIBILITY", 0)), " ,");
+		final StringBuilder visibilities = new StringBuilder();
+		while (st.hasMoreTokens()) {
+			if (visibilities.length() > 0)
+				visibilities.append(", ");
+			visibilities.append(st.nextToken());
+		}
+		if (visibilities.length() > 0)
+			sb.append(visibilities).append(" ");
+
+		// Same normalization as getEntityPortion: 'attributes' and 'fields'
+		// are the same portion.
+		final String portion = StringUtils.goLowerCase(arg.get("PORTION", 0));
+		if (portion.startsWith("met"))
+			sb.append("methods");
+		else if (portion.startsWith("mem"))
+			sb.append("members (fields and methods)");
+		else
+			sb.append("fields");
+		sb.append(" of classes");
+
+		if (visibilities.length() == 0)
+			sb.append(" (no visibility modifier given: ignored at execution)");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram classDiagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		if (classDiagram instanceof ClassDiagram) {
 			return executeArgClass((ClassDiagram) classDiagram, arg);

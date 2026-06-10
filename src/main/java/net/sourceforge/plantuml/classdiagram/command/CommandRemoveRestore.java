@@ -59,6 +59,25 @@ public class CommandRemoveRestore extends SingleLineCommand2<CucaDiagram> {
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// Unlike 'hide' which keeps the elements in the layout, 'remove'
+		// completely removes them from the diagram; 'restore' cancels a
+		// previous removal (see CucaDiagram.removeOrRestore).
+		final boolean restore = arg.get("COMMAND", 0).equalsIgnoreCase("restore");
+		sb.append(restore ? "Restoring" : "Removing");
+
+		final String what = arg.get("WHAT", 0).trim();
+		if (what.startsWith("<<"))
+			sb.append(" the elements stereotyped ").append(what);
+		else
+			sb.append(" the elements matching '").append(what).append("'");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
 		final boolean show = arg.get("COMMAND", 0).equalsIgnoreCase("restore");

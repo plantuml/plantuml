@@ -68,6 +68,18 @@ public class CommandNamespaceSeparator extends SingleLineCommand2<TitledDiagram>
 	}
 
 	@Override
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The namespace separator is the string splitting an element name into
+		// nested namespaces (the default is '.'); 'none' or 'null' disables
+		// this splitting, so dots become plain characters of the name.
+		final String separator = arg.get("SEPARATOR", 0);
+		if ("none".equalsIgnoreCase(separator) || "null".equalsIgnoreCase(separator))
+			return "Disabling the namespace separator: element names are no longer split into namespaces";
+
+		return "Setting the namespace separator to '" + separator + "'";
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String s = arg.get("SEPARATOR", 0);
