@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
-public class ProtectedCommand&lt;S extends Diagram&gt; implements Command&lt;S&gt; {
+public final class ProtectedCommand&lt;S extends Diagram&gt; implements Command&lt;S&gt; {
 
 	private final Command&lt;S&gt; cmd;
 
@@ -76,19 +76,24 @@ public class ProtectedCommand&lt;S extends Diagram&gt; implements Command&lt;S&g
 <span class="fc" id="L76">			return CommandExecutionResult.error(msg, t);</span>
 		}
 	}
+	
+	@Override
+	public String explain(BlocLines lines) {
+<span class="nc" id="L82">		return cmd.explain(lines);</span>
+	}
 
 	public CommandControl isValid(BlocLines lines) {
-<span class="nc" id="L81">		return cmd.isValid(lines);</span>
+<span class="nc" id="L86">		return cmd.isValid(lines);</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc" id="L86">		return cmd.isEligibleFor(pass);</span>
+<span class="nc" id="L91">		return cmd.isEligibleFor(pass);</span>
 	}
 
 	@Override
 	public final boolean isCommandForbidden(BlocLines lines) {
-<span class="nc" id="L91">		return cmd.isCommandForbidden(lines);</span>
+<span class="nc" id="L96">		return cmd.isCommandForbidden(lines);</span>
 	}
 
 }

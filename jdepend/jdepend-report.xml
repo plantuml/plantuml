@@ -5169,12 +5169,12 @@
 
         <Package name="net.sourceforge.plantuml.command">
             <Stats>
-                <TotalClasses>32</TotalClasses>
-                <ConcreteClasses>29</ConcreteClasses>
+                <TotalClasses>31</TotalClasses>
+                <ConcreteClasses>28</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>59</Ca>
                 <Ce>31</Ce>
-                <A>0.09</A>
+                <A>0.1</A>
                 <I>0.34</I>
                 <D>0.56</D>
                 <V>1</V>
@@ -5213,9 +5213,6 @@
                 </Class>
                 <Class sourceFile="CommandHeader.java">
                     net.sourceforge.plantuml.command.CommandHeader
-                </Class>
-                <Class sourceFile="CommandMultilinesComment.java">
-                    net.sourceforge.plantuml.command.CommandMultilinesComment
                 </Class>
                 <Class sourceFile="CommandMultilinesFooter.java">
                     net.sourceforge.plantuml.command.CommandMultilinesFooter

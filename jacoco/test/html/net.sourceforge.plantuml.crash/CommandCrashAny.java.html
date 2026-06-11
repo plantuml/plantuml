@@ -39,6 +39,7 @@ import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexZeroOrMore;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -49,18 +50,24 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandCrashAny extends UBrexSingleLineCommand2&lt;CrashDiagram&gt; {
 
 	public CommandCrashAny() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L56">		return new UBrexZeroOrMore(new UBrexLeaf(&quot;〴.&quot;));</span>
+<span class="fc" id="L57">		return new UBrexZeroOrMore(new UBrexLeaf(&quot;〴.&quot;));</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L63">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(CrashDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="fc" id="L63">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L70">		return CommandExecutionResult.ok();</span>
 	}
 
 }
