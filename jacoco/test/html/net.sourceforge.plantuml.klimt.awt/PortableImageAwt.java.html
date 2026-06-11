@@ -111,13 +111,20 @@ class PortableImageAwt implements PortableImage {
 	 * @return a new scaled PortableImage
 	 */
 	public PortableImageAwt scale(double scaleFactor, int interpolationType) {
-<span class="fc" id="L114">		final int w = (int) Math.round(image.getWidth() * scaleFactor);</span>
-<span class="fc" id="L115">		final int h = (int) Math.round(image.getHeight() * scaleFactor);</span>
-<span class="fc" id="L116">		final BufferedImage scaled = new BufferedImage(w, h, image.getType());</span>
-<span class="fc" id="L117">		final AffineTransform at = new AffineTransform();</span>
-<span class="fc" id="L118">		at.scale(scaleFactor, scaleFactor);</span>
-<span class="fc" id="L119">		final AffineTransformOp scaleOp = new AffineTransformOp(at, interpolationType);</span>
-<span class="fc" id="L120">		return new PortableImageAwt(scaleOp.filter(image, scaled));</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (scaleFactor == 1)</span>
+<span class="nc" id="L115">			return this;</span>
+
+<span class="fc" id="L117">		final int w = (int) Math.round(image.getWidth() * scaleFactor);</span>
+<span class="fc" id="L118">		final int h = (int) Math.round(image.getHeight() * scaleFactor);</span>
+		// Always use TYPE_INT_ARGB as destination: copying image.getType() may yield a
+		// type without alpha (e.g. RGB color type 2) or TYPE_CUSTOM, which produces a
+		// blank image after AffineTransformOp and breaks the GraalVM native build
+		// (missing ComponentColorModel JNI/reflection configuration).
+<span class="fc" id="L123">		final BufferedImage scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);</span>
+<span class="fc" id="L124">		final AffineTransform at = new AffineTransform();</span>
+<span class="fc" id="L125">		at.scale(scaleFactor, scaleFactor);</span>
+<span class="fc" id="L126">		final AffineTransformOp scaleOp = new AffineTransformOp(at, interpolationType);</span>
+<span class="fc" id="L127">		return new PortableImageAwt(scaleOp.filter(image, scaled));</span>
 	}
 
 }
