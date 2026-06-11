@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.NameAndCodeParser;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -49,15 +50,22 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandHideShowSpecificClass extends SingleLineCommand2&lt;CucaDiagram&gt; {
 
 	public CommandHideShowSpecificClass() {
-<span class="nc" id="L52">		super(getRegexConcat());</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L53">		super(getRegexConcat());</span>
+<span class="nc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L56">		return RegexConcat.build(CommandHideShowSpecificClass.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L57">		return RegexConcat.build(CommandHideShowSpecificClass.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;COMMAND&quot;, &quot;(hide|show)&quot;), //
-<span class="nc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L59">				NameAndCodeParser.codeForClass(), //</span>
-<span class="nc" id="L60">				RegexLeaf.end());</span>
+<span class="nc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L60">				NameAndCodeParser.codeForClass(), //</span>
+<span class="nc" id="L61">				RegexLeaf.end());</span>
+	}
+	
+	
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L68">		return null;</span>
 	}
 
 	@Override
@@ -83,7 +91,7 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2&lt;CucaDiag
 		// diagram.hideOrShow(hidden, arg.get(&quot;COMMAND&quot;, 0).equalsIgnoreCase(&quot;show&quot;));
 		// }
 		// return CommandExecutionResult.ok();
-<span class="nc" id="L86">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L94">		throw new UnsupportedOperationException();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -67,7 +67,7 @@ public class CommandActivity3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 <span class="fc" id="L67">		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //</span>
 				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L69">				color().getRegex(), //</span>
-<span class="fc" id="L70">				StereotypePattern.optional(&quot;IGNORED&quot;), //</span>
+<span class="fc" id="L70">				StereotypePattern.optionalIGNORED(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;;&quot;), //

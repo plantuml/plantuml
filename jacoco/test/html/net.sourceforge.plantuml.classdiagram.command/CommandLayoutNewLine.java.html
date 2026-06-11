@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -48,20 +49,28 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandLayoutNewLine extends SingleLineCommand2&lt;ClassDiagram&gt; {
 
 	public CommandLayoutNewLine() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	private static IRegex getRegexConcat() {
 
-<span class="fc" id="L56">		return RegexConcat.build(CommandLayoutNewLine.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandLayoutNewLine.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;layout_new_line&quot;), //
-<span class="fc" id="L58">				RegexLeaf.end());</span>
+<span class="fc" id="L59">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'layout_new_line' forces a line break in the layout: the unlinked
+		// elements declared after this point are placed on a new row.
+<span class="nc" id="L67">		return &quot;Forcing a layout line break: the following elements start a new row&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L63">		diagram.layoutNewLine();</span>
-<span class="nc" id="L64">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L72">		diagram.layoutNewLine();</span>
+<span class="nc" id="L73">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
