@@ -124,12 +124,12 @@ public abstract class BoxStyle {
 	}
 
 	public static BoxStyle fromString(String style) {
-<span class="nc" id="L127">		style = style.replaceAll(&quot;-&quot;, &quot;&quot;);</span>
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		for (BoxStyle bs : values)</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (style.equalsIgnoreCase(bs.stereotype))</span>
+<span class="fc" id="L127">		style = style.replaceAll(&quot;-&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		for (BoxStyle bs : values)</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">			if (style.equalsIgnoreCase(bs.stereotype))</span>
 <span class="nc" id="L130">				return bs;</span>
 
-<span class="nc" id="L132">		return PLAIN;</span>
+<span class="fc" id="L132">		return PLAIN;</span>
 	}
 
 	public Stereotype getStereotype() {

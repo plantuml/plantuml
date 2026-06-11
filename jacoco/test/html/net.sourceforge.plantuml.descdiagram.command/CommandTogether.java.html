@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,7 +48,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandTogether extends SingleLineCommand2&lt;AbstractEntityDiagram&gt; {
-    // ::remove folder when __HAXE__
 
 	public CommandTogether() {
 <span class="fc" id="L53">		super(getRegexConcat());</span>
@@ -61,10 +61,19 @@ public class CommandTogether extends SingleLineCommand2&lt;AbstractEntityDiagram
 	}
 
 	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'together {' groups the following elements so that the layout keeps
+		// them close to each other, without drawing any visible container;
+		// closed by '}'.
+<span class="nc" id="L69">		return &quot;Starting a 'together' block: the elements inside are kept close in the layout&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L66">		final CommandExecutionResult status = diagram.gotoTogether();</span>
-<span class="nc" id="L67">		return status;</span>
+<span class="nc" id="L75">		final CommandExecutionResult status = diagram.gotoTogether();</span>
+<span class="nc" id="L76">		return status;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
