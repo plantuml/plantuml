@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.cheneer.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -57,77 +58,84 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandCreateEntity extends SingleLineCommand2&lt;ChenEerDiagram&gt; {
 
 	public CommandCreateEntity() {
-<span class="fc" id="L60">		super(getRegexConcat());</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	protected static IRegex getRegexConcat() {
-<span class="fc" id="L64">		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L65">		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(entity|relationship)&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOptional( // Copied from CommandCreatePackageBlock
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;DISPLAY&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-<span class="fc" id="L70">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L71">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L72">								RegexLeaf.spaceOneOrMore() //</span>
+<span class="fc" id="L73">								RegexLeaf.spaceOneOrMore() //</span>
 						)), //
 				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;), //
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;STEREO&quot;, &quot;(&lt;&lt;.+&gt;&gt;)?&quot;), //
-<span class="fc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L78">				color().getRegex(), //</span>
-<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L79">				color().getRegex(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\{&quot;), //
-<span class="fc" id="L81">				RegexLeaf.end());</span>
+<span class="fc" id="L82">				RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L85">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L86">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L92">		return null;</span>
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 		LeafType type;
-<span class="pc bpc" id="L92" title="1 of 3 branches missed.">		switch (arg.get(&quot;TYPE&quot;, 0)) {</span>
+<span class="pc bpc" id="L100" title="1 of 3 branches missed.">		switch (arg.get(&quot;TYPE&quot;, 0)) {</span>
 		case &quot;entity&quot;:
-<span class="fc" id="L94">			type = LeafType.CHEN_ENTITY;</span>
-<span class="fc" id="L95">			break;</span>
+<span class="fc" id="L102">			type = LeafType.CHEN_ENTITY;</span>
+<span class="fc" id="L103">			break;</span>
 		case &quot;relationship&quot;:
-<span class="fc" id="L97">			type = LeafType.CHEN_RELATIONSHIP;</span>
-<span class="fc" id="L98">			break;</span>
+<span class="fc" id="L105">			type = LeafType.CHEN_RELATIONSHIP;</span>
+<span class="fc" id="L106">			break;</span>
 		default:
-<span class="nc" id="L100">			throw new IllegalStateException();</span>
+<span class="nc" id="L108">			throw new IllegalStateException();</span>
 		}
 
-<span class="fc" id="L103">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L104">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
-<span class="fc" id="L105">		String displayText = arg.get(&quot;DISPLAY&quot;, 0);</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">		if (displayText == null)</span>
-<span class="fc" id="L107">			displayText = quark.getName();</span>
+<span class="fc" id="L111">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L112">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="fc" id="L113">		String displayText = arg.get(&quot;DISPLAY&quot;, 0);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (displayText == null)</span>
+<span class="fc" id="L115">			displayText = quark.getName();</span>
 
-<span class="fc" id="L109">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L117">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="fc" id="L111">		Entity entity = quark.getData();</span>
+<span class="fc" id="L119">		Entity entity = quark.getData();</span>
 
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (entity == null) {</span>
-<span class="fc" id="L114">			Display display = Display.getWithNewlines(diagram.getPragma(), displayText);</span>
-<span class="fc" id="L115">			entity = diagram.reallyCreateLeaf(location, quark, display, type, null);</span>
-<span class="fc" id="L116">		} else {</span>
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">			if (entity.muteToType(type, null) == false)</span>
-<span class="nc" id="L118">				return CommandExecutionResult.error(&quot;Bad name&quot;);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (entity == null) {</span>
+<span class="fc" id="L122">			Display display = Display.getWithNewlines(diagram.getPragma(), displayText);</span>
+<span class="fc" id="L123">			entity = diagram.reallyCreateLeaf(location, quark, display, type, null);</span>
+<span class="fc" id="L124">		} else {</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">			if (entity.muteToType(type, null) == false)</span>
+<span class="nc" id="L126">				return CommandExecutionResult.error(&quot;Bad name&quot;);</span>
 		}
 
-<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (stereo != null) {</span>
-<span class="fc" id="L122">			entity.setStereotype(Stereotype.build(stereo));</span>
-<span class="fc" id="L123">			entity.setStereostyle(stereo);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">		if (stereo != null) {</span>
+<span class="fc" id="L130">			entity.setStereotype(Stereotype.build(stereo));</span>
+<span class="fc" id="L131">			entity.setStereostyle(stereo);</span>
 		}
 
-<span class="fc" id="L126">		entity.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="fc" id="L134">		entity.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="fc" id="L128">		diagram.pushOwner(entity);</span>
+<span class="fc" id="L136">		diagram.pushOwner(entity);</span>
 
-<span class="fc" id="L130">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L138">		return CommandExecutionResult.ok();</span>
 	}
 
 }

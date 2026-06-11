@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.help;
 
 import java.awt.GraphicsEnvironment;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,27 +50,34 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandHelpFont extends SingleLineCommand2&lt;Help&gt; {
 
 	public CommandHelpFont() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandHelpFont.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandHelpFont.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;help&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L59">				new RegexLeaf(&quot;fonts?&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L60">				new RegexLeaf(&quot;fonts?&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L66">		return null;</span>
+	}
+
+
+	@Override
 	protected CommandExecutionResult executeArg(Help diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L64">		diagram.add(&quot;&lt;b&gt;Help on font&quot;);</span>
-<span class="nc" id="L65">		diagram.add(&quot; &quot;);</span>
-<span class="nc" id="L66">		diagram.add(&quot; The possible font on your system are :&quot;);</span>
-<span class="nc" id="L67">		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (String n : name) {</span>
-<span class="nc" id="L69">			diagram.add(&quot;* &quot; + n);</span>
+<span class="nc" id="L72">		diagram.add(&quot;&lt;b&gt;Help on font&quot;);</span>
+<span class="nc" id="L73">		diagram.add(&quot; &quot;);</span>
+<span class="nc" id="L74">		diagram.add(&quot; The possible font on your system are :&quot;);</span>
+<span class="nc" id="L75">		final String name[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (String n : name) {</span>
+<span class="nc" id="L77">			diagram.add(&quot;* &quot; + n);</span>
 		}
 
-<span class="nc" id="L72">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L80">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

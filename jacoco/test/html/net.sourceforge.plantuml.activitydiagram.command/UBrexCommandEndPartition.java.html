@@ -41,6 +41,7 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexOr;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -51,26 +52,34 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class UBrexCommandEndPartition extends UBrexSingleLineCommand2&lt;ActivityDiagram&gt; {
 
 	public UBrexCommandEndPartition() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L58">		return UBrexConcat.build(new UBrexOr( //</span>
-<span class="fc" id="L59">				UBrexConcat.build(new UBrexLeaf(&quot;end&quot;), //</span>
-<span class="fc" id="L60">						UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L59">		return UBrexConcat.build(new UBrexOr( //</span>
+<span class="fc" id="L60">				UBrexConcat.build(new UBrexLeaf(&quot;end&quot;), //</span>
+<span class="fc" id="L61">						UBrexLeaf.spaceZeroOrMore(), //</span>
 						new UBrexLeaf(&quot;partition&quot;)), //
 				new UBrexLeaf(&quot;}&quot;), //
-<span class="fc" id="L63">				UBrexLeaf.end())); //</span>
+<span class="fc" id="L64">				UBrexLeaf.end())); //</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '}' (or 'end partition') closes the partition opened by the matching
+		// 'partition Name {' command (executeArg fails if none is open).
+<span class="nc" id="L72">		return &quot;Closing the current partition&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L69">		final boolean result = diagram.endGroup();</span>
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (result == false)</span>
-<span class="nc" id="L71">			return CommandExecutionResult.error(&quot;No partition defined&quot;);</span>
+<span class="nc" id="L78">		final boolean result = diagram.endGroup();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (result == false)</span>
+<span class="nc" id="L80">			return CommandExecutionResult.error(&quot;No partition defined&quot;);</span>
 
-<span class="nc" id="L73">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L82">		return CommandExecutionResult.ok();</span>
 	}
 
 }

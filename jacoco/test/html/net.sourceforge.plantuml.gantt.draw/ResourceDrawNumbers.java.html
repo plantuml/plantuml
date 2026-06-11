@@ -85,61 +85,66 @@ public class ResourceDrawNumbers implements ResourceDraw {
 
 <span class="fc" id="L86">		double startingPosition = -1;</span>
 <span class="fc" id="L87">		int totalLoad = 0;</span>
-<span class="fc" id="L88">		boolean isRed = false;</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (TimePoint i = min; i.compareTo(maxTimePointPrintedEndOfDay) &lt;= 0; i = i.increment()) {</span>
-<span class="fc" id="L90">			final boolean isBreaking = timeScale.isBreaking(i);</span>
-<span class="fc" id="L91">			final int load = ganttModelData.getLoadForResource(res, i);</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">			if (load &gt; 100)</span>
-<span class="nc" id="L93">				isRed = true;</span>
-<span class="fc" id="L94">			totalLoad += load;</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">			if (isBreaking) {</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">				if (totalLoad &gt; 0) {</span>
-<span class="fc" id="L97">					final TextBlock value = getTextBlock(totalLoad, isRed);</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">					if (startingPosition == -1)</span>
-<span class="fc" id="L99">						startingPosition = timeScale.getPosition(i);</span>
-<span class="fc" id="L100">					final double endingPosition = timeScale.getPosition(i) + timeScale.getWidth(i);</span>
-<span class="fc" id="L101">					final double start = (startingPosition + endingPosition) / 2</span>
-<span class="fc" id="L102">							- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;</span>
-<span class="fc" id="L103">					value.drawU(ug.apply(new UTranslate(start, 16)));</span>
+<span class="fc" id="L88">		int activeDays = 0;</span>
+<span class="fc" id="L89">		boolean isRed = false;</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		for (TimePoint i = min; i.compareTo(maxTimePointPrintedEndOfDay) &lt;= 0; i = i.increment()) {</span>
+<span class="fc" id="L91">			final boolean isBreaking = timeScale.isBreaking(i);</span>
+<span class="fc" id="L92">			final int load = ganttModelData.getLoadForResource(res, i);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">			if (load &gt; 100)</span>
+<span class="nc" id="L94">				isRed = true;</span>
+<span class="fc" id="L95">			totalLoad += load;</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			if (load &gt; 0)</span>
+<span class="fc" id="L97">				activeDays++;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">			if (isBreaking) {</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">				if (totalLoad &gt; 0) {</span>
+<span class="fc" id="L100">					final int displayedLoad = (int) Math.round((double) totalLoad / activeDays);</span>
+<span class="fc" id="L101">					final TextBlock value = getTextBlock(displayedLoad, isRed);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">					if (startingPosition == -1)</span>
+<span class="fc" id="L103">						startingPosition = timeScale.getPosition(i);</span>
+<span class="fc" id="L104">					final double endingPosition = timeScale.getPosition(i) + timeScale.getWidth(i);</span>
+<span class="fc" id="L105">					final double start = (startingPosition + endingPosition) / 2</span>
+<span class="fc" id="L106">							- value.calculateDimension(ug.getStringBounder()).getWidth() / 2;</span>
+<span class="fc" id="L107">					value.drawU(ug.apply(new UTranslate(start, 16)));</span>
 				}
-<span class="fc" id="L105">				startingPosition = -1;</span>
-<span class="fc" id="L106">				totalLoad = 0;</span>
-<span class="fc" id="L107">				isRed = false;</span>
+<span class="fc" id="L109">				startingPosition = -1;</span>
+<span class="fc" id="L110">				totalLoad = 0;</span>
+<span class="fc" id="L111">				activeDays = 0;</span>
+<span class="fc" id="L112">				isRed = false;</span>
 			} else {
-<span class="nc bnc" id="L109" title="All 2 branches missed.">				if (startingPosition == -1)</span>
-<span class="nc" id="L110">					startingPosition = timeScale.getPosition(i);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">				if (startingPosition == -1)</span>
+<span class="nc" id="L115">					startingPosition = timeScale.getPosition(i);</span>
 			}
 		}
 
-<span class="fc" id="L114">	}</span>
+<span class="fc" id="L119">	}</span>
 
 	private TextBlock getTextBlock(int totalLoad, boolean isRed) {
-<span class="fc" id="L117">		final Display display = Display.getWithNewlines(timelineStyleData.getSkinParam().getPragma(), &quot;&quot; + totalLoad);</span>
-<span class="fc" id="L118">		final FontConfiguration fontConfiguration = getFontConfiguration(isRed);</span>
-<span class="fc" id="L119">		return display.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
+<span class="fc" id="L122">		final Display display = Display.getWithNewlines(timelineStyleData.getSkinParam().getPragma(), &quot;&quot; + totalLoad);</span>
+<span class="fc" id="L123">		final FontConfiguration fontConfiguration = getFontConfiguration(isRed);</span>
+<span class="fc" id="L124">		return display.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty());</span>
 	}
 
 	private FontConfiguration getFontConfiguration(boolean isRed) {
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		return getFontConfiguration(9, isRed ? HColors.RED : HColors.BLACK);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		return getFontConfiguration(9, isRed ? HColors.RED : HColors.BLACK);</span>
 	}
 
 	private FontConfiguration getFontConfiguration(int size) {
-<span class="fc" id="L127">		return getFontConfiguration(size, HColors.BLACK);</span>
+<span class="fc" id="L132">		return getFontConfiguration(size, HColors.BLACK);</span>
 	}
 
 	private FontConfiguration getFontConfiguration(int size, HColor color) {
-<span class="fc" id="L131">		final UFont font = UFontFactory.serif(size);</span>
-<span class="fc" id="L132">		return FontConfiguration.create(font, color, color, null);</span>
+<span class="fc" id="L136">		final UFont font = UFontFactory.serif(size);</span>
+<span class="fc" id="L137">		return FontConfiguration.create(font, color, color, null);</span>
 	}
 
 	@Override
 	public double getHeight(StringBounder stringBounder) {
-<span class="fc" id="L137">		return 16 * 2;</span>
+<span class="fc" id="L142">		return 16 * 2;</span>
 	}
 
 	@Override
 	public final double getY() {
-<span class="fc" id="L142">		return y;</span>
+<span class="fc" id="L147">		return y;</span>
 	}
 
 }

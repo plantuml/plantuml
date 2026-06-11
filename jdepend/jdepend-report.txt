@@ -1548,8 +1548,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 9
-    Concrete Classes: 9
+    Total Classes: 5
+    Concrete Classes: 5
     Abstract Classes: 0
 
     Ca: 1
@@ -1562,11 +1562,7 @@ Stats:
 Abstract Classes:
 
 Concrete Classes:
-    net.sourceforge.plantuml.activitydiagram.command.CommandElse
-    net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition
-    net.sourceforge.plantuml.activitydiagram.command.CommandEndif
     net.sourceforge.plantuml.activitydiagram.command.CommandInnerConcurrent
-    net.sourceforge.plantuml.activitydiagram.command.CommandPartition
     net.sourceforge.plantuml.activitydiagram.command.UBrexCommandElse
     net.sourceforge.plantuml.activitydiagram.command.UBrexCommandEndPartition
     net.sourceforge.plantuml.activitydiagram.command.UBrexCommandEndif
@@ -3309,19 +3305,20 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 31
+    Total Classes: 32
     Concrete Classes: 29
-    Abstract Classes: 2
+    Abstract Classes: 3
 
     Ca: 59
-    Ce: 30
+    Ce: 31
 
-    A: 0.06
+    A: 0.09
     I: 0.34
-    D: 0.6
+    D: 0.56
 
 Abstract Classes:
     net.sourceforge.plantuml.command.CommandMultilines
+    net.sourceforge.plantuml.command.CommandMultilines3
     net.sourceforge.plantuml.command.PSystemAbstractFactory
 
 Concrete Classes:
@@ -3382,6 +3379,7 @@ Depends Upon:
     net.sourceforge.plantuml.statediagram.command
     net.sourceforge.plantuml.stereo
     net.sourceforge.plantuml.style
+    net.sourceforge.plantuml.teavm
     net.sourceforge.plantuml.text
     net.sourceforge.plantuml.url
     net.sourceforge.plantuml.utils
@@ -3799,12 +3797,12 @@ Stats:
     Concrete Classes: 24
     Abstract Classes: 6
 
-    Ca: 8
+    Ca: 7
     Ce: 21
 
     A: 0.2
-    I: 0.72
-    D: 0.08
+    I: 0.75
+    D: 0.05
 
 Abstract Classes:
     net.sourceforge.plantuml.cucadiagram.Bodier
@@ -3868,7 +3866,6 @@ Used By:
     net.sourceforge.plantuml.descdiagram
     net.sourceforge.plantuml.dot
     net.sourceforge.plantuml.skin
-    net.sourceforge.plantuml.statediagram.command
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.svek.image
     net.sourceforge.plantuml.xmi
@@ -10409,12 +10406,12 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 7
-    Concrete Classes: 7
+    Total Classes: 6
+    Concrete Classes: 6
     Abstract Classes: 0
 
     Ca: 2
-    Ce: 17
+    Ce: 16
 
     A: 0
     I: 0.89
@@ -10423,7 +10420,6 @@ Stats:
 Abstract Classes:
 
 Concrete Classes:
-    net.sourceforge.plantuml.statediagram.command.CommandAddField
     net.sourceforge.plantuml.statediagram.command.CommandConcurrentState
     net.sourceforge.plantuml.statediagram.command.CommandCreatePackage2
     net.sourceforge.plantuml.statediagram.command.CommandEndState
@@ -10437,7 +10433,6 @@ Depends Upon:
     net.sourceforge.plantuml.abel
     net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
-    net.sourceforge.plantuml.cucadiagram
     net.sourceforge.plantuml.decoration.symbol
     net.sourceforge.plantuml.descdiagram.command
     net.sourceforge.plantuml.klimt.color
@@ -11314,7 +11309,7 @@ Stats:
     Concrete Classes: 18
     Abstract Classes: 1
 
-    Ca: 42
+    Ca: 43
     Ce: 14
 
     A: 0.05
@@ -11365,6 +11360,7 @@ Used By:
     net.sourceforge.plantuml.activitydiagram3.ftile.vcompact
     net.sourceforge.plantuml.bpm
     net.sourceforge.plantuml.code
+    net.sourceforge.plantuml.command
     net.sourceforge.plantuml.core
     net.sourceforge.plantuml.crash
     net.sourceforge.plantuml.cucadiagram
@@ -14804,7 +14800,7 @@ net.atmp,3,0,19,10,0,0.34,0.66,1
 net.sourceforge.plantuml,38,13,96,33,0.34,0.26,0.4,1
 net.sourceforge.plantuml.abel,30,8,31,18,0.27,0.37,0.37,1
 net.sourceforge.plantuml.activitydiagram,2,0,2,12,0,0.86,0.14,1
-net.sourceforge.plantuml.activitydiagram.command,9,0,1,14,0,0.93,0.07,1
+net.sourceforge.plantuml.activitydiagram.command,5,0,1,14,0,0.93,0.07,1
 net.sourceforge.plantuml.activitydiagram3,27,4,6,25,0.15,0.81,0.05,1
 net.sourceforge.plantuml.activitydiagram3.command,30,0,1,17,0,0.94,0.06,1
 net.sourceforge.plantuml.activitydiagram3.ftile,62,6,10,26,0.1,0.72,0.18,1
@@ -14837,13 +14833,13 @@ net.sourceforge.plantuml.classdiagram.command,10,0,5,14,0,0.74,0.26,1
 net.sourceforge.plantuml.cli,12,3,7,5,0.25,0.42,0.33,1
 net.sourceforge.plantuml.code,25,4,3,10,0.16,0.77,0.07,1
 net.sourceforge.plantuml.code.deflate,5,1,1,3,0.2,0.75,0.05,1
-net.sourceforge.plantuml.command,31,2,59,30,0.06,0.34,0.6,1
+net.sourceforge.plantuml.command,32,3,59,31,0.09,0.34,0.56,1
 net.sourceforge.plantuml.command.note,11,1,4,17,0.09,0.81,0.1,1
 net.sourceforge.plantuml.command.note.sequence,8,0,1,10,0,0.91,0.09,1
 net.sourceforge.plantuml.core,12,2,79,40,0.17,0.34,0.5,1
 net.sourceforge.plantuml.crash,6,0,4,19,0,0.83,0.17,1
 net.sourceforge.plantuml.cruise,3,3,0,7,1,1,1,1
-net.sourceforge.plantuml.cucadiagram,30,6,8,21,0.2,0.72,0.08,1
+net.sourceforge.plantuml.cucadiagram,30,6,7,21,0.2,0.75,0.05,1
 net.sourceforge.plantuml.decoration,4,1,12,6,0.25,0.33,0.42,1
 net.sourceforge.plantuml.decoration.symbol,77,3,13,15,0.04,0.54,0.43,1
 net.sourceforge.plantuml.dedication,10,1,0,22,0.1,1,0.1,1
@@ -14961,7 +14957,7 @@ net.sourceforge.plantuml.sequencediagram.teoz,50,6,0,18,0.12,1,0.12,1
 net.sourceforge.plantuml.skin,34,5,39,26,0.15,0.4,0.45,1
 net.sourceforge.plantuml.skin.rose,23,1,12,13,0.04,0.52,0.44,1
 net.sourceforge.plantuml.statediagram,1,0,3,11,0,0.79,0.21,1
-net.sourceforge.plantuml.statediagram.command,7,0,2,17,0,0.89,0.11,1
+net.sourceforge.plantuml.statediagram.command,6,0,2,16,0,0.89,0.11,1
 net.sourceforge.plantuml.stats,14,1,1,11,0.07,0.92,0.01,1
 net.sourceforge.plantuml.stats.api,4,3,1,2,0.75,0.67,0.42,1
 net.sourceforge.plantuml.stereo,3,0,35,10,0,0.22,0.78,1
@@ -14974,7 +14970,7 @@ net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
 net.sourceforge.plantuml.svg.parser,11,1,0,13,0.09,1,0.09,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1
-net.sourceforge.plantuml.teavm,19,1,42,14,0.05,0.25,0.7,1
+net.sourceforge.plantuml.teavm,19,1,43,14,0.05,0.25,0.7,1
 net.sourceforge.plantuml.teavm.browser,3,3,1,2,1,0.67,0.67,1
 net.sourceforge.plantuml.teavm.headless,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1

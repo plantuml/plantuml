@@ -250,7 +250,7 @@ final public class CommandLinkClass extends SingleLineCommand2&lt;AbstractClassO
 <span class="nc" id="L250">		return sb.toString();</span>
 	}
 
-	private String describeRelation(String head1, String head2) {
+	public static String describeRelation(String head1, String head2) {
 		// Keep the most significant decoration: '&lt;|' wins over '&lt;', and so on.
 <span class="nc" id="L255">		final String heads = head1 + head2;</span>
 <span class="nc bnc" id="L256" title="All 2 branches missed.">		if (heads.contains(&quot;|&quot;))</span>

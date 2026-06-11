@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.command;
 
-import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -43,7 +42,7 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-<span class="fc" id="L46">public abstract class CommandMultilines3&lt;S extends Diagram&gt; implements Command&lt;S&gt; {</span>
+<span class="fc" id="L45">public abstract class CommandMultilines3&lt;S extends Diagram&gt; implements Command&lt;S&gt; {</span>
 
 	private final IRegex starting;
 
@@ -53,8 +52,9 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 	private final IRegex patternEnd;
 
-<span class="fc" id="L56">	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd, IRegex patternEnd) {</span>
-<span class="pc bpc" id="L57" title="3 of 6 branches missed.">		if (TeaVM.a()) assert patternStart.getPatternAsString().startsWith(&quot;^&quot;) &amp;&amp; patternStart.getPatternAsString().endsWith(&quot;$&quot;);</span>
+<span class="fc" id="L55">	public CommandMultilines3(IRegex patternStart, MultilinesStrategy strategy, Trim trimEnd, IRegex patternEnd) {</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L57" title="2 of 4 branches missed.">			assert patternStart.getPatternAsString().startsWith(&quot;^&quot;) &amp;&amp; patternStart.getPatternAsString().endsWith(&quot;$&quot;);</span>
 
 <span class="fc" id="L59">		this.strategy = strategy;</span>
 <span class="fc" id="L60">		this.starting = patternStart;</span>
@@ -105,28 +105,25 @@ import net.sourceforge.plantuml.utils.BlocLines;
 <span class="nc" id="L105">		return explainNow(lines);</span>
 	}
 
-	@Explain
-	protected String explainNow(BlocLines lines) {
-<span class="nc" id="L110">		return &quot;WIPexplain explainNow in &quot; + getClass();</span>
-	}
+	protected abstract String explainNow(BlocLines lines);
 
 	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines) throws NoSuchColorException;
 
 	protected CommandControl finalVerification() {
-<span class="fc" id="L116">		return CommandControl.OK;</span>
+<span class="fc" id="L113">		return CommandControl.OK;</span>
 	}
 
 	protected final IRegex getStartingPattern() {
-<span class="fc" id="L120">		return starting;</span>
+<span class="fc" id="L117">		return starting;</span>
 	}
 
 	protected final IRegex getEndingPattern() {
-<span class="fc" id="L124">		return patternEnd;</span>
+<span class="fc" id="L121">		return patternEnd;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		return pass == ParserPass.ONE;</span>
 	}
 
 }

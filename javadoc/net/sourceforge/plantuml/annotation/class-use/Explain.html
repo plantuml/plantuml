@@ -55,7 +55,19 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.activitydiagram3.command">net.sourceforge.plantuml.activitydiagram3.command</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.activitydiagram.command">net.sourceforge.plantuml.activitydiagram.command</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.activitydiagram3.command">net.sourceforge.plantuml.activitydiagram3.command</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.bpm">net.sourceforge.plantuml.bpm</a></div>
+<div class="col-last even-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="http://alphadoc.plantuml.com/doc/markdown/en/bpmn" target="_top">
+ BPMN (Business Process Model and Notation) Diagram</a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.chart.command">net.sourceforge.plantuml.chart.command</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.cheneer.command">net.sourceforge.plantuml.cheneer.command</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.classdiagram.command">net.sourceforge.plantuml.classdiagram.command</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
@@ -65,13 +77,67 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/commons" target="_top">
  PlantUML End User Common Commands</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.sequencediagram.command">net.sourceforge.plantuml.sequencediagram.command</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.descdiagram.command">net.sourceforge.plantuml.descdiagram.command</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.statediagram.command">net.sourceforge.plantuml.statediagram.command</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.flowdiagram">net.sourceforge.plantuml.flowdiagram</a></div>
+<div class="col-last even-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="http://alphadoc.plantuml.com/doc/markdown/en/flow-diagram" target="_top">
+ Flow Diagram</a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.help">net.sourceforge.plantuml.help</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Provides classes used to manage Help list.</div>
+</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.sequencediagram.command">net.sourceforge.plantuml.sequencediagram.command</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.statediagram.command">net.sourceforge.plantuml.statediagram.command</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
+<li>
+<section class="detail" id="net.sourceforge.plantuml.activitydiagram.command">
+<h2>Uses of <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a> in <a href="../../activitydiagram/command/package-summary.html">net.sourceforge.plantuml.activitydiagram.command</a></h2>
+<div class="caption"><span>Methods in <a href="../../activitydiagram/command/package-summary.html">net.sourceforge.plantuml.activitydiagram.command</a> with annotations of type <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandInnerConcurrent.</span><code><a href="../../activitydiagram/command/CommandInnerConcurrent.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandLinkActivity.</span><code><a href="../../activitydiagram/command/CommandLinkActivity.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UBrexCommandElse.</span><code><a href="../../activitydiagram/command/UBrexCommandElse.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UBrexCommandEndif.</span><code><a href="../../activitydiagram/command/UBrexCommandEndif.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UBrexCommandEndPartition.</span><code><a href="../../activitydiagram/command/UBrexCommandEndPartition.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UBrexCommandIf.</span><code><a href="../../activitydiagram/command/UBrexCommandIf.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UBrexCommandPartition.</span><code><a href="../../activitydiagram/command/UBrexCommandPartition.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandLinkLongActivity.</span><code><a href="../../activitydiagram/command/CommandLinkLongActivity.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="net.sourceforge.plantuml.activitydiagram3.command">
 <h2>Uses of <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a> in <a href="../../activitydiagram3/command/package-summary.html">net.sourceforge.plantuml.activitydiagram3.command</a></h2>
@@ -233,20 +299,161 @@ loadScripts(document, 'script');</script>
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandActivityLong3.</span><code><a href="../../activitydiagram3/command/CommandActivityLong3.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandSwitch.</span><code><a href="../../activitydiagram3/command/CommandSwitch.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandArrowLong3.</span><code><a href="../../activitydiagram3/command/CommandArrowLong3.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandWhile3.</span><code><a href="../../activitydiagram3/command/CommandWhile3.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandBackwardLong3.</span><code><a href="../../activitydiagram3/command/CommandBackwardLong3.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandWhileEnd3.</span><code><a href="../../activitydiagram3/command/CommandWhileEnd3.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandNoteLong3.</span><code><a href="../../activitydiagram3/command/CommandNoteLong3.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandActivityLong3.</span><code><a href="../../activitydiagram3/command/CommandActivityLong3.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandRepeatWhile3Multilines.</span><code><a href="../../activitydiagram3/command/CommandRepeatWhile3Multilines.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandArrowLong3.</span><code><a href="../../activitydiagram3/command/CommandArrowLong3.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandBackwardLong3.</span><code><a href="../../activitydiagram3/command/CommandBackwardLong3.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandNoteLong3.</span><code><a href="../../activitydiagram3/command/CommandNoteLong3.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandRepeatWhile3Multilines.</span><code><a href="../../activitydiagram3/command/CommandRepeatWhile3Multilines.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.bpm">
+<h2>Uses of <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a> in <a href="../../bpm/package-summary.html">net.sourceforge.plantuml.bpm</a></h2>
+<div class="caption"><span>Methods in <a href="../../bpm/package-summary.html">net.sourceforge.plantuml.bpm</a> with annotations of type <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandDockedEvent.</span><code><a href="../../bpm/CommandDockedEvent.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandElseBranch.</span><code><a href="../../bpm/CommandElseBranch.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandEndBranch.</span><code><a href="../../bpm/CommandEndBranch.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandGoto.</span><code><a href="../../bpm/CommandGoto.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandMerge.</span><code><a href="../../bpm/CommandMerge.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandNewBranch.</span><code><a href="../../bpm/CommandNewBranch.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandResume.</span><code><a href="../../bpm/CommandResume.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.chart.command">
+<h2>Uses of <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a> in <a href="../../chart/command/package-summary.html">net.sourceforge.plantuml.chart.command</a></h2>
+<div class="caption"><span>Methods in <a href="../../chart/command/package-summary.html">net.sourceforge.plantuml.chart.command</a> with annotations of type <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandChartAnnotation.</span><code><a href="../../chart/command/CommandChartAnnotation.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandChartArea.</span><code><a href="../../chart/command/CommandChartArea.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandChartBar.</span><code><a href="../../chart/command/CommandChartBar.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandChartGrid.</span><code><a href="../../chart/command/CommandChartGrid.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandChartHAxis.</span><code><a href="../../chart/command/CommandChartHAxis.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandChartLegend.</span><code><a href="../../chart/command/CommandChartLegend.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandChartLine.</span><code><a href="../../chart/command/CommandChartLine.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandChartOrientation.</span><code><a href="../../chart/command/CommandChartOrientation.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandChartScatter.</span><code><a href="../../chart/command/CommandChartScatter.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandChartStackMode.</span><code><a href="../../chart/command/CommandChartStackMode.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandChartVAxis.</span><code><a href="../../chart/command/CommandChartVAxis.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.cheneer.command">
+<h2>Uses of <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a> in <a href="../../cheneer/command/package-summary.html">net.sourceforge.plantuml.cheneer.command</a></h2>
+<div class="caption"><span>Methods in <a href="../../cheneer/command/package-summary.html">net.sourceforge.plantuml.cheneer.command</a> with annotations of type <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandAssociate.</span><code><a href="../../cheneer/command/CommandAssociate.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandCreateAttribute.</span><code><a href="../../cheneer/command/CommandCreateAttribute.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandCreateEntity.</span><code><a href="../../cheneer/command/CommandCreateEntity.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandEndGroup.</span><code><a href="../../cheneer/command/CommandEndGroup.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandMultiSubclass.</span><code><a href="../../cheneer/command/CommandMultiSubclass.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandSimpleSubclass.</span><code><a href="../../cheneer/command/CommandSimpleSubclass.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -432,14 +639,87 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">CommandMultilines2.</span><code><a href="../../command/CommandMultilines2.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandMultilines3.</span><code><a href="../../command/CommandMultilines3.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandMultilinesLegend.</span><code><a href="../../command/CommandMultilinesLegend.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandMultilinesLegend.</span><code><a href="../../command/CommandMultilinesLegend.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandSpriteSvgMultiline.</span><code><a href="../../command/CommandSpriteSvgMultiline.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.descdiagram.command">
+<h2>Uses of <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a> in <a href="../../descdiagram/command/package-summary.html">net.sourceforge.plantuml.descdiagram.command</a></h2>
+<div class="caption"><span>Methods in <a href="../../descdiagram/command/package-summary.html">net.sourceforge.plantuml.descdiagram.command</a> with annotations of type <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandCreateElementFull.</span><code><a href="../../descdiagram/command/CommandCreateElementFull.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandSpriteSvgMultiline.</span><code><a href="../../command/CommandSpriteSvgMultiline.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandCreateElementParenthesis.</span><code><a href="../../descdiagram/command/CommandCreateElementParenthesis.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandLinkElement.</span><code><a href="../../descdiagram/command/CommandLinkElement.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandCreateElementMultilines.</span><code><a href="../../descdiagram/command/CommandCreateElementMultilines.html#explainNow(net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">explainNow</a><wbr>(<a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.flowdiagram">
+<h2>Uses of <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a> in <a href="../../flowdiagram/package-summary.html">net.sourceforge.plantuml.flowdiagram</a></h2>
+<div class="caption"><span>Methods in <a href="../../flowdiagram/package-summary.html">net.sourceforge.plantuml.flowdiagram</a> with annotations of type <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandLineSimple.</span><code><a href="../../flowdiagram/CommandLineSimple.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandLink.</span><code><a href="../../flowdiagram/CommandLink.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.help">
+<h2>Uses of <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a> in <a href="../../help/package-summary.html">net.sourceforge.plantuml.help</a></h2>
+<div class="caption"><span>Methods in <a href="../../help/package-summary.html">net.sourceforge.plantuml.help</a> with annotations of type <a href="../Explain.html" title="annotation interface in net.sourceforge.plantuml.annotation">Explain</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandHelpColor.</span><code><a href="../../help/CommandHelpColor.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandHelpFont.</span><code><a href="../../help/CommandHelpFont.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandHelpKeyword.</span><code><a href="../../help/CommandHelpKeyword.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandHelpTheme.</span><code><a href="../../help/CommandHelpTheme.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandHelpType.</span><code><a href="../../help/CommandHelpType.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -581,6 +861,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandAddField.</span><code><a href="../../statediagram/command/CommandAddField.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandConcurrentState.</span><code><a href="../../statediagram/command/CommandConcurrentState.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandCreatePackage2.</span><code><a href="../../statediagram/command/CommandCreatePackage2.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandCreatePackageState.</span><code><a href="../../statediagram/command/CommandCreatePackageState.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandCreateState.</span><code><a href="../../statediagram/command/CommandCreateState.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CommandEndState.</span><code><a href="../../statediagram/command/CommandEndState.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CommandHideEmptyDescription.</span><code><a href="../../statediagram/command/CommandHideEmptyDescription.html#explainArg(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">explainArg</a><wbr>(<a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>

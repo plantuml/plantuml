@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.help;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -52,36 +53,43 @@ import net.sourceforge.plantuml.utils.Log;
 public class CommandHelpTheme extends SingleLineCommand2&lt;Help&gt; {
 
 	public CommandHelpTheme() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandHelpTheme.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandHelpTheme.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;help&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L62">				new RegexLeaf(&quot;themes?&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				new RegexLeaf(&quot;themes?&quot;), RegexLeaf.end());</span>
 	}
 
 	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L69">		return null;</span>
+	}
+
+
+	@Override
 	protected CommandExecutionResult executeArg(Help diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="fc" id="L67">		diagram.add(&quot;&lt;b&gt;Help on themes&quot;);</span>
-<span class="fc" id="L68">		diagram.add(&quot; &quot;);</span>
-<span class="fc" id="L69">		diagram.add(&quot; The possible themes are :&quot;);</span>
+<span class="fc" id="L75">		diagram.add(&quot;&lt;b&gt;Help on themes&quot;);</span>
+<span class="fc" id="L76">		diagram.add(&quot; &quot;);</span>
+<span class="fc" id="L77">		diagram.add(&quot; The possible themes are :&quot;);</span>
 
 		// ::comment when __TEAVM__
 		try {
-<span class="fc bfc" id="L73" title="All 2 branches covered.">			for (String theme : ThemeUtils.getAllThemeNames()) {</span>
-<span class="fc" id="L74">				diagram.add(&quot;* &quot; + theme);</span>
-<span class="fc" id="L75">			}</span>
-<span class="nc" id="L76">		} catch (IOException e) {</span>
-<span class="nc" id="L77">			final String message = &quot;Unexpected error listing themes: &quot; + e.getMessage();</span>
-<span class="nc" id="L78">			Log.error(message);</span>
-<span class="nc" id="L79">			Logme.error(e);</span>
-<span class="nc" id="L80">			return CommandExecutionResult.error(message);</span>
-<span class="fc" id="L81">		}</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			for (String theme : ThemeUtils.getAllThemeNames()) {</span>
+<span class="fc" id="L82">				diagram.add(&quot;* &quot; + theme);</span>
+<span class="fc" id="L83">			}</span>
+<span class="nc" id="L84">		} catch (IOException e) {</span>
+<span class="nc" id="L85">			final String message = &quot;Unexpected error listing themes: &quot; + e.getMessage();</span>
+<span class="nc" id="L86">			Log.error(message);</span>
+<span class="nc" id="L87">			Logme.error(e);</span>
+<span class="nc" id="L88">			return CommandExecutionResult.error(message);</span>
+<span class="fc" id="L89">		}</span>
 		// ::done
 
-<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L92">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

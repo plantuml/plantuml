@@ -419,7 +419,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.activitydiagram" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.activitydiagram.command" %lighten("red", 93) {
-Total Classes: 9
+Total Classes: 5
 }
 "net.sourceforge.plantuml.activitydiagram.command" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.activitydiagram.command" --> "com.plantuml.ubrex.builder"
@@ -925,8 +925,8 @@ Total Classes: 5
 "net.sourceforge.plantuml.code.deflate" --> "java.lang"
 "net.sourceforge.plantuml.code.deflate" --> "java.util"
 
-class "net.sourceforge.plantuml.command" %lighten("red", 40) {
-Total Classes: 31
+class "net.sourceforge.plantuml.command" %lighten("red", 43.99999999999999) {
+Total Classes: 32
 }
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex.builder"
@@ -954,6 +954,7 @@ Total Classes: 31
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.statediagram.command"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.style"
+"net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.command" --> "net.sourceforge.plantuml.utils"
@@ -1072,7 +1073,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.cruise" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.cruise" --> "net.sourceforge.plantuml.svek"
 
-class "net.sourceforge.plantuml.cucadiagram" %lighten("red", 92) {
+class "net.sourceforge.plantuml.cucadiagram" %lighten("red", 95) {
 Total Classes: 30
 }
 "net.sourceforge.plantuml.cucadiagram" --> "java.lang"
@@ -2966,14 +2967,13 @@ Total Classes: 1
 "net.sourceforge.plantuml.statediagram" --> "net.sourceforge.plantuml.statediagram.command"
 
 class "net.sourceforge.plantuml.statediagram.command" %lighten("red", 89) {
-Total Classes: 7
+Total Classes: 6
 }
 "net.sourceforge.plantuml.statediagram.command" --> "java.lang"
 "net.sourceforge.plantuml.statediagram.command" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.statediagram.command" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.statediagram.command" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.statediagram.command" --> "net.sourceforge.plantuml.core"
-"net.sourceforge.plantuml.statediagram.command" --> "net.sourceforge.plantuml.cucadiagram"
 "net.sourceforge.plantuml.statediagram.command" --> "net.sourceforge.plantuml.decoration.symbol"
 "net.sourceforge.plantuml.statediagram.command" --> "net.sourceforge.plantuml.descdiagram.command"
 "net.sourceforge.plantuml.statediagram.command" --> "net.sourceforge.plantuml.klimt.color"

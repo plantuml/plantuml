@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,37 +48,44 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandChartOrientation extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
 	public CommandChartOrientation() {
-<span class="nc" id="L50">		super(false, getRegexConcat());</span>
-<span class="nc" id="L51">	}</span>
+<span class="nc" id="L51">		super(false, getRegexConcat());</span>
+<span class="nc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L54">		return RegexConcat.build(CommandChartOrientation.class.getName(), RegexLeaf.start(), //</span>
-<span class="nc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L55">		return RegexConcat.build(CommandChartOrientation.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;orientation&quot;), //
-<span class="nc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;ORIENTATION&quot;, &quot;(vertical|horizontal)&quot;), //
-<span class="nc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L60">				RegexLeaf.end());</span>
+<span class="nc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L61">				RegexLeaf.end());</span>
 	}
+	
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L67">		return null;</span>
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L66">		final String orientationStr = arg.get(&quot;ORIENTATION&quot;, 0);</span>
+<span class="nc" id="L74">		final String orientationStr = arg.get(&quot;ORIENTATION&quot;, 0);</span>
 
 		ChartDiagram.Orientation orientation;
-<span class="nc bnc" id="L69" title="All 3 branches missed.">		switch (orientationStr.toLowerCase()) {</span>
+<span class="nc bnc" id="L77" title="All 3 branches missed.">		switch (orientationStr.toLowerCase()) {</span>
 		case &quot;vertical&quot;:
-<span class="nc" id="L71">			orientation = ChartDiagram.Orientation.VERTICAL;</span>
-<span class="nc" id="L72">			break;</span>
+<span class="nc" id="L79">			orientation = ChartDiagram.Orientation.VERTICAL;</span>
+<span class="nc" id="L80">			break;</span>
 		case &quot;horizontal&quot;:
-<span class="nc" id="L74">			orientation = ChartDiagram.Orientation.HORIZONTAL;</span>
-<span class="nc" id="L75">			break;</span>
+<span class="nc" id="L82">			orientation = ChartDiagram.Orientation.HORIZONTAL;</span>
+<span class="nc" id="L83">			break;</span>
 		default:
-<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;Invalid orientation: &quot; + orientationStr);</span>
+<span class="nc" id="L85">			return CommandExecutionResult.error(&quot;Invalid orientation: &quot; + orientationStr);</span>
 		}
 
-<span class="nc" id="L80">		return diagram.setOrientation(orientation);</span>
+<span class="nc" id="L88">		return diagram.setOrientation(orientation);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

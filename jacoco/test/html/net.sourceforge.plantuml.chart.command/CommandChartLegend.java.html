@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,43 +48,50 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandChartLegend extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
 	public CommandChartLegend() {
-<span class="nc" id="L50">		super(false, getRegexConcat());</span>
-<span class="nc" id="L51">	}</span>
+<span class="nc" id="L51">		super(false, getRegexConcat());</span>
+<span class="nc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L54">		return RegexConcat.build(CommandChartLegend.class.getName(), RegexLeaf.start(), //</span>
-<span class="nc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L55">		return RegexConcat.build(CommandChartLegend.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;legend&quot;), //
-<span class="nc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(left|right|top|bottom)&quot;), //
-<span class="nc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L60">				RegexLeaf.end());</span>
+<span class="nc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L61">				RegexLeaf.end());</span>
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L67">		return null;</span>
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L66">		final String position = arg.get(&quot;POSITION&quot;, 0);</span>
+<span class="nc" id="L74">		final String position = arg.get(&quot;POSITION&quot;, 0);</span>
 
 		ChartDiagram.LegendPosition legendPosition;
-<span class="nc bnc" id="L69" title="All 5 branches missed.">		switch (position.toLowerCase()) {</span>
+<span class="nc bnc" id="L77" title="All 5 branches missed.">		switch (position.toLowerCase()) {</span>
 		case &quot;left&quot;:
-<span class="nc" id="L71">			legendPosition = ChartDiagram.LegendPosition.LEFT;</span>
-<span class="nc" id="L72">			break;</span>
+<span class="nc" id="L79">			legendPosition = ChartDiagram.LegendPosition.LEFT;</span>
+<span class="nc" id="L80">			break;</span>
 		case &quot;right&quot;:
-<span class="nc" id="L74">			legendPosition = ChartDiagram.LegendPosition.RIGHT;</span>
-<span class="nc" id="L75">			break;</span>
+<span class="nc" id="L82">			legendPosition = ChartDiagram.LegendPosition.RIGHT;</span>
+<span class="nc" id="L83">			break;</span>
 		case &quot;top&quot;:
-<span class="nc" id="L77">			legendPosition = ChartDiagram.LegendPosition.TOP;</span>
-<span class="nc" id="L78">			break;</span>
+<span class="nc" id="L85">			legendPosition = ChartDiagram.LegendPosition.TOP;</span>
+<span class="nc" id="L86">			break;</span>
 		case &quot;bottom&quot;:
-<span class="nc" id="L80">			legendPosition = ChartDiagram.LegendPosition.BOTTOM;</span>
-<span class="nc" id="L81">			break;</span>
+<span class="nc" id="L88">			legendPosition = ChartDiagram.LegendPosition.BOTTOM;</span>
+<span class="nc" id="L89">			break;</span>
 		default:
-<span class="nc" id="L83">			return CommandExecutionResult.error(&quot;Invalid legend position: &quot; + position);</span>
+<span class="nc" id="L91">			return CommandExecutionResult.error(&quot;Invalid legend position: &quot; + position);</span>
 		}
 
-<span class="nc" id="L86">		return diagram.setLegendPosition(legendPosition);</span>
+<span class="nc" id="L94">		return diagram.setLegendPosition(legendPosition);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

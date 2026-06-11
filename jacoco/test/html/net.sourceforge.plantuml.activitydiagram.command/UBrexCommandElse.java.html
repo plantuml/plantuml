@@ -41,6 +41,7 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -50,27 +51,36 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class UBrexCommandElse extends UBrexSingleLineCommand2&lt;ActivityDiagram&gt; {
 
 	public UBrexCommandElse() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L57">		return UBrexConcat.build(new UBrexLeaf(&quot;else&quot;), UBrexLeaf.end());</span>
+<span class="fc" id="L58">		return UBrexConcat.build(new UBrexLeaf(&quot;else&quot;), UBrexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'else' switches to the alternative branch of the enclosing 'if'
+		// (legacy activity diagram syntax); executeArg fails when no 'if' is
+		// pending.
+<span class="nc" id="L67">		return &quot;Starting the 'else' branch of the enclosing if&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram system, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (system.getLastEntityConsulted() == null)</span>
-<span class="nc" id="L64">			return CommandExecutionResult.error(&quot;No if for this else&quot;);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (system.getLastEntityConsulted() == null)</span>
+<span class="nc" id="L74">			return CommandExecutionResult.error(&quot;No if for this else&quot;);</span>
 
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (system.getCurrentContext() == null)</span>
-<span class="nc" id="L67">			return CommandExecutionResult.error(&quot;No if for this else&quot;);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (system.getCurrentContext() == null)</span>
+<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;No if for this else&quot;);</span>
 
-<span class="fc" id="L69">		final Entity branch = system.getCurrentContext().getBranch();</span>
+<span class="fc" id="L79">		final Entity branch = system.getCurrentContext().getBranch();</span>
 
-<span class="fc" id="L71">		system.setLastEntityConsulted(branch);</span>
+<span class="fc" id="L81">		system.setLastEntityConsulted(branch);</span>
 
-<span class="fc" id="L73">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L83">		return CommandExecutionResult.ok();</span>
 	}
 
 }

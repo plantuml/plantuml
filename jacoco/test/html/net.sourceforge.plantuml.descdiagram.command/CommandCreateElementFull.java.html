@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -75,51 +76,51 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 	public static final String ALL_TYPES = &quot;person|artifact|actor/|actor|folder|card|file|package|rectangle|hexagon|label|node|frame|cloud|action|process|database|queue|stack|storage|agent|usecase/|usecase|component|boundary|control|entity|interface|circle|collections|port|portin|portout&quot;;
 
 	public CommandCreateElementFull() {
-<span class="fc" id="L78">		super(getRegexConcat());</span>
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L79">		super(getRegexConcat());</span>
+<span class="fc" id="L80">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L82">		return RegexConcat.build(CommandCreateElementFull.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L83">		return RegexConcat.build(CommandCreateElementFull.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;SYMBOL&quot;, &quot;(?:(&quot; + ALL_TYPES + &quot;|\\(\\))[%s]+)?&quot;), //
-<span class="fc" id="L84">				color2().getRegex(), //</span>
-<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L85">				color2().getRegex(), //</span>
+<span class="fc" id="L86">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr(//
 						new RegexLeaf(1, &quot;CODE1&quot;, CODE_WITH_QUOTE), //
 						new RegexConcat(//
 								new RegexLeaf(1, &quot;DISPLAY2&quot;, DISPLAY), //
-<span class="fc" id="L90">								StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
+<span class="fc" id="L91">								StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L92">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L93">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;CODE2&quot;, CODE)), //
 						new RegexConcat(//
 								new RegexLeaf(1, &quot;CODE3&quot;, CODE), //
-<span class="fc" id="L96">								StereotypePattern.optional(&quot;STEREOTYPE3&quot;), //</span>
+<span class="fc" id="L97">								StereotypePattern.optional(&quot;STEREOTYPE3&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L98">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L99">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;DISPLAY3&quot;, DISPLAY)), //
 						new RegexConcat(//
 								new RegexLeaf(1, &quot;DISPLAY4&quot;, DISPLAY_WITHOUT_QUOTE), //
-<span class="fc" id="L102">								StereotypePattern.optional(&quot;STEREOTYPE4&quot;), //</span>
+<span class="fc" id="L103">								StereotypePattern.optional(&quot;STEREOTYPE4&quot;), //</span>
 								new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L104">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L105">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;CODE4&quot;, CODE)) //
 				), //
-<span class="fc" id="L107">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L108">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L109">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-<span class="fc" id="L110">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L111">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L108">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L109">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L110">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L111">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L112">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L113">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L114">				color().getRegex(), RegexLeaf.end());</span>
+<span class="fc" id="L114">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L115">				color().getRegex(), RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L118">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L119">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	private static ColorParser color2() {
-<span class="fc" id="L122">		return ColorParser.simpleColor(ColorType.BACK, &quot;COLOR2&quot;);</span>
+<span class="fc" id="L123">		return ColorParser.simpleColor(ColorType.BACK, &quot;COLOR2&quot;);</span>
 	}
 
 	private static final String CODE_CORE = &quot;[%pLN_.]+|\\(\\)[%s]*[%pLN_.]+|\\(\\)[%s]*[%g][^%g]+[%g]|:[^:]+:/?|\\([^()]+\\)/?|\\[[^\\[\\]]+\\]&quot;;
@@ -130,153 +131,241 @@ public class CommandCreateElementFull extends SingleLineCommand2&lt;DescriptionD
 	public static final String DISPLAY = &quot;(&quot; + DISPLAY_CORE + &quot;)&quot;;
 	public static final String DISPLAY_WITHOUT_QUOTE = &quot;(&quot; + DISPLAY_CORE + &quot;|[%pLN_.]+)&quot;;
 
-<span class="fc" id="L133">	private static final Pattern FORBIDDEN_PATTERN = Pattern.compile(&quot;^[\\p{L}0-9_.]+$&quot;);</span>
+<span class="fc" id="L134">	private static final Pattern FORBIDDEN_PATTERN = Pattern.compile(&quot;^[\\p{L}0-9_.]+$&quot;);</span>
 
 	@Override
 	protected final boolean isForbidden(CharSequence line) {
-<span class="fc" id="L137">		return FORBIDDEN_PATTERN.matcher(line).matches();</span>
+<span class="fc" id="L138">		return FORBIDDEN_PATTERN.matcher(line).matches();</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L144">		final StringBuilder sb = new StringBuilder();</span>
+
+		// Mirror the symbol deduction of executeArg: the shape of the code or
+		// of the display ('()...', '(...)', ':...:', '[...]') overrides the
+		// keyword, and a trailing '/' selects the business variant of usecases
+		// and actors.
+<span class="nc" id="L150">		String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L151">		String displayRaw = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc" id="L152">		final char codeChar = getCharEncoding(codeRaw);</span>
+<span class="nc" id="L153">		final char codeDisplay = getCharEncoding(displayRaw);</span>
+		final String symbol;
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (codeRaw.startsWith(&quot;()&quot;)) {</span>
+<span class="nc" id="L156">			symbol = &quot;interface&quot;;</span>
+<span class="nc" id="L157">			codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(codeRaw.substring(2)));</span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">		} else if (codeChar == '(' || codeDisplay == '(') {</span>
+<span class="nc bnc" id="L159" title="All 4 branches missed.">			if (arg.get(&quot;SYMBOL&quot;, 0) != null &amp;&amp; arg.get(&quot;SYMBOL&quot;, 0).endsWith(&quot;/&quot;))</span>
+<span class="nc" id="L160">				symbol = &quot;usecase/&quot;;</span>
+<span class="nc bnc" id="L161" title="All 4 branches missed.">			else if (displayRaw != null &amp;&amp; displayRaw.endsWith(&quot;)/&quot;)) {</span>
+<span class="nc" id="L162">				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);</span>
+<span class="nc" id="L163">				symbol = &quot;usecase/&quot;;</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">			} else if (codeRaw.endsWith(&quot;)/&quot;)) {</span>
+<span class="nc" id="L165">				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);</span>
+<span class="nc" id="L166">				symbol = &quot;usecase/&quot;;</span>
+			} else
+<span class="nc" id="L168">				symbol = &quot;usecase&quot;;</span>
+<span class="nc bnc" id="L169" title="All 4 branches missed.">		} else if (codeChar == ':' || codeDisplay == ':') {</span>
+<span class="nc bnc" id="L170" title="All 4 branches missed.">			if (arg.get(&quot;SYMBOL&quot;, 0) != null &amp;&amp; arg.get(&quot;SYMBOL&quot;, 0).endsWith(&quot;/&quot;))</span>
+<span class="nc" id="L171">				symbol = &quot;actor/&quot;;</span>
+<span class="nc bnc" id="L172" title="All 4 branches missed.">			else if (displayRaw != null &amp;&amp; displayRaw.endsWith(&quot;:/&quot;)) {</span>
+<span class="nc" id="L173">				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);</span>
+<span class="nc" id="L174">				symbol = &quot;actor/&quot;;</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			} else if (codeRaw.endsWith(&quot;:/&quot;)) {</span>
+<span class="nc" id="L176">				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);</span>
+<span class="nc" id="L177">				symbol = &quot;actor/&quot;;</span>
+			} else
+<span class="nc" id="L179">				symbol = &quot;actor&quot;;</span>
+<span class="nc bnc" id="L180" title="All 4 branches missed.">		} else if (codeChar == '[' || codeDisplay == '[')</span>
+<span class="nc" id="L181">			symbol = &quot;component&quot;;</span>
+		else
+<span class="nc" id="L183">			symbol = arg.get(&quot;SYMBOL&quot;, 0);</span>
+
+<span class="nc" id="L185">		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(codeRaw);</span>
+<span class="nc" id="L186">		sb.append(&quot;Creating the &quot;).append(describeSymbol(symbol)).append(&quot; '&quot;).append(idShort).append(&quot;'&quot;);</span>
+
+<span class="nc bnc" id="L188" title="All 2 branches missed.">		if (displayRaw != null)</span>
+<span class="nc" id="L189">			sb.append(&quot; displayed as \&quot;&quot;)</span>
+<span class="nc" id="L190">					.append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(displayRaw)).append(&quot;\&quot;&quot;);</span>
+
+		// The stereotype may be written inside the 'as' clause or at the end
+		// of the line, hence the lazzy lookup, like in executeArg.
+<span class="nc" id="L194">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L196">			sb.append(&quot;, stereotype &quot;).append(stereotype);</span>
+
+<span class="nc" id="L198">		final String tags = arg.getLazzy(&quot;TAGS&quot;, 0);</span>
+<span class="nc bnc" id="L199" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
+<span class="nc" id="L200">			sb.append(&quot;, tagged &quot;).append(tags);</span>
+
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L203">			sb.append(&quot;, with a URL link&quot;);</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L206">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+		// The color written before the name (COLOR2) is parsed but never read
+		// by executeArg.
+<span class="nc bnc" id="L210" title="All 2 branches missed.">		if (arg.get(&quot;COLOR2&quot;, 0) != null)</span>
+<span class="nc" id="L211">			sb.append(&quot; (the leading color &quot;).append(arg.get(&quot;COLOR2&quot;, 0)).append(&quot; is currently ignored)&quot;);</span>
+
+<span class="nc" id="L213">		return sb.toString();</span>
+	}
+
+	static String describeSymbol(String symbol) {
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (symbol == null)</span>
+<span class="nc" id="L218">			return &quot;element&quot;;</span>
+
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		if (symbol.equalsIgnoreCase(&quot;usecase/&quot;))</span>
+<span class="nc" id="L221">			return &quot;business usecase&quot;;</span>
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (symbol.equalsIgnoreCase(&quot;actor/&quot;))</span>
+<span class="nc" id="L224">			return &quot;business actor&quot;;</span>
+
+<span class="nc" id="L226">		return StringUtils.goLowerCase(symbol);</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L143">		String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L144">		String displayRaw = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
-<span class="fc" id="L145">		final char codeChar = getCharEncoding(codeRaw);</span>
-<span class="fc" id="L146">		final char codeDisplay = getCharEncoding(displayRaw);</span>
+<span class="fc" id="L232">		String codeRaw = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L233">		String displayRaw = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="fc" id="L234">		final char codeChar = getCharEncoding(codeRaw);</span>
+<span class="fc" id="L235">		final char codeDisplay = getCharEncoding(displayRaw);</span>
 		final String symbol;
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (codeRaw.startsWith(&quot;()&quot;)) {</span>
-<span class="nc" id="L149">			symbol = &quot;interface&quot;;</span>
-<span class="nc" id="L150">			codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(codeRaw.substring(2)));</span>
-<span class="pc bpc" id="L151" title="2 of 4 branches missed.">		} else if (codeChar == '(' || codeDisplay == '(') {</span>
-<span class="nc bnc" id="L152" title="All 4 branches missed.">			if (arg.get(&quot;SYMBOL&quot;, 0) != null &amp;&amp; arg.get(&quot;SYMBOL&quot;, 0).endsWith(&quot;/&quot;)) {</span>
-<span class="nc" id="L153">				symbol = &quot;usecase/&quot;;</span>
-<span class="nc bnc" id="L154" title="All 4 branches missed.">			} else if (displayRaw != null &amp;&amp; displayRaw.endsWith(&quot;)/&quot;)) {</span>
-<span class="nc" id="L155">				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);</span>
-<span class="nc" id="L156">				symbol = &quot;usecase/&quot;;</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">			} else if (codeRaw.endsWith(&quot;)/&quot;)) {</span>
-<span class="nc" id="L158">				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);</span>
-<span class="nc" id="L159">				symbol = &quot;usecase/&quot;;</span>
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">		if (codeRaw.startsWith(&quot;()&quot;)) {</span>
+<span class="nc" id="L238">			symbol = &quot;interface&quot;;</span>
+<span class="nc" id="L239">			codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(StringUtils.trin(codeRaw.substring(2)));</span>
+<span class="pc bpc" id="L240" title="2 of 4 branches missed.">		} else if (codeChar == '(' || codeDisplay == '(') {</span>
+<span class="nc bnc" id="L241" title="All 4 branches missed.">			if (arg.get(&quot;SYMBOL&quot;, 0) != null &amp;&amp; arg.get(&quot;SYMBOL&quot;, 0).endsWith(&quot;/&quot;)) {</span>
+<span class="nc" id="L242">				symbol = &quot;usecase/&quot;;</span>
+<span class="nc bnc" id="L243" title="All 4 branches missed.">			} else if (displayRaw != null &amp;&amp; displayRaw.endsWith(&quot;)/&quot;)) {</span>
+<span class="nc" id="L244">				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);</span>
+<span class="nc" id="L245">				symbol = &quot;usecase/&quot;;</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">			} else if (codeRaw.endsWith(&quot;)/&quot;)) {</span>
+<span class="nc" id="L247">				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);</span>
+<span class="nc" id="L248">				symbol = &quot;usecase/&quot;;</span>
 			} else {
-<span class="nc" id="L161">				symbol = &quot;usecase&quot;;</span>
+<span class="nc" id="L250">				symbol = &quot;usecase&quot;;</span>
 			}
-<span class="pc bpc" id="L163" title="1 of 4 branches missed.">		} else if (codeChar == ':' || codeDisplay == ':') {</span>
-<span class="pc bpc" id="L164" title="3 of 4 branches missed.">			if (arg.get(&quot;SYMBOL&quot;, 0) != null &amp;&amp; arg.get(&quot;SYMBOL&quot;, 0).endsWith(&quot;/&quot;)) {</span>
-<span class="nc" id="L165">				symbol = &quot;actor/&quot;;</span>
-<span class="pc bpc" id="L166" title="3 of 4 branches missed.">			} else if (displayRaw != null &amp;&amp; displayRaw.endsWith(&quot;:/&quot;)) {</span>
-<span class="nc" id="L167">				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);</span>
-<span class="nc" id="L168">				symbol = &quot;actor/&quot;;</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">			} else if (codeRaw.endsWith(&quot;:/&quot;)) {</span>
-<span class="nc" id="L170">				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);</span>
-<span class="nc" id="L171">				symbol = &quot;actor/&quot;;</span>
+<span class="pc bpc" id="L252" title="1 of 4 branches missed.">		} else if (codeChar == ':' || codeDisplay == ':') {</span>
+<span class="pc bpc" id="L253" title="3 of 4 branches missed.">			if (arg.get(&quot;SYMBOL&quot;, 0) != null &amp;&amp; arg.get(&quot;SYMBOL&quot;, 0).endsWith(&quot;/&quot;)) {</span>
+<span class="nc" id="L254">				symbol = &quot;actor/&quot;;</span>
+<span class="pc bpc" id="L255" title="3 of 4 branches missed.">			} else if (displayRaw != null &amp;&amp; displayRaw.endsWith(&quot;:/&quot;)) {</span>
+<span class="nc" id="L256">				displayRaw = displayRaw.substring(0, displayRaw.length() - 1);</span>
+<span class="nc" id="L257">				symbol = &quot;actor/&quot;;</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">			} else if (codeRaw.endsWith(&quot;:/&quot;)) {</span>
+<span class="nc" id="L259">				codeRaw = codeRaw.substring(0, codeRaw.length() - 1);</span>
+<span class="nc" id="L260">				symbol = &quot;actor/&quot;;</span>
 			} else {
-<span class="fc" id="L173">				symbol = &quot;actor&quot;;</span>
+<span class="fc" id="L262">				symbol = &quot;actor&quot;;</span>
 			}
-<span class="pc bpc" id="L175" title="1 of 4 branches missed.">		} else if (codeChar == '[' || codeDisplay == '[') {</span>
-<span class="fc" id="L176">			symbol = &quot;component&quot;;</span>
+<span class="pc bpc" id="L264" title="1 of 4 branches missed.">		} else if (codeChar == '[' || codeDisplay == '[') {</span>
+<span class="fc" id="L265">			symbol = &quot;component&quot;;</span>
 		} else {
-<span class="fc" id="L178">			symbol = arg.get(&quot;SYMBOL&quot;, 0);</span>
+<span class="fc" id="L267">			symbol = arg.get(&quot;SYMBOL&quot;, 0);</span>
 		}
 
 		final LeafType type;
 		final USymbol usymbol;
 
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (symbol == null) {</span>
-<span class="nc" id="L185">			type = LeafType.DESCRIPTION;</span>
-<span class="nc" id="L186">			usymbol = diagram.getSkinParam().actorStyle().toUSymbol();</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;portin&quot;)) {</span>
-<span class="fc" id="L188">			type = LeafType.PORTIN;</span>
-<span class="fc" id="L189">			usymbol = null;</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;portout&quot;)) {</span>
-<span class="fc" id="L191">			type = LeafType.PORTOUT;</span>
-<span class="fc" id="L192">			usymbol = null;</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;port&quot;)) {</span>
-<span class="nc" id="L194">			type = LeafType.PORTIN;</span>
-<span class="nc" id="L195">			usymbol = null;</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;usecase&quot;)) {</span>
-<span class="fc" id="L197">			type = LeafType.USECASE;</span>
-<span class="fc" id="L198">			usymbol = null;</span>
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;usecase/&quot;)) {</span>
-<span class="nc" id="L200">			type = LeafType.USECASE_BUSINESS;</span>
-<span class="nc" id="L201">			usymbol = null;</span>
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;circle&quot;)) {</span>
-<span class="nc" id="L203">			type = LeafType.CIRCLE;</span>
-<span class="nc" id="L204">			usymbol = null;</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">		if (symbol == null) {</span>
+<span class="nc" id="L274">			type = LeafType.DESCRIPTION;</span>
+<span class="nc" id="L275">			usymbol = diagram.getSkinParam().actorStyle().toUSymbol();</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;portin&quot;)) {</span>
+<span class="fc" id="L277">			type = LeafType.PORTIN;</span>
+<span class="fc" id="L278">			usymbol = null;</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;portout&quot;)) {</span>
+<span class="fc" id="L280">			type = LeafType.PORTOUT;</span>
+<span class="fc" id="L281">			usymbol = null;</span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;port&quot;)) {</span>
+<span class="nc" id="L283">			type = LeafType.PORTIN;</span>
+<span class="nc" id="L284">			usymbol = null;</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">		} else if (symbol.equalsIgnoreCase(&quot;usecase&quot;)) {</span>
+<span class="fc" id="L286">			type = LeafType.USECASE;</span>
+<span class="fc" id="L287">			usymbol = null;</span>
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;usecase/&quot;)) {</span>
+<span class="nc" id="L289">			type = LeafType.USECASE_BUSINESS;</span>
+<span class="nc" id="L290">			usymbol = null;</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		} else if (symbol.equalsIgnoreCase(&quot;circle&quot;)) {</span>
+<span class="nc" id="L292">			type = LeafType.CIRCLE;</span>
+<span class="nc" id="L293">			usymbol = null;</span>
 		} else {
-<span class="fc" id="L206">			type = LeafType.DESCRIPTION;</span>
-<span class="fc" id="L207">			usymbol = USymbols.fromString(symbol, diagram.getSkinParam());</span>
-<span class="pc bpc" id="L208" title="1 of 2 branches missed.">			if (usymbol == null)</span>
-<span class="nc" id="L209">				throw new IllegalStateException();</span>
+<span class="fc" id="L295">			type = LeafType.DESCRIPTION;</span>
+<span class="fc" id="L296">			usymbol = USymbols.fromString(symbol, diagram.getSkinParam());</span>
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">			if (usymbol == null)</span>
+<span class="nc" id="L298">				throw new IllegalStateException();</span>
 
 		}
 
-<span class="fc" id="L213">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(codeRaw));</span>
+<span class="fc" id="L302">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(codeRaw));</span>
 
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		if (diagram.isGroup(quark))</span>
-<span class="nc" id="L216">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		if (diagram.isGroup(quark))</span>
+<span class="nc" id="L305">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
 
-<span class="fc" id="L218">		String display = displayRaw;</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">		if (display == null)</span>
-<span class="fc" id="L220">			display = quark.getName();</span>
+<span class="fc" id="L307">		String display = displayRaw;</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">		if (display == null)</span>
+<span class="fc" id="L309">			display = quark.getName();</span>
 
-<span class="fc" id="L222">		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);</span>
-<span class="fc" id="L223">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
-<span class="pc bpc" id="L224" title="1 of 2 branches missed.">		if (existsWithBadType3(diagram, quark, type, usymbol))</span>
-<span class="nc" id="L225">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
+<span class="fc" id="L311">		display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display);</span>
+<span class="fc" id="L312">		final String stereotype = arg.getLazzy(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">		if (existsWithBadType3(diagram, quark, type, usymbol))</span>
+<span class="nc" id="L314">			return CommandExecutionResult.error(&quot;This element (&quot; + quark.getName() + &quot;) is already defined&quot;);</span>
 
-<span class="pc bpc" id="L227" title="1 of 6 branches missed.">		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) &amp;&amp; diagram.getCurrentGroup().isRoot())</span>
-<span class="nc" id="L228">			return CommandExecutionResult.error(&quot;Port can only be used inside an element and not at root level&quot;);</span>
+<span class="pc bpc" id="L316" title="1 of 6 branches missed.">		if ((type == LeafType.PORTIN || type == LeafType.PORTOUT) &amp;&amp; diagram.getCurrentGroup().isRoot())</span>
+<span class="nc" id="L317">			return CommandExecutionResult.error(&quot;Port can only be used inside an element and not at root level&quot;);</span>
 
-<span class="fc" id="L230">		Entity entity = quark.getData();</span>
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (entity == null)</span>
-<span class="fc" id="L232">			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display),</span>
+<span class="fc" id="L319">		Entity entity = quark.getData();</span>
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">		if (entity == null)</span>
+<span class="fc" id="L321">			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display),</span>
 					type, usymbol);
 
-<span class="fc" id="L235">		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
+<span class="fc" id="L324">		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
 
-<span class="fc bfc" id="L237" title="All 2 branches covered.">		if (stereotype != null)</span>
-<span class="fc" id="L238">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
-<span class="fc" id="L239">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
-<span class="fc" id="L240">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">		if (stereotype != null)</span>
+<span class="fc" id="L327">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="fc" id="L328">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="fc" id="L329">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="fc" id="L242">		CommandCreateClassMultilines.addTags(entity, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
+<span class="fc" id="L331">		CommandCreateClassMultilines.addTags(entity, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
 
-<span class="fc" id="L244">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">		if (urlString != null) {</span>
-<span class="nc" id="L246">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L247">			final Url url = urlBuilder.getUrl(urlString);</span>
-<span class="nc" id="L248">			entity.addUrl(url);</span>
+<span class="fc" id="L333">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L335">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L336">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L337">			entity.addUrl(url);</span>
 		}
 
-<span class="fc" id="L251">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L252">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
+<span class="fc" id="L340">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L341">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
 
-<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (lineColor != null)</span>
-<span class="nc" id="L256">			colors = colors.add(ColorType.LINE, lineColor);</span>
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (lineColor != null)</span>
+<span class="nc" id="L345">			colors = colors.add(ColorType.LINE, lineColor);</span>
 
-<span class="fc" id="L258">		entity.setColors(colors);</span>
+<span class="fc" id="L347">		entity.setColors(colors);</span>
 
-<span class="fc" id="L260">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L349">		return CommandExecutionResult.ok();</span>
 	}
 
 	public static boolean existsWithBadType3(AbstractEntityDiagram diagram, Quark&lt;Entity&gt; code, LeafType type,
 			USymbol usymbol) {
-<span class="fc bfc" id="L265" title="All 2 branches covered.">		if (code.getData() == null)</span>
-<span class="fc" id="L266">			return false;</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">		if (code.getData() == null)</span>
+<span class="fc" id="L355">			return false;</span>
 
-<span class="fc" id="L268">		final Entity other = code.getData();</span>
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">		if (other.getLeafType() != type)</span>
-<span class="nc" id="L270">			return true;</span>
+<span class="fc" id="L357">		final Entity other = code.getData();</span>
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">		if (other.getLeafType() != type)</span>
+<span class="nc" id="L359">			return true;</span>
 
-<span class="pc bpc" id="L272" title="2 of 4 branches missed.">		if (usymbol != null &amp;&amp; other.getUSymbol() != usymbol)</span>
-<span class="nc" id="L273">			return true;</span>
+<span class="pc bpc" id="L361" title="2 of 4 branches missed.">		if (usymbol != null &amp;&amp; other.getUSymbol() != usymbol)</span>
+<span class="nc" id="L362">			return true;</span>
 
-<span class="fc" id="L275">		return false;</span>
+<span class="fc" id="L364">		return false;</span>
 	}
 
 	private char getCharEncoding(final String codeRaw) {
-<span class="fc bfc" id="L279" title="All 4 branches covered.">		return codeRaw != null &amp;&amp; codeRaw.length() &gt; 2 ? codeRaw.charAt(0) : 0;</span>
+<span class="fc bfc" id="L368" title="All 4 branches covered.">		return codeRaw != null &amp;&amp; codeRaw.length() &gt; 2 ? codeRaw.charAt(0) : 0;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

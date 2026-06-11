@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,33 +52,49 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandWhileEnd3 extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandWhileEnd3() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandWhileEnd3.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandWhileEnd3.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOr( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;end&quot;), //
-<span class="fc" id="L62">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;while&quot;) //
 						), //
 						new RegexConcat( //
 								new RegexLeaf(&quot;while&quot;), //
-<span class="fc" id="L67">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;end&quot;) //
 						) //
 				), //
-<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;OUT&quot;, &quot;\\((.+?)\\)&quot;)), //
 				new RegexLeaf(&quot;;?&quot;), //
-<span class="fc" id="L74">				RegexLeaf.end());</span>
+<span class="fc" id="L75">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L81">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'endwhile' (or 'while end') closes the while loop opened by
+		// 'while (test)'; the optional '(...)' labels the exit arrow.
+<span class="nc" id="L85">		sb.append(&quot;Closing the while loop&quot;);</span>
+
+<span class="nc" id="L87">		final String out = arg.get(&quot;OUT&quot;, 0);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (out != null)</span>
+<span class="nc" id="L89">			sb.append(&quot;, exit arrow labelled \&quot;&quot;).append(out).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L91">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L80">		return diagram.endwhile(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;OUT&quot;, 0)));</span>
+<span class="nc" id="L97">		return diagram.endwhile(Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;OUT&quot;, 0)));</span>
 	}
 
 }

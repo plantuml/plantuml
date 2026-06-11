@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.chart.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,33 +48,40 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandChartGrid extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
 	public CommandChartGrid() {
-<span class="nc" id="L50">		super(false, getRegexConcat());</span>
-<span class="nc" id="L51">	}</span>
+<span class="nc" id="L51">		super(false, getRegexConcat());</span>
+<span class="nc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L54">		return RegexConcat.build(CommandChartGrid.class.getName(), RegexLeaf.start(), //</span>
-<span class="nc" id="L55">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L55">		return RegexConcat.build(CommandChartGrid.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L56">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;grid&quot;), //
-<span class="nc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;AXIS&quot;, &quot;([hx]-axis|[vy]-axis)&quot;), //
-<span class="nc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L60">				RegexLeaf.end());</span>
+<span class="nc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L61">				RegexLeaf.end());</span>
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L67">		return null;</span>
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L66">		final String axis = arg.get(&quot;AXIS&quot;, 0);</span>
+<span class="nc" id="L74">		final String axis = arg.get(&quot;AXIS&quot;, 0);</span>
 
 		// Enable major gridlines for the specified axis
-<span class="nc" id="L69">		final ChartDiagram.GridMode gridMode = ChartDiagram.GridMode.MAJOR;</span>
+<span class="nc" id="L77">		final ChartDiagram.GridMode gridMode = ChartDiagram.GridMode.MAJOR;</span>
 
-<span class="nc bnc" id="L71" title="All 4 branches missed.">		if (axis.equals(&quot;h-axis&quot;) || axis.equals(&quot;x-axis&quot;)) {</span>
-<span class="nc" id="L72">			return diagram.setXGridMode(gridMode);</span>
-<span class="nc bnc" id="L73" title="All 4 branches missed.">		} else if (axis.equals(&quot;v-axis&quot;)  || axis.equals(&quot;y-axis&quot;)) {</span>
-<span class="nc" id="L74">			return diagram.setYGridMode(gridMode);</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">		if (axis.equals(&quot;h-axis&quot;) || axis.equals(&quot;x-axis&quot;)) {</span>
+<span class="nc" id="L80">			return diagram.setXGridMode(gridMode);</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		} else if (axis.equals(&quot;v-axis&quot;)  || axis.equals(&quot;y-axis&quot;)) {</span>
+<span class="nc" id="L82">			return diagram.setYGridMode(gridMode);</span>
 		} else {
-<span class="nc" id="L76">			return CommandExecutionResult.error(&quot;Invalid axis: &quot; + axis);</span>
+<span class="nc" id="L84">			return CommandExecutionResult.error(&quot;Invalid axis: &quot; + axis);</span>
 		}
 	}
 }

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -53,39 +54,63 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandSwitch extends SingleLineCommand2&lt;ActivityDiagram3&gt; {
 
 	public CommandSwitch() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandSwitch.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L61">				ColorParser.exp4(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandSwitch.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">				ColorParser.exp4(), //</span>
 				new RegexLeaf(&quot;switch&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(&quot;), //
 				new RegexLeaf(1, &quot;TEST&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;\\)&quot;), //
-<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L68">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L69">				RegexLeaf.end());</span>
+<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L70">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L76">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'switch (test)' opens a multi-branch block: each branch starts with
+		// 'case (value)' and the block is closed by 'endswitch'.
+<span class="nc" id="L80">		sb.append(&quot;Starting a switch&quot;);</span>
+
+<span class="nc" id="L82">		final String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (test.length() &gt; 0)</span>
+<span class="nc" id="L84">			sb.append(&quot;, testing \&quot;&quot;).append(test).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L86">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false)</span>
+<span class="nc" id="L88">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+
+		// The leading color is parsed but no longer applied by executeArg.
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L92">			sb.append(&quot; (the leading color is currently ignored: use a stereotype instead)&quot;);</span>
+
+<span class="nc" id="L94">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="nc" id="L76">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc" id="L77">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L101">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc" id="L102">		final Colors colors = stereogroup.getInnerColors(diagram.getSkinParam().getIHtmlColorSet());</span>
 
 //		final String s = arg.get(&quot;COLOR&quot;, 0);
 //		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
-<span class="nc" id="L82">		String test = arg.get(&quot;TEST&quot;, 0);</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (test.length() == 0)</span>
-<span class="nc" id="L84">			test = null;</span>
+<span class="nc" id="L107">		String test = arg.get(&quot;TEST&quot;, 0);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (test.length() == 0)</span>
+<span class="nc" id="L109">			test = null;</span>
 
-<span class="nc" id="L86">		diagram.startSwitch(Display.getWithNewlines(diagram.getPragma(), test), colors);</span>
+<span class="nc" id="L111">		diagram.startSwitch(Display.getWithNewlines(diagram.getPragma(), test), colors);</span>
 
-<span class="nc" id="L88">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L113">		return CommandExecutionResult.ok();</span>
 	}
 
 }

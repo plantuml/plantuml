@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.cheneer.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -48,21 +49,28 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandEndGroup extends SingleLineCommand2&lt;ChenEerDiagram&gt; {
 
 	public CommandEndGroup() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	protected static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandEndGroup.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandEndGroup.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\}&quot;), //
-<span class="fc" id="L57">				RegexLeaf.end()); //</span>
+<span class="fc" id="L58">				RegexLeaf.end()); //</span>
 	}
 
 	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L64">		return null;</span>
+	}
+
+
+	@Override
 	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (!diagram.popOwner()) {</span>
-<span class="nc" id="L63">			return CommandExecutionResult.error(&quot;Unbalanced brackets&quot;);</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (!diagram.popOwner()) {</span>
+<span class="nc" id="L71">			return CommandExecutionResult.error(&quot;Unbalanced brackets&quot;);</span>
 		}
-<span class="fc" id="L65">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L73">		return CommandExecutionResult.ok();</span>
 	}
 
 }

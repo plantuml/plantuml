@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -72,20 +73,20 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&gt; {
 
 	public CommandLinkActivity() {
-<span class="fc" id="L75">		super(getRegexConcat());</span>
-<span class="fc" id="L76">	}</span>
+<span class="fc" id="L76">		super(getRegexConcat());</span>
+<span class="fc" id="L77">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L79">		return RegexConcat.build(CommandLinkActivity.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L80">		return RegexConcat.build(CommandLinkActivity.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional(//
 						new RegexOr(&quot;FIRST&quot;, //
 								new RegexLeaf(2, &quot;STAR&quot;, &quot;(\\(\\*(top)?\\))&quot;), //
 								new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN][%pLN_.]*)&quot;), //
 								new RegexLeaf(1, &quot;BAR&quot;, &quot;(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)&quot;), //
 								new RegexLeaf(2, &quot;QUOTED&quot;, &quot;[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?&quot;))), //
-<span class="fc" id="L86">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
-<span class="fc" id="L87">				ColorParser.exp2(), //</span>
-<span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L87">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L88">				ColorParser.exp2(), //</span>
+<span class="fc" id="L89">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
 
 				new RegexLeaf(1, &quot;ARROW_BODY1&quot;, &quot;([-.]+)&quot;), //
@@ -95,9 +96,9 @@ public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&g
 				new RegexLeaf(1, &quot;ARROW_BODY2&quot;, &quot;([-.]*)&quot;), //
 				new RegexLeaf(&quot;\\&gt;&quot;), //
 
-<span class="fc" id="L98">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;BRACKET&quot;, &quot;\\[([^\\]*]+[^\\]]*)\\]&quot;)), //
-<span class="fc" id="L100">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L101">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr(&quot;FIRST2&quot;, //
 						new RegexLeaf(2, &quot;STAR2&quot;, &quot;(\\(\\*(top|\\d+)?\\))&quot;), //
 						new RegexLeaf(1, &quot;OPENBRACKET2&quot;, &quot;(\\{)&quot;), //
@@ -105,221 +106,345 @@ public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&g
 						new RegexLeaf(1, &quot;BAR2&quot;, &quot;(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)&quot;), //
 						new RegexLeaf(2, &quot;QUOTED2&quot;, &quot;[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?&quot;), //
 						new RegexLeaf(1, &quot;QUOTED_INVISIBLE2&quot;, &quot;(\\w.*?)&quot;)), //
-<span class="fc" id="L108">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
+<span class="fc" id="L109">				StereotypePattern.optional(&quot;STEREOTYPE2&quot;), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;in&quot;), //
-<span class="fc" id="L112">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L113">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;PARTITION2&quot;, &quot;([%g][^%g]+[%g]|\\S+)&quot;) //
 						)), //
-<span class="fc" id="L115">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L116">				ColorParser.exp3(), //</span>
-<span class="fc" id="L117">				RegexLeaf.end());</span>
+<span class="fc" id="L116">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L117">				ColorParser.exp3(), //</span>
+<span class="fc" id="L118">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L124">		final StringBuilder sb = new StringBuilder();</span>
+
+		// Legacy activity diagram link: 'Source --&gt; Target'. The endpoints are
+		// decoded like in getEntity(): '(*)' is the start or the end node
+		// depending on its side, '==name==' a synchronization bar, '{' opens
+		// an inner activity block, and a missing source means the last
+		// activity.
+<span class="nc" id="L131">		sb.append(&quot;Drawing a link from &quot;).append(describeSource(arg)).append(&quot; to &quot;).append(describeTarget(arg));</span>
+
+<span class="nc" id="L133">		final String partition = arg.get(&quot;PARTITION2&quot;, 0);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (partition != null)</span>
+<span class="nc" id="L135">			sb.append(&quot;, placed in the partition '&quot;)</span>
+<span class="nc" id="L136">					.append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition)).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L138">		final String bracket = arg.get(&quot;BRACKET&quot;, 0);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (bracket != null)</span>
+<span class="nc" id="L140">			sb.append(&quot;, labelled \&quot;&quot;).append(bracket).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L142">		final String bodies = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY1&quot;, 0))</span>
+<span class="nc" id="L143">				+ CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY2&quot;, 0));</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		if (bodies.contains(&quot;.&quot;))</span>
+<span class="nc" id="L145">			sb.append(&quot;, dotted&quot;);</span>
+
+		// A '*' in the arrow removes the layout constraint of the link.
+<span class="nc" id="L148">		final String direction = arg.get(&quot;ARROW_DIRECTION&quot;, 0);</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (&quot;*&quot;.equals(direction))</span>
+<span class="nc" id="L150">			sb.append(&quot;, without layout constraint&quot;);</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">		else if (direction != null &amp;&amp; direction.isEmpty() == false)</span>
+<span class="nc" id="L152">			sb.append(&quot;, oriented &quot;).append(describeDirection(direction));</span>
+
+<span class="nc" id="L154">		final String style = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (style != null)</span>
+<span class="nc" id="L156">			sb.append(&quot;, with style '&quot;).append(style).append(&quot;'&quot;);</span>
+
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L159">			sb.append(&quot;, with a URL link&quot;);</span>
+
+		// The stereotypes and colors written next to an endpoint are applied
+		// to that endpoint, not to the link.
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
+<span class="nc" id="L164">			sb.append(&quot;, setting the stereotype of the source to &quot;).append(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
+
+<span class="nc bnc" id="L166" title="All 2 branches missed.">		if (arg.get(&quot;BACKCOLOR&quot;, 0) != null)</span>
+<span class="nc" id="L167">			sb.append(&quot;, setting the background color of the source to &quot;).append(arg.get(&quot;BACKCOLOR&quot;, 0));</span>
+
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (arg.get(&quot;STEREOTYPE2&quot;, 0) != null)</span>
+<span class="nc" id="L170">			sb.append(&quot;, setting the stereotype of the target to &quot;).append(arg.get(&quot;STEREOTYPE2&quot;, 0));</span>
+
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (arg.get(&quot;BACKCOLOR2&quot;, 0) != null)</span>
+<span class="nc" id="L173">			sb.append(&quot;, setting the background color of the target to &quot;).append(arg.get(&quot;BACKCOLOR2&quot;, 0));</span>
+
+<span class="nc" id="L175">		return sb.toString();</span>
+	}
+
+	static String describeSource(RegexResult arg) {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (arg.get(&quot;STAR&quot;, 0) != null) {</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (arg.get(&quot;STAR&quot;, 1) != null)</span>
+<span class="nc" id="L181">				return &quot;the start node (the 'top' flag is currently ignored)&quot;;</span>
+<span class="nc" id="L182">			return &quot;the start node&quot;;</span>
+		}
+
+<span class="nc" id="L185">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		if (code != null)</span>
+<span class="nc" id="L187">			return &quot;'&quot; + code + &quot;'&quot;;</span>
+
+<span class="nc" id="L189">		final String bar = arg.get(&quot;BAR&quot;, 0);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (bar != null)</span>
+<span class="nc" id="L191">			return &quot;the synchronization bar '&quot; + bar + &quot;'&quot;;</span>
+
+<span class="nc" id="L193">		final String quoted = arg.get(&quot;QUOTED&quot;, 0);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">		if (quoted != null) {</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (arg.get(&quot;QUOTED&quot;, 1) != null)</span>
+<span class="nc" id="L196">				return &quot;'&quot; + arg.get(&quot;QUOTED&quot;, 1) + &quot;' displayed as \&quot;&quot; + quoted + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L197">			return &quot;\&quot;&quot; + quoted + &quot;\&quot;&quot;;</span>
+		}
+
+<span class="nc" id="L200">		return &quot;the last activity&quot;;</span>
+	}
+
+	private String describeTarget(RegexResult arg) {
+<span class="nc bnc" id="L204" title="All 2 branches missed.">		if (arg.get(&quot;STAR2&quot;, 0) != null) {</span>
+<span class="nc" id="L205">			final String suppId = arg.get(&quot;STAR2&quot;, 1);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (suppId != null)</span>
+<span class="nc" id="L207">				return &quot;the end node '&quot; + suppId + &quot;'&quot;;</span>
+<span class="nc" id="L208">			return &quot;the end node&quot;;</span>
+		}
+
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (arg.get(&quot;OPENBRACKET2&quot;, 0) != null)</span>
+<span class="nc" id="L212">			return &quot;a new inner activity block&quot;;</span>
+
+<span class="nc" id="L214">		final String code = arg.get(&quot;CODE2&quot;, 0);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (code != null)</span>
+<span class="nc" id="L216">			return &quot;'&quot; + code + &quot;'&quot;;</span>
+
+<span class="nc" id="L218">		final String bar = arg.get(&quot;BAR2&quot;, 0);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">		if (bar != null)</span>
+<span class="nc" id="L220">			return &quot;the synchronization bar '&quot; + bar + &quot;'&quot;;</span>
+
+<span class="nc" id="L222">		final String quoted = arg.get(&quot;QUOTED2&quot;, 0);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">		if (quoted != null) {</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">			if (arg.get(&quot;QUOTED2&quot;, 1) != null)</span>
+<span class="nc" id="L225">				return &quot;'&quot; + arg.get(&quot;QUOTED2&quot;, 1) + &quot;' displayed as \&quot;&quot; + quoted + &quot;\&quot;&quot;;</span>
+<span class="nc" id="L226">			return &quot;\&quot;&quot; + quoted + &quot;\&quot;&quot;;</span>
+		}
+
+<span class="nc" id="L229">		return &quot;'&quot; + arg.get(&quot;QUOTED_INVISIBLE2&quot;, 0) + &quot;'&quot;;</span>
+	}
+
+	static String describeDirection(String direction) {
+<span class="nc bnc" id="L233" title="All 4 branches missed.">		switch (Character.toLowerCase(direction.charAt(0))) {</span>
+		case 'l':
+<span class="nc" id="L235">			return &quot;to the left&quot;;</span>
+		case 'r':
+<span class="nc" id="L237">			return &quot;to the right&quot;;</span>
+		case 'u':
+<span class="nc" id="L239">			return &quot;upwards&quot;;</span>
+		default:
+<span class="nc" id="L241">			return &quot;downwards&quot;;</span>
+		}
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L123">		final Entity entity1 = getEntity(location, diagram, arg, true);</span>
+<span class="fc" id="L248">		final Entity entity1 = getEntity(location, diagram, arg, true);</span>
 
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (entity1 == null)</span>
-<span class="nc" id="L126">			return CommandExecutionResult.error(&quot;No such activity&quot;);</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">		if (entity1 == null)</span>
+<span class="nc" id="L251">			return CommandExecutionResult.error(&quot;No such activity&quot;);</span>
 
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
-<span class="nc" id="L129">			entity1.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
+<span class="pc bpc" id="L253" title="1 of 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
+<span class="nc" id="L254">			entity1.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0)));</span>
 
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (arg.get(&quot;BACKCOLOR&quot;, 0) != null) {</span>
-<span class="nc" id="L132">			String s = arg.get(&quot;BACKCOLOR&quot;, 0);</span>
-<span class="nc" id="L133">			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="pc bpc" id="L256" title="1 of 2 branches missed.">		if (arg.get(&quot;BACKCOLOR&quot;, 0) != null) {</span>
+<span class="nc" id="L257">			String s = arg.get(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="nc" id="L258">			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
 		}
 
-<span class="fc" id="L136">		final Entity entity2 = getEntity(location, diagram, arg, false);</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (entity2 == null)</span>
-<span class="nc" id="L138">			return CommandExecutionResult.error(&quot;No such activity&quot;);</span>
+<span class="fc" id="L261">		final Entity entity2 = getEntity(location, diagram, arg, false);</span>
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">		if (entity2 == null)</span>
+<span class="nc" id="L263">			return CommandExecutionResult.error(&quot;No such activity&quot;);</span>
 
-<span class="fc" id="L140">		diagram.setLastEntityConsulted(entity2);</span>
+<span class="fc" id="L265">		diagram.setLastEntityConsulted(entity2);</span>
 
-<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (arg.get(&quot;BACKCOLOR2&quot;, 0) != null) {</span>
-<span class="nc" id="L143">			String s = arg.get(&quot;BACKCOLOR2&quot;, 0);</span>
-<span class="nc" id="L144">			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (arg.get(&quot;BACKCOLOR2&quot;, 0) != null) {</span>
+<span class="nc" id="L268">			String s = arg.get(&quot;BACKCOLOR2&quot;, 0);</span>
+<span class="nc" id="L269">			entity2.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
 		}
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (arg.get(&quot;STEREOTYPE2&quot;, 0) != null)</span>
-<span class="nc" id="L147">			entity2.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE2&quot;, 0)));</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">		if (arg.get(&quot;STEREOTYPE2&quot;, 0) != null)</span>
+<span class="nc" id="L272">			entity2.setStereotype(Stereotype.build(arg.get(&quot;STEREOTYPE2&quot;, 0)));</span>
 
-<span class="fc" id="L149">		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;BRACKET&quot;, 0));</span>
+<span class="fc" id="L274">		final Display linkLabel = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;BRACKET&quot;, 0));</span>
 
-<span class="fc" id="L151">		final String arrowBody1 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY1&quot;, 0));</span>
-<span class="fc" id="L152">		final String arrowBody2 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY2&quot;, 0));</span>
-<span class="fc" id="L153">		final String arrowDirection = CommandLinkClass.notNull(arg.get(&quot;ARROW_DIRECTION&quot;, 0));</span>
+<span class="fc" id="L276">		final String arrowBody1 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY1&quot;, 0));</span>
+<span class="fc" id="L277">		final String arrowBody2 = CommandLinkClass.notNull(arg.get(&quot;ARROW_BODY2&quot;, 0));</span>
+<span class="fc" id="L278">		final String arrowDirection = CommandLinkClass.notNull(arg.get(&quot;ARROW_DIRECTION&quot;, 0));</span>
 
-<span class="fc" id="L155">		final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
-<span class="fc" id="L156">		int length = arrow.length() - 1;</span>
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (arrowDirection.contains(&quot;*&quot;))</span>
-<span class="nc" id="L158">			length = 2;</span>
+<span class="fc" id="L280">		final String arrow = StringUtils.manageArrowForCuca(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
+<span class="fc" id="L281">		int length = arrow.length() - 1;</span>
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (arrowDirection.contains(&quot;*&quot;))</span>
+<span class="nc" id="L283">			length = 2;</span>
 
-<span class="fc" id="L160">		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if ((arrowBody1 + arrowBody2).contains(&quot;.&quot;))</span>
-<span class="nc" id="L162">			type = type.goDotted();</span>
+<span class="fc" id="L285">		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);</span>
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if ((arrowBody1 + arrowBody2).contains(&quot;.&quot;))</span>
+<span class="nc" id="L287">			type = type.goDotted();</span>
 
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		final LinkArg linkArg = LinkArg.build(linkLabel, length, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="fc" id="L165">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, type,</span>
+<span class="pc bpc" id="L289" title="1 of 2 branches missed.">		final LinkArg linkArg = LinkArg.build(linkLabel, length, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="fc" id="L290">		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, type,</span>
 				linkArg);
-<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (arrowDirection.contains(&quot;*&quot;))</span>
-<span class="nc" id="L168">			link.setConstraint(false);</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (arrowDirection.contains(&quot;*&quot;))</span>
+<span class="nc" id="L293">			link.setConstraint(false);</span>
 
-<span class="fc" id="L170">		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
-<span class="pc bpc" id="L171" title="2 of 4 branches missed.">		if (direction == Direction.LEFT || direction == Direction.UP)</span>
-<span class="nc" id="L172">			link = link.getInv();</span>
+<span class="fc" id="L295">		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + &quot;&gt;&quot;);</span>
+<span class="pc bpc" id="L296" title="2 of 4 branches missed.">		if (direction == Direction.LEFT || direction == Direction.UP)</span>
+<span class="nc" id="L297">			link = link.getInv();</span>
 
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null) {</span>
-<span class="nc" id="L175">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L176">			final Url urlLink = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
-<span class="nc" id="L177">			link.setUrl(urlLink);</span>
+<span class="pc bpc" id="L299" title="1 of 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null) {</span>
+<span class="nc" id="L300">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L301">			final Url urlLink = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));</span>
+<span class="nc" id="L302">			link.setUrl(urlLink);</span>
 		}
 
-<span class="fc" id="L180">		link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
-<span class="fc" id="L181">		diagram.addLink(link);</span>
+<span class="fc" id="L305">		link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="fc" id="L306">		diagram.addLink(link);</span>
 
-<span class="fc" id="L183">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L308">		return CommandExecutionResult.ok();</span>
 
 	}
 
 	static Entity getEntity(LineLocation location, ActivityDiagram diagram, RegexResult arg, final boolean start) {
-<span class="fc bfc" id="L188" title="All 2 branches covered.">		final String suf = start ? &quot;&quot; : &quot;2&quot;;</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">		final String suf = start ? &quot;&quot; : &quot;2&quot;;</span>
 
-<span class="fc" id="L190">		final String openBracket2 = arg.get(&quot;OPENBRACKET&quot; + suf, 0);</span>
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">		if (openBracket2 != null)</span>
-<span class="nc" id="L192">			return diagram.createInnerActivity(location);</span>
+<span class="fc" id="L315">		final String openBracket2 = arg.get(&quot;OPENBRACKET&quot; + suf, 0);</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">		if (openBracket2 != null)</span>
+<span class="nc" id="L317">			return diagram.createInnerActivity(location);</span>
 
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (arg.get(&quot;STAR&quot; + suf, 0) != null) {</span>
-<span class="fc" id="L195">			final String suppId = arg.get(&quot;STAR&quot; + suf, 1);</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">			if (start) {</span>
+<span class="fc bfc" id="L319" title="All 2 branches covered.">		if (arg.get(&quot;STAR&quot; + suf, 0) != null) {</span>
+<span class="fc" id="L320">			final String suppId = arg.get(&quot;STAR&quot; + suf, 1);</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">			if (start) {</span>
 //				if (suppId != null)
 //					diagram.getStart().setTop(true);
-<span class="fc" id="L199">				return diagram.getStart(location);</span>
+<span class="fc" id="L324">				return diagram.getStart(location);</span>
 			}
-<span class="fc" id="L201">			return diagram.getEnd(location, suppId);</span>
+<span class="fc" id="L326">			return diagram.getEnd(location, suppId);</span>
 		}
-<span class="fc" id="L203">		String partition = arg.get(&quot;PARTITION&quot; + suf, 0);</span>
-<span class="pc bpc" id="L204" title="1 of 2 branches missed.">		if (partition != null)</span>
-<span class="nc" id="L205">			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);</span>
+<span class="fc" id="L328">		String partition = arg.get(&quot;PARTITION&quot; + suf, 0);</span>
+<span class="pc bpc" id="L329" title="1 of 2 branches missed.">		if (partition != null)</span>
+<span class="nc" id="L330">			partition = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(partition);</span>
 
-<span class="fc" id="L207">		final String idShort = arg.get(&quot;CODE&quot; + suf, 0);</span>
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (idShort != null) {</span>
-<span class="pc bpc" id="L209" title="1 of 2 branches missed.">			if (partition != null) {</span>
-<span class="nc" id="L210">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
-<span class="nc" id="L211">				diagram.gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.PACKAGE);</span>
+<span class="fc" id="L332">		final String idShort = arg.get(&quot;CODE&quot; + suf, 0);</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">		if (idShort != null) {</span>
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">			if (partition != null) {</span>
+<span class="nc" id="L335">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
+<span class="nc" id="L336">				diagram.gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.PACKAGE);</span>
 			}
-<span class="fc" id="L213">			final Quark&lt;Entity&gt; ident = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="fc" id="L338">			final Quark&lt;Entity&gt; ident = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
 
-<span class="fc" id="L215">			final LeafType type = getTypeIfExisting(diagram, ident);</span>
-<span class="fc" id="L216">			Entity result = ident.getData();</span>
-<span class="pc bpc" id="L217" title="1 of 2 branches missed.">			if (result == null)</span>
-<span class="fc" id="L218">				result = diagram.reallyCreateLeaf(location, ident,</span>
-<span class="fc" id="L219">						Display.getWithNewlines(diagram.getPragma(), idShort), type, null);</span>
+<span class="fc" id="L340">			final LeafType type = getTypeIfExisting(diagram, ident);</span>
+<span class="fc" id="L341">			Entity result = ident.getData();</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">			if (result == null)</span>
+<span class="fc" id="L343">				result = diagram.reallyCreateLeaf(location, ident,</span>
+<span class="fc" id="L344">						Display.getWithNewlines(diagram.getPragma(), idShort), type, null);</span>
 
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">			if (partition != null)</span>
-<span class="nc" id="L222">				diagram.endGroup();</span>
+<span class="pc bpc" id="L346" title="1 of 2 branches missed.">			if (partition != null)</span>
+<span class="nc" id="L347">				diagram.endGroup();</span>
 
-<span class="fc" id="L224">			return result;</span>
+<span class="fc" id="L349">			return result;</span>
 		}
-<span class="fc" id="L226">		final String bar = arg.get(&quot;BAR&quot; + suf, 0);</span>
-<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (bar != null) {</span>
-<span class="fc" id="L228">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(bar));</span>
-<span class="fc" id="L229">			Entity result = quark.getData();</span>
-<span class="fc bfc" id="L230" title="All 2 branches covered.">			if (result == null)</span>
-<span class="fc" id="L231">				result = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), bar),</span>
+<span class="fc" id="L351">		final String bar = arg.get(&quot;BAR&quot; + suf, 0);</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">		if (bar != null) {</span>
+<span class="fc" id="L353">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(bar));</span>
+<span class="fc" id="L354">			Entity result = quark.getData();</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">			if (result == null)</span>
+<span class="fc" id="L356">				result = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), bar),</span>
 						LeafType.SYNCHRO_BAR, null);
-<span class="fc" id="L233">			return result;</span>
+<span class="fc" id="L358">			return result;</span>
 		}
-<span class="fc" id="L235">		final RegexPartialMatch quoted = arg.get(&quot;QUOTED&quot; + suf);</span>
-<span class="pc bpc" id="L236" title="1 of 2 branches missed.">		if (quoted.get(0) != null) {</span>
-<span class="nc bnc" id="L237" title="All 2 branches missed.">			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);</span>
-<span class="nc bnc" id="L238" title="All 2 branches missed.">			if (partition != null) {</span>
-<span class="nc" id="L239">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
-<span class="nc" id="L240">				diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), partition),</span>
+<span class="fc" id="L360">		final RegexPartialMatch quoted = arg.get(&quot;QUOTED&quot; + suf);</span>
+<span class="pc bpc" id="L361" title="1 of 2 branches missed.">		if (quoted.get(0) != null) {</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);</span>
+<span class="nc bnc" id="L363" title="All 2 branches missed.">			if (partition != null) {</span>
+<span class="nc" id="L364">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
+<span class="nc" id="L365">				diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), partition),</span>
 						GroupType.PACKAGE);
 			}
 
-<span class="nc" id="L244">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(quotedString));</span>
+<span class="nc" id="L369">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(quotedString));</span>
 
-<span class="nc" id="L246">			final LeafType type = getTypeIfExisting(diagram, quark);</span>
-<span class="nc" id="L247">			Entity result = quark.getData();</span>
-<span class="nc bnc" id="L248" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L249">				result = diagram.reallyCreateLeaf(location, quark,</span>
-<span class="nc" id="L250">						Display.getWithNewlines(diagram.getPragma(), quoted.get(0)), type, null);</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">			if (partition != null)</span>
-<span class="nc" id="L252">				diagram.endGroup();</span>
+<span class="nc" id="L371">			final LeafType type = getTypeIfExisting(diagram, quark);</span>
+<span class="nc" id="L372">			Entity result = quark.getData();</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L374">				result = diagram.reallyCreateLeaf(location, quark,</span>
+<span class="nc" id="L375">						Display.getWithNewlines(diagram.getPragma(), quoted.get(0)), type, null);</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">			if (partition != null)</span>
+<span class="nc" id="L377">				diagram.endGroup();</span>
 
-<span class="nc" id="L254">			return result;</span>
+<span class="nc" id="L379">			return result;</span>
 		}
-<span class="fc" id="L256">		final String quoteInvisibleString = arg.get(&quot;QUOTED_INVISIBLE&quot; + suf, 0);</span>
-<span class="pc bpc" id="L257" title="1 of 2 branches missed.">		if (quoteInvisibleString != null) {</span>
-<span class="nc bnc" id="L258" title="All 2 branches missed.">			if (partition != null) {</span>
-<span class="nc" id="L259">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
-<span class="nc" id="L260">				diagram.gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.PACKAGE);</span>
+<span class="fc" id="L381">		final String quoteInvisibleString = arg.get(&quot;QUOTED_INVISIBLE&quot; + suf, 0);</span>
+<span class="pc bpc" id="L382" title="1 of 2 branches missed.">		if (quoteInvisibleString != null) {</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">			if (partition != null) {</span>
+<span class="nc" id="L384">				final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(partition));</span>
+<span class="nc" id="L385">				diagram.gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.PACKAGE);</span>
 			}
-<span class="nc" id="L262">			final Quark&lt;Entity&gt; identInvisible = diagram.quarkInContext(true, diagram.cleanId(quoteInvisibleString));</span>
-<span class="nc" id="L263">			Entity result = identInvisible.getData();</span>
-<span class="nc bnc" id="L264" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L265">				result = diagram.reallyCreateLeaf(location, identInvisible,</span>
-<span class="nc" id="L266">						Display.getWithNewlines(diagram.getPragma(), identInvisible.getName()), LeafType.ACTIVITY,</span>
+<span class="nc" id="L387">			final Quark&lt;Entity&gt; identInvisible = diagram.quarkInContext(true, diagram.cleanId(quoteInvisibleString));</span>
+<span class="nc" id="L388">			Entity result = identInvisible.getData();</span>
+<span class="nc bnc" id="L389" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L390">				result = diagram.reallyCreateLeaf(location, identInvisible,</span>
+<span class="nc" id="L391">						Display.getWithNewlines(diagram.getPragma(), identInvisible.getName()), LeafType.ACTIVITY,</span>
 						null);
-<span class="nc bnc" id="L268" title="All 2 branches missed.">			if (partition != null)</span>
-<span class="nc" id="L269">				diagram.endGroup();</span>
+<span class="nc bnc" id="L393" title="All 2 branches missed.">			if (partition != null)</span>
+<span class="nc" id="L394">				diagram.endGroup();</span>
 
-<span class="nc" id="L271">			return result;</span>
+<span class="nc" id="L396">			return result;</span>
 		}
-<span class="fc" id="L273">		final String first = arg.get(&quot;FIRST&quot; + suf, 0);</span>
-<span class="pc bpc" id="L274" title="1 of 2 branches missed.">		if (first == null)</span>
-<span class="fc" id="L275">			return diagram.getLastEntityConsulted();</span>
+<span class="fc" id="L398">		final String first = arg.get(&quot;FIRST&quot; + suf, 0);</span>
+<span class="pc bpc" id="L399" title="1 of 2 branches missed.">		if (first == null)</span>
+<span class="fc" id="L400">			return diagram.getLastEntityConsulted();</span>
 
-<span class="nc" id="L277">		return null;</span>
+<span class="nc" id="L402">		return null;</span>
 	}
 
 	static Entity ubrexGetEntityForIfOnly(LineLocation location, ActivityDiagram diagram, RegexResult arg) {
 
-<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (arg.get(&quot;STAR&quot;, 0) != null)</span>
-<span class="nc" id="L283">			return diagram.getStart(location);</span>
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">		if (arg.get(&quot;STAR&quot;, 0) != null)</span>
+<span class="nc" id="L408">			return diagram.getStart(location);</span>
 
-<span class="fc" id="L285">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="pc bpc" id="L286" title="1 of 2 branches missed.">		if (idShort != null) {</span>
-<span class="nc" id="L287">			final Quark&lt;Entity&gt; ident = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="fc" id="L410">		final String idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">		if (idShort != null) {</span>
+<span class="nc" id="L412">			final Quark&lt;Entity&gt; ident = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
 
-<span class="nc" id="L289">			final LeafType type = getTypeIfExisting(diagram, ident);</span>
-<span class="nc" id="L290">			Entity result = ident.getData();</span>
-<span class="nc bnc" id="L291" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L292">				result = diagram.reallyCreateLeaf(location, ident,</span>
-<span class="nc" id="L293">						Display.getWithNewlines(diagram.getPragma(), idShort), type, null);</span>
+<span class="nc" id="L414">			final LeafType type = getTypeIfExisting(diagram, ident);</span>
+<span class="nc" id="L415">			Entity result = ident.getData();</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L417">				result = diagram.reallyCreateLeaf(location, ident,</span>
+<span class="nc" id="L418">						Display.getWithNewlines(diagram.getPragma(), idShort), type, null);</span>
 
-<span class="nc" id="L295">			return result;</span>
+<span class="nc" id="L420">			return result;</span>
 		}
-<span class="fc" id="L297">		final String bar = arg.get(&quot;BAR&quot;, 0);</span>
-<span class="pc bpc" id="L298" title="1 of 2 branches missed.">		if (bar != null) {</span>
-<span class="nc" id="L299">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(bar));</span>
-<span class="nc" id="L300">			Entity result = quark.getData();</span>
-<span class="nc bnc" id="L301" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L302">				result = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), bar),</span>
+<span class="fc" id="L422">		final String bar = arg.get(&quot;BAR&quot;, 0);</span>
+<span class="pc bpc" id="L423" title="1 of 2 branches missed.">		if (bar != null) {</span>
+<span class="nc" id="L424">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(bar));</span>
+<span class="nc" id="L425">			Entity result = quark.getData();</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L427">				result = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), bar),</span>
 						LeafType.SYNCHRO_BAR, null);
-<span class="nc" id="L304">			return result;</span>
+<span class="nc" id="L429">			return result;</span>
 		}
-<span class="fc" id="L306">		final String quoted1 = arg.get(&quot;QUOTED1&quot;, 0);</span>
-<span class="pc bpc" id="L307" title="1 of 2 branches missed.">		if (quoted1 != null) {</span>
-<span class="nc" id="L308">			final String quoted2 = arg.get(&quot;QUOTED2&quot;, 0);</span>
-<span class="nc bnc" id="L309" title="All 2 branches missed.">			final String quotedString = quoted2 == null ? quoted1 : quoted2;</span>
+<span class="fc" id="L431">		final String quoted1 = arg.get(&quot;QUOTED1&quot;, 0);</span>
+<span class="pc bpc" id="L432" title="1 of 2 branches missed.">		if (quoted1 != null) {</span>
+<span class="nc" id="L433">			final String quoted2 = arg.get(&quot;QUOTED2&quot;, 0);</span>
+<span class="nc bnc" id="L434" title="All 2 branches missed.">			final String quotedString = quoted2 == null ? quoted1 : quoted2;</span>
 
-<span class="nc" id="L311">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(quotedString));</span>
+<span class="nc" id="L436">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(quotedString));</span>
 
-<span class="nc" id="L313">			final LeafType type = getTypeIfExisting(diagram, quark);</span>
-<span class="nc" id="L314">			Entity result = quark.getData();</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L316">				result = diagram.reallyCreateLeaf(location, quark,</span>
-<span class="nc" id="L317">						Display.getWithNewlines(diagram.getPragma(), quoted1), type, null);</span>
+<span class="nc" id="L438">			final LeafType type = getTypeIfExisting(diagram, quark);</span>
+<span class="nc" id="L439">			Entity result = quark.getData();</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L441">				result = diagram.reallyCreateLeaf(location, quark,</span>
+<span class="nc" id="L442">						Display.getWithNewlines(diagram.getPragma(), quoted1), type, null);</span>
 
-<span class="nc" id="L319">			return result;</span>
+<span class="nc" id="L444">			return result;</span>
 		}
 
-<span class="fc" id="L322">		return diagram.getLastEntityConsulted();</span>
+<span class="fc" id="L447">		return diagram.getLastEntityConsulted();</span>
 	}
 
 	private static LeafType getTypeIfExisting(ActivityDiagram system, Quark&lt;Entity&gt; code) {
@@ -329,7 +454,7 @@ public class CommandLinkActivity extends SingleLineCommand2&lt;ActivityDiagram&g
 //			if (ent.getLeafType() == LeafType.BRANCH)
 //				return LeafType.BRANCH;
 //		}
-<span class="fc" id="L332">		return LeafType.ACTIVITY;</span>
+<span class="fc" id="L457">		return LeafType.ACTIVITY;</span>
 	}
 
 }

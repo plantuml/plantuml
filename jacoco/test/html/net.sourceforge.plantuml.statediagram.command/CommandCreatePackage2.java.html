@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -65,89 +66,124 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandCreatePackage2 extends SingleLineCommand2&lt;StateDiagram&gt; {
 
 	public CommandCreatePackage2() {
-<span class="fc" id="L68">		super(getRegexConcat());</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L69">		super(getRegexConcat());</span>
+<span class="fc" id="L70">	}</span>
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc bnc" id="L73" title="All 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
+<span class="nc bnc" id="L74" title="All 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
 	}
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L77">		return RegexConcat.build(CommandCreatePackage2.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L78">		return RegexConcat.build(CommandCreatePackage2.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;frame&quot;), //
-<span class="fc" id="L79">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L80">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOr(//
 						new RegexConcat(//
 								new RegexLeaf(1, &quot;CODE1&quot;, &quot;([%pLN_.]+)&quot;), //
-<span class="fc" id="L83">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L84">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L85">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L86">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;DISPLAY1&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 						new RegexConcat(//
 								new RegexOptional(new RegexConcat( //
 										new RegexLeaf(1, &quot;DISPLAY2&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-<span class="fc" id="L90">										RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L91">										RegexLeaf.spaceOneOrMore(), //</span>
 										new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L92">										RegexLeaf.spaceOneOrMore() //</span>
+<span class="fc" id="L93">										RegexLeaf.spaceOneOrMore() //</span>
 								)), //
 								new RegexLeaf(1, &quot;CODE2&quot;, &quot;([%pLN_.]+)&quot;))), //
-<span class="fc" id="L95">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L96">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L97">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L98">				color().getRegex(), //</span>
-<span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L98">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L99">				color().getRegex(), //</span>
+<span class="fc" id="L100">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(2, &quot;LINECOLOR&quot;, &quot;##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?&quot;)),
-<span class="fc" id="L101">				new RegexLeaf(&quot;(?:[%s]*\\{|[%s]+begin)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L102">				new RegexLeaf(&quot;(?:[%s]*\\{|[%s]+begin)&quot;), RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L105">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L106">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	private String getNotNull(RegexResult arg, String v1, String v2) {
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (arg.get(v1, 0) == null)</span>
-<span class="nc" id="L110">			return arg.get(v2, 0);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (arg.get(v1, 0) == null)</span>
+<span class="nc" id="L111">			return arg.get(v2, 0);</span>
 
-<span class="nc" id="L112">		return arg.get(v1, 0);</span>
+<span class="nc" id="L113">		return arg.get(v1, 0);</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L119">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'frame Name {' (or 'frame Name begin') opens a frame around the
+		// following states, closed by '}'. The code and the display may be
+		// written in both orders, hence the getNotNull lookups, like in
+		// executeArg.
+<span class="nc" id="L125">		sb.append(&quot;Starting the frame '&quot;).append(getNotNull(arg, &quot;CODE1&quot;, &quot;CODE2&quot;)).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L127">		final String display = getNotNull(arg, &quot;DISPLAY1&quot;, &quot;DISPLAY2&quot;);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (display != null)</span>
+<span class="nc" id="L129">			sb.append(&quot; displayed as \&quot;&quot;).append(display).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L131">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L133">			sb.append(&quot;, stereotype &quot;).append(stereotype);</span>
+
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L136">			sb.append(&quot;, with a URL link&quot;);</span>
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L139">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+		// '##[style]color' sets the border style and color.
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 1) != null)</span>
+<span class="nc" id="L143">			sb.append(&quot;, line color &quot;).append(arg.get(&quot;LINECOLOR&quot;, 1));</span>
+
+<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
+<span class="nc" id="L146">			sb.append(&quot;, line style &quot;).append(arg.get(&quot;LINECOLOR&quot;, 0));</span>
+
+<span class="nc" id="L148">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="nc" id="L119">		final String idShort = getNotNull(arg, &quot;CODE1&quot;, &quot;CODE2&quot;);</span>
-<span class="nc" id="L120">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
-<span class="nc" id="L121">		String display = getNotNull(arg, &quot;DISPLAY1&quot;, &quot;DISPLAY2&quot;);</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (display == null)</span>
-<span class="nc" id="L123">			display = quark.getName();</span>
+<span class="nc" id="L155">		final String idShort = getNotNull(arg, &quot;CODE1&quot;, &quot;CODE2&quot;);</span>
+<span class="nc" id="L156">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="nc" id="L157">		String display = getNotNull(arg, &quot;DISPLAY1&quot;, &quot;DISPLAY2&quot;);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">		if (display == null)</span>
+<span class="nc" id="L159">			display = quark.getName();</span>
 
-<span class="nc" id="L125">		diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE,</span>
+<span class="nc" id="L161">		diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE,</span>
 				USymbols.FRAME);
-<span class="nc" id="L127">		final Entity p = diagram.getCurrentGroup();</span>
-<span class="nc" id="L128">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L130">			p.setStereotype(Stereotype.build(stereotype));</span>
+<span class="nc" id="L163">		final Entity p = diagram.getCurrentGroup();</span>
+<span class="nc" id="L164">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L166">			p.setStereotype(Stereotype.build(stereotype));</span>
 
-<span class="nc" id="L132">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (urlString != null) {</span>
-<span class="nc" id="L134">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L135">			final Url url = urlBuilder.getUrl(urlString);</span>
-<span class="nc" id="L136">			p.addUrl(url);</span>
+<span class="nc" id="L168">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L170">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L171">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L172">			p.addUrl(url);</span>
 		}
 
-<span class="nc" id="L139">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L140">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
+<span class="nc" id="L175">		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L176">		final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
 
-<span class="nc bnc" id="L142" title="All 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (lineColor != null)</span>
-<span class="nc" id="L144">			colors = colors.add(ColorType.LINE, lineColor);</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (lineColor != null)</span>
+<span class="nc" id="L180">			colors = colors.add(ColorType.LINE, lineColor);</span>
 
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
-<span class="nc" id="L147">			colors = colors.addLegacyStroke(arg.get(&quot;LINECOLOR&quot;, 0));</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
+<span class="nc" id="L183">			colors = colors.addLegacyStroke(arg.get(&quot;LINECOLOR&quot;, 0));</span>
 
-<span class="nc" id="L149">		p.setColors(colors);</span>
-<span class="nc" id="L150">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L185">		p.setColors(colors);</span>
+<span class="nc" id="L186">		return CommandExecutionResult.ok();</span>
 	}
 
 }

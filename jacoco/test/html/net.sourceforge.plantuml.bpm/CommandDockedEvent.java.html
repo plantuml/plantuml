@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.bpm;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -47,24 +48,30 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandDockedEvent extends SingleLineCommand2&lt;BpmDiagram&gt; {
 
 	public CommandDockedEvent() {
-<span class="nc" id="L50">		super(getRegexConcat());</span>
-<span class="nc" id="L51">	}</span>
+<span class="nc" id="L51">		super(getRegexConcat());</span>
+<span class="nc" id="L52">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L54">		return RegexConcat.build(CommandDockedEvent.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L55">		return RegexConcat.build(CommandDockedEvent.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), //
 				new RegexLeaf(0, &quot;STYLE&quot;, &quot;;&quot;), //
-<span class="nc" id="L58">				RegexLeaf.end());</span>
+<span class="nc" id="L59">				RegexLeaf.end());</span>
+	}
+	
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L65">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(BpmDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
-<span class="nc" id="L64">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc" id="L65">		final BpmElement element = new BpmElement(null, BpmElementType.DOCKED_EVENT, label);</span>
-<span class="nc" id="L66">		final BpmEvent event = new BpmEventAdd(element);</span>
-<span class="nc" id="L67">		return diagram.addEvent(event);</span>
+<span class="nc" id="L71">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc" id="L72">		final BpmElement element = new BpmElement(null, BpmElementType.DOCKED_EVENT, label);</span>
+<span class="nc" id="L73">		final BpmEvent event = new BpmEventAdd(element);</span>
+<span class="nc" id="L74">		return diagram.addEvent(event);</span>
 	}
 
 }

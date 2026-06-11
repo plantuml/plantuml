@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.activitydiagram.command;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,25 +49,42 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandInnerConcurrent extends SingleLineCommand2&lt;ActivityDiagram&gt; {
 
 	public CommandInnerConcurrent() {
-<span class="nc" id="L51">		super(getRegexConcat());</span>
-<span class="nc" id="L52">	}</span>
+<span class="nc" id="L52">		super(getRegexConcat());</span>
+<span class="nc" id="L53">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L55">		return RegexConcat.build(CommandInnerConcurrent.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L56">		return RegexConcat.build(CommandInnerConcurrent.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;--&quot;), //
-<span class="nc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;(.*)&quot;), //
-<span class="nc" id="L59">				RegexLeaf.end()); //</span>
+<span class="nc" id="L60">				RegexLeaf.end()); //</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L66">		final StringBuilder sb = new StringBuilder();</span>
+
+		// '--' inside an inner activity block (opened by '--&gt; {') starts a new
+		// concurrent branch (legacy activity diagram syntax); executeArg fails
+		// when no inner activity is open.
+<span class="nc" id="L71">		sb.append(&quot;Starting a new concurrent activity branch&quot;);</span>
+
+<span class="nc" id="L73">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">		if (name != null &amp;&amp; name.isEmpty() == false)</span>
+<span class="nc" id="L75">			sb.append(&quot; labelled \&quot;&quot;).append(name).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L77">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (diagram.getCurrentGroup().isRoot()) </span>
-<span class="nc" id="L65">			return CommandExecutionResult.error(&quot;No inner activity&quot;);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (diagram.getCurrentGroup().isRoot()) </span>
+<span class="nc" id="L83">			return CommandExecutionResult.error(&quot;No inner activity&quot;);</span>
 		
-<span class="nc" id="L67">		diagram.concurrentActivity(location, arg.get(&quot;NAME&quot;, 0));</span>
+<span class="nc" id="L85">		diagram.concurrentActivity(location, arg.get(&quot;NAME&quot;, 0));</span>
 
-<span class="nc" id="L69">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L87">		return CommandExecutionResult.ok();</span>
 	}
 
 }

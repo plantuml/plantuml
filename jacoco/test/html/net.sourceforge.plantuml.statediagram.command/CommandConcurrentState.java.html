@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.statediagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,26 +49,38 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandConcurrentState extends SingleLineCommand2&lt;StateDiagram&gt; {
 
 	public CommandConcurrentState() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc bnc" id="L56" title="All 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
+<span class="nc bnc" id="L57" title="All 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
 	}
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandConcurrentState.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandConcurrentState.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(--+|\\|\\|+)&quot;), //
-<span class="fc" id="L62">				RegexLeaf.end()); //</span>
+<span class="fc" id="L63">				RegexLeaf.end()); //</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '--' (or '||') inside a composite state starts a new concurrent
+		// region; the first character selects the separator orientation, like
+		// in executeArg.
+<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (arg.get(&quot;TYPE&quot;, 0).charAt(0) == '-')</span>
+<span class="nc" id="L73">			return &quot;Starting a new concurrent region, separated by a horizontal line&quot;;</span>
+
+<span class="nc" id="L75">		return &quot;Starting a new concurrent region, separated by a vertical line&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">		if (diagram.concurrentState(location, arg.get(&quot;TYPE&quot;, 0).charAt(0), currentPass))</span>
-<span class="nc" id="L68">			return CommandExecutionResult.ok();</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (diagram.concurrentState(location, arg.get(&quot;TYPE&quot;, 0).charAt(0), currentPass))</span>
+<span class="nc" id="L81">			return CommandExecutionResult.ok();</span>
 
-<span class="nc" id="L70">		return CommandExecutionResult.error(&quot;Error 42&quot;);</span>
+<span class="nc" id="L83">		return CommandExecutionResult.error(&quot;Error 42&quot;);</span>
 	}
 
 }

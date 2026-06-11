@@ -40,6 +40,7 @@ import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -50,29 +51,37 @@ public class UBrexCommandEndif extends UBrexSingleLineCommand2&lt;ActivityDiagra
 	// ::remove folder when __HAXE__
 
 	public UBrexCommandEndif() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L57">		return UBrexConcat.build( //</span>
+<span class="fc" id="L58">		return UBrexConcat.build( //</span>
 				new UBrexLeaf(&quot;end&quot;), //
-<span class="fc" id="L59">				UBrexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L60">				UBrexLeaf.spaceZeroOrMore(), //</span>
 				new UBrexLeaf(&quot;if&quot;), //
-<span class="fc" id="L61">				UBrexLeaf.end()); //</span>
+<span class="fc" id="L62">				UBrexLeaf.end()); //</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'endif' closes the enclosing 'if' (legacy activity diagram syntax);
+		// executeArg fails when no 'if' is pending.
+<span class="nc" id="L70">		return &quot;Closing the enclosing if&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (diagram.getLastEntityConsulted() == null)</span>
-<span class="nc" id="L68">			return CommandExecutionResult.error(&quot;No if for this endif&quot;);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (diagram.getLastEntityConsulted() == null)</span>
+<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;No if for this endif&quot;);</span>
 
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (diagram.getCurrentContext() == null)</span>
-<span class="nc" id="L71">			return CommandExecutionResult.error(&quot;No if for this endif&quot;);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (diagram.getCurrentContext() == null)</span>
+<span class="nc" id="L80">			return CommandExecutionResult.error(&quot;No if for this endif&quot;);</span>
 
-<span class="fc" id="L73">		diagram.endif();</span>
+<span class="fc" id="L82">		diagram.endif();</span>
 
-<span class="fc" id="L75">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L84">		return CommandExecutionResult.ok();</span>
 	}
 
 }

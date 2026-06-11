@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.chart.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.chart.ChartDiagram;
 import net.sourceforge.plantuml.chart.ChartSeries;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -55,86 +56,93 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandChartArea extends SingleLineCommand2&lt;ChartDiagram&gt; {
 
 	public CommandChartArea() {
-<span class="nc" id="L58">		super(false, getRegexConcat());</span>
-<span class="nc" id="L59">	}</span>
+<span class="nc" id="L59">		super(false, getRegexConcat());</span>
+<span class="nc" id="L60">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L62">		return RegexConcat.build(CommandChartArea.class.getName(), RegexLeaf.start(), //</span>
-<span class="nc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L63">		return RegexConcat.build(CommandChartArea.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;area&quot;), //
-<span class="nc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;STEREO&quot;, &quot;(\\&lt;\\&lt;.+?\\&gt;\\&gt;)&quot;)), //
-<span class="nc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;NAME&quot;, &quot;\&quot;([^\&quot;]+)\&quot;&quot;)), //
-<span class="nc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;DATA&quot;, &quot;\\[(.*)\\]&quot;), //
-<span class="nc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(1, &quot;COLOR&quot;, &quot;#([0-9a-fA-F]{6}|[0-9a-fA-F]{3}|\\w+)&quot;)), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="nc" id="L75">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L76">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;V2&quot;, &quot;([vy]2)&quot;))), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="nc" id="L79">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L80">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;LABELS&quot;, &quot;(labels)&quot;))), //
-<span class="nc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L82">				RegexLeaf.end());</span>
+<span class="nc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L83">				RegexLeaf.end());</span>
 	}
+	
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L89">		return null;</span>
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(ChartDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L88">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L89">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L90">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
-<span class="nc" id="L91">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L96">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L97">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L98">		final String data = arg.get(&quot;DATA&quot;, 0);</span>
+<span class="nc" id="L99">		final String colorStr = arg.get(&quot;COLOR&quot;, 0);</span>
 
-<span class="nc" id="L93">		final List&lt;Double&gt; values = parseValues(data);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (values == null)</span>
-<span class="nc" id="L95">			return CommandExecutionResult.error(&quot;Invalid number format in area data&quot;);</span>
+<span class="nc" id="L101">		final List&lt;Double&gt; values = parseValues(data);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (values == null)</span>
+<span class="nc" id="L103">			return CommandExecutionResult.error(&quot;Invalid number format in area data&quot;);</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		final String seriesName = name != null ? name : &quot;area&quot; + diagram.getSeries().size();</span>
-<span class="nc" id="L98">		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.AREA, values);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		final String seriesName = name != null ? name : &quot;area&quot; + diagram.getSeries().size();</span>
+<span class="nc" id="L106">		final ChartSeries series = new ChartSeries(seriesName, ChartSeries.SeriesType.AREA, values);</span>
 
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (stereo != null) {</span>
-<span class="nc" id="L101">			series.setStereotype(Stereotype.build(stereo));</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (stereo != null) {</span>
+<span class="nc" id="L109">			series.setStereotype(Stereotype.build(stereo));</span>
 		}
 
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (colorStr != null) {</span>
-<span class="nc" id="L105">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
-<span class="nc" id="L106">			series.setColor(color);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (colorStr != null) {</span>
+<span class="nc" id="L113">			final HColor color = diagram.getSkinParam().getIHtmlColorSet().getColor(&quot;#&quot; + colorStr);</span>
+<span class="nc" id="L114">			series.setColor(color);</span>
 		}
 
 		// Check if this area should use the secondary v-axis
-<span class="nc" id="L110">		final String secondaryAxisStr = arg.get(&quot;V2&quot;, 0);</span>
-<span class="nc bnc" id="L111" title="All 2 branches missed.">		if (secondaryAxisStr != null) {</span>
-<span class="nc" id="L112">			series.setUseSecondaryAxis(true);</span>
+<span class="nc" id="L118">		final String secondaryAxisStr = arg.get(&quot;V2&quot;, 0);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (secondaryAxisStr != null) {</span>
+<span class="nc" id="L120">			series.setUseSecondaryAxis(true);</span>
 		}
 
 		// Check if labels keyword was present
-<span class="nc" id="L116">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
-<span class="nc bnc" id="L117" title="All 2 branches missed.">		if (labelsStr != null) {</span>
-<span class="nc" id="L118">			series.setShowLabels(true);</span>
+<span class="nc" id="L124">		final String labelsStr = arg.get(&quot;LABELS&quot;, 0);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (labelsStr != null) {</span>
+<span class="nc" id="L126">			series.setShowLabels(true);</span>
 		}
 
-<span class="nc" id="L121">		return diagram.addSeries(series);</span>
+<span class="nc" id="L129">		return diagram.addSeries(series);</span>
 	}
 
 	private List&lt;Double&gt; parseValues(String data) {
-<span class="nc" id="L125">		final List&lt;Double&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L126" title="All 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
-<span class="nc" id="L127">			return result;</span>
+<span class="nc" id="L133">		final List&lt;Double&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L134" title="All 4 branches missed.">		if (data == null || data.trim().isEmpty())</span>
+<span class="nc" id="L135">			return result;</span>
 
-<span class="nc" id="L129">		final String[] parts = data.split(&quot;,&quot;);</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">		for (String part : parts) {</span>
+<span class="nc" id="L137">		final String[] parts = data.split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		for (String part : parts) {</span>
 			try {
-<span class="nc" id="L132">				result.add(Double.parseDouble(part.trim()));</span>
-<span class="nc" id="L133">			} catch (NumberFormatException e) {</span>
-<span class="nc" id="L134">				return null;</span>
-<span class="nc" id="L135">			}</span>
+<span class="nc" id="L140">				result.add(Double.parseDouble(part.trim()));</span>
+<span class="nc" id="L141">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L142">				return null;</span>
+<span class="nc" id="L143">			}</span>
 		}
-<span class="nc" id="L137">		return result;</span>
+<span class="nc" id="L145">		return result;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

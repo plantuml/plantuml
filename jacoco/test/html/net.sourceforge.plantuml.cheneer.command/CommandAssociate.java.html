@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.cheneer.command;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -59,59 +60,66 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAssociate extends SingleLineCommand2&lt;ChenEerDiagram&gt; {
 
 	public CommandAssociate() {
-<span class="fc" id="L62">		super(getRegexConcat());</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L63">		super(getRegexConcat());</span>
+<span class="fc" id="L64">	}</span>
 
 	protected static IRegex getRegexConcat() {
-<span class="fc" id="L66">		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L67">		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;NAME1&quot;, &quot;([%pLN_.-]+)&quot;), //
-<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;PARTICIPATION&quot;, &quot;([-=])&quot;), //
 				new RegexOptional( //
 						new RegexLeaf(1, &quot;CARDINALITY&quot;, &quot;([%pLN]+|\\([%pLN]+,[%s]*[%pLN]+\\))&quot;)), //
 				new RegexLeaf(1, &quot;PARTICIPATION2&quot;, &quot;([-=])&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME2&quot;, &quot;([%pLN_.-]+)&quot;), //
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L76">				color().getRegex(), //</span>
-<span class="fc" id="L77">				RegexLeaf.end());</span>
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L77">				color().getRegex(), //</span>
+<span class="fc" id="L78">				RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L81">		return ColorParser.simpleColor(ColorType.LINE);</span>
+<span class="fc" id="L82">		return ColorParser.simpleColor(ColorType.LINE);</span>
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L88">		return null;</span>
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L87">		final String name1 = diagram.cleanId(arg.get(&quot;NAME1&quot;, 0));</span>
-<span class="fc" id="L88">		final String name2 = diagram.cleanId(arg.get(&quot;NAME2&quot;, 0));</span>
-<span class="fc" id="L89">		final boolean isDouble = arg.get(&quot;PARTICIPATION&quot;, 0).equals(&quot;=&quot;);</span>
-<span class="fc" id="L90">		final String cardinality = arg.get(&quot;CARDINALITY&quot;, 0);</span>
+<span class="fc" id="L95">		final String name1 = diagram.cleanId(arg.get(&quot;NAME1&quot;, 0));</span>
+<span class="fc" id="L96">		final String name2 = diagram.cleanId(arg.get(&quot;NAME2&quot;, 0));</span>
+<span class="fc" id="L97">		final boolean isDouble = arg.get(&quot;PARTICIPATION&quot;, 0).equals(&quot;=&quot;);</span>
+<span class="fc" id="L98">		final String cardinality = arg.get(&quot;CARDINALITY&quot;, 0);</span>
 
-<span class="fc" id="L92">		final Quark&lt;Entity&gt; quark1 = diagram.quarkInContext(true, name1);</span>
-<span class="fc" id="L93">		final Entity entity1 = quark1.getData();</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (entity1 == null) {</span>
-<span class="nc" id="L95">			return CommandExecutionResult.error(&quot;No such entity: &quot; + name1);</span>
+<span class="fc" id="L100">		final Quark&lt;Entity&gt; quark1 = diagram.quarkInContext(true, name1);</span>
+<span class="fc" id="L101">		final Entity entity1 = quark1.getData();</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (entity1 == null) {</span>
+<span class="nc" id="L103">			return CommandExecutionResult.error(&quot;No such entity: &quot; + name1);</span>
 		}
 
-<span class="fc" id="L98">		final Quark&lt;Entity&gt; quark2 = diagram.quarkInContext(true, name2);</span>
-<span class="fc" id="L99">		final Entity entity2 = quark2.getData();</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (entity2 == null) {</span>
-<span class="nc" id="L101">			return CommandExecutionResult.error(&quot;No such entity: &quot; + name2);</span>
+<span class="fc" id="L106">		final Quark&lt;Entity&gt; quark2 = diagram.quarkInContext(true, name2);</span>
+<span class="fc" id="L107">		final Entity entity2 = quark2.getData();</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (entity2 == null) {</span>
+<span class="nc" id="L109">			return CommandExecutionResult.error(&quot;No such entity: &quot; + name2);</span>
 		}
 
-<span class="fc" id="L104">		LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (isDouble) {</span>
-<span class="fc" id="L106">			linkType = linkType.goBold();</span>
+<span class="fc" id="L112">		LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">		if (isDouble) {</span>
+<span class="fc" id="L114">			linkType = linkType.goBold();</span>
 		}
-<span class="fc" id="L108">		final Link link = new Link(location, diagram, diagram.getCurrentStyleBuilder(), entity1, entity2, linkType,</span>
-<span class="fc" id="L109">				LinkArg.build(Display.getWithNewlines(diagram.getPragma(), cardinality), 3));</span>
-<span class="fc" id="L110">		link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));</span>
-<span class="fc" id="L111">		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));</span>
-<span class="fc" id="L112">		diagram.addLink(link);</span>
+<span class="fc" id="L116">		final Link link = new Link(location, diagram, diagram.getCurrentStyleBuilder(), entity1, entity2, linkType,</span>
+<span class="fc" id="L117">				LinkArg.build(Display.getWithNewlines(diagram.getPragma(), cardinality), 3));</span>
+<span class="fc" id="L118">		link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));</span>
+<span class="fc" id="L119">		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="fc" id="L120">		diagram.addLink(link);</span>
 
-<span class="fc" id="L114">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L122">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -62,170 +63,247 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 	// ::remove folder when __HAXE__
 
 	CommandLinkStateCommon(IRegex pattern) {
-<span class="fc" id="L65">		super(pattern);</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L66">		super(pattern);</span>
+<span class="fc" id="L67">	}</span>
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		return pass == ParserPass.TWO;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		return pass == ParserPass.TWO;</span>
 	}
 
 	protected static RegexLeaf getStatePattern(String name) {
-<span class="fc" id="L74">		return new RegexLeaf(1, name,</span>
+<span class="fc" id="L75">		return new RegexLeaf(1, name,</span>
 				&quot;([%pLN_.:]+|[%pLN_.:]+\\[H\\*?\\]|\\[\\*\\]|\\[H\\*?\\]|(?:==+)(?:[%pLN_.:]+)(?:==+))&quot;);
 	}
 
 	protected static IRegex getLinkStereotypePattern() {
-<span class="fc" id="L79">		return StereotypePattern.optional(&quot;STEREOTYPE&quot;);</span>
+<span class="fc" id="L80">		return StereotypePattern.optional(&quot;STEREOTYPE&quot;);</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L86">		final StringBuilder sb = new StringBuilder();</span>
+
+		// Draws a transition between two states, created when needed. The
+		// special endpoints are decoded like in getEntityStart/getEntityEnd:
+		// '[*]' is the initial or the final pseudo-state depending on its
+		// side, '[H]' and '[H*]' are history pseudo-states, and '=name=' is a
+		// synchronization bar.
+<span class="nc" id="L93">		sb.append(&quot;Drawing a transition from &quot;).append(describeEndpoint(arg.get(&quot;ENT1&quot;, 0), true)).append(&quot; to &quot;)</span>
+<span class="nc" id="L94">				.append(describeEndpoint(arg.get(&quot;ENT2&quot;, 0), false));</span>
+
+<span class="nc" id="L96">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (label != null)</span>
+<span class="nc" id="L98">			sb.append(&quot;, labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (arg.get(&quot;ARROW_CROSS_START&quot;, 0) != null)</span>
+<span class="nc" id="L101">			sb.append(&quot;, with a circled cross at the start&quot;);</span>
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (arg.get(&quot;ARROW_CIRCLE_END&quot;, 0) != null)</span>
+<span class="nc" id="L104">			sb.append(&quot;, with a circle decoration at the end&quot;);</span>
+
+<span class="nc" id="L106">		final String direction = arg.get(&quot;ARROW_DIRECTION&quot;, 0);</span>
+<span class="nc bnc" id="L107" title="All 4 branches missed.">		if (direction != null &amp;&amp; direction.isEmpty() == false)</span>
+<span class="nc" id="L108">			sb.append(&quot;, oriented &quot;).append(describeDirection(direction));</span>
+
+		// The 'node' keyword in the style asks for the label to be drawn as an
+		// intermediate transition node (see shouldUseNodeStyle).
+<span class="nc" id="L112">		final String style = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (style != null) {</span>
+<span class="nc" id="L114">			sb.append(&quot;, with style '&quot;).append(style).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">			if (StringUtils.goLowerCase(style).contains(&quot;node&quot;))</span>
+<span class="nc" id="L116">				sb.append(&quot; (the label is drawn as an intermediate transition node)&quot;);</span>
+		}
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (arg.get(&quot;STEREOTYPE&quot;, 0) != null)</span>
+<span class="nc" id="L120">			sb.append(&quot;, stereotype &quot;).append(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
+
+<span class="nc" id="L122">		return sb.toString();</span>
+	}
+
+	private String describeEndpoint(String code, boolean start) {
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (code.startsWith(&quot;[*]&quot;))</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">			return start ? &quot;the initial pseudo-state&quot; : &quot;the final pseudo-state&quot;;</span>
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H]&quot;))</span>
+<span class="nc" id="L130">			return &quot;the shallow history of the current state&quot;;</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (code.endsWith(&quot;[H]&quot;))</span>
+<span class="nc" id="L133">			return &quot;the shallow history of '&quot; + code.substring(0, code.length() - 3) + &quot;'&quot;;</span>
+
+<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H*]&quot;))</span>
+<span class="nc" id="L136">			return &quot;the deep history of the current state&quot;;</span>
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (code.endsWith(&quot;[H*]&quot;))</span>
+<span class="nc" id="L139">			return &quot;the deep history of '&quot; + code.substring(0, code.length() - 4) + &quot;'&quot;;</span>
+
+<span class="nc bnc" id="L141" title="All 4 branches missed.">		if (code.startsWith(&quot;=&quot;) &amp;&amp; code.endsWith(&quot;=&quot;))</span>
+<span class="nc" id="L142">			return &quot;the synchronization bar '&quot; + removeEquals(code) + &quot;'&quot;;</span>
+
+<span class="nc" id="L144">		return &quot;'&quot; + code + &quot;'&quot;;</span>
+	}
+
+	private String describeDirection(String direction) {
+<span class="nc bnc" id="L148" title="All 4 branches missed.">		switch (Character.toLowerCase(direction.charAt(0))) {</span>
+		case 'l':
+<span class="nc" id="L150">			return &quot;to the left&quot;;</span>
+		case 'r':
+<span class="nc" id="L152">			return &quot;to the right&quot;;</span>
+		case 'u':
+<span class="nc" id="L154">			return &quot;upwards&quot;;</span>
+		default:
+<span class="nc" id="L156">			return &quot;downwards&quot;;</span>
+		}
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L85">		final String ent1 = arg.get(&quot;ENT1&quot;, 0);</span>
-<span class="fc" id="L86">		final String ent2 = arg.get(&quot;ENT2&quot;, 0);</span>
+<span class="fc" id="L163">		final String ent1 = arg.get(&quot;ENT1&quot;, 0);</span>
+<span class="fc" id="L164">		final String ent2 = arg.get(&quot;ENT2&quot;, 0);</span>
 
-<span class="fc" id="L88">		final Entity cl1 = getEntityStart(location, diagram, ent1);</span>
-<span class="pc bpc" id="L89" title="1 of 2 branches missed.">		if (cl1 == null)</span>
-<span class="nc" id="L90">			return CommandExecutionResult</span>
-<span class="nc" id="L91">					.error(&quot;The state &quot; + ent1 + &quot; cannot be used here.&quot;);</span>
+<span class="fc" id="L166">		final Entity cl1 = getEntityStart(location, diagram, ent1);</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">		if (cl1 == null)</span>
+<span class="nc" id="L168">			return CommandExecutionResult</span>
+<span class="nc" id="L169">					.error(&quot;The state &quot; + ent1 + &quot; cannot be used here.&quot;);</span>
 
-<span class="fc" id="L93">		final Entity cl2 = getEntityEnd(location, diagram, ent2);</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (cl2 == null)</span>
-<span class="nc" id="L95">			return CommandExecutionResult</span>
-<span class="nc" id="L96">					.error(&quot;The state &quot; + ent2 + &quot; cannot be used here.&quot;);</span>
+<span class="fc" id="L171">		final Entity cl2 = getEntityEnd(location, diagram, ent2);</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">		if (cl2 == null)</span>
+<span class="nc" id="L173">			return CommandExecutionResult</span>
+<span class="nc" id="L174">					.error(&quot;The state &quot; + ent2 + &quot; cannot be used here.&quot;);</span>
 
-<span class="fc" id="L98">		String queue = arg.get(&quot;ARROW_BODY1&quot;, 0) + arg.get(&quot;ARROW_BODY2&quot;, 0);</span>
-<span class="fc" id="L99">		final Direction dir = getDirection(arg);</span>
+<span class="fc" id="L176">		String queue = arg.get(&quot;ARROW_BODY1&quot;, 0) + arg.get(&quot;ARROW_BODY2&quot;, 0);</span>
+<span class="fc" id="L177">		final Direction dir = getDirection(arg);</span>
 
-<span class="pc bpc" id="L101" title="2 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
-<span class="nc" id="L102">			queue = &quot;-&quot;;</span>
+<span class="pc bpc" id="L179" title="2 of 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.RIGHT)</span>
+<span class="nc" id="L180">			queue = &quot;-&quot;;</span>
 
-<span class="fc" id="L104">		final int length = queue.length();</span>
+<span class="fc" id="L182">		final int length = queue.length();</span>
 
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		final boolean crossStart = arg.get(&quot;ARROW_CROSS_START&quot;, 0) != null;</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		final boolean circleEnd = arg.get(&quot;ARROW_CIRCLE_END&quot;, 0) != null;</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		final LinkType linkType = new LinkType(circleEnd ? LinkDecor.ARROW_AND_CIRCLE : LinkDecor.ARROW,</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">				crossStart ? LinkDecor.CIRCLE_CROSS : LinkDecor.NONE);</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		final boolean crossStart = arg.get(&quot;ARROW_CROSS_START&quot;, 0) != null;</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">		final boolean circleEnd = arg.get(&quot;ARROW_CIRCLE_END&quot;, 0) != null;</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		final LinkType linkType = new LinkType(circleEnd ? LinkDecor.ARROW_AND_CIRCLE : LinkDecor.ARROW,</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">				crossStart ? LinkDecor.CIRCLE_CROSS : LinkDecor.NONE);</span>
 
-<span class="fc" id="L111">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
+<span class="fc" id="L189">		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get(&quot;LABEL&quot;, 0));</span>
 
 		// Check if we should use node style for this transition
-<span class="fc" id="L114">		final boolean useNodeStyle = shouldUseNodeStyle(diagram, arg);</span>
+<span class="fc" id="L192">		final boolean useNodeStyle = shouldUseNodeStyle(diagram, arg);</span>
 
 		// Check if we have a non-empty label that should become an intermediate
 		// transition node
-<span class="pc bpc" id="L118" title="7 of 8 branches missed.">		if (useNodeStyle &amp;&amp; label != null &amp;&amp; !Display.isNull(label) &amp;&amp; !label.toString().trim().isEmpty()) {</span>
+<span class="pc bpc" id="L196" title="7 of 8 branches missed.">		if (useNodeStyle &amp;&amp; label != null &amp;&amp; !Display.isNull(label) &amp;&amp; !label.toString().trim().isEmpty()) {</span>
 			// Create intermediate transition node for the label
-<span class="nc" id="L120">			return createTransitionWithIntermediateNode(diagram, location, cl1, cl2, label, linkType, length, dir, arg);</span>
+<span class="nc" id="L198">			return createTransitionWithIntermediateNode(diagram, location, cl1, cl2, label, linkType, length, dir, arg);</span>
 		} else {
 			// Original direct link behavior for unlabeled transitions or when node style is
 			// not requested
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">			final LinkArg linkArg = LinkArg.build(label, length, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="fc" id="L125">			Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">			final LinkArg linkArg = LinkArg.build(label, length, diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="fc" id="L203">			Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,</span>
 					linkArg);
-<span class="pc bpc" id="L127" title="2 of 4 branches missed.">			if (dir == Direction.LEFT || dir == Direction.UP)</span>
-<span class="nc" id="L128">				link = link.getInv();</span>
+<span class="pc bpc" id="L205" title="2 of 4 branches missed.">			if (dir == Direction.LEFT || dir == Direction.UP)</span>
+<span class="nc" id="L206">				link = link.getInv();</span>
 
-<span class="fc" id="L130">			link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">			if (arg.get(&quot;STEREOTYPE&quot;, 0) != null) {</span>
-<span class="nc" id="L132">				final Stereotype stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
-<span class="nc" id="L133">				link.setStereotype(stereotype);</span>
+<span class="fc" id="L208">			link.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">			if (arg.get(&quot;STEREOTYPE&quot;, 0) != null) {</span>
+<span class="nc" id="L210">				final Stereotype stereotype = Stereotype.build(arg.get(&quot;STEREOTYPE&quot;, 0));</span>
+<span class="nc" id="L211">				link.setStereotype(stereotype);</span>
 			}
-<span class="fc" id="L135">			diagram.addLink(link);</span>
+<span class="fc" id="L213">			diagram.addLink(link);</span>
 
-<span class="fc" id="L137">			return CommandExecutionResult.ok();</span>
+<span class="fc" id="L215">			return CommandExecutionResult.ok();</span>
 		}
 	}
 
 	private Direction getDirection(RegexResult arg) {
-<span class="fc" id="L142">		final String arrowDirection = arg.get(&quot;ARROW_DIRECTION&quot;, 0);</span>
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (arrowDirection != null)</span>
-<span class="nc" id="L144">			return StringUtils.getQueueDirection(arrowDirection);</span>
+<span class="fc" id="L220">		final String arrowDirection = arg.get(&quot;ARROW_DIRECTION&quot;, 0);</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (arrowDirection != null)</span>
+<span class="nc" id="L222">			return StringUtils.getQueueDirection(arrowDirection);</span>
 
-<span class="fc" id="L146">		return getDefaultDirection();</span>
+<span class="fc" id="L224">		return getDefaultDirection();</span>
 	}
 
 	protected Direction getDefaultDirection() {
-<span class="fc" id="L150">		return null;</span>
+<span class="fc" id="L228">		return null;</span>
 	}
 
 	private Entity getEntityStart(LineLocation location, StateDiagram diagram, final String code) {
-<span class="fc bfc" id="L154" title="All 2 branches covered.">		if (code.startsWith(&quot;[*]&quot;))</span>
-<span class="fc" id="L155">			return diagram.getStart(location);</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		if (code.startsWith(&quot;[*]&quot;))</span>
+<span class="fc" id="L233">			return diagram.getStart(location);</span>
 
-<span class="fc" id="L157">		return getEntity(location, diagram, code);</span>
+<span class="fc" id="L235">		return getEntity(location, diagram, code);</span>
 	}
 
 	private Entity getEntityEnd(LineLocation location, StateDiagram diagram, final String code) {
-<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (code.startsWith(&quot;[*]&quot;))</span>
-<span class="fc" id="L162">			return diagram.getEnd(location);</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">		if (code.startsWith(&quot;[*]&quot;))</span>
+<span class="fc" id="L240">			return diagram.getEnd(location);</span>
 
-<span class="fc" id="L164">		return getEntity(location, diagram, code);</span>
+<span class="fc" id="L242">		return getEntity(location, diagram, code);</span>
 	}
 
 	private Entity getEntity(LineLocation location, StateDiagram diagram, final String code) {
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H]&quot;))</span>
-<span class="nc" id="L169">			return diagram.getHistorical(location);</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H]&quot;))</span>
+<span class="nc" id="L247">			return diagram.getHistorical(location);</span>
 
-<span class="pc bpc" id="L171" title="1 of 2 branches missed.">		if (code.endsWith(&quot;[H]&quot;))</span>
-<span class="nc" id="L172">			return diagram.getHistorical(location, code.substring(0, code.length() - 3));</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">		if (code.endsWith(&quot;[H]&quot;))</span>
+<span class="nc" id="L250">			return diagram.getHistorical(location, code.substring(0, code.length() - 3));</span>
 
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H*]&quot;))</span>
-<span class="nc" id="L175">			return diagram.getDeepHistory(location);</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">		if (code.equalsIgnoreCase(&quot;[H*]&quot;))</span>
+<span class="nc" id="L253">			return diagram.getDeepHistory(location);</span>
 
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (code.endsWith(&quot;[H*]&quot;))</span>
-<span class="nc" id="L178">			return diagram.getDeepHistory(location, code.substring(0, code.length() - 4));</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">		if (code.endsWith(&quot;[H*]&quot;))</span>
+<span class="nc" id="L256">			return diagram.getDeepHistory(location, code.substring(0, code.length() - 4));</span>
 
-<span class="pc bpc" id="L180" title="3 of 4 branches missed.">		if (code.startsWith(&quot;=&quot;) &amp;&amp; code.endsWith(&quot;=&quot;)) {</span>
-<span class="nc" id="L181">			final String codeString1 = removeEquals(code);</span>
-<span class="nc" id="L182">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(codeString1));</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">			if (quark.getData() != null)</span>
-<span class="nc" id="L184">				return quark.getData();</span>
-<span class="nc" id="L185">			return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.SYNCHRO_BAR,</span>
+<span class="pc bpc" id="L258" title="3 of 4 branches missed.">		if (code.startsWith(&quot;=&quot;) &amp;&amp; code.endsWith(&quot;=&quot;)) {</span>
+<span class="nc" id="L259">			final String codeString1 = removeEquals(code);</span>
+<span class="nc" id="L260">			final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(codeString1));</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">			if (quark.getData() != null)</span>
+<span class="nc" id="L262">				return quark.getData();</span>
+<span class="nc" id="L263">			return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.SYNCHRO_BAR,</span>
 					null);
 		}
 
-<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (diagram.getCurrentGroup().getName().equals(code))</span>
-<span class="nc" id="L190">			return diagram.getCurrentGroup();</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">		if (diagram.getCurrentGroup().getName().equals(code))</span>
+<span class="nc" id="L268">			return diagram.getCurrentGroup();</span>
 
-<span class="fc" id="L192">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(code));</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		if (diagram.checkConcurrentStateOk(quark) == false)</span>
-<span class="nc" id="L194">			return null;</span>
+<span class="fc" id="L270">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(code));</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">		if (diagram.checkConcurrentStateOk(quark) == false)</span>
+<span class="nc" id="L272">			return null;</span>
 
-<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (quark.getData() != null)</span>
-<span class="fc" id="L197">			return quark.getData();</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">		if (quark.getData() != null)</span>
+<span class="fc" id="L275">			return quark.getData();</span>
 
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (quark.getParent().getData() == null)</span>
-<span class="nc" id="L200">			return null;</span>
+<span class="pc bpc" id="L277" title="1 of 2 branches missed.">		if (quark.getParent().getData() == null)</span>
+<span class="nc" id="L278">			return null;</span>
 
-<span class="fc" id="L202">		return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()),</span>
+<span class="fc" id="L280">		return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()),</span>
 				LeafType.STATE, null);
 	}
 
 	private String removeEquals(String code) {
-<span class="nc bnc" id="L207" title="All 2 branches missed.">		while (code.startsWith(&quot;=&quot;))</span>
-<span class="nc" id="L208">			code = code.substring(1);</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">		while (code.startsWith(&quot;=&quot;))</span>
+<span class="nc" id="L286">			code = code.substring(1);</span>
 
-<span class="nc bnc" id="L210" title="All 2 branches missed.">		while (code.endsWith(&quot;=&quot;))</span>
-<span class="nc" id="L211">			code = code.substring(0, code.length() - 1);</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		while (code.endsWith(&quot;=&quot;))</span>
+<span class="nc" id="L289">			code = code.substring(0, code.length() - 1);</span>
 
-<span class="nc" id="L213">		return code;</span>
+<span class="nc" id="L291">		return code;</span>
 	}
 
 	private boolean shouldUseNodeStyle(StateDiagram diagram, RegexResult arg) {
 		// First check if &quot;node&quot; keyword is in the arrow style (per-transition override)
-<span class="fc" id="L218">		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
-<span class="pc bpc" id="L219" title="3 of 4 branches missed.">		if (arrowStyle != null &amp;&amp; arrowStyle.toLowerCase().contains(&quot;node&quot;))</span>
-<span class="nc" id="L220">			return true;</span>
+<span class="fc" id="L296">		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
+<span class="pc bpc" id="L297" title="3 of 4 branches missed.">		if (arrowStyle != null &amp;&amp; arrowStyle.toLowerCase().contains(&quot;node&quot;))</span>
+<span class="nc" id="L298">			return true;</span>
 
 		// Fall back to global skinparam setting
-<span class="fc" id="L223">		final String globalSetting = diagram.getSkinParam().getValue(&quot;statediagramedgelabelstyle&quot;);</span>
-<span class="pc bpc" id="L224" title="3 of 4 branches missed.">		if (globalSetting != null &amp;&amp; globalSetting.equalsIgnoreCase(&quot;node&quot;))</span>
-<span class="nc" id="L225">			return true;</span>
+<span class="fc" id="L301">		final String globalSetting = diagram.getSkinParam().getValue(&quot;statediagramedgelabelstyle&quot;);</span>
+<span class="pc bpc" id="L302" title="3 of 4 branches missed.">		if (globalSetting != null &amp;&amp; globalSetting.equalsIgnoreCase(&quot;node&quot;))</span>
+<span class="nc" id="L303">			return true;</span>
 
 		// Default to normal (original behavior)
-<span class="fc" id="L228">		return false;</span>
+<span class="fc" id="L306">		return false;</span>
 	}
 
 	private CommandExecutionResult createTransitionWithIntermediateNode(StateDiagram diagram, LineLocation location,
@@ -233,70 +311,70 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2&lt;StateDiagram
 			throws NoSuchColorException {
 
 		// Generate unique ID for the transition node
-<span class="nc" id="L236">		final String transitionNodeId = generateTransitionNodeId(source, target, label);</span>
+<span class="nc" id="L314">		final String transitionNodeId = generateTransitionNodeId(source, target, label);</span>
 
 		// Create the intermediate transition node
-<span class="nc" id="L239">		final Quark&lt;Entity&gt; transitionQuark = diagram.quarkInContext(true, diagram.cleanId(transitionNodeId));</span>
-<span class="nc" id="L240">		final Entity transitionNode = diagram.reallyCreateLeaf(location, transitionQuark, label,</span>
+<span class="nc" id="L317">		final Quark&lt;Entity&gt; transitionQuark = diagram.quarkInContext(true, diagram.cleanId(transitionNodeId));</span>
+<span class="nc" id="L318">		final Entity transitionNode = diagram.reallyCreateLeaf(location, transitionQuark, label,</span>
 				LeafType.STATE_TRANSITION_LABEL, null);
 
 		// Set transition node stereotype to make it visually distinct
-<span class="nc" id="L244">		transitionNode.setStereotype(Stereotype.build(&quot;&lt;&lt;transition&gt;&gt;&quot;));</span>
+<span class="nc" id="L322">		transitionNode.setStereotype(Stereotype.build(&quot;&lt;&lt;transition&gt;&gt;&quot;));</span>
 
 		// STEP 1: Create first link: source -&gt; transition node (no arrow decoration on
 		// intermediate link)
 		// Use length=2 to get minlen=1, which places transition node at rank(source)+1
-<span class="nc" id="L249">		final LinkType firstLinkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
-<span class="nc" id="L250">		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, 2,</span>
-<span class="nc bnc" id="L251" title="All 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="nc" id="L252">		Link firstLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source,</span>
+<span class="nc" id="L327">		final LinkType firstLinkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);</span>
+<span class="nc" id="L328">		final LinkArg firstLinkArg = LinkArg.build(Display.NULL, 2,</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="nc" id="L330">		Link firstLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), source,</span>
 				transitionNode, firstLinkType, firstLinkArg);
 		// High weight to control horizontal positioning - keeps this edge straight
-<span class="nc" id="L255">		firstLink.setWeight(10.0);</span>
+<span class="nc" id="L333">		firstLink.setWeight(10.0);</span>
 
 		// STEP 2: Create second link: transition node -&gt; target (with original arrow
 		// decoration)
 		// Use length=2 to get minlen=1, placing target at rank(transition)+1 =
 		// rank(source)+2
-<span class="nc" id="L261">		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 2,</span>
-<span class="nc bnc" id="L262" title="All 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
-<span class="nc" id="L263">		Link secondLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), transitionNode,</span>
+<span class="nc" id="L339">		final LinkArg secondLinkArg = LinkArg.build(Display.NULL, 2,</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">				diagram.getSkinParam().classAttributeIconSize() &gt; 0);</span>
+<span class="nc" id="L341">		Link secondLink = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), transitionNode,</span>
 				target, linkType, secondLinkArg);
 		// High weight to control horizontal positioning - keeps this edge straight
-<span class="nc" id="L266">		secondLink.setWeight(10.0);</span>
+<span class="nc" id="L344">		secondLink.setWeight(10.0);</span>
 
 		// Handle direction for visible links
-<span class="nc bnc" id="L269" title="All 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP) {</span>
-<span class="nc" id="L270">			firstLink = firstLink.getInv();</span>
-<span class="nc" id="L271">			secondLink = secondLink.getInv();</span>
+<span class="nc bnc" id="L347" title="All 4 branches missed.">		if (dir == Direction.LEFT || dir == Direction.UP) {</span>
+<span class="nc" id="L348">			firstLink = firstLink.getInv();</span>
+<span class="nc" id="L349">			secondLink = secondLink.getInv();</span>
 		}
 
 		// Apply styles (but filter out &quot;node&quot; keyword to avoid issues)
-<span class="nc" id="L275">		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">		if (arrowStyle != null) {</span>
+<span class="nc" id="L353">		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">		if (arrowStyle != null) {</span>
 			// Remove &quot;node&quot; from the style string since it's not a visual style
-<span class="nc" id="L278">			final String filteredStyle = arrowStyle.replaceAll(&quot;(?i),?node,?&quot;, &quot;&quot;).replaceAll(&quot;,,&quot;, &quot;,&quot;)</span>
-<span class="nc" id="L279">					.replaceAll(&quot;^,|,$&quot;, &quot;&quot;);</span>
-<span class="nc bnc" id="L280" title="All 2 branches missed.">			if (!filteredStyle.isEmpty()) {</span>
-<span class="nc" id="L281">				firstLink.applyStyle(filteredStyle);</span>
-<span class="nc" id="L282">				secondLink.applyStyle(filteredStyle);</span>
+<span class="nc" id="L356">			final String filteredStyle = arrowStyle.replaceAll(&quot;(?i),?node,?&quot;, &quot;&quot;).replaceAll(&quot;,,&quot;, &quot;,&quot;)</span>
+<span class="nc" id="L357">					.replaceAll(&quot;^,|,$&quot;, &quot;&quot;);</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">			if (!filteredStyle.isEmpty()) {</span>
+<span class="nc" id="L359">				firstLink.applyStyle(filteredStyle);</span>
+<span class="nc" id="L360">				secondLink.applyStyle(filteredStyle);</span>
 			}
 		}
 
 		// Add visible links to the diagram - high weight keeps them straight/aligned
-<span class="nc" id="L287">		diagram.addLink(firstLink);</span>
-<span class="nc" id="L288">		diagram.addLink(secondLink);</span>
+<span class="nc" id="L365">		diagram.addLink(firstLink);</span>
+<span class="nc" id="L366">		diagram.addLink(secondLink);</span>
 
-<span class="nc" id="L290">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L368">		return CommandExecutionResult.ok();</span>
 	}
 
 	private String generateTransitionNodeId(Entity source, Entity target, Display label) {
 		// Generate a unique ID for the transition node based on source, target, and
 		// label
-<span class="nc" id="L296">		final String sourceId = source.getName();</span>
-<span class="nc" id="L297">		final String targetId = target.getName();</span>
-<span class="nc" id="L298">		final String labelText = label.toString().replaceAll(&quot;[^a-zA-Z0-9_]&quot;, &quot;_&quot;);</span>
-<span class="nc" id="L299">		return &quot;transition_&quot; + sourceId + &quot;_&quot; + targetId + &quot;_&quot; + labelText + &quot;_&quot; + System.currentTimeMillis();</span>
+<span class="nc" id="L374">		final String sourceId = source.getName();</span>
+<span class="nc" id="L375">		final String targetId = target.getName();</span>
+<span class="nc" id="L376">		final String labelText = label.toString().replaceAll(&quot;[^a-zA-Z0-9_]&quot;, &quot;_&quot;);</span>
+<span class="nc" id="L377">		return &quot;transition_&quot; + sourceId + &quot;_&quot; + targetId + &quot;_&quot; + labelText + &quot;_&quot; + System.currentTimeMillis();</span>
 	}
 
 }
