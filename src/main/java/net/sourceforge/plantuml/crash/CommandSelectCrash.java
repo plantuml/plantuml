@@ -41,6 +41,7 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexOr;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -63,6 +64,16 @@ public class CommandSelectCrash extends UBrexSingleLineCommand2<CrashDiagram> {
 				new UBrexNamed("TYPE",
 						new UBrexOr(new UBrexLeaf("parsing"), new UBrexLeaf("finalizing"), new UBrexLeaf("drawing"))) //
 		);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Internal test command: 'crash when parsing|finalizing|drawing'
+		// deliberately crashes PlantUML during the given phase, to exercise
+		// the crash reporting pipeline. The 'parsing' flavor throws
+		// immediately from executeArg.
+		return "Deliberately crashing PlantUML during the " + arg.get("TYPE", 0) + " phase (internal test command)";
 	}
 
 	@Override

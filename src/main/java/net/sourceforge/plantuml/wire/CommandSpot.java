@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.wire;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -77,6 +78,13 @@ public class CommandSpot extends SingleLineCommand2<WireDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
+	
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg,

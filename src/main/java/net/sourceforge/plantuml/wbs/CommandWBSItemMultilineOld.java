@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -72,22 +73,28 @@ public class CommandWBSItemMultilineOld extends CommandMultilines2<WBSDiagram> {
 		return RegexConcat.build(CommandWBSItemMultilineOld.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, Constant.WBS_TYPE, "([ \t]*[*+-]+)"), //
 				new RegexOr( //
-					new RegexConcat( //
-						new RegexOptional(new RegexLeaf(1, "BACKCOLOR_1", "\\[(#\\w+)\\]")), //
-						new RegexOptional(new RegexLeaf(1, "CODE_1", "\\(([%pLN_]+)\\)"))),
-					new RegexConcat( //
-						new RegexOptional(new RegexLeaf(1, "CODE_2", "\\(([%pLN_]+)\\)")),
-						new RegexOptional(new RegexLeaf(1, "BACKCOLOR_2", "\\[(#\\w+)\\]")))), //
+						new RegexConcat( //
+								new RegexOptional(new RegexLeaf(1, "BACKCOLOR_1", "\\[(#\\w+)\\]")), //
+								new RegexOptional(new RegexLeaf(1, "CODE_1", "\\(([%pLN_]+)\\)"))),
+						new RegexConcat( //
+								new RegexOptional(new RegexLeaf(1, "CODE_2", "\\(([%pLN_]+)\\)")),
+								new RegexOptional(new RegexLeaf(1, "BACKCOLOR_2", "\\[(#\\w+)\\]")))), //
 				new RegexOr( //
-					new RegexConcat( //
-						new RegexLeaf(1, "SHAPE_1", "(_)?"), //
-						new RegexLeaf(1, Constant.WBS_DIRECTION + "_1", "([<>])?")), //
-					new RegexConcat( //
-						new RegexLeaf(1, Constant.WBS_DIRECTION + "_2", "([<>])?")), //
+						new RegexConcat( //
+								new RegexLeaf(1, "SHAPE_1", "(_)?"), //
+								new RegexLeaf(1, Constant.WBS_DIRECTION + "_1", "([<>])?")), //
+						new RegexConcat( //
+								new RegexLeaf(1, Constant.WBS_DIRECTION + "_2", "([<>])?")), //
 						new RegexLeaf(1, "SHAPE_2", "(_)?")), //
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		return null;
 	}
 
 	@Override

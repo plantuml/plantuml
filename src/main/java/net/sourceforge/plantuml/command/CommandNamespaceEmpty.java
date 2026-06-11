@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -74,6 +75,30 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\}"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'namespace a.b.c {}' declares an empty namespace, opened and closed
+		// on the same line; a dotted name creates the intermediate namespaces.
+		// Unlike CommandNamespace, executeArg fails when the name already
+		// exists.
+		sb.append("Declaring the empty namespace '").append(arg.get("NAME", 0)).append("'");
+
+		final String stereotype = arg.get("STEREOTYPE", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	@Override

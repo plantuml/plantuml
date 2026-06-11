@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -102,6 +103,21 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END) {
 
 			@Override
+			@Explain
+			protected String explainNow(BlocLines lines) {
+				// Mirror executeNow: the lines between 'note <position>' and
+				// 'end note' are the text of the note (legacy activity diagram
+				// syntax).
+				final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+				if (arg == null)
+					return "Adding a note";
+
+				final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+				return explainInternal(arg,
+						" with " + bodyCount + (bodyCount == 1 ? " line" : " lines") + " of text");
+			}
+
+			@Override
 			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines, ParserPass currentPass)
 					throws NoSuchColorException {
 				// StringUtils.trim(lines, true);
@@ -135,6 +151,13 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		return new SingleLineCommand2<ActivityDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
+			@Explain
+			protected String explainArg(LineLocation location, RegexResult arg) {
+				// 'note left : text' (legacy activity diagram syntax).
+				return explainInternal(arg, " labelled \"" + arg.get("NOTE", 0) + "\"");
+			}
+
+			@Override
 			protected CommandExecutionResult executeArg(final ActivityDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 				final String tmp = diagram.getUniqueSequence("GN");
@@ -144,6 +167,24 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				return executeInternal(location, diagram, arg, note);
 			}
 		};
+	}
+
+	/**
+	 * Builds the explanation shared by the single line and the multiline
+	 * flavors, mirroring the fields read by executeInternal. The note is
+	 * linked, with a dashed line, to the last consulted activity, or to the
+	 * start node when nothing has been consulted yet.
+	 */
+	@Explain
+	private String explainInternal(RegexResult arg, String contentClause) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Adding a note on the ").append(arg.get("POSITION", 0)).append(" of the last activity")
+				.append(contentClause);
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	private CommandExecutionResult executeInternal(LineLocation location, ActivityDiagram diagram, RegexResult arg, Entity note)

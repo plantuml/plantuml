@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -56,6 +57,15 @@ public class CommandRankDir extends SingleLineCommand2<TitledDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("direction"), //
 				RegexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'left to right direction' (or 'top to bottom direction') sets the
+		// global layout direction of the diagram; the default is top to
+		// bottom.
+		return "Setting the layout direction of the diagram to " + StringUtils.goLowerCase(arg.get("DIRECTION", 0));
 	}
 
 	@Override

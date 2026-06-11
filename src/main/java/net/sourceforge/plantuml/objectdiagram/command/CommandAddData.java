@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -63,6 +64,16 @@ public class CommandAddData extends SingleLineCommand2<AbstractClassOrObjectDiag
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "DATA", "(.*)"), RegexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'obj : field = value' adds a field line to the body of an existing
+		// object; executeArg fails when it does not exist, unlike the class
+		// and state flavors of this command, which create the entity on the
+		// fly.
+		return "Adding the field \"" + arg.get("DATA", 0) + "\" to the object '" + arg.get("NAME", 0) + "'";
 	}
 
 	@Override

@@ -41,6 +41,7 @@ import com.plantuml.ubrex.builder.UBrexNamed;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.SkinParam;
@@ -58,6 +59,15 @@ public class UBrexCommandRankDir extends UBrexSingleLineCommand2<TitledDiagram> 
 				UBrexLeaf.spaceOneOrMore(), //
 				new UBrexLeaf("direction"), //
 				UBrexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// UBREX twin of CommandRankDir: 'left to right direction' (or 'top to
+		// bottom direction') sets the global layout direction of the diagram;
+		// the default is top to bottom.
+		return "Setting the layout direction of the diagram to " + StringUtils.goLowerCase(arg.get("DIRECTION", 0));
 	}
 
 	@Override

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.style;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -60,10 +61,19 @@ public class CommandStyleSingleLineCSS extends SingleLineCommand2<TitledDiagram>
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandStyleSingleLineCSS.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("\\<style\\>"), //
-				new RegexLeaf(1, "STYLE", "([\\w%s;:{}]+)"), //
+				new RegexLeaf(1, "STYLE", "([-#.\\w%s;:{}]+)"), //
 				new RegexLeaf("\\</style\\>"), //
 				RegexLeaf.end() //
 		);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '<style>...</style>' on a single line defines inline styles: the
+		// content between the tags is a CSS-like style definition, merged into
+		// the current styles (executeArg fails when it cannot be parsed).
+		return "Defining inline styles from \"" + arg.get("STYLE", 0) + "\"";
 	}
 
 	@Override

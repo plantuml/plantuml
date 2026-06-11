@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command.note;
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.Command;
@@ -109,6 +110,15 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 		return new SingleLineCommand2<AbstractEntityDiagram>(singleLine) {
 
 			@Override
+			@Explain
+			protected String explainArg(LineLocation location, RegexResult arg) {
+				// 'note "text" as N1' creates a standalone named note, usable
+				// as an endpoint of links; executeArg fails when the name
+				// already exists.
+				return explainInternal(arg, " labelled \"" + arg.get("DISPLAY", 0) + "\"");
+			}
+
+			@Override
 			protected CommandExecutionResult executeArg(final AbstractEntityDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("DISPLAY", 0));
@@ -126,6 +136,20 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 				Trim.BOTH, END) {
 
 			@Override
+			@Explain
+			protected String explainNow(BlocLines lines) {
+				// Mirror executeNow: the lines between 'note as N1' and 'end
+				// note' are the text of this standalone named note.
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+				if (line0 == null)
+					return "Creating a named note";
+
+				final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+				return explainInternal(line0,
+						" with " + bodyCount + (bodyCount == 1 ? " line" : " lines") + " of text");
+			}
+
+			@Override
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
@@ -136,6 +160,30 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 				return executeInternal(lines.getLocation(), diagram, line0, display);
 			}
 		};
+	}
+
+	/**
+	 * Builds the explanation shared by the single line and the multiline
+	 * flavors, mirroring the fields read by
+	 * {@link #executeInternal(LineLocation, AbstractEntityDiagram, RegexResult, Display)}.
+	 */
+	@Explain
+	private String explainInternal(RegexResult arg, String contentClause) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Creating the named note '").append(arg.get("CODE", 0)).append("'").append(contentClause);
+
+		final String stereotype = arg.get("STEREO", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		final String tags = arg.get("TAGS", 0);
+		if (tags != null && tags.isEmpty() == false)
+			sb.append(", tagged ").append(tags);
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	private CommandExecutionResult executeInternal(LineLocation location, AbstractEntityDiagram diagram,

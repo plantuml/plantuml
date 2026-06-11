@@ -35,9 +35,11 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.command.GenericRegexProducer;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -81,6 +83,45 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 				// domain: lexical, causal, biddable
 				// requirement: FR, NFR, quality
 				new RegexLeaf(1, "GROUP", "(\\{)?"), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'domain "Display" as code' (or 'requirement ...') creates a Problem
+		// Frames element; with a trailing '{' it opens a group instead of a
+		// leaf, closed by '}'. Like in executeArg, the creation fails when the
+		// name already exists.
+		final String type = StringUtils.goLowerCase(arg.get("TYPE", 0));
+		if (arg.get("GROUP", 0) != null)
+			sb.append("Starting the ").append(type).append(" group '");
+		else
+			sb.append("Creating the ").append(type).append(" '");
+		sb.append(arg.getLazzy("CODE", 0)).append("' displayed as \"").append(arg.getLazzy("DISPLAY", 0))
+				.append("\"");
+
+		// On a domain, these stereotypes select the Problem Frames notation of
+		// the symbol, and are displayed as well, like in executeArg.
+		final String stereotype = arg.get("STEREO", 0);
+		if (stereotype != null) {
+			sb.append(", stereotype ").append(stereotype);
+			if (type.equals("domain") && (stereotype.equalsIgnoreCase("<<Machine>>")
+					|| stereotype.equalsIgnoreCase("<<Causal>>") || stereotype.equalsIgnoreCase("<<Designed>>")
+					|| stereotype.equalsIgnoreCase("<<Lexical>>") || stereotype.equalsIgnoreCase("<<Biddable>>")))
+				sb.append(" (selecting the Problem Frames symbol)");
+		}
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		// The generic part of the display, like "Name<T>", is parsed but never
+		// read by executeArg.
+		if (arg.get("DISPLAY", 1) != null)
+			sb.append(" (the generic <").append(arg.get("DISPLAY", 1)).append("> is currently ignored)");
+
+		return sb.toString();
 	}
 
 	@Override

@@ -41,6 +41,7 @@ import java.net.MalformedURLException;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -76,6 +77,22 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 				new RegexLeaf(1, "PATH", "([^%q%g]*)"), //
 				new RegexLeaf("[%q%g]?"), //
 				new RegexLeaf("\\>"), RegexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '<style file=path>' loads a style sheet and merges it into the
+		// current styles. No file access is done here: executeArg resolves the
+		// path as a URL, a local file or an internal '/skin/' resource, and
+		// fails when nothing can be read or parsed. Note that the attribute
+		// name before the '=' is not checked.
+		final String path = arg.get("PATH", 0);
+		if (path.startsWith("http://") || path.startsWith("https://"))
+			return "Importing a style sheet from the URL " + path;
+
+		return "Importing a style sheet from the file '" + path + "' (or from the internal '/skin/" + path
+				+ "' resource when the file does not exist)";
 	}
 
 	@Override

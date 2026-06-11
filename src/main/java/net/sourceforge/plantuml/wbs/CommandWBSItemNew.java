@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -99,6 +100,12 @@ public class CommandWBSItemNew extends SingleLineCommand2<WBSDiagram> {
 				RegexLeaf.end());
 	}
 
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
+	}
+	
 	@Override
 	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {

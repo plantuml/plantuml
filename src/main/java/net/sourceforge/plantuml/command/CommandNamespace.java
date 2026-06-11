@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
@@ -75,6 +76,32 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'namespace a.b.c {' opens a namespace (a package-like container),
+		// closed by '}'; a dotted name creates the intermediate namespaces.
+		sb.append("Starting the namespace '").append(arg.get("NAME", 0)).append("'");
+
+		// When the stereotype names a USymbol (like <<Cloud>> or <<Node>>), it
+		// selects the shape of the container instead of being displayed, like
+		// in executeArg.
+		final String stereotype = arg.get("STEREOTYPE", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype)
+					.append(" (a symbol name here selects the shape of the container)");
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	@Override

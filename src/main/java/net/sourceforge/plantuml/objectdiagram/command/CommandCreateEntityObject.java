@@ -35,8 +35,10 @@
  */
 package net.sourceforge.plantuml.objectdiagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.NameAndCodeParser;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -75,6 +77,36 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'object Name' (or 'object "Display" as code') creates an object;
+		// executeArg fails when the name already exists. The code and the
+		// display may be written in both orders, hence the lazzy lookups, like
+		// in executeArg.
+		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0));
+		sb.append("Creating the object '").append(idShort).append("'");
+
+		final String display = arg.getLazzy("DISPLAY", 0);
+		if (display != null)
+			sb.append(" displayed as \"").append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display))
+					.append("\"");
+
+		final String stereotype = arg.get("STEREO", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	@Override

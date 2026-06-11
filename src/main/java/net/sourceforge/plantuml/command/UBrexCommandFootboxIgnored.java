@@ -40,6 +40,7 @@ import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -56,6 +57,16 @@ public class UBrexCommandFootboxIgnored extends UBrexSingleLineCommand2<TitledDi
 				UBrexLeaf.spaceZeroOrMore(), //
 				new UBrexLeaf("footbox"), //
 				UBrexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// UBREX twin of CommandFootboxIgnored: swallows 'hide footbox' and
+		// 'show footbox' in diagram types where the footbox does not exist, so
+		// that the line is accepted without any effect; the real handling, for
+		// sequence diagrams, is in CommandFootbox.
+		return "Accepted but ignored: 'footbox' has no effect in this diagram type";
 	}
 
 	@Override

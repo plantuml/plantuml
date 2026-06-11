@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -87,6 +89,44 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: 'object Name {' opens a block whose lines are the
+		// fields of the object, closed by '}'. Unlike the single line 'object'
+		// command, an already existing entity is reused here.
+		lines = lines.trim().removeEmptyLines();
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Creating an object";
+
+		final StringBuilder sb = new StringBuilder();
+		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.getLazzy("CODE", 0));
+		sb.append("Creating the object '").append(idShort).append("'");
+
+		final String display = line0.getLazzy("DISPLAY", 0);
+		if (display != null)
+			sb.append(" displayed as \"").append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display))
+					.append("\"");
+
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		sb.append(" with ").append(bodyCount).append(bodyCount == 1 ? " field" : " fields");
+
+		final String stereotype = line0.get("STEREO", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		if (line0.get("COLOR", 0) != null)
+			sb.append(", background color ").append(line0.get("COLOR", 0));
+
+		// The URL is parsed but never read by executeNow, unlike in the single
+		// line 'object' command.
+		if (line0.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(" (the URL is currently ignored)");
+
+		return sb.toString();
 	}
 
 	@Override

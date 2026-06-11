@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -87,6 +88,43 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEnti
 						new RegexLeaf(2, "DATA_OBJECT", "(\\{[%s]*[%g](\\\\[%g]|[^%g])+[%g][%s]*:.*\\})") //
 				), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'json name value' embeds a single JSON value (boolean, number, null,
+		// string, array or object), displayed as a table-like element;
+		// executeArg fails when the name already exists. The lazzy lookup
+		// catches whichever of the six DATA_ alternatives matched, like in
+		// getJsonValue.
+		sb.append("Creating the JSON element '").append(arg.get("NAME", 1)).append("'");
+
+		final String display = arg.get("NAME", 0);
+		if (display != null)
+			sb.append(" displayed as \"").append(display).append("\"");
+
+		sb.append(" with the value ").append(arg.getLazzy("DATA_", 0));
+
+		final String stereotype = arg.get("STEREO", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		// Mirror the validation of executeArg: a pure in-memory parse, the
+		// regex alone does not guarantee well-formed JSON.
+		if (getJsonValue(arg) == null)
+			sb.append(" (rejected at execution: bad JSON data)");
+
+		// The URL is parsed but never read by executeArg.
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(" (the URL is currently ignored)");
+
+		return sb.toString();
 	}
 
 	@Override

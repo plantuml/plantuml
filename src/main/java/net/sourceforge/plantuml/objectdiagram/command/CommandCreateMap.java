@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -99,6 +100,60 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: 'map Name {' opens a table whose lines are
+		// 'key => value' entries (rejected at execution otherwise), closed by
+		// '}'; an entry like 'key *-> dest' also draws a link from the key
+		// port to an existing entity. Executing fails when the name already
+		// exists.
+		lines = lines.trim().removeEmptyLines();
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Creating a map";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Creating the map '").append(line0.get("NAME", 1)).append("'");
+
+		final String display = line0.get("NAME", 0);
+		if (display != null)
+			sb.append(" displayed as \"").append(display).append("\"");
+
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		sb.append(" with ").append(bodyCount).append(bodyCount == 1 ? " entry" : " entries");
+
+		// Count the 'key *-> dest' entries, which draw links, like in
+		// executeNow.
+		int linked = 0;
+		for (StringLocated sl : lines.subExtract(1, 1))
+			if (BodierMap.getLinkedEntry(sl.getString()) != null)
+				linked++;
+		if (linked > 0)
+			sb.append(", of which ").append(linked).append(linked == 1 ? " is a link" : " are links")
+					.append(" to other entities");
+
+		final String stereotype = line0.get("STEREO", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		if (line0.get("COLOR", 0) != null)
+			sb.append(", background color ").append(line0.get("COLOR", 0));
+
+		// '##[style]color' sets the border style and color.
+		if (line0.get("LINECOLOR", 1) != null)
+			sb.append(", line color ").append(line0.get("LINECOLOR", 1));
+
+		if (line0.get("LINECOLOR", 0) != null)
+			sb.append(", line style ").append(line0.get("LINECOLOR", 0));
+
+		// The URL is parsed but never read by executeNow.
+		if (line0.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(" (the URL is currently ignored)");
+
+		return sb.toString();
 	}
 
 	@Override

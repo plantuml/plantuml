@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
@@ -100,6 +101,47 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'package Name {' (or 'package "Display" as code {') opens a package
+		// around the following elements, closed by '}'.
+		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("NAME", 0));
+		final String as = arg.get("AS", 0);
+		if (as == null) {
+			if (name.length() == 0)
+				return "Starting a package without a name (rejected at execution: a name is required)";
+			sb.append("Starting the package '").append(name).append("'");
+		} else
+			sb.append("Starting the package '").append(as).append("' displayed as \"").append(name).append("\"");
+
+		final String visibility = arg.get("VISIBILITY", 0);
+		if (visibility != null)
+			sb.append(", with the visibility modifier '").append(visibility).append("'");
+
+		// When the stereotype names a USymbol (like <<Rectangle>> or
+		// <<Frame>>), it selects the shape of the package instead of being
+		// displayed, like in executeArg.
+		final String stereotype = arg.get("STEREOTYPE", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype)
+					.append(" (a symbol name here selects the shape of the package)");
+
+		final String tags = arg.getLazzy("TAGS", 0);
+		if (tags != null && tags.isEmpty() == false)
+			sb.append(", tagged ").append(tags);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	@Override

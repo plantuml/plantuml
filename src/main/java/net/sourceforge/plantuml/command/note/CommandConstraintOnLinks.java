@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -75,6 +76,24 @@ public final class CommandConstraintOnLinks extends SingleLineCommand2<CucaDiagr
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'constraint on links : {xor}' draws a constraint between the two
+		// last links of the diagram, like the UML xor notation between two
+		// associations; executeArg fails when there are fewer than two links.
+		sb.append("Drawing the constraint \"").append(arg.get("NOTE", 0))
+				.append("\" between the two last links");
+
+		// The color is parsed but never read by executeArg.
+		if (arg.get("COLOR", 0) != null)
+			sb.append(" (the color ").append(arg.get("COLOR", 0)).append(" is currently ignored)");
+
+		return sb.toString();
 	}
 
 	@Override

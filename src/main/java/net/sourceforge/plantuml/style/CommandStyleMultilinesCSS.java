@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.style;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -67,6 +68,17 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 				new RegexLeaf("\\<style\\>"), //
 				RegexLeaf.end() //
 		);
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// '<style>' opens an inline style sheet, closed by '</style>'; the
+		// lines in between are CSS-like style definitions, merged into the
+		// current styles (executeNow fails when they cannot be parsed).
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		return "Defining inline styles from " + bodyCount + (bodyCount == 1 ? " line" : " lines")
+				+ " of CSS-like definitions";
 	}
 
 	@Override

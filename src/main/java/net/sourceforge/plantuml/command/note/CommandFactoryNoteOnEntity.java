@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.Command;
@@ -171,6 +172,20 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		return new SingleLineCommand2<AbstractEntityDiagram>(getRegexConcatSingleLine(partialPattern)) {
 
 			@Override
+			@Explain
+			protected String explainArg(LineLocation location, RegexResult arg) {
+				final StringBuilder sb = new StringBuilder(
+						explainInternal(arg, " labelled \"" + arg.get("NOTE", 0) + "\""));
+
+				// The URL is parsed but never read by executeArg in the single
+				// line form (it is only applied by the multiline one).
+				if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+					sb.append(" (the URL is currently ignored)");
+
+				return sb.toString();
+			}
+
+			@Override
 			protected CommandExecutionResult executeArg(final AbstractEntityDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
@@ -193,6 +208,25 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 	public Command<AbstractEntityDiagram> createMultiLine(final boolean withBracket) {
 		return new CommandMultilines2<AbstractEntityDiagram>(getRegexConcatMultiLine(partialPattern, withBracket),
 				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, withBracket ? END_WITH_BRACKET : END) {
+
+			@Override
+			@Explain
+			protected String explainNow(BlocLines lines) {
+				// Mirror executeNow: the lines between the declaration and the
+				// closing 'end note' (or '}') are the text of the note.
+				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+				if (line0 == null)
+					return "Adding a note";
+
+				final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+				final StringBuilder sb = new StringBuilder(explainInternal(line0,
+						" with " + bodyCount + (bodyCount == 1 ? " line" : " lines") + " of text"));
+
+				if (line0.get(UrlBuilder.URL_KEY, 0) != null)
+					sb.append(", with a URL link");
+
+				return sb.toString();
+			}
 
 			@Override
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines,
@@ -219,6 +253,41 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 			}
 
 		};
+	}
+
+	/**
+	 * Builds the explanation shared by the single line and the multiline
+	 * flavors, mirroring the fields read by executeInternal. The note is
+	 * linked, with a dashed line, to the given entity, which must already
+	 * exist; without 'of X', the note is attached to the last entity.
+	 */
+	@Explain
+	private String explainInternal(RegexResult line0, String contentClause) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Adding a note on the ").append(line0.get("POSITION", 0));
+
+		final String code = line0.get("CODE", 0);
+		if (code == null)
+			sb.append(" of the last entity");
+		else
+			sb.append(" of '").append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(code)).append("'");
+
+		sb.append(contentClause);
+
+		final String stereotype = line0.get("STEREO", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		// The stereotag may be written before or after the stereotype
+		// (TAGS1/TAGS2), hence the lazzy lookup, like in executeInternal.
+		final String tags = line0.getLazzy("TAGS", 0);
+		if (tags != null && tags.isEmpty() == false)
+			sb.append(", tagged ").append(tags);
+
+		if (line0.get("COLOR", 0) != null)
+			sb.append(", background color ").append(line0.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0,
