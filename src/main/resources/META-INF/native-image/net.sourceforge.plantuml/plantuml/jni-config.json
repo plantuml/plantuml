@@ -67,6 +67,11 @@
   "methods":[{"name":"getRGBdefault","parameterTypes":[] }]
 },
 {
+  "name":"java.awt.image.ComponentColorModel",
+  "fields":[{"name":"coercedZeroFields"}, {"name":"isGCM"}, {"name":"needScaleInit"}, {"name":"noScaleRGB"}, {"name":"nonPremultInverted"}, {"name":"nonPremultScaleFields"}, {"name":"premultInverted"}, {"name":"premultScaleFields"}, {"name":"scaleFactor"}, {"name":"tosRGB"}],
+  "methods":[{"name":"<init>","parameterTypes":["java.awt.color.ColorSpace","int[]","boolean","boolean","int","int"] }]
+},
+{
   "name":"java.awt.image.DirectColorModel"
 },
 {

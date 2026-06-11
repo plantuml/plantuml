@@ -111,9 +111,16 @@ class PortableImageAwt implements PortableImage {
 	 * @return a new scaled PortableImage
 	 */
 	public PortableImageAwt scale(double scaleFactor, int interpolationType) {
+		if (scaleFactor == 1)
+			return this;
+
 		final int w = (int) Math.round(image.getWidth() * scaleFactor);
 		final int h = (int) Math.round(image.getHeight() * scaleFactor);
-		final BufferedImage scaled = new BufferedImage(w, h, image.getType());
+		// Always use TYPE_INT_ARGB as destination: copying image.getType() may yield a
+		// type without alpha (e.g. RGB color type 2) or TYPE_CUSTOM, which produces a
+		// blank image after AffineTransformOp and breaks the GraalVM native build
+		// (missing ComponentColorModel JNI/reflection configuration).
+		final BufferedImage scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 		final AffineTransform at = new AffineTransform();
 		at.scale(scaleFactor, scaleFactor);
 		final AffineTransformOp scaleOp = new AffineTransformOp(at, interpolationType);

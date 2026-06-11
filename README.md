@@ -5,6 +5,11 @@
 >
 > 💬 Want native PlantUML support in GitHub? Upvote and join the discussion: [Support for PlantUML diagrams](https://github.com/orgs/community/discussions/10111)
 
+> [!TIP]
+> 🤖 **New!** Give your AI assistant the power to render and check PlantUML diagrams with [`@plantuml/mcp-js`](https://www.npmjs.com/package/@plantuml/mcp-js) &mdash; a pure Node.js [MCP](https://modelcontextprotocol.io/) server. No Java. No server. Just `npx @plantuml/mcp-js`.
+>
+> [![npm version](https://img.shields.io/npm/v/@plantuml/mcp-js?logo=npm&color=cb3837)](https://www.npmjs.com/package/@plantuml/mcp-js) [![npm downloads](https://img.shields.io/npm/dm/@plantuml/mcp-js?logo=npm&color=cb3837)](https://www.npmjs.com/package/@plantuml/mcp-js)
+
 
 # 🌱 PlantUML
 
