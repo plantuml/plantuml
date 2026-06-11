@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -49,6 +50,15 @@ public class CommandMultilinesComment extends CommandMultilines<Diagram> {
 	private CommandMultilinesComment() {
 		super(Pattern2.cmpile(COMMENT_MULTILINE_START),
 				Pattern2.cmpile(COMMENT_MULTILINE_END));
+	}
+
+	@Override
+	@Explain
+	public String explain(BlocLines lines) {
+		// A '/' ... '/' multiline comment; execute() ignores it and returns
+		// ok(), so the block has no effect on the diagram.
+		final int count = lines.size();
+		return "A multiline comment of " + count + (count == 1 ? " line" : " lines") + " (ignored)";
 	}
 
 	public CommandExecutionResult execute(final Diagram diagram, BlocLines lines, ParserPass currentPass) {

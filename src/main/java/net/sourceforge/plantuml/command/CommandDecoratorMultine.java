@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -54,12 +55,23 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 		this.nbMaxLines = nbMaxLines;
 	}
 
+	@Override
 	public CommandExecutionResult execute(D diagram, BlocLines lines, ParserPass currentPass) {
 		if (removeEmptyColumn)
 			lines = lines.removeEmptyColumns();
 
 		lines = lines.toSingleLineWithHiddenNewLine();
 		return cmd.execute(diagram, lines, currentPass);
+	}
+	
+	@Override
+	@Explain
+	public String explain(BlocLines lines) {
+		if (removeEmptyColumn)
+			lines = lines.removeEmptyColumns();
+
+		lines = lines.toSingleLineWithHiddenNewLine();
+		return cmd.explain(lines);
 	}
 
 	public CommandControl isValid(BlocLines lines) {

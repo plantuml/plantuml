@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.salt;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -54,6 +55,12 @@ public class CommandAnything extends SingleLineCommand2<PSystemSalt> {
 		return RegexConcat.build(CommandAnything.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf(1, "ALL", "(.*)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
 	}
 
 	@Override

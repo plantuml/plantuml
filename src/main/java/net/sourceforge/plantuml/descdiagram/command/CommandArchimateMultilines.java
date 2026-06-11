@@ -35,9 +35,13 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import java.util.List;
+
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
@@ -90,6 +94,47 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: 'archimate #color code <<icon>> [' opens a
+		// multiline description ended by ']'; only the lines between the
+		// brackets form the display. Unlike the single line 'archimate'
+		// command, executeNow fails when the name already exists.
+		lines = lines.trim();
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Creating an ArchiMate element with a multiline description";
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Creating the ArchiMate element '").append(line0.getLazzy("CODE", 0)).append("'");
+
+		final int bodyCount = lines.size() > 2 ? lines.size() - 2 : 0;
+		sb.append(" with a description of ").append(bodyCount).append(bodyCount == 1 ? " line" : " lines");
+
+		final String icon = StereotypePattern.removeChevronBrackets(line0.getLazzy("STEREOTYPE", 0));
+		if (icon != null)
+			sb.append(", with the ArchiMate icon '").append(icon).append("'");
+
+		if (line0.getLazzy("COLOR", 0) != null)
+			sb.append(", background color ").append(line0.getLazzy("COLOR", 0));
+
+		// Parsed but never read by executeNow: the URL, the text written after
+		// the opening '[' and the text before the closing ']'.
+		if (line0.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(" (the URL is currently ignored)");
+
+		final String desc0 = line0.get("DESC", 0);
+		if (desc0 != null && desc0.isEmpty() == false)
+			sb.append(" (the text after the opening '[' is currently ignored)");
+
+		final List<String> lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getTrimmed().getString());
+		if (lineLast != null && StringUtils.isNotEmpty(lineLast.get(0)))
+			sb.append(" (the text before the closing ']' is currently ignored)");
+
+		return sb.toString();
 	}
 
 	@Override

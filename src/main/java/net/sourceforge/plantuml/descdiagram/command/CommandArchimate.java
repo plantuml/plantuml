@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.descdiagram.command;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -98,6 +99,32 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'archimate #color "Display" as code <<icon>>' creates (or updates,
+		// when the name already exists) an ArchiMate element; the stereotype
+		// selects the ArchiMate icon displayed in its corner, through the
+		// '$archimate/...' sprite, like in executeArg.
+		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0));
+		sb.append("Creating the ArchiMate element '").append(idShort).append("'");
+
+		final String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
+		if (display != null)
+			sb.append(" displayed as \"").append(display).append("\"");
+
+		final String icon = StereotypePattern.removeChevronBrackets(arg.getLazzy("STEREOTYPE", 0));
+		if (icon != null)
+			sb.append(", with the ArchiMate icon '").append(icon).append("'");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	@Override

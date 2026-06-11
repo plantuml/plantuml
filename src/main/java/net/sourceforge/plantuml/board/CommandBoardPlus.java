@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.board;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -58,7 +59,14 @@ public class CommandBoardPlus extends SingleLineCommand2<BoardDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(BoardDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
+	}
+
+	@Override
+	protected CommandExecutionResult executeArg(BoardDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String plus = arg.get("PLUS", 0);
 		final String label = arg.get("LABEL", 0);
 		return diagram.addLine(plus, label);

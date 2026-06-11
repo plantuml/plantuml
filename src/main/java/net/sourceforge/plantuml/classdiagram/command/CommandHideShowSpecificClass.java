@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.classdiagram.command;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.NameAndCodeParser;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -58,6 +59,13 @@ public class CommandHideShowSpecificClass extends SingleLineCommand2<CucaDiagram
 				RegexLeaf.spaceOneOrMore(), //
 				NameAndCodeParser.codeForClass(), //
 				RegexLeaf.end());
+	}
+	
+	
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
 	}
 
 	@Override

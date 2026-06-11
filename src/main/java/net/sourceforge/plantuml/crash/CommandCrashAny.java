@@ -39,6 +39,7 @@ import com.plantuml.ubrex.UnicodeBracketedExpression;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexZeroOrMore;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -54,6 +55,12 @@ public class CommandCrashAny extends UBrexSingleLineCommand2<CrashDiagram> {
 
 	static UnicodeBracketedExpression getRegexConcat() {
 		return new UBrexZeroOrMore(new UBrexLeaf("〴."));
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
 	}
 
 	@Override

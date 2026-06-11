@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.descdiagram.command;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -130,6 +131,45 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final StringBuilder sb = new StringBuilder();
+
+		// 'package Name {' (or rectangle/cloud/database/...) opens a container
+		// around the following elements, closed by '}'. Each keyword maps to a
+		// different visual symbol, and an empty name creates an anonymous
+		// container, like in executeArg.
+		final String symbol = StringUtils.goLowerCase(arg.get("SYMBOL", 0));
+		final String code = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0));
+		if (code.length() == 0)
+			sb.append("Starting an anonymous ").append(symbol);
+		else
+			sb.append("Starting the ").append(symbol).append(" '").append(code).append("'");
+
+		final String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
+		if (display != null)
+			sb.append(" displayed as \"").append(display).append("\"");
+
+		// The stereotype may be written inside the 'as' clause or at the end
+		// of the line, hence the lazzy lookup, like in executeArg.
+		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
+		if (stereotype != null)
+			sb.append(", stereotype ").append(stereotype);
+
+		final String tags = arg.getLazzy("TAGS", 0);
+		if (tags != null && tags.isEmpty() == false)
+			sb.append(", tagged ").append(tags);
+
+		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
+			sb.append(", with a URL link");
+
+		if (arg.get("COLOR", 0) != null)
+			sb.append(", background color ").append(arg.get("COLOR", 0));
+
+		return sb.toString();
 	}
 
 	@Override

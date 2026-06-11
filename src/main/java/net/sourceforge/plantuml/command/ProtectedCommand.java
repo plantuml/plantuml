@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
-public class ProtectedCommand<S extends Diagram> implements Command<S> {
+public final class ProtectedCommand<S extends Diagram> implements Command<S> {
 
 	private final Command<S> cmd;
 
@@ -75,6 +75,11 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 			msg += " " + t.toString();
 			return CommandExecutionResult.error(msg, t);
 		}
+	}
+	
+	@Override
+	public String explain(BlocLines lines) {
+		return cmd.explain(lines);
 	}
 
 	public CommandControl isValid(BlocLines lines) {

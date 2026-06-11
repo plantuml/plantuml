@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.classdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -56,6 +57,14 @@ public class CommandLayoutNewLine extends SingleLineCommand2<ClassDiagram> {
 		return RegexConcat.build(CommandLayoutNewLine.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("layout_new_line"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'layout_new_line' forces a line break in the layout: the unlinked
+		// elements declared after this point are placed on a new row.
+		return "Forcing a layout line break: the following elements start a new row";
 	}
 
 	@Override

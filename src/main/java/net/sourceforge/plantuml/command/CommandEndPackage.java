@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -52,6 +53,14 @@ public class CommandEndPackage extends SingleLineCommand2<AbstractEntityDiagram>
 		return RegexConcat.build(CommandEndPackage.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("\\}"), //
 				RegexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '}' closes the current container: package, namespace, together block
+		// or any other group symbol (executeArg fails if none is open).
+		return "Closing the current package, namespace or container";
 	}
 
 	@Override

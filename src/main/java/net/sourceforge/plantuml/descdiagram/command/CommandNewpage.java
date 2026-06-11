@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.NewpagedDiagram;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -59,6 +60,17 @@ public class CommandNewpage extends SingleLineCommand2<TitledDiagram> {
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandNewpage.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("newpage"), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'newpage' starts a new page: the following lines form a fresh, empty
+		// diagram of the same kind (only the dpi setting is carried over), so
+		// the elements declared before are not visible after. This differs
+		// from the sequence diagram 'newpage', which only inserts a page break
+		// in a single diagram.
+		return "Starting a new page: the following lines form a new empty diagram";
 	}
 
 	@Override

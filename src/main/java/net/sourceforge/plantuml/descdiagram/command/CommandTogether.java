@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -47,7 +48,6 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandTogether extends SingleLineCommand2<AbstractEntityDiagram> {
-    // ::remove folder when __HAXE__
 
 	public CommandTogether() {
 		super(getRegexConcat());
@@ -58,6 +58,15 @@ public class CommandTogether extends SingleLineCommand2<AbstractEntityDiagram> {
 				new RegexLeaf("together"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'together {' groups the following elements so that the layout keeps
+		// them close to each other, without drawing any visible container;
+		// closed by '}'.
+		return "Starting a 'together' block: the elements inside are kept close in the layout";
 	}
 
 	@Override

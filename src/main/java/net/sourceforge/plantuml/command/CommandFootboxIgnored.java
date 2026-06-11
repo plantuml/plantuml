@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -53,6 +54,16 @@ public class CommandFootboxIgnored extends SingleLineCommand2<TitledDiagram> {
 				new RegexLeaf(1, "(hide|show)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("footbox"), RegexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// This command swallows 'hide footbox' and 'show footbox' in diagram
+		// types where the footbox does not exist, so that the line is accepted
+		// without any effect; the real handling, for sequence diagrams, is in
+		// CommandFootbox.
+		return "Accepted but ignored: 'footbox' has no effect in this diagram type";
 	}
 
 	@Override

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -54,6 +55,14 @@ public class CommandRotate extends SingleLineCommand2<TitledDiagram> {
 		return RegexConcat.build(CommandRotate.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("rotate"), //
 				RegexLeaf.end()); //
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// 'rotate' is accepted for backward compatibility but has no effect:
+		// executeArg ignores it and returns ok().
+		return "Accepted but ignored: 'rotate' has no effect";
 	}
 
 	@Override
