@@ -71,7 +71,7 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp4(), //
 				new RegexLeaf("if"), //
-				StereotypePattern.optional("IGNORED"), //
+				StereotypePattern.optionalIGNORED(), //
 				new RegexLeaf("\\("), //
 				new RegexLeaf(1, "TEST", "(.*?)"), //
 				new RegexLeaf("\\)"), //

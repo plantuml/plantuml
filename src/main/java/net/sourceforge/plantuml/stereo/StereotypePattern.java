@@ -58,6 +58,11 @@ public class StereotypePattern {
 		);
 	}
 
+	public static IRegex optionalIGNORED() {
+		return optional("IGNORED");
+	}
+
+	@Deprecated
 	public static IRegex mandatory(String param) {
 		return new RegexLeaf(1, param, "(\\<\\<.+?\\>\\>)");
 	}

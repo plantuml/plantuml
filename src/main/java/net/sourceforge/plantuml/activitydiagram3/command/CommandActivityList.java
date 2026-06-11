@@ -41,14 +41,13 @@ import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.stereo.Stereogroup;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -64,9 +63,9 @@ public class CommandActivityList extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandActivityList.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("[-*]"), //
 				RegexLeaf.spaceZeroOrOne(), //
-				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf(1, "LABEL", "(.*?)"), //
-				StereotypePattern.optional("STEREO2"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				Stereogroup.optionalStereogroup(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.end());
@@ -81,11 +80,11 @@ public class CommandActivityList extends SingleLineCommand2<ActivityDiagram3> {
 		// plain activity to the current flow.
 		sb.append("Adding the activity \"").append(arg.get("LABEL", 0)).append("\" (list item syntax)");
 
-		// The stereotype may be written before or after the label
-		// (STEREO1/STEREO2), hence the lazzy lookup, like in executeArg.
-		final String stereo = arg.getLazzy("STEREO", 0);
-		if (stereo != null)
-			sb.append(", stereotyped ").append(stereo);
+		// The stereotypes carry the colors; the box style is forced to PLAIN
+		// by executeArg in this list form.
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+		if (stereogroup.isEmpty() == false)
+			sb.append(", stereotyped ").append(arg.get("STEREOGROUP", 0));
 
 		if (arg.get(UrlBuilder.URL_KEY, 0) != null)
 			sb.append(", with a URL link");
@@ -94,13 +93,11 @@ public class CommandActivityList extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		final String stereo = arg.getLazzy("STEREO", 0);
-		Stereotype stereotype = null;
-		if (stereo != null) {
-			stereotype = Stereotype.build(stereo);
-		}
-		
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
+
+		final Stereogroup stereogroup = Stereogroup.build(arg);
+
 		final Url url;
 		if (arg.get(UrlBuilder.URL_KEY, 0) == null) {
 			url = null;
@@ -108,9 +105,9 @@ public class CommandActivityList extends SingleLineCommand2<ActivityDiagram3> {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			url = urlBuilder.getUrl(arg.get(UrlBuilder.URL_KEY, 0));
 		}
-		
-		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0)), BoxStyle.PLAIN, url, Colors.empty(),
-				stereotype);
+
+		return diagram.addActivity(Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0)), BoxStyle.PLAIN,
+				url, stereogroup);
 	}
 
 }

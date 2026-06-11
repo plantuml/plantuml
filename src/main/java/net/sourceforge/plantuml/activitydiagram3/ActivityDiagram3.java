@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.compress.CompressionMode;
 import net.sourceforge.plantuml.klimt.compress.CompressionXorYBuilder;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -105,11 +106,15 @@ public class ActivityDiagram3 extends TitledDiagram {
 		return swimlanes.nextLinkRenderer();
 	}
 
-	public CommandExecutionResult addActivity(Display activity, BoxStyle boxStyle, Url url, Colors colors,
-			Stereotype stereotype) {
+	public CommandExecutionResult addActivity(Display activity, BoxStyle boxStyle, Url url, Stereogroup stereogroup)
+			throws NoSuchColorException {
+
+		final Colors colors = stereogroup.getInnerColors(getSkinParam().getIHtmlColorSet());
+
 		manageSwimlaneStrategy();
 		final InstructionSimple ins = new InstructionSimple(activity, nextLinkRenderer(),
-				swimlanes.getCurrentSwimlane(), boxStyle, url, colors, stereotype, getCurrentStyleBuilder());
+				swimlanes.getCurrentSwimlane(), boxStyle, url, colors, stereogroup.buildStereotype(),
+				getCurrentStyleBuilder());
 		final CommandExecutionResult added = current().add(ins);
 		if (added.isOk() == false)
 			return added;
