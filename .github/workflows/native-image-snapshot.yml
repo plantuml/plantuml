@@ -26,6 +26,14 @@ jobs:
         run: |
           echo "JAVA_TOOL_OPTIONS=-Djava.io.tmpdir=$env:RUNNER_TEMP" >> $env:GITHUB_ENV
 
+      # Native Build Tools 1.1.2 changed its MSVC detection and no longer finds
+      # vcvarsall.bat on the windows-2025-vs2026 runner on its own. Initialise the
+      # MSVC x64 build environment explicitly so native-image picks up the toolchain.
+      - name: Set up MSVC developer environment
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
       # --no-daemon: the Gradle daemon would otherwise stay alive after the build
       # and keep the cache .lock files open, which makes setup-graalvm's gradle
       # cache-save step fail with "Device or resource busy" during post-job cleanup.
