@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,21 +49,27 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandModeCompact extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandModeCompact() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandModeCompact.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandModeCompact.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;mode&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;compact&quot;), //
-<span class="fc" id="L59">				RegexLeaf.end());</span>
+<span class="fc" id="L60">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L66">		return &quot;Switching the timing diagram to compact mode&quot;;</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L64">		diagram.goCompactMode();</span>
-<span class="nc" id="L65">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L71">		diagram.goCompactMode();</span>
+<span class="nc" id="L72">		return CommandExecutionResult.ok();</span>
 	}
 
 }

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,19 +49,25 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandListSprite extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
 	public CommandListSprite() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandListSprite.class.getName(), //</span>
-<span class="fc" id="L56">				RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandListSprite.class.getName(), //</span>
+<span class="fc" id="L57">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;listsprites?&quot;), //
-<span class="fc" id="L58">				RegexLeaf.end());</span>
+<span class="fc" id="L59">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L65">		return &quot;Accepted but ignored: 'listsprites' has no effect&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L63">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L70">		return CommandExecutionResult.ok();</span>
 	}
 
 }

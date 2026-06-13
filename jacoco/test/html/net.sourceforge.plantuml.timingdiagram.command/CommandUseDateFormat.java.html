@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -48,25 +49,32 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandUseDateFormat extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandUseDateFormat() {
-<span class="fc" id="L51">		super(getRegexConcat());</span>
-<span class="fc" id="L52">	}</span>
+<span class="fc" id="L52">		super(getRegexConcat());</span>
+<span class="fc" id="L53">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L55">		return RegexConcat.build(CommandUseDateFormat.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L56">		return RegexConcat.build(CommandUseDateFormat.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;use&quot;), //
-<span class="fc" id="L57">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L58">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;date&quot;), //
-<span class="fc" id="L59">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L60">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;format&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;FORMAT&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-<span class="fc" id="L63">				RegexLeaf.end());</span>
+<span class="fc" id="L64">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L70">		final String format = arg.get(&quot;FORMAT&quot;, 0);</span>
+<span class="nc" id="L71">		return &quot;Setting the date format to \&quot;&quot; + format + &quot;\&quot;&quot;;</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L68">		final String format = arg.get(&quot;FORMAT&quot;, 0);</span>
-<span class="nc" id="L69">		return diagram.useDateFormat(format);</span>
+<span class="nc" id="L76">		final String format = arg.get(&quot;FORMAT&quot;, 0);</span>
+<span class="nc" id="L77">		return diagram.useDateFormat(format);</span>
 	}
 
 }

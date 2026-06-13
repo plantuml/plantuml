@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,35 +52,45 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandTicks extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandTicks() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandTicks.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandTicks.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;PLAYER&quot;, &quot;([%pLN_.@]+)&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;ticks&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOr(new RegexLeaf(&quot;every&quot;),
-<span class="fc" id="L64">						new RegexConcat(new RegexLeaf(&quot;num&quot;), RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;on&quot;),</span>
-<span class="fc" id="L65">								RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;multiple&quot;))),</span>
-<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L65">						new RegexConcat(new RegexLeaf(&quot;num&quot;), RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;on&quot;),</span>
+<span class="fc" id="L66">								RegexLeaf.spaceOneOrMore(), new RegexLeaf(&quot;multiple&quot;))),</span>
+<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;NUM&quot;, &quot;([0-9]+)&quot;), //
-<span class="fc" id="L68">				RegexLeaf.end());</span>
+<span class="fc" id="L69">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L75">		final String code = arg.get(&quot;PLAYER&quot;, 0);</span>
+<span class="nc" id="L76">		final String num = arg.get(&quot;NUM&quot;, 0);</span>
+		// executeArg fails when no player exists with this code
+		// The tick interval is applied only when the player is analog; it is silently ignored otherwise
+<span class="nc" id="L79">		return &quot;Setting the tick interval of player '&quot; + code + &quot;' to &quot; + num;</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L74">		final String code = arg.get(&quot;PLAYER&quot;, 0);</span>
-<span class="nc" id="L75">		final Player player = diagram.getPlayer(code);</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (player == null) {</span>
-<span class="nc" id="L77">			return CommandExecutionResult.error(&quot;No such participant &quot; + code);</span>
+<span class="nc" id="L85">		final String code = arg.get(&quot;PLAYER&quot;, 0);</span>
+<span class="nc" id="L86">		final Player player = diagram.getPlayer(code);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (player == null) {</span>
+<span class="nc" id="L88">			return CommandExecutionResult.error(&quot;No such participant &quot; + code);</span>
 		}
-<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (player instanceof PlayerAnalog) {</span>
-<span class="nc" id="L80">			((PlayerAnalog) player).setTicks(Integer.parseInt(arg.get(&quot;NUM&quot;, 0)));</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (player instanceof PlayerAnalog) {</span>
+<span class="nc" id="L91">			((PlayerAnalog) player).setTicks(Integer.parseInt(arg.get(&quot;NUM&quot;, 0)));</span>
 		}
-<span class="nc" id="L82">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L93">		return CommandExecutionResult.ok();</span>
 	}
 
 }

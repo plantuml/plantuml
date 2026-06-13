@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -55,46 +56,75 @@ public class CommandTimeMessage extends SingleLineCommand2&lt;TimingDiagram&gt; 
 	public static final String PLAYER_CODE = &quot;([\\p{L}_][%pLN_.]*)&quot;;
 
 	public CommandTimeMessage() {
-<span class="fc" id="L58">		super(getRegexConcat());</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat());</span>
+<span class="fc" id="L60">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L62">		return RegexConcat.build(CommandTimeMessage.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandTimeMessage.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;PART1&quot;, PLAYER_CODE), //
-<span class="fc" id="L64">				TimeTickBuilder.optionalExpressionAtWithArobase(&quot;TIME1&quot;), //</span>
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				TimeTickBuilder.optionalExpressionAtWithArobase(&quot;TIME1&quot;), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;ARROW_BODY&quot;, &quot;(-+)&quot;), //
 				new RegexLeaf(1, &quot;ARROW_STYLE&quot;, &quot;(?:\\[(&quot; + CommandLinkElement.LINE_STYLE + &quot;)\\])?&quot;), //
 				new RegexLeaf(0, &quot;ARROW_HEAD&quot;, &quot;\\&gt;&quot;), //
-<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;PART2&quot;, PLAYER_CODE), //
-<span class="fc" id="L71">				TimeTickBuilder.optionalExpressionAtWithArobase(&quot;TIME2&quot;), //</span>
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				TimeTickBuilder.optionalExpressionAtWithArobase(&quot;TIME2&quot;), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L76">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L77">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;MESSAGE&quot;, &quot;(.*)&quot;) //
 						)), //
-<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L86">		final String part1 = arg.get(&quot;PART1&quot;, 0);</span>
+<span class="nc" id="L87">		final String part2 = arg.get(&quot;PART2&quot;, 0);</span>
+		// TIME1/TIME2 are optional and resolved by parseTimeTick against state; describe them lexically only when present
+<span class="nc" id="L89">		final String style = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
+<span class="nc" id="L90">		final String message = arg.get(&quot;MESSAGE&quot;, 0);</span>
+
+<span class="nc" id="L92">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L93">		sb.append(&quot;Drawing a timing message from player '&quot;).append(part1).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (hasTime(&quot;TIME1&quot;, arg))</span>
+<span class="nc" id="L95">			sb.append(&quot; at &quot;).append(TimeTickBuilder.describeTime(&quot;TIME1&quot;, arg));</span>
+<span class="nc" id="L96">		sb.append(&quot; to player '&quot;).append(part2).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (hasTime(&quot;TIME2&quot;, arg))</span>
+<span class="nc" id="L98">			sb.append(&quot; at &quot;).append(TimeTickBuilder.describeTime(&quot;TIME2&quot;, arg));</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (style != null)</span>
+<span class="nc" id="L100">			sb.append(&quot; with arrow style &quot;).append(style);</span>
+<span class="nc bnc" id="L101" title="All 4 branches missed.">		if (message != null &amp;&amp; message.isEmpty() == false)</span>
+<span class="nc" id="L102">			sb.append(&quot; labelled \&quot;&quot;).append(message).append(&quot;\&quot;&quot;);</span>
+		// executeArg fails when either player does not exist
+<span class="nc" id="L104">		return sb.toString();</span>
+	}
+
+	private static boolean hasTime(String name, RegexResult arg) {
+<span class="nc bnc" id="L108" title="All 6 branches missed.">		return arg.get(name + &quot;CODE&quot;, 0) != null || arg.get(name + &quot;CLOCK&quot;, 0) != null || arg.get(name + &quot;HOUR&quot;, 0) != null</span>
+<span class="nc bnc" id="L109" title="All 4 branches missed.">				|| arg.get(name + &quot;DATE&quot;, 0) != null || arg.get(name + &quot;DIGIT&quot;, 1) != null;</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L85">		final Player player1 = diagram.getPlayer(arg.get(&quot;PART1&quot;, 0));</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">		if (player1 == null) {</span>
-<span class="fc" id="L87">			return CommandExecutionResult.error(&quot;No such element: &quot; + arg.get(&quot;PART1&quot;, 0));</span>
+<span class="fc" id="L115">		final Player player1 = diagram.getPlayer(arg.get(&quot;PART1&quot;, 0));</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">		if (player1 == null) {</span>
+<span class="fc" id="L117">			return CommandExecutionResult.error(&quot;No such element: &quot; + arg.get(&quot;PART1&quot;, 0));</span>
 		}
-<span class="fc" id="L89">		final Player player2 = diagram.getPlayer(arg.get(&quot;PART2&quot;, 0));</span>
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (player2 == null) {</span>
-<span class="nc" id="L91">			return CommandExecutionResult.error(&quot;No such element: &quot; + arg.get(&quot;PART2&quot;, 0));</span>
+<span class="fc" id="L119">		final Player player2 = diagram.getPlayer(arg.get(&quot;PART2&quot;, 0));</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">		if (player2 == null) {</span>
+<span class="nc" id="L121">			return CommandExecutionResult.error(&quot;No such element: &quot; + arg.get(&quot;PART2&quot;, 0));</span>
 		}
-<span class="fc" id="L93">		final TimeTick tick1 = TimeTickBuilder.parseTimeTick(&quot;TIME1&quot;, arg, diagram);</span>
-<span class="fc" id="L94">		final TimeTick tick2 = TimeTickBuilder.parseTimeTick(&quot;TIME2&quot;, arg, diagram);</span>
-<span class="fc" id="L95">		final TimeMessage result = diagram.createTimeMessage(player1, tick1, player2, tick2, arg.get(&quot;MESSAGE&quot;, 0));</span>
-<span class="fc" id="L96">		result.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
-<span class="fc" id="L97">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L123">		final TimeTick tick1 = TimeTickBuilder.parseTimeTick(&quot;TIME1&quot;, arg, diagram);</span>
+<span class="fc" id="L124">		final TimeTick tick2 = TimeTickBuilder.parseTimeTick(&quot;TIME2&quot;, arg, diagram);</span>
+<span class="fc" id="L125">		final TimeMessage result = diagram.createTimeMessage(player1, tick1, player2, tick2, arg.get(&quot;MESSAGE&quot;, 0));</span>
+<span class="fc" id="L126">		result.applyStyle(arg.getLazzy(&quot;ARROW_STYLE&quot;, 0));</span>
+<span class="fc" id="L127">		return CommandExecutionResult.ok();</span>
 	}
 
 }

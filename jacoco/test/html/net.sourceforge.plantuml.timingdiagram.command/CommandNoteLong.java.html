@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.timingdiagram.command;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -58,53 +59,74 @@ import net.sourceforge.plantuml.utils.Position;
 
 public class CommandNoteLong extends CommandMultilines2&lt;TimingDiagram&gt; {
 
-<span class="fc" id="L61">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L62">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
+<span class="fc" id="L62">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L63">			() -&gt; Pattern2.cmpile(&quot;^end[%s]?note$&quot;));</span>
 
 	public CommandNoteLong() {
-<span class="fc" id="L65">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L66">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L67">	}</span>
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+<span class="nc" id="L72">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (line0 == null)</span>
+<span class="nc" id="L74">			return &quot;Adding a note&quot;;</span>
+
+<span class="nc" id="L76">		final String code = line0.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L77">		final String position = line0.get(&quot;POSITION&quot;, 0);</span>
+<span class="nc" id="L78">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		final int bodyLines = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+
+<span class="nc" id="L81">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L82">		sb.append(&quot;Adding a note at the &quot;).append(position).append(&quot; of player '&quot;).append(code).append(&quot;'&quot;);</span>
+<span class="nc" id="L83">		sb.append(&quot; with &quot;).append(bodyLines).append(&quot; lines of text&quot;);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L85">			sb.append(&quot; stereotyped &quot;).append(stereotype);</span>
+		// executeNow fails when no player exists with this code; the note is placed at the current diagram time
+<span class="nc" id="L87">		return sb.toString();</span>
+	}
 
 	@Override
 	protected CommandExecutionResult executeNow(final TimingDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 
-<span class="nc" id="L72">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L73">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L74">		lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L75">		final String code = line0.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L76">		final Player player = diagram.getPlayer(code);</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (player == null)</span>
-<span class="nc" id="L78">			return CommandExecutionResult.error(&quot;Unknown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
+<span class="nc" id="L94">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L95">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L96">		lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L97">		final String code = line0.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L98">		final Player player = diagram.getPlayer(code);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (player == null)</span>
+<span class="nc" id="L100">			return CommandExecutionResult.error(&quot;Unknown \&quot;&quot; + code + &quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L80">		final Display note = lines.toDisplay();</span>
-<span class="nc" id="L81">		final TimeTick now = diagram.getNow();</span>
+<span class="nc" id="L102">		final Display note = lines.toDisplay();</span>
+<span class="nc" id="L103">		final TimeTick now = diagram.getNow();</span>
 		// final Colors colors = color().getColor(arg,
 		// diagram.getSkinParam().getIHtmlColorSet());
 
-<span class="nc" id="L85">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L86">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L88">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L107">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L108">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L110">			stereotype = Stereotype.build(stereotypeString);</span>
 
-<span class="nc" id="L90">		player.addNote(now, note, Position.fromString(line0.get(&quot;POSITION&quot;, 0)), stereotype);</span>
-<span class="nc" id="L91">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L112">		player.addNote(now, note, Position.fromString(line0.get(&quot;POSITION&quot;, 0)), stereotype);</span>
+<span class="nc" id="L113">		return CommandExecutionResult.ok();</span>
 	}
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L95">		return RegexConcat.build(CommandNoteLong.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L96">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L117">		return RegexConcat.build(CommandNoteLong.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L118">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L98">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L120">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(top|bottom)&quot;), //
-<span class="fc" id="L100">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L122">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;of&quot;), //
-<span class="fc" id="L102">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L124">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;CODE&quot;, CommandTimeMessage.PLAYER_CODE), //
-<span class="fc" id="L104">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L105">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L106">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L107">				RegexLeaf.end());</span>
+<span class="fc" id="L126">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L127">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L128">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L129">				RegexLeaf.end());</span>
 	}
 
 }

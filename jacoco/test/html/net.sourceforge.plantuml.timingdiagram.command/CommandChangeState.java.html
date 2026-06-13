@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
@@ -52,34 +53,52 @@ import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 abstract class CommandChangeState extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	CommandChangeState(IRegex pattern) {
-<span class="fc" id="L55">		super(pattern);</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L56">		super(pattern);</span>
+<span class="fc" id="L57">	}</span>
 
 	static final String STATE_CODE = &quot;([-%pLN_][-%pLN_.]*)&quot;;
 
 	static ColorParser color() {
-<span class="fc" id="L61">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L62">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	protected CommandExecutionResult addState(TimingDiagram diagram, RegexResult arg, final Player player,
 			final TimeTick now) throws NoSuchColorException {
-<span class="fc" id="L66">		final String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
-<span class="fc" id="L67">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
-<span class="fc" id="L68">		player.setState(now, comment, colors, getStates(arg));</span>
-<span class="fc" id="L69">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L67">		final String comment = arg.get(&quot;COMMENT&quot;, 0);</span>
+<span class="fc" id="L68">		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L69">		player.setState(now, comment, colors, getStates(arg));</span>
+<span class="fc" id="L70">		return CommandExecutionResult.ok();</span>
 	}
 
 	private String[] getStates(RegexResult arg) {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (arg.get(&quot;STATE7&quot;, 0) != null) {</span>
-<span class="nc" id="L74">			final String state1 = arg.get(&quot;STATE7&quot;, 0);</span>
-<span class="nc" id="L75">			final String state2 = arg.get(&quot;STATE7&quot;, 1);</span>
-<span class="nc" id="L76">			return new String[] { state1, state2 };</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (arg.get(&quot;STATE7&quot;, 0) != null) {</span>
+<span class="nc" id="L75">			final String state1 = arg.get(&quot;STATE7&quot;, 0);</span>
+<span class="nc" id="L76">			final String state2 = arg.get(&quot;STATE7&quot;, 1);</span>
+<span class="nc" id="L77">			return new String[] { state1, state2 };</span>
 		}
-<span class="fc" id="L78">		return new String[] { arg.getLazzy(&quot;STATE&quot;, 0) };</span>
+<span class="fc" id="L79">		return new String[] { arg.getLazzy(&quot;STATE&quot;, 0) };</span>
+	}
+
+	// Pure description of the state captured by getStateOrHidden(), shared by the explainArg of both
+	// concrete subclasses, mirroring how they share addState()/getStates() in execution.
+	@Explain
+	static String describeState(RegexResult arg) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (arg.get(&quot;STATE7&quot;, 0) != null)</span>
+<span class="nc" id="L87">			return &quot;states '&quot; + arg.get(&quot;STATE7&quot;, 0) + &quot;' and '&quot; + arg.get(&quot;STATE7&quot;, 1) + &quot;'&quot;;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (arg.get(&quot;STATE3&quot;, 0) != null)</span>
+<span class="nc" id="L89">			return &quot;a hidden state&quot;;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (arg.get(&quot;STATE4&quot;, 0) != null)</span>
+<span class="nc" id="L91">			return &quot;an unknown state {...}&quot;;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (arg.get(&quot;STATE5&quot;, 0) != null)</span>
+<span class="nc" id="L93">			return &quot;a low-impedance state {-}&quot;;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (arg.get(&quot;STATE6&quot;, 0) != null)</span>
+<span class="nc" id="L95">			return &quot;a tristate {?}&quot;;</span>
+<span class="nc" id="L96">		final String state = arg.getLazzy(&quot;STATE&quot;, 0);</span>
+<span class="nc" id="L97">		return &quot;state '&quot; + state + &quot;'&quot;;</span>
 	}
 
 	static IRegex getStateOrHidden() {
-<span class="fc" id="L82">		return new RegexOr(//</span>
+<span class="fc" id="L101">		return new RegexOr(//</span>
 				new RegexLeaf(1, &quot;STATE1&quot;, &quot;[%g]([^%g]*)[%g]&quot;), //
 				new RegexLeaf(1, &quot;STATE2&quot;, STATE_CODE), //
 				new RegexLeaf(1, &quot;STATE3&quot;, &quot;(\\{hidden\\})&quot;), //

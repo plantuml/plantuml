@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.timingdiagram.command;
 
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,38 +52,56 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandDefineStateShort extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandDefineStateShort() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandDefineStateShort.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandDefineStateShort.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;PLAYER&quot;, &quot;([%pLN_.@]+)&quot;), //
-<span class="fc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;has&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;STATE&quot;, &quot;([-%pLN_.@]+)&quot;), //
 				new RegexLeaf(3, &quot;STATES&quot;, &quot;((,([-%pLN_.@]+))*)&quot;), //
-<span class="fc" id="L65">				RegexLeaf.end());</span>
+<span class="fc" id="L66">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L72">		final String playerCode = arg.get(&quot;PLAYER&quot;, 0);</span>
+<span class="nc" id="L73">		final String stateCode = arg.get(&quot;STATE&quot;, 0);</span>
+
+<span class="nc" id="L75">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L76">		sb.append(&quot;Defining state '&quot;).append(stateCode).append(&quot;' on player '&quot;).append(playerCode).append(&quot;'&quot;);</span>
+		// Each state is defined with its label equal to its code; additional states are comma-separated
+<span class="nc" id="L78">		final String states = arg.get(&quot;STATES&quot;, 0);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (states != null) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			for (StringTokenizer st = new StringTokenizer(states, &quot;,&quot;); st.hasMoreTokens();)</span>
+<span class="nc" id="L81">				sb.append(&quot;, '&quot;).append(st.nextToken()).append(&quot;'&quot;);</span>
+		}
+		// executeArg fails when no player exists with this code
+<span class="nc" id="L84">		return sb.toString();</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L70">		final String playerCode = arg.get(&quot;PLAYER&quot;, 0);</span>
-<span class="nc" id="L71">		final Player player = diagram.getPlayer(playerCode);</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">		if (player == null) {</span>
-<span class="nc" id="L73">			return CommandExecutionResult.error(&quot;Unknown &quot; + playerCode);</span>
+<span class="nc" id="L89">		final String playerCode = arg.get(&quot;PLAYER&quot;, 0);</span>
+<span class="nc" id="L90">		final Player player = diagram.getPlayer(playerCode);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (player == null) {</span>
+<span class="nc" id="L92">			return CommandExecutionResult.error(&quot;Unknown &quot; + playerCode);</span>
 		}
-<span class="nc" id="L75">		final String stateCode = arg.get(&quot;STATE&quot;, 0);</span>
-<span class="nc" id="L76">		player.defineState(stateCode, stateCode);</span>
-<span class="nc" id="L77">		final String states = arg.get(&quot;STATES&quot;, 0);</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (states != null) {</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">			for (StringTokenizer st = new StringTokenizer(states, &quot;,&quot;); st.hasMoreTokens();) {</span>
-<span class="nc" id="L80">				final String token = st.nextToken();</span>
-<span class="nc" id="L81">				player.defineState(token, token);</span>
-<span class="nc" id="L82">			}</span>
+<span class="nc" id="L94">		final String stateCode = arg.get(&quot;STATE&quot;, 0);</span>
+<span class="nc" id="L95">		player.defineState(stateCode, stateCode);</span>
+<span class="nc" id="L96">		final String states = arg.get(&quot;STATES&quot;, 0);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (states != null) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			for (StringTokenizer st = new StringTokenizer(states, &quot;,&quot;); st.hasMoreTokens();) {</span>
+<span class="nc" id="L99">				final String token = st.nextToken();</span>
+<span class="nc" id="L100">				player.defineState(token, token);</span>
+<span class="nc" id="L101">			}</span>
 		}
 
-<span class="nc" id="L85">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L104">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

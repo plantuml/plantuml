@@ -8,7 +8,7 @@ end title
 set separator none
 hide empty members
 
-class "com.plantuml.ubrex" %lighten("red", 37) {
+class "com.plantuml.ubrex" %lighten("red", 39) {
 Total Classes: 28
 }
 "com.plantuml.ubrex" --> "java.lang"
@@ -1317,9 +1317,8 @@ Total Classes: 18
 "net.sourceforge.plantuml.dot" --> "net.sourceforge.plantuml.windowsdot"
 
 class "net.sourceforge.plantuml.ebnf" %lighten("red", 99) {
-Total Classes: 28
+Total Classes: 26
 }
-"net.sourceforge.plantuml.ebnf" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.ebnf" --> "java.lang"
 "net.sourceforge.plantuml.ebnf" --> "java.util"
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml"
@@ -1335,7 +1334,6 @@ Total Classes: 28
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.regex"
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.ebnf" --> "net.sourceforge.plantuml.utils"
@@ -2272,8 +2270,8 @@ Total Classes: 41
 "net.sourceforge.plantuml.klimt.shape" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.klimt.shape" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.sprite" %lighten("red", 79) {
-Total Classes: 22
+class "net.sourceforge.plantuml.klimt.sprite" %lighten("red", 80) {
+Total Classes: 21
 }
 "net.sourceforge.plantuml.klimt.sprite" --> "java.io"
 "net.sourceforge.plantuml.klimt.sprite" --> "java.lang"
@@ -2643,7 +2641,7 @@ Total Classes: 9
 "net.sourceforge.plantuml.regex" --> "net.sourceforge.plantuml.text"
 
 class "net.sourceforge.plantuml.regexdiagram" %lighten("red", 100) {
-Total Classes: 6
+Total Classes: 5
 }
 "net.sourceforge.plantuml.regexdiagram" --> "java.lang"
 "net.sourceforge.plantuml.regexdiagram" --> "java.util"
@@ -2652,16 +2650,12 @@ Total Classes: 6
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.ebnf"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.klimt"
-"net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.klimt.drawing"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.nio"
 "net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.preproc"
-"net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.regex"
-"net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.text"
-"net.sourceforge.plantuml.regexdiagram" --> "net.sourceforge.plantuml.utils"
 
 class "net.sourceforge.plantuml.salt" %lighten("red", 96) {
 Total Classes: 8
@@ -3223,7 +3217,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.telnet" --> "java.lang"
 "net.sourceforge.plantuml.telnet" --> "java.net"
 
-class "net.sourceforge.plantuml.text" %lighten("red", 29) {
+class "net.sourceforge.plantuml.text" %lighten("red", 30) {
 Total Classes: 5
 }
 "net.sourceforge.plantuml.text" --> "java.lang"
@@ -3329,8 +3323,8 @@ Total Classes: 25
 "net.sourceforge.plantuml.timingdiagram" --> "net.sourceforge.plantuml.timingdiagram.graphic"
 "net.sourceforge.plantuml.timingdiagram" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.timingdiagram.command" %lighten("red", 99) {
-Total Classes: 13
+class "net.sourceforge.plantuml.timingdiagram.command" %lighten("red", 92) {
+Total Classes: 10
 }
 "net.sourceforge.plantuml.timingdiagram.command" --> "java.lang"
 "net.sourceforge.plantuml.timingdiagram.command" --> "java.math"
@@ -3371,7 +3365,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.url" --> "java.util"
 "net.sourceforge.plantuml.url" --> "net.sourceforge.plantuml.klimt.geom"
 
-class "net.sourceforge.plantuml.utils" %lighten("red", 53) {
+class "net.sourceforge.plantuml.utils" %lighten("red", 54) {
 Total Classes: 18
 }
 "net.sourceforge.plantuml.utils" --> "java.io"

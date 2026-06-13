@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -50,33 +51,49 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandAtTime extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandAtTime() {
-<span class="fc" id="L53">		super(getRegexConcat());</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L54">		super(getRegexConcat());</span>
+<span class="fc" id="L55">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L57">		return RegexConcat.build(CommandAtTime.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L58">				TimeTickBuilder.expressionAtWithArobase(&quot;TIME&quot;), //</span>
+<span class="fc" id="L58">		return RegexConcat.build(CommandAtTime.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">				TimeTickBuilder.expressionAtWithArobase(&quot;TIME&quot;), //</span>
 				new RegexOptional(new RegexConcat( //
-<span class="fc" id="L60">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L61">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L62">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;:&quot;), //
 						new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;) //
 				)), //
-<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L67">				RegexLeaf.end());</span>
+<span class="fc" id="L67">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The actual TimeTick is resolved by TimeTickBuilder.parseTimeTick against clock/diagram state,
+		// so here we only describe the raw time expression from the matched sub-pattern.
+<span class="nc" id="L76">		final String time = TimeTickBuilder.describeTime(&quot;TIME&quot;, arg);</span>
+<span class="nc" id="L77">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+
+<span class="nc" id="L79">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L80">		sb.append(&quot;Adding a time mark at &quot;).append(time);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (code != null)</span>
+<span class="nc" id="L82">			sb.append(&quot; labelled '&quot;).append(code).append(&quot;'&quot;);</span>
+		// executeArg fails when the time expression cannot be resolved (&quot;What time?&quot;)
+<span class="nc" id="L84">		return sb.toString();</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L73">		final TimeTick timeTick = TimeTickBuilder.parseTimeTick(&quot;TIME&quot;, arg, diagram);</span>
-<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (timeTick == null)</span>
-<span class="nc" id="L75">			return CommandExecutionResult.error(&quot;What time?&quot;);</span>
+<span class="fc" id="L90">		final TimeTick timeTick = TimeTickBuilder.parseTimeTick(&quot;TIME&quot;, arg, diagram);</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (timeTick == null)</span>
+<span class="nc" id="L92">			return CommandExecutionResult.error(&quot;What time?&quot;);</span>
 
-<span class="fc" id="L77">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L78">		diagram.addTime(timeTick, code);</span>
-<span class="fc" id="L79">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L94">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L95">		diagram.addTime(timeTick, code);</span>
+<span class="fc" id="L96">		return CommandExecutionResult.ok();</span>
 	}
 
 }

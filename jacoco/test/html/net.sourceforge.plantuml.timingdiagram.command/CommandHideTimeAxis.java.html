@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,25 +50,34 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandHideTimeAxis extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandHideTimeAxis() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandHideTimeAxis.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandHideTimeAxis.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;COMMAND&quot;, &quot;(hide|manual)&quot;), //
-<span class="fc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;time&quot;), //
 				new RegexLeaf(&quot;.?&quot;), //
 				new RegexLeaf(&quot;axis&quot;), //
-<span class="fc" id="L62">				RegexLeaf.end());</span>
+<span class="fc" id="L63">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L69">		final String cmd = arg.get(&quot;COMMAND&quot;, 0);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (&quot;MANUAL&quot;.equalsIgnoreCase(cmd))</span>
+<span class="nc" id="L71">			return &quot;Setting the time axis strategy to manual&quot;;</span>
+<span class="nc" id="L72">		return &quot;Hiding the time axis&quot;;</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L67">		final String cmd = arg.get(&quot;COMMAND&quot;, 0);</span>
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (&quot;MANUAL&quot;.equalsIgnoreCase(cmd))</span>
-<span class="nc" id="L69">			return diagram.setTimeAxisStategy(TimeAxisStategy.MANUAL);</span>
-<span class="nc" id="L70">		return diagram.setTimeAxisStategy(TimeAxisStategy.HIDDEN);</span>
+<span class="nc" id="L77">		final String cmd = arg.get(&quot;COMMAND&quot;, 0);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (&quot;MANUAL&quot;.equalsIgnoreCase(cmd))</span>
+<span class="nc" id="L79">			return diagram.setTimeAxisStategy(TimeAxisStategy.MANUAL);</span>
+<span class="nc" id="L80">		return diagram.setTimeAxisStategy(TimeAxisStategy.HIDDEN);</span>
 	}
 
 }

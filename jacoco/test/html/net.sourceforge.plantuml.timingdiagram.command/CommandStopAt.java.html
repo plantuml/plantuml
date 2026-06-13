@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,25 +50,33 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandStopAt extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandStopAt() {
-<span class="nc" id="L52">		super(getRegexConcat());</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L53">		super(getRegexConcat());</span>
+<span class="nc" id="L54">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="nc" id="L56">		return RegexConcat.build(CommandStopAt.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L57">		return RegexConcat.build(CommandStopAt.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;stop&quot;), //
-<span class="nc" id="L58">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;at&quot;), //
-<span class="nc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="nc" id="L61">				TimeTickBuilder.expressionAtWithoutArobase(&quot;TIME&quot;), //</span>
-<span class="nc" id="L62">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+<span class="nc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L62">				TimeTickBuilder.expressionAtWithoutArobase(&quot;TIME&quot;), //</span>
+<span class="nc" id="L63">				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The actual TimeTick is resolved by parseTimeTick against clock/diagram state; describe it lexically only
+<span class="nc" id="L70">		final String time = TimeTickBuilder.describeTime(&quot;TIME&quot;, arg);</span>
+<span class="nc" id="L71">		return &quot;Stopping the timing diagram at &quot; + time;</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L68">		final TimeTick timeTick = TimeTickBuilder.parseTimeTick(&quot;TIME&quot;, arg, diagram);</span>
-<span class="nc" id="L69">		diagram.setStopAt(timeTick);</span>
-<span class="nc" id="L70">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L77">		final TimeTick timeTick = TimeTickBuilder.parseTimeTick(&quot;TIME&quot;, arg, diagram);</span>
+<span class="nc" id="L78">		diagram.setStopAt(timeTick);</span>
+<span class="nc" id="L79">		return CommandExecutionResult.ok();</span>
 	}
 
 }

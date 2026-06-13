@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -51,26 +52,34 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandCommentMultilines2 extends CommandMultilines2&lt;PSystemEbnf&gt; {
 
-<span class="fc" id="L54">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L55">			() -&gt; Pattern2.cmpile(&quot;^.*\\*\\*\\)[%s]*$&quot;));</span>
+<span class="fc" id="L55">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L56">			() -&gt; Pattern2.cmpile(&quot;^.*\\*\\*\\)[%s]*$&quot;));</span>
 
 	public CommandCommentMultilines2() {
-<span class="fc" id="L58">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat(), MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L60">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L62">		return RegexConcat.build(CommandCommentMultilines2.class.getName(), RegexLeaf.start(), //</span>
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandCommentMultilines2.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\(\\*\\*&quot;), //
 				new RegexLeaf(&quot;.*&quot;), //
-<span class="fc" id="L66">				RegexLeaf.end());</span>
+<span class="fc" id="L67">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// The starting pattern has no named groups; the (** ... **) delimiters share the first and last
+		// content lines, so every line carries text
+<span class="nc" id="L75">		return &quot;Adding an EBNF documentation comment with &quot; + lines.size() + &quot; lines of text&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L72">		final Display note = lines.removeFewChars(3).toDisplay();</span>
-<span class="nc" id="L73">		return diagram.addNote(note, null);</span>
+<span class="nc" id="L81">		final Display note = lines.removeFewChars(3).toDisplay();</span>
+<span class="nc" id="L82">		return diagram.addNote(note, null);</span>
 	}
 
 }

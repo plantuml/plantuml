@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.ebnf;
 
 import java.util.Collections;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -53,50 +54,66 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandEBnfSingleLine extends SingleLineCommand2&lt;PSystemEbnf&gt; {
 
 	public CommandEBnfSingleLine() {
-<span class="fc" id="L56">		super(true, getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		super(true, getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandEBnfSingleLine.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandEBnfSingleLine.class.getName(), RegexLeaf.start(), //</span>
 
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L64">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;\\(\\*&quot;), //
 								new RegexLeaf(1, &quot;COMMENTA&quot;, &quot;(.*[^%s].*)&quot;), //
 								new RegexLeaf(&quot;\\*\\)&quot;), //
-<span class="fc" id="L68">								RegexLeaf.spaceZeroOrMore())), //</span>
+<span class="fc" id="L69">								RegexLeaf.spaceZeroOrMore())), //</span>
 
 				new RegexLeaf(1, &quot;ID&quot;, &quot;([%pLN_][-%pLN_]*)&quot;), //
 
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L74">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(&quot;\\(\\*&quot;), //
 								new RegexLeaf(1, &quot;COMMENTB&quot;, &quot;(.*[^%s].*)&quot;), //
 								new RegexLeaf(&quot;\\*\\)&quot;), //
-<span class="fc" id="L78">								RegexLeaf.spaceZeroOrMore())), //</span>
+<span class="fc" id="L79">								RegexLeaf.spaceZeroOrMore())), //</span>
 
-<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;EQUALS&quot;, &quot;(=)&quot;), //
-<span class="fc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L83">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;LINE&quot;, &quot;(.*;)&quot;), //
-<span class="fc" id="L84">				RegexLeaf.end());</span>
+<span class="fc" id="L85">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L91">		final String id = arg.get(&quot;ID&quot;, 0);</span>
+<span class="nc" id="L92">		final String commentAbove = arg.get(&quot;COMMENTA&quot;, 0);</span>
+<span class="nc" id="L93">		final String commentBelow = arg.get(&quot;COMMENTB&quot;, 0);</span>
+
+<span class="nc" id="L95">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L96">		sb.append(&quot;Declaring the EBNF rule '&quot;).append(id).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (commentAbove != null)</span>
+<span class="nc" id="L98">			sb.append(&quot; with a comment above&quot;);</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (commentBelow != null)</span>
+<span class="nc" id="L100">			sb.append(&quot; with a comment below&quot;);</span>
+<span class="nc" id="L101">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L90">		final String id = arg.get(&quot;ID&quot;, 0);</span>
-<span class="fc" id="L91">		final String equals = arg.get(&quot;EQUALS&quot;, 0);</span>
-<span class="fc" id="L92">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
-<span class="fc" id="L93">		final String full = id + equals + line;</span>
+<span class="fc" id="L107">		final String id = arg.get(&quot;ID&quot;, 0);</span>
+<span class="fc" id="L108">		final String equals = arg.get(&quot;EQUALS&quot;, 0);</span>
+<span class="fc" id="L109">		final String line = arg.get(&quot;LINE&quot;, 0);</span>
+<span class="fc" id="L110">		final String full = id + equals + line;</span>
 
-<span class="fc" id="L95">		final String commentAbove = arg.get(&quot;COMMENTA&quot;, 0);</span>
-<span class="fc" id="L96">		final String commentBelow = arg.get(&quot;COMMENTB&quot;, 0);</span>
+<span class="fc" id="L112">		final String commentAbove = arg.get(&quot;COMMENTA&quot;, 0);</span>
+<span class="fc" id="L113">		final String commentBelow = arg.get(&quot;COMMENTB&quot;, 0);</span>
 
-<span class="fc" id="L98">		final StringLocated string = new StringLocated(full, location);</span>
-<span class="fc" id="L99">		return diagram.addBlocLines(BlocLines.from(Collections.singletonList(string)), commentAbove, commentBelow);</span>
+<span class="fc" id="L115">		final StringLocated string = new StringLocated(full, location);</span>
+<span class="fc" id="L116">		return diagram.addBlocLines(BlocLines.from(Collections.singletonList(string)), commentAbove, commentBelow);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.timingdiagram.command;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -53,70 +54,100 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandClock extends SingleLineCommand2&lt;TimingDiagram&gt; {
 
 	public CommandClock() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandClock.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandClock.class.getName(), RegexLeaf.start(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(1, &quot;COMPACT&quot;, &quot;(compact)&quot;), //
-<span class="fc" id="L64">								RegexLeaf.spaceOneOrMore())), //</span>
+<span class="fc" id="L65">								RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(0, &quot;TYPE&quot;, &quot;clock&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexOptional(new RegexConcat( //
 						new RegexLeaf(1, &quot;FULL&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-<span class="fc" id="L69">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L70">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L71">						RegexLeaf.spaceOneOrMore())), //</span>
+<span class="fc" id="L72">						RegexLeaf.spaceOneOrMore())), //</span>
 				new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.@]+)&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;with&quot;), //
-<span class="fc" id="L75">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L76">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;period&quot;), //
-<span class="fc" id="L77">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L78">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;PERIOD&quot;, &quot;([0-9]+(?:\\.[0-9]+)?)&quot;), //
 				new RegexOptional(new RegexConcat( //
-<span class="fc" id="L80">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L81">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;pulse&quot;), //
-<span class="fc" id="L82">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L83">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(1, &quot;PULSE&quot;, &quot;([0-9]+(?:\\.[0-9]+)?)&quot;) //
 				)), //
 				new RegexOptional(new RegexConcat( //
-<span class="fc" id="L86">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L87">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(&quot;offset&quot;), //
-<span class="fc" id="L88">						RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L89">						RegexLeaf.spaceOneOrMore(), //</span>
 						new RegexLeaf(1, &quot;OFFSET&quot;, &quot;([0-9]+(?:\\.[0-9]+)?)&quot;) //
 				)), //
-<span class="fc" id="L91">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L92">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L93">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L94">				RegexLeaf.end());</span>
+<span class="fc" id="L92">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L93">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L94">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L95">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L101">		final String compact = arg.get(&quot;COMPACT&quot;, 0);</span>
+<span class="nc" id="L102">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L103">		final String full = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="nc" id="L104">		final String period = arg.get(&quot;PERIOD&quot;, 0);</span>
+<span class="nc" id="L105">		final String pulse = arg.get(&quot;PULSE&quot;, 0);</span>
+<span class="nc" id="L106">		final String offset = arg.get(&quot;OFFSET&quot;, 0);</span>
+<span class="nc" id="L107">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
+
+<span class="nc" id="L109">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (compact != null)</span>
+<span class="nc" id="L111">			sb.append(&quot;Creating a compact clock '&quot;);</span>
+		else
+<span class="nc" id="L113">			sb.append(&quot;Creating a clock '&quot;);</span>
+<span class="nc" id="L114">		sb.append(code).append(&quot;'&quot;);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (full != null)</span>
+<span class="nc" id="L116">			sb.append(&quot; displayed as \&quot;&quot;).append(full).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L117">		sb.append(&quot; with period &quot;).append(period);</span>
+		// PULSE and OFFSET default to 0 when omitted
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (pulse != null)</span>
+<span class="nc" id="L120">			sb.append(&quot; pulse &quot;).append(pulse);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (offset != null)</span>
+<span class="nc" id="L122">			sb.append(&quot; offset &quot;).append(offset);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L124">			sb.append(&quot; stereotyped &quot;).append(stereotype);</span>
+<span class="nc" id="L125">		return sb.toString();</span>
 	}
 
 	@Override
 	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="fc" id="L100">		final String compact = arg.get(&quot;COMPACT&quot;, 0);</span>
-<span class="fc" id="L101">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
-<span class="fc" id="L102">		final BigDecimal period = new BigDecimal(arg.get(&quot;PERIOD&quot;, 0));</span>
-<span class="fc" id="L103">		final BigDecimal pulse = getBigDecimal(arg.get(&quot;PULSE&quot;, 0));</span>
-<span class="fc" id="L104">		final BigDecimal offset = getBigDecimal(arg.get(&quot;OFFSET&quot;, 0));</span>
-<span class="fc" id="L105">		String full = arg.get(&quot;FULL&quot;, 0);</span>
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (full == null)</span>
-<span class="nc" id="L107">			full = &quot;&quot;;</span>
-<span class="fc" id="L108">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L109">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L111">			stereotype = Stereotype.build(stereotypeString);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		diagram.createPlayerClock(code, full, period, pulse, offset, compact != null, stereotype);</span>
-<span class="fc" id="L113">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L131">		final String compact = arg.get(&quot;COMPACT&quot;, 0);</span>
+<span class="fc" id="L132">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L133">		final BigDecimal period = new BigDecimal(arg.get(&quot;PERIOD&quot;, 0));</span>
+<span class="fc" id="L134">		final BigDecimal pulse = getBigDecimal(arg.get(&quot;PULSE&quot;, 0));</span>
+<span class="fc" id="L135">		final BigDecimal offset = getBigDecimal(arg.get(&quot;OFFSET&quot;, 0));</span>
+<span class="fc" id="L136">		String full = arg.get(&quot;FULL&quot;, 0);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (full == null)</span>
+<span class="nc" id="L138">			full = &quot;&quot;;</span>
+<span class="fc" id="L139">		final String stereotypeString = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L140">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L142">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		diagram.createPlayerClock(code, full, period, pulse, offset, compact != null, stereotype);</span>
+<span class="fc" id="L144">		return CommandExecutionResult.ok();</span>
 	}
 
 	private BigDecimal getBigDecimal(String value) {
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		if (value == null)</span>
-<span class="fc" id="L118">			return BigDecimal.ZERO;</span>
-<span class="fc" id="L119">		return new BigDecimal(value);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (value == null)</span>
+<span class="fc" id="L149">			return BigDecimal.ZERO;</span>
+<span class="fc" id="L150">		return new BigDecimal(value);</span>
 	}
 
 }
