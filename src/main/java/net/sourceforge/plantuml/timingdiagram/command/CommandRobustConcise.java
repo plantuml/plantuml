@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -83,6 +84,33 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 
 	private static ColorParser color() {
 		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String compact = arg.get("COMPACT", 0);
+		final String type = arg.get("TYPE", 0);
+		final String code = arg.get("CODE", 0);
+		final String full = arg.get("FULL", 0);
+		// The two stereotype slots are mutually exclusive in practice; STEREOTYPE takes priority over STEREOTYPE2
+		String stereotype = arg.get("STEREOTYPE", 0);
+		if (stereotype == null)
+			stereotype = arg.get("STEREOTYPE2", 0);
+		final String color = arg.getLazzy("COLOR", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Creating a ");
+		if (compact != null)
+			sb.append("compact ");
+		sb.append(type).append(" timing player '").append(code).append("'");
+		if (full != null)
+			sb.append(" displayed as \"").append(full).append("\"");
+		if (stereotype != null)
+			sb.append(" stereotyped ").append(stereotype);
+		if (color != null)
+			sb.append(" with background color ").append(color);
+		return sb.toString();
 	}
 
 	@Override

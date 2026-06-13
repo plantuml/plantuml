@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.timingdiagram.command;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -109,6 +110,33 @@ public class TimeTickBuilder {
 			value = clock.getNow().getTime().add(value);
 
 		return new TimeTick(value, TimingFormat.DECIMAL);
+	}
+
+	// Pure description of the time expression matched by expressionAtWithoutArobase(name), mirroring the
+	// branch order of parseTimeTick but without resolving against clock/diagram state.
+	@Explain
+	public static String describeTime(String name, RegexResult arg) {
+		if (arg.get(name + "CODE", 0) != null) {
+			final String delta = arg.get(name + "CODE", 1);
+			if (delta != null)
+				return "time '" + arg.get(name + "CODE", 0) + "' shifted by " + delta;
+			return "time '" + arg.get(name + "CODE", 0) + "'";
+		}
+		if (arg.get(name + "CLOCK", 0) != null)
+			return "tick " + arg.get(name + "CLOCK", 1) + " of clock '" + arg.get(name + "CLOCK", 0) + "'";
+		if (arg.get(name + "HOUR", 0) != null)
+			return "hour " + arg.get(name + "HOUR", 0) + ":" + arg.get(name + "HOUR", 1) + ":" + arg.get(name + "HOUR", 2);
+		if (arg.get(name + "DATE", 0) != null)
+			return "date " + arg.get(name + "DATE", 0) + "/" + arg.get(name + "DATE", 1) + "/" + arg.get(name + "DATE", 2);
+		final String number = arg.get(name + "DIGIT", 1);
+		if (number != null) {
+			final boolean isRelative = "+".equals(arg.get(name + "DIGIT", 0));
+			if (isRelative)
+				return "a relative offset of " + number;
+			return "time " + number;
+		}
+		// No numeric value: parseTimeTick falls back to the current time
+		return "the current time";
 	}
 
 }

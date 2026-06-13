@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -68,6 +69,44 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("pixels?"), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String tick = arg.get("TICK", 0);
+		final String unit = arg.get("UNIT", 0);
+		final String pixel = arg.get("PIXEL", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Scaling ").append(tick);
+		// When omitted, the unit defaults to seconds (factor 1)
+		if (unit != null)
+			sb.append(" ").append(describeUnit(unit));
+		else
+			sb.append(" time unit(s)");
+		sb.append(" to ").append(pixel).append(" pixels");
+		// executeArg fails ("Bad value") when the tick or pixel value is not strictly positive
+		return sb.toString();
+	}
+
+	private static String describeUnit(String unit) {
+		switch (unit) {
+		case "s":
+			return "second(s)";
+		case "m":
+			return "minute(s)";
+		case "h":
+			return "hour(s)";
+		case "D":
+		case "d":
+			return "day(s)";
+		case "Y":
+		case "y":
+			return "year(s)";
+		default:
+			return "time unit(s)";
+		}
 	}
 
 	@Override

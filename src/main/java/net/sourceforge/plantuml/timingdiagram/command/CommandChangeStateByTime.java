@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -73,6 +74,26 @@ public class CommandChangeStateByTime extends CommandChangeState {
 								new RegexLeaf(1, "COMMENT", "(.*?)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The actual TimeTick is resolved by TimeTickBuilder.parseTimeTick against clock/diagram state,
+		// so here we only describe the raw time expression from the matched sub-pattern.
+		final String time = TimeTickBuilder.describeTime("TIME", arg);
+		final String state = describeState(arg);
+		final String color = arg.getLazzy("COLOR", 0);
+		final String comment = arg.get("COMMENT", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Setting the current player to ").append(state).append(" at ").append(time);
+		if (color != null)
+			sb.append(" with background color ").append(color);
+		if (comment != null && comment.isEmpty() == false)
+			sb.append(" labelled \"").append(comment).append("\"");
+		// executeArg fails when there is no current player (missing @ line before this)
+		return sb.toString();
 	}
 
 	@Override

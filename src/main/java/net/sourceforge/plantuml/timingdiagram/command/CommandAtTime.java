@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -65,6 +66,22 @@ public class CommandAtTime extends SingleLineCommand2<TimingDiagram> {
 				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The actual TimeTick is resolved by TimeTickBuilder.parseTimeTick against clock/diagram state,
+		// so here we only describe the raw time expression from the matched sub-pattern.
+		final String time = TimeTickBuilder.describeTime("TIME", arg);
+		final String code = arg.get("CODE", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Adding a time mark at ").append(time);
+		if (code != null)
+			sb.append(" labelled '").append(code).append("'");
+		// executeArg fails when the time expression cannot be resolved ("What time?")
+		return sb.toString();
 	}
 
 	@Override

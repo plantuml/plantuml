@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -77,6 +78,30 @@ public class CommandConstraint extends SingleLineCommand2<TimingDiagram> {
 								new RegexLeaf(1, "MESSAGE", "(.*)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String part1 = arg.get("PART1", 0);
+		// TIME1/TIME2 are resolved by parseTimeTick against clock/diagram state; describe them lexically only
+		final String time1 = TimeTickBuilder.describeTime("TIME1", arg);
+		final String time2 = TimeTickBuilder.describeTime("TIME2", arg);
+		// executeArg reads the style with the ARROW_STYLE prefix (matching the ARROW_STYLE1 group)
+		final String style = arg.getLazzy("ARROW_STYLE", 0);
+		final String message = arg.get("MESSAGE", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Drawing a timing constraint from ").append(time1).append(" to ").append(time2);
+		if (part1 != null)
+			sb.append(" on player '").append(part1).append("'");
+		// When no participant is given, executeArg uses the current player
+		if (style != null)
+			sb.append(" with arrow style ").append(style);
+		if (message != null && message.isEmpty() == false)
+			sb.append(" labelled \"").append(message).append("\"");
+		// executeArg fails when the player or either time label cannot be resolved
+		return sb.toString();
 	}
 
 	@Override

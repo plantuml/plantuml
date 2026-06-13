@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -73,6 +74,24 @@ public class CommandChangeStateByPlayerCode extends CommandChangeState {
 								new RegexLeaf(1, "COMMENT", "(.*?)") //
 						)), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String code = arg.get("CODE", 0);
+		final String state = describeState(arg);
+		final String color = arg.getLazzy("COLOR", 0);
+		final String comment = arg.get("COMMENT", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Setting player '").append(code).append("' to ").append(state);
+		if (color != null)
+			sb.append(" with background color ").append(color);
+		if (comment != null && comment.isEmpty() == false)
+			sb.append(" labelled \"").append(comment).append("\"");
+		// executeArg fails when no player exists with this code; the state change uses the current diagram time
+		return sb.toString();
 	}
 
 	@Override

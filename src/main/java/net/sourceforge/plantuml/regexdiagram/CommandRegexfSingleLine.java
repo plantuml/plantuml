@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.regexdiagram;
 
 import java.util.Collections;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -60,6 +61,13 @@ public class CommandRegexfSingleLine extends SingleLineCommand2<PSystemRegex> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "LINE", "(.*)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String line = arg.get("LINE", 0);
+		return "Adding the regex source line '" + line + "'";
 	}
 
 	@Override

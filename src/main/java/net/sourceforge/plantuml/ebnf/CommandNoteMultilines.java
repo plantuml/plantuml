@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -72,6 +73,24 @@ public class CommandNoteMultilines extends CommandMultilines2<PSystemEbnf> {
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Adding a note";
+
+		// The color is resolved by getColor against the skinparam color set; report the raw token only
+		final String color = line0.getLazzy("COLOR", 0);
+		final int bodyLines = lines.size() > 2 ? lines.size() - 2 : 0;
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Adding a note with ").append(bodyLines).append(" lines of text");
+		if (color != null)
+			sb.append(" with background color ").append(color);
+		return sb.toString();
 	}
 
 	@Override

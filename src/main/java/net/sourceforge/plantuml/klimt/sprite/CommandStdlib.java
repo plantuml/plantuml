@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.sprite;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -57,6 +58,13 @@ public class CommandStdlib extends SingleLineCommand2<StdlibDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "NAME", "([-\\w.]+)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String name = arg.get("NAME", 0);
+		return "Importing the standard library '" + name + "'";
 	}
 
 	@Override

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -61,6 +62,13 @@ public class CommandUseDateFormat extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "FORMAT", "[%g]([^%g]+)[%g]"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String format = arg.get("FORMAT", 0);
+		return "Setting the date format to \"" + format + "\"";
 	}
 
 	@Override

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.ebnf;
 
 import com.plantuml.ubrex.UnicodeBracketedExpression;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -52,6 +53,13 @@ public class UBrexCommandComment extends UBrexSingleLineCommand2<PSystemEbnf> {
 
 	static UnicodeBracketedExpression getRegexConcat() {
 		return UnicodeBracketedExpression.build("〇*〴s (* 〶$COMMENT=〄>〘*) 〇*〴s 〒$〙");
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String tmp = arg.get("COMMENT", 0).trim();
+		return "Adding an EBNF comment \"" + tmp + "\"";
 	}
 
 	@Override

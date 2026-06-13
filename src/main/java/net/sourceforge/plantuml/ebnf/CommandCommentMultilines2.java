@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -64,6 +65,14 @@ public class CommandCommentMultilines2 extends CommandMultilines2<PSystemEbnf> {
 				new RegexLeaf("\\(\\*\\*"), //
 				new RegexLeaf(".*"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// The starting pattern has no named groups; the (** ... **) delimiters share the first and last
+		// content lines, so every line carries text
+		return "Adding an EBNF documentation comment with " + lines.size() + " lines of text";
 	}
 
 	@Override

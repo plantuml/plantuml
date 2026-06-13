@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -66,6 +67,16 @@ public class CommandTicks extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "NUM", "([0-9]+)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String code = arg.get("PLAYER", 0);
+		final String num = arg.get("NUM", 0);
+		// executeArg fails when no player exists with this code
+		// The tick interval is applied only when the player is analog; it is silently ignored otherwise
+		return "Setting the tick interval of player '" + code + "' to " + num;
 	}
 
 	@Override

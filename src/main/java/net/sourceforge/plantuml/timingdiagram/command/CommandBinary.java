@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -71,6 +72,30 @@ public class CommandBinary extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf(1, "CODE", "([%pLN_.@]+)"), //
 				StereotypePattern.optional("STEREOTYPE2"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String compact = arg.get("COMPACT", 0);
+		final String code = arg.get("CODE", 0);
+		final String full = arg.get("FULL", 0);
+		// The two stereotype slots are mutually exclusive in practice; STEREOTYPE takes priority over STEREOTYPE2
+		String stereotype = arg.get("STEREOTYPE", 0);
+		if (stereotype == null)
+			stereotype = arg.get("STEREOTYPE2", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		if (compact != null)
+			sb.append("Creating a compact binary timing player '");
+		else
+			sb.append("Creating a binary timing player '");
+		sb.append(code).append("'");
+		if (full != null)
+			sb.append(" displayed as \"").append(full).append("\"");
+		if (stereotype != null)
+			sb.append(" stereotyped ").append(stereotype);
+		return sb.toString();
 	}
 
 	@Override

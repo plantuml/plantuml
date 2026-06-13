@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -63,6 +64,16 @@ public class CommandDefineStateLong extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf(1, "STATE", "([%pLN_.@]+)"), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String playerCode = arg.get("PLAYER", 0);
+		final String label = arg.get("LABEL", 0);
+		final String stateCode = arg.get("STATE", 0);
+		// executeArg fails when no player exists with this code
+		return "Defining state '" + stateCode + "' labelled \"" + label + "\" on player '" + playerCode + "'";
 	}
 
 	@Override

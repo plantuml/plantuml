@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -60,6 +61,14 @@ public class CommandStopAt extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				TimeTickBuilder.expressionAtWithoutArobase("TIME"), //
 				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The actual TimeTick is resolved by parseTimeTick against clock/diagram state; describe it lexically only
+		final String time = TimeTickBuilder.describeTime("TIME", arg);
+		return "Stopping the timing diagram at " + time;
 	}
 
 	@Override

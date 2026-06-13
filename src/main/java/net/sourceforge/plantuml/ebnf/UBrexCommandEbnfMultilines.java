@@ -41,6 +41,7 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -68,6 +69,14 @@ public class UBrexCommandEbnfMultilines extends UBrexCommandMultilines2<PSystemE
 						new UBrexLeaf("〇*〴.") //
 				));
 
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// executeNow hands the whole block to addBlocLines without extracting fields; the rule body runs
+		// until a line ending in ';', so every line carries content
+		return "Declaring an EBNF rule with " + lines.size() + " lines";
 	}
 
 	@Override

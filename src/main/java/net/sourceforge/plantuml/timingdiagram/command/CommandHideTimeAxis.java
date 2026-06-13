@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -60,6 +61,15 @@ public class CommandHideTimeAxis extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf(".?"), //
 				new RegexLeaf("axis"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String cmd = arg.get("COMMAND", 0);
+		if ("MANUAL".equalsIgnoreCase(cmd))
+			return "Setting the time axis strategy to manual";
+		return "Hiding the time axis";
 	}
 
 	@Override

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
@@ -76,6 +77,24 @@ abstract class CommandChangeState extends SingleLineCommand2<TimingDiagram> {
 			return new String[] { state1, state2 };
 		}
 		return new String[] { arg.getLazzy("STATE", 0) };
+	}
+
+	// Pure description of the state captured by getStateOrHidden(), shared by the explainArg of both
+	// concrete subclasses, mirroring how they share addState()/getStates() in execution.
+	@Explain
+	static String describeState(RegexResult arg) {
+		if (arg.get("STATE7", 0) != null)
+			return "states '" + arg.get("STATE7", 0) + "' and '" + arg.get("STATE7", 1) + "'";
+		if (arg.get("STATE3", 0) != null)
+			return "a hidden state";
+		if (arg.get("STATE4", 0) != null)
+			return "an unknown state {...}";
+		if (arg.get("STATE5", 0) != null)
+			return "a low-impedance state {-}";
+		if (arg.get("STATE6", 0) != null)
+			return "a tristate {?}";
+		final String state = arg.getLazzy("STATE", 0);
+		return "state '" + state + "'";
 	}
 
 	static IRegex getStateOrHidden() {

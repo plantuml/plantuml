@@ -57,7 +57,8 @@ public abstract class UBrexCommandMultilines2<S extends Diagram> implements Comm
 
 	public UBrexCommandMultilines2(UnicodeBracketedExpression patternStart, MultilinesStrategy strategy, Trim trimEnd,
 			Lazy<UnicodeBracketedExpression> end) {
-		if (TeaVM.a()) assert end != null;
+		if (TeaVM.a())
+			assert end != null;
 
 		this.strategy = strategy;
 		this.starting = patternStart;
@@ -104,6 +105,17 @@ public abstract class UBrexCommandMultilines2<S extends Diagram> implements Comm
 
 		return finalVerification(lines);
 	}
+
+	@Override
+	final public String explain(BlocLines lines) {
+		lines = lines.cleanList(strategy);
+		if (syntaxWithFinalBracket())
+			lines = lines.eventuallyMoveBracket();
+
+		return explainNow(lines);
+	}
+
+	protected abstract String explainNow(BlocLines lines);
 
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
 		lines = lines.cleanList(strategy);

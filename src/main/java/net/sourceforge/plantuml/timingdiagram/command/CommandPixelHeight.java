@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -64,6 +65,15 @@ public class CommandPixelHeight extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("height"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String code = arg.get("PLAYER", 0);
+		final String num = arg.get("NUM", 0);
+		// executeArg fails when no player exists with this code
+		return "Setting the height of player '" + code + "' to " + num + " pixels";
 	}
 
 	@Override

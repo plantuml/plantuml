@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -56,6 +57,12 @@ public class CommandListSprite extends SingleLineCommand2<TitledDiagram> {
 				RegexLeaf.start(), //
 				new RegexLeaf("listsprites?"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return "Accepted but ignored: 'listsprites' has no effect";
 	}
 
 	@Override

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.timingdiagram.command;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -58,6 +59,14 @@ public class CommandAtPlayer extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf(1, "PLAYER", CommandTimeMessage.PLAYER_CODE), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String code = arg.get("PLAYER", 0);
+		// executeArg fails when no player exists with this code
+		return "Setting the current timing player to '" + code + "'";
 	}
 
 	@Override

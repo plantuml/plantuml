@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.timingdiagram.command;
 
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -63,6 +64,24 @@ public class CommandDefineStateShort extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf(1, "STATE", "([-%pLN_.@]+)"), //
 				new RegexLeaf(3, "STATES", "((,([-%pLN_.@]+))*)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String playerCode = arg.get("PLAYER", 0);
+		final String stateCode = arg.get("STATE", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Defining state '").append(stateCode).append("' on player '").append(playerCode).append("'");
+		// Each state is defined with its label equal to its code; additional states are comma-separated
+		final String states = arg.get("STATES", 0);
+		if (states != null) {
+			for (StringTokenizer st = new StringTokenizer(states, ","); st.hasMoreTokens();)
+				sb.append(", '").append(st.nextToken()).append("'");
+		}
+		// executeArg fails when no player exists with this code
+		return sb.toString();
 	}
 
 	@Override

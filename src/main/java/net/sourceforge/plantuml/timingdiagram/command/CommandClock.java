@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.timingdiagram.command;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -92,6 +93,36 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 				StereotypePattern.optional("STEREO"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String compact = arg.get("COMPACT", 0);
+		final String code = arg.get("CODE", 0);
+		final String full = arg.get("FULL", 0);
+		final String period = arg.get("PERIOD", 0);
+		final String pulse = arg.get("PULSE", 0);
+		final String offset = arg.get("OFFSET", 0);
+		final String stereotype = arg.get("STEREO", 0);
+
+		final StringBuilder sb = new StringBuilder();
+		if (compact != null)
+			sb.append("Creating a compact clock '");
+		else
+			sb.append("Creating a clock '");
+		sb.append(code).append("'");
+		if (full != null)
+			sb.append(" displayed as \"").append(full).append("\"");
+		sb.append(" with period ").append(period);
+		// PULSE and OFFSET default to 0 when omitted
+		if (pulse != null)
+			sb.append(" pulse ").append(pulse);
+		if (offset != null)
+			sb.append(" offset ").append(offset);
+		if (stereotype != null)
+			sb.append(" stereotyped ").append(stereotype);
+		return sb.toString();
 	}
 
 	@Override
