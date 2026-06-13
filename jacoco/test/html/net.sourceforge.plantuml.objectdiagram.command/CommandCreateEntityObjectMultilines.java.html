@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -68,72 +70,110 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateEntityObjectMultilines extends CommandMultilines2&lt;AbstractClassOrObjectDiagram&gt; {
 
-<span class="fc" id="L71">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L72">			() -&gt; Pattern2.cmpile(&quot;^[%s]*\\}[%s]*$&quot;));</span>
+<span class="fc" id="L73">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L74">			() -&gt; Pattern2.cmpile(&quot;^[%s]*\\}[%s]*$&quot;));</span>
 
 	public CommandCreateEntityObjectMultilines() {
-<span class="fc" id="L75">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L76">	}</span>
+<span class="fc" id="L77">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L78">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L79">		return RegexConcat.build(CommandCreateEntityObjectMultilines.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L81">		return RegexConcat.build(CommandCreateEntityObjectMultilines.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(0, &quot;TYPE&quot;, &quot;object&quot;), //
-<span class="fc" id="L81">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L82">				NameAndCodeParser.nameAndCode(), //</span>
-<span class="fc" id="L83">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L83">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L84">				NameAndCodeParser.nameAndCode(), //</span>
+<span class="fc" id="L85">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L85">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L86">				ColorParser.exp1(), //</span>
 <span class="fc" id="L87">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L88">				ColorParser.exp1(), //</span>
+<span class="fc" id="L89">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\{&quot;), //
-<span class="fc" id="L89">				RegexLeaf.end());</span>
+<span class="fc" id="L91">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: 'object Name {' opens a block whose lines are the
+		// fields of the object, closed by '}'. Unlike the single line 'object'
+		// command, an already existing entity is reused here.
+<span class="nc" id="L100">		lines = lines.trim().removeEmptyLines();</span>
+<span class="nc" id="L101">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (line0 == null)</span>
+<span class="nc" id="L103">			return &quot;Creating an object&quot;;</span>
+
+<span class="nc" id="L105">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L106">		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.getLazzy(&quot;CODE&quot;, 0));</span>
+<span class="nc" id="L107">		sb.append(&quot;Creating the object '&quot;).append(idShort).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L109">		final String display = line0.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (display != null)</span>
+<span class="nc" id="L111">			sb.append(&quot; displayed as \&quot;&quot;).append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display))</span>
+<span class="nc" id="L112">					.append(&quot;\&quot;&quot;);</span>
+
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		sb.append(&quot; with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; field&quot; : &quot; fields&quot;);</span>
+
+<span class="nc" id="L117">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L119">			sb.append(&quot;, stereotype &quot;).append(stereotype);</span>
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (line0.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L122">			sb.append(&quot;, background color &quot;).append(line0.get(&quot;COLOR&quot;, 0));</span>
+
+		// The URL is parsed but never read by executeNow, unlike in the single
+		// line 'object' command.
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (line0.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L127">			sb.append(&quot; (the URL is currently ignored)&quot;);</span>
+
+<span class="nc" id="L129">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L95">		lines = lines.trim().removeEmptyLines();</span>
-<span class="nc" id="L96">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L97">		final Entity entity = executeArg0(lines.getLocation(), diagram, line0);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (entity == null)</span>
-<span class="nc" id="L99">			return CommandExecutionResult.error(&quot;No such entity&quot;);</span>
+<span class="nc" id="L135">		lines = lines.trim().removeEmptyLines();</span>
+<span class="nc" id="L136">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L137">		final Entity entity = executeArg0(lines.getLocation(), diagram, line0);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (entity == null)</span>
+<span class="nc" id="L139">			return CommandExecutionResult.error(&quot;No such entity&quot;);</span>
 
-<span class="nc" id="L101">		lines = lines.subExtract(1, 1);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">		for (StringLocated s : lines) {</span>
-<span class="nc bnc" id="L103" title="All 4 branches missed.">			if (TeaVM.a()) assert s.getString().length() &gt; 0;</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">			if (VisibilityModifier.isVisibilityCharacter(s.getString()))</span>
-<span class="nc" id="L105">				diagram.setVisibilityModifierPresent(true);</span>
+<span class="nc" id="L141">		lines = lines.subExtract(1, 1);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		for (StringLocated s : lines) {</span>
+<span class="nc bnc" id="L143" title="All 4 branches missed.">			if (TeaVM.a()) assert s.getString().length() &gt; 0;</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (VisibilityModifier.isVisibilityCharacter(s.getString()))</span>
+<span class="nc" id="L145">				diagram.setVisibilityModifierPresent(true);</span>
 
-<span class="nc" id="L107">			entity.getBodier().addFieldOrMethod(s.getString());</span>
-<span class="nc" id="L108">		}</span>
-<span class="nc" id="L109">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L147">			entity.getBodier().addFieldOrMethod(s.getString());</span>
+<span class="nc" id="L148">		}</span>
+<span class="nc" id="L149">		return CommandExecutionResult.ok();</span>
 	}
 
 	private Entity executeArg0(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult line0)
 			throws NoSuchColorException {
-<span class="nc" id="L114">		final String idShort = diagram.cleanId(line0.getLazzy(&quot;CODE&quot;, 0));</span>
-<span class="nc" id="L115">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc" id="L154">		final String idShort = diagram.cleanId(line0.getLazzy(&quot;CODE&quot;, 0));</span>
+<span class="nc" id="L155">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
 
-<span class="nc" id="L117">		final String displayString = line0.getLazzy(&quot;DISPLAY&quot;, 0);</span>
-<span class="nc" id="L118">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L157">		final String displayString = line0.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc" id="L158">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="nc" id="L120">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (Display.isNull(display))</span>
-<span class="nc" id="L122">			display = Display.getWithNewlines(diagram.getPragma(), quark.getName())</span>
-<span class="nc" id="L123">					.withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
-<span class="nc" id="L124">		Entity entity = quark.getData();</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (entity == null)</span>
-<span class="nc" id="L126">			entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.OBJECT, null);</span>
+<span class="nc" id="L160">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="nc" id="L162">			display = Display.getWithNewlines(diagram.getPragma(), quark.getName())</span>
+<span class="nc" id="L163">					.withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
+<span class="nc" id="L164">		Entity entity = quark.getData();</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (entity == null)</span>
+<span class="nc" id="L166">			entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.OBJECT, null);</span>
 
-<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L129">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
-<span class="nc" id="L130">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
-<span class="nc" id="L131">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L169">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L170">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L171">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L133">		final String s = line0.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L134">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
-<span class="nc" id="L136">		return entity;</span>
+<span class="nc" id="L173">		final String s = line0.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L174">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc" id="L176">		return entity;</span>
 	}
 
 }

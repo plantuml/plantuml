@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -57,56 +58,80 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandNamespaceEmpty extends SingleLineCommand2&lt;ClassDiagram&gt; {
 
 	public CommandNamespaceEmpty() {
-<span class="fc" id="L60">		super(getRegexConcat());</span>
-<span class="fc" id="L61">	}</span>
+<span class="fc" id="L61">		super(getRegexConcat());</span>
+<span class="fc" id="L62">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L64">		return RegexConcat.build(CommandNamespaceEmpty.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L65">		return RegexConcat.build(CommandNamespaceEmpty.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;namespace&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, CommandNamespace.NAMESPACE_REGEX), //
-<span class="fc" id="L68">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
+<span class="fc" id="L69">				StereotypePattern.optional(&quot;STEREOTYPE&quot;), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L71">				ColorParser.exp1(), //</span>
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				ColorParser.exp1(), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\{&quot;), //
-<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\}&quot;), //
-<span class="fc" id="L76">				RegexLeaf.end());</span>
+<span class="fc" id="L77">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L83">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'namespace a.b.c {}' declares an empty namespace, opened and closed
+		// on the same line; a dotted name creates the intermediate namespaces.
+		// Unlike CommandNamespace, executeArg fails when the name already
+		// exists.
+<span class="nc" id="L89">		sb.append(&quot;Declaring the empty namespace '&quot;).append(arg.get(&quot;NAME&quot;, 0)).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L91">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L93">			sb.append(&quot;, stereotype &quot;).append(stereotype);</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L96">			sb.append(&quot;, with a URL link&quot;);</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L99">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+<span class="nc" id="L101">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L82">		final String idShort = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L107">		final String idShort = arg.get(&quot;NAME&quot;, 0);</span>
 
-<span class="nc" id="L84">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L86">			return CommandExecutionResult.error(&quot;Already exists &quot; + quark.getName());</span>
+<span class="nc" id="L109">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L111">			return CommandExecutionResult.error(&quot;Already exists &quot; + quark.getName());</span>
 
-<span class="nc" id="L88">		final Display display = Display.getWithNewlines(diagram.getPragma(), quark.getQualifiedName());</span>
-<span class="nc" id="L89">		final CommandExecutionResult status = diagram.gotoGroup(location, quark, display, GroupType.PACKAGE);</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (status.isOk() == false)</span>
-<span class="nc" id="L91">			return status;</span>
-<span class="nc" id="L92">		final Entity p = diagram.getCurrentGroup();</span>
-<span class="nc" id="L93">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L95">			p.setStereotype(Stereotype.build(stereotype));</span>
+<span class="nc" id="L113">		final Display display = Display.getWithNewlines(diagram.getPragma(), quark.getQualifiedName());</span>
+<span class="nc" id="L114">		final CommandExecutionResult status = diagram.gotoGroup(location, quark, display, GroupType.PACKAGE);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (status.isOk() == false)</span>
+<span class="nc" id="L116">			return status;</span>
+<span class="nc" id="L117">		final Entity p = diagram.getCurrentGroup();</span>
+<span class="nc" id="L118">		final String stereotype = arg.get(&quot;STEREOTYPE&quot;, 0);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L120">			p.setStereotype(Stereotype.build(stereotype));</span>
 
-<span class="nc" id="L97">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (urlString != null) {</span>
-<span class="nc" id="L99">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L100">			final Url url = urlBuilder.getUrl(urlString);</span>
-<span class="nc" id="L101">			p.addUrl(url);</span>
+<span class="nc" id="L122">		final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (urlString != null) {</span>
+<span class="nc" id="L124">			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L125">			final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L126">			p.addUrl(url);</span>
 		}
 
-<span class="nc" id="L104">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L106">			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));</span>
+<span class="nc" id="L129">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L131">			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));</span>
 
-<span class="nc" id="L108">		diagram.endGroup();</span>
-<span class="nc" id="L109">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L133">		diagram.endGroup();</span>
+<span class="nc" id="L134">		return CommandExecutionResult.ok();</span>
 	}
 
 }

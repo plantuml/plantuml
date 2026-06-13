@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -55,37 +56,55 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public final class CommandConstraintOnLinks extends SingleLineCommand2&lt;CucaDiagram&gt; {
 
 	public CommandConstraintOnLinks() {
-<span class="fc" id="L58">		super(getRegexConcat());</span>
-<span class="fc" id="L59">	}</span>
+<span class="fc" id="L59">		super(getRegexConcat());</span>
+<span class="fc" id="L60">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L62">		return RegexConcat.build(CommandConstraintOnLinks.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L63">		return RegexConcat.build(CommandConstraintOnLinks.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;constraint&quot;), //
-<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;on&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L67">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;links&quot;), //
-<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L69">				color().getRegex(), //</span>
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L70">				color().getRegex(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L73">				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				new RegexLeaf(1, &quot;NOTE&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L77">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L78">		return ColorParser.simpleColor(ColorType.BACK);</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L84">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'constraint on links : {xor}' draws a constraint between the two
+		// last links of the diagram, like the UML xor notation between two
+		// associations; executeArg fails when there are fewer than two links.
+<span class="nc" id="L89">		sb.append(&quot;Drawing the constraint \&quot;&quot;).append(arg.get(&quot;NOTE&quot;, 0))</span>
+<span class="nc" id="L90">				.append(&quot;\&quot; between the two last links&quot;);</span>
+
+		// The color is parsed but never read by executeArg.
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L94">			sb.append(&quot; (the color &quot;).append(arg.get(&quot;COLOR&quot;, 0)).append(&quot; is currently ignored)&quot;);</span>
+
+<span class="nc" id="L96">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L83">		final List&lt;Link&gt; links = diagram.getTwoLastLinks();</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (links == null) {</span>
-<span class="nc" id="L85">			return CommandExecutionResult.error(&quot;Cannot put constraint on two last links&quot;);</span>
+<span class="nc" id="L102">		final List&lt;Link&gt; links = diagram.getTwoLastLinks();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">		if (links == null) {</span>
+<span class="nc" id="L104">			return CommandExecutionResult.error(&quot;Cannot put constraint on two last links&quot;);</span>
 		}
-<span class="nc" id="L87">		final BlocLines note = BlocLines.getWithNewlines(arg.get(&quot;NOTE&quot;, 0));</span>
-<span class="nc" id="L88">		return diagram.constraintOnLinks(links.get(0), links.get(1), note.toDisplay());</span>
+<span class="nc" id="L106">		final BlocLines note = BlocLines.getWithNewlines(arg.get(&quot;NOTE&quot;, 0));</span>
+<span class="nc" id="L107">		return diagram.constraintOnLinks(links.get(0), links.get(1), note.toDisplay());</span>
 	}
 
 }

@@ -41,6 +41,7 @@ import java.net.MalformedURLException;
 
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -57,64 +58,80 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStyleImport extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L60">	public static final CommandStyleImport ME = new CommandStyleImport();</span>
+<span class="fc" id="L61">	public static final CommandStyleImport ME = new CommandStyleImport();</span>
 
 	private CommandStyleImport() {
-<span class="fc" id="L63">		super(getRegexConcat());</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L64">		super(getRegexConcat());</span>
+<span class="fc" id="L65">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L67">		return RegexConcat.build(CommandStyleImport.class.getName(), //</span>
-<span class="fc" id="L68">				RegexLeaf.start(), //</span>
+<span class="fc" id="L68">		return RegexConcat.build(CommandStyleImport.class.getName(), //</span>
+<span class="fc" id="L69">				RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\&lt;style&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\w+&quot;), //
-<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;=&quot;), //
-<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;[%q%g]?&quot;), //
 				new RegexLeaf(1, &quot;PATH&quot;, &quot;([^%q%g]*)&quot;), //
 				new RegexLeaf(&quot;[%q%g]?&quot;), //
-<span class="fc" id="L78">				new RegexLeaf(&quot;\\&gt;&quot;), RegexLeaf.end()); //</span>
+<span class="fc" id="L79">				new RegexLeaf(&quot;\\&gt;&quot;), RegexLeaf.end()); //</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '&lt;style file=path&gt;' loads a style sheet and merges it into the
+		// current styles. No file access is done here: executeArg resolves the
+		// path as a URL, a local file or an internal '/skin/' resource, and
+		// fails when nothing can be read or parsed. Note that the attribute
+		// name before the '=' is not checked.
+<span class="nc" id="L90">		final String path = arg.get(&quot;PATH&quot;, 0);</span>
+<span class="nc bnc" id="L91" title="All 4 branches missed.">		if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;))</span>
+<span class="nc" id="L92">			return &quot;Importing a style sheet from the URL &quot; + path;</span>
+
+<span class="nc" id="L94">		return &quot;Importing a style sheet from the file '&quot; + path + &quot;' (or from the internal '/skin/&quot; + path</span>
+				+ &quot;' resource when the file does not exist)&quot;;
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L84">		final String path = arg.get(&quot;PATH&quot;, 0);</span>
+<span class="nc" id="L101">		final String path = arg.get(&quot;PATH&quot;, 0);</span>
 		try {
-<span class="nc" id="L86">			BlocLines lines = null;</span>
-<span class="nc bnc" id="L87" title="All 4 branches missed.">			if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
-<span class="nc" id="L88">				SURL url = SURL.create(path);</span>
-<span class="nc" id="L89">				try (InputStream remoteInputStream = url.openStream()) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">					if (remoteInputStream != null)</span>
-<span class="nc" id="L91">						lines = BlocLines.load(remoteInputStream, location);</span>
+<span class="nc" id="L103">			BlocLines lines = null;</span>
+<span class="nc bnc" id="L104" title="All 4 branches missed.">			if (path.startsWith(&quot;http://&quot;) || path.startsWith(&quot;https://&quot;)) {</span>
+<span class="nc" id="L105">				SURL url = SURL.create(path);</span>
+<span class="nc" id="L106">				try (InputStream remoteInputStream = url.openStream()) {</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">					if (remoteInputStream != null)</span>
+<span class="nc" id="L108">						lines = BlocLines.load(remoteInputStream, location);</span>
 				}
-<span class="nc" id="L93">			} else {</span>
-<span class="nc" id="L94">				final SFile styleFile = FileSystem.getInstance().getFile(path);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">				if (styleFile.exists()) {</span>
-<span class="nc" id="L96">					lines = BlocLines.load(styleFile, location);</span>
+<span class="nc" id="L110">			} else {</span>
+<span class="nc" id="L111">				final SFile styleFile = FileSystem.getInstance().getFile(path);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">				if (styleFile.exists()) {</span>
+<span class="nc" id="L113">					lines = BlocLines.load(styleFile, location);</span>
 				} else {
-<span class="nc" id="L98">					final InputStream internalIs = StyleLoader.class.getResourceAsStream(&quot;/skin/&quot; + path);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">					if (internalIs != null)</span>
-<span class="nc" id="L100">						lines = BlocLines.load(internalIs, location);</span>
+<span class="nc" id="L115">					final InputStream internalIs = StyleLoader.class.getResourceAsStream(&quot;/skin/&quot; + path);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">					if (internalIs != null)</span>
+<span class="nc" id="L117">						lines = BlocLines.load(internalIs, location);</span>
 				}
 			}
 
-<span class="nc bnc" id="L104" title="All 4 branches missed.">			if (lines == null || lines.size() == 0)</span>
-<span class="nc" id="L105">				return CommandExecutionResult.error(&quot;Cannot read: &quot; + path);</span>
+<span class="nc bnc" id="L121" title="All 4 branches missed.">			if (lines == null || lines.size() == 0)</span>
+<span class="nc" id="L122">				return CommandExecutionResult.error(&quot;Cannot read: &quot; + path);</span>
 
-<span class="nc" id="L107">			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();</span>
-<span class="nc" id="L108">			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(lines));</span>
+<span class="nc" id="L124">			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();</span>
+<span class="nc" id="L125">			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(lines));</span>
 
-<span class="nc" id="L110">		} catch (MalformedURLException e) {</span>
-<span class="nc" id="L111">			return CommandExecutionResult.error(&quot;Invalid URL to style definition: &quot; + e.getMessage());</span>
-<span class="nc" id="L112">		} catch (StyleParsingException e) {</span>
-<span class="nc" id="L113">			return CommandExecutionResult.error(&quot;Error in style definition: &quot; + e.getMessage());</span>
-<span class="nc" id="L114">		} catch (IOException e) {</span>
-<span class="nc" id="L115">			return CommandExecutionResult.error(&quot;Cannot read: &quot; + path);</span>
-<span class="nc" id="L116">		}</span>
-<span class="nc" id="L117">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L127">		} catch (MalformedURLException e) {</span>
+<span class="nc" id="L128">			return CommandExecutionResult.error(&quot;Invalid URL to style definition: &quot; + e.getMessage());</span>
+<span class="nc" id="L129">		} catch (StyleParsingException e) {</span>
+<span class="nc" id="L130">			return CommandExecutionResult.error(&quot;Error in style definition: &quot; + e.getMessage());</span>
+<span class="nc" id="L131">		} catch (IOException e) {</span>
+<span class="nc" id="L132">			return CommandExecutionResult.error(&quot;Cannot read: &quot; + path);</span>
+<span class="nc" id="L133">		}</span>
+<span class="nc" id="L134">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

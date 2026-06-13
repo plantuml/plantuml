@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -53,28 +54,52 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandPackageEmpty extends SingleLineCommand2&lt;AbstractEntityDiagram&gt; {
 
 	public CommandPackageEmpty() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L57">		super(getRegexConcat());</span>
+<span class="fc" id="L58">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandPackageEmpty.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L61">		return RegexConcat.build(CommandPackageEmpty.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;package&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;DISPLAY&quot;, &quot;([%g][^%g]+[%g]|[^#%s{}]*)&quot;), //
 				new RegexOptional( //
 						new RegexConcat( //
-<span class="fc" id="L66">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L67">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L68">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L69">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;CODE&quot;, &quot;([%pLN_.]+)&quot;) //
 						)), //
-<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#[0-9a-fA-F]{6}|#?\\w+)?&quot;), //
-<span class="fc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\{&quot;), //
-<span class="fc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L76">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\}&quot;), //
-<span class="fc" id="L77">				RegexLeaf.end()); //</span>
+<span class="fc" id="L78">				RegexLeaf.end()); //</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L84">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'package Name {}' declares an empty package, opened and closed on
+		// the same line; an empty name creates an anonymous one, like in
+		// executeArg.
+<span class="nc" id="L89">		final String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;DISPLAY&quot;, 0));</span>
+<span class="nc" id="L90">		final String code = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (code != null)</span>
+<span class="nc" id="L92">			sb.append(&quot;Declaring the empty package '&quot;).append(code).append(&quot;' displayed as \&quot;&quot;).append(display)</span>
+<span class="nc" id="L93">					.append(&quot;\&quot;&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		else if (display.length() == 0)</span>
+<span class="nc" id="L95">			sb.append(&quot;Declaring an anonymous empty package&quot;);</span>
+		else
+<span class="nc" id="L97">			sb.append(&quot;Declaring the empty package '&quot;).append(display).append(&quot;'&quot;);</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L100">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+<span class="nc" id="L102">		return sb.toString();</span>
 	}
 
 	@Override
@@ -82,30 +107,30 @@ public class CommandPackageEmpty extends SingleLineCommand2&lt;AbstractEntityDia
 			ParserPass currentPass) throws NoSuchColorException {
 		final String idShort;
 		final String display;
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		if (arg.get(&quot;CODE&quot;, 0) == null) {</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">			if (StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;DISPLAY&quot;, 0)).length() == 0) {</span>
-<span class="nc" id="L87">				idShort = diagram.getUniqueSequence(&quot;##&quot;);</span>
-<span class="nc" id="L88">				display = null;</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (arg.get(&quot;CODE&quot;, 0) == null) {</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">			if (StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;DISPLAY&quot;, 0)).length() == 0) {</span>
+<span class="nc" id="L112">				idShort = diagram.getUniqueSequence(&quot;##&quot;);</span>
+<span class="nc" id="L113">				display = null;</span>
 			} else {
-<span class="nc" id="L90">				idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;DISPLAY&quot;, 0));</span>
-<span class="nc" id="L91">				display = idShort;</span>
+<span class="nc" id="L115">				idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;DISPLAY&quot;, 0));</span>
+<span class="nc" id="L116">				display = idShort;</span>
 			}
 		} else {
-<span class="nc" id="L94">			display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;DISPLAY&quot;, 0));</span>
-<span class="nc" id="L95">			idShort = arg.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L119">			display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;DISPLAY&quot;, 0));</span>
+<span class="nc" id="L120">			idShort = arg.get(&quot;CODE&quot;, 0);</span>
 		}
-<span class="nc" id="L97">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
-<span class="nc" id="L98">		final CommandExecutionResult status = diagram.gotoGroup(location, quark,</span>
-<span class="nc" id="L99">				Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE);</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (status.isOk() == false)</span>
-<span class="nc" id="L101">			return status;</span>
-<span class="nc" id="L102">		final Entity p = diagram.getCurrentGroup();</span>
-<span class="nc" id="L103">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc bnc" id="L104" title="All 2 branches missed.">		if (color != null)</span>
-<span class="nc" id="L105">			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));</span>
+<span class="nc" id="L122">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(idShort));</span>
+<span class="nc" id="L123">		final CommandExecutionResult status = diagram.gotoGroup(location, quark,</span>
+<span class="nc" id="L124">				Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (status.isOk() == false)</span>
+<span class="nc" id="L126">			return status;</span>
+<span class="nc" id="L127">		final Entity p = diagram.getCurrentGroup();</span>
+<span class="nc" id="L128">		final String color = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (color != null)</span>
+<span class="nc" id="L130">			p.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(color));</span>
 
-<span class="nc" id="L107">		diagram.endGroup();</span>
-<span class="nc" id="L108">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L132">		diagram.endGroup();</span>
+<span class="nc" id="L133">		return CommandExecutionResult.ok();</span>
 	}
 
 }

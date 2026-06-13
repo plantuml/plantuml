@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -65,19 +66,19 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandCreateJsonSingleLine extends SingleLineCommand2&lt;AbstractEntityDiagram&gt; {
 
 	public CommandCreateJsonSingleLine() {
-<span class="fc" id="L68">		super(getRegexConcat());</span>
-<span class="fc" id="L69">	}</span>
+<span class="fc" id="L69">		super(getRegexConcat());</span>
+<span class="fc" id="L70">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L72">		return RegexConcat.build(CommandCreateJsonSingleLine.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L73">		return RegexConcat.build(CommandCreateJsonSingleLine.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(0, &quot;TYPE&quot;, &quot;json&quot;), //
-<span class="fc" id="L74">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L75">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(2, &quot;NAME&quot;, &quot;(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)&quot;), //
-<span class="fc" id="L76">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L77">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L79">				ColorParser.exp1(), //</span>
-<span class="fc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L80">				ColorParser.exp1(), //</span>
+<span class="fc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOr( //
 						new RegexLeaf(1, &quot;DATA_BOOLEAN&quot;, &quot;(true|false)&quot;), //
 						new RegexLeaf(1, &quot;DATA_NUMBER&quot;, &quot;(-?\\d+)&quot;), //
@@ -86,61 +87,98 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2&lt;AbstractE
 						new RegexLeaf(1, &quot;DATA_ARRAY&quot;, &quot;(\\[.*\\])&quot;), //
 						new RegexLeaf(2, &quot;DATA_OBJECT&quot;, &quot;(\\{[%s]*[%g](\\\\[%g]|[^%g])+[%g][%s]*:.*\\})&quot;) //
 				), //
-<span class="fc" id="L89">				RegexLeaf.end());</span>
+<span class="fc" id="L90">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L96">		final StringBuilder sb = new StringBuilder();</span>
+
+		// 'json name value' embeds a single JSON value (boolean, number, null,
+		// string, array or object), displayed as a table-like element;
+		// executeArg fails when the name already exists. The lazzy lookup
+		// catches whichever of the six DATA_ alternatives matched, like in
+		// getJsonValue.
+<span class="nc" id="L103">		sb.append(&quot;Creating the JSON element '&quot;).append(arg.get(&quot;NAME&quot;, 1)).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L105">		final String display = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (display != null)</span>
+<span class="nc" id="L107">			sb.append(&quot; displayed as \&quot;&quot;).append(display).append(&quot;\&quot;&quot;);</span>
+
+<span class="nc" id="L109">		sb.append(&quot; with the value &quot;).append(arg.getLazzy(&quot;DATA_&quot;, 0));</span>
+
+<span class="nc" id="L111">		final String stereotype = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L113">			sb.append(&quot;, stereotype &quot;).append(stereotype);</span>
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L116">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+
+		// Mirror the validation of executeArg: a pure in-memory parse, the
+		// regex alone does not guarantee well-formed JSON.
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (getJsonValue(arg) == null)</span>
+<span class="nc" id="L121">			sb.append(&quot; (rejected at execution: bad JSON data)&quot;);</span>
+
+		// The URL is parsed but never read by executeArg.
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L125">			sb.append(&quot; (the URL is currently ignored)&quot;);</span>
+
+<span class="nc" id="L127">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L95">		final Entity entity1 = executeArg0(location, diagram, arg);</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (entity1 == null)</span>
-<span class="nc" id="L97">			return CommandExecutionResult.error(&quot;JSON already exists: &quot; + arg.get(&quot;NAME&quot;, 1));</span>
+<span class="nc" id="L133">		final Entity entity1 = executeArg0(location, diagram, arg);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (entity1 == null)</span>
+<span class="nc" id="L135">			return CommandExecutionResult.error(&quot;JSON already exists: &quot; + arg.get(&quot;NAME&quot;, 1));</span>
 
-<span class="nc" id="L99">		final JsonValue json = getJsonValue(arg);</span>
+<span class="nc" id="L137">		final JsonValue json = getJsonValue(arg);</span>
 
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (json == null)</span>
-<span class="nc" id="L102">			return CommandExecutionResult.error(&quot;Bad data&quot;);</span>
-<span class="nc" id="L103">		((BodierJSon) entity1.getBodier()).setJson(json);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (json == null)</span>
+<span class="nc" id="L140">			return CommandExecutionResult.error(&quot;Bad data&quot;);</span>
+<span class="nc" id="L141">		((BodierJSon) entity1.getBodier()).setJson(json);</span>
 
-<span class="nc" id="L105">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L143">		return CommandExecutionResult.ok();</span>
 	}
 
 	private JsonValue getJsonValue(RegexResult arg) {
 		try {
-<span class="nc" id="L110">			final String data = arg.getLazzy(&quot;DATA_&quot;, 0);</span>
-<span class="nc" id="L111">			final DefaultHandler handler = new DefaultHandler();</span>
-<span class="nc" id="L112">			new JsonParser(handler).parse(data);</span>
-<span class="nc" id="L113">			final JsonValue json = handler.getValue();</span>
-<span class="nc" id="L114">			return json;</span>
-<span class="nc" id="L115">		} catch (Exception e) {</span>
-<span class="nc" id="L116">			return null;</span>
+<span class="nc" id="L148">			final String data = arg.getLazzy(&quot;DATA_&quot;, 0);</span>
+<span class="nc" id="L149">			final DefaultHandler handler = new DefaultHandler();</span>
+<span class="nc" id="L150">			new JsonParser(handler).parse(data);</span>
+<span class="nc" id="L151">			final JsonValue json = handler.getValue();</span>
+<span class="nc" id="L152">			return json;</span>
+<span class="nc" id="L153">		} catch (Exception e) {</span>
+<span class="nc" id="L154">			return null;</span>
 		}
 	}
 
 	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
-<span class="nc" id="L121">		final String name = line0.get(&quot;NAME&quot;, 1);</span>
+<span class="nc" id="L159">		final String name = line0.get(&quot;NAME&quot;, 1);</span>
 
-<span class="nc" id="L123">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(name));</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L125">			return null;</span>
+<span class="nc" id="L161">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(false, diagram.cleanId(name));</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L163">			return null;</span>
 
-<span class="nc" id="L127">		final String displayString = line0.get(&quot;NAME&quot;, 0);</span>
-<span class="nc" id="L128">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L165">		final String displayString = line0.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L166">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="nc" id="L130">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
-<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (Display.isNull(display))</span>
-<span class="nc" id="L132">			display = Display.getWithNewlines(diagram.getPragma(), name).withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
+<span class="nc" id="L168">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="nc" id="L170">			display = Display.getWithNewlines(diagram.getPragma(), name).withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
 
-<span class="nc" id="L134">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.JSON, null);</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L136">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
-<span class="nc" id="L137">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
-<span class="nc" id="L138">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="nc" id="L172">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.JSON, null);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L174">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L175">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L176">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L140">		final String s = line0.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L141">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
-<span class="nc" id="L143">		return entity;</span>
+<span class="nc" id="L178">		final String s = line0.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L179">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc" id="L181">		return entity;</span>
 	}
 
 }

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.wire;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -52,67 +53,74 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandWLink extends SingleLineCommand2&lt;WireDiagram&gt; {
 
 	public CommandWLink() {
-<span class="nc" id="L55">		super(false, getRegexConcat());</span>
-<span class="nc" id="L56">	}</span>
+<span class="nc" id="L56">		super(false, getRegexConcat());</span>
+<span class="nc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L59">		return RegexConcat.build(CommandWLink.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L60">		return RegexConcat.build(CommandWLink.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;NAME1&quot;, &quot;([\\w][.\\w]*)&quot;), //
 				new RegexOptional(new RegexConcat(//
 						new RegexLeaf(&quot;\\(&quot;), //
-<span class="nc" id="L63">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L64">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(2, &quot;X1&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
-<span class="nc" id="L65">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L66">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;,&quot;), //
-<span class="nc" id="L67">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L68">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(2, &quot;Y1&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
-<span class="nc" id="L69">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;\\)&quot;) //
 				)), //
-<span class="nc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L73">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;STYLE&quot;, &quot;(\\&lt;?[-=]{1,2}\\&gt;|\\&lt;?[-=]{1,2})&quot;), //
-<span class="nc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L75">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME2&quot;, &quot;([\\w][.\\w]*)&quot;), //
 				new RegexOptional(new RegexConcat( //
-<span class="nc" id="L77">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L78">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)?&quot;))), //
-<span class="nc" id="L79">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L80">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;MESSAGE&quot;, &quot;(?::[%s]*(.*))?&quot;), //
-<span class="nc" id="L81">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L82">				RegexLeaf.end());</span>
+<span class="nc" id="L82">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L83">				RegexLeaf.end());</span>
 	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L89">		return null;</span>
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="nc" id="L89">		final String name1 = arg.get(&quot;NAME1&quot;, 0);</span>
-<span class="nc" id="L90">		final String x1 = arg.get(&quot;X1&quot;, 0);</span>
-<span class="nc" id="L91">		final String y1 = arg.get(&quot;Y1&quot;, 0);</span>
+<span class="nc" id="L97">		final String name1 = arg.get(&quot;NAME1&quot;, 0);</span>
+<span class="nc" id="L98">		final String x1 = arg.get(&quot;X1&quot;, 0);</span>
+<span class="nc" id="L99">		final String y1 = arg.get(&quot;Y1&quot;, 0);</span>
 
-<span class="nc" id="L93">		final String name2 = arg.get(&quot;NAME2&quot;, 0);</span>
-<span class="nc" id="L94">		final String style = arg.get(&quot;STYLE&quot;, 0);</span>
-<span class="nc" id="L95">		final WLinkType type = WLinkType.from(style);</span>
-<span class="nc" id="L96">		final WArrowDirection direction = WArrowDirection.from(style);</span>
-<span class="nc" id="L97">		final WOrientation orientation = WOrientation.from(style);</span>
+<span class="nc" id="L101">		final String name2 = arg.get(&quot;NAME2&quot;, 0);</span>
+<span class="nc" id="L102">		final String style = arg.get(&quot;STYLE&quot;, 0);</span>
+<span class="nc" id="L103">		final WLinkType type = WLinkType.from(style);</span>
+<span class="nc" id="L104">		final WArrowDirection direction = WArrowDirection.from(style);</span>
+<span class="nc" id="L105">		final WOrientation orientation = WOrientation.from(style);</span>
 
-<span class="nc" id="L99">		final String stringColor = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L100">		HColor color = null;</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (stringColor != null)</span>
-<span class="nc" id="L102">			color = HColorSet.instance().getColor(stringColor);</span>
+<span class="nc" id="L107">		final String stringColor = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L108">		HColor color = null;</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (stringColor != null)</span>
+<span class="nc" id="L110">			color = HColorSet.instance().getColor(stringColor);</span>
 
 		final Display label;
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (arg.get(&quot;MESSAGE&quot;, 0) == null) {</span>
-<span class="nc" id="L106">			label = Display.NULL;</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (arg.get(&quot;MESSAGE&quot;, 0) == null) {</span>
+<span class="nc" id="L114">			label = Display.NULL;</span>
 		} else {
-<span class="nc" id="L108">			final String message = arg.get(&quot;MESSAGE&quot;, 0);</span>
-<span class="nc" id="L109">			label = Display.getWithNewlines(diagram.getPragma(), message);</span>
+<span class="nc" id="L116">			final String message = arg.get(&quot;MESSAGE&quot;, 0);</span>
+<span class="nc" id="L117">			label = Display.getWithNewlines(diagram.getPragma(), message);</span>
 		}
 
-<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (orientation == WOrientation.VERTICAL)</span>
-<span class="nc" id="L113">			return diagram.vlink(name1, x1, y1, name2, type, direction, color, label);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		if (orientation == WOrientation.VERTICAL)</span>
+<span class="nc" id="L121">			return diagram.vlink(name1, x1, y1, name2, type, direction, color, label);</span>
 
-<span class="nc" id="L115">		return diagram.hlink(name1, x1, y1, name2, type, direction, color, label);</span>
+<span class="nc" id="L123">		return diagram.hlink(name1, x1, y1, name2, type, direction, color, label);</span>
 	}
 
 }

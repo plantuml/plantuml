@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -72,88 +73,124 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
-<span class="fc" id="L75">public final class CommandFactoryTipOnEntity implements SingleMultiFactoryCommand&lt;AbstractEntityDiagram&gt; {</span>
+<span class="fc" id="L76">public final class CommandFactoryTipOnEntity implements SingleMultiFactoryCommand&lt;AbstractEntityDiagram&gt; {</span>
 
-<span class="fc" id="L77">	private final String key = &quot;a&quot;;</span>
+<span class="fc" id="L78">	private final String key = &quot;a&quot;;</span>
 
 	private RegexConcat getRegexConcatMultiLine(final boolean withBracket) {
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		if (withBracket) {</span>
-<span class="fc" id="L81">			return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (withBracket) {</span>
+<span class="fc" id="L82">			return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //</span>
 					new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L83">					RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L84">					RegexLeaf.spaceOneOrMore(), //</span>
 					new RegexLeaf(1, &quot;POSITION&quot;, &quot;(right|left)&quot;), //
-<span class="fc" id="L85">					RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L86">					RegexLeaf.spaceOneOrMore(), //</span>
 					new RegexLeaf(&quot;of&quot;), //
-<span class="fc" id="L87">					RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L88">					NameAndCodeParser.codeWithMemberForClass(), //</span>
-<span class="fc" id="L89">					RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L90">					new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L91">					StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L92">					new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L93">					RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L94">					ColorParser.exp1(), //</span>
-<span class="fc" id="L95">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L88">					RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L89">					NameAndCodeParser.codeWithMemberForClass(), //</span>
+<span class="fc" id="L90">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L91">					new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L92">					StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L93">					new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L94">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L95">					ColorParser.exp1(), //</span>
+<span class="fc" id="L96">					RegexLeaf.spaceZeroOrMore(), //</span>
 					UrlBuilder.OPTIONAL, //
-<span class="fc" id="L97">					RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L98">					RegexLeaf.spaceZeroOrMore(), //</span>
 					new RegexLeaf(&quot;\\{&quot;), //
-<span class="fc" id="L99">					RegexLeaf.end() //</span>
+<span class="fc" id="L100">					RegexLeaf.end() //</span>
 			);
 		}
-<span class="fc" id="L102">		return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //</span>
+<span class="fc" id="L103">		return RegexConcat.build(CommandFactoryTipOnEntity.class.getName() + key + withBracket, RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;note&quot;), //
-<span class="fc" id="L104">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L105">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(right|left)&quot;), //
-<span class="fc" id="L106">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L107">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;of&quot;), //
-<span class="fc" id="L108">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L109">				NameAndCodeParser.codeWithMemberForClass(), //</span>
-<span class="fc" id="L110">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L111">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L112">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L113">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L114">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L115">				ColorParser.exp1(), //</span>
-<span class="fc" id="L116">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L109">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L110">				NameAndCodeParser.codeWithMemberForClass(), //</span>
+<span class="fc" id="L111">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L112">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L113">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L114">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L115">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L116">				ColorParser.exp1(), //</span>
+<span class="fc" id="L117">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L118">				RegexLeaf.end() //</span>
+<span class="fc" id="L119">				RegexLeaf.end() //</span>
 		);
 	}
 
 	private static ColorParser color() {
-<span class="nc" id="L123">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="nc" id="L124">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	public Command&lt;AbstractEntityDiagram&gt; createSingleLine() {
-<span class="nc" id="L127">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L128">		throw new UnsupportedOperationException();</span>
 	}
 
-<span class="fc" id="L130">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L131">			() -&gt; Pattern2.cmpile(&quot;^[%s]*(end[%s]?note)$&quot;));</span>
+<span class="fc" id="L131">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L132">			() -&gt; Pattern2.cmpile(&quot;^[%s]*(end[%s]?note)$&quot;));</span>
 
-<span class="fc" id="L133">	private final static Lazy&lt;Pattern2&gt; END_WITH_BRACKET = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L134">			() -&gt; Pattern2.cmpile(&quot;^(\\})$&quot;));</span>
+<span class="fc" id="L134">	private final static Lazy&lt;Pattern2&gt; END_WITH_BRACKET = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L135">			() -&gt; Pattern2.cmpile(&quot;^(\\})$&quot;));</span>
 
 	public Command&lt;AbstractEntityDiagram&gt; createMultiLine(final boolean withBracket) {
-<span class="fc" id="L137">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(getRegexConcatMultiLine(withBracket),</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, withBracket ? END_WITH_BRACKET : END) {</span>
+<span class="fc" id="L138">		return new CommandMultilines2&lt;AbstractEntityDiagram&gt;(getRegexConcatMultiLine(withBracket),</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">				MultilinesStrategy.KEEP_STARTING_QUOTE, Trim.BOTH, withBracket ? END_WITH_BRACKET : END) {</span>
+
+			@Override
+			@Explain
+			protected String explainNow(BlocLines lines) {
+				// Mirror executeNow: 'note left of Class::member' attaches a
+				// tip (a small bubble) to a field or a method of an existing
+				// entity; the lines up to 'end note' (or '}') are its text.
+<span class="nc" id="L147">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">				if (line0 == null)</span>
+<span class="nc" id="L149">					return &quot;Adding a tip&quot;;</span>
+
+<span class="nc" id="L151">				final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">				final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc" id="L153">				sb.append(&quot;Adding a tip on the &quot;).append(line0.get(&quot;POSITION&quot;, 0)).append(&quot; of the member '&quot;)</span>
+<span class="nc" id="L154">						.append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;CODE&quot;, 1)))</span>
+<span class="nc" id="L155">						.append(&quot;' of '&quot;).append(line0.get(&quot;CODE&quot;, 0)).append(&quot;' with &quot;).append(bodyCount)</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">						.append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; of text&quot;);</span>
+
+<span class="nc" id="L158">				final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">				if (stereotype != null)</span>
+<span class="nc" id="L160">					sb.append(&quot;, stereotype &quot;).append(stereotype);</span>
+
+<span class="nc bnc" id="L162" title="All 2 branches missed.">				if (line0.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L163">					sb.append(&quot;, background color &quot;).append(line0.get(&quot;COLOR&quot;, 0));</span>
+
+				// Parsed but never read by executeInternal: the stereotags and
+				// the URL.
+<span class="nc" id="L167">				final String tags = line0.getLazzy(&quot;TAGS&quot;, 0);</span>
+<span class="nc bnc" id="L168" title="All 4 branches missed.">				if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
+<span class="nc" id="L169">					sb.append(&quot; (the tag &quot;).append(tags).append(&quot; is currently ignored)&quot;);</span>
+
+<span class="nc bnc" id="L171" title="All 2 branches missed.">				if (line0.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L172">					sb.append(&quot; (the URL is currently ignored)&quot;);</span>
+
+<span class="nc" id="L174">				return sb.toString();</span>
+			}
 
 			@Override
 			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
-<span class="nc" id="L144">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L145">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
-<span class="nc" id="L146">				lines = lines.removeEmptyColumns();</span>
-<span class="nc" id="L147">				final Display display = lines.toDisplay();</span>
+<span class="nc" id="L181">				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L182">				lines = lines.subExtract(1, 1).expandsNewline(false);</span>
+<span class="nc" id="L183">				lines = lines.removeEmptyColumns();</span>
+<span class="nc" id="L184">				final Display display = lines.toDisplay();</span>
 
-<span class="nc" id="L149">				Url url = null;</span>
-<span class="nc bnc" id="L150" title="All 2 branches missed.">				if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
-<span class="nc" id="L151">					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue(&quot;topurl&quot;),</span>
+<span class="nc" id="L186">				Url url = null;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">				if (line0.get(UrlBuilder.URL_KEY, 0) != null) {</span>
+<span class="nc" id="L188">					final UrlBuilder urlBuilder = new UrlBuilder(system.getSkinParam().getValue(&quot;topurl&quot;),</span>
 							UrlMode.STRICT);
-<span class="nc" id="L153">					url = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
+<span class="nc" id="L190">					url = urlBuilder.getUrl(line0.get(UrlBuilder.URL_KEY, 0));</span>
 				}
 
-<span class="nc" id="L156">				return executeInternal(lines.getLocation(), line0, system, url, display);</span>
+<span class="nc" id="L193">				return executeInternal(lines.getLocation(), line0, system, url, display);</span>
 			}
 		};
 	}
@@ -161,54 +198,54 @@ import net.sourceforge.plantuml.utils.Position;
 	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0,
 			AbstractEntityDiagram diagram, Url url, Display display) throws NoSuchColorException {
 
-<span class="nc" id="L164">		final String pos = line0.get(&quot;POSITION&quot;, 0);</span>
+<span class="nc" id="L201">		final String pos = line0.get(&quot;POSITION&quot;, 0);</span>
 
-<span class="nc" id="L166">		final String idShort = line0.get(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L167">		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;CODE&quot;, 1));</span>
+<span class="nc" id="L203">		final String idShort = line0.get(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L204">		final String member = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get(&quot;CODE&quot;, 1));</span>
 
-<span class="nc" id="L169">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
-<span class="nc" id="L170">		final Entity cl1 = quark.getData();</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">		if (cl1 == null)</span>
-<span class="nc" id="L172">			return CommandExecutionResult.error(&quot;Nothing to note to&quot;);</span>
+<span class="nc" id="L206">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc" id="L207">		final Entity cl1 = quark.getData();</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (cl1 == null)</span>
+<span class="nc" id="L209">			return CommandExecutionResult.error(&quot;Nothing to note to&quot;);</span>
 
-<span class="nc" id="L174">		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))</span>
-<span class="nc" id="L175">				.withRankdir(diagram.getSkinParam().getRankdir());</span>
+<span class="nc" id="L211">		final Position position = Position.valueOf(StringUtils.goUpperCase(pos))</span>
+<span class="nc" id="L212">				.withRankdir(diagram.getSkinParam().getRankdir());</span>
 
-<span class="nc" id="L177">		final String tmp = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort + &quot;$$$&quot; + position.name());</span>
-<span class="nc" id="L178">		final Quark&lt;Entity&gt; identTip = diagram.quarkInContext(true, tmp);</span>
-<span class="nc" id="L179">		Entity tips = identTip.getData();</span>
+<span class="nc" id="L214">		final String tmp = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(idShort + &quot;$$$&quot; + position.name());</span>
+<span class="nc" id="L215">		final Quark&lt;Entity&gt; identTip = diagram.quarkInContext(true, tmp);</span>
+<span class="nc" id="L216">		Entity tips = identTip.getData();</span>
 
-<span class="nc bnc" id="L181" title="All 2 branches missed.">		if (tips == null) {</span>
-<span class="nc" id="L182">			tips = diagram.reallyCreateLeaf(location, identTip, Display.getWithNewlines(diagram.getPragma(), &quot;&quot;),</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		if (tips == null) {</span>
+<span class="nc" id="L219">			tips = diagram.reallyCreateLeaf(location, identTip, Display.getWithNewlines(diagram.getPragma(), &quot;&quot;),</span>
 					LeafType.TIPS, null);
-<span class="nc" id="L184">			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();</span>
+<span class="nc" id="L221">			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();</span>
 			final Link link;
-<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (position == Position.RIGHT)</span>
-<span class="nc" id="L187">				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, tips, type,</span>
-<span class="nc" id="L188">						LinkArg.noDisplay(1));</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (position == Position.RIGHT)</span>
+<span class="nc" id="L224">				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, tips, type,</span>
+<span class="nc" id="L225">						LinkArg.noDisplay(1));</span>
 			else
-<span class="nc" id="L190">				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), tips, cl1, type,</span>
-<span class="nc" id="L191">						LinkArg.noDisplay(1));</span>
+<span class="nc" id="L227">				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), tips, cl1, type,</span>
+<span class="nc" id="L228">						LinkArg.noDisplay(1));</span>
 
-<span class="nc" id="L193">			diagram.addLink(link);</span>
+<span class="nc" id="L230">			diagram.addLink(link);</span>
 		}
-<span class="nc" id="L195">		tips.putTip(member, display);</span>
+<span class="nc" id="L232">		tips.putTip(member, display);</span>
 
-<span class="nc" id="L197">		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="nc" id="L234">		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L199">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc" id="L200">		Stereotype stereotype = null;</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">		if (stereotypeString != null) {</span>
-<span class="nc" id="L202">			stereotype = Stereotype.build(stereotypeString);</span>
-<span class="nc" id="L203">			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
+<span class="nc" id="L236">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L237">		Stereotype stereotype = null;</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (stereotypeString != null) {</span>
+<span class="nc" id="L239">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="nc" id="L240">			colors = colors.applyStereotypeForNote(stereotype, diagram.getSkinParam(), ColorParam.noteBackground,</span>
 					ColorParam.noteBorder);
 		}
-<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L207">			tips.setStereotype(stereotype);</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L244">			tips.setStereotype(stereotype);</span>
 
-<span class="nc" id="L209">		tips.setColors(colors);</span>
+<span class="nc" id="L246">		tips.setColors(colors);</span>
 
-<span class="nc" id="L211">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L248">		return CommandExecutionResult.ok();</span>
 	}
 
 }

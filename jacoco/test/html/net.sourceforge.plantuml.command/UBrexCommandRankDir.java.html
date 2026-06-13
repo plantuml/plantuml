@@ -41,6 +41,7 @@ import com.plantuml.ubrex.builder.UBrexNamed;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.SkinParam;
@@ -49,23 +50,32 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class UBrexCommandRankDir extends UBrexSingleLineCommand2&lt;TitledDiagram&gt; {
 
 	public UBrexCommandRankDir() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L56">		return UBrexConcat.build(</span>
+<span class="fc" id="L57">		return UBrexConcat.build(</span>
 				new UBrexNamed(&quot;DIRECTION&quot;, new UBrexLeaf(&quot;【 left∙to∙right ┇ top∙to∙bottom 】&quot;)), //
-<span class="fc" id="L58">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L59">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexLeaf(&quot;direction&quot;), //
-<span class="fc" id="L60">				UBrexLeaf.end()); //</span>
+<span class="fc" id="L61">				UBrexLeaf.end()); //</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// UBREX twin of CommandRankDir: 'left to right direction' (or 'top to
+		// bottom direction') sets the global layout direction of the diagram;
+		// the default is top to bottom.
+<span class="nc" id="L70">		return &quot;Setting the layout direction of the diagram to &quot; + StringUtils.goLowerCase(arg.get(&quot;DIRECTION&quot;, 0));</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L65">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replace(' ', '_');</span>
-<span class="nc" id="L66">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
+<span class="nc" id="L75">		final String s = StringUtils.goUpperCase(arg.get(&quot;DIRECTION&quot;, 0)).replace(' ', '_');</span>
+<span class="nc" id="L76">		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));</span>
 		// diagram.setRankdir(Rankdir.valueOf(s));
-<span class="nc" id="L68">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
 	}
 
 }

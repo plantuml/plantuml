@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.style;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,35 +52,44 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStyleSingleLineCSS extends SingleLineCommand2&lt;TitledDiagram&gt; {
 
-<span class="fc" id="L54">	public static final CommandStyleSingleLineCSS ME = new CommandStyleSingleLineCSS();</span>
+<span class="fc" id="L55">	public static final CommandStyleSingleLineCSS ME = new CommandStyleSingleLineCSS();</span>
 
 	private CommandStyleSingleLineCSS() {
-<span class="fc" id="L57">		super(getRegexConcat());</span>
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L58">		super(getRegexConcat());</span>
+<span class="fc" id="L59">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L61">		return RegexConcat.build(CommandStyleSingleLineCSS.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L62">		return RegexConcat.build(CommandStyleSingleLineCSS.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;\\&lt;style\\&gt;&quot;), //
-				new RegexLeaf(1, &quot;STYLE&quot;, &quot;([\\w%s;:{}]+)&quot;), //
+				new RegexLeaf(1, &quot;STYLE&quot;, &quot;([-#.\\w%s;:{}]+)&quot;), //
 				new RegexLeaf(&quot;\\&lt;/style\\&gt;&quot;), //
-<span class="fc" id="L65">				RegexLeaf.end() //</span>
+<span class="fc" id="L66">				RegexLeaf.end() //</span>
 		);
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// '&lt;style&gt;...&lt;/style&gt;' on a single line defines inline styles: the
+		// content between the tags is a CSS-like style definition, merged into
+		// the current styles (executeArg fails when it cannot be parsed).
+<span class="nc" id="L76">		return &quot;Defining inline styles from \&quot;&quot; + arg.get(&quot;STYLE&quot;, 0) + &quot;\&quot;&quot;;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L72">		final String line = arg.get(&quot;STYLE&quot;, 0);</span>
+<span class="nc" id="L82">		final String line = arg.get(&quot;STYLE&quot;, 0);</span>
 		try {
-<span class="nc" id="L74">			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();</span>
-<span class="nc" id="L75">			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(BlocLines.singleString(line)));</span>
+<span class="nc" id="L84">			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();</span>
+<span class="nc" id="L85">			diagram.getSkinParam().muteStyle(new StyleParser(styleBuilder).parse(BlocLines.singleString(line)));</span>
 
-<span class="nc" id="L77">			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();</span>
-<span class="nc" id="L78">			return CommandExecutionResult.ok();</span>
-<span class="nc" id="L79">		} catch (StyleParsingException e) {</span>
-<span class="nc" id="L80">			return CommandExecutionResult.error(&quot;Error in style definition: &quot; + e.getMessage());</span>
-<span class="nc" id="L81">		} catch (NoStyleAvailableException e) {</span>
-<span class="nc" id="L82">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
+<span class="nc" id="L87">			((SkinParam) diagram.getSkinParam()).applyPendingStyleMigration();</span>
+<span class="nc" id="L88">			return CommandExecutionResult.ok();</span>
+<span class="nc" id="L89">		} catch (StyleParsingException e) {</span>
+<span class="nc" id="L90">			return CommandExecutionResult.error(&quot;Error in style definition: &quot; + e.getMessage());</span>
+<span class="nc" id="L91">		} catch (NoStyleAvailableException e) {</span>
+<span class="nc" id="L92">			return CommandExecutionResult.error(&quot;General failure: no style available.&quot;);</span>
 		}
 	}
 

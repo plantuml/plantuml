@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -71,113 +73,152 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateJson extends CommandMultilines2&lt;AbstractEntityDiagram&gt; {
 
-<span class="fc" id="L74">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
-<span class="nc" id="L75">			() -&gt; Pattern2.cmpile(&quot;^[%s]*\\}[%s]*$&quot;));</span>
+<span class="fc" id="L76">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(</span>
+<span class="nc" id="L77">			() -&gt; Pattern2.cmpile(&quot;^[%s]*\\}[%s]*$&quot;));</span>
 
 	public CommandCreateJson() {
-<span class="fc" id="L78">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L80">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L81">	}</span>
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L82">		return RegexConcat.build(CommandCreateJson.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L84">		return RegexConcat.build(CommandCreateJson.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(0, &quot;TYPE&quot;, &quot;json&quot;), //
-<span class="fc" id="L84">				RegexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L85">				NameAndCodeParser.nameAndCode(), //</span>
-<span class="fc" id="L86">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L86">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L87">				NameAndCodeParser.nameAndCode(), //</span>
+<span class="fc" id="L88">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L88">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L89">				ColorParser.exp1(), //</span>
 <span class="fc" id="L90">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L91">				ColorParser.exp1(), //</span>
+<span class="fc" id="L92">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;\\{&quot;), //
-<span class="fc" id="L92">				RegexLeaf.end());</span>
+<span class="fc" id="L94">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		// Mirror executeNow: 'json Name {' embeds a JSON object, displayed as
+		// a table-like element; the lines between the brackets are the JSON
+		// data, validated at execution ('Bad data' when invalid). Like the
+		// single line 'object' command, executing fails when the name already
+		// exists.
+<span class="nc" id="L105">		lines = lines.trim().removeEmptyLines();</span>
+<span class="nc" id="L106">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (line0 == null)</span>
+<span class="nc" id="L108">			return &quot;Creating a JSON element&quot;;</span>
+
+<span class="nc" id="L110">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L111">		final String idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.getLazzy(&quot;CODE&quot;, 0));</span>
+<span class="nc" id="L112">		sb.append(&quot;Creating the JSON element '&quot;).append(idShort).append(&quot;'&quot;);</span>
+
+<span class="nc" id="L114">		final String display = line0.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (display != null)</span>
+<span class="nc" id="L116">			sb.append(&quot; displayed as \&quot;&quot;).append(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(display))</span>
+<span class="nc" id="L117">					.append(&quot;\&quot;&quot;);</span>
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		final int bodyCount = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">		sb.append(&quot; with &quot;).append(bodyCount).append(bodyCount == 1 ? &quot; line&quot; : &quot; lines&quot;).append(&quot; of JSON data&quot;);</span>
+
+<span class="nc" id="L122">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L124">			sb.append(&quot;, stereotype &quot;).append(stereotype);</span>
+
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		if (line0.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L127">			sb.append(&quot;, background color &quot;).append(line0.get(&quot;COLOR&quot;, 0));</span>
+
+		// The URL is parsed but never read by executeNow.
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if (line0.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L131">			sb.append(&quot; (the URL is currently ignored)&quot;);</span>
+
+<span class="nc" id="L133">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L98">		lines = lines.trim().removeEmptyLines();</span>
-<span class="nc" id="L99">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="nc" id="L100">		final Entity entity1 = executeArg0(lines.getLocation(), diagram, line0);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (entity1 == null)</span>
-<span class="nc" id="L102">			return CommandExecutionResult.error(&quot;JSON already exists: &quot; + line0.getLazzy(&quot;CODE&quot;, 0));</span>
+<span class="nc" id="L139">		lines = lines.trim().removeEmptyLines();</span>
+<span class="nc" id="L140">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L141">		final Entity entity1 = executeArg0(lines.getLocation(), diagram, line0);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (entity1 == null)</span>
+<span class="nc" id="L143">			return CommandExecutionResult.error(&quot;JSON already exists: &quot; + line0.getLazzy(&quot;CODE&quot;, 0));</span>
 
-<span class="nc" id="L104">		final JsonValue json = getJsonValue(lines);</span>
+<span class="nc" id="L145">		final JsonValue json = getJsonValue(lines);</span>
 
-<span class="nc bnc" id="L106" title="All 2 branches missed.">		if (json == null)</span>
-<span class="nc" id="L107">			return CommandExecutionResult.error(&quot;Bad data&quot;);</span>
-<span class="nc" id="L108">		((BodierJSon) entity1.getBodier()).setJson(json);</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (json == null)</span>
+<span class="nc" id="L148">			return CommandExecutionResult.error(&quot;Bad data&quot;);</span>
+<span class="nc" id="L149">		((BodierJSon) entity1.getBodier()).setJson(json);</span>
 
-<span class="nc" id="L110">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L151">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override
 	protected CommandControl finalVerification(BlocLines lines) {
-<span class="nc" id="L115">		final JsonValue json = getJsonValue(lines);</span>
-<span class="nc bnc" id="L116" title="All 2 branches missed.">		if (json == null)</span>
-<span class="nc" id="L117">			return CommandControl.OK_PARTIAL;</span>
+<span class="nc" id="L156">		final JsonValue json = getJsonValue(lines);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (json == null)</span>
+<span class="nc" id="L158">			return CommandControl.OK_PARTIAL;</span>
 
-<span class="nc" id="L119">		return super.finalVerification(lines);</span>
+<span class="nc" id="L160">		return super.finalVerification(lines);</span>
 	}
 
 	private JsonValue getJsonValue(BlocLines lines) {
-<span class="nc" id="L123">		final DefaultHandler handler = new DefaultHandler();</span>
-<span class="nc" id="L124">		final JsonParser jsonParser = new JsonParser(handler);</span>
+<span class="nc" id="L164">		final DefaultHandler handler = new DefaultHandler();</span>
+<span class="nc" id="L165">		final JsonParser jsonParser = new JsonParser(handler);</span>
 		try {
-<span class="nc" id="L126">			final String sb = getJsonString(lines);</span>
-<span class="nc" id="L127">			jsonParser.parse(sb);</span>
-<span class="nc" id="L128">			return handler.getValue();</span>
-<span class="nc" id="L129">		} catch (Exception e1) {</span>
+<span class="nc" id="L167">			final String sb = getJsonString(lines);</span>
+<span class="nc" id="L168">			jsonParser.parse(sb);</span>
+<span class="nc" id="L169">			return handler.getValue();</span>
+<span class="nc" id="L170">		} catch (Exception e1) {</span>
 			// Sorry, this is VERY ugly
 			// Let's see if wa could ignore external brackets...
 			try {
-<span class="nc" id="L133">				lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L134">				final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">				for (StringLocated sl : lines)</span>
-<span class="nc" id="L136">					sb.append(sl.getString());</span>
+<span class="nc" id="L174">				lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L175">				final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">				for (StringLocated sl : lines)</span>
+<span class="nc" id="L177">					sb.append(sl.getString());</span>
 
-<span class="nc" id="L138">				jsonParser.parse(sb.toString());</span>
-<span class="nc" id="L139">				return handler.getValue();</span>
-<span class="nc" id="L140">			} catch (Exception e2) {</span>
-<span class="nc" id="L141">				return null;</span>
+<span class="nc" id="L179">				jsonParser.parse(sb.toString());</span>
+<span class="nc" id="L180">				return handler.getValue();</span>
+<span class="nc" id="L181">			} catch (Exception e2) {</span>
+<span class="nc" id="L182">				return null;</span>
 			}
 		}
 	}
 
 	private String getJsonString(BlocLines lines) {
-<span class="nc" id="L147">		lines = lines.subExtract(1, 1);</span>
-<span class="nc" id="L148">		final StringBuilder sb = new StringBuilder(&quot;{&quot;);</span>
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		for (StringLocated sl : lines)</span>
-<span class="nc" id="L150">			sb.append(sl.getString());</span>
+<span class="nc" id="L188">		lines = lines.subExtract(1, 1);</span>
+<span class="nc" id="L189">		final StringBuilder sb = new StringBuilder(&quot;{&quot;);</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (StringLocated sl : lines)</span>
+<span class="nc" id="L191">			sb.append(sl.getString());</span>
 
-<span class="nc" id="L152">		sb.append(&quot;}&quot;);</span>
-<span class="nc" id="L153">		return sb.toString();</span>
+<span class="nc" id="L193">		sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L194">		return sb.toString();</span>
 	}
 
 	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0)
 			throws NoSuchColorException {
-<span class="nc" id="L158">		final String idShort = diagram.cleanId(line0.getLazzy(&quot;CODE&quot;, 0));</span>
+<span class="nc" id="L199">		final String idShort = diagram.cleanId(line0.getLazzy(&quot;CODE&quot;, 0));</span>
 
-<span class="nc" id="L160">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (quark.getData() != null)</span>
-<span class="nc" id="L162">			return null;</span>
-<span class="nc" id="L163">		final String displayString = line0.getLazzy(&quot;DISPLAY&quot;, 0);</span>
-<span class="nc" id="L164">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="nc" id="L201">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, idShort);</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">		if (quark.getData() != null)</span>
+<span class="nc" id="L203">			return null;</span>
+<span class="nc" id="L204">		final String displayString = line0.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc" id="L205">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
 
-<span class="nc" id="L166">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
-<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (Display.isNull(display))</span>
-<span class="nc" id="L168">			display = Display.getWithNewlines(diagram.getPragma(), quark.getName())</span>
-<span class="nc" id="L169">					.withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
+<span class="nc" id="L207">		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (Display.isNull(display))</span>
+<span class="nc" id="L209">			display = Display.getWithNewlines(diagram.getPragma(), quark.getName())</span>
+<span class="nc" id="L210">					.withCreoleMode(CreoleMode.SIMPLE_LINE);</span>
 
-<span class="nc" id="L171">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.JSON, null);</span>
-<span class="nc bnc" id="L172" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L173">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
-<span class="nc" id="L174">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
-<span class="nc" id="L175">					diagram.getSkinParam().getIHtmlColorSet()));</span>
+<span class="nc" id="L212">		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.JSON, null);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L214">			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),</span>
+<span class="nc" id="L215">					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),</span>
+<span class="nc" id="L216">					diagram.getSkinParam().getIHtmlColorSet()));</span>
 
-<span class="nc" id="L177">		final String s = line0.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L178">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
-<span class="nc bnc" id="L179" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
-<span class="nc" id="L180">		return entity;</span>
+<span class="nc" id="L218">		final String s = line0.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L219">		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));</span>
+<span class="nc" id="L221">		return entity;</span>
 	}
 
 }

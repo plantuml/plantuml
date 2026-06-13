@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.wire;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,47 +52,54 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandSpot extends SingleLineCommand2&lt;WireDiagram&gt; {
 
 	public CommandSpot() {
-<span class="nc" id="L54">		super(false, getRegexConcat());</span>
-<span class="nc" id="L55">	}</span>
+<span class="nc" id="L55">		super(false, getRegexConcat());</span>
+<span class="nc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="nc" id="L58">		return RegexConcat.build(CommandSpot.class.getName(), RegexLeaf.start(), //</span>
+<span class="nc" id="L59">		return RegexConcat.build(CommandSpot.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;spot&quot;), //
-<span class="nc" id="L60">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="nc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(1, &quot;NAME&quot;, &quot;([\\w][.\\w]*)&quot;), //
 				new RegexOptional(new RegexConcat(//
 						new RegexLeaf(&quot;\\(&quot;), //
-<span class="nc" id="L64">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L65">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(2, &quot;X&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
-<span class="nc" id="L66">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L67">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;,&quot;), //
-<span class="nc" id="L68">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L69">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(2, &quot;Y&quot;, &quot;(-?\\d+(%|%[-+]\\d+)?)&quot;), //
-<span class="nc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L71">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;\\)&quot;) //
 				)), //
 				new RegexOptional(new RegexConcat( //
-<span class="nc" id="L74">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L75">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;COLOR&quot;, &quot;(#\\w+)?&quot;))), //
 
-<span class="nc" id="L77">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="nc" id="L78">				RegexLeaf.end());</span>
+<span class="nc" id="L78">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="nc" id="L79">				RegexLeaf.end());</span>
 	}
+	
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L85">		return null;</span>
+	}
+
 
 	@Override
 	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L84">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
+<span class="nc" id="L92">		final String name = arg.get(&quot;NAME&quot;, 0);</span>
 
-<span class="nc" id="L86">		final String stringColor = arg.get(&quot;COLOR&quot;, 0);</span>
-<span class="nc" id="L87">		HColor color = null;</span>
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (stringColor != null)</span>
-<span class="nc" id="L89">			color = HColorSet.instance().getColor(stringColor);</span>
+<span class="nc" id="L94">		final String stringColor = arg.get(&quot;COLOR&quot;, 0);</span>
+<span class="nc" id="L95">		HColor color = null;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (stringColor != null)</span>
+<span class="nc" id="L97">			color = HColorSet.instance().getColor(stringColor);</span>
 
-<span class="nc" id="L91">		final String x = arg.get(&quot;X&quot;, 0);</span>
-<span class="nc" id="L92">		final String y = arg.get(&quot;Y&quot;, 0);</span>
+<span class="nc" id="L99">		final String x = arg.get(&quot;X&quot;, 0);</span>
+<span class="nc" id="L100">		final String y = arg.get(&quot;Y&quot;, 0);</span>
 
-<span class="nc" id="L94">		return diagram.spot(name, color, x, y);</span>
+<span class="nc" id="L102">		return diagram.spot(name, color, x, y);</span>
 	}
 
 }

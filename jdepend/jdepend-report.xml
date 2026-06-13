@@ -2316,11 +2316,11 @@
                 <TotalClasses>2</TotalClasses>
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>2</Ca>
+                <Ca>1</Ca>
                 <Ce>12</Ce>
                 <A>0</A>
-                <I>0.86</I>
-                <D>0.14</D>
+                <I>0.92</I>
+                <D>0.08</D>
                 <V>1</V>
             </Stats>
 
@@ -2353,7 +2353,6 @@
 
             <UsedBy>
                 <Package>net.sourceforge.plantuml.activitydiagram.command</Package>
-                <Package>net.sourceforge.plantuml.command.note</Package>
             </UsedBy>
         </Package>
 
@@ -5169,11 +5168,11 @@
 
         <Package name="net.sourceforge.plantuml.command">
             <Stats>
-                <TotalClasses>31</TotalClasses>
-                <ConcreteClasses>28</ConcreteClasses>
+                <TotalClasses>29</TotalClasses>
+                <ConcreteClasses>26</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>59</Ca>
-                <Ce>31</Ce>
+                <Ce>30</Ce>
                 <A>0.1</A>
                 <I>0.34</I>
                 <D>0.56</D>
@@ -5235,9 +5234,6 @@
                 <Class sourceFile="CommandPage.java">
                     net.sourceforge.plantuml.command.CommandPage
                 </Class>
-                <Class sourceFile="CommandRankDir.java">
-                    net.sourceforge.plantuml.command.CommandRankDir
-                </Class>
                 <Class sourceFile="CommandRotate.java">
                     net.sourceforge.plantuml.command.CommandRotate
                 </Class>
@@ -5271,9 +5267,6 @@
                 <Class sourceFile="UBrexCommandFootboxIgnored.java">
                     net.sourceforge.plantuml.command.UBrexCommandFootboxIgnored
                 </Class>
-                <Class sourceFile="UBrexCommandRankDir.java">
-                    net.sourceforge.plantuml.command.UBrexCommandRankDir
-                </Class>
                 <Class sourceFile="UBrexCommonCommands.java">
                     net.sourceforge.plantuml.command.UBrexCommonCommands
                 </Class>
@@ -5302,7 +5295,6 @@
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
-                <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
@@ -5378,14 +5370,14 @@
 
         <Package name="net.sourceforge.plantuml.command.note">
             <Stats>
-                <TotalClasses>11</TotalClasses>
-                <ConcreteClasses>10</ConcreteClasses>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>17</Ce>
-                <A>0.09</A>
-                <I>0.81</I>
-                <D>0.1</D>
+                <Ce>15</Ce>
+                <A>0.33</A>
+                <I>0.79</I>
+                <D>0.12</D>
                 <V>1</V>
             </Stats>
 
@@ -5399,30 +5391,6 @@
                 <Class sourceFile="CommandConstraintOnLinks.java">
                     net.sourceforge.plantuml.command.note.CommandConstraintOnLinks
                 </Class>
-                <Class sourceFile="CommandFactoryNote.java">
-                    net.sourceforge.plantuml.command.note.CommandFactoryNote$1
-                </Class>
-                <Class sourceFile="CommandFactoryNote.java">
-                    net.sourceforge.plantuml.command.note.CommandFactoryNote$2
-                </Class>
-                <Class sourceFile="CommandFactoryNoteActivity.java">
-                    net.sourceforge.plantuml.command.note.CommandFactoryNoteActivity$1
-                </Class>
-                <Class sourceFile="CommandFactoryNoteActivity.java">
-                    net.sourceforge.plantuml.command.note.CommandFactoryNoteActivity$2
-                </Class>
-                <Class sourceFile="CommandFactoryNoteOnEntity.java">
-                    net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity$1
-                </Class>
-                <Class sourceFile="CommandFactoryNoteOnEntity.java">
-                    net.sourceforge.plantuml.command.note.CommandFactoryNoteOnEntity$2
-                </Class>
-                <Class sourceFile="CommandFactoryNoteOnLink.java">
-                    net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink$1
-                </Class>
-                <Class sourceFile="CommandFactoryNoteOnLink.java">
-                    net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink$2
-                </Class>
                 <Class sourceFile="CommandFactoryTipOnEntity.java">
                     net.sourceforge.plantuml.command.note.CommandFactoryTipOnEntity$1
                 </Class>
@@ -5434,13 +5402,11 @@
                 <Package>net.atmp</Package>
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.abel</Package>
-                <Package>net.sourceforge.plantuml.activitydiagram</Package>
                 <Package>net.sourceforge.plantuml.classdiagram</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
-                <Package>net.sourceforge.plantuml.plasma</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
@@ -5700,8 +5666,8 @@
 
         <Package name="net.sourceforge.plantuml.crash">
             <Stats>
-                <TotalClasses>6</TotalClasses>
-                <ConcreteClasses>6</ConcreteClasses>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>4</Ca>
                 <Ce>19</Ce>
@@ -5717,9 +5683,6 @@
             <ConcreteClasses>
                 <Class sourceFile="CommandCrashAny.java">
                     net.sourceforge.plantuml.crash.CommandCrashAny
-                </Class>
-                <Class sourceFile="CommandSelectCrash.java">
-                    net.sourceforge.plantuml.crash.CommandSelectCrash
                 </Class>
                 <Class sourceFile="CrashDiagram.java">
                     net.sourceforge.plantuml.crash.CrashDiagram
@@ -12869,11 +12832,11 @@
                 <TotalClasses>2</TotalClasses>
                 <ConcreteClasses>2</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>7</Ca>
+                <Ca>6</Ca>
                 <Ce>2</Ce>
                 <A>0</A>
-                <I>0.22</I>
-                <D>0.78</D>
+                <I>0.25</I>
+                <D>0.75</D>
                 <V>1</V>
             </Stats>
 
@@ -12898,7 +12861,6 @@
                 <Package>net.sourceforge.plantuml.activitydiagram.command</Package>
                 <Package>net.sourceforge.plantuml.cheneer.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
-                <Package>net.sourceforge.plantuml.command.note</Package>
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
                 <Package>net.sourceforge.plantuml.svek.image</Package>
@@ -14842,10 +14804,10 @@
                 <TotalClasses>34</TotalClasses>
                 <ConcreteClasses>29</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>39</Ca>
+                <Ca>38</Ca>
                 <Ce>26</Ce>
                 <A>0.15</A>
-                <I>0.4</I>
+                <I>0.41</I>
                 <D>0.45</D>
                 <V>1</V>
             </Stats>
@@ -14997,7 +14959,6 @@
                 <Package>net.sourceforge.plantuml.asciiart</Package>
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
-                <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>

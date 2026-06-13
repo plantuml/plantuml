@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -61,57 +62,63 @@ import net.sourceforge.plantuml.utils.Direction;
 
 public class CommandWBSItemMultilineNew extends CommandMultilines2&lt;WBSDiagram&gt; {
 
-<span class="pc" id="L64">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);\\s*(\\&lt;\\&lt;(.+)\\&gt;\\&gt;)?$&quot;));</span>
+<span class="pc" id="L65">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^(.*);\\s*(\\&lt;\\&lt;(.+)\\&gt;\\&gt;)?$&quot;));</span>
 
 	public CommandWBSItemMultilineNew() {
-<span class="fc" id="L67">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L68">	}</span>
+<span class="fc" id="L68">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L69">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L71">		return RegexConcat.build(CommandWBSItemMultilineNew.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L72">		return RegexConcat.build(CommandWBSItemMultilineNew.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, Constant.WBS_TYPE, &quot;([ \t]*[*+-]+)&quot;), //
 				new RegexOr( //
-					new RegexConcat( //
-						new RegexLeaf(1, &quot;SHAPE_1&quot;, &quot;(_)?&quot;), //
-						new RegexLeaf(1, Constant.WBS_DIRECTION + &quot;_1&quot;, &quot;([&lt;&gt;])?&quot;)), //
-					new RegexConcat( //
-						new RegexLeaf(1, Constant.WBS_DIRECTION + &quot;_2&quot;, &quot;([&lt;&gt;])?&quot;)), //
+						new RegexConcat( //
+								new RegexLeaf(1, &quot;SHAPE_1&quot;, &quot;(_)?&quot;), //
+								new RegexLeaf(1, Constant.WBS_DIRECTION + &quot;_1&quot;, &quot;([&lt;&gt;])?&quot;)), //
+						new RegexConcat( //
+								new RegexLeaf(1, Constant.WBS_DIRECTION + &quot;_2&quot;, &quot;([&lt;&gt;])?&quot;)), //
 						new RegexLeaf(1, &quot;SHAPE_2&quot;, &quot;(_)?&quot;)), //
 				new RegexOr( //
-					new RegexConcat( //
-						new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR_1&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
-						new RegexOptional(new RegexLeaf(1, &quot;CODE_1&quot;, &quot;\\(([%pLN_]+)\\)&quot;))),
-					new RegexConcat( //
-						new RegexOptional(new RegexLeaf(1, &quot;CODE_2&quot;, &quot;\\(([%pLN_]+)\\)&quot;)),
-						new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR_2&quot;, &quot;\\[(#\\w+)\\]&quot;)))), //
+						new RegexConcat( //
+								new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR_1&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
+								new RegexOptional(new RegexLeaf(1, &quot;CODE_1&quot;, &quot;\\(([%pLN_]+)\\)&quot;))),
+						new RegexConcat( //
+								new RegexOptional(new RegexLeaf(1, &quot;CODE_2&quot;, &quot;\\(([%pLN_]+)\\)&quot;)),
+								new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR_2&quot;, &quot;\\[(#\\w+)\\]&quot;)))), //
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;DATA&quot;, &quot;(.*)&quot;), //
-<span class="fc" id="L89">				RegexLeaf.end());</span>
+<span class="fc" id="L90">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+<span class="nc" id="L96">		return null;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(WBSDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L95">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc" id="L102">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
 
-<span class="nc" id="L97">		final List&lt;String&gt; lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());</span>
-<span class="nc" id="L98">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 1);</span>
+<span class="nc" id="L104">		final List&lt;String&gt; lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());</span>
+<span class="nc" id="L105">		lines = lines.removeStartingAndEnding(line0.get(&quot;DATA&quot;, 0), 1);</span>
 
-<span class="nc" id="L100">		final String stereotype = lineLast.get(1);</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L102">			lines = lines.overrideLastLine(lineLast.get(0));</span>
+<span class="nc" id="L107">		final String stereotype = lineLast.get(1);</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L109">			lines = lines.overrideLastLine(lineLast.get(0));</span>
 
-<span class="nc" id="L104">		final String type = line0.get(Constant.WBS_TYPE, 0);</span>
-<span class="nc" id="L105">		final String stringColor = line0.getLazzy(&quot;BACKCOLOR&quot;, 0);</span>
-<span class="nc" id="L106">		HColor backColor = null;</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (stringColor != null)</span>
-<span class="nc" id="L108">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
+<span class="nc" id="L111">		final String type = line0.get(Constant.WBS_TYPE, 0);</span>
+<span class="nc" id="L112">		final String stringColor = line0.getLazzy(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="nc" id="L113">		HColor backColor = null;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (stringColor != null)</span>
+<span class="nc" id="L115">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
 
-<span class="nc" id="L110">		final String code = line0.getLazzy(&quot;CODE&quot;, 0);</span>
-<span class="nc" id="L111">		final Direction dir = Direction.getWBSDirection(line0);</span>
+<span class="nc" id="L117">		final String code = line0.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="nc" id="L118">		final Direction dir = Direction.getWBSDirection(line0);</span>
 
-<span class="nc" id="L113">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), lines.toDisplay(),</span>
-<span class="nc" id="L114">				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.getLazzy(&quot;SHAPE&quot;, 0)));</span>
+<span class="nc" id="L120">		return diagram.addIdea(code, backColor, diagram.getSmartLevel(type), lines.toDisplay(),</span>
+<span class="nc" id="L121">				Stereotype.build(stereotype), dir, IdeaShape.fromDesc(line0.getLazzy(&quot;SHAPE&quot;, 0)));</span>
 
 	}
 

@@ -41,6 +41,7 @@ import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexOr;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -51,33 +52,43 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandSelectCrash extends UBrexSingleLineCommand2&lt;CrashDiagram&gt; {
 
 	public CommandSelectCrash() {
-<span class="fc" id="L54">		super(getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L58">		return UBrexConcat.build( //</span>
+<span class="fc" id="L59">		return UBrexConcat.build( //</span>
 				new UBrexLeaf(&quot;crash&quot;), //
-<span class="fc" id="L60">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L61">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexLeaf(&quot;when&quot;), //
-<span class="fc" id="L62">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L63">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexNamed(&quot;TYPE&quot;,
 						new UBrexOr(new UBrexLeaf(&quot;parsing&quot;), new UBrexLeaf(&quot;finalizing&quot;), new UBrexLeaf(&quot;drawing&quot;))) //
 		);
 	}
 
 	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// Internal test command: 'crash when parsing|finalizing|drawing'
+		// deliberately crashes PlantUML during the given phase, to exercise
+		// the crash reporting pipeline. The 'parsing' flavor throws
+		// immediately from executeArg.
+<span class="nc" id="L76">		return &quot;Deliberately crashing PlantUML during the &quot; + arg.get(&quot;TYPE&quot;, 0) + &quot; phase (internal test command)&quot;;</span>
+	}
+
+	@Override
 	protected CommandExecutionResult executeArg(CrashDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 
-<span class="fc" id="L72">		final String typeString = arg.get(&quot;TYPE&quot;, 0);</span>
-<span class="fc" id="L73">		final CrashType type = CrashType.valueOf(typeString.toUpperCase());</span>
+<span class="fc" id="L83">		final String typeString = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="fc" id="L84">		final CrashType type = CrashType.valueOf(typeString.toUpperCase());</span>
 
-<span class="fc" id="L75">		diagram.setCrashType(type);</span>
+<span class="fc" id="L86">		diagram.setCrashType(type);</span>
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (type == CrashType.PARSING)</span>
-<span class="fc" id="L78">			throw new IllegalStateException(&quot;This is a normal crash when PARSING&quot;);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (type == CrashType.PARSING)</span>
+<span class="fc" id="L89">			throw new IllegalStateException(&quot;This is a normal crash when PARSING&quot;);</span>
 
-<span class="fc" id="L80">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L91">		return CommandExecutionResult.ok();</span>
 	}
 
 }
