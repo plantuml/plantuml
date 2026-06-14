@@ -44,7 +44,7 @@ public interface Command<D extends Diagram> {
 	CommandExecutionResult execute(D diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException;
 
 	default String explain(BlocLines lines) {
-		return "WIPexplain: cannot explain " + getClass();
+		return null;
 	}
 
 	CommandControl isValid(BlocLines lines);

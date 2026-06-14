@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.gantt.command;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -71,6 +72,28 @@ public class CommandNoteBottom extends CommandMultilines2<GanttDiagram> {
 				new RegexLeaf(4, "TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Adding a note";
+
+		final String stereotype = line0.get("STEREO", 0);
+		// The TAGS group is parsed but never read by executeNow
+		final String tags = line0.get("TAGS", 0);
+		final int bodyLines = lines.size() > 2 ? lines.size() - 2 : 0;
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Adding a note at the bottom of the gantt with ").append(bodyLines).append(" lines of text");
+		if (stereotype != null)
+			sb.append(" stereotyped ").append(stereotype);
+		if (tags != null && tags.isEmpty() == false)
+			sb.append(" tagged ").append(tags).append(" (currently ignored)");
+		// executeNow fails ("No note defined") when the body is empty
+		return sb.toString();
 	}
 
 	@Override

@@ -39,6 +39,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.Lazy;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -72,6 +73,34 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDi
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "DATA", "(.*)"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
+		if (line0 == null)
+			return "Adding a mindmap node";
+
+		final String type = line0.get("TYPE", 0);
+		final String stringColor = line0.get("BACKCOLOR", 0);
+		final String shape = line0.get("SHAPE", 0);
+		// In this multiline variant the depth is simply the marker count minus one (no getSmartLevel)
+		final int level = type.length() - 1;
+		// The optional trailing stereotype is captured on the last line by the end pattern
+		final List<String> lineLast = StringUtils.getSplit(getEndPattern(), lines.getLast().getString());
+		final String stereotype = lineLast == null ? null : lineLast.get(1);
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Adding a mindmap node at depth ").append(level);
+		// fromDesc maps '_' to NONE (no box); the default (absent) is a box
+		if ("_".equals(shape))
+			sb.append(" without a box outline");
+		if (stereotype != null)
+			sb.append(" stereotyped <<").append(stereotype).append(">>");
+		if (stringColor != null)
+			sb.append(" with background color ").append(stringColor);
+		return sb.toString();
 	}
 
 	@Override

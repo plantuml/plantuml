@@ -130,10 +130,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		return explainNow(lines);
 	}
 
-	@Explain
-	protected String explainNow(BlocLines lines) {
-		return "WIPexplain explainNow in " + getClass();
-	}
+	abstract protected String explainNow(BlocLines lines);
 
 	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException;

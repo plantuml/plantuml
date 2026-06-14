@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -62,6 +63,13 @@ public class CommandMindMapDirection extends SingleLineCommand2<MindMapDiagram> 
 				new RegexLeaf(1, "(side|direction)"), //
 				new RegexLeaf("[^*#]*"), //
 				RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String dir = arg.get("DIRECTION", 0);
+		return "Setting the default mindmap direction to " + dir;
 	}
 
 	@Override

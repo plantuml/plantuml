@@ -149,9 +149,7 @@ public abstract class UBrexSingleLineCommand2<S extends Diagram> implements Comm
 	}
 
 	@Explain
-	protected String explainArg(LineLocation location, RegexResult arg) {
-		return "WIPexplain explainArg in " + getClass();
-	}
+	abstract protected String explainArg(LineLocation location, RegexResult arg);
 
 	@Override
 	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {

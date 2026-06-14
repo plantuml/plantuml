@@ -43,6 +43,7 @@ import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -74,20 +75,15 @@ public class CommandPrintBetween extends UBrexSingleLineCommand2<GanttDiagram> {
 				UBrexLeaf.end());
 	}
 
-//	static IRegex getRegexConcatOld() {
-//		return RegexConcat.build(CommandPrintBetween.class.getName(), RegexLeaf.start(), //
-//				// Print between 2020/02/14 and 2020/03/04
-//				new RegexLeaf("print"), //
-//				RegexLeaf.spaceOneOrMore(), //
-//				new RegexLeaf("between"), //
-//				RegexLeaf.spaceOneOrMore(), //
-//				pattern.toRegex("START"), //
-//				RegexLeaf.spaceOneOrMore(), //
-//				new RegexLeaf("and"), //
-//				RegexLeaf.spaceOneOrMore(), //
-//				pattern.toRegex("END"), //
-//				RegexLeaf.end());
-//	}
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The dates are resolved by ComplementDate.getMe against the gantt calendar state;
+		// describe the raw date expressions only
+		final String start = arg.get("START", 0);
+		final String end = arg.get("END", 0);
+		return "Restricting the printed interval to between " + start + " and " + end;
+	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,

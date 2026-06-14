@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -61,6 +62,30 @@ public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
 				new RegexLeaf(1, "SHAPE", "(_)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(1, "LABEL", "(.*)"), RegexLeaf.end());
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		final String type = arg.get("TYPE", 0);
+		final String label = arg.get("LABEL", 0);
+		final String stringColor = arg.get("BACKCOLOR", 0);
+		final String shape = arg.get("SHAPE", 0);
+		// Depth is the marker count minus one; a '-' anywhere places the node on the left side, otherwise the right
+		final int level = type.length() - 1;
+		final boolean right = type.contains("-") == false;
+
+		final StringBuilder sb = new StringBuilder();
+		sb.append("Adding a mindmap node at depth ").append(level);
+		sb.append(right ? " on the right side" : " on the left side");
+		if (label != null && label.isEmpty() == false)
+			sb.append(" labelled \"").append(label).append("\"");
+		// fromDesc maps '_' to NONE (no box); the default (absent) is a box
+		if ("_".equals(shape))
+			sb.append(" without a box outline");
+		if (stringColor != null)
+			sb.append(" with background color ").append(stringColor);
+		return sb.toString();
 	}
 
 	@Override
