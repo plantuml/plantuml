@@ -130,29 +130,26 @@ import net.sourceforge.plantuml.utils.BlocLines;
 <span class="fc" id="L130">		return explainNow(lines);</span>
 	}
 
-	@Explain
-	protected String explainNow(BlocLines lines) {
-<span class="nc" id="L135">		return &quot;WIPexplain explainNow in &quot; + getClass();</span>
-	}
+	abstract protected String explainNow(BlocLines lines);
 
 	protected abstract CommandExecutionResult executeNow(S system, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException;
 
 	protected CommandControl finalVerification(BlocLines lines) {
-<span class="fc" id="L142">		return CommandControl.OK;</span>
+<span class="fc" id="L139">		return CommandControl.OK;</span>
 	}
 
 	protected final IRegex getStartingPattern() {
-<span class="fc" id="L146">		return starting;</span>
+<span class="fc" id="L143">		return starting;</span>
 	}
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="fc bfc" id="L151" title="All 2 branches covered.">		return pass == ParserPass.ONE;</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		return pass == ParserPass.ONE;</span>
 	}
 
 	public Pattern2 getEndPattern() {
-<span class="fc" id="L155">		return end.get();</span>
+<span class="fc" id="L152">		return end.get();</span>
 	}
 
 }

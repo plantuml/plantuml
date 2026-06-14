@@ -43,6 +43,7 @@ import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
@@ -53,51 +54,46 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPrintBetween extends UBrexSingleLineCommand2&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L56">	private static final ComplementDate pattern = ComplementDate.any();</span>
+<span class="fc" id="L57">	private static final ComplementDate pattern = ComplementDate.any();</span>
 
 	public CommandPrintBetween() {
-<span class="fc" id="L59">		super(getRegexConcat());</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L60">		super(getRegexConcat());</span>
+<span class="fc" id="L61">	}</span>
 
 	static UnicodeBracketedExpression getRegexConcat() {
-<span class="fc" id="L63">		return UBrexConcat.build(</span>
+<span class="fc" id="L64">		return UBrexConcat.build(</span>
 				// Print between 2020/02/14 and 2020/03/04
 				new UBrexLeaf(&quot;print&quot;), //
-<span class="fc" id="L66">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L67">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexLeaf(&quot;between&quot;), //
-<span class="fc" id="L68">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L69">				new UBrexNamed(&quot;START&quot;, pattern.toUnicodeBracketedExpressionComplement()), //</span>
-<span class="fc" id="L70">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L69">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L70">				new UBrexNamed(&quot;START&quot;, pattern.toUnicodeBracketedExpressionComplement()), //</span>
+<span class="fc" id="L71">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexLeaf(&quot;and&quot;), //
-<span class="fc" id="L72">				UBrexLeaf.spaceOneOrMore(), //</span>
-<span class="fc" id="L73">				new UBrexNamed(&quot;END&quot;, pattern.toUnicodeBracketedExpressionComplement()), //</span>
-<span class="fc" id="L74">				UBrexLeaf.end());</span>
+<span class="fc" id="L73">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L74">				new UBrexNamed(&quot;END&quot;, pattern.toUnicodeBracketedExpressionComplement()), //</span>
+<span class="fc" id="L75">				UBrexLeaf.end());</span>
 	}
 
-//	static IRegex getRegexConcatOld() {
-//		return RegexConcat.build(CommandPrintBetween.class.getName(), RegexLeaf.start(), //
-//				// Print between 2020/02/14 and 2020/03/04
-//				new RegexLeaf(&quot;print&quot;), //
-//				RegexLeaf.spaceOneOrMore(), //
-//				new RegexLeaf(&quot;between&quot;), //
-//				RegexLeaf.spaceOneOrMore(), //
-//				pattern.toRegex(&quot;START&quot;), //
-//				RegexLeaf.spaceOneOrMore(), //
-//				new RegexLeaf(&quot;and&quot;), //
-//				RegexLeaf.spaceOneOrMore(), //
-//				pattern.toRegex(&quot;END&quot;), //
-//				RegexLeaf.end());
-//	}
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		// The dates are resolved by ComplementDate.getMe against the gantt calendar state;
+		// describe the raw date expressions only
+<span class="nc" id="L83">		final String start = arg.get(&quot;START&quot;, 0);</span>
+<span class="nc" id="L84">		final String end = arg.get(&quot;END&quot;, 0);</span>
+<span class="nc" id="L85">		return &quot;Restricting the printed interval to between &quot; + start + &quot; and &quot; + end;</span>
+	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L95">		final Capture startCapture = arg.getUMatcher().extractByPrefix(&quot;START&quot;);</span>
-<span class="nc" id="L96">		final Capture endCapture = arg.getUMatcher().extractByPrefix(&quot;END&quot;);</span>
-<span class="nc" id="L97">		final LocalDate start = pattern.getMe(diagram, startCapture).get();</span>
-<span class="nc" id="L98">		final LocalDate end = pattern.getMe(diagram, endCapture).get();</span>
-<span class="nc" id="L99">		diagram.setPrintInterval(start, end);</span>
-<span class="nc" id="L100">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L91">		final Capture startCapture = arg.getUMatcher().extractByPrefix(&quot;START&quot;);</span>
+<span class="nc" id="L92">		final Capture endCapture = arg.getUMatcher().extractByPrefix(&quot;END&quot;);</span>
+<span class="nc" id="L93">		final LocalDate start = pattern.getMe(diagram, startCapture).get();</span>
+<span class="nc" id="L94">		final LocalDate end = pattern.getMe(diagram, endCapture).get();</span>
+<span class="nc" id="L95">		diagram.setPrintInterval(start, end);</span>
+<span class="nc" id="L96">		return CommandExecutionResult.ok();</span>
 	}
 
 }

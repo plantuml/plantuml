@@ -329,23 +329,24 @@ public class QuoteUtils {
 			&quot;Gur Rnegu vf syng, fb gurer'f ab vpr zrygvat be evfvat frn yriryf; vg'f whfg gur ynaq zbivat qbjajneq.&quot;,
 			&quot;Bayl gjb uneq ceboyrzf va qvfgevohgrq flfgrzf:  / 2. Rknpgyl-bapr qryvirel / 1.  Thnenagrrq beqre / 2.  Rknpgyl-bapr qryvirel /&quot;,
 			&quot;Qvq lbh xabj gung tybony jnezvat unccraf bayl va Pryfvhf, abg Snueraurvg?&quot;,
-			&quot;Jura V yvfgra gb Jntare, V trg gur fhqqra hetr gb pbadhre Terraynaq&quot;);
+			&quot;Jura V yvfgra gb Jntare, V trg gur fhqqra hetr gb pbadhre Terraynaq&quot;,
+			&quot;Qbrf gur Thys bs Zrkvpb cerirag hf sebz pnyyvat Serrqbz bs Fcrrpu 'Serrqbz bs Fcrrpu'?&quot;, &quot;Grfg prqevp&quot;);
 
 	private QuoteUtils() {
 	}
 
-<span class="fc" id="L337">	static private final List&lt;String&gt; tmp = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L338">	static private final List&lt;String&gt; tmp = new ArrayList&lt;&gt;();</span>
 
 	public static String getSomeQuote() {
-<span class="fc" id="L340">		synchronized (tmp) {</span>
-<span class="fc bfc" id="L341" title="All 2 branches covered.">			if (tmp.size() == 0) {</span>
-<span class="fc" id="L342">				tmp.addAll(quotes);</span>
-<span class="fc" id="L343">				Collections.shuffle(tmp);</span>
+<span class="fc" id="L341">		synchronized (tmp) {</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">			if (tmp.size() == 0) {</span>
+<span class="fc" id="L343">				tmp.addAll(quotes);</span>
+<span class="fc" id="L344">				Collections.shuffle(tmp);</span>
 			}
-<span class="fc" id="L345">			final int size = tmp.size();</span>
-<span class="fc" id="L346">			final String result = tmp.get(size - 1);</span>
-<span class="fc" id="L347">			tmp.remove(size - 1);</span>
-<span class="fc" id="L348">			return result;</span>
+<span class="fc" id="L346">			final int size = tmp.size();</span>
+<span class="fc" id="L347">			final String result = tmp.get(size - 1);</span>
+<span class="fc" id="L348">			tmp.remove(size - 1);</span>
+<span class="fc" id="L349">			return result;</span>
 		}
 	}
 }

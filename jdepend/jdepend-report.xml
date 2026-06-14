@@ -5167,18 +5167,21 @@
 
         <Package name="net.sourceforge.plantuml.command">
             <Stats>
-                <TotalClasses>29</TotalClasses>
+                <TotalClasses>30</TotalClasses>
                 <ConcreteClasses>26</ConcreteClasses>
-                <AbstractClasses>3</AbstractClasses>
+                <AbstractClasses>4</AbstractClasses>
                 <Ca>59</Ca>
                 <Ce>30</Ce>
-                <A>0.1</A>
+                <A>0.13</A>
                 <I>0.34</I>
-                <D>0.56</D>
+                <D>0.53</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
+                <Class sourceFile="Command.java">
+                    net.sourceforge.plantuml.command.Command
+                </Class>
                 <Class sourceFile="CommandMultilines.java">
                     net.sourceforge.plantuml.command.CommandMultilines
                 </Class>
@@ -7876,11 +7879,11 @@
 
         <Package name="net.sourceforge.plantuml.gantt.command">
             <Stats>
-                <TotalClasses>14</TotalClasses>
-                <ConcreteClasses>14</ConcreteClasses>
+                <TotalClasses>13</TotalClasses>
+                <ConcreteClasses>13</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
-                <Ce>19</Ce>
+                <Ce>18</Ce>
                 <A>0</A>
                 <I>0.95</I>
                 <D>0.05</D>
@@ -7918,9 +7921,6 @@
                 <Class sourceFile="CommandLanguage.java">
                     net.sourceforge.plantuml.gantt.command.CommandLanguage
                 </Class>
-                <Class sourceFile="CommandPrintBetween.java">
-                    net.sourceforge.plantuml.gantt.command.CommandPrintBetween
-                </Class>
                 <Class sourceFile="CommandPrintScale.java">
                     net.sourceforge.plantuml.gantt.command.CommandPrintScale
                 </Class>
@@ -7939,7 +7939,6 @@
                 <Package>com.plantuml.ubrex</Package>
                 <Package>com.plantuml.ubrex.builder</Package>
                 <Package>java.lang</Package>
-                <Package>java.time</Package>
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
@@ -12139,14 +12138,14 @@
 
         <Package name="net.sourceforge.plantuml.mindmap">
             <Stats>
-                <TotalClasses>12</TotalClasses>
-                <ConcreteClasses>11</ConcreteClasses>
+                <TotalClasses>11</TotalClasses>
+                <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>22</Ce>
-                <A>0.08</A>
+                <A>0.09</A>
                 <I>0.96</I>
-                <D>0.04</D>
+                <D>0.05</D>
                 <V>1</V>
             </Stats>
 
@@ -12159,9 +12158,6 @@
             <ConcreteClasses>
                 <Class sourceFile="Branch.java">
                     net.sourceforge.plantuml.mindmap.Branch
-                </Class>
-                <Class sourceFile="CommandMindMapDirection.java">
-                    net.sourceforge.plantuml.mindmap.CommandMindMapDirection
                 </Class>
                 <Class sourceFile="CommandMindMapOrgmode.java">
                     net.sourceforge.plantuml.mindmap.CommandMindMapOrgmode

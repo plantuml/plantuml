@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,30 +52,62 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandMindMapOrgmode extends SingleLineCommand2&lt;MindMapDiagram&gt; {
 
 	public CommandMindMapOrgmode() {
-<span class="fc" id="L54">		super(false, getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(false, getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandMindMapOrgmode.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandMindMapOrgmode.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;([ \t]*[*#]+)&quot;), //
 				new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
 				new RegexLeaf(1, &quot;SHAPE&quot;, &quot;(_)?&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L63">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L64">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L70">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="nc" id="L71">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc" id="L72">		final String stringColor = arg.get(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="nc" id="L73">		final String shape = arg.get(&quot;SHAPE&quot;, 0);</span>
+		// The actual depth is computed by getSmartLevel against org-mode state; report the raw marker count instead
+<span class="nc" id="L75">		final int markers = countMarkers(type);</span>
+
+<span class="nc" id="L77">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L78">		sb.append(&quot;Adding a mindmap node at depth &quot;).append(markers);</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">		if (label != null &amp;&amp; label.isEmpty() == false)</span>
+<span class="nc" id="L80">			sb.append(&quot; labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+		// fromDesc maps '_' to NONE (no box); the default (absent) is a box
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (&quot;_&quot;.equals(shape))</span>
+<span class="nc" id="L83">			sb.append(&quot; without a box outline&quot;);</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (stringColor != null)</span>
+<span class="nc" id="L85">			sb.append(&quot; with background color &quot;).append(stringColor);</span>
+<span class="nc" id="L86">		return sb.toString();</span>
+	}
+
+	private static int countMarkers(String type) {
+<span class="nc" id="L90">		int count = 0;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		for (int i = 0; i &lt; type.length(); i++) {</span>
+<span class="nc" id="L92">			final char c = type.charAt(i);</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">			if (c == '*' || c == '#')</span>
+<span class="nc" id="L94">				count++;</span>
+		}
+<span class="nc" id="L96">		return count;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L69">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
-<span class="fc" id="L70">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="fc" id="L71">		final String stringColor = arg.get(&quot;BACKCOLOR&quot;, 0);</span>
-<span class="fc" id="L72">		HColor backColor = null;</span>
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">		if (stringColor != null)</span>
-<span class="nc" id="L74">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
+<span class="fc" id="L102">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="fc" id="L103">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="fc" id="L104">		final String stringColor = arg.get(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="fc" id="L105">		HColor backColor = null;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (stringColor != null)</span>
+<span class="nc" id="L107">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
 
-<span class="fc" id="L76">		return diagram.addIdea(backColor, diagram.getSmartLevel(type), Display.getWithNewlines(diagram.getPragma(), label),</span>
-<span class="fc" id="L77">				IdeaShape.fromDesc(arg.get(&quot;SHAPE&quot;, 0)));</span>
+<span class="fc" id="L109">		return diagram.addIdea(backColor, diagram.getSmartLevel(type), Display.getWithNewlines(diagram.getPragma(), label),</span>
+<span class="fc" id="L110">				IdeaShape.fromDesc(arg.get(&quot;SHAPE&quot;, 0)));</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

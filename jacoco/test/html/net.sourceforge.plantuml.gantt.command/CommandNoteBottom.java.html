@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.gantt.command;
 
 import net.sourceforge.plantuml.Lazy;
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
@@ -56,39 +57,61 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandNoteBottom extends CommandMultilines2&lt;GanttDiagram&gt; {
 
-<span class="fc" id="L59">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^end[%s]*note$&quot;));</span>
+<span class="fc" id="L60">	private final static Lazy&lt;Pattern2&gt; END = new Lazy&lt;&gt;(() -&gt; Pattern2.cmpile(&quot;^end[%s]*note$&quot;));</span>
 
 	public CommandNoteBottom() {
-<span class="fc" id="L62">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L63">		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH, END);</span>
+<span class="fc" id="L64">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L66">		return RegexConcat.build(CommandNoteBottom.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L67">		return RegexConcat.build(CommandNoteBottom.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;(note)&quot;), //
-<span class="fc" id="L68">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(bottom)&quot;), //
-<span class="fc" id="L70">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L71">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L72">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
-<span class="fc" id="L73">				RegexLeaf.end());</span>
+<span class="fc" id="L71">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L72">				new RegexLeaf(4, &quot;TAGS&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L73">				StereotypePattern.optional(&quot;STEREO&quot;), //</span>
+<span class="fc" id="L74">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainNow(BlocLines lines) {
+<span class="nc" id="L80">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (line0 == null)</span>
+<span class="nc" id="L82">			return &quot;Adding a note&quot;;</span>
+
+<span class="nc" id="L84">		final String stereotype = line0.get(&quot;STEREO&quot;, 0);</span>
+		// The TAGS group is parsed but never read by executeNow
+<span class="nc" id="L86">		final String tags = line0.get(&quot;TAGS&quot;, 0);</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		final int bodyLines = lines.size() &gt; 2 ? lines.size() - 2 : 0;</span>
+
+<span class="nc" id="L89">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L90">		sb.append(&quot;Adding a note at the bottom of the gantt with &quot;).append(bodyLines).append(&quot; lines of text&quot;);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L92">			sb.append(&quot; stereotyped &quot;).append(stereotype);</span>
+<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
+<span class="nc" id="L94">			sb.append(&quot; tagged &quot;).append(tags).append(&quot; (currently ignored)&quot;);</span>
+		// executeNow fails (&quot;No note defined&quot;) when the body is empty
+<span class="nc" id="L96">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeNow(GanttDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="fc" id="L79">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
-<span class="fc" id="L80">		lines = lines.subExtract(1, 1);</span>
-<span class="fc" id="L81">		lines = lines.removeEmptyColumns();</span>
-<span class="fc" id="L82">		final Display strings = lines.toDisplay();</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (strings.size() == 0)</span>
-<span class="nc" id="L84">			return CommandExecutionResult.error(&quot;No note defined&quot;);</span>
+<span class="fc" id="L102">		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());</span>
+<span class="fc" id="L103">		lines = lines.subExtract(1, 1);</span>
+<span class="fc" id="L104">		lines = lines.removeEmptyColumns();</span>
+<span class="fc" id="L105">		final Display strings = lines.toDisplay();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">		if (strings.size() == 0)</span>
+<span class="nc" id="L107">			return CommandExecutionResult.error(&quot;No note defined&quot;);</span>
 
-<span class="fc" id="L86">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
-<span class="fc" id="L87">		Stereotype stereotype = null;</span>
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
-<span class="nc" id="L89">			stereotype = Stereotype.build(stereotypeString);</span>
+<span class="fc" id="L109">		final String stereotypeString = line0.get(&quot;STEREO&quot;, 0);</span>
+<span class="fc" id="L110">		Stereotype stereotype = null;</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		if (stereotypeString != null)</span>
+<span class="nc" id="L112">			stereotype = Stereotype.build(stereotypeString);</span>
 
-<span class="fc" id="L91">		return diagram.addNote(strings, stereotype);</span>
+<span class="fc" id="L114">		return diagram.addNote(strings, stereotype);</span>
 
 	}
 

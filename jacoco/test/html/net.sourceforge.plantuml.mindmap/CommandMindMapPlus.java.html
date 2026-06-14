@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -51,31 +52,55 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandMindMapPlus extends SingleLineCommand2&lt;MindMapDiagram&gt; {
 
 	public CommandMindMapPlus() {
-<span class="fc" id="L54">		super(false, getRegexConcat());</span>
-<span class="fc" id="L55">	}</span>
+<span class="fc" id="L55">		super(false, getRegexConcat());</span>
+<span class="fc" id="L56">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L58">		return RegexConcat.build(CommandMindMapPlus.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L59">		return RegexConcat.build(CommandMindMapPlus.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(1, &quot;TYPE&quot;, &quot;([+-]+)&quot;), //
 				new RegexOptional(new RegexLeaf(1, &quot;BACKCOLOR&quot;, &quot;\\[(#\\w+)\\]&quot;)), //
 				new RegexLeaf(1, &quot;SHAPE&quot;, &quot;(_)?&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L63">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L64">				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*)&quot;), RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L70">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="nc" id="L71">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc" id="L72">		final String stringColor = arg.get(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="nc" id="L73">		final String shape = arg.get(&quot;SHAPE&quot;, 0);</span>
+		// Depth is the marker count minus one; a '-' anywhere places the node on the left side, otherwise the right
+<span class="nc" id="L75">		final int level = type.length() - 1;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		final boolean right = type.contains(&quot;-&quot;) == false;</span>
+
+<span class="nc" id="L78">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L79">		sb.append(&quot;Adding a mindmap node at depth &quot;).append(level);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		sb.append(right ? &quot; on the right side&quot; : &quot; on the left side&quot;);</span>
+<span class="nc bnc" id="L81" title="All 4 branches missed.">		if (label != null &amp;&amp; label.isEmpty() == false)</span>
+<span class="nc" id="L82">			sb.append(&quot; labelled \&quot;&quot;).append(label).append(&quot;\&quot;&quot;);</span>
+		// fromDesc maps '_' to NONE (no box); the default (absent) is a box
+<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (&quot;_&quot;.equals(shape))</span>
+<span class="nc" id="L85">			sb.append(&quot; without a box outline&quot;);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">		if (stringColor != null)</span>
+<span class="nc" id="L87">			sb.append(&quot; with background color &quot;).append(stringColor);</span>
+<span class="nc" id="L88">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-<span class="nc" id="L69">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
-<span class="nc" id="L70">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
-<span class="nc" id="L71">		final String stringColor = arg.get(&quot;BACKCOLOR&quot;, 0);</span>
-<span class="nc" id="L72">		HColor backColor = null;</span>
-<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (stringColor != null) {</span>
-<span class="nc" id="L74">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
+<span class="nc" id="L94">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="nc" id="L95">		final String label = arg.get(&quot;LABEL&quot;, 0);</span>
+<span class="nc" id="L96">		final String stringColor = arg.get(&quot;BACKCOLOR&quot;, 0);</span>
+<span class="nc" id="L97">		HColor backColor = null;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (stringColor != null) {</span>
+<span class="nc" id="L99">			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);</span>
 		}
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		final boolean direction = type.contains(&quot;-&quot;) ? false : true;</span>
-<span class="nc" id="L77">		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(diagram.getPragma(), label),</span>
-<span class="nc" id="L78">				IdeaShape.fromDesc(arg.get(&quot;SHAPE&quot;, 0)), direction);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">		final boolean direction = type.contains(&quot;-&quot;) ? false : true;</span>
+<span class="nc" id="L102">		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(diagram.getPragma(), label),</span>
+<span class="nc" id="L103">				IdeaShape.fromDesc(arg.get(&quot;SHAPE&quot;, 0)), direction);</span>
 	}
 
 }

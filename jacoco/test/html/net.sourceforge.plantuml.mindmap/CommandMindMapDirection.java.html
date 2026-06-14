@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.mindmap;
 
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -49,11 +50,11 @@ public class CommandMindMapDirection extends SingleLineCommand2&lt;MindMapDiagra
     // ::remove folder when __HAXE__
 
 	public CommandMindMapDirection() {
-<span class="fc" id="L52">		super(getRegexConcat());</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L56">		return RegexConcat.build(CommandMindMapDirection.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandMindMapDirection.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;[^*#]*&quot;), //
 				new RegexLeaf(&quot;\\b&quot;), //
 				new RegexLeaf(1, &quot;DIRECTION&quot;, &quot;(left|right|top|bottom)&quot;), //
@@ -61,15 +62,22 @@ public class CommandMindMapDirection extends SingleLineCommand2&lt;MindMapDiagra
 				new RegexLeaf(&quot;[^*#]*&quot;), //
 				new RegexLeaf(1, &quot;(side|direction)&quot;), //
 				new RegexLeaf(&quot;[^*#]*&quot;), //
-<span class="fc" id="L64">				RegexLeaf.end());</span>
+<span class="fc" id="L65">				RegexLeaf.end());</span>
+	}
+
+	@Override
+	@Explain
+	protected String explainArg(LineLocation location, RegexResult arg) {
+<span class="nc" id="L71">		final String dir = arg.get(&quot;DIRECTION&quot;, 0);</span>
+<span class="nc" id="L72">		return &quot;Setting the default mindmap direction to &quot; + dir;</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(MindMapDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc" id="L69">		final String dir = arg.get(&quot;DIRECTION&quot;, 0);</span>
-<span class="nc" id="L70">		final Direction direction = Direction.lazzyValueOf(dir);</span>
-<span class="nc" id="L71">		diagram.setDefaultDirection(direction);</span>
-<span class="nc" id="L72">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L77">		final String dir = arg.get(&quot;DIRECTION&quot;, 0);</span>
+<span class="nc" id="L78">		final Direction direction = Direction.lazzyValueOf(dir);</span>
+<span class="nc" id="L79">		diagram.setDefaultDirection(direction);</span>
+<span class="nc" id="L80">		return CommandExecutionResult.ok();</span>
 	}
 
 }

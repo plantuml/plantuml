@@ -925,8 +925,8 @@ Total Classes: 5
 "net.sourceforge.plantuml.code.deflate" --> "java.lang"
 "net.sourceforge.plantuml.code.deflate" --> "java.util"
 
-class "net.sourceforge.plantuml.command" %lighten("red", 43.99999999999999) {
-Total Classes: 29
+class "net.sourceforge.plantuml.command" %lighten("red", 47) {
+Total Classes: 30
 }
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.command" --> "com.plantuml.ubrex.builder"
@@ -1591,12 +1591,11 @@ Total Classes: 17
 "net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.gantt.command" %lighten("red", 95) {
-Total Classes: 14
+Total Classes: 13
 }
 "net.sourceforge.plantuml.gantt.command" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.gantt.command" --> "com.plantuml.ubrex.builder"
 "net.sourceforge.plantuml.gantt.command" --> "java.lang"
-"net.sourceforge.plantuml.gantt.command" --> "java.time"
 "net.sourceforge.plantuml.gantt.command" --> "java.util"
 "net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.gantt.command" --> "net.sourceforge.plantuml.core"
@@ -2361,8 +2360,8 @@ Total Classes: 2
 "net.sourceforge.plantuml.mda" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.mda" --> "net.sourceforge.plantuml.api.mda.option2"
 
-class "net.sourceforge.plantuml.mindmap" %lighten("red", 96) {
-Total Classes: 12
+class "net.sourceforge.plantuml.mindmap" %lighten("red", 95) {
+Total Classes: 11
 }
 "net.sourceforge.plantuml.mindmap" --> "java.lang"
 "net.sourceforge.plantuml.mindmap" --> "java.util"
