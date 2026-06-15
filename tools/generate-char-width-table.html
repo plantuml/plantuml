@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+
+<div>
+  <label for="fontFamily">Font family: </label>
+  <select id="fontFamily">
+    <option value="serif">serif</option>
+    <option value="sans-serif" selected>sans-serif</option>
+    <option value="courier">courier</option>
+  </select>
+</div>
+
+<div id="output"></div>
+
+<script>
+function measureAdvanceOneChar(text, fontFamily, fontSize) {
+	  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	  svg.style.position = 'absolute';
+	  svg.style.visibility = 'hidden';
+	  document.body.appendChild(svg);
+	  var textEl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+	  textEl.setAttribute('font-family', fontFamily);
+	  textEl.setAttribute('font-size', fontSize);
+	  textEl.textContent = text;
+	  svg.appendChild(textEl);
+	  var advance = textEl.getComputedTextLength();
+	  document.body.removeChild(svg);
+	  return Math.round(advance * 10);
+	}
+
+
+function measureAdvanceOneUnicodeBlock(unicodeBlock, fontFamily, fontSize) {
+	  var base = unicodeBlock * 256;
+	  var result = [];
+
+	  for (var code = base; code < base + 256; code++) {
+	    var ch = String.fromCodePoint(code);
+	    var advance = measureAdvanceOneChar(ch, fontFamily, fontSize);
+	    result.push(advance);
+	  }
+	  return result;
+	}
+
+function mean(data) {
+    let sum = 0;
+    for (let i = 0; i < data.length; i++) {
+        sum += data[i];
+    }
+    return Math.round(sum / data.length);
+}
+
+// Blocks whose glyph widths we keep per-character.
+// All other blocks are collapsed to a single average value.
+var perCharBlocks = new Set([
+    0x00, // Basic Latin (0000–00FF)
+    0x01, // Latin-1 Supplement (0100–01FF)
+    0x02, // Latin Extended-A (0200–02FF)
+    0x03, // Greek and Coptic (0300–03FF)
+    0x04, // Cyrillic (0400–04FF)
+    0x05, // Hebrew (0500–05FF)
+    0x06, // Arabic (0600–06FF)
+    0x08, // Devanagari (0800–08FF)
+    0x0E, // Thai (0E00–0EFF)
+    0x20, // General Punctuation (2000–20FF)
+    0x21, // Currency Symbols, Letterlike Symbols, Number Forms, Arrows (2100–21FF)
+    0x22, // Mathematical Operators (2200–22FF)
+    0x24, // Enclosed Alphanumerics (2460–24FF)
+    0x25, // Box Drawing, Block Elements, Geometric Shapes (2500–25FF)
+    0x26, // Miscellaneous Symbols (2600–26FF)
+    0x27, // Dingbats (2700–27FF)
+    0x2E, // Miscellaneous Symbols and Pictographs part (2E00–2EFF)
+    0x30, // Hiragana / Katakana (3040–30FF)
+    0x32, // Enclosed CJK Letters and Months (3200–32FF)
+]);
+
+// CJK Unified Ideographs (4E00–9FFF): one block per 256 code points.
+for (var cjkBlock = 0x4E; cjkBlock <= 0x9F; cjkBlock++)
+    perCharBlocks.add(cjkBlock);
+
+function compressArray(data) {
+	var rle = compressRLE(data);
+	if (rle.length === 2)
+		return [rle[1]]
+	if (rle.length < 240)
+		return rle;
+	return data;
+	}
+
+function compressRLE(data) {
+	  if (data.length === 0) return [];
+
+	  var out = [];
+	  var current = data[0];
+	  var count = 1;
+
+	  for (var i = 1; i < data.length; i++) {
+	    if (data[i] === current) {
+	      count++;
+	    } else {
+	      out.push(count, current);
+	      current = data[i];
+	      count = 1;
+	    }
+	  }
+      out.push(count, current);
+
+	  return out;
+	}
+	
+	
+	
+function emitOneBlock(html, unicodeBlock, fontFamily, fontSize) {
+	  // Block title
+	  html.push('<code>// block ');
+	  html.push('0x' + unicodeBlock.toString(16).toUpperCase().padStart(2, '0')); // hex, 2 digits, uppercase
+	  html.push('</code><br>');
+
+	  html.push('<code>{');
+
+	  // Measure advances
+	  var values = measureAdvanceOneUnicodeBlock(unicodeBlock, fontFamily, fontSize);
+
+	  // Per-char blocks keep the full (RLE-compressed) table; others collapse to the mean.
+	  if (perCharBlocks.has(unicodeBlock)) {
+	    values = compressArray(values);
+	  } else {
+	    values = [mean(values)];
+	  }
+
+	  // Output values
+	  for (var i = 0; i < values.length; i++) {
+	    if (values[i] > 127) html.push('(byte)');
+	    html.push(values[i]);
+	    if (i < values.length - 1) {
+	      html.push(',');
+	    }
+	  }
+
+	  html.push('},</code>');
+	}
+	
+	
+function run() {
+	  var fontFamily = document.getElementById('fontFamily').value;
+	  var fontSize = 16;
+
+	  var output = document.getElementById('output');
+	  output.innerHTML = ""; // Clear first
+	  var block = 0;
+
+	  function processNextBlock() {
+	    if (block > 0xFE) return;
+
+	    var html = [];
+	    emitOneBlock(html, block, fontFamily, fontSize);
+	    html.push('<br>');
+	    output.innerHTML += html.join('');
+
+	    block++;
+	    setTimeout(processNextBlock, 0); // Yield to the browser between blocks
+	  }
+
+	  processNextBlock();
+	}
+
+document.getElementById('fontFamily').addEventListener('change', run);
+run();
+</script>
+</body>
+</html>
