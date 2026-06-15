@@ -48,6 +48,11 @@ import java.util.Arrays;
  * are XML-escaped, with the minimal escaping required for each context (text
  * content only needs {@code &} and {@code <}; attribute values additionally
  * need {@code "}).
+ * <p>
+ * Beyond elements, attributes and text, it can also emit comments, processing
+ * instructions, CDATA sections and raw (already-serialized) markup. Raw markup
+ * is the caller's responsibility to escape; this writer passes it through
+ * verbatim.
  */
 public class XmlWriter {
 
@@ -97,6 +102,65 @@ public class XmlWriter {
 		closePendingStartTag(false);
 		hasInlineContent = true;
 		escapeText(value);
+		return this;
+	}
+
+	/**
+	 * Emits an XML comment {@code <!-- ... -->}. The two-hyphen sequence
+	 * {@code --}, which is illegal inside a comment, is defanged by inserting a
+	 * space so the output stays well-formed.
+	 */
+	public XmlWriter comment(String value) {
+		closePendingStartTag(true);
+		indent(depth);
+		out.append("<!-- ");
+		if (value != null)
+			out.append(value.replace("--", "- -"));
+		out.append(" -->");
+		newline();
+		return this;
+	}
+
+	/**
+	 * Emits a processing instruction {@code <?target data?>}, e.g.
+	 * {@code <?plantuml version?>}.
+	 */
+	public XmlWriter processingInstruction(String target, String data) {
+		closePendingStartTag(true);
+		indent(depth);
+		out.append("<?").append(target);
+		if (data != null && data.length() > 0)
+			out.append(' ').append(data);
+		out.append("?>");
+		newline();
+		return this;
+	}
+
+	/**
+	 * Emits a CDATA section {@code <![CDATA[ ... ]]>}, used for embedded CSS and
+	 * scripts. The content is not escaped; the only illegal sequence {@code ]]>}
+	 * is split across two sections to keep the output well-formed.
+	 */
+	public XmlWriter cdata(String value) {
+		closePendingStartTag(true);
+		indent(depth);
+		out.append("<![CDATA[");
+		if (value != null)
+			out.append(value.replace("]]>", "]]]]><![CDATA[>"));
+		out.append("]]>");
+		newline();
+		return this;
+	}
+
+	/**
+	 * Emits already-serialized markup verbatim, with no escaping and no
+	 * indentation. Intended for splicing in pre-built SVG fragments (e.g. inlined
+	 * images). The caller is responsible for the well-formedness of {@code markup}.
+	 */
+	public XmlWriter raw(String markup) {
+		closePendingStartTag(true);
+		if (markup != null)
+			out.append(markup);
 		return this;
 	}
 
