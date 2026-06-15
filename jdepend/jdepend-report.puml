@@ -1481,6 +1481,22 @@ Total Classes: 3
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.error" --> "net.sourceforge.plantuml.text"
 
+class "net.sourceforge.plantuml.explain" %lighten("red", 100) {
+Total Classes: 4
+}
+"net.sourceforge.plantuml.explain" --> "java.io"
+"net.sourceforge.plantuml.explain" --> "java.lang"
+"net.sourceforge.plantuml.explain" --> "java.nio.charset"
+"net.sourceforge.plantuml.explain" --> "java.util"
+"net.sourceforge.plantuml.explain" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.explain" --> "net.sourceforge.plantuml.core"
+"net.sourceforge.plantuml.explain" --> "net.sourceforge.plantuml.klimt"
+"net.sourceforge.plantuml.explain" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.explain" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.explain" --> "net.sourceforge.plantuml.klimt.geom"
+"net.sourceforge.plantuml.explain" --> "net.sourceforge.plantuml.klimt.shape"
+"net.sourceforge.plantuml.explain" --> "net.sourceforge.plantuml.preproc"
+
 class "net.sourceforge.plantuml.file" %lighten("red", 75) {
 Total Classes: 1
 }
@@ -2339,14 +2355,13 @@ Total Classes: 13
 "net.sourceforge.plantuml.math" --> "org.w3c.dom"
 
 class "net.sourceforge.plantuml.mcp" %lighten("red", 100) {
-Total Classes: 4
+Total Classes: 3
 }
 "net.sourceforge.plantuml.mcp" --> "java.io"
 "net.sourceforge.plantuml.mcp" --> "java.lang"
 "net.sourceforge.plantuml.mcp" --> "java.nio.charset"
 "net.sourceforge.plantuml.mcp" --> "java.util"
 "net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml"
-"net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml.error"
 "net.sourceforge.plantuml.mcp" --> "net.sourceforge.plantuml.text"

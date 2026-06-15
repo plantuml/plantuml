@@ -165,13 +165,22 @@ final public class UmlSource {
 <span class="fc" id="L165">		return DiagramType.findStartTypes(source.get(0).getString());</span>
 	}
 
+	public Collection&lt;DiagramType&gt; getExplainTypes() {
+<span class="fc" id="L169">		String start = source.get(0).getString();</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (start.startsWith(&quot;@startexplain&quot;) == false)</span>
+<span class="fc" id="L171">			return null;</span>
+
+<span class="nc" id="L173">		start = start.replace(&quot;@startexplain&quot;, &quot;@start&quot;);</span>
+<span class="nc" id="L174">		return DiagramType.findStartTypes(start);</span>
+	}
+
 	/**
 	 * Allows to iterator over the source.
 	 *
 	 * @return a iterator that allow counting line number.
 	 */
 	public IteratorCounter2 iterator2() {
-<span class="fc" id="L174">		return new IteratorCounter2Impl(source);</span>
+<span class="fc" id="L183">		return new IteratorCounter2Impl(source);</span>
 	}
 
 //	public Iterator&lt;StringLocated&gt; iteratorRaw() {
@@ -184,7 +193,7 @@ final public class UmlSource {
 	 */
 	@Deprecated()
 	public String getPlainString() {
-<span class="nc" id="L187">		return getPlainString(&quot;\n&quot;);</span>
+<span class="nc" id="L196">		return getPlainString(&quot;\n&quot;);</span>
 	}
 
 	/**
@@ -193,46 +202,46 @@ final public class UmlSource {
 	 * @return the whole diagram source
 	 */
 	public String getPlainString(String separator) {
-<span class="fc" id="L196">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L197" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
-<span class="fc" id="L198">			sb.append(s.getString());</span>
-<span class="fc" id="L199">			sb.append(separator);</span>
-<span class="fc" id="L200">		}</span>
-<span class="fc" id="L201">		return sb.toString();</span>
-	}
-
-	public String getRawString(String separator) {
 <span class="fc" id="L205">		final StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L206" title="All 2 branches covered.">		for (StringLocated s : rawSource) {</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
 <span class="fc" id="L207">			sb.append(s.getString());</span>
 <span class="fc" id="L208">			sb.append(separator);</span>
 <span class="fc" id="L209">		}</span>
 <span class="fc" id="L210">		return sb.toString();</span>
 	}
 
-	public long seed() {
-<span class="fc bfc" id="L214" title="All 2 branches covered.">		if (seedCacheValid)</span>
-<span class="fc" id="L215">			return seedCache;</span>
+	public String getRawString(String separator) {
+<span class="fc" id="L214">		final StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		for (StringLocated s : rawSource) {</span>
+<span class="fc" id="L216">			sb.append(s.getString());</span>
+<span class="fc" id="L217">			sb.append(separator);</span>
+<span class="fc" id="L218">		}</span>
+<span class="fc" id="L219">		return sb.toString();</span>
+	}
 
-<span class="fc" id="L217">		long h = 1125899906842597L; // prime</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">		for (StringLocated sl : source) {</span>
-<span class="fc" id="L219">		    h = 31 * h + sl.getString().hashCode();</span>
-<span class="fc" id="L220">		    h = 31 * h + '\n';</span>
-<span class="fc" id="L221">		}</span>
-<span class="fc" id="L222">		seedCache = h;</span>
-<span class="fc" id="L223">		seedCacheValid = true;</span>
-<span class="fc" id="L224">		return h;</span>
+	public long seed() {
+<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (seedCacheValid)</span>
+<span class="fc" id="L224">			return seedCache;</span>
+
+<span class="fc" id="L226">		long h = 1125899906842597L; // prime</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">		for (StringLocated sl : source) {</span>
+<span class="fc" id="L228">			h = 31 * h + sl.getString().hashCode();</span>
+<span class="fc" id="L229">			h = 31 * h + '\n';</span>
+<span class="fc" id="L230">		}</span>
+<span class="fc" id="L231">		seedCache = h;</span>
+<span class="fc" id="L232">		seedCacheValid = true;</span>
+<span class="fc" id="L233">		return h;</span>
 	}
 
 	/**
 	 * Return the number of line in the diagram.
 	 */
 	public int getTotalLineCount() {
-<span class="fc" id="L231">		return source.size();</span>
+<span class="fc" id="L240">		return source.size();</span>
 	}
 
 	public boolean getTotalLineCountLessThan5() {
-<span class="fc bfc" id="L235" title="All 2 branches covered.">		return getTotalLineCount() &lt; 5;</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">		return getTotalLineCount() &lt; 5;</span>
 	}
 
 	/**
@@ -241,74 +250,74 @@ final public class UmlSource {
 	 *
 	 * @return &lt;code&gt;true&lt;/code&gt; if the diagram does not contain information.
 	 */
-<span class="fc" id="L244">	private static final Pattern COMMENT_LINE = Pattern.compile(&quot;\\s*'.*&quot;);</span>
+<span class="fc" id="L253">	private static final Pattern COMMENT_LINE = Pattern.compile(&quot;\\s*'.*&quot;);</span>
 
 	public boolean isEmpty() {
-<span class="fc bfc" id="L247" title="All 2 branches covered.">		for (StringLocated sl : source) {</span>
-<span class="fc" id="L248">			final String line = sl.getString();</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">		for (StringLocated sl : source) {</span>
+<span class="fc" id="L257">			final String line = sl.getString();</span>
 
-<span class="fc bfc" id="L250" title="All 2 branches covered.">			if (StartUtils.isStartDirective(line))</span>
-<span class="fc" id="L251">				continue;</span>
-<span class="fc bfc" id="L252" title="All 2 branches covered.">			if (StartUtils.isEndDirective(line))</span>
-<span class="fc" id="L253">				continue;</span>
-<span class="pc bpc" id="L254" title="1 of 2 branches missed.">			if (COMMENT_LINE.matcher(line).matches())</span>
-<span class="nc" id="L255">				continue;</span>
-<span class="fc bfc" id="L256" title="All 2 branches covered.">			if (StringUtils.trin(line).length() != 0)</span>
-<span class="fc" id="L257">				return false;</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">			if (StartUtils.isStartDirective(line))</span>
+<span class="fc" id="L260">				continue;</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">			if (StartUtils.isEndDirective(line))</span>
+<span class="fc" id="L262">				continue;</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">			if (COMMENT_LINE.matcher(line).matches())</span>
+<span class="nc" id="L264">				continue;</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">			if (StringUtils.trin(line).length() != 0)</span>
+<span class="fc" id="L266">				return false;</span>
 
-<span class="fc" id="L259">		}</span>
-<span class="fc" id="L260">		return true;</span>
+<span class="fc" id="L268">		}</span>
+<span class="fc" id="L269">		return true;</span>
 	}
 
-<span class="fc" id="L263">	private static final Pattern2 TITLE = Pattern2.cmpile(&quot;^[%s]*title[%s]+(.+)$&quot;);</span>
+<span class="fc" id="L272">	private static final Pattern2 TITLE = Pattern2.cmpile(&quot;^[%s]*title[%s]+(.+)$&quot;);</span>
 
 	/**
 	 * Retrieve the title, if defined in the diagram source. Never return
 	 * &lt;code&gt;null&lt;/code&gt;.
 	 */
 	public Display getTitle() {
-<span class="fc bfc" id="L270" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
-<span class="fc" id="L271">			final Matcher2 m = TITLE.matcher(s.getString(), 0);</span>
-<span class="fc" id="L272">			final boolean ok = m.matches();</span>
-<span class="fc bfc" id="L273" title="All 2 branches covered.">			if (ok)</span>
-<span class="fc" id="L274">				return Display.create(m.group(1));</span>
-<span class="fc" id="L275">		}</span>
-<span class="fc" id="L276">		return Display.empty();</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">		for (StringLocated s : source) {</span>
+<span class="fc" id="L280">			final Matcher2 m = TITLE.matcher(s.getString(), 0);</span>
+<span class="fc" id="L281">			final boolean ok = m.matches();</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">			if (ok)</span>
+<span class="fc" id="L283">				return Display.create(m.group(1));</span>
+<span class="fc" id="L284">		}</span>
+<span class="fc" id="L285">		return Display.empty();</span>
 	}
 
 	public boolean isStartDef() {
-<span class="nc" id="L280">		return source.get(0).getString().startsWith(&quot;@startdef&quot;);</span>
+<span class="nc" id="L289">		return source.get(0).getString().startsWith(&quot;@startdef&quot;);</span>
 	}
 
-<span class="fc" id="L283">	private static final Pattern ID = Pattern.compile(&quot;id=([\\w]+)\\b&quot;);</span>
+<span class="fc" id="L292">	private static final Pattern ID = Pattern.compile(&quot;id=([\\w]+)\\b&quot;);</span>
 
 	public String getId() {
-<span class="fc" id="L286">		final Matcher m = ID.matcher(source.get(0).getString());</span>
-<span class="fc bfc" id="L287" title="All 2 branches covered.">		if (m.find())</span>
-<span class="fc" id="L288">			return m.group(1);</span>
+<span class="fc" id="L295">		final Matcher m = ID.matcher(source.get(0).getString());</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">		if (m.find())</span>
+<span class="fc" id="L297">			return m.group(1);</span>
 
-<span class="fc" id="L290">		return null;</span>
+<span class="fc" id="L299">		return null;</span>
 	}
 
 	public PathSystem getPathSystem() {
-<span class="fc" id="L294">		return pathSystem;</span>
+<span class="fc" id="L303">		return pathSystem;</span>
 	}
 
 	public static final String BASE64_TAG_START = AtomImg.DATA_IMAGE_PNG_BASE64;
 	public static final String BASE64_TAG_REPLACEMENT = &quot;data:image/png;md5,&quot;;
-<span class="fc" id="L299">	private static final BoyerMoore BASE64_BM = new BoyerMoore(BASE64_TAG_START);</span>
+<span class="fc" id="L308">	private static final BoyerMoore BASE64_BM = new BoyerMoore(BASE64_TAG_START);</span>
 
 	public void patchBase64() {
-<span class="fc" id="L302">		seedCacheValid = false;</span>
-<span class="fc bfc" id="L303" title="All 2 branches covered.">		for (int i = 0; i &lt; source.size(); i++) {</span>
-<span class="fc" id="L304">			final StringLocated original = source.get(i);</span>
-<span class="fc" id="L305">			final String line = original.getString();</span>
-<span class="fc" id="L306">			final String patched = patchBase64Line(BASE64_BM, line);</span>
-<span class="fc bfc" id="L307" title="All 2 branches covered.">			if (patched != line)</span>
-<span class="fc" id="L308">				source.set(i, new StringLocated(patched, original.getLocation(), original.getPreprocessorError()));</span>
+<span class="fc" id="L311">		seedCacheValid = false;</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">		for (int i = 0; i &lt; source.size(); i++) {</span>
+<span class="fc" id="L313">			final StringLocated original = source.get(i);</span>
+<span class="fc" id="L314">			final String line = original.getString();</span>
+<span class="fc" id="L315">			final String patched = patchBase64Line(BASE64_BM, line);</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">			if (patched != line)</span>
+<span class="fc" id="L317">				source.set(i, new StringLocated(patched, original.getLocation(), original.getPreprocessorError()));</span>
 
 		}
-<span class="fc" id="L311">	}</span>
+<span class="fc" id="L320">	}</span>
 
 	/**
 	 * Replaces inline base64 PNG images with a compact MD5 digest form.
@@ -321,46 +330,46 @@ final public class UmlSource {
 	 * critical in TeaVM where the JS regex engine has a limited call stack.
 	 */
 	public String patchBase64Line(BoyerMoore bm, String line) {
-<span class="fc" id="L324">		int from = 0;</span>
-<span class="fc" id="L325">		StringBuilder sb = null;</span>
+<span class="fc" id="L333">		int from = 0;</span>
+<span class="fc" id="L334">		StringBuilder sb = null;</span>
 		while (true) {
-<span class="fc" id="L327">			final int start = bm.searchIn(line, from);</span>
-<span class="fc bfc" id="L328" title="All 2 branches covered.">			if (start == -1)</span>
-<span class="fc" id="L329">				break;</span>
+<span class="fc" id="L336">			final int start = bm.searchIn(line, from);</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">			if (start == -1)</span>
+<span class="fc" id="L338">				break;</span>
 
-<span class="fc" id="L331">			final int dataStart = start + BASE64_TAG_START.length();</span>
+<span class="fc" id="L340">			final int dataStart = start + BASE64_TAG_START.length();</span>
 
-<span class="fc bfc" id="L333" title="All 2 branches covered.">			if (sb == null)</span>
-<span class="fc" id="L334">				sb = new StringBuilder();</span>
+<span class="fc bfc" id="L342" title="All 2 branches covered.">			if (sb == null)</span>
+<span class="fc" id="L343">				sb = new StringBuilder();</span>
 
 			// Scan forward to find the end of legitimate base64 characters
-<span class="fc" id="L337">			int base64End = dataStart;</span>
-<span class="pc bpc" id="L338" title="1 of 4 branches missed.">			while (base64End &lt; line.length() &amp;&amp; isBase64Char(line.charAt(base64End)))</span>
-<span class="fc" id="L339">				base64End++;</span>
+<span class="fc" id="L346">			int base64End = dataStart;</span>
+<span class="pc bpc" id="L347" title="1 of 4 branches missed.">			while (base64End &lt; line.length() &amp;&amp; isBase64Char(line.charAt(base64End)))</span>
+<span class="fc" id="L348">				base64End++;</span>
 
-<span class="fc" id="L341">			final String base64Data = line.substring(dataStart, base64End);</span>
-<span class="fc" id="L342">			final String md5 = SignatureUtils.getMD5Hex(base64Data);</span>
-<span class="fc" id="L343">			md5map.put(md5, base64Data);</span>
+<span class="fc" id="L350">			final String base64Data = line.substring(dataStart, base64End);</span>
+<span class="fc" id="L351">			final String md5 = SignatureUtils.getMD5Hex(base64Data);</span>
+<span class="fc" id="L352">			md5map.put(md5, base64Data);</span>
 
-<span class="fc" id="L345">			sb.append(line, from, start);</span>
-<span class="fc" id="L346">			sb.append(BASE64_TAG_REPLACEMENT);</span>
-<span class="fc" id="L347">			sb.append(md5);</span>
-<span class="fc" id="L348">			from = base64End;</span>
-<span class="fc" id="L349">		}</span>
-<span class="fc bfc" id="L350" title="All 2 branches covered.">		if (sb == null)</span>
-<span class="fc" id="L351">			return line;</span>
+<span class="fc" id="L354">			sb.append(line, from, start);</span>
+<span class="fc" id="L355">			sb.append(BASE64_TAG_REPLACEMENT);</span>
+<span class="fc" id="L356">			sb.append(md5);</span>
+<span class="fc" id="L357">			from = base64End;</span>
+<span class="fc" id="L358">		}</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">		if (sb == null)</span>
+<span class="fc" id="L360">			return line;</span>
 
-<span class="fc" id="L353">		sb.append(line, from, line.length());</span>
-<span class="fc" id="L354">		return sb.toString();</span>
+<span class="fc" id="L362">		sb.append(line, from, line.length());</span>
+<span class="fc" id="L363">		return sb.toString();</span>
 	}
 
 	private static boolean isBase64Char(char c) {
-<span class="fc bfc" id="L358" title="All 18 branches covered.">		return (c &gt;= 'A' &amp;&amp; c &lt;= 'Z') || (c &gt;= 'a' &amp;&amp; c &lt;= 'z') || (c &gt;= '0' &amp;&amp; c &lt;= '9') || c == '+' || c == '/'</span>
+<span class="fc bfc" id="L367" title="All 18 branches covered.">		return (c &gt;= 'A' &amp;&amp; c &lt;= 'Z') || (c &gt;= 'a' &amp;&amp; c &lt;= 'z') || (c &gt;= '0' &amp;&amp; c &lt;= '9') || c == '+' || c == '/'</span>
 				|| c == '=';
 	}
 
 	public Map&lt;String, String&gt; getMd5map() {
-<span class="fc" id="L363">		return md5map;</span>
+<span class="fc" id="L372">		return md5map;</span>
 	}
 
 }

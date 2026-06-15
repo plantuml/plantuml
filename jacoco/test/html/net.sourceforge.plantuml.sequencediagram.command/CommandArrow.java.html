@@ -234,13 +234,13 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="pc bpc" id="L234" title="2 of 4 branches missed.">		if (dressing1.contains(&quot;o&quot;) || dressing2.contains(&quot;o&quot;))</span>
 <span class="nc" id="L235">			sb.append(&quot;, with a circle decoration&quot;);</span>
 
-//		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);
-//		if (arrowStyle != null &amp;&amp; arrowStyle.isEmpty() == false)
-//			sb.append(&quot;, style [&quot;).append(arrowStyle).append(&quot;]&quot;);
-//
-//		final String message = arg.get(&quot;MESSAGE&quot;, 0);
-//		if (message != null &amp;&amp; message.isEmpty() == false)
-//			sb.append(&quot;, labelled \&quot;&quot;).append(message).append(&quot;\&quot;&quot;);
+<span class="fc" id="L237">		final String arrowStyle = arg.getLazzy(&quot;ARROW_STYLE&quot;, 0);</span>
+<span class="pc bpc" id="L238" title="3 of 4 branches missed.">		if (arrowStyle != null &amp;&amp; arrowStyle.isEmpty() == false)</span>
+<span class="nc" id="L239">			sb.append(&quot;, style [&quot;).append(arrowStyle).append(&quot;]&quot;);</span>
+
+<span class="fc" id="L241">		final String message = arg.get(&quot;MESSAGE&quot;, 0);</span>
+<span class="pc bpc" id="L242" title="1 of 4 branches missed.">		if (message != null &amp;&amp; message.isEmpty() == false)</span>
+<span class="fc" id="L243">			sb.append(&quot;, labelled \&quot;&quot;).append(message).append(&quot;\&quot;&quot;);</span>
 
 		// Activation specifier (++, --, **, !!, ...) drives the life line.
 <span class="fc" id="L246">		final String activation = arg.get(&quot;ACTIVATION&quot;, 0);</span>

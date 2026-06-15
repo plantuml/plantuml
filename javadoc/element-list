@@ -85,6 +85,7 @@ net.sourceforge.plantuml.elk.proxy.graph.util
 net.sourceforge.plantuml.emoji
 net.sourceforge.plantuml.emoji.data
 net.sourceforge.plantuml.error
+net.sourceforge.plantuml.explain
 net.sourceforge.plantuml.file
 net.sourceforge.plantuml.filesdiagram
 net.sourceforge.plantuml.flashcode

@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.explain.Explanation;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -56,48 +57,48 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 
 	protected PSystemSingleLineFactory() {
 		// This is a hack for &quot;@startuml&quot;
-<span class="fc" id="L59">		super(DiagramType.SEQUENCE);</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L60">		super(DiagramType.SEQUENCE);</span>
+<span class="fc" id="L61">	}</span>
 
 	@Override
 	public List&lt;Explanation&gt; explain(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
-<span class="nc" id="L65">		throw new UnsupportedOperationException(&quot;wip &quot; + getClass());</span>
+<span class="nc" id="L66">		throw new UnsupportedOperationException(&quot;wip &quot; + getClass());</span>
 	}
 
 	@Override
 	final public Diagram createSystem(PathSystem pathSystem, UmlSource source, Previous previous,
 			PreprocessingArtifact preprocessing) {
 
-<span class="fc" id="L72">		source = source.removeInitialNoise();</span>
+<span class="fc" id="L73">		source = source.removeInitialNoise();</span>
 
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (source.getTotalLineCount() != 3)</span>
-<span class="fc" id="L75">			return null;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (source.getTotalLineCount() != 3)</span>
+<span class="fc" id="L76">			return null;</span>
 
-<span class="fc" id="L77">		final IteratorCounter2 it = source.iterator2();</span>
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (source.isEmpty()) {</span>
-<span class="nc" id="L79">			final StringLocated location = it.next();</span>
-<span class="nc" id="L80">			return buildEmptyError(source, location, it.getTrace(), preprocessing);</span>
+<span class="fc" id="L78">		final IteratorCounter2 it = source.iterator2();</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (source.isEmpty()) {</span>
+<span class="nc" id="L80">			final StringLocated location = it.next();</span>
+<span class="nc" id="L81">			return buildEmptyError(source, location, it.getTrace(), preprocessing);</span>
 		}
 
-<span class="fc" id="L83">		final StringLocated startLine = it.next();</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (StartUtils.isStartDirective(startLine.getString()) == false)</span>
-<span class="nc" id="L85">			throw new UnsupportedOperationException();</span>
+<span class="fc" id="L84">		final StringLocated startLine = it.next();</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (StartUtils.isStartDirective(startLine.getString()) == false)</span>
+<span class="nc" id="L86">			throw new UnsupportedOperationException();</span>
 
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (it.hasNext() == false)</span>
-<span class="nc" id="L88">			return buildEmptyError(source, startLine, it.getTrace(), preprocessing);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (it.hasNext() == false)</span>
+<span class="nc" id="L89">			return buildEmptyError(source, startLine, it.getTrace(), preprocessing);</span>
 
-<span class="fc" id="L90">		final StringLocated s = it.next();</span>
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (StartUtils.isEndDirective(s.getString()))</span>
-<span class="nc" id="L92">			return buildEmptyError(source, s, it.getTrace(), preprocessing);</span>
+<span class="fc" id="L91">		final StringLocated s = it.next();</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">		if (StartUtils.isEndDirective(s.getString()))</span>
+<span class="nc" id="L93">			return buildEmptyError(source, s, it.getTrace(), preprocessing);</span>
 
-<span class="fc" id="L94">		final Diagram sys = executeLine(source, s.getString(), preprocessing);</span>
-<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (sys == null) {</span>
-<span class="fc" id="L96">			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, &quot;Syntax Error?&quot;, 0, s, getDiagramType());</span>
+<span class="fc" id="L95">		final Diagram sys = executeLine(source, s.getString(), preprocessing);</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (sys == null) {</span>
+<span class="fc" id="L97">			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, &quot;Syntax Error?&quot;, 0, s, getDiagramType());</span>
 			// return PSystemErrorUtils.buildV1(source, err, null);
-<span class="fc" id="L98">			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);</span>
+<span class="fc" id="L99">			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);</span>
 		}
-<span class="fc" id="L100">		return sys;</span>
+<span class="fc" id="L101">		return sys;</span>
 
 	}
 
