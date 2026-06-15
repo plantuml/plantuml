@@ -1,6 +1,6 @@
 {
   "name": "@plantuml/mcp-js",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Pure Node/JS Model Context Protocol (MCP) server for PlantUML, powered by the TeaVM-compiled engine. No Java runtime required.",
   "type": "module",
   "bin": {

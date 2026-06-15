@@ -61,7 +61,7 @@ To avoid surprise updates, pin a specific version:
   "mcpServers": {
     "plantuml-js": {
       "command": "npx",
-      "args": ["-y", "@plantuml/mcp-js@0.1.1"]
+      "args": ["-y", "@plantuml/mcp-js@0.1.3"]
     }
   }
 }
@@ -87,7 +87,7 @@ a client to connect — that is normal, a stdio server is driven by its client.
 | ------------------ | ----------- | ------------------------------------------------ |
 | `plantuml_version` | available   | Returns the version of the embedded PlantUML.    |
 | `check_syntax`     | available   | Validates a diagram and reports syntax errors.   |
-| `diagram_explain`  | planned     | Explains a diagram line by line.                 |
+| `diagram_explain`  | available   | Explains a diagram line by line.                 |
 
 **`plantuml_version`** takes no parameters and returns the version string.
 
@@ -120,6 +120,26 @@ An invalid one reports the offending line and message:
 
 The failure fields are `errorLineNumber` (1-based), `errorMessage`, `errorLine`
 (the offending source line, when available) and `errorContext`.
+
+**`diagram_explain`** takes a single `source` parameter and explains how the
+diagram is parsed, line by line. It returns a JSON array of objects, each with
+`input` (the source line(s) that produced the explanation), `explain` (a
+human-readable explanation) and `line` (1-based line number, when available).
+For example:
+
+```
+@startuml
+Alice -> Bob
+@enduml
+```
+
+returns something like:
+
+```json
+[
+  { "input": "Alice -> Bob", "explain": "...", "line": 2 }
+]
+```
 
 ## Scope and limitations
 
