@@ -53,17 +53,11 @@ import java.util.Map;
  * Attribute order is preserved (insertion order) to keep the output
  * deterministic.
  */
-public class XmlNode {
-
-	// A child of an element: either a nested element or a leaf (text, comment,
-	// processing instruction, CDATA section or raw markup).
-	private interface Child {
-		void writeTo(XmlWriter w);
-	}
+public class XmlNode implements XmlContent {
 
 	private final String tagName;
 	private final Map<String, String> attributes = new LinkedHashMap<>();
-	private final List<Child> children = new ArrayList<>();
+	private final List<XmlContent> children = new ArrayList<>();
 
 	XmlNode(String tagName) {
 		this.tagName = tagName;
@@ -91,19 +85,19 @@ public class XmlNode {
 	}
 
 	public void appendText(String value) {
-		children.add(w -> w.text(value));
+		children.add(XmlLeaf.text(value));
 	}
 
 	public void appendComment(String value) {
-		children.add(w -> w.comment(value));
+		children.add(XmlLeaf.comment(value));
 	}
 
 	public void appendProcessingInstruction(String target, String data) {
-		children.add(w -> w.processingInstruction(target, data));
+		children.add(XmlLeaf.processingInstruction(target, data));
 	}
 
 	public void appendCData(String value) {
-		children.add(w -> w.cdata(value));
+		children.add(XmlLeaf.cdata(value));
 	}
 
 	/**
@@ -111,7 +105,7 @@ public class XmlNode {
 	 * inlined SVG images.
 	 */
 	public void appendRaw(String markup) {
-		children.add(w -> w.raw(markup));
+		children.add(XmlLeaf.raw(markup));
 	}
 
 	/**
@@ -119,16 +113,17 @@ public class XmlNode {
 	 * Mirrors {@code org.w3c.dom.Node.getFirstChild()}, used only to test whether
 	 * an element is empty (so empty groups/links can be dropped).
 	 */
-	public Object getFirstChild() {
+	public XmlContent getFirstChild() {
 		return children.isEmpty() ? null : children.get(0);
 	}
 
 	/** Serializes this element and its subtree into the given writer. */
+	@Override
 	public void writeTo(XmlWriter w) {
 		w.startElement(tagName);
 		for (Map.Entry<String, String> ent : attributes.entrySet())
 			w.attribute(ent.getKey(), ent.getValue());
-		for (Child child : children)
+		for (XmlContent child : children)
 			child.writeTo(w);
 		w.endElement();
 	}
