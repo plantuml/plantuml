@@ -54,7 +54,8 @@ public class UText implements UShape {
 	}
 
 	private UText(String text, FontConfiguration font, int orientation) {
-		if (TeaVM.a()) assert text.indexOf('\t') == -1;
+		if (TeaVM.a())
+			assert text.indexOf('\t') == -1;
 		this.text = text.replace(Jaws.BLOCK_E1_NEWLINE, '\u21b5').replace(Jaws.BLOCK_E1_BREAKLINE, '\u23ce');
 		this.font = font;
 		this.orientation = orientation;
@@ -76,11 +77,9 @@ public class UText implements UShape {
 		return font;
 	}
 
-	// ::comment when __HAXE__
 	public double getDescent(StringBounder stringBounder) {
 		return stringBounder.getDescent(font.getFont(), text);
 	}
-	// ::done
 
 	public final int getOrientation() {
 		return orientation;

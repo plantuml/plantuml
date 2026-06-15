@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.cheneer.ChenEerDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
-import net.sourceforge.plantuml.command.Explanation;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -75,6 +74,8 @@ import net.sourceforge.plantuml.emoji.PSystemListEmojiFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
+import net.sourceforge.plantuml.explain.Explanation;
+import net.sourceforge.plantuml.explain.PSystemExplain;
 import net.sourceforge.plantuml.filesdiagram.FilesDiagramFactory;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
@@ -241,7 +242,12 @@ public class PSystemBuilder {
 
 			umlSource.patchBase64();
 
-			final Collection<DiagramType> diagramTypes = umlSource.getDiagramTypes();
+			final Collection<DiagramType> explainTypes = umlSource.getExplainTypes();
+			final Collection<DiagramType> diagramTypes;
+			if (explainTypes == null)
+				diagramTypes = umlSource.getDiagramTypes();
+			else
+				diagramTypes = explainTypes;
 
 			final UgDiagram basicCheck = PSystemErrorUtils.checkBasicError(diagramTypes, source, preprocessing,
 					umlSource);
@@ -249,15 +255,20 @@ public class PSystemBuilder {
 				return basicCheck;
 
 			final List<PSystemError> errors = new ArrayList<>();
-			for (PSystemFactory systemFactory : factories) {
-				if (!diagramTypes.contains(systemFactory.getDiagramType()))
+			for (PSystemFactory f : factories) {
+				if (!diagramTypes.contains(f.getDiagramType()))
 					continue;
 
 				try {
 					// WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
-					final Diagram sys = systemFactory.createSystem(pathSystem, umlSource, previous, preprocessing);
+					final Diagram sys = f.createSystem(pathSystem, umlSource, previous, preprocessing);
 					if (isOk(sys)) {
 						result = sys;
+						if (explainTypes != null) {
+							final List<Explanation> explanations = f.explain(pathSystem, umlSource, previous,
+									preprocessing);
+							return new PSystemExplain(umlSource, preprocessing, explanations);
+						}
 						return sys;
 					}
 					errors.add((PSystemError) sys);

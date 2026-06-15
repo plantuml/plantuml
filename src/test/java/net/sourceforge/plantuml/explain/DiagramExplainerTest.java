@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.mcp;
+package net.sourceforge.plantuml.explain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-
-import net.sourceforge.plantuml.command.Explanation;
 
 class DiagramExplainerTest {
 
@@ -47,7 +45,7 @@ class DiagramExplainerTest {
 								""";
 		final List<Explanation> result = explainer.explain(source);
 		assertEquals(
-				"[[actor Alice] ==> Declaring actor 'Alice', [Alice -> Bob : hello] ==> Message from 'Alice' to 'Bob']",
+				"[[actor Alice] ==> Declaring actor 'Alice', [Alice -> Bob : hello] ==> Message from 'Alice' to 'Bob', labelled \"hello\"]",
 				result.toString());
 	}
 

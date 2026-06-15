@@ -6,8 +6,8 @@ import java.util.List;
 import org.teavm.jso.JSExport;
 import org.teavm.jso.JSObject;
 
-import net.sourceforge.plantuml.command.Explanation;
-import net.sourceforge.plantuml.mcp.DiagramExplainer;
+import net.sourceforge.plantuml.explain.DiagramExplainer;
+import net.sourceforge.plantuml.explain.Explanation;
 import net.sourceforge.plantuml.mcp.McpResult;
 import net.sourceforge.plantuml.mcp.SyntaxChecker;
 import net.sourceforge.plantuml.utils.LineLocation;

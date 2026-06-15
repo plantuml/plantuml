@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,37 +30,58 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.mcp;
+package net.sourceforge.plantuml.explain;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.plantuml.BlockUml;
-import net.sourceforge.plantuml.SourceStringReader;
-import net.sourceforge.plantuml.command.Explanation;
+import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-public class DiagramExplainer {
+public class Explanation {
 
-	public List<Explanation> explain(String source) throws IOException {
-		if (source.startsWith("@start") == false)
-			return Arrays.asList(
-					Explanation.ofError("The input must start with a @start... directive (for example @startuml)"));
+	private final List<String> input;
+	private final String explain;
+	private final LineLocation location;
 
-		final SourceStringReader ss = new SourceStringReader(source, UTF_8);
-		final List<BlockUml> blocks = ss.getBlocks();
-		if (blocks.size() != 1)
-			return Arrays.asList(Explanation.ofError("Expected exactly one diagram in the source"));
+	public Explanation(BlocLines blocLines, String explain) {
 
-		final BlockUml blockUml = blocks.get(0);
+		if (blocLines == null) {
+			this.input = Collections.emptyList();
+			this.location = null;
+		} else {
+			this.input = blocLines.asList();
+			this.location = blocLines.getLocation();
 
-		return blockUml.explain();
+		}
+		this.explain = explain;
+	}
 
+	public static Explanation ofError(String error) {
+		return new Explanation(null, error);
+	}
+
+	@Override
+	public String toString() {
+		if (input == null)
+			return explain;
+
+		return input + " ==> " + explain;
+	}
+
+	public List<String> getInput() {
+		return Collections.unmodifiableList(input);
+	}
+
+	public String getExplain() {
+		return explain;
+	}
+
+	public LineLocation getLocation() {
+		return location;
 	}
 
 }

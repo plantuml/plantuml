@@ -234,13 +234,13 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		if (dressing1.contains("o") || dressing2.contains("o"))
 			sb.append(", with a circle decoration");
 
-//		final String arrowStyle = arg.getLazzy("ARROW_STYLE", 0);
-//		if (arrowStyle != null && arrowStyle.isEmpty() == false)
-//			sb.append(", style [").append(arrowStyle).append("]");
-//
-//		final String message = arg.get("MESSAGE", 0);
-//		if (message != null && message.isEmpty() == false)
-//			sb.append(", labelled \"").append(message).append("\"");
+		final String arrowStyle = arg.getLazzy("ARROW_STYLE", 0);
+		if (arrowStyle != null && arrowStyle.isEmpty() == false)
+			sb.append(", style [").append(arrowStyle).append("]");
+
+		final String message = arg.get("MESSAGE", 0);
+		if (message != null && message.isEmpty() == false)
+			sb.append(", labelled \"").append(message).append("\"");
 
 		// Activation specifier (++, --, **, !!, ...) drives the life line.
 		final String activation = arg.get("ACTIVATION", 0);

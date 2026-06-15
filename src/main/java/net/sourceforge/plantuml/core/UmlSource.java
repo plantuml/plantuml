@@ -165,6 +165,15 @@ final public class UmlSource {
 		return DiagramType.findStartTypes(source.get(0).getString());
 	}
 
+	public Collection<DiagramType> getExplainTypes() {
+		String start = source.get(0).getString();
+		if (start.startsWith("@startexplain") == false)
+			return null;
+
+		start = start.replace("@startexplain", "@start");
+		return DiagramType.findStartTypes(start);
+	}
+
 	/**
 	 * Allows to iterator over the source.
 	 *
@@ -216,8 +225,8 @@ final public class UmlSource {
 
 		long h = 1125899906842597L; // prime
 		for (StringLocated sl : source) {
-		    h = 31 * h + sl.getString().hashCode();
-		    h = 31 * h + '\n';
+			h = 31 * h + sl.getString().hashCode();
+			h = 31 * h + '\n';
 		}
 		seedCache = h;
 		seedCacheValid = true;

@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.chart.ChartDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
-import net.sourceforge.plantuml.command.Explanation;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -58,6 +57,8 @@ import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
 import net.sourceforge.plantuml.error.PSystemUnsupported;
+import net.sourceforge.plantuml.explain.Explanation;
+import net.sourceforge.plantuml.explain.PSystemExplain;
 import net.sourceforge.plantuml.gantt.GanttDiagramFactory;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagramFactory;
@@ -164,7 +165,12 @@ public class PSystemBuilder2 {
 
 		umlSource.patchBase64();
 
-		final Collection<DiagramType> diagramTypes = umlSource.getDiagramTypes();
+		final Collection<DiagramType> explainTypes = umlSource.getExplainTypes();
+		final Collection<DiagramType> diagramTypes;
+		if (explainTypes == null)
+			diagramTypes = umlSource.getDiagramTypes();
+		else
+			diagramTypes = explainTypes;
 
 		final UgDiagram basicCheck = PSystemErrorUtils.checkBasicError(diagramTypes, source, preprocessing, umlSource);
 		if (basicCheck != null)
@@ -174,8 +180,13 @@ public class PSystemBuilder2 {
 
 		if (lastFactory != null && diagramTypes.contains(lastFactory.getDiagramType())) {
 			final Diagram sys = lastFactory.createSystem(null, umlSource, null, preprocessing);
-			if (isOk(sys))
+			if (isOk(sys)) {
+				if (explainTypes != null) {
+					final List<Explanation> explanations = lastFactory.explain(null, umlSource, null, preprocessing);
+					return new PSystemExplain(umlSource, preprocessing, explanations);
+				}
 				return sys;
+			}
 			errors.add((PSystemError) sys);
 		}
 
@@ -190,6 +201,10 @@ public class PSystemBuilder2 {
 			if (isOk(sys)) {
 				BrowserLog.consoleLog(PSystemBuilder2.class, "ok!");
 				this.lastFactory = f;
+				if (explainTypes != null) {
+					final List<Explanation> explanations = f.explain(null, umlSource, null, preprocessing);
+					return new PSystemExplain(umlSource, preprocessing, explanations);
+				}
 				return sys;
 			}
 			errors.add((PSystemError) sys);

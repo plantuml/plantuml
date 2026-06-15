@@ -38,10 +38,10 @@ package net.sourceforge.plantuml.api;
 import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.command.Explanation;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.explain.Explanation;
 import net.sourceforge.plantuml.nio.PathSystem;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
