@@ -118,6 +118,7 @@ public class XmlWriter {
 			out.append(value.replace("--", "- -"));
 		out.append(" -->");
 		newline();
+		hasInlineContent = false;
 		return this;
 	}
 
@@ -133,6 +134,7 @@ public class XmlWriter {
 			out.append(' ').append(data);
 		out.append("?>");
 		newline();
+		hasInlineContent = false;
 		return this;
 	}
 
@@ -149,6 +151,7 @@ public class XmlWriter {
 			out.append(value.replace("]]>", "]]]]><![CDATA[>"));
 		out.append("]]>");
 		newline();
+		hasInlineContent = false;
 		return this;
 	}
 
@@ -161,6 +164,7 @@ public class XmlWriter {
 		closePendingStartTag(true);
 		if (markup != null)
 			out.append(markup);
+		hasInlineContent = false;
 		return this;
 	}
 
@@ -188,6 +192,16 @@ public class XmlWriter {
 		if (depth != 0)
 			throw new IllegalStateException("Some elements were left open: " + Arrays.toString(Arrays.copyOf(openTags, depth)));
 
+		return out.toString();
+	}
+
+	/**
+	 * Returns the markup produced so far, without requiring that every element be
+	 * closed. Use this to retrieve a fragment that will be spliced into another
+	 * writer via {@link #raw(String)}; use {@link #getXml()} for a complete
+	 * document, where leaving an element open is a programming error.
+	 */
+	public String getRawXml() {
 		return out.toString();
 	}
 
