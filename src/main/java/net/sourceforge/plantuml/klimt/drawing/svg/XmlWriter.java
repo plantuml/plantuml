@@ -106,17 +106,22 @@ public class XmlWriter {
 	}
 
 	/**
-	 * Emits an XML comment {@code <!-- ... -->}. The two-hyphen sequence
-	 * {@code --}, which is illegal inside a comment, is defanged by inserting a
-	 * space so the output stays well-formed.
+	 * Emits an XML comment {@code <!--...-->} with no decorative spacing, matching
+	 * the legacy serializer. The sequence {@code --} (illegal inside a comment) is
+	 * defanged to {@code - -}; a trailing {@code -} would otherwise merge with the
+	 * closing {@code -->}, so a single space is inserted in that case only.
 	 */
 	public XmlWriter comment(String value) {
 		closePendingStartTag(true);
 		indent(depth);
-		out.append("<!-- ");
-		if (value != null)
-			out.append(value.replace("--", "- -"));
-		out.append(" -->");
+		out.append("<!--");
+		if (value != null) {
+			String safe = value.replace("--", "- -");
+			if (safe.endsWith("-"))
+				safe = safe + " ";
+			out.append(safe);
+		}
+		out.append("-->");
 		newline();
 		hasInlineContent = false;
 		return this;
