@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.util.Locale;
+
 import net.sourceforge.plantuml.crash.CrashImage;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.gantt.core.Resource;
@@ -73,6 +75,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 	private final DisplayConfigData displayConfig;
 	private final TimelineStyleData timelineStyle;
 	private final TaskDrawRegistryData drawRegistry;
+	private final GanttTaskTable taskTable;
 
 	public GanttDiagramMainBlock(TimeBoundsData timeBounds, GanttModelData modelData, TaskDrawRegistryData drawRegistry,
 			DisplayConfigData displayConfig, TimelineStyleData timelineStyle, GanttDiagram diagram,
@@ -86,11 +89,17 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 		this.timeHeader = timeHeader;
 		this.layout = new GanttLayout(modelData, displayConfig, timeBounds, timelineStyle, drawRegistry, stringBounder,
 				timeHeader);
+		this.taskTable = new GanttTaskTable(modelData, timeBounds, drawRegistry, timelineStyle,
+				layout.getHeaderHeight(), Locale.ENGLISH, stringBounder);
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
 		try {
+			final double tableWidth = taskTable.getWidth();
+			taskTable.drawU(ug, drawRegistry.getTotalHeightWithoutFooter());
+			ug = ug.apply(UTranslate.dx(tableWidth));
+
 			final UGraphic ugOrig = ug;
 
 			if (displayConfig.getLabelStrategy().titleInFirstColumn())
@@ -144,7 +153,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		final double margin = 20;
-		final double width = layout.getTitlesWidth() + layout.getBarsWidth() + margin;
+		final double width = taskTable.getWidth() + layout.getTitlesWidth() + layout.getBarsWidth() + margin;
 		final double height = layout.getTotalHeight();
 		return new XDimension2D(width, height);
 	}
