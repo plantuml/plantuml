@@ -59,7 +59,7 @@ public class DriverTextAsPathSvg implements UDriver<UText, SvgGraphics> {
 			return;
 		}
 
-		final TextLayout t = UFontContext.SVG.createTextLayout(ushape);
+		final TextLayout t = ushape.createTextLayout();
 		svg.drawPathIterator(x, y, t.getOutline(null).getPathIterator(null));
 	}
 

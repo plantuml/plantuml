@@ -179,7 +179,7 @@ svg.click-active &gt; g &gt; g.click-highlighted {
       <line style="stroke:#000000;stroke-width:1.5;" x1="22" x2="65.45" y1="49" y2="49"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="30.45" x="26" y="41.8889">pkg2</text>
     </g>
-    <!--class Class 1 with ASCII special chars\r\n\t!#$%&'()*+,-/:;<=>?@[\\]^_`{|}~????????????????????????????????-???????????????-->
+    <!--class Class 1 with ASCII special chars\r\n\t!#$%&'()*+,-/:;<=>?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ😀☕️-->
     <g class="entity" data-qualified-name="pkg1.pkg2.Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-source-line="3" id="ent0001">
       <rect fill="#F1F1F1" height="68" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="980.7333" x="30.5" y="54"/>
       <ellipse cx="45.5" cy="80" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>

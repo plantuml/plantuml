@@ -69,7 +69,7 @@ public class MagicBox {
 	}
 
 	private TextBlock getSmallBlock() {
-		final FontConfiguration fc = FontConfiguration.create(UFontFactory.monospaced(15).withFontFace(UFontFace.bold()), fontColor, fontColor, null);
+		final FontConfiguration fc = FontConfiguration.create(UFontFactory.monospace(15).withFontFace(UFontFace.bold()), fontColor, fontColor, null);
 		return node.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);
 	}
 

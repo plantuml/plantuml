@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class TextBlockExplanation implements TextBlock {
 
-	private final static FontConfiguration MONOSPACED = FontConfiguration.blackBlueTrue(UFontFactory.monospaced(10));
+	private final static FontConfiguration MONOSPACED = FontConfiguration.blackBlueTrue(UFontFactory.monospace(10));
 	private final static FontConfiguration SANS_SERIF = FontConfiguration.blackBlueTrue(UFontFactory.sansSerif(14));
 	private final static FontConfiguration SANS_SERIF_ITALIC = FontConfiguration
 			.blackBlueTrue(UFontFactory.sansSerif(14)).italic();

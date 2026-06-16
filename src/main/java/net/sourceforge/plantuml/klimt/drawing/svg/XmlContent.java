@@ -35,34 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
-import org.w3c.dom.Element;
+/**
+ * A piece of content that can sit inside an {@link XmlNode}: either a nested
+ * element ({@link XmlNode}) or a leaf such as text, a comment, a processing
+ * instruction, a CDATA section or raw markup ({@link XmlLeaf}).
+ */
+interface XmlContent {
 
-public class W3cElementAdapter implements IElement {
-
-	private final Element wrapped;
-
-	public W3cElementAdapter(Element wrapped) {
-		this.wrapped = wrapped;
-	}
-
-	public Element getWrapped() {
-		return wrapped;
-	}
-
-	@Override
-	public void appendChild(IElement child) {
-		final W3cElementAdapter other = (W3cElementAdapter) child;
-		wrapped.appendChild(other.wrapped);
-	}
-
-	@Override
-	public void setAttribute(String name, String value) {
-		wrapped.setAttribute(name, value);
-	}
-
-	@Override
-	public void setTextContent(String value) {
-		wrapped.setTextContent(value);
-	}
+	void writeTo(XmlWriter w);
 
 }

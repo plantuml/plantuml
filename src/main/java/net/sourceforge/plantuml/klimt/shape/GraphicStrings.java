@@ -124,7 +124,7 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 	}
 
 	private static FontConfiguration monospaced14(HColor color) {
-		return FontConfiguration.create(UFontFactory.monospaced(14), color, hyperlinkColor, useUnderlineForHyperlink);
+		return FontConfiguration.create(UFontFactory.monospace(14), color, hyperlinkColor, useUnderlineForHyperlink);
 	}
 
 	private final CreoleMode mode;

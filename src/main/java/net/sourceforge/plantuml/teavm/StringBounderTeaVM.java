@@ -41,7 +41,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontImpl;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderTeaVM implements StringBounder {
@@ -50,11 +50,11 @@ public class StringBounderTeaVM implements StringBounder {
 	private static final int MAX_CACHE_SIZE = 8192;
 
 	private static final class CacheKey {
-		private final UFontImpl font;
+		private final UFont font;
 		private final String text;
 		private final int hash;
 
-		CacheKey(UFontImpl font, String text) {
+		CacheKey(UFont font, String text) {
 			this.font = font;
 			this.text = text;
 			this.hash = Objects.hash(font, text);
@@ -88,13 +88,13 @@ public class StringBounderTeaVM implements StringBounder {
 		if (text == null || text.isEmpty())
 			return new XDimension2D(0, 0);
 
-		final UFontImpl font = (UFontImpl) f;
+		final UFont font = (UFont) f;
 		final CacheKey key = new CacheKey(font, text);
 
 		return cache.computeIfAbsent(key, k -> calculateDimensionSlow(font, text));
 	}
 
-	private XDimension2D calculateDimensionSlow(UFontImpl font, String text) {
+	private XDimension2D calculateDimensionSlow(UFont font, String text) {
 		final String fontFamily = font.getFamily(null, null);
 		final int fontSize = font.getSize();
 		final String fontWeight = font.getFontFace().isBold() ? "bold" : "normal";

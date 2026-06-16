@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2025, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -31,48 +31,52 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.klimt.drawing.font;
 
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
-
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.text.SvgCharSizeHack;
 
-public class StringBounderSvg implements StringBounder {
+public class StringBounderFoo implements StringBounder {
 
-	private final SvgCharSizeHack charSizeHack;
-	private final FontRenderContext fontRenderContext = FileFormat.gg.getFontRenderContext();
+	private static final double[] WIDTH = { 3.3, 3.3, 4.3, 6.7, 6.7, 10.7, 8.0, 2.3, 4.0, 4.0, 4.7, 7.0, 3.3, 4.0, 3.3,
+			3.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 3.3, 3.3, 7.0, 7.0, 7.0, 6.7, 12.2, 8.0, 8.0, 8.7,
+			8.7, 8.0, 7.3, 9.3, 8.7, 3.3, 6.0, 8.0, 6.7, 10.0, 8.7, 9.3, 8.0, 9.3, 8.7, 8.0, 7.3, 8.7, 8.0, 11.3, 8.0,
+			8.0, 7.3, 3.3, 3.3, 3.3, 5.6, 6.7, 4.0, 6.7, 6.7, 6.0, 6.7, 6.7, 3.3, 6.7, 6.7, 2.7, 2.7, 6.0, 2.7, 10.0,
+			6.7, 6.7, 6.7, 6.7, 4.0, 6.0, 3.3, 6.7, 6.0, 8.7, 6.0, 6.0, 6.0, 4.0, 3.1, 4.0, 7.0, 6.0, };
 
-	public StringBounderSvg(final SvgCharSizeHack charSizeHack) {
-		this.charSizeHack = charSizeHack;
+	private final FileFormat fileFormat;
+
+	public StringBounderFoo(FileFormat fileFormat) {
+		this.fileFormat = fileFormat;
 	}
 
 	@Override
 	public FileFormat getFileFormat() {
-		return FileFormat.SVG;
+		return fileFormat;
 	}
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-		text = charSizeHack.transformStringForSizeHack(text);
-		return FileFormat.getJavaDimension(font, text);
+		final String family = font.getFamily(text, UFontContext.SVG);
+		System.err.println("familty=" + family);
+		final double size = font.getSize2D();
+		final double factor = size / 12.0;
+		final double height = size;
+		double width = 0;
+		for (int i = 0; i < text.length(); i++)
+			width += getCharWidth(font, text.charAt(i));
+
+		return new XDimension2D(width * factor, height);
 	}
 
-	@Override
-	public boolean matchesProperty(String propertyName) {
-		return "SVG".equalsIgnoreCase(propertyName);
-	}
-
-	@Override
-	public double getDescent(UFont font, String text) {
-		final LineMetrics lineMetrics = font.getUnderlayingFont(text).getLineMetrics(text, fontRenderContext);
-		final double descent = lineMetrics.getDescent();
-		return descent;
+	private double getCharWidth(UFont font, char c) {
+		if (c >= 32 && c <= 127)
+			return WIDTH[c - 32];
+		return 13;
 	}
 
 }

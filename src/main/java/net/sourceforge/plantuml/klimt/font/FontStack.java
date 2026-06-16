@@ -37,31 +37,45 @@ package net.sourceforge.plantuml.klimt.font;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class FontStack {
 
+	public static final String MONOSPACE = "Monospaced";
+	public static final String SANS_SERIF = "SansSerif";
+	public static final String SERIF = "Serif";
+
 	private final List<Font> fonts = new ArrayList<>();
 	private final String fullDefinition;
 
-//	private static final Set<String> availableFontFamilyNames = new TreeSet<>();
-//
-//	static {
-//		for (String name : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames())
-//			availableFontFamilyNames.add(name.toLowerCase());
-//	}
+	private static final int MAX_ENTRIES = 200;
 
-	public FontStack(String fullDefinition) {
+	private static final Map<String, FontStack> cache = Collections
+			.synchronizedMap(new LinkedHashMap<String, FontStack>(16, 0.75f, true) {
+				@Override
+				protected boolean removeEldestEntry(Map.Entry<String, FontStack> eldest) {
+					return size() > MAX_ENTRIES;
+				}
+			});
+
+	public static FontStack build(String fullDefinition) {
+		synchronized (cache) {
+			return cache.computeIfAbsent(fullDefinition, FontStack::new);
+		}
+	}
+
+	private FontStack(String fullDefinition) {
 		this.fullDefinition = fullDefinition;
 	}
-	
 
-	private List<Font> getFonts() {
+	private synchronized List<Font> getFonts() {
 		if (fonts.size() == 0)
 			for (String name : fullDefinition.split(",")) {
 				name = trimWhitespaceOrDoubleQuote(name);
-				// final Font font = new Font(name, Font.PLAIN, 12);
 				final Font font = Font.decode(name);
 				fonts.add(font);
 			}
@@ -90,18 +104,18 @@ public class FontStack {
 	}
 
 	/**
-	 * Face-aware font creation.  Selects the first family font that can display
-	 * the given text (or falls back to the primary family), resizes it, then
-	 * applies both the italic axis and CSS weight via
-	 * {@link UFontFace#deriveFont(Font)}.
+	 * Face-aware font creation. Selects the first family font that can display the
+	 * given text (or falls back to the primary family), resizes it, then applies
+	 * both the italic axis and CSS weight via {@link UFontFace#deriveFont(Font)}.
 	 *
-	 * <p>When the weight is a standard binary value (400 or 700) the result is
-	 * identical to the legacy path.  For intermediate weights (100-300, 500-600,
-	 * 800-900) is used so that fonts with matching
-	 * weight faces (e.g. Helvetica Neue) render at the requested weight.
+	 * <p>
+	 * When the weight is a standard binary value (400 or 700) the result is
+	 * identical to the legacy path. For intermediate weights (100-300, 500-600,
+	 * 800-900) is used so that fonts with matching weight faces (e.g. Helvetica
+	 * Neue) render at the requested weight.
 	 *
-	 * @param text the string to be rendered (used for font-family fallback selection,
-	 *             may be {@code null})
+	 * @param text the string to be rendered (used for font-family fallback
+	 *             selection, may be {@code null})
 	 * @param face the font face (weight + italic axis)
 	 * @param size the point size
 	 * @return a {@link Font} ready for Java2D rendering or metric measurement
@@ -160,4 +174,17 @@ public class FontStack {
 	public String getFullDefinition() {
 		return fullDefinition;
 	}
+
+	public String getSvgFamily() {
+		switch (fullDefinition) {
+		case SERIF:
+			return "serif";
+		case SANS_SERIF:
+			return "sans-serif";
+		case MONOSPACE:
+			return "monospace";
+		}
+		return fullDefinition.replace('\"', '\'');
+	}
+
 }

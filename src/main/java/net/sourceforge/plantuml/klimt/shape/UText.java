@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import java.awt.font.TextLayout;
+
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -87,6 +89,10 @@ public class UText implements UShape {
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		return stringBounder.calculateDimension(font.getFont(), text);
+	}
+
+	public TextLayout createTextLayout() {
+		return getFontConfiguration().getFont().createTextLayout(getText());
 	}
 
 }

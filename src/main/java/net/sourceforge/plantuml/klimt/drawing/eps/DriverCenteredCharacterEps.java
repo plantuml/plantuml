@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UText;
 
 public class DriverCenteredCharacterEps implements UDriver<UCenteredCharacter, EpsGraphics> {
 	
@@ -56,7 +57,7 @@ public class DriverCenteredCharacterEps implements UDriver<UCenteredCharacter, E
 		final double xpos = x - unusedSpace.getCenterX() - 0.5;
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
-		final TextLayout t = UFontContext.EPS.createTextLayout(font, "" + c);
+		final TextLayout t = font.createTextLayout("" + c);
 		eps.setStrokeColor(param.getColor().toColor(mapper));
 		DriverTextEps.drawPathIterator(eps, xpos, ypos, t.getOutline(null));
 	}

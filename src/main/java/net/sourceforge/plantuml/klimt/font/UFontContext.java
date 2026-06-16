@@ -35,20 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.font;
 
-import java.awt.font.TextLayout;
-
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.klimt.shape.UText;
-
 public enum UFontContext {
 
-	EPS, SVG, G2D, TIKZ, PDF;
-
-	public TextLayout createTextLayout(UText shape) {
-		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());
-	}
-
-	public TextLayout createTextLayout(UFont font, String text) {
-		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());
-	}
+	EPS, SVG, G2D, TIKZ, PDF
 }

@@ -30,41 +30,40 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.klimt.font;
+package net.sourceforge.plantuml.klimt.drawing.font;
 
-public class UFontFactory {
+public class UnicodeBlock {
 
-	/**
-	 * Builds a font using a face (weight + italic axis) and size.
-	 *
-	 * @param fullDefinition font family definition
-	 * @param face           font face (style + weight), defaults to normal if null
-	 * @param fontSize       font size
-	 * @return configured font
-	 */
-	public static UFont build(String fullDefinition, UFontFace face, int fontSize) {
-		final FontStack fontStack = FontStack.build(fullDefinition);
-		final UFontFace safeFace = face == null ? UFontFace.normal() : face;
-		return new UFont(fontStack, safeFace, fontSize);
+	private byte data[];
+
+	public UnicodeBlock(byte data[]) {
+		if (data.length != 1 && data.length < 256) {
+			this.data = decodeRLE(data);
+		} else {
+			this.data = data;
+		}
+
 	}
 
-	public static UFont serif(int size) {
-		return build(FontStack.SERIF, UFontFace.normal(), size);
+	private static byte[] decodeRLE(byte[] data) {
+		final byte[] result = new byte[256];
+		int idx = 0;
+		for (int i = 0; i < data.length; i += 2) {
+			final int count = data[i] & 0xFF;
+			final byte value = data[i + 1];
+			for (int j = 0; j < count; j++)
+				result[idx++] = value;
+		}
+		return result;
 	}
 
-	public static UFont sansSerif(int size) {
-		return build(FontStack.SANS_SERIF, UFontFace.normal(), size);
-	}
+	public double getWidth(char ch) {
+		if (data.length == 1)
+			return (data[0] & 0xFF) / 10.0;
 
-	public static UFont monospace(int size) {
-		return build(FontStack.MONOSPACE, UFontFace.normal(), size);
+		final int width = data[ch & 0xFF] & 0xFF;
+		return width / 10.0;
 	}
-
-	public static UFont byDefault(int size) {
-		return sansSerif(12);
-	}
-
 }

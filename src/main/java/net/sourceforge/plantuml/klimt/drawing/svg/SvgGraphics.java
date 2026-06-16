@@ -42,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -51,20 +52,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.CDATASection;
-import org.w3c.dom.Comment;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.ProcessingInstruction;
 
 import net.atmp.SvgOption;
 import net.sourceforge.plantuml.FileUtils;
@@ -91,7 +78,6 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
-import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class SvgGraphics {
 
@@ -113,10 +99,10 @@ public class SvgGraphics {
 	private static final String XLINK_HREF1 = "href";
 	private static final String XLINK_HREF2 = "xlink:href";
 
-	final private Document document;
-	final private Element root;
-	final private Element defs;
-	final private Element gRoot;
+	final private XmlDocument document;
+	final private XmlNode root;
+	final private XmlNode defs;
+	final private XmlNode gRoot;
 
 	private String fill = "black";
 	private String stroke = "black";
@@ -134,7 +120,7 @@ public class SvgGraphics {
 
 	private final SvgOption option;
 
-	private Element pendingBackground;
+	private XmlNode pendingBackground;
 	private boolean robotoAdded = false;
 
 	final protected void ensureVisible(double x, double y) {
@@ -147,60 +133,54 @@ public class SvgGraphics {
 	}
 
 	public SvgGraphics(long seed, SvgOption option) {
-		try {
-			this.document = getDocument();
+		this.document = new XmlDocument();
 
-			this.option = option;
-			final XDimension2D minDim = option.getMinDim();
-			ensureVisible(minDim.getWidth(), minDim.getHeight());
+		this.option = option;
+		final XDimension2D minDim = option.getMinDim();
+		ensureVisible(minDim.getWidth(), minDim.getHeight());
 
-			this.root = getRootNode();
+		this.root = getRootNode();
 
-			for (Map.Entry<String, String> ent : option.getRootAttributes().entrySet())
-				root.setAttribute(ent.getKey(), ent.getValue());
+		for (Map.Entry<String, String> ent : option.getRootAttributes().entrySet())
+			root.setAttribute(ent.getKey(), ent.getValue());
 
-			// Create a node named defs, which will be the parent
-			// for a pair of linear gradient definitions.
-			defs = simpleElement("defs");
-			gRoot = simpleElement("g");
-			strokeWidth = format(1);
-			this.filterUid = "b" + getSeed(seed);
-			this.shadowId = "f" + getSeed(seed);
-			this.gradientId = "g" + getSeed(seed);
-			if (option.getHover() != null)
-				defs.appendChild(getPathHover(option.getHover()));
+		// Create a node named defs, which will be the parent
+		// for a pair of linear gradient definitions.
+		defs = simpleElement("defs");
+		gRoot = simpleElement("g");
+		strokeWidth = format(1);
+		this.filterUid = "b" + getSeed(seed);
+		this.shadowId = "f" + getSeed(seed);
+		this.gradientId = "g" + getSeed(seed);
+		if (option.getHover() != null)
+			defs.appendChild(getPathHover(option.getHover()));
 
-			if (option.isInteractive()) {
-				final Element styles = getStylesForInteractiveMode();
-				if (styles != null)
-					defs.appendChild(styles);
+		if (option.isInteractive()) {
+			final XmlNode styles = getStylesForInteractiveMode();
+			if (styles != null)
+				defs.appendChild(styles);
 
-				final Element script = getScriptForInteractiveMode();
-				if (script != null)
-					defs.appendChild(script);
-			}
+			final XmlNode script = getScriptForInteractiveMode();
+			if (script != null)
+				defs.appendChild(script);
+		}
 
-			final HColor backcolor = option.getBackcolor();
+		final HColor backcolor = option.getBackcolor();
 
-			if (backcolor instanceof HColorGradient) {
-				this.backcolorString = null;
-				HColorGradient gr = (HColorGradient) backcolor;
-				final String id = this.createSvgGradient(gr.getColor1().toRGB(option.getColorMapper()),
-						gr.getColor2().toRGB(option.getColorMapper()), gr.getPolicy());
-				this.paintBackcolor("url(#" + id + ")");
-			} else if (backcolor == null) {
-				this.backcolorString = null;
-			} else {
-				this.backcolorString = backcolor.toSvg(option.getColorMapper());
-				final String color = backcolor.toSvg(option.getColorMapper());
-				if (color.equals("#00000000") == false && color.equals("#000000") == false
-						&& color.equals("#FFFFFF") == false)
-					this.paintBackcolor(color);
-			}
-
-		} catch (ParserConfigurationException e) {
-			Logme.error(e);
-			throw new IllegalStateException(e);
+		if (backcolor instanceof HColorGradient) {
+			this.backcolorString = null;
+			HColorGradient gr = (HColorGradient) backcolor;
+			final String id = this.createSvgGradient(gr.getColor1().toRGB(option.getColorMapper()),
+					gr.getColor2().toRGB(option.getColorMapper()), gr.getPolicy());
+			this.paintBackcolor("url(#" + id + ")");
+		} else if (backcolor == null) {
+			this.backcolorString = null;
+		} else {
+			this.backcolorString = backcolor.toSvg(option.getColorMapper());
+			final String color = backcolor.toSvg(option.getColorMapper());
+			if (color.equals("#00000000") == false && color.equals("#000000") == false
+					&& color.equals("#FFFFFF") == false)
+				this.paintBackcolor(color);
 		}
 	}
 
@@ -208,7 +188,7 @@ public class SvgGraphics {
 		if (robotoAdded)
 			return;
 		// https://stackoverflow.com/questions/36253961/using-google-fonts-with-svg-object
-		final Element style = document.createElement("style");
+		final XmlNode style = document.createElement("style");
 		style.setAttribute("type", "text/css");
 		style.setTextContent(
 				"@import url('https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic');");
@@ -223,15 +203,14 @@ public class SvgGraphics {
 		getG().appendChild(pendingBackground);
 	}
 
-	private Element getStylesForInteractiveMode() {
-		final Element style = simpleElement("style");
+	private XmlNode getStylesForInteractiveMode() {
 		final String text = getData(option.getInteractiveBaseFilename() + ".css");
 		if (text == null)
 			return null;
 
-		final CDATASection cdata = document.createCDATASection(text);
+		final XmlNode style = document.createElement("style");
 		style.setAttribute("type", "text/css");
-		style.appendChild(cdata);
+		style.appendCData(text);
 		return style;
 	}
 
@@ -263,12 +242,12 @@ public class SvgGraphics {
 //		return style;
 //	}
 
-	private Element getScriptForInteractiveMode() {
-		final Element script = document.createElement("script");
+	private XmlNode getScriptForInteractiveMode() {
 		final String text = getData(option.getInteractiveBaseFilename() + ".js");
 		if (text == null)
 			return null;
 
+		final XmlNode script = document.createElement("script");
 		script.setTextContent(text);
 		return script;
 	}
@@ -286,11 +265,10 @@ public class SvgGraphics {
 		return null;
 	}
 
-	private Element getPathHover(String hover) {
-		final Element style = simpleElement("style");
-		final CDATASection cdata = document.createCDATASection("path:hover { stroke: " + hover + " !important;}");
+	private XmlNode getPathHover(String hover) {
+		final XmlNode style = document.createElement("style");
 		style.setAttribute("type", "text/css");
-		style.appendChild(cdata);
+		style.appendCData("path:hover { stroke: " + hover + " !important;}");
 		return style;
 	}
 
@@ -300,31 +278,23 @@ public class SvgGraphics {
 
 	// This method returns a reference to a simple XML
 	// element node that has no attributes.
-	private Element simpleElement(String type) {
-		final Element theElement = document.createElement(type);
+	private XmlNode simpleElement(String type) {
+		final XmlNode theElement = document.createElement(type);
 		root.appendChild(theElement);
 		return theElement;
 	}
 
-	private Document getDocument() throws ParserConfigurationException {
-		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();
-		final Document document = builder.newDocument();
-		document.setXmlStandalone(true);
-		return document;
-	}
-
 	// This method returns a reference to a root node that
-	// has already been appended to the document.
-	private Element getRootNode() {
-		// Create the root node named svg and append it to
-		// the document.
-		final Element svg = document.createElement("svg");
-		document.appendChild(svg);
+	// has already been set as the document root.
+	private XmlNode getRootNode() {
+		// Create the root node named svg and set it as the document root.
+		final XmlNode svg = document.createElement("svg");
+		document.setRoot(svg);
 
 		// Add PlantUML version as processing instruction inside svg element
 		// (placed as first child of <svg> for Confluence compatibility)
 		// https://github.com/plantuml/plantuml/issues/2583
-		svg.appendChild(document.createProcessingInstruction("plantuml", Version.versionString()));
+		svg.appendProcessingInstruction("plantuml", Version.versionString());
 
 		// Set some attributes on the root node that are
 		// required for proper rendering. Note that the
@@ -337,7 +307,7 @@ public class SvgGraphics {
 
 		if (option.getTitle() != null) {
 			// Create a title element and set its text
-			final Element title = document.createElement("title");
+			final XmlNode title = document.createElement("title");
 			title.setTextContent(option.getTitle());
 			svg.appendChild(title);
 		}
@@ -345,7 +315,7 @@ public class SvgGraphics {
 		final String desc = option.getDesc();
 		if (desc != null) {
 			// Create a desc element and set its text
-			final Element descElement = document.createElement("desc");
+			final XmlNode descElement = document.createElement("desc");
 			descElement.setTextContent(desc);
 			svg.appendChild(descElement);
 		}
@@ -355,7 +325,7 @@ public class SvgGraphics {
 	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = document.createElement("ellipse");
+			final XmlNode elt = document.createElement("ellipse");
 			elt.setAttribute("cx", format(x));
 			elt.setAttribute("cy", format(y));
 			elt.setAttribute("rx", format(xRadius));
@@ -372,7 +342,7 @@ public class SvgGraphics {
 		if (hidden == false) {
 			final String path = "M" + format(x1) + "," + format(y1) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
 					+ format(x2) + " " + format(y2);
-			final Element elt = document.createElement("path");
+			final XmlNode elt = document.createElement("path");
 			elt.setAttribute("d", path);
 			fillMe(elt);
 			styleMe(elt, null);
@@ -388,7 +358,7 @@ public class SvgGraphics {
 		final List<Object> key = Arrays.asList((Object) color1, color2, policy);
 		String id = gradients.get(key);
 		if (id == null) {
-			final Element elt = document.createElement("linearGradient");
+			final XmlNode elt = document.createElement("linearGradient");
 			if (policy == '|') {
 				elt.setAttribute("x1", "0%");
 				elt.setAttribute("y1", "50%");
@@ -414,10 +384,10 @@ public class SvgGraphics {
 			gradients.put(key, id);
 			elt.setAttribute("id", id);
 
-			final Element stop1 = document.createElement("stop");
+			final XmlNode stop1 = document.createElement("stop");
 			stop1.setAttribute("stop-color", color1);
 			stop1.setAttribute("offset", "0%");
-			final Element stop2 = document.createElement("stop");
+			final XmlNode stop2 = document.createElement("stop");
 			stop2.setAttribute("stop-color", color2);
 			stop2.setAttribute("offset", "100%");
 
@@ -432,7 +402,7 @@ public class SvgGraphics {
 		final List<Object> key = buildLinearGradientKey(gr, mapper);
 		String id = gradients.get(key);
 		if (id == null) {
-			final Element elt = document.createElement("linearGradient");
+			final XmlNode elt = document.createElement("linearGradient");
 			if (gr.isUserSpaceOnUse()) {
 				elt.setAttribute("gradientUnits", "userSpaceOnUse");
 				elt.setAttribute("x1", format(gr.getX1()));
@@ -453,7 +423,7 @@ public class SvgGraphics {
 			elt.setAttribute("id", id);
 
 			for (HColorLinearGradient.Stop stop : gr.getStops()) {
-				final Element stopElt = document.createElement("stop");
+				final XmlNode stopElt = document.createElement("stop");
 				stopElt.setAttribute("offset", formatPercent(stop.getOffset()));
 				final XColor color = stop.getColor().toColor(mapper);
 				stopElt.setAttribute("stop-color", XColor.toHexRGBColor(color.getRGB()));
@@ -545,7 +515,7 @@ public class SvgGraphics {
 			this.strokeDasharray = "" + format(strokeDasharray[0]) + "," + format(strokeDasharray[1]);
 	}
 
-	public final Element getG() {
+	public final XmlNode getG() {
 		if (pendingElements.size() == 0)
 			return gRoot;
 
@@ -561,7 +531,7 @@ public class SvgGraphics {
 		}
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = createRectangleInternal(x, y, width, height);
+			final XmlNode elt = createRectangleInternal(x, y, width, height);
 			addFilterShadowId(elt, deltaShadow);
 			if (rx > 0 && ry > 0) {
 				elt.setAttribute("rx", format(rx));
@@ -578,8 +548,8 @@ public class SvgGraphics {
 		ensureVisible(x + width + 2 * deltaShadow, y + height + 2 * deltaShadow);
 	}
 
-	private Element createRectangleInternal(double x, double y, double width, double height) {
-		final Element elt = document.createElement("rect");
+	private XmlNode createRectangleInternal(double x, double y, double width, double height) {
+		final XmlNode elt = document.createElement("rect");
 		elt.setAttribute("x", format(x));
 		elt.setAttribute("y", format(y));
 		elt.setAttribute("width", format(width));
@@ -592,7 +562,7 @@ public class SvgGraphics {
 	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = document.createElement("line");
+			final XmlNode elt = document.createElement("line");
 			elt.setAttribute("x1", format(x1));
 			elt.setAttribute("y1", format(y1));
 			elt.setAttribute("x2", format(x2));
@@ -605,7 +575,7 @@ public class SvgGraphics {
 		ensureVisible(x2 + 2 * deltaShadow, y2 + 2 * deltaShadow);
 	}
 
-	private void styleMe(Element elt, String suppStyle) {
+	private void styleMe(XmlNode elt, String suppStyle) {
 		if (strokeWidth.equals("0"))
 			return;
 
@@ -628,7 +598,7 @@ public class SvgGraphics {
 			assert points.length % 2 == 0;
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = document.createElement("polygon");
+			final XmlNode elt = document.createElement("polygon");
 			final StringBuilder sb = new StringBuilder();
 			for (double coord : points) {
 				if (sb.length() > 0)
@@ -660,7 +630,7 @@ public class SvgGraphics {
 			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
 			String textBackColor, int orientation) {
 		if (hidden == false) {
-			final Element elt = document.createElement("text");
+			final XmlNode elt = document.createElement("text");
 			// required for web-kit based browsers
 			// elt.setAttribute("text-rendering", "geometricPrecision");
 			elt.setAttribute("x", format(x));
@@ -755,7 +725,7 @@ public class SvgGraphics {
 			return id;
 
 		id = getIdFilterBackColor(color);
-		final Element filter = document.createElement("filter");
+		final XmlNode filter = document.createElement("filter");
 		filter.setAttribute("id", id);
 		filter.setAttribute("x", "0");
 		filter.setAttribute("y", "0");
@@ -767,43 +737,17 @@ public class SvgGraphics {
 		return id;
 	}
 
-	private Transformer getTransformer() throws TransformerException {
-		final Transformer transformer = XmlFactories.newTransformer();
-		Log.info(() -> "Transformer=" + transformer.getClass());
-
-		// // Sets the standalone property in the first line of
-		// // the output file.
-		transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
-		transformer.setOutputProperty(OutputKeys.ENCODING, "us-ascii");
-		// transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "SVG 1.1");
-		// transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-
-		return transformer;
-	}
-
-	public void createXml(OutputStream os) throws TransformerException, IOException {
-		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		createXmlInternal(baos);
-		String s = new String(baos.toByteArray());
+	public void createXml(OutputStream os) throws IOException {
+		finalizeRootAttributes();
+		String s = document.toXml(0);
 		for (Map.Entry<String, String> ent : images.entrySet()) {
 			final String k = "<" + ent.getKey() + "/>";
 			s = s.replace(k, ent.getValue());
 		}
-		s = removeXmlHeader(s);
-		// s = s.replace("<", "\n<").replace(">", ">\n");
-		os.write(s.getBytes());
+		os.write(s.getBytes(StandardCharsets.UTF_8));
 	}
 
-	private String removeXmlHeader(String s) {
-		s = s.replaceFirst("^<\\?xml [^<>]+?\\>", "");
-		return s;
-	}
-
-	private void createXmlInternal(OutputStream os) throws TransformerException {
-		// Get a DOMSource object that represents the
-		// Document object
-		final DOMSource source = new DOMSource(document);
-
+	private void finalizeRootAttributes() {
 		final int maxXscaled = (int) (maxX * option.getScale());
 		final int maxYscaled = (int) (maxY * option.getScale());
 		String style = "width:" + maxXscaled + "px;height:" + maxYscaled + "px;";
@@ -826,12 +770,6 @@ public class SvgGraphics {
 			pendingBackground.setAttribute("width", format(maxX));
 			pendingBackground.setAttribute("height", format(maxY));
 		}
-
-		// Get a StreamResult object that points to the
-		// screen. Then transform the DOM sending XML to
-		// the screen.
-		final StreamResult scrResult = new StreamResult(os);
-		getTransformer().transform(source, scrResult);
 	}
 
 	public void svgPath(double x, double y, UPath path, double deltaShadow) {
@@ -872,7 +810,7 @@ public class SvgGraphics {
 
 		}
 		if (hidden == false) {
-			final Element elt = document.createElement("path");
+			final XmlNode elt = document.createElement("path");
 			elt.setAttribute("d", sb.toString().trim());
 			styleMe(elt, null);
 			fillMe(elt);
@@ -889,7 +827,7 @@ public class SvgGraphics {
 		}
 	}
 
-	private void fillMe(Element elt) {
+	private void fillMe(XmlNode elt) {
 		if (fill.matches("#[0-9A-Fa-f]{8}")) {
 			elt.setAttribute("fill", fill.substring(0, 7));
 			final double opacity = Integer.parseInt(fill.substring(7), 16) / 255.0;
@@ -899,7 +837,7 @@ public class SvgGraphics {
 		}
 	}
 
-	private void addFilterShadowId(final Element elt, double deltaShadow) {
+	private void addFilterShadowId(final XmlNode elt, double deltaShadow) {
 		if (deltaShadow > 0)
 			elt.setAttribute("filter", "url(#" + shadowId + ")");
 
@@ -969,7 +907,7 @@ public class SvgGraphics {
 
 	public void fill(int windingRule) {
 		if (hidden == false) {
-			final Element elt = document.createElement("path");
+			final XmlNode elt = document.createElement("path");
 			elt.setAttribute("d", currentPath.toString());
 			fillMe(elt);
 			getG().appendChild(elt);
@@ -1006,7 +944,7 @@ public class SvgGraphics {
 
 	public void svgImage(PortableImage image, double x, double y) throws IOException {
 		if (hidden == false) {
-			final Element elt = document.createElement("image");
+			final XmlNode elt = document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
 			elt.setAttribute("height", format(image.getHeight()));
 			elt.setAttribute("x", format(x));
@@ -1027,7 +965,7 @@ public class SvgGraphics {
 			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
 			svg = pos + svg.substring(5);
 			final String key = "imagesvginlined" + image.getMD5Hex() + images.size();
-			final Element elt = document.createElement(key);
+			final XmlNode elt = document.createElement(key);
 			getG().appendChild(elt);
 			images.put(key, svg);
 		}
@@ -1043,7 +981,7 @@ public class SvgGraphics {
 
 		// https://developer.mozilla.org/fr/docs/Web/SVG/Element/image
 		if (hidden == false) {
-			final Element elt = document.createElement("image");
+			final XmlNode elt = document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
 			elt.setAttribute("height", format(image.getHeight()));
 			elt.setAttribute("x", format(x));
@@ -1096,8 +1034,6 @@ public class SvgGraphics {
 		return new String(Base64Coder.encode(data));
 	}
 
-	
-	
 	private String toBase64(String s) {
 		final byte data[] = s.getBytes(java.nio.charset.StandardCharsets.UTF_8);
 		return new String(Base64Coder.encode(data));
@@ -1111,7 +1047,7 @@ public class SvgGraphics {
 		if (deltaShadow != 0) {
 			if (withShadow == false) {
 				// <filter id="f1" x="0" y="0" width="120%" height="120%">
-				final Element filter = document.createElement("filter");
+				final XmlNode filter = document.createElement("filter");
 				filter.setAttribute("id", shadowId);
 				filter.setAttribute("x", "-1");
 				filter.setAttribute("y", "-1");
@@ -1129,10 +1065,10 @@ public class SvgGraphics {
 		}
 	}
 
-	private void addFilter(Element filter, String name, String... data) {
+	private void addFilter(XmlNode filter, String name, String... data) {
 		if (TeaVM.a())
 			assert data.length % 2 == 0;
-		final Element elt = document.createElement(name);
+		final XmlNode elt = document.createElement(name);
 		for (int i = 0; i < data.length; i += 2)
 			elt.setAttribute(data[i], data[i + 1]);
 
@@ -1159,14 +1095,11 @@ public class SvgGraphics {
 	public void addCommentMetadata(String metadata) {
 		// https://github.com/plantuml/plantuml/issues/2306
 		final String signature = getMetadataHex(metadata);
-		final ProcessingInstruction processingInstruction = document.createProcessingInstruction("plantuml-src",
-				signature);
-		getG().appendChild(processingInstruction);
+		getG().appendProcessingInstruction("plantuml-src", signature);
 	}
 
 	public void addComment(String comment) {
-		final Comment commentElement = document.createComment(comment);
-		getG().appendChild(commentElement);
+		getG().appendComment(comment);
 	}
 
 	private static class LinkData {
@@ -1202,7 +1135,7 @@ public class SvgGraphics {
 			return sb.toString().replaceAll("\\\\n", "\n");
 		}
 
-		public void updateAttributesOf(Element element) {
+		public void updateAttributesOf(XmlNode element) {
 			element.setAttribute("target", target);
 			element.setAttribute(XLINK_HREF1, url);
 			element.setAttribute(XLINK_HREF2, url);
@@ -1216,7 +1149,7 @@ public class SvgGraphics {
 		}
 	}
 
-	private final List<Element> pendingElements = new ArrayList<>();
+	private final List<XmlNode> pendingElements = new ArrayList<>();
 
 	/*
 	 * Note: SVG does not support nested links (<a> within <a>). Thus, we manage
@@ -1230,7 +1163,7 @@ public class SvgGraphics {
 	 * SVG group.
 	 */
 	private void closeTopPendingElement() {
-		final Element element = pendingElements.get(0);
+		final XmlNode element = pendingElements.get(0);
 		pendingElements.remove(0);
 		if (element.getFirstChild() != null)
 			getG().appendChild(element);
@@ -1250,7 +1183,7 @@ public class SvgGraphics {
 		}
 
 		// Check for invalid state: no links should remain pending
-		for (Element elt : pendingElements)
+		for (XmlNode elt : pendingElements)
 			if (elt.getTagName().equals("a"))
 				throw new IllegalStateException();
 
@@ -1323,11 +1256,8 @@ public class SvgGraphics {
 		closeTopActiveLinkIfNeeded();
 
 		pendingElements.add(0, document.createElement("g"));
-		final W3cElementAdapter ielement = new W3cElementAdapter(pendingElements.get(0));
-
-		final PortableSvgDocument idocument = new W3cSvgDocument(document);
 		for (Map.Entry<UGroupType, String> entry : typeIdents.entrySet())
-			idocument.applyGroupAttribute(ielement, entry.getKey(), entry.getValue());
+			document.applyGroupAttribute(pendingElements.get(0), entry.getKey(), entry.getValue());
 
 		// Restore link state after group creation if needed
 		addTopOpenedLinkIfNeeded();

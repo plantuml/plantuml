@@ -37,8 +37,6 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.xml.transform.TransformerException;
-
 import net.atmp.SvgOption;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.ClipContainer;
@@ -134,14 +132,10 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-		try {
-			if (metadata != null)
-				getGraphicObject().addCommentMetadata(metadata);
+		if (metadata != null)
+			getGraphicObject().addCommentMetadata(metadata);
 
-			getGraphicObject().createXml(os);
-		} catch (TransformerException e) {
-			throw new IOException(e);
-		}
+		getGraphicObject().createXml(os);
 	}
 
 	@Override

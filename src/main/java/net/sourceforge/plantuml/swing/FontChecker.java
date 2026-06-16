@@ -112,7 +112,7 @@ public class FontChecker {
 	}
 
 	public String getCharDesc(char c) {
-		final TextLayout t = UFontContext.G2D.createTextLayout(font, "" + c);
+		final TextLayout t = font.createTextLayout("" + c);
 		final Shape sh = t.getOutline(null);
 		final double current[] = new double[6];
 		final PathIterator it = sh.getPathIterator(null);
@@ -130,7 +130,7 @@ public class FontChecker {
 	}
 
 	public String getCharDescVerbose(char c) {
-		final TextLayout t = UFontContext.G2D.createTextLayout(font, "" + c);
+		final TextLayout t = font.createTextLayout("" + c);
 		final Shape sh = t.getOutline(null);
 		final double current[] = new double[6];
 		final PathIterator it = sh.getPathIterator(null);

@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UText;
 
 public class DriverCenteredCharacterPdf implements UDriver<UCenteredCharacter, PdfGraphics> {
 
@@ -59,7 +60,7 @@ public class DriverCenteredCharacterPdf implements UDriver<UCenteredCharacter, P
 		final double xpos = x - unusedSpace.getCenterX() - 0.5;
 		final double ypos = y - unusedSpace.getCenterY() - 0.5;
 
-		final TextLayout t = UFontContext.SVG.createTextLayout(font, "" + c);
+		final TextLayout t = font.createTextLayout("" + c);
 		svg.setFillColor(textColor.toColor(mapper).toAwtColor());
 
 		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));

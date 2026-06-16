@@ -103,7 +103,7 @@ public class AtomImg extends AbstractAtom implements Atom {
 	}
 
 	public static Atom create(ISkinSimple skinParam, String src, ImgValign valign, int vspace, double scale, Url url) {
-		final UFont font = UFontFactory.monospaced(14);
+		final UFont font = UFontFactory.monospace(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 
 		if (src.startsWith(UmlSource.BASE64_TAG_REPLACEMENT)) {

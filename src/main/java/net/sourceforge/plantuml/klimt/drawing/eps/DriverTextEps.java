@@ -78,7 +78,7 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 			return;
 		}
 
-		final TextLayout textLayout = UFontContext.EPS.createTextLayout(shape);
+		final TextLayout textLayout = shape.createTextLayout();
 
 		MinMax dim = null;
 

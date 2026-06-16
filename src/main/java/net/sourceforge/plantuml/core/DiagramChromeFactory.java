@@ -98,7 +98,7 @@ import net.sourceforge.plantuml.warning.Warning;
  */
 public final class DiagramChromeFactory {
 
-	private static final FontConfiguration WARNING_FC = FontConfiguration.blackBlueTrue(UFontFactory.monospaced(10));
+	private static final FontConfiguration WARNING_FC = FontConfiguration.blackBlueTrue(UFontFactory.monospace(10));
 
 	// Utility class — no instantiation
 	private DiagramChromeFactory() {

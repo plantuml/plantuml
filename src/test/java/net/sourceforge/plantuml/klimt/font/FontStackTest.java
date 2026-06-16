@@ -10,14 +10,14 @@ class FontStackTest {
 
 	@Test
 	void testGetFont() {
-		FontStack stack = new FontStack("foo");
+		FontStack stack = FontStack.build("foo");
 		Font font = stack.getFont("hello", Font.PLAIN, 12);
 		assertThat(font.toString()).isEqualTo("java.awt.Font[family=Dialog,name=foo,style=plain,size=12]");
 	}
 
 	@Test
 	void shouldReturnMinusOneWhenAllCharsAreDisplayable() {
-		FontStack stack = new FontStack("foo");
+		FontStack stack = FontStack.build("foo");
 		// All characters are displayable in most fonts
 		assertThat(stack.canDisplayUpTo(0, "a")).isEqualTo(-1);
 	}

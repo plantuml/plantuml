@@ -60,7 +60,7 @@ public class Tile implements TextBlock {
 	private static double SIZE = 40;
 	private final int num;
 
-	private final UFont numberFont = UFontFactory.monospaced(11);
+	private final UFont numberFont = UFontFactory.monospace(11);
 	private final FontConfiguration fc = FontConfiguration.blackBlueTrue(numberFont);
 	private final Map<TileGeometry, TileArea> geometries;
 

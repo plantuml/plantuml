@@ -35,19 +35,40 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
-import org.w3c.dom.Document;
+/**
+ * A minimal, dependency-free document, replicating just the subset of
+ * {@code org.w3c.dom.Document} that the SVG generation code relies on: a
+ * factory for {@link XmlNode} elements plus a single root.
+ * <p>
+ * It is the TeaVM-friendly counterpart of the {@code org.w3c.dom.Document} used
+ * by {@code SvgGraphics}, designed so that the dependency-free SVG generator can
+ * be a near-mechanical port where {@code Document}/{@code Element} become
+ * {@code XmlDocument}/{@code XmlNode}.
+ */
+public class XmlDocument extends PortableSvgDocument {
 
-public class W3cSvgDocument extends PortableSvgDocument {
+	private XmlNode root;
 
-	private final Document wrapped;
-
-	public W3cSvgDocument(Document wrapped) {
-		this.wrapped = wrapped;
+	public XmlNode createElement(String name) {
+		return new XmlNode(name);
 	}
 
-	@Override
-	public IElement createElement(String name) {
-		return new W3cElementAdapter(wrapped.createElement(name));
+	/** Sets the root element; subsequent serialization starts from it. */
+	public void setRoot(XmlNode root) {
+		this.root = root;
 	}
 
+	public XmlNode getRoot() {
+		return root;
+	}
+
+	/** Serializes the whole document, starting at the root element. */
+	public String toXml(int indentSpaces) {
+		if (root == null)
+			throw new IllegalStateException("No root element set.");
+
+		final XmlWriter w = new XmlWriter(indentSpaces);
+		root.writeTo(w);
+		return w.getXml();
+	}
 }

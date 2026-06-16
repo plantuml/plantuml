@@ -116,7 +116,7 @@ public class JsonDiagram extends TitledDiagram implements TextBlock {
 		if (root == null) {
 			final Display display = Display.getWithNewlines(getSkinParam().getPragma(),
 					"Your data does not sound like " + getDiagramType() + " data");
-			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.courier(14));
+			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.monospace(14));
 			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());
 			result = TextBlockUtils.withMargin(result, 5, 2);
 			result.drawU(ug);

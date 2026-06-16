@@ -40,20 +40,18 @@ import java.awt.font.LineMetrics;
 
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.text.RichText;
 import net.sourceforge.plantuml.text.StyledString;
 
 public class StringBounderAwt implements StringBounder {
-	
-	private final FontRenderContext frc = FileFormat.gg.getFontRenderContext();
 
+	private final FontRenderContext frc = FileFormat.gg.getFontRenderContext();
 
 	private XDimension2D calculateDimensionInternal(UFont font, String text) {
 		return FileFormat.getJavaDimension(font, text);
 	}
-	
+
 	@Override
 	public final XDimension2D calculateDimension(UFont font, String text) {
 //		if (font == null) {
@@ -73,10 +71,9 @@ public class StringBounderAwt implements StringBounder {
 		return calculateDimensionInternal(font, text);
 	}
 
-
 	@Override
 	public double getDescent(UFont font, String text) {
-		final LineMetrics lineMetrics = UFontImpl.getUnderlayingFont(font, text).getLineMetrics(text, frc);
+		final LineMetrics lineMetrics = font.getUnderlayingFont(text).getLineMetrics(text, frc);
 		final double descent = lineMetrics.getDescent();
 		return descent;
 	}
@@ -85,6 +82,5 @@ public class StringBounderAwt implements StringBounder {
 	public FileFormat getFileFormat() {
 		return FileFormat.PNG;
 	}
-
 
 }
