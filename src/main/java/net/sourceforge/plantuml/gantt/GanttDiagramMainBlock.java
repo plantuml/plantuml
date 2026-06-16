@@ -79,7 +79,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 
 	public GanttDiagramMainBlock(TimeBoundsData timeBounds, GanttModelData modelData, TaskDrawRegistryData drawRegistry,
 			DisplayConfigData displayConfig, TimelineStyleData timelineStyle, GanttDiagram diagram,
-			TimeHeader timeHeader, StringBounder stringBounder) {
+			TimeHeader timeHeader, Locale locale, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.timeBounds = timeBounds;
 		this.modelData = modelData;
@@ -90,7 +90,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 		this.layout = new GanttLayout(modelData, displayConfig, timeBounds, timelineStyle, drawRegistry, stringBounder,
 				timeHeader);
 		this.taskTable = new GanttTaskTable(modelData, timeBounds, drawRegistry, timelineStyle,
-				timeHeader.getFullHeaderHeight(stringBounder), Locale.ENGLISH, stringBounder);
+				timeHeader.getFullHeaderHeight(stringBounder), locale, stringBounder);
 	}
 
 	@Override

@@ -186,7 +186,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 		final TimeHeader timeHeader = factory.createTimeHeader();
 
 		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,
-				this.timelineStyle, this, timeHeader, stringBounder);
+				this.timelineStyle, this, timeHeader, this.weekConfig.getLocale(), stringBounder);
 	}
 
 	private void initMinMax() {
