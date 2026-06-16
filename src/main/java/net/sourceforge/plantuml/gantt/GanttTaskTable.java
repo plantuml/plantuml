@@ -134,7 +134,7 @@ public final class GanttTaskTable {
 				continue;
 
 			final TaskDraw draw = drawRegistry.getTaskDraw(task);
-			final double yCenter = headerHeight + draw.getY(stringBounder).getCurrentValue()
+			final double yCenter = draw.getY(stringBounder).getCurrentValue()
 					+ draw.getFullHeightTask(stringBounder) / 2;
 			drawRow(ug, yCenter, codeOf(task), startOf(task), endOf(task), durationOf(task));
 		}

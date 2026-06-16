@@ -21,9 +21,15 @@ import net.sourceforge.plantuml.preproc.Defines;
 You can use this file to put a test you are working on.
 Here is a simple example:
 
-@startuml
-alice->bob: this is a test
-@enduml
+@startgantt
+language fr
+Project starts 2020-07-01
+[Test prototype] requires 10 days
+[Prototype completed] happens 2020-07-10
+[Setup assembly line] requires 12 days
+[Setup assembly line] starts at [Test prototype]'s end
+@endgantt
+
 
 So you can edit this file, but please do not push any modification in the "main" branch.
 Put your own tests on your own branches.

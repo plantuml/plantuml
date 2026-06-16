@@ -90,7 +90,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 		this.layout = new GanttLayout(modelData, displayConfig, timeBounds, timelineStyle, drawRegistry, stringBounder,
 				timeHeader);
 		this.taskTable = new GanttTaskTable(modelData, timeBounds, drawRegistry, timelineStyle,
-				layout.getHeaderHeight(), Locale.ENGLISH, stringBounder);
+				timeHeader.getFullHeaderHeight(stringBounder), Locale.ENGLISH, stringBounder);
 	}
 
 	@Override
