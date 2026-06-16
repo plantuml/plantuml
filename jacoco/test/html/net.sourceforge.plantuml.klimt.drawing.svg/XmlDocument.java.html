@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XmlDocument.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.drawing.svg</a> &gt; <span class="el_source">XmlDocument.java</span></div><h1>XmlDocument.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2025, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.klimt.drawing.svg;
+
+/**
+ * A minimal, dependency-free document, replicating just the subset of
+ * {@code org.w3c.dom.Document} that the SVG generation code relies on: a
+ * factory for {@link XmlNode} elements plus a single root.
+ * &lt;p&gt;
+ * It is the TeaVM-friendly counterpart of the {@code org.w3c.dom.Document} used
+ * by {@code SvgGraphics}, designed so that the dependency-free SVG generator can
+ * be a near-mechanical port where {@code Document}/{@code Element} become
+ * {@code XmlDocument}/{@code XmlNode}.
+ */
+<span class="fc" id="L48">public class XmlDocument extends PortableSvgDocument {</span>
+
+	private XmlNode root;
+
+	public XmlNode createElement(String name) {
+<span class="fc" id="L53">		return new XmlNode(name);</span>
+	}
+
+	/** Sets the root element; subsequent serialization starts from it. */
+	public void setRoot(XmlNode root) {
+<span class="fc" id="L58">		this.root = root;</span>
+<span class="fc" id="L59">	}</span>
+
+	public XmlNode getRoot() {
+<span class="nc" id="L62">		return root;</span>
+	}
+
+	/** Serializes the whole document, starting at the root element. */
+	public String toXml(int indentSpaces) {
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">		if (root == null)</span>
+<span class="nc" id="L68">			throw new IllegalStateException(&quot;No root element set.&quot;);</span>
+
+<span class="fc" id="L70">		final XmlWriter w = new XmlWriter(indentSpaces);</span>
+<span class="fc" id="L71">		root.writeTo(w);</span>
+<span class="fc" id="L72">		return w.getXml();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

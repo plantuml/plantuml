@@ -73,8 +73,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../W3cElementAdapter.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">W3cElementAdapter</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="../XmlNode.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.svg">XmlNode</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A minimal, dependency-free DOM element, replicating just the subset of
+ <code>org.w3c.dom.Element</code> that the SVG generation code relies on.</div>
+</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a> that return <a href="../IElement.html" title="interface in net.sourceforge.plantuml.klimt.drawing.svg">IElement</a></span></div>
 <div class="summary-table three-column-summary">
@@ -84,9 +87,6 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>abstract <a href="../IElement.html" title="interface in net.sourceforge.plantuml.klimt.drawing.svg">IElement</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">PortableSvgDocument.</span><code><a href="../PortableSvgDocument.html#createElement(java.lang.String)" class="member-name-link">createElement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../IElement.html" title="interface in net.sourceforge.plantuml.klimt.drawing.svg">IElement</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">W3cSvgDocument.</span><code><a href="../W3cSvgDocument.html#createElement(java.lang.String)" class="member-name-link">createElement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.klimt.drawing.svg</a> with parameters of type <a href="../IElement.html" title="interface in net.sourceforge.plantuml.klimt.drawing.svg">IElement</a></span></div>
 <div class="summary-table three-column-summary">
@@ -97,7 +97,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">IElement.</span><code><a href="../IElement.html#appendChild(net.sourceforge.plantuml.klimt.drawing.svg.IElement)" class="member-name-link">appendChild</a><wbr>(<a href="../IElement.html" title="interface in net.sourceforge.plantuml.klimt.drawing.svg">IElement</a>&nbsp;title)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">W3cElementAdapter.</span><code><a href="../W3cElementAdapter.html#appendChild(net.sourceforge.plantuml.klimt.drawing.svg.IElement)" class="member-name-link">appendChild</a><wbr>(<a href="../IElement.html" title="interface in net.sourceforge.plantuml.klimt.drawing.svg">IElement</a>&nbsp;child)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlNode.</span><code><a href="../XmlNode.html#appendChild(net.sourceforge.plantuml.klimt.drawing.svg.IElement)" class="member-name-link">appendChild</a><wbr>(<a href="../IElement.html" title="interface in net.sourceforge.plantuml.klimt.drawing.svg">IElement</a>&nbsp;child)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">PortableSvgDocument.</span><code><a href="../PortableSvgDocument.html#applyGroupAttribute(net.sourceforge.plantuml.klimt.drawing.svg.IElement,net.sourceforge.plantuml.klimt.UGroupType,java.lang.String)" class="member-name-link">applyGroupAttribute</a><wbr>(<a href="../IElement.html" title="interface in net.sourceforge.plantuml.klimt.drawing.svg">IElement</a>&nbsp;element,

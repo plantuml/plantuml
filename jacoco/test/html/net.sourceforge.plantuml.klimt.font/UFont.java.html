@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UFont.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.klimt.font</a> &gt; <span class="el_source">UFont.java</span></div><h1>UFont.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.klimt.font;
+
+import java.awt.Font;
+import java.awt.font.TextAttribute;
+import java.awt.font.TextLayout;
+import java.util.Objects;
+
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.teavm.TeaVM;
+
+public final class UFont {
+
+	private final FontStack fontStack;
+	/**
+	 * The full font face (italic axis + CSS weight 100-900). This is the canonical
+	 * weight/style store.
+	 */
+	private final UFontFace face;
+	private final int size;
+
+	/**
+	 * Face-aware constructor. Stores the full {@link UFontFace} so that
+	 * intermediate CSS weights (100-900) are preserved and applied via
+	 * {@link TextAttribute#WEIGHT} during Java2D rendering.
+	 */
+<span class="fc" id="L61">	UFont(FontStack fontStack, UFontFace face, int size) {</span>
+<span class="fc" id="L62">		this.fontStack = fontStack;</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		this.face = face == null ? UFontFace.normal() : face;</span>
+<span class="fc" id="L64">		this.size = size;</span>
+<span class="fc" id="L65">	}</span>
+
+	/**
+	 * Returns the underlying {@link java.awt.Font} for the given text, with all
+	 * font properties applied via {@link java.awt.font.TextAttribute}s.
+	 *
+	 * &lt;p&gt;
+	 * Weight (CSS 100-900) and italic axis are both applied through
+	 * {@link UFontFace#deriveFont(Font)} so that fonts with intermediate weight
+	 * faces (e.g. Helvetica Neue Medium) render at the requested weight. Fonts that
+	 * only provide binary bold/normal fall back gracefully.
+	 */
+	public Font getUnderlayingFont(String text) {
+<span class="fc" id="L78">		return fontStack.getFont(text, face, size);</span>
+	}
+
+	public UFont withSize(float size) {
+<span class="fc" id="L82">		return new UFont(fontStack, this.face, (int) size);</span>
+	}
+
+	public UFontFace getFontFace() {
+<span class="fc" id="L86">		return face;</span>
+	}
+
+	public UFont withFontFace(UFontFace newFace) {
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (newFace == null)</span>
+<span class="nc" id="L91">			return this;</span>
+<span class="fc" id="L92">		return new UFont(fontStack, newFace, this.size);</span>
+	}
+
+	public int getSize() {
+<span class="fc" id="L96">		return size;</span>
+	}
+
+	public double getSize2D() {
+<span class="fc" id="L100">		return size;</span>
+	}
+
+	public String getFamily(String text, UFontContext context) {
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L105">			return getTeaVMDefinition();</span>
+		} else {
+<span class="pc bpc" id="L107" title="2 of 4 branches missed.">			switch (context) {</span>
+			case PDF:
+<span class="nc" id="L109">				return fontStack.getFullDefinition();</span>
+			case EPS:
+<span class="fc" id="L111">				return getUnderlayingFont(text).getPSName();</span>
+			case SVG:
+<span class="fc" id="L113">				return fontStack.getSvgFamily();</span>
+			}
+		}
+<span class="nc" id="L116">		throw new IllegalArgumentException();</span>
+	}
+
+	private String getTeaVMDefinition() {
+<span class="nc" id="L120">		return fontStack.getSvgFamily();</span>
+	}
+
+	// Kludge for testing because font names on some machines (only macOS?) do not
+	// end with &lt;DOT&gt;&lt;STYLE&gt;
+	// See https://github.com/plantuml/plantuml/issues/720
+	private String getPortableFontName() {
+<span class="fc" id="L127">		final Font font = getUnderlayingFont(null);</span>
+<span class="fc" id="L128">		final String name = font.getFontName();</span>
+<span class="pc bpc" id="L129" title="1 of 4 branches missed.">		if (font.isBold() &amp;&amp; font.isItalic())</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			return name.endsWith(&quot;.bolditalic&quot;) ? name : name + &quot;.bolditalic&quot;;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		else if (font.isBold())</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">			return name.endsWith(&quot;.bold&quot;) ? name : name + &quot;.bold&quot;;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		else if (font.isItalic())</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">			return name.endsWith(&quot;.italic&quot;) ? name : name + &quot;.italic&quot;;</span>
+		else
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			return name.endsWith(&quot;.plain&quot;) ? name : name + &quot;.plain&quot;;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc" id="L141">		final StringBuilder sb = new StringBuilder();</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L143">			sb.append(getTeaVMDefinition());</span>
+		else
+<span class="fc" id="L145">			sb.append(getPortableFontName());</span>
+<span class="fc" id="L146">		sb.append(&quot;/&quot;);</span>
+<span class="fc" id="L147">		sb.append(getSize());</span>
+<span class="fc" id="L148">		return sb.toString();</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L154">			return Objects.hash(getTeaVMDefinition(), face, size);</span>
+		else
+<span class="fc" id="L156">			return Objects.hash(fontStack, face, size);</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L162">			return true;</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (!(obj instanceof UFont))</span>
+<span class="nc" id="L164">			return false;</span>
+<span class="fc" id="L165">		UFont other = (UFont) obj;</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc bnc" id="L167" title="All 6 branches missed.">			return Objects.equals(getTeaVMDefinition(), other.getTeaVMDefinition()) &amp;&amp; Objects.equals(face, other.face)</span>
+					&amp;&amp; size == other.size;
+		else
+<span class="pc bpc" id="L170" title="2 of 6 branches missed.">			return Objects.equals(fontStack, other.fontStack) &amp;&amp; Objects.equals(face, other.face) &amp;&amp; size == other.size;</span>
+	}
+
+	public TextLayout createTextLayout(String text) {
+<span class="fc" id="L174">		return new TextLayout(text, getUnderlayingFont(text), FileFormat.gg.getFontRenderContext());</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -127,6 +127,7 @@ net.sourceforge.plantuml.klimt.creole.legacy
 net.sourceforge.plantuml.klimt.drawing
 net.sourceforge.plantuml.klimt.drawing.debug
 net.sourceforge.plantuml.klimt.drawing.eps
+net.sourceforge.plantuml.klimt.drawing.font
 net.sourceforge.plantuml.klimt.drawing.g2d
 net.sourceforge.plantuml.klimt.drawing.hand
 net.sourceforge.plantuml.klimt.drawing.html5

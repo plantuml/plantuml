@@ -41,34 +41,30 @@ package net.sourceforge.plantuml.klimt.font;
 	 * Builds a font using a face (weight + italic axis) and size.
 	 *
 	 * @param fullDefinition font family definition
-	 * @param face font face (style + weight), defaults to normal if null
-	 * @param fontSize font size
+	 * @param face           font face (style + weight), defaults to normal if null
+	 * @param fontSize       font size
 	 * @return configured font
 	 */
 	public static UFont build(String fullDefinition, UFontFace face, int fontSize) {
-<span class="fc" id="L49">		final FontStack fontStack = new FontStack(fullDefinition);</span>
+<span class="fc" id="L49">		final FontStack fontStack = FontStack.build(fullDefinition);</span>
 <span class="pc bpc" id="L50" title="1 of 2 branches missed.">		final UFontFace safeFace = face == null ? UFontFace.normal() : face;</span>
-<span class="fc" id="L51">		return new UFontImpl(fontStack, safeFace, fontSize);</span>
+<span class="fc" id="L51">		return new UFont(fontStack, safeFace, fontSize);</span>
 	}
 
 	public static UFont serif(int size) {
-<span class="fc" id="L55">		return build(&quot;Serif&quot;, UFontFace.normal(), size);</span>
+<span class="fc" id="L55">		return build(FontStack.SERIF, UFontFace.normal(), size);</span>
 	}
 
 	public static UFont sansSerif(int size) {
-<span class="fc" id="L59">		return build(&quot;SansSerif&quot;, UFontFace.normal(), size);</span>
+<span class="fc" id="L59">		return build(FontStack.SANS_SERIF, UFontFace.normal(), size);</span>
 	}
 
-	public static UFont courier(int size) {
-<span class="nc" id="L63">		return build(&quot;Courier&quot;, UFontFace.normal(), size);</span>
+	public static UFont monospace(int size) {
+<span class="fc" id="L63">		return build(FontStack.MONOSPACE, UFontFace.normal(), size);</span>
 	}
 
 	public static UFont byDefault(int size) {
 <span class="nc" id="L67">		return sansSerif(12);</span>
-	}
-
-	public static UFont monospaced(int size) {
-<span class="fc" id="L71">		return build(&quot;Monospaced&quot;, UFontFace.normal(), size);</span>
 	}
 
 }

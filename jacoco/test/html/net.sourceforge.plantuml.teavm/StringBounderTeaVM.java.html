@@ -41,7 +41,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontImpl;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 <span class="nc" id="L47">public class StringBounderTeaVM implements StringBounder {</span>
@@ -50,11 +50,11 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 	private static final int MAX_CACHE_SIZE = 8192;
 
 	private static final class CacheKey {
-		private final UFontImpl font;
+		private final UFont font;
 		private final String text;
 		private final int hash;
 
-<span class="nc" id="L57">		CacheKey(UFontImpl font, String text) {</span>
+<span class="nc" id="L57">		CacheKey(UFont font, String text) {</span>
 <span class="nc" id="L58">			this.font = font;</span>
 <span class="nc" id="L59">			this.text = text;</span>
 <span class="nc" id="L60">			this.hash = Objects.hash(font, text);</span>
@@ -88,13 +88,13 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 <span class="nc bnc" id="L88" title="All 4 branches missed.">		if (text == null || text.isEmpty())</span>
 <span class="nc" id="L89">			return new XDimension2D(0, 0);</span>
 
-<span class="nc" id="L91">		final UFontImpl font = (UFontImpl) f;</span>
+<span class="nc" id="L91">		final UFont font = (UFont) f;</span>
 <span class="nc" id="L92">		final CacheKey key = new CacheKey(font, text);</span>
 
 <span class="nc" id="L94">		return cache.computeIfAbsent(key, k -&gt; calculateDimensionSlow(font, text));</span>
 	}
 
-	private XDimension2D calculateDimensionSlow(UFontImpl font, String text) {
+	private XDimension2D calculateDimensionSlow(UFont font, String text) {
 <span class="nc" id="L98">		final String fontFamily = font.getFamily(null, null);</span>
 <span class="nc" id="L99">		final int fontSize = font.getSize();</span>
 <span class="nc bnc" id="L100" title="All 2 branches missed.">		final String fontWeight = font.getFontFace().isBold() ? &quot;bold&quot; : &quot;normal&quot;;</span>

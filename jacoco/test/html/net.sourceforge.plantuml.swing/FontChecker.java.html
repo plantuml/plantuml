@@ -112,7 +112,7 @@ public class FontChecker {
 	}
 
 	public String getCharDesc(char c) {
-<span class="nc" id="L115">		final TextLayout t = UFontContext.G2D.createTextLayout(font, &quot;&quot; + c);</span>
+<span class="nc" id="L115">		final TextLayout t = font.createTextLayout(&quot;&quot; + c);</span>
 <span class="nc" id="L116">		final Shape sh = t.getOutline(null);</span>
 <span class="nc" id="L117">		final double current[] = new double[6];</span>
 <span class="nc" id="L118">		final PathIterator it = sh.getPathIterator(null);</span>
@@ -130,7 +130,7 @@ public class FontChecker {
 	}
 
 	public String getCharDescVerbose(char c) {
-<span class="nc" id="L133">		final TextLayout t = UFontContext.G2D.createTextLayout(font, &quot;&quot; + c);</span>
+<span class="nc" id="L133">		final TextLayout t = font.createTextLayout(&quot;&quot; + c);</span>
 <span class="nc" id="L134">		final Shape sh = t.getOutline(null);</span>
 <span class="nc" id="L135">		final double current[] = new double[6];</span>
 <span class="nc" id="L136">		final PathIterator it = sh.getPathIterator(null);</span>

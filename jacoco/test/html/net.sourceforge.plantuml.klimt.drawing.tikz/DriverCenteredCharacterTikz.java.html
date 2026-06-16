@@ -43,24 +43,25 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.font.UnusedSpace;
 import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
+import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 
-<span class="nc" id="L48">public class DriverCenteredCharacterTikz implements UDriver&lt;UCenteredCharacter, TikzGraphics&gt; {</span>
+<span class="nc" id="L49">public class DriverCenteredCharacterTikz implements UDriver&lt;UCenteredCharacter, TikzGraphics&gt; {</span>
     // ::remove folder when __HAXE__
 
 	public void draw(UCenteredCharacter centeredCharacter, double x, double y, ColorMapper mapper, UParam param,
 			TikzGraphics tikz) {
-<span class="nc" id="L53">		final char c = centeredCharacter.getChar();</span>
-<span class="nc" id="L54">		final UFont font = centeredCharacter.getFont();</span>
-<span class="nc" id="L55">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
+<span class="nc" id="L54">		final char c = centeredCharacter.getChar();</span>
+<span class="nc" id="L55">		final UFont font = centeredCharacter.getFont();</span>
+<span class="nc" id="L56">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
 
-<span class="nc" id="L57">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
-<span class="nc" id="L58">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
+<span class="nc" id="L58">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
+<span class="nc" id="L59">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
 
-<span class="nc" id="L60">		final TextLayout t = UFontContext.TIKZ.createTextLayout(font, &quot;&quot; + c);</span>
-<span class="nc" id="L61">		tikz.setStrokeColor(param.getColor());</span>
-<span class="nc" id="L62">		tikz.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L61">		final TextLayout t = font.createTextLayout(&quot;&quot; + c);</span>
+<span class="nc" id="L62">		tikz.setStrokeColor(param.getColor());</span>
+<span class="nc" id="L63">		tikz.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
+<span class="nc" id="L64">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

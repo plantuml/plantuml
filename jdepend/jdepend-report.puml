@@ -2122,6 +2122,12 @@ Total Classes: 15
 "net.sourceforge.plantuml.klimt.drawing.eps" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.klimt.drawing.eps" --> "net.sourceforge.plantuml.url"
 
+class "net.sourceforge.plantuml.klimt.drawing.font" %lighten("red", 100) {
+Total Classes: 2
+}
+"net.sourceforge.plantuml.klimt.drawing.font" --> "java.io"
+"net.sourceforge.plantuml.klimt.drawing.font" --> "java.lang"
+
 class "net.sourceforge.plantuml.klimt.drawing.g2d" %lighten("red", 90) {
 Total Classes: 14
 }
@@ -2169,8 +2175,8 @@ Total Classes: 3
 "net.sourceforge.plantuml.klimt.drawing.html5" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.klimt.drawing.html5" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml.klimt.drawing.svg" %lighten("red", 98) {
-Total Classes: 16
+class "net.sourceforge.plantuml.klimt.drawing.svg" %lighten("red", 100) {
+Total Classes: 19
 }
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "java.awt"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "java.awt.font"
@@ -2178,7 +2184,6 @@ Total Classes: 16
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "java.io"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "java.lang"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "java.util"
-"net.sourceforge.plantuml.klimt.drawing.svg" --> "javax.xml.transform"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.atmp"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml.klimt"
@@ -2189,7 +2194,6 @@ Total Classes: 16
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.klimt.drawing.svg" --> "net.sourceforge.plantuml.url"
-"net.sourceforge.plantuml.klimt.drawing.svg" --> "org.w3c.dom"
 
 class "net.sourceforge.plantuml.klimt.drawing.tikz" %lighten("red", 93) {
 Total Classes: 11
@@ -2239,17 +2243,14 @@ Total Classes: 8
 "net.sourceforge.plantuml.klimt.drawing.visio" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.klimt.drawing.visio" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml.klimt.font" %lighten("red", 37) {
+class "net.sourceforge.plantuml.klimt.font" %lighten("red", 25) {
 Total Classes: 11
 }
-"net.sourceforge.plantuml.klimt.font" --> "java.awt"
-"net.sourceforge.plantuml.klimt.font" --> "java.awt.font"
 "net.sourceforge.plantuml.klimt.font" --> "java.lang"
 "net.sourceforge.plantuml.klimt.font" --> "java.util"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.klimt.geom"
-"net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.klimt.font" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.klimt.geom" %lighten("red", 27) {

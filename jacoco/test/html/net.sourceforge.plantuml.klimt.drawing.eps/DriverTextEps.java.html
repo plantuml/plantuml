@@ -78,7 +78,7 @@ public class DriverTextEps implements UDriver&lt;UText, EpsGraphics&gt; {
 <span class="fc" id="L78">			return;</span>
 		}
 
-<span class="fc" id="L81">		final TextLayout textLayout = UFontContext.EPS.createTextLayout(shape);</span>
+<span class="fc" id="L81">		final TextLayout textLayout = shape.createTextLayout();</span>
 
 <span class="fc" id="L83">		MinMax dim = null;</span>
 

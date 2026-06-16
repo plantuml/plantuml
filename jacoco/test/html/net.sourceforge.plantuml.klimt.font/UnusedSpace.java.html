@@ -90,7 +90,7 @@ public class UnusedSpace {
 <span class="fc" id="L90">		final PortableImage im = PortableImageFactory.build(2 * HALF_SIZE, 2 * HALF_SIZE, PortableImage.TYPE_INT_RGB);</span>
 <span class="fc" id="L91">		final Graphics2D g2d = im.createGraphics();</span>
 <span class="fc" id="L92">		final String text = &quot;&quot; + c;</span>
-<span class="fc" id="L93">		g2d.setFont(UFontImpl.getUnderlayingFont(font, text));</span>
+<span class="fc" id="L93">		g2d.setFont(font.getUnderlayingFont(text));</span>
 <span class="fc" id="L94">		g2d.drawString(text, HALF_SIZE, HALF_SIZE);</span>
 
 <span class="fc" id="L96">		int minI = Integer.MAX_VALUE;</span>

@@ -40,52 +40,48 @@ import java.awt.font.LineMetrics;
 
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.text.RichText;
 import net.sourceforge.plantuml.text.StyledString;
 
-<span class="fc" id="L48">public class StringBounderAwt implements StringBounder {</span>
-	
-<span class="fc" id="L50">	private final FontRenderContext frc = FileFormat.gg.getFontRenderContext();</span>
+<span class="fc" id="L47">public class StringBounderAwt implements StringBounder {</span>
 
+<span class="fc" id="L49">	private final FontRenderContext frc = FileFormat.gg.getFontRenderContext();</span>
 
 	private XDimension2D calculateDimensionInternal(UFont font, String text) {
-<span class="fc" id="L54">		return FileFormat.getJavaDimension(font, text);</span>
+<span class="fc" id="L52">		return FileFormat.getJavaDimension(font, text);</span>
 	}
-	
+
 	@Override
 	public final XDimension2D calculateDimension(UFont font, String text) {
 //		if (font == null) {
 //			return calculateDimensionInternal(null, text);
 //		}
-<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (RichText.isRich(text)) {</span>
-<span class="nc" id="L63">			double width = 0;</span>
-<span class="nc" id="L64">			double height = 0;</span>
-<span class="nc bnc" id="L65" title="All 2 branches missed.">			for (StyledString s : StyledString.build(text)) {</span>
-<span class="nc" id="L66">				final UFont newFont = s.getStyle().mutateFont(font);</span>
-<span class="nc" id="L67">				final XDimension2D rect = calculateDimensionInternal(newFont, s.getText());</span>
-<span class="nc" id="L68">				width += rect.getWidth();</span>
-<span class="nc" id="L69">				height = Math.max(height, rect.getHeight());</span>
-<span class="nc" id="L70">			}</span>
-<span class="nc" id="L71">			return new XDimension2D(width, height);</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">		if (RichText.isRich(text)) {</span>
+<span class="nc" id="L61">			double width = 0;</span>
+<span class="nc" id="L62">			double height = 0;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			for (StyledString s : StyledString.build(text)) {</span>
+<span class="nc" id="L64">				final UFont newFont = s.getStyle().mutateFont(font);</span>
+<span class="nc" id="L65">				final XDimension2D rect = calculateDimensionInternal(newFont, s.getText());</span>
+<span class="nc" id="L66">				width += rect.getWidth();</span>
+<span class="nc" id="L67">				height = Math.max(height, rect.getHeight());</span>
+<span class="nc" id="L68">			}</span>
+<span class="nc" id="L69">			return new XDimension2D(width, height);</span>
 		}
-<span class="fc" id="L73">		return calculateDimensionInternal(font, text);</span>
+<span class="fc" id="L71">		return calculateDimensionInternal(font, text);</span>
 	}
-
 
 	@Override
 	public double getDescent(UFont font, String text) {
-<span class="fc" id="L79">		final LineMetrics lineMetrics = UFontImpl.getUnderlayingFont(font, text).getLineMetrics(text, frc);</span>
-<span class="fc" id="L80">		final double descent = lineMetrics.getDescent();</span>
-<span class="fc" id="L81">		return descent;</span>
+<span class="fc" id="L76">		final LineMetrics lineMetrics = font.getUnderlayingFont(text).getLineMetrics(text, frc);</span>
+<span class="fc" id="L77">		final double descent = lineMetrics.getDescent();</span>
+<span class="fc" id="L78">		return descent;</span>
 	}
 
 	@Override
 	public FileFormat getFileFormat() {
-<span class="fc" id="L86">		return FileFormat.PNG;</span>
+<span class="fc" id="L83">		return FileFormat.PNG;</span>
 	}
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

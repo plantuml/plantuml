@@ -40,41 +40,39 @@ import java.awt.font.LineMetrics;
 
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
 
 public class StringBounderSvg implements StringBounder {
 
 	private final SvgCharSizeHack charSizeHack;
-<span class="fc" id="L50">	private final FontRenderContext fontRenderContext = FileFormat.gg.getFontRenderContext();</span>
+<span class="fc" id="L49">	private final FontRenderContext fontRenderContext = FileFormat.gg.getFontRenderContext();</span>
 
-<span class="fc" id="L52">	public StringBounderSvg(final SvgCharSizeHack charSizeHack) {</span>
-<span class="fc" id="L53">		this.charSizeHack = charSizeHack;</span>
-<span class="fc" id="L54">	}</span>
+<span class="fc" id="L51">	public StringBounderSvg(final SvgCharSizeHack charSizeHack) {</span>
+<span class="fc" id="L52">		this.charSizeHack = charSizeHack;</span>
+<span class="fc" id="L53">	}</span>
 
 	@Override
 	public FileFormat getFileFormat() {
-<span class="nc" id="L58">		return FileFormat.SVG;</span>
+<span class="nc" id="L57">		return FileFormat.SVG;</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-<span class="fc" id="L63">		text = charSizeHack.transformStringForSizeHack(text);</span>
-<span class="fc" id="L64">		return FileFormat.getJavaDimension(font, text);</span>
+<span class="fc" id="L62">		text = charSizeHack.transformStringForSizeHack(text);</span>
+<span class="fc" id="L63">		return FileFormat.getJavaDimension(font, text);</span>
 	}
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="fc" id="L69">		return &quot;SVG&quot;.equalsIgnoreCase(propertyName);</span>
+<span class="fc" id="L68">		return &quot;SVG&quot;.equalsIgnoreCase(propertyName);</span>
 	}
 
 	@Override
 	public double getDescent(UFont font, String text) {
-<span class="fc" id="L74">		final LineMetrics lineMetrics = UFontImpl.getUnderlayingFont(font, text).getLineMetrics(text,</span>
-				fontRenderContext);
-<span class="fc" id="L76">		final double descent = lineMetrics.getDescent();</span>
-<span class="fc" id="L77">		return descent;</span>
+<span class="fc" id="L73">		final LineMetrics lineMetrics = font.getUnderlayingFont(text).getLineMetrics(text, fontRenderContext);</span>
+<span class="fc" id="L74">		final double descent = lineMetrics.getDescent();</span>
+<span class="fc" id="L75">		return descent;</span>
 	}
 
 }

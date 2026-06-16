@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDeterministic;
 import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.font.UFontImpl;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.log.Logme;
 //::comment when JAVA8
@@ -71,60 +70,60 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
  * @author Arnaud Roques
  * 
  */
-<span class="fc" id="L74">public enum FileFormat {</span>
+<span class="fc" id="L73">public enum FileFormat {</span>
 
-<span class="fc" id="L76">	EPS(&quot;eps&quot;, &quot;application/postscript&quot;), //</span>
-<span class="fc" id="L77">	EPS_TEXT(&quot;eps-text&quot;, &quot;application/postscript&quot;), //</span>
-<span class="fc" id="L78">	ATXT(&quot;txt&quot;, &quot;text/plain&quot;), //</span>
-<span class="fc" id="L79">	UTXT(&quot;utxt&quot;, &quot;text/plain;charset=UTF-8&quot;), //</span>
-<span class="fc" id="L80">	XMI_STANDARD(&quot;xmi&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
-<span class="fc" id="L81">	XMI_STAR(&quot;xmi-star&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
-<span class="fc" id="L82">	XMI_ARGO(&quot;xmi-argo&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
-<span class="fc" id="L83">	XMI_CUSTOM(&quot;xmi-custom&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
-<span class="fc" id="L84">	XMI_SCRIPT(&quot;xmi-script&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
-<span class="fc" id="L85">	SCXML(&quot;scxml&quot;, &quot;application/scxml+xml&quot;), //</span>
-<span class="fc" id="L86">	GRAPHML(&quot;graphml&quot;, &quot;application/graphml+xml&quot;), //</span>
-<span class="fc" id="L87">	PDF(&quot;pdf&quot;, &quot;application/pdf&quot;), //</span>
-<span class="fc" id="L88">	HTML(&quot;html&quot;, &quot;text/html&quot;), //</span>
-<span class="fc" id="L89">	HTML5(&quot;html5&quot;, &quot;text/html&quot;), //</span>
-<span class="fc" id="L90">	VDX(&quot;vdx&quot;, &quot;application/vnd.visio.xml&quot;), //</span>
-<span class="fc" id="L91">	LATEX(&quot;eps&quot;, &quot;application/x-latex&quot;), //</span>
-<span class="fc" id="L92">	LATEX_NO_PREAMBLE(&quot;eps-no-preamble&quot;, &quot;application/x-latex&quot;), //</span>
-<span class="fc" id="L93">	LATEX_DETERMINISTIC(&quot;eps&quot;, &quot;application/x-latex&quot;), //</span>
-<span class="fc" id="L94">	BASE64(&quot;base64&quot;, &quot;text/plain; charset=x-user-defined&quot;), //</span>
-<span class="fc" id="L95">	BRAILLE_PNG(&quot;braille-png&quot;, &quot;image/png&quot;), //</span>
-<span class="fc" id="L96">	OBFUSCATE(&quot;obfuscate&quot;, &quot;text/plain&quot;), //</span>
-<span class="fc" id="L97">	DEBUG(&quot;debug&quot;, &quot;text/plain&quot;), //</span>
-<span class="fc" id="L98">	NULL(&quot;null&quot;, &quot;text/plain&quot;), //</span>
+<span class="fc" id="L75">	EPS(&quot;eps&quot;, &quot;application/postscript&quot;), //</span>
+<span class="fc" id="L76">	EPS_TEXT(&quot;eps-text&quot;, &quot;application/postscript&quot;), //</span>
+<span class="fc" id="L77">	ATXT(&quot;txt&quot;, &quot;text/plain&quot;), //</span>
+<span class="fc" id="L78">	UTXT(&quot;utxt&quot;, &quot;text/plain;charset=UTF-8&quot;), //</span>
+<span class="fc" id="L79">	XMI_STANDARD(&quot;xmi&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
+<span class="fc" id="L80">	XMI_STAR(&quot;xmi-star&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
+<span class="fc" id="L81">	XMI_ARGO(&quot;xmi-argo&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
+<span class="fc" id="L82">	XMI_CUSTOM(&quot;xmi-custom&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
+<span class="fc" id="L83">	XMI_SCRIPT(&quot;xmi-script&quot;, &quot;application/vnd.xmi+xml&quot;), //</span>
+<span class="fc" id="L84">	SCXML(&quot;scxml&quot;, &quot;application/scxml+xml&quot;), //</span>
+<span class="fc" id="L85">	GRAPHML(&quot;graphml&quot;, &quot;application/graphml+xml&quot;), //</span>
+<span class="fc" id="L86">	PDF(&quot;pdf&quot;, &quot;application/pdf&quot;), //</span>
+<span class="fc" id="L87">	HTML(&quot;html&quot;, &quot;text/html&quot;), //</span>
+<span class="fc" id="L88">	HTML5(&quot;html5&quot;, &quot;text/html&quot;), //</span>
+<span class="fc" id="L89">	VDX(&quot;vdx&quot;, &quot;application/vnd.visio.xml&quot;), //</span>
+<span class="fc" id="L90">	LATEX(&quot;eps&quot;, &quot;application/x-latex&quot;), //</span>
+<span class="fc" id="L91">	LATEX_NO_PREAMBLE(&quot;eps-no-preamble&quot;, &quot;application/x-latex&quot;), //</span>
+<span class="fc" id="L92">	LATEX_DETERMINISTIC(&quot;eps&quot;, &quot;application/x-latex&quot;), //</span>
+<span class="fc" id="L93">	BASE64(&quot;base64&quot;, &quot;text/plain; charset=x-user-defined&quot;), //</span>
+<span class="fc" id="L94">	BRAILLE_PNG(&quot;braille-png&quot;, &quot;image/png&quot;), //</span>
+<span class="fc" id="L95">	OBFUSCATE(&quot;obfuscate&quot;, &quot;text/plain&quot;), //</span>
+<span class="fc" id="L96">	DEBUG(&quot;debug&quot;, &quot;text/plain&quot;), //</span>
+<span class="fc" id="L97">	NULL(&quot;null&quot;, &quot;text/plain&quot;), //</span>
 
-<span class="fc" id="L100">	PREPROC(&quot;preproc&quot;, &quot;text/plain&quot;), //</span>
-<span class="fc" id="L101">	PNG(&quot;png&quot;, &quot;image/png&quot;), //</span>
-<span class="fc" id="L102">	PNG_EMPTY(&quot;png-empty&quot;, &quot;image/png&quot;), //</span>
-<span class="fc" id="L103">	RAW(&quot;raw&quot;, &quot;image/raw&quot;), //</span>
-<span class="fc" id="L104">	SVG_DETERMINISTIC(&quot;svg&quot;, &quot;image/svg+xml&quot;), //</span>
-<span class="fc" id="L105">	SVG(&quot;svg&quot;, &quot;image/svg+xml&quot;); //</span>
+<span class="fc" id="L99">	PREPROC(&quot;preproc&quot;, &quot;text/plain&quot;), //</span>
+<span class="fc" id="L100">	PNG(&quot;png&quot;, &quot;image/png&quot;), //</span>
+<span class="fc" id="L101">	PNG_EMPTY(&quot;png-empty&quot;, &quot;image/png&quot;), //</span>
+<span class="fc" id="L102">	RAW(&quot;raw&quot;, &quot;image/raw&quot;), //</span>
+<span class="fc" id="L103">	SVG_DETERMINISTIC(&quot;svg&quot;, &quot;image/svg+xml&quot;), //</span>
+<span class="fc" id="L104">	SVG(&quot;svg&quot;, &quot;image/svg+xml&quot;); //</span>
 
 	private final String mimeType;
 	private final String name;
 	private final static Map&lt;String, FileFormat&gt; byName;
 
 	static {
-<span class="fc" id="L112">		byName = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">		for (FileFormat format : values())</span>
-<span class="fc" id="L114">			byName.put(format.name, format);</span>
+<span class="fc" id="L111">		byName = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		for (FileFormat format : values())</span>
+<span class="fc" id="L113">			byName.put(format.name, format);</span>
 	}
 
 	public static FileFormat fromCli(String formatName) {
-<span class="fc" id="L118">		return byName.get(formatName);</span>
+<span class="fc" id="L117">		return byName.get(formatName);</span>
 	}
 
-<span class="fc" id="L121">	private FileFormat(String name, String mimeType) {</span>
-<span class="fc" id="L122">		this.mimeType = mimeType;</span>
-<span class="fc" id="L123">		this.name = name;</span>
-<span class="fc" id="L124">	}</span>
+<span class="fc" id="L120">	private FileFormat(String name, String mimeType) {</span>
+<span class="fc" id="L121">		this.mimeType = mimeType;</span>
+<span class="fc" id="L122">		this.name = name;</span>
+<span class="fc" id="L123">	}</span>
 
 	public String getMimeType() {
-<span class="fc" id="L127">		return mimeType;</span>
+<span class="fc" id="L126">		return mimeType;</span>
 	}
 
 	/**
@@ -133,84 +132,84 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 	 * @return a string starting by a point.
 	 */
 	public String getFileSuffix() {
-<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">			if (name().startsWith(&quot;XMI_CUSTOM&quot;))</span>
-<span class="nc" id="L138">				return &quot;.xmi_custom&quot;;</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">			if (name().startsWith(&quot;XMI_CUSTOM&quot;))</span>
+<span class="nc" id="L137">				return &quot;.xmi_custom&quot;;</span>
 
-<span class="fc bfc" id="L140" title="All 2 branches covered.">			if (name().startsWith(&quot;XMI&quot;))</span>
-<span class="fc" id="L141">				return &quot;.xmi&quot;;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			if (name().startsWith(&quot;XMI&quot;))</span>
+<span class="fc" id="L140">				return &quot;.xmi&quot;;</span>
 
-<span class="pc bpc" id="L143" title="3 of 6 branches missed.">			if (this == LATEX || this == LATEX_NO_PREAMBLE || this == LATEX_DETERMINISTIC)</span>
-<span class="nc" id="L144">				return &quot;.tex&quot;;</span>
+<span class="pc bpc" id="L142" title="3 of 6 branches missed.">			if (this == LATEX || this == LATEX_NO_PREAMBLE || this == LATEX_DETERMINISTIC)</span>
+<span class="nc" id="L143">				return &quot;.tex&quot;;</span>
 
-<span class="pc bpc" id="L146" title="1 of 2 branches missed.">			if (this == BRAILLE_PNG)</span>
-<span class="nc" id="L147">				return &quot;.braille.png&quot;;</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			if (this == BRAILLE_PNG)</span>
+<span class="nc" id="L146">				return &quot;.braille.png&quot;;</span>
 
-<span class="pc bpc" id="L149" title="1 of 2 branches missed.">			if (this == SVG_DETERMINISTIC)</span>
-<span class="nc" id="L150">				return &quot;.svg&quot;;</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">			if (this == SVG_DETERMINISTIC)</span>
+<span class="nc" id="L149">				return &quot;.svg&quot;;</span>
 
-<span class="fc bfc" id="L152" title="All 2 branches covered.">			if (this == EPS_TEXT)</span>
-<span class="fc" id="L153">				return EPS.getFileSuffix();</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">			if (this == EPS_TEXT)</span>
+<span class="fc" id="L152">				return EPS.getFileSuffix();</span>
 		}
 
-<span class="fc" id="L156">		return &quot;.&quot; + StringUtils.goLowerCase(name());</span>
+<span class="fc" id="L155">		return &quot;.&quot; + StringUtils.goLowerCase(name());</span>
 	}
 
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">	final static private BufferedImage imDummy = TeaVM.isTeaVM() ? null</span>
-<span class="fc" id="L160">			: new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);</span>
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">	final static public Graphics2D gg = TeaVM.isTeaVM() ? null : imDummy.createGraphics();</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">	final static private BufferedImage imDummy = TeaVM.isTeaVM() ? null</span>
+<span class="fc" id="L159">			: new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">	final static public Graphics2D gg = TeaVM.isTeaVM() ? null : imDummy.createGraphics();</span>
 	static {
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="fc" id="L164">			gg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);</span>
-<span class="fc" id="L165">			gg.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L163">			gg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);</span>
+<span class="fc" id="L164">			gg.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);</span>
 		}
 	}
 
 	public StringBounder getDefaultStringBounder() {
-<span class="nc" id="L170">		return getDefaultStringBounder(TikzFontDistortion.getDefault(), SvgCharSizeHack.NO_HACK);</span>
+<span class="nc" id="L169">		return getDefaultStringBounder(TikzFontDistortion.getDefault(), SvgCharSizeHack.NO_HACK);</span>
 	}
 
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion, SvgCharSizeHack charSizeHack) {
 		// ::comment when JAVA8
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L176">			return new StringBounderTeaVM();</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM()) {</span>
+<span class="nc" id="L175">			return new StringBounderTeaVM();</span>
 		}
 		// ::done
 
-<span class="pc bpc" id="L180" title="3 of 7 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L179" title="3 of 7 branches missed.">		switch (this) {</span>
 		case LATEX:
 		case LATEX_NO_PREAMBLE:
-<span class="nc" id="L183">			return new StringBounderTikz(tikzFontDistortion, this);</span>
+<span class="nc" id="L182">			return new StringBounderTikz(tikzFontDistortion, this);</span>
 
 		case BRAILLE_PNG:
-<span class="nc" id="L186">			return new StringBounderBraille();</span>
+<span class="nc" id="L185">			return new StringBounderBraille();</span>
 
 		case DEBUG:
-<span class="fc" id="L189">			return new StringBounderDebug();</span>
+<span class="fc" id="L188">			return new StringBounderDebug();</span>
 
 		case SVG:
-<span class="fc" id="L192">			return new StringBounderSvg(charSizeHack);</span>
+<span class="fc" id="L191">			return new StringBounderSvg(charSizeHack);</span>
 
 		case LATEX_DETERMINISTIC:
 		case SVG_DETERMINISTIC:
-<span class="fc" id="L196">			return new StringBounderDeterministic(this);</span>
+<span class="fc" id="L195">			return new StringBounderDeterministic(this);</span>
 
 		// ::comment when JAVA8
 		case PDF:
-<span class="nc" id="L200">			return new StringBounderOpenPdf();</span>
+<span class="nc" id="L199">			return new StringBounderOpenPdf();</span>
 		// ::done
 		}
 
-<span class="fc" id="L204">		return new StringBounderAwt();</span>
+<span class="fc" id="L203">		return new StringBounderAwt();</span>
 	}
 
 	private static final int CACHE_SIZE = 10_000;
 
-<span class="fc" id="L209">	private static final Map&lt;FontTextKey, XDimension2D&gt; DIMENSION_CACHE = new LinkedHashMap&lt;FontTextKey, XDimension2D&gt;(</span>
-<span class="fc" id="L210">			CACHE_SIZE, 0.75f, true) {</span>
+<span class="fc" id="L208">	private static final Map&lt;FontTextKey, XDimension2D&gt; DIMENSION_CACHE = new LinkedHashMap&lt;FontTextKey, XDimension2D&gt;(</span>
+<span class="fc" id="L209">			CACHE_SIZE, 0.75f, true) {</span>
 		@Override
 		protected boolean removeEldestEntry(Map.Entry&lt;FontTextKey, XDimension2D&gt; eldest) {
-<span class="pc bpc" id="L213" title="1 of 2 branches missed.">			return size() &gt; CACHE_SIZE;</span>
+<span class="pc bpc" id="L212" title="1 of 2 branches missed.">			return size() &gt; CACHE_SIZE;</span>
 		}
 	};
 
@@ -218,41 +217,41 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 		private final UFont font;
 		private final String text;
 
-<span class="fc" id="L221">		FontTextKey(UFont font, String text) {</span>
-<span class="fc" id="L222">			this.font = font;</span>
-<span class="fc" id="L223">			this.text = text;</span>
-<span class="fc" id="L224">		}</span>
+<span class="fc" id="L220">		FontTextKey(UFont font, String text) {</span>
+<span class="fc" id="L221">			this.font = font;</span>
+<span class="fc" id="L222">			this.text = text;</span>
+<span class="fc" id="L223">		}</span>
 
 		@Override
 		public boolean equals(Object obj) {
-<span class="fc" id="L228">			final FontTextKey other = (FontTextKey) obj;</span>
-<span class="pc bpc" id="L229" title="1 of 4 branches missed.">			return font.equals(other.font) &amp;&amp; text.equals(other.text);</span>
+<span class="fc" id="L227">			final FontTextKey other = (FontTextKey) obj;</span>
+<span class="pc bpc" id="L228" title="1 of 4 branches missed.">			return font.equals(other.font) &amp;&amp; text.equals(other.text);</span>
 		}
 
 		@Override
 		public int hashCode() {
-<span class="fc" id="L234">			return font.hashCode() * 31 + text.hashCode();</span>
+<span class="fc" id="L233">			return font.hashCode() * 31 + text.hashCode();</span>
 		}
 	}
 
 	// ::comment when __TEAVM__
 	static public XDimension2D getJavaDimension(UFont font, String text) {
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (text.length() == 0)</span>
-<span class="nc" id="L241">			return new XDimension2D(0, 0);</span>
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">		if (text.length() == 0)</span>
+<span class="nc" id="L240">			return new XDimension2D(0, 0);</span>
 
-<span class="fc" id="L243">		final FontTextKey key = new FontTextKey(font, text);</span>
+<span class="fc" id="L242">		final FontTextKey key = new FontTextKey(font, text);</span>
 
-<span class="fc" id="L245">		synchronized (DIMENSION_CACHE) {</span>
-<span class="fc" id="L246">			XDimension2D cached = DIMENSION_CACHE.get(key);</span>
-<span class="fc bfc" id="L247" title="All 2 branches covered.">			if (cached != null)</span>
-<span class="fc" id="L248">				return cached;</span>
+<span class="fc" id="L244">		synchronized (DIMENSION_CACHE) {</span>
+<span class="fc" id="L245">			XDimension2D cached = DIMENSION_CACHE.get(key);</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">			if (cached != null)</span>
+<span class="fc" id="L247">				return cached;</span>
 
-<span class="fc" id="L250">			final Font javaFont = UFontImpl.getUnderlayingFont(font, text);</span>
-<span class="fc" id="L251">			final FontMetrics fm = gg.getFontMetrics(javaFont);</span>
-<span class="fc" id="L252">			final Rectangle2D rect = fm.getStringBounds(text, gg);</span>
-<span class="fc" id="L253">			final XDimension2D result = new XDimension2D(rect.getWidth(), rect.getHeight());</span>
-<span class="fc" id="L254">			DIMENSION_CACHE.put(key, result);</span>
-<span class="fc" id="L255">			return result;</span>
+<span class="fc" id="L249">			final Font javaFont = font.getUnderlayingFont(text);</span>
+<span class="fc" id="L250">			final FontMetrics fm = gg.getFontMetrics(javaFont);</span>
+<span class="fc" id="L251">			final Rectangle2D rect = fm.getStringBounds(text, gg);</span>
+<span class="fc" id="L252">			final XDimension2D result = new XDimension2D(rect.getWidth(), rect.getHeight());</span>
+<span class="fc" id="L253">			DIMENSION_CACHE.put(key, result);</span>
+<span class="fc" id="L254">			return result;</span>
 		}
 	}
 
@@ -262,74 +261,74 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 	 * @return &lt;code&gt;true&lt;/code&gt; for EPS.
 	 */
 	public boolean isEps() {
-<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (this == EPS)</span>
-<span class="nc" id="L266">			return true;</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (this == EPS)</span>
+<span class="nc" id="L265">			return true;</span>
 
-<span class="nc bnc" id="L268" title="All 2 branches missed.">		if (this == EPS_TEXT)</span>
-<span class="nc" id="L269">			return true;</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">		if (this == EPS_TEXT)</span>
+<span class="nc" id="L268">			return true;</span>
 
-<span class="nc" id="L271">		return false;</span>
+<span class="nc" id="L270">		return false;</span>
 	}
 
 	public boolean isXmi() {
-<span class="fc" id="L275">		return name().startsWith(&quot;XMI&quot;);</span>
+<span class="fc" id="L274">		return name().startsWith(&quot;XMI&quot;);</span>
 	}
 
 	public String changeName(String fileName, int cpt) {
-<span class="fc bfc" id="L279" title="All 2 branches covered.">		if (cpt == 0)</span>
-<span class="fc" id="L280">			return changeName(fileName, getFileSuffix());</span>
+<span class="fc bfc" id="L278" title="All 2 branches covered.">		if (cpt == 0)</span>
+<span class="fc" id="L279">			return changeName(fileName, getFileSuffix());</span>
 
-<span class="fc" id="L282">		return changeName(fileName, (String) GlobalConfig.getInstance().value(GlobalConfigKey.FILE_SEPARATOR)</span>
-<span class="fc" id="L283">				+ String.format(&quot;%03d&quot;, cpt) + getFileSuffix());</span>
+<span class="fc" id="L281">		return changeName(fileName, (String) GlobalConfig.getInstance().value(GlobalConfigKey.FILE_SEPARATOR)</span>
+<span class="fc" id="L282">				+ String.format(&quot;%03d&quot;, cpt) + getFileSuffix());</span>
 	}
 
 	private String changeName(String fileName, String replacement) {
-<span class="fc" id="L287">		String result = fileName.replaceAll(&quot;\\.\\w+$&quot;, replacement);</span>
-<span class="fc bfc" id="L288" title="All 2 branches covered.">		if (result.equals(fileName))</span>
-<span class="fc" id="L289">			result = fileName + replacement;</span>
+<span class="fc" id="L286">		String result = fileName.replaceAll(&quot;\\.\\w+$&quot;, replacement);</span>
+<span class="fc bfc" id="L287" title="All 2 branches covered.">		if (result.equals(fileName))</span>
+<span class="fc" id="L288">			result = fileName + replacement;</span>
 
-<span class="fc" id="L291">		return result;</span>
+<span class="fc" id="L290">		return result;</span>
 	}
 
 	public boolean doesSupportMetadata() {
-<span class="pc bpc" id="L295" title="1 of 4 branches missed.">		return this == PNG || this == SVG;</span>
+<span class="pc bpc" id="L294" title="1 of 4 branches missed.">		return this == PNG || this == SVG;</span>
 	}
 
 	private static final String META_HEADER_NEW = &quot;&lt;?plantuml-src &quot;;
 
 	public boolean equalsMetadata(String currentMetadata, SFile existingFile) {
 		try {
-<span class="fc bfc" id="L302" title="All 2 branches covered.">			if (this == PNG) {</span>
-<span class="fc" id="L303">				final MetadataTag tag = new MetadataTag(existingFile, &quot;plantuml&quot;);</span>
-<span class="fc" id="L304">				final String previousMetadata = tag.getData();</span>
-<span class="fc" id="L305">				final boolean sameMetadata = currentMetadata.equals(previousMetadata);</span>
-<span class="fc" id="L306">				return sameMetadata;</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">			if (this == PNG) {</span>
+<span class="fc" id="L302">				final MetadataTag tag = new MetadataTag(existingFile, &quot;plantuml&quot;);</span>
+<span class="fc" id="L303">				final String previousMetadata = tag.getData();</span>
+<span class="fc" id="L304">				final boolean sameMetadata = currentMetadata.equals(previousMetadata);</span>
+<span class="fc" id="L305">				return sameMetadata;</span>
 			}
-<span class="pc bpc" id="L308" title="1 of 2 branches missed.">			if (this == SVG) {</span>
-<span class="fc" id="L309">				final String svg = FileUtils.readSvg(existingFile);</span>
-<span class="pc bpc" id="L310" title="1 of 2 branches missed.">				if (svg == null)</span>
-<span class="nc" id="L311">					return false;</span>
+<span class="pc bpc" id="L307" title="1 of 2 branches missed.">			if (this == SVG) {</span>
+<span class="fc" id="L308">				final String svg = FileUtils.readSvg(existingFile);</span>
+<span class="pc bpc" id="L309" title="1 of 2 branches missed.">				if (svg == null)</span>
+<span class="nc" id="L310">					return false;</span>
 
-<span class="fc" id="L313">				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);</span>
+<span class="fc" id="L312">				final String currentSignature = SvgGraphics.getMetadataHex(currentMetadata);</span>
 
 				// New format: &lt;?plantuml-src ...?&gt;
-<span class="fc" id="L316">				final int idxNew = svg.lastIndexOf(META_HEADER_NEW);</span>
-<span class="pc bpc" id="L317" title="1 of 2 branches missed.">				if (idxNew != -1) {</span>
-<span class="fc" id="L318">					final String part = svg.substring(idxNew + META_HEADER_NEW.length());</span>
-<span class="fc" id="L319">					return part.startsWith(currentSignature + &quot;?&gt;&quot;);</span>
+<span class="fc" id="L315">				final int idxNew = svg.lastIndexOf(META_HEADER_NEW);</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">				if (idxNew != -1) {</span>
+<span class="fc" id="L317">					final String part = svg.substring(idxNew + META_HEADER_NEW.length());</span>
+<span class="fc" id="L318">					return part.startsWith(currentSignature + &quot;?&gt;&quot;);</span>
 				}
 
 				// Old format: &lt;!--SRC=[...]--&gt;
-<span class="nc" id="L323">				final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
-<span class="nc bnc" id="L324" title="All 2 branches missed.">				if (idxOld != -1) {</span>
-<span class="nc" id="L325">					final String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());</span>
-<span class="nc" id="L326">					return part.startsWith(currentSignature + &quot;]&quot;);</span>
+<span class="nc" id="L322">				final int idxOld = svg.lastIndexOf(SvgGraphics.META_HEADER);</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">				if (idxOld != -1) {</span>
+<span class="nc" id="L324">					final String part = svg.substring(idxOld + SvgGraphics.META_HEADER.length());</span>
+<span class="nc" id="L325">					return part.startsWith(currentSignature + &quot;]&quot;);</span>
 				}
 			}
-<span class="nc" id="L329">		} catch (IOException e) {</span>
-<span class="nc" id="L330">			Logme.error(e);</span>
-<span class="nc" id="L331">		}</span>
-<span class="nc" id="L332">		return false;</span>
+<span class="nc" id="L328">		} catch (IOException e) {</span>
+<span class="nc" id="L329">			Logme.error(e);</span>
+<span class="nc" id="L330">		}</span>
+<span class="nc" id="L331">		return false;</span>
 	}
 	// ::done
 

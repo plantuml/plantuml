@@ -116,7 +116,7 @@ public class JsonDiagram extends TitledDiagram implements TextBlock {
 <span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (root == null) {</span>
 <span class="nc" id="L117">			final Display display = Display.getWithNewlines(getSkinParam().getPragma(),</span>
 <span class="nc" id="L118">					&quot;Your data does not sound like &quot; + getDiagramType() + &quot; data&quot;);</span>
-<span class="nc" id="L119">			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.courier(14));</span>
+<span class="nc" id="L119">			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFontFactory.monospace(14));</span>
 <span class="nc" id="L120">			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());</span>
 <span class="nc" id="L121">			result = TextBlockUtils.withMargin(result, 5, 2);</span>
 <span class="nc" id="L122">			result.drawU(ug);</span>

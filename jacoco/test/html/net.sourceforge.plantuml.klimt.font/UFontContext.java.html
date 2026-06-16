@@ -35,21 +35,8 @@
  */
 package net.sourceforge.plantuml.klimt.font;
 
-import java.awt.font.TextLayout;
+<span class="fc" id="L38">public enum UFontContext {</span>
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.klimt.shape.UText;
-
-<span class="fc" id="L43">public enum UFontContext {</span>
-
-<span class="fc" id="L45">	EPS, SVG, G2D, TIKZ, PDF;</span>
-
-	public TextLayout createTextLayout(UText shape) {
-<span class="fc" id="L48">		return createTextLayout(shape.getFontConfiguration().getFont(), shape.getText());</span>
-	}
-
-	public TextLayout createTextLayout(UFont font, String text) {
-<span class="fc" id="L52">		return new TextLayout(text, UFontImpl.getUnderlayingFont(font, text), FileFormat.gg.getFontRenderContext());</span>
-	}
+<span class="fc" id="L40">	EPS, SVG, G2D, TIKZ, PDF</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
