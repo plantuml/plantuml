@@ -35,53 +35,49 @@
  */
 package net.sourceforge.plantuml.gantt.data;
 
-import net.sourceforge.plantuml.gantt.LabelPosition;
-import net.sourceforge.plantuml.gantt.LabelStrategy;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-
 /**
  * Value object containing display configuration options.
  */
-<span class="fc" id="L45">public class DisplayConfigData {</span>
+<span class="fc" id="L41">public class DisplayConfigData {</span>
 
-<span class="fc" id="L47">	private LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);</span>
-<span class="fc" id="L48">	private boolean showFootbox = true;</span>
+	// private LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);
+<span class="fc" id="L44">	private boolean showFootbox = true;</span>
 	private boolean hideResourceName;
 	private boolean hideResourceFootbox;
 
-	public LabelStrategy getLabelStrategy() {
-<span class="fc" id="L53">		return labelStrategy;</span>
-	}
+//	public LabelStrategy getLabelStrategy() {
+//		return labelStrategy;
+//	}
 
 	public boolean isShowFootbox() {
-<span class="fc" id="L57">		return showFootbox;</span>
+<span class="fc" id="L53">		return showFootbox;</span>
 	}
 
 	public boolean isHideResourceName() {
-<span class="fc" id="L61">		return hideResourceName;</span>
+<span class="fc" id="L57">		return hideResourceName;</span>
 	}
 
 	public boolean isHideResourceFootbox() {
-<span class="fc" id="L65">		return hideResourceFootbox;</span>
+<span class="fc" id="L61">		return hideResourceFootbox;</span>
 	}
 
 	// Setters
 
-	public void setLabelStrategy(LabelStrategy labelStrategy) {
-<span class="nc" id="L71">		this.labelStrategy = labelStrategy;</span>
-<span class="nc" id="L72">	}</span>
+//	public void setLabelStrategy(LabelStrategy labelStrategy) {
+//		this.labelStrategy = labelStrategy;
+//	}
 
 	public void setShowFootbox(boolean showFootbox) {
-<span class="nc" id="L75">		this.showFootbox = showFootbox;</span>
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L71">		this.showFootbox = showFootbox;</span>
+<span class="nc" id="L72">	}</span>
 
 	public void setHideResourceName(boolean hideResourceName) {
-<span class="nc" id="L79">		this.hideResourceName = hideResourceName;</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L75">		this.hideResourceName = hideResourceName;</span>
+<span class="nc" id="L76">	}</span>
 
 	public void setHideResourceFootbox(boolean hideResourceFootbox) {
-<span class="nc" id="L83">		this.hideResourceFootbox = hideResourceFootbox;</span>
-<span class="nc" id="L84">	}</span>
+<span class="nc" id="L79">		this.hideResourceFootbox = hideResourceFootbox;</span>
+<span class="nc" id="L80">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

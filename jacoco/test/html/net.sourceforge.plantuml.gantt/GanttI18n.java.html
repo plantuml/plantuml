@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GanttI18n.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.gantt</a> &gt; <span class="el_source">GanttI18n.java</span></div><h1>GanttI18n.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ *
+ * If you like this project or if you find it useful, you can support us at:
+ *
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ *
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.gantt;
+
+import java.util.Locale;
+
+public final class GanttI18n {
+
+	private GanttI18n() {
+	}
+
+	public static String task(Locale locale) {
+<span class="fc" id="L46">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L47" title="7 of 8 branches missed.">		switch (lang) {</span>
+		case &quot;fr&quot;:
+<span class="nc" id="L49">			return &quot;Tâche&quot;;</span>
+		case &quot;es&quot;:
+<span class="nc" id="L51">			return &quot;Tarea&quot;;</span>
+		case &quot;de&quot;:
+<span class="nc" id="L53">			return &quot;Aufgabe&quot;;</span>
+		case &quot;ja&quot;:
+<span class="nc" id="L55">			return &quot;タスク&quot;;</span>
+		case &quot;ko&quot;:
+<span class="nc" id="L57">			return &quot;작업&quot;;</span>
+		case &quot;ru&quot;:
+<span class="nc" id="L59">			return &quot;Задача&quot;;</span>
+		case &quot;zh&quot;:
+<span class="nc" id="L61">			return &quot;任务&quot;;</span>
+		}
+<span class="fc" id="L63">		return &quot;Task&quot;;</span>
+	}
+
+	public static String start(Locale locale) {
+<span class="fc" id="L67">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L68" title="7 of 8 branches missed.">		switch (lang) {</span>
+		case &quot;fr&quot;:
+<span class="nc" id="L70">			return &quot;Début&quot;;</span>
+		case &quot;es&quot;:
+<span class="nc" id="L72">			return &quot;Inicio&quot;;</span>
+		case &quot;de&quot;:
+<span class="nc" id="L74">			return &quot;Start&quot;;</span>
+		case &quot;ja&quot;:
+<span class="nc" id="L76">			return &quot;開始&quot;;</span>
+		case &quot;ko&quot;:
+<span class="nc" id="L78">			return &quot;시작&quot;;</span>
+		case &quot;ru&quot;:
+<span class="nc" id="L80">			return &quot;Начало&quot;;</span>
+		case &quot;zh&quot;:
+<span class="nc" id="L82">			return &quot;开始&quot;;</span>
+		}
+<span class="fc" id="L84">		return &quot;Start&quot;;</span>
+	}
+
+	public static String end(Locale locale) {
+<span class="fc" id="L88">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L89" title="7 of 8 branches missed.">		switch (lang) {</span>
+		case &quot;fr&quot;:
+<span class="nc" id="L91">			return &quot;Fin&quot;;</span>
+		case &quot;es&quot;:
+<span class="nc" id="L93">			return &quot;Fin&quot;;</span>
+		case &quot;de&quot;:
+<span class="nc" id="L95">			return &quot;Ende&quot;;</span>
+		case &quot;ja&quot;:
+<span class="nc" id="L97">			return &quot;終了&quot;;</span>
+		case &quot;ko&quot;:
+<span class="nc" id="L99">			return &quot;끝&quot;;</span>
+		case &quot;ru&quot;:
+<span class="nc" id="L101">			return &quot;Окончание&quot;;</span>
+		case &quot;zh&quot;:
+<span class="nc" id="L103">			return &quot;结束&quot;;</span>
+		}
+<span class="fc" id="L105">		return &quot;End&quot;;</span>
+	}
+
+	public static String duration(Locale locale) {
+<span class="fc" id="L109">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L110" title="7 of 8 branches missed.">		switch (lang) {</span>
+		case &quot;fr&quot;:
+<span class="nc" id="L112">			return &quot;Durée&quot;;</span>
+		case &quot;es&quot;:
+<span class="nc" id="L114">			return &quot;Duración&quot;;</span>
+		case &quot;de&quot;:
+<span class="nc" id="L116">			return &quot;Dauer&quot;;</span>
+		case &quot;ja&quot;:
+<span class="nc" id="L118">			return &quot;期間&quot;;</span>
+		case &quot;ko&quot;:
+<span class="nc" id="L120">			return &quot;기간&quot;;</span>
+		case &quot;ru&quot;:
+<span class="nc" id="L122">			return &quot;Длительность&quot;;</span>
+		case &quot;zh&quot;:
+<span class="nc" id="L124">			return &quot;持续时间&quot;;</span>
+		}
+<span class="fc" id="L126">		return &quot;Duration&quot;;</span>
+	}
+
+	public static String durationInDays(Locale locale, int days) {
+<span class="fc" id="L130">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L131" title="7 of 8 branches missed.">		switch (lang) {</span>
+		case &quot;fr&quot;:
+<span class="nc bnc" id="L133" title="All 2 branches missed.">			if (days &lt;= 1)</span>
+<span class="nc" id="L134">				return &quot;1 jour&quot;;</span>
+<span class="nc" id="L135">			return days + &quot; jours&quot;;</span>
+		case &quot;es&quot;:
+<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (days &lt;= 1)</span>
+<span class="nc" id="L138">				return &quot;1 día&quot;;</span>
+<span class="nc" id="L139">			return days + &quot; días&quot;;</span>
+		case &quot;de&quot;:
+<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (days &lt;= 1)</span>
+<span class="nc" id="L142">				return &quot;1 Tag&quot;;</span>
+<span class="nc" id="L143">			return days + &quot; Tage&quot;;</span>
+		case &quot;ja&quot;:
+<span class="nc" id="L145">			return days + &quot;日&quot;;</span>
+		case &quot;ko&quot;:
+<span class="nc" id="L147">			return days + &quot;일&quot;;</span>
+		case &quot;ru&quot;:
+<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (days == 1)</span>
+<span class="nc" id="L150">				return &quot;1 день&quot;;</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">			else if (days &gt;= 2 &amp;&amp; days &lt;= 4)</span>
+<span class="nc" id="L152">				return days + &quot; дня&quot;;</span>
+			else
+<span class="nc" id="L154">				return days + &quot; дней&quot;;</span>
+		case &quot;zh&quot;:
+<span class="nc" id="L156">			return days + &quot;天&quot;;</span>
+		}
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (days &lt;= 1)</span>
+<span class="fc" id="L159">			return &quot;1 day&quot;;</span>
+<span class="fc" id="L160">		return days + &quot; days&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -42,6 +42,7 @@ net.sourceforge.plantuml.argon2.blake2
 net.sourceforge.plantuml.argon2.exception
 net.sourceforge.plantuml.argon2.model
 net.sourceforge.plantuml.asciiart
+net.sourceforge.plantuml.asciiverse
 net.sourceforge.plantuml.board
 net.sourceforge.plantuml.bpm
 net.sourceforge.plantuml.braille

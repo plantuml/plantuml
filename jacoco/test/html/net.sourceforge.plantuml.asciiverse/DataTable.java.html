@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataTable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.asciiverse</a> &gt; <span class="el_source">DataTable.java</span></div><h1>DataTable.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.asciiverse;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+public class DataTable&lt;E&gt; {
+
+	private final Map&lt;CellKey, E&gt; cells;
+	private final E defaultValue;
+
+	private static class CellKey {
+		final int x;
+		final int y;
+
+<span class="fc" id="L51">		CellKey(int x, int y) {</span>
+<span class="fc" id="L52">			this.x = x;</span>
+<span class="fc" id="L53">			this.y = y;</span>
+<span class="fc" id="L54">		}</span>
+
+		@Override
+		public boolean equals(Object o) {
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">			if (this == o)</span>
+<span class="nc" id="L59">				return true;</span>
+<span class="pc bpc" id="L60" title="2 of 4 branches missed.">			if (o == null || getClass() != o.getClass())</span>
+<span class="nc" id="L61">				return false;</span>
+<span class="fc" id="L62">			CellKey cellKey = (CellKey) o;</span>
+<span class="pc bpc" id="L63" title="2 of 4 branches missed.">			return x == cellKey.x &amp;&amp; y == cellKey.y;</span>
+		}
+
+		@Override
+		public int hashCode() {
+<span class="fc" id="L68">			return Objects.hash(x, y);</span>
+		}
+	}
+
+<span class="fc" id="L72">	public DataTable(E defaultValue) {</span>
+<span class="fc" id="L73">		this.defaultValue = defaultValue;</span>
+<span class="fc" id="L74">		this.cells = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L75">	}</span>
+
+	public void set(int x, int y, E value) {
+<span class="fc" id="L78">		cells.put(new CellKey(x, y), value);</span>
+<span class="fc" id="L79">	}</span>
+
+	public E get(int x, int y) {
+<span class="fc" id="L82">		return cells.getOrDefault(new CellKey(x, y), defaultValue);</span>
+	}
+
+	public boolean contains(int x, int y) {
+<span class="nc" id="L86">		return cells.containsKey(new CellKey(x, y));</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

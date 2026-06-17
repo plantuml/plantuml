@@ -763,5 +763,15 @@ public class Display implements Iterable&lt;CharSequence&gt; {
 //		return mayHaveEmbedded;
 //	}
 
+	public int contentWidth() {
+<span class="fc" id="L767">		int width = 0;</span>
+<span class="fc bfc" id="L768" title="All 2 branches covered.">		for (int i = 0; i &lt; this.size(); i++) {</span>
+<span class="fc" id="L769">			final int len = this.get(i).length();</span>
+<span class="pc bpc" id="L770" title="1 of 2 branches missed.">			if (len &gt; width)</span>
+<span class="fc" id="L771">				width = len;</span>
+		}
+<span class="fc" id="L773">		return width;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

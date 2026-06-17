@@ -48,44 +48,46 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandLabelOnColumn extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
 	public CommandLabelOnColumn() {
-<span class="fc" id="L55">		super(getRegexConcat());</span>
-<span class="fc" id="L56">	}</span>
+<span class="fc" id="L56">		super(getRegexConcat());</span>
+<span class="fc" id="L57">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L59">		return RegexConcat.build(CommandLabelOnColumn.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L60">		return RegexConcat.build(CommandLabelOnColumn.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;labels?&quot;), //
-<span class="fc" id="L61">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;on&quot;), //
-<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(first|last)&quot;), //
-<span class="fc" id="L65">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;column&quot;), //
 				new RegexOptional(new RegexConcat( //
-<span class="fc" id="L68">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L69">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;and&quot;), //
-<span class="fc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L71">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;ALIGNED&quot;, &quot;(left|right)&quot;), //
-<span class="fc" id="L72">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;aligned&quot;) //
 				)), //
-<span class="fc" id="L75">				RegexLeaf.end());</span>
+<span class="fc" id="L76">				RegexLeaf.end());</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc bnc" id="L81" title="All 2 branches missed.">		final LabelPosition position = &quot;first&quot;.equalsIgnoreCase(arg.get(&quot;POSITION&quot;, 0)) ? LabelPosition.FIRST_COLUMN</span>
-<span class="nc" id="L82">				: LabelPosition.LAST_COLUMN;</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">		final HorizontalAlignment alignment = &quot;right&quot;.equalsIgnoreCase(arg.get(&quot;ALIGNED&quot;, 0))</span>
-<span class="nc" id="L84">				? HorizontalAlignment.RIGHT</span>
-<span class="nc" id="L85">				: HorizontalAlignment.LEFT;</span>
-<span class="nc" id="L86">		final LabelStrategy strategy = new LabelStrategy(position, alignment);</span>
-<span class="nc" id="L87">		diagram.setLabelStrategy(strategy);</span>
-<span class="nc" id="L88">		return CommandExecutionResult.ok();</span>
+//		final LabelPosition position = &quot;first&quot;.equalsIgnoreCase(arg.get(&quot;POSITION&quot;, 0)) ? LabelPosition.FIRST_COLUMN
+//				: LabelPosition.LAST_COLUMN;
+//		final HorizontalAlignment alignment = &quot;right&quot;.equalsIgnoreCase(arg.get(&quot;ALIGNED&quot;, 0))
+//				? HorizontalAlignment.RIGHT
+//				: HorizontalAlignment.LEFT;
+//		final LabelStrategy strategy = new LabelStrategy(position, alignment);
+//		diagram.setLabelStrategy(strategy);
+<span class="nc" id="L89">		diagram.addWarning(new Warning(&quot;This command is deprecated&quot;));</span>
+<span class="nc" id="L90">		return CommandExecutionResult.ok();</span>
 	}
 
 }
