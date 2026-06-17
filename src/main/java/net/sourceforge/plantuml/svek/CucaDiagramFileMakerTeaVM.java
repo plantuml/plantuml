@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -47,10 +48,10 @@ import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierActivity;
 import net.sourceforge.plantuml.dot.CucaDiagramSimplifierState;
 import net.sourceforge.plantuml.dot.DotData;
+import net.sourceforge.plantuml.klimt.drawing.font.StringBounderFromWidthTable;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.teavm.StringBounderTeaVM;
-import net.sourceforge.plantuml.teavm.browser.BrowserLog;
 
 public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 	// ::remove file when JAVA8
@@ -63,7 +64,11 @@ public final class CucaDiagramFileMakerTeaVM extends CucaDiagramFileMaker {
 	public TextBlock getTextBlock(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
-		final StringBounder stringBounder = new StringBounderTeaVM();
+		final StringBounder stringBounder;
+		if (fileFormatOption.getFileFormat() == FileFormat.SVG_DETERMINISTIC)
+			stringBounder = new StringBounderFromWidthTable(FileFormat.SVG_DETERMINISTIC);
+		else
+			stringBounder = new StringBounderTeaVM();
 
 		if (diagram.getDiagramType() == DiagramType.ACTIVITY)
 			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);
