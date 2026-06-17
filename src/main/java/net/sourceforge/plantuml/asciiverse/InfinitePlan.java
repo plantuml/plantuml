@@ -30,21 +30,50 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.gantt.core;
+package net.sourceforge.plantuml.asciiverse;
 
-import net.sourceforge.plantuml.gantt.time.TimePoint;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface Moment {
+import net.sourceforge.plantuml.security.SecurityUtils;
 
-	public TimePoint getStart();
+public class InfinitePlan {
 
-	public TimePoint getEnd();
+	private final List<InfiniteString> plan = new ArrayList<>();
 
-	public default TimePoint getEndMinusOneDayTOBEREMOVED() {
-		return getEnd().decrement();
+	public void drawChar(char c, int x, int y) {
+		ensureSize(y);
+		plan.get(y).setCharAt(x, c);
+	}
+
+	public void fillRect(char c, int x, int y, int width, int height) {
+		for (int i = 0; i < width; i++)
+			for (int j = 0; j < height; j++)
+				drawChar(c, x + i, y + j);
+	}
+
+	private void ensureSize(int y) {
+		while (y >= plan.size())
+			plan.add(new InfiniteString());
+	}
+
+	public char getCharAt(int x, int y) {
+		if (y < 0 || y >= plan.size())
+			return ' ';
+
+		return plan.get(y).getCharAt(x);
+	}
+
+	public void exportTxt(OutputStream os) {
+		final PrintStream ps = SecurityUtils.createPrintStream(os);
+		for (InfiniteString line : plan) {
+			ps.println(line.toString());
+		}
 	}
 
 }

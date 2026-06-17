@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandLabelOnColumn extends SingleLineCommand2<GanttDiagram> {
 
@@ -78,13 +79,14 @@ public class CommandLabelOnColumn extends SingleLineCommand2<GanttDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		final LabelPosition position = "first".equalsIgnoreCase(arg.get("POSITION", 0)) ? LabelPosition.FIRST_COLUMN
-				: LabelPosition.LAST_COLUMN;
-		final HorizontalAlignment alignment = "right".equalsIgnoreCase(arg.get("ALIGNED", 0))
-				? HorizontalAlignment.RIGHT
-				: HorizontalAlignment.LEFT;
-		final LabelStrategy strategy = new LabelStrategy(position, alignment);
-		diagram.setLabelStrategy(strategy);
+//		final LabelPosition position = "first".equalsIgnoreCase(arg.get("POSITION", 0)) ? LabelPosition.FIRST_COLUMN
+//				: LabelPosition.LAST_COLUMN;
+//		final HorizontalAlignment alignment = "right".equalsIgnoreCase(arg.get("ALIGNED", 0))
+//				? HorizontalAlignment.RIGHT
+//				: HorizontalAlignment.LEFT;
+//		final LabelStrategy strategy = new LabelStrategy(position, alignment);
+//		diagram.setLabelStrategy(strategy);
+		diagram.addWarning(new Warning("This command is deprecated"));
 		return CommandExecutionResult.ok();
 	}
 

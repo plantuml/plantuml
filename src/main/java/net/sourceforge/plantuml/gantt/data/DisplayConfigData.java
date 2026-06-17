@@ -35,23 +35,19 @@
  */
 package net.sourceforge.plantuml.gantt.data;
 
-import net.sourceforge.plantuml.gantt.LabelPosition;
-import net.sourceforge.plantuml.gantt.LabelStrategy;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-
 /**
  * Value object containing display configuration options.
  */
 public class DisplayConfigData {
 
-	private LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);
+	// private LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);
 	private boolean showFootbox = true;
 	private boolean hideResourceName;
 	private boolean hideResourceFootbox;
 
-	public LabelStrategy getLabelStrategy() {
-		return labelStrategy;
-	}
+//	public LabelStrategy getLabelStrategy() {
+//		return labelStrategy;
+//	}
 
 	public boolean isShowFootbox() {
 		return showFootbox;
@@ -67,9 +63,9 @@ public class DisplayConfigData {
 
 	// Setters
 
-	public void setLabelStrategy(LabelStrategy labelStrategy) {
-		this.labelStrategy = labelStrategy;
-	}
+//	public void setLabelStrategy(LabelStrategy labelStrategy) {
+//		this.labelStrategy = labelStrategy;
+//	}
 
 	public void setShowFootbox(boolean showFootbox) {
 		this.showFootbox = showFootbox;

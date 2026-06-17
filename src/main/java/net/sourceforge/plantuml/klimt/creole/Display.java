@@ -763,4 +763,14 @@ public class Display implements Iterable<CharSequence> {
 //		return mayHaveEmbedded;
 //	}
 
+	public int contentWidth() {
+		int width = 0;
+		for (int i = 0; i < this.size(); i++) {
+			final int len = this.get(i).length();
+			if (len > width)
+				width = len;
+		}
+		return width;
+	}
+
 }

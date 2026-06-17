@@ -61,28 +61,28 @@ public final class GanttLayout {
 		drawRegistry.buildTaskAndResourceDraws(stringBounder, timeHeader, modelData, displayConfig, timeBounds,
 				timelineStyle);
 
-		final double computedTitlesWidth;
-		if (displayConfig.getLabelStrategy().titleInside()) {
-			computedTitlesWidth = 0;
-		} else {
-			double w = 0;
-			for (Task task : modelData.getTasks()) {
-				if (timeBounds.isHidden(task))
-					continue;
-
-				final TaskDraw draw = drawRegistry.getTaskDraw(task);
-				if (draw == null)
-					continue;
-
-				w = Math.max(w, draw.getTitleWidth(stringBounder));
-			}
-			computedTitlesWidth = w;
-		}
+		final double computedTitlesWidth = 0;
+//		if (displayConfig.getLabelStrategy().titleInside()) {
+//			computedTitlesWidth = 0;
+//		} else {
+//			double w = 0;
+//			for (Task task : modelData.getTasks()) {
+//				if (timeBounds.isHidden(task))
+//					continue;
+//
+//				final TaskDraw draw = drawRegistry.getTaskDraw(task);
+//				if (draw == null)
+//					continue;
+//
+//				w = Math.max(w, draw.getTitleWidth(stringBounder));
+//			}
+//			computedTitlesWidth = w;
+//		}
 
 		this.titlesWidth = computedTitlesWidth;
 
 		this.timelineWidth = timeBounds.getBarsColumnWidth(timeHeader);
-		if (displayConfig.getLabelStrategy().titleInside()) {
+		// if (displayConfig.getLabelStrategy().titleInside()) {
 			double maxLabelOverflow = 0;
 			for (Task task : modelData.getTasks()) {
 				if (timeBounds.isHidden(task))
@@ -95,9 +95,9 @@ public final class GanttLayout {
 				maxLabelOverflow = Math.max(maxLabelOverflow, draw.getLabelOverflow(stringBounder, timelineWidth));
 			}
 			this.barsWidth = timelineWidth + maxLabelOverflow;
-		} else {
-			this.barsWidth = timelineWidth;
-		}
+//		} else {
+//			this.barsWidth = timelineWidth;
+//		}
 		this.headerHeight = timeHeader.getTimeHeaderHeight(stringBounder);
 		this.footerHeight = displayConfig.isShowFootbox() ? timeHeader.getTimeFooterHeight(stringBounder) : 0;
 		this.totalHeight = drawRegistry.getTotalHeightWithoutFooter() + this.footerHeight;

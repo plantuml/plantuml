@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -47,11 +49,16 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.asciiverse.ATable;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.gantt.core.Moment;
 import net.sourceforge.plantuml.gantt.core.MomentImpl;
@@ -186,7 +193,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 		final TimeHeader timeHeader = factory.createTimeHeader();
 
 		return new GanttDiagramMainBlock(this.timeBounds, this.modelData, this.drawRegistry, this.displayConfig,
-				this.timelineStyle, this, timeHeader, stringBounder);
+				this.timelineStyle, this, timeHeader, this.weekConfig.getLocale(), stringBounder);
 	}
 
 	private void initMinMax() {
@@ -492,9 +499,9 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 		return ClockwiseTopRightBottomLeft.none();
 	}
 
-	public void setLabelStrategy(LabelStrategy strategy) {
-		this.displayConfig.setLabelStrategy(strategy);
-	}
+//	public void setLabelStrategy(LabelStrategy strategy) {
+//		this.displayConfig.setLabelStrategy(strategy);
+//	}
 
 	public void setWeeklyHeaderStrategy(WeeklyHeaderStrategy weeklyHeaderStrategy, int weekStartingNumber) {
 		this.weekConfig.setWeeklyHeaderStrategy(weeklyHeaderStrategy);
@@ -571,4 +578,86 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 		final Duration result = durationOfDays(totalDays);
 		return result.plus(Duration.ofHours(totalHours));
 	}
+
+	@Override
+	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+		initMinMax();
+
+		final Locale locale = weekConfig.getLocale();
+
+		final List<Task> drawableTasks = new ArrayList<>();
+		for (Task task : modelData.getTasks())
+			if (isDrawable(task))
+				drawableTasks.add(task);
+
+		// One header row plus one row per drawable task; four columns.
+		final ATable table = new ATable(drawableTasks.size() + 1, 4).withLeftPadding(1).withRightPadding(1);
+
+		table.setCellContent(0, 0, Display.create(GanttI18n.task(locale)));
+		table.setCellContent(0, 1, Display.create(GanttI18n.start(locale)));
+		table.setCellContent(0, 2, Display.create(GanttI18n.end(locale)));
+		table.setCellContent(0, 3, Display.create(GanttI18n.duration(locale)));
+
+		int row = 1;
+		for (Task task : drawableTasks) {
+			table.setCellContent(row, 0, Display.create(codeOf(task)));
+			table.setCellContent(row, 1, Display.create(startOf(task, locale)));
+			table.setCellContent(row, 2, Display.create(endOf(task, locale)));
+			table.setCellContent(row, 3, Display.create(durationOf(task, locale)));
+			row++;
+		}
+
+		final InfinitePlan plan = new InfinitePlan();
+		table.draw(plan, 0, 0);
+
+		plan.exportTxt(os);
+
+		return ImageDataSimple.ok();
+	}
+
+	private boolean isDrawable(Task task) {
+		if (task instanceof TaskImpl == false)
+			return false;
+
+		if (timeBounds.isHidden(task))
+			return false;
+
+		return true;
+	}
+
+	private String codeOf(Task task) {
+		return task.getCode().getDisplay();
+	}
+
+	private boolean isRelativeMode() {
+		return timeBounds.getMinDay().equals(TimePoint.epoch());
+	}
+
+	private int relativeDayNum(TimePoint point) {
+		final int minAbs = TimePoint.ofStartOfDay(timeBounds.getMinDay()).getAbsoluteDayNum();
+		return point.getAbsoluteDayNum() - minAbs + 1;
+	}
+
+	private String startOf(Task task, Locale locale) {
+		if (isRelativeMode())
+			return GanttI18n.dayNumber(locale, relativeDayNum(task.getStart()));
+
+		return task.getStart().toStringShort(locale);
+	}
+
+	private String endOf(Task task, Locale locale) {
+		if (isRelativeMode())
+			return GanttI18n.dayNumber(locale, relativeDayNum(task.getEndMinusOneDayTOBEREMOVED()));
+
+		return task.getEndMinusOneDayTOBEREMOVED().toStringShort(locale);
+	}
+
+	private String durationOf(Task task, Locale locale) {
+		final TimePoint start = task.getStart();
+		final TimePoint end = task.getEnd();
+		final int days = end.getAbsoluteDayNum() - start.getAbsoluteDayNum();
+
+		return GanttI18n.durationInDays(locale, days);
+	}
+
 }

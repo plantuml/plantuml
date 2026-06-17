@@ -30,21 +30,44 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.gantt.core;
+package net.sourceforge.plantuml.asciiverse;
 
-import net.sourceforge.plantuml.gantt.time.TimePoint;
+public class InfiniteString {
 
-public interface Moment {
+	private final StringBuilder sb = new StringBuilder();
 
-	public TimePoint getStart();
+	private void ensureLength(int length) {
+		while (sb.length() < length)
+			sb.append(' ');
 
-	public TimePoint getEnd();
-
-	public default TimePoint getEndMinusOneDayTOBEREMOVED() {
-		return getEnd().decrement();
 	}
 
+	public void setCharAt(int position, char ch) {
+		ensureLength(position + 1);
+		sb.setCharAt(position, ch);
+	}
+
+	public void setStringAt(int position, String s) {
+		final int endPosition = position + s.length();
+		ensureLength(endPosition);
+
+		for (int i = 0; i < s.length(); i++)
+			sb.setCharAt(position + i, s.charAt(i));
+
+	}
+
+	public char getCharAt(int position) {
+		if (position >= sb.length())
+			return ' ';
+
+		return sb.charAt(position);
+	}
+
+	@Override
+	public String toString() {
+		return sb.toString();
+	}
 }

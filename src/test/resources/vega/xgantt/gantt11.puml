@@ -1,14 +1,8 @@
-package nonreg.simple;
-
-import java.io.IOException;
-
-import org.junit.jupiter.api.Test;
-
-import nonreg.BasicTest;
-
-/*
-
-"""
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
 @startgantt
 scale 2
 printscale weekly
@@ -22,13 +16,3 @@ Project starts the 2020-10-15
 [Testing] lasts 5 days
 [TASK1]->[Testing]
 @endgantt
-"""
-
- */
-public class A0003_Test extends BasicTest {
-
-	@Test
-	void testSimple() throws IOException {
-		checkImage("(Gantt)");
-	}
-}

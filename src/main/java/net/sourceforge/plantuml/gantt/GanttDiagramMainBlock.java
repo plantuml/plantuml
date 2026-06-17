@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.util.Locale;
+
 import net.sourceforge.plantuml.crash.CrashImage;
 import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.gantt.core.Resource;
@@ -53,6 +55,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
@@ -73,10 +76,11 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 	private final DisplayConfigData displayConfig;
 	private final TimelineStyleData timelineStyle;
 	private final TaskDrawRegistryData drawRegistry;
+	private final GanttTaskTable taskTable;
 
 	public GanttDiagramMainBlock(TimeBoundsData timeBounds, GanttModelData modelData, TaskDrawRegistryData drawRegistry,
 			DisplayConfigData displayConfig, TimelineStyleData timelineStyle, GanttDiagram diagram,
-			TimeHeader timeHeader, StringBounder stringBounder) {
+			TimeHeader timeHeader, Locale locale, StringBounder stringBounder) {
 		this.diagram = diagram;
 		this.timeBounds = timeBounds;
 		this.modelData = modelData;
@@ -86,15 +90,21 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 		this.timeHeader = timeHeader;
 		this.layout = new GanttLayout(modelData, displayConfig, timeBounds, timelineStyle, drawRegistry, stringBounder,
 				timeHeader);
+		this.taskTable = new GanttTaskTable(modelData, timeBounds, drawRegistry, timelineStyle,
+				timeHeader.getFullHeaderHeight(stringBounder), locale, stringBounder);
 	}
 
 	@Override
 	public void drawU(UGraphic ug) {
 		try {
+			final double tableWidth = taskTable.getWidth();
+			taskTable.drawU(ug, drawRegistry.getTotalHeightWithoutFooter());
+			ug = ug.apply(UTranslate.dx(tableWidth));
+
 			final UGraphic ugOrig = ug;
 
-			if (displayConfig.getLabelStrategy().titleInFirstColumn())
-				ug = ug.apply(UTranslate.dx(layout.getTitlesWidth()));
+//			if (displayConfig.getLabelStrategy().titleInFirstColumn())
+//				ug = ug.apply(UTranslate.dx(layout.getTitlesWidth()));
 
 			final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
 					.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());
@@ -144,7 +154,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
 		final double margin = 20;
-		final double width = layout.getTitlesWidth() + layout.getBarsWidth() + margin;
+		final double width = taskTable.getWidth() + layout.getTitlesWidth() + layout.getBarsWidth() + margin;
 		final double height = layout.getTotalHeight();
 		return new XDimension2D(width, height);
 	}
@@ -172,6 +182,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 
 	}
 
+
 	private void drawTasksTitle(UGraphic ug, double colTitles, double colBars) {
 		for (Task task : modelData.getTasks()) {
 			if (timeBounds.isHidden(task))
@@ -179,7 +190,9 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 
 			final TaskDraw draw = drawRegistry.getTaskDraw(task);
 			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());
-			draw.drawTitle(ug.apply(move), displayConfig.getLabelStrategy(), colTitles, colBars);
+			// draw.drawTitle(ug.apply(move), displayConfig.getLabelStrategy(), colTitles, colBars);
+			final LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);
+			draw.drawTitle(ug.apply(move), labelStrategy, colTitles, colBars);
 		}
 	}
 

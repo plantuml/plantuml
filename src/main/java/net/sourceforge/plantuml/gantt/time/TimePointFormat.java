@@ -41,7 +41,8 @@ import net.sourceforge.plantuml.utils.I18nTimeData;
 
 public enum TimePointFormat {
 
-	DAY_OF_WEEK_SHORT, DAY_OF_WEEK_LONG, MONTH_YEAR_SHORT, MONTH_YEAR_LONG, MONTH_LONG, MONTH_SHORT, YEAR, QUARTER, DAY_OF_MONTH;
+	DAY_OF_WEEK_SHORT, DAY_OF_WEEK_LONG, MONTH_YEAR_SHORT, MONTH_YEAR_LONG, MONTH_LONG, MONTH_SHORT, YEAR, QUARTER,
+	DAY_OF_MONTH, MONTH_AND_DAY;
 
 	public String format(TimePoint when, Locale locale) {
 		switch (this) {
@@ -72,8 +73,37 @@ public enum TimePointFormat {
 		case MONTH_YEAR_LONG:
 			return I18nTimeData.monthLong(when.month(), locale) + " " + when.year();
 
+		case MONTH_AND_DAY:
+			return monthAndDay(when, locale);
+
 		}
 		throw new IllegalStateException();
 	}
 
+	private String monthAndDay(TimePoint when, Locale locale) {
+	    final String lang = locale.getLanguage();
+	    switch (lang) {
+	        case "fr":
+	            return when.getDayOfMonth() + " " + TimePointFormat.MONTH_SHORT.format(when, locale);
+	        case "es":
+	            // "día de mes" (ex: "17 de jun")
+	            return when.getDayOfMonth() + " de " + TimePointFormat.MONTH_SHORT.format(when, locale);
+	        case "de":
+	            // "Tag. Monat" (ex: "17. Jun")
+	            return when.getDayOfMonth() + ". " + TimePointFormat.MONTH_SHORT.format(when, locale);
+	        case "ja":
+	            // "月/日" (ex: "6月/17日")
+	            return TimePointFormat.MONTH_SHORT.format(when, locale) + "/" + when.getDayOfMonth() + "日";
+	        case "ko":
+	            // "월 일" (ex: "6월 17일")
+	            return TimePointFormat.MONTH_SHORT.format(when, locale) + " " + when.getDayOfMonth() + "일";
+	        case "ru":
+	            // "день месяца" (ex: "17 июня")
+	            return when.getDayOfMonth() + " " + TimePointFormat.MONTH_LONG.format(when, locale).toLowerCase();
+	        case "zh":
+	            // "月/日" (ex: "6月/17日")
+	            return TimePointFormat.MONTH_SHORT.format(when, locale) + when.getDayOfMonth() + "日";
+	    }
+	    return TimePointFormat.MONTH_SHORT.format(when, locale) + " " + when.getDayOfMonth();
+	}
 }

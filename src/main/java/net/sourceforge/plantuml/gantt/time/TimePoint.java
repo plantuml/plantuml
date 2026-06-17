@@ -105,7 +105,7 @@ public class TimePoint implements Comparable<TimePoint>, PValue {
 	}
 
 	public String toStringShort(Locale locale) {
-		return TimePointFormat.MONTH_SHORT.format(this, locale) + " " + getDayOfMonth();
+		return TimePointFormat.MONTH_AND_DAY.format(this, locale);
 	}
 
 	public int getWeekOfYear(WeekNumberStrategy strategy) {

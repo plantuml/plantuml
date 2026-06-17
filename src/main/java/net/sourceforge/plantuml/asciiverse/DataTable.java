@@ -30,21 +30,60 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.gantt.core;
+package net.sourceforge.plantuml.asciiverse;
 
-import net.sourceforge.plantuml.gantt.time.TimePoint;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
-public interface Moment {
+public class DataTable<E> {
 
-	public TimePoint getStart();
+	private final Map<CellKey, E> cells;
+	private final E defaultValue;
 
-	public TimePoint getEnd();
+	private static class CellKey {
+		final int x;
+		final int y;
 
-	public default TimePoint getEndMinusOneDayTOBEREMOVED() {
-		return getEnd().decrement();
+		CellKey(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o)
+				return true;
+			if (o == null || getClass() != o.getClass())
+				return false;
+			CellKey cellKey = (CellKey) o;
+			return x == cellKey.x && y == cellKey.y;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(x, y);
+		}
+	}
+
+	public DataTable(E defaultValue) {
+		this.defaultValue = defaultValue;
+		this.cells = new HashMap<>();
+	}
+
+	public void set(int x, int y, E value) {
+		cells.put(new CellKey(x, y), value);
+	}
+
+	public E get(int x, int y) {
+		return cells.getOrDefault(new CellKey(x, y), defaultValue);
+	}
+
+	public boolean contains(int x, int y) {
+		return cells.containsKey(new CellKey(x, y));
 	}
 
 }
