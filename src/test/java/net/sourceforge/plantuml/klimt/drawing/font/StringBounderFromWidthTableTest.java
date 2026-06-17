@@ -7,12 +7,12 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFontFactory;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-class StringBounderFooTest {
+class StringBounderFromWidthTableTest {
 
 	@Test
 	void testCalculateDimension() {
 
-		final StringBounder sb = new StringBounderFoo(FileFormat.SVG);
+		final StringBounder sb = new StringBounderFromWidthTable(FileFormat.SVG);
 		final XDimension2D dim = sb.calculateDimension(UFontFactory.serif(16), "!");
 	}
 

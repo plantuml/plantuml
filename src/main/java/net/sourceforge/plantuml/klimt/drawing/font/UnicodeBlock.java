@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.klimt.drawing.font;
 
 public class UnicodeBlock {
 
-	private byte data[];
+	private final byte data[];
 
 	public UnicodeBlock(byte data[]) {
 		if (data.length != 1 && data.length < 256) {
