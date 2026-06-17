@@ -172,6 +172,8 @@ public enum FileFormat {
 	public StringBounder getDefaultStringBounder(TikzFontDistortion tikzFontDistortion, SvgCharSizeHack charSizeHack) {
 		// ::comment when JAVA8
 		if (TeaVM.isTeaVM()) {
+			if (this == SVG_DETERMINISTIC)
+				return new StringBounderFromWidthTable(this);
 			return new StringBounderTeaVM();
 		}
 		// ::done
