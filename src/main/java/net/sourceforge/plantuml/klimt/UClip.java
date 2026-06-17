@@ -34,8 +34,7 @@
  */
 package net.sourceforge.plantuml.klimt;
 
-import java.awt.geom.Line2D;
-
+import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.teavm.TeaVM;
@@ -126,7 +125,7 @@ public class UClip implements UChange {
 		return new XRectangle2D(x1, y1, x2 - x1, y2 - y1);
 	}
 
-	public Line2D.Double getClippedLine(Line2D.Double line) {
+	public XLine2D getClippedLine(XLine2D line) {
 		if (isInside(line.x1, line.y1) && isInside(line.x2, line.y2))
 			return line;
 
@@ -135,7 +134,7 @@ public class UClip implements UChange {
 				final double newy1 = getClippedY(line.y1);
 				final double newy2 = getClippedY(line.y2);
 				if (newy1 != newy2)
-					return new Line2D.Double(line.x1, newy1, line.x2, newy2);
+					return new XLine2D(line.x1, newy1, line.x2, newy2);
 
 			}
 			return null;
@@ -148,12 +147,12 @@ public class UClip implements UChange {
 		if (line.y1 == line.y2) {
 			final double newx1 = getClippedX(line.x1);
 			final double newx2 = getClippedX(line.x2);
-			return new Line2D.Double(newx1, line.y1, newx2, line.y2);
+			return new XLine2D(newx1, line.y1, newx2, line.y2);
 		}
 		if (line.x1 == line.x2) {
 			final double newy1 = getClippedY(line.y1);
 			final double newy2 = getClippedY(line.y2);
-			return new Line2D.Double(line.x1, newy1, line.x2, newy2);
+			return new XLine2D(line.x1, newy1, line.x2, newy2);
 		}
 		throw new IllegalStateException();
 	}

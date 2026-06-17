@@ -34,14 +34,13 @@
  */
 package net.sourceforge.plantuml.openpdf;
 
-import java.awt.geom.Line2D;
-
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.geom.XLine2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class DriverLinePdf implements UDriver<ULine, PdfGraphics> {
@@ -58,7 +57,7 @@ public class DriverLinePdf implements UDriver<ULine, PdfGraphics> {
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
-			final Line2D.Double line = clip.getClippedLine(new Line2D.Double(x, y, x2, y2));
+			final XLine2D line = clip.getClippedLine(new XLine2D(x, y, x2, y2));
 			if (line == null) {
 				return;
 			}
