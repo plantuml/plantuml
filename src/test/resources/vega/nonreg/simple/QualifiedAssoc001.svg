@@ -3,14 +3,14 @@
   <g>
     <!--class HashMap-->
     <g class="entity" data-qualified-name="HashMap" data-source-line="1" id="ent0001">
-      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="115.3833" x="73" y="96"/>
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="115.2875" x="73" y="96"/>
       <ellipse cx="88" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="0" x="83" y="117">C</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="60.0833" x="102" y="115.8889">HashMap</text>
-      <rect fill="#FFFFFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="21.3" x="170.0833" y="93"/>
-      <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="19.3" x="171.0833" y="103.3333">K,V</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="74" x2="187.3833" y1="128" y2="128"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="74" x2="187.3833" y1="136" y2="136"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="59.9375" x="102" y="115.8889">HashMap</text>
+      <rect fill="#FFFFFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="21.35" x="169.9375" y="93"/>
+      <text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="19.35" x="170.9375" y="103.3333">K,V</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="74" x2="187.2875" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="74" x2="187.2875" y1="136" y2="136"/>
     </g>
     <!--class V1-->
     <g class="entity" data-qualified-name="V1" data-source-line="2" id="ent0002">
@@ -50,39 +50,39 @@
     </g>
     <!--class MoreComplex-->
     <g class="entity" data-qualified-name="MoreComplex" data-source-line="7" id="ent0012">
-      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="119.3833" x="293" y="12"/>
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="119.15" x="293" y="12"/>
       <ellipse cx="308" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="0" x="303" y="33">C</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87.3833" x="322" y="31.8889">MoreComplex</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="294" x2="411.3833" y1="44" y2="44"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="294" x2="411.3833" y1="52" y2="52"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87.15" x="322" y="31.8889">MoreComplex</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="294" x2="411.15" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="294" x2="411.15" y1="52" y2="52"/>
     </g>
     <!--class X-->
     <g class="entity" data-qualified-name="X" data-source-line="7" id="ent0013">
-      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.3333" x="273" y="96"/>
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.3625" x="273" y="96"/>
       <ellipse cx="288" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="0" x="283" y="117">C</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="302" y="115.8889">X</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="274" x2="313.3333" y1="128" y2="128"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="274" x2="313.3333" y1="136" y2="136"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="302" y="115.8889">X</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="274" x2="313.3625" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="274" x2="313.3625" y1="136" y2="136"/>
     </g>
     <!--class Y-->
     <g class="entity" data-qualified-name="Y" data-source-line="8" id="ent0015">
-      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.3333" x="332" y="96"/>
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.3625" x="332" y="96"/>
       <ellipse cx="347" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="0" x="342" y="117">C</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="361" y="115.8889">Y</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="333" x2="372.3333" y1="128" y2="128"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="333" x2="372.3333" y1="136" y2="136"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="361" y="115.8889">Y</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="333" x2="372.3625" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="333" x2="372.3625" y1="136" y2="136"/>
     </g>
     <!--class Z-->
     <g class="entity" data-qualified-name="Z" data-source-line="9" id="ent0017">
-      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.5167" x="391" y="96"/>
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.575" x="391" y="96"/>
       <ellipse cx="406" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="0" x="401" y="117">C</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8.5167" x="420" y="115.8889">Z</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="392" x2="430.5167" y1="128" y2="128"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="392" x2="430.5167" y1="136" y2="136"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8.575" x="420" y="115.8889">Z</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="392" x2="430.575" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="392" x2="430.575" y1="136" y2="136"/>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="extension" id="lnk4">
       <polygon fill="#181818" points="130.5,60.2786,126.5,69.2786,130.5,65.2786,134.5,69.2786,130.5,60.2786" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

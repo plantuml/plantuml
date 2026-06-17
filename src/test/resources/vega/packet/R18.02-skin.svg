@@ -8,16 +8,16 @@
     </filter>
   </defs>
   <g>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="6.0917" y="20.8889">0</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.7875" x="6.1062" y="20.8889">0</text>
     <path d="M10,24 L10,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M52,24 L52,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M94,24 L94,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M136,24 L136,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M178,24 L178,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <rect fill="#FEFECE" filter="url(#f11yuyr74r9e6m)" height="34" style="stroke:#A80036;stroke-width:1;" width="42" x="10" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="26.3333" y="76.8889">A</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="26.3188" y="76.8889">A</text>
     <rect fill="#FEFECE" filter="url(#f11yuyr74r9e6m)" height="34" style="stroke:#A80036;stroke-width:1;" width="42" x="52" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="68.3333" y="76.8889">B</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="68.3188" y="76.8889">B</text>
     <rect fill="#FEFECE" filter="url(#f11yuyr74r9e6m)" height="34" style="stroke:#A80036;stroke-width:1;" width="42" x="94" y="56"/>
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.15" x="109.925" y="76.8889">C</text>
     <rect fill="#FEFECE" filter="url(#f11yuyr74r9e6m)" height="34" style="stroke:#A80036;stroke-width:1;" width="42" x="136" y="56"/>

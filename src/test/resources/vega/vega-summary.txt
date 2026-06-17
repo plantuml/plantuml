@@ -2,9 +2,12 @@
  VEGA TEST SUMMARY
 ===========================================
  Total:    135
- Passed:   125
- Failed:   0
- Skipped:  10
+ Passed:   126
+ Failed:   1
+ Skipped:  8
+===========================================
+ Failed tests:
+   - svg/interactive/SVG0004_Svek.puml
 ===========================================
  Skipped tests:
    - mvp/hello-debug-skipped.puml
@@ -12,8 +15,6 @@
    - packet/R07.02-Range_Error2.puml
    - packet/R11.01-len_0.puml
    - packet/R11.07-len_0_8.puml
-   - tikz/tikz-1926-svg.puml
-   - tikz/tikz-1926.puml
    - tikz/tikz-scale-down.puml
    - tikz/tikz-scale-nested-scale.puml
    - tikz/tikz-scale-up.puml

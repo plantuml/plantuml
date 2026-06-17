@@ -49,7 +49,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
-import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDeterministic;
+import net.sourceforge.plantuml.klimt.drawing.font.StringBounderFromWidthTable;
 import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
@@ -192,7 +192,7 @@ public enum FileFormat {
 
 		case LATEX_DETERMINISTIC:
 		case SVG_DETERMINISTIC:
-			return new StringBounderDeterministic(this);
+			return new StringBounderFromWidthTable(this);
 
 		// ::comment when JAVA8
 		case PDF:
