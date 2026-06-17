@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramDescription;
 
 public class DiagramRendererTeaVM {
 
@@ -61,8 +60,14 @@ public class DiagramRendererTeaVM {
 
 		final BlockUml blockUml = blocks.get(0);
 		final Diagram diagram = blockUml.getDiagram();
+
+		// Export straight from the Diagram rather than going through
+		// SourceStringReader.outputImage(): the latter starts with a
+		// noValidStartFound() fallback that builds a PNG error image through AWT
+		// (EmptyImageBuilder -> Graphics2D), which is unavailable under TeaVM. We
+		// already have a single, valid block here, so we render it directly.
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		final DiagramDescription dr = ss.outputImage(baos, 0, new FileFormatOption(FileFormat.SVG_DETERMINISTIC));
+		diagram.exportDiagram(baos, 0, new FileFormatOption(FileFormat.SVG_DETERMINISTIC));
 
 		final String svg = new String(baos.toByteArray(), UTF_8);
 		return new McpResult(diagram, svg);
