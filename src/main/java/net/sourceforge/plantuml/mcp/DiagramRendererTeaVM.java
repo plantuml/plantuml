@@ -108,9 +108,9 @@ public class DiagramRendererTeaVM {
 		try {
 			final String svg = buildSvg((UgDiagram) diagram);
 			return new McpResult(diagram, svg);
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			Logme.error(e);
-			return new McpResult(diagram);
+			return McpResult.renderError(diagram, "Rendering failed: " + e);
 		}
 	}
 

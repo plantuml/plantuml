@@ -88,6 +88,22 @@ public class McpResult {
 		this.svg = svg;
 	}
 
+	/**
+	 * Builds a result for a diagram that parsed correctly but failed to render. The
+	 * structured counters from {@code diagram} are kept, but the result is marked
+	 * as not OK and carries the rendering error message.
+	 *
+	 * @param diagram the parsed (non-error) diagram
+	 * @param message the rendering error message
+	 * @return a not-OK result describing the rendering failure
+	 */
+	public static McpResult renderError(Diagram diagram, String message) {
+		final McpResult result = new McpResult(diagram);
+		result.ok = false;
+		result.errorMessage = message;
+		return result;
+	}
+
 	public static McpResult badInput() {
 		final McpResult result = new McpResult();
 		result.errorMessage = "Expected exactly one diagram in the source";
