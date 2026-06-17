@@ -34,8 +34,8 @@ npx @modelcontextprotocol/inspector npx -y @plantuml/mcp-js
 
 It opens a browser UI (with a session token in the printed URL). Make sure the
 transport is **stdio**, click **Connect**, then open **Tools → List Tools** to
-see `plantuml_version` and `check_syntax`, and run them with the inputs shown
-below.
+see `plantuml_version`, `check_syntax` and `render_diagram`, and run them with
+the inputs shown below.
 
 
 ## Quick start
@@ -87,6 +87,7 @@ a client to connect — that is normal, a stdio server is driven by its client.
 | ------------------ | ----------- | ------------------------------------------------ |
 | `plantuml_version` | available   | Returns the version of the embedded PlantUML.    |
 | `check_syntax`     | available   | Validates a diagram and reports syntax errors.   |
+| `render_diagram`   | available   | Renders a diagram to a deterministic SVG.        |
 | `diagram_explain`  | available   | Explains a diagram line by line.                 |
 
 **`plantuml_version`** takes no parameters and returns the version string.
@@ -121,6 +122,32 @@ An invalid one reports the offending line and message:
 The failure fields are `errorLineNumber` (1-based), `errorMessage`, `errorLine`
 (the offending source line, when available) and `errorContext`.
 
+**`render_diagram`** takes a single `source` parameter and renders the diagram
+to a deterministic SVG. A valid diagram:
+
+```
+@startuml
+Alice -> Bob
+@enduml
+```
+
+returns something like:
+
+```json
+{
+  "valid": true,
+  "diagramType": "SequenceDiagram",
+  "lineCount": 3,
+  "warnings": [],
+  "svg": "<svg ...>...</svg>"
+}
+```
+
+The rendering is **deterministic**: text dimensions come from a built-in glyph
+width table rather than from the host's installed fonts or AWT, so the same
+source yields byte-for-byte the same SVG on any machine. On failure it reports
+the same fields as `check_syntax` (without `svg`).
+
 **`diagram_explain`** takes a single `source` parameter and explains how the
 diagram is parsed, line by line. It returns a JSON array of objects, each with
 `input` (the source line(s) that produced the explanation), `explain` (a
@@ -143,14 +170,14 @@ returns something like:
 
 ## Scope and limitations
 
-Because the JavaScript build is **headless** (no browser DOM, no native
-Graphviz), it deliberately does **not** render diagrams: the SVG output pipeline
-depends on the browser DOM and is out of scope here. This server focuses on the
-text-only capabilities of the engine.
+The JavaScript build is **headless** (no browser DOM, no native Graphviz). It
+renders to **SVG only**, via a deterministic, font-metrics-free pipeline (see
+`render_diagram` above); raster and document formats (PNG/PDF) are out of scope
+here, as is any layout that requires native Graphviz.
 
-If you need diagram **rendering** (SVG/PNG/PDF), use the Java-based
-[`plantuml-mcp`](https://github.com/plantuml/plantuml-mcp) server instead. It
-exposes the same kind of tools but requires a Java runtime.
+If you need those other formats, or a Graphviz-backed layout, use the
+Java-based [`plantuml-mcp`](https://github.com/plantuml/plantuml-mcp) server
+instead. It exposes the same kind of tools but requires a Java runtime.
 
 ## Architecture
 
