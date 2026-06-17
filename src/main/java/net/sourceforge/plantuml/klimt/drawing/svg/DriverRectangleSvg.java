@@ -34,8 +34,6 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
-import java.awt.geom.Rectangle2D;
-
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
@@ -44,6 +42,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
 import net.sourceforge.plantuml.klimt.color.HColorLinearGradient;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
@@ -67,11 +66,11 @@ public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
-			final Rectangle2D.Double r = clip.getClippedRectangle(new Rectangle2D.Double(x, y, width, height));
-			x = r.x;
-			y = r.y;
-			width = r.width;
-			height = r.height;
+			final XRectangle2D r = clip.getClippedRectangle(new XRectangle2D(x, y, width, height));
+			x = r.getX();
+			y = r.getY();
+			width = r.getWidth();
+			height = r.getHeight();
 			if (height <= 0) {
 				return;
 			}

@@ -34,13 +34,12 @@
  */
 package net.sourceforge.plantuml.braille;
 
-import java.awt.geom.Rectangle2D;
-
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class DriverRectangleBraille implements UDriver<URectangle, BrailleGrid> {
@@ -78,7 +77,7 @@ public class DriverRectangleBraille implements UDriver<URectangle, BrailleGrid> 
 
 		final UClip clip = clipContainer.getClip();
 		if (clip != null) {
-			final Rectangle2D.Double r = clip.getClippedRectangle(new Rectangle2D.Double(x, y, width, height));
+			final XRectangle2D r = clip.getClippedRectangle(new XRectangle2D(x, y, width, height));
 			x = r.x;
 			y = r.y;
 			width = r.width;
