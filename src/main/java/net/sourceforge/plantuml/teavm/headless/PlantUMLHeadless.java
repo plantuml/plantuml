@@ -1,9 +1,12 @@
 package net.sourceforge.plantuml.teavm.headless;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import org.teavm.jso.JSExport;
+import org.teavm.jso.JSFunctor;
 import org.teavm.jso.JSObject;
 
 import net.sourceforge.plantuml.explain.DiagramExplainer;
@@ -39,8 +42,12 @@ import net.sourceforge.plantuml.version.Version;
  * transport -&gt; tool discovery by the client).</li>
  * <li>{@link #checkSyntax(String)} &mdash; parses a single diagram and reports
  * a structured diagnostic, without rendering.</li>
- * <li>{@link #renderSvg(String)} &mdash; parses and renders a single diagram to
- * a deterministic SVG.</li>
+ * <li>{@link #renderSvg(String, ResultCallback)} &mdash; parses and renders a
+ * single diagram to a deterministic SVG. Asynchronous: the result JSON is
+ * delivered through a callback, because diagrams that need Graphviz call the
+ * Viz.js engine, whose {@code @Async} bridge can only suspend from a TeaVM
+ * worker thread (see {@link net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser}
+ * for the same constraint).</li>
  * </ul>
  */
 public class PlantUMLHeadless {
@@ -109,10 +116,83 @@ public class PlantUMLHeadless {
 	}
 
 	/**
+	 * Callback used to deliver the render result JSON back to JavaScript.
+	 */
+	@JSFunctor
+	public interface ResultCallback extends JSObject {
+		void call(String json);
+	}
+
+	// =========================================================================
+	// Render worker thread
+	//
+	// Rendering must run on a TeaVM thread so that the Viz.js @Async bridge
+	// (GraphVizjsTeaVMEngine) can suspend. An @JSExport called directly from
+	// JavaScript runs in a native JS context, where suspension is illegal. So
+	// renderSvg() only queues a request and wakes the worker; the worker does the
+	// actual rendering in a coroutine context and invokes the callback.
+	// =========================================================================
+
+	private static final Object LOCK = new Object();
+
+	private static volatile boolean workerStarted = false;
+
+	private static final class RenderRequest {
+		final String source;
+		final ResultCallback callback;
+
+		RenderRequest(String source, ResultCallback callback) {
+			this.source = source;
+			this.callback = callback;
+		}
+	}
+
+	// A real queue (not a single slot like PlantUMLBrowser): an MCP server may
+	// receive several independent render_diagram calls, and none must be dropped.
+	private static final Deque<RenderRequest> QUEUE = new ArrayDeque<>();
+
+	private static void ensureWorkerStarted() {
+		if (workerStarted == false) {
+			synchronized (LOCK) {
+				if (workerStarted == false) {
+					new Thread(PlantUMLHeadless::workerLoop, "plantuml-headless-render").start();
+					workerStarted = true;
+				}
+			}
+		}
+	}
+
+	private static void workerLoop() {
+		while (true) {
+			final RenderRequest request;
+			synchronized (LOCK) {
+				while (QUEUE.isEmpty()) {
+					try {
+						LOCK.wait();
+					} catch (InterruptedException e) {
+						// Not expected; just retry.
+					}
+				}
+				request = QUEUE.removeFirst();
+			}
+
+			// Render OUTSIDE the lock so new requests can be queued meanwhile.
+			String json;
+			try {
+				json = renderSvgToJson(request.source);
+			} catch (Throwable e) {
+				json = errorJson("Could not render the diagram source: " + e);
+			}
+			request.callback.call(json);
+		}
+	}
+
+	/**
 	 * Parses and renders a single PlantUML diagram to a deterministic SVG.
 	 *
 	 * <p>
-	 * On success, the result is a JSON object with the following shape:
+	 * Asynchronous: the result is delivered as a JSON string through
+	 * {@code callback}. On success the JSON has the shape:
 	 *
 	 * <pre>
 	 * {
@@ -127,13 +207,24 @@ public class PlantUMLHeadless {
 	 * On failure, it has the same error shape as {@link #checkSyntax(String)} (no
 	 * {@code svg} field).
 	 *
-	 * @param source the raw PlantUML source (a single {@code @start.../@end...}
-	 *               diagram)
-	 * @return a JSON string with the rendered SVG or a diagnostic; never
-	 *         {@code null}
+	 * @param source   the raw PlantUML source (a single {@code @start.../@end...}
+	 *                 diagram)
+	 * @param callback invoked once with the result JSON
 	 */
 	@JSExport
-	public static String renderSvg(String source) {
+	public static void renderSvg(String source, ResultCallback callback) {
+		ensureWorkerStarted();
+		synchronized (LOCK) {
+			QUEUE.addLast(new RenderRequest(source, callback));
+			LOCK.notify();
+		}
+	}
+
+	/**
+	 * Synchronous core of {@link #renderSvg(String, ResultCallback)}, run on the
+	 * worker thread. Returns the result JSON string.
+	 */
+	private static String renderSvgToJson(String source) {
 		final McpResult result;
 		try {
 			result = new DiagramRendererTeaVM().render(source);
