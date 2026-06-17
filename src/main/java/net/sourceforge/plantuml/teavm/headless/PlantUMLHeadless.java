@@ -8,6 +8,7 @@ import org.teavm.jso.JSObject;
 
 import net.sourceforge.plantuml.explain.DiagramExplainer;
 import net.sourceforge.plantuml.explain.Explanation;
+import net.sourceforge.plantuml.mcp.DiagramRendererTeaVM;
 import net.sourceforge.plantuml.mcp.McpResult;
 import net.sourceforge.plantuml.mcp.SyntaxChecker;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -38,6 +39,8 @@ import net.sourceforge.plantuml.version.Version;
  * transport -&gt; tool discovery by the client).</li>
  * <li>{@link #checkSyntax(String)} &mdash; parses a single diagram and reports
  * a structured diagnostic, without rendering.</li>
+ * <li>{@link #renderSvg(String)} &mdash; parses and renders a single diagram to
+ * a deterministic SVG.</li>
  * </ul>
  */
 public class PlantUMLHeadless {
@@ -106,6 +109,45 @@ public class PlantUMLHeadless {
 	}
 
 	/**
+	 * Parses and renders a single PlantUML diagram to a deterministic SVG.
+	 *
+	 * <p>
+	 * On success, the result is a JSON object with the following shape:
+	 *
+	 * <pre>
+	 * {
+	 *   "valid": true,
+	 *   "diagramType": "SequenceDiagram",
+	 *   "lineCount": 4,
+	 *   "warnings": ["..."],
+	 *   "svg": "&lt;svg ...&gt;...&lt;/svg&gt;"
+	 * }
+	 * </pre>
+	 *
+	 * On failure, it has the same error shape as {@link #checkSyntax(String)} (no
+	 * {@code svg} field).
+	 *
+	 * @param source the raw PlantUML source (a single {@code @start.../@end...}
+	 *               diagram)
+	 * @return a JSON string with the rendered SVG or a diagnostic; never
+	 *         {@code null}
+	 */
+	@JSExport
+	public static String renderSvg(String source) {
+		final McpResult result;
+		try {
+			result = new DiagramRendererTeaVM().render(source);
+		} catch (IOException e) {
+			return errorJson("Could not render the diagram source: " + e.getMessage());
+		}
+
+		if (result.isOk())
+			return renderOkJson(result);
+
+		return errorJson(result);
+	}
+
+	/**
 	 * Explains how a single PlantUML diagram is parsed, line by line.
 	 *
 	 * <p>
@@ -165,6 +207,16 @@ public class PlantUMLHeadless {
 		TeaVmJson.putString(json, "diagramType", result.getDiagramType());
 		TeaVmJson.putInt(json, "lineCount", result.getLineCount());
 		TeaVmJson.putObject(json, "warnings", toJsArray(result.getWarnings()));
+		return TeaVmJson.stringify(json);
+	}
+
+	private static String renderOkJson(McpResult result) {
+		final JSObject json = TeaVmJson.newObject();
+		TeaVmJson.putBoolean(json, "valid", true);
+		TeaVmJson.putString(json, "diagramType", result.getDiagramType());
+		TeaVmJson.putInt(json, "lineCount", result.getLineCount());
+		TeaVmJson.putObject(json, "warnings", toJsArray(result.getWarnings()));
+		TeaVmJson.addStringSafe(json, "svg", result.getSvg());
 		return TeaVmJson.stringify(json);
 	}
 
