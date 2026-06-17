@@ -160,5 +160,28 @@ public final class GanttI18n {
 <span class="fc" id="L160">		return days + &quot; days&quot;;</span>
 	}
 
+	// Used for date-less (relative) Gantt diagrams, where columns show a day index
+	// (&quot;Day 1&quot;, &quot;Day 2&quot;, ...) instead of a calendar date.
+	public static String dayNumber(Locale locale, int dayNum) {
+<span class="fc" id="L166">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L167" title="7 of 8 branches missed.">		switch (lang) {</span>
+		case &quot;fr&quot;:
+<span class="nc" id="L169">			return &quot;Jour &quot; + dayNum;</span>
+		case &quot;es&quot;:
+<span class="nc" id="L171">			return &quot;Día &quot; + dayNum;</span>
+		case &quot;de&quot;:
+<span class="nc" id="L173">			return &quot;Tag &quot; + dayNum;</span>
+		case &quot;ja&quot;:
+<span class="nc" id="L175">			return dayNum + &quot;日目&quot;;</span>
+		case &quot;ko&quot;:
+<span class="nc" id="L177">			return dayNum + &quot;일째&quot;;</span>
+		case &quot;ru&quot;:
+<span class="nc" id="L179">			return &quot;День &quot; + dayNum;</span>
+		case &quot;zh&quot;:
+<span class="nc" id="L181">			return &quot;第&quot; + dayNum + &quot;天&quot;;</span>
+		}
+<span class="fc" id="L183">		return &quot;Day &quot; + dayNum;</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

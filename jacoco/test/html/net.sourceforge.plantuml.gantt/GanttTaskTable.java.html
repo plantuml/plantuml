@@ -183,38 +183,53 @@ public final class GanttTaskTable {
 <span class="fc" id="L183">		return task.getCode().getDisplay();</span>
 	}
 
+	private boolean isRelativeMode() {
+<span class="fc" id="L187">		return timeBounds.getMinDay().equals(TimePoint.epoch());</span>
+	}
+
+	private int relativeDayNum(TimePoint point) {
+<span class="fc" id="L191">		final int minAbs = TimePoint.ofStartOfDay(timeBounds.getMinDay()).getAbsoluteDayNum();</span>
+<span class="fc" id="L192">		return point.getAbsoluteDayNum() - minAbs + 1;</span>
+	}
+
 	private String startOf(Task task) {
-<span class="fc" id="L187">		return task.getStart().toStringShort(locale);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (isRelativeMode())</span>
+<span class="fc" id="L197">			return GanttI18n.dayNumber(locale, relativeDayNum(task.getStart()));</span>
+
+<span class="fc" id="L199">		return task.getStart().toStringShort(locale);</span>
 	}
 
 	private String endOf(Task task) {
-<span class="fc" id="L191">		return task.getEndMinusOneDayTOBEREMOVED().toStringShort(locale);</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (isRelativeMode())</span>
+<span class="fc" id="L204">			return GanttI18n.dayNumber(locale, relativeDayNum(task.getEndMinusOneDayTOBEREMOVED()));</span>
+
+<span class="fc" id="L206">		return task.getEndMinusOneDayTOBEREMOVED().toStringShort(locale);</span>
 	}
 
 	private String durationOf(Task task) {
-<span class="fc" id="L195">		final TimePoint start = task.getStart();</span>
-<span class="fc" id="L196">		final TimePoint end = task.getEnd();</span>
-<span class="fc" id="L197">		final int days = end.getAbsoluteDayNum() - start.getAbsoluteDayNum();</span>
+<span class="fc" id="L210">		final TimePoint start = task.getStart();</span>
+<span class="fc" id="L211">		final TimePoint end = task.getEnd();</span>
+<span class="fc" id="L212">		final int days = end.getAbsoluteDayNum() - start.getAbsoluteDayNum();</span>
 
-<span class="fc" id="L199">		return GanttI18n.durationInDays(locale, days);</span>
+<span class="fc" id="L214">		return GanttI18n.durationInDays(locale, days);</span>
 	}
 
 	private double widthOf(StringBounder stringBounder, String text) {
-<span class="fc" id="L203">		return createTextBlock(text).calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L218">		return createTextBlock(text).calculateDimension(stringBounder).getWidth();</span>
 	}
 
 	private TextBlock createTextBlock(String text) {
-<span class="fc" id="L207">		return Display.getWithNewlines(timelineStyle.getPragma(), text).create(getFontConfiguration(),</span>
+<span class="fc" id="L222">		return Display.getWithNewlines(timelineStyle.getPragma(), text).create(getFontConfiguration(),</span>
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	private Style getStyle() {
-<span class="fc" id="L212">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)</span>
-<span class="fc" id="L213">				.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L227">		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)</span>
+<span class="fc" id="L228">				.getMergedStyle(timelineStyle.getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	private FontConfiguration getFontConfiguration() {
-<span class="fc" id="L217">		return getStyle().getFontConfiguration(timelineStyle.getColorSet());</span>
+<span class="fc" id="L232">		return getStyle().getFontConfiguration(timelineStyle.getColorSet());</span>
 	}
 
 }

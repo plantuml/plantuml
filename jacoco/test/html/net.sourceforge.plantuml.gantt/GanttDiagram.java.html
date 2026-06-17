@@ -629,20 +629,35 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 <span class="fc" id="L629">		return task.getCode().getDisplay();</span>
 	}
 
+	private boolean isRelativeMode() {
+<span class="fc" id="L633">		return timeBounds.getMinDay().equals(TimePoint.epoch());</span>
+	}
+
+	private int relativeDayNum(TimePoint point) {
+<span class="nc" id="L637">		final int minAbs = TimePoint.ofStartOfDay(timeBounds.getMinDay()).getAbsoluteDayNum();</span>
+<span class="nc" id="L638">		return point.getAbsoluteDayNum() - minAbs + 1;</span>
+	}
+
 	private String startOf(Task task, Locale locale) {
-<span class="fc" id="L633">		return task.getStart().toStringShort(locale);</span>
+<span class="pc bpc" id="L642" title="1 of 2 branches missed.">		if (isRelativeMode())</span>
+<span class="nc" id="L643">			return GanttI18n.dayNumber(locale, relativeDayNum(task.getStart()));</span>
+
+<span class="fc" id="L645">		return task.getStart().toStringShort(locale);</span>
 	}
 
 	private String endOf(Task task, Locale locale) {
-<span class="fc" id="L637">		return task.getEndMinusOneDayTOBEREMOVED().toStringShort(locale);</span>
+<span class="pc bpc" id="L649" title="1 of 2 branches missed.">		if (isRelativeMode())</span>
+<span class="nc" id="L650">			return GanttI18n.dayNumber(locale, relativeDayNum(task.getEndMinusOneDayTOBEREMOVED()));</span>
+
+<span class="fc" id="L652">		return task.getEndMinusOneDayTOBEREMOVED().toStringShort(locale);</span>
 	}
 
 	private String durationOf(Task task, Locale locale) {
-<span class="fc" id="L641">		final TimePoint start = task.getStart();</span>
-<span class="fc" id="L642">		final TimePoint end = task.getEnd();</span>
-<span class="fc" id="L643">		final int days = end.getAbsoluteDayNum() - start.getAbsoluteDayNum();</span>
+<span class="fc" id="L656">		final TimePoint start = task.getStart();</span>
+<span class="fc" id="L657">		final TimePoint end = task.getEnd();</span>
+<span class="fc" id="L658">		final int days = end.getAbsoluteDayNum() - start.getAbsoluteDayNum();</span>
 
-<span class="fc" id="L645">		return GanttI18n.durationInDays(locale, days);</span>
+<span class="fc" id="L660">		return GanttI18n.durationInDays(locale, days);</span>
 	}
 
 }
