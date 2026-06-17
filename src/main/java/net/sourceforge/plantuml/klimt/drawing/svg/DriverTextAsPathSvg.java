@@ -41,11 +41,9 @@ import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
-import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.shape.UText;
 
 public class DriverTextAsPathSvg implements UDriver<UText, SvgGraphics> {
-    // ::remove file when __HAXE__
 
 	private final ClipContainer clipContainer;
 
