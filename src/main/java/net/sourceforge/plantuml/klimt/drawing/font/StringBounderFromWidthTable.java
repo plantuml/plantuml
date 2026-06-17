@@ -61,11 +61,13 @@ public class StringBounderFromWidthTable implements StringBounder {
 		return fileFormat;
 	}
 
+	private static final double REFERENCE_SIZE = 16.0;
+
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
 		final String family = font.getFamily(text, UFontContext.SVG);
 		final double size = font.getSize2D();
-		final double factor = size / 12.0;
+		final double factor = size / REFERENCE_SIZE;
 		final double height = size;
 		double width = 0;
 		for (int i = 0; i < text.length(); i++)

@@ -13,7 +13,7 @@ class StringBounderFromWidthTableTest {
 	void testCalculateDimension() {
 
 		final StringBounder sb = new StringBounderFromWidthTable(FileFormat.SVG);
-		final XDimension2D dim = sb.calculateDimension(UFontFactory.serif(16), "!");
+		final XDimension2D dim = sb.calculateDimension(UFontFactory.sansSerif(16), "!");
 	}
 
 }
