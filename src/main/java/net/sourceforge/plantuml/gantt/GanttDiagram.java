@@ -608,7 +608,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 		}
 
 		final InfinitePlan plan = new InfinitePlan();
-		table.draw(plan, 0, 0);
+		table.asciiDraw(plan);
 
 		plan.exportTxt(os);
 

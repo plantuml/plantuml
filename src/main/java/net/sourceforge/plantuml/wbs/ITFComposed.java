@@ -40,8 +40,11 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
+import net.sourceforge.plantuml.asciiverse.ATable;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -165,6 +168,15 @@ class ITFComposed extends WBSTextBlock implements ITF {
 		return new XDimension2D(width, height);
 	}
 
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		final Display label = getIdea().getLabel();
+		final ATable table = new ATable(1, 1).withLeftPadding(7).withRightPadding(7);
+		table.setCellContent(0, 0, label);
+		table.asciiDraw(plan);
+	}
+
+	
 	public void drawU(final UGraphic ug) {
 		applyAutoWidth(ug.getStringBounder());
 		final StringBounder stringBounder = ug.getStringBounder();

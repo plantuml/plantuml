@@ -39,8 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class ATable {
+public class ATable implements AsciiBlock {
 
 	private DataTable<Display> cells;
 	private DataTable<CellSpan> mergedCells;
@@ -74,7 +75,7 @@ public class ATable {
 		for (int i = 0; i < minRows; i++)
 			this.rowMinHeights.add(1);
 	}
-	
+
 	public ATable withLeftPadding(int leftPadding) {
 		this.leftPadding = Math.max(leftPadding, 0);
 		return this;
@@ -84,8 +85,6 @@ public class ATable {
 		this.rightPadding = Math.max(rightPadding, 0);
 		return this;
 	}
-
-	
 
 	public ATable withColumnMinWidth(int col, int width) {
 		columnMinWidths.set(col, Math.max(width, 1));
@@ -191,15 +190,24 @@ public class ATable {
 		return totalHeight;
 	}
 
-	public void draw(InfinitePlan plan, int startX, int startY) {
-		int currentY = startY;
+	@Override
+	public XDimension2D asciiDimension() {
+		final int width = getTotalWidth();
+		final int height = getTotalHeight() + 2 + rowMinHeights.size() - 1;
 
-		drawHorizontalBorder(plan, startX, currentY, -1);
+		return new XDimension2D(width, height);
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		int currentY = 0;
+
+		drawHorizontalBorder(plan, 0, currentY, -1);
 
 		currentY++;
 
 		for (int row = 0; row < rowMinHeights.size(); row++) {
-			int currentX = startX;
+			int currentX = 0;
 			int rowHeight = rowMinHeights.get(row);
 
 			for (int col = 0; col < columnMinWidths.size(); col++) {
@@ -240,7 +248,7 @@ public class ATable {
 
 			for (int h = 1; h < rowHeight; h++) {
 				currentY++;
-				currentX = startX;
+				currentX = 0;
 				for (int col = 0; col < columnMinWidths.size(); col++) {
 					final CellSpan span = mergedCells.get(row, col);
 					if (span != null && span.startRow == row && span.startCol == col) {
@@ -273,7 +281,7 @@ public class ATable {
 			currentY++;
 
 			final int position = row == rowMinHeights.size() - 1 ? 1 : 0;
-			drawHorizontalBorder(plan, startX, currentY, position);
+			drawHorizontalBorder(plan, 0, currentY, position);
 
 			currentY++;
 		}

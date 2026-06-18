@@ -35,16 +35,22 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -69,7 +75,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Direction;
 
-public class WBSDiagram extends TitledDiagram {
+public class WBSDiagram extends TitledDiagram implements TextBlock {
 
 	private WElement root;
 	private WElement last;
@@ -87,16 +93,30 @@ public class WBSDiagram extends TitledDiagram {
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
-		return new TextBlock() {
+		return this;
+	}
 
-			public void drawU(UGraphic ug) {
-				drawMe(ug.apply(new UTranslate(10, 10)));
-			}
+	@Override
+	public void drawU(UGraphic ug) {
+		drawMe(ug.apply(new UTranslate(10, 10)));
+	}
 
-			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return getDrawingElement().calculateDimension(stringBounder).delta(20);
-			}
-		};
+	@Override
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return getDrawingElement().calculateDimension(stringBounder).delta(20);
+	}
+
+	@Override
+	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
+
+		final InfinitePlan plan = new InfinitePlan();
+		final Fork fork = getDrawingElement();
+
+		fork.asciiDraw(plan);
+		plan.exportTxt(os);
+
+		return ImageDataSimple.ok();
+
 	}
 
 	private void drawMe(UGraphic ug) {

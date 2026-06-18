@@ -44,25 +44,43 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 
 public class InfinitePlan {
 
-	private final List<InfiniteString> plan = new ArrayList<>();
+	private final List<InfiniteString> plan;
+	private final int dx;
+	private final int dy;
+
+	public InfinitePlan() {
+		this(0, 0, new ArrayList<>());
+	}
+
+	private InfinitePlan(int dx, int dy, List<InfiniteString> plan) {
+		this.dx = dx;
+		this.dy = dy;
+		this.plan = plan;
+	}
+
+	public InfinitePlan move(int movex, int movey) {
+		return new InfinitePlan(dx + movex, dy + movey, plan);
+	}
 
 	public void drawChar(char c, int x, int y) {
-		ensureSize(y);
-		plan.get(y).setCharAt(x, c);
+		ensureSize(dy + y);
+		plan.get(dy + y).setCharAt(dx + x, c);
 	}
 
-	public void fillRect(char c, int x, int y, int width, int height) {
-		for (int i = 0; i < width; i++)
-			for (int j = 0; j < height; j++)
-				drawChar(c, x + i, y + j);
-	}
+//	public void fillRect(char c, int x, int y, int width, int height) {
+//		for (int i = 0; i < width; i++)
+//			for (int j = 0; j < height; j++)
+//				drawChar(c, x + i, y + j);
+//	}
 
-	private void ensureSize(int y) {
-		while (y >= plan.size())
+	private void ensureSize(int yAbsolute) {
+		while (yAbsolute >= plan.size())
 			plan.add(new InfiniteString());
 	}
 
 	public char getCharAt(int x, int y) {
+		x += dx;
+		y += dy;
 		if (y < 0 || y >= plan.size())
 			return ' ';
 

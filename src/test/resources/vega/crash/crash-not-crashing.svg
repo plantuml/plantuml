@@ -1,31 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="BPM" height="273px" preserveAspectRatio="none" style="width:350px;height:273px;background:#FFFFFF;" version="1.1" viewBox="0 0 350 273" width="350px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="BPM" height="273px" preserveAspectRatio="none" style="width:318px;height:273px;background:#FFFFFF;" version="1.1" viewBox="0 0 318 273" width="318px" zoomAndPan="magnify">
   <defs/>
   <g>
-    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="94.3833" x="10" y="20.8889">Crash Diagram</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.1667" x="10" y="34.8889"> </text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="299.95" x="10" y="48.8889">This diagram is only used to test crash handling.</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.1667" x="10" y="62.8889"> </text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="191.45" x="10" y="76.8889">There are three types of crash:</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="60.4333" x="17.7" y="90.8889">• During</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="46.0833" x="81.9833" y="90.8889">parsing</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="60.4333" x="17.7" y="104.8889">• During</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="54.7167" x="81.9833" y="104.8889">finalizing</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="60.4333" x="17.7" y="118.8889">• During</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="49.2333" x="81.9833" y="118.8889">drawing</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.1667" x="10" y="132.8889"> </text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="329.35" x="10" y="146.8889">The purpose is to verify that PlantUML error recovery</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="321.0667" x="10" y="160.8889">mechanisms work correctly, using a diagram whose</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="140.4667" x="10" y="174.8889">behavior is predictable</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="69.3" x="154.3167" y="174.8889">(it crashes)</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="3.85" x="223.6167" y="174.8889">.</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.1667" x="10" y="188.8889"> </text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="271.95" x="10" y="202.8889">To do so, you should the following directive:</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.1667" x="17.7" y="216.8889">•</text>
-    <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="121.6833" x="36.7167" y="216.8889">crash when parsing</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.1667" x="17.7" y="230.8889">•</text>
-    <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="130.3167" x="36.7167" y="230.8889">crash when finalizing</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.1667" x="17.7" y="244.8889">•</text>
-    <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="124.8333" x="36.7167" y="244.8889">crash when drawing</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.1667" x="10" y="258.8889"> </text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="90.3" x="10" y="20.8889">Crash Diagram</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="3.85" x="10" y="34.8889"> </text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="268.5375" x="10" y="48.8889">This diagram is only used to test crash handling.</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="3.85" x="10" y="62.8889"> </text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="171.7625" x="10" y="76.8889">There are three types of crash:</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="46.2" x="10" y="90.8889">• During</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="45.9375" x="56.2" y="90.8889">parsing</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="46.2" x="10" y="104.8889">• During</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="54.6" x="56.2" y="104.8889">finalizing</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="46.2" x="10" y="118.8889">• During</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="49.0875" x="56.2" y="118.8889">drawing</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="3.85" x="10" y="132.8889"> </text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="297.85" x="10" y="146.8889">The purpose is to verify that PlantUML error recovery</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="297.2375" x="10" y="160.8889">mechanisms work correctly, using a diagram whose</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="132.3875" x="10" y="174.8889">behavior is predictable</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="65.275" x="142.3875" y="174.8889">(it crashes)</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="3.85" x="207.6625" y="174.8889">.</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="3.85" x="10" y="188.8889"> </text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="244.475" x="10" y="202.8889">To do so, you should the following directive:</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4.9" x="10" y="216.8889">•</text>
+    <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="113.6625" x="14.9" y="216.8889">crash when parsing</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4.9" x="10" y="230.8889">•</text>
+    <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="122.325" x="14.9" y="230.8889">crash when finalizing</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4.9" x="10" y="244.8889">•</text>
+    <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="116.8125" x="14.9" y="244.8889">crash when drawing</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="3.85" x="10" y="258.8889"> </text>
   </g>
 </svg>

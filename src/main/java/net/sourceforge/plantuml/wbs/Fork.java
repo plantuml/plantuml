@@ -38,13 +38,14 @@ package net.sourceforge.plantuml.wbs;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -84,6 +85,16 @@ class Fork extends WBSTextBlock {
 
 	final private double delta1x = 20;
 	final private double deltay = 40;
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		super.asciiDraw(plan);
+
+		for (ITF child : right) {
+			plan = plan.move(4, 4);
+			((AsciiBlock) child).asciiDraw(plan);
+		}
+	}
 
 	public void drawU(final UGraphic ug) {
 		applyAutoWidth(ug.getStringBounder());

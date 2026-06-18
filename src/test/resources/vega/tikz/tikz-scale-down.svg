@@ -1,51 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="249px" preserveAspectRatio="none" style="width:224px;height:249px;background:#FFFFFF;" version="1.1" viewBox="0 0 224 249" width="224px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="213px" preserveAspectRatio="none" style="width:194px;height:213px;background:#FFFFFF;" version="1.1" viewBox="0 0 194 213" width="194px" zoomAndPan="magnify">
   <defs/>
   <g>
     <g class="title" data-source-line="1">
-      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="156.6833" x="30.2125" y="25.8889">Embedded with scale 0.5</text>
+      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="144.8125" x="17.0594" y="25.8889">Embedded with scale 0.5</text>
     </g>
     <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="Bob" data-source-line="2" id="part1-lifeline">
       <g>
         <title>Bob</title>
-        <rect fill="#000000" fill-opacity="0.00000" height="145" width="8" x="20.4833" y="69"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="24" x2="24" y1="69" y2="214"/>
+        <rect fill="#000000" fill-opacity="0.00000" height="109" width="8" x="20.4688" y="69"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="24" x2="24" y1="69" y2="178"/>
       </g>
     </g>
     <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="Alice" data-source-line="2" id="part2-lifeline">
       <g>
         <title>Alice</title>
-        <rect fill="#000000" fill-opacity="0.00000" height="145" width="8" x="98.1083" y="69"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="101.8833" x2="101.8833" y1="69" y2="214"/>
+        <rect fill="#000000" fill-opacity="0.00000" height="109" width="8" x="97.9313" y="69"/>
+        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="101.7063" x2="101.7063" y1="69" y2="178"/>
       </g>
     </g>
     <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="Bob" data-source-line="2" id="part1-head">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.9667" x="5" y="40"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24.9667" x="12" y="57.8889">Bob</text>
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.9375" x="5" y="40"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24.9375" x="12" y="57.8889">Bob</text>
     </g>
     <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="Bob" data-source-line="2" id="part1-tail">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.9667" x="5" y="213"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24.9667" x="12" y="230.8889">Bob</text>
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.9375" x="5" y="177"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24.9375" x="12" y="194.8889">Bob</text>
     </g>
     <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="Alice" data-source-line="2" id="part2-head">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="79.8833" y="40"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30.45" x="86.8833" y="57.8889">Alice</text>
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="79.7063" y="40"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30.45" x="86.7063" y="57.8889">Alice</text>
     </g>
     <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="Alice" data-source-line="2" id="part2-tail">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="79.8833" y="213"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30.45" x="86.8833" y="230.8889">Alice</text>
+      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="79.7063" y="177"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="30.45" x="86.7063" y="194.8889">Alice</text>
     </g>
     <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="2" id="msg1">
-      <polygon fill="#181818" points="90.1083,129.5,100.1083,133.5,90.1083,137.5,94.1083,133.5" style="stroke:#181818;stroke-width:1;"/>
-      <line style="stroke:#181818;stroke-width:1;" x1="24.4833" x2="96.1083" y1="133.5" y2="133.5"/>
-      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="43.4417" x="31.4833" y="128.6111">request</text>
+      <polygon fill="#181818" points="89.9313,111.5,99.9313,115.5,89.9313,119.5,93.9313,115.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="24.4688" x2="95.9313" y1="115.5" y2="115.5"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="43.3063" x="31.4688" y="110.6111">request</text>
     </g>
-    <path d="M107,84 L107,172 L208,172 L208,94 L198,84 L107,84" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
-    <path d="M198,84 L198,94 L208,94 L198,84" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
-    <image height="78" width="80" x="113" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9Ijc4IiB3aWR0aD0iODAiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGc+PHJlY3QgZmlsbD0iI0ZGRkZGRiIgc3R5bGU9IndpZHRoOjgwcHg7aGVpZ2h0Ojc4cHg7YmFja2dyb3VuZDojRkZGRkZGOyIgd2lkdGg9IjgwIiBoZWlnaHQ9Ijc4Ii8+IDwhLS1lbnRpdHkgVXNlci0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IlVzZXIiIGRhdGEtc291cmNlLWxpbmU9IjIiIGlkPSJlbnQwMDAyIj48ZWxsaXBzZSBjeD0iMzUuODg5NiIgY3k9IjEwLjI1IiBmaWxsPSIjRjFGMUYxIiByeD0iNCIgcnk9IjQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC4yNTsiLz48cGF0aCBkPSJNMzUuODg5NiwxNC4yNSBMMzUuODg5NiwyNy43NSBNMjkuMzg5NiwxOC4yNSBMNDIuMzg5NiwxOC4yNSBNMzUuODg5NiwyNy43NSBMMjkuMzg5NiwzNS4yNSBNMzUuODg5NiwyNy43NSBMNDIuMzg5NiwzNS4yNSIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjI1OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjciIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTQuNzc5MyIgeD0iMjguNSIgeT0iNDMuMjY2NiI+VXNlcjwvdGV4dD48L2c+PCEtLWVudGl0eSBMb2dpbi0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IkxvZ2luIiBkYXRhLXNvdXJjZS1saW5lPSIzIiBpZD0iZW50MDAwMyI+PGVsbGlwc2UgY3g9IjE2LjYxMDkiIGN5PSI3MC43MjU5IiBmaWxsPSIjRjFGMUYxIiByeD0iMTMuNjEwOSIgcnk9IjcuNzI1OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjI1OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjciIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTcuMTI3NCIgeD0iOC4wNDcyIiB5PSI3My4zNzgyIj5Mb2dpbjwvdGV4dD48L2c+PCEtLWVudGl0eSBMb2dvdXQtLT48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJMb2dvdXQiIGRhdGEtc291cmNlLWxpbmU9IjQiIGlkPSJlbnQwMDA0Ij48ZWxsaXBzZSBjeD0iNTUuODg5MyIgY3k9IjcwLjcyNTkiIGZpbGw9IiNGMUYxRjEiIHJ4PSIxNi42MzkzIiByeT0iNy43MjU5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuMjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMS40MTAyIiB4PSI0NS4xODQyIiB5PSI3My4zNzgyIj5Mb2dvdXQ8L3RleHQ+PC9nPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJlbnQwMDAyIiBkYXRhLWVudGl0eS0yPSJlbnQwMDAzIiBkYXRhLWxpbmstdHlwZT0iZGVwZW5kZW5jeSIgaWQ9ImxuazUiPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTkuNzkzNCw2Mi43NzY0LDIzLjQzODMsNTkuNDY1MSwyMC44MDE2LDYwLjQ4ODcsMTkuNzc3OSw1Ny44NTIsMTkuNzkzNCw2Mi43NzY0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cGF0aCBkPSJNMjguNDYwOCw0My4xMDgyIEMyNS40NTk5LDQ5LjkxNzkgMjMuMzczOSw1NC42NTE2IDIxLjAwMzIsNjAuMDMxMiIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PC9nPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJlbnQwMDAyIiBkYXRhLWVudGl0eS0yPSJlbnQwMDA0IiBkYXRhLWxpbmstdHlwZT0iZGVwZW5kZW5jeSIgaWQ9ImxuazYiPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iNTIuNjQ1OCw2Mi44Mjg3LDUyLjYxNDksNTcuOTA0NCw1MS42MTYxLDYwLjU1MDYsNDguOTY5OSw1OS41NTE5LDUyLjY0NTgsNjIuODI4NyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTQzLjUwNDIsNDIuNjAzIEM0Ni42NTIxLDQ5LjU2NzcgNDguOTE2OSw1NC41Nzg2IDUxLjQxMDIsNjAuMDk1IiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48L2c+PC9nPjwvc3ZnPg==" y="89"/>
+    <path d="M106,84 L106,136 L169,136 L169,94 L159,84 L106,84" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M159,84 L159,94 L169,94 L159,84" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <image height="74" width="81" x="112" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9Ijc0IiB3aWR0aD0iODEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGc+PHJlY3QgZmlsbD0iI0ZGRkZGRiIgc3R5bGU9IndpZHRoOjgxcHg7aGVpZ2h0Ojc0cHg7YmFja2dyb3VuZDojRkZGRkZGOyIgd2lkdGg9IjgxIiBoZWlnaHQ9Ijc0Ii8+IDwhLS1lbnRpdHkgVXNlci0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IlVzZXIiIGlkPSJlbnQwMDAxIiBkYXRhLXNvdXJjZS1saW5lPSIyIj48ZWxsaXBzZSBjeD0iMzYuMTQzOCIgY3k9IjEwLjI1IiByeD0iNCIgcnk9IjQiIGZpbGw9IiNGMUYxRjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC4yNTsiLz48cGF0aCBkPSJNMzYuMTQzOCwxNC4yNSBMMzYuMTQzOCwyNy43NSBNMjkuNjQzNywxOC4yNSBMNDIuNjQzOCwxOC4yNSBNMzYuMTQzOCwyNy43NSBMMjkuNjQzNywzNS4yNSBNMzYuMTQzOCwyNy43NSBMNDIuNjQzOCwzNS4yNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjI1OyIgZmlsbD0ibm9uZSIvPjx0ZXh0IHg9IjI4Ljc1IiB5PSI0MS40NDQ0IiBmaWxsPSIjMDAwMDAwIiBmb250LXNpemU9IjciIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTQuNzg3NSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPlVzZXI8L3RleHQ+PC9nPjwhLS1lbnRpdHkgTG9naW4tLT48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJMb2dpbiIgaWQ9ImVudDAwMDIiIGRhdGEtc291cmNlLWxpbmU9IjMiPjxlbGxpcHNlIGN4PSIxNi42MjY5IiBjeT0iNjcuNDQ5NyIgcng9IjEzLjYyNjkiIHJ5PSI2LjQ0OTciIGZpbGw9IiNGMUYxRjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC4yNTsiLz48dGV4dCB4PSI4LjA1MTkiIHk9IjY5LjE5OTciIGZpbGw9IiMwMDAwMDAiIGZvbnQtc2l6ZT0iNyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNy4xNSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkxvZ2luPC90ZXh0PjwvZz48IS0tZW50aXR5IExvZ291dC0tPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IkxvZ291dCIgaWQ9ImVudDAwMDMiIGRhdGEtc291cmNlLWxpbmU9IjQiPjxlbGxpcHNlIGN4PSI1Ni4xMjc3IiBjeT0iNjcuNDQ5NyIgcng9IjE2LjYyNzciIHJ5PSI2LjQ0OTciIGZpbGw9IiNGMUYxRjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC4yNTsiLz48dGV4dCB4PSI0NS40MzA4IiB5PSI2OS4xOTk3IiBmaWxsPSIjMDAwMDAwIiBmb250LXNpemU9IjciIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjEuMzkzOCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkxvZ291dDwvdGV4dD48L2c+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImVudDAwMDEiIGRhdGEtZW50aXR5LTI9ImVudDAwMDIiIGlkPSJsbms0IiBkYXRhLWxpbmstdHlwZT0iZGVwZW5kZW5jeSI+PHBvbHlnb24gcG9pbnRzPSIxOS42Mjg2LDYwLjc5OTksMjMuMzM3Niw1Ny41NjA2LDIwLjY4MTQsNTguNTMyNCwxOS43MDk2LDU1Ljg3NjIsMTkuNjI4Niw2MC43OTk5IiBmaWxsPSIjMTgxODE4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6MTA7Ii8+PHBhdGggZD0iTTI4LjY1NSw0MS4zNTg2IEMyNS40ODk2LDQ4LjE3NjMgMjMuMDU4LDUzLjQxMzYgMjAuNjgxNCw1OC41MzI0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIGZpbGw9Im5vbmUiLz48L2c+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImVudDAwMDEiIGRhdGEtZW50aXR5LTI9ImVudDAwMDMiIGlkPSJsbms1IiBkYXRhLWxpbmstdHlwZT0iZGVwZW5kZW5jeSI+PHBvbHlnb24gcG9pbnRzPSI1My4zMjUxLDYwLjg1NzcsNTMuMTk2MSw1NS45MzUsNTIuMjUwMyw1OC42MDA2LDQ5LjU4NDcsNTcuNjU0Nyw1My4zMjUxLDYwLjg1NzciIGZpbGw9IiMxODE4MTgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48cGF0aCBkPSJNNDMuODExMSw0MC44Nzg0IEM0Ny4xMjk3LDQ3Ljg0NzMgNDkuNzU1LDUzLjM2MDUgNTIuMjUwMyw1OC42MDA2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIGZpbGw9Im5vbmUiLz48L2c+PC9nPjwvc3ZnPg==" y="89"/>
     <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="13" id="msg3">
-      <polygon fill="#181818" points="35.4833,192,25.4833,196,35.4833,200,31.4833,196" style="stroke:#181818;stroke-width:1;"/>
-      <line style="stroke:#181818;stroke-width:1;" x1="29.4833" x2="101.1083" y1="196" y2="196"/>
-      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53.625" x="41.4833" y="191.1111">response</text>
+      <polygon fill="#181818" points="35.4688,156,25.4688,160,35.4688,164,31.4688,160" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="29.4688" x2="100.9313" y1="160" y2="160"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="53.4625" x="41.4688" y="155.1111">response</text>
     </g>
   </g>
 </svg>

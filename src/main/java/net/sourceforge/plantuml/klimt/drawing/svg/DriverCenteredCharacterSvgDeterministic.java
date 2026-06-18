@@ -31,59 +31,26 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.asciiverse;
+package net.sourceforge.plantuml.klimt.drawing.svg;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
-final class DataTable<E> {
+import net.sourceforge.plantuml.klimt.UParam;
+import net.sourceforge.plantuml.klimt.color.ColorMapper;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.drawing.UDriver;
+import net.sourceforge.plantuml.klimt.shape.UCenteredCharacter;
 
-	private final Map<CellKey, E> cells;
-	private final E defaultValue;
+public class DriverCenteredCharacterSvgDeterministic implements UDriver<UCenteredCharacter, SvgGraphics> {
 
-	private static class CellKey {
-		final int x;
-		final int y;
+	public void draw(UCenteredCharacter characterCircled, double x, double y, ColorMapper mapper, UParam param,
+			SvgGraphics svg) {
+		final char c = characterCircled.getChar();
+		final HColor textColor = param.getColor();
 
-		CellKey(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o)
-				return true;
-			if (o == null || getClass() != o.getClass())
-				return false;
-			CellKey cellKey = (CellKey) o;
-			return x == cellKey.x && y == cellKey.y;
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(x, y);
-		}
+		svg.setFillColor(textColor.toSvg(mapper));
+		svg.text(String.valueOf(c), x - 5, y + 5, "monospace", 14, null, null, null, 0, new HashMap<String, String>(),
+				null);
 	}
-
-	public DataTable(E defaultValue) {
-		this.defaultValue = defaultValue;
-		this.cells = new HashMap<>();
-	}
-
-	public void set(int x, int y, E value) {
-		cells.put(new CellKey(x, y), value);
-	}
-
-	public E get(int x, int y) {
-		return cells.getOrDefault(new CellKey(x, y), defaultValue);
-	}
-
-	public boolean contains(int x, int y) {
-		return cells.containsKey(new CellKey(x, y));
-	}
-
 }

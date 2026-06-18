@@ -35,6 +35,7 @@
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
+    "@viz-js/viz": "^3.28.0",
     "zod": "^3.23.0"
   }
 }

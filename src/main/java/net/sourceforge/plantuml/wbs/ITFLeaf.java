@@ -37,6 +37,9 @@ package net.sourceforge.plantuml.wbs;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.annotation.Fast;
+import net.sourceforge.plantuml.asciiverse.ATable;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -51,7 +54,7 @@ import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
-class ITFLeaf implements TextBlock, ITF {
+class ITFLeaf implements TextBlock, ITF, AsciiBlock {
 
 	private final TextBlock box;
 	private final FtileBoxOld fbox;
@@ -75,6 +78,14 @@ class ITFLeaf implements TextBlock, ITF {
 					style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 			this.box = TextBlockUtils.withMargin(text, 0, 3, 1, 1);
 		}
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		final Display label = idea.getLabel();
+		final ATable table = new ATable(1, 1).withLeftPadding(3).withRightPadding(3);
+		table.setCellContent(0, 0, label);
+		table.asciiDraw(plan);
 	}
 
 	@Override

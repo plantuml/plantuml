@@ -10,6 +10,7 @@
 // Tools:
 //   - plantuml_version : returns the embedded PlantUML version.
 //   - check_syntax     : validates a single diagram without rendering it.
+//   - render_diagram   : renders a single diagram to a deterministic SVG.
 //   - diagram_explain  : explains how a single diagram is parsed, line by line.
 //
 // IMPORTANT: stdout is the MCP transport channel in stdio mode. Never write
@@ -38,6 +39,19 @@ import { existsSync } from "node:fs";
 console.log = (...args) => console.error(...args);
 console.info = (...args) => console.error(...args);
 console.debug = (...args) => console.error(...args);
+
+// --- Provide the Viz.js engine to the TeaVM code ----------------------------
+//
+// Diagrams that need Graphviz layout (class, state, component, ...) call
+// GraphVizjsTeaVMEngine, whose @JSBody expects a global `Viz` exposing
+// `Viz.instance()` (the same shape Viz.js has in the browser). In Node we get
+// that from the @viz-js/viz package (WASM build of Graphviz). The instance
+// promise is memoized so the WASM module is loaded only once.
+import * as vizModule from "@viz-js/viz";
+let vizInstancePromise = null;
+globalThis.Viz = {
+  instance: () => (vizInstancePromise ??= vizModule.instance()),
+};
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -103,6 +117,48 @@ server.tool(
     const json = engine.checkSyntax(source);
     // Validate it parses (and surface a clear error if the engine ever
     // returns something unexpected), then hand the JSON text to the client.
+    let isError = false;
+    try {
+      const parsed = JSON.parse(json);
+      isError = parsed.valid === false;
+    } catch (e) {
+      return {
+        isError: true,
+        content: [
+          { type: "text", text: `Engine returned invalid JSON: ${String(e)}` },
+        ],
+      };
+    }
+    return {
+      isError,
+      content: [{ type: "text", text: json }],
+    };
+  }
+);
+
+server.tool(
+  "render_diagram",
+  "Renders a single PlantUML diagram to a deterministic SVG. " +
+    "Returns a JSON object containing: 'valid' (boolean), and when valid " +
+    "'diagramType', 'lineCount', 'warnings' (list of non-fatal warnings) and " +
+    "'svg' (the rendered SVG as a string). On failure it has the same error " +
+    "shape as check_syntax: 'errorLineNumber' (1-based), 'errorMessage', " +
+    "'errorLine' (the offending source line, when available) and " +
+    "'errorContext'.",
+  {
+    source: z
+      .string()
+      .describe(
+        "The PlantUML source to render, including @start.../@end... (a single diagram)"
+      ),
+  },
+  async ({ source }) => {
+    // engine.renderSvg is asynchronous: it runs the render on a TeaVM worker
+    // thread (required so the Viz.js @Async bridge can suspend) and delivers
+    // the result JSON string through a callback. Wrap it in a Promise.
+    const json = await new Promise((resolve) => {
+      engine.renderSvg(source, (result) => resolve(result));
+    });
     let isError = false;
     try {
       const parsed = JSON.parse(json);

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="146px" preserveAspectRatio="none" style="width:1087px;height:146px;background:#FFFFFF;" version="1.1" viewBox="0 0 1087 146" width="1087px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="146px" preserveAspectRatio="none" style="width:763px;height:146px;background:#FFFFFF;" version="1.1" viewBox="0 0 763 146" width="763px" zoomAndPan="magnify">
   <defs>
     <style type="text/css">svg .entity {
     cursor: pointer;
@@ -169,31 +169,31 @@ svg.click-active &gt; g &gt; g.click-highlighted {
   <g>
     <!--cluster pkg1-->
     <g class="cluster" data-qualified-name="pkg1" data-source-line="3" id="ent0002">
-      <path d="M16.5,4 L47.95,4 A3.75,3.75 0 0 1 50.45,6.5 L57.45,24 L1076.5,24 A2.5,2.5 0 0 1 1079,26.5 L1079,135.5 A2.5,2.5 0 0 1 1076.5,138 L16.5,138 A2.5,2.5 0 0 1 14,135.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000000;stroke-width:1.5;"/>
-      <line style="stroke:#000000;stroke-width:1.5;" x1="14" x2="57.45" y1="24" y2="24"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="30.45" x="18" y="16.8889">pkg1</text>
+      <path d="M16.5,4 L47.8625,4 A3.75,3.75 0 0 1 50.3625,6.5 L57.3625,24 L752.5,24 A2.5,2.5 0 0 1 755,26.5 L755,135.5 A2.5,2.5 0 0 1 752.5,138 L16.5,138 A2.5,2.5 0 0 1 14,135.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+      <line style="stroke:#000000;stroke-width:1.5;" x1="14" x2="57.3625" y1="24" y2="24"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="30.3625" x="18" y="16.8889">pkg1</text>
     </g>
     <!--cluster pkg2-->
     <g class="cluster" data-qualified-name="pkg1.pkg2" data-source-line="3" id="ent0003">
-      <path d="M24.5,29 L55.95,29 A3.75,3.75 0 0 1 58.45,31.5 L65.45,49 L1068.5,49 A2.5,2.5 0 0 1 1071,51.5 L1071,127.5 A2.5,2.5 0 0 1 1068.5,130 L24.5,130 A2.5,2.5 0 0 1 22,127.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000000;stroke-width:1.5;"/>
-      <line style="stroke:#000000;stroke-width:1.5;" x1="22" x2="65.45" y1="49" y2="49"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="30.45" x="26" y="41.8889">pkg2</text>
+      <path d="M24.5,29 L55.8625,29 A3.75,3.75 0 0 1 58.3625,31.5 L65.3625,49 L744.5,49 A2.5,2.5 0 0 1 747,51.5 L747,127.5 A2.5,2.5 0 0 1 744.5,130 L24.5,130 A2.5,2.5 0 0 1 22,127.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000000;stroke-width:1.5;"/>
+      <line style="stroke:#000000;stroke-width:1.5;" x1="22" x2="65.3625" y1="49" y2="49"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="30.3625" x="26" y="41.8889">pkg2</text>
     </g>
     <!--class Class 1 with ASCII special chars\r\n\t!#$%&'()*+,-/:;<=>?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ😀☕️-->
     <g class="entity" data-qualified-name="pkg1.pkg2.Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-source-line="3" id="ent0001">
-      <rect fill="#F1F1F1" height="68" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="980.7333" x="30.5" y="54"/>
+      <rect fill="#F1F1F1" height="68" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="657.0125" x="30.5" y="54"/>
       <ellipse cx="45.5" cy="80" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="0" x="40.5" y="85">C</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="201.7167" x="806.5167" y="69.8889">Class 1 with ASCII special chars</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.1667" x="1004.3833" y="83.8889"> </text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="917.9333" x="90.3" y="97.8889">!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="1010.2333" y1="106" y2="106"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="1010.2333" y1="114" y2="114"/>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="182.2625" x="502.25" y="69.8889">Class 1 with ASCII special chars</text>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="3.85" x="684.5125" y="83.8889"> </text>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="569.0125" x="115.5" y="97.8889">!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="686.5125" y1="106" y2="106"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="686.5125" y1="114" y2="114"/>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
-      <polygon fill="#181818" points="1011.7897,94.0194,1021.2796,96.6542,1016.7355,93.285,1020.1047,88.741,1011.7897,94.0194" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M1011.7897,81.9806 C1023.1634,83.6693 1029.5,85.6758 1029.5,88 C1029.5,90.3242 1028.1092,91.5964 1016.7355,93.285" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="29.7917" x="1031.5" y="91.6111">Hello</text>
+      <polygon fill="#181818" points="687.5901,95.1275,697.1247,97.5956,692.5223,94.3066,695.8112,89.7041,687.5901,95.1275" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M687.5901,80.8725 C698.9827,82.7687 705.5,85.1445 705.5,88 C705.5,90.8555 703.9148,92.4104 692.5223,94.3066" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="29.7375" x="707.5" y="91.6111">Hello</text>
     </g>
   </g>
 </svg>

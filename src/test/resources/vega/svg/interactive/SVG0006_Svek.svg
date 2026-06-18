@@ -169,17 +169,17 @@ svg.click-active &gt; g &gt; g.click-highlighted {
   <g>
     <!--class A-->
     <g class="entity" data-qualified-name="A" data-source-line="3" id="ent0001">
-      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.3333" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.3625" x="6" y="12"/>
       <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="0" x="16" y="33">C</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="35" y="31.8889">A</text>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="35" y="31.8889">A</text>
     </g>
     <!--class B-->
     <g class="entity" data-qualified-name="B" data-source-line="4" id="ent0002">
-      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.3333" x="100" y="12"/>
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.3625" x="100" y="12"/>
       <ellipse cx="115" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="monospace" font-size="14" lengthAdjust="spacing" textLength="0" x="110" y="33">C</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="129" y="31.8889">B</text>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="129" y="31.8889">B</text>
     </g>
     <!--class C-->
     <g class="entity" data-qualified-name="C" data-source-line="5" id="ent0003">
@@ -198,18 +198,18 @@ svg.click-active &gt; g &gt; g.click-highlighted {
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk5">
       <polygon fill="#181818" points="47.3616,28,53.3616,32,59.3616,28,53.3616,24,47.3616,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M59.3616,28 C74.9391,28 84.1333,28 99.6967,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="31.2" x="58" y="20.1111">holds</text>
-      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7.2583" x="91.6967" y="24.1111">1</text>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="31.1188" x="58" y="20.1111">holds</text>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7.2313" x="91.6967" y="24.1111">1</text>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="aggregation" id="lnk6">
       <polygon fill="none" points="120.5,44.2235,116.5,50.2235,120.5,56.2235,124.5,50.2235,120.5,44.2235" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M120.5,56.2235 C120.5,71.1994 120.5,81.9306 120.5,96.873" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="31.2" x="122.5" y="74.1111">holds</text>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="31.1188" x="122.5" y="74.1111">holds</text>
     </g>
     <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="association" id="lnk7">
       <path d="M141.5836,113 C157.3267,113 178.7464,113 194.4754,113" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="31.2" x="152.5" y="105.1111">holds</text>
-      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7.2583" x="186.4754" y="124.1111">1</text>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="31.1188" x="152.5" y="105.1111">holds</text>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7.2313" x="186.4754" y="124.1111">1</text>
     </g>
   </g>
 </svg>

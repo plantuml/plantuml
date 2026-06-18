@@ -36,6 +36,9 @@
 package net.sourceforge.plantuml.wbs;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
+import net.sourceforge.plantuml.asciiverse.ATable;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -55,7 +58,7 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
-abstract class WBSTextBlock extends TextBlockMemoized {
+abstract class WBSTextBlock extends TextBlockMemoized implements AsciiBlock {
 
 	protected final ISkinParam skinParam;
 	private final Stereotype stereotype;
@@ -108,6 +111,14 @@ abstract class WBSTextBlock extends TextBlockMemoized {
 		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),
 				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		final Display label = idea.getLabel();
+		final ATable table = new ATable(1, 1).withLeftPadding(1).withRightPadding(1);
+		table.setCellContent(0, 0, label);
+		table.asciiDraw(plan);
 	}
 
 }

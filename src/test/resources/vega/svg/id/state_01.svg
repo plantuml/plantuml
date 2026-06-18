@@ -4,7 +4,7 @@
     <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
       <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="72"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="96" y2="96"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="26.3333" y="87.8889">A</text>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="26.3188" y="87.8889">A</text>
     </g>
     <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0002">
       <ellipse cx="31" cy="22" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/>

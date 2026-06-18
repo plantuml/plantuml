@@ -1,24 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="237px" preserveAspectRatio="none" style="width:147px;height:237px;background:#FFFFFF;" version="1.1" viewBox="0 0 147 237" width="147px" zoomAndPan="magnify">
   <defs/>
   <g>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="6.0917" y="20.8889">0</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.7875" x="6.1062" y="20.8889">0</text>
     <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="48.0917" y="36.8889">1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.7875" x="48.1063" y="36.8889">1</text>
     <path d="M52,40 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.8167" x="90.0917" y="20.8889">2</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.7875" x="90.1063" y="20.8889">2</text>
     <path d="M94,24 L94,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="26.3333" y="76.8889">A</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="26.3188" y="76.8889">A</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="52" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="68.3333" y="76.8889">B</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="68.3188" y="76.8889">B</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="90"/>
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.15" x="25.925" y="110.8889">C</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="52" y="90"/>
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.15" x="67.925" y="110.8889">D</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="124"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3333" x="26.3333" y="144.8889">E</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="26.3188" y="144.8889">E</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="52" y="124"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8.5167" x="68.7417" y="144.8889">F</text>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8.575" x="68.7125" y="144.8889">F</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="158"/>
     <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.85" x="25.575" y="178.8889">G</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="52" y="158"/>

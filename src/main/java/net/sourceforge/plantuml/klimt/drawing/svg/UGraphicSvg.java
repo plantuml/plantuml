@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.UPixel;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer {
@@ -109,7 +110,10 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	private void register() {
 		registerDriver(URectangle.class, new DriverRectangleSvg(this));
-		if (textAsPath)
+
+		if (TeaVM.isTeaVM())
+			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
+		else if (textAsPath)
 			registerDriver(UText.class, new DriverTextAsPathSvg(this));
 		else
 			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));
@@ -118,12 +122,16 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		registerDriver(UPixel.class, new DriverPixelSvg());
 		registerDriver(UPolygon.class, new DriverPolygonSvg(this));
 		registerDriver(UEllipse.class, new DriverEllipseSvg(this));
-		registerDriver(UImage.class, new DriverImagePng(this));
+		if (!TeaVM.isTeaVM())
+			registerDriver(UImage.class, new DriverImagePng(this));
 		registerDriver(UImageSvg.class, new DriverImageSvgSvg());
 		ignoreShape(UImageTikz.class);
 		registerDriver(UPath.class, new DriverPathSvg(this));
 		registerDriver(DotPath.class, new DriverDotPathSvg());
-		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg(fileFormat));
+		if (TeaVM.isTeaVM())
+			registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvgDeterministic());
+		else
+			registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg(fileFormat));
 	}
 
 	public SvgGraphics getSvgGraphics() {

@@ -38,10 +38,7 @@ package net.sourceforge.plantuml.klimt.creole.legacy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -271,7 +268,10 @@ public final class AtomText extends AbstractAtom implements Atom {
 	}
 
 	private double getTabSize(StringBounder stringBounder) {
-		return stringBounder.calculateDimension(fontConfiguration.getFont(), tabString()).getWidth();
+		final double width = stringBounder.calculateDimension(fontConfiguration.getFont(), tabString()).getWidth();
+		if (width == 0)
+			return fontConfiguration.getFont().getSize2D() * 4;
+		return width;
 	}
 
 	@Override

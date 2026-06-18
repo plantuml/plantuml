@@ -40,18 +40,20 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.font.UFontContext;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-public class StringBounderFoo implements StringBounder {
+public class StringBounderFromWidthTable implements StringBounder {
 
-	private static final double[] WIDTH = { 3.3, 3.3, 4.3, 6.7, 6.7, 10.7, 8.0, 2.3, 4.0, 4.0, 4.7, 7.0, 3.3, 4.0, 3.3,
-			3.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 3.3, 3.3, 7.0, 7.0, 7.0, 6.7, 12.2, 8.0, 8.0, 8.7,
-			8.7, 8.0, 7.3, 9.3, 8.7, 3.3, 6.0, 8.0, 6.7, 10.0, 8.7, 9.3, 8.0, 9.3, 8.7, 8.0, 7.3, 8.7, 8.0, 11.3, 8.0,
-			8.0, 7.3, 3.3, 3.3, 3.3, 5.6, 6.7, 4.0, 6.7, 6.7, 6.0, 6.7, 6.7, 3.3, 6.7, 6.7, 2.7, 2.7, 6.0, 2.7, 10.0,
-			6.7, 6.7, 6.7, 6.7, 4.0, 6.0, 3.3, 6.7, 6.0, 8.7, 6.0, 6.0, 6.0, 4.0, 3.1, 4.0, 7.0, 6.0, };
+	private static final UnicodeBlock[] BLOCKS = new UnicodeBlock[UnicodeFontWidthSansSerif.SANS_SERIF.length];
 
 	private final FileFormat fileFormat;
 
-	public StringBounderFoo(FileFormat fileFormat) {
+	public StringBounderFromWidthTable(FileFormat fileFormat) {
 		this.fileFormat = fileFormat;
+	}
+
+	private static UnicodeBlock getBlock(int block) {
+		if (BLOCKS[block] == null)
+			BLOCKS[block] = new UnicodeBlock(UnicodeFontWidthSansSerif.SANS_SERIF[block]);
+		return BLOCKS[block];
 	}
 
 	@Override
@@ -59,24 +61,31 @@ public class StringBounderFoo implements StringBounder {
 		return fileFormat;
 	}
 
+	private static final double REFERENCE_SIZE = 16.0;
+
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
 		final String family = font.getFamily(text, UFontContext.SVG);
-		System.err.println("familty=" + family);
 		final double size = font.getSize2D();
-		final double factor = size / 12.0;
+		final double factor = size / REFERENCE_SIZE;
 		final double height = size;
 		double width = 0;
-		for (int i = 0; i < text.length(); i++)
-			width += getCharWidth(font, text.charAt(i));
+		for (int i = 0; i < text.length();) {
+			final int cp = text.codePointAt(i);
+			width += getCharWidth(font, cp);
+			i += Character.charCount(cp);
+		}
 
 		return new XDimension2D(width * factor, height);
 	}
 
-	private double getCharWidth(UFont font, char c) {
-		if (c >= 32 && c <= 127)
-			return WIDTH[c - 32];
-		return 13;
+	private double getCharWidth(UFont font, int cp) {
+		if (cp >= 0xFFFF)
+			return 16;
+		final int block = (cp >> 8) & 0xFF;
+		if (block >= BLOCKS.length)
+			return 13;
+		return getBlock(block).getWidth((char) cp);
 	}
 
 }

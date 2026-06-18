@@ -30,60 +30,19 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.asciiverse;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
-final class DataTable<E> {
+public interface AsciiBlock {
 
-	private final Map<CellKey, E> cells;
-	private final E defaultValue;
-
-	private static class CellKey {
-		final int x;
-		final int y;
-
-		CellKey(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (this == o)
-				return true;
-			if (o == null || getClass() != o.getClass())
-				return false;
-			CellKey cellKey = (CellKey) o;
-			return x == cellKey.x && y == cellKey.y;
-		}
-
-		@Override
-		public int hashCode() {
-			return Objects.hash(x, y);
-		}
+	public default XDimension2D asciiDimension() {
+		throw new UnsupportedOperationException();
 	}
 
-	public DataTable(E defaultValue) {
-		this.defaultValue = defaultValue;
-		this.cells = new HashMap<>();
-	}
-
-	public void set(int x, int y, E value) {
-		cells.put(new CellKey(x, y), value);
-	}
-
-	public E get(int x, int y) {
-		return cells.getOrDefault(new CellKey(x, y), defaultValue);
-	}
-
-	public boolean contains(int x, int y) {
-		return cells.containsKey(new CellKey(x, y));
-	}
+	public void asciiDraw(InfinitePlan plan);
 
 }
