@@ -34,8 +34,8 @@ npx @modelcontextprotocol/inspector npx -y @plantuml/mcp-js
 
 It opens a browser UI (with a session token in the printed URL). Make sure the
 transport is **stdio**, click **Connect**, then open **Tools → List Tools** to
-see `plantuml_version`, `check_syntax` and `render_diagram`, and run them with
-the inputs shown below.
+see `plantuml_version`, `check_syntax`, `render_diagram` and `explain_diagram`,
+and run them with the inputs shown below.
 
 
 ## Quick start
@@ -88,7 +88,7 @@ a client to connect — that is normal, a stdio server is driven by its client.
 | `plantuml_version` | available   | Returns the version of the embedded PlantUML.    |
 | `check_syntax`     | available   | Validates a diagram and reports syntax errors.   |
 | `render_diagram`   | available   | Renders a diagram to a deterministic SVG.        |
-| `diagram_explain`  | available   | Explains a diagram line by line.                 |
+| `explain_diagram`  | available   | Explains a diagram line by line.                 |
 
 **`plantuml_version`** takes no parameters and returns the version string.
 
@@ -148,7 +148,7 @@ width table rather than from the host's installed fonts or AWT, so the same
 source yields byte-for-byte the same SVG on any machine. On failure it reports
 the same fields as `check_syntax` (without `svg`).
 
-**`diagram_explain`** takes a single `source` parameter and explains how the
+**`explain_diagram`** takes a single `source` parameter and explains how the
 diagram is parsed, line by line. It returns a JSON array of objects, each with
 `input` (the source line(s) that produced the explanation), `explain` (a
 human-readable explanation) and `line` (1-based line number, when available).

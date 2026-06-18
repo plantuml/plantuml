@@ -11,7 +11,7 @@
 //   - plantuml_version : returns the embedded PlantUML version.
 //   - check_syntax     : validates a single diagram without rendering it.
 //   - render_diagram   : renders a single diagram to a deterministic SVG.
-//   - diagram_explain  : explains how a single diagram is parsed, line by line.
+//   - explain_diagram  : explains how a single diagram is parsed, line by line.
 //
 // IMPORTANT: stdout is the MCP transport channel in stdio mode. Never write
 // anything but JSON-RPC to it. All diagnostics go to stderr.
@@ -179,7 +179,7 @@ server.tool(
 );
 
 server.tool(
-  "diagram_explain",
+  "explain_diagram",
   "Explains how a single PlantUML diagram is parsed, line by line. " +
     "Returns a JSON array of objects, each containing: 'input' (the source " +
     "line(s) that produced the explanation), 'explain' (a human-readable " +

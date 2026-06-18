@@ -20,10 +20,10 @@ configuring a JVM.
 
 ### Scope and limitations
 
-Because the JavaScript build is **headless** (no browser DOM, no native
-Graphviz), it deliberately does **not** provide diagram rendering: the SVG
-output pipeline depends on the browser DOM and is out of scope here. This
-server focuses on the text-only capabilities of the engine.
+The JavaScript build is **headless** (no browser DOM, no native Graphviz). It
+renders to **SVG only**, via a deterministic, font-metrics-free pipeline; raster
+and document formats (PNG/PDF) are out of scope here, as is any layout that
+requires native Graphviz.
 
 Tools:
 
@@ -31,10 +31,11 @@ Tools:
 | ------------------ | ----------- | ------------------------------------------------ |
 | `plantuml_version` | available   | Returns the version of the embedded PlantUML.    |
 | `check_syntax`     | available   | Validates a diagram and reports syntax errors.   |
-| `diagram_explain`  | planned     | Explains a diagram line by line.                 |
+| `render_diagram`   | available   | Renders a diagram to a deterministic SVG.        |
+| `explain_diagram`  | available   | Explains a diagram line by line.                 |
 
-If you need diagram **rendering** (SVG/PNG/PDF), use the Java-based
-`plantuml-mcp` server instead.
+If you need raster/document formats (PNG/PDF) or a Graphviz-backed layout, use
+the Java-based `plantuml-mcp` server instead.
 
 ## Architecture
 
@@ -111,7 +112,7 @@ session token). In the UI:
 
 1. Make sure the transport is **stdio** and click **Connect**.
 2. Open the **Tools** tab and click **List Tools** — you should see
-   `plantuml_version` and `check_syntax`.
+   `plantuml_version`, `check_syntax`, `render_diagram` and `explain_diagram`.
 3. Select a tool, fill in its parameters, and click **Run Tool**.
 
 **`plantuml_version`** takes no parameters and returns the version string.
