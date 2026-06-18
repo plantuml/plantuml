@@ -90,9 +90,14 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">net.sourceforge.plantuml.asciiverse.ATable</div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>All Implemented Interfaces:</dt>
+<dd><code><a href="AsciiBlock.html" title="interface in net.sourceforge.plantuml.asciiverse">AsciiBlock</a></code></dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ATable</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
+implements <a href="AsciiBlock.html" title="interface in net.sourceforge.plantuml.asciiverse">AsciiBlock</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -127,46 +132,47 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ATable.html" title="class in net.sourceforge.plantuml.asciiverse">ATable</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addRow()" class="member-name-link">addRow</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#draw(net.sourceforge.plantuml.asciiverse.InfinitePlan,int,int)" class="member-name-link">draw</a><wbr>(<a href="InfinitePlan.html" title="class in net.sourceforge.plantuml.asciiverse">InfinitePlan</a>&nbsp;plan,
- int&nbsp;startX,
- int&nbsp;startY)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asciiDimension()" class="member-name-link">asciiDimension</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCellContent(int,int)" class="member-name-link">getCellContent</a><wbr>(int&nbsp;row,
- int&nbsp;col)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asciiDraw(net.sourceforge.plantuml.asciiverse.InfinitePlan)" class="member-name-link">asciiDraw</a><wbr>(<a href="InfinitePlan.html" title="class in net.sourceforge.plantuml.asciiverse">InfinitePlan</a>&nbsp;plan)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTotalHeight()" class="member-name-link">getTotalHeight</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCellContent(int,int)" class="member-name-link">getCellContent</a><wbr>(int&nbsp;row,
+ int&nbsp;col)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTotalWidth()" class="member-name-link">getTotalWidth</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTotalHeight()" class="member-name-link">getTotalHeight</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mergeCells(int,int,int,int)" class="member-name-link">mergeCells</a><wbr>(int&nbsp;startRow,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTotalWidth()" class="member-name-link">getTotalWidth</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mergeCells(int,int,int,int)" class="member-name-link">mergeCells</a><wbr>(int&nbsp;startRow,
  int&nbsp;startCol,
  int&nbsp;rowSpan,
  int&nbsp;colSpan)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCellContent(int,int,net.sourceforge.plantuml.klimt.creole.Display)" class="member-name-link">setCellContent</a><wbr>(int&nbsp;row,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCellContent(int,int,net.sourceforge.plantuml.klimt.creole.Display)" class="member-name-link">setCellContent</a><wbr>(int&nbsp;row,
  int&nbsp;col,
  <a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;content)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ATable.html" title="class in net.sourceforge.plantuml.asciiverse">ATable</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withColumnMinWidth(int,int)" class="member-name-link">withColumnMinWidth</a><wbr>(int&nbsp;col,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ATable.html" title="class in net.sourceforge.plantuml.asciiverse">ATable</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withColumnMinWidth(int,int)" class="member-name-link">withColumnMinWidth</a><wbr>(int&nbsp;col,
  int&nbsp;width)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ATable.html" title="class in net.sourceforge.plantuml.asciiverse">ATable</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withLeftPadding(int)" class="member-name-link">withLeftPadding</a><wbr>(int&nbsp;leftPadding)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ATable.html" title="class in net.sourceforge.plantuml.asciiverse">ATable</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withRightPadding(int)" class="member-name-link">withRightPadding</a><wbr>(int&nbsp;rightPadding)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withLeftPadding(int)" class="member-name-link">withLeftPadding</a><wbr>(int&nbsp;leftPadding)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ATable.html" title="class in net.sourceforge.plantuml.asciiverse">ATable</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withRowMinHeight(int,int)" class="member-name-link">withRowMinHeight</a><wbr>(int&nbsp;row,
- int&nbsp;height)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withRightPadding(int)" class="member-name-link">withRightPadding</a><wbr>(int&nbsp;rightPadding)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ATable.html" title="class in net.sourceforge.plantuml.asciiverse">ATable</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withRowMinHeight(int,int)" class="member-name-link">withRowMinHeight</a><wbr>(int&nbsp;row,
+ int&nbsp;height)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -274,11 +280,23 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="draw(net.sourceforge.plantuml.asciiverse.InfinitePlan,int,int)">
-<h3>draw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw</span><wbr><span class="parameters">(<a href="InfinitePlan.html" title="class in net.sourceforge.plantuml.asciiverse">InfinitePlan</a>&nbsp;plan,
- int&nbsp;startX,
- int&nbsp;startY)</span></div>
+<section class="detail" id="asciiDimension()">
+<h3>asciiDimension</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../klimt/geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></span>&nbsp;<span class="element-name">asciiDimension</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="AsciiBlock.html#asciiDimension()">asciiDimension</a></code>&nbsp;in interface&nbsp;<code><a href="AsciiBlock.html" title="interface in net.sourceforge.plantuml.asciiverse">AsciiBlock</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="asciiDraw(net.sourceforge.plantuml.asciiverse.InfinitePlan)">
+<h3>asciiDraw</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">asciiDraw</span><wbr><span class="parameters">(<a href="InfinitePlan.html" title="class in net.sourceforge.plantuml.asciiverse">InfinitePlan</a>&nbsp;plan)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="AsciiBlock.html#asciiDraw(net.sourceforge.plantuml.asciiverse.InfinitePlan)">asciiDraw</a></code>&nbsp;in interface&nbsp;<code><a href="AsciiBlock.html" title="interface in net.sourceforge.plantuml.asciiverse">AsciiBlock</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>

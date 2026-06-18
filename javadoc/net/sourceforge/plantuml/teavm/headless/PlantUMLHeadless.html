@@ -39,7 +39,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Summary:</p>
 <ul>
-<li>Nested</li>
+<li><a href="#nested-class-summary">Nested</a></li>
 <li>Field</li>
 <li><a href="#constructor-summary">Constr</a></li>
 <li><a href="#method-summary">Method</a></li>
@@ -59,7 +59,7 @@ loadScripts(document, 'script');</script>
 <div id="navbar-sub-list">
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -117,10 +117,33 @@ loadScripts(document, 'script');</script>
  transport -&gt; tool discovery by the client).</li>
  <li><a href="#checkSyntax(java.lang.String)"><code>checkSyntax(String)</code></a> &mdash; parses a single diagram and reports
  a structured diagnostic, without rendering.</li>
+ <li><a href="#renderSvg(java.lang.String,net.sourceforge.plantuml.teavm.headless.PlantUMLHeadless.ResultCallback)"><code>renderSvg(String, ResultCallback)</code></a> &mdash; parses and renders a
+ single diagram to a deterministic SVG. Asynchronous: the result JSON is
+ delivered through a callback, because diagrams that need Graphviz call the
+ Viz.js engine, whose <code>@Async</code> bridge can only suspend from a TeaVM
+ worker thread (see <a href="../browser/PlantUMLBrowser.html" title="class in net.sourceforge.plantuml.teavm.browser"><code>PlantUMLBrowser</code></a>
+ for the same constraint).</li>
  </ul></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="PlantUMLHeadless.ResultCallback.html" class="type-name-link" title="interface in net.sourceforge.plantuml.teavm.headless">PlantUMLHeadless.ResultCallback</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Callback used to deliver the render result JSON back to JavaScript.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -155,9 +178,15 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Explains how a single PlantUML diagram is parsed, line by line.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#version()" class="member-name-link">version</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#renderSvg(java.lang.String,net.sourceforge.plantuml.teavm.headless.PlantUMLHeadless.ResultCallback)" class="member-name-link">renderSvg</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;source,
+ <a href="PlantUMLHeadless.ResultCallback.html" title="interface in net.sourceforge.plantuml.teavm.headless">PlantUMLHeadless.ResultCallback</a>&nbsp;callback)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Parses and renders a single PlantUML diagram to a deterministic SVG.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#version()" class="member-name-link">version</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns the full description of the embedded PlantUML version.</div>
 </div>
 </div>
@@ -238,6 +267,37 @@ loadScripts(document, 'script');</script>
                diagram)</dd>
 <dt>Returns:</dt>
 <dd>a JSON string describing the diagnostic; never <code>null</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="renderSvg(java.lang.String,net.sourceforge.plantuml.teavm.headless.PlantUMLHeadless.ResultCallback)">
+<h3>renderSvg</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">renderSvg</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;source,
+ <a href="PlantUMLHeadless.ResultCallback.html" title="interface in net.sourceforge.plantuml.teavm.headless">PlantUMLHeadless.ResultCallback</a>&nbsp;callback)</span></div>
+<div class="block">Parses and renders a single PlantUML diagram to a deterministic SVG.
+
+ <p>
+ Asynchronous: the result is delivered as a JSON string through
+ <code>callback</code>. On success the JSON has the shape:
+
+ <pre>
+ {
+   "valid": true,
+   "diagramType": "SequenceDiagram",
+   "lineCount": 4,
+   "warnings": ["..."],
+   "svg": "&lt;svg ...&gt;...&lt;/svg&gt;"
+ }
+ </pre>
+
+ On failure, it has the same error shape as <a href="#checkSyntax(java.lang.String)"><code>checkSyntax(String)</code></a> (no
+ <code>svg</code> field).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>source</code> - the raw PlantUML source (a single <code>@start.../@end...</code>
+                 diagram)</dd>
+<dd><code>callback</code> - invoked once with the result JSON</dd>
 </dl>
 </section>
 </li>

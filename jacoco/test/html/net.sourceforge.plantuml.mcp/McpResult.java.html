@@ -88,23 +88,39 @@ public class McpResult {
 <span class="nc" id="L88">		this.svg = svg;</span>
 <span class="nc" id="L89">	}</span>
 
+	/**
+	 * Builds a result for a diagram that parsed correctly but failed to render. The
+	 * structured counters from {@code diagram} are kept, but the result is marked
+	 * as not OK and carries the rendering error message.
+	 *
+	 * @param diagram the parsed (non-error) diagram
+	 * @param message the rendering error message
+	 * @return a not-OK result describing the rendering failure
+	 */
+	public static McpResult renderError(Diagram diagram, String message) {
+<span class="nc" id="L101">		final McpResult result = new McpResult(diagram);</span>
+<span class="nc" id="L102">		result.ok = false;</span>
+<span class="nc" id="L103">		result.errorMessage = message;</span>
+<span class="nc" id="L104">		return result;</span>
+	}
+
 	public static McpResult badInput() {
-<span class="nc" id="L92">		final McpResult result = new McpResult();</span>
-<span class="nc" id="L93">		result.errorMessage = &quot;Expected exactly one diagram in the source&quot;;</span>
-<span class="nc" id="L94">		return result;</span>
+<span class="nc" id="L108">		final McpResult result = new McpResult();</span>
+<span class="nc" id="L109">		result.errorMessage = &quot;Expected exactly one diagram in the source&quot;;</span>
+<span class="nc" id="L110">		return result;</span>
 	}
 
 	public static McpResult noAtStart() {
-<span class="fc" id="L98">		final McpResult result = new McpResult();</span>
-<span class="fc" id="L99">		result.errorMessage = &quot;The input must start with a @start... directive (for example @startuml)&quot;;</span>
-<span class="fc" id="L100">		return result;</span>
+<span class="fc" id="L114">		final McpResult result = new McpResult();</span>
+<span class="fc" id="L115">		result.errorMessage = &quot;The input must start with a @start... directive (for example @startuml)&quot;;</span>
+<span class="fc" id="L116">		return result;</span>
 	}
 
 	/**
 	 * @return {@code true} if the source parsed without error
 	 */
 	public boolean isOk() {
-<span class="fc" id="L107">		return ok;</span>
+<span class="fc" id="L123">		return ok;</span>
 	}
 
 	/**
@@ -112,21 +128,21 @@ public class McpResult {
 	 *         {@code null} when not applicable
 	 */
 	public String getDiagramType() {
-<span class="fc" id="L115">		return diagramType;</span>
+<span class="fc" id="L131">		return diagramType;</span>
 	}
 
 	/**
 	 * @return the number of source lines of the checked diagram
 	 */
 	public int getLineCount() {
-<span class="fc" id="L122">		return lineCount;</span>
+<span class="fc" id="L138">		return lineCount;</span>
 	}
 
 	/**
 	 * @return the non-fatal warnings, never {@code null} (possibly empty)
 	 */
 	public List&lt;String&gt; getWarnings() {
-<span class="fc" id="L129">		return warnings;</span>
+<span class="fc" id="L145">		return warnings;</span>
 	}
 
 	/**
@@ -134,7 +150,7 @@ public class McpResult {
 	 *         {@code true}
 	 */
 	public int getErrorLineNumber() {
-<span class="fc" id="L137">		return errorLineNumber;</span>
+<span class="fc" id="L153">		return errorLineNumber;</span>
 	}
 
 	/**
@@ -142,22 +158,22 @@ public class McpResult {
 	 *         {@code true}
 	 */
 	public String getErrorMessage() {
-<span class="fc" id="L145">		return errorMessage;</span>
+<span class="fc" id="L161">		return errorMessage;</span>
 	}
 
 	public String getErrorLine() {
-<span class="fc" id="L149">		return errorLine;</span>
+<span class="fc" id="L165">		return errorLine;</span>
 	}
 
 	/**
 	 * @return the offending source line, or {@code null} when not available
 	 */
 	public String getErrorContext() {
-<span class="nc" id="L156">		return errorContext;</span>
+<span class="nc" id="L172">		return errorContext;</span>
 	}
 
 	public String getSvg() {
-<span class="nc" id="L160">		return svg;</span>
+<span class="nc" id="L176">		return svg;</span>
 	}
 
 }

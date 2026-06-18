@@ -38,10 +38,7 @@ package net.sourceforge.plantuml.klimt.creole.legacy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -73,205 +70,208 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	@JawsStrange
 	protected AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft,
-<span class="fc" id="L76">			DelayedDouble marginRight, boolean manageSpecialChars) {</span>
+<span class="fc" id="L73">			DelayedDouble marginRight, boolean manageSpecialChars) {</span>
 //		if (text.contains(&quot;&quot; + BackSlash.hiddenNewLine()))
 //			throw new IllegalArgumentException(text);
 
-<span class="fc" id="L80">		this.marginLeft = marginLeft;</span>
-<span class="fc" id="L81">		this.marginRight = marginRight;</span>
-<span class="fc" id="L82">		String s = CharHidder.unhide(text);</span>
-<span class="pc bpc" id="L83" title="1 of 2 branches missed.">		if (manageSpecialChars)</span>
-<span class="fc" id="L84">			s = manageSpecialChars(s);</span>
+<span class="fc" id="L77">		this.marginLeft = marginLeft;</span>
+<span class="fc" id="L78">		this.marginRight = marginRight;</span>
+<span class="fc" id="L79">		String s = CharHidder.unhide(text);</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (manageSpecialChars)</span>
+<span class="fc" id="L81">			s = manageSpecialChars(s);</span>
 
-<span class="fc" id="L86">		this.manageSpecialChars = manageSpecialChars;</span>
-<span class="fc" id="L87">		this.text = s;</span>
-<span class="fc" id="L88">		this.fontConfiguration = style;</span>
-<span class="fc" id="L89">		this.url = url;</span>
-<span class="fc" id="L90">	}</span>
+<span class="fc" id="L83">		this.manageSpecialChars = manageSpecialChars;</span>
+<span class="fc" id="L84">		this.text = s;</span>
+<span class="fc" id="L85">		this.fontConfiguration = style;</span>
+<span class="fc" id="L86">		this.url = url;</span>
+<span class="fc" id="L87">	}</span>
 
 	private static String manageSpecialChars(String s) {
-<span class="fc" id="L93">		final int len = s.length();</span>
-<span class="fc" id="L94">		StringBuilder sb = null; // allocated lazily on first replacement</span>
-<span class="fc" id="L95">		int i = 0;</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		while (i &lt; len) {</span>
-<span class="fc" id="L97">			final char c = s.charAt(i);</span>
-<span class="fc" id="L98">			int consumed = 0;</span>
-<span class="fc" id="L99">			String replacement = null;</span>
+<span class="fc" id="L90">		final int len = s.length();</span>
+<span class="fc" id="L91">		StringBuilder sb = null; // allocated lazily on first replacement</span>
+<span class="fc" id="L92">		int i = 0;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		while (i &lt; len) {</span>
+<span class="fc" id="L94">			final char c = s.charAt(i);</span>
+<span class="fc" id="L95">			int consumed = 0;</span>
+<span class="fc" id="L96">			String replacement = null;</span>
 
-<span class="fc bfc" id="L101" title="All 2 branches covered.">			if (c == '&amp;') {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (c == '&amp;') {</span>
 				// Try to match &amp;#[0-9]+;
-<span class="fc" id="L103">				int j = i + 1;</span>
-<span class="pc bpc" id="L104" title="2 of 4 branches missed.">				if (j &lt; len &amp;&amp; s.charAt(j) == '#') {</span>
-<span class="nc" id="L105">					j++;</span>
-<span class="nc" id="L106">					final int start = j;</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">					while (j &lt; len) {</span>
-<span class="nc" id="L108">						final char cj = s.charAt(j);</span>
-<span class="nc bnc" id="L109" title="All 4 branches missed.">						if (cj &lt; '0' || cj &gt; '9')</span>
-<span class="nc" id="L110">							break;</span>
-<span class="nc" id="L111">						j++;</span>
-<span class="nc" id="L112">					}</span>
-<span class="nc bnc" id="L113" title="All 6 branches missed.">					if (j &gt; start &amp;&amp; j &lt; len &amp;&amp; s.charAt(j) == ';') {</span>
+<span class="fc" id="L100">				int j = i + 1;</span>
+<span class="pc bpc" id="L101" title="2 of 4 branches missed.">				if (j &lt; len &amp;&amp; s.charAt(j) == '#') {</span>
+<span class="nc" id="L102">					j++;</span>
+<span class="nc" id="L103">					final int start = j;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">					while (j &lt; len) {</span>
+<span class="nc" id="L105">						final char cj = s.charAt(j);</span>
+<span class="nc bnc" id="L106" title="All 4 branches missed.">						if (cj &lt; '0' || cj &gt; '9')</span>
+<span class="nc" id="L107">							break;</span>
+<span class="nc" id="L108">						j++;</span>
+<span class="nc" id="L109">					}</span>
+<span class="nc bnc" id="L110" title="All 6 branches missed.">					if (j &gt; start &amp;&amp; j &lt; len &amp;&amp; s.charAt(j) == ';') {</span>
 						try {
-<span class="nc" id="L115">							final int codePoint = Integer.parseInt(s.substring(start, j));</span>
-<span class="nc" id="L116">							replacement = new String(Character.toChars(codePoint));</span>
-<span class="nc" id="L117">							consumed = j + 1 - i;</span>
-<span class="nc" id="L118">						} catch (NumberFormatException e) {</span>
+<span class="nc" id="L112">							final int codePoint = Integer.parseInt(s.substring(start, j));</span>
+<span class="nc" id="L113">							replacement = new String(Character.toChars(codePoint));</span>
+<span class="nc" id="L114">							consumed = j + 1 - i;</span>
+<span class="nc" id="L115">						} catch (NumberFormatException e) {</span>
 							// overflow: leave as-is
-<span class="nc" id="L120">						}</span>
+<span class="nc" id="L117">						}</span>
 					}
 				}
-<span class="fc bfc" id="L123" title="All 2 branches covered.">			} else if (c == '&lt;') {</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">			} else if (c == '&lt;') {</span>
 				// Try to match &lt;U+[0-9a-fA-F]{4,5}&gt;
-<span class="pc bpc" id="L125" title="1 of 6 branches missed.">				if (i + 6 &lt; len &amp;&amp; s.charAt(i + 1) == 'U' &amp;&amp; s.charAt(i + 2) == '+') {</span>
-<span class="fc" id="L126">					int j = i + 3;</span>
-<span class="fc" id="L127">					final int start = j;</span>
-<span class="pc bpc" id="L128" title="2 of 6 branches missed.">					while (j &lt; len &amp;&amp; j - start &lt; 5 &amp;&amp; isHexDigit(s.charAt(j)))</span>
-<span class="fc" id="L129">						j++;</span>
-<span class="fc" id="L130">					final int hexLen = j - start;</span>
-<span class="pc bpc" id="L131" title="3 of 6 branches missed.">					if (hexLen &gt;= 4 &amp;&amp; j &lt; len &amp;&amp; s.charAt(j) == '&gt;') {</span>
-<span class="fc" id="L132">						final int value = Integer.parseInt(s.substring(start, j), 16);</span>
-<span class="fc" id="L133">						replacement = new String(Character.toChars(value));</span>
-<span class="fc" id="L134">						consumed = j + 1 - i;</span>
+<span class="pc bpc" id="L122" title="1 of 6 branches missed.">				if (i + 6 &lt; len &amp;&amp; s.charAt(i + 1) == 'U' &amp;&amp; s.charAt(i + 2) == '+') {</span>
+<span class="fc" id="L123">					int j = i + 3;</span>
+<span class="fc" id="L124">					final int start = j;</span>
+<span class="pc bpc" id="L125" title="2 of 6 branches missed.">					while (j &lt; len &amp;&amp; j - start &lt; 5 &amp;&amp; isHexDigit(s.charAt(j)))</span>
+<span class="fc" id="L126">						j++;</span>
+<span class="fc" id="L127">					final int hexLen = j - start;</span>
+<span class="pc bpc" id="L128" title="3 of 6 branches missed.">					if (hexLen &gt;= 4 &amp;&amp; j &lt; len &amp;&amp; s.charAt(j) == '&gt;') {</span>
+<span class="fc" id="L129">						final int value = Integer.parseInt(s.substring(start, j), 16);</span>
+<span class="fc" id="L130">						replacement = new String(Character.toChars(value));</span>
+<span class="fc" id="L131">						consumed = j + 1 - i;</span>
 					}
-<span class="fc" id="L136">				}</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">			} else if (c == '~') {</span>
+<span class="fc" id="L133">				}</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			} else if (c == '~') {</span>
 				// Try to match ~@start
-<span class="pc bpc" id="L139" title="6 of 8 branches missed.">				if (i + 7 &lt;= len &amp;&amp; s.charAt(i + 1) == '@' &amp;&amp; s.charAt(i + 2) == 's' &amp;&amp; s.charAt(i + 3) == 't'</span>
-<span class="nc bnc" id="L140" title="All 6 branches missed.">						&amp;&amp; s.charAt(i + 4) == 'a' &amp;&amp; s.charAt(i + 5) == 'r' &amp;&amp; s.charAt(i + 6) == 't') {</span>
-<span class="nc" id="L141">					replacement = &quot;@start&quot;;</span>
-<span class="nc" id="L142">					consumed = 7;</span>
+<span class="pc bpc" id="L136" title="6 of 8 branches missed.">				if (i + 7 &lt;= len &amp;&amp; s.charAt(i + 1) == '@' &amp;&amp; s.charAt(i + 2) == 's' &amp;&amp; s.charAt(i + 3) == 't'</span>
+<span class="nc bnc" id="L137" title="All 6 branches missed.">						&amp;&amp; s.charAt(i + 4) == 'a' &amp;&amp; s.charAt(i + 5) == 'r' &amp;&amp; s.charAt(i + 6) == 't') {</span>
+<span class="nc" id="L138">					replacement = &quot;@start&quot;;</span>
+<span class="nc" id="L139">					consumed = 7;</span>
 				}
-<span class="fc bfc" id="L144" title="All 2 branches covered.">			} else if (c == '\\') {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">			} else if (c == '\\') {</span>
 				// Try to match \t
-<span class="pc bpc" id="L146" title="1 of 4 branches missed.">				if (i + 1 &lt; len &amp;&amp; s.charAt(i + 1) == 't') {</span>
-<span class="nc" id="L147">					replacement = &quot;\t&quot;;</span>
-<span class="nc" id="L148">					consumed = 2;</span>
+<span class="pc bpc" id="L143" title="1 of 4 branches missed.">				if (i + 1 &lt; len &amp;&amp; s.charAt(i + 1) == 't') {</span>
+<span class="nc" id="L144">					replacement = &quot;\t&quot;;</span>
+<span class="nc" id="L145">					consumed = 2;</span>
 				}
 			}
 
-<span class="fc bfc" id="L152" title="All 2 branches covered.">			if (replacement != null) {</span>
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">				if (sb == null) {</span>
-<span class="fc" id="L154">					sb = new StringBuilder(len);</span>
-<span class="fc" id="L155">					sb.append(s, 0, i);</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">			if (replacement != null) {</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">				if (sb == null) {</span>
+<span class="fc" id="L151">					sb = new StringBuilder(len);</span>
+<span class="fc" id="L152">					sb.append(s, 0, i);</span>
 				}
-<span class="fc" id="L157">				sb.append(replacement);</span>
-<span class="fc" id="L158">				i += consumed;</span>
+<span class="fc" id="L154">				sb.append(replacement);</span>
+<span class="fc" id="L155">				i += consumed;</span>
 			} else {
-<span class="fc bfc" id="L160" title="All 2 branches covered.">				if (sb != null)</span>
-<span class="fc" id="L161">					sb.append(c);</span>
-<span class="fc" id="L162">				i++;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">				if (sb != null)</span>
+<span class="fc" id="L158">					sb.append(c);</span>
+<span class="fc" id="L159">				i++;</span>
 			}
-<span class="fc" id="L164">		}</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">		return sb == null ? s : sb.toString();</span>
+<span class="fc" id="L161">		}</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		return sb == null ? s : sb.toString();</span>
 	}
 
 	private static boolean isHexDigit(char c) {
-<span class="pc bpc" id="L169" title="5 of 12 branches missed.">		return (c &gt;= '0' &amp;&amp; c &lt;= '9') || (c &gt;= 'a' &amp;&amp; c &lt;= 'f') || (c &gt;= 'A' &amp;&amp; c &lt;= 'F');</span>
+<span class="pc bpc" id="L166" title="5 of 12 branches missed.">		return (c &gt;= '0' &amp;&amp; c &lt;= '9') || (c &gt;= 'a' &amp;&amp; c &lt;= 'f') || (c &gt;= 'A' &amp;&amp; c &lt;= 'F');</span>
 	}
 
 	private AtomText withText(String text) {
-<span class="fc" id="L173">		return new AtomText(text, fontConfiguration, url, marginLeft, marginRight, manageSpecialChars);</span>
+<span class="fc" id="L170">		return new AtomText(text, fontConfiguration, url, marginLeft, marginRight, manageSpecialChars);</span>
 	}
 
 	@JawsStrange
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L179">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
-<span class="pc" id="L180">		Log.debug(() -&gt; &quot;g2d=&quot; + rect);</span>
-<span class="pc" id="L181">		Log.debug(() -&gt; &quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
-<span class="fc" id="L182">		double h = rect.getHeight();</span>
-<span class="fc bfc" id="L183" title="All 2 branches covered.">		if (h &lt; 10)</span>
-<span class="fc" id="L184">			h = 10;</span>
+<span class="fc" id="L176">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
+<span class="pc" id="L177">		Log.debug(() -&gt; &quot;g2d=&quot; + rect);</span>
+<span class="pc" id="L178">		Log.debug(() -&gt; &quot;Size for &quot; + text + &quot; is &quot; + rect);</span>
+<span class="fc" id="L179">		double h = rect.getHeight();</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (h &lt; 10)</span>
+<span class="fc" id="L181">			h = 10;</span>
 
-<span class="pc bpc" id="L186" title="1 of 4 branches missed.">		double width = (text.indexOf(&quot;\t&quot;) == -1 &amp;&amp; text.indexOf(Jaws.BLOCK_E1_REAL_TABULATION) == -1)</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">				|| stringBounder.matchesProperty(&quot;TIKZ&quot;) ? rect.getWidth() : getWidth(stringBounder, text);</span>
-<span class="fc" id="L188">		final double left = marginLeft.getDouble(stringBounder);</span>
-<span class="fc" id="L189">		final double right = marginRight.getDouble(stringBounder);</span>
-<span class="fc" id="L190">		return new XDimension2D(width + left + right, h);</span>
+<span class="pc bpc" id="L183" title="1 of 4 branches missed.">		double width = (text.indexOf(&quot;\t&quot;) == -1 &amp;&amp; text.indexOf(Jaws.BLOCK_E1_REAL_TABULATION) == -1)</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">				|| stringBounder.matchesProperty(&quot;TIKZ&quot;) ? rect.getWidth() : getWidth(stringBounder, text);</span>
+<span class="fc" id="L185">		final double left = marginLeft.getDouble(stringBounder);</span>
+<span class="fc" id="L186">		final double right = marginRight.getDouble(stringBounder);</span>
+<span class="fc" id="L187">		return new XDimension2D(width + left + right, h);</span>
 	}
 
 	public double getFontHeight(StringBounder stringBounder) {
-<span class="nc" id="L194">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
-<span class="nc" id="L195">		final double descent = stringBounder.getDescent(fontConfiguration.getFont(), text);</span>
-<span class="nc" id="L196">		return rect.getHeight() - descent;</span>
+<span class="nc" id="L191">		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);</span>
+<span class="nc" id="L192">		final double descent = stringBounder.getDescent(fontConfiguration.getFont(), text);</span>
+<span class="nc" id="L193">		return rect.getHeight() - descent;</span>
 	}
 
 	@JawsStrange
 	public void drawU(UGraphic ug) {
-<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (url != null)</span>
-<span class="fc" id="L202">			ug.startUrl(url);</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (url != null)</span>
+<span class="fc" id="L199">			ug.startUrl(url);</span>
 
-<span class="fc bfc" id="L204" title="All 2 branches covered.">		if (ug.matchesProperty(&quot;SPECIALTXT&quot;)) {</span>
-<span class="fc" id="L205">			ug.draw(this);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (ug.matchesProperty(&quot;SPECIALTXT&quot;)) {</span>
+<span class="fc" id="L202">			ug.draw(this);</span>
 		} else {
 
-<span class="fc" id="L208">			final FontConfiguration useFontConfiguration = fontConfiguration.adjustColorForBackground(ug);</span>
+<span class="fc" id="L205">			final FontConfiguration useFontConfiguration = fontConfiguration.adjustColorForBackground(ug);</span>
 
-<span class="pc bpc" id="L210" title="1 of 2 branches missed.">			if (marginLeft != AtomTextUtils.ZERO)</span>
-<span class="nc" id="L211">				ug = ug.apply(UTranslate.dx(marginLeft.getDouble(ug.getStringBounder())));</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">			if (marginLeft != AtomTextUtils.ZERO)</span>
+<span class="nc" id="L208">				ug = ug.apply(UTranslate.dx(marginLeft.getDouble(ug.getStringBounder())));</span>
 
-<span class="fc" id="L213">			final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
+<span class="fc" id="L210">			final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
 
 			// final int ypos = fontConfiguration.getSpace();
-<span class="fc" id="L216">			final XDimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);</span>
-<span class="fc" id="L217">			final double descent = getDescent(ug.getStringBounder());</span>
-<span class="fc" id="L218">			final double ypos = rect.getHeight() - descent;</span>
+<span class="fc" id="L213">			final XDimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);</span>
+<span class="fc" id="L214">			final double descent = getDescent(ug.getStringBounder());</span>
+<span class="fc" id="L215">			final double ypos = rect.getHeight() - descent;</span>
 
-<span class="fc" id="L220">			double x = 0;</span>
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">			if (tokenizer.hasMoreTokens()) {</span>
-<span class="fc" id="L222">				final double tabSize = getTabSize(ug.getStringBounder());</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">				while (tokenizer.hasMoreTokens()) {</span>
-<span class="fc" id="L224">					final String s = tokenizer.nextToken();</span>
-<span class="pc bpc" id="L225" title="1 of 4 branches missed.">					if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
-<span class="fc" id="L226">						final double remainder = x % tabSize;</span>
-<span class="fc" id="L227">						x += tabSize - remainder;</span>
-<span class="fc" id="L228">					} else {</span>
-<span class="fc" id="L229">						final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),</span>
+<span class="fc" id="L217">			double x = 0;</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">			if (tokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L219">				final double tabSize = getTabSize(ug.getStringBounder());</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">				while (tokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L221">					final String s = tokenizer.nextToken();</span>
+<span class="pc bpc" id="L222" title="1 of 4 branches missed.">					if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
+<span class="fc" id="L223">						final double remainder = x % tabSize;</span>
+<span class="fc" id="L224">						x += tabSize - remainder;</span>
+<span class="fc" id="L225">					} else {</span>
+<span class="fc" id="L226">						final XDimension2D dim = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(),</span>
 								s);
-<span class="fc" id="L231">						final UText utext = UText.build(s, useFontConfiguration);</span>
-<span class="fc" id="L232">						ug.apply(new UTranslate(x, ypos)).draw(utext);</span>
-<span class="fc" id="L233">						x += dim.getWidth();</span>
+<span class="fc" id="L228">						final UText utext = UText.build(s, useFontConfiguration);</span>
+<span class="fc" id="L229">						ug.apply(new UTranslate(x, ypos)).draw(utext);</span>
+<span class="fc" id="L230">						x += dim.getWidth();</span>
 					}
-<span class="fc" id="L235">				}</span>
+<span class="fc" id="L232">				}</span>
 			}
 		}
-<span class="fc bfc" id="L238" title="All 2 branches covered.">		if (url != null)</span>
-<span class="fc" id="L239">			ug.closeUrl();</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">		if (url != null)</span>
+<span class="fc" id="L236">			ug.closeUrl();</span>
 
-<span class="fc" id="L241">	}</span>
+<span class="fc" id="L238">	}</span>
 
 	@JawsStrange
 	private double getWidth(StringBounder stringBounder, String text) {
-<span class="fc" id="L245">		final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
-<span class="fc" id="L246">		final double tabSize = getTabSize(stringBounder);</span>
-<span class="fc" id="L247">		double x = 0;</span>
-<span class="fc bfc" id="L248" title="All 2 branches covered.">		while (tokenizer.hasMoreTokens()) {</span>
-<span class="fc" id="L249">			final String s = tokenizer.nextToken();</span>
-<span class="pc bpc" id="L250" title="1 of 4 branches missed.">			if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
-<span class="fc" id="L251">				final double remainder = x % tabSize;</span>
-<span class="fc" id="L252">				x += tabSize - remainder;</span>
-<span class="fc" id="L253">			} else {</span>
-<span class="fc" id="L254">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
-<span class="fc" id="L255">				x += dim.getWidth();</span>
+<span class="fc" id="L242">		final StringTokenizer tokenizer = new StringTokenizer(text, &quot;\t&quot; + Jaws.BLOCK_E1_REAL_TABULATION, true);</span>
+<span class="fc" id="L243">		final double tabSize = getTabSize(stringBounder);</span>
+<span class="fc" id="L244">		double x = 0;</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		while (tokenizer.hasMoreTokens()) {</span>
+<span class="fc" id="L246">			final String s = tokenizer.nextToken();</span>
+<span class="pc bpc" id="L247" title="1 of 4 branches missed.">			if (s.equals(&quot;\t&quot;) || s.equals(&quot;&quot; + Jaws.BLOCK_E1_REAL_TABULATION)) {</span>
+<span class="fc" id="L248">				final double remainder = x % tabSize;</span>
+<span class="fc" id="L249">				x += tabSize - remainder;</span>
+<span class="fc" id="L250">			} else {</span>
+<span class="fc" id="L251">				final XDimension2D dim = stringBounder.calculateDimension(fontConfiguration.getFont(), s);</span>
+<span class="fc" id="L252">				x += dim.getWidth();</span>
 			}
-<span class="fc" id="L257">		}</span>
-<span class="fc" id="L258">		return x;</span>
+<span class="fc" id="L254">		}</span>
+<span class="fc" id="L255">		return x;</span>
 	}
 
 	private String tabString() {
-<span class="fc" id="L262">		final int nb = fontConfiguration.getTabSize();</span>
-<span class="pc bpc" id="L263" title="2 of 4 branches missed.">		if (nb &gt;= 1 &amp;&amp; nb &lt; 7)</span>
-<span class="nc" id="L264">			return &quot;        &quot;.substring(0, nb);</span>
+<span class="fc" id="L259">		final int nb = fontConfiguration.getTabSize();</span>
+<span class="pc bpc" id="L260" title="2 of 4 branches missed.">		if (nb &gt;= 1 &amp;&amp; nb &lt; 7)</span>
+<span class="nc" id="L261">			return &quot;        &quot;.substring(0, nb);</span>
 
-<span class="fc" id="L266">		return &quot;        &quot;;</span>
+<span class="fc" id="L263">		return &quot;        &quot;;</span>
 	}
 
 	private double getDescent(StringBounder stringBounder) {
-<span class="fc" id="L270">		return stringBounder.getDescent(fontConfiguration.getFont(), text);</span>
+<span class="fc" id="L267">		return stringBounder.getDescent(fontConfiguration.getFont(), text);</span>
 	}
 
 	private double getTabSize(StringBounder stringBounder) {
-<span class="fc" id="L274">		return stringBounder.calculateDimension(fontConfiguration.getFont(), tabString()).getWidth();</span>
+<span class="fc" id="L271">		final double width = stringBounder.calculateDimension(fontConfiguration.getFont(), tabString()).getWidth();</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">		if (width == 0)</span>
+<span class="fc" id="L273">			return fontConfiguration.getFont().getSize2D() * 4;</span>
+<span class="fc" id="L274">		return width;</span>
 	}
 
 	@Override

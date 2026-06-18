@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlantUMLHeadless.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.teavm.headless</a> &gt; <span class="el_source">PlantUMLHeadless.java</span></div><h1>PlantUMLHeadless.java</h1><pre class="source lang-java linenums">package net.sourceforge.plantuml.teavm.headless;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 import org.teavm.jso.JSExport;
+import org.teavm.jso.JSFunctor;
 import org.teavm.jso.JSObject;
 
 import net.sourceforge.plantuml.explain.DiagramExplainer;
 import net.sourceforge.plantuml.explain.Explanation;
+import net.sourceforge.plantuml.mcp.DiagramRendererTeaVM;
 import net.sourceforge.plantuml.mcp.McpResult;
 import net.sourceforge.plantuml.mcp.SyntaxChecker;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -38,9 +42,15 @@ import net.sourceforge.plantuml.version.Version;
  * transport -&amp;gt; tool discovery by the client).&lt;/li&gt;
  * &lt;li&gt;{@link #checkSyntax(String)} &amp;mdash; parses a single diagram and reports
  * a structured diagnostic, without rendering.&lt;/li&gt;
+ * &lt;li&gt;{@link #renderSvg(String, ResultCallback)} &amp;mdash; parses and renders a
+ * single diagram to a deterministic SVG. Asynchronous: the result JSON is
+ * delivered through a callback, because diagrams that need Graphviz call the
+ * Viz.js engine, whose {@code @Async} bridge can only suspend from a TeaVM
+ * worker thread (see {@link net.sourceforge.plantuml.teavm.browser.PlantUMLBrowser}
+ * for the same constraint).&lt;/li&gt;
  * &lt;/ul&gt;
  */
-<span class="nc" id="L43">public class PlantUMLHeadless {</span>
+<span class="nc" id="L53">public class PlantUMLHeadless {</span>
 	// ::remove file when __MIT__ __EPL__ __BSD__ __ASL__ __LGPL__ __GPLV2__
 	// ::remove file when JAVA8
 
@@ -51,7 +61,7 @@ import net.sourceforge.plantuml.version.Version;
 	 */
 	@JSExport
 	public static String version() {
-<span class="nc" id="L54">		return Version.fullDescription();</span>
+<span class="nc" id="L64">		return Version.fullDescription();</span>
 	}
 
 	/**
@@ -90,19 +100,142 @@ import net.sourceforge.plantuml.version.Version;
 	public static String checkSyntax(String source) {
 		final McpResult result;
 		try {
-<span class="nc" id="L93">			result = new SyntaxChecker().check(source);</span>
-<span class="nc" id="L94">		} catch (IOException e) {</span>
-<span class="nc" id="L95">			return errorJson(&quot;Could not read the diagram source: &quot; + e.getMessage());</span>
-<span class="nc" id="L96">		}</span>
+<span class="nc" id="L103">			result = new SyntaxChecker().check(source);</span>
+<span class="nc" id="L104">		} catch (IOException e) {</span>
+<span class="nc" id="L105">			return errorJson(&quot;Could not read the diagram source: &quot; + e.getMessage());</span>
+<span class="nc" id="L106">		}</span>
 
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (result.isOk())</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (result.isOk())</span>
 			// return okJson(result.getDiagramType(), result.getLineCount(),
 			// result.getWarnings());
-<span class="nc" id="L101">			return okJson(result);</span>
+<span class="nc" id="L111">			return okJson(result);</span>
 
-<span class="nc" id="L103">		return errorJson(result);</span>
+<span class="nc" id="L113">		return errorJson(result);</span>
 //		return errorJson(result.getErrorLineNumber(), result.getErrorMessage(), result.getErrorLine(),
 //				result.getLineCount());
+	}
+
+	/**
+	 * Callback used to deliver the render result JSON back to JavaScript.
+	 */
+	@JSFunctor
+	public interface ResultCallback extends JSObject {
+		void call(String json);
+	}
+
+	// =========================================================================
+	// Render worker thread
+	//
+	// Rendering must run on a TeaVM thread so that the Viz.js @Async bridge
+	// (GraphVizjsTeaVMEngine) can suspend. An @JSExport called directly from
+	// JavaScript runs in a native JS context, where suspension is illegal. So
+	// renderSvg() only queues a request and wakes the worker; the worker does the
+	// actual rendering in a coroutine context and invokes the callback.
+	// =========================================================================
+
+<span class="nc" id="L136">	private static final Object LOCK = new Object();</span>
+
+<span class="nc" id="L138">	private static volatile boolean workerStarted = false;</span>
+
+	private static final class RenderRequest {
+		final String source;
+		final ResultCallback callback;
+
+<span class="nc" id="L144">		RenderRequest(String source, ResultCallback callback) {</span>
+<span class="nc" id="L145">			this.source = source;</span>
+<span class="nc" id="L146">			this.callback = callback;</span>
+<span class="nc" id="L147">		}</span>
+	}
+
+	// A real queue (not a single slot like PlantUMLBrowser): an MCP server may
+	// receive several independent render_diagram calls, and none must be dropped.
+<span class="nc" id="L152">	private static final Deque&lt;RenderRequest&gt; QUEUE = new ArrayDeque&lt;&gt;();</span>
+
+	private static void ensureWorkerStarted() {
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (workerStarted == false) {</span>
+<span class="nc" id="L156">			synchronized (LOCK) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">				if (workerStarted == false) {</span>
+<span class="nc" id="L158">					new Thread(PlantUMLHeadless::workerLoop, &quot;plantuml-headless-render&quot;).start();</span>
+<span class="nc" id="L159">					workerStarted = true;</span>
+				}
+<span class="nc" id="L161">			}</span>
+		}
+<span class="nc" id="L163">	}</span>
+
+	private static void workerLoop() {
+		while (true) {
+			final RenderRequest request;
+<span class="nc" id="L168">			synchronized (LOCK) {</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">				while (QUEUE.isEmpty()) {</span>
+					try {
+<span class="nc" id="L171">						LOCK.wait();</span>
+<span class="nc" id="L172">					} catch (InterruptedException e) {</span>
+						// Not expected; just retry.
+<span class="nc" id="L174">					}</span>
+				}
+<span class="nc" id="L176">				request = QUEUE.removeFirst();</span>
+<span class="nc" id="L177">			}</span>
+
+			// Render OUTSIDE the lock so new requests can be queued meanwhile.
+			String json;
+			try {
+<span class="nc" id="L182">				json = renderSvgToJson(request.source);</span>
+<span class="nc" id="L183">			} catch (Throwable e) {</span>
+<span class="nc" id="L184">				json = errorJson(&quot;Could not render the diagram source: &quot; + e);</span>
+<span class="nc" id="L185">			}</span>
+<span class="nc" id="L186">			request.callback.call(json);</span>
+<span class="nc" id="L187">		}</span>
+	}
+
+	/**
+	 * Parses and renders a single PlantUML diagram to a deterministic SVG.
+	 *
+	 * &lt;p&gt;
+	 * Asynchronous: the result is delivered as a JSON string through
+	 * {@code callback}. On success the JSON has the shape:
+	 *
+	 * &lt;pre&gt;
+	 * {
+	 *   &quot;valid&quot;: true,
+	 *   &quot;diagramType&quot;: &quot;SequenceDiagram&quot;,
+	 *   &quot;lineCount&quot;: 4,
+	 *   &quot;warnings&quot;: [&quot;...&quot;],
+	 *   &quot;svg&quot;: &quot;&amp;lt;svg ...&amp;gt;...&amp;lt;/svg&amp;gt;&quot;
+	 * }
+	 * &lt;/pre&gt;
+	 *
+	 * On failure, it has the same error shape as {@link #checkSyntax(String)} (no
+	 * {@code svg} field).
+	 *
+	 * @param source   the raw PlantUML source (a single {@code @start.../@end...}
+	 *                 diagram)
+	 * @param callback invoked once with the result JSON
+	 */
+	@JSExport
+	public static void renderSvg(String source, ResultCallback callback) {
+<span class="nc" id="L216">		ensureWorkerStarted();</span>
+<span class="nc" id="L217">		synchronized (LOCK) {</span>
+<span class="nc" id="L218">			QUEUE.addLast(new RenderRequest(source, callback));</span>
+<span class="nc" id="L219">			LOCK.notify();</span>
+<span class="nc" id="L220">		}</span>
+<span class="nc" id="L221">	}</span>
+
+	/**
+	 * Synchronous core of {@link #renderSvg(String, ResultCallback)}, run on the
+	 * worker thread. Returns the result JSON string.
+	 */
+	private static String renderSvgToJson(String source) {
+		final McpResult result;
+		try {
+<span class="nc" id="L230">			result = new DiagramRendererTeaVM().render(source);</span>
+<span class="nc" id="L231">		} catch (IOException e) {</span>
+<span class="nc" id="L232">			return errorJson(&quot;Could not render the diagram source: &quot; + e.getMessage());</span>
+<span class="nc" id="L233">		}</span>
+
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		if (result.isOk())</span>
+<span class="nc" id="L236">			return renderOkJson(result);</span>
+
+<span class="nc" id="L238">		return errorJson(result);</span>
 	}
 
 	/**
@@ -131,67 +264,77 @@ import net.sourceforge.plantuml.version.Version;
 	public static String explain(String source) {
 		final List&lt;Explanation&gt; explanations;
 		try {
-<span class="nc" id="L134">			explanations = new DiagramExplainer().explain(source);</span>
-<span class="nc" id="L135">		} catch (IOException e) {</span>
-<span class="nc" id="L136">			final JSObject array = TeaVmJson.newArray();</span>
-<span class="nc" id="L137">			TeaVmJson.pushObject(array,</span>
-<span class="nc" id="L138">					explanationToJson(null, &quot;Could not read the diagram source: &quot; + e.getMessage(), -1));</span>
-<span class="nc" id="L139">			return TeaVmJson.stringify(array);</span>
-<span class="nc" id="L140">		}</span>
+<span class="nc" id="L267">			explanations = new DiagramExplainer().explain(source);</span>
+<span class="nc" id="L268">		} catch (IOException e) {</span>
+<span class="nc" id="L269">			final JSObject array = TeaVmJson.newArray();</span>
+<span class="nc" id="L270">			TeaVmJson.pushObject(array,</span>
+<span class="nc" id="L271">					explanationToJson(null, &quot;Could not read the diagram source: &quot; + e.getMessage(), -1));</span>
+<span class="nc" id="L272">			return TeaVmJson.stringify(array);</span>
+<span class="nc" id="L273">		}</span>
 
-<span class="nc" id="L142">		final JSObject array = TeaVmJson.newArray();</span>
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		for (int i = 0; i &lt; explanations.size(); i++) {</span>
-<span class="nc" id="L144">			final Explanation explanation = explanations.get(i);</span>
-<span class="nc" id="L145">			final LineLocation location = explanation.getLocation();</span>
+<span class="nc" id="L275">		final JSObject array = TeaVmJson.newArray();</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">		for (int i = 0; i &lt; explanations.size(); i++) {</span>
+<span class="nc" id="L277">			final Explanation explanation = explanations.get(i);</span>
+<span class="nc" id="L278">			final LineLocation location = explanation.getLocation();</span>
 			// getPosition() is 0-based; the public contract exposes a 1-based line.
-<span class="nc bnc" id="L147" title="All 2 branches missed.">			final int line = location == null ? -1 : location.getPosition() + 1;</span>
-<span class="nc" id="L148">			TeaVmJson.pushObject(array, explanationToJson(explanation.getInput(), explanation.getExplain(), line));</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">			final int line = location == null ? -1 : location.getPosition() + 1;</span>
+<span class="nc" id="L281">			TeaVmJson.pushObject(array, explanationToJson(explanation.getInput(), explanation.getExplain(), line));</span>
 		}
-<span class="nc" id="L150">		return TeaVmJson.stringify(array);</span>
+<span class="nc" id="L283">		return TeaVmJson.stringify(array);</span>
 	}
 
 	private static JSObject explanationToJson(List&lt;String&gt; input, String explain, int line) {
-<span class="nc" id="L154">		final JSObject json = TeaVmJson.newObject();</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		TeaVmJson.putObject(json, &quot;input&quot;, input == null ? TeaVmJson.newArray() : toJsArray(input));</span>
-<span class="nc" id="L156">		TeaVmJson.putString(json, &quot;explain&quot;, explain);</span>
-<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (line &gt; 0)</span>
-<span class="nc" id="L158">			TeaVmJson.putInt(json, &quot;lineNumber&quot;, line);</span>
-<span class="nc" id="L159">		return json;</span>
+<span class="nc" id="L287">		final JSObject json = TeaVmJson.newObject();</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">		TeaVmJson.putObject(json, &quot;input&quot;, input == null ? TeaVmJson.newArray() : toJsArray(input));</span>
+<span class="nc" id="L289">		TeaVmJson.putString(json, &quot;explain&quot;, explain);</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">		if (line &gt; 0)</span>
+<span class="nc" id="L291">			TeaVmJson.putInt(json, &quot;lineNumber&quot;, line);</span>
+<span class="nc" id="L292">		return json;</span>
 	}
 
 	private static String okJson(McpResult result) {
-<span class="nc" id="L163">		final JSObject json = TeaVmJson.newObject();</span>
-<span class="nc" id="L164">		TeaVmJson.putBoolean(json, &quot;valid&quot;, true);</span>
-<span class="nc" id="L165">		TeaVmJson.putString(json, &quot;diagramType&quot;, result.getDiagramType());</span>
-<span class="nc" id="L166">		TeaVmJson.putInt(json, &quot;lineCount&quot;, result.getLineCount());</span>
-<span class="nc" id="L167">		TeaVmJson.putObject(json, &quot;warnings&quot;, toJsArray(result.getWarnings()));</span>
-<span class="nc" id="L168">		return TeaVmJson.stringify(json);</span>
+<span class="nc" id="L296">		final JSObject json = TeaVmJson.newObject();</span>
+<span class="nc" id="L297">		TeaVmJson.putBoolean(json, &quot;valid&quot;, true);</span>
+<span class="nc" id="L298">		TeaVmJson.putString(json, &quot;diagramType&quot;, result.getDiagramType());</span>
+<span class="nc" id="L299">		TeaVmJson.putInt(json, &quot;lineCount&quot;, result.getLineCount());</span>
+<span class="nc" id="L300">		TeaVmJson.putObject(json, &quot;warnings&quot;, toJsArray(result.getWarnings()));</span>
+<span class="nc" id="L301">		return TeaVmJson.stringify(json);</span>
+	}
+
+	private static String renderOkJson(McpResult result) {
+<span class="nc" id="L305">		final JSObject json = TeaVmJson.newObject();</span>
+<span class="nc" id="L306">		TeaVmJson.putBoolean(json, &quot;valid&quot;, true);</span>
+<span class="nc" id="L307">		TeaVmJson.putString(json, &quot;diagramType&quot;, result.getDiagramType());</span>
+<span class="nc" id="L308">		TeaVmJson.putInt(json, &quot;lineCount&quot;, result.getLineCount());</span>
+<span class="nc" id="L309">		TeaVmJson.putObject(json, &quot;warnings&quot;, toJsArray(result.getWarnings()));</span>
+<span class="nc" id="L310">		TeaVmJson.addStringSafe(json, &quot;svg&quot;, result.getSvg());</span>
+<span class="nc" id="L311">		return TeaVmJson.stringify(json);</span>
 	}
 
 	private static String errorJson(McpResult result) {
-<span class="nc" id="L172">		final JSObject json = TeaVmJson.newObject();</span>
-<span class="nc" id="L173">		TeaVmJson.putBoolean(json, &quot;valid&quot;, false);</span>
-<span class="nc" id="L174">		TeaVmJson.putInt(json, &quot;lineCount&quot;, result.getLineCount());</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (result.getErrorLineNumber() &gt; 0)</span>
-<span class="nc" id="L176">			TeaVmJson.putInt(json, &quot;errorLineNumber&quot;, result.getErrorLineNumber());</span>
-<span class="nc" id="L177">		TeaVmJson.addStringSafe(json, &quot;errorMessage&quot;, result.getErrorMessage());</span>
-<span class="nc" id="L178">		TeaVmJson.addStringSafe(json, &quot;errorLine&quot;, result.getErrorLine());</span>
-<span class="nc" id="L179">		TeaVmJson.addStringSafe(json, &quot;errorContext&quot;, result.getErrorContext());</span>
-<span class="nc" id="L180">		return TeaVmJson.stringify(json);</span>
+<span class="nc" id="L315">		final JSObject json = TeaVmJson.newObject();</span>
+<span class="nc" id="L316">		TeaVmJson.putBoolean(json, &quot;valid&quot;, false);</span>
+<span class="nc" id="L317">		TeaVmJson.putInt(json, &quot;lineCount&quot;, result.getLineCount());</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">		if (result.getErrorLineNumber() &gt; 0)</span>
+<span class="nc" id="L319">			TeaVmJson.putInt(json, &quot;errorLineNumber&quot;, result.getErrorLineNumber());</span>
+<span class="nc" id="L320">		TeaVmJson.addStringSafe(json, &quot;errorMessage&quot;, result.getErrorMessage());</span>
+<span class="nc" id="L321">		TeaVmJson.addStringSafe(json, &quot;errorLine&quot;, result.getErrorLine());</span>
+<span class="nc" id="L322">		TeaVmJson.addStringSafe(json, &quot;errorContext&quot;, result.getErrorContext());</span>
+<span class="nc" id="L323">		return TeaVmJson.stringify(json);</span>
 	}
 
 	private static String errorJson(String errorMessage) {
-<span class="nc" id="L184">		final JSObject json = TeaVmJson.newObject();</span>
-<span class="nc" id="L185">		TeaVmJson.putBoolean(json, &quot;valid&quot;, false);</span>
-<span class="nc" id="L186">		TeaVmJson.addStringSafe(json, &quot;errorMessage&quot;, errorMessage);</span>
-<span class="nc" id="L187">		return TeaVmJson.stringify(json);</span>
+<span class="nc" id="L327">		final JSObject json = TeaVmJson.newObject();</span>
+<span class="nc" id="L328">		TeaVmJson.putBoolean(json, &quot;valid&quot;, false);</span>
+<span class="nc" id="L329">		TeaVmJson.addStringSafe(json, &quot;errorMessage&quot;, errorMessage);</span>
+<span class="nc" id="L330">		return TeaVmJson.stringify(json);</span>
 	}
 
 	private static JSObject toJsArray(List&lt;String&gt; values) {
-<span class="nc" id="L191">		final JSObject array = TeaVmJson.newArray();</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">		for (int i = 0; i &lt; values.size(); i++)</span>
-<span class="nc" id="L193">			TeaVmJson.push(array, values.get(i));</span>
-<span class="nc" id="L194">		return array;</span>
+<span class="nc" id="L334">		final JSObject array = TeaVmJson.newArray();</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">		for (int i = 0; i &lt; values.size(); i++)</span>
+<span class="nc" id="L336">			TeaVmJson.push(array, values.get(i));</span>
+<span class="nc" id="L337">		return array;</span>
 	}
 
 }

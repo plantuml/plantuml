@@ -36,10 +36,10 @@ package net.sourceforge.plantuml.klimt.drawing.font;
 
 public class UnicodeBlock {
 
-	private byte data[];
+	private final byte data[];
 
 <span class="fc" id="L41">	public UnicodeBlock(byte data[]) {</span>
-<span class="pc bpc" id="L42" title="1 of 4 branches missed.">		if (data.length != 1 &amp;&amp; data.length &lt; 256) {</span>
+<span class="fc bfc" id="L42" title="All 4 branches covered.">		if (data.length != 1 &amp;&amp; data.length &lt; 256) {</span>
 <span class="fc" id="L43">			this.data = decodeRLE(data);</span>
 		} else {
 <span class="fc" id="L45">			this.data = data;</span>
@@ -60,8 +60,8 @@ public class UnicodeBlock {
 	}
 
 	public double getWidth(char ch) {
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">		if (data.length == 1)</span>
-<span class="nc" id="L64">			return (data[0] &amp; 0xFF) / 10.0;</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">		if (data.length == 1)</span>
+<span class="fc" id="L64">			return (data[0] &amp; 0xFF) / 10.0;</span>
 
 <span class="fc" id="L66">		final int width = data[ch &amp; 0xFF] &amp; 0xFF;</span>
 <span class="fc" id="L67">		return width / 10.0;</span>

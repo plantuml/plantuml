@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.UPixel;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicSvg extends AbstractUGraphic&lt;SvgGraphics&gt; implements ClipContainer {
@@ -66,109 +67,116 @@ public class UGraphicSvg extends AbstractUGraphic&lt;SvgGraphics&gt; implements 
 	private /* final */ SvgOption option;
 
 	public double dpiFactor() {
-<span class="nc" id="L69">		return 1;</span>
+<span class="nc" id="L70">		return 1;</span>
 	}
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="fc" id="L74">		final UGraphicSvg result = new UGraphicSvg(getStringBounder(), textAsPath, fileFormat);</span>
-<span class="fc" id="L75">		result.copy(this);</span>
-<span class="fc" id="L76">		result.option = this.option;</span>
-<span class="fc" id="L77">		return result;</span>
+<span class="fc" id="L75">		final UGraphicSvg result = new UGraphicSvg(getStringBounder(), textAsPath, fileFormat);</span>
+<span class="fc" id="L76">		result.copy(this);</span>
+<span class="fc" id="L77">		result.option = this.option;</span>
+<span class="fc" id="L78">		return result;</span>
 	}
 
 	private UGraphicSvg(StringBounder stringBounder, boolean textAsPath, FileFormat fileFormat) {
-<span class="fc" id="L81">		super(stringBounder);</span>
-<span class="fc" id="L82">		this.fileFormat = fileFormat;</span>
-<span class="fc" id="L83">		this.textAsPath = textAsPath;</span>
-<span class="fc" id="L84">		register();</span>
-<span class="fc" id="L85">	}</span>
+<span class="fc" id="L82">		super(stringBounder);</span>
+<span class="fc" id="L83">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L84">		this.textAsPath = textAsPath;</span>
+<span class="fc" id="L85">		register();</span>
+<span class="fc" id="L86">	}</span>
 
 	public static UGraphicSvg build(SvgOption option, boolean textAsPath, long seed, StringBounder stringBounder,
 			FileFormat fileFormat) {
-<span class="fc" id="L89">		final UGraphicSvg result = new UGraphicSvg(stringBounder, textAsPath, fileFormat);</span>
-<span class="fc" id="L90">		result.copy(option.getBackcolor(), option.getColorMapper(), new SvgGraphics(seed, option));</span>
-<span class="fc" id="L91">		result.option = option;</span>
-<span class="fc" id="L92">		return result;</span>
+<span class="fc" id="L90">		final UGraphicSvg result = new UGraphicSvg(stringBounder, textAsPath, fileFormat);</span>
+<span class="fc" id="L91">		result.copy(option.getBackcolor(), option.getColorMapper(), new SvgGraphics(seed, option));</span>
+<span class="fc" id="L92">		result.option = option;</span>
+<span class="fc" id="L93">		return result;</span>
 	}
 
 	@Override
 	protected boolean manageHiddenAutomatically() {
-<span class="nc" id="L97">		return false;</span>
+<span class="nc" id="L98">		return false;</span>
 	}
 
 	@Override
 	protected void beforeDraw() {
-<span class="fc" id="L102">		getGraphicObject().setHidden(getParam().isHidden());</span>
-<span class="fc" id="L103">	}</span>
+<span class="fc" id="L103">		getGraphicObject().setHidden(getParam().isHidden());</span>
+<span class="fc" id="L104">	}</span>
 
 	@Override
 	protected void afterDraw() {
-<span class="fc" id="L107">		getGraphicObject().setHidden(false);</span>
-<span class="fc" id="L108">	}</span>
+<span class="fc" id="L108">		getGraphicObject().setHidden(false);</span>
+<span class="fc" id="L109">	}</span>
 
 	private void register() {
-<span class="fc" id="L111">		registerDriver(URectangle.class, new DriverRectangleSvg(this));</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (textAsPath)</span>
-<span class="nc" id="L113">			registerDriver(UText.class, new DriverTextAsPathSvg(this));</span>
-		else
-<span class="fc" id="L115">			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));</span>
+<span class="fc" id="L112">		registerDriver(URectangle.class, new DriverRectangleSvg(this));</span>
 
-<span class="fc" id="L117">		registerDriver(ULine.class, new DriverLineSvg(this));</span>
-<span class="fc" id="L118">		registerDriver(UPixel.class, new DriverPixelSvg());</span>
-<span class="fc" id="L119">		registerDriver(UPolygon.class, new DriverPolygonSvg(this));</span>
-<span class="fc" id="L120">		registerDriver(UEllipse.class, new DriverEllipseSvg(this));</span>
-<span class="fc" id="L121">		registerDriver(UImage.class, new DriverImagePng(this));</span>
-<span class="fc" id="L122">		registerDriver(UImageSvg.class, new DriverImageSvgSvg());</span>
-<span class="fc" id="L123">		ignoreShape(UImageTikz.class);</span>
-<span class="fc" id="L124">		registerDriver(UPath.class, new DriverPathSvg(this));</span>
-<span class="fc" id="L125">		registerDriver(DotPath.class, new DriverDotPathSvg());</span>
-<span class="fc" id="L126">		registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg(fileFormat));</span>
-<span class="fc" id="L127">	}</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L115">			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		else if (textAsPath)</span>
+<span class="nc" id="L117">			registerDriver(UText.class, new DriverTextAsPathSvg(this));</span>
+		else
+<span class="fc" id="L119">			registerDriver(UText.class, new DriverTextSvg(getStringBounder(), this));</span>
+
+<span class="fc" id="L121">		registerDriver(ULine.class, new DriverLineSvg(this));</span>
+<span class="fc" id="L122">		registerDriver(UPixel.class, new DriverPixelSvg());</span>
+<span class="fc" id="L123">		registerDriver(UPolygon.class, new DriverPolygonSvg(this));</span>
+<span class="fc" id="L124">		registerDriver(UEllipse.class, new DriverEllipseSvg(this));</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM())</span>
+<span class="fc" id="L126">			registerDriver(UImage.class, new DriverImagePng(this));</span>
+<span class="fc" id="L127">		registerDriver(UImageSvg.class, new DriverImageSvgSvg());</span>
+<span class="fc" id="L128">		ignoreShape(UImageTikz.class);</span>
+<span class="fc" id="L129">		registerDriver(UPath.class, new DriverPathSvg(this));</span>
+<span class="fc" id="L130">		registerDriver(DotPath.class, new DriverDotPathSvg());</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (TeaVM.isTeaVM())</span>
+<span class="nc" id="L132">			registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvgDeterministic());</span>
+		else
+<span class="fc" id="L134">			registerDriver(UCenteredCharacter.class, new DriverCenteredCharacterSvg(fileFormat));</span>
+<span class="fc" id="L135">	}</span>
 
 	public SvgGraphics getSvgGraphics() {
-<span class="nc" id="L130">		return this.getGraphicObject();</span>
+<span class="nc" id="L138">		return this.getGraphicObject();</span>
 	}
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (metadata != null)</span>
-<span class="fc" id="L136">			getGraphicObject().addCommentMetadata(metadata);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (metadata != null)</span>
+<span class="fc" id="L144">			getGraphicObject().addCommentMetadata(metadata);</span>
 
-<span class="fc" id="L138">		getGraphicObject().createXml(os);</span>
-<span class="fc" id="L139">	}</span>
+<span class="fc" id="L146">		getGraphicObject().createXml(os);</span>
+<span class="fc" id="L147">	}</span>
 
 	@Override
 	public void startGroup(UGroup group) {
-<span class="fc" id="L143">		getGraphicObject().startGroup(group.asMap());</span>
-<span class="fc" id="L144">	}</span>
+<span class="fc" id="L151">		getGraphicObject().startGroup(group.asMap());</span>
+<span class="fc" id="L152">	}</span>
 
 	@Override
 	public void closeGroup() {
-<span class="fc" id="L148">		getGraphicObject().closeGroup();</span>
-<span class="fc" id="L149">	}</span>
+<span class="fc" id="L156">		getGraphicObject().closeGroup();</span>
+<span class="fc" id="L157">	}</span>
 
 	@Override
 	public void startUrl(Url url) {
-<span class="fc" id="L153">		getGraphicObject().openLink(url.getUrl(), url.getTooltip(), option.getLinkTarget());</span>
-<span class="fc" id="L154">	}</span>
+<span class="fc" id="L161">		getGraphicObject().openLink(url.getUrl(), url.getTooltip(), option.getLinkTarget());</span>
+<span class="fc" id="L162">	}</span>
 
 	@Override
 	public void closeUrl() {
-<span class="fc" id="L158">		getGraphicObject().closeLink();</span>
-<span class="fc" id="L159">	}</span>
+<span class="fc" id="L166">		getGraphicObject().closeLink();</span>
+<span class="fc" id="L167">	}</span>
 
 	@Override
 	protected void drawComment(UComment comment) {
-<span class="fc" id="L163">		getGraphicObject().addComment(comment.getComment());</span>
-<span class="fc" id="L164">	}</span>
+<span class="fc" id="L171">		getGraphicObject().addComment(comment.getComment());</span>
+<span class="fc" id="L172">	}</span>
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
-<span class="fc" id="L169">			return true;</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (propertyName.equalsIgnoreCase(&quot;SVG&quot;))</span>
+<span class="fc" id="L177">			return true;</span>
 
-<span class="fc" id="L171">		return super.matchesProperty(propertyName);</span>
+<span class="fc" id="L179">		return super.matchesProperty(propertyName);</span>
 	}
 
 	// @Override
