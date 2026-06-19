@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -68,7 +68,7 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -104,7 +104,7 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -140,7 +140,7 @@ jobs:
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: graalvm/setup-graalvm@v1
         with:
