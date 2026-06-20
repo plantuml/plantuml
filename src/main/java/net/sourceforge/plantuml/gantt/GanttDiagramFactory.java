@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.gantt.command.CommandGroupStart;
 import net.sourceforge.plantuml.gantt.command.CommandHideClosed;
 import net.sourceforge.plantuml.gantt.command.CommandHideResourceFootbox;
 import net.sourceforge.plantuml.gantt.command.CommandHideResourceName;
+import net.sourceforge.plantuml.gantt.command.CommandHideShowColumns;
 import net.sourceforge.plantuml.gantt.command.CommandLabelOnColumn;
 import net.sourceforge.plantuml.gantt.command.CommandLanguage;
 import net.sourceforge.plantuml.gantt.command.CommandNoteBottom;
@@ -103,6 +104,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLabelOnColumn());
 		cmds.add(new CommandHideResourceName());
 		cmds.add(new CommandHideResourceFootbox());
+		cmds.add(new CommandHideShowColumns());
 		cmds.add(new CommandHideClosed());
 		cmds.add(new CommandTaskCompleteDefault());
 	}

@@ -1,61 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="114px" preserveAspectRatio="none" style="width:395px;height:114px;background:#FFFFFF;" version="1.1" viewBox="0 0 395 114" width="395px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="114px" preserveAspectRatio="none" style="width:337px;height:114px;background:#FFFFFF;" version="1.1" viewBox="0 0 337 114" width="337px" zoomAndPan="magnify">
   <defs/>
   <g>
     <g class="title" data-source-line="1">
-      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="140.875" x="126.3875" y="20.8889">Long Long Long note KO</text>
+      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="140.875" x="97.2" y="20.8889">Long Long Long note KO</text>
     </g>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="183.4375" y1="35" y2="35"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="183.4375" y1="62" y2="62"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="183.4375" y1="97" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="125.0625" y1="35" y2="35"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="125.0625" y1="62" y2="62"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="125.0625" y1="97" y2="97"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="35" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="58.375" x2="58.375" y1="35" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="98.375" x2="98.375" y1="35" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="135.625" x2="135.625" y1="35" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="183.4375" x2="183.4375" y1="35" y2="97"/>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.6875" x="5" y="51.2778">Task</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.0625" x="63.375" y="51.2778">Start</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8125" x="103.375" y="51.2778">End</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="37.8125" x="140.625" y="51.2778">Duration</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="31.75" x="5" y="72.2778">TASK1</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="30" x="63.375" y="72.2778">May 29</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="103.375" y="72.2778">Jun 30</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="32.25" x="140.625" y="72.2778">33 days</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="48.375" x="5" y="72.2778">Milestone 1</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="63.375" y="72.2778">Jun 30</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="103.375" y="72.2778">Jun 30</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.6875" x="140.625" y="72.2778">1 day</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="200.4375" y="58.7778">23</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="228.4375" y="58.7778">24</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="256.4375" y="58.7778">25</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="284.4375" y="58.7778">26</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="195.4375" x2="195.4375" y1="51" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="223.4375" x2="223.4375" y1="51" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="251.4375" x2="251.4375" y1="51" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="279.4375" x2="279.4375" y1="51" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="307.4375" x2="307.4375" y1="51" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="315.4375" x2="315.4375" y1="51" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="183.4375" x2="183.4375" y1="35" y2="51"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="195.4375" x2="195.4375" y1="35" y2="51"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="22.65" x="183.4375" y="44.3333">May</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="315.4375" x2="315.4375" y1="35" y2="51"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="46.05" x="232.4125" y="44.3333">Jun 2020</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="183.4375" x2="315.4375" y1="35" y2="35"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="183.4375" x2="315.4375" y1="51" y2="51"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="183.4375" x2="315.4375" y1="62" y2="62"/>
-    <path d="M183.4375,77 L183.4375,97 L345.9625,97 L345.9625,87 L335.9625,77 L183.4375,77" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
-    <path d="M335.9625,77 L335.9625,87 L345.9625,87 L335.9625,77" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="141.525" x="189.4375" y="89">Long very very very Long Long note KO</text>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="128" x="185.4375" y="64"/>
-    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="128" x="185.4375" y="64"/>
-    <polygon fill="#000000" points="313.4375,64,318.4375,69,313.4375,74,308.4375,69" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="34.925" x="189.4375" y="72.5556">TASK1</text>
-    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="53.2125" x="321.4375" y="72.5556">Milestone 1</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="183.4375" x2="315.4375" y1="97" y2="97"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="183.4375" x2="183.4375" y1="97" y2="113"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="195.4375" x2="195.4375" y1="97" y2="113"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="22.65" x="183.4375" y="106.3333">May</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="315.4375" x2="315.4375" y1="97" y2="113"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="46.05" x="232.4125" y="106.3333">Jun 2020</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="183.4375" x2="315.4375" y1="113" y2="113"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="40" x2="40" y1="35" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="77.25" x2="77.25" y1="35" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.0625" x2="125.0625" y1="35" y2="97"/>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.0625" x="5" y="51.2778">Start</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8125" x="45" y="51.2778">End</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="37.8125" x="82.25" y="51.2778">Duration</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="30" x="5" y="72.2778">May 29</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="45" y="72.2778">Jun 30</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="32.25" x="82.25" y="72.2778">33 days</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="5" y="72.2778">Jun 30</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="45" y="72.2778">Jun 30</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.6875" x="82.25" y="72.2778">1 day</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="142.0625" y="58.7778">23</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="170.0625" y="58.7778">24</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="198.0625" y="58.7778">25</text>
+    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="226.0625" y="58.7778">26</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="137.0625" x2="137.0625" y1="51" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="165.0625" x2="165.0625" y1="51" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="193.0625" x2="193.0625" y1="51" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="221.0625" x2="221.0625" y1="51" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="249.0625" x2="249.0625" y1="51" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="257.0625" x2="257.0625" y1="51" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.0625" x2="125.0625" y1="35" y2="51"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="137.0625" x2="137.0625" y1="35" y2="51"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="22.65" x="125.0625" y="44.3333">May</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="257.0625" x2="257.0625" y1="35" y2="51"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="46.05" x="174.0375" y="44.3333">Jun 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.0625" x2="257.0625" y1="35" y2="35"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.0625" x2="257.0625" y1="51" y2="51"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.0625" x2="257.0625" y1="62" y2="62"/>
+    <path d="M125.0625,77 L125.0625,97 L287.5875,97 L287.5875,87 L277.5875,77 L125.0625,77" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M277.5875,77 L277.5875,87 L287.5875,87 L277.5875,77" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="9" lengthAdjust="spacing" textLength="141.525" x="131.0625" y="89">Long very very very Long Long note KO</text>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="128" x="127.0625" y="64"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="128" x="127.0625" y="64"/>
+    <polygon fill="#000000" points="255.0625,64,260.0625,69,255.0625,74,250.0625,69" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="34.925" x="131.0625" y="72.5556">TASK1</text>
+    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="53.2125" x="263.0625" y="72.5556">Milestone 1</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.0625" x2="257.0625" y1="97" y2="97"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.0625" x2="125.0625" y1="97" y2="113"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="137.0625" x2="137.0625" y1="97" y2="113"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="22.65" x="125.0625" y="106.3333">May</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="257.0625" x2="257.0625" y1="97" y2="113"/>
+    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="46.05" x="174.0375" y="106.3333">Jun 2020</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.0625" x2="257.0625" y1="113" y2="113"/>
   </g>
 </svg>
