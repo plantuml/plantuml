@@ -91,7 +91,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 		this.layout = new GanttLayout(modelData, displayConfig, timeBounds, timelineStyle, drawRegistry, stringBounder,
 				timeHeader);
 		this.taskTable = new GanttTaskTable(modelData, timeBounds, drawRegistry, timelineStyle,
-				timeHeader.getFullHeaderHeight(stringBounder), locale, stringBounder);
+				timeHeader.getFullHeaderHeight(stringBounder), locale, stringBounder, diagram.getDisplayedColumn());
 	}
 
 	@Override
@@ -182,7 +182,6 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 
 	}
 
-
 	private void drawTasksTitle(UGraphic ug, double colTitles, double colBars) {
 		for (Task task : modelData.getTasks()) {
 			if (timeBounds.isHidden(task))
@@ -190,7 +189,8 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 
 			final TaskDraw draw = drawRegistry.getTaskDraw(task);
 			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());
-			// draw.drawTitle(ug.apply(move), displayConfig.getLabelStrategy(), colTitles, colBars);
+			// draw.drawTitle(ug.apply(move), displayConfig.getLabelStrategy(), colTitles,
+			// colBars);
 			final LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);
 			draw.drawTitle(ug.apply(move), labelStrategy, colTitles, colBars);
 		}

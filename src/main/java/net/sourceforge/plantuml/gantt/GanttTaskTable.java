@@ -35,8 +35,10 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.util.List;
 import java.util.Locale;
 
+import net.sourceforge.plantuml.gantt.GanttTaskTableColumn.Context;
 import net.sourceforge.plantuml.gantt.core.Task;
 import net.sourceforge.plantuml.gantt.core.TaskImpl;
 import net.sourceforge.plantuml.gantt.data.GanttModelData;
@@ -76,45 +78,43 @@ public final class GanttTaskTable {
 	private final Locale locale;
 	private final double headerHeight;
 
+	private final Context context;
+	private final List<GanttTaskTableColumn> displayedColumn;
+
 	// One boundary per column edge: columnEdges[0] is the left border, the last
-	// entry is the right border. There are 4 columns, so 5 edges.
+	// entry is the right border of the last column. With N displayed columns there
+	// are N+1 edges.
 	private final double[] columnEdges;
 
 	public GanttTaskTable(GanttModelData modelData, TimeBoundsData timeBounds, TaskDrawRegistryData drawRegistry,
-			TimelineStyleData timelineStyle, double headerHeight, Locale locale, StringBounder stringBounder) {
+			TimelineStyleData timelineStyle, double headerHeight, Locale locale, StringBounder stringBounder,
+			List<GanttTaskTableColumn> displayedColumn) {
+		this.displayedColumn = displayedColumn;
 		this.modelData = modelData;
 		this.timeBounds = timeBounds;
 		this.drawRegistry = drawRegistry;
 		this.timelineStyle = timelineStyle;
 		this.headerHeight = headerHeight;
 		this.locale = locale;
+		this.context = new Context(locale, isRelativeMode(), timeBounds.getMinDay());
 
-		double wCode = widthOf(stringBounder, GanttI18n.task(locale));
-		double wStart = widthOf(stringBounder, GanttI18n.start(locale));
-		double wEnd = widthOf(stringBounder, GanttI18n.end(locale));
-		double wDuration = widthOf(stringBounder, GanttI18n.duration(locale));
+		this.columnEdges = new double[displayedColumn.size() + 1];
+		this.columnEdges[0] = 0;
+		for (int i = 0; i < displayedColumn.size(); i++) {
+			final double colWidth = columnWidth(stringBounder, displayedColumn.get(i));
+			this.columnEdges[i + 1] = this.columnEdges[i] + colWidth;
+		}
+	}
 
+	private double columnWidth(StringBounder stringBounder, GanttTaskTableColumn column) {
+		double width = widthOf(stringBounder, column.header(locale));
 		for (Task task : modelData.getTasks()) {
 			if (isDrawable(task) == false)
 				continue;
 
-			wCode = Math.max(wCode, widthOf(stringBounder, codeOf(task)));
-			wStart = Math.max(wStart, widthOf(stringBounder, startOf(task)));
-			wEnd = Math.max(wEnd, widthOf(stringBounder, endOf(task)));
-			wDuration = Math.max(wDuration, widthOf(stringBounder, durationOf(task)));
+			width = Math.max(width, widthOf(stringBounder, column.valueOf(task, context)));
 		}
-
-		final double colCode = wCode + 2 * CELL_PADDING;
-		final double colStart = wStart + 2 * CELL_PADDING;
-		final double colEnd = wEnd + 2 * CELL_PADDING;
-		final double colDuration = wDuration + 2 * CELL_PADDING;
-
-		this.columnEdges = new double[5];
-		this.columnEdges[0] = 0;
-		this.columnEdges[1] = this.columnEdges[0] + colCode;
-		this.columnEdges[2] = this.columnEdges[1] + colStart;
-		this.columnEdges[3] = this.columnEdges[2] + colEnd;
-		this.columnEdges[4] = this.columnEdges[3] + colDuration;
+		return width + 2 * CELL_PADDING;
 	}
 
 	public double getWidth() {
@@ -127,8 +127,7 @@ public final class GanttTaskTable {
 
 		drawGrid(ug.apply(line), totalHeightWithoutFooter);
 
-		drawRow(ug, headerHeight / 2, GanttI18n.task(locale), GanttI18n.start(locale), GanttI18n.end(locale),
-				GanttI18n.duration(locale));
+		drawHeaderRow(ug, headerHeight / 2);
 
 		for (Task task : modelData.getTasks()) {
 			if (isDrawable(task) == false)
@@ -137,7 +136,7 @@ public final class GanttTaskTable {
 			final TaskDraw draw = drawRegistry.getTaskDraw(task);
 			final double yCenter = draw.getY(stringBounder).getCurrentValue()
 					+ draw.getFullHeightTask(stringBounder) / 2;
-			drawRow(ug, yCenter, codeOf(task), startOf(task), endOf(task), durationOf(task));
+			drawTaskRow(ug, yCenter, task);
 		}
 	}
 
@@ -152,11 +151,14 @@ public final class GanttTaskTable {
 			ug.apply(UTranslate.dx(x)).draw(ULine.vline(totalHeightWithoutFooter));
 	}
 
-	private void drawRow(UGraphic ug, double yCenter, String code, String start, String end, String duration) {
-		drawCell(ug, columnEdges[0], yCenter, code);
-		drawCell(ug, columnEdges[1], yCenter, start);
-		drawCell(ug, columnEdges[2], yCenter, end);
-		drawCell(ug, columnEdges[3], yCenter, duration);
+	private void drawHeaderRow(UGraphic ug, double yCenter) {
+		for (int i = 0; i < displayedColumn.size(); i++)
+			drawCell(ug, columnEdges[i], yCenter, displayedColumn.get(i).header(locale));
+	}
+
+	private void drawTaskRow(UGraphic ug, double yCenter, Task task) {
+		for (int i = 0; i < displayedColumn.size(); i++)
+			drawCell(ug, columnEdges[i], yCenter, displayedColumn.get(i).valueOf(task, context));
 	}
 
 	private void drawCell(UGraphic ug, double xLeft, double yCenter, String text) {
@@ -179,39 +181,8 @@ public final class GanttTaskTable {
 		return true;
 	}
 
-	private String codeOf(Task task) {
-		return task.getCode().getDisplay();
-	}
-
 	private boolean isRelativeMode() {
 		return timeBounds.getMinDay().equals(TimePoint.epoch());
-	}
-
-	private int relativeDayNum(TimePoint point) {
-		final int minAbs = TimePoint.ofStartOfDay(timeBounds.getMinDay()).getAbsoluteDayNum();
-		return point.getAbsoluteDayNum() - minAbs + 1;
-	}
-
-	private String startOf(Task task) {
-		if (isRelativeMode())
-			return GanttI18n.dayNumber(locale, relativeDayNum(task.getStart()));
-
-		return task.getStart().toStringShort(locale);
-	}
-
-	private String endOf(Task task) {
-		if (isRelativeMode())
-			return GanttI18n.dayNumber(locale, relativeDayNum(task.getEndMinusOneDayTOBEREMOVED()));
-
-		return task.getEndMinusOneDayTOBEREMOVED().toStringShort(locale);
-	}
-
-	private String durationOf(Task task) {
-		final TimePoint start = task.getStart();
-		final TimePoint end = task.getEnd();
-		final int days = end.getAbsoluteDayNum() - start.getAbsoluteDayNum();
-
-		return GanttI18n.durationInDays(locale, days);
 	}
 
 	private double widthOf(StringBounder stringBounder, String text) {

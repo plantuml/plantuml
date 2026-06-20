@@ -35,56 +35,54 @@
  */
 package net.sourceforge.plantuml.gantt.command;
 
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOr;
+
+import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.gantt.GanttTaskTableColumn;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
-import net.sourceforge.plantuml.warning.Warning;
 
-public class CommandLabelOnColumn extends SingleLineCommand2<GanttDiagram> {
+public class CommandHideShowColumns extends UBrexSingleLineCommand2<GanttDiagram> {
 
-	public CommandLabelOnColumn() {
+	public CommandHideShowColumns() {
 		super(getRegexConcat());
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandLabelOnColumn.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("labels?"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("on"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf(1, "POSITION", "(first|last)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("column"), //
-				new RegexOptional(new RegexConcat( //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("and"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf(1, "ALIGNED", "(left|right)"), //
-						RegexLeaf.spaceZeroOrMore(), //
-						new RegexLeaf("aligned") //
-				)), //
-				RegexLeaf.end());
+	static UnicodeBracketedExpression getRegexConcat() {
+		// hide column duration
+		return UBrexConcat.build( //
+				new UBrexNamed("COMMAND", new UBrexOr(new UBrexLeaf("hide"), new UBrexLeaf("show"))), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("column"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("WHAT", GanttTaskTableColumn.getUbrex()), //
+				UBrexLeaf.end());
+	}
+
+	@Override
+	@Explain(comment = "to be done")
+	protected String explainArg(LineLocation location, RegexResult arg) {
+		return null;
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-//		final LabelPosition position = "first".equalsIgnoreCase(arg.get("POSITION", 0)) ? LabelPosition.FIRST_COLUMN
-//				: LabelPosition.LAST_COLUMN;
-//		final HorizontalAlignment alignment = "right".equalsIgnoreCase(arg.get("ALIGNED", 0))
-//				? HorizontalAlignment.RIGHT
-//				: HorizontalAlignment.LEFT;
-//		final LabelStrategy strategy = new LabelStrategy(position, alignment);
-//		diagram.setLabelStrategy(strategy);
-		diagram.addWarning(new Warning("This command is deprecated"));
-		return CommandExecutionResult.ok();
+		final char tmp = arg.get("COMMAND", 0).charAt(0);
+		final boolean show = tmp == 's';
+
+		final String what = arg.get("WHAT", 0);
+
+		final GanttTaskTableColumn column = GanttTaskTableColumn.of(what);
+		return diagram.hideOrShowColumn(show, column);
 	}
 
 }

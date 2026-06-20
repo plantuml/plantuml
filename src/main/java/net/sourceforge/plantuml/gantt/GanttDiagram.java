@@ -42,10 +42,12 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -658,6 +660,23 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 		final int days = end.getAbsoluteDayNum() - start.getAbsoluteDayNum();
 
 		return GanttI18n.durationInDays(locale, days);
+	}
+
+	private final Set<GanttTaskTableColumn> displayedColumn = EnumSet.of(GanttTaskTableColumn.START,
+			GanttTaskTableColumn.END, GanttTaskTableColumn.DURATION);
+
+	public CommandExecutionResult hideOrShowColumn(boolean show, GanttTaskTableColumn column) {
+		if (column != null) {
+			if (show)
+				displayedColumn.add(column);
+			else
+				displayedColumn.remove(column);
+		}
+		return CommandExecutionResult.ok();
+	}
+
+	public List<GanttTaskTableColumn> getDisplayedColumn() {
+		return new ArrayList<>(displayedColumn);
 	}
 
 }
