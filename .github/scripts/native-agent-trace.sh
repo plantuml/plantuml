@@ -43,6 +43,14 @@ run_merge() {
 		-agentlib:native-image-agent=config-merge-dir="$OUT" \
 		-jar "$JAR" "$@"
 }
+# Same as run_merge but with the UNSECURE security profile so that diagrams
+# referencing remote resources (e.g. a remote <img:...>) are actually fetched.
+run_merge_unsecure() {
+	java -Djava.awt.headless=true \
+		-DPLANTUML_SECURITY_PROFILE=UNSECURE \
+		-agentlib:native-image-agent=config-merge-dir="$OUT" \
+		-jar "$JAR" "$@"
+}
 
 echo "=== Tracing agent: corpus start ==="
 
@@ -84,6 +92,13 @@ printf 'listopeniconic' | run_merge -tsvg -pipe
 # Embedded raster image WITH scaling -- this is the AffineTransformOp.scale /
 # sun.awt.image.ByteComponentRaster path that crashed in the bug report.
 printf 'set separator none\n\nleft to right direction\n\nskinparam {\n  arrowFontSize 10\n  defaultTextAlignment center\n  wrapWidth 200\n  maxMessageSize 100\n}\n\nhide stereotype\n\nrectangle "Amazon Web Services\\n<size:10>[Deployment Node]</size>\\n\\n<img:https://static.structurizr.com/themes/amazon-web-services-2020.04.30/aws-cloud.png{scale=0.21428571428571427}>" as aws {\n}' | run_merge -tsvg -pipe
+
+# Embedded remote JPEG image -- exercises the legacy AWT JPEG decode path
+# (sun.awt.image.JPEGImageDecoder.initIDs, which looks up
+# java.io.InputStream.read([BII)I via JNI). This is the crash from issue #2757;
+# the PNG path above works but JPEG was never covered by the corpus before.
+# Needs the UNSECURE profile so the remote image is actually fetched/decoded.
+printf '@startuml\nnote over Alice,Bob\n<img:https://plantuml.com/sourceforge.jpg>\nend note\n@enduml\n' | run_merge_unsecure -tsvg -pipe > /dev/null || true
 
 echo "=== Tracing agent: corpus done ==="
 echo "Generated config files in: $OUT"

@@ -95,6 +95,10 @@
   "fields":[{"name":"bitMasks"}, {"name":"bitOffsets"}, {"name":"bitSizes"}, {"name":"maxBitSize"}]
 },
 {
+  "name":"java.io.InputStream",
+  "methods":[{"name":"read","parameterTypes":["byte[]","int","int"] }]
+},
+{
   "name":"java.lang.Boolean",
   "methods":[{"name":"getBoolean","parameterTypes":["java.lang.String"] }]
 },
