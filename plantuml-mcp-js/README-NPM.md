@@ -61,7 +61,7 @@ To avoid surprise updates, pin a specific version:
   "mcpServers": {
     "plantuml-js": {
       "command": "npx",
-      "args": ["-y", "@plantuml/mcp-js@0.1.3"]
+      "args": ["-y", "@plantuml/mcp-js@0.2.0"]
     }
   }
 }
@@ -170,14 +170,16 @@ returns something like:
 
 ## Scope and limitations
 
-The JavaScript build is **headless** (no browser DOM, no native Graphviz). It
-renders to **SVG only**, via a deterministic, font-metrics-free pipeline (see
-`render_diagram` above); raster and document formats (PNG/PDF) are out of scope
-here, as is any layout that requires native Graphviz.
+The JavaScript build is **headless** (no browser DOM, no *native* Graphviz
+binary). It renders to **SVG only**, via a deterministic, font-metrics-free
+pipeline (see `render_diagram` above); raster and document formats (PNG/PDF) are
+out of scope here. Layouts that need Graphviz (class, state, component, ...) are
+handled by the Viz.js (`@viz-js/viz`) WASM build rather than a native `dot`, so
+they work too — only PNG/PDF output is unavailable.
 
-If you need those other formats, or a Graphviz-backed layout, use the
-Java-based [`plantuml-mcp`](https://github.com/plantuml/plantuml-mcp) server
-instead. It exposes the same kind of tools but requires a Java runtime.
+If you need those raster/document formats, use the Java-based
+[`plantuml-mcp`](https://github.com/plantuml/plantuml-mcp) server instead. It
+exposes the same kind of tools but requires a Java runtime.
 
 ## Architecture
 
@@ -195,8 +197,11 @@ MCP client (LM Studio, Claude Desktop, ...)
 ```
 
 Unlike the root project's TeaVM *browser* build (`PlantUMLBrowser`), the
-headless entry point pulls in none of the DOM / Viz.js / worker-thread
-machinery: the exported functions are synchronous and return plain strings.
+headless entry point stays minimal: `plantuml_version`, `check_syntax` and
+`explain_diagram` are synchronous and return plain strings. `render_diagram`
+is asynchronous — it runs on a TeaVM worker thread and uses the Viz.js
+(`@viz-js/viz`) WASM build for Graphviz-dependent layouts — and delivers its
+result JSON through a callback that `server.js` wraps in a Promise.
 
 
 ## Links

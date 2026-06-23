@@ -82,7 +82,7 @@ const engine = await import(pathToFileURL(ENGINE_PATH).href);
 
 const server = new McpServer({
   name: "plantuml-mcp-js",
-  version: "0.1.0",
+  version: "0.2.0",
 });
 
 server.tool(
