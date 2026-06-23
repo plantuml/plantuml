@@ -96,7 +96,7 @@
 },
 {
   "name":"java.io.InputStream",
-  "methods":[{"name":"read","parameterTypes":["byte[]","int","int"] }]
+  "methods":[{"name":"available","parameterTypes":[] }, {"name":"read","parameterTypes":["byte[]","int","int"] }]
 },
 {
   "name":"java.lang.Boolean",
@@ -138,6 +138,10 @@
 {
   "name":"sun.awt.image.IntegerComponentRaster",
   "fields":[{"name":"data"}, {"name":"dataOffsets"}, {"name":"pixelStride"}, {"name":"scanlineStride"}, {"name":"type"}]
+},
+{
+  "name":"sun.awt.image.JPEGImageDecoder",
+  "methods":[{"name":"sendHeaderInfo","parameterTypes":["int","int","boolean","boolean","boolean"] }, {"name":"sendPixels","parameterTypes":["byte[]","int"] }, {"name":"sendPixels","parameterTypes":["int[]","int"] }]
 },
 {
   "name":"sun.awt.image.ShortComponentRaster",
