@@ -254,6 +254,10 @@ class "javax.swing"{
 
 }
 
+class "javax.xml"{
+
+}
+
 class "javax.xml.parsers"{
 
 }
@@ -3553,10 +3557,11 @@ Total Classes: 16
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.xml"
 "net.sourceforge.plantuml.xmi" --> "org.w3c.dom"
 
-class "net.sourceforge.plantuml.xml" %lighten("red", 50) {
+class "net.sourceforge.plantuml.xml" %lighten("red", 57) {
 Total Classes: 3
 }
 "net.sourceforge.plantuml.xml" --> "java.lang"
+"net.sourceforge.plantuml.xml" --> "javax.xml"
 "net.sourceforge.plantuml.xml" --> "javax.xml.parsers"
 "net.sourceforge.plantuml.xml" --> "javax.xml.transform"
 

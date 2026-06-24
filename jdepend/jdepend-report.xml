@@ -1382,6 +1382,10 @@
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
+        <Package name="javax.xml">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
         <Package name="javax.xml.parsers">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
@@ -18777,10 +18781,10 @@
                 <ConcreteClasses>3</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>3</Ce>
+                <Ce>4</Ce>
                 <A>0</A>
-                <I>0.5</I>
-                <D>0.5</D>
+                <I>0.57</I>
+                <D>0.43</D>
                 <V>1</V>
             </Stats>
 
@@ -18801,6 +18805,7 @@
 
             <DependsUpon>
                 <Package>java.lang</Package>
+                <Package>javax.xml</Package>
                 <Package>javax.xml.parsers</Package>
                 <Package>javax.xml.transform</Package>
             </DependsUpon>
