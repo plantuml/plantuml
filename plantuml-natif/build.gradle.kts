@@ -55,8 +55,19 @@ graalvmNative {
 		// not survive into the image -- the dictionary ends up null at run time
 		// ("brotli dictionary is not set"). Forcing run-time initialization makes
 		// the static initializer run at startup, allocating the buffer for real.
+		//
+		// By default native-image targets the build machine's own CPU features,
+		// so the binary fails on older CPUs with an error like:
+		//   "The current machine does not support all of the following CPU
+		//    features that are required by the image: [..., AVX, AVX2, BMI1,
+		//    BMI2, FMA]. Please rebuild the executable with an appropriate
+		//    setting of the -march option."
+		// We use '-march=compatibility' to target a conservative baseline
+		// (x86-64-v1 / equivalent) so the binary runs on older hardware, at a
+		// small performance cost.
 		buildArgs(listOf(
 			"-Djava.awt.headless=true",
+			"-march=compatibility",
 			"--enable-url-protocols=https",
 			"--initialize-at-run-time=net.sourceforge.plantuml.brotli.Dictionary,net.sourceforge.plantuml.brotli.Dictionary\$DataLoader,net.sourceforge.plantuml.brotli.DictionaryData"
 		))
