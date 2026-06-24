@@ -1,5 +1,6 @@
 ---
 output: svg
+decimal: 0
 expected-description: (Gantt)
 expected-status: 0
 ---

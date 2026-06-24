@@ -5,107 +5,107 @@
       <stop offset="100%" stop-color="#009FDB"/>
     </linearGradient>
   </defs>
-  <g>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="127.8125" y1="0" y2="0"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="127.8125" y1="27" y2="27"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="127.8125" y1="72" y2="72"/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="128" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="128" y1="27" y2="27"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="128" y1="72" y2="72"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="72"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="40" x2="40" y1="0" y2="72"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="80" x2="80" y1="0" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="127.8125" x2="127.8125" y1="0" y2="72"/>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.0625" x="5" y="16.2778">Start</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="17.8125" x="45" y="16.2778">End</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="37.8125" x="85" y="16.2778">Duration</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="5" y="37.2778">Jan 15</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="45" y="37.2778">Jan 21</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="26.6875" x="85" y="37.2778">7 days</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="5" y="52.2778">Jan 22</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="27.25" x="45" y="52.2778">Jan 28</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="26.6875" x="85" y="52.2778">7 days</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="30" x="5" y="67.2778">May 31</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="30" x="45" y="67.2778">May 31</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="21.6875" x="85" y="67.2778">1 day</text>
-    <rect fill="#D2D2D2" height="45" style="stroke:none;stroke-width:1;" width="28" x="139.8125" y="27"/>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5625" x="144.8125" y="23.7778">1</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5625" x="172.8125" y="23.7778">2</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5625" x="200.8125" y="23.7778">3</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5625" x="228.8125" y="23.7778">4</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5625" x="256.8125" y="23.7778">5</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5625" x="284.8125" y="23.7778">6</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5625" x="312.8125" y="23.7778">7</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5625" x="340.8125" y="23.7778">8</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="5.5625" x="368.8125" y="23.7778">9</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="396.8125" y="23.7778">10</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="424.8125" y="23.7778">11</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="452.8125" y="23.7778">12</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="480.8125" y="23.7778">13</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="508.8125" y="23.7778">14</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="536.8125" y="23.7778">15</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="564.8125" y="23.7778">16</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="592.8125" y="23.7778">17</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="620.8125" y="23.7778">18</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="648.8125" y="23.7778">19</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="676.8125" y="23.7778">20</text>
-    <text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="11.125" x="704.8125" y="23.7778">21</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="139.8125" x2="139.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="167.8125" x2="167.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="195.8125" x2="195.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="223.8125" x2="223.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="251.8125" x2="251.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="279.8125" x2="279.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="307.8125" x2="307.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="335.8125" x2="335.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="363.8125" x2="363.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="391.8125" x2="391.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="419.8125" x2="419.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="447.8125" x2="447.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="475.8125" x2="475.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="503.8125" x2="503.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="531.8125" x2="531.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="559.8125" x2="559.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="587.8125" x2="587.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="615.8125" x2="615.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="643.8125" x2="643.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="671.8125" x2="671.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="699.8125" x2="699.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="727.8125" x2="727.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="731.8125" x2="731.8125" y1="16" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="127.8125" x2="127.8125" y1="0" y2="16"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="251.8125" x2="251.8125" y1="0" y2="16"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="46.05" x="166.7875" y="9.3333">Jan 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="363.8125" x2="363.8125" y1="0" y2="16"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="47.4" x="284.1125" y="9.3333">Feb 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="487.8125" x2="487.8125" y1="0" y2="16"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="47.325" x="402.15" y="9.3333">Mar 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="607.8125" x2="607.8125" y1="0" y2="16"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="45.375" x="525.125" y="9.3333">Apr 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="731.8125" x2="731.8125" y1="0" y2="16"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.35" x="645.1375" y="9.3333">May 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="127.8125" x2="731.8125" y1="0" y2="0"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="127.8125" x2="731.8125" y1="16" y2="16"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="127.8125" x2="731.8125" y1="27" y2="27"/>
-    <path d="M203.8125,40 L203.8125,49.5 L208.8125,49.5" fill="none" style="stroke:#000000;stroke-width:1.5;"/>
-    <polygon fill="#000000" points="207.8125,45.5,211.8125,49.5,207.8125,53.5,207.8125,45.5" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <rect fill="url(#g6a4wbdo5s4hl0)" height="11" style="stroke:none;stroke-width:1;" width="24" x="185.8125" y="29"/>
-    <rect fill="none" height="11" style="stroke:#C2C2C2;stroke-width:1;" width="24" x="185.8125" y="29"/>
-    <rect fill="url(#g6a4wbdo5s4hl0)" height="11" style="stroke:none;stroke-width:1;" width="24" x="213.8125" y="44"/>
-    <rect fill="none" height="11" style="stroke:#C2C2C2;stroke-width:1;" width="24" x="213.8125" y="44"/>
-    <polygon fill="#000000" points="729.8125,59,734.8125,64,729.8125,69,724.8125,64" style="stroke:#000000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <text fill="#5A5A5A" font-family="Cascadia Code PL" font-size="11" font-weight="700" lengthAdjust="spacing" textLength="146.0938" x="213.8125" y="37.5556">Automatic branch tag on release</text>
-    <text fill="#5A5A5A" font-family="Cascadia Code PL" font-size="11" font-weight="700" lengthAdjust="spacing" textLength="105.7375" x="241.8125" y="52.5556">Setup Automatic Alerts</text>
-    <text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="19.5938" x="737.8125" y="67.5556">End</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="127.8125" x2="731.8125" y1="72" y2="72"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="127.8125" x2="127.8125" y1="72" y2="88"/>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="251.8125" x2="251.8125" y1="72" y2="88"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="46.05" x="166.7875" y="81.3333">Jan 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="363.8125" x2="363.8125" y1="72" y2="88"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="47.4" x="284.1125" y="81.3333">Feb 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="487.8125" x2="487.8125" y1="72" y2="88"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="47.325" x="402.15" y="81.3333">Mar 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="607.8125" x2="607.8125" y1="72" y2="88"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="45.375" x="525.125" y="81.3333">Apr 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="731.8125" x2="731.8125" y1="72" y2="88"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" font-weight="700" lengthAdjust="spacing" textLength="49.35" x="645.1375" y="81.3333">May 2021</text>
-    <line style="stroke:#C0C0C0;stroke-width:1;" x1="127.8125" x2="731.8125" y1="88" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="0" y2="72"/>
+    <text fill="#000" font-size="10" textLength="21" x="5" y="16">Start</text>
+    <text fill="#000" font-size="10" textLength="18" x="45" y="16">End</text>
+    <text fill="#000" font-size="10" textLength="38" x="85" y="16">Duration</text>
+    <text fill="#000" font-size="10" textLength="27" x="5" y="37">Jan 15</text>
+    <text fill="#000" font-size="10" textLength="27" x="45" y="37">Jan 21</text>
+    <text fill="#000" font-size="10" textLength="27" x="85" y="37">7 days</text>
+    <text fill="#000" font-size="10" textLength="27" x="5" y="52">Jan 22</text>
+    <text fill="#000" font-size="10" textLength="27" x="45" y="52">Jan 28</text>
+    <text fill="#000" font-size="10" textLength="27" x="85" y="52">7 days</text>
+    <text fill="#000" font-size="10" textLength="30" x="5" y="67">May 31</text>
+    <text fill="#000" font-size="10" textLength="30" x="45" y="67">May 31</text>
+    <text fill="#000" font-size="10" textLength="22" x="85" y="67">1 day</text>
+    <rect fill="#D2D2D2" height="45" style="stroke:none;stroke-width:1;" width="28" x="140" y="27"/>
+    <text fill="#000" font-size="10" textLength="6" x="145" y="24">1</text>
+    <text fill="#000" font-size="10" textLength="6" x="173" y="24">2</text>
+    <text fill="#000" font-size="10" textLength="6" x="201" y="24">3</text>
+    <text fill="#000" font-size="10" textLength="6" x="229" y="24">4</text>
+    <text fill="#000" font-size="10" textLength="6" x="257" y="24">5</text>
+    <text fill="#000" font-size="10" textLength="6" x="285" y="24">6</text>
+    <text fill="#000" font-size="10" textLength="6" x="313" y="24">7</text>
+    <text fill="#000" font-size="10" textLength="6" x="341" y="24">8</text>
+    <text fill="#000" font-size="10" textLength="6" x="369" y="24">9</text>
+    <text fill="#000" font-size="10" textLength="11" x="397" y="24">10</text>
+    <text fill="#000" font-size="10" textLength="11" x="425" y="24">11</text>
+    <text fill="#000" font-size="10" textLength="11" x="453" y="24">12</text>
+    <text fill="#000" font-size="10" textLength="11" x="481" y="24">13</text>
+    <text fill="#000" font-size="10" textLength="11" x="509" y="24">14</text>
+    <text fill="#000" font-size="10" textLength="11" x="537" y="24">15</text>
+    <text fill="#000" font-size="10" textLength="11" x="565" y="24">16</text>
+    <text fill="#000" font-size="10" textLength="11" x="593" y="24">17</text>
+    <text fill="#000" font-size="10" textLength="11" x="621" y="24">18</text>
+    <text fill="#000" font-size="10" textLength="11" x="649" y="24">19</text>
+    <text fill="#000" font-size="10" textLength="11" x="677" y="24">20</text>
+    <text fill="#000" font-size="10" textLength="11" x="705" y="24">21</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="140" x2="140" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="168" x2="168" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="196" x2="196" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="224" x2="224" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="252" x2="252" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="280" x2="280" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="308" x2="308" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="336" x2="336" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="364" x2="364" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="392" x2="392" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="420" x2="420" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="448" x2="448" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="476" x2="476" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="504" x2="504" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="532" x2="532" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="560" x2="560" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="588" x2="588" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="616" x2="616" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="644" x2="644" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="672" x2="672" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="700" x2="700" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="728" x2="728" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="732" x2="732" y1="16" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="0" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="252" x2="252" y1="0" y2="16"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="46" x="167" y="9">Jan 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="364" x2="364" y1="0" y2="16"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="47" x="284" y="9">Feb 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="488" x2="488" y1="0" y2="16"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="47" x="402" y="9">Mar 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="608" x2="608" y1="0" y2="16"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="45" x="525" y="9">Apr 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="732" x2="732" y1="0" y2="16"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="49" x="645" y="9">May 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="732" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="732" y1="16" y2="16"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="732" y1="27" y2="27"/>
+    <path d="M204,40 L204,50 L209,50" fill="none" style="stroke:#000;stroke-width:2;"/>
+    <polygon fill="#000" points="208,46,212,50,208,54,208,46" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <rect fill="url(#g6a4wbdo5s4hl0)" height="11" style="stroke:none;stroke-width:1;" width="24" x="186" y="29"/>
+    <rect fill="none" height="11" style="stroke:#C2C2C2;stroke-width:1;" width="24" x="186" y="29"/>
+    <rect fill="url(#g6a4wbdo5s4hl0)" height="11" style="stroke:none;stroke-width:1;" width="24" x="214" y="44"/>
+    <rect fill="none" height="11" style="stroke:#C2C2C2;stroke-width:1;" width="24" x="214" y="44"/>
+    <polygon fill="#000" points="730,59,735,64,730,69,725,64" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#5A5A5A" font-family="Cascadia Code PL" font-size="11" font-weight="700" textLength="146" x="214" y="38">Automatic branch tag on release</text>
+    <text fill="#5A5A5A" font-family="Cascadia Code PL" font-size="11" font-weight="700" textLength="106" x="242" y="53">Setup Automatic Alerts</text>
+    <text fill="#000" font-size="11" textLength="20" x="738" y="68">End</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="732" y1="72" y2="72"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="128" y1="72" y2="88"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="252" x2="252" y1="72" y2="88"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="46" x="167" y="81">Jan 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="364" x2="364" y1="72" y2="88"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="47" x="284" y="81">Feb 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="488" x2="488" y1="72" y2="88"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="47" x="402" y="81">Mar 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="608" x2="608" y1="72" y2="88"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="45" x="525" y="81">Apr 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="732" x2="732" y1="72" y2="88"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="49" x="645" y="81">May 2021</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="732" y1="88" y2="88"/>
   </g>
 </svg>

@@ -1,36 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="248px" preserveAspectRatio="none" style="width:190px;height:248px;background:#FFFFFF;" version="1.1" viewBox="0 0 190 248" width="190px" zoomAndPan="magnify">
   <defs/>
-  <g>
+  <g font-family="sans-serif" lengthAdjust="spacing">
     <g class="header" data-source-line="1">
-      <text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="59.5" x="124" y="7.7778">this is a header</text>
+      <text fill="#888" font-size="10" textLength="59.5" x="124" y="7.778">this is a header</text>
     </g>
     <g class="title" data-source-line="3">
-      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="41.2125" x="71.1438" y="31.8889">the title</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.213" x="71.144" y="31.889">the title</text>
     </g>
-    <rect fill="#FFFFFF" height="99" style="stroke:#181818;stroke-width:1.5;" width="174.5" x="5" y="56"/>
-    <path d="M125.5125,56 L125.5125,63 L115.5125,73 L5,73" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44.45" x="8" y="67.8889">This is a</text>
-    <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="66.0625" x="52.45" y="67.8889">mainframe</text>
+    <rect fill="#FFF" height="99" style="stroke:#181818;stroke-width:1.5;" width="174.5" x="5" y="56"/>
+    <path d="M125.513,56 L125.513,63 L115.513,73 L5,73" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="8" y="67.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="52.45" y="67.889">mainframe</text>
     <!--entity in1-->
     <g class="entity" data-qualified-name="in1" data-source-line="5" id="ent0001">
-      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="101.8125" x="16" y="93"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="66.2375" x="26" y="113.8889">this is a long</text>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="81.8125" x="26" y="127.8889">mutliline thing</text>
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="101.813" x="16" y="93"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="26" y="113.889">this is a long</text>
+      <text fill="#000" font-size="14" textLength="81.813" x="26" y="127.889">mutliline thing</text>
     </g>
     <!--entity c-->
     <g class="entity" data-qualified-name="c" data-source-line="10" id="ent0002">
       <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27" x="136.5" y="105"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7" x="146.5" y="118.8889">c</text>
+      <text fill="#000" font-size="14" textLength="7" x="146.5" y="118.889">c</text>
     </g>
     <g class="legend" data-source-line="12">
-      <rect fill="#DDDDDD" height="24" rx="7.5" ry="7.5" style="stroke:#000000;stroke-width:1;" width="103.45" x="40.025" y="177"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="93.45" x="45.025" y="192.8889">this is the legend</text>
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="103.45" x="40.025" y="177"/>
+      <text fill="#000" font-size="14" textLength="93.45" x="45.025" y="192.889">this is the legend</text>
     </g>
     <g class="caption" data-source-line="16">
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84.875" x="49.3125" y="225.8889">this is a caption</text>
+      <text fill="#000" font-size="14" textLength="84.875" x="49.312" y="225.889">this is a caption</text>
     </g>
     <g class="footer" data-source-line="18">
-      <text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacing" textLength="53.875" x="64.8125" y="238.7778">this is a footer</text>
+      <text fill="#888" font-size="10" textLength="53.875" x="64.813" y="238.778">this is a footer</text>
     </g>
   </g>
 </svg>

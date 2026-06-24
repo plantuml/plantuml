@@ -25,13 +25,15 @@ class RunFlagDarkmodeTest extends AbstractCliTest {
 		final String normal = new String(Files.readAllBytes(svgFile), java.nio.charset.StandardCharsets.UTF_8);
 		assertTrue(normal.contains("#E2E2F0"));
 		assertFalse(normal.contains("#222222"));
+		assertFalse(normal.contains("#222"));
 
 		Run.main(new String[] { "-svg", "-darkmode", tempDir.toAbsolutePath().toString() });
 		assertLs("[test.svg, test.txt]", tempDir);
 
 		final String darkmode = new String(Files.readAllBytes(svgFile), java.nio.charset.StandardCharsets.UTF_8);
 		assertFalse(darkmode.contains("#E2E2F0"));
-		assertTrue(darkmode.contains("#222222"));
+		assertFalse(normal.contains("#222222"));
+		assertTrue(darkmode.contains("#222"));
 
 	}
 }

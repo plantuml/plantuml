@@ -1,30 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="239px" preserveAspectRatio="none" style="width:326px;height:239px;background:#FFFFFF;" version="1.1" viewBox="0 0 326 239" width="326px" zoomAndPan="magnify">
   <defs/>
-  <g>
+  <g font-family="sans-serif" lengthAdjust="spacing">
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="30" y1="72" y2="92"/>
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="108" y2="108"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="54.05" x="40" y="92"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="34.05" x="50" y="111.3333">Task A</text>
+    <text fill="#000" font-size="12" textLength="34.05" x="50" y="111.333">Task A</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="140" y2="140"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="106.775" x="40" y="124"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="86.775" x="50" y="143.3333">Task B long name</text>
+    <text fill="#000" font-size="12" textLength="86.775" x="50" y="143.333">Task B long name</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="172" y2="172"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="54.725" x="40" y="156"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="34.725" x="50" y="175.3333">Task C</text>
+    <text fill="#000" font-size="12" textLength="34.725" x="50" y="175.333">Task C</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="30" y1="92" y2="172"/>
     <line style="stroke:#181818;stroke-width:1.5;" x1="200.175" x2="200.175" y1="72" y2="92"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="66.8" x="166.775" y="92"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="46.8" x="176.775" y="111.3333">Planning</text>
+    <text fill="#000" font-size="12" textLength="46.8" x="176.775" y="111.333">Planning</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="200.175" x2="210.175" y1="155" y2="155"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="86.75" x="210.175" y="139"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="66.75" x="220.175" y="158.3333">Define scope</text>
+    <text fill="#000" font-size="12" textLength="66.75" x="220.175" y="158.333">Define scope</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="200.175" x2="210.175" y1="202" y2="202"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="95.375" x="210.175" y="186"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="75.375" x="220.175" y="205.3333">Set milestones</text>
+    <text fill="#000" font-size="12" textLength="75.375" x="220.175" y="205.333">Set milestones</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="200.175" x2="200.175" y1="124" y2="202"/>
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="200.175" y1="72" y2="72"/>
-    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="57.35" x="86.4125" y="20"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="37.35" x="96.4125" y="39.3333">Project</text>
-    <line style="stroke:#181818;stroke-width:1.5;" x1="115.0875" x2="115.0875" y1="52" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="57.35" x="86.413" y="20"/>
+    <text fill="#000" font-size="12" textLength="37.35" x="96.413" y="39.333">Project</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="115.088" x2="115.088" y1="52" y2="72"/>
   </g>
 </svg>

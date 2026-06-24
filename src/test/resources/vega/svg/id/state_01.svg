@@ -1,25 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="182px" preserveAspectRatio="none" style="width:72px;height:182px;background:#FFFFFF;" version="1.1" viewBox="0 0 72 182" width="72px" zoomAndPan="magnify">
   <defs/>
-  <g>
+  <g font-family="sans-serif" lengthAdjust="spacing">
     <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
       <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="72"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="96" y2="96"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="26.3188" y="87.8889">A</text>
+      <text fill="#000" font-size="14" textLength="9.362" x="26.319" y="87.889">A</text>
     </g>
     <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0002">
-      <ellipse cx="31" cy="22" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/>
+      <ellipse cx="31" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
     </g>
     <g class="end_entity" data-qualified-name=".end." data-source-line="3" id="ent0004">
-      <ellipse cx="31" cy="169" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/>
-      <ellipse cx="31" cy="169" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/>
+      <ellipse cx="31" cy="169" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="31" cy="169" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
-      <polygon fill="#181818" points="31,71.7644,35,62.7644,31,66.7644,27,62.7644,31,71.7644" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M31,36.0938 C31,45.6101 31,54.6616 31,66.7644" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="31,71.764,35,62.764,31,66.764,27,62.764,31,71.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M31,36.094 C31,45.61 31,54.662 31,66.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
-      <polygon fill="#181818" points="31,157.7204,35,148.7204,31,152.7204,27,148.7204,31,157.7204" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M31,122.0374 C31,134.1063 31,143.1553 31,152.7204" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="31,157.72,35,148.72,31,152.72,27,148.72,31,157.72" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M31,122.037 C31,134.106 31,143.155 31,152.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
   </g>
 </svg>

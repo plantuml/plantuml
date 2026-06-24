@@ -94,6 +94,9 @@ public class SvgGraphics {
 	// http://www.w3schools.com/svg/svg_feoffset.asp
 	// http://www.adobe.com/svg/demos/samples.html
 
+	private static final String DEFAULT_FONT_FAMILY = "sans-serif";
+	private static final String DEFAULT_LENGTH_ADJUST = "spacing";
+
 	private static final String XLINK_TITLE1 = "title";
 	private static final String XLINK_TITLE2 = "xlink:title";
 	private static final String XLINK_HREF1 = "href";
@@ -148,6 +151,11 @@ public class SvgGraphics {
 		// for a pair of linear gradient definitions.
 		defs = simpleElement("defs");
 		gRoot = simpleElement("g");
+		gRoot.setAttribute("font-family", DEFAULT_FONT_FAMILY);
+		if (option.getLengthAdjust() == LengthAdjust.SPACING)
+			gRoot.setAttribute("lengthAdjust", DEFAULT_LENGTH_ADJUST);
+		else if (option.getLengthAdjust() == LengthAdjust.SPACING_AND_GLYPHS)
+			gRoot.setAttribute("lengthAdjust", "spacingAndGlyphs");
 		strokeWidth = format(1);
 		this.filterUid = "b" + getSeed(seed);
 		this.shadowId = "f" + getSeed(seed);
@@ -385,10 +393,10 @@ public class SvgGraphics {
 			elt.setAttribute("id", id);
 
 			final XmlNode stop1 = document.createElement("stop");
-			stop1.setAttribute("stop-color", color1);
+			stop1.setAttribute("stop-color", shortenColor(color1));
 			stop1.setAttribute("offset", "0%");
 			final XmlNode stop2 = document.createElement("stop");
-			stop2.setAttribute("stop-color", color2);
+			stop2.setAttribute("stop-color", shortenColor(color2));
 			stop2.setAttribute("offset", "100%");
 
 			elt.appendChild(stop1);
@@ -426,7 +434,7 @@ public class SvgGraphics {
 				final XmlNode stopElt = document.createElement("stop");
 				stopElt.setAttribute("offset", formatPercent(stop.getOffset()));
 				final XColor color = stop.getColor().toColor(mapper);
-				stopElt.setAttribute("stop-color", XColor.toHexRGBColor(color.getRGB()));
+				stopElt.setAttribute("stop-color", shortenColor(XColor.toHexRGBColor(color.getRGB())));
 				final double opacity = (color.getAlpha() / 255.0) * stop.getOpacity();
 				if (opacity < 0.9999)
 					stopElt.setAttribute("stop-opacity", formatOpacity(opacity));
@@ -455,22 +463,27 @@ public class SvgGraphics {
 		return key;
 	}
 
+	private String format(double xx) {
+		final double x = xx * option.getScale();
+		if (x == 0.0)
+			return "0";
+
+		final String s = String.format(Locale.US, "%." + option.getDecimal() + "f", x);
+		return trimZeros(s);
+	}
+
+	private String formatBoolean(double x) {
+		return x == 0 ? "0" : "1";
+	}
+
 	private String formatPercent(double value) {
 		final double percent = value * 100.0;
 		if (percent == 0.0)
 			return "0%";
 
-		String s = String.format(Locale.US, "%.4f", percent);
-		final int dot = s.indexOf('.');
-		if (dot >= 0) {
-			int end = s.length() - 1;
-			while (end > dot && s.charAt(end) == '0')
-				end--;
-			if (end == dot)
-				end--;
-			s = s.substring(0, end + 1);
-		}
-		return s + "%";
+		final int decimal = Math.max(option.getDecimal(), 2);
+		final String s = String.format(Locale.US, "%." + decimal + "f", percent);
+		return trimZeros(s) + "%";
 	}
 
 	private String formatOpacity(double value) {
@@ -478,7 +491,25 @@ public class SvgGraphics {
 			return "0";
 		if (value >= 1.0)
 			return "1";
-		return String.format(Locale.US, "%.4f", value);
+		final int decimal = Math.max(option.getDecimal(), 2);
+		final String s = String.format(Locale.US, "%." + decimal + "f", value);
+		return trimZeros(s);
+	}
+
+	// Removes useless trailing zeros (and the dot if it becomes orphan)
+	private String trimZeros(String s) {
+		final int dot = s.indexOf('.');
+		if (dot >= 0) {
+			int end = s.length() - 1;
+			while (end > dot && s.charAt(end) == '0')
+				end--;
+
+			if (end == dot)
+				end--;
+
+			s = s.substring(0, end + 1);
+		}
+		return s;
 	}
 
 	public final void setFillColor(String fill) {
@@ -505,6 +536,19 @@ public class SvgGraphics {
 	// https://github.com/plantuml/plantuml/issues/2071
 	private String fixColor(String color) {
 		return color == null || "#00000000".equals(color) ? "none" : color;
+	}
+
+	// Shortens #RRGGBB into #RGB when each pair has two identical digits.
+	// Longer forms (#RRGGBBAA) and named/url colors are returned unchanged.
+	private String shortenColor(String color) {
+		if (color == null || color.length() != 7 || color.charAt(0) != '#')
+			return color;
+
+		if (color.charAt(1) == color.charAt(2) && color.charAt(3) == color.charAt(4)
+				&& color.charAt(5) == color.charAt(6))
+			return "#" + color.charAt(1) + color.charAt(3) + color.charAt(5);
+
+		return color;
 	}
 
 	public final void setStrokeWidth(double strokeWidth, double[] strokeDasharray) {
@@ -581,7 +625,7 @@ public class SvgGraphics {
 
 		final StringBuilder style = new StringBuilder();
 
-		style.append("stroke:" + stroke + ";");
+		style.append("stroke:" + shortenColor(stroke) + ";");
 		style.append("stroke-width:" + strokeWidth + ";");
 
 		if (strokeDasharray != null)
@@ -647,13 +691,11 @@ public class SvgGraphics {
 			// elt.setAttribute("text-anchor", "middle");
 
 //			if (option.getFont() == null) {
-			if (option.getLengthAdjust() == LengthAdjust.SPACING) {
-				elt.setAttribute("lengthAdjust", "spacing");
+			// lengthAdjust is set once on the root <g> element (inherited here).
+			// Only textLength must be emitted per <text> since it is not inheritable.
+			if (option.getLengthAdjust() == LengthAdjust.SPACING
+					|| option.getLengthAdjust() == LengthAdjust.SPACING_AND_GLYPHS)
 				elt.setAttribute("textLength", format(textLength));
-			} else if (option.getLengthAdjust() == LengthAdjust.SPACING_AND_GLYPHS) {
-				elt.setAttribute("lengthAdjust", "spacingAndGlyphs");
-				elt.setAttribute("textLength", format(textLength));
-			}
 //			}
 
 			if (fontWeight != null)
@@ -674,7 +716,8 @@ public class SvgGraphics {
 				if ("monospaced".equalsIgnoreCase(fontFamily))
 					fontFamily = "monospace";
 
-				elt.setAttribute("font-family", fontFamily);
+				if (fontFamily.equalsIgnoreCase(DEFAULT_FONT_FAMILY) == false)
+					elt.setAttribute("font-family", fontFamily);
 
 				if (fontFamily.equalsIgnoreCase("monospace") || fontFamily.equalsIgnoreCase("courier"))
 					text = text.replace(' ', (char) 160);
@@ -829,11 +872,11 @@ public class SvgGraphics {
 
 	private void fillMe(XmlNode elt) {
 		if (fill.matches("#[0-9A-Fa-f]{8}")) {
-			elt.setAttribute("fill", fill.substring(0, 7));
+			elt.setAttribute("fill", shortenColor(fill.substring(0, 7)));
 			final double opacity = Integer.parseInt(fill.substring(7), 16) / 255.0;
-			elt.setAttribute("fill-opacity", String.format(Locale.US, "%1.5f", opacity));
+			elt.setAttribute("fill-opacity", formatOpacity(opacity));
 		} else {
-			elt.setAttribute("fill", fill);
+			elt.setAttribute("fill", shortenColor(fill));
 		}
 	}
 
@@ -878,31 +921,6 @@ public class SvgGraphics {
 		currentPath.append("Q" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " ");
 		ensureVisible(x1, y1);
 		ensureVisible(x2, y2);
-	}
-
-	private String format(double xx) {
-		final double x = xx * option.getScale();
-		if (x == 0.0)
-			return "0";
-
-		String s = String.format(Locale.US, "%.4f", x);
-
-		final int dot = s.indexOf('.');
-		if (dot >= 0) {
-			int end = s.length() - 1;
-			while (end > dot && s.charAt(end) == '0')
-				end--;
-
-			if (end == dot)
-				end--;
-
-			s = s.substring(0, end + 1);
-		}
-		return s;
-	}
-
-	private String formatBoolean(double x) {
-		return x == 0 ? "0" : "1";
 	}
 
 	public void fill(int windingRule) {

@@ -293,6 +293,9 @@ public class TextBlockExporter {
 			option = option.withRootAttribute("data-diagram-type", diagramType.name());
 		}
 
+		if (fileFormatOption.getDecimal() >= 0)
+			option = option.withDecimal(fileFormatOption.getDecimal());
+
 		if (p.isTrue(PragmaKey.SVG_INTERACTIVE)) {
 			String interactiveBaseFilename = "default";
 			if (diagramType == DiagramType.SEQUENCE)

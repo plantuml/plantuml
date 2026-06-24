@@ -142,6 +142,7 @@ public class DiagramRendererTeaVM {
 		option = option.withBackcolor(backcolor);
 		option = option.withScale(scaleFactor);
 		option = option.withColorMapper(colorMapper);
+		option = option.withDecimal(0);
 
 		UGraphic ug = UGraphicSvg.build(option, false, diagram.seed(), STRING_BOUNDER, FileFormat.SVG_DETERMINISTIC);
 		if (diagram.isHandwritten())

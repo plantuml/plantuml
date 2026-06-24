@@ -58,6 +58,7 @@ public class SvgOption {
 	private XDimension2D minDim = new XDimension2D(0, 0);
 	private HColor backcolor;
 	private double scale = 1.0;
+	private int decimal = 3;
 	private ColorMapper colorMapper = ColorMapper.IDENTITY;
 	private String linkTarget;
 	private String font;
@@ -150,6 +151,11 @@ public class SvgOption {
 		return this;
 	}
 
+	public SvgOption withDecimal(int decimal) {
+		this.decimal = decimal;
+		return this;
+	}
+
 	public SvgOption withColorMapper(ColorMapper colorMapper) {
 		this.colorMapper = colorMapper;
 		return this;
@@ -204,6 +210,10 @@ public class SvgOption {
 
 	public double getScale() {
 		return scale;
+	}
+
+	public int getDecimal() {
+		return decimal;
 	}
 
 	public ColorMapper getColorMapper() {

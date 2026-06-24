@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="148px" preserveAspectRatio="none" style="width:704px;height:148px;background:#FFFFFF;" version="1.1" viewBox="0 0 704 148" width="704px" zoomAndPan="magnify">
   <defs/>
-  <g>
+  <g font-family="sans-serif" lengthAdjust="spacing">
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="0" x2="251.375" y1="0" y2="0"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="0" x2="251.375" y1="54" y2="54"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="0" x2="251.375" y1="114" y2="114"/>
@@ -8,27 +8,27 @@
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="77.875" x2="77.875" y1="0" y2="114"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="155.75" x2="155.75" y1="0" y2="114"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="251.375" x2="251.375" y1="0" y2="114"/>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="42.125" x="10" y="32.5556">Start</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="35.625" x="87.875" y="32.5556">End</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="75.625" x="165.75" y="32.5556">Duration</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="53.25" x="10" y="74.5556">Oct 15</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="57.875" x="87.875" y="74.5556">Nov 18</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="64.5" x="165.75" y="74.5556">35 days</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="57.875" x="10" y="104.5556">Nov 19</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="57.875" x="87.875" y="104.5556">Nov 25</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="53.375" x="165.75" y="104.5556">7 days</text>
+    <text fill="#000" font-size="20" textLength="42.125" x="10" y="32.556">Start</text>
+    <text fill="#000" font-size="20" textLength="35.625" x="87.875" y="32.556">End</text>
+    <text fill="#000" font-size="20" textLength="75.625" x="165.75" y="32.556">Duration</text>
+    <text fill="#000" font-size="20" textLength="53.25" x="10" y="74.556">Oct 15</text>
+    <text fill="#000" font-size="20" textLength="57.875" x="87.875" y="74.556">Nov 18</text>
+    <text fill="#000" font-size="20" textLength="64.5" x="165.75" y="74.556">35 days</text>
+    <text fill="#000" font-size="20" textLength="57.875" x="10" y="104.556">Nov 19</text>
+    <text fill="#000" font-size="20" textLength="57.875" x="87.875" y="104.556">Nov 25</text>
+    <text fill="#000" font-size="20" textLength="53.375" x="165.75" y="104.556">7 days</text>
     <rect fill="#F1E5E5" height="60" style="stroke:none;stroke-width:2;" width="16" x="267.375" y="54"/>
     <rect fill="#F1E5E5" height="60" style="stroke:none;stroke-width:2;" width="16" x="323.375" y="54"/>
     <rect fill="#FA8072" height="60" style="stroke:none;stroke-width:2;" width="56" x="339.375" y="54"/>
     <rect fill="#F1E5E5" height="60" style="stroke:none;stroke-width:2;" width="16" x="435.375" y="54"/>
     <rect fill="#F1E5E5" height="60" style="stroke:none;stroke-width:2;" width="16" x="491.375" y="54"/>
     <rect fill="#F1E5E5" height="60" style="stroke:none;stroke-width:2;" width="16" x="547.375" y="54"/>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="22.25" x="293.375" y="47.5556">43</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="22.25" x="349.375" y="47.5556">44</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="22.25" x="405.375" y="47.5556">45</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="22.25" x="461.375" y="47.5556">46</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="22.25" x="517.375" y="47.5556">47</text>
-    <text fill="#000000" font-family="sans-serif" font-size="20" lengthAdjust="spacing" textLength="22.25" x="573.375" y="47.5556">48</text>
+    <text fill="#000" font-size="20" textLength="22.25" x="293.375" y="47.556">43</text>
+    <text fill="#000" font-size="20" textLength="22.25" x="349.375" y="47.556">44</text>
+    <text fill="#000" font-size="20" textLength="22.25" x="405.375" y="47.556">45</text>
+    <text fill="#000" font-size="20" textLength="22.25" x="461.375" y="47.556">46</text>
+    <text fill="#000" font-size="20" textLength="22.25" x="517.375" y="47.556">47</text>
+    <text fill="#000" font-size="20" textLength="22.25" x="573.375" y="47.556">48</text>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="283.375" x2="283.375" y1="32" y2="114"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="339.375" x2="339.375" y1="32" y2="114"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="395.375" x2="395.375" y1="32" y2="114"/>
@@ -38,9 +38,9 @@
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="587.375" x2="587.375" y1="32" y2="114"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="251.375" x2="251.375" y1="0" y2="32"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="387.375" x2="387.375" y1="0" y2="32"/>
-    <text fill="#000000" font-family="sans-serif" font-size="24" font-weight="700" lengthAdjust="spacing" textLength="90.6" x="274.075" y="18.6667">Oct 2020</text>
+    <text fill="#000" font-size="24" font-weight="700" textLength="90.6" x="274.075" y="18.667">Oct 2020</text>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="587.375" x2="587.375" y1="0" y2="32"/>
-    <text fill="#000000" font-family="sans-serif" font-size="24" font-weight="700" lengthAdjust="spacing" textLength="96.15" x="439.3" y="18.6667">Nov 2020</text>
+    <text fill="#000" font-size="24" font-weight="700" textLength="96.15" x="439.3" y="18.667">Nov 2020</text>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="251.375" x2="587.375" y1="0" y2="0"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="251.375" x2="587.375" y1="32" y2="32"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="251.375" x2="587.375" y1="54" y2="54"/>
@@ -78,14 +78,14 @@
     <path d="M563.375,88 L583.375,88 L583.375,110 L563.375,110" fill="none" style="stroke:#181818;stroke-width:2;"/>
     <line style="stroke:#181818;stroke-width:2;stroke-dasharray:4,6;" x1="553.375" x2="557.375" y1="88" y2="88"/>
     <line style="stroke:#181818;stroke-width:2;stroke-dasharray:4,6;" x1="553.375" x2="557.375" y1="110" y2="110"/>
-    <text fill="#000000" font-family="sans-serif" font-size="22" lengthAdjust="spacing" textLength="158.95" x="263.375" y="75.1111">Prototype design</text>
-    <text fill="#000000" font-family="sans-serif" font-size="22" lengthAdjust="spacing" textLength="72.1875" x="591.375" y="105.1111">Testing</text>
+    <text fill="#000" font-size="22" textLength="158.95" x="263.375" y="75.111">Prototype design</text>
+    <text fill="#000" font-size="22" textLength="72.188" x="591.375" y="105.111">Testing</text>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="251.375" x2="587.375" y1="114" y2="114"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="251.375" x2="251.375" y1="114" y2="146"/>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="387.375" x2="387.375" y1="114" y2="146"/>
-    <text fill="#000000" font-family="sans-serif" font-size="24" font-weight="700" lengthAdjust="spacing" textLength="90.6" x="274.075" y="132.6667">Oct 2020</text>
+    <text fill="#000" font-size="24" font-weight="700" textLength="90.6" x="274.075" y="132.667">Oct 2020</text>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="587.375" x2="587.375" y1="114" y2="146"/>
-    <text fill="#000000" font-family="sans-serif" font-size="24" font-weight="700" lengthAdjust="spacing" textLength="96.15" x="439.3" y="132.6667">Nov 2020</text>
+    <text fill="#000" font-size="24" font-weight="700" textLength="96.15" x="439.3" y="132.667">Nov 2020</text>
     <line style="stroke:#C0C0C0;stroke-width:2;" x1="251.375" x2="587.375" y1="146" y2="146"/>
   </g>
 </svg>

@@ -166,14 +166,14 @@ svg.click-active &gt; g &gt; g.click-highlighted {
 })();
 </script>
   </defs>
-  <g>
+  <g font-family="sans-serif" lengthAdjust="spacing">
     <!--cluster c1-->
     <g class="cluster" data-qualified-name="c1" data-source-line="3" id="ent0001">
       <rect fill="none" height="57" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="52" x="-6" y="4"/>
       <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="26" y="9"/>
       <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="24" y="11"/>
       <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="24" y="15"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="14.7875" x="12.6063" y="27.8889">c1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="12.606" y="27.889">c1</text>
     </g>
     <!--cluster c2-->
     <g class="cluster" data-qualified-name="c2" data-source-line="7" id="ent0003">
@@ -181,19 +181,19 @@ svg.click-active &gt; g &gt; g.click-highlighted {
       <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="26" y="9"/>
       <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="24" y="11"/>
       <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="24" y="15"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="700" lengthAdjust="spacing" textLength="14.7875" x="12.6063" y="27.8889">c2</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="12.606" y="27.889">c2</text>
     </g>
     <g class="entity" data-qualified-name="c1.p1" data-source-line="4" id="ent0002">
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.575" x="20.2125" y="13.8889">p1</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="20.213" y="13.889">p1</text>
       <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="22" y="29"/>
     </g>
     <g class="entity" data-qualified-name="c2.p2" data-source-line="8" id="ent0004">
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.575" x="20.2125" y="116.8889">p2</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="20.213" y="116.889">p2</text>
       <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="22" y="94"/>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
-      <polygon fill="#181818" points="30,93.8344,34,84.8344,30,88.8344,26,84.8344,30,93.8344" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M30,53.2631 C30,64.7304 30,77.4025 30,88.8344" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="30,93.834,34,84.834,30,88.834,26,84.834,30,93.834" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M30,53.263 C30,64.73 30,77.402 30,88.834" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
   </g>
 </svg>

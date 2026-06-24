@@ -1,28 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="407px" preserveAspectRatio="none" style="width:105px;height:407px;background:#FFFFFF;" version="1.1" viewBox="0 0 105 407" width="105px" zoomAndPan="magnify">
   <defs/>
-  <g>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.7875" x="6.1062" y="20.8889">0</text>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="14" textLength="7.788" x="6.106" y="20.889">0</text>
     <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M52,24 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="56"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="26.3188" y="76.8889">A</text>
+    <text fill="#000" font-size="14" textLength="9.362" x="26.319" y="76.889">A</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="90"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="26.3188" y="110.8889">B</text>
+    <text fill="#000" font-size="14" textLength="9.362" x="26.319" y="110.889">B</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="124"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.15" x="25.925" y="144.8889">C</text>
+    <text fill="#000" font-size="14" textLength="10.15" x="25.925" y="144.889">C</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="158"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.15" x="25.925" y="178.8889">D</text>
+    <text fill="#000" font-size="14" textLength="10.15" x="25.925" y="178.889">D</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="192"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="26.3188" y="212.8889">E</text>
+    <text fill="#000" font-size="14" textLength="9.362" x="26.319" y="212.889">E</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="226"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="8.575" x="26.7125" y="246.8889">F</text>
+    <text fill="#000" font-size="14" textLength="8.575" x="26.713" y="246.889">F</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="260"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.85" x="25.575" y="280.8889">G</text>
+    <text fill="#000" font-size="14" textLength="10.85" x="25.575" y="280.889">G</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="294"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10.15" x="25.925" y="314.8889">H</text>
+    <text fill="#000" font-size="14" textLength="10.15" x="25.925" y="314.889">H</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="328"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="3.85" x="29.075" y="348.8889">I</text>
+    <text fill="#000" font-size="14" textLength="3.85" x="29.075" y="348.889">I</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="362"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7" x="27.5" y="382.8889">J</text>
+    <text fill="#000" font-size="14" textLength="7" x="27.5" y="382.889">J</text>
   </g>
 </svg>

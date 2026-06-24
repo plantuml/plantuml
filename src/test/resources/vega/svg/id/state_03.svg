@@ -1,32 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="182px" preserveAspectRatio="none" style="width:127px;height:182px;background:#FFFFFF;" version="1.1" viewBox="0 0 127 182" width="127px" zoomAndPan="magnify">
   <defs/>
-  <g>
+  <g font-family="sans-serif" lengthAdjust="spacing">
     <!--cluster A-->
     <g class="cluster" data-qualified-name="A" data-source-line="1" id="ent0001">
       <path d="M26.5,47 L101.5,47 A12.5,12.5 0 0 1 114,59.5 L114,66 L14,66 L14,59.5 A12.5,12.5 0 0 1 26.5,47" fill="#F1F1F1"/>
       <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100" x="14" y="47"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="114" y1="66" y2="66"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="59.3188" y="57.8889">A</text>
+      <text fill="#000" font-size="14" textLength="9.362" x="59.319" y="57.889">A</text>
     </g>
     <g class="start_entity" data-qualified-name=".start." data-source-line="4" id="ent0003">
-      <ellipse cx="30" cy="22" fill="#222222" rx="10" ry="10" style="stroke:#222222;stroke-width:1;"/>
+      <ellipse cx="30" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
     </g>
     <g class="end_entity" data-qualified-name=".end." data-source-line="5" id="ent0005">
-      <ellipse cx="81" cy="169" fill="none" rx="11" ry="11" style="stroke:#222222;stroke-width:1;"/>
-      <ellipse cx="81" cy="169" fill="#222222" rx="6" ry="6" style="stroke:#222222;stroke-width:1;"/>
+      <ellipse cx="81" cy="169" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="81" cy="169" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
     </g>
     <g class="entity" data-qualified-name="A.B" data-source-line="2" id="ent0002">
       <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="56" y="72"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="56" x2="106" y1="96" y2="96"/>
-      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="9.3625" x="76.3188" y="87.8889">B</text>
+      <text fill="#000" font-size="14" textLength="9.362" x="76.319" y="87.889">B</text>
     </g>
     <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
-      <polygon fill="#181818" points="30,46.8355,34,37.8355,30,41.8355,26,37.8355,30,46.8355" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M30,36.0938 C30,37.7513 30,39.5465 30,41.4449 C30,42.3942 30,43.3693 30,44.3659 C30,44.8642 30,45.3679 30,45.8764 C30,46.1307 30,46.3862 30,46.6428 C30,46.707 30,41.7712 30,41.8355" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="30,46.836,34,37.836,30,41.836,26,37.836,30,46.836" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M30,36.094 C30,37.751 30,39.546 30,41.445 C30,42.394 30,43.369 30,44.366 C30,44.864 30,45.368 30,45.876 C30,46.131 30,46.386 30,46.643 C30,46.707 30,41.771 30,41.836" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
-      <polygon fill="#181818" points="81,157.7204,85,148.7204,81,152.7204,77,148.7204,81,157.7204" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M81,122.0374 C81,134.1063 81,143.1553 81,152.7204" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="81,157.72,85,148.72,81,152.72,77,148.72,81,157.72" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M81,122.037 C81,134.106 81,143.155 81,152.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
   </g>
 </svg>

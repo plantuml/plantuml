@@ -36,6 +36,23 @@ import net.sourceforge.plantuml.log.Logme;
 @Isolated
 class VegaTest {
 
+	// To regenerate all the "expected" reference files instead of comparing
+	// against them, set the VEGA_FORCE_WRITE environment variable to "true"
+	// before running the tests (see VegaInputFile.FORCE_WRITE).
+	//
+	// Windows (PowerShell):
+	//   $env:VEGA_FORCE_WRITE="true"; .\gradlew test --tests test.vega.VegaTest
+	//   Remove-Item Env:\VEGA_FORCE_WRITE
+	//
+	// Windows (cmd.exe):
+	//   set VEGA_FORCE_WRITE=true && gradlew test --tests test.vega.VegaTest
+	//   set VEGA_FORCE_WRITE=
+	//
+	// Linux / macOS (bash):
+	//   VEGA_FORCE_WRITE=true ./gradlew test --tests test.vega.VegaTest
+	//
+	// Always review the changes with "git diff" before committing.
+
 	public static final Path VEGA_RESOURCES = Paths.get("src", "test", "resources", "vega");
 
 	public static final List<JsonObject> results = new ArrayList<>();

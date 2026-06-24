@@ -1,32 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="WBS" height="192px" preserveAspectRatio="none" style="width:341px;height:192px;background:#FFFFFF;" version="1.1" viewBox="0 0 341 192" width="341px" zoomAndPan="magnify">
   <defs/>
-  <g>
+  <g font-family="sans-serif" lengthAdjust="spacing">
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="30" y1="72" y2="92"/>
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="108" y2="108"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="55.475" x="40" y="92"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="35.475" x="50" y="111.3333">Child A</text>
+    <text fill="#000" font-size="12" textLength="35.475" x="50" y="111.333">Child A</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="40" y1="140" y2="140"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="55.475" x="40" y="124"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="35.475" x="50" y="143.3333">Child B</text>
+    <text fill="#000" font-size="12" textLength="35.475" x="50" y="143.333">Child B</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="30" y1="92" y2="140"/>
     <line style="stroke:#181818;stroke-width:1.5;" x1="125.475" x2="125.475" y1="72" y2="92"/>
     <line style="stroke:#181818;stroke-width:1.5;" x1="125.475" x2="135.475" y1="108" y2="108"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="56.15" x="135.475" y="92"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="36.15" x="145.475" y="111.3333">Child C</text>
+    <text fill="#000" font-size="12" textLength="36.15" x="145.475" y="111.333">Child C</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="125.475" x2="135.475" y1="140" y2="140"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="56.15" x="135.475" y="124"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="36.15" x="145.475" y="143.3333">Child D</text>
+    <text fill="#000" font-size="12" textLength="36.15" x="145.475" y="143.333">Child D</text>
     <line style="stroke:#181818;stroke-width:1.5;" x1="125.475" x2="125.475" y1="92" y2="140"/>
-    <line style="stroke:#181818;stroke-width:1.5;" x1="255.3375" x2="255.3375" y1="72" y2="92"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="255.338" x2="255.338" y1="72" y2="92"/>
     <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="87.425" x="211.625" y="92"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="67.425" x="221.625" y="111.3333">Normal Node</text>
-    <line style="stroke:#181818;stroke-width:1.5;" x1="255.3375" x2="265.3375" y1="155" y2="155"/>
-    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="55.475" x="265.3375" y="139"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="35.475" x="275.3375" y="158.3333">Child E</text>
-    <line style="stroke:#181818;stroke-width:1.5;" x1="255.3375" x2="255.3375" y1="124" y2="155"/>
-    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="255.3375" y1="72" y2="72"/>
-    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="45.35" x="119.9938" y="20"/>
-    <text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="25.35" x="129.9938" y="39.3333">Root</text>
-    <line style="stroke:#181818;stroke-width:1.5;" x1="142.6688" x2="142.6688" y1="52" y2="72"/>
+    <text fill="#000" font-size="12" textLength="67.425" x="221.625" y="111.333">Normal Node</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="255.338" x2="265.338" y1="155" y2="155"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="55.475" x="265.338" y="139"/>
+    <text fill="#000" font-size="12" textLength="35.475" x="275.338" y="158.333">Child E</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="255.338" x2="255.338" y1="124" y2="155"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="30" x2="255.338" y1="72" y2="72"/>
+    <rect fill="#F1F1F1" height="32" style="stroke:#181818;stroke-width:1.5;" width="45.35" x="119.994" y="20"/>
+    <text fill="#000" font-size="12" textLength="25.35" x="129.994" y="39.333">Root</text>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="142.669" x2="142.669" y1="52" y2="72"/>
   </g>
 </svg>

@@ -63,6 +63,7 @@ public final class FileFormatOption implements Serializable {
 	private final String preserveAspectRatio;
 	private final String watermark;
 	private final ColorMapper colorMapper;
+	private final int decimal;
 
 	public double getScaleCoef() {
 		return scale;
@@ -70,17 +71,17 @@ public final class FileFormatOption implements Serializable {
 
 	public FileFormatOption(FileFormat fileFormat) {
 		this(fileFormat, true, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
-				ColorMapper.IDENTITY);
+				ColorMapper.IDENTITY, -1);
 	}
 
 	public FileFormatOption(FileFormat fileFormat, boolean withMetadata) {
 		this(fileFormat, withMetadata, false, null, false, null, TikzFontDistortion.getDefault(), 1.0, null, null,
-				ColorMapper.IDENTITY);
+				ColorMapper.IDENTITY, -1);
 	}
 
 	private FileFormatOption(FileFormat fileFormat, boolean withMetadata, boolean useRedForError, String svgLinkTarget,
 			boolean debugsvek, String hoverColor, TikzFontDistortion tikzFontDistortion, double scale,
-			String preserveAspectRatio, String watermark, ColorMapper colorMapper) {
+			String preserveAspectRatio, String watermark, ColorMapper colorMapper, int decimal) {
 		this.hoverColor = hoverColor;
 		this.watermark = watermark;
 		this.fileFormat = fileFormat;
@@ -92,6 +93,7 @@ public final class FileFormatOption implements Serializable {
 		this.scale = scale;
 		this.preserveAspectRatio = preserveAspectRatio;
 		this.colorMapper = colorMapper;
+		this.decimal = decimal;
 	}
 
 	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {
@@ -112,42 +114,47 @@ public final class FileFormatOption implements Serializable {
 
 	public FileFormatOption withUseRedForError() {
 		return new FileFormatOption(fileFormat, withMetadata, true, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, decimal);
 	}
 
 	public FileFormatOption withTikzFontDistortion(TikzFontDistortion tikzFontDistortion) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, decimal);
 	}
 
 	public FileFormatOption withSvgLinkTarget(String svgLinkTarget) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, decimal);
 	}
 
 	public FileFormatOption withPreserveAspectRatio(String preserveAspectRatio) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, decimal);
 	}
 
 	public FileFormatOption withHoverColor(String hoverColor) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, decimal);
 	}
 
 	public FileFormatOption withScale(double scale) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, decimal);
 	}
 
 	public FileFormatOption withWartermark(String watermark) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, decimal);
 	}
 
 	public FileFormatOption withColorMapper(ColorMapper colorMapper) {
 		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
-				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, decimal);
+	}
+
+	public FileFormatOption withDecimal(int decimal) {
+		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper, decimal);
 	}
 
 	@Override
@@ -197,6 +204,10 @@ public final class FileFormatOption implements Serializable {
 
 	public ColorMapper getColorMapper() {
 		return colorMapper;
+	}
+
+	public int getDecimal() {
+		return decimal;
 	}
 
 }

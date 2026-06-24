@@ -307,8 +307,11 @@ public class VegaInputFile {
 			for (int imageIndex = 0; imageIndex < nbImages; imageIndex++) {
 				final SourceStringReader ssrForFormat = new SourceStringReader(source, getCurrentDir());
 				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				final DiagramDescription description = ssrForFormat.outputImage(baos, imageIndex,
-						new FileFormatOption(fileFormat));
+				FileFormatOption fileFormatOption = new FileFormatOption(fileFormat);
+				final String decimal = getYamlString("decimal");
+				if (decimal != null)
+					fileFormatOption = fileFormatOption.withDecimal(Integer.parseInt(decimal.trim()));
+				final DiagramDescription description = ssrForFormat.outputImage(baos, imageIndex, fileFormatOption);
 
 				this.description = description.getDescription();
 
@@ -467,8 +470,10 @@ public class VegaInputFile {
 		return this.rootCause.getClass().getSimpleName() + " - " + this.rootCause.getMessage();
 	}
 
+	public static final boolean FORCE_WRITE = "true".equals(System.getenv("VEGA_FORCE_WRITE"));
+
 	public boolean forceWrite() {
-		return hasYamlHeader == false;
+		return FORCE_WRITE || hasYamlHeader == false;
 	}
 
 }

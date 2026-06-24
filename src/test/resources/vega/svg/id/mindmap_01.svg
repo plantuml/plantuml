@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="MINDMAP" height="183px" preserveAspectRatio="none" style="width:238px;height:183px;background:#FFFFFF;" version="1.1" viewBox="0 0 238 183" width="238px" zoomAndPan="magnify">
   <defs/>
-  <g>
-    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="44.0625" x="10" y="74"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="24.0625" x="20" y="94.8889">root</text>
-    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.7875" x="104.0625" y="47"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.7875" x="114.0625" y="67.8889">a</text>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="44.063" x="10" y="74"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="20" y="94.889">root</text>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.788" x="104.063" y="47"/>
+    <text fill="#000" font-size="14" textLength="7.788" x="114.063" y="67.889">a</text>
     <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.575" x="181.85" y="20"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.575" x="191.85" y="40.8889">a1</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="191.85" y="40.889">a1</text>
     <path d="M131.85,64 L141.85,64 C156.85,64 156.85,37 171.85,37 L181.85,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
     <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.575" x="181.85" y="74"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.575" x="191.85" y="94.8889">a2</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="191.85" y="94.889">a2</text>
     <path d="M131.85,64 L141.85,64 C156.85,64 156.85,91 171.85,91 L181.85,91" fill="none" style="stroke:#181818;stroke-width:1;"/>
-    <path d="M54.0625,91 L64.0625,91 C79.0625,91 79.0625,64 94.0625,64 L104.0625,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
-    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.7875" x="104.0625" y="128"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7.7875" x="114.0625" y="148.8889">b</text>
+    <path d="M54.063,91 L64.063,91 C79.063,91 79.063,64 94.063,64 L104.063,64" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="27.788" x="104.063" y="128"/>
+    <text fill="#000" font-size="14" textLength="7.788" x="114.063" y="148.889">b</text>
     <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1.5;" width="35.575" x="181.85" y="128"/>
-    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15.575" x="191.85" y="148.8889">b1</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="191.85" y="148.889">b1</text>
     <path d="M131.85,145 L141.85,145 C156.85,145 156.85,145 171.85,145 L181.85,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
-    <path d="M54.0625,91 L64.0625,91 C79.0625,91 79.0625,145 94.0625,145 L104.0625,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    <path d="M54.063,91 L64.063,91 C79.063,91 79.063,145 94.063,145 L104.063,145" fill="none" style="stroke:#181818;stroke-width:1;"/>
   </g>
 </svg>

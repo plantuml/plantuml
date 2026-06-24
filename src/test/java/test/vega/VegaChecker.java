@@ -18,7 +18,7 @@ public abstract class VegaChecker {
 		final String actualOutput = normalizeLineEndings(new String(baos.toByteArray(), UTF_8));
 		final Path expectedFile = getExpectedFile(data.getPath(), suffix, extension);
 
-		if (Files.exists(expectedFile) == false) {
+		if (Files.exists(expectedFile) == false || data.forceWrite()) {
 			Files.write(expectedFile, actualOutput.getBytes(UTF_8));
 			return expectedFile;
 		}
