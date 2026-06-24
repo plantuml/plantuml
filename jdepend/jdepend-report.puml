@@ -16,7 +16,7 @@ Total Classes: 28
 "com.plantuml.ubrex" --> "java.util.concurrent.atomic"
 "com.plantuml.ubrex" --> "java.util.function"
 
-class "com.plantuml.ubrex.builder" %lighten("red", 38) {
+class "com.plantuml.ubrex.builder" %lighten("red", 36) {
 Total Classes: 9
 }
 "com.plantuml.ubrex.builder" --> "com.plantuml.ubrex"
@@ -727,13 +727,16 @@ Total Classes: 23
 "net.sourceforge.plantuml.asciiart" --> "net.sourceforge.plantuml.skin.rose"
 "net.sourceforge.plantuml.asciiart" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.asciiverse" %lighten("red", 89) {
-Total Classes: 7
+class "net.sourceforge.plantuml.asciiverse" %lighten("red", 94) {
+Total Classes: 8
 }
 "net.sourceforge.plantuml.asciiverse" --> "java.io"
 "net.sourceforge.plantuml.asciiverse" --> "java.lang"
 "net.sourceforge.plantuml.asciiverse" --> "java.util"
+"net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt.creole"
+"net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt.drawing"
+"net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.security"
 
@@ -1580,9 +1583,10 @@ Total Classes: 2
 "net.sourceforge.plantuml.ftp" --> "java.lang"
 "net.sourceforge.plantuml.ftp" --> "net.sourceforge.plantuml.log"
 
-class "net.sourceforge.plantuml.gantt" %lighten("red", 93) {
-Total Classes: 18
+class "net.sourceforge.plantuml.gantt" %lighten("red", 94) {
+Total Classes: 24
 }
+"net.sourceforge.plantuml.gantt" --> "com.plantuml.ubrex.builder"
 "net.sourceforge.plantuml.gantt" --> "java.io"
 "net.sourceforge.plantuml.gantt" --> "java.lang"
 "net.sourceforge.plantuml.gantt" --> "java.time"
@@ -1620,7 +1624,7 @@ Total Classes: 18
 "net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.gantt.command" %lighten("red", 95) {
-Total Classes: 13
+Total Classes: 14
 }
 "net.sourceforge.plantuml.gantt.command" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.gantt.command" --> "com.plantuml.ubrex.builder"
@@ -1947,7 +1951,7 @@ Total Classes: 6
 "net.sourceforge.plantuml.jsondiagram" --> "net.sourceforge.plantuml.yaml"
 "net.sourceforge.plantuml.jsondiagram" --> "smetana.core"
 
-class "net.sourceforge.plantuml.klimt" %lighten("red", 67) {
+class "net.sourceforge.plantuml.klimt" %lighten("red", 66) {
 Total Classes: 21
 }
 "net.sourceforge.plantuml.klimt" --> "java.awt"
@@ -2258,7 +2262,7 @@ Total Classes: 8
 "net.sourceforge.plantuml.klimt.drawing.visio" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.klimt.drawing.visio" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml.klimt.font" %lighten("red", 25) {
+class "net.sourceforge.plantuml.klimt.font" %lighten("red", 24) {
 Total Classes: 11
 }
 "net.sourceforge.plantuml.klimt.font" --> "java.lang"

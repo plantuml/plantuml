@@ -39,9 +39,6 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
-import net.sourceforge.plantuml.gantt.LabelPosition;
-import net.sourceforge.plantuml.gantt.LabelStrategy;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -53,27 +50,27 @@ import net.sourceforge.plantuml.warning.Warning;
 public class CommandLabelOnColumn extends SingleLineCommand2&lt;GanttDiagram&gt; {
 
 	public CommandLabelOnColumn() {
-<span class="fc" id="L56">		super(getRegexConcat());</span>
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L53">		super(getRegexConcat());</span>
+<span class="fc" id="L54">	}</span>
 
 	static IRegex getRegexConcat() {
-<span class="fc" id="L60">		return RegexConcat.build(CommandLabelOnColumn.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L57">		return RegexConcat.build(CommandLabelOnColumn.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;labels?&quot;), //
-<span class="fc" id="L62">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L59">				RegexLeaf.spaceOneOrMore(), //</span>
 				new RegexLeaf(&quot;on&quot;), //
-<span class="fc" id="L64">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L61">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(1, &quot;POSITION&quot;, &quot;(first|last)&quot;), //
-<span class="fc" id="L66">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L63">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexLeaf(&quot;column&quot;), //
 				new RegexOptional(new RegexConcat( //
-<span class="fc" id="L69">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L66">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;and&quot;), //
-<span class="fc" id="L71">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L68">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(1, &quot;ALIGNED&quot;, &quot;(left|right)&quot;), //
-<span class="fc" id="L73">						RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L70">						RegexLeaf.spaceZeroOrMore(), //</span>
 						new RegexLeaf(&quot;aligned&quot;) //
 				)), //
-<span class="fc" id="L76">				RegexLeaf.end());</span>
+<span class="fc" id="L73">				RegexLeaf.end());</span>
 	}
 
 	@Override
@@ -86,8 +83,8 @@ public class CommandLabelOnColumn extends SingleLineCommand2&lt;GanttDiagram&gt;
 //				: HorizontalAlignment.LEFT;
 //		final LabelStrategy strategy = new LabelStrategy(position, alignment);
 //		diagram.setLabelStrategy(strategy);
-<span class="nc" id="L89">		diagram.addWarning(new Warning(&quot;This command is deprecated&quot;));</span>
-<span class="nc" id="L90">		return CommandExecutionResult.ok();</span>
+<span class="nc" id="L86">		diagram.addWarning(new Warning(&quot;This command is deprecated&quot;));</span>
+<span class="nc" id="L87">		return CommandExecutionResult.ok();</span>
 	}
 
 }

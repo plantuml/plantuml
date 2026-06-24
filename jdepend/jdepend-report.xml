@@ -131,11 +131,11 @@
                 <TotalClasses>9</TotalClasses>
                 <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
-                <Ca>8</Ca>
+                <Ca>9</Ca>
                 <Ce>3</Ce>
                 <A>0.11</A>
-                <I>0.27</I>
-                <D>0.62</D>
+                <I>0.25</I>
+                <D>0.64</D>
                 <V>1</V>
             </Stats>
 
@@ -183,6 +183,7 @@
                 <Package>net.sourceforge.plantuml.classdiagram.command</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.crash</Package>
+                <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gantt.command</Package>
                 <Package>net.sourceforge.plantuml.gantt.lang</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
@@ -4237,14 +4238,14 @@
 
         <Package name="net.sourceforge.plantuml.asciiverse">
             <Stats>
-                <TotalClasses>7</TotalClasses>
-                <ConcreteClasses>6</ConcreteClasses>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>2</Ca>
-                <Ce>6</Ce>
-                <A>0.14</A>
-                <I>0.75</I>
-                <D>0.11</D>
+                <Ce>9</Ce>
+                <A>0.12</A>
+                <I>0.82</I>
+                <D>0.06</D>
                 <V>1</V>
             </Stats>
 
@@ -4260,6 +4261,9 @@
                 </Class>
                 <Class sourceFile="ATable.java">
                     net.sourceforge.plantuml.asciiverse.ATable$CellSpan
+                </Class>
+                <Class sourceFile="AsciiSnake.java">
+                    net.sourceforge.plantuml.asciiverse.AsciiSnake
                 </Class>
                 <Class sourceFile="DataTable.java">
                     net.sourceforge.plantuml.asciiverse.DataTable
@@ -4279,7 +4283,10 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
+                <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
+                <Package>net.sourceforge.plantuml.klimt.drawing</Package>
+                <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.security</Package>
             </DependsUpon>
@@ -7870,20 +7877,23 @@
 
         <Package name="net.sourceforge.plantuml.gantt">
             <Stats>
-                <TotalClasses>18</TotalClasses>
-                <ConcreteClasses>16</ConcreteClasses>
-                <AbstractClasses>2</AbstractClasses>
+                <TotalClasses>24</TotalClasses>
+                <ConcreteClasses>21</ConcreteClasses>
+                <AbstractClasses>3</AbstractClasses>
                 <Ca>8</Ca>
-                <Ce>35</Ce>
-                <A>0.11</A>
-                <I>0.81</I>
-                <D>0.07</D>
+                <Ce>36</Ce>
+                <A>0.12</A>
+                <I>0.82</I>
+                <D>0.06</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
                 <Class sourceFile="GanttStyle.java">
                     net.sourceforge.plantuml.gantt.GanttStyle
+                </Class>
+                <Class sourceFile="GanttTaskTableColumn.java">
+                    net.sourceforge.plantuml.gantt.GanttTaskTableColumn
                 </Class>
                 <Class sourceFile="PValue.java">
                     net.sourceforge.plantuml.gantt.PValue
@@ -7927,6 +7937,21 @@
                 <Class sourceFile="GanttTaskTable.java">
                     net.sourceforge.plantuml.gantt.GanttTaskTable
                 </Class>
+                <Class sourceFile="GanttTaskTableColumn.java">
+                    net.sourceforge.plantuml.gantt.GanttTaskTableColumn$1
+                </Class>
+                <Class sourceFile="GanttTaskTableColumn.java">
+                    net.sourceforge.plantuml.gantt.GanttTaskTableColumn$2
+                </Class>
+                <Class sourceFile="GanttTaskTableColumn.java">
+                    net.sourceforge.plantuml.gantt.GanttTaskTableColumn$3
+                </Class>
+                <Class sourceFile="GanttTaskTableColumn.java">
+                    net.sourceforge.plantuml.gantt.GanttTaskTableColumn$4
+                </Class>
+                <Class sourceFile="GanttTaskTableColumn.java">
+                    net.sourceforge.plantuml.gantt.GanttTaskTableColumn$Context
+                </Class>
                 <Class sourceFile="LabelPosition.java">
                     net.sourceforge.plantuml.gantt.LabelPosition
                 </Class>
@@ -7942,6 +7967,7 @@
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>com.plantuml.ubrex.builder</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.time</Package>
@@ -7993,8 +8019,8 @@
 
         <Package name="net.sourceforge.plantuml.gantt.command">
             <Stats>
-                <TotalClasses>13</TotalClasses>
-                <ConcreteClasses>13</ConcreteClasses>
+                <TotalClasses>14</TotalClasses>
+                <ConcreteClasses>14</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>18</Ce>
@@ -8028,6 +8054,9 @@
                 </Class>
                 <Class sourceFile="CommandHideResourceName.java">
                     net.sourceforge.plantuml.gantt.command.CommandHideResourceName
+                </Class>
+                <Class sourceFile="CommandHideShowColumns.java">
+                    net.sourceforge.plantuml.gantt.command.CommandHideShowColumns
                 </Class>
                 <Class sourceFile="CommandLabelOnColumn.java">
                     net.sourceforge.plantuml.gantt.command.CommandLabelOnColumn
@@ -9470,11 +9499,11 @@
                 <TotalClasses>21</TotalClasses>
                 <ConcreteClasses>11</ConcreteClasses>
                 <AbstractClasses>10</AbstractClasses>
-                <Ca>81</Ca>
+                <Ca>82</Ca>
                 <Ce>19</Ce>
                 <A>0.48</A>
                 <I>0.19</I>
-                <D>0.33</D>
+                <D>0.34</D>
                 <V>1</V>
             </Stats>
 
@@ -9578,6 +9607,7 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vertical</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
+                <Package>net.sourceforge.plantuml.asciiverse</Package>
                 <Package>net.sourceforge.plantuml.board</Package>
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
@@ -10464,7 +10494,7 @@
                 <TotalClasses>14</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>79</Ca>
+                <Ca>80</Ca>
                 <Ce>14</Ce>
                 <A>0.36</A>
                 <I>0.15</I>
@@ -10547,6 +10577,7 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vertical</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
                 <Package>net.sourceforge.plantuml.asciiart</Package>
+                <Package>net.sourceforge.plantuml.asciiverse</Package>
                 <Package>net.sourceforge.plantuml.board</Package>
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
@@ -11267,11 +11298,11 @@
                 <TotalClasses>11</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>88</Ca>
+                <Ca>89</Ca>
                 <Ce>6</Ce>
                 <A>0.18</A>
                 <I>0.06</I>
-                <D>0.75</D>
+                <D>0.76</D>
                 <V>1</V>
             </Stats>
 
@@ -11333,6 +11364,7 @@
                 <Package>net.sourceforge.plantuml.activitydiagram3.ftile.vertical</Package>
                 <Package>net.sourceforge.plantuml.activitydiagram3.gtile</Package>
                 <Package>net.sourceforge.plantuml.asciiart</Package>
+                <Package>net.sourceforge.plantuml.asciiverse</Package>
                 <Package>net.sourceforge.plantuml.board</Package>
                 <Package>net.sourceforge.plantuml.bpm</Package>
                 <Package>net.sourceforge.plantuml.braille</Package>
@@ -20238,9 +20270,11 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt">
-            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.gantt.core</Package>
+            <Package>net.sourceforge.plantuml.url</Package>
             <Package>net.sourceforge.plantuml.klimt.geom</Package>
             <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.gantt.command">

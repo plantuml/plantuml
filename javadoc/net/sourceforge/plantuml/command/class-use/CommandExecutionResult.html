@@ -1764,17 +1764,21 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#endGroup()" class="member-name-link">endGroup</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#hideResourceFootbox()" class="member-name-link">hideResourceFootbox</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#hideOrShowColumn(boolean,net.sourceforge.plantuml.gantt.GanttTaskTableColumn)" class="member-name-link">hideOrShowColumn</a><wbr>(boolean&nbsp;show,
+ <a href="../../gantt/GanttTaskTableColumn.html" title="enum class in net.sourceforge.plantuml.gantt">GanttTaskTableColumn</a>&nbsp;column)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#hideResourceName()" class="member-name-link">hideResourceName</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#hideResourceFootbox()" class="member-name-link">hideResourceFootbox</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#setToday(java.time.LocalDate)" class="member-name-link">setToday</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;date)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#hideResourceName()" class="member-name-link">hideResourceName</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#updateStartingPoint(java.time.LocalDate)" class="member-name-link">updateStartingPoint</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;start)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#setToday(java.time.LocalDate)" class="member-name-link">setToday</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;date)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../gantt/GanttDiagram.html#updateStartingPoint(java.time.LocalDate)" class="member-name-link">updateStartingPoint</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;start)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -1846,52 +1850,58 @@ loadScripts(document, 'script');</script>
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandLabelOnColumn.</span><code><a href="../../gantt/command/CommandLabelOnColumn.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+<div class="col-second even-row-color"><span class="type-name-label">CommandHideShowColumns.</span><code><a href="../../gantt/command/CommandHideShowColumns.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandLanguage.</span><code><a href="../../gantt/command/CommandLanguage.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+<div class="col-second odd-row-color"><span class="type-name-label">CommandLabelOnColumn.</span><code><a href="../../gantt/command/CommandLabelOnColumn.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandPrintBetween.</span><code><a href="../../gantt/command/CommandPrintBetween.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+<div class="col-second even-row-color"><span class="type-name-label">CommandLanguage.</span><code><a href="../../gantt/command/CommandLanguage.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandPrintScale.</span><code><a href="../../gantt/command/CommandPrintScale.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+<div class="col-second odd-row-color"><span class="type-name-label">CommandPrintBetween.</span><code><a href="../../gantt/command/CommandPrintBetween.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandSeparator.</span><code><a href="../../gantt/command/CommandSeparator.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+<div class="col-second even-row-color"><span class="type-name-label">CommandPrintScale.</span><code><a href="../../gantt/command/CommandPrintScale.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandTaskCompleteDefault.</span><code><a href="../../gantt/command/CommandTaskCompleteDefault.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+<div class="col-second odd-row-color"><span class="type-name-label">CommandSeparator.</span><code><a href="../../gantt/command/CommandSeparator.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CommandWeekNumberStrategy.</span><code><a href="../../gantt/command/CommandWeekNumberStrategy.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+<div class="col-second even-row-color"><span class="type-name-label">CommandTaskCompleteDefault.</span><code><a href="../../gantt/command/CommandTaskCompleteDefault.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
  <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CommandNoteBottom.</span><code><a href="../../gantt/command/CommandNoteBottom.html#executeNow(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+<div class="col-second odd-row-color"><span class="type-name-label">CommandWeekNumberStrategy.</span><code><a href="../../gantt/command/CommandWeekNumberStrategy.html#executeArg(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.regex.RegexResult,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeArg</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
+ <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
+ <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="../CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CommandNoteBottom.</span><code><a href="../../gantt/command/CommandNoteBottom.html#executeNow(net.sourceforge.plantuml.gantt.GanttDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../../gantt/GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;diagram,
  <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
  <a href="../ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

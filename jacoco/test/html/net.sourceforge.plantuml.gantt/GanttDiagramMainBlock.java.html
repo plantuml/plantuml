@@ -91,7 +91,7 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 <span class="fc" id="L91">		this.layout = new GanttLayout(modelData, displayConfig, timeBounds, timelineStyle, drawRegistry, stringBounder,</span>
 				timeHeader);
 <span class="fc" id="L93">		this.taskTable = new GanttTaskTable(modelData, timeBounds, drawRegistry, timelineStyle,</span>
-<span class="fc" id="L94">				timeHeader.getFullHeaderHeight(stringBounder), locale, stringBounder);</span>
+<span class="fc" id="L94">				timeHeader.getFullHeaderHeight(stringBounder), locale, stringBounder, diagram.getDisplayedColumn());</span>
 <span class="fc" id="L95">	}</span>
 
 	@Override
@@ -182,15 +182,15 @@ public class GanttDiagramMainBlock extends TextBlockMemoized {
 
 <span class="fc" id="L183">	}</span>
 
-
 	private void drawTasksTitle(UGraphic ug, double colTitles, double colBars) {
-<span class="fc bfc" id="L187" title="All 2 branches covered.">		for (Task task : modelData.getTasks()) {</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (timeBounds.isHidden(task))</span>
-<span class="nc" id="L189">				continue;</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		for (Task task : modelData.getTasks()) {</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">			if (timeBounds.isHidden(task))</span>
+<span class="nc" id="L188">				continue;</span>
 
-<span class="fc" id="L191">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
-<span class="fc" id="L192">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
-			// draw.drawTitle(ug.apply(move), displayConfig.getLabelStrategy(), colTitles, colBars);
+<span class="fc" id="L190">			final TaskDraw draw = drawRegistry.getTaskDraw(task);</span>
+<span class="fc" id="L191">			final UTranslate move = UTranslate.dy(draw.getY(ug.getStringBounder()).getCurrentValue());</span>
+			// draw.drawTitle(ug.apply(move), displayConfig.getLabelStrategy(), colTitles,
+			// colBars);
 <span class="fc" id="L194">			final LabelStrategy labelStrategy = new LabelStrategy(LabelPosition.LEGACY, HorizontalAlignment.LEFT);</span>
 <span class="fc" id="L195">			draw.drawTitle(ug.apply(move), labelStrategy, colTitles, colBars);</span>
 <span class="fc" id="L196">		}</span>
