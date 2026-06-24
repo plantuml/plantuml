@@ -207,7 +207,7 @@ jobs:
         run: |
           echo "release_version=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_OUTPUT
       - name: Cache libs
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v6
         with:
           path: |
             build/libs
@@ -341,7 +341,7 @@ jobs:
           path: build/native-image
 
       - name: Restore Libs cache
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@v6
         with:
           path: |
             build/libs
