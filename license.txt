@@ -47,3 +47,22 @@ Icons provided by OpenIconic :  https://useiconic.com/open
 Archimate sprites provided by Archi :  http://www.archimatetool.com
 ASCIIMathML (c) Peter Jipsen http://www.chapman.edu/~jipsen
 ASCIIMathML (c) David Lippman http://www.pierce.ctc.edu/dlippman
+
+========================================================================
+Third-Party Dependencies and Acknowledgements
+========================================================================
+
+PlantUML relies on several open-source libraries and projects:
+
+- ELK Layout Engine (elk-full.jar)
+- Avalon Framework (avalon-framework-4.2.0.jar)
+- Apache Batik (batik-all-1.7.jar)
+- Apache Commons IO (commons-io-1.3.1.jar)
+- Apache Commons Logging (commons-logging-1.0.4.jar)
+- Apache FOP (fop.jar)
+- XML Graphics Commons (xmlgraphics-commons-1.4.jar)
+- JLaTeXMath (jlatexmath-minimal-1.0.3.jar)
+- Viz.js (vizjs.jar)
+- Ditaa (ditaa0_9.jar)
+
+The PlantUML project acknowledges and thanks the maintainers and contributors of these open-source projects.
