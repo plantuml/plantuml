@@ -142,6 +142,12 @@ class FtileRepeat extends AbstractFtile {
 			final Ftile diamond2;
 			if (noOut && Display.isNull(test))
 				diamond2 = new FtileEmpty(repeat.skinParam());
+			else if (backwardExitsOnLeft(backward, swimlaneOut))
+				// The loop-back arrow exits towards the backward activity. When that
+				// activity lives in a swimlane left of the diamond, the arrow leaves on
+				// the left, so its label is placed west of the diamond.
+				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor2, borderColor, swimlaneOut)
+						.withWest(yesTb).withSouth(outTb);
 			else
 				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor2, borderColor, swimlaneOut)
 						.withEast(yesTb).withSouth(outTb);
@@ -196,6 +202,20 @@ class FtileRepeat extends AbstractFtile {
 		final Rainbow tmpColor = endRepeatLinkColor.withDefault(arrowColor);
 		conns.add(result.new ConnectionOut(tmpColor, tbout1));
 		return FtileUtils.addConnection(result, conns);
+	}
+
+	// The loop-back arrow (and its label) leaves the diamond on the side where the
+	// backward activity sits. It exits on the left when the backward activity lives
+	// in a swimlane ordered before the diamond's swimlane.
+	private static boolean backwardExitsOnLeft(Ftile backward, Swimlane swimlaneOut) {
+		if (backward == null)
+			return false;
+
+		final Swimlane swimlaneBackward = backward.getSwimlaneIn();
+		if (swimlaneBackward == null || swimlaneOut == null)
+			return false;
+
+		return swimlaneBackward.compareTo(swimlaneOut) < 0;
 	}
 
 	class ConnectionIn extends AbstractConnection implements ConnectionTranslatable {
@@ -419,10 +439,14 @@ class FtileRepeat extends AbstractFtile {
 
 		private void drawSnake(UGraphic ug, final XPoint2D p1, final XPoint2D p2) {
 			final XDimension2D dimDiamond2 = diamond2.calculateDimension(ug.getStringBounder());
-			final double x1 = p1.getX() + dimDiamond2.getWidth();
-			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;
 			final double x2 = p2.getX();
 			final double y2 = p2.getY();
+			// The loop-back arrow leaves the diamond on the side where the backward
+			// activity sits: if the activity (x2) is left of the diamond center, the
+			// arrow exits by the left edge, otherwise by the right edge.
+			final double diamondCenterX = p1.getX() + dimDiamond2.getWidth() / 2;
+			final double x1 = x2 < diamondCenterX ? p1.getX() : p1.getX() + dimDiamond2.getWidth();
+			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;
 
 			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToUp()).withLabel(tbback,
 					arrowHorizontalAlignment());
