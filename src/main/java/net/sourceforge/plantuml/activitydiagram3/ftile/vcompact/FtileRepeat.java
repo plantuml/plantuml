@@ -185,8 +185,8 @@ class FtileRepeat extends AbstractFtile {
 					: incoming2.getDisplay().create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);
 			final Rainbow rainbow2 = incoming2.getRainbow(arrowColor);
 			conns.add(result.new ConnectionBackBackward2(rainbow2, backArrowLabel));
-		} else if (repeat.getSwimlaneIn() == null || repeat.getSwimlaneIn() == swimlaneOut) {
-			if (repeat.getSwimlaneIn() != null && repeat.getSwimlaneIn().isSmallerThanAllOthers(repeat.getSwimlanes()))
+		} else if (swimlane == null || swimlane == swimlaneOut) {
+			if (swimlane != null && swimlane.isSmallerThanAllOthers(repeat.getSwimlanes()))
 				conns.add(result.new ConnectionBackSimple1(incoming1.getRainbow(arrowColor), incomingText));
 			else
 				conns.add(result.new ConnectionBackSimple2(incoming1.getRainbow(arrowColor), incomingText));
