@@ -142,113 +142,133 @@ class FtileRepeat extends AbstractFtile {
 			final Ftile diamond2;
 <span class="pc bpc" id="L143" title="3 of 4 branches missed.">			if (noOut &amp;&amp; Display.isNull(test))</span>
 <span class="nc" id="L144">				diamond2 = new FtileEmpty(repeat.skinParam());</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			else if (backwardExitsOnLeft(backward, swimlaneOut))</span>
+				// The loop-back arrow exits towards the backward activity. When that
+				// activity lives in a swimlane left of the diamond, the arrow leaves on
+				// the left, so its label is placed west of the diamond.
+<span class="nc" id="L149">				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor2, borderColor, swimlaneOut)</span>
+<span class="nc" id="L150">						.withWest(yesTb).withSouth(outTb);</span>
 			else
-<span class="fc" id="L146">				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor2, borderColor, swimlaneOut)</span>
-<span class="fc" id="L147">						.withEast(yesTb).withSouth(outTb);</span>
+<span class="fc" id="L152">				diamond2 = new FtileDiamondInside(tbTest, repeat.skinParam(), diamondColor2, borderColor, swimlaneOut)</span>
+<span class="fc" id="L153">						.withEast(yesTb).withSouth(outTb);</span>
 
-<span class="fc" id="L149">			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);</span>
-<span class="pc bnc" id="L150" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {</span>
-<span class="nc" id="L151">			final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), diamondColor2, borderColor, swimlane)</span>
-<span class="nc" id="L152">					.withEast(tbTest);</span>
-<span class="nc" id="L153">			result = new FtileRepeat(repeat, diamond1, diamond2, tbTest, backward);</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {</span>
-<span class="nc" id="L155">			final Ftile diamond2 = new FtileDiamondSquare(tbTest, repeat.skinParam(), diamondColor2, borderColor,</span>
-<span class="nc" id="L156">					swimlane).withEast(yesTb).withSouth(outTb);</span>
-<span class="nc" id="L157">			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);</span>
-<span class="nc" id="L158">		} else {</span>
-<span class="nc" id="L159">			throw new IllegalStateException();</span>
+<span class="fc" id="L155">			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);</span>
+<span class="pc bnc" id="L156" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.EMPTY_DIAMOND) {</span>
+<span class="nc" id="L157">			final Ftile diamond2 = new FtileDiamond(repeat.skinParam(), diamondColor2, borderColor, swimlane)</span>
+<span class="nc" id="L158">					.withEast(tbTest);</span>
+<span class="nc" id="L159">			result = new FtileRepeat(repeat, diamond1, diamond2, tbTest, backward);</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		} else if (conditionStyle == ConditionStyle.INSIDE_DIAMOND) {</span>
+<span class="nc" id="L161">			final Ftile diamond2 = new FtileDiamondSquare(tbTest, repeat.skinParam(), diamondColor2, borderColor,</span>
+<span class="nc" id="L162">					swimlane).withEast(yesTb).withSouth(outTb);</span>
+<span class="nc" id="L163">			result = new FtileRepeat(repeat, diamond1, diamond2, TextBlockUtils.empty(0, 0), backward);</span>
+<span class="nc" id="L164">		} else {</span>
+<span class="nc" id="L165">			throw new IllegalStateException();</span>
 		}
 
-<span class="fc" id="L162">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L163">		final Display in1 = repeat.getInLinkRendering().getDisplay();</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		final TextBlock tbin1 = in1 == null ? null</span>
-<span class="fc" id="L165">				: in1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer, CreoleMode.SIMPLE_LINE);</span>
-<span class="fc" id="L166">		conns.add(result.new ConnectionIn(repeat.getInLinkRendering().getRainbow(arrowColor), tbin1));</span>
+<span class="fc" id="L168">		final List&lt;Connection&gt; conns = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L169">		final Display in1 = repeat.getInLinkRendering().getDisplay();</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		final TextBlock tbin1 = in1 == null ? null</span>
+<span class="fc" id="L171">				: in1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer, CreoleMode.SIMPLE_LINE);</span>
+<span class="fc" id="L172">		conns.add(result.new ConnectionIn(repeat.getInLinkRendering().getRainbow(arrowColor), tbin1));</span>
 
 		final TextBlock incomingText;
-<span class="pc bpc" id="L169" title="2 of 4 branches missed.">		if (incoming1 == null || incoming1.getDisplay() == null)</span>
-<span class="nc" id="L170">			incomingText = null;</span>
+<span class="pc bpc" id="L175" title="2 of 4 branches missed.">		if (incoming1 == null || incoming1.getDisplay() == null)</span>
+<span class="nc" id="L176">			incomingText = null;</span>
 		else
-<span class="fc" id="L172">			incomingText = incoming1.getDisplay().create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer,</span>
+<span class="fc" id="L178">			incomingText = incoming1.getDisplay().create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer,</span>
 					CreoleMode.SIMPLE_LINE);
 
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">		if (backward != null) {</span>
-<span class="nc" id="L176">			final Rainbow rainbow1 = incoming1.getRainbow(arrowColor);</span>
-<span class="nc" id="L177">			conns.add(result.new ConnectionBackBackward1(rainbow1, incomingText));</span>
-<span class="nc bnc" id="L178" title="All 4 branches missed.">			final TextBlock backArrowLabel = incoming2 == null || incoming2.getDisplay() == null ? null</span>
-<span class="nc" id="L179">					: incoming2.getDisplay().create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);</span>
-<span class="nc" id="L180">			final Rainbow rainbow2 = incoming2.getRainbow(arrowColor);</span>
-<span class="nc" id="L181">			conns.add(result.new ConnectionBackBackward2(rainbow2, backArrowLabel));</span>
-<span class="pc bpc" id="L182" title="3 of 4 branches missed.">		} else if (repeat.getSwimlaneIn() == null || repeat.getSwimlaneIn() == swimlaneOut) {</span>
-<span class="pc bpc" id="L183" title="3 of 4 branches missed.">			if (repeat.getSwimlaneIn() != null &amp;&amp; repeat.getSwimlaneIn().isSmallerThanAllOthers(repeat.getSwimlanes()))</span>
-<span class="nc" id="L184">				conns.add(result.new ConnectionBackSimple1(incoming1.getRainbow(arrowColor), incomingText));</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (backward != null) {</span>
+<span class="nc" id="L182">			final Rainbow rainbow1 = incoming1.getRainbow(arrowColor);</span>
+<span class="nc" id="L183">			conns.add(result.new ConnectionBackBackward1(rainbow1, incomingText));</span>
+<span class="nc bnc" id="L184" title="All 4 branches missed.">			final TextBlock backArrowLabel = incoming2 == null || incoming2.getDisplay() == null ? null</span>
+<span class="nc" id="L185">					: incoming2.getDisplay().create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);</span>
+<span class="nc" id="L186">			final Rainbow rainbow2 = incoming2.getRainbow(arrowColor);</span>
+<span class="nc" id="L187">			conns.add(result.new ConnectionBackBackward2(rainbow2, backArrowLabel));</span>
+<span class="pc bpc" id="L188" title="3 of 4 branches missed.">		} else if (repeat.getSwimlaneIn() == null || repeat.getSwimlaneIn() == swimlaneOut) {</span>
+<span class="pc bpc" id="L189" title="3 of 4 branches missed.">			if (repeat.getSwimlaneIn() != null &amp;&amp; repeat.getSwimlaneIn().isSmallerThanAllOthers(repeat.getSwimlanes()))</span>
+<span class="nc" id="L190">				conns.add(result.new ConnectionBackSimple1(incoming1.getRainbow(arrowColor), incomingText));</span>
 			else
-<span class="fc" id="L186">				conns.add(result.new ConnectionBackSimple2(incoming1.getRainbow(arrowColor), incomingText));</span>
+<span class="fc" id="L192">				conns.add(result.new ConnectionBackSimple2(incoming1.getRainbow(arrowColor), incomingText));</span>
 
 		} else {
-<span class="nc" id="L189">			conns.add(result.new ConnectionBackComplex1(incoming1.getRainbow(arrowColor)));</span>
+<span class="nc" id="L195">			conns.add(result.new ConnectionBackComplex1(incoming1.getRainbow(arrowColor)));</span>
 		}
 
-<span class="fc" id="L192">		final Display out1 = repeat.getOutLinkRendering().getDisplay();</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		final TextBlock tbout1 = out1 == null ? null</span>
-<span class="fc" id="L194">				: out1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer, CreoleMode.SIMPLE_LINE);</span>
+<span class="fc" id="L198">		final Display out1 = repeat.getOutLinkRendering().getDisplay();</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		final TextBlock tbout1 = out1 == null ? null</span>
+<span class="fc" id="L200">				: out1.create7(fcArrow, HorizontalAlignment.LEFT, spriteContainer, CreoleMode.SIMPLE_LINE);</span>
 
-<span class="fc" id="L196">		final Rainbow tmpColor = endRepeatLinkColor.withDefault(arrowColor);</span>
-<span class="fc" id="L197">		conns.add(result.new ConnectionOut(tmpColor, tbout1));</span>
-<span class="fc" id="L198">		return FtileUtils.addConnection(result, conns);</span>
+<span class="fc" id="L202">		final Rainbow tmpColor = endRepeatLinkColor.withDefault(arrowColor);</span>
+<span class="fc" id="L203">		conns.add(result.new ConnectionOut(tmpColor, tbout1));</span>
+<span class="fc" id="L204">		return FtileUtils.addConnection(result, conns);</span>
+	}
+
+	// The loop-back arrow (and its label) leaves the diamond on the side where the
+	// backward activity sits. It exits on the left when the backward activity lives
+	// in a swimlane ordered before the diamond's swimlane.
+	private static boolean backwardExitsOnLeft(Ftile backward, Swimlane swimlaneOut) {
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (backward == null)</span>
+<span class="fc" id="L212">			return false;</span>
+
+<span class="nc" id="L214">		final Swimlane swimlaneBackward = backward.getSwimlaneIn();</span>
+<span class="nc bnc" id="L215" title="All 4 branches missed.">		if (swimlaneBackward == null || swimlaneOut == null)</span>
+<span class="nc" id="L216">			return false;</span>
+
+<span class="nc bnc" id="L218" title="All 2 branches missed.">		return swimlaneBackward.compareTo(swimlaneOut) &lt; 0;</span>
 	}
 
 	class ConnectionIn extends AbstractConnection implements ConnectionTranslatable {
 		private final Rainbow arrowColor;
 		private final TextBlock tbin;
 
-<span class="fc" id="L205">		public ConnectionIn(Rainbow arrowColor, TextBlock tbin) {</span>
-<span class="fc" id="L206">			super(diamond1, repeat);</span>
-<span class="fc" id="L207">			this.arrowColor = arrowColor;</span>
-<span class="fc" id="L208">			this.tbin = tbin;</span>
-<span class="fc" id="L209">		}</span>
+<span class="fc" id="L225">		public ConnectionIn(Rainbow arrowColor, TextBlock tbin) {</span>
+<span class="fc" id="L226">			super(diamond1, repeat);</span>
+<span class="fc" id="L227">			this.arrowColor = arrowColor;</span>
+<span class="fc" id="L228">			this.tbin = tbin;</span>
+<span class="fc" id="L229">		}</span>
 
 		private XPoint2D getP1(final StringBounder stringBounder) {
-<span class="fc" id="L212">			return getFtile1().calculateDimension(stringBounder).translate(getTranslateDiamond1(stringBounder))</span>
-<span class="fc" id="L213">					.getPointOut();</span>
+<span class="fc" id="L232">			return getFtile1().calculateDimension(stringBounder).translate(getTranslateDiamond1(stringBounder))</span>
+<span class="fc" id="L233">					.getPointOut();</span>
 		}
 
 		private XPoint2D getP2(final StringBounder stringBounder) {
-<span class="fc" id="L217">			return getFtile2().calculateDimension(stringBounder).translate(getTranslateForRepeat(stringBounder))</span>
-<span class="fc" id="L218">					.getPointIn();</span>
+<span class="fc" id="L237">			return getFtile2().calculateDimension(stringBounder).translate(getTranslateForRepeat(stringBounder))</span>
+<span class="fc" id="L238">					.getPointIn();</span>
 		}
 
 		public void drawU(UGraphic ug) {
-<span class="fc" id="L222">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L242">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="fc" id="L224">			final XPoint2D p1 = getP1(stringBounder);</span>
-<span class="fc" id="L225">			final XPoint2D p2 = getP2(stringBounder);</span>
-<span class="fc" id="L226">			drawSnake(ug, p1, p2);</span>
-<span class="fc" id="L227">		}</span>
+<span class="fc" id="L244">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="fc" id="L245">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="fc" id="L246">			drawSnake(ug, p1, p2);</span>
+<span class="fc" id="L247">		}</span>
 
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-<span class="nc" id="L231">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L251">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L233">			final XPoint2D p1 = translate1.getTranslated(getP1(stringBounder));</span>
-<span class="nc" id="L234">			final XPoint2D p2 = translate2.getTranslated(getP2(stringBounder));</span>
+<span class="nc" id="L253">			final XPoint2D p1 = translate1.getTranslated(getP1(stringBounder));</span>
+<span class="nc" id="L254">			final XPoint2D p2 = translate2.getTranslated(getP2(stringBounder));</span>
 
-<span class="nc" id="L236">			drawSnake(ug, p1, p2);</span>
-<span class="nc" id="L237">		}</span>
+<span class="nc" id="L256">			drawSnake(ug, p1, p2);</span>
+<span class="nc" id="L257">		}</span>
 
 		private void drawSnake(UGraphic ug, final XPoint2D p1, final XPoint2D p2) {
-<span class="fc" id="L240">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown()).withLabel(tbin,</span>
-<span class="fc" id="L241">					arrowHorizontalAlignment());</span>
-<span class="fc" id="L242">			snake.addPoint(p1);</span>
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">			if (p1.getX() != p2.getX()) {</span>
-<span class="nc" id="L244">				final double my = (p1.getY() + p2.getY()) / 2;</span>
-<span class="nc" id="L245">				snake.addPoint(new XPoint2D(p1.getX(), my));</span>
-<span class="nc" id="L246">				snake.addPoint(new XPoint2D(p2.getX(), my));</span>
+<span class="fc" id="L260">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown()).withLabel(tbin,</span>
+<span class="fc" id="L261">					arrowHorizontalAlignment());</span>
+<span class="fc" id="L262">			snake.addPoint(p1);</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">			if (p1.getX() != p2.getX()) {</span>
+<span class="nc" id="L264">				final double my = (p1.getY() + p2.getY()) / 2;</span>
+<span class="nc" id="L265">				snake.addPoint(new XPoint2D(p1.getX(), my));</span>
+<span class="nc" id="L266">				snake.addPoint(new XPoint2D(p2.getX(), my));</span>
 			}
-<span class="fc" id="L248">			snake.addPoint(p2);</span>
+<span class="fc" id="L268">			snake.addPoint(p2);</span>
 
-<span class="fc" id="L250">			ug.draw(snake);</span>
-<span class="fc" id="L251">		}</span>
+<span class="fc" id="L270">			ug.draw(snake);</span>
+<span class="fc" id="L271">		}</span>
 
 	}
 
@@ -256,130 +276,130 @@ class FtileRepeat extends AbstractFtile {
 		private final Rainbow arrowColor;
 		private final TextBlock tbout;
 
-<span class="fc" id="L259">		public ConnectionOut(Rainbow arrowColor, TextBlock tbout) {</span>
-<span class="fc" id="L260">			super(repeat, diamond2);</span>
-<span class="fc" id="L261">			this.arrowColor = arrowColor;</span>
-<span class="fc" id="L262">			this.tbout = tbout;</span>
-<span class="fc" id="L263">		}</span>
+<span class="fc" id="L279">		public ConnectionOut(Rainbow arrowColor, TextBlock tbout) {</span>
+<span class="fc" id="L280">			super(repeat, diamond2);</span>
+<span class="fc" id="L281">			this.arrowColor = arrowColor;</span>
+<span class="fc" id="L282">			this.tbout = tbout;</span>
+<span class="fc" id="L283">		}</span>
 
 		private XPoint2D getP1(final StringBounder stringBounder) {
-<span class="fc" id="L266">			return getTranslateForRepeat(stringBounder)</span>
-<span class="fc" id="L267">					.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());</span>
+<span class="fc" id="L286">			return getTranslateForRepeat(stringBounder)</span>
+<span class="fc" id="L287">					.getTranslated(getFtile1().calculateDimension(stringBounder).getPointOut());</span>
 		}
 
 		private XPoint2D getP2(final StringBounder stringBounder) {
-<span class="fc" id="L271">			return getTranslateDiamond2(stringBounder)</span>
-<span class="fc" id="L272">					.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());</span>
+<span class="fc" id="L291">			return getTranslateDiamond2(stringBounder)</span>
+<span class="fc" id="L292">					.getTranslated(getFtile2().calculateDimension(stringBounder).getPointIn());</span>
 		}
 
 		public void drawU(UGraphic ug) {
-<span class="fc" id="L276">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="pc bpc" id="L277" title="1 of 2 branches missed.">			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false)</span>
-<span class="nc" id="L278">				return;</span>
+<span class="fc" id="L296">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false)</span>
+<span class="nc" id="L298">				return;</span>
 
-<span class="fc" id="L280">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown()).withLabel(tbout,</span>
-<span class="fc" id="L281">					arrowHorizontalAlignment());</span>
-<span class="fc" id="L282">			snake.addPoint(getP1(stringBounder));</span>
-<span class="fc" id="L283">			snake.addPoint(getP2(stringBounder));</span>
+<span class="fc" id="L300">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown()).withLabel(tbout,</span>
+<span class="fc" id="L301">					arrowHorizontalAlignment());</span>
+<span class="fc" id="L302">			snake.addPoint(getP1(stringBounder));</span>
+<span class="fc" id="L303">			snake.addPoint(getP2(stringBounder));</span>
 
-<span class="fc" id="L285">			ug.draw(snake);</span>
-<span class="fc" id="L286">		}</span>
+<span class="fc" id="L305">			ug.draw(snake);</span>
+<span class="fc" id="L306">		}</span>
 
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-<span class="nc" id="L290">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc bnc" id="L291" title="All 2 branches missed.">			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false)</span>
-<span class="nc" id="L292">				return;</span>
+<span class="nc" id="L310">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">			if (getFtile1().calculateDimension(stringBounder).hasPointOut() == false)</span>
+<span class="nc" id="L312">				return;</span>
 
-<span class="nc" id="L294">			final Snake snake = Snake.create(skinParam(), arrowColor);</span>
-<span class="nc" id="L295">			final XPoint2D mp1a = translate1.getTranslated(getP1(stringBounder));</span>
-<span class="nc" id="L296">			final XPoint2D mp2b = translate2.getTranslated(getP2(stringBounder));</span>
-<span class="nc" id="L297">			final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;</span>
-<span class="nc" id="L298">			snake.addPoint(mp1a);</span>
-<span class="nc" id="L299">			snake.addPoint(mp1a.getX(), middle);</span>
-<span class="nc" id="L300">			snake.addPoint(mp2b.getX(), middle);</span>
-<span class="nc" id="L301">			ug.draw(snake);</span>
+<span class="nc" id="L314">			final Snake snake = Snake.create(skinParam(), arrowColor);</span>
+<span class="nc" id="L315">			final XPoint2D mp1a = translate1.getTranslated(getP1(stringBounder));</span>
+<span class="nc" id="L316">			final XPoint2D mp2b = translate2.getTranslated(getP2(stringBounder));</span>
+<span class="nc" id="L317">			final double middle = (mp1a.getY() + mp2b.getY()) / 2.0;</span>
+<span class="nc" id="L318">			snake.addPoint(mp1a);</span>
+<span class="nc" id="L319">			snake.addPoint(mp1a.getX(), middle);</span>
+<span class="nc" id="L320">			snake.addPoint(mp2b.getX(), middle);</span>
+<span class="nc" id="L321">			ug.draw(snake);</span>
 
-<span class="nc" id="L303">			final Snake small = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown()).withLabel(tbout,</span>
-<span class="nc" id="L304">					arrowHorizontalAlignment());</span>
-<span class="nc" id="L305">			small.addPoint(mp2b.getX(), middle);</span>
-<span class="nc" id="L306">			small.addPoint(mp2b);</span>
-<span class="nc" id="L307">			ug.draw(small);</span>
+<span class="nc" id="L323">			final Snake small = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToDown()).withLabel(tbout,</span>
+<span class="nc" id="L324">					arrowHorizontalAlignment());</span>
+<span class="nc" id="L325">			small.addPoint(mp2b.getX(), middle);</span>
+<span class="nc" id="L326">			small.addPoint(mp2b);</span>
+<span class="nc" id="L327">			ug.draw(small);</span>
 
-<span class="nc" id="L309">		}</span>
+<span class="nc" id="L329">		}</span>
 
 	}
 
 	class ConnectionBackComplex1 extends AbstractConnection implements ConnectionTranslatable {
 		private final Rainbow arrowColor;
 
-<span class="nc" id="L316">		public ConnectionBackComplex1(Rainbow arrowColor) {</span>
-<span class="nc" id="L317">			super(diamond2, diamond1);</span>
-<span class="nc" id="L318">			this.arrowColor = arrowColor;</span>
-<span class="nc" id="L319">		}</span>
+<span class="nc" id="L336">		public ConnectionBackComplex1(Rainbow arrowColor) {</span>
+<span class="nc" id="L337">			super(diamond2, diamond1);</span>
+<span class="nc" id="L338">			this.arrowColor = arrowColor;</span>
+<span class="nc" id="L339">		}</span>
 
 		private XPoint2D getP1(final StringBounder stringBounder) {
-<span class="nc" id="L322">			return getTranslateDiamond2(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
+<span class="nc" id="L342">			return getTranslateDiamond2(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
 		}
 
 		private XPoint2D getP2(final StringBounder stringBounder) {
-<span class="nc" id="L326">			return getTranslateDiamond1(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
+<span class="nc" id="L346">			return getTranslateDiamond1(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
 		}
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L330">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L331">			final XPoint2D p1 = getP1(stringBounder);</span>
-<span class="nc" id="L332">			final XPoint2D p2 = getP2(stringBounder);</span>
-<span class="nc" id="L333">			drawSnake(ug, p1, p2);</span>
-<span class="nc" id="L334">		}</span>
+<span class="nc" id="L350">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L351">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L352">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L353">			drawSnake(ug, p1, p2);</span>
+<span class="nc" id="L354">		}</span>
 
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-<span class="nc" id="L338">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L339">			final XPoint2D p1 = translate1.getTranslated(getP1(stringBounder));</span>
-<span class="nc" id="L340">			final XPoint2D p2 = translate2.getTranslated(getP2(stringBounder));</span>
-<span class="nc" id="L341">			drawSnake(ug, p1, p2);</span>
-<span class="nc" id="L342">		}</span>
+<span class="nc" id="L358">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L359">			final XPoint2D p1 = translate1.getTranslated(getP1(stringBounder));</span>
+<span class="nc" id="L360">			final XPoint2D p2 = translate2.getTranslated(getP2(stringBounder));</span>
+<span class="nc" id="L361">			drawSnake(ug, p1, p2);</span>
+<span class="nc" id="L362">		}</span>
 
 		private void drawSnake(UGraphic ug, XPoint2D p1, XPoint2D p2) {
-<span class="nc" id="L345">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L365">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L347">			final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
+<span class="nc" id="L367">			final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L349">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L350">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="nc" id="L351">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
-<span class="nc" id="L352">			double x2 = p2.getX() + dimDiamond1.getWidth();</span>
-<span class="nc" id="L353">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
+<span class="nc" id="L369">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L370">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L371">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
+<span class="nc" id="L372">			double x2 = p2.getX() + dimDiamond1.getWidth();</span>
+<span class="nc" id="L373">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
 
-<span class="nc" id="L355">			final double x1_a = p1.getX() + dimDiamond2.getWidth();</span>
-<span class="nc" id="L356">			final double x1_b = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2</span>
+<span class="nc" id="L375">			final double x1_a = p1.getX() + dimDiamond2.getWidth();</span>
+<span class="nc" id="L376">			final double x1_b = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2</span>
 					+ Hexagon.hexagonHalfSize;
 
 			final Snake snake;
-<span class="nc bnc" id="L360" title="All 2 branches missed.">			if (x2 &lt; x1_a) {</span>
-<span class="nc" id="L361">				snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft())</span>
-<span class="nc" id="L362">						.emphasizeDirection(Direction.UP);</span>
-<span class="nc" id="L363">				snake.addPoint(x1_a, y1);</span>
-<span class="nc bnc" id="L364" title="All 2 branches missed.">				if (x1_a &lt; x1_b) {</span>
-<span class="nc" id="L365">					snake.addPoint(x1_b, y1);</span>
-<span class="nc" id="L366">					snake.addPoint(x1_b, y2);</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">			if (x2 &lt; x1_a) {</span>
+<span class="nc" id="L381">				snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft())</span>
+<span class="nc" id="L382">						.emphasizeDirection(Direction.UP);</span>
+<span class="nc" id="L383">				snake.addPoint(x1_a, y1);</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">				if (x1_a &lt; x1_b) {</span>
+<span class="nc" id="L385">					snake.addPoint(x1_b, y1);</span>
+<span class="nc" id="L386">					snake.addPoint(x1_b, y2);</span>
 				} else {
-<span class="nc" id="L368">					snake.addPoint(x1_a + 10, y1);</span>
-<span class="nc" id="L369">					snake.addPoint(x1_a + 10, y2);</span>
+<span class="nc" id="L388">					snake.addPoint(x1_a + 10, y1);</span>
+<span class="nc" id="L389">					snake.addPoint(x1_a + 10, y2);</span>
 				}
 			} else {
-<span class="nc" id="L372">				x2 = p2.getX();</span>
-<span class="nc" id="L373">				snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToRight())</span>
-<span class="nc" id="L374">						.emphasizeDirection(Direction.UP);</span>
-<span class="nc" id="L375">				snake.addPoint(x1_a, y1);</span>
-<span class="nc" id="L376">				final double middle = x1_a / 4 + x2 * 3 / 4;</span>
-<span class="nc" id="L377">				snake.addPoint(middle, y1);</span>
-<span class="nc" id="L378">				snake.addPoint(middle, y2);</span>
+<span class="nc" id="L392">				x2 = p2.getX();</span>
+<span class="nc" id="L393">				snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToRight())</span>
+<span class="nc" id="L394">						.emphasizeDirection(Direction.UP);</span>
+<span class="nc" id="L395">				snake.addPoint(x1_a, y1);</span>
+<span class="nc" id="L396">				final double middle = x1_a / 4 + x2 * 3 / 4;</span>
+<span class="nc" id="L397">				snake.addPoint(middle, y1);</span>
+<span class="nc" id="L398">				snake.addPoint(middle, y2);</span>
 			}
-<span class="nc" id="L380">			snake.addPoint(x2, y2);</span>
-<span class="nc" id="L381">			ug.draw(snake);</span>
-<span class="nc" id="L382">		}</span>
+<span class="nc" id="L400">			snake.addPoint(x2, y2);</span>
+<span class="nc" id="L401">			ug.draw(snake);</span>
+<span class="nc" id="L402">		}</span>
 
 	}
 
@@ -387,52 +407,56 @@ class FtileRepeat extends AbstractFtile {
 		private final Rainbow arrowColor;
 		private final TextBlock tbback;
 
-<span class="nc" id="L390">		public ConnectionBackBackward1(Rainbow arrowColor, TextBlock tbback) {</span>
-<span class="nc" id="L391">			super(diamond2, backward);</span>
-<span class="nc" id="L392">			this.arrowColor = arrowColor;</span>
-<span class="nc" id="L393">			this.tbback = tbback;</span>
-<span class="nc" id="L394">		}</span>
+<span class="nc" id="L410">		public ConnectionBackBackward1(Rainbow arrowColor, TextBlock tbback) {</span>
+<span class="nc" id="L411">			super(diamond2, backward);</span>
+<span class="nc" id="L412">			this.arrowColor = arrowColor;</span>
+<span class="nc" id="L413">			this.tbback = tbback;</span>
+<span class="nc" id="L414">		}</span>
 
 		private XPoint2D getP1(final StringBounder stringBounder) {
-<span class="nc" id="L397">			return getTranslateDiamond2(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
+<span class="nc" id="L417">			return getTranslateDiamond2(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
 		}
 
 		private XPoint2D getP2(final StringBounder stringBounder) {
-<span class="nc" id="L401">			final FtileGeometry dim = backward.calculateDimension(stringBounder);</span>
-<span class="nc" id="L402">			return getTranslateBackward(stringBounder).getTranslated(new XPoint2D(dim.getLeft(), dim.getOutY()));</span>
+<span class="nc" id="L421">			final FtileGeometry dim = backward.calculateDimension(stringBounder);</span>
+<span class="nc" id="L422">			return getTranslateBackward(stringBounder).getTranslated(new XPoint2D(dim.getLeft(), dim.getOutY()));</span>
 		}
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L406">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L407">			final XPoint2D p1 = getP1(stringBounder);</span>
-<span class="nc" id="L408">			final XPoint2D p2 = getP2(stringBounder);</span>
-<span class="nc" id="L409">			drawSnake(ug, p1, p2);</span>
-<span class="nc" id="L410">		}</span>
+<span class="nc" id="L426">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L427">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L428">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L429">			drawSnake(ug, p1, p2);</span>
+<span class="nc" id="L430">		}</span>
 
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-<span class="nc" id="L414">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L415">			final XPoint2D p1 = translate1.getTranslated(getP1(stringBounder));</span>
-<span class="nc" id="L416">			final XPoint2D p2 = translate2.getTranslated(getP2(stringBounder));</span>
-<span class="nc" id="L417">			drawSnake(ug, p1, p2);</span>
-<span class="nc" id="L418">		}</span>
+<span class="nc" id="L434">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L435">			final XPoint2D p1 = translate1.getTranslated(getP1(stringBounder));</span>
+<span class="nc" id="L436">			final XPoint2D p2 = translate2.getTranslated(getP2(stringBounder));</span>
+<span class="nc" id="L437">			drawSnake(ug, p1, p2);</span>
+<span class="nc" id="L438">		}</span>
 
 		private void drawSnake(UGraphic ug, final XPoint2D p1, final XPoint2D p2) {
-<span class="nc" id="L421">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L422">			final double x1 = p1.getX() + dimDiamond2.getWidth();</span>
-<span class="nc" id="L423">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
-<span class="nc" id="L424">			final double x2 = p2.getX();</span>
-<span class="nc" id="L425">			final double y2 = p2.getY();</span>
+<span class="nc" id="L441">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(ug.getStringBounder());</span>
+<span class="nc" id="L442">			final double x2 = p2.getX();</span>
+<span class="nc" id="L443">			final double y2 = p2.getY();</span>
+			// The loop-back arrow leaves the diamond on the side where the backward
+			// activity sits: if the activity (x2) is left of the diamond center, the
+			// arrow exits by the left edge, otherwise by the right edge.
+<span class="nc" id="L447">			final double diamondCenterX = p1.getX() + dimDiamond2.getWidth() / 2;</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">			final double x1 = x2 &lt; diamondCenterX ? p1.getX() : p1.getX() + dimDiamond2.getWidth();</span>
+<span class="nc" id="L449">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
 
-<span class="nc" id="L427">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToUp()).withLabel(tbback,</span>
-<span class="nc" id="L428">					arrowHorizontalAlignment());</span>
+<span class="nc" id="L451">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToUp()).withLabel(tbback,</span>
+<span class="nc" id="L452">					arrowHorizontalAlignment());</span>
 
-<span class="nc" id="L430">			snake.addPoint(x1, y1);</span>
-<span class="nc" id="L431">			snake.addPoint(x2, y1);</span>
-<span class="nc" id="L432">			snake.addPoint(x2, y2);</span>
+<span class="nc" id="L454">			snake.addPoint(x1, y1);</span>
+<span class="nc" id="L455">			snake.addPoint(x2, y1);</span>
+<span class="nc" id="L456">			snake.addPoint(x2, y2);</span>
 
-<span class="nc" id="L434">			ug.draw(snake);</span>
-<span class="nc" id="L435">		}</span>
+<span class="nc" id="L458">			ug.draw(snake);</span>
+<span class="nc" id="L459">		}</span>
 
 	}
 
@@ -440,73 +464,73 @@ class FtileRepeat extends AbstractFtile {
 		private final Rainbow arrowColor;
 		private final TextBlock label;
 
-<span class="nc" id="L443">		public ConnectionBackBackward2(Rainbow arrowColor, TextBlock label) {</span>
-<span class="nc" id="L444">			super(backward, diamond1);</span>
-<span class="nc" id="L445">			this.label = label;</span>
-<span class="nc" id="L446">			this.arrowColor = arrowColor;</span>
-<span class="nc" id="L447">		}</span>
+<span class="nc" id="L467">		public ConnectionBackBackward2(Rainbow arrowColor, TextBlock label) {</span>
+<span class="nc" id="L468">			super(backward, diamond1);</span>
+<span class="nc" id="L469">			this.label = label;</span>
+<span class="nc" id="L470">			this.arrowColor = arrowColor;</span>
+<span class="nc" id="L471">		}</span>
 
 		private XPoint2D getP1(final StringBounder stringBounder) {
-<span class="nc" id="L450">			final FtileGeometry dim = backward.calculateDimension(stringBounder);</span>
-<span class="nc" id="L451">			return getTranslateBackward(stringBounder).getTranslated(new XPoint2D(dim.getLeft(), dim.getInY()));</span>
+<span class="nc" id="L474">			final FtileGeometry dim = backward.calculateDimension(stringBounder);</span>
+<span class="nc" id="L475">			return getTranslateBackward(stringBounder).getTranslated(new XPoint2D(dim.getLeft(), dim.getInY()));</span>
 		}
 
 		private XPoint2D getP2(final StringBounder stringBounder) {
-<span class="nc" id="L455">			return getTranslateDiamond1(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
+<span class="nc" id="L479">			return getTranslateDiamond1(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
 		}
 
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-<span class="nc" id="L460">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L484">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L462">			XPoint2D p1 = getP1(stringBounder);</span>
-<span class="nc" id="L463">			XPoint2D p2 = getP2(stringBounder);</span>
-<span class="nc" id="L464">			p1 = translate1.getTranslated(p1);</span>
-<span class="nc" id="L465">			p2 = translate2.getTranslated(p2);</span>
+<span class="nc" id="L486">			XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L487">			XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L488">			p1 = translate1.getTranslated(p1);</span>
+<span class="nc" id="L489">			p2 = translate2.getTranslated(p2);</span>
 
-<span class="nc" id="L467">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L491">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L469">			final double x1 = p1.getX();</span>
-<span class="nc" id="L470">			final double y1 = p1.getY();</span>
-<span class="nc" id="L471">			double x2 = p2.getX();</span>
-<span class="nc bnc" id="L472" title="All 2 branches missed.">			if (x2 &lt; x1)</span>
-<span class="nc" id="L473">				x2 += dimDiamond1.getWidth();</span>
-<span class="nc" id="L474">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
+<span class="nc" id="L493">			final double x1 = p1.getX();</span>
+<span class="nc" id="L494">			final double y1 = p1.getY();</span>
+<span class="nc" id="L495">			double x2 = p2.getX();</span>
+<span class="nc bnc" id="L496" title="All 2 branches missed.">			if (x2 &lt; x1)</span>
+<span class="nc" id="L497">				x2 += dimDiamond1.getWidth();</span>
+<span class="nc" id="L498">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
 
-<span class="nc" id="L476">			Snake snake = Snake.create(skinParam(), arrowColor,</span>
-<span class="nc bnc" id="L477" title="All 2 branches missed.">					x2 &lt; x1 ? skinParam().arrows().asToLeft() : skinParam().arrows().asToRight());</span>
-<span class="nc bnc" id="L478" title="All 2 branches missed.">			if (label != null)</span>
-<span class="nc" id="L479">				snake = snake.withLabel(label, arrowHorizontalAlignment());</span>
+<span class="nc" id="L500">			Snake snake = Snake.create(skinParam(), arrowColor,</span>
+<span class="nc bnc" id="L501" title="All 2 branches missed.">					x2 &lt; x1 ? skinParam().arrows().asToLeft() : skinParam().arrows().asToRight());</span>
+<span class="nc bnc" id="L502" title="All 2 branches missed.">			if (label != null)</span>
+<span class="nc" id="L503">				snake = snake.withLabel(label, arrowHorizontalAlignment());</span>
 
-<span class="nc" id="L481">			snake.addPoint(x1, y1);</span>
-<span class="nc" id="L482">			snake.addPoint(x1, y2);</span>
-<span class="nc" id="L483">			snake.addPoint(x2, y2);</span>
+<span class="nc" id="L505">			snake.addPoint(x1, y1);</span>
+<span class="nc" id="L506">			snake.addPoint(x1, y2);</span>
+<span class="nc" id="L507">			snake.addPoint(x2, y2);</span>
 
-<span class="nc" id="L485">			ug.draw(snake);</span>
+<span class="nc" id="L509">			ug.draw(snake);</span>
 
-<span class="nc" id="L487">		}</span>
+<span class="nc" id="L511">		}</span>
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L490">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L514">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L492">			Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft());</span>
-<span class="nc bnc" id="L493" title="All 2 branches missed.">			if (label != null)</span>
-<span class="nc" id="L494">				snake = snake.withLabel(label, arrowHorizontalAlignment());</span>
+<span class="nc" id="L516">			Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft());</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">			if (label != null)</span>
+<span class="nc" id="L518">				snake = snake.withLabel(label, arrowHorizontalAlignment());</span>
 
-<span class="nc" id="L496">			final XPoint2D p1 = getP1(stringBounder);</span>
-<span class="nc" id="L497">			final XPoint2D p2 = getP2(stringBounder);</span>
-<span class="nc" id="L498">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L499">			final double x1 = p1.getX();</span>
-<span class="nc" id="L500">			final double y1 = p1.getY();</span>
-<span class="nc" id="L501">			final double x2 = p2.getX() + dimDiamond1.getWidth();</span>
-<span class="nc" id="L502">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
+<span class="nc" id="L520">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L521">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L522">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L523">			final double x1 = p1.getX();</span>
+<span class="nc" id="L524">			final double y1 = p1.getY();</span>
+<span class="nc" id="L525">			final double x2 = p2.getX() + dimDiamond1.getWidth();</span>
+<span class="nc" id="L526">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
 
-<span class="nc" id="L504">			snake.addPoint(x1, y1);</span>
-<span class="nc" id="L505">			snake.addPoint(x1, y2);</span>
-<span class="nc" id="L506">			snake.addPoint(x2, y2);</span>
+<span class="nc" id="L528">			snake.addPoint(x1, y1);</span>
+<span class="nc" id="L529">			snake.addPoint(x1, y2);</span>
+<span class="nc" id="L530">			snake.addPoint(x2, y2);</span>
 
-<span class="nc" id="L508">			ug.draw(snake);</span>
-<span class="nc" id="L509">		}</span>
+<span class="nc" id="L532">			ug.draw(snake);</span>
+<span class="nc" id="L533">		}</span>
 
 	}
 
@@ -514,70 +538,70 @@ class FtileRepeat extends AbstractFtile {
 		private final Rainbow arrowColor;
 		private final TextBlock tbback;
 
-<span class="nc" id="L517">		public ConnectionBackSimple1(Rainbow arrowColor, TextBlock tbback) {</span>
-<span class="nc" id="L518">			super(diamond2, diamond1);</span>
-<span class="nc" id="L519">			this.arrowColor = arrowColor;</span>
-<span class="nc" id="L520">			this.tbback = tbback;</span>
-<span class="nc" id="L521">		}</span>
+<span class="nc" id="L541">		public ConnectionBackSimple1(Rainbow arrowColor, TextBlock tbback) {</span>
+<span class="nc" id="L542">			super(diamond2, diamond1);</span>
+<span class="nc" id="L543">			this.arrowColor = arrowColor;</span>
+<span class="nc" id="L544">			this.tbback = tbback;</span>
+<span class="nc" id="L545">		}</span>
 
 		private XPoint2D getP1(final StringBounder stringBounder) {
-<span class="nc" id="L524">			return getTranslateDiamond2(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
+<span class="nc" id="L548">			return getTranslateDiamond2(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
 		}
 
 		private XPoint2D getP2(final StringBounder stringBounder) {
-<span class="nc" id="L528">			return getTranslateDiamond1(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
+<span class="nc" id="L552">			return getTranslateDiamond1(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
 		}
 
 		public void drawU(UGraphic ug) {
-<span class="nc" id="L532">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L556">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L534">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToRight())</span>
-<span class="nc" id="L535">					.emphasizeDirection(Direction.UP).withLabel(tbback, arrowHorizontalAlignment());</span>
-<span class="nc" id="L536">			final XPoint2D p1 = getP1(stringBounder);</span>
-<span class="nc" id="L537">			final XPoint2D p2 = getP2(stringBounder);</span>
-<span class="nc" id="L538">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L539">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="nc" id="L540">			final double x1 = p1.getX();</span>
-<span class="nc" id="L541">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
-<span class="nc" id="L542">			final double x2 = p2.getX();</span>
-<span class="nc" id="L543">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
+<span class="nc" id="L558">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToRight())</span>
+<span class="nc" id="L559">					.emphasizeDirection(Direction.UP).withLabel(tbback, arrowHorizontalAlignment());</span>
+<span class="nc" id="L560">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L561">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L562">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L563">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L564">			final double x1 = p1.getX();</span>
+<span class="nc" id="L565">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
+<span class="nc" id="L566">			final double x2 = p2.getX();</span>
+<span class="nc" id="L567">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
 
-<span class="nc" id="L545">			snake.addPoint(x1, y1);</span>
-<span class="nc" id="L546">			final double xmin = -Hexagon.hexagonHalfSize;</span>
-<span class="nc" id="L547">			snake.addPoint(xmin, y1);</span>
-<span class="nc" id="L548">			snake.addPoint(xmin, y2);</span>
-<span class="nc" id="L549">			snake.addPoint(x2, y2);</span>
+<span class="nc" id="L569">			snake.addPoint(x1, y1);</span>
+<span class="nc" id="L570">			final double xmin = -Hexagon.hexagonHalfSize;</span>
+<span class="nc" id="L571">			snake.addPoint(xmin, y1);</span>
+<span class="nc" id="L572">			snake.addPoint(xmin, y2);</span>
+<span class="nc" id="L573">			snake.addPoint(x2, y2);</span>
 
-<span class="nc" id="L551">			ug.draw(snake);</span>
-<span class="nc" id="L552">		}</span>
+<span class="nc" id="L575">			ug.draw(snake);</span>
+<span class="nc" id="L576">		}</span>
 
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-<span class="nc" id="L556">			final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L557">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft())</span>
-<span class="nc" id="L558">					.emphasizeDirection(Direction.UP).withLabel(tbback, arrowHorizontalAlignment());</span>
-<span class="nc" id="L559">			final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
+<span class="nc" id="L580">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L581">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft())</span>
+<span class="nc" id="L582">					.emphasizeDirection(Direction.UP).withLabel(tbback, arrowHorizontalAlignment());</span>
+<span class="nc" id="L583">			final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L561">			XPoint2D p1 = getP1(stringBounder);</span>
-<span class="nc" id="L562">			XPoint2D p2 = getP2(stringBounder);</span>
-<span class="nc" id="L563">			p1 = translate1.getTranslated(p1);</span>
-<span class="nc" id="L564">			p2 = translate2.getTranslated(p2);</span>
-<span class="nc" id="L565">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L566">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="nc" id="L567">			final double x1 = p1.getX();</span>
-<span class="nc" id="L568">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
-<span class="nc" id="L569">			final double x2 = p2.getX();</span>
-<span class="nc" id="L570">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
+<span class="nc" id="L585">			XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L586">			XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L587">			p1 = translate1.getTranslated(p1);</span>
+<span class="nc" id="L588">			p2 = translate2.getTranslated(p2);</span>
+<span class="nc" id="L589">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L590">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L591">			final double x1 = p1.getX();</span>
+<span class="nc" id="L592">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
+<span class="nc" id="L593">			final double x2 = p2.getX();</span>
+<span class="nc" id="L594">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
 
-<span class="nc" id="L572">			snake.addPoint(x1, y1);</span>
-<span class="nc" id="L573">			final double xmax = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2</span>
+<span class="nc" id="L596">			snake.addPoint(x1, y1);</span>
+<span class="nc" id="L597">			final double xmax = p1.getX() + dimDiamond2.getWidth() / 2 + dimRepeat.getWidth() / 2</span>
 					+ Hexagon.hexagonHalfSize;
-<span class="nc" id="L575">			snake.addPoint(xmax, y1);</span>
-<span class="nc" id="L576">			snake.addPoint(xmax, y2);</span>
-<span class="nc" id="L577">			snake.addPoint(x2, y2);</span>
+<span class="nc" id="L599">			snake.addPoint(xmax, y1);</span>
+<span class="nc" id="L600">			snake.addPoint(xmax, y2);</span>
+<span class="nc" id="L601">			snake.addPoint(x2, y2);</span>
 
-<span class="nc" id="L579">			ug.draw(snake);</span>
-<span class="nc" id="L580">		}</span>
+<span class="nc" id="L603">			ug.draw(snake);</span>
+<span class="nc" id="L604">		}</span>
 
 	}
 
@@ -585,180 +609,180 @@ class FtileRepeat extends AbstractFtile {
 		private final Rainbow arrowColor;
 		private final TextBlock tbback;
 
-<span class="fc" id="L588">		public ConnectionBackSimple2(Rainbow arrowColor, TextBlock tbback) {</span>
-<span class="fc" id="L589">			super(diamond2, diamond1);</span>
-<span class="fc" id="L590">			this.arrowColor = arrowColor;</span>
-<span class="fc" id="L591">			this.tbback = tbback;</span>
-<span class="fc" id="L592">		}</span>
+<span class="fc" id="L612">		public ConnectionBackSimple2(Rainbow arrowColor, TextBlock tbback) {</span>
+<span class="fc" id="L613">			super(diamond2, diamond1);</span>
+<span class="fc" id="L614">			this.arrowColor = arrowColor;</span>
+<span class="fc" id="L615">			this.tbback = tbback;</span>
+<span class="fc" id="L616">		}</span>
 
 		private XPoint2D getP1(final StringBounder stringBounder) {
-<span class="fc" id="L595">			return getTranslateDiamond2(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
+<span class="fc" id="L619">			return getTranslateDiamond2(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
 		}
 
 		private XPoint2D getP2(final StringBounder stringBounder) {
-<span class="fc" id="L599">			return getTranslateDiamond1(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
+<span class="fc" id="L623">			return getTranslateDiamond1(stringBounder).getTranslated(new XPoint2D(0, 0));</span>
 		}
 
 		public void drawU(UGraphic ug) {
-<span class="fc" id="L603">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L627">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="fc" id="L605">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft())</span>
-<span class="fc" id="L606">					.emphasizeDirection(Direction.UP).withLabel(tbback, arrowHorizontalAlignment());</span>
-<span class="fc" id="L607">			final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="fc" id="L608">			final XPoint2D p1 = getP1(stringBounder);</span>
-<span class="fc" id="L609">			final XPoint2D p2 = getP2(stringBounder);</span>
-<span class="fc" id="L610">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="fc" id="L611">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="fc" id="L612">			final double x1 = p1.getX() + dimDiamond2.getWidth();</span>
-<span class="fc" id="L613">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
-<span class="fc" id="L614">			final double x2 = p2.getX() + dimDiamond1.getWidth();</span>
-<span class="fc" id="L615">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
+<span class="fc" id="L629">			final Snake snake = Snake.create(skinParam(), arrowColor, skinParam().arrows().asToLeft())</span>
+<span class="fc" id="L630">					.emphasizeDirection(Direction.UP).withLabel(tbback, arrowHorizontalAlignment());</span>
+<span class="fc" id="L631">			final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L632">			final XPoint2D p1 = getP1(stringBounder);</span>
+<span class="fc" id="L633">			final XPoint2D p2 = getP2(stringBounder);</span>
+<span class="fc" id="L634">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L635">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L636">			final double x1 = p1.getX() + dimDiamond2.getWidth();</span>
+<span class="fc" id="L637">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
+<span class="fc" id="L638">			final double x2 = p2.getX() + dimDiamond1.getWidth();</span>
+<span class="fc" id="L639">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
 
-<span class="fc" id="L617">			snake.addPoint(x1, y1);</span>
-<span class="fc" id="L618">			final double xmax = dimTotal.getWidth() - Hexagon.hexagonHalfSize;</span>
-<span class="fc" id="L619">			snake.addPoint(xmax, y1);</span>
-<span class="fc" id="L620">			snake.addPoint(xmax, y2);</span>
-<span class="fc" id="L621">			snake.addPoint(x2, y2);</span>
+<span class="fc" id="L641">			snake.addPoint(x1, y1);</span>
+<span class="fc" id="L642">			final double xmax = dimTotal.getWidth() - Hexagon.hexagonHalfSize;</span>
+<span class="fc" id="L643">			snake.addPoint(xmax, y1);</span>
+<span class="fc" id="L644">			snake.addPoint(xmax, y2);</span>
+<span class="fc" id="L645">			snake.addPoint(x2, y2);</span>
 
-<span class="fc" id="L623">			ug.draw(snake);</span>
-<span class="fc" id="L624">		}</span>
+<span class="fc" id="L647">			ug.draw(snake);</span>
+<span class="fc" id="L648">		}</span>
 
 		@Override
 		public void drawTranslate(UGraphic ug, UTranslate translate1, UTranslate translate2) {
-<span class="nc" id="L628">			final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L652">			final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L630">			XPoint2D p1 = getP1(stringBounder);</span>
-<span class="nc" id="L631">			XPoint2D p2 = getP2(stringBounder);</span>
-<span class="nc" id="L632">			p1 = translate1.getTranslated(p1);</span>
-<span class="nc" id="L633">			p2 = translate2.getTranslated(p2);</span>
-<span class="nc" id="L634">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="nc" id="L635">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="nc" id="L636">			final double x1 = p1.getX() + dimDiamond2.getWidth();</span>
-<span class="nc" id="L637">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
+<span class="nc" id="L654">			XPoint2D p1 = getP1(stringBounder);</span>
+<span class="nc" id="L655">			XPoint2D p2 = getP2(stringBounder);</span>
+<span class="nc" id="L656">			p1 = translate1.getTranslated(p1);</span>
+<span class="nc" id="L657">			p2 = translate2.getTranslated(p2);</span>
+<span class="nc" id="L658">			final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="nc" id="L659">			final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="nc" id="L660">			final double x1 = p1.getX() + dimDiamond2.getWidth();</span>
+<span class="nc" id="L661">			final double y1 = p1.getY() + dimDiamond2.getHeight() / 2;</span>
 
-<span class="nc" id="L639">			final double x2a = p2.getX();</span>
-<span class="nc" id="L640">			final double x2b = p2.getX() + dimDiamond1.getWidth();</span>
-<span class="nc bnc" id="L641" title="All 2 branches missed.">			final boolean isOnA = x1 &lt; (x2a + x2b) / 2;</span>
+<span class="nc" id="L663">			final double x2a = p2.getX();</span>
+<span class="nc" id="L664">			final double x2b = p2.getX() + dimDiamond1.getWidth();</span>
+<span class="nc bnc" id="L665" title="All 2 branches missed.">			final boolean isOnA = x1 &lt; (x2a + x2b) / 2;</span>
 
-<span class="nc bnc" id="L643" title="All 2 branches missed.">			final double x2 = isOnA ? x2a : x2b;</span>
-<span class="nc" id="L644">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
+<span class="nc bnc" id="L667" title="All 2 branches missed.">			final double x2 = isOnA ? x2a : x2b;</span>
+<span class="nc" id="L668">			final double y2 = p2.getY() + dimDiamond1.getHeight() / 2;</span>
 
-<span class="nc bnc" id="L646" title="All 2 branches missed.">			final UPolygon arrow = isOnA ? skinParam().arrows().asToRight() : skinParam().arrows().asToLeft();</span>
-<span class="nc" id="L647">			final Snake snake = Snake.create(skinParam(), arrowColor, arrow).emphasizeDirection(Direction.UP)</span>
-<span class="nc" id="L648">					.withLabel(tbback, arrowHorizontalAlignment());</span>
+<span class="nc bnc" id="L670" title="All 2 branches missed.">			final UPolygon arrow = isOnA ? skinParam().arrows().asToRight() : skinParam().arrows().asToLeft();</span>
+<span class="nc" id="L671">			final Snake snake = Snake.create(skinParam(), arrowColor, arrow).emphasizeDirection(Direction.UP)</span>
+<span class="nc" id="L672">					.withLabel(tbback, arrowHorizontalAlignment());</span>
 
-<span class="nc" id="L650">			snake.addPoint(x1, y1);</span>
-<span class="nc" id="L651">			final double xmiddle = (x1 + x2) / 2;</span>
-<span class="nc" id="L652">			snake.addPoint(xmiddle, y1);</span>
-<span class="nc" id="L653">			snake.addPoint(xmiddle, y2);</span>
-<span class="nc" id="L654">			snake.addPoint(x2, y2);</span>
+<span class="nc" id="L674">			snake.addPoint(x1, y1);</span>
+<span class="nc" id="L675">			final double xmiddle = (x1 + x2) / 2;</span>
+<span class="nc" id="L676">			snake.addPoint(xmiddle, y1);</span>
+<span class="nc" id="L677">			snake.addPoint(xmiddle, y2);</span>
+<span class="nc" id="L678">			snake.addPoint(x2, y2);</span>
 
-<span class="nc" id="L656">			ug.draw(snake);</span>
-<span class="nc" id="L657">		}</span>
+<span class="nc" id="L680">			ug.draw(snake);</span>
+<span class="nc" id="L681">		}</span>
 
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L662">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L663">		ug.apply(getTranslateForRepeat(stringBounder)).draw(repeat);</span>
-<span class="fc" id="L664">		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);</span>
-<span class="fc" id="L665">		ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);</span>
-<span class="pc bpc" id="L666" title="1 of 2 branches missed.">		if (backward != null)</span>
-<span class="nc" id="L667">			ug.apply(getTranslateBackward(stringBounder)).draw(backward);</span>
+<span class="fc" id="L686">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L687">		ug.apply(getTranslateForRepeat(stringBounder)).draw(repeat);</span>
+<span class="fc" id="L688">		ug.apply(getTranslateDiamond1(stringBounder)).draw(diamond1);</span>
+<span class="fc" id="L689">		ug.apply(getTranslateDiamond2(stringBounder)).draw(diamond2);</span>
+<span class="pc bpc" id="L690" title="1 of 2 branches missed.">		if (backward != null)</span>
+<span class="nc" id="L691">			ug.apply(getTranslateBackward(stringBounder)).draw(backward);</span>
 
-<span class="fc" id="L669">	}</span>
+<span class="fc" id="L693">	}</span>
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-<span class="fc" id="L673">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="fc" id="L674">		return new FtileGeometry(dimTotal, getLeft(stringBounder), 0, dimTotal.getHeight());</span>
+<span class="fc" id="L697">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L698">		return new FtileGeometry(dimTotal, getLeft(stringBounder), 0, dimTotal.getHeight());</span>
 	}
 
 	private XDimension2D calculateDimensionInternal(StringBounder stringBounder) {
-<span class="fc" id="L678">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="fc" id="L679">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="fc" id="L680">		final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
+<span class="fc" id="L702">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L703">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L704">		final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
 
-<span class="fc" id="L682">		final double w = tbTest.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L706">		final double w = tbTest.calculateDimension(stringBounder).getWidth();</span>
 
-<span class="fc" id="L684">		double width = getLeft(stringBounder) + getRight(stringBounder);</span>
-<span class="fc" id="L685">		width = Math.max(width, w + 2 * Hexagon.hexagonHalfSize);</span>
-<span class="pc bpc" id="L686" title="1 of 2 branches missed.">		if (backward != null)</span>
-<span class="nc" id="L687">			width += backward.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L708">		double width = getLeft(stringBounder) + getRight(stringBounder);</span>
+<span class="fc" id="L709">		width = Math.max(width, w + 2 * Hexagon.hexagonHalfSize);</span>
+<span class="pc bpc" id="L710" title="1 of 2 branches missed.">		if (backward != null)</span>
+<span class="nc" id="L711">			width += backward.calculateDimension(stringBounder).getWidth();</span>
 
-<span class="fc" id="L689">		final double height = dimDiamond1.getHeight() + dimRepeat.getHeight() + dimDiamond2.getHeight()</span>
+<span class="fc" id="L713">		final double height = dimDiamond1.getHeight() + dimRepeat.getHeight() + dimDiamond2.getHeight()</span>
 				+ 8 * Hexagon.hexagonHalfSize;
-<span class="fc" id="L691">		return new XDimension2D(width + 2 * Hexagon.hexagonHalfSize, height);</span>
+<span class="fc" id="L715">		return new XDimension2D(width + 2 * Hexagon.hexagonHalfSize, height);</span>
 
 	}
 
 	@Override
 	public UTranslate getTranslateFor(Ftile child, StringBounder stringBounder) {
-<span class="nc bnc" id="L697" title="All 2 branches missed.">		if (child == repeat)</span>
-<span class="nc" id="L698">			return getTranslateForRepeat(stringBounder);</span>
+<span class="nc bnc" id="L721" title="All 2 branches missed.">		if (child == repeat)</span>
+<span class="nc" id="L722">			return getTranslateForRepeat(stringBounder);</span>
 
-<span class="nc bnc" id="L700" title="All 2 branches missed.">		if (child == diamond1)</span>
-<span class="nc" id="L701">			return getTranslateDiamond1(stringBounder);</span>
+<span class="nc bnc" id="L724" title="All 2 branches missed.">		if (child == diamond1)</span>
+<span class="nc" id="L725">			return getTranslateDiamond1(stringBounder);</span>
 
-<span class="nc" id="L703">		throw new UnsupportedOperationException();</span>
+<span class="nc" id="L727">		throw new UnsupportedOperationException();</span>
 	}
 
 	private UTranslate getTranslateForRepeat(StringBounder stringBounder) {
 
-<span class="fc" id="L708">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="fc" id="L709">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="fc" id="L710">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="fc" id="L711">		final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
-<span class="fc" id="L712">		final double space = dimTotal.getHeight() - dimDiamond1.getHeight() - dimDiamond2.getHeight()</span>
-<span class="fc" id="L713">				- dimRepeat.getHeight();</span>
-<span class="fc" id="L714">		final double y = dimDiamond1.getHeight() + space / 2;</span>
-<span class="fc" id="L715">		final double left = getLeft(stringBounder);</span>
-<span class="fc" id="L716">		return new UTranslate(left - repeat.calculateDimension(stringBounder).getLeft(), y);</span>
+<span class="fc" id="L732">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L733">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L734">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L735">		final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
+<span class="fc" id="L736">		final double space = dimTotal.getHeight() - dimDiamond1.getHeight() - dimDiamond2.getHeight()</span>
+<span class="fc" id="L737">				- dimRepeat.getHeight();</span>
+<span class="fc" id="L738">		final double y = dimDiamond1.getHeight() + space / 2;</span>
+<span class="fc" id="L739">		final double left = getLeft(stringBounder);</span>
+<span class="fc" id="L740">		return new UTranslate(left - repeat.calculateDimension(stringBounder).getLeft(), y);</span>
 
 	}
 
 	private UTranslate getTranslateDiamond1(StringBounder stringBounder) {
-<span class="fc" id="L721">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="fc" id="L722">		final double left = getLeft(stringBounder);</span>
-<span class="fc" id="L723">		return UTranslate.dx(left - dimDiamond1.getWidth() / 2);</span>
+<span class="fc" id="L745">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L746">		final double left = getLeft(stringBounder);</span>
+<span class="fc" id="L747">		return UTranslate.dx(left - dimDiamond1.getWidth() / 2);</span>
 	}
 
 	private UTranslate getTranslateBackward(StringBounder stringBounder) {
-<span class="nc" id="L727">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="nc" id="L728">		final XDimension2D dimBackward = backward.calculateDimension(stringBounder);</span>
-<span class="nc" id="L729">		final double x = dimTotal.getWidth() - dimBackward.getWidth();</span>
-<span class="nc" id="L730">		final double y = (dimTotal.getHeight() - dimBackward.getHeight()) / 2;</span>
+<span class="nc" id="L751">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="nc" id="L752">		final XDimension2D dimBackward = backward.calculateDimension(stringBounder);</span>
+<span class="nc" id="L753">		final double x = dimTotal.getWidth() - dimBackward.getWidth();</span>
+<span class="nc" id="L754">		final double y = (dimTotal.getHeight() - dimBackward.getHeight()) / 2;</span>
 
-<span class="nc" id="L732">		return new UTranslate(x, y);</span>
+<span class="nc" id="L756">		return new UTranslate(x, y);</span>
 	}
 
 	private UTranslate getTranslateDiamond2(StringBounder stringBounder) {
-<span class="fc" id="L736">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
-<span class="fc" id="L737">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="fc" id="L738">		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();</span>
-<span class="fc" id="L739">		final double left = getLeft(stringBounder);</span>
-<span class="fc" id="L740">		return new UTranslate(left - dimDiamond2.getWidth() / 2, y2);</span>
+<span class="fc" id="L760">		final XDimension2D dimTotal = calculateDimensionInternal(stringBounder);</span>
+<span class="fc" id="L761">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L762">		final double y2 = dimTotal.getHeight() - dimDiamond2.getHeight();</span>
+<span class="fc" id="L763">		final double left = getLeft(stringBounder);</span>
+<span class="fc" id="L764">		return new UTranslate(left - dimDiamond2.getWidth() / 2, y2);</span>
 	}
 
 	private double getLeft(StringBounder stringBounder) {
-<span class="fc" id="L744">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="fc" id="L745">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="fc" id="L746">		double left1 = repeat.calculateDimension(stringBounder).getLeft();</span>
-<span class="fc" id="L747">		left1 = Math.max(left1, dimDiamond1.getWidth() / 2);</span>
-<span class="fc" id="L748">		double left2 = repeat.calculateDimension(stringBounder).getLeft();</span>
-<span class="fc" id="L749">		left2 = Math.max(left2, dimDiamond2.getWidth() / 2);</span>
-<span class="fc" id="L750">		return Math.max(left1, left2);</span>
+<span class="fc" id="L768">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L769">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L770">		double left1 = repeat.calculateDimension(stringBounder).getLeft();</span>
+<span class="fc" id="L771">		left1 = Math.max(left1, dimDiamond1.getWidth() / 2);</span>
+<span class="fc" id="L772">		double left2 = repeat.calculateDimension(stringBounder).getLeft();</span>
+<span class="fc" id="L773">		left2 = Math.max(left2, dimDiamond2.getWidth() / 2);</span>
+<span class="fc" id="L774">		return Math.max(left1, left2);</span>
 	}
 
 	private double getRight(StringBounder stringBounder) {
-<span class="fc" id="L754">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
-<span class="fc" id="L755">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
-<span class="fc" id="L756">		final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
-<span class="fc" id="L757">		double right1 = dimRepeat.getWidth() - repeat.calculateDimension(stringBounder).getLeft();</span>
-<span class="fc" id="L758">		right1 = Math.max(right1, dimDiamond1.getWidth() / 2);</span>
-<span class="fc" id="L759">		double right2 = dimRepeat.getWidth() - repeat.calculateDimension(stringBounder).getLeft();</span>
-<span class="fc" id="L760">		right2 = Math.max(right2, dimDiamond2.getWidth() / 2);</span>
-<span class="fc" id="L761">		return Math.max(right1, right2);</span>
+<span class="fc" id="L778">		final XDimension2D dimDiamond1 = diamond1.calculateDimension(stringBounder);</span>
+<span class="fc" id="L779">		final XDimension2D dimDiamond2 = diamond2.calculateDimension(stringBounder);</span>
+<span class="fc" id="L780">		final XDimension2D dimRepeat = repeat.calculateDimension(stringBounder);</span>
+<span class="fc" id="L781">		double right1 = dimRepeat.getWidth() - repeat.calculateDimension(stringBounder).getLeft();</span>
+<span class="fc" id="L782">		right1 = Math.max(right1, dimDiamond1.getWidth() / 2);</span>
+<span class="fc" id="L783">		double right2 = dimRepeat.getWidth() - repeat.calculateDimension(stringBounder).getLeft();</span>
+<span class="fc" id="L784">		right2 = Math.max(right2, dimDiamond2.getWidth() / 2);</span>
+<span class="fc" id="L785">		return Math.max(right1, right2);</span>
 	}
 
 }
