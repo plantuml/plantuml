@@ -1,0 +1,14 @@
+---
+output: preproc
+---
+@startuml
+
+A -> A : stuff1
+!startsub BASIC
+B -> B : stuff2
+!endsub
+C -> C : stuff3
+!startsub BASIC
+D -> D : stuff4
+!endsub
+@enduml

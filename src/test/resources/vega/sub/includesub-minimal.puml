@@ -1,0 +1,10 @@
+---
+output: preproc
+---
+@startuml
+!startsub SUB
+Alice -> Bob : hello
+!endsub
+
+!includesub SUB
+@enduml

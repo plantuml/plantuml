@@ -1,0 +1,14 @@
+---
+output: preproc
+---
+@startuml
+!startsub SUB
+!procedure box($desc)
+card "$desc"
+!endprocedure
+!endsub
+
+!includesub SUB
+
+box("single line")
+@enduml

@@ -28,6 +28,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.yaml.parser.Monomorph;
 import net.sourceforge.plantuml.yaml.parser.MonomorphType;
 import net.sourceforge.plantuml.yaml.parser.YamlParser;
@@ -281,11 +282,16 @@ public class VegaInputFile {
 		}
 	}
 
+	private SFile getCurrentDir() {
+		final Path parent = path.toAbsolutePath().getParent();
+		return new SFile(parent.toString());
+	}
+
 	private void doRunSingleFile() throws IOException {
 		assertFalse(getPumlSource().isEmpty(), "PlantUML source in " + path);
 
 		final String source = getPumlSourceAsString();
-		final SourceStringReader ssr = new SourceStringReader(source, UTF_8);
+		final SourceStringReader ssr = new SourceStringReader(source, getCurrentDir());
 		final Diagram diagram = ssr.getBlocks().get(0).getDiagram();
 		this.diagramClass = diagram.getClass();
 		this.rootCause = diagram.getRootCause();
@@ -299,7 +305,7 @@ public class VegaInputFile {
 
 		for (final FileFormat fileFormat : fileFormats) {
 			for (int imageIndex = 0; imageIndex < nbImages; imageIndex++) {
-				final SourceStringReader ssrForFormat = new SourceStringReader(source, UTF_8);
+				final SourceStringReader ssrForFormat = new SourceStringReader(source, getCurrentDir());
 				final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				final DiagramDescription description = ssrForFormat.outputImage(baos, imageIndex,
 						new FileFormatOption(fileFormat));

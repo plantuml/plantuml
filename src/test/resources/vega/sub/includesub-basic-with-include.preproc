@@ -1,0 +1,6 @@
+@startuml
+
+title this contains only B and D
+B -> B : stuff2
+D -> D : stuff4
+@enduml
