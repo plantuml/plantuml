@@ -45,6 +45,7 @@ import org.teavm.jso.dom.xml.Element;
 
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.drawing.svg.PortableSvgDocument;
+import net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics;
 
 /**
  * SVG Graphics implementation for TeaVM. Uses browser's native DOM API instead
@@ -144,8 +145,37 @@ public class SvgGraphicsTeaVM {
 			groupStack.remove(groupStack.size() - 1);
 	}
 
+	/**
+	 * Embeds the PlantUML source into the SVG as a {@code plantuml-src} processing
+	 * instruction, mirroring {@link net.sourceforge.plantuml.klimt.drawing.svg.SvgGraphics#addCommentMetadata(String)}.
+	 *
+	 * <p>
+	 * The source is encoded with the very same transcoder used by the classic Java
+	 * backend (see {@link SvgGraphics#getMetadataHex(String)}), so the produced
+	 * {@code plantuml-src} is byte-for-byte compatible with the one emitted by the
+	 * server and understood by editor.plantuml.com.
+	 *
+	 * <p>
+	 * The processing instruction is appended to the main group, exactly as the
+	 * classic backend appends it to {@code getG()}.
+	 *
+	 * @param metadata the raw PlantUML source to embed (may be {@code null})
+	 * @see <a href="https://github.com/plantuml/plantuml/issues/2761">issue #2761</a>
+	 */
+	public void addCommentMetadata(String metadata) {
+		if (metadata == null)
+			return;
+		// https://github.com/plantuml/plantuml/issues/2306
+		final String signature = SvgGraphics.getMetadataHex(metadata);
+		appendProcessingInstruction(mainGroup, "plantuml-src", signature);
+	}
+
 	@JSBody(params = { "tagName" }, script = "return document.createElementNS('http://www.w3.org/2000/svg', tagName);")
 	private static native Element createSvgElement(String tagName);
+
+	@JSBody(params = { "parent", "target",
+			"data" }, script = "parent.appendChild(parent.ownerDocument.createProcessingInstruction(target, data));")
+	private static native void appendProcessingInstruction(Element parent, String target, String data);
 
 	public Element getSvgRoot() {
 		return svgRoot;

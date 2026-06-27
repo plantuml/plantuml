@@ -424,6 +424,13 @@ public class PlantUMLBrowser {
 
 		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());
 		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);
+
+		// Embed the PlantUML source as a plantuml-src processing instruction, so the
+		// generated SVG can be re-imported/edited later, just like the SVGs produced
+		// by the classic Java backend and editor.plantuml.com.
+		// https://github.com/plantuml/plantuml/issues/2761
+		svg.addCommentMetadata(String.join("\n", lines));
+
 		return svg;
 	}
 
