@@ -87,17 +87,17 @@ public class CommandPartition3 extends SingleLineCommand2&lt;ActivityDiagram3&gt
 	}
 
 	private USymbol getUSymbol(String type) {
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (&quot;partition&quot;.equalsIgnoreCase(type))</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (&quot;partition&quot;.equalsIgnoreCase(type))</span>
 <span class="nc" id="L91">			return USymbols.PARTITION;</span>
 
-<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (&quot;package&quot;.equalsIgnoreCase(type))</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (&quot;package&quot;.equalsIgnoreCase(type))</span>
 <span class="nc" id="L94">			return USymbols.PACKAGE;</span>
 
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (&quot;rectangle&quot;.equalsIgnoreCase(type))</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (&quot;rectangle&quot;.equalsIgnoreCase(type))</span>
 <span class="nc" id="L97">			return USymbols.RECTANGLE;</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (&quot;card&quot;.equalsIgnoreCase(type))</span>
-<span class="nc" id="L100">			return USymbols.CARD;</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (&quot;card&quot;.equalsIgnoreCase(type))</span>
+<span class="fc" id="L100">			return USymbols.CARD;</span>
 
 <span class="nc bnc" id="L102" title="All 2 branches missed.">		if (&quot;group&quot;.equalsIgnoreCase(type))</span>
 <span class="nc" id="L103">			return USymbols.GROUP;</span>
@@ -140,33 +140,33 @@ public class CommandPartition3 extends SingleLineCommand2&lt;ActivityDiagram3&gt
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="nc" id="L143">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
+<span class="fc" id="L143">		final String name = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get(&quot;NAME&quot;, 0));</span>
 
-<span class="nc" id="L145">		final String b1 = arg.get(&quot;BACK1&quot;, 0);</span>
-<span class="nc bnc" id="L146" title="All 2 branches missed.">		final Colors colors = color(b1 == null ? &quot;BACK2&quot; : &quot;BACK1&quot;).getColor(arg,</span>
-<span class="nc" id="L147">				diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L145">		final String b1 = arg.get(&quot;BACK1&quot;, 0);</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		final Colors colors = color(b1 == null ? &quot;BACK2&quot; : &quot;BACK1&quot;).getColor(arg,</span>
+<span class="fc" id="L147">				diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L149">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
-<span class="nc" id="L150">		final USymbol symbol = getUSymbol(type);</span>
-<span class="nc" id="L151">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		final Stereotype stereotype = stereo == null ? null : Stereotype.build(stereo);</span>
+<span class="fc" id="L149">		final String type = arg.get(&quot;TYPE&quot;, 0);</span>
+<span class="fc" id="L150">		final USymbol symbol = getUSymbol(type);</span>
+<span class="fc" id="L151">		final String stereo = arg.get(&quot;STEREO&quot;, 0);</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		final Stereotype stereotype = stereo == null ? null : Stereotype.build(stereo);</span>
 
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		final boolean hasBracket = arg.get(&quot;BRACKET&quot;, 0).length() &gt; 0;</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		if (hasBracket == false)</span>
-<span class="nc" id="L156">			diagram.addWarning(</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		final boolean hasBracket = arg.get(&quot;BRACKET&quot;, 0).length() &gt; 0;</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (hasBracket == false)</span>
+<span class="fc" id="L156">			diagram.addWarning(</span>
 					new Warning(&quot;You should use a bracket ({) when defining your container '&quot; + type + &quot;' &quot; + name));
 
 		// Warning : titleColor unused in FTileGroupW
 
-<span class="nc" id="L161">		final Style stylePartition = FtileGroup.getStyleSignature(symbol).withTOBECHANGED(stereotype)</span>
-<span class="nc" id="L162">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="nc" id="L163">		HColor backColor = colors.getColor(ColorType.BACK);</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (backColor == null)</span>
-<span class="nc" id="L165">			backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L161">		final Style stylePartition = FtileGroup.getStyleSignature(symbol).withTOBECHANGED(stereotype)</span>
+<span class="fc" id="L162">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L163">		HColor backColor = colors.getColor(ColorType.BACK);</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		if (backColor == null)</span>
+<span class="fc" id="L165">			backColor = stylePartition.value(PName.BackGroundColor).asColor(diagram.getSkinParam().getIHtmlColorSet());</span>
 
-<span class="nc" id="L167">		diagram.startGroup(Display.getWithNewlines(diagram.getPragma(), name), backColor, symbol, stylePartition);</span>
+<span class="fc" id="L167">		diagram.startGroup(Display.getWithNewlines(diagram.getPragma(), name), backColor, symbol, stylePartition);</span>
 
-<span class="nc" id="L169">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L169">		return CommandExecutionResult.ok();</span>
 	}
 
 }

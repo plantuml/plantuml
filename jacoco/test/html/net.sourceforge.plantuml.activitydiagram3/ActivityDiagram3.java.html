@@ -419,12 +419,12 @@ public class ActivityDiagram3 extends TitledDiagram {
 	}
 
 	public void startGroup(Display name, HColor backColor, USymbol type, Style style) {
-<span class="nc" id="L422">		manageSwimlaneStrategy();</span>
-<span class="nc" id="L423">		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor,</span>
-<span class="nc" id="L424">				swimlanes.getCurrentSwimlane(), nextLinkRenderer(), type, style);</span>
-<span class="nc" id="L425">		current().add(instructionGroup);</span>
-<span class="nc" id="L426">		setCurrent(instructionGroup);</span>
-<span class="nc" id="L427">	}</span>
+<span class="fc" id="L422">		manageSwimlaneStrategy();</span>
+<span class="fc" id="L423">		final InstructionGroup instructionGroup = new InstructionGroup(current(), name, backColor,</span>
+<span class="fc" id="L424">				swimlanes.getCurrentSwimlane(), nextLinkRenderer(), type, style);</span>
+<span class="fc" id="L425">		current().add(instructionGroup);</span>
+<span class="fc" id="L426">		setCurrent(instructionGroup);</span>
+<span class="fc" id="L427">	}</span>
 
 	public CommandExecutionResult closeGroup() {
 <span class="nc bnc" id="L430" title="All 2 branches missed.">		if (current() instanceof InstructionGroup) {</span>
