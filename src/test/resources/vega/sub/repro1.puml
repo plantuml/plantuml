@@ -1,0 +1,9 @@
+---
+output: preproc
+---
+@startuml
+!includesub subfile.puml!SUB
+
+working_single_line()
+'not_working_multi_line() 'uncomment to get an error
+@enduml

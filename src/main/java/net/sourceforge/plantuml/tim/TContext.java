@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
 import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
+import net.sourceforge.plantuml.preproc2.ReadFilterMergeLines;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.skin.Pragma;
@@ -657,6 +658,7 @@ public class TContext {
 							try {
 								ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());
 								readerline = new UncommentReadLine(readerline);
+								readerline = new ReadFilterMergeLines().applyFilter(readerline);
 								sub = Sub.fromFile(readerline, blocname, this, memory);
 							} finally {
 								reader.close();

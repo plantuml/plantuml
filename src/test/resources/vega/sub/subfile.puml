@@ -1,0 +1,21 @@
+---
+output: preproc
+---
+@startuml
+
+!startsub SUB
+    !procedure box($desc)
+        card "$desc"
+    !endprocedure
+
+    !procedure working_single_line()
+        box("single line")
+    !endprocedure
+
+    !procedure not_working_multi_line()
+        box("multi \
+        line")
+    !endprocedure
+!endsub
+
+@enduml

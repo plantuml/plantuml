@@ -1,0 +1,7 @@
+@startuml
+
+
+
+                card "single line"
+                card "multi         line" 'uncomment to get an error
+@enduml

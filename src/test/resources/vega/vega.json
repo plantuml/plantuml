@@ -20,8 +20,8 @@
         "net.sourceforge.plantuml.UgDiagram.getExporter(UgDiagram.java:121)",
         "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:93)",
         "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:192)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:304)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:256)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:310)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:257)",
         "test.vega.VegaTest.lambda$11(VegaTest.java:174)"
       ]
     },
@@ -40,8 +40,8 @@
         "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:1)",
         "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:264)",
         "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:194)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:289)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:256)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:295)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:257)",
         "test.vega.VegaTest.lambda$11(VegaTest.java:174)"
       ]
     },
@@ -64,8 +64,8 @@
         "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:1)",
         "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:264)",
         "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:194)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:289)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:256)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:295)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:257)",
         "test.vega.VegaTest.lambda$11(VegaTest.java:174)"
       ]
     },
@@ -103,8 +103,8 @@
         "org.junit.jupiter.api.Assertions.assertFalse(Assertions.java:266)",
         "test.vega.VegaCheckerDebug.checkDebugContains(VegaCheckerDebug.java:33)",
         "test.vega.VegaCheckerDebug.checkOutput(VegaCheckerDebug.java:19)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:351)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:256)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:357)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:257)",
         "test.vega.VegaTest.lambda$11(VegaTest.java:174)"
       ]
     },
@@ -402,8 +402,8 @@
         "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:160)",
         "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:93)",
         "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:192)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:304)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:256)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:310)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:257)",
         "test.vega.VegaTest.lambda$11(VegaTest.java:174)"
       ]
     },
@@ -437,8 +437,8 @@
         "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:1)",
         "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:264)",
         "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:194)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:289)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:256)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:295)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:257)",
         "test.vega.VegaTest.lambda$11(VegaTest.java:174)"
       ]
     },
@@ -544,8 +544,8 @@
         "net.sourceforge.plantuml.command.PSystemCommandFactory.createSystem(PSystemCommandFactory.java:1)",
         "net.sourceforge.plantuml.PSystemBuilder.createPSystem(PSystemBuilder.java:264)",
         "net.sourceforge.plantuml.BlockUml.getDiagram(BlockUml.java:194)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:289)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:256)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:295)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:257)",
         "test.vega.VegaTest.lambda$11(VegaTest.java:174)"
       ]
     },
@@ -613,8 +613,8 @@
         "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:177)",
         "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:93)",
         "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:192)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:304)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:256)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:310)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:257)",
         "test.vega.VegaTest.lambda$11(VegaTest.java:174)"
       ]
     },
@@ -821,8 +821,8 @@
         "net.sourceforge.plantuml.core.TextBlockExporter.exportTo(TextBlockExporter.java:160)",
         "net.sourceforge.plantuml.UgDiagram.exportDiagram(UgDiagram.java:93)",
         "net.sourceforge.plantuml.SourceStringReader.outputImage(SourceStringReader.java:192)",
-        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:304)",
-        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:256)",
+        "test.vega.VegaInputFile.doRunSingleFile(VegaInputFile.java:310)",
+        "test.vega.VegaInputFile.runSingleFile(VegaInputFile.java:257)",
         "test.vega.VegaTest.lambda$11(VegaTest.java:174)"
       ]
     },
@@ -881,6 +881,55 @@
       "status": "pass",
       "description": "(2 participants)",
       "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "sub/includesub-basic-with-include.puml",
+      "folder": "sub",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "sub/includesub-basic.puml",
+      "folder": "sub",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "sub/includesub-minimal.puml",
+      "folder": "sub",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "sub/includesub-same-file.puml",
+      "folder": "sub",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "sub/repro1.puml",
+      "folder": "sub",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "DescriptionDiagram"
+    },
+    {
+      "file": "sub/repro2.puml",
+      "folder": "sub",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "ActivityDiagram3"
+    },
+    {
+      "file": "sub/subfile.puml",
+      "folder": "sub",
+      "status": "pass",
+      "description": "PREPROC",
+      "diagram_class": "PSystemErrorV2"
     },
     {
       "file": "svg/id/commons_01.puml",
@@ -1219,8 +1268,8 @@
     }
   ],
   "summary": {
-    "total": 135,
-    "passed": 130,
+    "total": 142,
+    "passed": 137,
     "failed": 0,
     "skipped": 5
   }
