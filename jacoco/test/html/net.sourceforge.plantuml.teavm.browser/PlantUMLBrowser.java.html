@@ -424,33 +424,40 @@ import net.sourceforge.plantuml.teavm.UGraphicTeaVM;
 
 <span class="nc bnc" id="L425" title="All 2 branches missed.">		final double scaleFactor = scale == null ? 1.0 : scale.getScale(dim.getWidth(), dim.getHeight());</span>
 <span class="nc" id="L426">		svg.updateSvgSize(dim.getWidth(), dim.getHeight(), scaleFactor);</span>
-<span class="nc" id="L427">		return svg;</span>
+
+		// Embed the PlantUML source as a plantuml-src processing instruction, so the
+		// generated SVG can be re-imported/edited later, just like the SVGs produced
+		// by the classic Java backend and editor.plantuml.com.
+		// https://github.com/plantuml/plantuml/issues/2761
+<span class="nc" id="L432">		svg.addCommentMetadata(String.join(&quot;\n&quot;, lines));</span>
+
+<span class="nc" id="L434">		return svg;</span>
 	}
 
 	private static void doRender(String[] lines, String elementId, boolean darkMode) {
-<span class="nc" id="L431">		final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
-<span class="nc bnc" id="L432" title="All 2 branches missed.">		if (out == null)</span>
-<span class="nc" id="L433">			return;</span>
+<span class="nc" id="L438">		final HTMLElement out = HTMLDocument.current().getElementById(elementId);</span>
+<span class="nc bnc" id="L439" title="All 2 branches missed.">		if (out == null)</span>
+<span class="nc" id="L440">			return;</span>
 
 		try {
-<span class="nc" id="L436">			BrowserLog.reset();</span>
-<span class="nc" id="L437">			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode);</span>
-<span class="nc" id="L438">			removeAllChildren(out);</span>
-<span class="nc" id="L439">			appendSvgElement(out, svg.getSvgRoot());</span>
-<span class="nc" id="L440">		} catch (Exception e) {</span>
-<span class="nc" id="L441">			out.setTextContent(String.valueOf(e));</span>
-<span class="nc" id="L442">		}</span>
-<span class="nc" id="L443">		BrowserLog.jsStatusDuration();</span>
-<span class="nc" id="L444">	}</span>
+<span class="nc" id="L443">			BrowserLog.reset();</span>
+<span class="nc" id="L444">			final SvgGraphicsTeaVM svg = buildSvg(lines, darkMode);</span>
+<span class="nc" id="L445">			removeAllChildren(out);</span>
+<span class="nc" id="L446">			appendSvgElement(out, svg.getSvgRoot());</span>
+<span class="nc" id="L447">		} catch (Exception e) {</span>
+<span class="nc" id="L448">			out.setTextContent(String.valueOf(e));</span>
+<span class="nc" id="L449">		}</span>
+<span class="nc" id="L450">		BrowserLog.jsStatusDuration();</span>
+<span class="nc" id="L451">	}</span>
 
 	private static void doRenderToString(String[] lines, StringCallback onSuccess, StringCallback onError,
 			boolean darkMode) {
 		try {
-<span class="nc" id="L449">			onSuccess.call(serializeSvg(buildSvg(lines, darkMode).getSvgRoot()));</span>
-<span class="nc" id="L450">		} catch (Exception e) {</span>
-<span class="nc" id="L451">			onError.call(String.valueOf(e));</span>
-<span class="nc" id="L452">		}</span>
-<span class="nc" id="L453">	}</span>
+<span class="nc" id="L456">			onSuccess.call(serializeSvg(buildSvg(lines, darkMode).getSvgRoot()));</span>
+<span class="nc" id="L457">		} catch (Exception e) {</span>
+<span class="nc" id="L458">			onError.call(String.valueOf(e));</span>
+<span class="nc" id="L459">		}</span>
+<span class="nc" id="L460">	}</span>
 
 	// =========================================================================
 	// JavaScript interop utilities
