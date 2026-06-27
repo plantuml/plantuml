@@ -41,21 +41,21 @@ public class EaterIncludesub extends Eater {
 	private String what;
 
 	public EaterIncludesub(StringLocated s) {
-<span class="nc" id="L44">		super(s);</span>
-<span class="nc" id="L45">	}</span>
+<span class="fc" id="L44">		super(s);</span>
+<span class="fc" id="L45">	}</span>
 
 	@Override
 	public void analyze(TContext context, TMemory memory) throws EaterException {
-<span class="nc" id="L49">		skipSpaces();</span>
-<span class="nc" id="L50">		checkAndEatChar(&quot;!includesub&quot;);</span>
-<span class="nc" id="L51">		skipSpaces();</span>
-<span class="nc" id="L52">		this.what = context.applyFunctionsAndVariables(memory,</span>
-<span class="nc" id="L53">				new StringLocated(this.eatAllToEnd(), getLineLocation()));</span>
+<span class="fc" id="L49">		skipSpaces();</span>
+<span class="fc" id="L50">		checkAndEatChar(&quot;!includesub&quot;);</span>
+<span class="fc" id="L51">		skipSpaces();</span>
+<span class="fc" id="L52">		this.what = context.applyFunctionsAndVariables(memory,</span>
+<span class="fc" id="L53">				new StringLocated(this.eatAllToEnd(), getLineLocation()));</span>
 
-<span class="nc" id="L55">	}</span>
+<span class="fc" id="L55">	}</span>
 
 	public final String getWhat() {
-<span class="nc" id="L58">		return what;</span>
+<span class="fc" id="L58">		return what;</span>
 	}
 
 }

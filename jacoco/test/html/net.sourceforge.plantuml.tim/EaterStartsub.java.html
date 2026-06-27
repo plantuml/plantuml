@@ -41,22 +41,22 @@ public class EaterStartsub extends Eater {
 	private String subname;
 
 	public EaterStartsub(StringLocated s) {
-<span class="nc" id="L44">		super(s);</span>
-<span class="nc" id="L45">	}</span>
+<span class="fc" id="L44">		super(s);</span>
+<span class="fc" id="L45">	}</span>
 
 	@Override
 	public void analyze(TContext context, TMemory memory) throws EaterException {
-<span class="nc" id="L49">		skipSpaces();</span>
-<span class="nc" id="L50">		checkAndEatChar(&quot;!startsub&quot;);</span>
-<span class="nc" id="L51">		skipSpaces();</span>
-<span class="nc" id="L52">		this.subname = eatAllToEnd();</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (this.subname.matches(&quot;\\w+&quot;) == false)</span>
+<span class="fc" id="L49">		skipSpaces();</span>
+<span class="fc" id="L50">		checkAndEatChar(&quot;!startsub&quot;);</span>
+<span class="fc" id="L51">		skipSpaces();</span>
+<span class="fc" id="L52">		this.subname = eatAllToEnd();</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		if (this.subname.matches(&quot;\\w+&quot;) == false)</span>
 <span class="nc" id="L54">			throw new EaterException(&quot;Bad sub name&quot;, getStringLocated());</span>
 
-<span class="nc" id="L56">	}</span>
+<span class="fc" id="L56">	}</span>
 
 	public final String getSubname() {
-<span class="nc" id="L59">		return subname;</span>
+<span class="fc" id="L59">		return subname;</span>
 	}
 
 }

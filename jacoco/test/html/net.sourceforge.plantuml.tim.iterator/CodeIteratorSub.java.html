@@ -66,50 +66,50 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 	}
 
 	public StringLocated peek() throws EaterException {
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">		if (readingInProgress != null)</span>
-<span class="nc" id="L70">			return readingInProgress.peek();</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		if (readingInProgress != null)</span>
+<span class="fc" id="L70">			return readingInProgress.peek();</span>
 
 <span class="fc" id="L72">		StringLocated result = source.peek();</span>
 <span class="fc bfc" id="L73" title="All 2 branches covered.">		if (result == null)</span>
 <span class="fc" id="L74">			return null;</span>
 
-<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (result.getType() == TLineType.STARTSUB) {</span>
-<span class="nc" id="L77">			final EaterStartsub eater = new EaterStartsub(result.getTrimmed());</span>
-<span class="nc" id="L78">			eater.analyze(context, memory);</span>
-<span class="nc" id="L79">			final Sub created = new Sub(eater.getSubname());</span>
-<span class="nc" id="L80">			this.subs.put(eater.getSubname(), created);</span>
-<span class="nc" id="L81">			source.next();</span>
-<span class="nc" id="L82">			StringLocated s = null;</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">			while ((s = source.peek()) != null) {</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">				if (s.getType() == TLineType.STARTSUB) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		if (result.getType() == TLineType.STARTSUB) {</span>
+<span class="fc" id="L77">			final EaterStartsub eater = new EaterStartsub(result.getTrimmed());</span>
+<span class="fc" id="L78">			eater.analyze(context, memory);</span>
+<span class="fc" id="L79">			final Sub created = new Sub(eater.getSubname());</span>
+<span class="fc" id="L80">			this.subs.put(eater.getSubname(), created);</span>
+<span class="fc" id="L81">			source.next();</span>
+<span class="fc" id="L82">			StringLocated s = null;</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">			while ((s = source.peek()) != null) {</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">				if (s.getType() == TLineType.STARTSUB) {</span>
 <span class="nc" id="L85">					throw new EaterException(&quot;Cannot nest sub&quot;, result);</span>
-<span class="nc bnc" id="L86" title="All 2 branches missed.">				} else if (s.getType() == TLineType.ENDSUB) {</span>
-<span class="nc" id="L87">					source.next();</span>
-<span class="nc" id="L88">					readingInProgress = new CodeIteratorImpl(created.lines());</span>
-<span class="nc" id="L89">					break;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">				} else if (s.getType() == TLineType.ENDSUB) {</span>
+<span class="fc" id="L87">					source.next();</span>
+<span class="fc" id="L88">					readingInProgress = new CodeIteratorImpl(created.lines());</span>
+<span class="fc" id="L89">					break;</span>
 				} else {
-<span class="nc" id="L91">					created.add(s);</span>
-<span class="nc" id="L92">					source.next();</span>
+<span class="fc" id="L91">					created.add(s);</span>
+<span class="fc" id="L92">					source.next();</span>
 				}
 			}
 		}
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (readingInProgress != null)</span>
-<span class="nc" id="L97">			return readingInProgress.peek();</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (readingInProgress != null)</span>
+<span class="fc" id="L97">			return readingInProgress.peek();</span>
 
 <span class="fc" id="L99">		return result;</span>
 	}
 
 	@Override
 	public void next() throws EaterException {
-<span class="pc bpc" id="L104" title="1 of 2 branches missed.">		if (readingInProgress == null) {</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">		if (readingInProgress == null) {</span>
 <span class="fc" id="L105">			source.next();</span>
 <span class="fc" id="L106">			return;</span>
 		}
-<span class="nc" id="L108">		readingInProgress.next();</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">		if (readingInProgress.peek() == null)</span>
-<span class="nc" id="L110">			readingInProgress = null;</span>
+<span class="fc" id="L108">		readingInProgress.next();</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		if (readingInProgress.peek() == null)</span>
+<span class="fc" id="L110">			readingInProgress = null;</span>
 
-<span class="nc" id="L112">	}</span>
+<span class="fc" id="L112">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

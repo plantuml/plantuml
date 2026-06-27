@@ -360,15 +360,15 @@ public class TContext {
 
 	private void executeLinesInternal(TMemory memory, List&lt;StringLocated&gt; body, TFunctionType ftype)
 			throws EaterException {
-<span class="nc" id="L363">		final CodeIterator it = buildCodeIterator(memory, body);</span>
+<span class="fc" id="L363">		final CodeIterator it = buildCodeIterator(memory, body);</span>
 
-<span class="nc" id="L365">		StringLocated s = null;</span>
-<span class="nc bnc" id="L366" title="All 2 branches missed.">		while ((s = it.peek()) != null) {</span>
-<span class="nc" id="L367">			executeOneLineSafe(memory, s, ftype, false);</span>
-<span class="nc" id="L368">			it.next();</span>
+<span class="fc" id="L365">		StringLocated s = null;</span>
+<span class="fc bfc" id="L366" title="All 2 branches covered.">		while ((s = it.peek()) != null) {</span>
+<span class="fc" id="L367">			executeOneLineSafe(memory, s, ftype, false);</span>
+<span class="fc" id="L368">			it.next();</span>
 		}
 
-<span class="nc" id="L371">	}</span>
+<span class="fc" id="L371">	}</span>
 
 	private TValue executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
 			throws EaterException {
@@ -387,9 +387,9 @@ public class TContext {
 			throws EaterException {
 <span class="fc" id="L388">		final TLineType type = s.getType();</span>
 
-<span class="pc bpc" id="L390" title="1 of 2 branches missed.">		if (type == TLineType.INCLUDESUB) {</span>
-<span class="nc" id="L391">			this.executeIncludesub(memory, s);</span>
-<span class="nc" id="L392">			return null;</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">		if (type == TLineType.INCLUDESUB) {</span>
+<span class="fc" id="L391">			this.executeIncludesub(memory, s);</span>
+<span class="fc" id="L392">			return null;</span>
 <span class="fc bfc" id="L393" title="All 2 branches covered.">		} else if (type == TLineType.THEME) {</span>
 <span class="fc" id="L394">			this.executeTheme(memory, s);</span>
 <span class="fc" id="L395">			return null;</span>
@@ -634,53 +634,53 @@ public class TContext {
 //	}
 
 	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException {
-<span class="nc bnc" id="L637" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
-<span class="nc" id="L638">			PathSystem saveImportedFiles = null;</span>
+<span class="pc bpc" id="L637" title="1 of 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
+<span class="fc" id="L638">			PathSystem saveImportedFiles = null;</span>
 			try {
-<span class="nc" id="L640">				final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());</span>
-<span class="nc" id="L641">				include.analyze(this, memory);</span>
-<span class="nc" id="L642">				final String what = include.getWhat();</span>
-<span class="nc" id="L643">				final int idx = what.indexOf('!');</span>
-<span class="nc" id="L644">				Sub sub = null;</span>
-<span class="nc bnc" id="L645" title="All 2 branches missed.">				if (idx != -1) {</span>
-<span class="nc" id="L646">					final String filename = what.substring(0, idx);</span>
-<span class="nc" id="L647">					final String blocname = what.substring(idx + 1);</span>
+<span class="fc" id="L640">				final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());</span>
+<span class="fc" id="L641">				include.analyze(this, memory);</span>
+<span class="fc" id="L642">				final String what = include.getWhat();</span>
+<span class="fc" id="L643">				final int idx = what.indexOf('!');</span>
+<span class="fc" id="L644">				Sub sub = null;</span>
+<span class="fc bfc" id="L645" title="All 2 branches covered.">				if (idx != -1) {</span>
+<span class="fc" id="L646">					final String filename = what.substring(0, idx);</span>
+<span class="fc" id="L647">					final String blocname = what.substring(idx + 1);</span>
 					try {
-<span class="nc" id="L649">						final InputFile f2 = pathSystem.getFile(filename, null);</span>
-<span class="nc bnc" id="L650" title="All 2 branches missed.">						if (f2 != null) {</span>
-<span class="nc" id="L651">							saveImportedFiles = this.pathSystem;</span>
-<span class="nc" id="L652">							this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());</span>
-<span class="nc" id="L653">							final Reader reader = f2.getReader(charset);</span>
-<span class="nc bnc" id="L654" title="All 2 branches missed.">							if (reader == null)</span>
+<span class="fc" id="L649">						final InputFile f2 = pathSystem.getFile(filename, null);</span>
+<span class="pc bpc" id="L650" title="1 of 2 branches missed.">						if (f2 != null) {</span>
+<span class="fc" id="L651">							saveImportedFiles = this.pathSystem;</span>
+<span class="fc" id="L652">							this.pathSystem = this.pathSystem.withCurrentDir(f2.getParentFolder());</span>
+<span class="fc" id="L653">							final Reader reader = f2.getReader(charset);</span>
+<span class="pc bpc" id="L654" title="1 of 2 branches missed.">							if (reader == null)</span>
 <span class="nc" id="L655">								throw new EaterException(&quot;cannot include &quot; + what, s);</span>
 
 							try {
-<span class="nc" id="L658">								ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());</span>
-<span class="nc" id="L659">								readerline = new UncommentReadLine(readerline);</span>
-<span class="nc" id="L660">								sub = Sub.fromFile(readerline, blocname, this, memory);</span>
+<span class="fc" id="L658">								ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());</span>
+<span class="fc" id="L659">								readerline = new UncommentReadLine(readerline);</span>
+<span class="fc" id="L660">								sub = Sub.fromFile(readerline, blocname, this, memory);</span>
 							} finally {
-<span class="nc" id="L662">								reader.close();</span>
+<span class="fc" id="L662">								reader.close();</span>
 							}
 						}
 <span class="nc" id="L665">					} catch (IOException e) {</span>
 <span class="nc" id="L666">						Logme.error(e);</span>
 <span class="nc" id="L667">						throw new EaterException(&quot;cannot include &quot; + what, s);</span>
-<span class="nc" id="L668">					}</span>
+<span class="fc" id="L668">					}</span>
 				}
-<span class="nc bnc" id="L670" title="All 2 branches missed.">				if (sub == null)</span>
-<span class="nc" id="L671">					sub = subs.get(what);</span>
+<span class="fc bfc" id="L670" title="All 2 branches covered.">				if (sub == null)</span>
+<span class="fc" id="L671">					sub = subs.get(what);</span>
 
-<span class="nc bnc" id="L673" title="All 2 branches missed.">				if (sub == null)</span>
+<span class="pc bpc" id="L673" title="1 of 2 branches missed.">				if (sub == null)</span>
 <span class="nc" id="L674">					throw new EaterException(&quot;cannot include &quot; + what, s);</span>
 
-<span class="nc" id="L676">				executeLinesInternal(memory, sub.lines(), null);</span>
+<span class="fc" id="L676">				executeLinesInternal(memory, sub.lines(), null);</span>
 			} finally {
-<span class="nc bnc" id="L678" title="All 2 branches missed.">				if (saveImportedFiles != null)</span>
-<span class="nc" id="L679">					this.pathSystem = saveImportedFiles;</span>
+<span class="fc bfc" id="L678" title="All 2 branches covered.">				if (saveImportedFiles != null)</span>
+<span class="fc" id="L679">					this.pathSystem = saveImportedFiles;</span>
 
 			}
 		}
-<span class="nc" id="L683">	}</span>
+<span class="fc" id="L683">	}</span>
 
 	private void executeIncludeDef(TMemory memory, StringLocated s) throws EaterException {
 <span class="nc bnc" id="L686" title="All 2 branches missed.">		if (!TeaVM.isTeaVM()) {</span>
