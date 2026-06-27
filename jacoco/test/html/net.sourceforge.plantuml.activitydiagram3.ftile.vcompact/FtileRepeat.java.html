@@ -185,8 +185,8 @@ class FtileRepeat extends AbstractFtile {
 <span class="nc" id="L185">					: incoming2.getDisplay().create(fcArrow, HorizontalAlignment.LEFT, spriteContainer);</span>
 <span class="nc" id="L186">			final Rainbow rainbow2 = incoming2.getRainbow(arrowColor);</span>
 <span class="nc" id="L187">			conns.add(result.new ConnectionBackBackward2(rainbow2, backArrowLabel));</span>
-<span class="pc bpc" id="L188" title="3 of 4 branches missed.">		} else if (repeat.getSwimlaneIn() == null || repeat.getSwimlaneIn() == swimlaneOut) {</span>
-<span class="pc bpc" id="L189" title="3 of 4 branches missed.">			if (repeat.getSwimlaneIn() != null &amp;&amp; repeat.getSwimlaneIn().isSmallerThanAllOthers(repeat.getSwimlanes()))</span>
+<span class="pc bpc" id="L188" title="3 of 4 branches missed.">		} else if (swimlane == null || swimlane == swimlaneOut) {</span>
+<span class="pc bpc" id="L189" title="3 of 4 branches missed.">			if (swimlane != null &amp;&amp; swimlane.isSmallerThanAllOthers(repeat.getSwimlanes()))</span>
 <span class="nc" id="L190">				conns.add(result.new ConnectionBackSimple1(incoming1.getRainbow(arrowColor), incomingText));</span>
 			else
 <span class="fc" id="L192">				conns.add(result.new ConnectionBackSimple2(incoming1.getRainbow(arrowColor), incomingText));</span>
