@@ -70,8 +70,8 @@ import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -390,7 +390,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	public TextBlock getTextBlock(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
-		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),
+				diagram.getPragma());
 
 		this.printAllSubgroups(stringBounder, diagram.getRootGroup());
 		this.printEntities(stringBounder, getUnpackagedEntities());
@@ -575,11 +576,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),
 					skinParam.getDiagramType().getStyleName()).getMergedStyle(link.getStyleBuilder());
 			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
-			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0
-					? styleWidth
-					: skinParam.maxMessageSize();
-			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth,
-					CreoleMode.SIMPLE_LINE, null, null);
+			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0 ? styleWidth : skinParam.maxMessageSize();
+			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth, CreoleMode.SIMPLE_LINE, null, null);
 
 			labelOnly = addVisibilityModifier(block, link, skinParam);
 			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL && hasSeveralGuideLines == false) {

@@ -33,6 +33,7 @@ import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.tikz.TikzFontDistortion;
 
 class SkinParamTest {
 

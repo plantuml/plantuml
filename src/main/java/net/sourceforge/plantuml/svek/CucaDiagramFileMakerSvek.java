@@ -60,7 +60,8 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 	public TextBlock getTextBlock(List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
-		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),
+				diagram.getPragma());
 
 		if (diagram.getDiagramType() == DiagramType.ACTIVITY)
 			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);

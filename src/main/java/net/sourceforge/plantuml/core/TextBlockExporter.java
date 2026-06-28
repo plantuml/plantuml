@@ -109,8 +109,8 @@ import net.sourceforge.plantuml.url.Url;
  * <p>
  * It does <b>not</b> handle diagram chrome (title, header, footer, etc.). The
  * input {@link TextBlock} is expected to be already fully decorated (e.g. by
- * {@link DiagramChromeFactory}). Handwritten mode is applied automatically
- * when {@code skinParam.handwritten()} is {@code true}.
+ * {@link DiagramChromeFactory}). Handwritten mode is applied automatically when
+ * {@code skinParam.handwritten()} is {@code true}.
  */
 public class TextBlockExporter {
 
@@ -145,8 +145,8 @@ public class TextBlockExporter {
 		this.pragma = builder.pragma;
 		this.diagramType = builder.diagramType;
 		this.isHandwritten = builder.isHandwritten;
-		this.stringBounder = builder.fileFormatOption
-				.getDefaultStringBounder(builder.skinParam != null ? builder.skinParam : SvgCharSizeHack.NO_HACK);
+		this.stringBounder = builder.fileFormatOption.getDefaultStringBounder(
+				builder.skinParam != null ? builder.skinParam : SvgCharSizeHack.NO_HACK, this.pragma);
 	}
 
 	/**

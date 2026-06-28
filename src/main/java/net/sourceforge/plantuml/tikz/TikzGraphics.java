@@ -346,7 +346,7 @@ public class TikzGraphics {
 			if (bold)
 				sb.append("\\textbf{");
 
-			sb.append(LatexManager.protectText(text));
+			sb.append(LatexTextMetrics.protectText(text));
 			if (bold)
 				sb.append("}");
 
@@ -359,7 +359,7 @@ public class TikzGraphics {
 		} else {
 			appendPendingUrl(sb);
 			sb.append("{");
-			sb.append(LatexManager.protectText(text));
+			sb.append(LatexTextMetrics.protectText(text));
 			sb.append("}");
 		}
 		sb.append("};");

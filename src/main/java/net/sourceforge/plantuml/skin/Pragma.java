@@ -40,6 +40,7 @@ import java.util.EnumMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.tikz.LatexEngine;
 import net.sourceforge.plantuml.warning.Warning;
 import net.sourceforge.plantuml.warning.WarningHandler;
 
@@ -75,6 +76,10 @@ public class Pragma implements WarningHandler {
 
 	public String getValue(PragmaKey key) {
 		return values.get(key);
+	}
+
+	public LatexEngine getLatexEngine() {
+		return LatexEngine.getSuggestedEngine(this);
 	}
 
 	public boolean isTrue(PragmaKey key) {

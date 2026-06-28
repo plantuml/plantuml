@@ -54,7 +54,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsRegular;
 import net.sourceforge.plantuml.activitydiagram3.ftile.ArrowsTriangle;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -106,6 +105,7 @@ import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.teavm.EmbeddedResources;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.tikz.TikzFontDistortion;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class SkinParam implements ISkinParam {
