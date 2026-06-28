@@ -217,11 +217,8 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),
 					skinParam.getDiagramType().getStyleName()).getMergedStyle(link.getStyleBuilder());
 			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();
-			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0
-					? styleWidth
-					: skinParam.maxMessageSize();
-			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth,
-					CreoleMode.SIMPLE_LINE, null, null);
+			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() > 0 ? styleWidth : skinParam.maxMessageSize();
+			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth, CreoleMode.SIMPLE_LINE, null, null);
 
 			labelOnly = addVisibilityModifier(block, link, skinParam);
 			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL && hasSeveralGuideLines == false) {
@@ -485,7 +482,8 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		root.setProperty(CoreOptions.DIRECTION, Direction.DOWN);
 		root.setProperty(CoreOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
 
-		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),
+				diagram.getPragma());
 
 		this.printAllSubgroups(stringBounder, root, diagram.getRootGroup());
 		this.printEntities(stringBounder, root, getUnpackagedEntities());

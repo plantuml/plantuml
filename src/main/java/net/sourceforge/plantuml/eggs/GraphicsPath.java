@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.eggs;
 
-
 import java.awt.Graphics2D;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -55,7 +54,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.png.PngIO;
 
 public class GraphicsPath {
-	
 
 	private final String path;
 	private final ColorMapper colorMapper;

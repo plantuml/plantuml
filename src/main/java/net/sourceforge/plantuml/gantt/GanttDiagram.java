@@ -182,7 +182,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
-		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam(), getPragma());
 		if (this.timeBounds.getPrintStart() == null) {
 			initMinMax();
 		} else {

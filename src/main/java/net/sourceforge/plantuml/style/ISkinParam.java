@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.style;
 
 import java.util.Collection;
 
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.Arrows;
@@ -65,6 +64,7 @@ import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.tikz.TikzFontDistortion;
 
 public interface ISkinParam extends ISkinSimple {
 

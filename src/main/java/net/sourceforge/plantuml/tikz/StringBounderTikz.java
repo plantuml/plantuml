@@ -36,19 +36,18 @@
 package net.sourceforge.plantuml.tikz;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderTikz implements StringBounder {
 
-	private final LatexManager latexManager;
+	private final LatexTextMetrics latexManager;
 	private final FileFormat fileFormat;
 
-	public StringBounderTikz(TikzFontDistortion tikzFontDistortion, FileFormat latexManager) {
-		this.fileFormat = latexManager;
-		this.latexManager = new LatexManager(tikzFontDistortion.getTexSystem(), tikzFontDistortion.getTexPreamble());
+	public StringBounderTikz(LatexEngine latexEngine, TikzFontDistortion tikzFontDistortion, FileFormat fileFormat) {
+		this.fileFormat = fileFormat;
+		this.latexManager = new LatexTextMetrics(latexEngine, tikzFontDistortion.getTexPreamble());
 	}
 
 	@Override
@@ -92,7 +91,7 @@ public class StringBounderTikz implements StringBounder {
 		if (bold)
 			sb.append("\\textbf{");
 
-		sb.append(LatexManager.protectText(text));
+		sb.append(LatexTextMetrics.protectText(text));
 		if (bold)
 			sb.append("}");
 

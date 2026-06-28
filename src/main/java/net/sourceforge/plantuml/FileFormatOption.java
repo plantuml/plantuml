@@ -41,7 +41,9 @@ import java.util.Objects;
 import net.sourceforge.plantuml.klimt.awt.XAffineTransform;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
+import net.sourceforge.plantuml.tikz.TikzFontDistortion;
 import net.sourceforge.plantuml.utils.Log;
 
 /**
@@ -96,8 +98,8 @@ public final class FileFormatOption implements Serializable {
 		this.decimal = decimal;
 	}
 
-	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {
-		return fileFormat.getDefaultStringBounder(tikzFontDistortion, charSizeHack);
+	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack, Pragma pragma) {
+		return fileFormat.getDefaultStringBounder(tikzFontDistortion, charSizeHack, pragma);
 	}
 
 	public String getSvgLinkTarget() {

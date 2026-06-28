@@ -31,6 +31,7 @@ import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.WriterConfig;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.tikz.LatexEngine;
 
 @Execution(ExecutionMode.SAME_THREAD)
 @Isolated
@@ -59,6 +60,7 @@ class VegaTest {
 
 	static {
 		TitledDiagram.FORCE_SMETANA = true;
+		LatexEngine.FORCE_NONE = true;
 	}
 
 	@BeforeEach

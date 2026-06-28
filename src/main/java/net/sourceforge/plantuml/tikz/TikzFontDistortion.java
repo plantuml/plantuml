@@ -33,7 +33,7 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.tikz;
 
 import java.util.StringTokenizer;
 
@@ -44,7 +44,6 @@ public class TikzFontDistortion {
 
 	private final double magnify;
 	private final double distortion;
-	private String texSystem;
 	private String texPreamble;
 
 	private TikzFontDistortion(double magnify, double distortion) {
@@ -58,21 +57,21 @@ public class TikzFontDistortion {
 	}
 
 	public static TikzFontDistortion fromValue(String value) {
-		if (value == null) {
+		if (value == null)
 			return getDefault();
-		}
+
 		final StringTokenizer st = new StringTokenizer(value, ";");
-		if (st.hasMoreElements() == false) {
+		if (st.hasMoreElements() == false)
 			return getDefault();
-		}
+
 		final String v1 = st.nextToken();
-		if (st.hasMoreElements() == false) {
+		if (st.hasMoreElements() == false)
 			return getDefault();
-		}
+
 		final String v2 = st.nextToken();
-		if (v1.matches("[\\d.]+") && v2.matches("[-\\d.]+")) {
+		if (v1.matches("[\\d.]+") && v2.matches("[-\\d.]+"))
 			return new TikzFontDistortion(Double.parseDouble(v1), Double.parseDouble(v2));
-		}
+
 		return getDefault();
 	}
 
@@ -88,16 +87,11 @@ public class TikzFontDistortion {
 		return distortion;
 	}
 
-	public String getTexSystem() {
-		return texSystem;
-	}
-
 	public String getTexPreamble() {
 		return texPreamble;
 	}
 
 	public void updateFromPragma(Pragma pragma) {
-		this.texSystem = pragma.getValue(PragmaKey.TEX_SYSTEM);
 		this.texPreamble = pragma.getValue(PragmaKey.TEX_PREAMBLE);
 	}
 
