@@ -18,9 +18,6 @@
  * PlantUML is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License V2.
  *
- * THE ACCOMPANYING PROGRAM IS PROVIDED UNDER THE TERMS OF THIS ECLIPSE PUBLIC
- * LICENSE ("AGREEMENT"). [GNU General Public License V2]
- *
  * ANY USE, REPRODUCTION OR DISTRIBUTION OF THE PROGRAM CONSTITUTES
  * RECIPIENT'S ACCEPTANCE OF THIS AGREEMENT.
  *
