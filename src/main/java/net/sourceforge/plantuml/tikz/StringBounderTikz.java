@@ -33,8 +33,10 @@
  *
  *
  */
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.tikz;
 
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -44,7 +46,7 @@ public class StringBounderTikz implements StringBounder {
 	private final LatexManager latexManager;
 	private final FileFormat fileFormat;
 
-	protected StringBounderTikz(TikzFontDistortion tikzFontDistortion, FileFormat latexManager) {
+	public StringBounderTikz(TikzFontDistortion tikzFontDistortion, FileFormat latexManager) {
 		this.fileFormat = latexManager;
 		this.latexManager = new LatexManager(tikzFontDistortion.getTexSystem(), tikzFontDistortion.getTexPreamble());
 	}

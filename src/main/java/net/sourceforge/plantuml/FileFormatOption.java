@@ -116,7 +116,7 @@ public final class FileFormatOption implements Serializable {
 	}
 
 	public FileFormatOption withTikzFontDistortion(TikzFontDistortion tikzFontDistortion) {
-		return new FileFormatOption(fileFormat, withMetadata, true, svgLinkTarget, debugsvek, hoverColor,
+		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
 				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 

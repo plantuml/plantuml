@@ -49,7 +49,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.LatexManager;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.awt.XColor;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;

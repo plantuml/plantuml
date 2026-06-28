@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml;
+package net.sourceforge.plantuml.tikz;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,9 +30,13 @@ public class LatexManager implements AutoCloseable {
 		try {
 			File tempDir = Files.createTempDirectory("plantuml-latex-").toFile();
 			tempDir.deleteOnExit();
-			this.process = new ProcessBuilder(command, "-halt-on-error")
-							.directory(tempDir)
-							.start();
+			final ProcessBuilder pb = new ProcessBuilder(command, "-halt-on-error")
+							.directory(tempDir);
+			// Avoid inheriting a relative TEXMF_OUTPUT_DIRECTORY (set by TeX Live for
+			// sub-processes), which would make the measurement process write outside its
+			// temp dir and hang. See issue #2764.
+			pb.environment().remove("TEXMF_OUTPUT_DIRECTORY");
+			this.process = pb.start();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

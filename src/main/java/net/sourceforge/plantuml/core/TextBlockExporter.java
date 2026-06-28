@@ -402,7 +402,7 @@ public class TextBlockExporter {
 	public static class Builder {
 		// Required
 		private final TextBlock textBlock;
-		private final FileFormatOption fileFormatOption;
+		private FileFormatOption fileFormatOption;
 		private final boolean isHandwritten;
 
 		// Optional with defaults
@@ -494,6 +494,9 @@ public class TextBlockExporter {
 			this.scale = diagram.getScale();
 			this.pragma = diagram.getPragma();
 			this.diagramType = diagram.getDiagramType();
+			this.fileFormatOption = fileFormatOption
+					.withTikzFontDistortion(diagram.getSkinParam().getTikzFontDistortion());
+			this.fileFormatOption.getTikzFontDistortion().updateFromPragma(diagram.getPragma());
 			return this;
 		}
 

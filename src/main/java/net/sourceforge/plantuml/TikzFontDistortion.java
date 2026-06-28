@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
 
 public class TikzFontDistortion {
-	// ::remove file when __HAXE__
 
 	private final double magnify;
 	private final double distortion;
