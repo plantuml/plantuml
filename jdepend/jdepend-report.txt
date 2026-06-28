@@ -1219,16 +1219,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 38
-    Concrete Classes: 25
+    Total Classes: 37
+    Concrete Classes: 24
     Abstract Classes: 13
 
     Ca: 98
     Ce: 33
 
-    A: 0.34
+    A: 0.35
     I: 0.25
-    D: 0.41
+    D: 0.4
 
 Abstract Classes:
     net.sourceforge.plantuml.Annotated
@@ -1253,7 +1253,6 @@ Concrete Classes:
     net.sourceforge.plantuml.FileFormat$FontTextKey
     net.sourceforge.plantuml.FileImageData
     net.sourceforge.plantuml.LZWEncoder
-    net.sourceforge.plantuml.LatexManager$LruCache
     net.sourceforge.plantuml.NeuQuant
     net.sourceforge.plantuml.NullOutputStream
     net.sourceforge.plantuml.OptionFlags
@@ -11711,7 +11710,29 @@ Used By:
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.tikz
 --------------------------------------------------
-No stats available: package referenced, but not analyzed.
+
+Stats:
+    Total Classes: 1
+    Concrete Classes: 1
+    Abstract Classes: 0
+
+    Ca: 1
+    Ce: 1
+
+    A: 0
+    I: 0.5
+    D: 0.5
+
+Abstract Classes:
+
+Concrete Classes:
+    net.sourceforge.plantuml.tikz.LatexManager$LruCache
+
+Depends Upon:
+    java.util
+
+Used By:
+    net.sourceforge.plantuml.klimt.drawing.tikz
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.tim
@@ -14833,7 +14854,7 @@ java.security.spec,0,0,2,0,0,0,1,1
 java.text,0,0,5,0,0,0,1,1
 java.time,0,0,12,0,0,0,1,1
 java.time.temporal,0,0,1,0,0,0,1,1
-java.util,0,0,173,0,0,0,1,1
+java.util,0,0,174,0,0,0,1,1
 java.util.concurrent,0,0,6,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
 java.util.function,0,0,2,0,0,0,1,1
@@ -14860,7 +14881,7 @@ jcckit.renderer,1,0,1,4,0,0.8,0.2,1
 jcckit.transformation,1,1,1,3,1,0.75,0.75,1
 jcckit.util,7,2,5,2,0.29,0.29,0.43,1
 net.atmp,3,0,19,10,0,0.34,0.66,1
-net.sourceforge.plantuml,38,13,98,33,0.34,0.25,0.41,1
+net.sourceforge.plantuml,37,13,98,33,0.35,0.25,0.4,1
 net.sourceforge.plantuml.abel,30,8,31,18,0.27,0.37,0.37,1
 net.sourceforge.plantuml.activitydiagram,2,0,1,12,0,0.92,0.08,1
 net.sourceforge.plantuml.activitydiagram.command,5,0,1,14,0,0.93,0.07,1
@@ -15042,7 +15063,7 @@ net.sourceforge.plantuml.teavm.headless,3,1,0,2,0.33,1,0.33,1
 net.sourceforge.plantuml.telnet,1,0,0,2,0,1,0,1
 net.sourceforge.plantuml.text,5,1,38,4,0.2,0.1,0.7,1
 net.sourceforge.plantuml.theme,2,0,1,6,0,0.86,0.14,1
-net.sourceforge.plantuml.tikz,0,0,1,0,0,0,1,1
+net.sourceforge.plantuml.tikz,1,0,1,1,0,0.5,0.5,1
 net.sourceforge.plantuml.tim,38,4,3,14,0.11,0.82,0.07,1
 net.sourceforge.plantuml.tim.builtin,68,1,0,14,0.01,1,0.01,1
 net.sourceforge.plantuml.tim.expression,17,3,3,3,0.18,0.5,0.32,1

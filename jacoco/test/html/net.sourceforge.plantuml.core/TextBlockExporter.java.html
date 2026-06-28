@@ -402,7 +402,7 @@ public class TextBlockExporter {
 	public static class Builder {
 		// Required
 		private final TextBlock textBlock;
-		private final FileFormatOption fileFormatOption;
+		private FileFormatOption fileFormatOption;
 		private final boolean isHandwritten;
 
 		// Optional with defaults
@@ -494,19 +494,22 @@ public class TextBlockExporter {
 <span class="fc" id="L494">			this.scale = diagram.getScale();</span>
 <span class="fc" id="L495">			this.pragma = diagram.getPragma();</span>
 <span class="fc" id="L496">			this.diagramType = diagram.getDiagramType();</span>
-<span class="fc" id="L497">			return this;</span>
+<span class="fc" id="L497">			this.fileFormatOption = fileFormatOption</span>
+<span class="fc" id="L498">					.withTikzFontDistortion(diagram.getSkinParam().getTikzFontDistortion());</span>
+<span class="fc" id="L499">			this.fileFormatOption.getTikzFontDistortion().updateFromPragma(diagram.getPragma());</span>
+<span class="fc" id="L500">			return this;</span>
 		}
 
 		public TextBlockExporter build() {
-<span class="fc" id="L501">			return new TextBlockExporter(this);</span>
+<span class="fc" id="L504">			return new TextBlockExporter(this);</span>
 		}
 
 		private static ClockwiseTopRightBottomLeft calculateMargin(net.sourceforge.plantuml.TitledDiagram diagram) {
-<span class="fc" id="L505">			final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
-<span class="fc" id="L506">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
-<span class="fc bfc" id="L507" title="All 2 branches covered.">			if (style.hasValue(PName.Margin))</span>
-<span class="fc" id="L508">				return style.getMargin();</span>
-<span class="fc" id="L509">			return diagram.getDefaultMargins();</span>
+<span class="fc" id="L508">			final Style style = StyleSignatureBasic.of(SName.root, SName.document)</span>
+<span class="fc" id="L509">					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">			if (style.hasValue(PName.Margin))</span>
+<span class="fc" id="L511">				return style.getMargin();</span>
+<span class="fc" id="L512">			return diagram.getDefaultMargins();</span>
 		}
 	}
 

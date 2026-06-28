@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -58,57 +57,57 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class NewpagedDiagram extends UgDiagram {
 
-<span class="nc" id="L61">	private final List&lt;UgDiagram&gt; diagrams = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L60">	private final List&lt;UgDiagram&gt; diagrams = new ArrayList&lt;&gt;();</span>
 
 	public NewpagedDiagram(UmlSource source, UgDiagram diag1, UgDiagram diag2,
 			PreprocessingArtifact preprocessingArtifact) {
-<span class="nc" id="L65">		super(source, preprocessingArtifact);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (diag1 instanceof NewpagedDiagram)</span>
-<span class="nc" id="L67">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L64">		super(source, preprocessingArtifact);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (diag1 instanceof NewpagedDiagram)</span>
+<span class="nc" id="L66">			throw new IllegalArgumentException();</span>
 
-<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (diag2 instanceof NewpagedDiagram)</span>
-<span class="nc" id="L70">			throw new IllegalArgumentException();</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (diag2 instanceof NewpagedDiagram)</span>
+<span class="nc" id="L69">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L72">		this.diagrams.add(diag1);</span>
-<span class="nc" id="L73">		this.diagrams.add(diag2);</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L71">		this.diagrams.add(diag1);</span>
+<span class="nc" id="L72">		this.diagrams.add(diag2);</span>
+<span class="nc" id="L73">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L78">		return super.toString() + &quot; SIZE=&quot; + diagrams.size() + &quot; &quot; + diagrams;</span>
+<span class="nc" id="L77">		return super.toString() + &quot; SIZE=&quot; + diagrams.size() + &quot; &quot; + diagrams;</span>
 	}
 
 	public UgDiagram getLastDiagram() {
-<span class="nc" id="L82">		return diagrams.get(diagrams.size() - 1);</span>
+<span class="nc" id="L81">		return diagrams.get(diagrams.size() - 1);</span>
 	}
 
 	@Override
 	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines, ParserPass currentPass) {
-<span class="nc" id="L87">		final int nb = diagrams.size();</span>
+<span class="nc" id="L86">		final int nb = diagrams.size();</span>
 		try {
-<span class="nc" id="L89">			final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines, currentPass);</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (tmp.getNewDiagram() instanceof NewpagedDiagram) {</span>
-<span class="nc" id="L91">				final NewpagedDiagram new1 = (NewpagedDiagram) tmp.getNewDiagram();</span>
+<span class="nc" id="L88">			final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines, currentPass);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">			if (tmp.getNewDiagram() instanceof NewpagedDiagram) {</span>
+<span class="nc" id="L90">				final NewpagedDiagram new1 = (NewpagedDiagram) tmp.getNewDiagram();</span>
 				// System.err.println(&quot;this=&quot; + this);
 				// System.err.println(&quot;new1=&quot; + new1);
-<span class="nc bnc" id="L94" title="All 2 branches missed.">				if (new1.size() != 2)</span>
-<span class="nc" id="L95">					throw new IllegalStateException();</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">				if (new1.size() != 2)</span>
+<span class="nc" id="L94">					throw new IllegalStateException();</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">				if (new1.diagrams.get(0) != this.diagrams.get(nb - 1))</span>
-<span class="nc" id="L98">					throw new IllegalStateException();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				if (new1.diagrams.get(0) != this.diagrams.get(nb - 1))</span>
+<span class="nc" id="L97">					throw new IllegalStateException();</span>
 
-<span class="nc" id="L100">				this.diagrams.add(new1.diagrams.get(1));</span>
-<span class="nc" id="L101">				return tmp.withDiagram(this);</span>
+<span class="nc" id="L99">				this.diagrams.add(new1.diagrams.get(1));</span>
+<span class="nc" id="L100">				return tmp.withDiagram(this);</span>
 
 			}
-<span class="nc" id="L104">			return tmp;</span>
-<span class="nc" id="L105">		} catch (NoSuchColorException e) {</span>
-<span class="nc" id="L106">			return CommandExecutionResult.badColor();</span>
+<span class="nc" id="L103">			return tmp;</span>
+<span class="nc" id="L104">		} catch (NoSuchColorException e) {</span>
+<span class="nc" id="L105">			return CommandExecutionResult.badColor();</span>
 		}
 	}
 
 	private int size() {
-<span class="nc" id="L111">		return diagrams.size();</span>
+<span class="nc" id="L110">		return diagrams.size();</span>
 	}
 
 //	@Override
@@ -118,54 +117,54 @@ public class NewpagedDiagram extends UgDiagram {
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception {
-<span class="nc" id="L121">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
-<span class="nc" id="L122">		TextBlock result = titledDiagram.getTextBlock(num, fileFormatOption);</span>
-<span class="nc" id="L123">		result = DiagramChromeFactory.create(result, titledDiagram, titledDiagram.getSkinParam(),</span>
-<span class="nc" id="L124">				titledDiagram.getWarnings());</span>
+<span class="nc" id="L120">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
+<span class="nc" id="L121">		TextBlock result = titledDiagram.getTextBlock(num, fileFormatOption);</span>
+<span class="nc" id="L122">		result = DiagramChromeFactory.create(result, titledDiagram, titledDiagram.getSkinParam(),</span>
+<span class="nc" id="L123">				titledDiagram.getWarnings());</span>
 
-<span class="nc" id="L126">		return result;</span>
+<span class="nc" id="L125">		return result;</span>
 	}
 
 	@Override
 	protected TextBlockExporter getExporter(int num, FileFormatOption fileFormatOption) throws Exception {
 
-<span class="nc" id="L132">		TextBlock result = getTextBlock(num, fileFormatOption);</span>
+<span class="nc" id="L131">		TextBlock result = getTextBlock(num, fileFormatOption);</span>
 
-<span class="nc" id="L134">		final HColor backColor = calculateBackColor();</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (backColor != null)</span>
-<span class="nc" id="L136">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
+<span class="nc" id="L133">		final HColor backColor = calculateBackColor();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">		if (backColor != null)</span>
+<span class="nc" id="L135">			result = TextBlockUtils.addBackcolor(result, backColor);</span>
 
-<span class="nc" id="L138">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
-<span class="nc" id="L139">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
+<span class="nc" id="L137">		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());</span>
+<span class="nc" id="L138">		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);</span>
 
-<span class="nc" id="L141">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
+<span class="nc" id="L140">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
 
-<span class="nc" id="L143">		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat,</span>
-<span class="nc" id="L144">				titledDiagram.isHandwritten());</span>
+<span class="nc" id="L142">		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat,</span>
+<span class="nc" id="L143">				titledDiagram.isHandwritten());</span>
 
-<span class="nc" id="L146">		builder.styled(titledDiagram);</span>
+<span class="nc" id="L145">		builder.styled(titledDiagram);</span>
 
-<span class="nc" id="L148">		return builder.build();</span>
+<span class="nc" id="L147">		return builder.build();</span>
 
 	}
 
 	public int getCardinality() {
-<span class="nc" id="L153">		int nb = 0;</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (UgDiagram d : diagrams)</span>
-<span class="nc" id="L155">			nb += d.getNbImages();</span>
+<span class="nc" id="L152">		int nb = 0;</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (UgDiagram d : diagrams)</span>
+<span class="nc" id="L154">			nb += d.getNbImages();</span>
 
-<span class="nc" id="L157">		return nb;</span>
+<span class="nc" id="L156">		return nb;</span>
 	}
 
 	public DiagramDescription getDescription() {
-<span class="nc" id="L161">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		for (UgDiagram d : diagrams) {</span>
-<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
-<span class="nc" id="L164">				sb.append(&quot; &quot;);</span>
+<span class="nc" id="L160">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		for (UgDiagram d : diagrams) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			if (sb.length() &gt; 0)</span>
+<span class="nc" id="L163">				sb.append(&quot; &quot;);</span>
 
-<span class="nc" id="L166">			sb.append(d.getDescription());</span>
-<span class="nc" id="L167">		}</span>
-<span class="nc" id="L168">		return new DiagramDescription(sb.toString());</span>
+<span class="nc" id="L165">			sb.append(d.getDescription());</span>
+<span class="nc" id="L166">		}</span>
+<span class="nc" id="L167">		return new DiagramDescription(sb.toString());</span>
 	}
 
 //	public String getWarningOrError() {
@@ -186,25 +185,25 @@ public class NewpagedDiagram extends UgDiagram {
 
 	@Override
 	public void makeDiagramReady() {
-<span class="nc" id="L189">		super.makeDiagramReady();</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">		for (UgDiagram diagram : diagrams)</span>
-<span class="nc" id="L191">			diagram.makeDiagramReady();</span>
+<span class="nc" id="L188">		super.makeDiagramReady();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">		for (UgDiagram diagram : diagrams)</span>
+<span class="nc" id="L190">			diagram.makeDiagramReady();</span>
 
-<span class="nc" id="L193">	}</span>
+<span class="nc" id="L192">	}</span>
 
 	@Override
 	public String checkFinalError() {
-<span class="nc bnc" id="L197" title="All 2 branches missed.">		for (UgDiagram p : getDiagrams()) {</span>
-<span class="nc" id="L198">			final String check = ((Diagram) p).checkFinalError();</span>
-<span class="nc bnc" id="L199" title="All 2 branches missed.">			if (check != null)</span>
-<span class="nc" id="L200">				return check;</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">		for (UgDiagram p : getDiagrams()) {</span>
+<span class="nc" id="L197">			final String check = ((Diagram) p).checkFinalError();</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">			if (check != null)</span>
+<span class="nc" id="L199">				return check;</span>
 
-<span class="nc" id="L202">		}</span>
-<span class="nc" id="L203">		return super.checkFinalError();</span>
+<span class="nc" id="L201">		}</span>
+<span class="nc" id="L202">		return super.checkFinalError();</span>
 	}
 
 	public final List&lt;UgDiagram&gt; getDiagrams() {
-<span class="nc" id="L207">		return Collections.unmodifiableList(diagrams);</span>
+<span class="nc" id="L206">		return Collections.unmodifiableList(diagrams);</span>
 	}
 
 }

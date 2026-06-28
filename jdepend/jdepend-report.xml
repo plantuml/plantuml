@@ -1883,14 +1883,14 @@
 
         <Package name="net.sourceforge.plantuml">
             <Stats>
-                <TotalClasses>38</TotalClasses>
-                <ConcreteClasses>25</ConcreteClasses>
+                <TotalClasses>37</TotalClasses>
+                <ConcreteClasses>24</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
                 <Ca>98</Ca>
                 <Ce>33</Ce>
-                <A>0.34</A>
+                <A>0.35</A>
                 <I>0.25</I>
-                <D>0.41</D>
+                <D>0.4</D>
                 <V>1</V>
             </Stats>
 
@@ -1957,9 +1957,6 @@
                 </Class>
                 <Class sourceFile="AnimatedGifEncoder.java">
                     net.sourceforge.plantuml.LZWEncoder
-                </Class>
-                <Class sourceFile="LatexManager.java">
-                    net.sourceforge.plantuml.LatexManager$LruCache
                 </Class>
                 <Class sourceFile="AnimatedGifEncoder.java">
                     net.sourceforge.plantuml.NeuQuant
@@ -17152,7 +17149,34 @@
         </Package>
 
         <Package name="net.sourceforge.plantuml.tikz">
-            <error>No stats available: package referenced, but not analyzed.</error>
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>0.5</I>
+                <D>0.5</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="LatexManager.java">
+                    net.sourceforge.plantuml.tikz.LatexManager$LruCache
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.util</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>net.sourceforge.plantuml.klimt.drawing.tikz</Package>
+            </UsedBy>
         </Package>
 
         <Package name="net.sourceforge.plantuml.tim">

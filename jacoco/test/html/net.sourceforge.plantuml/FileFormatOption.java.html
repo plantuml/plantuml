@@ -116,7 +116,7 @@ public final class FileFormatOption implements Serializable {
 	}
 
 	public FileFormatOption withTikzFontDistortion(TikzFontDistortion tikzFontDistortion) {
-<span class="nc" id="L119">		return new FileFormatOption(fileFormat, withMetadata, true, svgLinkTarget, debugsvek, hoverColor,</span>
+<span class="fc" id="L119">		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,</span>
 				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
@@ -188,7 +188,7 @@ public final class FileFormatOption implements Serializable {
 <span class="fc" id="L188">	}</span>
 
 	public final TikzFontDistortion getTikzFontDistortion() {
-<span class="nc" id="L191">		return tikzFontDistortion;</span>
+<span class="fc" id="L191">		return tikzFontDistortion;</span>
 	}
 
 	public final String getWatermark() {

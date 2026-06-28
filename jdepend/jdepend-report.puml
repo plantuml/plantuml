@@ -347,8 +347,8 @@ Total Classes: 3
 "net.atmp" --> "net.sourceforge.plantuml.klimt.geom"
 "net.atmp" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml" %lighten("red", 59) {
-Total Classes: 38
+class "net.sourceforge.plantuml" %lighten("red", 60) {
+Total Classes: 37
 }
 "net.sourceforge.plantuml" --> "java.awt"
 "net.sourceforge.plantuml" --> "java.awt.font"
@@ -3274,9 +3274,10 @@ Total Classes: 2
 "net.sourceforge.plantuml.theme" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.theme" --> "net.sourceforge.plantuml.text"
 
-class "net.sourceforge.plantuml.tikz"{
-
+class "net.sourceforge.plantuml.tikz" %lighten("red", 50) {
+Total Classes: 1
 }
+"net.sourceforge.plantuml.tikz" --> "java.util"
 
 class "net.sourceforge.plantuml.tim" %lighten("red", 93) {
 Total Classes: 38
