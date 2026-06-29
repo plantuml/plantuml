@@ -142,18 +142,19 @@ import net.sourceforge.plantuml.log.Logme;
 <span class="nc" id="L142">		option = option.withBackcolor(backcolor);</span>
 <span class="nc" id="L143">		option = option.withScale(scaleFactor);</span>
 <span class="nc" id="L144">		option = option.withColorMapper(colorMapper);</span>
+<span class="nc" id="L145">		option = option.withDecimal(0);</span>
 
-<span class="nc" id="L146">		UGraphic ug = UGraphicSvg.build(option, false, diagram.seed(), STRING_BOUNDER, FileFormat.SVG_DETERMINISTIC);</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (diagram.isHandwritten())</span>
-<span class="nc" id="L148">			ug = new UGraphicHandwritten(ug);</span>
+<span class="nc" id="L147">		UGraphic ug = UGraphicSvg.build(option, false, diagram.seed(), STRING_BOUNDER, FileFormat.SVG_DETERMINISTIC);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		if (diagram.isHandwritten())</span>
+<span class="nc" id="L149">			ug = new UGraphicHandwritten(ug);</span>
 
-<span class="nc" id="L150">		tb.drawU(ug);</span>
-<span class="nc" id="L151">		ug.flushUg();</span>
+<span class="nc" id="L151">		tb.drawU(ug);</span>
+<span class="nc" id="L152">		ug.flushUg();</span>
 
-<span class="nc" id="L153">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L154">		ug.writeToStream(baos, null, 96);</span>
-<span class="nc" id="L155">		baos.flush();</span>
-<span class="nc" id="L156">		return new String(baos.toByteArray(), UTF_8);</span>
+<span class="nc" id="L154">		final ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L155">		ug.writeToStream(baos, null, 96);</span>
+<span class="nc" id="L156">		baos.flush();</span>
+<span class="nc" id="L157">		return new String(baos.toByteArray(), UTF_8);</span>
 	}
 
 }
