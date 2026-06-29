@@ -151,7 +151,22 @@ function controls() {
 
 	function getContent() {
 		const out = document.getElementById("out");
-		return out.innerHTML;
+		const svg = out.querySelector("svg");
+		if (svg == null) {
+			return out.innerHTML;
+		}
+		// Serialize via XMLSerializer rather than reading innerHTML.
+		// innerHTML uses the HTML serialization algorithm, and Firefox's HTML
+		// serializer drops the closing "?" of a processing instruction, turning
+		// <?plantuml-src ...?> into <?plantuml-src ...>, which produces invalid
+		// XML that browsers and image viewers refuse to open.
+		// XMLSerializer always emits a well-formed "?>" in every browser.
+		// https://github.com/plantuml/plantuml/issues/2769
+		const clone = svg.cloneNode(true);
+		if (clone.getAttribute("xmlns") == null) {
+			clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+		}
+		return new XMLSerializer().serializeToString(clone);
 	}
 }
 
