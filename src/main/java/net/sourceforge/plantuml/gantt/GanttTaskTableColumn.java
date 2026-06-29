@@ -88,7 +88,7 @@ public enum GanttTaskTableColumn {
 
 		@Override
 		String valueOf(Task task, Context context) {
-			return context.formatDay(task.getEndMinusOneDayTOBEREMOVED());
+			return context.formatDay(task.getEnd().minusOneSecond());
 		}
 	},
 

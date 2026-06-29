@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.gantt.time.MonthUtils;
 
 public class DayPattern {
 
-	private final String id;
 	private final String yearKeyA;
 	private final String yearKeyB;
 	private final String yearKeyC;
@@ -59,7 +58,6 @@ public class DayPattern {
 	private final String dayKeyC;
 
 	public DayPattern(String id) {
-		this.id = id;
 		this.yearKeyA = "AYEAR" + id;
 		this.yearKeyB = "BYEAR" + id;
 		this.yearKeyC = "CYEAR" + id;
