@@ -88,7 +88,7 @@ import net.sourceforge.plantuml.gantt.time.TimePoint;
 
 		@Override
 		String valueOf(Task task, Context context) {
-<span class="fc" id="L91">			return context.formatDay(task.getEndMinusOneDayTOBEREMOVED());</span>
+<span class="fc" id="L91">			return context.formatDay(task.getEnd().minusOneSecond());</span>
 		}
 	},
 
