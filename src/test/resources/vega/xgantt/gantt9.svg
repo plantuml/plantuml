@@ -36,26 +36,26 @@
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="328.125" x2="328.125" y1="6" y2="101"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="344.125" x2="344.125" y1="6" y2="101"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="360.125" x2="360.125" y1="6" y2="101"/>
-    <text fill="#000" font-size="10" textLength="5.563" x="125.344" y="7.778">1</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="141.344" y="7.778">2</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="157.344" y="7.778">3</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="173.344" y="7.778">4</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="189.344" y="7.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="205.344" y="7.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="221.344" y="7.778">7</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="237.344" y="7.778">8</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="253.344" y="7.778">9</text>
+    <text fill="#000" font-size="10" x="125.344" y="7.778">1</text>
+    <text fill="#000" font-size="10" x="141.344" y="7.778">2</text>
+    <text fill="#000" font-size="10" x="157.344" y="7.778">3</text>
+    <text fill="#000" font-size="10" x="173.344" y="7.778">4</text>
+    <text fill="#000" font-size="10" x="189.344" y="7.778">5</text>
+    <text fill="#000" font-size="10" x="205.344" y="7.778">6</text>
+    <text fill="#000" font-size="10" x="221.344" y="7.778">7</text>
+    <text fill="#000" font-size="10" x="237.344" y="7.778">8</text>
+    <text fill="#000" font-size="10" x="253.344" y="7.778">9</text>
     <text fill="#000" font-size="10" textLength="11.125" x="266.563" y="7.778">10</text>
     <text fill="#000" font-size="10" textLength="11.125" x="282.563" y="7.778">11</text>
     <text fill="#000" font-size="10" textLength="11.125" x="298.563" y="7.778">12</text>
     <text fill="#000" font-size="10" textLength="11.125" x="314.563" y="7.778">13</text>
     <text fill="#000" font-size="10" textLength="11.125" x="330.563" y="7.778">14</text>
     <text fill="#000" font-size="10" textLength="11.125" x="346.563" y="7.778">15</text>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="156" x="122.125" y="18"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="156" x="122.125" y="18"/>
     <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="156" x="122.125" y="18"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="236" x="122.125" y="33"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="236" x="122.125" y="33"/>
     <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="236" x="122.125" y="33"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="156" x="122.125" y="48"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="156" x="122.125" y="48"/>
     <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="156" x="122.125" y="48"/>
     <text fill="#000" font-size="11" textLength="60.431" x="126.125" y="26.556">T1 {def:50%}</text>
     <text fill="#000" font-size="11" textLength="12.856" x="126.125" y="41.556">T2</text>
@@ -72,15 +72,15 @@
     <text fill="#000" font-family="serif" font-size="9" textLength="10.013" x="235.119" y="84">50</text>
     <text fill="#000" font-family="serif" font-size="9" textLength="10.013" x="251.119" y="84">50</text>
     <text fill="#000" font-family="serif" font-size="9" textLength="10.013" x="267.119" y="84">50</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="125.344" y="103.778">1</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="141.344" y="103.778">2</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="157.344" y="103.778">3</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="173.344" y="103.778">4</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="189.344" y="103.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="205.344" y="103.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="221.344" y="103.778">7</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="237.344" y="103.778">8</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="253.344" y="103.778">9</text>
+    <text fill="#000" font-size="10" x="125.344" y="103.778">1</text>
+    <text fill="#000" font-size="10" x="141.344" y="103.778">2</text>
+    <text fill="#000" font-size="10" x="157.344" y="103.778">3</text>
+    <text fill="#000" font-size="10" x="173.344" y="103.778">4</text>
+    <text fill="#000" font-size="10" x="189.344" y="103.778">5</text>
+    <text fill="#000" font-size="10" x="205.344" y="103.778">6</text>
+    <text fill="#000" font-size="10" x="221.344" y="103.778">7</text>
+    <text fill="#000" font-size="10" x="237.344" y="103.778">8</text>
+    <text fill="#000" font-size="10" x="253.344" y="103.778">9</text>
     <text fill="#000" font-size="10" textLength="11.125" x="266.563" y="103.778">10</text>
     <text fill="#000" font-size="10" textLength="11.125" x="282.563" y="103.778">11</text>
     <text fill="#000" font-size="10" textLength="11.125" x="298.563" y="103.778">12</text>

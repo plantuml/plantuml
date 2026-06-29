@@ -7,7 +7,7 @@
       <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="101.753" y="112.553"/>
       <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="99.753" y="114.553"/>
       <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="99.753" y="118.553"/>
-      <text fill="#000" font-size="14" textLength="9.362" x="87.391" y="138.442">A</text>
+      <text fill="#000" font-size="14" x="87.391" y="138.442">A</text>
     </g>
     <!--entity B-->
     <g class="entity" data-qualified-name="B" data-source-line="2" id="ent0002">
@@ -15,7 +15,7 @@
       <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="103.753" y="15.553"/>
       <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.753" y="17.553"/>
       <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.753" y="21.553"/>
-      <text fill="#000" font-size="14" textLength="9.362" x="89.391" y="41.442">B</text>
+      <text fill="#000" font-size="14" x="89.391" y="41.442">B</text>
     </g>
     <!--entity C-->
     <g class="entity" data-qualified-name="C" data-source-line="3" id="ent0003">
@@ -23,7 +23,7 @@
       <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="266.041" y="15.553"/>
       <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="264.041" y="17.553"/>
       <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="264.041" y="21.553"/>
-      <text fill="#000" font-size="14" textLength="10.15" x="250.891" y="41.442">C</text>
+      <text fill="#000" font-size="14" x="250.891" y="41.442">C</text>
     </g>
     <!--entity D-->
     <g class="entity" data-qualified-name="D" data-source-line="4" id="ent0004">
@@ -31,7 +31,7 @@
       <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="266.041" y="112.553"/>
       <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="264.041" y="114.553"/>
       <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="264.041" y="118.553"/>
-      <text fill="#000" font-size="14" textLength="10.15" x="250.891" y="138.442">D</text>
+      <text fill="#000" font-size="14" x="250.891" y="138.442">D</text>
     </g>
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
       <polygon fill="#181818" points="74.12,36.921,64.501,34.808,69.222,37.924,66.106,42.645,74.12,36.921" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

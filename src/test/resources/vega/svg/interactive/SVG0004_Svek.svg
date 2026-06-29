@@ -183,9 +183,9 @@ svg.click-active &gt; g &gt; g.click-highlighted {
     <g class="entity" data-qualified-name="pkg1.pkg2.Class 1 with ASCII special chars.r.n.t...........-............._.....................................-..............." data-source-line="3" id="ent0001">
       <rect fill="#F1F1F1" height="68" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="657.012" x="30.5" y="54"/>
       <ellipse cx="45.5" cy="80" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" textLength="0" x="40.5" y="85">C</text>
+      <text fill="#000" font-family="monospace" font-size="14" x="40.5" y="85">C</text>
       <text fill="#000" font-size="14" textLength="182.263" x="502.25" y="69.889">Class 1 with ASCII special chars</text>
-      <text fill="#000" font-size="14" textLength="3.85" x="684.512" y="83.889"> </text>
+      <text fill="#000" font-size="14" x="684.512" y="83.889"> </text>
       <text fill="#000" font-size="14" textLength="569.012" x="115.5" y="97.889">!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️</text>
       <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="686.512" y1="106" y2="106"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="686.512" y1="114" y2="114"/>

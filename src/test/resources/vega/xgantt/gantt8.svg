@@ -41,7 +41,7 @@
     <path d="M125.063,77 L125.063,97 L287.588,97 L287.588,87 L277.588,77 L125.063,77" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M277.588,77 L277.588,87 L287.588,87 L277.588,77" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
     <text fill="#000" font-size="9" textLength="141.525" x="131.063" y="89">Long very very very Long Long note KO</text>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="128" x="127.063" y="64"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="128" x="127.063" y="64"/>
     <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="128" x="127.063" y="64"/>
     <polygon fill="#000" points="255.063,64,260.063,69,255.063,74,250.063,69" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <text fill="#000" font-size="11" textLength="34.925" x="131.063" y="72.556">TASK1</text>

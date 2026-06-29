@@ -14,10 +14,10 @@
     <text fill="#000" font-size="10" textLength="28.938" x="5" y="65.278">Nov 30</text>
     <text fill="#000" font-size="10" textLength="23.375" x="43.938" y="65.278">Dec 4</text>
     <text fill="#000" font-size="10" textLength="26.688" x="77.313" y="65.278">5 days</text>
-    <rect fill="#ADD8E6" height="15" style="stroke:none;stroke-width:1;" width="176" x="120.125" y="55"/>
-    <rect fill="#90EE90" height="15" style="stroke:none;stroke-width:1;" width="224" x="296.125" y="55"/>
-    <rect fill="#ADD8E6" height="15" style="stroke:none;stroke-width:1;" width="224" x="520.125" y="55"/>
-    <rect fill="#90EE90" height="15" style="stroke:none;stroke-width:1;" width="240" x="744.125" y="55"/>
+    <rect fill="#ADD8E6" height="15" style="stroke:none;" width="176" x="120.125" y="55"/>
+    <rect fill="#90EE90" height="15" style="stroke:none;" width="224" x="296.125" y="55"/>
+    <rect fill="#ADD8E6" height="15" style="stroke:none;" width="224" x="520.125" y="55"/>
+    <rect fill="#90EE90" height="15" style="stroke:none;" width="240" x="744.125" y="55"/>
     <text fill="#000" font-size="12" font-weight="700" textLength="82.05" x="287.1" y="9.333">November 2018</text>
     <text fill="#000" font-size="12" font-weight="700" textLength="82.05" x="719.1" y="9.333">December 2018</text>
     <text fill="#000" font-size="10" textLength="13.875" x="121.188" y="21.778">Mo</text>
@@ -74,11 +74,11 @@
     <text fill="#000" font-size="10" textLength="15" x="936.625" y="21.778">We</text>
     <text fill="#000" font-size="10" textLength="11.688" x="954.281" y="21.778">Th</text>
     <text fill="#000" font-size="10" textLength="9.438" x="971.406" y="21.778">Fr</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="125.344" y="33.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="141.344" y="33.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="157.344" y="33.778">7</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="173.344" y="33.778">8</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="189.344" y="33.778">9</text>
+    <text fill="#000" font-size="10" x="125.344" y="33.778">5</text>
+    <text fill="#000" font-size="10" x="141.344" y="33.778">6</text>
+    <text fill="#000" font-size="10" x="157.344" y="33.778">7</text>
+    <text fill="#000" font-size="10" x="173.344" y="33.778">8</text>
+    <text fill="#000" font-size="10" x="189.344" y="33.778">9</text>
     <text fill="#989898" font-size="10" textLength="11.125" x="202.563" y="33.778">10</text>
     <text fill="#989898" font-size="10" textLength="11.125" x="218.563" y="33.778">11</text>
     <text fill="#000" font-size="10" textLength="11.125" x="234.563" y="33.778">12</text>
@@ -100,15 +100,15 @@
     <text fill="#000" font-size="10" textLength="11.125" x="490.563" y="33.778">28</text>
     <text fill="#000" font-size="10" textLength="11.125" x="506.563" y="33.778">29</text>
     <text fill="#000" font-size="10" textLength="11.125" x="522.563" y="33.778">30</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="541.344" y="33.778">1</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="557.344" y="33.778">2</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="573.344" y="33.778">3</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="589.344" y="33.778">4</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="605.344" y="33.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="621.344" y="33.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="637.344" y="33.778">7</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="653.344" y="33.778">8</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="669.344" y="33.778">9</text>
+    <text fill="#989898" font-size="10" x="541.344" y="33.778">1</text>
+    <text fill="#989898" font-size="10" x="557.344" y="33.778">2</text>
+    <text fill="#000" font-size="10" x="573.344" y="33.778">3</text>
+    <text fill="#000" font-size="10" x="589.344" y="33.778">4</text>
+    <text fill="#000" font-size="10" x="605.344" y="33.778">5</text>
+    <text fill="#000" font-size="10" x="621.344" y="33.778">6</text>
+    <text fill="#000" font-size="10" x="637.344" y="33.778">7</text>
+    <text fill="#989898" font-size="10" x="653.344" y="33.778">8</text>
+    <text fill="#989898" font-size="10" x="669.344" y="33.778">9</text>
     <text fill="#000" font-size="10" textLength="11.125" x="682.563" y="33.778">10</text>
     <text fill="#000" font-size="10" textLength="11.125" x="698.563" y="33.778">11</text>
     <text fill="#000" font-size="10" textLength="11.125" x="714.563" y="33.778">12</text>
@@ -189,9 +189,9 @@
     <text fill="#000" font-size="12" textLength="44.7" x="744.125" y="48.333">Sprint 52</text>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="120.125" x2="984.125" y1="55" y2="55"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="120.125" x2="984.125" y1="70" y2="70"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="15" x="522.125" y="57"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="15" x="522.125" y="57"/>
     <path d="M536.125,68 L522.125,68 L522.125,57 L536.125,57" fill="none" style="stroke:#181818;stroke-width:1;"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="30" x="568.125" y="57"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="30" x="568.125" y="57"/>
     <path d="M568.125,57 L598.125,57 L598.125,68 L568.125,68" fill="none" style="stroke:#181818;stroke-width:1;"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="539.125" x2="565.125" y1="57" y2="57"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="539.125" x2="565.125" y1="68" y2="68"/>
@@ -250,11 +250,11 @@
     <text fill="#000" font-size="10" textLength="15" x="936.625" y="77.778">We</text>
     <text fill="#000" font-size="10" textLength="11.688" x="954.281" y="77.778">Th</text>
     <text fill="#000" font-size="10" textLength="9.438" x="971.406" y="77.778">Fr</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="125.344" y="91.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="141.344" y="91.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="157.344" y="91.778">7</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="173.344" y="91.778">8</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="189.344" y="91.778">9</text>
+    <text fill="#000" font-size="10" x="125.344" y="91.778">5</text>
+    <text fill="#000" font-size="10" x="141.344" y="91.778">6</text>
+    <text fill="#000" font-size="10" x="157.344" y="91.778">7</text>
+    <text fill="#000" font-size="10" x="173.344" y="91.778">8</text>
+    <text fill="#000" font-size="10" x="189.344" y="91.778">9</text>
     <text fill="#989898" font-size="10" textLength="11.125" x="202.563" y="91.778">10</text>
     <text fill="#989898" font-size="10" textLength="11.125" x="218.563" y="91.778">11</text>
     <text fill="#000" font-size="10" textLength="11.125" x="234.563" y="91.778">12</text>
@@ -276,15 +276,15 @@
     <text fill="#000" font-size="10" textLength="11.125" x="490.563" y="91.778">28</text>
     <text fill="#000" font-size="10" textLength="11.125" x="506.563" y="91.778">29</text>
     <text fill="#000" font-size="10" textLength="11.125" x="522.563" y="91.778">30</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="541.344" y="91.778">1</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="557.344" y="91.778">2</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="573.344" y="91.778">3</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="589.344" y="91.778">4</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="605.344" y="91.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="621.344" y="91.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="637.344" y="91.778">7</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="653.344" y="91.778">8</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="669.344" y="91.778">9</text>
+    <text fill="#989898" font-size="10" x="541.344" y="91.778">1</text>
+    <text fill="#989898" font-size="10" x="557.344" y="91.778">2</text>
+    <text fill="#000" font-size="10" x="573.344" y="91.778">3</text>
+    <text fill="#000" font-size="10" x="589.344" y="91.778">4</text>
+    <text fill="#000" font-size="10" x="605.344" y="91.778">5</text>
+    <text fill="#000" font-size="10" x="621.344" y="91.778">6</text>
+    <text fill="#000" font-size="10" x="637.344" y="91.778">7</text>
+    <text fill="#989898" font-size="10" x="653.344" y="91.778">8</text>
+    <text fill="#989898" font-size="10" x="669.344" y="91.778">9</text>
     <text fill="#000" font-size="10" textLength="11.125" x="682.563" y="91.778">10</text>
     <text fill="#000" font-size="10" textLength="11.125" x="698.563" y="91.778">11</text>
     <text fill="#000" font-size="10" textLength="11.125" x="714.563" y="91.778">12</text>

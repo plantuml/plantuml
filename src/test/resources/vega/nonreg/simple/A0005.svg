@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="286px" preserveAspectRatio="none" style="width:84px;height:286px;background:#FFA500;" version="1.1" viewBox="0 0 84 286" width="84px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <rect fill="#FFA500" height="286" style="stroke:none;stroke-width:1;" width="84" x="0" y="0"/>
+    <rect fill="#FFA500" height="286" style="stroke:none;" width="84" x="0" y="0"/>
     <g class="header" data-source-line="4">
-      <rect fill="#F00" height="10" style="stroke:none;stroke-width:1;" width="31.125" x="45.875" y="0"/>
+      <rect fill="#F00" height="10" style="stroke:none;" width="31.125" x="45.875" y="0"/>
       <text fill="#888" font-size="10" textLength="31.125" x="45.875" y="7.778">header</text>
     </g>
     <g class="title" data-source-line="1">
-      <rect fill="#FF0" height="24" style="stroke:none;stroke-width:1;" width="31.787" x="22.606" y="16"/>
+      <rect fill="#FF0" height="24" style="stroke:none;" width="31.787" x="22.606" y="16"/>
       <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="27.606" y="31.889">title</text>
     </g>
     <!--class Bob-->
     <g class="entity" data-qualified-name="Bob" data-source-line="29" id="ent0001">
       <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.938" x="8.5" y="142"/>
       <ellipse cx="23.5" cy="158" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" textLength="0" x="18.5" y="163">C</text>
+      <text fill="#000" font-family="monospace" font-size="14" x="18.5" y="163">C</text>
       <text fill="#000" font-size="14" textLength="24.938" x="37.5" y="161.889">Bob</text>
       <line style="stroke:#181818;stroke-width:0.5;" x1="9.5" x2="64.438" y1="174" y2="174"/>
       <text fill="#000" font-size="14" textLength="29.663" x="14.5" y="188.889">hello</text>
@@ -24,7 +24,7 @@
     <g class="entity" data-qualified-name="Sally" data-source-line="32" id="ent0002">
       <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.45" x="6" y="58"/>
       <ellipse cx="21" cy="74" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" textLength="0" x="16" y="79">C</text>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="79">C</text>
       <text fill="#000" font-size="14" textLength="30.45" x="35" y="77.889">Sally</text>
       <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="67.45" y1="90" y2="90"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="67.45" y1="98" y2="98"/>
@@ -38,11 +38,11 @@
       <text fill="#000" font-size="14" textLength="42.087" x="17.456" y="225.889">legend</text>
     </g>
     <g class="caption" data-source-line="5">
-      <rect fill="#800080" height="14" style="stroke:none;stroke-width:1;" width="45.15" x="15.925" y="248"/>
+      <rect fill="#800080" height="14" style="stroke:none;" width="45.15" x="15.925" y="248"/>
       <text fill="#000" font-size="14" textLength="45.15" x="15.925" y="258.889">caption</text>
     </g>
     <g class="footer" data-source-line="3">
-      <rect fill="#00F" height="15" style="stroke:none;stroke-width:1;" width="38.25" x="19.375" y="264"/>
+      <rect fill="#00F" height="15" style="stroke:none;" width="38.25" x="19.375" y="264"/>
       <text fill="#F00" font-size="15" textLength="38.25" x="19.375" y="275.667">footer</text>
     </g>
   </g>

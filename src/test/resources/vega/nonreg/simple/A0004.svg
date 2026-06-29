@@ -17,11 +17,11 @@
     </g>
     <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="95.3" x="82" y="234"/>
     <text fill="#000" font-size="12" textLength="75.3" x="92" y="253.333">getPreference</text>
-    <rect fill="#555" height="8" style="stroke:none;stroke-width:1;" width="80" x="90.5" y="303"/>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="90.5" y="303"/>
     <g class="entity" data-qualified-name=".15" id="ent0016">
       <polygon fill="#F1F1F1" points="130.5,364,142.5,376,130.5,388,118.5,376,130.5,364" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     </g>
-    <rect fill="#555" height="8" style="stroke:none;stroke-width:1;" width="80" x="148.5" y="525"/>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="148.5" y="525"/>
     <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="111.5" x="168.5" y="456"/>
     <text fill="#000" font-size="12" textLength="91.5" x="178.5" y="475.333">ReceiveBaggage</text>
     <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="119.45" x="231" y="406"/>
@@ -35,7 +35,7 @@
     <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
       <polygon fill="#181818" points="89.5,141.641,93.5,132.641,89.5,136.641,85.5,132.641,89.5,141.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M89.5,105.251 C89.5,116.467 89.5,126.468 89.5,136.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-size="11" textLength="3.025" x="88.5" y="138.197"> </text>
+      <text fill="#000" font-size="11" x="88.5" y="138.197"> </text>
     </g>
     <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
       <polygon fill="#181818" points="65.845,183.912,74.64,179.479,69.011,180.042,68.448,174.413,65.845,183.912" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
@@ -58,7 +58,7 @@
     <g class="link" data-entity-1="ent0013" data-entity-2="ent0016" data-link-type="dependency" id="lnk17">
       <polygon fill="#181818" points="130.5,363.952,134.5,354.952,130.5,358.952,126.5,354.952,130.5,363.952" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M130.5,327.097 C130.5,337.646 130.5,348.421 130.5,358.952" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-size="11" textLength="3.025" x="129.5" y="360.508"> </text>
+      <text fill="#000" font-size="11" x="129.5" y="360.508"> </text>
     </g>
     <g class="link" data-entity-1="ent0016" data-entity-2="ent0018" data-link-type="dependency" id="lnk19">
       <polygon fill="#181818" points="154.106,524.922,147.446,517.666,149.52,522.929,144.257,525.003,154.106,524.922" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

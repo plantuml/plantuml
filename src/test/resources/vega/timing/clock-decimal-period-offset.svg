@@ -39,7 +39,7 @@
     <line style="stroke:#333;stroke-width:2;" x1="330" x2="330" y1="110" y2="115"/>
     <line style="stroke:#333;stroke-width:2;" x1="380" x2="380" y1="110" y2="115"/>
     <line style="stroke:#333;stroke-width:2;" x1="30" x2="380" y1="110" y2="110"/>
-    <text fill="#333" font-size="11" textLength="6.119" x="26.941" y="124.556">0</text>
+    <text fill="#333" font-size="11" x="26.941" y="124.556">0</text>
     <text fill="#333" font-size="11" textLength="12.238" x="273.881" y="124.556">10</text>
     <text fill="#333" font-size="11" textLength="12.238" x="323.881" y="124.556">12</text>
   </g>

@@ -8,19 +8,19 @@
     </filter>
   </defs>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <text fill="#000" font-size="14" textLength="7.788" x="6.106" y="20.889">0</text>
+    <text fill="#000" font-size="14" x="6.106" y="20.889">0</text>
     <path d="M10,24 L10,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M52,24 L52,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M94,24 L94,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M136,24 L136,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M178,24 L178,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <rect fill="#FEFECE" filter="url(#f11yuyr74r9e6m)" height="34" style="stroke:#A80036;stroke-width:1;" width="42" x="10" y="56"/>
-    <text fill="#000" font-size="14" textLength="9.362" x="26.319" y="76.889">A</text>
+    <text fill="#000" font-size="14" x="26.319" y="76.889">A</text>
     <rect fill="#FEFECE" filter="url(#f11yuyr74r9e6m)" height="34" style="stroke:#A80036;stroke-width:1;" width="42" x="52" y="56"/>
-    <text fill="#000" font-size="14" textLength="9.362" x="68.319" y="76.889">B</text>
+    <text fill="#000" font-size="14" x="68.319" y="76.889">B</text>
     <rect fill="#FEFECE" filter="url(#f11yuyr74r9e6m)" height="34" style="stroke:#A80036;stroke-width:1;" width="42" x="94" y="56"/>
-    <text fill="#000" font-size="14" textLength="10.15" x="109.925" y="76.889">C</text>
+    <text fill="#000" font-size="14" x="109.925" y="76.889">C</text>
     <rect fill="#FEFECE" filter="url(#f11yuyr74r9e6m)" height="34" style="stroke:#A80036;stroke-width:1;" width="42" x="136" y="56"/>
-    <text fill="#000" font-size="14" textLength="10.15" x="151.925" y="76.889">D</text>
+    <text fill="#000" font-size="14" x="151.925" y="76.889">D</text>
   </g>
 </svg>

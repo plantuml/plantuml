@@ -25,16 +25,16 @@
     <text fill="#000" font-size="10" textLength="30" x="5" y="67">May 31</text>
     <text fill="#000" font-size="10" textLength="30" x="45" y="67">May 31</text>
     <text fill="#000" font-size="10" textLength="22" x="85" y="67">1 day</text>
-    <rect fill="#D2D2D2" height="45" style="stroke:none;stroke-width:1;" width="28" x="140" y="27"/>
-    <text fill="#000" font-size="10" textLength="6" x="145" y="24">1</text>
-    <text fill="#000" font-size="10" textLength="6" x="173" y="24">2</text>
-    <text fill="#000" font-size="10" textLength="6" x="201" y="24">3</text>
-    <text fill="#000" font-size="10" textLength="6" x="229" y="24">4</text>
-    <text fill="#000" font-size="10" textLength="6" x="257" y="24">5</text>
-    <text fill="#000" font-size="10" textLength="6" x="285" y="24">6</text>
-    <text fill="#000" font-size="10" textLength="6" x="313" y="24">7</text>
-    <text fill="#000" font-size="10" textLength="6" x="341" y="24">8</text>
-    <text fill="#000" font-size="10" textLength="6" x="369" y="24">9</text>
+    <rect fill="#D2D2D2" height="45" style="stroke:none;" width="28" x="140" y="27"/>
+    <text fill="#000" font-size="10" x="145" y="24">1</text>
+    <text fill="#000" font-size="10" x="173" y="24">2</text>
+    <text fill="#000" font-size="10" x="201" y="24">3</text>
+    <text fill="#000" font-size="10" x="229" y="24">4</text>
+    <text fill="#000" font-size="10" x="257" y="24">5</text>
+    <text fill="#000" font-size="10" x="285" y="24">6</text>
+    <text fill="#000" font-size="10" x="313" y="24">7</text>
+    <text fill="#000" font-size="10" x="341" y="24">8</text>
+    <text fill="#000" font-size="10" x="369" y="24">9</text>
     <text fill="#000" font-size="10" textLength="11" x="397" y="24">10</text>
     <text fill="#000" font-size="10" textLength="11" x="425" y="24">11</text>
     <text fill="#000" font-size="10" textLength="11" x="453" y="24">12</text>
@@ -86,9 +86,9 @@
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="128" x2="732" y1="27" y2="27"/>
     <path d="M204,40 L204,50 L209,50" fill="none" style="stroke:#000;stroke-width:2;"/>
     <polygon fill="#000" points="208,46,212,50,208,54,208,46" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <rect fill="url(#g6a4wbdo5s4hl0)" height="11" style="stroke:none;stroke-width:1;" width="24" x="186" y="29"/>
+    <rect fill="url(#g6a4wbdo5s4hl0)" height="11" style="stroke:none;" width="24" x="186" y="29"/>
     <rect fill="none" height="11" style="stroke:#C2C2C2;stroke-width:1;" width="24" x="186" y="29"/>
-    <rect fill="url(#g6a4wbdo5s4hl0)" height="11" style="stroke:none;stroke-width:1;" width="24" x="214" y="44"/>
+    <rect fill="url(#g6a4wbdo5s4hl0)" height="11" style="stroke:none;" width="24" x="214" y="44"/>
     <rect fill="none" height="11" style="stroke:#C2C2C2;stroke-width:1;" width="24" x="214" y="44"/>
     <polygon fill="#000" points="730,59,735,64,730,69,725,64" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <text fill="#5A5A5A" font-family="Cascadia Code PL" font-size="11" font-weight="700" textLength="146" x="214" y="38">Automatic branch tag on release</text>

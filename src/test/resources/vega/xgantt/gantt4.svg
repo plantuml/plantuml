@@ -20,8 +20,8 @@
     <text fill="#000" font-size="10" textLength="28.938" x="5" y="79.278">Sep 29</text>
     <text fill="#000" font-size="10" textLength="28.938" x="43.938" y="79.278">Sep 29</text>
     <text fill="#000" font-size="10" textLength="21.688" x="82.875" y="79.278">1 day</text>
-    <rect fill="#F00" height="45" style="stroke:none;stroke-width:1;" width="16" x="157.688" y="39"/>
-    <rect fill="#ADD8E6" height="45" style="stroke:none;stroke-width:1;" width="64" x="173.688" y="39"/>
+    <rect fill="#F00" height="45" style="stroke:none;" width="16" x="157.688" y="39"/>
+    <rect fill="#ADD8E6" height="45" style="stroke:none;" width="64" x="173.688" y="39"/>
     <text fill="#000" font-size="12" font-weight="700" textLength="85.35" x="163.013" y="9.333">September 2018</text>
     <text fill="#000" font-size="10" textLength="11.688" x="127.844" y="21.778">Th</text>
     <text fill="#000" font-size="10" textLength="9.438" x="144.969" y="21.778">Fr</text>
@@ -56,7 +56,7 @@
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="285.688" x2="285.688" y1="39" y2="84"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.688" x2="285.688" y1="39" y2="39"/>
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.688" x2="285.688" y1="84" y2="84"/>
-    <rect fill="#E6E6FA" height="11" style="stroke:none;stroke-width:1;" width="124" x="127.688" y="41"/>
+    <rect fill="#E6E6FA" height="11" style="stroke:none;" width="124" x="127.688" y="41"/>
     <rect fill="none" height="11" style="stroke:#ADD8E6;stroke-width:1;" width="124" x="127.688" y="41"/>
     <polygon fill="#000" points="245.688,56,250.688,61,245.688,66,240.688,61" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <polygon fill="#000" points="277.688,71,282.688,76,277.688,81,272.688,76" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

@@ -17,19 +17,19 @@
     </g>
     <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-head">
       <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="5" y="5"/>
-      <text fill="#000" font-size="14" textLength="7.788" x="12" y="22.889">a</text>
+      <text fill="#000" font-size="14" x="12" y="22.889">a</text>
     </g>
     <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-tail">
       <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="5" y="67"/>
-      <text fill="#000" font-size="14" textLength="7.788" x="12" y="84.889">a</text>
+      <text fill="#000" font-size="14" x="12" y="84.889">a</text>
     </g>
     <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-head">
       <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="36.788" y="5"/>
-      <text fill="#000" font-size="14" textLength="7.788" x="43.788" y="22.889">b</text>
+      <text fill="#000" font-size="14" x="43.788" y="22.889">b</text>
     </g>
     <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-tail">
       <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="36.788" y="67"/>
-      <text fill="#000" font-size="14" textLength="7.788" x="43.788" y="84.889">b</text>
+      <text fill="#000" font-size="14" x="43.788" y="84.889">b</text>
     </g>
     <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="1" id="msg1">
       <polygon fill="#181818" points="35.681,46,45.681,50,35.681,54,39.681,50" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

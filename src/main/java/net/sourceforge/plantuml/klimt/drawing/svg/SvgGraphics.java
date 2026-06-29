@@ -626,10 +626,13 @@ public class SvgGraphics {
 		final StringBuilder style = new StringBuilder();
 
 		style.append("stroke:" + shortenColor(stroke) + ";");
-		style.append("stroke-width:" + strokeWidth + ";");
+		// When there is no stroke, stroke-width and stroke-dasharray are useless
+		if ("none".equals(stroke) == false) {
+			style.append("stroke-width:" + strokeWidth + ";");
 
-		if (strokeDasharray != null)
-			style.append("stroke-dasharray:" + strokeDasharray + ";");
+			if (strokeDasharray != null)
+				style.append("stroke-dasharray:" + strokeDasharray + ";");
+		}
 
 		if (suppStyle != null)
 			style.append(suppStyle);
@@ -693,8 +696,10 @@ public class SvgGraphics {
 //			if (option.getFont() == null) {
 			// lengthAdjust is set once on the root <g> element (inherited here).
 			// Only textLength must be emitted per <text> since it is not inheritable.
-			if (option.getLengthAdjust() == LengthAdjust.SPACING
-					|| option.getLengthAdjust() == LengthAdjust.SPACING_AND_GLYPHS)
+			// A single glyph has no inter-character spacing to adjust, so textLength
+			// would have no visible effect: skip it to reduce output size.
+			if (text.length() > 1 && (option.getLengthAdjust() == LengthAdjust.SPACING
+					|| option.getLengthAdjust() == LengthAdjust.SPACING_AND_GLYPHS))
 				elt.setAttribute("textLength", format(textLength));
 //			}
 

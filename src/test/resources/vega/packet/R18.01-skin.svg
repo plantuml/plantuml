@@ -8,7 +8,7 @@
     </filter>
   </defs>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <text fill="#000" font-size="14" textLength="7.788" x="6.106" y="20.889">0</text>
+    <text fill="#000" font-size="14" x="6.106" y="20.889">0</text>
     <path d="M10,24 L10,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M52,40 L52,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M94,40 L94,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
@@ -17,7 +17,7 @@
     <path d="M220,40 L220,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M262,40 L262,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M304,40 L304,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="342.106" y="20.889">8</text>
+    <text fill="#000" font-size="14" x="342.106" y="20.889">8</text>
     <path d="M346,24 L346,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M388,40 L388,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>
     <path d="M430,40 L430,56" fill="none" style="stroke:#A80036;stroke-width:1;"/>

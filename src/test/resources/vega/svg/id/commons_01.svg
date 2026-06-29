@@ -20,7 +20,7 @@
     <!--entity c-->
     <g class="entity" data-qualified-name="c" data-source-line="10" id="ent0002">
       <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27" x="136.5" y="105"/>
-      <text fill="#000" font-size="14" textLength="7" x="146.5" y="118.889">c</text>
+      <text fill="#000" font-size="14" x="146.5" y="118.889">c</text>
     </g>
     <g class="legend" data-source-line="12">
       <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="103.45" x="40.025" y="177"/>

@@ -1,33 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="169px" preserveAspectRatio="none" style="width:231px;height:169px;background:#FFFFFF;" version="1.1" viewBox="0 0 231 169" width="231px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <text fill="#000" font-size="14" textLength="7.788" x="6.106" y="20.889">0</text>
+    <text fill="#000" font-size="14" x="6.106" y="20.889">0</text>
     <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M52,24 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="90.106" y="20.889">2</text>
+    <text fill="#000" font-size="14" x="90.106" y="20.889">2</text>
     <path d="M94,24 L94,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M136,24 L136,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="174.106" y="20.889">4</text>
+    <text fill="#000" font-size="14" x="174.106" y="20.889">4</text>
     <path d="M178,24 L178,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="56"/>
-    <text fill="#000" font-size="14" textLength="9.362" x="26.319" y="76.889">A</text>
+    <text fill="#000" font-size="14" x="26.319" y="76.889">A</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="52" y="56"/>
-    <text fill="#000" font-size="14" textLength="9.362" x="68.319" y="76.889">B</text>
+    <text fill="#000" font-size="14" x="68.319" y="76.889">B</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="94" y="56"/>
-    <text fill="#000" font-size="14" textLength="10.15" x="109.925" y="76.889">C</text>
+    <text fill="#000" font-size="14" x="109.925" y="76.889">C</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="136" y="56"/>
-    <text fill="#000" font-size="14" textLength="10.15" x="151.925" y="76.889">D</text>
+    <text fill="#000" font-size="14" x="151.925" y="76.889">D</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="90"/>
-    <text fill="#000" font-size="14" textLength="9.362" x="26.319" y="110.889">E</text>
+    <text fill="#000" font-size="14" x="26.319" y="110.889">E</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="52" y="90"/>
-    <text fill="#000" font-size="14" textLength="8.575" x="68.713" y="110.889">F</text>
+    <text fill="#000" font-size="14" x="68.713" y="110.889">F</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="94" y="90"/>
-    <text fill="#000" font-size="14" textLength="10.85" x="109.575" y="110.889">G</text>
+    <text fill="#000" font-size="14" x="109.575" y="110.889">G</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="136" y="90"/>
-    <text fill="#000" font-size="14" textLength="10.15" x="151.925" y="110.889">H</text>
+    <text fill="#000" font-size="14" x="151.925" y="110.889">H</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="10" y="124"/>
-    <text fill="#000" font-size="14" textLength="3.85" x="29.075" y="144.889">I</text>
+    <text fill="#000" font-size="14" x="29.075" y="144.889">I</text>
     <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="42" x="52" y="124"/>
-    <text fill="#000" font-size="14" textLength="7" x="69.5" y="144.889">J</text>
+    <text fill="#000" font-size="14" x="69.5" y="144.889">J</text>
   </g>
 </svg>

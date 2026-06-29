@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="101px" preserveAspectRatio="none" style="width:147px;height:101px;background:#FFFFFF;" version="1.1" viewBox="0 0 147 101" width="147px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <text fill="#000" font-size="14" textLength="7.788" x="6.106" y="20.889">0</text>
+    <text fill="#000" font-size="14" x="6.106" y="20.889">0</text>
     <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M52,40 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <path d="M94,24 L94,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>

@@ -20,10 +20,10 @@
     <text fill="#000" font-size="10" textLength="18.375" x="5" y="79.278">Jul 1</text>
     <text fill="#000" font-size="10" textLength="23.938" x="38.938" y="79.278">Jul 11</text>
     <text fill="#000" font-size="10" textLength="32.25" x="72.875" y="79.278">11 days</text>
-    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="32" x="163.688" y="39"/>
-    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="32" x="275.688" y="39"/>
-    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="32" x="387.688" y="39"/>
-    <rect fill="#F1E5E5" height="45" style="stroke:none;stroke-width:1;" width="32" x="499.688" y="39"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;" width="32" x="163.688" y="39"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;" width="32" x="275.688" y="39"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;" width="32" x="387.688" y="39"/>
+    <rect fill="#F1E5E5" height="45" style="stroke:none;" width="32" x="499.688" y="39"/>
     <text fill="#000" font-size="12" font-weight="700" textLength="48.075" x="315.65" y="9.333">July 2020</text>
     <text fill="#000" font-size="10" textLength="15" x="116.188" y="21.778">We</text>
     <text fill="#000" font-size="10" textLength="11.688" x="133.844" y="21.778">Th</text>
@@ -53,15 +53,15 @@
     <text fill="#989898" font-size="10" textLength="12.25" x="517.563" y="21.778">Su</text>
     <text fill="#000" font-size="10" textLength="13.875" x="532.75" y="21.778">Mo</text>
     <text fill="#000" font-size="10" textLength="11.688" x="549.844" y="21.778">Tu</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="120.906" y="33.778">1</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="136.906" y="33.778">2</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="152.906" y="33.778">3</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="168.906" y="33.778">4</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="184.906" y="33.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="200.906" y="33.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="216.906" y="33.778">7</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="232.906" y="33.778">8</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="248.906" y="33.778">9</text>
+    <text fill="#000" font-size="10" x="120.906" y="33.778">1</text>
+    <text fill="#000" font-size="10" x="136.906" y="33.778">2</text>
+    <text fill="#000" font-size="10" x="152.906" y="33.778">3</text>
+    <text fill="#989898" font-size="10" x="168.906" y="33.778">4</text>
+    <text fill="#989898" font-size="10" x="184.906" y="33.778">5</text>
+    <text fill="#000" font-size="10" x="200.906" y="33.778">6</text>
+    <text fill="#000" font-size="10" x="216.906" y="33.778">7</text>
+    <text fill="#000" font-size="10" x="232.906" y="33.778">8</text>
+    <text fill="#000" font-size="10" x="248.906" y="33.778">9</text>
     <text fill="#000" font-size="10" textLength="11.125" x="262.125" y="33.778">10</text>
     <text fill="#989898" font-size="10" textLength="11.125" x="278.125" y="33.778">11</text>
     <text fill="#989898" font-size="10" textLength="11.125" x="294.125" y="33.778">12</text>
@@ -114,31 +114,31 @@
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="115.688" x2="563.688" y1="84" y2="84"/>
     <path d="M331.688,52 L331.688,61.5 L336.688,61.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
     <polygon fill="#181818" points="335.688,57.5,339.688,61.5,335.688,65.5,335.688,57.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="47" x="117.688" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="47" x="117.688" y="41"/>
     <path d="M163.688,52 L117.688,52 L117.688,41 L163.688,41" fill="none" style="stroke:#181818;stroke-width:1;"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="81" x="195.688" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="81" x="195.688" y="41"/>
     <line style="stroke:#181818;stroke-width:1;" x1="195.688" x2="275.688" y1="41" y2="41"/>
     <line style="stroke:#181818;stroke-width:1;" x1="195.688" x2="275.688" y1="52" y2="52"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="30" x="307.688" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="30" x="307.688" y="41"/>
     <path d="M307.688,41 L337.688,41 L337.688,52 L307.688,52" fill="none" style="stroke:#181818;stroke-width:1;"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="166.688" x2="192.688" y1="41" y2="41"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="166.688" x2="192.688" y1="52" y2="52"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="278.688" x2="304.688" y1="41" y2="41"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="278.688" x2="304.688" y1="52" y2="52"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="47" x="341.688" y="56"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="47" x="341.688" y="56"/>
     <path d="M387.688,67 L341.688,67 L341.688,56 L387.688,56" fill="none" style="stroke:#181818;stroke-width:1;"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="81" x="419.688" y="56"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="81" x="419.688" y="56"/>
     <line style="stroke:#181818;stroke-width:1;" x1="419.688" x2="499.688" y1="56" y2="56"/>
     <line style="stroke:#181818;stroke-width:1;" x1="419.688" x2="499.688" y1="67" y2="67"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="30" x="531.688" y="56"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="30" x="531.688" y="56"/>
     <path d="M531.688,56 L561.688,56 L561.688,67 L531.688,67" fill="none" style="stroke:#181818;stroke-width:1;"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="390.688" x2="416.688" y1="56" y2="56"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="390.688" x2="416.688" y1="67" y2="67"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="502.688" x2="528.688" y1="56" y2="56"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="502.688" x2="528.688" y1="67" y2="67"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="63" x="117.688" y="71"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="63" x="117.688" y="71"/>
     <path d="M179.688,82 L117.688,82 L117.688,71 L179.688,71" fill="none" style="stroke:#181818;stroke-width:1;"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="94" x="195.688" y="71"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="94" x="195.688" y="71"/>
     <path d="M195.688,71 L289.688,71 L289.688,82 L195.688,82" fill="none" style="stroke:#181818;stroke-width:1;"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="182.688" x2="192.688" y1="71" y2="71"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="182.688" x2="192.688" y1="82" y2="82"/>
@@ -173,15 +173,15 @@
     <text fill="#989898" font-size="10" textLength="12.25" x="517.563" y="91.778">Su</text>
     <text fill="#000" font-size="10" textLength="13.875" x="532.75" y="91.778">Mo</text>
     <text fill="#000" font-size="10" textLength="11.688" x="549.844" y="91.778">Tu</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="120.906" y="105.778">1</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="136.906" y="105.778">2</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="152.906" y="105.778">3</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="168.906" y="105.778">4</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="184.906" y="105.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="200.906" y="105.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="216.906" y="105.778">7</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="232.906" y="105.778">8</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="248.906" y="105.778">9</text>
+    <text fill="#000" font-size="10" x="120.906" y="105.778">1</text>
+    <text fill="#000" font-size="10" x="136.906" y="105.778">2</text>
+    <text fill="#000" font-size="10" x="152.906" y="105.778">3</text>
+    <text fill="#989898" font-size="10" x="168.906" y="105.778">4</text>
+    <text fill="#989898" font-size="10" x="184.906" y="105.778">5</text>
+    <text fill="#000" font-size="10" x="200.906" y="105.778">6</text>
+    <text fill="#000" font-size="10" x="216.906" y="105.778">7</text>
+    <text fill="#000" font-size="10" x="232.906" y="105.778">8</text>
+    <text fill="#000" font-size="10" x="248.906" y="105.778">9</text>
     <text fill="#000" font-size="10" textLength="11.125" x="262.125" y="105.778">10</text>
     <text fill="#989898" font-size="10" textLength="11.125" x="278.125" y="105.778">11</text>
     <text fill="#989898" font-size="10" textLength="11.125" x="294.125" y="105.778">12</text>

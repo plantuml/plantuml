@@ -6,7 +6,7 @@
       <path d="M26.5,47 L101.5,47 A12.5,12.5 0 0 1 114,59.5 L114,66 L14,66 L14,59.5 A12.5,12.5 0 0 1 26.5,47" fill="#F1F1F1"/>
       <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100" x="14" y="47"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="114" y1="66" y2="66"/>
-      <text fill="#000" font-size="14" textLength="9.362" x="59.319" y="57.889">A</text>
+      <text fill="#000" font-size="14" x="59.319" y="57.889">A</text>
     </g>
     <g class="start_entity" data-qualified-name=".start." data-source-line="4" id="ent0003">
       <ellipse cx="30" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
@@ -18,7 +18,7 @@
     <g class="entity" data-qualified-name="A.B" data-source-line="2" id="ent0002">
       <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="56" y="72"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="56" x2="106" y1="96" y2="96"/>
-      <text fill="#000" font-size="14" textLength="9.362" x="76.319" y="87.889">B</text>
+      <text fill="#000" font-size="14" x="76.319" y="87.889">B</text>
     </g>
     <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
       <polygon fill="#181818" points="30,46.836,34,37.836,30,41.836,26,37.836,30,46.836" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

@@ -6,21 +6,21 @@
       <path d="M48.5,12 L233.5,12 A12.5,12.5 0 0 1 246,24.5 L246,31 L36,31 L36,24.5 A12.5,12.5 0 0 1 48.5,12" fill="#F1F1F1"/>
       <rect fill="none" height="116" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="210" x="36" y="12"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="36" x2="246" y1="31" y2="31"/>
-      <text fill="#000" font-size="14" textLength="9.362" x="136.319" y="22.889">A</text>
+      <text fill="#000" font-size="14" x="136.319" y="22.889">A</text>
     </g>
     <!--cluster y-->
     <g class="cluster" data-qualified-name="A.y" data-source-line="2" id="ent0004">
       <path d="M150.5,37 L225.5,37 A12.5,12.5 0 0 1 238,49.5 L238,56 L138,56 L138,49.5 A12.5,12.5 0 0 1 150.5,37" fill="#F1F1F1"/>
       <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100" x="138" y="37"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="138" x2="238" y1="56" y2="56"/>
-      <text fill="#000" font-size="14" textLength="7" x="184.5" y="47.889">y</text>
+      <text fill="#000" font-size="14" x="184.5" y="47.889">y</text>
     </g>
     <!--cluster B-->
     <g class="cluster" data-qualified-name="B" data-source-line="3" id="ent0006">
       <path d="M266.5,37 L341.5,37 A12.5,12.5 0 0 1 354,49.5 L354,56 L254,56 L254,49.5 A12.5,12.5 0 0 1 266.5,37" fill="#F1F1F1"/>
       <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100" x="254" y="37"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="254" x2="354" y1="56" y2="56"/>
-      <text fill="#000" font-size="14" textLength="9.362" x="299.319" y="47.889">B</text>
+      <text fill="#000" font-size="14" x="299.319" y="47.889">B</text>
     </g>
     <g class="start_entity" data-qualified-name=".start." data-source-line="5" id="ent0007">
       <ellipse cx="16" cy="85" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
@@ -32,7 +32,7 @@
     <g class="entity" data-qualified-name="A.x" data-source-line="1" id="ent0001">
       <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="78" y="62"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="78" x2="128" y1="86" y2="86"/>
-      <text fill="#000" font-size="14" textLength="7" x="99.5" y="77.889">x</text>
+      <text fill="#000" font-size="14" x="99.5" y="77.889">x</text>
     </g>
     <g class="entity" data-qualified-name="A.y.foo" data-source-line="2" id="ent0003">
       <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="180" y="62"/>
@@ -42,7 +42,7 @@
     <g class="entity" data-qualified-name="B.z" data-source-line="3" id="ent0005">
       <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="296" y="62"/>
       <line style="stroke:#181818;stroke-width:0.5;" x1="296" x2="346" y1="86" y2="86"/>
-      <text fill="#000" font-size="14" textLength="7" x="317.5" y="77.889">z</text>
+      <text fill="#000" font-size="14" x="317.5" y="77.889">z</text>
     </g>
     <g class="link" data-entity-1="ent0007" data-entity-2="ent0001" data-link-type="dependency" id="lnk8">
       <polygon fill="#181818" points="97.566,61.864,99.227,52.156,96.335,57.018,91.474,54.126,97.566,61.864" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

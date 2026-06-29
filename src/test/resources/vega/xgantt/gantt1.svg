@@ -17,10 +17,10 @@
     <text fill="#000" font-size="10" textLength="28.938" x="5" y="64.278">Dec 26</text>
     <text fill="#000" font-size="10" textLength="28.938" x="43.938" y="64.278">Dec 27</text>
     <text fill="#000" font-size="10" textLength="26.688" x="82.875" y="64.278">2 days</text>
-    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="32" x="173.688" y="39"/>
-    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="32" x="285.688" y="39"/>
-    <rect fill="#F1E5E5" height="30" style="stroke:none;stroke-width:1;" width="32" x="397.688" y="39"/>
-    <rect fill="#FFA500" height="30" style="stroke:none;stroke-width:1;" width="16" x="509.688" y="39"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="32" x="173.688" y="39"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="32" x="285.688" y="39"/>
+    <rect fill="#F1E5E5" height="30" style="stroke:none;" width="32" x="397.688" y="39"/>
+    <rect fill="#FFA500" height="30" style="stroke:none;" width="16" x="509.688" y="39"/>
     <text fill="#000" font-size="12" font-weight="700" textLength="82.05" x="284.663" y="9.333">December 2018</text>
     <text fill="#000" font-size="10" textLength="15" x="126.188" y="21.778">We</text>
     <text fill="#000" font-size="10" textLength="11.688" x="143.844" y="21.778">Th</text>
@@ -47,11 +47,11 @@
     <text fill="#000" font-size="10" textLength="11.688" x="479.844" y="21.778">Th</text>
     <text fill="#000" font-size="10" textLength="9.438" x="496.969" y="21.778">Fr</text>
     <text fill="#000" font-size="10" textLength="12.25" x="511.563" y="21.778">Sa</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="130.906" y="33.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="146.906" y="33.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="162.906" y="33.778">7</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="178.906" y="33.778">8</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="194.906" y="33.778">9</text>
+    <text fill="#000" font-size="10" x="130.906" y="33.778">5</text>
+    <text fill="#000" font-size="10" x="146.906" y="33.778">6</text>
+    <text fill="#000" font-size="10" x="162.906" y="33.778">7</text>
+    <text fill="#989898" font-size="10" x="178.906" y="33.778">8</text>
+    <text fill="#989898" font-size="10" x="194.906" y="33.778">9</text>
     <text fill="#000" font-size="10" textLength="11.125" x="208.125" y="33.778">10</text>
     <text fill="#000" font-size="10" textLength="11.125" x="224.125" y="33.778">11</text>
     <text fill="#000" font-size="10" textLength="11.125" x="240.125" y="33.778">12</text>
@@ -102,15 +102,15 @@
     <line style="stroke:#C0C0C0;stroke-width:1;" x1="125.688" x2="525.688" y1="69" y2="69"/>
     <path d="M453.688,52 L453.688,61.5 L458.688,61.5" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
     <polygon fill="#181818" points="457.688,57.5,461.688,61.5,457.688,65.5,457.688,57.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="47" x="127.688" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="47" x="127.688" y="41"/>
     <path d="M173.688,52 L127.688,52 L127.688,41 L173.688,41" fill="none" style="stroke:#181818;stroke-width:1;"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="81" x="205.688" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="81" x="205.688" y="41"/>
     <line style="stroke:#181818;stroke-width:1;" x1="205.688" x2="285.688" y1="41" y2="41"/>
     <line style="stroke:#181818;stroke-width:1;" x1="205.688" x2="285.688" y1="52" y2="52"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="81" x="317.688" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="81" x="317.688" y="41"/>
     <line style="stroke:#181818;stroke-width:1;" x1="317.688" x2="397.688" y1="41" y2="41"/>
     <line style="stroke:#181818;stroke-width:1;" x1="317.688" x2="397.688" y1="52" y2="52"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="30" x="429.688" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="30" x="429.688" y="41"/>
     <path d="M429.688,41 L459.688,41 L459.688,52 L429.688,52" fill="none" style="stroke:#181818;stroke-width:1;"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="176.688" x2="202.688" y1="41" y2="41"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="176.688" x2="202.688" y1="52" y2="52"/>
@@ -118,7 +118,7 @@
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="288.688" x2="314.688" y1="52" y2="52"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="400.688" x2="426.688" y1="41" y2="41"/>
     <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,3;" x1="400.688" x2="426.688" y1="52" y2="52"/>
-    <rect fill="#E2E2F0" height="11" style="stroke:none;stroke-width:1;" width="28" x="463.688" y="56"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="28" x="463.688" y="56"/>
     <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="28" x="463.688" y="56"/>
     <text fill="#000" font-size="11" textLength="79.475" x="131.688" y="49.556">Prototype design</text>
     <text fill="#000" font-size="11" textLength="67.169" x="495.688" y="64.556">Test prototype</text>
@@ -147,11 +147,11 @@
     <text fill="#000" font-size="10" textLength="11.688" x="479.844" y="76.778">Th</text>
     <text fill="#000" font-size="10" textLength="9.438" x="496.969" y="76.778">Fr</text>
     <text fill="#000" font-size="10" textLength="12.25" x="511.563" y="76.778">Sa</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="130.906" y="90.778">5</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="146.906" y="90.778">6</text>
-    <text fill="#000" font-size="10" textLength="5.563" x="162.906" y="90.778">7</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="178.906" y="90.778">8</text>
-    <text fill="#989898" font-size="10" textLength="5.563" x="194.906" y="90.778">9</text>
+    <text fill="#000" font-size="10" x="130.906" y="90.778">5</text>
+    <text fill="#000" font-size="10" x="146.906" y="90.778">6</text>
+    <text fill="#000" font-size="10" x="162.906" y="90.778">7</text>
+    <text fill="#989898" font-size="10" x="178.906" y="90.778">8</text>
+    <text fill="#989898" font-size="10" x="194.906" y="90.778">9</text>
     <text fill="#000" font-size="10" textLength="11.125" x="208.125" y="90.778">10</text>
     <text fill="#000" font-size="10" textLength="11.125" x="224.125" y="90.778">11</text>
     <text fill="#000" font-size="10" textLength="11.125" x="240.125" y="90.778">12</text>

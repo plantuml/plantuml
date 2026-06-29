@@ -4,12 +4,12 @@
     <!--entity a-->
     <g class="entity" data-qualified-name="a" data-source-line="1" id="ent0001">
       <ellipse cx="15" cy="7.575" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
-      <text fill="#000" font-size="14" textLength="7.788" x="11.106" y="35.464">a</text>
+      <text fill="#000" font-size="14" x="11.106" y="35.464">a</text>
     </g>
     <!--entity b-->
     <g class="entity" data-qualified-name="b" data-source-line="2" id="ent0002">
       <ellipse cx="91" cy="7.575" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
-      <text fill="#000" font-size="14" textLength="7.788" x="87.106" y="35.464">b</text>
+      <text fill="#000" font-size="14" x="87.106" y="35.464">b</text>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
       <polygon fill="#181818" points="81.995,10.575,72.995,6.575,76.995,10.575,72.995,14.575,81.995,10.575" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

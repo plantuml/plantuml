@@ -1,25 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="PACKET" height="135px" preserveAspectRatio="none" style="width:735px;height:135px;background:#FFFFFF;" version="1.1" viewBox="0 0 735 135" width="735px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <text fill="#000" font-size="14" textLength="7.788" x="6.106" y="20.889">0</text>
+    <text fill="#000" font-size="14" x="6.106" y="20.889">0</text>
     <path d="M10,24 L10,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="48.106" y="36.889">1</text>
+    <text fill="#000" font-size="14" x="48.106" y="36.889">1</text>
     <path d="M52,40 L52,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="90.106" y="36.889">2</text>
+    <text fill="#000" font-size="14" x="90.106" y="36.889">2</text>
     <path d="M94,40 L94,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="132.106" y="36.889">3</text>
+    <text fill="#000" font-size="14" x="132.106" y="36.889">3</text>
     <path d="M136,40 L136,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="174.106" y="20.889">4</text>
+    <text fill="#000" font-size="14" x="174.106" y="20.889">4</text>
     <path d="M178,24 L178,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="216.106" y="36.889">5</text>
+    <text fill="#000" font-size="14" x="216.106" y="36.889">5</text>
     <path d="M220,40 L220,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="258.106" y="36.889">6</text>
+    <text fill="#000" font-size="14" x="258.106" y="36.889">6</text>
     <path d="M262,40 L262,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="300.106" y="36.889">7</text>
+    <text fill="#000" font-size="14" x="300.106" y="36.889">7</text>
     <path d="M304,40 L304,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="342.106" y="20.889">8</text>
+    <text fill="#000" font-size="14" x="342.106" y="20.889">8</text>
     <path d="M346,24 L346,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    <text fill="#000" font-size="14" textLength="7.788" x="384.106" y="36.889">9</text>
+    <text fill="#000" font-size="14" x="384.106" y="36.889">9</text>
     <path d="M388,40 L388,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     <text fill="#000" font-size="14" textLength="15.575" x="422.213" y="36.889">10</text>
     <path d="M430,40 L430,56" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
