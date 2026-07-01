@@ -63,8 +63,8 @@ public class ChallengeResult {
 		return fullCaptureLength;
 	}
 
-	public List<String> findValuesByKey(String path) {
-		return capture.findValuesByKey(path);
+	public List<String> findValuesByKey(String key) {
+		return capture.findValuesByKey(key);
 	}
 
 	public List<String> findFirstValuesByKeyPrefix(String keyPrefix) {

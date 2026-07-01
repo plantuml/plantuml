@@ -94,26 +94,26 @@ public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
 	@Override
 	public Failable<LocalDate> getMe(GanttDiagram gantt, UMatcher arg) {
-		if (arg.get("BDAY", 0) != null)
+		if (arg.findFirstValueByKey("BDAY") != null)
 			return Failable.ok(resultB(arg));
 
-		if (arg.get("ECOUNT", 0) != null)
+		if (arg.findFirstValueByKey("ECOUNT") != null)
 			return Failable.ok(resultE(gantt, arg));
 
 		throw new IllegalStateException();
 	}
 
 	private LocalDate resultB(UMatcher arg) {
-		final int day = Integer.parseInt(arg.get("BDAY", 0));
-		final int month = Integer.parseInt(arg.get("BMONTH", 0));
-		final int year = Integer.parseInt(arg.get("BYEAR", 0));
+		final int day = Integer.parseInt(arg.findFirstValueByKey("BDAY"));
+		final int month = Integer.parseInt(arg.findFirstValueByKey("BMONTH"));
+		final int year = Integer.parseInt(arg.findFirstValueByKey("BYEAR"));
 		return LocalDate.of(year, month, day);
 	}
 
 	private LocalDate resultE(GanttDiagram gantt, UMatcher arg) {
-		final String type = arg.get("ETYPE", 0).toUpperCase();
-		final String operation = arg.get("EOPERATION", 0);
-		int day = Integer.parseInt(arg.get("ECOUNT", 0));
+		final String type = arg.findFirstValueByKey("ETYPE").toUpperCase();
+		final String operation = arg.findFirstValueByKey("EOPERATION");
+		int day = Integer.parseInt(arg.findFirstValueByKey("ECOUNT"));
 		if ("-".equals(operation))
 			day = -day;
 		if ("D".equals(type))

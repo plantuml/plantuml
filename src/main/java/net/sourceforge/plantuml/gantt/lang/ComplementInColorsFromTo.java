@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -68,11 +68,11 @@ public class ComplementInColorsFromTo implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<CenterBorderColor[]> getMe(GanttDiagram diagram, UMatcher arg) {
-		final String arg0 = arg.get("FROM1", 0);
-		final String arg1 = arg.get("FROM2", 0);
-		final String arg2 = arg.get("TO1", 0);
-		final String arg3 = arg.get("TO2", 0);
+	public Failable<CenterBorderColor[]> getMe(GanttDiagram diagram, CaptureLookup arg) {
+		final String arg0 = arg.findFirstValueByKey("FROM1");
+		final String arg1 = arg.findFirstValueByKey("FROM2");
+		final String arg2 = arg.findFirstValueByKey("TO1");
+		final String arg3 = arg.findFirstValueByKey("TO2");
 		final HColor from0 = arg0 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg0);
 		final HColor from1 = arg1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg1);
 		final HColor to0 = arg2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(arg2);

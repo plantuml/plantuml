@@ -71,7 +71,7 @@ public class CommandCreoleExposantChange implements Command {
 	@Override
 	public int matchingSize(String line, int pos) {
 		final UMatcher matcher = ubrex.match(line, pos);
-		final List<String> value = matcher.getCapture("V");
+		final List<String> value = matcher.findValuesByKey("V");
 		if (value.size() == 0)
 			return 0;
 		return value.get(0).length();
@@ -81,7 +81,7 @@ public class CommandCreoleExposantChange implements Command {
 	public int executeAndAdvance(ISkinSimple skinSimple, String line, int pos, StripeSimple stripe) {
 
 		final UMatcher matcher = ubrex.match(line, pos);
-		final List<String> value = matcher.getCapture("V");
+		final List<String> value = matcher.findValuesByKey("V");
 		final String accepted = matcher.getAcceptedMatch();
 
 		if (value.size() == 0)

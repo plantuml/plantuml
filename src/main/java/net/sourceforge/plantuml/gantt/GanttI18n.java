@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.time.Duration;
 import java.util.Locale;
 
 public final class GanttI18n {
@@ -126,38 +127,116 @@ public final class GanttI18n {
 		return "Duration";
 	}
 
-	public static String durationInDays(Locale locale, int days) {
-		final String lang = locale.getLanguage();
-		switch (lang) {
-		case "fr":
-			if (days <= 1)
-				return "1 jour";
-			return days + " jours";
-		case "es":
-			if (days <= 1)
-				return "1 día";
-			return days + " días";
-		case "de":
-			if (days <= 1)
-				return "1 Tag";
-			return days + " Tage";
-		case "ja":
-			return days + "日";
-		case "ko":
-			return days + "일";
-		case "ru":
-			if (days == 1)
-				return "1 день";
-			else if (days >= 2 && days <= 4)
-				return days + " дня";
-			else
-				return days + " дней";
-		case "zh":
-			return days + "天";
+	public static String durationHumanReadable(Locale locale, Duration duration) {
+		long seconds = duration.getSeconds();
+		final Units units = Units.of(locale.getLanguage());
+
+		if (seconds == 0)
+			return units.none;
+
+		final long days = seconds / (24 * 3600);
+		seconds %= (24 * 3600);
+		final long hours = seconds / 3600;
+		seconds %= 3600;
+		final long minutes = seconds / 60;
+		seconds %= 60;
+
+		final StringBuilder result = new StringBuilder();
+		units.append(result, days, Unit.DAY);
+		units.append(result, hours, Unit.HOUR);
+		units.append(result, minutes, Unit.MINUTE);
+		units.append(result, seconds, Unit.SECOND);
+		return result.toString();
+	}
+
+	private enum Unit {
+		DAY, HOUR, MINUTE, SECOND
+	}
+
+	// Holds the localized unit labels and formatting rules for one language.
+	private static final class Units {
+		private final String none;
+		private final String separator;
+		// labels[unit.ordinal()] = { singular, plural } or, for languages with a
+		// single invariable form (ja/ko/zh), just { form }. Russian uses three
+		// forms: { singular, genitive-plural, paucal (2-4) }.
+		private final String[][] labels;
+		// true for CJK languages where the number and unit are written with no
+		// space in between (e.g. "3日").
+		private final boolean suffixNoSpace;
+
+		private Units(String none, String separator, boolean suffixNoSpace, String[][] labels) {
+			this.none = none;
+			this.separator = separator;
+			this.suffixNoSpace = suffixNoSpace;
+			this.labels = labels;
 		}
-		if (days <= 1)
-			return "1 day";
-		return days + " days";
+
+		void append(StringBuilder sb, long value, Unit unit) {
+			if (value <= 0)
+				return;
+			if (sb.length() > 0)
+				sb.append(separator);
+			sb.append(value);
+			if (suffixNoSpace == false)
+				sb.append(' ');
+			sb.append(label(unit.ordinal(), value));
+		}
+
+		private String label(int unit, long value) {
+			final String[] forms = labels[unit];
+			if (forms.length == 1)
+				// Invariable form (CJK).
+				return forms[0];
+			if (forms.length == 3) {
+				// Russian plural rules.
+				final long mod100 = value % 100;
+				final long mod10 = value % 10;
+				if (mod10 == 1 && mod100 != 11)
+					return forms[0];
+				if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14))
+					return forms[2];
+				return forms[1];
+			}
+			// Western singular/plural.
+			return value > 1 ? forms[1] : forms[0];
+		}
+
+		static Units of(String lang) {
+			switch (lang) {
+			case "fr":
+				return new Units("aucune", ", ", false, new String[][] { //
+						{ "jour", "jours" }, { "heure", "heures" }, //
+						{ "minute", "minutes" }, { "seconde", "secondes" } });
+			case "es":
+				return new Units("ninguna", ", ", false, new String[][] { //
+						{ "día", "días" }, { "hora", "horas" }, //
+						{ "minuto", "minutos" }, { "segundo", "segundos" } });
+			case "de":
+				return new Units("keine", ", ", false, new String[][] { //
+						{ "Tag", "Tage" }, { "Stunde", "Stunden" }, //
+						{ "Minute", "Minuten" }, { "Sekunde", "Sekunden" } });
+			case "ja":
+				return new Units("なし", "", true, new String[][] { //
+						{ "日" }, { "時間" }, { "分" }, { "秒" } });
+			case "ko":
+				return new Units("없음", ", ", true, new String[][] { //
+						{ "일" }, { "시간" }, { "분" }, { "초" } });
+			case "ru":
+				return new Units("нет", ", ", false, new String[][] { //
+						{ "день", "дней", "дня" }, //
+						{ "час", "часов", "часа" }, //
+						{ "минута", "минут", "минуты" }, //
+						{ "секунда", "секунд", "секунды" } });
+			case "zh":
+				return new Units("无", "", true, new String[][] { //
+						{ "天" }, { "小时" }, { "分钟" }, { "秒" } });
+			default:
+				return new Units("none", ", ", false, new String[][] { //
+						{ "day", "days" }, { "hour", "hours" }, //
+						{ "minute", "minutes" }, { "second", "seconds" } });
+			}
+		}
 	}
 
 	// Used for date-less (relative) Gantt diagrams, where columns show a day index

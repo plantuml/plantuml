@@ -60,8 +60,8 @@ public class SubjectWorkingHours implements Subject<GanttDiagram> {
 
 	@Override
 	public Failable<TimeRange> getMe(GanttDiagram gantt, UMatcher arg) {
-		final String start = arg.get("START", 0);
-		final String end = arg.get("END", 0);
+		final String start = arg.findFirstValueByKey("START");
+		final String end = arg.findFirstValueByKey("END");
 		return Failable.ok(new TimeRange(start, end));
 	}
 

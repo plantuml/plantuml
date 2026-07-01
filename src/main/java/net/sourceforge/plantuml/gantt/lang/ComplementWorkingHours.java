@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
@@ -54,7 +54,7 @@ public class ComplementWorkingHours implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<String> getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable<String> getMe(GanttDiagram gantt, CaptureLookup arg) {
 		return Failable.ok("");
 	}
 

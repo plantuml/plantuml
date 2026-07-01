@@ -35,6 +35,10 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
@@ -44,27 +48,55 @@ import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.gantt.Failable;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
+import net.sourceforge.plantuml.gantt.time.TimePoint;
 
-public class ComplementOpen implements Something<GanttDiagram> {
+public class ComplementTimePoint implements Something<GanttDiagram> {
 
-	@Override
-	public UBrexPart toUnicodeBracketedExpressionComplement() {
-		return new UBrexNamed("OPEN", //
-				UBrexConcat.build( //
-						new UBrexLeaf("open〇?e〇?d"), //
-						new UBrexOptional(UBrexConcat.build(new UBrexLeaf("∙for∙"), SubjectTask.taskCode("FOO")))));
+	private ComplementTimePoint() {
+	}
+
+	public static ComplementTimePoint any() {
+		return new ComplementTimePoint();
 	}
 
 	@Override
-	public Failable<String> getMe(GanttDiagram diagram, CaptureLookup arg) {
-		final String value = arg.findFirstValueByKey("OPEN");
-		final int x = value.indexOf('[');
-		if (x > 0) {
-			final int y = value.lastIndexOf(']');
-			final String s = value.substring(x + 1, y);
-			return Failable.ok(s);
-		}
-		return Failable.ok("");
+	public UBrexPart toUnicodeBracketedExpressionComplement() {
+		final DayPattern dayPattern = new DayPattern("");
+		return UBrexConcat.build( //
+				dayPattern.toUbrex(), //
+				toUbrexTime() //
+		);
+	}
+
+	private UBrexPart toUbrexTime() {
+		final UBrexPart digits1to2 = new UBrexLeaf("〇{1-2}〴d");
+		final UBrexPart seconds = new UBrexOptional(UBrexConcat.build( //
+				new UBrexLeaf(":"), //
+				new UBrexNamed("SECOND", digits1to2) //
+		));
+		return UBrexConcat.build( //
+				new UBrexLeaf("「Tt∙」"), //
+				new UBrexNamed("HOUR", digits1to2), //
+				new UBrexLeaf(":"), //
+				new UBrexNamed("MINUTE", digits1to2), //
+				seconds //
+		);
+	}
+
+	@Override
+	public Failable<TimePoint> getMe(GanttDiagram gantt, CaptureLookup arg) {
+		final DayPattern dayPattern = new DayPattern("");
+		final LocalDate day = dayPattern.getDay(arg);
+		if (day == null)
+			throw new IllegalStateException();
+		return Failable.ok(TimePoint.of(LocalDateTime.of(day, getTime(arg))));
+	}
+
+	private LocalTime getTime(CaptureLookup arg) {
+		final int hour = Integer.parseInt(arg.findFirstValueByKey("HOUR"));
+		final int minute = Integer.parseInt(arg.findFirstValueByKey("MINUTE"));
+		final int second = arg.findFirstValueByKey("SECOND") == null ? 0 : Integer.parseInt(arg.findFirstValueByKey("SECOND"));
+		return LocalTime.of(hour, minute, second);
 	}
 
 }

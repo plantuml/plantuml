@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
@@ -54,7 +54,7 @@ public class PairOfSomething<D extends Diagram> implements Something<D> {
 	}
 
 	@Override
-	public Failable<? extends Object> getMe(D diagram, UMatcher arg) {
+	public Failable<? extends Object> getMe(D diagram, CaptureLookup arg) {
 		final Failable<? extends Object> r1 = complement1.getMe(diagram, arg);
 		final Failable<? extends Object> r2 = complement2.getMe(diagram, arg);
 		if (r1.isFail())

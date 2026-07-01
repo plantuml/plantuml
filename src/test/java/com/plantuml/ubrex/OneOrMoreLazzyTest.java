@@ -23,8 +23,8 @@ public class OneOrMoreLazzyTest {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("aa 〇l+〶$gr1=〴w 〶$gr2=end  〒$");
 		final UMatcher matcher = cut.match(TextNavigator.build("aabbbbend"));
 		assertEquals("aabbbbend", matcher.getAcceptedMatch());
-		assertEquals("[b, b, b, b]", matcher.getCapture("gr1").toString());
-		assertEquals("[e]", matcher.getCapture("gr2").toString());
+		assertEquals("[b, b, b, b]", matcher.findValuesByKey("gr1").toString());
+		assertEquals("[e]", matcher.findValuesByKey("gr2").toString());
 
 	}
 
@@ -33,8 +33,8 @@ public class OneOrMoreLazzyTest {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("aa 〶$gr1=〇l+〴w   〶$gr2=end  〒$");
 		final UMatcher matcher = cut.match(TextNavigator.build("aabbbbend"));
 		assertEquals("aabbbbend", matcher.getAcceptedMatch());
-		assertEquals("[bbbb]", matcher.getCapture("gr1").toString());
-		assertEquals("[e]", matcher.getCapture("gr2").toString());
+		assertEquals("[bbbb]", matcher.findValuesByKey("gr1").toString());
+		assertEquals("[e]", matcher.findValuesByKey("gr2").toString());
 	}
 
 
@@ -43,8 +43,8 @@ public class OneOrMoreLazzyTest {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("aaa 〶$gr1=〇l+〴w   〶$gr2=end  〒$");
 		final UMatcher matcher = cut.match(TextNavigator.build("aaabbbbend"));
 		assertEquals("aaabbbbend", matcher.getAcceptedMatch());
-		assertEquals("[bbbb]", matcher.getCapture("gr1").toString());
-		assertEquals("[e]", matcher.getCapture("gr2").toString());
+		assertEquals("[bbbb]", matcher.findValuesByKey("gr1").toString());
+		assertEquals("[e]", matcher.findValuesByKey("gr2").toString());
 	}
 
 	@Test
@@ -52,8 +52,8 @@ public class OneOrMoreLazzyTest {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("aaa 〶$gr1=〇l+〘〴w〴w〙   〶$gr2=end  〒$");
 		final UMatcher matcher = cut.match(TextNavigator.build("aaabbbbbbend"));
 		assertEquals("aaabbbbbbend", matcher.getAcceptedMatch());
-		assertEquals("[bbbbbb]", matcher.getCapture("gr1").toString());
-		assertEquals("[e]", matcher.getCapture("gr2").toString());
+		assertEquals("[bbbbbb]", matcher.findValuesByKey("gr1").toString());
+		assertEquals("[e]", matcher.findValuesByKey("gr2").toString());
 	}
 
 	@Test
@@ -61,8 +61,8 @@ public class OneOrMoreLazzyTest {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build(" 〶$gr1=〇l+〘〴w〴w〙   〶$gr2=end  〒$");
 		final UMatcher matcher = cut.match(TextNavigator.build("bbbbbbend"));
 		assertEquals("bbbbbbend", matcher.getAcceptedMatch());
-		assertEquals("[bbbbbb]", matcher.getCapture("gr1").toString());
-		assertEquals("[e]", matcher.getCapture("gr2").toString());
+		assertEquals("[bbbbbb]", matcher.findValuesByKey("gr1").toString());
+		assertEquals("[e]", matcher.findValuesByKey("gr2").toString());
 	}
 
 	@Test
@@ -70,8 +70,8 @@ public class OneOrMoreLazzyTest {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build(" 〶$gr1=〇l+〘〴w〴w〙  〶$gr2=end  〒$");
 		final UMatcher matcher = cut.match(TextNavigator.build("bbend"));
 		assertEquals("bbend", matcher.getAcceptedMatch());
-		assertEquals("[bb]", matcher.getCapture("gr1").toString());
-		assertEquals("[e]", matcher.getCapture("gr2").toString());
+		assertEquals("[bb]", matcher.findValuesByKey("gr1").toString());
+		assertEquals("[e]", matcher.findValuesByKey("gr2").toString());
 	}
 
 	@Test
@@ -79,8 +79,8 @@ public class OneOrMoreLazzyTest {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("aaaa 〶$gr1=〇l+〘〴w〴w〙   〶$gr2=end  〒$");
 		final UMatcher matcher = cut.match(TextNavigator.build("aaaabbend"));
 		assertEquals("aaaabbend", matcher.getAcceptedMatch());
-		assertEquals("[bb]", matcher.getCapture("gr1").toString());
-		assertEquals("[e]", matcher.getCapture("gr2").toString());
+		assertEquals("[bb]", matcher.findValuesByKey("gr1").toString());
+		assertEquals("[e]", matcher.findValuesByKey("gr2").toString());
 	}
 
 }

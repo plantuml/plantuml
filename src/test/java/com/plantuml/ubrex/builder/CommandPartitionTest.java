@@ -49,7 +49,7 @@ class CommandPartitionTest {
 
 		final UMatcher match = cut.match("partition \"foo\"", 0);
 		assertTrue(match.exactMatch());
-		assertEquals("[foo]", match.getCapture("NAME").toString());
+		assertEquals("[foo]", match.findValuesByKey("NAME").toString());
 
 	}
 
@@ -58,7 +58,7 @@ class CommandPartitionTest {
 		UnicodeBracketedExpression cut = cut();
 		final UMatcher match = cut.match("partition DUMMY", 0);
 		assertTrue(match.exactMatch());
-		assertEquals("[DUMMY]", match.getCapture("NAME").toString());
+		assertEquals("[DUMMY]", match.findValuesByKey("NAME").toString());
 
 	}
 
@@ -67,8 +67,8 @@ class CommandPartitionTest {
 		UnicodeBracketedExpression cut = cut();
 		final UMatcher match = cut.match("partition DUMMY <<my-stereo>>", 0);
 		assertTrue(match.exactMatch());
-		assertEquals("[DUMMY]", match.getCapture("NAME").toString());
-		assertEquals("[<<my-stereo>>]", match.getCapture("STEREOTYPE").toString());
+		assertEquals("[DUMMY]", match.findValuesByKey("NAME").toString());
+		assertEquals("[<<my-stereo>>]", match.findValuesByKey("STEREOTYPE").toString());
 
 	}
 

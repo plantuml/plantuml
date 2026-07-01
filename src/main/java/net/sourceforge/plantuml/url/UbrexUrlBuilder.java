@@ -158,7 +158,7 @@ public class UbrexUrlBuilder {
 	}
 
 	private String getValue(UMatcher m, String key) {
-		final List<String> list = m.getCapture(key);
+		final List<String> list = m.findValuesByKey(key);
 		if (list.size() == 0)
 			return null;
 		return list.get(0);
@@ -202,7 +202,7 @@ public class UbrexUrlBuilder {
 		}
 
 		@Override
-		public List<String> getCapture(String path) {
+		public List<String> findValuesByKey(String path) {
 			throw new UnsupportedOperationException();
 		}
 

@@ -1,0 +1,15 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts 2024-09-19
+saturday are closed
+sunday are closed
+
+From 8:00 to 12:00 are working hours
+From 14:00 to 18:00 are working hours
+[Task 1] starts 2024-09-19 10:30:46 and ends 2024-09-24 10:30:47
+@endgantt
+

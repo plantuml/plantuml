@@ -13,7 +13,7 @@ public class NamedGroup2Test {
 		UMatcher matcher = cut.match(TextNavigator.build("000"));
 		assertTrue(matcher.startMatch());
 		// assertEquals("{gr=000}", matcher.getNamedCaptures().toString());
-		assertEquals("[000]", matcher.getCapture("gr").toString());
+		assertEquals("[000]", matcher.findValuesByKey("gr").toString());
 	}
 
 	@Test
@@ -22,7 +22,7 @@ public class NamedGroup2Test {
 		UMatcher matcher = cut.match(TextNavigator.build("123 456"));
 		assertTrue(matcher.startMatch());
 		// assertEquals("{num=[123, 456]}", matcher.getNamedCaptures().toString());
-		assertEquals("[123, 456]", matcher.getCapture("num").toString());
+		assertEquals("[123, 456]", matcher.findValuesByKey("num").toString());
 	}
 
 	@Test
@@ -31,7 +31,7 @@ public class NamedGroup2Test {
 		UMatcher matcher = cut.match(TextNavigator.build("123 456 789"));
 		assertTrue(matcher.startMatch());
 		// assertEquals("{num=[123, 456, 789]}", matcher.getNamedCaptures().toString());
-		assertEquals("[123, 456, 789]", matcher.getCapture("num").toString());
+		assertEquals("[123, 456, 789]", matcher.findValuesByKey("num").toString());
 	}
 
 	@Test
@@ -40,8 +40,8 @@ public class NamedGroup2Test {
 		UMatcher matcher = cut.match(TextNavigator.build("123 456"));
 		assertTrue(matcher.startMatch());
 		// assertEquals("{gr={num=[123, 456], =123 456}}", matcher.getNamedCaptures().toString());
-		assertEquals("[123 456]", matcher.getCapture("gr").toString());
-		assertEquals("[123, 456]", matcher.getCapture("gr/num").toString());
+		assertEquals("[123 456]", matcher.findValuesByKey("gr").toString());
+		assertEquals("[123, 456]", matcher.findValuesByKey("gr/num").toString());
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class NamedGroup2Test {
 		UMatcher matcher = cut.match(TextNavigator.build("123 456"));
 		assertTrue(matcher.startMatch());
 		// assertEquals("{num=123}", matcher.getNamedCaptures().toString());
-		assertEquals("[123]", matcher.getCapture("num").toString());
+		assertEquals("[123]", matcher.findValuesByKey("num").toString());
 	}
 
 	@Test
@@ -59,7 +59,7 @@ public class NamedGroup2Test {
 		UMatcher matcher = cut.match(TextNavigator.build("123 456"));
 		assertTrue(matcher.startMatch());
 		// assertEquals("{num=[123, 456]}", matcher.getNamedCaptures().toString());
-		assertEquals("[123, 456]", matcher.getCapture("num").toString());
+		assertEquals("[123, 456]", matcher.findValuesByKey("num").toString());
 	}
 
 	@Test
@@ -68,8 +68,8 @@ public class NamedGroup2Test {
 		UMatcher matcher = cut.match(TextNavigator.build("123 456"));
 		assertTrue(matcher.startMatch());
 		// assertEquals("{gr={num=123, =123}}", matcher.getNamedCaptures().toString());
-		assertEquals("[123]", matcher.getCapture("gr").toString());
-		assertEquals("[123]", matcher.getCapture("gr/num").toString());
+		assertEquals("[123]", matcher.findValuesByKey("gr").toString());
+		assertEquals("[123]", matcher.findValuesByKey("gr/num").toString());
 	}
 
 	@Test
@@ -79,9 +79,9 @@ public class NamedGroup2Test {
 		assertTrue(matcher.startMatch());
 //		assertEquals("{gr={num=[123, 456, 0, 0], letter=[qsd, , ccc, ], =123qsd 456 0ccc 0}}",
 //				matcher.getNamedCaptures().toString());
-		assertEquals("[123qsd 456 0ccc 0]", matcher.getCapture("gr").toString());
-		assertEquals("[123, 456, 0, 0]", matcher.getCapture("gr/num").toString());
-		assertEquals("[qsd, , ccc, ]", matcher.getCapture("gr/letter").toString());
+		assertEquals("[123qsd 456 0ccc 0]", matcher.findValuesByKey("gr").toString());
+		assertEquals("[123, 456, 0, 0]", matcher.findValuesByKey("gr/num").toString());
+		assertEquals("[qsd, , ccc, ]", matcher.findValuesByKey("gr/letter").toString());
 	}
 
 	@Test
@@ -91,9 +91,9 @@ public class NamedGroup2Test {
 		assertTrue(matcher.startMatch());
 //		assertEquals("{gr={num=[123, 456, 0, 0], letter=[qsd, , ccc, ], =123qsd 456 0ccc 0}}",
 //				matcher.getNamedCaptures().toString());
-		assertEquals("[123qsd 456 0ccc 0]", matcher.getCapture("gr").toString());
-		assertEquals("[123, 456, 0, 0]", matcher.getCapture("gr/num").toString());
-		assertEquals("[qsd, , ccc, ]", matcher.getCapture("gr/letter").toString());
+		assertEquals("[123qsd 456 0ccc 0]", matcher.findValuesByKey("gr").toString());
+		assertEquals("[123, 456, 0, 0]", matcher.findValuesByKey("gr/num").toString());
+		assertEquals("[qsd, , ccc, ]", matcher.findValuesByKey("gr/letter").toString());
 	}
 
 	@Test
@@ -104,9 +104,9 @@ public class NamedGroup2Test {
 		assertTrue(matcher.startMatch());
 //		assertEquals("{gr={num=[123, 456, 0, 0], letter=[qsd, , ccc, ], =123qsd 456 0ccc 0}}",
 //				matcher.getNamedCaptures().toString());
-		assertEquals("[123qsd 456 1ccc 2, 3aa]", matcher.getCapture("gr").toString());
-		assertEquals("[123, 456, 1, 2, 3]", matcher.getCapture("gr/num").toString());
-		assertEquals("[qsd, , ccc, , aa]", matcher.getCapture("gr/letter").toString());
+		assertEquals("[123qsd 456 1ccc 2, 3aa]", matcher.findValuesByKey("gr").toString());
+		assertEquals("[123, 456, 1, 2, 3]", matcher.findValuesByKey("gr/num").toString());
+		assertEquals("[qsd, , ccc, , aa]", matcher.findValuesByKey("gr/letter").toString());
 
 	}
 

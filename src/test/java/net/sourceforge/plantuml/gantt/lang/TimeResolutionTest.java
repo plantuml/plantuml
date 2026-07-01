@@ -21,9 +21,9 @@ class TimeResolutionTest {
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexA_DD_MONTH_YYYY("YEAR", "MONTH", "DAY");
 		final UMatcher matcher = ubrex.match(input, 0);
 		assertTrue(matcher.startMatch(), "Should match: " + input);
-		assertEquals(expectedDay.trim(), matcher.getCapture("DAY").get(0));
-		assertEquals(expectedMonth.trim(), matcher.getCapture("MONTH").get(0));
-		assertEquals(expectedYear.trim(), matcher.getCapture("YEAR").get(0));
+		assertEquals(expectedDay.trim(), matcher.findValuesByKey("DAY").get(0));
+		assertEquals(expectedMonth.trim(), matcher.findValuesByKey("MONTH").get(0));
+		assertEquals(expectedYear.trim(), matcher.findValuesByKey("YEAR").get(0));
 	}
 
 	// ========== Format B: YYYY-MM-DD ==========
@@ -34,9 +34,9 @@ class TimeResolutionTest {
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexB_YYYY_MM_DD("YEAR", "MONTH", "DAY");
 		final UMatcher matcher = ubrex.match(input, 0);
 		assertTrue(matcher.startMatch(), "Should match: " + input);
-		assertEquals(expectedYear.trim(), matcher.getCapture("YEAR").get(0));
-		assertEquals(expectedMonth.trim(), matcher.getCapture("MONTH").get(0));
-		assertEquals(expectedDay.trim(), matcher.getCapture("DAY").get(0));
+		assertEquals(expectedYear.trim(), matcher.findValuesByKey("YEAR").get(0));
+		assertEquals(expectedMonth.trim(), matcher.findValuesByKey("MONTH").get(0));
+		assertEquals(expectedDay.trim(), matcher.findValuesByKey("DAY").get(0));
 	}
 
 	// ========== Format C: MONTH DD, YYYY ==========
@@ -48,9 +48,9 @@ class TimeResolutionTest {
 		final UnicodeBracketedExpression ubrex = TimeResolution.toUbrexC_MONTH_DD_YYYY("YEAR", "MONTH", "DAY");
 		final UMatcher matcher = ubrex.match(input, 0);
 		assertTrue(matcher.startMatch(), "Should match: " + input);
-		assertEquals(expectedMonth.trim(), matcher.getCapture("MONTH").get(0));
-		assertEquals(expectedDay.trim(), matcher.getCapture("DAY").get(0));
-		assertEquals(expectedYear.trim(), matcher.getCapture("YEAR").get(0));
+		assertEquals(expectedMonth.trim(), matcher.findValuesByKey("MONTH").get(0));
+		assertEquals(expectedDay.trim(), matcher.findValuesByKey("DAY").get(0));
+		assertEquals(expectedYear.trim(), matcher.findValuesByKey("YEAR").get(0));
 	}
 
 	// ========== Regex vs Ubrex consistency ==========
@@ -63,9 +63,9 @@ class TimeResolutionTest {
 		final UMatcher ubrexMatcher = ubrex.match(input, 0);
 
 		assertTrue(ubrexMatcher.startMatch());
-		assertEquals("2024", ubrexMatcher.getCapture("YEAR").get(0));
-		assertEquals("January", ubrexMatcher.getCapture("MONTH").get(0));
-		assertEquals("15", ubrexMatcher.getCapture("DAY").get(0));
+		assertEquals("2024", ubrexMatcher.findValuesByKey("YEAR").get(0));
+		assertEquals("January", ubrexMatcher.findValuesByKey("MONTH").get(0));
+		assertEquals("15", ubrexMatcher.findValuesByKey("DAY").get(0));
 	}
 
 	@Test
@@ -76,9 +76,9 @@ class TimeResolutionTest {
 		final UMatcher ubrexMatcher = ubrex.match(input, 0);
 
 		assertTrue(ubrexMatcher.startMatch());
-		assertEquals("2024", ubrexMatcher.getCapture("YEAR").get(0));
-		assertEquals("06", ubrexMatcher.getCapture("MONTH").get(0));
-		assertEquals("15", ubrexMatcher.getCapture("DAY").get(0));
+		assertEquals("2024", ubrexMatcher.findValuesByKey("YEAR").get(0));
+		assertEquals("06", ubrexMatcher.findValuesByKey("MONTH").get(0));
+		assertEquals("15", ubrexMatcher.findValuesByKey("DAY").get(0));
 	}
 
 	@Test
@@ -89,9 +89,9 @@ class TimeResolutionTest {
 		final UMatcher ubrexMatcher = ubrex.match(input, 0);
 
 		assertTrue(ubrexMatcher.startMatch());
-		assertEquals("2024", ubrexMatcher.getCapture("YEAR").get(0));
-		assertEquals("January", ubrexMatcher.getCapture("MONTH").get(0));
-		assertEquals("15", ubrexMatcher.getCapture("DAY").get(0));
+		assertEquals("2024", ubrexMatcher.findValuesByKey("YEAR").get(0));
+		assertEquals("January", ubrexMatcher.findValuesByKey("MONTH").get(0));
+		assertEquals("15", ubrexMatcher.findValuesByKey("DAY").get(0));
 	}
 
 	@Test
@@ -102,9 +102,9 @@ class TimeResolutionTest {
 		final UMatcher ubrexMatcher = ubrex.match(input, 0);
 
 		assertTrue(ubrexMatcher.startMatch());
-		assertEquals("2018", ubrexMatcher.getCapture("YEAR").get(0));
-		assertEquals("december", ubrexMatcher.getCapture("MONTH").get(0));
-		assertEquals("5", ubrexMatcher.getCapture("DAY").get(0));
+		assertEquals("2018", ubrexMatcher.findValuesByKey("YEAR").get(0));
+		assertEquals("december", ubrexMatcher.findValuesByKey("MONTH").get(0));
+		assertEquals("5", ubrexMatcher.findValuesByKey("DAY").get(0));
 	}
 
 }

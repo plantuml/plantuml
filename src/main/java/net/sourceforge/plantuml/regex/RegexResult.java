@@ -75,7 +75,7 @@ public class RegexResult {
 
 	public String get(String key, int num) {
 		if (matcher != null) {
-			final List<String> list = matcher.getCapture(key);
+			final List<String> list = matcher.findValuesByKey(key);
 			if (list == null || list.size() == 0)
 				return null;
 			return list.get(num);

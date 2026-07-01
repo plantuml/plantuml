@@ -36,13 +36,14 @@
 package net.sourceforge.plantuml.gantt.lang;
 
 import java.time.Duration;
+import java.util.List;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
-import com.plantuml.ubrex.builder.UBrexOptional;
 import com.plantuml.ubrex.builder.UBrexPart;
+import com.plantuml.ubrex.builder.UBrexZeroOrMore;
 
 import net.sourceforge.plantuml.gantt.Failable;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
@@ -53,56 +54,73 @@ public class ComplementDuration implements Something<GanttDiagram> {
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
 		return UBrexConcat.build( //
-				UBrexConcat.build( //
-						new UBrexNamed("CNUM1", new UBrexLeaf("〇+〴d")), //
-						UBrexLeaf.spaceOneOrMore(), //
-						new UBrexNamed("CUNIT1", new UBrexLeaf("【hour┇day┇week┇month】")), //
-						new UBrexLeaf("〇?s")), //
-				new UBrexOptional(UBrexConcat.build( //
-						UBrexLeaf.spaceOneOrMore(), //
-						new UBrexLeaf("and"), //
-						UBrexLeaf.spaceOneOrMore(), //
-						new UBrexNamed("CNUM2", new UBrexLeaf("〇+〴d")), //
-						UBrexLeaf.spaceOneOrMore(), //
-						new UBrexNamed("CUNIT2", new UBrexLeaf("【hour┇day┇week┇month】")), //
-						new UBrexLeaf("〇?s"))));
+				oneElement("0"), //
+				new UBrexZeroOrMore(UBrexConcat.build( //
+						separator(), //
+						oneElement("1"))));
+	}
+
+	// A single "<number> <unit>[s]" element.
+	private static UBrexPart oneElement(String prefix) {
+		return UBrexConcat.build( //
+				new UBrexNamed("CNUM" + prefix, new UBrexLeaf("〇+〴d")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("CUNIT" + prefix, //
+						new UBrexLeaf("【hour┇minute┇second┇day┇week┇month】")), //
+				new UBrexLeaf("〇?s"));
+	}
+
+	private static UBrexPart separator() {
+		return new UBrexLeaf("【〇+「∙,」and〇+「∙,」┇〇+「∙,」】");
 	}
 
 	@Override
-	public Failable<Load> getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable<Load> getMe(GanttDiagram gantt, CaptureLookup arg) {
 
-		final int firstValue = Integer.parseInt(arg.get("CNUM1", 0));
-		final String firstUnit = arg.get("CUNIT1", 0);
-		final int[] firstDaysAndHours = toDaysAndHours(gantt, firstValue, firstUnit);
+		final int[] totals = new int[4]; // days, hours, minutes, seconds
 
-		int[] secondDaysAndHours = { 0, 0 };
-		final String secondValue = arg.get("CNUM2", 0);
-		if (secondValue != null) {
-			final int value = Integer.parseInt(secondValue);
-			final String unit = arg.get("CUNIT2", 0);
-			secondDaysAndHours = toDaysAndHours(gantt, value, unit);
-		}
+		// The first element is captured under CNUM0/CUNIT0, the repeated ones
+		// under CNUM1/CUNIT1.
+		accumulate(gantt, totals, arg.findFirstValueByKey("CNUM0"), arg.findFirstValueByKey("CUNIT0"));
 
-		final int totalDays = firstDaysAndHours[0] + secondDaysAndHours[0];
-		final int totalHours = firstDaysAndHours[1] + secondDaysAndHours[1];
+		final List<String> cnum = arg.findValuesByKey("CNUM1");
+		final List<String> cunit = arg.findValuesByKey("CUNIT1");
+		for (int i = 0; i < cnum.size(); i++)
+			accumulate(gantt, totals, cnum.get(i), cunit.get(i));
 
-		return Failable.ok(Load.of(gantt.durationOfDaysAndHours(totalDays, totalHours)));
+		final Duration duration = gantt.durationOfDaysHoursMinutesSeconds(totals[0], totals[1], totals[2], totals[3]);
+
+		return Failable.ok(Load.of(duration));
 	}
 
-	private int[] toDaysAndHours(GanttDiagram gantt, int value, String unit) {
+	private static void accumulate(GanttDiagram gantt, int[] totals, String num, String unit) {
+		final int value = Integer.parseInt(num);
 		switch (unit.charAt(0)) {
 		case 'H':
 		case 'h':
-			return new int[] { 0, value };
+			totals[1] += value;
+			break;
 		case 'D':
 		case 'd':
-			return new int[] { value, 0 };
+			totals[0] += value;
+			break;
 		case 'W':
 		case 'w':
-			return new int[] { value * gantt.daysInWeek(), 0 };
+			totals[0] += value * gantt.daysInWeek();
+			break;
+		case 'S':
+		case 's':
+			totals[3] += value;
+			break;
 		case 'M':
 		case 'm':
-			return new int[] { value * gantt.daysInMonth(), 0 };
+			// 'm' is ambiguous between "minute" and "month": disambiguate on the
+			// second letter ("mi" -> minute, otherwise month).
+			if (unit.length() >= 2 && (unit.charAt(1) == 'i' || unit.charAt(1) == 'I'))
+				totals[2] += value;
+			else
+				totals[0] += value * gantt.daysInMonth();
+			break;
 		default:
 			throw new IllegalArgumentException("unknown time unit: " + unit);
 		}

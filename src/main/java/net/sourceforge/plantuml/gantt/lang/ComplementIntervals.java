@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.gantt.lang;
 
 import java.time.LocalDate;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -80,24 +80,24 @@ public class ComplementIntervals implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<DaysAsDates> getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable<DaysAsDates> getMe(GanttDiagram gantt, CaptureLookup arg) {
 		final LocalDate d1 = new DayPattern("1").getDay(arg);
 		if (d1 != null) {
 			final LocalDate d2 = new DayPattern("2").getDay(arg);
 			return Failable.ok(new DaysAsDates(d1, d2));
 		}
 
-		if (arg.get("ECOUNT1", 0) != null)
+		if (arg.findFirstValueByKey("ECOUNT1") != null)
 			return Failable.ok(resultE(gantt, arg));
 
 		throw new IllegalStateException();
 	}
 
-	private DaysAsDates resultE(GanttDiagram gantt, UMatcher arg) {
-		final int day1 = Integer.parseInt(arg.get("ECOUNT1", 0));
+	private DaysAsDates resultE(GanttDiagram gantt, CaptureLookup arg) {
+		final int day1 = Integer.parseInt(arg.findFirstValueByKey("ECOUNT1"));
 		final TimePoint date1 = gantt.getMinTimePoint().addDays(day1);
 
-		final int day2 = Integer.parseInt(arg.get("ECOUNT2", 0));
+		final int day2 = Integer.parseInt(arg.findFirstValueByKey("ECOUNT2"));
 		final TimePoint date2 = gantt.getMinTimePoint().addDays(day2);
 
 		return new DaysAsDates(date1.toDay(), date2.toDay());

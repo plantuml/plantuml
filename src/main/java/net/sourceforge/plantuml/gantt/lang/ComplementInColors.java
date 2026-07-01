@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -60,9 +60,9 @@ public class ComplementInColors implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, UMatcher arg) {
-		final String color1 = arg.get("COMPLEMENT1", 0);
-		final String color2 = arg.get("COMPLEMENT2", 0);
+	public Failable<CenterBorderColor> getMe(GanttDiagram diagram, CaptureLookup arg) {
+		final String color1 = arg.findFirstValueByKey("COMPLEMENT1");
+		final String color2 = arg.findFirstValueByKey("COMPLEMENT2");
 		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);
 		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color2);
 		return Failable.ok(new CenterBorderColor(col1, col2));

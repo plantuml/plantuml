@@ -22,7 +22,7 @@ public class UpToTest {
 	public void test20() {
 		UnicodeBracketedExpression cut = UnicodeBracketedExpression.build("a 〶$cell=〄>1");
 		assertEquals("a000000001", cut.match(TextNavigator.build("a000000001")).getAcceptedMatch());
-		assertEquals("[00000000]", cut.match(TextNavigator.build("a000000001")).getCapture("cell").toString());
+		assertEquals("[00000000]", cut.match(TextNavigator.build("a000000001")).findValuesByKey("cell").toString());
 	}
 
 }

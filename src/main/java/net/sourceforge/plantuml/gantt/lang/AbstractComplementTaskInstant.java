@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 
 import net.sourceforge.plantuml.gantt.Failable;
 import net.sourceforge.plantuml.gantt.GanttConstraintMode;
@@ -46,33 +46,34 @@ import net.sourceforge.plantuml.gantt.core.TaskInstant;
 
 abstract class AbstractComplementTaskInstant implements Something<GanttDiagram> {
 
-	final public Failable<TaskInstant> getComplementTaskInstant(GanttDiagram gantt, UMatcher arg) {
-		final String code = arg.get("COMPLEMENT_CODE_OTHER", 0);
-		final String startOrEnd = arg.get("COMPLEMENT_START_OR_END", 0);
+	final public Failable<TaskInstant> getComplementTaskInstant(GanttDiagram gantt, CaptureLookup arg) {
+		final String code = arg.findFirstValueByKey("COMPLEMENT_CODE_OTHER");
+		final String startOrEnd = arg.findFirstValueByKey("COMPLEMENT_START_OR_END");
 
 		final Moment task = gantt.getExistingMoment(code);
 		if (task == null)
 			return Failable.error("No such task " + code);
 
 		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(startOrEnd));
-		final String nb1 = arg.get("COMPLEMENT_NB1", 0);
+		final String nb1 = arg.findFirstValueByKey("COMPLEMENT_NB1");
 		if (nb1 != null) {
-			final int factor1 = arg.get("COMPLEMENT_DAY_OR_WEEK1", 0).startsWith("w") ? gantt.daysInWeek() : 1;
+			final int factor1 = arg.findFirstValueByKey("COMPLEMENT_DAY_OR_WEEK1").startsWith("w") ? gantt.daysInWeek() : 1;
 			final int days1 = Integer.parseInt(nb1) * factor1;
 
-			final String nb2 = arg.get("COMPLEMENT_NB2", 0);
+			final String nb2 = arg.findFirstValueByKey("COMPLEMENT_NB2");
 			int days2 = 0;
 			if (nb2 != null) {
-				final int factor2 = arg.get("COMPLEMENT_DAY_OR_WEEK2", 0).startsWith("w") ? gantt.daysInWeek() : 1;
+				final int factor2 = arg.findFirstValueByKey("COMPLEMENT_DAY_OR_WEEK2").startsWith("w") ? gantt.daysInWeek()
+						: 1;
 				days2 = Integer.parseInt(nb2) * factor2;
 			}
 
 			int delta = days1 + days2;
-			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT_BEFORE_OR_AFTER", 0)))
+			if ("before".equalsIgnoreCase(arg.findFirstValueByKey("COMPLEMENT_BEFORE_OR_AFTER")))
 				delta = -delta;
 
-			final boolean working = arg.get("COMPLEMENT_WORKING1", 0) != null
-					|| arg.get("COMPLEMENT_WORKING2", 0) != null;
+			final boolean working = arg.findFirstValueByKey("COMPLEMENT_WORKING1") != null
+					|| arg.findFirstValueByKey("COMPLEMENT_WORKING2") != null;
 
 			final GanttConstraintMode mode = working ? GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY
 					: GanttConstraintMode.IGNORE_CALENDAR;

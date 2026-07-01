@@ -65,13 +65,13 @@ public class SubjectResource implements Subject<GanttDiagram> {
 
 	@Override
 	public Failable<Resource> getMe(GanttDiagram gantt, UMatcher arg) {
-		if (arg.get("THEY", 0) != null) {
+		if (arg.findFirstValueByKey("THEY") != null) {
 			final Resource they = gantt.getThey();
 			if (they == null)
 				return Failable.error("Not sure who are you refering to?");
 			return Failable.ok(they);
 		}
-		final String resource = arg.get("RESOURCE", 0);
+		final String resource = arg.findFirstValueByKey("RESOURCE");
 		final Resource result = gantt.getResource(resource);
 		gantt.setThey(result);
 		return Failable.ok(result);

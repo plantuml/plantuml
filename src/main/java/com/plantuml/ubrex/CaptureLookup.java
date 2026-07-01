@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,41 +30,16 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.gantt.lang;
+package com.plantuml.ubrex;
 
-import com.plantuml.ubrex.CaptureLookup;
-import com.plantuml.ubrex.builder.UBrexConcat;
-import com.plantuml.ubrex.builder.UBrexLeaf;
-import com.plantuml.ubrex.builder.UBrexNamed;
-import com.plantuml.ubrex.builder.UBrexOptional;
-import com.plantuml.ubrex.builder.UBrexPart;
+import java.util.List;
 
-import net.sourceforge.plantuml.gantt.Failable;
-import net.sourceforge.plantuml.gantt.GanttDiagram;
+public interface CaptureLookup {
 
-public class ComplementOpen implements Something<GanttDiagram> {
+	public String findFirstValueByKey(String key);
 
-	@Override
-	public UBrexPart toUnicodeBracketedExpressionComplement() {
-		return new UBrexNamed("OPEN", //
-				UBrexConcat.build( //
-						new UBrexLeaf("open〇?e〇?d"), //
-						new UBrexOptional(UBrexConcat.build(new UBrexLeaf("∙for∙"), SubjectTask.taskCode("FOO")))));
-	}
-
-	@Override
-	public Failable<String> getMe(GanttDiagram diagram, CaptureLookup arg) {
-		final String value = arg.findFirstValueByKey("OPEN");
-		final int x = value.indexOf('[');
-		if (x > 0) {
-			final int y = value.lastIndexOf(']');
-			final String s = value.substring(x + 1, y);
-			return Failable.ok(s);
-		}
-		return Failable.ok("");
-	}
+	public List<String> findValuesByKey(String key);
 
 }

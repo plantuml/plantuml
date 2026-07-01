@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexPart;
 
 import net.sourceforge.plantuml.core.Diagram;
@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.gantt.Failable;
 
 public interface Something<D extends Diagram> {
 
-	public Failable<? extends Object> getMe(D diagram, UMatcher arg);
+	public Failable<? extends Object> getMe(D diagram, CaptureLookup arg);
 
 	public UBrexPart toUnicodeBracketedExpressionComplement();
 

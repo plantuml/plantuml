@@ -37,7 +37,7 @@ package com.plantuml.ubrex;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Capture {
+public class Capture implements CaptureLookup {
 
 	public static final Capture EMPTY = new Capture(SafeList.<CaptureEntry>createEmpty());
 	private final SafeList<CaptureEntry> entries;
@@ -69,6 +69,7 @@ public class Capture {
 		return new Capture(this.entries.mapped(entry -> entry.withPrefixedKey(prefix)));
 	}
 
+	@Override
 	public List<String> findValuesByKey(String key) {
 		final List<String> result = new ArrayList<>();
 		for (CaptureEntry entry : this.entries)
@@ -94,7 +95,8 @@ public class Capture {
 		return new Capture(result);
 	}
 
-	public String get(String key) {
+	@Override
+	public String findFirstValueByKey(String key) {
 		for (CaptureEntry entry : this.entries)
 			if (entry.getKey().equals(key))
 				return entry.getValue();

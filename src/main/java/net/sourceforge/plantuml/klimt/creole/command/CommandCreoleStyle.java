@@ -90,7 +90,7 @@ public class CommandCreoleStyle implements Command {
 
 	private HColor getExtendedColor(UMatcher matcher) {
 		if (tryExtendedColor) {
-			final List<String> extendedColor = matcher.getCapture("XC");
+			final List<String> extendedColor = matcher.findValuesByKey("XC");
 			if (extendedColor.size() > 0)
 				return HColorSet.instance().getColorOrWhite(extendedColor.get(0));
 		}
@@ -102,7 +102,7 @@ public class CommandCreoleStyle implements Command {
 	public int executeAndAdvance(ISkinSimple skinSimple, final String line, int pos, StripeSimple stripe) {
 		final UMatcher matcher = ubrex.match(line, pos);
 
-		final List<String> value = matcher.getCapture("V");
+		final List<String> value = matcher.findValuesByKey("V");
 		final String accepted = matcher.getAcceptedMatch();
 		if (value.size() == 0)
 			throw new IllegalStateException();
@@ -119,7 +119,7 @@ public class CommandCreoleStyle implements Command {
 	@Override
 	public int matchingSize(String line, int pos) {
 		final UMatcher matcher = ubrex.match(line, pos);
-		final List<String> value = matcher.getCapture("V");
+		final List<String> value = matcher.findValuesByKey("V");
 		if (value.size() == 0)
 			return 0;
 

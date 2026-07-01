@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.gantt.lang;
 
 import java.time.LocalDate;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -92,7 +92,7 @@ public class ComplementIntervalsSmart extends AbstractComplementTaskInstant {
 	}
 
 	@Override
-	public Failable<DaysAsDates> getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable<DaysAsDates> getMe(GanttDiagram gantt, CaptureLookup arg) {
 		final LocalDate d1 = new DayPattern("1").getDay(arg);
 
 		final Failable<TaskInstant> i2 = getComplementTaskInstant(gantt, arg);

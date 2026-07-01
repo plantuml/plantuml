@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -88,7 +88,7 @@ public class ComplementBeforeOrAfterOrAtTaskStartOrEnd extends AbstractComplemen
 	}
 
 	@Override
-	public Failable<TaskInstant> getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable<TaskInstant> getMe(GanttDiagram gantt, CaptureLookup arg) {
 		return getComplementTaskInstant(gantt, arg);
 	}
 

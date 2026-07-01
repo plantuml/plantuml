@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -56,8 +56,8 @@ public class ComplementClose implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<String> getMe(GanttDiagram diagram, UMatcher arg) {
-		final String value = arg.get("CLOSED", 0);
+	public Failable<String> getMe(GanttDiagram diagram, CaptureLookup arg) {
+		final String value = arg.findFirstValueByKey("CLOSED");
 		final int x = value.indexOf('[');
 		if (x > 0) {
 			final int y = value.lastIndexOf(']');

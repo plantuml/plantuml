@@ -99,6 +99,21 @@ public class SubjectTask implements Subject<GanttDiagram> {
 			}
 		});
 
+		result.add(new VerbPhraseAction(Verbs.starts, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
+				ComplementTimePoint.any()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+				if (gantt.getMinDay().equals(TimePoint.epoch()))
+					return CommandExecutionResult.error("No starting date for the project");
+
+				final Task task = (Task) subject;
+				final TimePoint start = (TimePoint) complement;
+
+				task.setStart(start);
+				return CommandExecutionResult.ok();
+			}
+		});
+
 		result.add(new VerbPhraseAction(Verbs.starts,
 				new PairOfSomething<>(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementWithColorLink())) {
 			@Override
@@ -154,11 +169,11 @@ public class SubjectTask implements Subject<GanttDiagram> {
 				ComplementDate.any()) {
 			@Override
 			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-				final Task task = (Task) subject;
-				final LocalDate start = (LocalDate) complement;
 				if (gantt.getMinDay().equals(TimePoint.epoch()))
 					return CommandExecutionResult.error("No starting date for the project");
 
+				final Task task = (Task) subject;
+				final LocalDate start = (LocalDate) complement;
 				task.setStart(TimePoint.ofStartOfDay(start));
 				return CommandExecutionResult.ok();
 			}
@@ -239,6 +254,23 @@ public class SubjectTask implements Subject<GanttDiagram> {
 				return CommandExecutionResult.ok();
 			}
 		});
+		
+		result.add(new VerbPhraseAction(Verbs.ends, Words.uzeroOrMore(Words.THE, Words.ON, Words.AT),
+				ComplementTimePoint.any()) {
+			@Override
+			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
+				if (gantt.getMinDay().equals(TimePoint.epoch()))
+					return CommandExecutionResult.error("No starting date for the project");
+
+				final Task task = (Task) subject;
+				final TimePoint start = (TimePoint) complement;
+
+				task.setEnd(start);
+				return CommandExecutionResult.ok();
+			}
+		});
+
+
 
 		result.add(new VerbPhraseAction(Verbs.ends, new ComplementBeforeOrAfterOrAtTaskStartOrEnd()) {
 			@Override
@@ -259,7 +291,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 				final Task task = (Task) subject;
 				final LocalDate end = (LocalDate) complement;
 
-				task.setEnd(TimePoint.ofEndOfDayMinusOneSecond(end).increment());
+				task.setEnd(TimePoint.ofStartOfDay(end).increment());
 				return CommandExecutionResult.ok();
 			}
 		});
@@ -409,21 +441,21 @@ public class SubjectTask implements Subject<GanttDiagram> {
 	@Override
 	public Failable<Task> getMe(GanttDiagram gantt, UMatcher arg) {
 		final Task result;
-		if (arg.get("IT", 0) != null) {
+		if (arg.findFirstValueByKey("IT") != null) {
 			result = gantt.getIt();
 			if (result == null)
 				return Failable.error("Not sure what are you refering to?");
 		} else {
-			final String subject = arg.get("SUBJECT", 0);
-			final String shortName = arg.get("SHORTNAME", 0);
-			final String then = arg.get("THEN", 0);
-			final String stereotype = arg.get("STEREOTYPE", 0);
+			final String subject = arg.findFirstValueByKey("SUBJECT");
+			final String shortName = arg.findFirstValueByKey("SHORTNAME");
+			final String then = arg.findFirstValueByKey("THEN");
+			final String stereotype = arg.findFirstValueByKey("STEREOTYPE");
 
 			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);
 			result = gantt.getOrCreateTask(code, then != null);
 
 			if (stereotype != null)
-				result.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));
+				result.setStereotype(Stereotype.build(arg.findFirstValueByKey("STEREOTYPE")));
 
 			gantt.setIt(result);
 		}
@@ -431,7 +463,7 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		if (result == null)
 			throw new IllegalStateException();
 
-		final String resource = arg.get("RESOURCE", 0);
+		final String resource = arg.findFirstValueByKey("RESOURCE");
 		if (resource != null) {
 			for (final StringTokenizer st = new StringTokenizer(resource, "{}"); st.hasMoreTokens();) {
 				final String part = st.nextToken().trim();

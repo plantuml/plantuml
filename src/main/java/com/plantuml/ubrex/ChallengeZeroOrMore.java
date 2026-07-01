@@ -49,13 +49,16 @@ public class ChallengeZeroOrMore implements Challenge {
 
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
+		Capture capture = Capture.EMPTY;
+
 		int currentPos = position;
 		while (true) {
 			final ChallengeResult tmp = origin.runChallenge(string, currentPos);
 			if (tmp.getFullCaptureLength() < 0)
-				return new ChallengeResult(currentPos - position);
+				return new ChallengeResult(currentPos - position, capture);
 			if (tmp.getFullCaptureLength() == 0)
 				throw new IllegalStateException("infinite loop");
+			capture = capture.merge(tmp.getCapture());
 			currentPos += tmp.getFullCaptureLength();
 		}
 	}

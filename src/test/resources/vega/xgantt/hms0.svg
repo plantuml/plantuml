@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="125px" preserveAspectRatio="none" style="width:280px;height:125px;background:#FFFFFF;" version="1.1" viewBox="0 0 280 125" width="280px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="203.438" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="203.438" y1="39" y2="39"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="203.438" y1="84" y2="84"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="84"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="77.813" x2="77.813" y1="0" y2="84"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="155.625" x2="155.625" y1="0" y2="84"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="203.438" x2="203.438" y1="0" y2="84"/>
+    <text fill="#000" font-size="10" textLength="21.063" x="5" y="22.278">Start</text>
+    <text fill="#000" font-size="10" textLength="17.813" x="82.813" y="22.278">End</text>
+    <text fill="#000" font-size="10" textLength="37.813" x="160.625" y="22.278">Duration</text>
+    <text fill="#000" font-size="10" textLength="67.813" x="5" y="49.278">Sep 22 10:30:46</text>
+    <text fill="#000" font-size="10" textLength="67.813" x="82.813" y="49.278">Sep 23 10:30:46</text>
+    <text fill="#000" font-size="10" textLength="21.688" x="160.625" y="49.278">1 day</text>
+    <text fill="#000" font-size="10" textLength="67.813" x="5" y="64.278">Sep 22 11:30:46</text>
+    <text fill="#000" font-size="10" textLength="67.813" x="82.813" y="64.278">Sep 23 11:30:46</text>
+    <text fill="#000" font-size="10" textLength="21.688" x="160.625" y="64.278">1 day</text>
+    <text fill="#000" font-size="10" textLength="53.938" x="5" y="79.278">Sep 22 10:30</text>
+    <text fill="#000" font-size="10" textLength="53.938" x="82.813" y="79.278">Sep 23 10:30</text>
+    <text fill="#000" font-size="10" textLength="21.688" x="160.625" y="79.278">1 day</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="21.375" x="208.75" y="9.333">Sep</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="205.313" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="220.5" y="21.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="205.875" y="33.778">22</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="221.875" y="33.778">23</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="203.438" x2="203.438" y1="39" y2="84"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="219.438" x2="219.438" y1="39" y2="84"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="235.438" x2="235.438" y1="39" y2="84"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="203.438" x2="235.438" y1="39" y2="39"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="203.438" x2="235.438" y1="84" y2="84"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="12" x="212.446" y="41"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="212.446" y="41"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="12" x="213.113" y="56"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="213.113" y="56"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="12" x="212.438" y="71"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="12" x="212.438" y="71"/>
+    <text fill="#000" font-size="11" textLength="29.975" x="228.446" y="49.556">Task 1</text>
+    <text fill="#000" font-size="11" textLength="29.975" x="229.113" y="64.556">Task 2</text>
+    <text fill="#000" font-size="11" textLength="29.975" x="228.438" y="79.556">Task 3</text>
+    <text fill="#000" font-size="10" textLength="12.25" x="205.313" y="91.778">Su</text>
+    <text fill="#000" font-size="10" textLength="13.875" x="220.5" y="91.778">Mo</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="205.875" y="105.778">22</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="221.875" y="105.778">23</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="21.375" x="208.75" y="120.333">Sep</text>
+  </g>
+</svg>

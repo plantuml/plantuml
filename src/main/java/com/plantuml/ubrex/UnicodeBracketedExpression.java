@@ -93,8 +93,8 @@ public interface UnicodeBracketedExpression {
 					}
 
 					@Override
-					public List<String> getCapture(String path) {
-						return shallWePass.findValuesByKey(path);
+					public List<String> findValuesByKey(String key) {
+						return shallWePass.findValuesByKey(key);
 					}
 
 					@Override

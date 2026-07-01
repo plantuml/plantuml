@@ -1225,6 +1225,34 @@
       "diagram_class": "GanttDiagram"
     },
     {
+      "file": "xgantt/hms0.puml",
+      "folder": "xgantt",
+      "status": "pass",
+      "description": "(Gantt)",
+      "diagram_class": "GanttDiagram"
+    },
+    {
+      "file": "xgantt/hms1.puml",
+      "folder": "xgantt",
+      "status": "pass",
+      "description": "(Gantt)",
+      "diagram_class": "GanttDiagram"
+    },
+    {
+      "file": "xgantt/hms2.puml",
+      "folder": "xgantt",
+      "status": "pass",
+      "description": "(Gantt)",
+      "diagram_class": "GanttDiagram"
+    },
+    {
+      "file": "xgantt/hms3.puml",
+      "folder": "xgantt",
+      "status": "pass",
+      "description": "(Gantt)",
+      "diagram_class": "GanttDiagram"
+    },
+    {
       "file": "xmi/clazz/XMI0000_class.puml",
       "folder": "xmi/clazz",
       "status": "pass",
@@ -1268,8 +1296,8 @@
     }
   ],
   "summary": {
-    "total": 142,
-    "passed": 137,
+    "total": 146,
+    "passed": 141,
     "failed": 0,
     "skipped": 5
   }

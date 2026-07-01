@@ -101,7 +101,7 @@ public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 
 	@Override
 	public Failable<DayOfWeek> getMe(GanttDiagram gantt, UMatcher arg) {
-		final String s = arg.get("SUBJECT", 0);
+		final String s = arg.findFirstValueByKey("SUBJECT");
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 

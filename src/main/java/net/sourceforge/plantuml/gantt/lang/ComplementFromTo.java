@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
@@ -57,9 +57,9 @@ public class ComplementFromTo implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<TwoNames> getMe(GanttDiagram diagram, UMatcher arg) {
-		final String name1 = arg.get("COMPLEMENT1", 0);
-		final String name2 = arg.get("COMPLEMENT2", 0);
+	public Failable<TwoNames> getMe(GanttDiagram diagram, CaptureLookup arg) {
+		final String name1 = arg.findFirstValueByKey("COMPLEMENT1");
+		final String name2 = arg.findFirstValueByKey("COMPLEMENT2");
 		return Failable.ok(new TwoNames(name1, name2));
 	}
 

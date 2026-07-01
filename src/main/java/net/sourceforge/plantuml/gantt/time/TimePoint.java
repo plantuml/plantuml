@@ -78,10 +78,9 @@ public class TimePoint implements Comparable<TimePoint>, PValue {
 		return ofStartOfDay(day.plusDays(1)).minusOneSecond();
 	}
 
-	public TimePoint ofEndOfDay() {
-		return new TimePoint(utcDateTime.toLocalDate().plusDays(1).atStartOfDay().minusSeconds(1));
-
-	}
+//	public TimePoint ofEndOfDay() {
+//		return new TimePoint(utcDateTime.toLocalDate().plusDays(1).atStartOfDay().minusSeconds(1));
+//	}
 
 	public static TimePoint create(long ms) {
 		return new TimePoint(LocalDateTime.ofInstant(Instant.ofEpochMilli(ms), ZoneOffset.UTC));
@@ -122,7 +121,7 @@ public class TimePoint implements Comparable<TimePoint>, PValue {
 	}
 
 	public TimePoint addDays(int nday) {
-		return new TimePoint(this.utcDateTime.toLocalDate().plusDays(nday).atStartOfDay());
+		return new TimePoint(this.utcDateTime.plusDays(nday));
 	}
 
 	public final int getAbsoluteDayNum() {

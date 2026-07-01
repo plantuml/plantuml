@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="GANTT" height="94px" preserveAspectRatio="none" style="width:384px;height:94px;background:#FFFFFF;" version="1.1" viewBox="0 0 384 94" width="384px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="227.875" y1="0" y2="0"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="227.875" y1="39" y2="39"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="227.875" y1="54" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="0" x2="0" y1="0" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="77.813" x2="77.813" y1="0" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="155.625" x2="155.625" y1="0" y2="54"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="227.875" x2="227.875" y1="0" y2="54"/>
+    <text fill="#000" font-size="10" textLength="21.063" x="5" y="22.278">Start</text>
+    <text fill="#000" font-size="10" textLength="17.813" x="82.813" y="22.278">End</text>
+    <text fill="#000" font-size="10" textLength="37.813" x="160.625" y="22.278">Duration</text>
+    <text fill="#000" font-size="10" textLength="67.813" x="5" y="49.278">Sep 23 10:30:46</text>
+    <text fill="#000" font-size="10" textLength="67.813" x="82.813" y="49.278">Sep 24 10:30:47</text>
+    <text fill="#000" font-size="10" textLength="62.25" x="160.625" y="49.278">1 day, 1 second</text>
+    <rect fill="#F1E5E5" height="15" style="stroke:none;" width="24" x="227.875" y="39"/>
+    <rect fill="#F1E5E5" height="54" style="stroke:#F1E5E5;stroke-width:1;" width="8" x="227.875" y="39"/>
+    <rect fill="#F1E5E5" height="54" style="stroke:#F1E5E5;stroke-width:1;" width="2" x="255.875" y="39"/>
+    <rect fill="#F1E5E5" height="54" style="stroke:#F1E5E5;stroke-width:1;" width="6" x="277.875" y="39"/>
+    <rect fill="#F1E5E5" height="54" style="stroke:#F1E5E5;stroke-width:1;" width="8" x="251.875" y="39"/>
+    <rect fill="#F1E5E5" height="54" style="stroke:#F1E5E5;stroke-width:1;" width="2" x="279.875" y="39"/>
+    <rect fill="#F1E5E5" height="54" style="stroke:#F1E5E5;stroke-width:1;" width="6" x="301.875" y="39"/>
+    <rect fill="#F1E5E5" height="54" style="stroke:#F1E5E5;stroke-width:1;" width="8" x="307.875" y="39"/>
+    <rect fill="#F1E5E5" height="54" style="stroke:#F1E5E5;stroke-width:1;" width="2" x="335.875" y="39"/>
+    <rect fill="#F1E5E5" height="54" style="stroke:#F1E5E5;stroke-width:1;" width="6" x="357.875" y="39"/>
+    <text fill="#000" font-size="12" font-weight="700" textLength="85.35" x="253.2" y="9.333">September 2024</text>
+    <text fill="#989898" font-size="10" textLength="12.25" x="233.75" y="21.778">Su</text>
+    <text fill="#000" font-size="10" textLength="35.563" x="262.094" y="21.778">Monday</text>
+    <text fill="#000" font-size="10" textLength="38.375" x="316.688" y="21.778">Tuesday</text>
+    <text fill="#989898" font-size="10" textLength="11.125" x="234.313" y="33.778">22</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="274.313" y="33.778">23</text>
+    <text fill="#000" font-size="10" textLength="11.125" x="330.313" y="33.778">24</text>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="227.875" x2="227.875" y1="14" y2="68"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="251.875" x2="251.875" y1="14" y2="68"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="307.875" x2="307.875" y1="14" y2="68"/>
+    <line style="stroke:#C0C0C0;stroke-width:1;" x1="363.875" x2="363.875" y1="14" y2="68"/>
+    <rect fill="#E2E2F0" height="11" style="stroke:none;" width="52.001" x="274.439" y="41"/>
+    <rect fill="none" height="11" style="stroke:#181818;stroke-width:1;" width="52.001" x="274.439" y="41"/>
+    <text fill="#000" font-size="11" textLength="29.975" x="278.439" y="49.556">Task 1</text>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+---
+output: svg
+expected-description: (Gantt)
+expected-status: 0
+---
+@startgantt
+Project starts 2024-09-22
+
+[Task 1] starts 2024-09-22 10:30:46
+[Task 2] starts 2024-09-22T11:30:46
+[Task 3] starts 2024-09-22t10:30
+
+@endgantt

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -50,7 +50,7 @@ public class ComplementDeleted implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<Object> getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable<Object> getMe(GanttDiagram gantt, CaptureLookup arg) {
 		return Failable.ok(new Object());
 	}
 

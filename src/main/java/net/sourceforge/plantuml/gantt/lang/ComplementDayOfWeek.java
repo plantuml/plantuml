@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.gantt.lang;
 
 import java.time.DayOfWeek;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -53,8 +53,8 @@ public class ComplementDayOfWeek implements Something<GanttDiagram> {
 	}
 
 	@Override
-	public Failable<DayOfWeek> getMe(GanttDiagram diagram, UMatcher arg) {
-		final String s = arg.get("COMPLEMENT", 0);
+	public Failable<DayOfWeek> getMe(GanttDiagram diagram, CaptureLookup arg) {
+		final String s = arg.findFirstValueByKey("COMPLEMENT");
 		return Failable.ok(DayOfWeekUtils.fromString(s));
 	}
 

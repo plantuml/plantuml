@@ -73,6 +73,8 @@ public class ChallengeCharSet implements Challenge {
 				result.addRange(ch, end);
 			} else if (ch == '〃') {
 				result.addChar('\"');
+			} else if (ch == '∙') {
+				result.addChar(' ');
 			} else {
 				result.addChar(ch);
 			}

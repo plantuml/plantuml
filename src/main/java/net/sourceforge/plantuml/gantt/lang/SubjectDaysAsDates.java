@@ -109,13 +109,13 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
 	@Override
 	public Failable<DaysAsDates> getMe(GanttDiagram gantt, UMatcher arg) {
-		final String countAnd = arg.get("COUNT_AND", 0);
+		final String countAnd = arg.findFirstValueByKey("COUNT_AND");
 		if (countAnd != null) {
 			final TimePoint date3 = getDate(gantt, arg, "3");
 			final int nb = Integer.parseInt(countAnd);
 			return Failable.ok(new DaysAsDates(gantt, date3.toDay(), nb));
 		}
-		final String countThen = arg.get("COUNT_THEN", 0);
+		final String countThen = arg.findFirstValueByKey("COUNT_THEN");
 		if (countThen != null) {
 			final TimePoint date3 = gantt.getThenDate();
 			final int nb = Integer.parseInt(countThen);
@@ -127,14 +127,14 @@ public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 	}
 
 	private TimePoint getDate(GanttDiagram gantt, UMatcher arg, String suffix) {
-		if (arg.get("BDAY" + suffix, 0) != null) {
-			final int day = Integer.parseInt(arg.get("BDAY" + suffix, 0));
-			final int month = Integer.parseInt(arg.get("BMONTH" + suffix, 0));
-			final int year = Integer.parseInt(arg.get("BYEAR" + suffix, 0));
+		if (arg.findFirstValueByKey("BDAY" + suffix) != null) {
+			final int day = Integer.parseInt(arg.findFirstValueByKey("BDAY" + suffix));
+			final int month = Integer.parseInt(arg.findFirstValueByKey("BMONTH" + suffix));
+			final int year = Integer.parseInt(arg.findFirstValueByKey("BYEAR" + suffix));
 			return TimePoint.ofStartOfDay(year, month, day);
 		}
-		if (arg.get("ECOUNT" + suffix, 0) != null) {
-			final int day = Integer.parseInt(arg.get("ECOUNT" + suffix, 0));
+		if (arg.findFirstValueByKey("ECOUNT" + suffix) != null) {
+			final int day = Integer.parseInt(arg.findFirstValueByKey("ECOUNT" + suffix));
 			return gantt.getMinTimePoint().addDays(day);
 		}
 		throw new IllegalStateException();

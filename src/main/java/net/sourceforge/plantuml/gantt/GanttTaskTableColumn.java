@@ -35,7 +35,10 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
@@ -76,7 +79,7 @@ public enum GanttTaskTableColumn {
 
 		@Override
 		String valueOf(Task task, Context context) {
-			return context.formatDay(task.getStart());
+			return context.formatDayWithTime(task.getStart());
 		}
 	},
 
@@ -88,7 +91,7 @@ public enum GanttTaskTableColumn {
 
 		@Override
 		String valueOf(Task task, Context context) {
-			return context.formatDay(task.getEnd().minusOneSecond());
+			return context.formatEnd(task.getEnd());
 		}
 	},
 
@@ -100,10 +103,17 @@ public enum GanttTaskTableColumn {
 
 		@Override
 		String valueOf(Task task, Context context) {
-			final int days = task.getEnd().getAbsoluteDayNum() - task.getStart().getAbsoluteDayNum();
-			return GanttI18n.durationInDays(context.getLocale(), days);
+			final LocalDateTime start = task.getStart().toLocalDateTime();
+			final LocalDateTime end = task.getEnd().toLocalDateTime();
+
+			final Duration duration = Duration.between(start, end);
+
+			return GanttI18n.durationHumanReadable(context.getLocale(), duration);
+
 		}
 	};
+
+	static final long SECONDS_IN_A_DAY = ChronoUnit.DAYS.getDuration().getSeconds(); // 86400
 
 	/**
 	 * Localized header label shown on the first row of the table.
@@ -141,6 +151,45 @@ public enum GanttTaskTableColumn {
 				return GanttI18n.dayNumber(locale, relativeDayNum(point));
 
 			return point.toStringShort(locale);
+		}
+
+		// Same as formatDay, but appends the time of day when the point does not fall
+		// exactly at midnight. Seconds are shown only when they are not zero, so a
+		// point at 14:30:00 renders as "14:30" while 14:30:45 renders as "14:30:45".
+		String formatDayWithTime(TimePoint point) {
+			final String day = formatDay(point);
+
+			final LocalDateTime dateTime = point.toLocalDateTime();
+			final int hour = dateTime.getHour();
+			final int minute = dateTime.getMinute();
+			final int second = dateTime.getSecond();
+
+			if (hour == 0 && minute == 0 && second == 0)
+				return day;
+
+			final String time;
+			if (second == 0)
+				time = String.format("%02d:%02d", hour, minute);
+			else
+				time = String.format("%02d:%02d:%02d", hour, minute, second);
+
+			return day + " " + time;
+		}
+
+		// The task end is stored as an exclusive bound. When it falls exactly at
+		// midnight the task spans whole days, so we step back one second to render
+		// the last included day (e.g. an end at "6 00:00:00" shows as "5"). When the
+		// end carries an explicit time of day, it is already the point to display and
+		// must be shown as-is, down to the minute or second.
+		String formatEnd(TimePoint end) {
+			final LocalDateTime dateTime = end.toLocalDateTime();
+			final boolean atMidnight = dateTime.getHour() == 0 && dateTime.getMinute() == 0
+					&& dateTime.getSecond() == 0;
+
+			if (atMidnight)
+				return formatDay(end.minusOneSecond());
+
+			return formatDayWithTime(end);
 		}
 
 		private int relativeDayNum(TimePoint point) {

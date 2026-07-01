@@ -38,8 +38,7 @@ package net.sourceforge.plantuml.gantt.lang;
 import java.time.LocalDate;
 import java.time.Month;
 
-import com.plantuml.ubrex.Capture;
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexOr;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -75,70 +74,36 @@ public class DayPattern {
 				TimeResolution.toUbrexC_MONTH_DD_YYYY(yearKeyC, monthKeyC, dayKeyC));
 	}
 
-	public LocalDate getDay(Capture arg) {
-		if (arg.get(dayKeyA) != null)
+	public LocalDate getDay(CaptureLookup arg) {
+		if (arg.findFirstValueByKey(dayKeyA) != null)
 			return resultA(arg);
 
-		if (arg.get(dayKeyB) != null)
+		if (arg.findFirstValueByKey(dayKeyB) != null)
 			return resultB(arg);
 
-		if (arg.get(dayKeyC) != null)
+		if (arg.findFirstValueByKey(dayKeyC) != null)
 			return resultC(arg);
 		return null;
 	}
 
-	public LocalDate getDay(UMatcher arg) {
-		if (arg.get(dayKeyA, 0) != null)
-			return resultA(arg);
-
-		if (arg.get(dayKeyB, 0) != null)
-			return resultB(arg);
-
-		if (arg.get(dayKeyC, 0) != null)
-			return resultC(arg);
-
-		return null;
-	}
-
-	private LocalDate resultA(UMatcher arg) {
-		final int day = Integer.parseInt(arg.get(dayKeyA, 0));
-		final Month month = MonthUtils.fromString(arg.get(monthKeyA, 0));
-		final int year = Integer.parseInt(arg.get(yearKeyA, 0));
+	private LocalDate resultA(CaptureLookup arg) {
+		final int day = Integer.parseInt(arg.findFirstValueByKey(dayKeyA));
+		final Month month = MonthUtils.fromString(arg.findFirstValueByKey(monthKeyA));
+		final int year = Integer.parseInt(arg.findFirstValueByKey(yearKeyA));
 		return LocalDate.of(year, month, day);
 	}
 
-	private LocalDate resultA(Capture arg) {
-		final int day = Integer.parseInt(arg.get(dayKeyA));
-		final Month month = MonthUtils.fromString(arg.get(monthKeyA));
-		final int year = Integer.parseInt(arg.get(yearKeyA));
+	private LocalDate resultB(CaptureLookup arg) {
+		final int day = Integer.parseInt(arg.findFirstValueByKey(dayKeyB));
+		final int month = Integer.parseInt(arg.findFirstValueByKey(monthKeyB));
+		final int year = Integer.parseInt(arg.findFirstValueByKey(yearKeyB));
 		return LocalDate.of(year, month, day);
 	}
 
-	private LocalDate resultB(UMatcher arg) {
-		final int day = Integer.parseInt(arg.get(dayKeyB, 0));
-		final int month = Integer.parseInt(arg.get(monthKeyB, 0));
-		final int year = Integer.parseInt(arg.get(yearKeyB, 0));
-		return LocalDate.of(year, month, day);
-	}
-
-	private LocalDate resultB(Capture arg) {
-		final int day = Integer.parseInt(arg.get(dayKeyB));
-		final int month = Integer.parseInt(arg.get(monthKeyB));
-		final int year = Integer.parseInt(arg.get(yearKeyB));
-		return LocalDate.of(year, month, day);
-	}
-
-	private LocalDate resultC(Capture arg) {
-		final int day = Integer.parseInt(arg.get(dayKeyC));
-		final Month month = MonthUtils.fromString(arg.get(monthKeyC));
-		final int year = Integer.parseInt(arg.get(yearKeyC));
-		return LocalDate.of(year, month, day);
-	}
-
-	private LocalDate resultC(UMatcher arg) {
-		final int day = Integer.parseInt(arg.get(dayKeyC, 0));
-		final Month month = MonthUtils.fromString(arg.get(monthKeyC, 0));
-		final int year = Integer.parseInt(arg.get(yearKeyC, 0));
+	private LocalDate resultC(CaptureLookup arg) {
+		final int day = Integer.parseInt(arg.findFirstValueByKey(dayKeyC));
+		final Month month = MonthUtils.fromString(arg.findFirstValueByKey(monthKeyC));
+		final int year = Integer.parseInt(arg.findFirstValueByKey(yearKeyC));
 		return LocalDate.of(year, month, day);
 	}
 
