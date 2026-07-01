@@ -191,8 +191,8 @@ import net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstantWeekday;
 <span class="fc" id="L191">			result = Combiner.max(specificDaysOpen, Combiner.product(weekPattern, specificDaysClosed));</span>
 		}
 
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">		if (workingTimeRanges.size() &gt; 0)</span>
-<span class="nc" id="L195">			result = Combiner.product(result, PiecewiseConstantHours.fromWorkingHours(workingTimeRanges));</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (workingTimeRanges.size() &gt; 0)</span>
+<span class="fc" id="L195">			result = Combiner.product(result, PiecewiseConstantHours.fromWorkingHours(workingTimeRanges));</span>
 
 <span class="pc bpc" id="L197" title="2 of 4 branches missed.">		if (offBefore == null &amp;&amp; offAfter == null) {</span>
 <span class="fc" id="L198">			cachedPiecewiseConstant = result;</span>
@@ -217,8 +217,8 @@ import net.sourceforge.plantuml.gantt.ngm.math.PiecewiseConstantWeekday;
 	}
 
 	public void addWorkingTimeRange(TimeRange timeRange) {
-<span class="nc" id="L220">		workingTimeRanges.add(timeRange);</span>
-<span class="nc" id="L221">	}</span>
+<span class="fc" id="L220">		workingTimeRanges.add(timeRange);</span>
+<span class="fc" id="L221">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.gantt.core.Task;
 	}
 
 	@Override
-	public Failable&lt;Task&gt; getMe(GanttDiagram gantt, UMatcher arg) {
-<span class="nc" id="L55">		final String code = arg.get(&quot;COMPLEMENT&quot;, 0);</span>
+	public Failable&lt;Task&gt; getMe(GanttDiagram gantt, CaptureLookup arg) {
+<span class="nc" id="L55">		final String code = arg.findFirstValueByKey(&quot;COMPLEMENT&quot;);</span>
 <span class="nc" id="L56">		final Task task = gantt.getExistingTask(code);</span>
 <span class="nc bnc" id="L57" title="All 2 branches missed.">		if (task == null)</span>
 <span class="nc" id="L58">			return Failable.error(&quot;No such task &quot; + code);</span>

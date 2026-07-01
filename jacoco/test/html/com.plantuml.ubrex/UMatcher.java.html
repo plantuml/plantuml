@@ -36,7 +36,7 @@ package com.plantuml.ubrex;
 
 import java.util.List;
 
-public interface UMatcher {
+public interface UMatcher extends CaptureLookup {
 
 	public boolean startMatch();
 
@@ -44,17 +44,18 @@ public interface UMatcher {
 
 	public String getAcceptedMatch();
 
-	public List&lt;String&gt; getCapture(String path);
+	public List&lt;String&gt; findValuesByKey(String key);
 
 	public List&lt;String&gt; findFirstValuesByKeyPrefix(String keyPrefix);
 
 	public Capture extractByPrefix(String key);
 
-	public default String get(String key, int num) {
-<span class="fc" id="L54">		final List&lt;String&gt; tmp = getCapture(key);</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (num &gt;= tmp.size())</span>
-<span class="fc" id="L56">			return null;</span>
-<span class="fc" id="L57">		return tmp.get(num);</span>
+	@Override
+	public default String findFirstValueByKey(String key) {
+<span class="fc" id="L55">		final List&lt;String&gt; tmp = findValuesByKey(key);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (tmp.size() == 0)</span>
+<span class="fc" id="L57">			return null;</span>
+<span class="fc" id="L58">		return tmp.get(0);</span>
 	}
 
 }

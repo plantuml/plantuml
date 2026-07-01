@@ -36,76 +36,94 @@
 package net.sourceforge.plantuml.gantt.lang;
 
 import java.time.Duration;
+import java.util.List;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
-import com.plantuml.ubrex.builder.UBrexOptional;
 import com.plantuml.ubrex.builder.UBrexPart;
+import com.plantuml.ubrex.builder.UBrexZeroOrMore;
 
 import net.sourceforge.plantuml.gantt.Failable;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
 import net.sourceforge.plantuml.gantt.ngm.Load;
 
-<span class="fc" id="L51">public class ComplementDuration implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L52">public class ComplementDuration implements Something&lt;GanttDiagram&gt; {</span>
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
-<span class="fc" id="L55">		return UBrexConcat.build( //</span>
-<span class="fc" id="L56">				UBrexConcat.build( //</span>
-						new UBrexNamed(&quot;CNUM1&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
-<span class="fc" id="L58">						UBrexLeaf.spaceOneOrMore(), //</span>
-						new UBrexNamed(&quot;CUNIT1&quot;, new UBrexLeaf(&quot;【hour┇day┇week┇month】&quot;)), //
-						new UBrexLeaf(&quot;〇?s&quot;)), //
-<span class="fc" id="L61">				new UBrexOptional(UBrexConcat.build( //</span>
-<span class="fc" id="L62">						UBrexLeaf.spaceOneOrMore(), //</span>
-						new UBrexLeaf(&quot;and&quot;), //
-<span class="fc" id="L64">						UBrexLeaf.spaceOneOrMore(), //</span>
-						new UBrexNamed(&quot;CNUM2&quot;, new UBrexLeaf(&quot;〇+〴d&quot;)), //
-<span class="fc" id="L66">						UBrexLeaf.spaceOneOrMore(), //</span>
-						new UBrexNamed(&quot;CUNIT2&quot;, new UBrexLeaf(&quot;【hour┇day┇week┇month】&quot;)), //
-						new UBrexLeaf(&quot;〇?s&quot;))));
+<span class="fc" id="L56">		return UBrexConcat.build( //</span>
+<span class="fc" id="L57">				oneElement(&quot;0&quot;), //</span>
+<span class="fc" id="L58">				new UBrexZeroOrMore(UBrexConcat.build( //</span>
+<span class="fc" id="L59">						separator(), //</span>
+<span class="fc" id="L60">						oneElement(&quot;1&quot;))));</span>
+	}
+
+	// A single &quot;&lt;number&gt; &lt;unit&gt;[s]&quot; element.
+	private static UBrexPart oneElement(String prefix) {
+<span class="fc" id="L65">		return UBrexConcat.build( //</span>
+				new UBrexNamed(&quot;CNUM&quot; + prefix, new UBrexLeaf(&quot;〇+〴d&quot;)), //
+<span class="fc" id="L67">				UBrexLeaf.spaceOneOrMore(), //</span>
+				new UBrexNamed(&quot;CUNIT&quot; + prefix, //
+						new UBrexLeaf(&quot;【hour┇minute┇second┇day┇week┇month】&quot;)), //
+				new UBrexLeaf(&quot;〇?s&quot;));
+	}
+
+	private static UBrexPart separator() {
+<span class="fc" id="L74">		return new UBrexLeaf(&quot;【〇+「∙,」and〇+「∙,」┇〇+「∙,」】&quot;);</span>
 	}
 
 	@Override
-	public Failable&lt;Load&gt; getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable&lt;Load&gt; getMe(GanttDiagram gantt, CaptureLookup arg) {
 
-<span class="fc" id="L74">		final int firstValue = Integer.parseInt(arg.get(&quot;CNUM1&quot;, 0));</span>
-<span class="fc" id="L75">		final String firstUnit = arg.get(&quot;CUNIT1&quot;, 0);</span>
-<span class="fc" id="L76">		final int[] firstDaysAndHours = toDaysAndHours(gantt, firstValue, firstUnit);</span>
+<span class="fc" id="L80">		final int[] totals = new int[4]; // days, hours, minutes, seconds</span>
 
-<span class="fc" id="L78">		int[] secondDaysAndHours = { 0, 0 };</span>
-<span class="fc" id="L79">		final String secondValue = arg.get(&quot;CNUM2&quot;, 0);</span>
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (secondValue != null) {</span>
-<span class="nc" id="L81">			final int value = Integer.parseInt(secondValue);</span>
-<span class="nc" id="L82">			final String unit = arg.get(&quot;CUNIT2&quot;, 0);</span>
-<span class="nc" id="L83">			secondDaysAndHours = toDaysAndHours(gantt, value, unit);</span>
-		}
+		// The first element is captured under CNUM0/CUNIT0, the repeated ones
+		// under CNUM1/CUNIT1.
+<span class="fc" id="L84">		accumulate(gantt, totals, arg.findFirstValueByKey(&quot;CNUM0&quot;), arg.findFirstValueByKey(&quot;CUNIT0&quot;));</span>
 
-<span class="fc" id="L86">		final int totalDays = firstDaysAndHours[0] + secondDaysAndHours[0];</span>
-<span class="fc" id="L87">		final int totalHours = firstDaysAndHours[1] + secondDaysAndHours[1];</span>
+<span class="fc" id="L86">		final List&lt;String&gt; cnum = arg.findValuesByKey(&quot;CNUM1&quot;);</span>
+<span class="fc" id="L87">		final List&lt;String&gt; cunit = arg.findValuesByKey(&quot;CUNIT1&quot;);</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		for (int i = 0; i &lt; cnum.size(); i++)</span>
+<span class="nc" id="L89">			accumulate(gantt, totals, cnum.get(i), cunit.get(i));</span>
 
-<span class="fc" id="L89">		return Failable.ok(Load.of(gantt.durationOfDaysAndHours(totalDays, totalHours)));</span>
+<span class="fc" id="L91">		final Duration duration = gantt.durationOfDaysHoursMinutesSeconds(totals[0], totals[1], totals[2], totals[3]);</span>
+
+<span class="fc" id="L93">		return Failable.ok(Load.of(duration));</span>
 	}
 
-	private int[] toDaysAndHours(GanttDiagram gantt, int value, String unit) {
-<span class="pc bpc" id="L93" title="3 of 5 branches missed.">		switch (unit.charAt(0)) {</span>
+	private static void accumulate(GanttDiagram gantt, int[] totals, String num, String unit) {
+<span class="fc" id="L97">		final int value = Integer.parseInt(num);</span>
+<span class="pc bpc" id="L98" title="4 of 6 branches missed.">		switch (unit.charAt(0)) {</span>
 		case 'H':
 		case 'h':
-<span class="nc" id="L96">			return new int[] { 0, value };</span>
+<span class="nc" id="L101">			totals[1] += value;</span>
+<span class="nc" id="L102">			break;</span>
 		case 'D':
 		case 'd':
-<span class="fc" id="L99">			return new int[] { value, 0 };</span>
+<span class="fc" id="L105">			totals[0] += value;</span>
+<span class="fc" id="L106">			break;</span>
 		case 'W':
 		case 'w':
-<span class="fc" id="L102">			return new int[] { value * gantt.daysInWeek(), 0 };</span>
+<span class="fc" id="L109">			totals[0] += value * gantt.daysInWeek();</span>
+<span class="fc" id="L110">			break;</span>
+		case 'S':
+		case 's':
+<span class="nc" id="L113">			totals[3] += value;</span>
+<span class="nc" id="L114">			break;</span>
 		case 'M':
 		case 'm':
-<span class="nc" id="L105">			return new int[] { value * gantt.daysInMonth(), 0 };</span>
+			// 'm' is ambiguous between &quot;minute&quot; and &quot;month&quot;: disambiguate on the
+			// second letter (&quot;mi&quot; -&gt; minute, otherwise month).
+<span class="nc bnc" id="L119" title="All 6 branches missed.">			if (unit.length() &gt;= 2 &amp;&amp; (unit.charAt(1) == 'i' || unit.charAt(1) == 'I'))</span>
+<span class="nc" id="L120">				totals[2] += value;</span>
+			else
+<span class="nc" id="L122">				totals[0] += value * gantt.daysInMonth();</span>
+<span class="nc" id="L123">			break;</span>
 		default:
-<span class="nc" id="L107">			throw new IllegalArgumentException(&quot;unknown time unit: &quot; + unit);</span>
+<span class="nc" id="L125">			throw new IllegalArgumentException(&quot;unknown time unit: &quot; + unit);</span>
 		}
-	}
+<span class="fc" id="L127">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

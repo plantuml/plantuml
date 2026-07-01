@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.gantt.lang;
 
 import java.time.LocalDate;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -92,7 +92,7 @@ import net.sourceforge.plantuml.gantt.time.TimePoint;
 	}
 
 	@Override
-	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram gantt, CaptureLookup arg) {
 <span class="nc" id="L96">		final LocalDate d1 = new DayPattern(&quot;1&quot;).getDay(arg);</span>
 
 <span class="nc" id="L98">		final Failable&lt;TaskInstant&gt; i2 = getComplementTaskInstant(gantt, arg);</span>

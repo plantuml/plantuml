@@ -9,8 +9,8 @@ import java.util.Locale;
 <span class="nc" id="L9">public class I18nTimeData {</span>
 
 	public static String dayOfWeekLong(DayOfWeek dayOfWeek, Locale locale) {
-<span class="nc" id="L12">		final String lang = locale.getLanguage();</span>
-<span class="nc bnc" id="L13" title="All 8 branches missed.">		switch (lang) {</span>
+<span class="fc" id="L12">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L13" title="7 of 8 branches missed.">		switch (lang) {</span>
 		case &quot;de&quot;:
 <span class="nc bnc" id="L15" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
 <span class="nc" id="L16">			case MONDAY: return &quot;Montag&quot;;</span>
@@ -90,30 +90,30 @@ import java.util.Locale;
 			break;
 		}
 		// Fallback: English long form
-<span class="nc bnc" id="L93" title="All 8 branches missed.">		switch (dayOfWeek) {</span>
-<span class="nc" id="L94">		case MONDAY: return &quot;Monday&quot;;</span>
-<span class="nc" id="L95">		case TUESDAY: return &quot;Tuesday&quot;;</span>
+<span class="pc bpc" id="L93" title="2 of 8 branches missed.">		switch (dayOfWeek) {</span>
+<span class="fc" id="L94">		case MONDAY: return &quot;Monday&quot;;</span>
+<span class="fc" id="L95">		case TUESDAY: return &quot;Tuesday&quot;;</span>
 <span class="nc" id="L96">		case WEDNESDAY: return &quot;Wednesday&quot;;</span>
-<span class="nc" id="L97">		case THURSDAY: return &quot;Thursday&quot;;</span>
-<span class="nc" id="L98">		case FRIDAY: return &quot;Friday&quot;;</span>
-<span class="nc" id="L99">		case SATURDAY: return &quot;Saturday&quot;;</span>
-<span class="nc" id="L100">		case SUNDAY: return &quot;Sunday&quot;;</span>
+<span class="fc" id="L97">		case THURSDAY: return &quot;Thursday&quot;;</span>
+<span class="fc" id="L98">		case FRIDAY: return &quot;Friday&quot;;</span>
+<span class="fc" id="L99">		case SATURDAY: return &quot;Saturday&quot;;</span>
+<span class="fc" id="L100">		case SUNDAY: return &quot;Sunday&quot;;</span>
 		}
 <span class="nc" id="L102">		throw new IllegalArgumentException();</span>
 	}
 
 	public static String dayOfWeekShort(DayOfWeek dayOfWeek, Locale locale) {
 <span class="fc" id="L106">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L107" title="7 of 8 branches missed.">		switch (lang) {</span>
+<span class="pc bpc" id="L107" title="6 of 8 branches missed.">		switch (lang) {</span>
 		case &quot;de&quot;:
-<span class="nc bnc" id="L109" title="All 8 branches missed.">			switch (dayOfWeek) {</span>
-<span class="nc" id="L110">			case MONDAY: return &quot;Mo&quot;;</span>
-<span class="nc" id="L111">			case TUESDAY: return &quot;Di&quot;;</span>
+<span class="pc bpc" id="L109" title="5 of 8 branches missed.">			switch (dayOfWeek) {</span>
+<span class="fc" id="L110">			case MONDAY: return &quot;Mo&quot;;</span>
+<span class="fc" id="L111">			case TUESDAY: return &quot;Di&quot;;</span>
 <span class="nc" id="L112">			case WEDNESDAY: return &quot;Mi&quot;;</span>
 <span class="nc" id="L113">			case THURSDAY: return &quot;Do&quot;;</span>
 <span class="nc" id="L114">			case FRIDAY: return &quot;Fr&quot;;</span>
 <span class="nc" id="L115">			case SATURDAY: return &quot;Sa&quot;;</span>
-<span class="nc" id="L116">			case SUNDAY: return &quot;So&quot;;</span>
+<span class="fc" id="L116">			case SUNDAY: return &quot;So&quot;;</span>
 			}
 <span class="nc" id="L118">			break;</span>
 		case &quot;es&quot;:
@@ -198,9 +198,9 @@ import java.util.Locale;
 
 	public static String monthShort(Month month, Locale locale) {
 <span class="fc" id="L200">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L201" title="7 of 8 branches missed.">		switch (lang) {</span>
+<span class="pc bpc" id="L201" title="6 of 8 branches missed.">		switch (lang) {</span>
 		case &quot;de&quot;:
-<span class="nc bnc" id="L203" title="All 13 branches missed.">			switch (month) {</span>
+<span class="pc bpc" id="L203" title="12 of 13 branches missed.">			switch (month) {</span>
 <span class="nc" id="L204">			case JANUARY: return &quot;Jan&quot;;</span>
 <span class="nc" id="L205">			case FEBRUARY: return &quot;Feb&quot;;</span>
 <span class="nc" id="L206">			case MARCH: return &quot;Mär&quot;;</span>
@@ -209,7 +209,7 @@ import java.util.Locale;
 <span class="nc" id="L209">			case JUNE: return &quot;Jun&quot;;</span>
 <span class="nc" id="L210">			case JULY: return &quot;Jul&quot;;</span>
 <span class="nc" id="L211">			case AUGUST: return &quot;Aug&quot;;</span>
-<span class="nc" id="L212">			case SEPTEMBER: return &quot;Sep&quot;;</span>
+<span class="fc" id="L212">			case SEPTEMBER: return &quot;Sep&quot;;</span>
 <span class="nc" id="L213">			case OCTOBER: return &quot;Okt&quot;;</span>
 <span class="nc" id="L214">			case NOVEMBER: return &quot;Nov&quot;;</span>
 <span class="nc" id="L215">			case DECEMBER: return &quot;Dez&quot;;</span>
@@ -332,9 +332,9 @@ import java.util.Locale;
 
 	public static String monthLong(Month month, Locale locale) {
 <span class="fc" id="L334">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L335" title="7 of 8 branches missed.">		switch (lang) {</span>
+<span class="pc bpc" id="L335" title="6 of 8 branches missed.">		switch (lang) {</span>
 		case &quot;de&quot;:
-<span class="nc bnc" id="L337" title="All 13 branches missed.">			switch (month) {</span>
+<span class="pc bpc" id="L337" title="12 of 13 branches missed.">			switch (month) {</span>
 <span class="nc" id="L338">			case JANUARY: return &quot;Januar&quot;;</span>
 <span class="nc" id="L339">			case FEBRUARY: return &quot;Februar&quot;;</span>
 <span class="nc" id="L340">			case MARCH: return &quot;März&quot;;</span>
@@ -343,7 +343,7 @@ import java.util.Locale;
 <span class="nc" id="L343">			case JUNE: return &quot;Juni&quot;;</span>
 <span class="nc" id="L344">			case JULY: return &quot;Juli&quot;;</span>
 <span class="nc" id="L345">			case AUGUST: return &quot;August&quot;;</span>
-<span class="nc" id="L346">			case SEPTEMBER: return &quot;September&quot;;</span>
+<span class="fc" id="L346">			case SEPTEMBER: return &quot;September&quot;;</span>
 <span class="nc" id="L347">			case OCTOBER: return &quot;Oktober&quot;;</span>
 <span class="nc" id="L348">			case NOVEMBER: return &quot;November&quot;;</span>
 <span class="nc" id="L349">			case DECEMBER: return &quot;Dezember&quot;;</span>

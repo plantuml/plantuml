@@ -51,7 +51,7 @@ public class TimeRanges implements Iterable&lt;TimeRange&gt; {
 <span class="fc" id="L51">	}</span>
 
 	public boolean hasWorkingTimeRanges() {
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">		return timeRanges.size() &gt; 0;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">		return timeRanges.size() &gt; 0;</span>
 	}
 
 	public void add(TimeRange timeRange) {
@@ -76,8 +76,8 @@ public class TimeRanges implements Iterable&lt;TimeRange&gt; {
 	}
 
 	public Duration durationOfDays(int totalDays) {
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">		if (hasWorkingTimeRanges())</span>
-<span class="nc" id="L80">			return totalWorkingDuration().multipliedBy(totalDays);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">		if (hasWorkingTimeRanges())</span>
+<span class="fc" id="L80">			return totalWorkingDuration().multipliedBy(totalDays);</span>
 
 <span class="fc" id="L82">		return Duration.ofDays(totalDays);</span>
 	}

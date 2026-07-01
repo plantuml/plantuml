@@ -392,8 +392,8 @@ public final class Segment {
 <span class="fc bfc" id="L392" title="All 2 branches covered.">			if (direction == TimeDirection.FORWARD) {</span>
 <span class="fc bfc" id="L393" title="All 2 branches covered.">				if (segment.startExclusive().isAfter(start))</span>
 <span class="fc" id="L394">					start = segment.startExclusive();</span>
-<span class="pc bpc" id="L395" title="1 of 2 branches missed.">				if (segment.endExclusive().isBefore(end))</span>
-<span class="nc" id="L396">					end = segment.endExclusive();</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">				if (segment.endExclusive().isBefore(end))</span>
+<span class="fc" id="L396">					end = segment.endExclusive();</span>
 			} else {
 <span class="fc bfc" id="L398" title="All 2 branches covered.">				if (segment.startExclusive().isBefore(start))</span>
 <span class="fc" id="L399">					start = segment.startExclusive();</span>

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -61,9 +61,9 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 	}
 
 	@Override
-	public Failable&lt;CenterBorderColor&gt; getMe(GanttDiagram diagram, UMatcher arg) {
-<span class="fc" id="L65">		final String color1 = arg.get(&quot;COMPLEMENT1&quot;, 0);</span>
-<span class="fc" id="L66">		final String color2 = arg.get(&quot;COMPLEMENT2&quot;, 0);</span>
+	public Failable&lt;CenterBorderColor&gt; getMe(GanttDiagram diagram, CaptureLookup arg) {
+<span class="fc" id="L65">		final String color1 = arg.findFirstValueByKey(&quot;COMPLEMENT1&quot;);</span>
+<span class="fc" id="L66">		final String color2 = arg.findFirstValueByKey(&quot;COMPLEMENT2&quot;);</span>
 <span class="pc bpc" id="L67" title="1 of 2 branches missed.">		final HColor col1 = color1 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color1);</span>
 <span class="pc bpc" id="L68" title="1 of 2 branches missed.">		final HColor col2 = color2 == null ? null : diagram.getIHtmlColorSet().getColorOrWhite(color2);</span>
 <span class="fc" id="L69">		return Failable.ok(new CenterBorderColor(col1, col2));</span>

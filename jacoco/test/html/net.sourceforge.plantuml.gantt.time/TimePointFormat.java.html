@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.utils.I18nTimeData;
 <span class="fc" id="L45">	DAY_OF_MONTH, MONTH_AND_DAY;</span>
 
 	public String format(TimePoint when, Locale locale) {
-<span class="pc bpc" id="L48" title="4 of 11 branches missed.">		switch (this) {</span>
+<span class="pc bpc" id="L48" title="2 of 11 branches missed.">		switch (this) {</span>
 		case DAY_OF_MONTH:
 <span class="fc" id="L50">			return &quot;&quot; + when.getDayOfMonth();</span>
 
@@ -56,13 +56,13 @@ import net.sourceforge.plantuml.utils.I18nTimeData;
 <span class="fc" id="L56">			return &quot;&quot; + when.year();</span>
 
 		case DAY_OF_WEEK_LONG:
-<span class="nc" id="L59">			return I18nTimeData.dayOfWeekLong(when.toDayOfWeek(), locale);</span>
+<span class="fc" id="L59">			return I18nTimeData.dayOfWeekLong(when.toDayOfWeek(), locale);</span>
 
 		case DAY_OF_WEEK_SHORT:
 <span class="fc" id="L62">			return I18nTimeData.dayOfWeekShort(when.toDayOfWeek(), locale);</span>
 
 		case MONTH_LONG:
-<span class="nc" id="L65">			return I18nTimeData.monthLong(when.month(), locale);</span>
+<span class="fc" id="L65">			return I18nTimeData.monthLong(when.month(), locale);</span>
 
 		case MONTH_SHORT:
 <span class="fc" id="L68">			return I18nTimeData.monthShort(when.month(), locale);</span>
@@ -82,7 +82,7 @@ import net.sourceforge.plantuml.utils.I18nTimeData;
 
 	private String monthAndDay(TimePoint when, Locale locale) {
 <span class="fc" id="L84">	    final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L85" title="7 of 8 branches missed.">	    switch (lang) {</span>
+<span class="pc bpc" id="L85" title="6 of 8 branches missed.">	    switch (lang) {</span>
 	        case &quot;fr&quot;:
 <span class="nc" id="L87">	            return when.getDayOfMonth() + &quot; &quot; + TimePointFormat.MONTH_SHORT.format(when, locale);</span>
 	        case &quot;es&quot;:
@@ -90,7 +90,7 @@ import net.sourceforge.plantuml.utils.I18nTimeData;
 <span class="nc" id="L90">	            return when.getDayOfMonth() + &quot; de &quot; + TimePointFormat.MONTH_SHORT.format(when, locale);</span>
 	        case &quot;de&quot;:
 	            // &quot;Tag. Monat&quot; (ex: &quot;17. Jun&quot;)
-<span class="nc" id="L93">	            return when.getDayOfMonth() + &quot;. &quot; + TimePointFormat.MONTH_SHORT.format(when, locale);</span>
+<span class="fc" id="L93">	            return when.getDayOfMonth() + &quot;. &quot; + TimePointFormat.MONTH_SHORT.format(when, locale);</span>
 	        case &quot;ja&quot;:
 	            // &quot;月/日&quot; (ex: &quot;6月/17日&quot;)
 <span class="nc" id="L96">	            return TimePointFormat.MONTH_SHORT.format(when, locale) + &quot;/&quot; + when.getDayOfMonth() + &quot;日&quot;;</span>

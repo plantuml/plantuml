@@ -49,15 +49,18 @@ public class ChallengeZeroOrMore implements Challenge {
 
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
-<span class="fc" id="L52">		int currentPos = position;</span>
+<span class="fc" id="L52">		Capture capture = Capture.EMPTY;</span>
+
+<span class="fc" id="L54">		int currentPos = position;</span>
 		while (true) {
-<span class="fc" id="L54">			final ChallengeResult tmp = origin.runChallenge(string, currentPos);</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">			if (tmp.getFullCaptureLength() &lt; 0)</span>
-<span class="fc" id="L56">				return new ChallengeResult(currentPos - position);</span>
-<span class="pc bpc" id="L57" title="1 of 2 branches missed.">			if (tmp.getFullCaptureLength() == 0)</span>
-<span class="nc" id="L58">				throw new IllegalStateException(&quot;infinite loop&quot;);</span>
-<span class="fc" id="L59">			currentPos += tmp.getFullCaptureLength();</span>
-<span class="fc" id="L60">		}</span>
+<span class="fc" id="L56">			final ChallengeResult tmp = origin.runChallenge(string, currentPos);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">			if (tmp.getFullCaptureLength() &lt; 0)</span>
+<span class="fc" id="L58">				return new ChallengeResult(currentPos - position, capture);</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">			if (tmp.getFullCaptureLength() == 0)</span>
+<span class="nc" id="L60">				throw new IllegalStateException(&quot;infinite loop&quot;);</span>
+<span class="fc" id="L61">			capture = capture.merge(tmp.getCapture());</span>
+<span class="fc" id="L62">			currentPos += tmp.getFullCaptureLength();</span>
+<span class="fc" id="L63">		}</span>
 	}
 
 }

@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.gantt.lang;
 
 import java.time.LocalDate;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -80,24 +80,24 @@ import net.sourceforge.plantuml.gantt.time.TimePoint;
 	}
 
 	@Override
-	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram gantt, CaptureLookup arg) {
 <span class="nc" id="L84">		final LocalDate d1 = new DayPattern(&quot;1&quot;).getDay(arg);</span>
 <span class="nc bnc" id="L85" title="All 2 branches missed.">		if (d1 != null) {</span>
 <span class="nc" id="L86">			final LocalDate d2 = new DayPattern(&quot;2&quot;).getDay(arg);</span>
 <span class="nc" id="L87">			return Failable.ok(new DaysAsDates(d1, d2));</span>
 		}
 
-<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT1&quot;, 0) != null)</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		if (arg.findFirstValueByKey(&quot;ECOUNT1&quot;) != null)</span>
 <span class="nc" id="L91">			return Failable.ok(resultE(gantt, arg));</span>
 
 <span class="nc" id="L93">		throw new IllegalStateException();</span>
 	}
 
-	private DaysAsDates resultE(GanttDiagram gantt, UMatcher arg) {
-<span class="nc" id="L97">		final int day1 = Integer.parseInt(arg.get(&quot;ECOUNT1&quot;, 0));</span>
+	private DaysAsDates resultE(GanttDiagram gantt, CaptureLookup arg) {
+<span class="nc" id="L97">		final int day1 = Integer.parseInt(arg.findFirstValueByKey(&quot;ECOUNT1&quot;));</span>
 <span class="nc" id="L98">		final TimePoint date1 = gantt.getMinTimePoint().addDays(day1);</span>
 
-<span class="nc" id="L100">		final int day2 = Integer.parseInt(arg.get(&quot;ECOUNT2&quot;, 0));</span>
+<span class="nc" id="L100">		final int day2 = Integer.parseInt(arg.findFirstValueByKey(&quot;ECOUNT2&quot;));</span>
 <span class="nc" id="L101">		final TimePoint date2 = gantt.getMinTimePoint().addDays(day2);</span>
 
 <span class="nc" id="L103">		return new DaysAsDates(date1.toDay(), date2.toDay());</span>

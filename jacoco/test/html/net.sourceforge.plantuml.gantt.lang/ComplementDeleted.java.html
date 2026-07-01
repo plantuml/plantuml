@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
 
@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.gantt.GanttDiagram;
 	}
 
 	@Override
-	public Failable&lt;Object&gt; getMe(GanttDiagram gantt, UMatcher arg) {
+	public Failable&lt;Object&gt; getMe(GanttDiagram gantt, CaptureLookup arg) {
 <span class="nc" id="L54">		return Failable.ok(new Object());</span>
 	}
 

@@ -44,8 +44,8 @@ public class TimeRange {
 	private final LocalTime end;
 
 	public TimeRange(String start, String end) {
-<span class="nc" id="L47">		this(parse(start), parse(end));</span>
-<span class="nc" id="L48">	}</span>
+<span class="fc" id="L47">		this(parse(start), parse(end));</span>
+<span class="fc" id="L48">	}</span>
 
 <span class="fc" id="L50">	public TimeRange(LocalTime start, LocalTime end) {</span>
 <span class="fc" id="L51">		this.start = start;</span>
@@ -53,14 +53,14 @@ public class TimeRange {
 <span class="fc" id="L53">	}</span>
 
 	private static LocalTime parse(String time) {
-<span class="nc" id="L56">		final int index = time.indexOf(':');</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (index == -1)</span>
+<span class="fc" id="L56">		final int index = time.indexOf(':');</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (index == -1)</span>
 <span class="nc" id="L58">			throw new IllegalArgumentException(&quot;Invalid time: &quot; + time);</span>
 
 		try {
-<span class="nc" id="L61">			final int hour = Integer.parseInt(time.substring(0, index).trim());</span>
-<span class="nc" id="L62">			final int minute = Integer.parseInt(time.substring(index + 1).trim());</span>
-<span class="nc" id="L63">			return LocalTime.of(hour, minute);</span>
+<span class="fc" id="L61">			final int hour = Integer.parseInt(time.substring(0, index).trim());</span>
+<span class="fc" id="L62">			final int minute = Integer.parseInt(time.substring(index + 1).trim());</span>
+<span class="fc" id="L63">			return LocalTime.of(hour, minute);</span>
 <span class="nc" id="L64">		} catch (Exception e) {</span>
 <span class="nc" id="L65">			return null;</span>
 		}

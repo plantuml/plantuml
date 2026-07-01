@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.gantt.GanttDiagram;
 	}
 
 	@Override
-	public Failable&lt;String&gt; getMe(GanttDiagram diagram, UMatcher arg) {
-<span class="fc" id="L59">		final String name = arg.get(&quot;COMPLEMENT&quot;, 0);</span>
+	public Failable&lt;String&gt; getMe(GanttDiagram diagram, CaptureLookup arg) {
+<span class="fc" id="L59">		final String name = arg.findFirstValueByKey(&quot;COMPLEMENT&quot;);</span>
 <span class="fc" id="L60">		return Failable.ok(name);</span>
 	}
 

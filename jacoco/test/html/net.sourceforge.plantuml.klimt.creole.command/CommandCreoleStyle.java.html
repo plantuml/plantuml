@@ -90,7 +90,7 @@ public class CommandCreoleStyle implements Command {
 
 	private HColor getExtendedColor(UMatcher matcher) {
 <span class="fc bfc" id="L92" title="All 2 branches covered.">		if (tryExtendedColor) {</span>
-<span class="fc" id="L93">			final List&lt;String&gt; extendedColor = matcher.getCapture(&quot;XC&quot;);</span>
+<span class="fc" id="L93">			final List&lt;String&gt; extendedColor = matcher.findValuesByKey(&quot;XC&quot;);</span>
 <span class="fc bfc" id="L94" title="All 2 branches covered.">			if (extendedColor.size() &gt; 0)</span>
 <span class="fc" id="L95">				return HColorSet.instance().getColorOrWhite(extendedColor.get(0));</span>
 		}
@@ -102,7 +102,7 @@ public class CommandCreoleStyle implements Command {
 	public int executeAndAdvance(ISkinSimple skinSimple, final String line, int pos, StripeSimple stripe) {
 <span class="fc" id="L103">		final UMatcher matcher = ubrex.match(line, pos);</span>
 
-<span class="fc" id="L105">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
+<span class="fc" id="L105">		final List&lt;String&gt; value = matcher.findValuesByKey(&quot;V&quot;);</span>
 <span class="fc" id="L106">		final String accepted = matcher.getAcceptedMatch();</span>
 <span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (value.size() == 0)</span>
 <span class="nc" id="L108">			throw new IllegalStateException();</span>
@@ -119,7 +119,7 @@ public class CommandCreoleStyle implements Command {
 	@Override
 	public int matchingSize(String line, int pos) {
 <span class="fc" id="L121">		final UMatcher matcher = ubrex.match(line, pos);</span>
-<span class="fc" id="L122">		final List&lt;String&gt; value = matcher.getCapture(&quot;V&quot;);</span>
+<span class="fc" id="L122">		final List&lt;String&gt; value = matcher.findValuesByKey(&quot;V&quot;);</span>
 <span class="fc bfc" id="L123" title="All 2 branches covered.">		if (value.size() == 0)</span>
 <span class="fc" id="L124">			return 0;</span>
 

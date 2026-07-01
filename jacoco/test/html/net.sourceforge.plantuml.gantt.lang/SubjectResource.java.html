@@ -65,13 +65,13 @@ public class SubjectResource implements Subject&lt;GanttDiagram&gt; {
 
 	@Override
 	public Failable&lt;Resource&gt; getMe(GanttDiagram gantt, UMatcher arg) {
-<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (arg.get(&quot;THEY&quot;, 0) != null) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (arg.findFirstValueByKey(&quot;THEY&quot;) != null) {</span>
 <span class="nc" id="L69">			final Resource they = gantt.getThey();</span>
 <span class="nc bnc" id="L70" title="All 2 branches missed.">			if (they == null)</span>
 <span class="nc" id="L71">				return Failable.error(&quot;Not sure who are you refering to?&quot;);</span>
 <span class="nc" id="L72">			return Failable.ok(they);</span>
 		}
-<span class="nc" id="L74">		final String resource = arg.get(&quot;RESOURCE&quot;, 0);</span>
+<span class="nc" id="L74">		final String resource = arg.findFirstValueByKey(&quot;RESOURCE&quot;);</span>
 <span class="nc" id="L75">		final Resource result = gantt.getResource(resource);</span>
 <span class="nc" id="L76">		gantt.setThey(result);</span>
 <span class="nc" id="L77">		return Failable.ok(result);</span>

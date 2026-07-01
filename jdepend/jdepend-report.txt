@@ -4,18 +4,19 @@
 --------------------------------------------------
 
 Stats:
-    Total Classes: 28
+    Total Classes: 29
     Concrete Classes: 25
-    Abstract Classes: 3
+    Abstract Classes: 4
 
     Ca: 10
     Ce: 4
 
-    A: 0.11
+    A: 0.14
     I: 0.29
-    D: 0.61
+    D: 0.58
 
 Abstract Classes:
+    com.plantuml.ubrex.CaptureLookup
     com.plantuml.ubrex.Challenge
     com.plantuml.ubrex.UMatcher
     com.plantuml.ubrex.UnicodeBracketedExpression
@@ -5292,12 +5293,12 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 24
-    Concrete Classes: 21
+    Total Classes: 25
+    Concrete Classes: 22
     Abstract Classes: 3
 
     Ca: 8
-    Ce: 36
+    Ce: 37
 
     A: 0.12
     I: 0.82
@@ -5319,13 +5320,14 @@ Concrete Classes:
     net.sourceforge.plantuml.gantt.GanttDiagram
     net.sourceforge.plantuml.gantt.GanttDiagramFactory
     net.sourceforge.plantuml.gantt.GanttDiagramMainBlock
+    net.sourceforge.plantuml.gantt.GanttI18n$Unit
+    net.sourceforge.plantuml.gantt.GanttI18n$Units
     net.sourceforge.plantuml.gantt.GanttLayout
     net.sourceforge.plantuml.gantt.GanttTaskTable
     net.sourceforge.plantuml.gantt.GanttTaskTableColumn$1
     net.sourceforge.plantuml.gantt.GanttTaskTableColumn$2
     net.sourceforge.plantuml.gantt.GanttTaskTableColumn$3
     net.sourceforge.plantuml.gantt.GanttTaskTableColumn$4
-    net.sourceforge.plantuml.gantt.GanttTaskTableColumn$Context
     net.sourceforge.plantuml.gantt.LabelPosition
     net.sourceforge.plantuml.gantt.LabelStrategy
     net.sourceforge.plantuml.gantt.OpenClose
@@ -5336,6 +5338,7 @@ Depends Upon:
     java.io
     java.lang
     java.time
+    java.time.temporal
     java.util
     java.util.regex
     net.sourceforge.plantuml
@@ -5665,8 +5668,8 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 80
-    Concrete Classes: 77
+    Total Classes: 83
+    Concrete Classes: 80
     Abstract Classes: 3
 
     Ca: 4
@@ -5699,6 +5702,7 @@ Concrete Classes:
     net.sourceforge.plantuml.gantt.lang.ComplementIntervalsSmart
     net.sourceforge.plantuml.gantt.lang.ComplementNamed
     net.sourceforge.plantuml.gantt.lang.ComplementOpen
+    net.sourceforge.plantuml.gantt.lang.ComplementTimePoint
     net.sourceforge.plantuml.gantt.lang.ComplementUrl
     net.sourceforge.plantuml.gantt.lang.ComplementWithColorLink
     net.sourceforge.plantuml.gantt.lang.ComplementWorkingHours
@@ -5732,11 +5736,11 @@ Concrete Classes:
     net.sourceforge.plantuml.gantt.lang.SubjectSeparator$3
     net.sourceforge.plantuml.gantt.lang.SubjectTask
     net.sourceforge.plantuml.gantt.lang.SubjectTask$1
-    net.sourceforge.plantuml.gantt.lang.SubjectTask$11
+    net.sourceforge.plantuml.gantt.lang.SubjectTask$10
     net.sourceforge.plantuml.gantt.lang.SubjectTask$12
     net.sourceforge.plantuml.gantt.lang.SubjectTask$13
+    net.sourceforge.plantuml.gantt.lang.SubjectTask$14
     net.sourceforge.plantuml.gantt.lang.SubjectTask$15
-    net.sourceforge.plantuml.gantt.lang.SubjectTask$16
     net.sourceforge.plantuml.gantt.lang.SubjectTask$17
     net.sourceforge.plantuml.gantt.lang.SubjectTask$18
     net.sourceforge.plantuml.gantt.lang.SubjectTask$19
@@ -5744,6 +5748,8 @@ Concrete Classes:
     net.sourceforge.plantuml.gantt.lang.SubjectTask$20
     net.sourceforge.plantuml.gantt.lang.SubjectTask$21
     net.sourceforge.plantuml.gantt.lang.SubjectTask$22
+    net.sourceforge.plantuml.gantt.lang.SubjectTask$23
+    net.sourceforge.plantuml.gantt.lang.SubjectTask$24
     net.sourceforge.plantuml.gantt.lang.SubjectTask$3
     net.sourceforge.plantuml.gantt.lang.SubjectTask$4
     net.sourceforge.plantuml.gantt.lang.SubjectTask$5
@@ -14821,7 +14827,7 @@ zext.plantuml.com.google.zxing.qrcode.encoder
 
 Name, Class Count, Abstract Class Count, Ca, Ce, A, I, D, V:
 
-com.plantuml.ubrex,28,3,10,4,0.11,0.29,0.61,1
+com.plantuml.ubrex,29,4,10,4,0.14,0.29,0.58,1
 com.plantuml.ubrex.builder,9,1,9,3,0.11,0.25,0.64,1
 gen.annotation,9,9,0,2,1,1,1,1
 gen.lib.cdt,18,0,3,4,0,0.57,0.43,1
@@ -14853,7 +14859,7 @@ java.security,0,0,3,0,0,0,1,1
 java.security.spec,0,0,2,0,0,0,1,1
 java.text,0,0,5,0,0,0,1,1
 java.time,0,0,12,0,0,0,1,1
-java.time.temporal,0,0,1,0,0,0,1,1
+java.time.temporal,0,0,2,0,0,0,1,1
 java.util,0,0,174,0,0,0,1,1
 java.util.concurrent,0,0,6,0,0,0,1,1
 java.util.concurrent.atomic,0,0,5,0,0,0,1,1
@@ -14955,13 +14961,13 @@ net.sourceforge.plantuml.flashcode,3,1,0,3,0.33,1,0.33,1
 net.sourceforge.plantuml.flowdiagram,6,0,0,19,0,1,0,1
 net.sourceforge.plantuml.font,2,0,0,7,0,1,0,1
 net.sourceforge.plantuml.ftp,2,0,0,3,0,1,0,1
-net.sourceforge.plantuml.gantt,24,3,8,36,0.12,0.82,0.06,1
+net.sourceforge.plantuml.gantt,25,3,8,37,0.12,0.82,0.06,1
 net.sourceforge.plantuml.gantt.command,14,0,1,18,0,0.95,0.05,1
 net.sourceforge.plantuml.gantt.core,12,3,9,13,0.25,0.59,0.16,1
 net.sourceforge.plantuml.gantt.data,8,0,3,18,0,0.86,0.14,1
 net.sourceforge.plantuml.gantt.draw,9,2,4,25,0.22,0.86,0.08,1
 net.sourceforge.plantuml.gantt.draw.header,10,2,2,15,0.2,0.88,0.08,1
-net.sourceforge.plantuml.gantt.lang,80,3,4,17,0.04,0.81,0.15,1
+net.sourceforge.plantuml.gantt.lang,83,3,4,17,0.04,0.81,0.15,1
 net.sourceforge.plantuml.gantt.ngm,4,1,4,3,0.25,0.43,0.32,1
 net.sourceforge.plantuml.gantt.ngm.math,11,2,5,6,0.18,0.55,0.27,1
 net.sourceforge.plantuml.gantt.solver,2,0,1,8,0,0.89,0.11,1

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
@@ -43,19 +43,19 @@ import com.plantuml.ubrex.builder.UBrexPart;
 import net.sourceforge.plantuml.gantt.Failable;
 import net.sourceforge.plantuml.gantt.GanttDiagram;
 
-<span class="nc" id="L46">public class ComplementWorkingHours implements Something&lt;GanttDiagram&gt; {</span>
+<span class="fc" id="L46">public class ComplementWorkingHours implements Something&lt;GanttDiagram&gt; {</span>
 
 	@Override
 	public UBrexPart toUnicodeBracketedExpressionComplement() {
-<span class="nc" id="L50">		return UBrexConcat.build( //</span>
+<span class="fc" id="L50">		return UBrexConcat.build( //</span>
 				new UBrexLeaf(&quot;working&quot;), //
-<span class="nc" id="L52">				UBrexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L52">				UBrexLeaf.spaceOneOrMore(), //</span>
 				new UBrexLeaf(&quot;hours&quot;));
 	}
 
 	@Override
-	public Failable&lt;String&gt; getMe(GanttDiagram gantt, UMatcher arg) {
-<span class="nc" id="L58">		return Failable.ok(&quot;&quot;);</span>
+	public Failable&lt;String&gt; getMe(GanttDiagram gantt, CaptureLookup arg) {
+<span class="fc" id="L58">		return Failable.ok(&quot;&quot;);</span>
 	}
 
 }

@@ -4,18 +4,21 @@
 
         <Package name="com.plantuml.ubrex">
             <Stats>
-                <TotalClasses>28</TotalClasses>
+                <TotalClasses>29</TotalClasses>
                 <ConcreteClasses>25</ConcreteClasses>
-                <AbstractClasses>3</AbstractClasses>
+                <AbstractClasses>4</AbstractClasses>
                 <Ca>10</Ca>
                 <Ce>4</Ce>
-                <A>0.11</A>
+                <A>0.14</A>
                 <I>0.29</I>
-                <D>0.61</D>
+                <D>0.58</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
+                <Class sourceFile="CaptureLookup.java">
+                    com.plantuml.ubrex.CaptureLookup
+                </Class>
                 <Class sourceFile="Challenge.java">
                     com.plantuml.ubrex.Challenge
                 </Class>
@@ -7878,11 +7881,11 @@
 
         <Package name="net.sourceforge.plantuml.gantt">
             <Stats>
-                <TotalClasses>24</TotalClasses>
-                <ConcreteClasses>21</ConcreteClasses>
+                <TotalClasses>25</TotalClasses>
+                <ConcreteClasses>22</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>8</Ca>
-                <Ce>36</Ce>
+                <Ce>37</Ce>
                 <A>0.12</A>
                 <I>0.82</I>
                 <D>0.06</D>
@@ -7932,6 +7935,12 @@
                 <Class sourceFile="GanttDiagramMainBlock.java">
                     net.sourceforge.plantuml.gantt.GanttDiagramMainBlock
                 </Class>
+                <Class sourceFile="GanttI18n.java">
+                    net.sourceforge.plantuml.gantt.GanttI18n$Unit
+                </Class>
+                <Class sourceFile="GanttI18n.java">
+                    net.sourceforge.plantuml.gantt.GanttI18n$Units
+                </Class>
                 <Class sourceFile="GanttLayout.java">
                     net.sourceforge.plantuml.gantt.GanttLayout
                 </Class>
@@ -7949,9 +7958,6 @@
                 </Class>
                 <Class sourceFile="GanttTaskTableColumn.java">
                     net.sourceforge.plantuml.gantt.GanttTaskTableColumn$4
-                </Class>
-                <Class sourceFile="GanttTaskTableColumn.java">
-                    net.sourceforge.plantuml.gantt.GanttTaskTableColumn$Context
                 </Class>
                 <Class sourceFile="LabelPosition.java">
                     net.sourceforge.plantuml.gantt.LabelPosition
@@ -7972,6 +7978,7 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.time</Package>
+                <Package>java.time.temporal</Package>
                 <Package>java.util</Package>
                 <Package>java.util.regex</Package>
                 <Package>net.sourceforge.plantuml</Package>
@@ -8417,8 +8424,8 @@
 
         <Package name="net.sourceforge.plantuml.gantt.lang">
             <Stats>
-                <TotalClasses>80</TotalClasses>
-                <ConcreteClasses>77</ConcreteClasses>
+                <TotalClasses>83</TotalClasses>
+                <ConcreteClasses>80</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
                 <Ca>4</Ca>
                 <Ce>17</Ce>
@@ -8491,6 +8498,9 @@
                 </Class>
                 <Class sourceFile="ComplementOpen.java">
                     net.sourceforge.plantuml.gantt.lang.ComplementOpen
+                </Class>
+                <Class sourceFile="ComplementTimePoint.java">
+                    net.sourceforge.plantuml.gantt.lang.ComplementTimePoint
                 </Class>
                 <Class sourceFile="ComplementUrl.java">
                     net.sourceforge.plantuml.gantt.lang.ComplementUrl
@@ -8592,7 +8602,7 @@
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$1
                 </Class>
                 <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.gantt.lang.SubjectTask$11
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$10
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$12
@@ -8601,10 +8611,10 @@
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$13
                 </Class>
                 <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.gantt.lang.SubjectTask$15
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$14
                 </Class>
                 <Class sourceFile="SubjectTask.java">
-                    net.sourceforge.plantuml.gantt.lang.SubjectTask$16
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$15
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$17
@@ -8626,6 +8636,12 @@
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$22
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$23
+                </Class>
+                <Class sourceFile="SubjectTask.java">
+                    net.sourceforge.plantuml.gantt.lang.SubjectTask$24
                 </Class>
                 <Class sourceFile="SubjectTask.java">
                     net.sourceforge.plantuml.gantt.lang.SubjectTask$3

@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
@@ -56,8 +56,8 @@ import net.sourceforge.plantuml.gantt.GanttDiagram;
 	}
 
 	@Override
-	public Failable&lt;String&gt; getMe(GanttDiagram diagram, UMatcher arg) {
-<span class="fc" id="L60">		final String value = arg.get(&quot;CLOSED&quot;, 0);</span>
+	public Failable&lt;String&gt; getMe(GanttDiagram diagram, CaptureLookup arg) {
+<span class="fc" id="L60">		final String value = arg.findFirstValueByKey(&quot;CLOSED&quot;);</span>
 <span class="fc" id="L61">		final int x = value.indexOf('[');</span>
 <span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (x &gt; 0) {</span>
 <span class="nc" id="L63">			final int y = value.lastIndexOf(']');</span>

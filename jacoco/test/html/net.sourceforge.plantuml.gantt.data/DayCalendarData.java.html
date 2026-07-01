@@ -138,12 +138,12 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 	}
 
 	public void addWorkingTimeRange(TimeRange timeRange) {
-<span class="nc" id="L141">		workingTimeRanges.add(timeRange);</span>
-<span class="nc" id="L142">		openClose.addWorkingTimeRange(timeRange);</span>
-<span class="nc" id="L143">	}</span>
+<span class="fc" id="L141">		workingTimeRanges.add(timeRange);</span>
+<span class="fc" id="L142">		openClose.addWorkingTimeRange(timeRange);</span>
+<span class="fc" id="L143">	}</span>
 
 	public WorkingHours buildWorkingHours(double dayWidth, double closeFactor) {
-<span class="nc" id="L146">		return new WorkingHours(workingTimeRanges, dayWidth, closeFactor);</span>
+<span class="fc" id="L146">		return new WorkingHours(workingTimeRanges, dayWidth, closeFactor);</span>
 	}
 
 	public boolean hasWorkingTimeRanges() {

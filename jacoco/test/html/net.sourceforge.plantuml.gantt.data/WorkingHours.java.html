@@ -62,8 +62,8 @@ public class WorkingHours {
 	}
 
 	public double getWorkingDurationForOneDay(boolean isClosed) {
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (isClosed)</span>
-<span class="nc" id="L66">			return widthForClosedHours(Duration.ofHours(24));</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (isClosed)</span>
+<span class="fc" id="L66">			return widthForClosedHours(Duration.ofHours(24));</span>
 
 <span class="fc" id="L68">		final Duration working = workingTimeRanges.totalWorkingDuration();</span>
 <span class="fc" id="L69">		final Duration pause = Duration.ofHours(24).minus(working);</span>
@@ -101,15 +101,15 @@ public class WorkingHours {
 	}
 
 	public void drawOneDay(UGraphic ug, double height) {
-<span class="nc" id="L104">		double current = getPartialDayWidth(LocalTime.MIDNIGHT);</span>
-<span class="nc bnc" id="L105" title="All 2 branches missed.">		for (TimeRange range : this.workingTimeRanges) {</span>
-<span class="nc" id="L106">			final double start = getPartialDayWidth(range.getStart());</span>
-<span class="nc" id="L107">			ug.apply(UTranslate.dx(current)).draw(URectangle.build(start - current, height));</span>
-<span class="nc" id="L108">			current = getPartialDayWidth(range.getEnd());</span>
-<span class="nc" id="L109">		}</span>
-<span class="nc" id="L110">		final double last = getPartialDayWidth(LocalTime.MAX);</span>
-<span class="nc" id="L111">		ug.apply(UTranslate.dx(current)).draw(URectangle.build(last - current, height));</span>
-<span class="nc" id="L112">	}</span>
+<span class="fc" id="L104">		double current = getPartialDayWidth(LocalTime.MIDNIGHT);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		for (TimeRange range : this.workingTimeRanges) {</span>
+<span class="fc" id="L106">			final double start = getPartialDayWidth(range.getStart());</span>
+<span class="fc" id="L107">			ug.apply(UTranslate.dx(current)).draw(URectangle.build(start - current, height));</span>
+<span class="fc" id="L108">			current = getPartialDayWidth(range.getEnd());</span>
+<span class="fc" id="L109">		}</span>
+<span class="fc" id="L110">		final double last = getPartialDayWidth(LocalTime.MAX);</span>
+<span class="fc" id="L111">		ug.apply(UTranslate.dx(current)).draw(URectangle.build(last - current, height));</span>
+<span class="fc" id="L112">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

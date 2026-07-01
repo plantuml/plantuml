@@ -69,10 +69,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.draw.header">net.sourceforge.plantuml.gantt.draw.header</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.time">net.sourceforge.plantuml.gantt.time</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.lang">net.sourceforge.plantuml.gantt.lang</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.timescale">net.sourceforge.plantuml.gantt.timescale</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.gantt.time">net.sourceforge.plantuml.gantt.time</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.gantt.timescale">net.sourceforge.plantuml.gantt.timescale</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -369,6 +371,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="net.sourceforge.plantuml.gantt.lang">
+<h2>Uses of <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a> in <a href="../../lang/package-summary.html">net.sourceforge.plantuml.gantt.lang</a></h2>
+<div class="caption"><span>Methods in <a href="../../lang/package-summary.html">net.sourceforge.plantuml.gantt.lang</a> that return types with arguments of type <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../Failable.html" title="class in net.sourceforge.plantuml.gantt">Failable</a><wbr>&lt;<a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ComplementTimePoint.</span><code><a href="../../lang/ComplementTimePoint.html#getMe(net.sourceforge.plantuml.gantt.GanttDiagram,com.plantuml.ubrex.CaptureLookup)" class="member-name-link">getMe</a><wbr>(<a href="../../GanttDiagram.html" title="class in net.sourceforge.plantuml.gantt">GanttDiagram</a>&nbsp;gantt,
+ <a href="../../../../../../com/plantuml/ubrex/CaptureLookup.html" title="interface in com.plantuml.ubrex">CaptureLookup</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="net.sourceforge.plantuml.gantt.time">
 <h2>Uses of <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a> in <a href="../package-summary.html">net.sourceforge.plantuml.gantt.time</a></h2>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.gantt.time</a> that return <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></span></div>
@@ -411,37 +428,34 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#of(java.time.LocalDateTime)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;time)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#ofEndOfDay()" class="member-name-link">ofEndOfDay</a>()</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#ofEndOfDayMinusOneSecond(java.time.LocalDate)" class="member-name-link">ofEndOfDayMinusOneSecond</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#ofEndOfDayMinusOneSecond(java.time.LocalDate)" class="member-name-link">ofEndOfDayMinusOneSecond</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#ofStartOfDay(int,int,int)" class="member-name-link">ofStartOfDay</a><wbr>(int&nbsp;year,
+<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#ofStartOfDay(int,int,int)" class="member-name-link">ofStartOfDay</a><wbr>(int&nbsp;year,
  int&nbsp;month,
  int&nbsp;dayOfMonth)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#ofStartOfDay(int,java.lang.String,int)" class="member-name-link">ofStartOfDay</a><wbr>(int&nbsp;year,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#ofStartOfDay(int,java.lang.String,int)" class="member-name-link">ofStartOfDay</a><wbr>(int&nbsp;year,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;month,
  int&nbsp;dayOfMonth)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#ofStartOfDay(java.time.LocalDate)" class="member-name-link">ofStartOfDay</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#plusOneSecond()" class="member-name-link">plusOneSecond</a>()</code></div>
+<div class="col-first even-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#ofStartOfDay(java.time.LocalDate)" class="member-name-link">ofStartOfDay</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;day)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#roundDayDown()" class="member-name-link">roundDayDown</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#plusOneSecond()" class="member-name-link">plusOneSecond</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#roundDayUp()" class="member-name-link">roundDayUp</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#roundDayDown()" class="member-name-link">roundDayDown</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#todayAtMidnight()" class="member-name-link">todayAtMidnight</a>()</code></div>
+<div class="col-first odd-row-color"><code><a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#roundDayUp()" class="member-name-link">roundDayUp</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TimePoint.</span><code><a href="../TimePoint.html#todayAtMidnight()" class="member-name-link">todayAtMidnight</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.gantt.time</a> with parameters of type <a href="../TimePoint.html" title="class in net.sourceforge.plantuml.gantt.time">TimePoint</a></span></div>
 <div class="summary-table three-column-summary">

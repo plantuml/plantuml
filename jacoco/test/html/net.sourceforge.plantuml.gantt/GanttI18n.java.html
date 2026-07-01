@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt;
 
+import java.time.Duration;
 import java.util.Locale;
 
 public final class GanttI18n {
@@ -43,144 +44,222 @@ public final class GanttI18n {
 	}
 
 	public static String task(Locale locale) {
-<span class="fc" id="L46">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L47" title="7 of 8 branches missed.">		switch (lang) {</span>
+<span class="fc" id="L47">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L48" title="7 of 8 branches missed.">		switch (lang) {</span>
 		case &quot;fr&quot;:
-<span class="nc" id="L49">			return &quot;Tâche&quot;;</span>
+<span class="nc" id="L50">			return &quot;Tâche&quot;;</span>
 		case &quot;es&quot;:
-<span class="nc" id="L51">			return &quot;Tarea&quot;;</span>
+<span class="nc" id="L52">			return &quot;Tarea&quot;;</span>
 		case &quot;de&quot;:
-<span class="nc" id="L53">			return &quot;Aufgabe&quot;;</span>
+<span class="nc" id="L54">			return &quot;Aufgabe&quot;;</span>
 		case &quot;ja&quot;:
-<span class="nc" id="L55">			return &quot;タスク&quot;;</span>
+<span class="nc" id="L56">			return &quot;タスク&quot;;</span>
 		case &quot;ko&quot;:
-<span class="nc" id="L57">			return &quot;작업&quot;;</span>
+<span class="nc" id="L58">			return &quot;작업&quot;;</span>
 		case &quot;ru&quot;:
-<span class="nc" id="L59">			return &quot;Задача&quot;;</span>
+<span class="nc" id="L60">			return &quot;Задача&quot;;</span>
 		case &quot;zh&quot;:
-<span class="nc" id="L61">			return &quot;任务&quot;;</span>
+<span class="nc" id="L62">			return &quot;任务&quot;;</span>
 		}
-<span class="fc" id="L63">		return &quot;Task&quot;;</span>
+<span class="fc" id="L64">		return &quot;Task&quot;;</span>
 	}
 
 	public static String start(Locale locale) {
-<span class="fc" id="L67">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L68" title="7 of 8 branches missed.">		switch (lang) {</span>
+<span class="fc" id="L68">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L69" title="6 of 8 branches missed.">		switch (lang) {</span>
 		case &quot;fr&quot;:
-<span class="nc" id="L70">			return &quot;Début&quot;;</span>
+<span class="nc" id="L71">			return &quot;Début&quot;;</span>
 		case &quot;es&quot;:
-<span class="nc" id="L72">			return &quot;Inicio&quot;;</span>
+<span class="nc" id="L73">			return &quot;Inicio&quot;;</span>
 		case &quot;de&quot;:
-<span class="nc" id="L74">			return &quot;Start&quot;;</span>
+<span class="fc" id="L75">			return &quot;Start&quot;;</span>
 		case &quot;ja&quot;:
-<span class="nc" id="L76">			return &quot;開始&quot;;</span>
+<span class="nc" id="L77">			return &quot;開始&quot;;</span>
 		case &quot;ko&quot;:
-<span class="nc" id="L78">			return &quot;시작&quot;;</span>
+<span class="nc" id="L79">			return &quot;시작&quot;;</span>
 		case &quot;ru&quot;:
-<span class="nc" id="L80">			return &quot;Начало&quot;;</span>
+<span class="nc" id="L81">			return &quot;Начало&quot;;</span>
 		case &quot;zh&quot;:
-<span class="nc" id="L82">			return &quot;开始&quot;;</span>
+<span class="nc" id="L83">			return &quot;开始&quot;;</span>
 		}
-<span class="fc" id="L84">		return &quot;Start&quot;;</span>
+<span class="fc" id="L85">		return &quot;Start&quot;;</span>
 	}
 
 	public static String end(Locale locale) {
-<span class="fc" id="L88">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L89" title="7 of 8 branches missed.">		switch (lang) {</span>
+<span class="fc" id="L89">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L90" title="6 of 8 branches missed.">		switch (lang) {</span>
 		case &quot;fr&quot;:
-<span class="nc" id="L91">			return &quot;Fin&quot;;</span>
+<span class="nc" id="L92">			return &quot;Fin&quot;;</span>
 		case &quot;es&quot;:
-<span class="nc" id="L93">			return &quot;Fin&quot;;</span>
+<span class="nc" id="L94">			return &quot;Fin&quot;;</span>
 		case &quot;de&quot;:
-<span class="nc" id="L95">			return &quot;Ende&quot;;</span>
+<span class="fc" id="L96">			return &quot;Ende&quot;;</span>
 		case &quot;ja&quot;:
-<span class="nc" id="L97">			return &quot;終了&quot;;</span>
+<span class="nc" id="L98">			return &quot;終了&quot;;</span>
 		case &quot;ko&quot;:
-<span class="nc" id="L99">			return &quot;끝&quot;;</span>
+<span class="nc" id="L100">			return &quot;끝&quot;;</span>
 		case &quot;ru&quot;:
-<span class="nc" id="L101">			return &quot;Окончание&quot;;</span>
+<span class="nc" id="L102">			return &quot;Окончание&quot;;</span>
 		case &quot;zh&quot;:
-<span class="nc" id="L103">			return &quot;结束&quot;;</span>
+<span class="nc" id="L104">			return &quot;结束&quot;;</span>
 		}
-<span class="fc" id="L105">		return &quot;End&quot;;</span>
+<span class="fc" id="L106">		return &quot;End&quot;;</span>
 	}
 
 	public static String duration(Locale locale) {
-<span class="fc" id="L109">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L110" title="7 of 8 branches missed.">		switch (lang) {</span>
+<span class="fc" id="L110">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L111" title="6 of 8 branches missed.">		switch (lang) {</span>
 		case &quot;fr&quot;:
-<span class="nc" id="L112">			return &quot;Durée&quot;;</span>
+<span class="nc" id="L113">			return &quot;Durée&quot;;</span>
 		case &quot;es&quot;:
-<span class="nc" id="L114">			return &quot;Duración&quot;;</span>
+<span class="nc" id="L115">			return &quot;Duración&quot;;</span>
 		case &quot;de&quot;:
-<span class="nc" id="L116">			return &quot;Dauer&quot;;</span>
+<span class="fc" id="L117">			return &quot;Dauer&quot;;</span>
 		case &quot;ja&quot;:
-<span class="nc" id="L118">			return &quot;期間&quot;;</span>
+<span class="nc" id="L119">			return &quot;期間&quot;;</span>
 		case &quot;ko&quot;:
-<span class="nc" id="L120">			return &quot;기간&quot;;</span>
+<span class="nc" id="L121">			return &quot;기간&quot;;</span>
 		case &quot;ru&quot;:
-<span class="nc" id="L122">			return &quot;Длительность&quot;;</span>
+<span class="nc" id="L123">			return &quot;Длительность&quot;;</span>
 		case &quot;zh&quot;:
-<span class="nc" id="L124">			return &quot;持续时间&quot;;</span>
+<span class="nc" id="L125">			return &quot;持续时间&quot;;</span>
 		}
-<span class="fc" id="L126">		return &quot;Duration&quot;;</span>
+<span class="fc" id="L127">		return &quot;Duration&quot;;</span>
 	}
 
-	public static String durationInDays(Locale locale, int days) {
-<span class="fc" id="L130">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L131" title="7 of 8 branches missed.">		switch (lang) {</span>
-		case &quot;fr&quot;:
-<span class="nc bnc" id="L133" title="All 2 branches missed.">			if (days &lt;= 1)</span>
-<span class="nc" id="L134">				return &quot;1 jour&quot;;</span>
-<span class="nc" id="L135">			return days + &quot; jours&quot;;</span>
-		case &quot;es&quot;:
-<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (days &lt;= 1)</span>
-<span class="nc" id="L138">				return &quot;1 día&quot;;</span>
-<span class="nc" id="L139">			return days + &quot; días&quot;;</span>
-		case &quot;de&quot;:
-<span class="nc bnc" id="L141" title="All 2 branches missed.">			if (days &lt;= 1)</span>
-<span class="nc" id="L142">				return &quot;1 Tag&quot;;</span>
-<span class="nc" id="L143">			return days + &quot; Tage&quot;;</span>
-		case &quot;ja&quot;:
-<span class="nc" id="L145">			return days + &quot;日&quot;;</span>
-		case &quot;ko&quot;:
-<span class="nc" id="L147">			return days + &quot;일&quot;;</span>
-		case &quot;ru&quot;:
-<span class="nc bnc" id="L149" title="All 2 branches missed.">			if (days == 1)</span>
-<span class="nc" id="L150">				return &quot;1 день&quot;;</span>
-<span class="nc bnc" id="L151" title="All 4 branches missed.">			else if (days &gt;= 2 &amp;&amp; days &lt;= 4)</span>
-<span class="nc" id="L152">				return days + &quot; дня&quot;;</span>
-			else
-<span class="nc" id="L154">				return days + &quot; дней&quot;;</span>
-		case &quot;zh&quot;:
-<span class="nc" id="L156">			return days + &quot;天&quot;;</span>
+	public static String durationHumanReadable(Locale locale, Duration duration) {
+<span class="fc" id="L131">		long seconds = duration.getSeconds();</span>
+<span class="fc" id="L132">		final Units units = Units.of(locale.getLanguage());</span>
+
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (seconds == 0)</span>
+<span class="nc" id="L135">			return units.none;</span>
+
+<span class="fc" id="L137">		final long days = seconds / (24 * 3600);</span>
+<span class="fc" id="L138">		seconds %= (24 * 3600);</span>
+<span class="fc" id="L139">		final long hours = seconds / 3600;</span>
+<span class="fc" id="L140">		seconds %= 3600;</span>
+<span class="fc" id="L141">		final long minutes = seconds / 60;</span>
+<span class="fc" id="L142">		seconds %= 60;</span>
+
+<span class="fc" id="L144">		final StringBuilder result = new StringBuilder();</span>
+<span class="fc" id="L145">		units.append(result, days, Unit.DAY);</span>
+<span class="fc" id="L146">		units.append(result, hours, Unit.HOUR);</span>
+<span class="fc" id="L147">		units.append(result, minutes, Unit.MINUTE);</span>
+<span class="fc" id="L148">		units.append(result, seconds, Unit.SECOND);</span>
+<span class="fc" id="L149">		return result.toString();</span>
+	}
+
+<span class="fc" id="L152">	private enum Unit {</span>
+<span class="fc" id="L153">		DAY, HOUR, MINUTE, SECOND</span>
+	}
+
+	// Holds the localized unit labels and formatting rules for one language.
+	private static final class Units {
+		private final String none;
+		private final String separator;
+		// labels[unit.ordinal()] = { singular, plural } or, for languages with a
+		// single invariable form (ja/ko/zh), just { form }. Russian uses three
+		// forms: { singular, genitive-plural, paucal (2-4) }.
+		private final String[][] labels;
+		// true for CJK languages where the number and unit are written with no
+		// space in between (e.g. &quot;3日&quot;).
+		private final boolean suffixNoSpace;
+
+<span class="fc" id="L168">		private Units(String none, String separator, boolean suffixNoSpace, String[][] labels) {</span>
+<span class="fc" id="L169">			this.none = none;</span>
+<span class="fc" id="L170">			this.separator = separator;</span>
+<span class="fc" id="L171">			this.suffixNoSpace = suffixNoSpace;</span>
+<span class="fc" id="L172">			this.labels = labels;</span>
+<span class="fc" id="L173">		}</span>
+
+		void append(StringBuilder sb, long value, Unit unit) {
+<span class="fc bfc" id="L176" title="All 2 branches covered.">			if (value &lt;= 0)</span>
+<span class="fc" id="L177">				return;</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">			if (sb.length() &gt; 0)</span>
+<span class="fc" id="L179">				sb.append(separator);</span>
+<span class="fc" id="L180">			sb.append(value);</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">			if (suffixNoSpace == false)</span>
+<span class="fc" id="L182">				sb.append(' ');</span>
+<span class="fc" id="L183">			sb.append(label(unit.ordinal(), value));</span>
+<span class="fc" id="L184">		}</span>
+
+		private String label(int unit, long value) {
+<span class="fc" id="L187">			final String[] forms = labels[unit];</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">			if (forms.length == 1)</span>
+				// Invariable form (CJK).
+<span class="nc" id="L190">				return forms[0];</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">			if (forms.length == 3) {</span>
+				// Russian plural rules.
+<span class="nc" id="L193">				final long mod100 = value % 100;</span>
+<span class="nc" id="L194">				final long mod10 = value % 10;</span>
+<span class="nc bnc" id="L195" title="All 4 branches missed.">				if (mod10 == 1 &amp;&amp; mod100 != 11)</span>
+<span class="nc" id="L196">					return forms[0];</span>
+<span class="nc bnc" id="L197" title="All 8 branches missed.">				if (mod10 &gt;= 2 &amp;&amp; mod10 &lt;= 4 &amp;&amp; (mod100 &lt; 12 || mod100 &gt; 14))</span>
+<span class="nc" id="L198">					return forms[2];</span>
+<span class="nc" id="L199">				return forms[1];</span>
+			}
+			// Western singular/plural.
+<span class="fc bfc" id="L202" title="All 2 branches covered.">			return value &gt; 1 ? forms[1] : forms[0];</span>
 		}
-<span class="fc bfc" id="L158" title="All 2 branches covered.">		if (days &lt;= 1)</span>
-<span class="fc" id="L159">			return &quot;1 day&quot;;</span>
-<span class="fc" id="L160">		return days + &quot; days&quot;;</span>
+
+		static Units of(String lang) {
+<span class="pc bpc" id="L206" title="6 of 8 branches missed.">			switch (lang) {</span>
+			case &quot;fr&quot;:
+<span class="nc" id="L208">				return new Units(&quot;aucune&quot;, &quot;, &quot;, false, new String[][] { //</span>
+						{ &quot;jour&quot;, &quot;jours&quot; }, { &quot;heure&quot;, &quot;heures&quot; }, //
+						{ &quot;minute&quot;, &quot;minutes&quot; }, { &quot;seconde&quot;, &quot;secondes&quot; } });
+			case &quot;es&quot;:
+<span class="nc" id="L212">				return new Units(&quot;ninguna&quot;, &quot;, &quot;, false, new String[][] { //</span>
+						{ &quot;día&quot;, &quot;días&quot; }, { &quot;hora&quot;, &quot;horas&quot; }, //
+						{ &quot;minuto&quot;, &quot;minutos&quot; }, { &quot;segundo&quot;, &quot;segundos&quot; } });
+			case &quot;de&quot;:
+<span class="fc" id="L216">				return new Units(&quot;keine&quot;, &quot;, &quot;, false, new String[][] { //</span>
+						{ &quot;Tag&quot;, &quot;Tage&quot; }, { &quot;Stunde&quot;, &quot;Stunden&quot; }, //
+						{ &quot;Minute&quot;, &quot;Minuten&quot; }, { &quot;Sekunde&quot;, &quot;Sekunden&quot; } });
+			case &quot;ja&quot;:
+<span class="nc" id="L220">				return new Units(&quot;なし&quot;, &quot;&quot;, true, new String[][] { //</span>
+						{ &quot;日&quot; }, { &quot;時間&quot; }, { &quot;分&quot; }, { &quot;秒&quot; } });
+			case &quot;ko&quot;:
+<span class="nc" id="L223">				return new Units(&quot;없음&quot;, &quot;, &quot;, true, new String[][] { //</span>
+						{ &quot;일&quot; }, { &quot;시간&quot; }, { &quot;분&quot; }, { &quot;초&quot; } });
+			case &quot;ru&quot;:
+<span class="nc" id="L226">				return new Units(&quot;нет&quot;, &quot;, &quot;, false, new String[][] { //</span>
+						{ &quot;день&quot;, &quot;дней&quot;, &quot;дня&quot; }, //
+						{ &quot;час&quot;, &quot;часов&quot;, &quot;часа&quot; }, //
+						{ &quot;минута&quot;, &quot;минут&quot;, &quot;минуты&quot; }, //
+						{ &quot;секунда&quot;, &quot;секунд&quot;, &quot;секунды&quot; } });
+			case &quot;zh&quot;:
+<span class="nc" id="L232">				return new Units(&quot;无&quot;, &quot;&quot;, true, new String[][] { //</span>
+						{ &quot;天&quot; }, { &quot;小时&quot; }, { &quot;分钟&quot; }, { &quot;秒&quot; } });
+			default:
+<span class="fc" id="L235">				return new Units(&quot;none&quot;, &quot;, &quot;, false, new String[][] { //</span>
+						{ &quot;day&quot;, &quot;days&quot; }, { &quot;hour&quot;, &quot;hours&quot; }, //
+						{ &quot;minute&quot;, &quot;minutes&quot; }, { &quot;second&quot;, &quot;seconds&quot; } });
+			}
+		}
 	}
 
 	// Used for date-less (relative) Gantt diagrams, where columns show a day index
 	// (&quot;Day 1&quot;, &quot;Day 2&quot;, ...) instead of a calendar date.
 	public static String dayNumber(Locale locale, int dayNum) {
-<span class="fc" id="L166">		final String lang = locale.getLanguage();</span>
-<span class="pc bpc" id="L167" title="7 of 8 branches missed.">		switch (lang) {</span>
+<span class="fc" id="L245">		final String lang = locale.getLanguage();</span>
+<span class="pc bpc" id="L246" title="7 of 8 branches missed.">		switch (lang) {</span>
 		case &quot;fr&quot;:
-<span class="nc" id="L169">			return &quot;Jour &quot; + dayNum;</span>
+<span class="nc" id="L248">			return &quot;Jour &quot; + dayNum;</span>
 		case &quot;es&quot;:
-<span class="nc" id="L171">			return &quot;Día &quot; + dayNum;</span>
+<span class="nc" id="L250">			return &quot;Día &quot; + dayNum;</span>
 		case &quot;de&quot;:
-<span class="nc" id="L173">			return &quot;Tag &quot; + dayNum;</span>
+<span class="nc" id="L252">			return &quot;Tag &quot; + dayNum;</span>
 		case &quot;ja&quot;:
-<span class="nc" id="L175">			return dayNum + &quot;日目&quot;;</span>
+<span class="nc" id="L254">			return dayNum + &quot;日目&quot;;</span>
 		case &quot;ko&quot;:
-<span class="nc" id="L177">			return dayNum + &quot;일째&quot;;</span>
+<span class="nc" id="L256">			return dayNum + &quot;일째&quot;;</span>
 		case &quot;ru&quot;:
-<span class="nc" id="L179">			return &quot;День &quot; + dayNum;</span>
+<span class="nc" id="L258">			return &quot;День &quot; + dayNum;</span>
 		case &quot;zh&quot;:
-<span class="nc" id="L181">			return &quot;第&quot; + dayNum + &quot;天&quot;;</span>
+<span class="nc" id="L260">			return &quot;第&quot; + dayNum + &quot;天&quot;;</span>
 		}
-<span class="fc" id="L183">		return &quot;Day &quot; + dayNum;</span>
+<span class="fc" id="L262">		return &quot;Day &quot; + dayNum;</span>
 	}
 
 }

@@ -75,7 +75,7 @@ public class RegexResult {
 
 	public String get(String key, int num) {
 <span class="fc bfc" id="L77" title="All 2 branches covered.">		if (matcher != null) {</span>
-<span class="fc" id="L78">			final List&lt;String&gt; list = matcher.getCapture(key);</span>
+<span class="fc" id="L78">			final List&lt;String&gt; list = matcher.findValuesByKey(key);</span>
 <span class="pc bpc" id="L79" title="1 of 4 branches missed.">			if (list == null || list.size() == 0)</span>
 <span class="fc" id="L80">				return null;</span>
 <span class="fc" id="L81">			return list.get(num);</span>

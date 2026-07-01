@@ -60,9 +60,9 @@ public class SubjectWorkingHours implements Subject&lt;GanttDiagram&gt; {
 
 	@Override
 	public Failable&lt;TimeRange&gt; getMe(GanttDiagram gantt, UMatcher arg) {
-<span class="nc" id="L63">		final String start = arg.get(&quot;START&quot;, 0);</span>
-<span class="nc" id="L64">		final String end = arg.get(&quot;END&quot;, 0);</span>
-<span class="nc" id="L65">		return Failable.ok(new TimeRange(start, end));</span>
+<span class="fc" id="L63">		final String start = arg.findFirstValueByKey(&quot;START&quot;);</span>
+<span class="fc" id="L64">		final String end = arg.findFirstValueByKey(&quot;END&quot;);</span>
+<span class="fc" id="L65">		return Failable.ok(new TimeRange(start, end));</span>
 	}
 
 	@Override
@@ -79,17 +79,17 @@ public class SubjectWorkingHours implements Subject&lt;GanttDiagram&gt; {
 
 	@Override
 	public Collection&lt;VerbPhraseAction&gt; getVerbPhrases() {
-<span class="nc" id="L82">		final List&lt;VerbPhraseAction&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L82">		final List&lt;VerbPhraseAction&gt; result = new ArrayList&lt;&gt;();</span>
 
-<span class="nc" id="L84">		result.add(new VerbPhraseAction(Verbs.are, new ComplementWorkingHours()) {</span>
+<span class="fc" id="L84">		result.add(new VerbPhraseAction(Verbs.are, new ComplementWorkingHours()) {</span>
 			@Override
 			public CommandExecutionResult execute(GanttDiagram gantt, Object subject, Object complement) {
-<span class="nc" id="L87">				final TimeRange timeRange = (TimeRange) subject;</span>
-<span class="nc" id="L88">				return gantt.addWorkingTimeRange(timeRange);</span>
+<span class="fc" id="L87">				final TimeRange timeRange = (TimeRange) subject;</span>
+<span class="fc" id="L88">				return gantt.addWorkingTimeRange(timeRange);</span>
 			}
 		});
 
-<span class="nc" id="L92">		return result;</span>
+<span class="fc" id="L92">		return result;</span>
 
 	}
 

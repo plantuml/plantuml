@@ -8,8 +8,8 @@ end title
 set separator none
 hide empty members
 
-class "com.plantuml.ubrex" %lighten("red", 39) {
-Total Classes: 28
+class "com.plantuml.ubrex" %lighten("red", 42.00000000000001) {
+Total Classes: 29
 }
 "com.plantuml.ubrex" --> "java.lang"
 "com.plantuml.ubrex" --> "java.util"
@@ -1588,12 +1588,13 @@ Total Classes: 2
 "net.sourceforge.plantuml.ftp" --> "net.sourceforge.plantuml.log"
 
 class "net.sourceforge.plantuml.gantt" %lighten("red", 94) {
-Total Classes: 24
+Total Classes: 25
 }
 "net.sourceforge.plantuml.gantt" --> "com.plantuml.ubrex.builder"
 "net.sourceforge.plantuml.gantt" --> "java.io"
 "net.sourceforge.plantuml.gantt" --> "java.lang"
 "net.sourceforge.plantuml.gantt" --> "java.time"
+"net.sourceforge.plantuml.gantt" --> "java.time.temporal"
 "net.sourceforge.plantuml.gantt" --> "java.util"
 "net.sourceforge.plantuml.gantt" --> "java.util.regex"
 "net.sourceforge.plantuml.gantt" --> "net.sourceforge.plantuml"
@@ -1737,7 +1738,7 @@ Total Classes: 10
 "net.sourceforge.plantuml.gantt.draw.header" --> "net.sourceforge.plantuml.style"
 
 class "net.sourceforge.plantuml.gantt.lang" %lighten("red", 85) {
-Total Classes: 80
+Total Classes: 83
 }
 "net.sourceforge.plantuml.gantt.lang" --> "com.plantuml.ubrex"
 "net.sourceforge.plantuml.gantt.lang" --> "com.plantuml.ubrex.builder"

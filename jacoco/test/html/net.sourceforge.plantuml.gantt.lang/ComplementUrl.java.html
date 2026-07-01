@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
 import com.plantuml.ubrex.builder.UBrexPart;
@@ -54,8 +54,8 @@ import net.sourceforge.plantuml.url.UrlMode;
 	}
 
 	@Override
-	public Failable&lt;Url&gt; getMe(GanttDiagram diagram, UMatcher arg) {
-<span class="nc" id="L58">		final String urlString = arg.get(&quot;COMPLEMENT&quot;, 0);</span>
+	public Failable&lt;Url&gt; getMe(GanttDiagram diagram, CaptureLookup arg) {
+<span class="nc" id="L58">		final String urlString = arg.findFirstValueByKey(&quot;COMPLEMENT&quot;);</span>
 <span class="nc" id="L59">		final UbrexUrlBuilder urlBuilder = new UbrexUrlBuilder(&quot;&quot;, UrlMode.STRICT);</span>
 <span class="nc" id="L60">		final Url url = urlBuilder.getUrl(urlString);</span>
 <span class="nc" id="L61">		return Failable.ok(url);</span>

@@ -245,8 +245,8 @@ public class TaskImpl extends AbstractTask implements Task {
 <span class="fc" id="L245">		TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.START);</span>
 <span class="fc bfc" id="L246" title="All 2 branches covered.">		if (diamond == false) {</span>
 <span class="fc" id="L247">			final PiecewiseConstant cal = asPiecewiseConstant();</span>
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">			while (PiecewiseConstantUtils.isZeroOnDay(cal, result.toDay()))</span>
-<span class="nc" id="L249">				result = result.increment();</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">			while (PiecewiseConstantUtils.isZeroOnDay(cal, result.toDay()))</span>
+<span class="fc" id="L249">				result = result.increment();</span>
 		}
 <span class="fc" id="L251">		cachedStart = result;</span>
 <span class="fc" id="L252">		return cachedStart;</span>

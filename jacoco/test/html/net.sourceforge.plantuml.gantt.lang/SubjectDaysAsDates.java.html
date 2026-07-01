@@ -109,13 +109,13 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 
 	@Override
 	public Failable&lt;DaysAsDates&gt; getMe(GanttDiagram gantt, UMatcher arg) {
-<span class="fc" id="L112">		final String countAnd = arg.get(&quot;COUNT_AND&quot;, 0);</span>
+<span class="fc" id="L112">		final String countAnd = arg.findFirstValueByKey(&quot;COUNT_AND&quot;);</span>
 <span class="fc bfc" id="L113" title="All 2 branches covered.">		if (countAnd != null) {</span>
 <span class="fc" id="L114">			final TimePoint date3 = getDate(gantt, arg, &quot;3&quot;);</span>
 <span class="fc" id="L115">			final int nb = Integer.parseInt(countAnd);</span>
 <span class="fc" id="L116">			return Failable.ok(new DaysAsDates(gantt, date3.toDay(), nb));</span>
 		}
-<span class="fc" id="L118">		final String countThen = arg.get(&quot;COUNT_THEN&quot;, 0);</span>
+<span class="fc" id="L118">		final String countThen = arg.findFirstValueByKey(&quot;COUNT_THEN&quot;);</span>
 <span class="fc bfc" id="L119" title="All 2 branches covered.">		if (countThen != null) {</span>
 <span class="fc" id="L120">			final TimePoint date3 = gantt.getThenDate();</span>
 <span class="fc" id="L121">			final int nb = Integer.parseInt(countThen);</span>
@@ -127,14 +127,14 @@ public class SubjectDaysAsDates implements Subject&lt;GanttDiagram&gt; {
 	}
 
 	private TimePoint getDate(GanttDiagram gantt, UMatcher arg, String suffix) {
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (arg.get(&quot;BDAY&quot; + suffix, 0) != null) {</span>
-<span class="fc" id="L131">			final int day = Integer.parseInt(arg.get(&quot;BDAY&quot; + suffix, 0));</span>
-<span class="fc" id="L132">			final int month = Integer.parseInt(arg.get(&quot;BMONTH&quot; + suffix, 0));</span>
-<span class="fc" id="L133">			final int year = Integer.parseInt(arg.get(&quot;BYEAR&quot; + suffix, 0));</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (arg.findFirstValueByKey(&quot;BDAY&quot; + suffix) != null) {</span>
+<span class="fc" id="L131">			final int day = Integer.parseInt(arg.findFirstValueByKey(&quot;BDAY&quot; + suffix));</span>
+<span class="fc" id="L132">			final int month = Integer.parseInt(arg.findFirstValueByKey(&quot;BMONTH&quot; + suffix));</span>
+<span class="fc" id="L133">			final int year = Integer.parseInt(arg.findFirstValueByKey(&quot;BYEAR&quot; + suffix));</span>
 <span class="fc" id="L134">			return TimePoint.ofStartOfDay(year, month, day);</span>
 		}
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (arg.get(&quot;ECOUNT&quot; + suffix, 0) != null) {</span>
-<span class="nc" id="L137">			final int day = Integer.parseInt(arg.get(&quot;ECOUNT&quot; + suffix, 0));</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (arg.findFirstValueByKey(&quot;ECOUNT&quot; + suffix) != null) {</span>
+<span class="nc" id="L137">			final int day = Integer.parseInt(arg.findFirstValueByKey(&quot;ECOUNT&quot; + suffix));</span>
 <span class="nc" id="L138">			return gantt.getMinTimePoint().addDays(day);</span>
 		}
 <span class="nc" id="L140">		throw new IllegalStateException();</span>

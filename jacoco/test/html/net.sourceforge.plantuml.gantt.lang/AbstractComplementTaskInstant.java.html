@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 
 import net.sourceforge.plantuml.gantt.Failable;
 import net.sourceforge.plantuml.gantt.GanttConstraintMode;
@@ -46,40 +46,41 @@ import net.sourceforge.plantuml.gantt.core.TaskInstant;
 
 <span class="fc" id="L47">abstract class AbstractComplementTaskInstant implements Something&lt;GanttDiagram&gt; {</span>
 
-	final public Failable&lt;TaskInstant&gt; getComplementTaskInstant(GanttDiagram gantt, UMatcher arg) {
-<span class="fc" id="L50">		final String code = arg.get(&quot;COMPLEMENT_CODE_OTHER&quot;, 0);</span>
-<span class="fc" id="L51">		final String startOrEnd = arg.get(&quot;COMPLEMENT_START_OR_END&quot;, 0);</span>
+	final public Failable&lt;TaskInstant&gt; getComplementTaskInstant(GanttDiagram gantt, CaptureLookup arg) {
+<span class="fc" id="L50">		final String code = arg.findFirstValueByKey(&quot;COMPLEMENT_CODE_OTHER&quot;);</span>
+<span class="fc" id="L51">		final String startOrEnd = arg.findFirstValueByKey(&quot;COMPLEMENT_START_OR_END&quot;);</span>
 
 <span class="fc" id="L53">		final Moment task = gantt.getExistingMoment(code);</span>
 <span class="pc bpc" id="L54" title="1 of 2 branches missed.">		if (task == null)</span>
 <span class="nc" id="L55">			return Failable.error(&quot;No such task &quot; + code);</span>
 
 <span class="fc" id="L57">		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(startOrEnd));</span>
-<span class="fc" id="L58">		final String nb1 = arg.get(&quot;COMPLEMENT_NB1&quot;, 0);</span>
+<span class="fc" id="L58">		final String nb1 = arg.findFirstValueByKey(&quot;COMPLEMENT_NB1&quot;);</span>
 <span class="fc bfc" id="L59" title="All 2 branches covered.">		if (nb1 != null) {</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			final int factor1 = arg.get(&quot;COMPLEMENT_DAY_OR_WEEK1&quot;, 0).startsWith(&quot;w&quot;) ? gantt.daysInWeek() : 1;</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			final int factor1 = arg.findFirstValueByKey(&quot;COMPLEMENT_DAY_OR_WEEK1&quot;).startsWith(&quot;w&quot;) ? gantt.daysInWeek() : 1;</span>
 <span class="fc" id="L61">			final int days1 = Integer.parseInt(nb1) * factor1;</span>
 
-<span class="fc" id="L63">			final String nb2 = arg.get(&quot;COMPLEMENT_NB2&quot;, 0);</span>
+<span class="fc" id="L63">			final String nb2 = arg.findFirstValueByKey(&quot;COMPLEMENT_NB2&quot;);</span>
 <span class="fc" id="L64">			int days2 = 0;</span>
 <span class="pc bpc" id="L65" title="1 of 2 branches missed.">			if (nb2 != null) {</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">				final int factor2 = arg.get(&quot;COMPLEMENT_DAY_OR_WEEK2&quot;, 0).startsWith(&quot;w&quot;) ? gantt.daysInWeek() : 1;</span>
-<span class="nc" id="L67">				days2 = Integer.parseInt(nb2) * factor2;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">				final int factor2 = arg.findFirstValueByKey(&quot;COMPLEMENT_DAY_OR_WEEK2&quot;).startsWith(&quot;w&quot;) ? gantt.daysInWeek()</span>
+<span class="nc" id="L67">						: 1;</span>
+<span class="nc" id="L68">				days2 = Integer.parseInt(nb2) * factor2;</span>
 			}
 
-<span class="fc" id="L70">			int delta = days1 + days2;</span>
-<span class="fc bfc" id="L71" title="All 2 branches covered.">			if (&quot;before&quot;.equalsIgnoreCase(arg.get(&quot;COMPLEMENT_BEFORE_OR_AFTER&quot;, 0)))</span>
-<span class="fc" id="L72">				delta = -delta;</span>
+<span class="fc" id="L71">			int delta = days1 + days2;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			if (&quot;before&quot;.equalsIgnoreCase(arg.findFirstValueByKey(&quot;COMPLEMENT_BEFORE_OR_AFTER&quot;)))</span>
+<span class="fc" id="L73">				delta = -delta;</span>
 
-<span class="fc bfc" id="L74" title="All 2 branches covered.">			final boolean working = arg.get(&quot;COMPLEMENT_WORKING1&quot;, 0) != null</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">					|| arg.get(&quot;COMPLEMENT_WORKING2&quot;, 0) != null;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			final boolean working = arg.findFirstValueByKey(&quot;COMPLEMENT_WORKING1&quot;) != null</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">					|| arg.findFirstValueByKey(&quot;COMPLEMENT_WORKING2&quot;) != null;</span>
 
-<span class="fc bfc" id="L77" title="All 2 branches covered.">			final GanttConstraintMode mode = working ? GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY</span>
-<span class="fc" id="L78">					: GanttConstraintMode.IGNORE_CALENDAR;</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">			final GanttConstraintMode mode = working ? GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY</span>
+<span class="fc" id="L79">					: GanttConstraintMode.IGNORE_CALENDAR;</span>
 
-<span class="fc" id="L80">			result = result.withDelta(delta, mode, gantt.getDefaultPlan());</span>
+<span class="fc" id="L81">			result = result.withDelta(delta, mode, gantt.getDefaultPlan());</span>
 		}
-<span class="fc" id="L82">		return Failable.ok(result);</span>
+<span class="fc" id="L83">		return Failable.ok(result);</span>
 	}
 
 }

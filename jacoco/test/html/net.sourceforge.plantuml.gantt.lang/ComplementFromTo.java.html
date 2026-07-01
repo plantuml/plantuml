@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.gantt.lang;
 
-import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.CaptureLookup;
 import com.plantuml.ubrex.builder.UBrexConcat;
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexPart;
@@ -57,9 +57,9 @@ import net.sourceforge.plantuml.gantt.GanttDiagram;
 	}
 
 	@Override
-	public Failable&lt;TwoNames&gt; getMe(GanttDiagram diagram, UMatcher arg) {
-<span class="fc" id="L61">		final String name1 = arg.get(&quot;COMPLEMENT1&quot;, 0);</span>
-<span class="fc" id="L62">		final String name2 = arg.get(&quot;COMPLEMENT2&quot;, 0);</span>
+	public Failable&lt;TwoNames&gt; getMe(GanttDiagram diagram, CaptureLookup arg) {
+<span class="fc" id="L61">		final String name1 = arg.findFirstValueByKey(&quot;COMPLEMENT1&quot;);</span>
+<span class="fc" id="L62">		final String name2 = arg.findFirstValueByKey(&quot;COMPLEMENT2&quot;);</span>
 <span class="fc" id="L63">		return Failable.ok(new TwoNames(name1, name2));</span>
 	}
 
