@@ -18,18 +18,15 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-You can use this file to put a test you are working on.
-Here is a simple example:
+@startgantt
+Project starts 2024-09-21
+saturday are closed
+sunday are closed
 
-@startuml
-alice->bob: this is a test
-@enduml
-
-So you can edit this file, but please do not push any modification in the "main" branch.
-Put your own tests on your own branches.
-
-However, if your test are interesting, you can add them to the "pdiff" project.
-See https://github.com/plantuml/pdiff
+From 8:00 to 12:00 are working hours
+From 14:00 to 18:00 are working hours
+[Task 1] starts 2024-09-22 10:30:46 and ends 2024-09-22 11:28:48
+@endgantt
 
  */
 public class Test_0 {
