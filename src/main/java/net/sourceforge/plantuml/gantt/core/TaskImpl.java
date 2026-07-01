@@ -258,7 +258,18 @@ public class TaskImpl extends AbstractTask implements Task {
 			return cachedEnd;
 
 		final NGMAllocation allocation = NGMAllocation.of(this.asPiecewiseConstant());
-		cachedEnd = (TimePoint) solver.getData(allocation, TaskAttribute.END);
+		TimePoint result = (TimePoint) solver.getData(allocation, TaskAttribute.END);
+		if (diamond == false) {
+			final PiecewiseConstant cal = asPiecewiseConstant();
+			// The end is an exclusive bound: when it falls exactly at midnight, the last
+			// included instant belongs to the previous day, hence the minusOneSecond().
+			while (PiecewiseConstantUtils.isZeroOnDay(cal, result.minusOneSecond().toDay()))
+				result = result.increment();
+
+			// Safety net: the end must never be before the start.
+			result = TimePoint.max(result, getStart());
+		}
+		cachedEnd = result;
 		return cachedEnd;
 	}
 
