@@ -3,11 +3,16 @@ package net.sourceforge.plantuml.classdiagram;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.api.v2.DiagramReturn;
 import net.sourceforge.plantuml.api.v2.DiagramUtils;
@@ -52,6 +57,50 @@ class NamespaceSameNameAsClassTest {
 		final Entity leafB = quarkB.getData();
 		assertNotNull(leafB, "Nested class 'a.b' should still exist");
 		assertFalse(leafB.isGroup(), "'a.b' should be a class (leaf), not a group/namespace");
+	}
+
+	/**
+	 * Checking only {@link Diagram#getDescription()} is not enough: a promoted
+	 * phantom-group entity used to keep the {@code Bodier} built by
+	 * {@code CucaDiagram.createGroup} (never bound to a leaf via
+	 * {@code Bodier.setLeaf}, and unable to render fields/methods), which made
+	 * the description succeed while actually rendering the image crashed with a
+	 * NullPointerException in BodyEnhanced1. These tests render real images to
+	 * guard against that class of bug.
+	 */
+	@Test
+	void testRenderingImageDoesNotCrash() throws IOException {
+		assertRendersWithoutCrash("@startuml", "set separator .", "class a.b", "class a", "@enduml");
+	}
+
+	@Test
+	void testRenderingImageDoesNotCrashWhenRelationPointsAtPhantomGroupFirst() throws IOException {
+		assertRendersWithoutCrash("@startuml", "set separator .", "class a.b", "X --> a", "class a", "@enduml");
+	}
+
+	@Test
+	void testRenderingImageDoesNotCrashWithMultiplePhantomChildren() throws IOException {
+		assertRendersWithoutCrash("@startuml", "set separator .", "class a.b", "class a.c", "class a", "@enduml");
+	}
+
+	@Test
+	void testRenderingImageDoesNotCrashWhenPromotedClassHasBodyContent() throws IOException {
+		assertRendersWithoutCrash("@startuml", "set separator .", "class a.b", "class a {", "+field1",
+				"+method1()", "}", "@enduml");
+	}
+
+	private void assertRendersWithoutCrash(String... lines) throws IOException {
+		final StringBuilder source = new StringBuilder();
+		for (String line : lines)
+			source.append(line).append('\n');
+
+		final SourceStringReader reader = new SourceStringReader(source.toString());
+		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		reader.outputImage(baos, new FileFormatOption(FileFormat.SVG));
+
+		final String svg = new String(baos.toByteArray(), java.nio.charset.StandardCharsets.UTF_8);
+		assertFalse(svg.contains("has crashed"), "Rendering should not crash:\n" + svg);
+		assertFalse(svg.contains("An error has occurred"), "Rendering should not report an error:\n" + svg);
 	}
 
 }

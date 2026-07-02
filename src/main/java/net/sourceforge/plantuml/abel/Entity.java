@@ -52,6 +52,7 @@ import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.Neighborhood;
@@ -95,7 +96,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 	private Url url;
 
-	private final Bodier bodier;
+	private Bodier bodier;
 	private final String uid;
 	private Display display = Display.empty();
 	private DisplayPositioned legend = null;
@@ -230,6 +231,11 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 			this.phantomGroup = false;
 			this.leafType = newType;
 			this.symbol = newSymbol;
+			// The group's Bodier (built by BodyFactory.createGroup) is never bound to a
+			// leaf and cannot render fields/methods, so it must be replaced with a real
+			// leaf Bodier, exactly like CucaDiagram.createLeaf does for a fresh leaf.
+			this.bodier = BodyFactory.createLeaf(diagram.getSkinParam(), newType, null);
+			this.bodier.setLeaf(this);
 			return true;
 		}
 		if (leafType != LeafType.STILL_UNKNOWN) {
