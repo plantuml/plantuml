@@ -140,6 +140,12 @@ public class GroupingTile extends AbstractTile {
 				allElses.add(tile);
 				continue;
 			}
+			// Else tiles merged inside a TileParallel (par2) must also be processed
+			// later, like plain else tiles: their min X is the min X of this very
+			// GroupingTile, which is not computed yet
+			if (tile instanceof TileParallel)
+				allElses.addAll(((TileParallel) tile).getElseTiles());
+
 			min2.add(tile.getMinX().addFixed(-MARGINX));
 			final Real m = tile.getMaxX();
 			// max2.add(m == tileArgumentsOriginal.getOmega() ? m : m.addFixed(MARGINX));
