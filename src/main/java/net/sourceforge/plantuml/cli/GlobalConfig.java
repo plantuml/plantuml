@@ -44,7 +44,7 @@ public class GlobalConfig {
 	static public final boolean STRICT_SELFMESSAGE_POSITION = true;
 	static public final boolean USE_INTERFACE_EYE1 = false;
 	static public final boolean USE_INTERFACE_EYE2 = false;
-	static public final boolean FORCE_TEOZ = false;
+	static public final boolean FORCE_TEOZ = true;
 
 	public static GlobalConfig getInstance() {
 		return singleton;
