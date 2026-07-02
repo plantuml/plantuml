@@ -18,6 +18,16 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
+daduxi-21
+fusavi
+jexavi-40
+cofuse-78
+caluni-22
+cinula-56
+cotaju-41
+kafupo
+
+
 @startuml
 header header
 footer footer
