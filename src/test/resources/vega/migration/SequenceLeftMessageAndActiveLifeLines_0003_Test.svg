@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="307px" preserveAspectRatio="none" style="width:258px;height:307px;background:#FFFFFF;" version="1.1" viewBox="0 0 258 307" width="258px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Test</title>
+      <rect fill="#000" fill-opacity="0" height="228" width="8" x="223.506" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="227.006" x2="227.006" y1="39" y2="267"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="189" style="stroke:#181818;stroke-width:1;" width="10" x="222.006" y="47"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.213" x="206.4" y="10"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="213.4" y="27.889">Test</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.213" x="206.4" y="267"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="213.4" y="284.889">Test</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="180.006" x2="221.006" y1="118" y2="118"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="180.006" x2="180.006" y1="118" y2="131"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="180.006" x2="221.006" y1="131" y2="131"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="220.006" x2="210.006" y1="131" y2="127"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="220.006" x2="210.006" y1="131" y2="135"/>
+    <text fill="#000" font-size="13" textLength="18.038" x="17" y="61.111">the</text>
+    <text fill="#000" font-size="13" x="35.038" y="61.111"> </text>
+    <text fill="#000" font-size="13" textLength="32.5" x="35.038" y="61.111">arrow</text>
+    <text fill="#000" font-size="13" x="67.538" y="61.111"> </text>
+    <text fill="#000" font-size="13" textLength="21.694" x="67.538" y="61.111">and</text>
+    <text fill="#000" font-size="13" x="89.231" y="61.111"> </text>
+    <text fill="#000" font-size="13" textLength="20.881" x="89.231" y="61.111">text</text>
+    <text fill="#000" font-size="13" x="110.113" y="61.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.769" x="110.113" y="61.111">are</text>
+    <text fill="#000" font-size="13" x="128.881" y="61.111"> </text>
+    <text fill="#000" font-size="13" textLength="41.925" x="128.881" y="61.111">located</text>
+    <text fill="#000" font-size="13" x="170.806" y="61.111"> </text>
+    <text fill="#000" font-size="13" textLength="34.044" x="170.806" y="61.111">inside</text>
+    <text fill="#000" font-size="13" textLength="18.038" x="17" y="74.111">the</text>
+    <text fill="#000" font-size="13" x="35.038" y="74.111"> </text>
+    <text fill="#000" font-size="13" textLength="41.275" x="35.038" y="74.111">Lifeline</text>
+    <text fill="#000" font-size="13" x="76.313" y="74.111"> </text>
+    <text fill="#000" font-size="13" textLength="49.156" x="76.313" y="74.111">because</text>
+    <text fill="#000" font-size="13" x="125.469" y="74.111"> </text>
+    <text fill="#000" font-size="13" textLength="24.538" x="125.469" y="74.111">they</text>
+    <text fill="#000" font-size="13" x="150.006" y="74.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.769" x="150.006" y="74.111">are</text>
+    <text fill="#000" font-size="13" x="168.775" y="74.111"> </text>
+    <text fill="#000" font-size="13" textLength="46.231" x="168.775" y="74.111">counted</text>
+    <text fill="#000" font-size="13" textLength="25.919" x="17" y="87.111">from</text>
+    <text fill="#000" font-size="13" x="42.919" y="87.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="42.919" y="87.111">the</text>
+    <text fill="#000" font-size="13" x="60.956" y="87.111"> </text>
+    <text fill="#000" font-size="13" textLength="25.269" x="60.956" y="87.111">right</text>
+    <text fill="#000" font-size="13" x="86.225" y="87.111"> </text>
+    <text fill="#000" font-size="13" textLength="23.888" x="86.225" y="87.111">side</text>
+    <text fill="#000" font-size="13" x="110.113" y="87.111"> </text>
+    <text fill="#000" font-size="13" textLength="10.806" x="110.113" y="87.111">of</text>
+    <text fill="#000" font-size="13" x="120.919" y="87.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="120.919" y="87.111">the</text>
+    <text fill="#000" font-size="13" x="138.956" y="87.111"> </text>
+    <text fill="#000" font-size="13" textLength="33.963" x="138.956" y="87.111">active</text>
+    <text fill="#000" font-size="13" textLength="56.631" x="17" y="100.111">member's</text>
+    <text fill="#000" font-size="13" x="73.631" y="100.111"> </text>
+    <text fill="#000" font-size="13" textLength="41.925" x="73.631" y="100.111">column</text>
+    <text fill="#000" font-size="13" x="115.556" y="100.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.769" x="115.556" y="100.111">bar</text>
+    <text fill="#000" font-size="13" x="134.325" y="100.111"> </text>
+    <text fill="#000" font-size="13" textLength="53.463" x="134.325" y="100.111">(Lifeline).</text>
+    <text fill="#000" font-size="13" textLength="36.156" x="17" y="113.111">Which</text>
+    <text fill="#000" font-size="13" x="53.156" y="113.111"> </text>
+    <text fill="#000" font-size="13" textLength="9.425" x="53.156" y="113.111">is</text>
+    <text fill="#000" font-size="13" x="62.581" y="113.111"> </text>
+    <text fill="#000" font-size="13" textLength="14.463" x="62.581" y="113.111">an</text>
+    <text fill="#000" font-size="13" x="77.044" y="113.111"> </text>
+    <text fill="#000" font-size="13" textLength="49.806" x="77.044" y="113.111">incorrect</text>
+    <text fill="#000" font-size="13" x="126.85" y="113.111"> </text>
+    <text fill="#000" font-size="13" textLength="44.119" x="126.85" y="113.111">display,</text>
+    <text fill="#000" font-size="13" x="170.969" y="113.111"> </text>
+    <text fill="#000" font-size="13" textLength="32.5" x="170.969" y="113.111">right?</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="180.006" x2="221.006" y1="236" y2="236"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="180.006" x2="180.006" y1="236" y2="249"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="180.006" x2="226.006" y1="249" y2="249"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="225.006" x2="215.006" y1="249" y2="245"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="225.006" x2="215.006" y1="249" y2="253"/>
+    <text fill="#000" font-size="13" textLength="23.888" x="19.519" y="153.111">also</text>
+    <text fill="#000" font-size="13" x="43.406" y="153.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="43.406" y="153.111">the</text>
+    <text fill="#000" font-size="13" x="61.444" y="153.111"> </text>
+    <text fill="#000" font-size="13" textLength="32.5" x="61.444" y="153.111">arrow</text>
+    <text fill="#000" font-size="13" x="93.944" y="153.111"> </text>
+    <text fill="#000" font-size="13" textLength="9.425" x="93.944" y="153.111">is</text>
+    <text fill="#000" font-size="13" x="103.369" y="153.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="103.369" y="153.111">not</text>
+    <text fill="#000" font-size="13" x="121.406" y="153.111"> </text>
+    <text fill="#000" font-size="13" textLength="55.006" x="121.406" y="153.111">displayed</text>
+    <text fill="#000" font-size="13" textLength="49.075" x="19.519" y="166.111">correctly</text>
+    <text fill="#000" font-size="13" x="68.594" y="166.111"> </text>
+    <text fill="#000" font-size="13" textLength="38.269" x="68.594" y="166.111">(issue:</text>
+    <text fill="#000" font-size="13" x="106.862" y="166.111"> </text>
+    <text fill="#000" font-size="13" textLength="44.037" x="106.862" y="166.111">#1678).</text>
+    <text fill="#000" font-size="13" x="150.9" y="166.111"> </text>
+    <text fill="#000" font-size="13" textLength="7.881" x="150.9" y="166.111">(I</text>
+    <text fill="#000" font-size="13" x="158.781" y="166.111"> </text>
+    <text fill="#000" font-size="13" textLength="42.656" x="158.781" y="166.111">wonder</text>
+    <text fill="#000" font-size="13" x="201.437" y="166.111"> </text>
+    <text fill="#000" font-size="13" textLength="6.5" x="201.437" y="166.111">if</text>
+    <text fill="#000" font-size="13" textLength="18.038" x="19.519" y="179.111">the</text>
+    <text fill="#000" font-size="13" x="37.556" y="179.111"> </text>
+    <text fill="#000" font-size="13" textLength="40.544" x="37.556" y="179.111">closing</text>
+    <text fill="#000" font-size="13" x="78.1" y="179.111"> </text>
+    <text fill="#000" font-size="13" textLength="10.806" x="78.1" y="179.111">of</text>
+    <text fill="#000" font-size="13" x="88.906" y="179.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="88.906" y="179.111">the</text>
+    <text fill="#000" font-size="13" x="106.944" y="179.111"> </text>
+    <text fill="#000" font-size="13" textLength="41.275" x="106.944" y="179.111">Lifeline</text>
+    <text fill="#000" font-size="13" x="148.219" y="179.111"> </text>
+    <text fill="#000" font-size="13" textLength="9.425" x="148.219" y="179.111">is</text>
+    <text fill="#000" font-size="13" x="157.644" y="179.111"> </text>
+    <text fill="#000" font-size="13" textLength="55.006" x="157.644" y="179.111">displayed</text>
+    <text fill="#000" font-size="13" textLength="56.306" x="19.519" y="192.111">correctly?</text>
+    <text fill="#000" font-size="13" x="75.825" y="192.111"> </text>
+    <text fill="#000" font-size="13" textLength="40.544" x="75.825" y="192.111">Should</text>
+    <text fill="#000" font-size="13" x="116.369" y="192.111"> </text>
+    <text fill="#000" font-size="13" textLength="6.5" x="116.369" y="192.111">it</text>
+    <text fill="#000" font-size="13" x="122.869" y="192.111"> </text>
+    <text fill="#000" font-size="13" textLength="23.888" x="122.869" y="192.111">also</text>
+    <text fill="#000" font-size="13" x="146.756" y="192.111"> </text>
+    <text fill="#000" font-size="13" textLength="41.275" x="146.756" y="192.111">include</text>
+    <text fill="#000" font-size="13" x="188.031" y="192.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="188.031" y="192.111">the</text>
+    <text fill="#000" font-size="13" textLength="32.5" x="19.519" y="205.111">arrow</text>
+    <text fill="#000" font-size="13" x="52.019" y="205.111"> </text>
+    <text fill="#000" font-size="13" textLength="36.806" x="52.019" y="205.111">before</text>
+    <text fill="#000" font-size="13" x="88.825" y="205.111"> </text>
+    <text fill="#000" font-size="13" textLength="10.075" x="88.825" y="205.111">it,</text>
+    <text fill="#000" font-size="13" x="98.9" y="205.111"> </text>
+    <text fill="#000" font-size="13" textLength="17.306" x="98.9" y="205.111">i.e.</text>
+    <text fill="#000" font-size="13" x="116.206" y="205.111"> </text>
+    <text fill="#000" font-size="13" textLength="30.388" x="116.206" y="205.111">close</text>
+    <text fill="#000" font-size="13" x="146.594" y="205.111"> </text>
+    <text fill="#000" font-size="13" textLength="25.919" x="146.594" y="205.111">after</text>
+    <text fill="#000" font-size="13" x="172.512" y="205.111"> </text>
+    <text fill="#000" font-size="13" textLength="13.731" x="172.512" y="205.111">it?</text>
+    <text fill="#000" font-size="13" x="186.244" y="205.111"> </text>
+    <text fill="#000" font-size="13" textLength="7.15" x="186.244" y="205.111">If</text>
+    <text fill="#000" font-size="13" x="193.394" y="205.111"> </text>
+    <text fill="#000" font-size="13" textLength="21.613" x="193.394" y="205.111">not,</text>
+    <text fill="#000" font-size="13" textLength="23.888" x="19.519" y="218.111">how</text>
+    <text fill="#000" font-size="13" x="43.406" y="218.111"> </text>
+    <text fill="#000" font-size="13" textLength="14.463" x="43.406" y="218.111">do</text>
+    <text fill="#000" font-size="13" x="57.869" y="218.111"> </text>
+    <text fill="#000" font-size="13" x="57.869" y="218.111">I</text>
+    <text fill="#000" font-size="13" x="61.444" y="218.111"> </text>
+    <text fill="#000" font-size="13" textLength="30.388" x="61.444" y="218.111">close</text>
+    <text fill="#000" font-size="13" x="91.831" y="218.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="91.831" y="218.111">the</text>
+    <text fill="#000" font-size="13" x="109.869" y="218.111"> </text>
+    <text fill="#000" font-size="13" textLength="20.963" x="109.869" y="218.111">Life</text>
+    <text fill="#000" font-size="13" x="130.831" y="218.111"> </text>
+    <text fill="#000" font-size="13" textLength="24.619" x="130.831" y="218.111">Line</text>
+    <text fill="#000" font-size="13" x="155.45" y="218.111"> </text>
+    <text fill="#000" font-size="13" textLength="25.919" x="155.45" y="218.111">after</text>
+    <text fill="#000" font-size="13" x="181.369" y="218.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="181.369" y="218.111">the</text>
+    <text fill="#000" font-size="13" textLength="20.231" x="19.519" y="231.111">last</text>
+    <text fill="#000" font-size="13" x="39.75" y="231.111"> </text>
+    <text fill="#000" font-size="13" textLength="44.037" x="39.75" y="231.111">arrow?)</text>
+  </g>
+</svg>

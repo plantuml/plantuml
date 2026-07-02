@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="233px" preserveAspectRatio="none" style="width:770px;height:233px;background:#FFFFFF;" version="1.1" viewBox="0 0 770 233" width="770px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="241px" preserveAspectRatio="none" style="width:775px;height:241px;background:#FFFFFF;" version="1.1" viewBox="0 0 775 241" width="775px" zoomAndPan="magnify">
   <defs>
     <style type="text/css">
 svg[data-diagram-type=SEQUENCE] g.header.floating-header {
@@ -312,149 +312,97 @@ svg[data-diagram-type=SEQUENCE].filter-active:not(.filter-nomatch) g.filter-high
 </script>
   </defs>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="my_actor" data-source-line="2" id="part1-lifeline">
-      <g>
-        <title>my_actor</title>
-        <rect fill="#000" fill-opacity="0" height="74" width="8" x="32.744" y="79"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="36" x2="36" y1="79" y2="153"/>
-      </g>
+    <g>
+      <title>my_actor</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="38.244" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="41.744" x2="41.744" y1="84" y2="156"/>
     </g>
-    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="my_boundary" data-source-line="3" id="part2-lifeline">
-      <g>
-        <title>my_boundary</title>
-        <rect fill="#000" fill-opacity="0" height="74" width="8" x="119.881" y="79"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="123.488" x2="123.488" y1="79" y2="153"/>
-      </g>
+    <g>
+      <title>my_boundary</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="125.381" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="128.881" x2="128.881" y1="84" y2="156"/>
     </g>
-    <g class="participant-lifeline" data-entity-uid="part3" data-qualified-name="my_collections" data-source-line="4" id="part3-lifeline">
-      <g>
-        <title>my_collections</title>
-        <rect fill="#000" fill-opacity="0" height="74" width="8" x="230.213" y="79"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="233.275" x2="233.275" y1="79" y2="153"/>
-      </g>
+    <g>
+      <title>my_collections</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="235.713" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="239.213" x2="239.213" y1="84" y2="156"/>
     </g>
-    <g class="participant-lifeline" data-entity-uid="part4" data-qualified-name="my_control" data-source-line="5" id="part4-lifeline">
-      <g>
-        <title>my_control</title>
-        <rect fill="#000" fill-opacity="0" height="74" width="8" x="332.363" y="79"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="336.15" x2="336.15" y1="79" y2="153"/>
-      </g>
+    <g>
+      <title>my_control</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="337.863" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="341.363" x2="341.363" y1="84" y2="156"/>
     </g>
-    <g class="participant-lifeline" data-entity-uid="part5" data-qualified-name="my_database" data-source-line="6" id="part5-lifeline">
-      <g>
-        <title>my_database</title>
-        <rect fill="#000" fill-opacity="0" height="74" width="8" x="424.575" y="79"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="428.575" x2="428.575" y1="79" y2="153"/>
-      </g>
+    <g>
+      <title>my_database</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="430.075" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="433.575" x2="433.575" y1="84" y2="156"/>
     </g>
-    <g class="participant-lifeline" data-entity-uid="part6" data-qualified-name="my_entity" data-source-line="7" id="part6-lifeline">
-      <g>
-        <title>my_entity</title>
-        <rect fill="#000" fill-opacity="0" height="74" width="8" x="512.5" y="79"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="515.575" x2="515.575" y1="79" y2="153"/>
-      </g>
+    <g>
+      <title>my_entity</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="518" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="521.5" x2="521.5" y1="84" y2="156"/>
     </g>
-    <g class="participant-lifeline" data-entity-uid="part7" data-qualified-name="my_participant" data-source-line="8" id="part7-lifeline">
-      <g>
-        <title>my_participant</title>
-        <rect fill="#000" fill-opacity="0" height="74" width="8" x="607.925" y="79"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="611.425" x2="611.425" y1="79" y2="153"/>
-      </g>
+    <g>
+      <title>my_participant</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="613.425" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="616.925" x2="616.925" y1="84" y2="156"/>
     </g>
-    <g class="participant-lifeline" data-entity-uid="part8" data-qualified-name="my_queue" data-source-line="9" id="part8-lifeline">
-      <g>
-        <title>my_queue</title>
-        <rect fill="#000" fill-opacity="0" height="74" width="8" x="713.106" y="79"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="716.425" x2="716.425" y1="79" y2="153"/>
-      </g>
+    <g>
+      <title>my_queue</title>
+      <rect fill="#000" fill-opacity="0" height="72" width="8" x="718.606" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="722.106" x2="722.106" y1="84" y2="156"/>
     </g>
-    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="my_actor" data-source-line="2" id="part1-head">
-      <text fill="#000" font-size="14" textLength="57.488" x="5" y="75.889">my_actor</text>
-      <ellipse cx="36.744" cy="13.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
-      <path d="M36.744,21.5 L36.744,48.5 M23.744,29.5 L49.744,29.5 M36.744,48.5 L23.744,63.5 M36.744,48.5 L49.744,63.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="my_actor" data-source-line="2" id="part1-tail">
-      <text fill="#000" font-size="14" textLength="57.488" x="5" y="162.889">my_actor</text>
-      <ellipse cx="36.744" cy="174.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
-      <path d="M36.744,182.5 L36.744,209.5 M23.744,190.5 L49.744,190.5 M36.744,209.5 L23.744,224.5 M36.744,209.5 L49.744,224.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    </g>
-    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="my_boundary" data-source-line="3" id="part2-head">
-      <text fill="#000" font-size="14" textLength="84.788" x="78.488" y="75.889">my_boundary</text>
-      <path d="M103.381,37 L103.381,61 M103.381,49 L120.381,49" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-      <ellipse cx="132.381" cy="49" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="my_boundary" data-source-line="3" id="part2-tail">
-      <text fill="#000" font-size="14" textLength="84.788" x="78.488" y="162.889">my_boundary</text>
-      <path d="M103.381,170 L103.381,194 M103.381,182 L120.381,182" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-      <ellipse cx="132.381" cy="182" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-    </g>
-    <g class="participant participant-head" data-entity-uid="part3" data-qualified-name="my_collections" data-source-line="4" id="part3-head">
-      <rect fill="#E2E2F0" height="28" style="stroke:#181818;stroke-width:0.5;" width="105.875" x="183.275" y="46"/>
-      <rect fill="#E2E2F0" height="28" style="stroke:#181818;stroke-width:0.5;" width="105.875" x="179.275" y="50"/>
-      <text fill="#000" font-size="14" textLength="91.875" x="186.275" y="67.889">my_collections</text>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part3" data-qualified-name="my_collections" data-source-line="4" id="part3-tail">
-      <rect fill="#E2E2F0" height="28" style="stroke:#181818;stroke-width:0.5;" width="105.875" x="183.275" y="152"/>
-      <rect fill="#E2E2F0" height="28" style="stroke:#181818;stroke-width:0.5;" width="105.875" x="179.275" y="156"/>
-      <text fill="#000" font-size="14" textLength="91.875" x="186.275" y="173.889">my_collections</text>
-    </g>
-    <g class="participant participant-head" data-entity-uid="part4" data-qualified-name="my_control" data-source-line="5" id="part4-head">
-      <text fill="#000" font-size="14" textLength="68.425" x="299.15" y="75.889">my_control</text>
-      <ellipse cx="336.363" cy="49" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-      <polygon fill="#181818" points="332.363,37,338.363,32,336.363,37,338.363,42,332.363,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part4" data-qualified-name="my_control" data-source-line="5" id="part4-tail">
-      <text fill="#000" font-size="14" textLength="68.425" x="299.15" y="162.889">my_control</text>
-      <ellipse cx="336.363" cy="182" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-      <polygon fill="#181818" points="332.363,170,338.363,165,336.363,170,338.363,175,332.363,170" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-    </g>
-    <g class="participant participant-head" data-entity-uid="part5" data-qualified-name="my_database" data-source-line="6" id="part5-head">
-      <text fill="#000" font-size="14" textLength="84" x="383.575" y="75.889">my_database</text>
-      <path d="M410.575,29 C410.575,19 428.575,19 428.575,19 C428.575,19 446.575,19 446.575,29 L446.575,55 C446.575,65 428.575,65 428.575,65 C428.575,65 410.575,65 410.575,55 L410.575,29" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
-      <path d="M410.575,29 C410.575,39 428.575,39 428.575,39 C428.575,39 446.575,39 446.575,29" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part5" data-qualified-name="my_database" data-source-line="6" id="part5-tail">
-      <text fill="#000" font-size="14" textLength="84" x="383.575" y="162.889">my_database</text>
-      <path d="M410.575,176 C410.575,166 428.575,166 428.575,166 C428.575,166 446.575,166 446.575,176 L446.575,202 C446.575,212 428.575,212 428.575,212 C428.575,212 410.575,212 410.575,202 L410.575,176" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
-      <path d="M410.575,176 C410.575,186 428.575,186 428.575,186 C428.575,186 446.575,186 446.575,176" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-    </g>
-    <g class="participant participant-head" data-entity-uid="part6" data-qualified-name="my_entity" data-source-line="7" id="part6-head">
-      <text fill="#000" font-size="14" textLength="59.85" x="483.575" y="75.889">my_entity</text>
-      <ellipse cx="516.5" cy="49" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="504.5" x2="528.5" y1="63" y2="63"/>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part6" data-qualified-name="my_entity" data-source-line="7" id="part6-tail">
-      <text fill="#000" font-size="14" textLength="59.85" x="483.575" y="162.889">my_entity</text>
-      <ellipse cx="516.5" cy="182" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="504.5" x2="528.5" y1="196" y2="196"/>
-    </g>
-    <g class="participant participant-head" data-entity-uid="part7" data-qualified-name="my_participant" data-source-line="8" id="part7-head">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="105" x="559.425" y="50"/>
-      <text fill="#000" font-size="14" textLength="91" x="566.425" y="67.889">my_participant</text>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part7" data-qualified-name="my_participant" data-source-line="8" id="part7-tail">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="105" x="559.425" y="152"/>
-      <text fill="#000" font-size="14" textLength="91" x="566.425" y="169.889">my_participant</text>
-    </g>
-    <g class="participant participant-head" data-entity-uid="part8" data-qualified-name="my_queue" data-source-line="9" id="part8-head">
-      <path d="M679.425,55 L754.788,55 C759.788,55 759.788,67 759.788,67 C759.788,67 759.788,79 754.788,79 L679.425,79 C674.425,79 674.425,67 674.425,67 C674.425,67 674.425,55 679.425,55" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
-      <path d="M754.788,55 C749.788,55 749.788,67 749.788,67 C749.788,79 754.788,79 754.788,79" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-      <text fill="#000" font-size="14" textLength="65.363" x="679.425" y="70.889">my_queue</text>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part8" data-qualified-name="my_queue" data-source-line="9" id="part8-tail">
-      <path d="M679.425,152 L754.788,152 C759.788,152 759.788,164 759.788,164 C759.788,164 759.788,176 754.788,176 L679.425,176 C674.425,176 674.425,164 674.425,164 C674.425,164 674.425,152 679.425,152" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
-      <path d="M754.788,152 C749.788,152 749.788,164 749.788,164 C749.788,176 754.788,176 754.788,176" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
-      <text fill="#000" font-size="14" textLength="65.363" x="679.425" y="167.889">my_queue</text>
-    </g>
-    <g class="message" data-entity-1="part1" data-entity-2="part5" data-source-line="10" id="msg1">
-      <polygon fill="#181818" points="416.575,104,426.575,108,416.575,112,420.575,108" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <line style="stroke:#181818;stroke-width:1;" x1="36.744" x2="422.575" y1="108" y2="108"/>
-      <text fill="#000" font-size="13" textLength="76.619" x="43.744" y="103.111">Do something</text>
-    </g>
-    <g class="message" data-entity-1="part5" data-entity-2="part1" data-source-line="11" id="msg2">
-      <polygon fill="#181818" points="47.744,131,37.744,135,47.744,139,43.744,135" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="41.744" x2="427.575" y1="135" y2="135"/>
-      <text fill="#000" font-size="13" textLength="83.931" x="53.744" y="130.111">Acknowledge it</text>
-    </g>
+    <text fill="#000" font-size="14" textLength="57.488" x="10" y="80.889">my_actor</text>
+    <ellipse cx="41.744" cy="18.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M41.744,26.5 L41.744,53.5 M28.744,34.5 L54.744,34.5 M41.744,53.5 L28.744,68.5 M41.744,53.5 L54.744,68.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="84.788" x="83.488" y="80.889">my_boundary</text>
+    <path d="M108.381,42 L108.381,66 M108.381,54 L125.381,54" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="137.381" cy="54" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" style="stroke:#181818;stroke-width:0.5;" width="105.875" x="188.275" y="51"/>
+    <rect fill="#E2E2F0" height="28" style="stroke:#181818;stroke-width:0.5;" width="105.875" x="184.275" y="55"/>
+    <text fill="#000" font-size="14" textLength="91.875" x="191.275" y="72.889">my_collections</text>
+    <text fill="#000" font-size="14" textLength="68.425" x="304.15" y="80.889">my_control</text>
+    <ellipse cx="341.363" cy="54" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+    <polygon fill="#181818" points="337.363,42,343.363,37,341.363,42,343.363,47,337.363,42" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" textLength="84" x="388.575" y="80.889">my_database</text>
+    <path d="M415.575,34 C415.575,24 433.575,24 433.575,24 C433.575,24 451.575,24 451.575,34 L451.575,60 C451.575,70 433.575,70 433.575,70 C433.575,70 415.575,70 415.575,60 L415.575,34" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M415.575,34 C415.575,44 433.575,44 433.575,44 C433.575,44 451.575,44 451.575,34" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="59.85" x="488.575" y="80.889">my_entity</text>
+    <ellipse cx="521.5" cy="54" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="509.5" x2="533.5" y1="68" y2="68"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="105" x="564.425" y="55"/>
+    <text fill="#000" font-size="14" textLength="91" x="571.425" y="72.889">my_participant</text>
+    <path d="M684.425,60 L759.788,60 C764.788,60 764.788,72 764.788,72 C764.788,72 764.788,84 759.788,84 L684.425,84 C679.425,84 679.425,72 679.425,72 C679.425,72 679.425,60 684.425,60" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M759.788,60 C754.788,60 754.788,72 754.788,72 C754.788,84 759.788,84 759.788,84" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="65.363" x="684.425" y="75.889">my_queue</text>
+    <text fill="#000" font-size="14" textLength="57.488" x="10" y="166.889">my_actor</text>
+    <ellipse cx="41.744" cy="178.5" fill="#E2E2F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M41.744,186.5 L41.744,213.5 M28.744,194.5 L54.744,194.5 M41.744,213.5 L28.744,228.5 M41.744,213.5 L54.744,228.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="84.788" x="83.488" y="166.889">my_boundary</text>
+    <path d="M108.381,174 L108.381,198 M108.381,186 L125.381,186" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <ellipse cx="137.381" cy="186" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+    <rect fill="#E2E2F0" height="28" style="stroke:#181818;stroke-width:0.5;" width="105.875" x="188.275" y="156"/>
+    <rect fill="#E2E2F0" height="28" style="stroke:#181818;stroke-width:0.5;" width="105.875" x="184.275" y="160"/>
+    <text fill="#000" font-size="14" textLength="91.875" x="191.275" y="177.889">my_collections</text>
+    <text fill="#000" font-size="14" textLength="68.425" x="304.15" y="166.889">my_control</text>
+    <ellipse cx="341.363" cy="186" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+    <polygon fill="#181818" points="337.363,174,343.363,169,341.363,174,343.363,179,337.363,174" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="14" textLength="84" x="388.575" y="166.889">my_database</text>
+    <path d="M415.575,180 C415.575,170 433.575,170 433.575,170 C433.575,170 451.575,170 451.575,180 L451.575,206 C451.575,216 433.575,216 433.575,216 C433.575,216 415.575,216 415.575,206 L415.575,180" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M415.575,180 C415.575,190 433.575,190 433.575,190 C433.575,190 451.575,190 451.575,180" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="59.85" x="488.575" y="166.889">my_entity</text>
+    <ellipse cx="521.5" cy="186" fill="#E2E2F0" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="509.5" x2="533.5" y1="200" y2="200"/>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="105" x="564.425" y="156"/>
+    <text fill="#000" font-size="14" textLength="91" x="571.425" y="173.889">my_participant</text>
+    <path d="M684.425,156 L759.788,156 C764.788,156 764.788,168 764.788,168 C764.788,168 764.788,180 759.788,180 L684.425,180 C679.425,180 679.425,168 679.425,168 C679.425,168 679.425,156 684.425,156" fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M759.788,156 C754.788,156 754.788,168 754.788,168 C754.788,180 759.788,180 759.788,180" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="65.363" x="684.425" y="171.889">my_queue</text>
+    <polygon fill="#181818" points="421.575,107,431.575,111,421.575,115,425.575,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="41.744" x2="427.575" y1="111" y2="111"/>
+    <text fill="#000" font-size="13" textLength="76.619" x="48.744" y="106.111">Do something</text>
+    <polygon fill="#181818" points="52.744,134,42.744,138,52.744,142,48.744,138" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="46.744" x2="432.575" y1="138" y2="138"/>
+    <text fill="#000" font-size="13" textLength="83.931" x="58.744" y="133.111">Acknowledge it</text>
   </g>
 </svg>

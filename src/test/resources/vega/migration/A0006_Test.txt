@@ -1,0 +1,242 @@
+DPI: 96
+dimension: [ 153.3989 ; 238.0000 ]
+scaleFactor: 1.0000
+seed: -1727514930130266294
+svgLinkTarget: _top
+hoverPathColorRGB: null
+preserveAspectRatio: none
+
+EMPTY:
+  pt1: [ 70.0665 ; 5.0000 ]
+  pt2: [ 148.3989 ; 16.0000 ]
+
+RECTANGLE:
+  pt1: [ 70.0665 ; 5.0000 ]
+  pt2: [ 147.3989 ; 15.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: ffff0000
+
+TEXT:
+  text: header
+  position: [ 70.0665 ; 12.7778 ]
+  orientation: 0
+  font: SansSerif.plain/10 []
+  color: ff888888
+  extendedColor: NULL_COLOR
+
+EMPTY:
+  pt1: [ 36.3586 ; 16.0000 ]
+  pt2: [ 117.0403 ; 51.0000 ]
+
+RECTANGLE:
+  pt1: [ 41.3586 ; 21.0000 ]
+  pt2: [ 111.0403 ; 45.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: ffffff00
+
+TEXT:
+  text: title
+  position: [ 46.3586 ; 36.8889 ]
+  orientation: 0
+  font: SansSerif.bold/14 [BOLD]
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 43.3469 ; 85.0000 ]
+  pt2: [ 51.3469 ; 117.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
+LINE:
+  pt1: [ 46.8469 ; 85.0000 ]
+  pt2: [ 46.8469 ; 117.0000 ]
+  stroke: 5.0-5.0-0.5
+  shadow: 0
+  color: ff181818
+
+RECTANGLE:
+  pt1: [ 115.0463 ; 85.0000 ]
+  pt2: [ 123.0463 ; 117.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
+LINE:
+  pt1: [ 118.5463 ; 85.0000 ]
+  pt2: [ 118.5463 ; 117.0000 ]
+  stroke: 5.0-5.0-0.5
+  shadow: 0
+  color: ff181818
+
+RECTANGLE:
+  pt1: [ 10.0000 ; 56.0000 ]
+  pt2: [ 83.6938 ; 84.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Sally
+  position: [ 17.0000 ; 73.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 93.6938 ; 56.0000 ]
+  pt2: [ 143.3989 ; 84.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Bob
+  position: [ 100.6938 ; 73.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 10.0000 ; 117.0000 ]
+  pt2: [ 83.6938 ; 145.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Sally
+  position: [ 17.0000 ; 134.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 93.6938 ; 117.0000 ]
+  pt2: [ 143.3989 ; 145.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Bob
+  position: [ 100.6938 ; 134.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+POLYGON:
+  points:
+   - [ 106.5463 ; 95.0000 ]
+   - [ 116.5463 ; 99.0000 ]
+   - [ 106.5463 ; 103.0000 ]
+   - [ 110.5463 ; 99.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+LINE:
+  pt1: [ 46.8469 ; 99.0000 ]
+  pt2: [ 112.5463 ; 99.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+EMPTY:
+  pt1: [ 12.6527 ; 151.0000 ]
+  pt2: [ 140.7462 ; 200.0000 ]
+
+RECTANGLE:
+  pt1: [ 24.6527 ; 163.0000 ]
+  pt2: [ 127.7462 ; 187.0000 ]
+  xCorner: 15
+  yCorner: 15
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff000000
+  backcolor: ff008000
+
+TEXT:
+  text: legend
+  position: [ 29.6527 ; 178.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+EMPTY:
+  pt1: [ 18.3206 ; 200.0000 ]
+  pt2: [ 135.0783 ; 217.0000 ]
+
+RECTANGLE:
+  pt1: [ 19.3206 ; 201.0000 ]
+  pt2: [ 133.0783 ; 215.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: ff800080
+
+TEXT:
+  text: caption
+  position: [ 19.3206 ; 211.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+EMPTY:
+  pt1: [ 32.6323 ; 217.0000 ]
+  pt2: [ 120.7666 ; 233.0000 ]
+
+RECTANGLE:
+  pt1: [ 32.6323 ; 217.0000 ]
+  pt2: [ 119.7666 ; 232.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: ff0000ff
+
+TEXT:
+  text: footer
+  position: [ 32.6323 ; 228.6667 ]
+  orientation: 0
+  font: SansSerif.plain/15 []
+  color: ffff0000
+  extendedColor: NULL_COLOR
+

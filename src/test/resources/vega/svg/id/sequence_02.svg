@@ -1,53 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="171px" preserveAspectRatio="none" style="width:115px;height:171px;background:#FFFFFF;" version="1.1" viewBox="0 0 115 171" width="115px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="179px" preserveAspectRatio="none" style="width:120px;height:179px;background:#FFFFFF;" version="1.1" viewBox="0 0 120 179" width="120px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
-    <g class="participant-lifeline" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-lifeline">
-      <g>
-        <title>a</title>
-        <rect fill="#000" fill-opacity="0" height="102" width="8" x="11.894" y="34"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="15" x2="15" y1="34" y2="136"/>
-      </g>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="100" width="8" x="17.394" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="20.894" x2="20.894" y1="39" y2="139"/>
     </g>
-    <g class="participant-lifeline" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-lifeline">
-      <g>
-        <title>b</title>
-        <rect fill="#000" fill-opacity="0" height="102" width="8" x="89.356" y="34"/>
-        <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="92.463" x2="92.463" y1="34" y2="136"/>
-      </g>
+    <g>
+      <title>b</title>
+      <rect fill="#000" fill-opacity="0" height="100" width="8" x="94.856" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="98.356" x2="98.356" y1="39" y2="139"/>
     </g>
-    <g class="participant participant-head" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-head">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="5" y="5"/>
-      <text fill="#000" font-size="14" x="12" y="22.889">a</text>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part1" data-qualified-name="a" data-source-line="1" id="part1-tail">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="5" y="135"/>
-      <text fill="#000" font-size="14" x="12" y="152.889">a</text>
-    </g>
-    <g class="participant participant-head" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-head">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="82.463" y="5"/>
-      <text fill="#000" font-size="14" x="89.463" y="22.889">b</text>
-    </g>
-    <g class="participant participant-tail" data-entity-uid="part2" data-qualified-name="b" data-source-line="1" id="part2-tail">
-      <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="82.463" y="135"/>
-      <text fill="#000" font-size="14" x="89.463" y="152.889">b</text>
-    </g>
-    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="1" id="msg1">
-      <polygon fill="#181818" points="81.356,46,91.356,50,81.356,54,85.356,50" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <line style="stroke:#181818;stroke-width:1;" x1="15.894" x2="87.356" y1="50" y2="50"/>
-    </g>
-    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="2" id="msg2">
-      <polygon fill="#181818" points="26.894,60,16.894,64,26.894,68,22.894,64" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="20.894" x2="92.356" y1="64" y2="64"/>
-    </g>
-    <g class="message" data-entity-1="part1" data-entity-2="part2" data-source-line="3" id="msg3">
-      <polygon fill="#181818" points="81.356,87,91.356,91,81.356,95,85.356,91" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <line style="stroke:#181818;stroke-width:1;" x1="15.894" x2="87.356" y1="91" y2="91"/>
-      <text fill="#000" font-size="13" textLength="43.306" x="22.894" y="86.111">request</text>
-    </g>
-    <g class="message" data-entity-1="part2" data-entity-2="part1" data-source-line="4" id="msg4">
-      <polygon fill="#181818" points="26.894,114,16.894,118,26.894,122,22.894,118" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="20.894" x2="92.356" y1="118" y2="118"/>
-      <text fill="#000" font-size="13" textLength="53.463" x="32.894" y="113.111">response</text>
-    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="10" y="10"/>
+    <text fill="#000" font-size="14" x="17" y="27.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="87.463" y="10"/>
+    <text fill="#000" font-size="14" x="94.463" y="27.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="10" y="139"/>
+    <text fill="#000" font-size="14" x="17" y="156.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="87.463" y="139"/>
+    <text fill="#000" font-size="14" x="94.463" y="156.889">b</text>
+    <polygon fill="#181818" points="86.356,49,96.356,53,86.356,57,90.356,53" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="20.894" x2="92.356" y1="53" y2="53"/>
+    <polygon fill="#181818" points="31.894,63,21.894,67,31.894,71,27.894,67" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="25.894" x2="97.356" y1="67" y2="67"/>
+    <polygon fill="#181818" points="86.356,90,96.356,94,86.356,98,90.356,94" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="20.894" x2="92.356" y1="94" y2="94"/>
+    <text fill="#000" font-size="13" textLength="43.306" x="27.894" y="89.111">request</text>
+    <polygon fill="#181818" points="31.894,117,21.894,121,31.894,125,27.894,121" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="25.894" x2="97.356" y1="121" y2="121"/>
+    <text fill="#000" font-size="13" textLength="53.463" x="37.894" y="116.111">response</text>
   </g>
 </svg>

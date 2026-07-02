@@ -97,10 +97,13 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				xorigin, yorigin);
 
 		this.dolls = new Dolls(tileArguments);
+		// The dolls constraints must be set before the PlayingSpace is built:
+		// PlayingSpace captures dolls.getMinX()/getMaxX(), which freeze the
+		// margins (see LivingSpace.getPosA/getPosE) needed for the box titles
+		this.dolls.addConstraints(stringBounder);
 		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);
 		this.livingSpaces.addConstraints(stringBounder);
 		mainTile.addConstraints();
-		this.dolls.addConstraints(stringBounder);
 		xorigin.compileNow();
 		if (YGauge.USE_ME)
 			System.err.println("COMPILING Y");
@@ -141,6 +144,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				// The exporter calculates the dimension before calling drawU(),
+				// so the page index must be set here too
+				body.setIndex(num);
 				final double totalWidth = body.calculateDimension(stringBounder).getWidth();
 				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1
 						+ heightEnglober2;

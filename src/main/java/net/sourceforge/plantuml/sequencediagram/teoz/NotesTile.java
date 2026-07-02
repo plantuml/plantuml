@@ -132,11 +132,14 @@ public class NotesTile extends AbstractTile implements Tile {
 		final NotePosition position = note.getPosition();
 		final double width = getUsedWidth(stringBounder, note);
 		if (position == NotePosition.LEFT) {
-			return livingSpace1.getPosC(stringBounder).addFixed(-width);
+			// Several LEFT notes on the same participant are rigidly anchored to the
+			// same point: they are stacked leftward (see getStackingOffset)
+			return livingSpace1.getPosC(stringBounder)
+					.addFixed(-width - getStackingOffset(stringBounder, note));
 		} else if (position == NotePosition.RIGHT) {
 			final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 			final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;
-			return livingSpace1.getPosC(stringBounder).addFixed(dx);
+			return livingSpace1.getPosC(stringBounder).addFixed(dx + getStackingOffset(stringBounder, note));
 		} else if (position == NotePosition.OVER_SEVERAL) {
 			final LivingSpace livingSpace2 = livingSpaces.get(note.getParticipant2());
 			final Real x1 = livingSpace1.getPosC(stringBounder);
@@ -147,6 +150,21 @@ public class NotesTile extends AbstractTile implements Tile {
 		} else {
 			throw new UnsupportedOperationException(position.toString());
 		}
+	}
+
+	// Total width of the previous notes of this group anchored to the same
+	// point (same participant, same side), so that they are drawn side by side
+	// instead of overlapping
+	private double getStackingOffset(StringBounder stringBounder, Note note) {
+		double result = 0;
+		for (Note other : notes) {
+			if (other == note)
+				return result;
+
+			if (other.getPosition() == note.getPosition() && other.getParticipant() == note.getParticipant())
+				result += getUsedWidth(stringBounder, other);
+		}
+		return result;
 	}
 
 	public double getPreferredHeight() {
@@ -165,6 +183,13 @@ public class NotesTile extends AbstractTile implements Tile {
 			for (int j = i + 1; j < all.size(); j++) {
 				final double center1 = getXcenter(getStringBounder(), all.get(i)).getCurrentValue();
 				final double center2 = getXcenter(getStringBounder(), all.get(j)).getCurrentValue();
+				// Both notes are anchored to the same point (for example two notes
+				// on the same participant): their relative positions are rigid, so
+				// adding a constraint between them would be unsatisfiable and make
+				// RealLine.compile() loop forever
+				if (center2 == center1)
+					continue;
+
 				if (center2 > center1) {
 					final Real point1b = getX2(getStringBounder(), all.get(i));
 					final Real point2 = getX(getStringBounder(), all.get(j));

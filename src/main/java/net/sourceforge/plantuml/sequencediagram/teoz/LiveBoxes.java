@@ -146,6 +146,26 @@ public class LiveBoxes {
 					}
 
 				}
+				if (current instanceof Note) {
+					// An activate or deactivate attached to a previous message applies
+					// retroactively at the message position, that is above this note:
+					// the note placement must take it into account
+					while (it.hasNext()) {
+						final Event next = nextButSkippingNotes(it);
+						if (next instanceof LifeEvent == false)
+							break;
+
+						final LifeEvent le = (LifeEvent) next;
+						if (le.getParticipant() != p || le.getMessage() == null)
+							continue;
+
+						if (mode != EventsHistoryMode.IGNORE_FUTURE_ACTIVATE && le.isActivate())
+							level++;
+
+						if (mode == EventsHistoryMode.CONSIDER_FUTURE_DEACTIVATE && le.isDeactivateOrDestroy())
+							level = Math.max(0, level - 1);
+					}
+				}
 				if (level < 0)
 					return 0;
 
@@ -164,10 +184,16 @@ public class LiveBoxes {
 				continue;
 
 			if (current instanceof Message) {
-				final Event next = nextButSkippingNotes(it);
-				if (next instanceof LifeEvent) {
+				// Several life events may follow the message (for example a
+				// deactivate then a destroy): the destroy is not always the
+				// first one
+				Event next = nextButSkippingNotes(it);
+				while (next instanceof LifeEvent) {
 					final LifeEvent le = (LifeEvent) next;
-					return le.isDestroy(p);
+					if (le.isDestroy(p))
+						return true;
+
+					next = nextButSkippingNotes(it);
 				}
 			}
 			return false;

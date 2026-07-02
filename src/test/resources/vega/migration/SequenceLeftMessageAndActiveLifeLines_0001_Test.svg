@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="465px" preserveAspectRatio="none" style="width:676px;height:465px;background:#FFFFFF;" version="1.1" viewBox="0 0 676 465" width="676px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f11b0m6xo6h4kq" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Testing</title>
+      <rect fill="#000" fill-opacity="0" height="378" width="8" x="477.313" y="43"/>
+      <line style="stroke:#A80036;stroke-width:1;stroke-dasharray:5,5;" x1="480.813" x2="480.813" y1="43" y2="421"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" filter="url(#f11b0m6xo6h4kq)" height="227" style="stroke:#A80036;stroke-width:1;" width="10" x="475.813" y="123"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" filter="url(#f11b0m6xo6h4kq)" height="67" style="stroke:#A80036;stroke-width:1;" width="10" x="480.813" y="203"/>
+    </g>
+    <rect fill="#FEFECE" filter="url(#f11b0m6xo6h4kq)" height="28" style="stroke:#A80036;stroke-width:1.5;" width="59.938" x="448.844" y="10"/>
+    <text fill="#000" font-size="14" textLength="45.938" x="455.844" y="27.889">Testing</text>
+    <rect fill="#FEFECE" filter="url(#f11b0m6xo6h4kq)" height="28" style="stroke:#A80036;stroke-width:1.5;" width="59.938" x="448.844" y="421"/>
+    <text fill="#000" font-size="14" textLength="45.938" x="455.844" y="438.889">Testing</text>
+    <line style="stroke:#008000;stroke-width:1;" x1="438.813" x2="479.813" y1="70" y2="70"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="438.813" x2="438.813" y1="70" y2="83"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="438.813" x2="478.813" y1="83" y2="83"/>
+    <polygon fill="#008000" points="468.813,79,478.813,83,468.813,87,472.813,83" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="163.231" x="310.581" y="65.111">1st self message, no activation</text>
+    <path d="M134.156,56 L134.156,79 L294.156,79 L294.156,66 L284.156,56 L134.156,56" fill="#FBFB77" filter="url(#f11b0m6xo6h4kq)" style="stroke:#A80036;stroke-width:1;"/>
+    <path d="M284.156,56 L284.156,66 L294.156,66 L284.156,56" fill="#FBFB77" style="stroke:#A80036;stroke-width:1;"/>
+    <text fill="#000" font-size="13" textLength="139.425" x="140.156" y="71.111">A note on the self message</text>
+    <line style="stroke:#008000;stroke-width:1;" x1="438.813" x2="479.813" y1="110" y2="110"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="438.813" x2="438.813" y1="110" y2="123"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="438.813" x2="473.813" y1="123" y2="123"/>
+    <polygon fill="#008000" points="463.813,119,473.813,123,463.813,127,467.813,123" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="195.731" x="278.081" y="105.111">2nd self message, starting activation</text>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="474.813" y1="150" y2="150"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="433.813" y1="150" y2="163"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="473.813" y1="163" y2="163"/>
+    <polygon fill="#008000" points="463.813,159,473.813,163,463.813,167,467.813,163" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="162.5" x="306.312" y="145.111">2.5th self message, no change</text>
+    <path d="M495.813,136 L495.813,159 L655.813,159 L655.813,146 L645.813,136 L495.813,136" fill="#FBFB77" filter="url(#f11b0m6xo6h4kq)" style="stroke:#A80036;stroke-width:1;"/>
+    <path d="M645.813,136 L645.813,146 L655.813,146 L645.813,136" fill="#FBFB77" style="stroke:#A80036;stroke-width:1;"/>
+    <text fill="#000" font-size="13" textLength="139.425" x="501.813" y="151.111">A note on the self message</text>
+    <line style="stroke:#008000;stroke-width:1;stroke-dasharray:2,2;" x1="433.813" x2="474.813" y1="190" y2="190"/>
+    <line style="stroke:#008000;stroke-width:1;stroke-dasharray:2,2;" x1="433.813" x2="433.813" y1="190" y2="203"/>
+    <line style="stroke:#008000;stroke-width:1;stroke-dasharray:2,2;" x1="433.813" x2="479.813" y1="203" y2="203"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="478.813" x2="468.813" y1="203" y2="207"/>
+    <text fill="#000" font-size="13" textLength="233.269" x="235.544" y="185.111">3rd self message, staring another activation</text>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="479.813" y1="230" y2="230"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="433.813" y1="230" y2="243"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="479.813" y1="243" y2="243"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="478.813" x2="468.813" y1="243" y2="239"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="478.813" x2="468.813" y1="243" y2="247"/>
+    <text fill="#000" font-size="13" textLength="277.388" x="191.425" y="225.111">4th self message, continuing in the current activation</text>
+    <path d="M15,216 L15,239 L175,239 L175,226 L165,216 L15,216" fill="#FBFB77" filter="url(#f11b0m6xo6h4kq)" style="stroke:#A80036;stroke-width:1;"/>
+    <path d="M165,216 L165,226 L175,226 L165,216" fill="#FBFB77" style="stroke:#A80036;stroke-width:1;"/>
+    <text fill="#000" font-size="13" textLength="139.425" x="21" y="231.111">A note on the self message</text>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="479.813" y1="270" y2="270"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="433.813" y1="270" y2="283"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="473.813" y1="283" y2="283"/>
+    <polygon fill="#008000" points="463.813,279,473.813,283,463.813,287,467.813,283" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="192.156" x="276.656" y="265.111">5th self message, deactivating once</text>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="474.813" y1="310" y2="310"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="433.813" y1="310" y2="323"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="473.813" y1="323" y2="323"/>
+    <polygon fill="#008000" points="463.813,319,473.813,323,463.813,327,467.813,323" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="226.85" x="241.962" y="305.111">6th self message, continuing the activation</text>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="474.813" y1="350" y2="350"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="433.813" y1="350" y2="363"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="433.813" x2="478.813" y1="363" y2="363"/>
+    <polygon fill="#008000" points="468.813,359,478.813,363,468.813,367,472.813,363" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="205.156" x="263.656" y="345.111">7th self message, exiting the activation</text>
+    <line style="stroke:#008000;stroke-width:1;" x1="438.813" x2="479.813" y1="390" y2="390"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="438.813" x2="438.813" y1="390" y2="403"/>
+    <line style="stroke:#008000;stroke-width:1;" x1="438.813" x2="478.813" y1="403" y2="403"/>
+    <polygon fill="#008000" points="468.813,399,478.813,403,468.813,407,472.813,403" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="163.963" x="309.85" y="385.111">8th self message, no activation</text>
+  </g>
+</svg>
