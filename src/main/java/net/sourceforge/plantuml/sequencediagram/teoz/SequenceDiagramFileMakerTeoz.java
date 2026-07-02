@@ -141,6 +141,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				// The exporter calculates the dimension before calling drawU(),
+				// so the page index must be set here too
+				body.setIndex(num);
 				final double totalWidth = body.calculateDimension(stringBounder).getWidth();
 				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1
 						+ heightEnglober2;
