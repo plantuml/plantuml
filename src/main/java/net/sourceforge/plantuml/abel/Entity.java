@@ -52,6 +52,7 @@ import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
+import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.Neighborhood;
@@ -95,7 +96,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 	private Url url;
 
-	private final Bodier bodier;
+	private Bodier bodier;
 	private final String uid;
 	private Display display = Display.empty();
 	private DisplayPositioned legend = null;
@@ -106,6 +107,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	private String generic;
 
 	private GroupType groupType;
+	private boolean phantomGroup;
 
 	// Other
 	private Margins margins = Margins.NONE;
@@ -203,9 +205,39 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		this.leafType = null;
 	}
 
+	/**
+	 * Marks this entity as a "phantom" group, i.e. a group that was
+	 * automatically/implicitly created because some other entity used a
+	 * dotted/qualified name (for example {@code class a.b} implicitly creates a
+	 * group named {@code a}), as opposed to a group that was explicitly declared
+	 * by the user through a {@code namespace}/{@code package} command.
+	 */
+	public void setPhantomGroup(boolean phantomGroup) {
+		this.phantomGroup = phantomGroup;
+	}
+
+	public boolean isPhantomGroup() {
+		return phantomGroup;
+	}
+
 	public boolean muteToType(LeafType newType, USymbol newSymbol) {
 		// checkNotGroup();
 		Objects.requireNonNull(newType);
+		if (isGroup() && phantomGroup) {
+			// An implicit/phantom group (created only because of a dotted child name,
+			// e.g. "class a.b") is not a real user-declared namespace, so it is safe
+			// to turn it into a genuine leaf entity (e.g. a later "class a").
+			this.groupType = null;
+			this.phantomGroup = false;
+			this.leafType = newType;
+			this.symbol = newSymbol;
+			// The group's Bodier (built by BodyFactory.createGroup) is never bound to a
+			// leaf and cannot render fields/methods, so it must be replaced with a real
+			// leaf Bodier, exactly like CucaDiagram.createLeaf does for a fresh leaf.
+			this.bodier = BodyFactory.createLeaf(diagram.getSkinParam(), newType, null);
+			this.bodier.setLeaf(this);
+			return true;
+		}
 		if (leafType != LeafType.STILL_UNKNOWN) {
 			if (newType == this.leafType)
 				return true;
