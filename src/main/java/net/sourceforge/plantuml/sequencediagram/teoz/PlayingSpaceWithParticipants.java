@@ -56,8 +56,7 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized {
 
 	private final PlayingSpace playingSpace;
 
-	private double ymin;
-	private double ymax;
+	private int pageIndex;
 
 	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {
 		this.playingSpace = Objects.requireNonNull(playingSpace);
@@ -68,43 +67,72 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized {
 		final double width = playingSpace.getMaxX(stringBounder).getCurrentValue()
 				- playingSpace.getMinX(stringBounder).getCurrentValue();
 
+		// getPreferredHeight() triggers the layout pass that positions the tiles,
+		// so it must be called before getYMin()/getYMax()
+		final double fullHeight = playingSpace.getPreferredHeight(stringBounder);
+		final double pageHeight = getYMax(fullHeight) - getYMin();
+
 		final int factor = playingSpace.isShowFootbox() ? 2 : 1;
-		final double height = playingSpace.getPreferredHeight(stringBounder)
-				+ factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);
+		final double height = pageHeight + factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);
 
 		return new XDimension2D(width, height);
+	}
+
+	// Warning: both methods below rely on the tiles TimeHook: they are
+	// meaningful only after a layout pass, that is after
+	// playingSpace.getPreferredHeight() has been called at least once.
+	// Like in Puma (see PageSplitter), consecutive pages slightly overlap on the
+	// newpage separator, so that the dashed line is visible at the bottom of the
+	// page ending there and at the top of the page starting there.
+
+	private double getYMin() {
+		if (pageIndex == 0)
+			return 0;
+
+		return playingSpace.getNewpageTiles().get(pageIndex - 1).getTimeHook().getValue();
+	}
+
+	private double getYMax(double fullHeight) {
+		final List<NewpageTile> newpages = playingSpace.getNewpageTiles();
+		if (pageIndex >= newpages.size())
+			return fullHeight;
+
+		final NewpageTile newpage = newpages.get(pageIndex);
+		return Math.min(newpage.getTimeHook().getValue() + newpage.getPreferredHeight(), fullHeight);
 	}
 
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		final Context2D context = new SimpleContext2D(false);
-		final double height = playingSpace.getPreferredHeight(stringBounder);
 		final LivingSpaces livingSpaces = playingSpace.getLivingSpaces();
-
 		final double headHeight = livingSpaces.getHeadHeight(stringBounder);
 
-		if (ymax == 0) {
-			playingSpace.drawBackground(ug.apply(UTranslate.dy(headHeight)));
-		} else {
-			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, ymax - ymin + 1);
-			playingSpace.drawBackground(ug.apply(UTranslate.dy(headHeight)).apply(clip));
+		// getPreferredHeight() triggers the layout pass that positions the tiles,
+		// so it must be called before getYMin()/getYMax()
+		final double fullHeight = playingSpace.getPreferredHeight(stringBounder);
+		final double ymin = getYMin();
+		final double ymax = getYMax(fullHeight);
+		final double pageHeight = ymax - ymin;
+
+		// The body is translated so that the current page starts right below the
+		// heads, and clipped so that the content of the other pages stays hidden.
+		UGraphic ugBody = ug.apply(UTranslate.dy(headHeight - ymin));
+		if (playingSpace.getNbPages() > 1) {
+			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, pageHeight + 1);
+			ugBody = ugBody.apply(clip);
 		}
 
-		livingSpaces.drawLifeLines(ug.apply(UTranslate.dy(headHeight)), height, context);
+		playingSpace.drawBackground(ugBody);
+		// Lifelines and liveboxes use absolute positions over the whole diagram:
+		// they must be drawn with the full height, the clip trims them to the page
+		livingSpaces.drawLifeLines(ugBody, fullHeight, context);
 
 		livingSpaces.drawHeads(ug, context, VerticalAlignment.BOTTOM);
-		if (playingSpace.isShowFootbox()) {
-			livingSpaces.drawHeads(ug.apply(UTranslate.dy(height + headHeight)), context, VerticalAlignment.TOP);
-		}
-		if (ymax == 0) {
-			playingSpace.drawForeground(ug.apply(UTranslate.dy(headHeight)));
-		} else {
-			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, ymax - ymin + 1);
-			// playingSpace.drawForeground(new
-			// UGraphicNewpages(ug.apply(UTranslate.dy(headHeight)), ymin, ymax));
-			playingSpace.drawForeground(ug.apply(UTranslate.dy(headHeight)).apply(clip));
-		}
+		if (playingSpace.isShowFootbox())
+			livingSpaces.drawHeads(ug.apply(UTranslate.dy(pageHeight + headHeight)), context, VerticalAlignment.TOP);
+
+		playingSpace.drawForeground(ugBody);
 		// drawNewPages(ug.apply(UTranslate.dy(headHeight)));
 	}
 
@@ -117,9 +145,10 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized {
 	}
 
 	public void setIndex(int index) {
-		final List<Double> yNewPages = playingSpace.yNewPages();
-		this.ymin = yNewPages.get(index);
-		this.ymax = yNewPages.get(index + 1);
+		if (index != this.pageIndex) {
+			this.pageIndex = index;
+			invalidateDimensionCache();
+		}
 	}
 
 	private List<Double> yNewPages() {

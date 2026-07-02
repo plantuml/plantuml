@@ -35,9 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
-import java.util.AbstractCollection;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -112,55 +110,43 @@ public class TileParallel extends CommonTile {
 	}
 
 	public Real getMinX() {
-		return RealUtils.min(new AbstractCollection<Real>() {
-			public Iterator<Real> iterator() {
-				return new Iterator<Real>() {
-					private final Iterator<Tile> source = tiles.iterator();
+		// The min X of an ElseTile is the min X of its parent GroupingTile, which
+		// may still be under construction: else tiles are skipped here and
+		// processed later by the GroupingTile constructor (see allElses)
+		final List<Real> result = new ArrayList<>();
+		for (Tile tile : tiles) {
+			if (tile instanceof ElseTile)
+				continue;
 
-					public boolean hasNext() {
-						return source.hasNext();
-					}
+			result.add(tile.getMinX());
+		}
+		if (result.size() == 0)
+			return tiles.get(0).getMinX();
 
-					public Real next() {
-						return source.next().getMinX();
-					}
-
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
-			}
-
-			public int size() {
-				return tiles.size();
-			}
-		});
+		return RealUtils.min(result);
 	}
 
 	public Real getMaxX() {
-		return RealUtils.max(new AbstractCollection<Real>() {
-			public Iterator<Real> iterator() {
-				return new Iterator<Real>() {
-					private final Iterator<Tile> source = tiles.iterator();
+		final List<Real> result = new ArrayList<>();
+		for (Tile tile : tiles) {
+			if (tile instanceof ElseTile)
+				continue;
 
-					public boolean hasNext() {
-						return source.hasNext();
-					}
+			result.add(tile.getMaxX());
+		}
+		if (result.size() == 0)
+			return tiles.get(0).getMaxX();
 
-					public Real next() {
-						return source.next().getMaxX();
-					}
+		return RealUtils.max(result);
+	}
 
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
-			}
+	public List<Tile> getElseTiles() {
+		final List<Tile> result = new ArrayList<>();
+		for (Tile tile : tiles)
+			if (tile instanceof ElseTile)
+				result.add(tile);
 
-			public int size() {
-				return tiles.size();
-			}
-		});
+		return result;
 	}
 
 	public Event getEvent() {

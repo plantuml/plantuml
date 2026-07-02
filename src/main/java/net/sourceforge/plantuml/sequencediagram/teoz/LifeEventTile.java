@@ -65,6 +65,8 @@ public class LifeEventTile extends AbstractTile {
 		// System.err.println("LifeEventTile::updateStairs " + lifeEvent + " " +
 		// livingSpace.getParticipant() + " y=" + y);
 		livingSpace.addStepForLivebox(getEvent(), y.getValue());
+		if (lifeEvent.getType() == LifeEventType.DESTROY)
+			livingSpace.goDestroy(y.getValue());
 	}
 
 	public Event getEvent() {

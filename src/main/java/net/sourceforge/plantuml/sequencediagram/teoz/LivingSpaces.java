@@ -114,7 +114,16 @@ public class LivingSpaces {
 				final XDimension2D dimHead = livingSpace.getHeadPreferredDimension(stringBounder);
 				y = headHeight - dimHead.getHeight();
 			}
-			livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context, verticalAlignment, HorizontalAlignment.LEFT);
+			// TOP means that we are drawing the footboxes at the bottom of the
+			// diagram (the real heads are aligned on BOTTOM): the tail component
+			// is used there, like in Puma (for an actor, the label is displayed
+			// above the stickman)
+			if (verticalAlignment == VerticalAlignment.TOP)
+				livingSpace.drawTail(ug.apply(new UTranslate(x, y)), context, verticalAlignment,
+						HorizontalAlignment.LEFT);
+			else
+				livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context, verticalAlignment,
+						HorizontalAlignment.LEFT);
 		}
 	}
 

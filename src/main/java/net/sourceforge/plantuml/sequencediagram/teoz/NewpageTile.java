@@ -35,12 +35,19 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Newpage;
+import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.skin.Component;
+import net.sourceforge.plantuml.skin.Context2D;
 
 public class NewpageTile extends AbstractTile {
+
+	// Small vertical space before and after the dashed separator
+	private static final double MARGINY = 10;
 
 	private final Newpage newpage;
 	private final TileArguments tileArguments;
@@ -56,11 +63,26 @@ public class NewpageTile extends AbstractTile {
 		this.tileArguments = tileArguments;
 	}
 
+	private Component getComponent() {
+		return tileArguments.getSkin().createComponentNewPage(newpage.getUsedStyles(), tileArguments.getSkinParam());
+	}
+
 	public void drawU(UGraphic ug) {
+		// Like in Puma, the dashed separator is displayed at the bottom of the
+		// page ending here and at the top of the page starting here: the pages
+		// slightly overlap in PlayingSpaceWithParticipants
+		if (((Context2D) ug).isBackground())
+			return;
+
+		final Component comp = getComponent();
+		final Area area = Area.create(tileArguments.getBorder2() - tileArguments.getBorder1()
+				- tileArguments.getXOrigin().getCurrentValue(), comp.getPreferredHeight(getStringBounder()));
+		ug = ug.apply(new UTranslate(tileArguments.getBorder1(), MARGINY));
+		comp.drawU(ug, area, (Context2D) ug);
 	}
 
 	public double getPreferredHeight() {
-		return 0;
+		return getComponent().getPreferredHeight(getStringBounder()) + 2 * MARGINY;
 	}
 
 	public void addConstraints() {
