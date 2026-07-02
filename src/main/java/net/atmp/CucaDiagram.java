@@ -329,6 +329,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 				// final Display display = Display.getWithNewlines(quark.getQualifiedName());
 				final Display display = Display.getWithNewlines(getPragma(), quark.getName());
 				final Entity result = this.createGroup(location, quark, GroupType.PACKAGE);
+				result.setPhantomGroup(true);
 				result.setDisplay(display);
 			}
 		}
@@ -353,6 +354,9 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		}
 		final Entity ent = quark.getData();
 		ent.muteToGroupType(type);
+		// This group is now explicitly declared by the user (namespace/package
+		// command), so it is no longer a mere implicit/phantom group.
+		ent.setPhantomGroup(false);
 		if (usymbol != null)
 			ent.setUSymbol(usymbol);
 
