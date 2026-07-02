@@ -18,18 +18,23 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-You can use this file to put a test you are working on.
-Here is a simple example:
-
 @startuml
-alice->bob: this is a test
+header header
+footer footer
+
+Bob -> Alice : hello
+
+newpage
+
+Bob -> Alice : hello2
+create Dog
+Alice --> Dog : creation
+Bob -> Alice : hello3
+
+newpage
+Bob -> Alice : hello4
 @enduml
 
-So you can edit this file, but please do not push any modification in the "main" branch.
-Put your own tests on your own branches.
-
-However, if your test are interesting, you can add them to the "pdiff" project.
-See https://github.com/plantuml/pdiff
 
  */
 public class Test_0 {
