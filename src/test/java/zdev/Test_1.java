@@ -18,36 +18,23 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-daduxi-21
-fusavi
-jexavi-40
-cofuse-78
-caluni-22
-cinula-56
-cotaju-41
-kafupo
-
-
 @startuml
-header header
-footer footer
+box "This is the Solar system" #LightBlue
+participant Alice
+end box
+participant Bob
+participant P
 
-Bob -> Alice : hello
+participant Sun
 
+Alice -> Bob
 newpage
-
-Bob -> Alice : hello2
-create Dog
-Alice --> Dog : creation
-Bob -> Alice : hello3
-
-newpage
-Bob -> Alice : hello4
+Bob -> P
+P -> Sun
 @enduml
 
-
  */
-public class Test_0 {
+public class Test_1 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();
@@ -67,7 +54,7 @@ public class Test_0 {
 				Collections.<String>emptyList(), "UTF-8", options);
 		final List<GeneratedImage> list = reader.getGeneratedImages();
 
-		assertEquals(3, list.size());
+		assertEquals(2, list.size());
 
 	}
 

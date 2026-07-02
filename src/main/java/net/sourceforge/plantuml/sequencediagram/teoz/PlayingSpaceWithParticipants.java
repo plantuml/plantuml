@@ -119,7 +119,9 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized {
 		}
 
 		playingSpace.drawBackground(ugBody);
-		livingSpaces.drawLifeLines(ugBody, ymax, context);
+		// Lifelines and liveboxes use absolute positions over the whole diagram:
+		// they must be drawn with the full height, the clip trims them to the page
+		livingSpaces.drawLifeLines(ugBody, fullHeight, context);
 
 		livingSpaces.drawHeads(ug, context, VerticalAlignment.BOTTOM);
 		if (playingSpace.isShowFootbox())
