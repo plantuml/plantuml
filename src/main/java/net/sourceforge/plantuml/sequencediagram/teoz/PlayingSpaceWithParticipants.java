@@ -78,22 +78,27 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized {
 		return new XDimension2D(width, height);
 	}
 
-	// Warning: both methods below rely on yNewPages(), which reads the tiles
-	// TimeHook: they are meaningful only after a layout pass, that is after
+	// Warning: both methods below rely on the tiles TimeHook: they are
+	// meaningful only after a layout pass, that is after
 	// playingSpace.getPreferredHeight() has been called at least once.
+	// Like in Puma (see PageSplitter), consecutive pages slightly overlap on the
+	// newpage separator, so that the dashed line is visible at the bottom of the
+	// page ending there and at the top of the page starting there.
 
 	private double getYMin() {
-		if (playingSpace.getNbPages() == 1)
+		if (pageIndex == 0)
 			return 0;
 
-		return playingSpace.yNewPages().get(pageIndex);
+		return playingSpace.getNewpageTiles().get(pageIndex - 1).getTimeHook().getValue();
 	}
 
 	private double getYMax(double fullHeight) {
-		if (playingSpace.getNbPages() == 1)
+		final List<NewpageTile> newpages = playingSpace.getNewpageTiles();
+		if (pageIndex >= newpages.size())
 			return fullHeight;
 
-		return Math.min(playingSpace.yNewPages().get(pageIndex + 1), fullHeight);
+		final NewpageTile newpage = newpages.get(pageIndex);
+		return Math.min(newpage.getTimeHook().getValue() + newpage.getPreferredHeight(), fullHeight);
 	}
 
 	public void drawU(UGraphic ug) {

@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -415,15 +414,13 @@ public class GroupingTile extends AbstractTile {
 		return tile instanceof TileParallel == false && tile.getEvent().isParallel();
 	}
 
-	void addYNewPages(Collection<Double> yNewPages) {
+	void addNewpageTiles(List<NewpageTile> newpages) {
 		for (Tile tile : tiles) {
 			if (tile instanceof GroupingTile)
-				((GroupingTile) tile).addYNewPages(yNewPages);
+				((GroupingTile) tile).addNewpageTiles(newpages);
 
-			if (tile instanceof NewpageTile) {
-				final double y = ((NewpageTile) tile).getTimeHook().getValue();
-				yNewPages.add(y);
-			}
+			if (tile instanceof NewpageTile)
+				newpages.add((NewpageTile) tile);
 		}
 	}
 	

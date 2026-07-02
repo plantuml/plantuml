@@ -178,18 +178,24 @@ public class PlayingSpace implements Bordered {
 		return max.getCurrentValue();
 	}
 
+	public List<NewpageTile> getNewpageTiles() {
+		final List<NewpageTile> result = new ArrayList<>();
+		for (Tile tile : tiles) {
+			if (tile instanceof GroupingTile)
+				((GroupingTile) tile).addNewpageTiles(result);
+
+			if (tile instanceof NewpageTile)
+				result.add((NewpageTile) tile);
+		}
+		return result;
+	}
+
 	public List<Double> yNewPages() {
 		final List<Double> yNewPages = new ArrayList<>();
 		yNewPages.add(0.0);
-		for (Tile tile : tiles) {
-			if (tile instanceof GroupingTile)
-				((GroupingTile) tile).addYNewPages(yNewPages);
+		for (NewpageTile newpageTile : getNewpageTiles())
+			yNewPages.add(newpageTile.getTimeHook().getValue());
 
-			if (tile instanceof NewpageTile) {
-				final double y = ((NewpageTile) tile).getTimeHook().getValue();
-				yNewPages.add(y);
-			}
-		}
 		yNewPages.add(Double.MAX_VALUE);
 		return yNewPages;
 	}
