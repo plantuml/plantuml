@@ -1,0 +1,9 @@
+---
+output: svg
+expected-description: (2 entities)
+---
+@startuml
+set separator .
+class a.b
+class a
+@enduml
