@@ -399,10 +399,24 @@ public final class GraphvizImageBuilder {
 	private Collection<Entity> getUnpackagedEntities() {
 		final List<Entity> result = new ArrayList<>();
 		for (Entity ent : dotData.getLeafs())
-			if (dotData.getTopParent() == ent.getParentContainer())
+			if (isEffectivelyUnpackaged(ent))
 				result.add(ent);
 
 		return result;
+	}
+
+	// An entity is "unpackaged" (drawn at top level, not inside a cluster) when
+	// its container chain reaches the diagram root without going through a real
+	// GROUP. A class promoted from an implicit/phantom namespace (see #2099) is
+	// a plain leaf, not a group, so its own children are no longer picked up by
+	// printGroups()/Entity.groups() (which only recurse into real groups): they
+	// must still be drawn here, at the same level as their (former-group) parent.
+	private boolean isEffectivelyUnpackaged(Entity ent) {
+		Entity container = ent.getParentContainer();
+		while (container != null && container != dotData.getTopParent() && container.isGroup() == false)
+			container = container.getParentContainer();
+
+		return container == dotData.getTopParent();
 	}
 
 	private void printGroups(StringBounder stringBounder, Entity parent) {
