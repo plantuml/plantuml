@@ -180,10 +180,20 @@ public class LivingSpace {
 
 	public void drawHead(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
 			HorizontalAlignment horizontalAlignment) {
+		drawHeadOrTail(ug, context, verticalAlignment, horizontalAlignment, headType);
+	}
+
+	public void drawTail(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
+			HorizontalAlignment horizontalAlignment) {
+		drawHeadOrTail(ug, context, verticalAlignment, horizontalAlignment, tailType);
+	}
+
+	private void drawHeadOrTail(UGraphic ug, Context2D context, VerticalAlignment verticalAlignment,
+			HorizontalAlignment horizontalAlignment, ComponentType type) {
 		if (create && verticalAlignment == VerticalAlignment.BOTTOM) {
 			return;
 		}
-		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,
+		final Component comp = rose.createComponentParticipant(p, type, null, skinParam,
 				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		if (horizontalAlignment == HorizontalAlignment.RIGHT) {
