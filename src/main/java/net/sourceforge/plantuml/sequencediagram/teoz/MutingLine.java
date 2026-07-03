@@ -76,7 +76,10 @@ public class MutingLine {
 		if (delays.size() > 0) {
 			double y = createY;
 			for (Map.Entry<Double, Double> ent : delays.entrySet()) {
-				if (ent.getKey() >= createY) {
+				// Only the delays fully inside [createY, endY] are relevant: the
+				// line may be drawn on a life segment (see LivingSpace) that ends
+				// at a destroy, located above some of the delays
+				if (ent.getKey() >= createY && ent.getKey() + ent.getValue() <= endY) {
 					drawInternal(ug, context, y, ent.getKey(), defaultLineType);
 					drawInternal(ug, context, ent.getKey(), ent.getKey() + ent.getValue(), ComponentType.DELAY_LINE);
 					y = ent.getKey() + ent.getValue();
