@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.sequencediagram.Grouping;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
+import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -73,6 +75,7 @@ public class GroupingTile extends AbstractTile {
 	private final Real min;
 	private final Real max;
 	private final GroupingStart start;
+	private GroupingLeaf end;
 	private final YGauge yGauge;
 
 	private final Rose skin;
@@ -120,8 +123,10 @@ public class GroupingTile extends AbstractTile {
 
 		while (it.hasNext()) {
 			final Event ev = it.next();
-			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.END)
+			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.END) {
+				this.end = (GroupingLeaf) ev;
 				break;
+			}
 
 			for (Tile tile : TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this, currentY)) {
 				tiles.add(tile);
@@ -194,6 +199,7 @@ public class GroupingTile extends AbstractTile {
 			}
 			comp.drawU(ug.apply(UTranslate.dx(minCurrentValueForDrawing())), area, (Context2D) ug);
 			drawAllElses(ug);
+			drawNotes(ug);
 		}
 
 		double h = dim1.getHeight() + MARGINY_MAGIC / 2;
@@ -311,7 +317,43 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	public Real getMaxX() {
-		return max.addFixed(EXTERNAL_MARGINX2);
+		return max.addFixed(EXTERNAL_MARGINX2 + getNotesWidth(getStringBounder()));
+	}
+
+	// Notes attached to the group ("note right" just after the end keyword) are
+	// drawn like in Puma: at the top right corner of the group frame
+	// (see GroupingGraphicalElementHeader)
+	private void drawNotes(UGraphic ug) {
+		final StringBounder stringBounder = ug.getStringBounder();
+		double x = max.getCurrentValue();
+		for (Component note : getNoteComponents()) {
+			final XDimension2D dimNote = note.getPreferredDimension(stringBounder);
+			note.drawU(ug.apply(UTranslate.dx(x)), Area.create(dimNote.getWidth(), dimNote.getHeight()),
+					(Context2D) ug);
+			x += dimNote.getWidth();
+		}
+	}
+
+	private double getNotesWidth(StringBounder stringBounder) {
+		double result = 0;
+		for (Component note : getNoteComponents())
+			result += note.getPreferredDimension(stringBounder).getWidth();
+
+		return result;
+	}
+
+	private List<Component> getNoteComponents() {
+		if (end == null)
+			return Collections.emptyList();
+
+		final List<Component> result = new ArrayList<>();
+		for (Note noteOnMessage : end.getNoteOnMessages()) {
+			final ISkinParam sk = noteOnMessage.getSkinParamBackcolored(skinParam);
+			result.add(skin.createComponentNote(noteOnMessage.getUsedStyles(),
+					noteOnMessage.getNoteStyle().getNoteComponentType(), sk, noteOnMessage.getDisplay(),
+					noteOnMessage.getColors()));
+		}
+		return result;
 	}
 
 	public static TimeHook fillPositionelTiles(StringBounder stringBounder, TimeHook y, List<Tile> tiles,
