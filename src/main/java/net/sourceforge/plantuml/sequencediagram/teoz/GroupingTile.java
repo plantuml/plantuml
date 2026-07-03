@@ -245,7 +245,14 @@ public class GroupingTile extends AbstractTile {
 			if (tile instanceof ElseTile) {
 				final ElseTile elseTile = (ElseTile) tile;
 				final double ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
-				blotter.addChange(ypos + 1, elseTile.getBackColorGeneral());
+				HColor backElse = elseTile.getBackColorGeneral();
+				// An else section without its own color inherits the group
+				// background: it may come from the style, not only from the
+				// inline #color of the command, so getBackColorGeneral() alone
+				// is not enough
+				if (backElse == null)
+					backElse = back;
+				blotter.addChange(ypos + 1, backElse);
 			}
 
 		blotter.closeChanges();

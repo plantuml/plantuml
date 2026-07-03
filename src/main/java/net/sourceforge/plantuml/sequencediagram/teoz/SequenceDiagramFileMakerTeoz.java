@@ -97,10 +97,13 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				xorigin, yorigin);
 
 		this.dolls = new Dolls(tileArguments);
+		// The dolls constraints must be set before the PlayingSpace is built:
+		// PlayingSpace captures dolls.getMinX()/getMaxX(), which freeze the
+		// margins (see LivingSpace.getPosA/getPosE) needed for the box titles
+		this.dolls.addConstraints(stringBounder);
 		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);
 		this.livingSpaces.addConstraints(stringBounder);
 		mainTile.addConstraints();
-		this.dolls.addConstraints(stringBounder);
 		xorigin.compileNow();
 		if (YGauge.USE_ME)
 			System.err.println("COMPILING Y");

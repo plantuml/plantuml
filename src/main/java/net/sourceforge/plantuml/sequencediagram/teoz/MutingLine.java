@@ -96,7 +96,11 @@ public class MutingLine {
 		if (y2 < y1)
 			throw new IllegalArgumentException();
 
-		final Style style = defaultLineType.getStyleSignature().getMergedStyle(styleBuilder);
+		// Like in Puma (see DrawableSetInitializer.prepareParticipant), the style
+		// is merged with the participant stereotype, so that stereotyped rules
+		// such as <style>.foo { lineColor ... }</style> apply to the life line
+		final Style style = defaultLineType.getStyleSignature().withTOBECHANGED(participant.getStereotype())
+				.getMergedStyle(styleBuilder);
 		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,
 				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
