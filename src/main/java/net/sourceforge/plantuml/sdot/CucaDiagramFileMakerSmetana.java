@@ -63,6 +63,7 @@ import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityUtils;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
@@ -134,14 +135,40 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	// Structural access relative to the local layout root.
-	// For now these delegate to the whole diagram (no behavior change); they are the
-	// hooks where a concurrent-region sub-layout will later restrict the scope.
+	// At the diagram root, these behave exactly like before (whole diagram).
+	// In a nested sub-layout (root is a group, e.g. a composite state rendered as a
+	// leaf), they restrict the scope to that group: concurrent sub-regions are
+	// filtered out of the group hierarchy, and only links fully internal to the
+	// group are laid out. This mirrors GroupMakerState.InnerGroupHierarchy /
+	// getPureInnerLinks on the dot side, and avoids trying to resolve links that
+	// touch the group itself or the outside world (which have no node in the
+	// sub-layout).
+	private boolean isNestedLayout() {
+		return root != diagram.getRootGroup();
+	}
+
 	private Collection<Entity> getChildrenGroups(Entity parent) {
-		return diagram.getChildrenGroups(parent);
+		if (isNestedLayout() == false)
+			return diagram.getChildrenGroups(parent);
+
+		final List<Entity> result = new ArrayList<>();
+		for (Entity g : diagram.getChildrenGroups(parent))
+			if (g.getGroupType() != GroupType.CONCURRENT_STATE)
+				result.add(g);
+
+		return result;
 	}
 
 	private Collection<Link> getLocalLinks() {
-		return diagram.getLinks();
+		if (isNestedLayout() == false)
+			return diagram.getLinks();
+
+		final List<Link> result = new ArrayList<>();
+		for (Link link : diagram.getLinks())
+			if (EntityUtils.isPureInnerLink12(root, link))
+				result.add(link);
+
+		return result;
 	}
 
 	private MinMaxMutable getSmetanaMinMax() {
