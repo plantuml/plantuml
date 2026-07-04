@@ -411,6 +411,20 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),
 				diagram.getPragma());
 
+		// Turn composite states into pre-rendered leaves, mirroring the dot pipeline.
+		// Selective for now: concurrent states are left untouched (see the simplifier).
+		if (diagram.getDiagramType() == DiagramType.STATE)
+			new CucaDiagramSimplifierStateSmetana().simplify(diagram, stringBounder);
+
+		return layoutAndGetTextBlock(stringBounder);
+	}
+
+	// Layout the current root and return the resulting drawable.
+	// Factored out of getTextBlock so that a sub-layout (e.g. a composite state
+	// rendered as a leaf) can be produced from a StringBounder alone, mirroring
+	// GraphvizImageBuilder.buildImage(stringBounder, ...) on the dot side.
+	private TextBlock layoutAndGetTextBlock(StringBounder stringBounder) {
+
 		this.printAllSubgroups(stringBounder, root);
 		this.printEntities(stringBounder, getUnpackagedEntities());
 
@@ -446,6 +460,16 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		} finally {
 			lock.unlock();
 		}
+	}
+
+	// Render the current root as a self-contained IEntityImage.
+	// Used when a composite state is turned into a leaf and laid out by a nested
+	// Smetana pass (see GroupMakerStateSmetana). The returned image is autonomous:
+	// the layout is fully computed here, so drawing later does not require an open
+	// Globals context.
+	public IEntityImage getImage(StringBounder stringBounder) {
+		final TextBlock textBlock = layoutAndGetTextBlock(stringBounder);
+		return new TextBlockToEntityImage(textBlock);
 	}
 
 	private TextBlock getTextBlockInternal(StringBounder stringBounder, Globals zz) {
