@@ -5506,12 +5506,12 @@ Stats:
     Concrete Classes: 8
     Abstract Classes: 0
 
-    Ca: 3
+    Ca: 4
     Ce: 18
 
     A: 0
-    I: 0.86
-    D: 0.14
+    I: 0.82
+    D: 0.18
 
 Abstract Classes:
 
@@ -5549,6 +5549,7 @@ Used By:
     net.sourceforge.plantuml.gantt
     net.sourceforge.plantuml.gantt.draw
     net.sourceforge.plantuml.gantt.draw.header
+    net.sourceforge.plantuml.gantt.timescale
 
 --------------------------------------------------
 - Package: net.sourceforge.plantuml.gantt.draw
@@ -5947,16 +5948,16 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 8
-    Concrete Classes: 7
+    Total Classes: 9
+    Concrete Classes: 8
     Abstract Classes: 1
 
     Ca: 4
-    Ce: 6
+    Ce: 7
 
-    A: 0.12
-    I: 0.6
-    D: 0.27
+    A: 0.11
+    I: 0.64
+    D: 0.25
 
 Abstract Classes:
     net.sourceforge.plantuml.gantt.timescale.TimeScale
@@ -5969,6 +5970,7 @@ Concrete Classes:
     net.sourceforge.plantuml.gantt.timescale.TimeScaleDaily
     net.sourceforge.plantuml.gantt.timescale.TimeScaleDailyHideClosed
     net.sourceforge.plantuml.gantt.timescale.TimeScaleWink
+    net.sourceforge.plantuml.gantt.timescale.VariantTimeScale
 
 Depends Upon:
     java.lang
@@ -5976,6 +5978,7 @@ Depends Upon:
     java.util
     net.sourceforge.plantuml.gantt
     net.sourceforge.plantuml.gantt.core
+    net.sourceforge.plantuml.gantt.data
     net.sourceforge.plantuml.gantt.time
 
 Used By:
@@ -14960,7 +14963,7 @@ net.sourceforge.plantuml.ftp,2,0,0,3,0,1,0,1
 net.sourceforge.plantuml.gantt,25,3,8,37,0.12,0.82,0.06,1
 net.sourceforge.plantuml.gantt.command,14,0,1,18,0,0.95,0.05,1
 net.sourceforge.plantuml.gantt.core,12,3,9,13,0.25,0.59,0.16,1
-net.sourceforge.plantuml.gantt.data,8,0,3,18,0,0.86,0.14,1
+net.sourceforge.plantuml.gantt.data,8,0,4,18,0,0.82,0.18,1
 net.sourceforge.plantuml.gantt.draw,9,2,4,25,0.22,0.86,0.08,1
 net.sourceforge.plantuml.gantt.draw.header,10,2,2,15,0.2,0.88,0.08,1
 net.sourceforge.plantuml.gantt.lang,83,3,4,17,0.04,0.81,0.15,1
@@ -14968,7 +14971,7 @@ net.sourceforge.plantuml.gantt.ngm,4,1,4,3,0.25,0.43,0.32,1
 net.sourceforge.plantuml.gantt.ngm.math,11,2,5,6,0.18,0.55,0.27,1
 net.sourceforge.plantuml.gantt.solver,2,0,1,8,0,0.89,0.11,1
 net.sourceforge.plantuml.gantt.time,1,0,8,2,0,0.2,0.8,1
-net.sourceforge.plantuml.gantt.timescale,8,1,4,6,0.12,0.6,0.27,1
+net.sourceforge.plantuml.gantt.timescale,9,1,4,7,0.11,0.64,0.25,1
 net.sourceforge.plantuml.gantt.ulang,0,0,2,0,0,0,1,1
 net.sourceforge.plantuml.gitlog,9,0,0,20,0,1,0,1
 net.sourceforge.plantuml.golem,10,0,1,10,0,0.91,0.09,1

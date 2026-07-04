@@ -1667,7 +1667,7 @@ Total Classes: 12
 "net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.gantt.core" --> "net.sourceforge.plantuml.url"
 
-class "net.sourceforge.plantuml.gantt.data" %lighten("red", 86) {
+class "net.sourceforge.plantuml.gantt.data" %lighten("red", 82) {
 Total Classes: 8
 }
 "net.sourceforge.plantuml.gantt.data" --> "java.lang"
@@ -1793,14 +1793,15 @@ Total Classes: 1
 "net.sourceforge.plantuml.gantt.time" --> "java.lang"
 "net.sourceforge.plantuml.gantt.time" --> "java.time"
 
-class "net.sourceforge.plantuml.gantt.timescale" %lighten("red", 73) {
-Total Classes: 8
+class "net.sourceforge.plantuml.gantt.timescale" %lighten("red", 75) {
+Total Classes: 9
 }
 "net.sourceforge.plantuml.gantt.timescale" --> "java.lang"
 "net.sourceforge.plantuml.gantt.timescale" --> "java.time"
 "net.sourceforge.plantuml.gantt.timescale" --> "java.util"
 "net.sourceforge.plantuml.gantt.timescale" --> "net.sourceforge.plantuml.gantt"
 "net.sourceforge.plantuml.gantt.timescale" --> "net.sourceforge.plantuml.gantt.core"
+"net.sourceforge.plantuml.gantt.timescale" --> "net.sourceforge.plantuml.gantt.data"
 "net.sourceforge.plantuml.gantt.timescale" --> "net.sourceforge.plantuml.gantt.time"
 
 class "net.sourceforge.plantuml.gantt.ulang"{

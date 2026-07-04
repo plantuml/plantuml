@@ -8201,11 +8201,11 @@
                 <TotalClasses>8</TotalClasses>
                 <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>3</Ca>
+                <Ca>4</Ca>
                 <Ce>18</Ce>
                 <A>0</A>
-                <I>0.86</I>
-                <D>0.14</D>
+                <I>0.82</I>
+                <D>0.18</D>
                 <V>1</V>
             </Stats>
 
@@ -8264,6 +8264,7 @@
                 <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.gantt.draw.header</Package>
+                <Package>net.sourceforge.plantuml.gantt.timescale</Package>
             </UsedBy>
         </Package>
 
@@ -8915,14 +8916,14 @@
 
         <Package name="net.sourceforge.plantuml.gantt.timescale">
             <Stats>
-                <TotalClasses>8</TotalClasses>
-                <ConcreteClasses>7</ConcreteClasses>
+                <TotalClasses>9</TotalClasses>
+                <ConcreteClasses>8</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>4</Ca>
-                <Ce>6</Ce>
-                <A>0.12</A>
-                <I>0.6</I>
-                <D>0.27</D>
+                <Ce>7</Ce>
+                <A>0.11</A>
+                <I>0.64</I>
+                <D>0.25</D>
                 <V>1</V>
             </Stats>
 
@@ -8954,6 +8955,9 @@
                 <Class sourceFile="TimeScaleWink.java">
                     net.sourceforge.plantuml.gantt.timescale.TimeScaleWink
                 </Class>
+                <Class sourceFile="VariantTimeScale.java">
+                    net.sourceforge.plantuml.gantt.timescale.VariantTimeScale
+                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
@@ -8962,6 +8966,7 @@
                 <Package>java.util</Package>
                 <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.gantt.core</Package>
+                <Package>net.sourceforge.plantuml.gantt.data</Package>
                 <Package>net.sourceforge.plantuml.gantt.time</Package>
             </DependsUpon>
 
