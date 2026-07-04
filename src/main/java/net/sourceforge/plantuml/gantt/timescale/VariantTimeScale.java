@@ -69,7 +69,6 @@ public class VariantTimeScale implements TimeScale {
 
 	@Override
 	public double getWidth(TimePoint instant) {
-		System.err.println("VariantTimeScale::instant=" + instant + " " + instant.toDay());
 		final boolean isClosed = openClose.isClosed(instant.toDay());
 		return workingHours.getWorkingDurationForOneDay(isClosed);
 	}
