@@ -292,10 +292,10 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 <span class="nc" id="L292">				return new SequenceDiagramXmiMaker(this, fileFormat);</span>
 
 		}
-<span class="fc bfc" id="L295" title="All 2 branches covered.">		if (modeTeoz())</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">		if (modeTeoz())</span>
 <span class="fc" id="L296">			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);</span>
 
-<span class="fc" id="L298">		return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);</span>
+<span class="nc" id="L298">		return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);</span>
 	}
 
 	private boolean modeTeoz() {
@@ -592,9 +592,9 @@ import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 	@Override
 	public ClockwiseTopRightBottomLeft getDefaultMargins() {
-<span class="fc bfc" id="L595" title="All 2 branches covered.">		return modeTeoz() // this is for backward compatibility</span>
+<span class="pc bpc" id="L595" title="1 of 2 branches missed.">		return modeTeoz() // this is for backward compatibility</span>
 <span class="fc" id="L596">				? ClockwiseTopRightBottomLeft.same(5)</span>
-<span class="fc" id="L597">				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);</span>
+<span class="nc" id="L597">				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

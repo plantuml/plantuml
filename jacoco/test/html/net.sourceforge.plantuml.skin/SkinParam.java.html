@@ -138,7 +138,7 @@ public class SkinParam implements ISkinParam {
 	}
 
 	private static boolean isIntOrDecimal(String s) {
-<span class="pc bpc" id="L141" title="1 of 4 branches missed.">		return s != null &amp;&amp; INT_OR_DECIMAL.matcher(s).matches();</span>
+<span class="pc bpc" id="L141" title="3 of 4 branches missed.">		return s != null &amp;&amp; INT_OR_DECIMAL.matcher(s).matches();</span>
 	}
 
 	private SkinParam(PathSystem pathSystem, DiagramType type, Pragma pragma, ConfigurationStore&lt;OptionKey&gt; option,
@@ -753,8 +753,8 @@ public class SkinParam implements ISkinParam {
 
 		}
 <span class="fc" id="L755">		final String value = getValue(&quot;shadowing&quot;);</span>
-<span class="fc bfc" id="L756" title="All 2 branches covered.">		if (&quot;false&quot;.equalsIgnoreCase(value))</span>
-<span class="fc" id="L757">			return false;</span>
+<span class="pc bpc" id="L756" title="1 of 2 branches missed.">		if (&quot;false&quot;.equalsIgnoreCase(value))</span>
+<span class="nc" id="L757">			return false;</span>
 
 <span class="pc bpc" id="L759" title="1 of 2 branches missed.">		if (&quot;true&quot;.equalsIgnoreCase(value))</span>
 <span class="nc" id="L760">			return true;</span>
@@ -1128,8 +1128,8 @@ public class SkinParam implements ISkinParam {
 
 	private ClockwiseTopRightBottomLeft getAsDouble(final String name) {
 <span class="fc" id="L1130">		final String value = getValue(name);</span>
-<span class="fc bfc" id="L1131" title="All 2 branches covered.">		if (isIntOrDecimal(value))</span>
-<span class="fc" id="L1132">			return ClockwiseTopRightBottomLeft.same(Double.parseDouble(value));</span>
+<span class="pc bpc" id="L1131" title="1 of 2 branches missed.">		if (isIntOrDecimal(value))</span>
+<span class="nc" id="L1132">			return ClockwiseTopRightBottomLeft.same(Double.parseDouble(value));</span>
 
 <span class="fc" id="L1134">		return ClockwiseTopRightBottomLeft.same(0);</span>
 	}

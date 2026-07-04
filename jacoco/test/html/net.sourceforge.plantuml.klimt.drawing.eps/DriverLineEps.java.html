@@ -55,15 +55,15 @@ public class DriverLineEps implements UDriver&lt;ULine, EpsGraphics&gt; {
 <span class="fc" id="L55">		double y2 = y + shape.getDY();</span>
 
 <span class="fc" id="L57">		final UClip clip = clipContainer.getClip();</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (clip != null) {</span>
-<span class="fc" id="L59">			final XLine2D line = clip.getClippedLine(new XLine2D(x, y, x2, y2));</span>
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">			if (line == null) {</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (clip != null) {</span>
+<span class="nc" id="L59">			final XLine2D line = clip.getClippedLine(new XLine2D(x, y, x2, y2));</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (line == null) {</span>
 <span class="nc" id="L61">				return;</span>
 			}
-<span class="fc" id="L63">			x = line.x1;</span>
-<span class="fc" id="L64">			y = line.y1;</span>
-<span class="fc" id="L65">			x2 = line.x2;</span>
-<span class="fc" id="L66">			y2 = line.y2;</span>
+<span class="nc" id="L63">			x = line.x1;</span>
+<span class="nc" id="L64">			y = line.y1;</span>
+<span class="nc" id="L65">			x2 = line.x2;</span>
+<span class="nc" id="L66">			y2 = line.y2;</span>
 		}
 
 <span class="fc" id="L69">		eps.setStrokeColor(param.getColor().toColor(mapper));</span>

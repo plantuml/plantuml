@@ -98,7 +98,7 @@ import net.sourceforge.plantuml.url.Url;
 <span class="fc" id="L98">	}</span>
 
 	public ParticipantBox getVeryfirst() {
-<span class="fc" id="L101">		return participants.values().iterator().next().getParticipantBox();</span>
+<span class="nc" id="L101">		return participants.values().iterator().next().getParticipantBox();</span>
 	}
 
 	public final Rose getSkin() {
@@ -160,7 +160,7 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	public GraphicalElement getEvent(Event ev) {
-<span class="fc" id="L163">		return events.get(ev);</span>
+<span class="nc" id="L163">		return events.get(ev);</span>
 	}
 
 	public double getHeadHeight(StringBounder stringBounder) {
@@ -281,18 +281,18 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	TextBlock asTextBlock(final double delta, final double width, final Page page, final boolean showTail) {
-<span class="fc" id="L284">		return new TextBlock() {</span>
+<span class="nc" id="L284">		return new TextBlock() {</span>
 
 			@Override
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L288">				drawU22(ug, delta, width, page, showTail);</span>
-<span class="fc" id="L289">			}</span>
+<span class="nc" id="L288">				drawU22(ug, delta, width, page, showTail);</span>
+<span class="nc" id="L289">			}</span>
 
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L294">				final double height = page.getHeight();</span>
-<span class="fc" id="L295">				return new XDimension2D(width, height);</span>
+<span class="nc" id="L294">				final double height = page.getHeight();</span>
+<span class="nc" id="L295">				return new XDimension2D(width, height);</span>
 			}
 
 		};
@@ -320,8 +320,8 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	private UTranslate getTranslate4(final double delta) {
-<span class="fc bfc" id="L323" title="All 2 branches covered.">		if (delta &gt; 0)</span>
-<span class="fc" id="L324">			return UTranslate.dy(-delta);</span>
+<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (delta &gt; 0)</span>
+<span class="nc" id="L324">			return UTranslate.dy(-delta);</span>
 
 <span class="fc" id="L326">		return UTranslate.none();</span>
 	}
@@ -373,12 +373,12 @@ import net.sourceforge.plantuml.url.Url;
 
 			}
 <span class="fc" id="L375">			final Url url = p.getUrl();</span>
-<span class="fc bfc" id="L376" title="All 2 branches covered.">			if (url != null)</span>
-<span class="fc" id="L377">				ug.startUrl(url);</span>
+<span class="pc bpc" id="L376" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L377">				ug.startUrl(url);</span>
 
 <span class="fc" id="L379">			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);</span>
-<span class="fc bfc" id="L380" title="All 2 branches covered.">			if (url != null)</span>
-<span class="fc" id="L381">				ug.closeUrl();</span>
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L381">				ug.closeUrl();</span>
 
 <span class="fc" id="L383">		}</span>
 <span class="fc" id="L384">	}</span>

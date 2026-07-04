@@ -61,17 +61,17 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	private final List&lt;Page&gt; pages;
 	private final StringBounder stringBounder;
 
-<span class="fc" id="L64">	public SequenceDiagramFileMakerPuma2(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption) {</span>
-<span class="fc" id="L65">		this.diagram = diagram;</span>
-<span class="fc" id="L66">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
-<span class="fc" id="L67">		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, diagram.getSkinParam(),</span>
-<span class="fc" id="L68">				diagram.isShowFootbox(), /* diagram.getAutonewpage(), */ diagram.getCounter());</span>
+<span class="nc" id="L64">	public SequenceDiagramFileMakerPuma2(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption) {</span>
+<span class="nc" id="L65">		this.diagram = diagram;</span>
+<span class="nc" id="L66">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+<span class="nc" id="L67">		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, diagram.getSkinParam(),</span>
+<span class="nc" id="L68">				diagram.isShowFootbox(), /* diagram.getAutonewpage(), */ diagram.getCounter());</span>
 
-<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (Participant p : diagram.participants())</span>
-<span class="fc" id="L71">			initializer.addParticipant(p, diagram.getEnglober(p));</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		for (Participant p : diagram.participants())</span>
+<span class="nc" id="L71">			initializer.addParticipant(p, diagram.getEnglober(p));</span>
 
-<span class="fc bfc" id="L73" title="All 2 branches covered.">		for (Event ev : diagram.events()) {</span>
-<span class="fc" id="L74">			initializer.addEvent(ev);</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		for (Event ev : diagram.events()) {</span>
+<span class="nc" id="L74">			initializer.addEvent(ev);</span>
 			// if (ev instanceof Message) {
 			// // TODO mieux faire
 			// final Message m = (Message) ev;
@@ -84,20 +84,20 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			// }
 			// }
 			// }
-<span class="fc" id="L87">		}</span>
-<span class="fc" id="L88">		drawableSet = initializer.createDrawableSet(stringBounder);</span>
-<span class="fc" id="L89">		final List&lt;Newpage&gt; newpages = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">		for (Event ev : drawableSet.getAllEvents())</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">			if (ev instanceof Newpage)</span>
-<span class="fc" id="L92">				newpages.add((Newpage) ev);</span>
+<span class="nc" id="L87">		}</span>
+<span class="nc" id="L88">		drawableSet = initializer.createDrawableSet(stringBounder);</span>
+<span class="nc" id="L89">		final List&lt;Newpage&gt; newpages = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">		for (Event ev : drawableSet.getAllEvents())</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">			if (ev instanceof Newpage)</span>
+<span class="nc" id="L92">				newpages.add((Newpage) ev);</span>
 
-<span class="fc" id="L94">		fullDimension = drawableSet.getDimension();</span>
-<span class="fc" id="L95">		final Map&lt;Newpage, Double&gt; positions = new LinkedHashMap&lt;Newpage, Double&gt;();</span>
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		for (Newpage n : newpages)</span>
-<span class="fc" id="L97">			positions.put(n, initializer.getYposition(stringBounder, n));</span>
+<span class="nc" id="L94">		fullDimension = drawableSet.getDimension();</span>
+<span class="nc" id="L95">		final Map&lt;Newpage, Double&gt; positions = new LinkedHashMap&lt;Newpage, Double&gt;();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		for (Newpage n : newpages)</span>
+<span class="nc" id="L97">			positions.put(n, initializer.getYposition(stringBounder, n));</span>
 
-<span class="fc" id="L99">		pages = create(drawableSet, positions, diagram.isShowFootbox(), diagram.getTitle().getDisplay()).getPages();</span>
-<span class="fc" id="L100">	}</span>
+<span class="nc" id="L99">		pages = create(drawableSet, positions, diagram.isShowFootbox(), diagram.getTitle().getDisplay()).getPages();</span>
+<span class="nc" id="L100">	}</span>
 
 	public int getNbPages() {
 <span class="nc" id="L103">		return pages.size();</span>
@@ -106,32 +106,32 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 	private PageSplitter create(DrawableSet drawableSet, Map&lt;Newpage, Double&gt; positions, boolean showFootbox,
 			Display title) {
 
-<span class="fc" id="L109">		final double headerHeight = drawableSet.getHeadHeight(stringBounder);</span>
-<span class="fc" id="L110">		final double tailHeight = drawableSet.getTailHeight(stringBounder, showFootbox);</span>
-<span class="fc" id="L111">		final double signatureHeight = 0;</span>
-<span class="fc" id="L112">		final double newpageHeight = drawableSet.getSkin()</span>
-<span class="fc" id="L113">				.createComponentNewPage(</span>
-<span class="fc" id="L114">						new Style[] { ComponentType.NEWPAGE.getStyleSignature()</span>
-<span class="fc" id="L115">								.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },</span>
-<span class="fc" id="L116">						drawableSet.getSkinParam())</span>
-<span class="fc" id="L117">				.getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L109">		final double headerHeight = drawableSet.getHeadHeight(stringBounder);</span>
+<span class="nc" id="L110">		final double tailHeight = drawableSet.getTailHeight(stringBounder, showFootbox);</span>
+<span class="nc" id="L111">		final double signatureHeight = 0;</span>
+<span class="nc" id="L112">		final double newpageHeight = drawableSet.getSkin()</span>
+<span class="nc" id="L113">				.createComponentNewPage(</span>
+<span class="nc" id="L114">						new Style[] { ComponentType.NEWPAGE.getStyleSignature()</span>
+<span class="nc" id="L115">								.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },</span>
+<span class="nc" id="L116">						drawableSet.getSkinParam())</span>
+<span class="nc" id="L117">				.getPreferredHeight(stringBounder);</span>
 
-<span class="fc" id="L119">		return new PageSplitter(fullDimension.getHeight(), headerHeight, positions, tailHeight, signatureHeight,</span>
+<span class="nc" id="L119">		return new PageSplitter(fullDimension.getHeight(), headerHeight, positions, tailHeight, signatureHeight,</span>
 				newpageHeight, title);
 	}
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
-<span class="fc" id="L125">		final Page page = pages.get(num);</span>
+<span class="nc" id="L125">		final Page page = pages.get(num);</span>
 
-<span class="fc" id="L127">		double delta = 0;</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (num &gt; 0)</span>
-<span class="fc" id="L129">			delta = page.getNewpage1() - page.getHeaderHeight();</span>
+<span class="nc" id="L127">		double delta = 0;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		if (num &gt; 0)</span>
+<span class="nc" id="L129">			delta = page.getNewpage1() - page.getHeaderHeight();</span>
 
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">		if (delta &lt; 0)</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">		if (delta &lt; 0)</span>
 <span class="nc" id="L132">			delta = 0;</span>
 
-<span class="fc" id="L134">		return drawableSet.asTextBlock(delta, fullDimension.getWidth(), page, diagram.isShowFootbox());</span>
+<span class="nc" id="L134">		return drawableSet.asTextBlock(delta, fullDimension.getWidth(), page, diagram.isShowFootbox());</span>
 	}
 
 }

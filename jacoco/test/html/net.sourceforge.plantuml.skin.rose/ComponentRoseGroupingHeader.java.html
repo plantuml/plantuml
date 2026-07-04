@@ -77,7 +77,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 <span class="fc" id="L77">				skinParam, strings.get(0));</span>
 
 <span class="fc" id="L79">		this.roundCorner = style.value(PName.RoundCorner).asInt(false);</span>
-<span class="fc bfc" id="L80" title="All 2 branches covered.">		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());</span>
 <span class="fc" id="L81">		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());</span>
 <span class="fc" id="L82">		this.symbolContextCorner = styleHeader.getSymbolContext(getIHtmlColorSet());</span>
 
@@ -124,13 +124,13 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-<span class="fc" id="L127">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="fc" id="L128">		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());</span>
-<span class="fc" id="L129">		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())</span>
-<span class="fc" id="L130">				.rounded(roundCorner);</span>
-<span class="fc" id="L131">		rect.setDeltaShadow(symbolContext.getDeltaShadow());</span>
-<span class="fc" id="L132">		ug.apply(background.bg()).draw(rect);</span>
-<span class="fc" id="L133">	}</span>
+<span class="nc" id="L127">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L128">		ug = symbolContext.applyStroke(ug).apply(symbolContext.getForeColor());</span>
+<span class="nc" id="L129">		final URectangle rect = URectangle.build(dimensionToUse.getWidth(), dimensionToUse.getHeight())</span>
+<span class="nc" id="L130">				.rounded(roundCorner);</span>
+<span class="nc" id="L131">		rect.setDeltaShadow(symbolContext.getDeltaShadow());</span>
+<span class="nc" id="L132">		ug.apply(background.bg()).draw(rect);</span>
+<span class="nc" id="L133">	}</span>
 
 	@Override
 	protected void drawInternalU(UGraphic ug, Area area) {

@@ -114,7 +114,7 @@ public class XmlNode implements XmlContent, IElement {
 	 * an element is empty (so empty groups/links can be dropped).
 	 */
 	public XmlContent getFirstChild() {
-<span class="fc bfc" id="L117" title="All 2 branches covered.">		return children.isEmpty() ? null : children.get(0);</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		return children.isEmpty() ? null : children.get(0);</span>
 	}
 
 	/** Serializes this element and its subtree into the given writer. */

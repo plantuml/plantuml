@@ -37,18 +37,18 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="fc" id="L40">public enum LifeSegmentVariation {</span>
-<span class="fc" id="L41">	LARGER, SMALLER;</span>
+<span class="nc" id="L40">public enum LifeSegmentVariation {</span>
+<span class="nc" id="L41">	LARGER, SMALLER;</span>
 
 	public int apply(int v) {
-<span class="fc bfc" id="L44" title="All 2 branches covered.">		if (this == LARGER) {</span>
-<span class="fc" id="L45">			return v + 1;</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		if (this == LARGER) {</span>
+<span class="nc" id="L45">			return v + 1;</span>
 		}
-<span class="pc bpc" id="L47" title="2 of 4 branches missed.">		if (TeaVM.a()) assert this == SMALLER;</span>
-<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (v == 0) {</span>
+<span class="nc bnc" id="L47" title="All 4 branches missed.">		if (TeaVM.a()) assert this == SMALLER;</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		if (v == 0) {</span>
 <span class="nc" id="L49">			return 0;</span>
 		}
-<span class="fc" id="L51">		return v - 1;</span>
+<span class="nc" id="L51">		return v - 1;</span>
 	}
 
 }

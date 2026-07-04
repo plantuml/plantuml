@@ -97,58 +97,64 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				xorigin, yorigin);
 
 <span class="fc" id="L99">		this.dolls = new Dolls(tileArguments);</span>
-<span class="fc" id="L100">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
-<span class="fc" id="L101">		this.livingSpaces.addConstraints(stringBounder);</span>
-<span class="fc" id="L102">		mainTile.addConstraints();</span>
+		// The dolls constraints must be set before the PlayingSpace is built:
+		// PlayingSpace captures dolls.getMinX()/getMaxX(), which freeze the
+		// margins (see LivingSpace.getPosA/getPosE) needed for the box titles
 <span class="fc" id="L103">		this.dolls.addConstraints(stringBounder);</span>
-<span class="fc" id="L104">		xorigin.compileNow();</span>
+<span class="fc" id="L104">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
+<span class="fc" id="L105">		this.livingSpaces.addConstraints(stringBounder);</span>
+<span class="fc" id="L106">		mainTile.addConstraints();</span>
+<span class="fc" id="L107">		xorigin.compileNow();</span>
 		if (YGauge.USE_ME)
 			System.err.println(&quot;COMPILING Y&quot;);
-<span class="fc" id="L107">		yorigin.compileNow();</span>
-<span class="fc" id="L108">		tileArguments.setBordered(mainTile);</span>
-<span class="fc" id="L109">		return mainTile;</span>
+<span class="fc" id="L110">		yorigin.compileNow();</span>
+<span class="fc" id="L111">		tileArguments.setBordered(mainTile);</span>
+<span class="fc" id="L112">		return mainTile;</span>
 	}
 
 	public ISkinParam getSkinParam() {
-<span class="fc" id="L113">		return diagram.getSkinParam();</span>
+<span class="fc" id="L116">		return diagram.getSkinParam();</span>
 	}
 
 	public int getNbPages() {
-<span class="nc" id="L117">		return body.getNbPages();</span>
+<span class="nc" id="L120">		return body.getNbPages();</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
-<span class="fc" id="L122">		return new TextBlock() {</span>
+<span class="fc" id="L125">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L125">				ug = ug.apply(new UTranslate(5, 5));</span>
+<span class="fc" id="L128">				ug = ug.apply(new UTranslate(5, 5));</span>
 
-<span class="fc" id="L127">				body.setIndex(num);</span>
-<span class="fc" id="L128">				final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
-<span class="fc" id="L129">				ug = ug.apply(min1translate);</span>
+<span class="fc" id="L130">				body.setIndex(num);</span>
+<span class="fc" id="L131">				final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
+<span class="fc" id="L132">				ug = ug.apply(min1translate);</span>
 
-<span class="fc" id="L131">				dolls.drawEnglobers(ug,</span>
-<span class="fc" id="L132">						body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
+<span class="fc" id="L134">				dolls.drawEnglobers(ug,</span>
+<span class="fc" id="L135">						body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
 						new SimpleContext2D(true));
 
-<span class="fc" id="L135">				ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
-<span class="fc" id="L136">				body.drawU(ug);</span>
-<span class="fc" id="L137">				ug = ug.apply(UTranslate.dy(body.calculateDimension(stringBounder).getHeight()));</span>
-<span class="fc" id="L138">				ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
-<span class="fc" id="L139">			}</span>
+<span class="fc" id="L138">				ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
+<span class="fc" id="L139">				body.drawU(ug);</span>
+<span class="fc" id="L140">				ug = ug.apply(UTranslate.dy(body.calculateDimension(stringBounder).getHeight()));</span>
+<span class="fc" id="L141">				ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
+<span class="fc" id="L142">			}</span>
 
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L144">				final double totalWidth = body.calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L145">				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
+				// The exporter calculates the dimension before calling drawU(),
+				// so the page index must be set here too
+<span class="fc" id="L149">				body.setIndex(num);</span>
+<span class="fc" id="L150">				final double totalWidth = body.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L151">				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
 						+ heightEnglober2;
-<span class="fc" id="L147">				return new XDimension2D(totalWidth + 10, totalHeight + 10);</span>
+<span class="fc" id="L153">				return new XDimension2D(totalWidth + 10, totalHeight + 10);</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L151">				return null;</span>
+<span class="nc" id="L157">				return null;</span>
 			}
 
 		};

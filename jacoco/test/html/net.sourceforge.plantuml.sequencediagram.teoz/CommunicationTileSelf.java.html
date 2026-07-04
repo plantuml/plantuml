@@ -108,8 +108,8 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 <span class="fc" id="L108">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
 <span class="fc bfc" id="L109" title="All 2 branches covered.">		else if (message.isDeactivate())</span>
 <span class="fc" id="L110">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p1.getY());</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		else if (message.isDestroy())</span>
-<span class="nc" id="L112">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">		else if (message.isDestroy())</span>
+<span class="fc" id="L112">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
 
 <span class="fc" id="L114">	}</span>
 
@@ -125,8 +125,8 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 <span class="pc" id="L125">		Log.info(() -&gt; &quot;CommunicationTileSelf::drawU levelIgnore=&quot; + levelIgnore + &quot; levelConsidere=&quot; + levelConsidere);</span>
 <span class="fc bfc" id="L126" title="All 2 branches covered.">		if (!isReverseDefine()) {</span>
 <span class="fc" id="L127">			x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">			if (levelIgnore &lt; levelConsidere) {</span>
-<span class="nc" id="L129">				x1 += CommunicationTile.LIVE_DELTA_SIZE * (levelConsidere - levelIgnore);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">			if (levelIgnore &lt; levelConsidere) {</span>
+<span class="fc" id="L129">				x1 += CommunicationTile.LIVE_DELTA_SIZE * (levelConsidere - levelIgnore);</span>
 			}
 		}
 

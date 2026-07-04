@@ -189,7 +189,7 @@ public class UGraphicG2d extends AbstractUGraphic&lt;Graphics2D&gt; implements E
 
 	public void ensureVisible(double x, double y) {
 <span class="fc bfc" id="L191" title="All 2 branches covered.">		for (Url u : urls)</span>
-<span class="pc bpc" id="L192" title="2 of 6 branches missed.">			if (u != null &amp;&amp; (getClip() == null || getClip().isInside(x, y)))</span>
+<span class="pc bpc" id="L192" title="4 of 6 branches missed.">			if (u != null &amp;&amp; (getClip() == null || getClip().isInside(x, y)))</span>
 <span class="fc" id="L193">				u.ensureVisible(x, y);</span>
 
 <span class="fc" id="L195">	}</span>

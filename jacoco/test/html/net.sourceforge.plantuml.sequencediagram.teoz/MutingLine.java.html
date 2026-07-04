@@ -76,37 +76,44 @@ public class MutingLine {
 <span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (delays.size() &gt; 0) {</span>
 <span class="nc" id="L77">			double y = createY;</span>
 <span class="nc bnc" id="L78" title="All 2 branches missed.">			for (Map.Entry&lt;Double, Double&gt; ent : delays.entrySet()) {</span>
-<span class="nc bnc" id="L79" title="All 2 branches missed.">				if (ent.getKey() &gt;= createY) {</span>
-<span class="nc" id="L80">					drawInternal(ug, context, y, ent.getKey(), defaultLineType);</span>
-<span class="nc" id="L81">					drawInternal(ug, context, ent.getKey(), ent.getKey() + ent.getValue(), ComponentType.DELAY_LINE);</span>
-<span class="nc" id="L82">					y = ent.getKey() + ent.getValue();</span>
+				// Only the delays fully inside [createY, endY] are relevant: the
+				// line may be drawn on a life segment (see LivingSpace) that ends
+				// at a destroy, located above some of the delays
+<span class="nc bnc" id="L82" title="All 4 branches missed.">				if (ent.getKey() &gt;= createY &amp;&amp; ent.getKey() + ent.getValue() &lt;= endY) {</span>
+<span class="nc" id="L83">					drawInternal(ug, context, y, ent.getKey(), defaultLineType);</span>
+<span class="nc" id="L84">					drawInternal(ug, context, ent.getKey(), ent.getKey() + ent.getValue(), ComponentType.DELAY_LINE);</span>
+<span class="nc" id="L85">					y = ent.getKey() + ent.getValue();</span>
 				}
-<span class="nc" id="L84">			}</span>
-<span class="nc" id="L85">			drawInternal(ug, context, y, endY, defaultLineType);</span>
-<span class="nc" id="L86">		} else {</span>
-<span class="fc" id="L87">			drawInternal(ug, context, createY, endY, defaultLineType);</span>
+<span class="nc" id="L87">			}</span>
+<span class="nc" id="L88">			drawInternal(ug, context, y, endY, defaultLineType);</span>
+<span class="nc" id="L89">		} else {</span>
+<span class="fc" id="L90">			drawInternal(ug, context, createY, endY, defaultLineType);</span>
 		}
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L92">	}</span>
 
 	private void drawInternal(UGraphic ug, Context2D context, double y1, double y2,
 			final ComponentType defaultLineType) {
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (y2 == y1)</span>
-<span class="nc" id="L94">			return;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (y2 == y1)</span>
+<span class="nc" id="L97">			return;</span>
 
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (y2 &lt; y1)</span>
-<span class="nc" id="L97">			throw new IllegalArgumentException();</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		if (y2 &lt; y1)</span>
+<span class="nc" id="L100">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L99">		final Style style = defaultLineType.getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L100">		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,</span>
-<span class="fc" id="L101">				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
-<span class="fc" id="L102">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
-<span class="fc" id="L103">		final Area area = Area.create(dim.getWidth(), y2 - y1);</span>
-<span class="fc" id="L104">		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);</span>
-<span class="fc" id="L105">	}</span>
+		// Like in Puma (see DrawableSetInitializer.prepareParticipant), the style
+		// is merged with the participant stereotype, so that stereotyped rules
+		// such as &lt;style&gt;.foo { lineColor ... }&lt;/style&gt; apply to the life line
+<span class="fc" id="L105">		final Style style = defaultLineType.getStyleSignature().withTOBECHANGED(participant.getStereotype())</span>
+<span class="fc" id="L106">				.getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L107">		final Component comp = skin.createComponent(new Style[] { style }, defaultLineType, null, skinParam,</span>
+<span class="fc" id="L108">				participant.getDisplay(skinParam.forceSequenceParticipantUnderlined()));</span>
+<span class="fc" id="L109">		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());</span>
+<span class="fc" id="L110">		final Area area = Area.create(dim.getWidth(), y2 - y1);</span>
+<span class="fc" id="L111">		comp.drawU(ug.apply(UTranslate.dy(y1)), area, context);</span>
+<span class="fc" id="L112">	}</span>
 
 	public void delayOn(double y, double height) {
-<span class="nc" id="L108">		delays.put(y, height);</span>
-<span class="nc" id="L109">	}</span>
+<span class="nc" id="L115">		delays.put(y, height);</span>
+<span class="nc" id="L116">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

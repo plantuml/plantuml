@@ -150,28 +150,28 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 
 <span class="fc bfc" id="L151" title="All 2 branches covered.">		if (shape instanceof URectangle) {</span>
 <span class="fc" id="L152">			final URectangle rect = (URectangle) shape;</span>
-<span class="pc bpc" id="L153" title="1 of 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="pc bnc" id="L154" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + rect.getWidth(), getTranslateY() + rect.getHeight()) == false;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + rect.getWidth(), getTranslateY() + rect.getHeight()) == false;</span>
 		}
-<span class="fc bfc" id="L156" title="All 2 branches covered.">		if (shape instanceof UEllipse) {</span>
-<span class="fc" id="L157">			final UEllipse ell = (UEllipse) shape;</span>
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="pc bnc" id="L159" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + ell.getWidth(), getTranslateY() + ell.getHeight()) == false;</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		if (shape instanceof UEllipse) {</span>
+<span class="nc" id="L157">			final UEllipse ell = (UEllipse) shape;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + ell.getWidth(), getTranslateY() + ell.getHeight()) == false;</span>
 		}
 <span class="fc bfc" id="L161" title="All 2 branches covered.">		if (shape instanceof ULine) {</span>
 <span class="fc" id="L162">			final ULine line = (ULine) shape;</span>
 <span class="fc bfc" id="L163" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY()) == false</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">					&amp;&amp; clip.isInside(getTranslateX() + line.getDX(), getTranslateY() + line.getDY()) == false;</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">					&amp;&amp; clip.isInside(getTranslateX() + line.getDX(), getTranslateY() + line.getDY()) == false;</span>
 		}
 <span class="fc bfc" id="L166" title="All 2 branches covered.">		if (shape instanceof UText) {</span>
 <span class="fc" id="L167">			final UText text = (UText) shape;</span>
 <span class="fc" id="L168">			final XDimension2D textDim = getStringBounder().calculateDimension(text.getFontConfiguration().getFont(),</span>
 <span class="fc" id="L169">					text.getText());</span>
 <span class="fc bfc" id="L170" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY()) == false &amp;&amp; clip</span>
-<span class="fc bfc" id="L171" title="All 2 branches covered.">					.isInside(getTranslateX() + textDim.getWidth(), getTranslateY() - textDim.getHeight()) == false;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">					.isInside(getTranslateX() + textDim.getWidth(), getTranslateY() - textDim.getHeight()) == false;</span>
 		}
-<span class="fc bfc" id="L173" title="All 2 branches covered.">		if (shape instanceof UPath) {</span>
-<span class="fc bfc" id="L174" title="All 2 branches covered.">			return clip.isInside(getTranslateX(), getTranslateY(), (UPath) shape) == false;</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (shape instanceof UPath) {</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">			return clip.isInside(getTranslateX(), getTranslateY(), (UPath) shape) == false;</span>
 		}
 <span class="fc" id="L176">		return false;</span>
 	}

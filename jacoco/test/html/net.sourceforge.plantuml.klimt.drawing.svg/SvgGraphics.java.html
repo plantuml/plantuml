@@ -1188,7 +1188,7 @@ import net.sourceforge.plantuml.version.Version;
 	private void closeTopPendingElement() {
 <span class="fc" id="L1189">		final XmlNode element = pendingElements.get(0);</span>
 <span class="fc" id="L1190">		pendingElements.remove(0);</span>
-<span class="fc bfc" id="L1191" title="All 2 branches covered.">		if (element.getFirstChild() != null)</span>
+<span class="pc bpc" id="L1191" title="1 of 2 branches missed.">		if (element.getFirstChild() != null)</span>
 <span class="fc" id="L1192">			getG().appendChild(element);</span>
 <span class="fc" id="L1193">	}</span>
 

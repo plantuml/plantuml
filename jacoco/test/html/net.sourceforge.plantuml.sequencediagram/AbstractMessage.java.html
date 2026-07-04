@@ -123,8 +123,8 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	final public Url getUrl() {
 <span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (url == null)</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">			for (Note n : noteOnMessages)</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">				if (n.getUrl() != null)</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			for (Note n : noteOnMessages)</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">				if (n.getUrl() != null)</span>
 <span class="nc" id="L128">					return n.getUrl();</span>
 
 <span class="fc" id="L130">		return url;</span>
@@ -186,11 +186,11 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	@Deprecated
 	private boolean isDeactivateOrDestroy() {
-<span class="pc bpc" id="L189" title="2 of 4 branches missed.">		return isDeactivate() || isDestroy();</span>
+<span class="nc bnc" id="L189" title="All 4 branches missed.">		return isDeactivate() || isDestroy();</span>
 	}
 
 	public final boolean isActivateAndDeactive() {
-<span class="pc bpc" id="L193" title="1 of 4 branches missed.">		return firstIsActivate &amp;&amp; isDeactivateOrDestroy();</span>
+<span class="pc bpc" id="L193" title="3 of 4 branches missed.">		return firstIsActivate &amp;&amp; isDeactivateOrDestroy();</span>
 	}
 
 	public final Display getLabel() {
@@ -242,7 +242,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	private double posYstartLevel;
 
 	public double getPosYstartLevel() {
-<span class="fc" id="L245">		return posYstartLevel;</span>
+<span class="nc" id="L245">		return posYstartLevel;</span>
 	}
 
 	public void setPosYstartLevel(double posYstartLevel) {
@@ -254,7 +254,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 <span class="fc" id="L254">	}</span>
 
 	public double getPosYendLevel() {
-<span class="fc" id="L257">		return posYendLevel;</span>
+<span class="nc" id="L257">		return posYendLevel;</span>
 	}
 
 	private String anchor;

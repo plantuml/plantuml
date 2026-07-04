@@ -14799,14 +14799,14 @@
 
         <Package name="net.sourceforge.plantuml.sequencediagram.teoz">
             <Stats>
-                <TotalClasses>50</TotalClasses>
-                <ConcreteClasses>44</ConcreteClasses>
+                <TotalClasses>46</TotalClasses>
+                <ConcreteClasses>40</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
                 <Ca>0</Ca>
                 <Ce>18</Ce>
-                <A>0.12</A>
+                <A>0.13</A>
                 <I>1</I>
-                <D>0.12</D>
+                <D>0.13</D>
                 <V>1</V>
             </Stats>
 
@@ -14945,18 +14945,6 @@
                 </Class>
                 <Class sourceFile="TileParallel.java">
                     net.sourceforge.plantuml.sequencediagram.teoz.TileParallel
-                </Class>
-                <Class sourceFile="TileParallel.java">
-                    net.sourceforge.plantuml.sequencediagram.teoz.TileParallel$1
-                </Class>
-                <Class sourceFile="TileParallel.java">
-                    net.sourceforge.plantuml.sequencediagram.teoz.TileParallel$1$1
-                </Class>
-                <Class sourceFile="TileParallel.java">
-                    net.sourceforge.plantuml.sequencediagram.teoz.TileParallel$2
-                </Class>
-                <Class sourceFile="TileParallel.java">
-                    net.sourceforge.plantuml.sequencediagram.teoz.TileParallel$2$1
                 </Class>
                 <Class sourceFile="TileUtils.java">
                     net.sourceforge.plantuml.sequencediagram.teoz.TileUtils

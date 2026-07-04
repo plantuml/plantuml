@@ -46,29 +46,29 @@ import net.sourceforge.plantuml.sequencediagram.InGroupableList;
 <span class="fc" id="L46">	final private List&lt;InGroupableList&gt; inGroupableStack = new ArrayList&lt;&gt;();</span>
 
 	public void addList(InGroupableList inGroupableList) {
-<span class="pc bpc" id="L49" title="1 of 2 branches missed.">		for (InGroupableList other : inGroupableStack) {</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		for (InGroupableList other : inGroupableStack) {</span>
 <span class="nc" id="L50">			other.addInGroupable(inGroupableList);</span>
 <span class="nc" id="L51">		}</span>
-<span class="fc" id="L52">		inGroupableStack.add(inGroupableList);</span>
+<span class="nc" id="L52">		inGroupableStack.add(inGroupableList);</span>
 
-<span class="fc" id="L54">	}</span>
+<span class="nc" id="L54">	}</span>
 
 	public void pop() {
-<span class="fc" id="L57">		final int idx = inGroupableStack.size() - 1;</span>
-<span class="fc" id="L58">		inGroupableStack.remove(idx);</span>
-<span class="fc" id="L59">	}</span>
+<span class="nc" id="L57">		final int idx = inGroupableStack.size() - 1;</span>
+<span class="nc" id="L58">		inGroupableStack.remove(idx);</span>
+<span class="nc" id="L59">	}</span>
 
 	public void addElement(InGroupable inGroupable) {
-<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (InGroupableList groupingStructure : inGroupableStack) {</span>
-<span class="fc" id="L63">			groupingStructure.addInGroupable(inGroupable);</span>
-<span class="fc" id="L64">		}</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		for (InGroupableList groupingStructure : inGroupableStack) {</span>
+<span class="nc" id="L63">			groupingStructure.addInGroupable(inGroupable);</span>
+<span class="nc" id="L64">		}</span>
 <span class="fc" id="L65">	}</span>
 
 	public InGroupableList getTopGroupingStructure() {
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		if (inGroupableStack.size() == 0) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		if (inGroupableStack.size() == 0) {</span>
 <span class="nc" id="L69">			return null;</span>
 		}
-<span class="fc" id="L71">		return inGroupableStack.get(inGroupableStack.size() - 1);</span>
+<span class="nc" id="L71">		return inGroupableStack.get(inGroupableStack.size() - 1);</span>
 	}
 
 }

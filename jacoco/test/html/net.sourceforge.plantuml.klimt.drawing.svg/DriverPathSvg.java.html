@@ -56,8 +56,8 @@ public class DriverPathSvg extends DriverShadowedG2d implements UDriver&lt;UPath
 
 	public void draw(UPath shape, double x, double y, ColorMapper mapper, UParam param, SvgGraphics svg) {
 <span class="fc" id="L58">		final UClip clip = clipContainer.getClip();</span>
-<span class="fc bfc" id="L59" title="All 4 branches covered.">		if (clip != null &amp;&amp; clip.isInside(x, y, shape) == false)</span>
-<span class="fc" id="L60">			return;</span>
+<span class="pc bpc" id="L59" title="3 of 4 branches missed.">		if (clip != null &amp;&amp; clip.isInside(x, y, shape) == false)</span>
+<span class="nc" id="L60">			return;</span>
 
 <span class="fc" id="L62">		final HColor color = param.getColor();</span>
 <span class="fc" id="L63">		final HColor back = param.getBackcolor();</span>

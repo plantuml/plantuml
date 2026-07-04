@@ -90,7 +90,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 
 	private void drawRightSide(UGraphic ug, UGraphic ug2, Area area, double arrowHeight, double textHeight) {
 <span class="fc bfc" id="L92" title="All 2 branches covered.">		double x1 = area.getDeltaX1() &lt; 0 ? area.getDeltaX1() : 0;</span>
-<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		double x2 = area.getDeltaX1() &gt; 0 ? -area.getDeltaX1() : 1;</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		double x2 = area.getDeltaX1() &gt; 0 ? -area.getDeltaX1() : 1;</span>
 <span class="fc" id="L94">		final UEllipse circle = UEllipse.build(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);</span>
 <span class="fc bfc" id="L95" title="All 2 branches covered.">		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {</span>
 <span class="fc" id="L96">			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())</span>

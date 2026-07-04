@@ -132,70 +132,95 @@ public class NotesTile extends AbstractTile implements Tile {
 <span class="nc" id="L132">		final NotePosition position = note.getPosition();</span>
 <span class="nc" id="L133">		final double width = getUsedWidth(stringBounder, note);</span>
 <span class="nc bnc" id="L134" title="All 2 branches missed.">		if (position == NotePosition.LEFT) {</span>
-<span class="nc" id="L135">			return livingSpace1.getPosC(stringBounder).addFixed(-width);</span>
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		} else if (position == NotePosition.RIGHT) {</span>
-<span class="nc" id="L137">			final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="nc" id="L138">			final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;</span>
-<span class="nc" id="L139">			return livingSpace1.getPosC(stringBounder).addFixed(dx);</span>
-<span class="nc bnc" id="L140" title="All 2 branches missed.">		} else if (position == NotePosition.OVER_SEVERAL) {</span>
-<span class="nc" id="L141">			final LivingSpace livingSpace2 = livingSpaces.get(note.getParticipant2());</span>
-<span class="nc" id="L142">			final Real x1 = livingSpace1.getPosC(stringBounder);</span>
-<span class="nc" id="L143">			final Real x2 = livingSpace2.getPosC(stringBounder);</span>
-<span class="nc" id="L144">			return RealUtils.middle(x1, x2).addFixed(-width / 2);</span>
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		} else if (position == NotePosition.OVER) {</span>
-<span class="nc" id="L146">			return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);</span>
+			// Several LEFT notes on the same participant are rigidly anchored to the
+			// same point: they are stacked leftward (see getStackingOffset)
+<span class="nc" id="L137">			return livingSpace1.getPosC(stringBounder)</span>
+<span class="nc" id="L138">					.addFixed(-width - getStackingOffset(stringBounder, note));</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">		} else if (position == NotePosition.RIGHT) {</span>
+<span class="nc" id="L140">			final int level = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="nc" id="L141">			final double dx = level * CommunicationTile.LIVE_DELTA_SIZE;</span>
+<span class="nc" id="L142">			return livingSpace1.getPosC(stringBounder).addFixed(dx + getStackingOffset(stringBounder, note));</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		} else if (position == NotePosition.OVER_SEVERAL) {</span>
+<span class="nc" id="L144">			final LivingSpace livingSpace2 = livingSpaces.get(note.getParticipant2());</span>
+<span class="nc" id="L145">			final Real x1 = livingSpace1.getPosC(stringBounder);</span>
+<span class="nc" id="L146">			final Real x2 = livingSpace2.getPosC(stringBounder);</span>
+<span class="nc" id="L147">			return RealUtils.middle(x1, x2).addFixed(-width / 2);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">		} else if (position == NotePosition.OVER) {</span>
+<span class="nc" id="L149">			return livingSpace1.getPosC(stringBounder).addFixed(-width / 2);</span>
 		} else {
-<span class="nc" id="L148">			throw new UnsupportedOperationException(position.toString());</span>
+<span class="nc" id="L151">			throw new UnsupportedOperationException(position.toString());</span>
 		}
+	}
+
+	// Total width of the previous notes of this group anchored to the same
+	// point (same participant, same side), so that they are drawn side by side
+	// instead of overlapping
+	private double getStackingOffset(StringBounder stringBounder, Note note) {
+<span class="nc" id="L159">		double result = 0;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (Note other : notes) {</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">			if (other == note)</span>
+<span class="nc" id="L162">				return result;</span>
+
+<span class="nc bnc" id="L164" title="All 4 branches missed.">			if (other.getPosition() == note.getPosition() &amp;&amp; other.getParticipant() == note.getParticipant())</span>
+<span class="nc" id="L165">				result += getUsedWidth(stringBounder, other);</span>
+<span class="nc" id="L166">		}</span>
+<span class="nc" id="L167">		return result;</span>
 	}
 
 	public double getPreferredHeight() {
-<span class="nc" id="L153">		double result = 0;</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">		for (Note note : notes) {</span>
-<span class="nc" id="L155">			final Component comp = getComponent(getStringBounder(), note);</span>
-<span class="nc" id="L156">			final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L157">			result = Math.max(result, dim.getHeight());</span>
-<span class="nc" id="L158">		}</span>
-<span class="nc" id="L159">		return result;</span>
+<span class="nc" id="L171">		double result = 0;</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		for (Note note : notes) {</span>
+<span class="nc" id="L173">			final Component comp = getComponent(getStringBounder(), note);</span>
+<span class="nc" id="L174">			final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="nc" id="L175">			result = Math.max(result, dim.getHeight());</span>
+<span class="nc" id="L176">		}</span>
+<span class="nc" id="L177">		return result;</span>
 	}
 
 	public void addConstraints() {
-<span class="nc" id="L163">		final List&lt;Note&gt; all = notes.asList();</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">		for (int i = 0; i &lt; all.size() - 1; i++) {</span>
-<span class="nc bnc" id="L165" title="All 2 branches missed.">			for (int j = i + 1; j &lt; all.size(); j++) {</span>
-<span class="nc" id="L166">				final double center1 = getXcenter(getStringBounder(), all.get(i)).getCurrentValue();</span>
-<span class="nc" id="L167">				final double center2 = getXcenter(getStringBounder(), all.get(j)).getCurrentValue();</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">				if (center2 &gt; center1) {</span>
-<span class="nc" id="L169">					final Real point1b = getX2(getStringBounder(), all.get(i));</span>
-<span class="nc" id="L170">					final Real point2 = getX(getStringBounder(), all.get(j));</span>
-<span class="nc" id="L171">					point2.ensureBiggerThan(point1b);</span>
-<span class="nc" id="L172">				} else {</span>
-<span class="nc" id="L173">					final Real point1 = getX(getStringBounder(), all.get(i));</span>
-<span class="nc" id="L174">					final Real point2b = getX2(getStringBounder(), all.get(j));</span>
-<span class="nc" id="L175">					point1.ensureBiggerThan(point2b);</span>
+<span class="nc" id="L181">		final List&lt;Note&gt; all = notes.asList();</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">		for (int i = 0; i &lt; all.size() - 1; i++) {</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">			for (int j = i + 1; j &lt; all.size(); j++) {</span>
+<span class="nc" id="L184">				final double center1 = getXcenter(getStringBounder(), all.get(i)).getCurrentValue();</span>
+<span class="nc" id="L185">				final double center2 = getXcenter(getStringBounder(), all.get(j)).getCurrentValue();</span>
+				// Both notes are anchored to the same point (for example two notes
+				// on the same participant): their relative positions are rigid, so
+				// adding a constraint between them would be unsatisfiable and make
+				// RealLine.compile() loop forever
+<span class="nc bnc" id="L190" title="All 2 branches missed.">				if (center2 == center1)</span>
+<span class="nc" id="L191">					continue;</span>
+
+<span class="nc bnc" id="L193" title="All 2 branches missed.">				if (center2 &gt; center1) {</span>
+<span class="nc" id="L194">					final Real point1b = getX2(getStringBounder(), all.get(i));</span>
+<span class="nc" id="L195">					final Real point2 = getX(getStringBounder(), all.get(j));</span>
+<span class="nc" id="L196">					point2.ensureBiggerThan(point1b);</span>
+<span class="nc" id="L197">				} else {</span>
+<span class="nc" id="L198">					final Real point1 = getX(getStringBounder(), all.get(i));</span>
+<span class="nc" id="L199">					final Real point2b = getX2(getStringBounder(), all.get(j));</span>
+<span class="nc" id="L200">					point1.ensureBiggerThan(point2b);</span>
 				}
 			}
 		}
-<span class="nc" id="L179">	}</span>
+<span class="nc" id="L204">	}</span>
 
 	public Real getMinX() {
-<span class="nc" id="L182">		final List&lt;Real&gt; reals = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		for (Note note : notes)</span>
-<span class="nc" id="L184">			reals.add(getX(getStringBounder(), note));</span>
+<span class="nc" id="L207">		final List&lt;Real&gt; reals = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">		for (Note note : notes)</span>
+<span class="nc" id="L209">			reals.add(getX(getStringBounder(), note));</span>
 
-<span class="nc" id="L186">		return RealUtils.min(reals);</span>
+<span class="nc" id="L211">		return RealUtils.min(reals);</span>
 	}
 
 	private Real getX2(StringBounder stringBounder, Note note) {
-<span class="nc" id="L190">		return getX(stringBounder, note).addFixed(getUsedWidth(stringBounder, note));</span>
+<span class="nc" id="L215">		return getX(stringBounder, note).addFixed(getUsedWidth(stringBounder, note));</span>
 	}
 
 	public Real getMaxX() {
-<span class="nc" id="L194">		final List&lt;Real&gt; reals = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L195" title="All 2 branches missed.">		for (Note note : notes)</span>
-<span class="nc" id="L196">			reals.add(getX2(getStringBounder(), note));</span>
+<span class="nc" id="L219">		final List&lt;Real&gt; reals = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		for (Note note : notes)</span>
+<span class="nc" id="L221">			reals.add(getX2(getStringBounder(), note));</span>
 
-<span class="nc" id="L198">		return RealUtils.max(reals);</span>
+<span class="nc" id="L223">		return RealUtils.max(reals);</span>
 	}
 
 }

@@ -90,15 +90,15 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public boolean isInside(double xp, double yp) {
-<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (xp &lt; x) {</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">			if (TeaVM.a())</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">				assert getClippedX(xp) != xp;</span>
-<span class="fc" id="L96">			return false;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		if (xp &lt; x) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">			if (TeaVM.a())</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">				assert getClippedX(xp) != xp;</span>
+<span class="nc" id="L96">			return false;</span>
 		}
-<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (xp &gt; x + width) {</span>
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">			if (TeaVM.a())</span>
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">				assert getClippedX(xp) != xp;</span>
-<span class="fc" id="L101">			return false;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (xp &gt; x + width) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">			if (TeaVM.a())</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">				assert getClippedX(xp) != xp;</span>
+<span class="nc" id="L101">			return false;</span>
 		}
 <span class="fc bfc" id="L103" title="All 2 branches covered.">		if (yp &lt; y) {</span>
 <span class="pc bpc" id="L104" title="1 of 2 branches missed.">			if (TeaVM.a())</span>
@@ -126,10 +126,10 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public XLine2D getClippedLine(XLine2D line) {
-<span class="pc bpc" id="L129" title="1 of 4 branches missed.">		if (isInside(line.x1, line.y1) &amp;&amp; isInside(line.x2, line.y2))</span>
+<span class="fc bfc" id="L129" title="All 4 branches covered.">		if (isInside(line.x1, line.y1) &amp;&amp; isInside(line.x2, line.y2))</span>
 <span class="fc" id="L130">			return line;</span>
 
-<span class="pc bpc" id="L132" title="2 of 4 branches missed.">		if (isInside(line.x1, line.y1) == false &amp;&amp; isInside(line.x2, line.y2) == false) {</span>
+<span class="fc bfc" id="L132" title="All 4 branches covered.">		if (isInside(line.x1, line.y1) == false &amp;&amp; isInside(line.x2, line.y2) == false) {</span>
 <span class="pc bpc" id="L133" title="1 of 2 branches missed.">			if (line.x1 == line.x2) {</span>
 <span class="nc" id="L134">				final double newy1 = getClippedY(line.y1);</span>
 <span class="nc" id="L135">				final double newy2 = getClippedY(line.y2);</span>
@@ -139,34 +139,34 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 			}
 <span class="fc" id="L140">			return null;</span>
 		}
-<span class="nc bnc" id="L142" title="All 4 branches missed.">		if (line.x1 != line.x2 &amp;&amp; line.y1 != line.y2)</span>
+<span class="pc bpc" id="L142" title="3 of 4 branches missed.">		if (line.x1 != line.x2 &amp;&amp; line.y1 != line.y2)</span>
 <span class="nc" id="L143">			return null;</span>
 
-<span class="nc bnc" id="L145" title="All 2 branches missed.">		if (TeaVM.a())</span>
-<span class="nc bnc" id="L146" title="All 4 branches missed.">			assert line.x1 == line.x2 || line.y1 == line.y2;</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (line.y1 == line.y2) {</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">		if (TeaVM.a())</span>
+<span class="pc bpc" id="L146" title="3 of 4 branches missed.">			assert line.x1 == line.x2 || line.y1 == line.y2;</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">		if (line.y1 == line.y2) {</span>
 <span class="nc" id="L148">			final double newx1 = getClippedX(line.x1);</span>
 <span class="nc" id="L149">			final double newx2 = getClippedX(line.x2);</span>
 <span class="nc" id="L150">			return new XLine2D(newx1, line.y1, newx2, line.y2);</span>
 		}
-<span class="nc bnc" id="L152" title="All 2 branches missed.">		if (line.x1 == line.x2) {</span>
-<span class="nc" id="L153">			final double newy1 = getClippedY(line.y1);</span>
-<span class="nc" id="L154">			final double newy2 = getClippedY(line.y2);</span>
-<span class="nc" id="L155">			return new XLine2D(line.x1, newy1, line.x2, newy2);</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (line.x1 == line.x2) {</span>
+<span class="fc" id="L153">			final double newy1 = getClippedY(line.y1);</span>
+<span class="fc" id="L154">			final double newy2 = getClippedY(line.y2);</span>
+<span class="fc" id="L155">			return new XLine2D(line.x1, newy1, line.x2, newy2);</span>
 		}
 <span class="nc" id="L157">		throw new IllegalStateException();</span>
 	}
 
 	public boolean isInside(double x, double y, UPath shape) {
-<span class="pc bpc" id="L161" title="1 of 4 branches missed.">		return isInside(x + shape.getMinX(), y + shape.getMinY()) &amp;&amp; isInside(x + shape.getMaxX(), y + shape.getMaxY());</span>
+<span class="nc bnc" id="L161" title="All 4 branches missed.">		return isInside(x + shape.getMinX(), y + shape.getMinY()) &amp;&amp; isInside(x + shape.getMaxX(), y + shape.getMaxY());</span>
 	}
 
 	private double getClippedX(double xp) {
-<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (xp &lt; x)</span>
-<span class="fc" id="L166">			return x;</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (xp &lt; x)</span>
+<span class="nc" id="L166">			return x;</span>
 
-<span class="fc bfc" id="L168" title="All 2 branches covered.">		if (xp &gt; x + width)</span>
-<span class="fc" id="L169">			return x + width;</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (xp &gt; x + width)</span>
+<span class="nc" id="L169">			return x + width;</span>
 
 <span class="fc" id="L171">		return xp;</span>
 	}

@@ -105,18 +105,18 @@ import net.sourceforge.plantuml.style.ISkinParam;
 			}
 <span class="fc bfc" id="L106" title="All 2 branches covered.">			for (Note noteOnMessage : msg.getNoteOnMessages()) {</span>
 <span class="fc" id="L107">				final NotePosition notePosition = noteOnMessage.getPosition();</span>
-<span class="pc bpc" id="L108" title="1 of 4 branches missed.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
+<span class="fc bfc" id="L108" title="All 4 branches covered.">				if (notePosition == NotePosition.LEFT &amp;&amp; msg.isSelfMessage())</span>
 <span class="fc" id="L109">					result = new CommunicationTileSelfNoteLeft((CommunicationTileSelf) result, msg, skin, skinParam,</span>
 							noteOnMessage, currentY);
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">				else if (notePosition == NotePosition.LEFT)</span>
-<span class="nc" id="L112">					result = new CommunicationTileNoteLeft(result, msg, skin, skinParam,</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">							reverse ? livingSpace2 : livingSpace1, noteOnMessage, currentY);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">				else if (notePosition == NotePosition.LEFT)</span>
+<span class="fc" id="L112">					result = new CommunicationTileNoteLeft(result, msg, skin, skinParam,</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">							reverse ? livingSpace2 : livingSpace1, noteOnMessage, currentY);</span>
 <span class="pc bpc" id="L114" title="1 of 4 branches missed.">				else if (notePosition == NotePosition.RIGHT &amp;&amp; msg.isSelfMessage())</span>
 <span class="fc" id="L115">					result = new CommunicationTileSelfNoteRight((CommunicationTileSelf) result, msg, skin, skinParam,</span>
 							noteOnMessage, currentY);
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">				else if (notePosition == NotePosition.RIGHT)</span>
 <span class="fc" id="L118">					result = new CommunicationTileNoteRight(result, msg, skin, skinParam,</span>
-<span class="pc bpc" id="L119" title="1 of 2 branches missed.">							reverse ? livingSpace1 : livingSpace2, noteOnMessage, currentY);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">							reverse ? livingSpace1 : livingSpace2, noteOnMessage, currentY);</span>
 <span class="nc bnc" id="L120" title="All 2 branches missed.">				else if (notePosition == NotePosition.BOTTOM)</span>
 <span class="nc" id="L121">					result = new CommunicationTileNoteBottom(result, msg, skin, skinParam, noteOnMessage, currentY);</span>
 <span class="nc bnc" id="L122" title="All 2 branches missed.">				else if (notePosition == NotePosition.TOP)</span>
@@ -185,14 +185,14 @@ import net.sourceforge.plantuml.style.ISkinParam;
 <span class="pc bpc" id="L185" title="1 of 2 branches missed.">		} else if (ev instanceof HSpace) {</span>
 <span class="nc" id="L186">			final HSpace hspace = (HSpace) ev;</span>
 <span class="nc" id="L187">			tiles.add(new HSpaceTile(hspace, tileArguments, currentY));</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		} else if (ev instanceof LifeEvent) {</span>
+<span class="pc bfc" id="L188" title="All 2 branches covered.">		} else if (ev instanceof LifeEvent) {</span>
 <span class="fc" id="L189">			final LifeEvent lifeEvent = (LifeEvent) ev;</span>
 <span class="fc" id="L190">			final LivingSpace livingSpace = livingSpaces.get(lifeEvent.getParticipant());</span>
 <span class="fc" id="L191">			tiles.add(new LifeEventTile(lifeEvent, tileArguments, livingSpace, skin, skinParam, currentY));</span>
-<span class="pc bnc" id="L192" title="All 2 branches missed.">		} else if (ev instanceof Newpage) {</span>
-<span class="nc" id="L193">			final Newpage newpage = (Newpage) ev;</span>
-<span class="nc" id="L194">			tiles.add(new NewpageTile(newpage, tileArguments, currentY));</span>
-<span class="nc" id="L195">		} else {</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		} else if (ev instanceof Newpage) {</span>
+<span class="fc" id="L193">			final Newpage newpage = (Newpage) ev;</span>
+<span class="fc" id="L194">			tiles.add(new NewpageTile(newpage, tileArguments, currentY));</span>
+<span class="fc" id="L195">		} else {</span>
 <span class="nc" id="L196">			System.err.println(&quot;TileBuilder::Ignoring &quot; + ev.getClass());</span>
 		}
 <span class="fc" id="L198">		return tiles;</span>

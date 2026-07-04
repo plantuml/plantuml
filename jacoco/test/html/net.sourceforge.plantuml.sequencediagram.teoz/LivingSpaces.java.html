@@ -114,40 +114,49 @@ import net.sourceforge.plantuml.skin.Context2D;
 <span class="fc" id="L114">				final XDimension2D dimHead = livingSpace.getHeadPreferredDimension(stringBounder);</span>
 <span class="fc" id="L115">				y = headHeight - dimHead.getHeight();</span>
 			}
-<span class="fc" id="L117">			livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context, verticalAlignment, HorizontalAlignment.LEFT);</span>
-<span class="fc" id="L118">		}</span>
-<span class="fc" id="L119">	}</span>
+			// TOP means that we are drawing the footboxes at the bottom of the
+			// diagram (the real heads are aligned on BOTTOM): the tail component
+			// is used there, like in Puma (for an actor, the label is displayed
+			// above the stickman)
+<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (verticalAlignment == VerticalAlignment.TOP)</span>
+<span class="fc" id="L122">				livingSpace.drawTail(ug.apply(new UTranslate(x, y)), context, verticalAlignment,</span>
+						HorizontalAlignment.LEFT);
+			else
+<span class="fc" id="L125">				livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context, verticalAlignment,</span>
+						HorizontalAlignment.LEFT);
+<span class="fc" id="L127">		}</span>
+<span class="fc" id="L128">	}</span>
 
 	public double getHeadHeight(StringBounder stringBounder) {
-<span class="fc" id="L122">		double headHeight = 0;</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
-<span class="fc" id="L124">			final XDimension2D headDim = livingSpace.getHeadPreferredDimension(stringBounder);</span>
-<span class="fc" id="L125">			headHeight = Math.max(headHeight, headDim.getHeight());</span>
-<span class="fc" id="L126">		}</span>
-<span class="fc" id="L127">		return headHeight;</span>
+<span class="fc" id="L131">		double headHeight = 0;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
+<span class="fc" id="L133">			final XDimension2D headDim = livingSpace.getHeadPreferredDimension(stringBounder);</span>
+<span class="fc" id="L134">			headHeight = Math.max(headHeight, headDim.getHeight());</span>
+<span class="fc" id="L135">		}</span>
+<span class="fc" id="L136">		return headHeight;</span>
 	}
 
 	public void drawLifeLines(final UGraphic ug, double height, Context2D context) {
-<span class="fc" id="L131">		int i = 0;</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
+<span class="fc" id="L140">		int i = 0;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
 			// if (i++ == 0) {
 			// System.err.println(&quot;TEMPORARY SKIPPING OTHERS&quot;);
 			// continue;
 			// }
 			// System.err.println(&quot;drawing lines &quot; + livingSpace);
-<span class="fc" id="L138">			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();</span>
-<span class="fc" id="L139">			livingSpace.drawLineAndLiveboxes(ug.apply(UTranslate.dx(x)), height, context);</span>
-<span class="fc" id="L140">		}</span>
-<span class="fc" id="L141">	}</span>
+<span class="fc" id="L147">			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();</span>
+<span class="fc" id="L148">			livingSpace.drawLineAndLiveboxes(ug.apply(UTranslate.dx(x)), height, context);</span>
+<span class="fc" id="L149">		}</span>
+<span class="fc" id="L150">	}</span>
 
 	public void delayOn(double y, double height) {
-<span class="nc bnc" id="L144" title="All 2 branches missed.">		for (LivingSpace livingSpace : values())</span>
-<span class="nc" id="L145">			livingSpace.delayOn(y, height);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (LivingSpace livingSpace : values())</span>
+<span class="nc" id="L154">			livingSpace.delayOn(y, height);</span>
 
-<span class="nc" id="L147">	}</span>
+<span class="nc" id="L156">	}</span>
 
 	public int size() {
-<span class="nc" id="L150">		return all.size();</span>
+<span class="nc" id="L159">		return all.size();</span>
 	}
 
 }
