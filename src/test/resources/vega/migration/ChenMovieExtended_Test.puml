@@ -1,17 +1,9 @@
-package nonreg.simple;
+---
+output: svg
+expected-description: (30 entities)
+---
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.Test;
-
-import nonreg.BasicTest;
-
-/*
-
-Test diagram MUST be put between triple quotes
-
-"""
-@startchen movies
+@startchen
 
 entity DIRECTOR {
   Number <<key>>
@@ -81,14 +73,4 @@ entity PERSON {
 PERSON ->- U { CUSTOMER, DIRECTOR } #lime;line:green
 
 @endchen
-"""
 
- */
-public class ChenMovieExtended_Test extends BasicTest {
-
-	@Test
-	void testSimple() throws IOException {
-		checkImage("(30 entities)");
-	}
-
-}

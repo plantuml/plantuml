@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="268px" preserveAspectRatio="none" style="width:142px;height:268px;background:#FFFFFF;" version="1.1" viewBox="0 0 142 268" width="142px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Outer" data-source-line="2" id="ent0001">
+      <path d="M18.5,12 L113.5,12 A12.5,12.5 0 0 1 126,24.5 L126,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="none" height="240" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="120" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="126" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="34.913" x="48.544" y="27.889">Outer</text>
+      <g class="entity" data-qualified-name="Outer.Inner" data-source-line="3" id="ent0002">
+        <path d="M24.5,47 L94.5,47 A12.5,12.5 0 0 1 107,59.5 L107,71 L12,71 L12,59.5 A12.5,12.5 0 0 1 24.5,47" fill="#F1F1F1"/>
+        <rect fill="none" height="190" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="95" x="12" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="107" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="31.85" x="43.575" y="62.889">Inner</text>
+        <g class="entity" data-qualified-name="Outer.Inner.C" data-source-line="4" id="ent0003">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="24" y="88"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="24" x2="74" y1="112" y2="112"/>
+          <text fill="#000" font-size="14" x="43.925" y="103.889">C</text>
+        </g>
+        <line style="stroke:#181818;stroke-width:1.5;stroke-dasharray:8,10;" x1="17" x2="92" y1="154" y2="154"/>
+        <g class="entity" data-qualified-name="Outer.Inner.CONC1.D" data-source-line="6" id="ent0005">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="24" y="166"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="24" x2="74" y1="190" y2="190"/>
+          <text fill="#000" font-size="14" x="43.925" y="181.889">D</text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

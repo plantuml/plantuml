@@ -63,6 +63,7 @@ import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityUtils;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
@@ -79,6 +80,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.MinMaxMutable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
@@ -120,10 +122,54 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private final Rankdir rankdir;
 
+	private final Entity root;
+
 	public CucaDiagramFileMakerSmetana(CucaDiagram diagram) {
-		super(diagram);
+		this(diagram, diagram.getRootGroup());
+	}
+
+	public CucaDiagramFileMakerSmetana(CucaDiagram diagram, Entity root) {
+		super(diagram, root);
+		this.root = root;
 		this.rankdir = diagram.getSkinParam().getRankdir();
 
+	}
+
+	// Structural access relative to the local layout root.
+	// At the diagram root, these behave exactly like before (whole diagram).
+	// In a nested sub-layout (root is a group, e.g. a composite state rendered as a
+	// leaf), they restrict the scope to that group: concurrent sub-regions are
+	// filtered out of the group hierarchy, and only links fully internal to the
+	// group are laid out. This mirrors GroupMakerState.InnerGroupHierarchy /
+	// getPureInnerLinks on the dot side, and avoids trying to resolve links that
+	// touch the group itself or the outside world (which have no node in the
+	// sub-layout).
+	private boolean isNestedLayout() {
+		return root != diagram.getRootGroup();
+	}
+
+	private Collection<Entity> getChildrenGroups(Entity parent) {
+		if (isNestedLayout() == false)
+			return diagram.getChildrenGroups(parent);
+
+		final List<Entity> result = new ArrayList<>();
+		for (Entity g : diagram.getChildrenGroups(parent))
+			if (g.getGroupType() != GroupType.CONCURRENT_STATE)
+				result.add(g);
+
+		return result;
+	}
+
+	private Collection<Link> getLocalLinks() {
+		if (isNestedLayout() == false)
+			return diagram.getLinks();
+
+		final List<Link> result = new ArrayList<>();
+		for (Link link : diagram.getLinks())
+			if (EntityUtils.isPureInnerLink12(root, link))
+				result.add(link);
+
+		return result;
 	}
 
 	private MinMaxMutable getSmetanaMinMax() {
@@ -152,17 +198,64 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 		private final YMirror ymirror;
 		private final MinMaxMutable minMax;
+		private final double canvasMargin;
+		private MinMax measuredMinMax;
 
-		public Drawing() {
+		public Drawing(double canvasMargin) {
 			this.minMax = getSmetanaMinMax();
 			this.ymirror = new YMirror(minMax.getMaxY() + 6);
+			this.canvasMargin = canvasMargin;
+		}
+
+		private UTranslate getBaselineTranslate() {
+			return new UTranslate(canvasMargin, canvasMargin - minMax.getMinY());
+		}
+
+		private XDimension2D getBaselineDimension() {
+			return minMax.getDimension().delta(2 * canvasMargin + 4, canvasMargin + 16);
+		}
+
+		// The structural minMax (from Smetana's own node/cluster layout boxes) does not
+		// account for geometry drawn afterwards by our own code, such as self-loop edge
+		// curves (SmetanaEdge): a self-loop can visually extend past the rightmost node
+		// it is attached to. At the diagram root this went unnoticed because nothing
+		// framed the drawing tightly, but once this Drawing is used as the image of a
+		// region inside a ConcurrentStates/InnerStateAutonom, that extra geometry gets
+		// clipped by the surrounding border.
+		//
+		// To fix this in a way that cannot regress already-approved renders, we measure
+		// the actually-drawn bounding box once (same technique as SvekResult on the dot
+		// side: draw into a LimitFinder to record real extents), and only ADD extra
+		// margin/translation where the real drawing overflows the structural baseline.
+		// When there is no overflow (the common case), dimension and translate are
+		// byte-for-byte identical to the previous, purely structural computation.
+		private MinMax getMeasuredMinMax(StringBounder stringBounder) {
+			if (measuredMinMax == null) {
+				final UTranslate baseline = getBaselineTranslate();
+				measuredMinMax = TextBlockUtils.getMinMax(ug -> drawContent(ug.apply(baseline)), stringBounder, false);
+			}
+			return measuredMinMax;
 		}
 
 		public void drawU(UGraphic ug) {
+			final MinMax measured = getMeasuredMinMax(ug.getStringBounder());
+			final double extraLeft = Math.max(0, -measured.getMinX());
+			final double extraTop = Math.max(0, -measured.getMinY());
+
+			UGraphic shifted = ug.apply(getBaselineTranslate());
+			if (extraLeft != 0 || extraTop != 0)
+				shifted = shifted.apply(new UTranslate(extraLeft, extraTop));
+
+			drawContent(shifted);
+		}
+
+		// Draws the diagram content. The caller is responsible for positioning ug at
+		// the desired origin beforehand (no translation is applied here), so that this
+		// method can be reused both for the real draw and for the bounding-box
+		// measurement dry-run above.
+		private void drawContent(UGraphic ug) {
 
 			smetanaPathes.clear();
-
-			ug = ug.apply(new UTranslate(6, 6 - minMax.getMinY()));
 
 			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
 				final Link link = ent.getKey();
@@ -208,7 +301,16 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		@Fast
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-			return minMax.getDimension().delta(16, 6);
+			final MinMax measured = getMeasuredMinMax(stringBounder);
+			final XDimension2D baseline = getBaselineDimension();
+
+			final double extraLeft = Math.max(0, -measured.getMinX());
+			final double extraTop = Math.max(0, -measured.getMinY());
+			final double extraRight = Math.max(0, measured.getMaxX() - baseline.getWidth());
+			final double extraBottom = Math.max(0, measured.getMaxY() - baseline.getHeight());
+
+			return new XDimension2D(baseline.getWidth() + extraLeft + extraRight,
+					baseline.getHeight() + extraTop + extraBottom);
 		}
 
 		private XPoint2D getCorner(ST_Agnode_s n) {
@@ -280,7 +382,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private void printAllSubgroups(StringBounder stringBounder, Entity parent) {
-		for (Entity g : diagram.getChildrenGroups(parent)) {
+		for (Entity g : getChildrenGroups(parent)) {
 			if (g.isRemoved())
 				continue;
 
@@ -378,8 +480,15 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	private Collection<Entity> getUnpackagedEntities() {
 		final List<Entity> result = new ArrayList<>();
 		for (Entity ent : diagram.leafs())
-			if (diagram.getRootGroup() == ent.getParentContainer())
+			if (root == ent.getParentContainer()) {
+				// In a nested sub-layout of a concurrent state, the STATE_CONCURRENT
+				// leaves are the other regions: they are stacked separately by
+				// GroupMakerStateSmetana, so they must not be laid out here.
+				if (isNestedLayout() && ent.getLeafType() == LeafType.STATE_CONCURRENT)
+					continue;
+
 				result.add(ent);
+			}
 
 		return result;
 	}
@@ -393,10 +502,24 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),
 				diagram.getPragma());
 
-		this.printAllSubgroups(stringBounder, diagram.getRootGroup());
+		// Turn composite states into pre-rendered leaves, mirroring the dot pipeline.
+		// Selective for now: concurrent states are left untouched (see the simplifier).
+		if (diagram.getDiagramType() == DiagramType.STATE)
+			new CucaDiagramSimplifierStateSmetana().simplify(diagram, stringBounder);
+
+		return layoutAndGetTextBlock(stringBounder);
+	}
+
+	// Layout the current root and return the resulting drawable.
+	// Factored out of getTextBlock so that a sub-layout (e.g. a composite state
+	// rendered as a leaf) can be produced from a StringBounder alone, mirroring
+	// GraphvizImageBuilder.buildImage(stringBounder, ...) on the dot side.
+	private TextBlock layoutAndGetTextBlock(StringBounder stringBounder) {
+
+		this.printAllSubgroups(stringBounder, root);
 		this.printEntities(stringBounder, getUnpackagedEntities());
 
-		for (Link link : diagram.getLinks()) {
+		for (Link link : getLocalLinks()) {
 			if (link.isRemoved())
 				continue;
 
@@ -430,14 +553,24 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		}
 	}
 
+	// Render the current root as a self-contained IEntityImage.
+	// Used when a composite state is turned into a leaf and laid out by a nested
+	// Smetana pass (see GroupMakerStateSmetana). The returned image is autonomous:
+	// the layout is fully computed here, so drawing later does not require an open
+	// Globals context.
+	public IEntityImage getImage(StringBounder stringBounder) {
+		final TextBlock textBlock = layoutAndGetTextBlock(stringBounder);
+		return new TextBlockToEntityImage(textBlock);
+	}
+
 	private TextBlock getTextBlockInternal(StringBounder stringBounder, Globals zz) {
 
 		final ST_Agraph_s g = agopen(zz, new CString("g"), zz.Agdirected, null);
 
 		exportEntities(zz, g, getUnpackagedEntities());
-		exportGroups(zz, g, diagram.getRootGroup());
+		exportGroups(zz, g, root);
 
-		for (Link link : diagram.getLinks()) {
+		for (Link link : getLocalLinks()) {
 			final ST_Agedge_s e = createEdge(stringBounder, zz, g, link);
 			if (e != null)
 				edges.put(link, e);
@@ -454,12 +587,16 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		gvLayoutJobs(zz, gvc, g);
 		SmetanaDebug.printMe();
 
-		final TextBlock drawable = new Drawing();
+		// At the diagram root, keep the historical canvas margin (6). In a nested
+		// sub-layout the surrounding InnerStateAutonom already provides the padding,
+		// so we drop this margin to avoid extra space inside the composite state.
+		final double canvasMargin = isNestedLayout() ? 0 : 6;
+		final TextBlock drawable = new Drawing(canvasMargin);
 		return drawable;
 	}
 
 	private void exportGroups(Globals zz, ST_Agraph_s graph, Entity parent) {
-		for (Entity g : diagram.getChildrenGroups(parent)) {
+		for (Entity g : getChildrenGroups(parent)) {
 			if (g.isRemoved())
 				continue;
 

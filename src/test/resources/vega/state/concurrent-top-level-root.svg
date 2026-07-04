@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="106px" preserveAspectRatio="none" style="width:246px;height:106px;background:#FFFFFF;" version="1.1" viewBox="0 0 246 106" width="246px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="A" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="26"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="50" y2="50"/>
+      <text fill="#000" font-size="14" x="26.319" y="41.889">A</text>
+    </g>
+    <g class="entity" data-qualified-name="CONC1.B" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="127" y="24"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="127" x2="177" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" x="147.319" y="39.889">B</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="177.176,58.338,185.997,62.718,182.171,58.551,186.338,54.725,177.176,58.338" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M177.176,39.662 C186.91,39.247 195,42.359 195,49 C195,55.641 191.905,58.966 182.171,58.551" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="24.537" x="197" y="52.611">evt2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="56.176,60.338,64.997,64.718,61.171,60.551,65.338,56.725,56.176,60.338" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56.176,41.662 C65.91,41.247 74,44.359 74,51 C74,57.641 70.905,60.966 61.171,60.551" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="24.537" x="76" y="54.611">evt1</text>
+    </g>
+  </g>
+</svg>

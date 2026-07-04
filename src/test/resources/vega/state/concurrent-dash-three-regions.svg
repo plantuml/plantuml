@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="296px" preserveAspectRatio="none" style="width:117px;height:296px;background:#FFFFFF;" version="1.1" viewBox="0 0 117 296" width="117px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Parent" data-source-line="2" id="ent0001">
+      <path d="M18.5,12 L88.5,12 A12.5,12.5 0 0 1 101,24.5 L101,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="none" height="268" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="95" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="101" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="41.213" x="32.894" y="27.889">Parent</text>
+      <g class="entity" data-qualified-name="Parent.A" data-source-line="3" id="ent0002">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="18" y="53"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="68" y1="77" y2="77"/>
+        <text fill="#000" font-size="14" x="38.319" y="68.889">A</text>
+      </g>
+      <line style="stroke:#181818;stroke-width:1.5;stroke-dasharray:8,10;" x1="11" x2="86" y1="119" y2="119"/>
+      <g class="entity" data-qualified-name="Parent.CONC1.B" data-source-line="5" id="ent0004">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="18" y="131"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="68" y1="155" y2="155"/>
+        <text fill="#000" font-size="14" x="38.319" y="146.889">B</text>
+      </g>
+      <line style="stroke:#181818;stroke-width:1.5;stroke-dasharray:8,10;" x1="11" x2="86" y1="197" y2="197"/>
+      <g class="entity" data-qualified-name="Parent.CONC2.C" data-source-line="7" id="ent0006">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="18" y="209"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="68" y1="233" y2="233"/>
+        <text fill="#000" font-size="14" x="37.925" y="224.889">C</text>
+      </g>
+    </g>
+  </g>
+</svg>

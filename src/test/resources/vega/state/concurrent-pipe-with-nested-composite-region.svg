@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="284px" preserveAspectRatio="none" style="width:201px;height:284px;background:#FFFFFF;" version="1.1" viewBox="0 0 201 284" width="201px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Parent" data-source-line="2" id="ent0001">
+      <path d="M18.5,12 L172.5,12 A12.5,12.5 0 0 1 185,24.5 L185,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="none" height="256" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="179" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="185" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="41.213" x="74.894" y="27.889">Parent</text>
+      <g class="entity" data-qualified-name="Parent.A" data-source-line="3" id="ent0002">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="18" y="53"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="68" y1="77" y2="77"/>
+        <text fill="#000" font-size="14" x="38.319" y="68.889">A</text>
+      </g>
+      <line style="stroke:#181818;stroke-width:1.5;stroke-dasharray:8,10;" x1="78" x2="78" y1="41" y2="263"/>
+      <g class="entity" data-qualified-name="Parent.CONC1.B" data-source-line="5" id="ent0004">
+        <path d="M97.5,53 L147.5,53 A12.5,12.5 0 0 1 160,65.5 L160,77 L85,77 L85,65.5 A12.5,12.5 0 0 1 97.5,53" fill="#F1F1F1"/>
+        <rect fill="none" height="186" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="85" y="53"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="85" x2="160" y1="77" y2="77"/>
+        <text fill="#000" font-size="14" x="117.819" y="68.889">B</text>
+        <g class="entity" data-qualified-name="Parent.CONC1.B.B1" data-source-line="6" id="ent0005">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="91" y="88"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="91" x2="141" y1="112" y2="112"/>
+          <text fill="#000" font-size="14" textLength="17.15" x="107.425" y="103.889">B1</text>
+        </g>
+        <g class="entity" data-qualified-name="Parent.CONC1.B.B2" data-source-line="7" id="ent0006">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="91" y="174"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="91" x2="141" y1="198" y2="198"/>
+          <text fill="#000" font-size="14" textLength="17.15" x="107.425" y="189.889">B2</text>
+        </g>
+        <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+          <polygon fill="#181818" points="116,173.758,120,164.758,116,168.758,112,164.758,116,173.758" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+          <path d="M116,138.296 C116,149.441 116,157.621 116,168.758" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

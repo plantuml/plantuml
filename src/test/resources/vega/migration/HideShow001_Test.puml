@@ -1,0 +1,8 @@
+---
+output: svg
+expected-description: (1 entities)
+---
+@startuml
+    hide <<focus>> stereotype
+    class Access <<Entity>> <<focus>>
+@enduml

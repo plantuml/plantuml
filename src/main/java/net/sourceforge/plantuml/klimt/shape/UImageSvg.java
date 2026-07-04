@@ -120,12 +120,16 @@ public class UImageSvg implements UShape {
 		if (m2.find()) {
 			if ("width".equals(name)) {
 				final String s = m2.group(3);
-				final int width = (int) Double.parseDouble(s);
+				// Round up (not down): a floor here understates the declared box, and
+				// that undersized box is later reused as a hard viewport when this
+				// embedded SVG is re-wrapped without its own viewBox, clipping up to
+				// 1 unit of real content (see issue #2735, embedded-diagram overflow).
+				final int width = (int) Math.ceil(Double.parseDouble(s));
 				return width;
 			}
 			if ("height".equals(name)) {
 				final String s = m2.group(4);
-				final int result = (int) Double.parseDouble(s);
+				final int result = (int) Math.ceil(Double.parseDouble(s));
 				return result;
 			}
 		}

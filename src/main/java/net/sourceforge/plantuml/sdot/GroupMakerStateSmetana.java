@@ -1,0 +1,145 @@
+/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sdot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.svek.ConcurrentStates;
+import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.InnerStateAutonom;
+import net.sourceforge.plantuml.svek.image.EntityImageState;
+
+// Smetana counterpart of GroupMakerState.
+//
+// For a composite state group, it lays out the group's content with a nested
+// Smetana pass (rooted on the group itself) and wraps the result in an
+// InnerStateAutonom, so the group can be turned into a leaf by
+// CucaDiagramSimplifierStateSmetana.
+//
+// Concurrent states are handled like on the dot side: each region (a
+// CONCURRENT_STATE sub-group) has already been turned into a STATE_CONCURRENT
+// leaf by the bottom-up simplifier, so here we just stack the first region (the
+// group's own non-concurrent leaves) together with the pre-rendered region
+// images into a ConcurrentStates.
+public final class GroupMakerStateSmetana {
+
+	// Breathing room added around each Smetana-rendered region before it is
+	// stacked by ConcurrentStates, which otherwise places adjacent regions
+	// edge-to-edge with no margin of its own (dot's own regions get this for free
+	// from SvekResult's built-in padding).
+	private static final double REGION_PADDING = 6;
+
+	// ConcurrentStates' separator is drawn a fixed amount (its private DASH
+	// constant, currently 8) longer than the total stacked dimension, so the dash
+	// deliberately overshoots past the declared bounding box on one side. Reserve
+	// that much extra room so it doesn't get clipped by the outer
+	// InnerStateAutonom border.
+	private static final double SEPARATOR_OVERSHOOT = 8;
+
+	private final CucaDiagram diagram;
+	private final Entity group;
+	private final StringBounder stringBounder;
+
+	public GroupMakerStateSmetana(CucaDiagram diagram, Entity group, StringBounder stringBounder) {
+		this.diagram = diagram;
+		this.group = group;
+		this.stringBounder = stringBounder;
+		if (group.isGroup() == false)
+			throw new IllegalArgumentException();
+	}
+
+	public IEntityImage getImage() {
+		if (group.countChildren() == 0 && group.groups().size() == 0)
+			return new EntityImageState(group);
+
+		if (group.getGroupType() == GroupType.CONCURRENT_STATE)
+			return PaddedEntityImage.uniform(subLayout(), REGION_PADDING);
+
+		if (group.getGroupType() != GroupType.STATE)
+			throw new UnsupportedOperationException(group.getGroupType().toString());
+
+		final IEntityImage image;
+		if (containsSomeConcurrentStates()) {
+			final List<IEntityImage> inners = new ArrayList<>();
+			// First region: the group's own (non-concurrent) content. The nested
+			// sub-layout filters out the STATE_CONCURRENT leaves (see
+			// CucaDiagramFileMakerSmetana.getUnpackagedEntities).
+			inners.add(PaddedEntityImage.uniform(subLayout(), REGION_PADDING));
+			// Remaining regions: already rendered (and padded) by the bottom-up
+			// simplifier, via the CONCURRENT_STATE branch above.
+			for (Entity inner : group.leafs())
+				if (inner.getLeafType() == LeafType.STATE_CONCURRENT)
+					inners.add(inner.getSvekImage());
+
+			final IEntityImage stacked = new ConcurrentStates(inners, group.getConcurrentSeparator(),
+					diagram.getSkinParam(), group.getStereotype());
+			image = withSeparatorOvershoot(stacked, group.getConcurrentSeparator());
+		} else {
+			image = subLayout();
+		}
+
+		return new InnerStateAutonom(image, group);
+	}
+
+	// The separator's dash overshoot is vertical (extends past the bottom) for a
+	// '|' (side-by-side regions), and horizontal (extends past the right) for a
+	// '-' (stacked regions) -- see ConcurrentStates.Separator.drawSeparator.
+	private IEntityImage withSeparatorOvershoot(IEntityImage stacked, char concurrentSeparator) {
+		final double bottom = concurrentSeparator == '|' ? SEPARATOR_OVERSHOOT : 0;
+		final double right = concurrentSeparator == '-' ? SEPARATOR_OVERSHOOT : 0;
+		return new PaddedEntityImage(stacked, 0, 0, right, bottom);
+	}
+
+	private IEntityImage subLayout() {
+		final CucaDiagramFileMakerSmetana maker = new CucaDiagramFileMakerSmetana(diagram, group);
+		return maker.getImage(stringBounder);
+	}
+
+	private boolean containsSomeConcurrentStates() {
+		for (Entity entity : group.leafs())
+			if (entity.getLeafType() == LeafType.STATE_CONCURRENT)
+				return true;
+
+		return false;
+	}
+
+}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="128px" preserveAspectRatio="none" style="width:165px;height:128px;background:#FFFFFF;" version="1.1" viewBox="0 0 165 128" width="165px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Parent" data-source-line="2" id="ent0001">
+      <path d="M18.5,12 L136.5,12 A12.5,12.5 0 0 1 149,24.5 L149,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="143" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="149" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="41.213" x="56.894" y="27.889">Parent</text>
+      <g class="entity" data-qualified-name="Parent.A" data-source-line="3" id="ent0002">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="12" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="62" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" x="32.319" y="62.889">A</text>
+      </g>
+      <g class="entity" data-qualified-name="Parent.B" data-source-line="4" id="ent0003">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="80" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="80" x2="130" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" x="100.319" y="62.889">B</text>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CHEN_EER" height="84px" preserveAspectRatio="none" style="width:441px;height:84px;background:#FFFFFF;" version="1.1" viewBox="0 0 441 84" width="441px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="64.363" x="6" y="23"/>
+      <text fill="#000" font-size="14" textLength="44.363" x="16" y="43.889">Person</text>
+    </g>
+    <g>
+      <rect fill="#F1F1F1" height="34" style="stroke:#181818;stroke-width:0.5;" width="72.938" x="352" y="23"/>
+      <text fill="#000" font-size="14" textLength="52.938" x="362" y="43.889">Location</text>
+    </g>
+    <g>
+      <polygon fill="#F1F1F1" points="155,40.165,211.33,12,267.661,40.165,211.33,68.33" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="62.3" x="180.18" y="44.054">Birthplace</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M70.057,40 C93.61,40 126.61,40 154.704,40" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="109" y="35.556">N</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="association" id="lnk5">
+      <path d="M268.352,40 C295.76,40 327.956,40 351.966,40" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="307" y="35.556">1</text>
+    </g>
+  </g>
+</svg>
