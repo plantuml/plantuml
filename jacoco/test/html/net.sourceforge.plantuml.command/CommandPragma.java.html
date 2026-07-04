@@ -119,11 +119,11 @@ public class CommandPragma extends SingleLineCommand2&lt;TitledDiagram&gt; {
 <span class="nc" id="L119">					return CommandExecutionResult.error(&quot;This directive has been renamed to '!pragma layout &quot; + value</span>
 							+ &quot;'. Please update your diagram.&quot;);
 
-<span class="pc bpc" id="L122" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;smetana&quot;))</span>
+<span class="fc bfc" id="L122" title="All 4 branches covered.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;smetana&quot;))</span>
 <span class="fc" id="L123">					system.setUseSmetana(true);</span>
 
-<span class="pc bpc" id="L125" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;elk&quot;))</span>
-<span class="nc" id="L126">					system.setUseElk(true);</span>
+<span class="fc bfc" id="L125" title="All 4 branches covered.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(&quot;elk&quot;))</span>
+<span class="fc" id="L126">					system.setUseElk(true);</span>
 
 <span class="pc bpc" id="L128" title="1 of 4 branches missed.">				if (name.equalsIgnoreCase(&quot;layout&quot;) &amp;&amp; value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))</span>
 <span class="nc" id="L129">					system.getSkinParam().setUseVizJs(true);</span>

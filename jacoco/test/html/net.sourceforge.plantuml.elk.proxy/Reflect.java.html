@@ -83,8 +83,8 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Object newInstance(String className) {
 		try {
-<span class="nc" id="L86">			final Class&lt;?&gt; cl = Class.forName(className);</span>
-<span class="nc" id="L87">			return cl.newInstance();</span>
+<span class="fc" id="L86">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="fc" id="L87">			return cl.newInstance();</span>
 <span class="nc" id="L88">		} catch (Throwable t) {</span>
 <span class="nc" id="L89">			Logme.error(t);</span>
 <span class="nc" id="L90">			throw new IllegalArgumentException(t);</span>
@@ -104,9 +104,9 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Object newInstance(String className, double arg1, double arg2, double arg3, double arg4) {
 		try {
-<span class="nc" id="L107">			final Class&lt;?&gt; cl = Class.forName(className);</span>
-<span class="nc" id="L108">			final Constructor&lt;?&gt; m = cl.getConstructor(Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE);</span>
-<span class="nc" id="L109">			return m.newInstance(arg1, arg2, arg3, arg4);</span>
+<span class="fc" id="L107">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="fc" id="L108">			final Constructor&lt;?&gt; m = cl.getConstructor(Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE);</span>
+<span class="fc" id="L109">			return m.newInstance(arg1, arg2, arg3, arg4);</span>
 <span class="nc" id="L110">		} catch (Throwable t) {</span>
 <span class="nc" id="L111">			Logme.error(t);</span>
 <span class="nc" id="L112">			throw new IllegalArgumentException(t);</span>
@@ -115,9 +115,9 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Object field(String className, String fieldName) {
 		try {
-<span class="nc" id="L118">			final Class&lt;?&gt; cl = Class.forName(className);</span>
-<span class="nc" id="L119">			final Field f = cl.getField(fieldName);</span>
-<span class="nc" id="L120">			return f.get(null);</span>
+<span class="fc" id="L118">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="fc" id="L119">			final Field f = cl.getField(fieldName);</span>
+<span class="fc" id="L120">			return f.get(null);</span>
 <span class="nc" id="L121">		} catch (Throwable t) {</span>
 <span class="nc" id="L122">			Logme.error(t);</span>
 <span class="nc" id="L123">			throw new IllegalArgumentException(t);</span>
@@ -126,9 +126,9 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Object callStatic(String className, String method) {
 		try {
-<span class="nc" id="L129">			final Class&lt;?&gt; cl = Class.forName(className);</span>
-<span class="nc" id="L130">			final Method m = cl.getMethod(method);</span>
-<span class="nc" id="L131">			return m.invoke(null);</span>
+<span class="fc" id="L129">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="fc" id="L130">			final Method m = cl.getMethod(method);</span>
+<span class="fc" id="L131">			return m.invoke(null);</span>
 <span class="nc" id="L132">		} catch (Throwable t) {</span>
 <span class="nc" id="L133">			Logme.error(t);</span>
 <span class="nc" id="L134">			throw new IllegalArgumentException(t);</span>
@@ -159,9 +159,9 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Object callStatic2(String className, String method, Object arg1) {
 		try {
-<span class="nc" id="L162">			final Class&lt;?&gt; cl = Class.forName(className);</span>
-<span class="nc" id="L163">			final Method m = getStaticMethod(cl, method, 1);</span>
-<span class="nc" id="L164">			return m.invoke(null, arg1);</span>
+<span class="fc" id="L162">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="fc" id="L163">			final Method m = getStaticMethod(cl, method, 1);</span>
+<span class="fc" id="L164">			return m.invoke(null, arg1);</span>
 <span class="nc" id="L165">		} catch (Throwable t) {</span>
 <span class="nc" id="L166">			Logme.error(t);</span>
 <span class="nc" id="L167">			throw new IllegalArgumentException(t);</span>
@@ -170,9 +170,9 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Object callStatic2(String className, String method, Object arg1, Object arg2) {
 		try {
-<span class="nc" id="L173">			final Class&lt;?&gt; cl = Class.forName(className);</span>
-<span class="nc" id="L174">			final Method m = getStaticMethod(cl, method, 2);</span>
-<span class="nc" id="L175">			return m.invoke(null, arg1, arg2);</span>
+<span class="fc" id="L173">			final Class&lt;?&gt; cl = Class.forName(className);</span>
+<span class="fc" id="L174">			final Method m = getStaticMethod(cl, method, 2);</span>
+<span class="fc" id="L175">			return m.invoke(null, arg1, arg2);</span>
 <span class="nc" id="L176">		} catch (Throwable t) {</span>
 <span class="nc" id="L177">			Logme.error(t);</span>
 <span class="nc" id="L178">			throw new IllegalArgumentException(t);</span>
@@ -180,9 +180,9 @@ import net.sourceforge.plantuml.log.Logme;
 	}
 
 	public static Method getStaticMethod(Class&lt;?&gt; cl, String method, int nbArgs) {
-<span class="nc bnc" id="L183" title="All 2 branches missed.">		for (Method m : cl.getMethods()) {</span>
-<span class="nc bnc" id="L184" title="All 4 branches missed.">			if (m.getName().equals(method) &amp;&amp; m.getParameters().length == nbArgs) {</span>
-<span class="nc" id="L185">				return m;</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		for (Method m : cl.getMethods()) {</span>
+<span class="fc bfc" id="L184" title="All 4 branches covered.">			if (m.getName().equals(method) &amp;&amp; m.getParameters().length == nbArgs) {</span>
+<span class="fc" id="L185">				return m;</span>
 			}
 		}
 <span class="nc" id="L188">		throw new IllegalArgumentException();</span>
@@ -190,8 +190,8 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Object call(Object instance, String method) {
 		try {
-<span class="nc" id="L193">			final Method m = instance.getClass().getMethod(method);</span>
-<span class="nc" id="L194">			return m.invoke(instance);</span>
+<span class="fc" id="L193">			final Method m = instance.getClass().getMethod(method);</span>
+<span class="fc" id="L194">			return m.invoke(instance);</span>
 <span class="nc" id="L195">		} catch (Throwable t) {</span>
 <span class="nc" id="L196">			Logme.error(t);</span>
 <span class="nc" id="L197">			throw new IllegalArgumentException(t);</span>
@@ -200,8 +200,8 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Object call(Object instance, String method, Object arg1) {
 		try {
-<span class="nc" id="L203">			final Method m = instance.getClass().getMethod(method, arg1.getClass());</span>
-<span class="nc" id="L204">			return m.invoke(instance, arg1);</span>
+<span class="fc" id="L203">			final Method m = instance.getClass().getMethod(method, arg1.getClass());</span>
+<span class="fc" id="L204">			return m.invoke(instance, arg1);</span>
 <span class="nc" id="L205">		} catch (Throwable t) {</span>
 <span class="nc" id="L206">			Logme.error(t);</span>
 <span class="nc" id="L207">			throw new IllegalArgumentException(t);</span>
@@ -220,8 +220,8 @@ import net.sourceforge.plantuml.log.Logme;
 
 	public static Object call2(Object instance, String method, Object arg1, Object arg2) {
 		try {
-<span class="nc" id="L223">			final Method m = getMethod(instance, method, 2);</span>
-<span class="nc" id="L224">			return m.invoke(instance, arg1, arg2);</span>
+<span class="fc" id="L223">			final Method m = getMethod(instance, method, 2);</span>
+<span class="fc" id="L224">			return m.invoke(instance, arg1, arg2);</span>
 <span class="nc" id="L225">		} catch (Throwable t) {</span>
 <span class="nc" id="L226">			Logme.error(t);</span>
 <span class="nc" id="L227">			throw new IllegalArgumentException(t);</span>
@@ -229,9 +229,9 @@ import net.sourceforge.plantuml.log.Logme;
 	}
 
 	public static Method getMethod(Object instance, String method, int nbArgs) {
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		for (Method m : instance.getClass().getMethods()) {</span>
-<span class="nc bnc" id="L233" title="All 4 branches missed.">			if (m.getName().equals(method) &amp;&amp; m.getParameters().length == nbArgs) {</span>
-<span class="nc" id="L234">				return m;</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">		for (Method m : instance.getClass().getMethods()) {</span>
+<span class="fc bfc" id="L233" title="All 4 branches covered.">			if (m.getName().equals(method) &amp;&amp; m.getParameters().length == nbArgs) {</span>
+<span class="fc" id="L234">				return m;</span>
 			}
 		}
 <span class="nc" id="L237">		throw new IllegalArgumentException();</span>

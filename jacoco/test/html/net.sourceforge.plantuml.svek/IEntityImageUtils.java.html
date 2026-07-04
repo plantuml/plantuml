@@ -49,13 +49,13 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 <span class="nc" id="L49">public class IEntityImageUtils {</span>
 
 	public static IEntityImage translate(final IEntityImage orig, final UTranslate translate) {
-<span class="nc" id="L52">		return new IEntityImage() {</span>
+<span class="fc" id="L52">		return new IEntityImage() {</span>
 
 			@Override
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L56">				orig.drawU(ug.apply(translate));</span>
+<span class="fc" id="L56">				orig.drawU(ug.apply(translate));</span>
 
-<span class="nc" id="L58">			}</span>
+<span class="fc" id="L58">			}</span>
 
 			@Override
 			public MinMax getMinMax(StringBounder stringBounder) {
@@ -101,12 +101,12 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 
 			@Override
 			public MagneticBorder getMagneticBorder() {
-<span class="nc" id="L104">				final MagneticBorder magneticBorder = orig.getMagneticBorder();</span>
-<span class="nc" id="L105">				return new MagneticBorder() {</span>
+<span class="fc" id="L104">				final MagneticBorder magneticBorder = orig.getMagneticBorder();</span>
+<span class="fc" id="L105">				return new MagneticBorder() {</span>
 
 					@Override
 					public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
-<span class="nc" id="L109">						return magneticBorder.getForceAt(stringBounder, translate.reverse().getTranslated(position));</span>
+<span class="fc" id="L109">						return magneticBorder.getForceAt(stringBounder, translate.reverse().getTranslated(position));</span>
 					}
 				};
 			}

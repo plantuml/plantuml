@@ -10,29 +10,29 @@ public class ElkEdge extends ElkWithProperty {
     // ::remove folder when __HAXE__
 
 	public ElkEdge(Object obj) {
-<span class="nc" id="L13">		super(obj);</span>
-<span class="nc" id="L14">	}</span>
+<span class="fc" id="L13">		super(obj);</span>
+<span class="fc" id="L14">	}</span>
 
 	public ElkNode getContainingNode() {
-<span class="nc" id="L17">		return new ElkNode(Reflect.call(obj, &quot;getContainingNode&quot;));</span>
+<span class="fc" id="L17">		return new ElkNode(Reflect.call(obj, &quot;getContainingNode&quot;));</span>
 	}
 
 	public Collection&lt;ElkLabel&gt; getLabels() {
-<span class="nc" id="L21">		final List&lt;ElkLabel&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L22">		Collection internal = (Collection) Reflect.call(obj, &quot;getLabels&quot;);</span>
-<span class="nc bnc" id="L23" title="All 2 branches missed.">		for (Object element : internal) {</span>
-<span class="nc" id="L24">			result.add(new ElkLabel(element));</span>
-<span class="nc" id="L25">		}</span>
-<span class="nc" id="L26">		return result;</span>
+<span class="fc" id="L21">		final List&lt;ElkLabel&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L22">		Collection internal = (Collection) Reflect.call(obj, &quot;getLabels&quot;);</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">		for (Object element : internal) {</span>
+<span class="fc" id="L24">			result.add(new ElkLabel(element));</span>
+<span class="fc" id="L25">		}</span>
+<span class="fc" id="L26">		return result;</span>
 	}
 
 	public List&lt;ElkEdgeSection&gt; getSections() {
-<span class="nc" id="L30">		final List&lt;ElkEdgeSection&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L31">		Collection internal = (Collection) Reflect.call(obj, &quot;getSections&quot;);</span>
-<span class="nc bnc" id="L32" title="All 2 branches missed.">		for (Object element : internal) {</span>
-<span class="nc" id="L33">			result.add(new ElkEdgeSection(element));</span>
-<span class="nc" id="L34">		}</span>
-<span class="nc" id="L35">		return result;</span>
+<span class="fc" id="L30">		final List&lt;ElkEdgeSection&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L31">		Collection internal = (Collection) Reflect.call(obj, &quot;getSections&quot;);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		for (Object element : internal) {</span>
+<span class="fc" id="L33">			result.add(new ElkEdgeSection(element));</span>
+<span class="fc" id="L34">		}</span>
+<span class="fc" id="L35">		return result;</span>
 	}
 
 	public boolean isHierarchical() {

@@ -11,9 +11,9 @@ public class ElkEdgeSection {
 
 	public final Object obj;
 
-<span class="nc" id="L14">	public ElkEdgeSection(Object obj) {</span>
-<span class="nc" id="L15">		this.obj = Objects.requireNonNull(obj);</span>
-<span class="nc" id="L16">	}</span>
+<span class="fc" id="L14">	public ElkEdgeSection(Object obj) {</span>
+<span class="fc" id="L15">		this.obj = Objects.requireNonNull(obj);</span>
+<span class="fc" id="L16">	}</span>
 
 	@Override
 	public int hashCode() {
@@ -26,28 +26,28 @@ public class ElkEdgeSection {
 	}
 
 	public double getStartX() {
-<span class="nc" id="L29">		return (Double) Reflect.call(obj, &quot;getStartX&quot;);</span>
+<span class="fc" id="L29">		return (Double) Reflect.call(obj, &quot;getStartX&quot;);</span>
 	}
 
 	public double getStartY() {
-<span class="nc" id="L33">		return (Double) Reflect.call(obj, &quot;getStartY&quot;);</span>
+<span class="fc" id="L33">		return (Double) Reflect.call(obj, &quot;getStartY&quot;);</span>
 	}
 
 	public double getEndX() {
-<span class="nc" id="L37">		return (Double) Reflect.call(obj, &quot;getEndX&quot;);</span>
+<span class="fc" id="L37">		return (Double) Reflect.call(obj, &quot;getEndX&quot;);</span>
 	}
 
 	public double getEndY() {
-<span class="nc" id="L41">		return (Double) Reflect.call(obj, &quot;getEndY&quot;);</span>
+<span class="fc" id="L41">		return (Double) Reflect.call(obj, &quot;getEndY&quot;);</span>
 	}
 
 	public Collection&lt;ElkBendPoint&gt; getBendPoints() {
-<span class="nc" id="L45">		final List&lt;ElkBendPoint&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L46">		Collection internal = (Collection) Reflect.call(obj, &quot;getBendPoints&quot;);</span>
-<span class="nc bnc" id="L47" title="All 2 branches missed.">		for (Object element : internal) {</span>
-<span class="nc" id="L48">			result.add(new ElkBendPoint(element));</span>
-<span class="nc" id="L49">		}</span>
-<span class="nc" id="L50">		return result;</span>
+<span class="fc" id="L45">		final List&lt;ElkBendPoint&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L46">		Collection internal = (Collection) Reflect.call(obj, &quot;getBendPoints&quot;);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">		for (Object element : internal) {</span>
+<span class="fc" id="L48">			result.add(new ElkBendPoint(element));</span>
+<span class="fc" id="L49">		}</span>
+<span class="fc" id="L50">		return result;</span>
 	}
 
 }

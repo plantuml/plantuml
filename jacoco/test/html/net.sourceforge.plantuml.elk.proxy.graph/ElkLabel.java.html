@@ -5,27 +5,27 @@ import net.sourceforge.plantuml.elk.proxy.Reflect;
 public class ElkLabel extends ElkWithProperty {
 
 	public ElkLabel(Object obj) {
-<span class="nc" id="L8">		super(obj);</span>
-<span class="nc" id="L9">	}</span>
+<span class="fc" id="L8">		super(obj);</span>
+<span class="fc" id="L9">	}</span>
 
 	public void setText(String text) {
-<span class="nc" id="L12">		Reflect.call(obj, &quot;setText&quot;, text);</span>
-<span class="nc" id="L13">	}</span>
+<span class="fc" id="L12">		Reflect.call(obj, &quot;setText&quot;, text);</span>
+<span class="fc" id="L13">	}</span>
 
 	public void setDimensions(double width, double height) {
-<span class="nc" id="L16">		Reflect.call2(obj, &quot;setDimensions&quot;, width, height);</span>
-<span class="nc" id="L17">	}</span>
+<span class="fc" id="L16">		Reflect.call2(obj, &quot;setDimensions&quot;, width, height);</span>
+<span class="fc" id="L17">	}</span>
 
 	public String getText() {
-<span class="nc" id="L20">		return (String) Reflect.call(obj, &quot;getText&quot;);</span>
+<span class="fc" id="L20">		return (String) Reflect.call(obj, &quot;getText&quot;);</span>
 	}
 
 	public double getX() {
-<span class="nc" id="L24">		return (Double) Reflect.call(obj, &quot;getX&quot;);</span>
+<span class="fc" id="L24">		return (Double) Reflect.call(obj, &quot;getX&quot;);</span>
 	}
 
 	public double getY() {
-<span class="nc" id="L28">		return (Double) Reflect.call(obj, &quot;getY&quot;);</span>
+<span class="fc" id="L28">		return (Double) Reflect.call(obj, &quot;getY&quot;);</span>
 	}
 
 }

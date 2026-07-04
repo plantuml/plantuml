@@ -8,45 +8,45 @@ import net.sourceforge.plantuml.elk.proxy.Reflect;
 public class ElkNode extends ElkWithProperty {
 
 	public ElkNode(Object obj) {
-<span class="nc" id="L11">		super(obj);</span>
-<span class="nc" id="L12">	}</span>
+<span class="fc" id="L11">		super(obj);</span>
+<span class="fc" id="L12">	}</span>
 
 	public ElkNode getParent() {
-<span class="nc" id="L15">		final Object tmp = Reflect.call(obj, &quot;getParent&quot;);</span>
-<span class="nc bnc" id="L16" title="All 2 branches missed.">		if (tmp == null) {</span>
-<span class="nc" id="L17">			return null;</span>
+<span class="fc" id="L15">		final Object tmp = Reflect.call(obj, &quot;getParent&quot;);</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">		if (tmp == null) {</span>
+<span class="fc" id="L17">			return null;</span>
 		}
-<span class="nc" id="L19">		return new ElkNode(tmp);</span>
+<span class="fc" id="L19">		return new ElkNode(tmp);</span>
 	}
 
 	public double getX() {
-<span class="nc" id="L23">		return (Double) Reflect.call(obj, &quot;getX&quot;);</span>
+<span class="fc" id="L23">		return (Double) Reflect.call(obj, &quot;getX&quot;);</span>
 	}
 
 	public double getY() {
-<span class="nc" id="L27">		return (Double) Reflect.call(obj, &quot;getY&quot;);</span>
+<span class="fc" id="L27">		return (Double) Reflect.call(obj, &quot;getY&quot;);</span>
 	}
 
 	public Collection&lt;ElkLabel&gt; getLabels() {
-<span class="nc" id="L31">		final Collection&lt;ElkLabel&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L32">		final Collection internal = (Collection) Reflect.call(obj, &quot;getLabels&quot;);</span>
-<span class="nc bnc" id="L33" title="All 2 branches missed.">		for (Object element : internal) {</span>
-<span class="nc" id="L34">			result.add(new ElkLabel(element));</span>
-<span class="nc" id="L35">		}</span>
-<span class="nc" id="L36">		return result;</span>
+<span class="fc" id="L31">		final Collection&lt;ElkLabel&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L32">		final Collection internal = (Collection) Reflect.call(obj, &quot;getLabels&quot;);</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">		for (Object element : internal) {</span>
+<span class="fc" id="L34">			result.add(new ElkLabel(element));</span>
+<span class="fc" id="L35">		}</span>
+<span class="fc" id="L36">		return result;</span>
 	}
 
 	public double getWidth() {
-<span class="nc" id="L40">		return (Double) Reflect.call(obj, &quot;getWidth&quot;);</span>
+<span class="fc" id="L40">		return (Double) Reflect.call(obj, &quot;getWidth&quot;);</span>
 	}
 
 	public double getHeight() {
-<span class="nc" id="L44">		return (Double) Reflect.call(obj, &quot;getHeight&quot;);</span>
+<span class="fc" id="L44">		return (Double) Reflect.call(obj, &quot;getHeight&quot;);</span>
 	}
 
 	public void setDimensions(double width, double height) {
-<span class="nc" id="L48">		Reflect.call2(obj, &quot;setDimensions&quot;, width, height);</span>
-<span class="nc" id="L49">	}</span>
+<span class="fc" id="L48">		Reflect.call2(obj, &quot;setDimensions&quot;, width, height);</span>
+<span class="fc" id="L49">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

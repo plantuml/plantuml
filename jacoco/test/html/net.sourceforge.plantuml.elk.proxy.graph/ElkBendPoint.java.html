@@ -8,9 +8,9 @@ public class ElkBendPoint {
 
 	public final Object obj;
 
-<span class="nc" id="L11">	public ElkBendPoint(Object obj) {</span>
-<span class="nc" id="L12">		this.obj = Objects.requireNonNull(obj);</span>
-<span class="nc" id="L13">	}</span>
+<span class="fc" id="L11">	public ElkBendPoint(Object obj) {</span>
+<span class="fc" id="L12">		this.obj = Objects.requireNonNull(obj);</span>
+<span class="fc" id="L13">	}</span>
 
 	@Override
 	public int hashCode() {
@@ -23,11 +23,11 @@ public class ElkBendPoint {
 	}
 
 	public double getX() {
-<span class="nc" id="L26">		return (Double) Reflect.call(obj, &quot;getX&quot;);</span>
+<span class="fc" id="L26">		return (Double) Reflect.call(obj, &quot;getX&quot;);</span>
 	}
 
 	public double getY() {
-<span class="nc" id="L30">		return (Double) Reflect.call(obj, &quot;getY&quot;);</span>
+<span class="fc" id="L30">		return (Double) Reflect.call(obj, &quot;getY&quot;);</span>
 	}
 
 }

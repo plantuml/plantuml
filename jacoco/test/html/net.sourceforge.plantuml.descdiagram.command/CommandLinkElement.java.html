@@ -310,7 +310,7 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 
 		final Entity cl1;
 		final Entity cl2;
-<span class="pc bpc" id="L313" title="3 of 4 branches missed.">		if (diagram.isGroup(ent1clean) &amp;&amp; diagram.isGroup(ent2clean)) {</span>
+<span class="pc bpc" id="L313" title="1 of 4 branches missed.">		if (diagram.isGroup(ent1clean) &amp;&amp; diagram.isGroup(ent2clean)) {</span>
 <span class="nc" id="L314">			cl1 = diagram.getGroup(ent1clean);</span>
 <span class="nc" id="L315">			cl2 = diagram.getGroup(ent2clean);</span>
 		} else {
@@ -358,8 +358,8 @@ public class CommandLinkElement extends SingleLineCommand2&lt;DescriptionDiagram
 <span class="fc" id="L358">		ident = diagram.cleanId(ident);</span>
 <span class="fc" id="L359">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, ident);</span>
 
-<span class="pc bpc" id="L361" title="1 of 2 branches missed.">		if (diagram.isGroup(quark))</span>
-<span class="nc" id="L362">			return quark.getData();</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">		if (diagram.isGroup(quark))</span>
+<span class="fc" id="L362">			return quark.getData();</span>
 <span class="fc bfc" id="L363" title="All 2 branches covered.">		if (quark.getData() != null)</span>
 <span class="fc" id="L364">			return quark.getData();</span>
 <span class="fc" id="L365">		final Display display = Display.getWithNewlines(diagram.getPragma(), quark.getName());</span>

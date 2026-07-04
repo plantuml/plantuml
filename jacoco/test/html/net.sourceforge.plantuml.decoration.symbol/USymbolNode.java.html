@@ -156,46 +156,46 @@ import net.sourceforge.plantuml.style.SName;
 	public TextBlock asBig(final TextBlock title, HorizontalAlignment labelAlignment, final TextBlock stereotype,
 			final double width, final double height, final Fashion symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-<span class="nc" id="L159">		return new TextBlock() {</span>
+<span class="fc" id="L159">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="nc" id="L162">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L163">				ug = symbolContext.apply(ug);</span>
-<span class="nc" id="L164">				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
-<span class="nc" id="L165">				ug = ug.apply(new UTranslate(-4, 11));</span>
+<span class="fc" id="L162">				final XDimension2D dim = calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L163">				ug = symbolContext.apply(ug);</span>
+<span class="fc" id="L164">				drawNode(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow());</span>
+<span class="fc" id="L165">				ug = ug.apply(new UTranslate(-4, 11));</span>
 
-<span class="nc" id="L167">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L167">				final XDimension2D dimStereo = stereotype.calculateDimension(ug.getStringBounder());</span>
 				final double posStereoX;
-<span class="nc" id="L169">				final double posStereoY = 2;</span>
-<span class="nc bnc" id="L170" title="All 2 branches missed.">				if (stereoAlignment == HorizontalAlignment.RIGHT) {</span>
+<span class="fc" id="L169">				final double posStereoY = 2;</span>
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">				if (stereoAlignment == HorizontalAlignment.RIGHT) {</span>
 <span class="nc" id="L171">					posStereoX = width - dimStereo.getWidth() - getMargin().getX1();</span>
 				} else {
-<span class="nc" id="L173">					posStereoX = (width - dimStereo.getWidth()) / 2;</span>
+<span class="fc" id="L173">					posStereoX = (width - dimStereo.getWidth()) / 2;</span>
 
 				}
-<span class="nc" id="L176">				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));</span>
-<span class="nc" id="L177">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
-<span class="nc" id="L178">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
-<span class="nc" id="L179">				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));</span>
+<span class="fc" id="L176">				stereotype.drawU(ug.apply(new UTranslate(posStereoX, posStereoY)));</span>
+<span class="fc" id="L177">				final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());</span>
+<span class="fc" id="L178">				final double posTitle = (width - dimTitle.getWidth()) / 2;</span>
+<span class="fc" id="L179">				title.drawU(ug.apply(new UTranslate(posTitle, 2 + dimStereo.getHeight())));</span>
 
-<span class="nc" id="L181">			}</span>
+<span class="fc" id="L181">			}</span>
 
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc" id="L186">				return new XDimension2D(width, height);</span>
+<span class="fc" id="L186">				return new XDimension2D(width, height);</span>
 			}
 		};
 	}
 
 	@Override
 	public int suppHeightBecauseOfShape() {
-<span class="nc" id="L193">		return 5;</span>
+<span class="fc" id="L193">		return 5;</span>
 	}
 
 	@Override
 	public int suppWidthBecauseOfShape() {
-<span class="nc" id="L198">		return 60;</span>
+<span class="fc" id="L198">		return 60;</span>
 	}
 
 }

@@ -702,8 +702,8 @@ public class Cluster implements Moveable {
 			StyleBuilder styleBuilder, HColorSet colorSet, GroupType groupType) {
 
 <span class="fc" id="L704">		final Style style = getDefaultStyleDefinition(styleName, symbol, groupType).getMergedStyle(styleBuilder);</span>
-<span class="pc bpc" id="L705" title="1 of 2 branches missed.">		if (backColor == null)</span>
-<span class="nc" id="L706">			backColor = style.value(PName.BackGroundColor).asColor(colorSet);</span>
+<span class="fc bfc" id="L705" title="All 2 branches covered.">		if (backColor == null)</span>
+<span class="fc" id="L706">			backColor = style.value(PName.BackGroundColor).asColor(colorSet);</span>
 
 <span class="pc bpc" id="L708" title="1 of 4 branches missed.">		if (backColor == null || backColor.equals(HColors.transparent()))</span>
 <span class="fc" id="L709">			backColor = HColors.transparent();</span>
