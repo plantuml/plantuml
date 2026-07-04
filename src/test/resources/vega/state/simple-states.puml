@@ -1,5 +1,5 @@
 ---
-output: svg, debug
+output: svg
 ---
 @startuml
 !pragma layout smetana

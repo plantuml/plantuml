@@ -255,7 +255,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		@Fast
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-			return minMax.getDimension().delta(2 * canvasMargin + 4, canvasMargin);
+			return minMax.getDimension().delta(2 * canvasMargin + 4, canvasMargin + 16);
 		}
 
 		private XPoint2D getCorner(ST_Agnode_s n) {
