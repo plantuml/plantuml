@@ -1,0 +1,12 @@
+---
+output: svg, debug
+expected-description: (1 participants)
+---
+@startuml
+group
+    a -> a : This works fine
+end
+group
+    a <- a : This [now works]
+end
+@enduml

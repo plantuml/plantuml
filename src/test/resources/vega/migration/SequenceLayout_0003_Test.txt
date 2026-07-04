@@ -1,0 +1,381 @@
+DPI: 96
+dimension: [ 1108.7507 ; 256.0000 ]
+scaleFactor: 1.0000
+seed: -1278943498286084378
+svgLinkTarget: _top
+hoverPathColorRGB: null
+preserveAspectRatio: none
+
+RECTANGLE:
+  pt1: [ 577.5399 ; 39.0000 ]
+  pt2: [ 585.5399 ; 217.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
+LINE:
+  pt1: [ 581.0399 ; 39.0000 ]
+  pt2: [ 581.0399 ; 217.0000 ]
+  stroke: 5.0-5.0-0.5
+  shadow: 0
+  color: ff181818
+
+RECTANGLE:
+  pt1: [ 551.5938 ; 10.0000 ]
+  pt2: [ 610.4859 ; 38.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Test
+  position: [ 558.5938 ; 27.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 551.5938 ; 217.0000 ]
+  pt2: [ 610.4859 ; 245.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Test
+  position: [ 558.5938 ; 234.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+LINE:
+  pt1: [ 581.0399 ; 66.0000 ]
+  pt2: [ 623.0399 ; 66.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 623.0399 ; 66.0000 ]
+  pt2: [ 623.0399 ; 79.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 582.0399 ; 79.0000 ]
+  pt2: [ 623.0399 ; 79.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+POLYGON:
+  points:
+   - [ 592.0399 ; 75.0000 ]
+   - [ 582.0399 ; 79.0000 ]
+   - [ 592.0399 ; 83.0000 ]
+   - [ 588.0399 ; 79.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+TEXT:
+  text: Text
+  position: [ 588.0399 ; 61.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 23.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 451.0000 ; 23.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 451.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 441.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: fffeffdd
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 441.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 441.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 451.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 441.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: fffeffdd
+
+TEXT:
+  text: the location of the Comment is correct
+  position: [ 647.9607 ; 67.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+LINE:
+  pt1: [ 581.0399 ; 106.0000 ]
+  pt2: [ 623.0399 ; 106.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 623.0399 ; 106.0000 ]
+  pt2: [ 623.0399 ; 119.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 582.0399 ; 119.0000 ]
+  pt2: [ 623.0399 ; 119.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+POLYGON:
+  points:
+   - [ 592.0399 ; 115.0000 ]
+   - [ 582.0399 ; 119.0000 ]
+   - [ 592.0399 ; 123.0000 ]
+   - [ 588.0399 ; 119.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+TEXT:
+  text: Text
+  position: [ 588.0399 ; 101.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 23.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 451.0000 ; 23.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 451.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 441.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: fffeffdd
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 441.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 441.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 451.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 441.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: fffeffdd
+
+TEXT:
+  text: the location of the Comment is correct
+  position: [ 130.2498 ; 107.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+LINE:
+  pt1: [ 539.0399 ; 146.0000 ]
+  pt2: [ 580.0399 ; 146.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 539.0399 ; 146.0000 ]
+  pt2: [ 539.0399 ; 159.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 539.0399 ; 159.0000 ]
+  pt2: [ 579.0399 ; 159.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+POLYGON:
+  points:
+   - [ 569.0399 ; 155.0000 ]
+   - [ 579.0399 ; 159.0000 ]
+   - [ 569.0399 ; 163.0000 ]
+   - [ 573.0399 ; 159.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+TEXT:
+  text: Text
+  position: [ 532.1191 ; 141.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 23.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 505.0000 ; 23.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 505.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 495.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: fffeffdd
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 495.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 495.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 505.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 495.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: fffeffdd
+
+TEXT:
+  text: the location of the Comment is [now correct]
+  position: [ 592.0399 ; 147.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+LINE:
+  pt1: [ 539.0399 ; 186.0000 ]
+  pt2: [ 580.0399 ; 186.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 539.0399 ; 186.0000 ]
+  pt2: [ 539.0399 ; 199.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+LINE:
+  pt1: [ 539.0399 ; 199.0000 ]
+  pt2: [ 579.0399 ; 199.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff181818
+
+POLYGON:
+  points:
+   - [ 569.0399 ; 195.0000 ]
+   - [ 579.0399 ; 199.0000 ]
+   - [ 569.0399 ; 203.0000 ]
+   - [ 573.0399 ; 199.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+TEXT:
+  text: Text
+  position: [ 532.1191 ; 181.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 23.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 505.0000 ; 23.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 505.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 495.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: fffeffdd
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 495.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 495.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 505.0000 ; 10.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 495.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: fffeffdd
+
+TEXT:
+  text: the location of the Comment is [now correct]
+  position: [ 21.0000 ; 187.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+

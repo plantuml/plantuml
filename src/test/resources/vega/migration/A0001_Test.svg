@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="296px" preserveAspectRatio="none" style="width:166px;height:296px;background:#FFFFFF;" version="1.1" viewBox="0 0 166 296" width="166px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="88" width="8" x="25.969" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29.469" x2="29.469" y1="39" y2="127"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="40" style="stroke:#181818;stroke-width:1;" width="10" x="24.469" y="79"/>
+    </g>
+    <line style="stroke:#A80036;stroke-width:2;" x1="20.469" x2="38.469" y1="110" y2="128"/>
+    <line style="stroke:#A80036;stroke-width:2;" x1="20.469" x2="38.469" y1="128" y2="110"/>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="217" width="8" x="129.55" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="133.05" x2="133.05" y1="39" y2="256"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="110.825" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="117.825" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="10" y="256"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="17" y="273.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="110.825" y="256"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="117.825" y="273.889">Alice</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="76.469" y1="66" y2="66"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="76.469" x2="76.469" y1="66" y2="79"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="35.469" x2="76.469" y1="79" y2="79"/>
+    <polygon fill="#181818" points="45.469,75,35.469,79,45.469,83,41.469,79" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="34.775" x="41.469" y="61.111">hello1</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="34.469" x2="76.469" y1="106" y2="106"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="76.469" x2="76.469" y1="106" y2="119"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="76.469" y1="119" y2="119"/>
+    <polygon fill="#181818" points="39.469,115,29.469,119,39.469,123,35.469,119" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="34.775" x="41.469" y="101.111">hello2</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="71.469" y1="172" y2="172"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="71.469" x2="71.469" y1="172" y2="185"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="30.469" x2="71.469" y1="185" y2="185"/>
+    <polygon fill="#181818" points="40.469,181,30.469,185,40.469,189,36.469,185" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="44.119" x="36.469" y="141.111">this is an</text>
+    <text fill="#000" font-size="13" textLength="84.581" x="36.469" y="154.111">example of long</text>
+    <text fill="#000" font-size="13" textLength="52.731" x="36.469" y="167.111">message</text>
+    <polygon fill="#181818" points="121.05,234,131.05,238,121.05,242,125.05,238" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29.469" x2="127.05" y1="238" y2="238"/>
+    <text fill="#000" font-size="13" textLength="43.387" x="36.469" y="207.111">And this</text>
+    <text fill="#000" font-size="13" textLength="67.925" x="36.469" y="220.111">is an other on</text>
+    <text fill="#000" font-size="13" textLength="67.194" x="36.469" y="233.111">very long too</text>
+  </g>
+</svg>

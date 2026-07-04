@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="239px" preserveAspectRatio="none" style="width:114px;height:239px;background:#FFA500;" version="1.1" viewBox="0 0 114 239" width="114px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFA500" height="239" style="stroke:none;" width="114" x="0" y="0"/>
+    <g class="header" data-source-line="4">
+      <rect fill="#F00" height="10" style="stroke:none;" width="31.125" x="76.263" y="5"/>
+      <text fill="#888" font-size="10" textLength="31.125" x="76.263" y="12.778">header</text>
+    </g>
+    <g class="title" data-source-line="1">
+      <rect fill="#FF0" height="24" style="stroke:none;" width="31.787" x="40.3" y="21"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="45.3" y="36.889">title</text>
+    </g>
+    <g>
+      <title>Sally</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="28.725" y="85"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="32.225" x2="32.225" y1="85" y2="117"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="32" width="8" x="80.419" y="85"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="83.919" x2="83.919" y1="85" y2="117"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="56"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="17" y="73.889">Sally</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="64.45" y="56"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="71.45" y="73.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="10" y="117"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="17" y="134.889">Sally</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="64.45" y="117"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="71.45" y="134.889">Bob</text>
+    <polygon fill="#181818" points="71.919,95,81.919,99,71.919,103,75.919,99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="32.225" x2="77.919" y1="99" y2="99"/>
+    <g class="legend">
+      <rect fill="#008000" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="52.087" x="30.15" y="163"/>
+      <text fill="#000" font-size="14" textLength="42.087" x="35.15" y="178.889">legend</text>
+    </g>
+    <g class="caption" data-source-line="5">
+      <rect fill="#800080" height="14" style="stroke:none;" width="45.15" x="33.619" y="201"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="33.619" y="211.889">caption</text>
+    </g>
+    <g class="footer" data-source-line="3">
+      <rect fill="#00F" height="15" style="stroke:none;" width="38.25" x="37.069" y="217"/>
+      <text fill="#F00" font-size="15" textLength="38.25" x="37.069" y="228.667">footer</text>
+    </g>
+  </g>
+</svg>

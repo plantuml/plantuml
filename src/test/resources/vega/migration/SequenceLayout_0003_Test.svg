@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="257px" preserveAspectRatio="none" style="width:608px;height:257px;background:#FFFFFF;" version="1.1" viewBox="0 0 608 257" width="608px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>Test</title>
+      <rect fill="#000" fill-opacity="0" height="178" width="8" x="315.65" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="319.15" x2="319.15" y1="39" y2="217"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.213" x="298.544" y="10"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="305.544" y="27.889">Test</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.213" x="298.544" y="217"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="305.544" y="234.889">Test</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="319.15" x2="361.15" y1="66" y2="66"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="361.15" x2="361.15" y1="66" y2="79"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="320.15" x2="361.15" y1="79" y2="79"/>
+    <polygon fill="#181818" points="330.15,75,320.15,79,330.15,83,326.15,79" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="25.269" x="326.15" y="61.111">Text</text>
+    <path d="M374.15,52 L374.15,75 L592.15,75 L592.15,62 L582.15,52 L374.15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M582.15,52 L582.15,62 L592.15,62 L582.15,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="197.113" x="380.15" y="67.111">the location of the Comment is correct</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="319.15" x2="361.15" y1="106" y2="106"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="361.15" x2="361.15" y1="106" y2="119"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="320.15" x2="361.15" y1="119" y2="119"/>
+    <polygon fill="#181818" points="330.15,115,320.15,119,330.15,123,326.15,119" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="25.269" x="326.15" y="101.111">Text</text>
+    <path d="M96.038,92 L96.038,115 L314.038,115 L314.038,102 L304.038,92 L96.038,92" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M304.038,92 L304.038,102 L314.038,102 L304.038,92" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="197.113" x="102.038" y="107.111">the location of the Comment is correct</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="277.15" x2="318.15" y1="146" y2="146"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="277.15" x2="277.15" y1="146" y2="159"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="277.15" x2="317.15" y1="159" y2="159"/>
+    <polygon fill="#181818" points="307.15,155,317.15,159,307.15,163,311.15,159" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="25.269" x="276.15" y="141.111">Text</text>
+    <path d="M324.15,132 L324.15,155 L573.15,155 L573.15,142 L563.15,132 L324.15,132" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M563.15,132 L563.15,142 L573.15,142 L563.15,132" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="228.15" x="330.15" y="147.111">the location of the Comment is [now correct]</text>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="277.15" x2="318.15" y1="186" y2="186"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="277.15" x2="277.15" y1="186" y2="199"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="277.15" x2="317.15" y1="199" y2="199"/>
+    <polygon fill="#181818" points="307.15,195,317.15,199,307.15,203,311.15,199" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="25.269" x="276.15" y="181.111">Text</text>
+    <path d="M15,172 L15,195 L264,195 L264,182 L254,172 L15,172" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M254,172 L254,182 L264,182 L254,172" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="228.15" x="21" y="187.111">the location of the Comment is [now correct]</text>
+  </g>
+</svg>

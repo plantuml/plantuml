@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="157px" preserveAspectRatio="none" style="width:132px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 132 157" width="132px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>A</title>
+      <rect fill="#000" fill-opacity="0" height="78" width="8" x="18.181" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="21.681" x2="21.681" y1="39" y2="117"/>
+    </g>
+    <g>
+      <title>B</title>
+      <rect fill="#000" fill-opacity="0" height="78" width="8" x="54.412" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="57.912" x2="57.912" y1="39" y2="117"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="33" style="stroke:#181818;stroke-width:1;" width="10" x="52.912" y="66"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="10"/>
+    <text fill="#000" font-size="14" x="17" y="27.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="46.231" y="10"/>
+    <text fill="#000" font-size="14" x="53.231" y="27.889">B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="10" y="117"/>
+    <text fill="#000" font-size="14" x="17" y="134.889">A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="46.231" y="117"/>
+    <text fill="#000" font-size="14" x="53.231" y="134.889">B</text>
+    <polygon fill="#181818" points="40.912,62,50.912,66,40.912,70,44.912,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="21.681" x2="46.912" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" x="28.681" y="61.111">a</text>
+    <path d="M67.913,52 L67.913,75 L115.913,75 L115.913,62 L105.913,52 L67.913,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M105.913,52 L105.913,62 L115.913,62 L105.913,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="27.463" x="73.913" y="67.111">Note</text>
+    <polygon fill="#181818" points="32.681,95,22.681,99,32.681,103,28.681,99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" x1="26.681" x2="51.912" y1="99" y2="99"/>
+    <text fill="#000" font-size="13" x="38.681" y="94.111">b</text>
+  </g>
+</svg>
