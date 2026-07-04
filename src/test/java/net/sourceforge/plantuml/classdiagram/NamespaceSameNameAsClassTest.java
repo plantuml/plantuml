@@ -89,7 +89,39 @@ class NamespaceSameNameAsClassTest {
 				"+method1()", "}", "@enduml");
 	}
 
+	/**
+	 * Reported by @arnaudroques on the #2099 PR: rendering succeeds and does not
+	 * crash, but the nested class "b" is completely missing from the image -
+	 * only "a" is drawn. "b" still exists as a genuine leaf Entity (see
+	 * {@link #testClassSameNameAsImplicitNamespaceIsAccepted}), so this is a
+	 * rendering/layout gap, not a data-model gap: GraphvizImageBuilder only
+	 * finds entities to draw via two paths - inside a rendered GROUP, or as a
+	 * top-level entity whose parent container is the diagram root - and "b"
+	 * (parent container "a", which is no longer a GROUP) falls into neither.
+	 */
+	@Test
+	void testRenderingImageStillShowsNestedClassAfterPromotion() throws IOException {
+		final String svg = renderToSvg("@startuml", "set separator .", "class a.b", "class a", "@enduml");
+		assertTrue(containsLabel(svg, "a"), "Rendered image should show class 'a':\n" + svg);
+		assertTrue(containsLabel(svg, "b"), "Rendered image should still show nested class 'b':\n" + svg);
+	}
+
+	@Test
+	void testRenderingImageStillShowsAllPhantomChildrenAfterPromotion() throws IOException {
+		final String svg = renderToSvg("@startuml", "set separator .", "class a.b", "class a.c", "class a",
+				"@enduml");
+		assertTrue(containsLabel(svg, "a"), "Rendered image should show class 'a':\n" + svg);
+		assertTrue(containsLabel(svg, "b"), "Rendered image should still show nested class 'b':\n" + svg);
+		assertTrue(containsLabel(svg, "c"), "Rendered image should still show nested class 'c':\n" + svg);
+	}
+
 	private void assertRendersWithoutCrash(String... lines) throws IOException {
+		final String svg = renderToSvg(lines);
+		assertFalse(svg.contains("has crashed"), "Rendering should not crash:\n" + svg);
+		assertFalse(svg.contains("An error has occurred"), "Rendering should not report an error:\n" + svg);
+	}
+
+	private String renderToSvg(String... lines) throws IOException {
 		final StringBuilder source = new StringBuilder();
 		for (String line : lines)
 			source.append(line).append('\n');
@@ -98,9 +130,11 @@ class NamespaceSameNameAsClassTest {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		reader.outputImage(baos, new FileFormatOption(FileFormat.SVG));
 
-		final String svg = new String(baos.toByteArray(), java.nio.charset.StandardCharsets.UTF_8);
-		assertFalse(svg.contains("has crashed"), "Rendering should not crash:\n" + svg);
-		assertFalse(svg.contains("An error has occurred"), "Rendering should not report an error:\n" + svg);
+		return new String(baos.toByteArray(), java.nio.charset.StandardCharsets.UTF_8);
+	}
+
+	private boolean containsLabel(String svg, String label) {
+		return svg.contains(">" + label + "<");
 	}
 
 }
