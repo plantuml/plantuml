@@ -1,0 +1,24 @@
+---
+output: svg
+expected-description: (4 entities)
+---
+@startuml
+    ' hide all attributes and methods...
+    hide members
+
+    '... but show the methods in class B
+    show B methods
+
+    class A {
+        - name: String
+        + id: long
+        # doSomething(): void
+    }
+    class B {
+        ~run(): boolean
+    }
+    class C
+    class D
+@enduml
+"""
+

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="150px" preserveAspectRatio="none" style="width:190px;height:150px;background:#FFFFFF;" version="1.1" viewBox="0 0 190 150" width="190px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="12" id="ent0002">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.213" x="6" y="12"/>
+      <ellipse cx="51.675" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="46.675" y="33">C</text>
+      <text fill="#000" font-size="14" x="72.175" y="31.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="114.213" y1="44" y2="44"/>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_METHOD">
+        <polygon fill="#4177AF" points="17,52.5,13,58.5,21,58.5" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="83.213" x="26" y="58.889">run(): boolean</text>
+    </g>
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="133" y="23"/>
+      <ellipse cx="148" cy="39" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="143" y="44">C</text>
+      <text fill="#000" font-size="14" x="162" y="42.889">A</text>
+    </g>
+    <!--class C-->
+    <g class="entity" data-qualified-name="C" data-source-line="15" id="ent0003">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="39.5" y="102"/>
+      <ellipse cx="54.5" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="49.5" y="123">C</text>
+      <text fill="#000" font-size="14" x="68.5" y="121.889">C</text>
+    </g>
+    <!--class D-->
+    <g class="entity" data-qualified-name="D" data-source-line="16" id="ent0004">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="99.5" y="102"/>
+      <ellipse cx="114.5" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="109.5" y="123">C</text>
+      <text fill="#000" font-size="14" x="128.5" y="121.889">D</text>
+    </g>
+  </g>
+</svg>

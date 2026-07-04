@@ -1,16 +1,7 @@
-package nonreg.simple;
-
-import nonreg.BasicTest;
-
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-
-/*
-
-Diagram under test (has to be in tripple quotes """):
-
-"""
+---
+output: svg
+expected-description: (6 entities)
+---
 @startuml
 <style>
 root {
@@ -34,15 +25,3 @@ package other <<Stereotype A>> <<Stereotype B>> {
     class ExternalImportantClass <<external>> <<highlight>>
 }
 @enduml
-"""
-
-*/
-
-public class HideShow002_Test extends BasicTest {
-
-	@Test
-	void testIssue1735() throws IOException {
-		checkImage("(6 entities)");
-	}
-
-}

@@ -105,6 +105,66 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "migration/ChenMovieAlias_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(30 entities)",
+      "tag": "specification",
+      "allow-failure": "true",
+      "diagram_class": "ChenEerDiagram"
+    },
+    {
+      "file": "migration/ChenMovieExtended_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(30 entities)",
+      "diagram_class": "ChenEerDiagram"
+    },
+    {
+      "file": "migration/ChenMovie_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(16 entities)",
+      "diagram_class": "ChenEerDiagram"
+    },
+    {
+      "file": "migration/ChenRankDir_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(3 entities)",
+      "diagram_class": "ChenEerDiagram"
+    },
+    {
+      "file": "migration/HideShow001_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(1 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "migration/HideShow002_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(6 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "migration/HideShow003_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(3 entities)",
+      "tag": "specification",
+      "allow-failure": "true",
+      "diagram_class": "ClassDiagram"
+    },
+    {
+      "file": "migration/HideShow004_Test.puml",
+      "folder": "migration",
+      "status": "pass",
+      "description": "(4 entities)",
+      "diagram_class": "ClassDiagram"
+    },
+    {
       "file": "migration/SequenceLayout_0001_Test.puml",
       "folder": "migration",
       "status": "pass",
@@ -1609,8 +1669,8 @@
     }
   ],
   "summary": {
-    "total": 161,
-    "passed": 152,
+    "total": 169,
+    "passed": 160,
     "failed": 0,
     "skipped": 9
   }
