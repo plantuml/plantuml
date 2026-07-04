@@ -182,7 +182,18 @@ public enum FileFormat {
 		switch (this) {
 		case LATEX:
 		case LATEX_NO_PREAMBLE:
-			return new StringBounderTikz(tikzFontDistortion, this);
+			try {
+				return new StringBounderTikz(tikzFontDistortion, this);
+			} catch (RuntimeException e) {
+				// No usable LaTeX engine (none installed, or it failed to start): fall
+				// back to the AWT font-based string bounder so TikZ output is still
+				// produced -- with approximate metrics -- instead of failing with an
+				// empty result. See issue #2764.
+				System.err.println("[warning] LaTeX/TikZ text measurement unavailable (" + e.getMessage()
+						+ "); falling back to approximate AWT font metrics. Install lualatex, xelatex or"
+						+ " pdflatex, or set `!pragma tex_system`. See issue #2764.");
+				return new StringBounderAwt();
+			}
 
 		case BRAILLE_PNG:
 			return new StringBounderBraille();

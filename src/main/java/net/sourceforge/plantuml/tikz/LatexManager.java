@@ -22,8 +22,10 @@ public class LatexManager implements AutoCloseable {
 	private static final Pattern PATTERN = Pattern.compile("\\*?[\\d.]+pt,[\\d.]+pt,[\\d.]+pt");
 	private final LruCache lruCache = new LruCache(128);
 
+	private static final String[] CANDIDATE_TEX_SYSTEMS = { "lualatex", "xelatex", "pdflatex" };
+
 	public LatexManager(String system, String preamble) {
-		String command = (system != null && !system.isEmpty()) ? system : "xelatex";
+		final String command = resolveTexSystem(system);
 		if (!command.endsWith("latex")) {
 			throw new IllegalArgumentException("command " + command + " is unsupported");
 		}
@@ -52,6 +54,48 @@ public class LatexManager implements AutoCloseable {
 			throw new IllegalArgumentException(command + " fail, message: " + output + System.lineSeparator()
 							+ "please install " + command + ", and package `amsmath`, `tikz`");
 		}
+	}
+
+	/**
+	 * Resolves the LaTeX engine used to measure text for TikZ output.
+	 * <p>
+	 * An explicit {@code !pragma tex_system} always wins. Otherwise the first
+	 * engine found on the {@code PATH} is used, preferring lualatex, then xelatex,
+	 * then pdflatex -- so machines that ship only lualatex or pdflatex no longer
+	 * silently produce empty output. lualatex and xelatex yield identical TikZ
+	 * metrics, so preferring lualatex changes nothing visible where either exists.
+	 * When none is found the first candidate is returned, so the caller still gets
+	 * the usual error (or falls back to the AWT font-based string bounder). See
+	 * issue #2764.
+	 */
+	static String resolveTexSystem(String system) {
+		if (system != null && !system.isEmpty())
+			return system;
+		for (String candidate : CANDIDATE_TEX_SYSTEMS)
+			if (isExecutableOnPath(candidate))
+				return candidate;
+		return CANDIDATE_TEX_SYSTEMS[0];
+	}
+
+	private static boolean isExecutableOnPath(String name) {
+		final String path = System.getenv("PATH");
+		if (path == null)
+			return false;
+		final boolean windows = File.separatorChar == '\\';
+		for (String dirname : path.split(File.pathSeparator)) {
+			if (dirname.isEmpty())
+				continue;
+			final File exe = new File(dirname, name);
+			if (exe.isFile() && exe.canExecute())
+				return true;
+			if (windows)
+				for (String ext : new String[] { ".cmd", ".bat", ".exe" }) {
+					final File exeWithExt = new File(dirname, name + ext);
+					if (exeWithExt.isFile() && exeWithExt.canExecute())
+						return true;
+				}
+		}
+		return false;
 	}
 
 	private String expect(String s, String end) {
