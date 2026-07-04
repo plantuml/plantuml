@@ -120,10 +120,28 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private final Rankdir rankdir;
 
+	private final Entity root;
+
 	public CucaDiagramFileMakerSmetana(CucaDiagram diagram) {
-		super(diagram);
+		this(diagram, diagram.getRootGroup());
+	}
+
+	public CucaDiagramFileMakerSmetana(CucaDiagram diagram, Entity root) {
+		super(diagram, root);
+		this.root = root;
 		this.rankdir = diagram.getSkinParam().getRankdir();
 
+	}
+
+	// Structural access relative to the local layout root.
+	// For now these delegate to the whole diagram (no behavior change); they are the
+	// hooks where a concurrent-region sub-layout will later restrict the scope.
+	private Collection<Entity> getChildrenGroups(Entity parent) {
+		return diagram.getChildrenGroups(parent);
+	}
+
+	private Collection<Link> getLocalLinks() {
+		return diagram.getLinks();
 	}
 
 	private MinMaxMutable getSmetanaMinMax() {
@@ -280,7 +298,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private void printAllSubgroups(StringBounder stringBounder, Entity parent) {
-		for (Entity g : diagram.getChildrenGroups(parent)) {
+		for (Entity g : getChildrenGroups(parent)) {
 			if (g.isRemoved())
 				continue;
 
@@ -378,7 +396,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	private Collection<Entity> getUnpackagedEntities() {
 		final List<Entity> result = new ArrayList<>();
 		for (Entity ent : diagram.leafs())
-			if (diagram.getRootGroup() == ent.getParentContainer())
+			if (root == ent.getParentContainer())
 				result.add(ent);
 
 		return result;
@@ -393,10 +411,10 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),
 				diagram.getPragma());
 
-		this.printAllSubgroups(stringBounder, diagram.getRootGroup());
+		this.printAllSubgroups(stringBounder, root);
 		this.printEntities(stringBounder, getUnpackagedEntities());
 
-		for (Link link : diagram.getLinks()) {
+		for (Link link : getLocalLinks()) {
 			if (link.isRemoved())
 				continue;
 
@@ -435,9 +453,9 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final ST_Agraph_s g = agopen(zz, new CString("g"), zz.Agdirected, null);
 
 		exportEntities(zz, g, getUnpackagedEntities());
-		exportGroups(zz, g, diagram.getRootGroup());
+		exportGroups(zz, g, root);
 
-		for (Link link : diagram.getLinks()) {
+		for (Link link : getLocalLinks()) {
 			final ST_Agedge_s e = createEdge(stringBounder, zz, g, link);
 			if (e != null)
 				edges.put(link, e);
@@ -459,7 +477,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private void exportGroups(Globals zz, ST_Agraph_s graph, Entity parent) {
-		for (Entity g : diagram.getChildrenGroups(parent)) {
+		for (Entity g : getChildrenGroups(parent)) {
 			if (g.isRemoved())
 				continue;
 

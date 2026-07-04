@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public abstract class CucaDiagramFileMaker {
@@ -49,10 +50,14 @@ public abstract class CucaDiagramFileMaker {
 	protected final ClusterManager clusterManager;
 
 	public CucaDiagramFileMaker(CucaDiagram diagram) {
+		this(diagram, diagram.getRootGroup());
+	}
+
+	public CucaDiagramFileMaker(CucaDiagram diagram, Entity root) {
 		this.diagram = diagram;
 		this.bibliotekon = new Bibliotekon(diagram.getLinks());
-		final Cluster root = new Cluster(null, diagram, bibliotekon.getColorSequence(), diagram.getRootGroup());
-		this.clusterManager = new ClusterManager(bibliotekon, root);
+		final Cluster rootCluster = new Cluster(null, diagram, bibliotekon.getColorSequence(), root);
+		this.clusterManager = new ClusterManager(bibliotekon, rootCluster);
 
 	}
 
