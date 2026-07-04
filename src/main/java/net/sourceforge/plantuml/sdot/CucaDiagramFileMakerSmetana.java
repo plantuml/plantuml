@@ -197,17 +197,19 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 		private final YMirror ymirror;
 		private final MinMaxMutable minMax;
+		private final double canvasMargin;
 
-		public Drawing() {
+		public Drawing(double canvasMargin) {
 			this.minMax = getSmetanaMinMax();
 			this.ymirror = new YMirror(minMax.getMaxY() + 6);
+			this.canvasMargin = canvasMargin;
 		}
 
 		public void drawU(UGraphic ug) {
 
 			smetanaPathes.clear();
 
-			ug = ug.apply(new UTranslate(6, 6 - minMax.getMinY()));
+			ug = ug.apply(new UTranslate(canvasMargin, canvasMargin - minMax.getMinY()));
 
 			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
 				final Link link = ent.getKey();
@@ -253,7 +255,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		@Fast
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-			return minMax.getDimension().delta(16, 6);
+			return minMax.getDimension().delta(2 * canvasMargin + 4, canvasMargin);
 		}
 
 		private XPoint2D getCorner(ST_Agnode_s n) {
@@ -523,7 +525,11 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		gvLayoutJobs(zz, gvc, g);
 		SmetanaDebug.printMe();
 
-		final TextBlock drawable = new Drawing();
+		// At the diagram root, keep the historical canvas margin (6). In a nested
+		// sub-layout the surrounding InnerStateAutonom already provides the padding,
+		// so we drop this margin to avoid extra space inside the composite state.
+		final double canvasMargin = isNestedLayout() ? 0 : 6;
+		final TextBlock drawable = new Drawing(canvasMargin);
 		return drawable;
 	}
 
