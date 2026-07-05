@@ -189,7 +189,14 @@ public enum FileFormat {
 			final LatexEngine latexEngine = pragma.getLatexEngine();
 			if (latexEngine == LatexEngine.NONE || latexEngine == LatexEngine.UNKNOWN_OR_NOT_INSTALLED)
 				return new StringBounderFromWidthTable(this);
-			return new StringBounderTikz(latexEngine, tikzFontDistortion, this);
+			try {
+				return new StringBounderTikz(latexEngine, tikzFontDistortion, this);
+			} catch (Throwable e) {
+				// The engine passed the --version probe but failed to actually measure
+				// text (e.g. missing tikz/standalone package). Fall back rather than
+				// propagate and produce empty output. See issue #2764.
+				return new StringBounderFromWidthTable(this);
+			}
 
 		case BRAILLE_PNG:
 			return new StringBounderBraille();
