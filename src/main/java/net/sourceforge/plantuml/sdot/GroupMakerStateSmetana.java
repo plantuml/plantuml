@@ -62,6 +62,19 @@ import net.sourceforge.plantuml.svek.image.EntityImageState;
 // images into a ConcurrentStates.
 public final class GroupMakerStateSmetana {
 
+	// Breathing room added around each Smetana-rendered region before it is
+	// stacked by ConcurrentStates, which otherwise places adjacent regions
+	// edge-to-edge with no margin of its own (dot's own regions get this for free
+	// from SvekResult's built-in padding).
+	private static final double REGION_PADDING = 6;
+
+	// ConcurrentStates' separator is drawn a fixed amount (its private DASH
+	// constant, currently 8) longer than the total stacked dimension, so the dash
+	// deliberately overshoots past the declared bounding box on one side. Reserve
+	// that much extra room so it doesn't get clipped by the outer
+	// InnerStateAutonom border.
+	private static final double SEPARATOR_OVERSHOOT = 8;
+
 	private final CucaDiagram diagram;
 	private final Entity group;
 	private final StringBounder stringBounder;
@@ -79,7 +92,7 @@ public final class GroupMakerStateSmetana {
 			return new EntityImageState(group);
 
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE)
-			return subLayout();
+			return PaddedEntityImage.uniform(subLayout(), REGION_PADDING);
 
 		if (group.getGroupType() != GroupType.STATE)
 			throw new UnsupportedOperationException(group.getGroupType().toString());
@@ -90,19 +103,30 @@ public final class GroupMakerStateSmetana {
 			// First region: the group's own (non-concurrent) content. The nested
 			// sub-layout filters out the STATE_CONCURRENT leaves (see
 			// CucaDiagramFileMakerSmetana.getUnpackagedEntities).
-			inners.add(subLayout());
-			// Remaining regions: already rendered by the bottom-up simplifier.
+			inners.add(PaddedEntityImage.uniform(subLayout(), REGION_PADDING));
+			// Remaining regions: already rendered (and padded) by the bottom-up
+			// simplifier, via the CONCURRENT_STATE branch above.
 			for (Entity inner : group.leafs())
 				if (inner.getLeafType() == LeafType.STATE_CONCURRENT)
 					inners.add(inner.getSvekImage());
 
-			image = new ConcurrentStates(inners, group.getConcurrentSeparator(), diagram.getSkinParam(),
-					group.getStereotype());
+			final IEntityImage stacked = new ConcurrentStates(inners, group.getConcurrentSeparator(),
+					diagram.getSkinParam(), group.getStereotype());
+			image = withSeparatorOvershoot(stacked, group.getConcurrentSeparator());
 		} else {
 			image = subLayout();
 		}
 
 		return new InnerStateAutonom(image, group);
+	}
+
+	// The separator's dash overshoot is vertical (extends past the bottom) for a
+	// '|' (side-by-side regions), and horizontal (extends past the right) for a
+	// '-' (stacked regions) -- see ConcurrentStates.Separator.drawSeparator.
+	private IEntityImage withSeparatorOvershoot(IEntityImage stacked, char concurrentSeparator) {
+		final double bottom = concurrentSeparator == '|' ? SEPARATOR_OVERSHOOT : 0;
+		final double right = concurrentSeparator == '-' ? SEPARATOR_OVERSHOOT : 0;
+		return new PaddedEntityImage(stacked, 0, 0, right, bottom);
 	}
 
 	private IEntityImage subLayout() {
