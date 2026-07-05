@@ -83,21 +83,35 @@ import static smetana.core.Macro.ED_showboxes;
 import static smetana.core.Macro.ED_weight;
 import static smetana.core.Macro.ED_xpenalty;
 import static smetana.core.Macro.ET_SPLINE;
+import static smetana.core.Macro.GD_bb;
+import static smetana.core.Macro.GD_clust;
 import static smetana.core.Macro.GD_dotroot;
 import static smetana.core.Macro.GD_flags;
 import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_maxrank;
+import static smetana.core.Macro.GD_minrank;
+import static smetana.core.Macro.GD_n_cluster;
+import static smetana.core.Macro.GD_nlist;
+import static smetana.core.Macro.GD_rank;
 import static smetana.core.Macro.ND_UF_size;
+import static smetana.core.Macro.ND_clust;
+import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_flat_in;
 import static smetana.core.Macro.ND_flat_out;
 import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_next;
+import static smetana.core.Macro.ND_order;
 import static smetana.core.Macro.ND_other;
 import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.NEW_RANK;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.agfindgraphattr;
 import static smetana.core.Macro.alloc_elist;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
+import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -109,6 +123,8 @@ import h.ST_Agobj_s;
 import h.ST_Agraph_s;
 import h.ST_aspect_t;
 import h.ST_pack_info;
+import h.ST_rank_t;
+import smetana.core.CArray;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
@@ -354,6 +370,7 @@ try {
     
     do {
         dot_rank(zz, g, asp);
+	// dumpLayoutState(zz, g, "after dot_rank");
 	if (maxphase == 1) {
 	    attach_phase_attrs (g, 1);
 	    return;
@@ -364,11 +381,13 @@ UNSUPPORTED("5uwp9z6jkv5uc30iyfszyg6dw"); // 	    asp = NULL;
 UNSUPPORTED("28kbszyxsjoj03gb134ov4hag"); // 	    aspect.nextIter = 0;
 	}
         dot_mincross(zz, g, (asp != null));
+	// dumpLayoutState(zz, g, "after dot_mincross");
 	if (maxphase == 2) {
 	    attach_phase_attrs (g, 2);
 	    return;
 	}
         dot_position(zz, g, asp);
+	// dumpLayoutState(zz, g, "after dot_position");
 	if (maxphase == 3) {
 	    attach_phase_attrs (g, 2);  /* positions will be attached on output */
 	    return;
@@ -559,6 +578,214 @@ try {
 } finally {
 LEAVING("ca52dadcp7m8x0bqhaw4tvtaw","dot_root");
 }
+}
+
+
+/*
+ * [DEBUG-cluster-layout] Ad-hoc tracing added to investigate the Smetana
+ * cluster/package layout producing overlapping nodes (see zdev.Test_1,
+ * compared against native-dot zdev.Test_2). Dumps, to smetana.txt via
+ * SmetanaDebug.TRACE, every node's rank/order/coord and its enclosing
+ * cluster, plus every cluster's bounding box, after each of the three main
+ * dotLayout phases (dot_rank, dot_mincross, dot_position). Safe to leave in
+ * place: TRACE()/safeName() never throw and are silent unless the trace file
+ * is actually inspected. Not present in upstream Graphviz.
+ */
+private static void dumpLayoutState(Globals zz, ST_Agraph_s g, String phase) {
+	if (false) SMETANA_TRACE("dotinit__c", "===== " + phase + " =====");
+	if (false) SMETANA_TRACE("dotinit__c", "root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g));
+    for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {
+	final ST_Agraph_s clust = ND_clust(n);
+	if (false) SMETANA_TRACE("dotinit__c", "node " + safeName(zz, n)
+		+ " rank=" + ND_rank(n)
+		+ " order=" + ND_order(n)
+		+ " x=" + ND_coord(n).x
+		+ " y=" + ND_coord(n).y
+		+ " clust=" + (clust == null ? "-" : safeName(zz, clust)));
+    }
+    dumpClusters(zz, g, "  ");
+}
+
+private static void dumpClusters(Globals zz, ST_Agraph_s g, String indent) {
+    for (int c = 1; c <= GD_n_cluster(g); c++) {
+	final ST_Agraph_s clust = GD_clust(g).get_(c);
+	if (false) SMETANA_TRACE("dotinit__c", indent + "cluster " + safeName(zz, clust)
+		+ " minrank=" + GD_minrank(clust)
+		+ " maxrank=" + GD_maxrank(clust)
+		+ " bb=[" + GD_bb(clust).LL.x + "," + GD_bb(clust).LL.y
+		+ " -> " + GD_bb(clust).UR.x + "," + GD_bb(clust).UR.y + "]");
+	if (GD_rank(clust) == null) {
+	    if (false) SMETANA_TRACE("dotinit__c", indent + "  (GD_rank not allocated yet at this phase)");
+	} else {
+	    for (int r = GD_minrank(clust); r <= GD_maxrank(clust); r++) {
+		final int n = GD_rank(clust).get__(r).n;
+		final ST_Agnode_s first = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(0) : null;
+		final ST_Agnode_s last = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(n - 1) : null;
+		if (false) SMETANA_TRACE("dotinit__c", indent + "  local rank " + r + ": n=" + n
+			+ " v[0]=" + (first == null ? "-" : safeName(zz, first))
+			+ " v[n-1]=" + (last == null ? "-" : safeName(zz, last)));
+	    }
+	}
+	// dumpClusters(zz, clust, indent + "  ");
+    }
+}
+
+/*
+ * [DEBUG-cluster-layout] Ad-hoc check added to investigate zdev.Test_7 (see
+ * SMETANA.md): verifies the invariant that dot_mincross's cluster machinery
+ * (install_cluster / expand_cluster / merge_ranks) is supposed to guarantee --
+ * on every rank of the root graph, the members of each cluster (including
+ * members of its nested sub-clusters) form ONE contiguous block in the global
+ * left-right order. If a cluster appears as two or more separate segments on
+ * the same rank, the X-position constraints built later by create_aux_edges()
+ * (adjacency chains + ln/rn containment + keepout) become jointly infeasible
+ * and close a cycle in the X aux graph, which is exactly the init_rank
+ * ctr != N_nodes stall observed on Test_7. Must be called AFTER
+ * mark_lowclusters() (which sets ND_clust on virtual nodes too); calling it
+ * right after dot_mincross would report false violations for virtual chain
+ * nodes whose ND_clust is not yet assigned. Not present in upstream Graphviz;
+ * pure TRACE, no side effect, safe to leave in place.
+ */
+public static void checkClusterContiguity(Globals zz, ST_Agraph_s g, String phase) {
+    if (GD_rank(g) == null) {
+	if (false) SMETANA_TRACE("dotinit__c", "checkClusterContiguity " + phase + ": GD_rank(root) not allocated, skipping");
+	return;
+    }
+    final java.util.List<ST_Agraph_s> clusters = new java.util.ArrayList<ST_Agraph_s>();
+    collectClustersRec(g, clusters);
+    final java.util.Set<Integer> dumpedRanks = new java.util.HashSet<Integer>();
+    int violations = 0;
+    for (ST_Agraph_s clust : clusters) {
+	// Membership set: the cluster itself plus all its nested sub-clusters,
+	// so a node of a sub-cluster also counts as "inside" the enclosing one.
+	final java.util.Set<ST_Agraph_s> members = java.util.Collections
+		.newSetFromMap(new java.util.IdentityHashMap<ST_Agraph_s, Boolean>());
+	collectSelfAndDescendants(clust, members);
+	for (int r = GD_minrank(clust); r <= GD_maxrank(clust); r++) {
+	    if (r < GD_minrank(g) || r > GD_maxrank(g)) {
+		continue;
+	    }
+	    final ST_rank_t rr = GD_rank(g).get__(r);
+	    int segments = 0;
+	    boolean inSegment = false;
+	    final StringBuilder pattern = new StringBuilder();
+	    for (int i = 0; i < rr.n; i++) {
+		final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(i);
+		final ST_Agraph_s nc = v == null ? null : ND_clust(v);
+		final boolean member = nc != null && members.contains(nc);
+		pattern.append(member ? 'X' : '.');
+		if (member && inSegment == false) {
+		    segments++;
+		    inSegment = true;
+		} else if (member == false) {
+		    inSegment = false;
+		}
+	    }
+	    if (segments > 1) {
+		violations++;
+		if (false) SMETANA_TRACE("dotinit__c", "checkClusterContiguity " + phase + ": VIOLATION cluster " + safeName(zz, clust)
+			+ " rank " + r + " split into " + segments + " segments, pattern=" + pattern
+			+ " (X=member incl. sub-clusters, .=non-member)");
+		if (dumpedRanks.contains(r) == false) {
+		    dumpedRanks.add(r);
+		    for (int i = 0; i < rr.n; i++) {
+			final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(i);
+			final ST_Agraph_s nc = v == null ? null : ND_clust(v);
+			if (false) SMETANA_TRACE("dotinit__c", "    rank " + r + " v[" + i + "]=" + safeName(zz, v)
+				+ " clust=" + (nc == null ? "-" : safeName(zz, nc)));
+		    }
+		}
+	    }
+	}
+    }
+    if (false) SMETANA_TRACE("dotinit__c", "checkClusterContiguity " + phase + ": " + violations
+	    + " violation(s) over " + clusters.size() + " cluster(s)"
+	    + (violations > 0 ? "  <<<< cluster order is NOT contiguous, X constraints will be cyclic" : ""));
+    checkSiblingClusterOrder(zz, g, g, phase);
+}
+
+/*
+ * [DEBUG-cluster-layout] Second invariant check, added after the first Test_7
+ * traced run (see SMETANA.md): per-rank contiguity alone is NOT enough. For
+ * every pair of SIBLING clusters whose rank ranges overlap, the relative
+ * left-right order must be the SAME on every shared rank -- otherwise
+ * separate_subclust() (which picks ONE side for the pair) and
+ * keepout_othernodes()/contain_nodes() (which encode the actual per-rank
+ * order) produce contradictory aux edges, closing a cycle. This is exactly
+ * what the first Test_7 run showed: bbb4 left of bbb1 on rank 14, but bbb1
+ * left of bbb4 on ranks 16 and 18. Recursive over nesting levels.
+ */
+private static void checkSiblingClusterOrder(Globals zz, ST_Agraph_s root, ST_Agraph_s g, String phase) {
+    for (int i = 1; i <= GD_n_cluster(g); i++) {
+	checkSiblingClusterOrder(zz, root, GD_clust(g).get_(i), phase);
+    }
+    for (int i = 1; i <= GD_n_cluster(g); i++) {
+	for (int j = i + 1; j <= GD_n_cluster(g); j++) {
+	    final ST_Agraph_s c1 = GD_clust(g).get_(i);
+	    final ST_Agraph_s c2 = GD_clust(g).get_(j);
+	    if (GD_minrank(c1) > GD_maxrank(c2) || GD_minrank(c2) > GD_maxrank(c1)) {
+		continue;
+	    }
+	    final java.util.Set<ST_Agraph_s> m1 = java.util.Collections
+		    .newSetFromMap(new java.util.IdentityHashMap<ST_Agraph_s, Boolean>());
+	    collectSelfAndDescendants(c1, m1);
+	    final java.util.Set<ST_Agraph_s> m2 = java.util.Collections
+		    .newSetFromMap(new java.util.IdentityHashMap<ST_Agraph_s, Boolean>());
+	    collectSelfAndDescendants(c2, m2);
+	    final int lo = Math.max(Math.max(GD_minrank(c1), GD_minrank(c2)), GD_minrank(root));
+	    final int hi = Math.min(Math.min(GD_maxrank(c1), GD_maxrank(c2)), GD_maxrank(root));
+	    int firstSide = 0; // +1 = c1 left of c2, -1 = c2 left of c1
+	    int firstSideRank = 0;
+	    for (int r = lo; r <= hi; r++) {
+		final ST_rank_t rr = GD_rank(root).get__(r);
+		int min1 = -1;
+		int min2 = -1;
+		for (int k = 0; k < rr.n; k++) {
+		    final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(k);
+		    final ST_Agraph_s nc = v == null ? null : ND_clust(v);
+		    if (nc == null) {
+			continue;
+		    }
+		    if (min1 < 0 && m1.contains(nc)) {
+			min1 = k;
+		    }
+		    if (min2 < 0 && m2.contains(nc)) {
+			min2 = k;
+		    }
+		}
+		if (min1 < 0 || min2 < 0) {
+		    continue; // one of the two has no member on this rank
+		}
+		final int side = min1 < min2 ? 1 : -1;
+		if (firstSide == 0) {
+		    firstSide = side;
+		    firstSideRank = r;
+		} else if (side != firstSide) {
+		    if (false) SMETANA_TRACE("dotinit__c", "checkSiblingClusterOrder " + phase + ": SIDE-SWAP between "
+			    + safeName(zz, c1) + " and " + safeName(zz, c2)
+			    + " -- rank " + firstSideRank + " has " + (firstSide > 0 ? "c1" : "c2")
+			    + " on the left, but rank " + r + " has " + (side > 0 ? "c1" : "c2")
+			    + " on the left (c1 pos=" + min1 + ", c2 pos=" + min2 + ")"
+			    + "  <<<< separate_subclust vs keepout will be contradictory -> X cycle");
+		}
+	    }
+	}
+    }
+}
+
+private static void collectClustersRec(ST_Agraph_s g, java.util.List<ST_Agraph_s> out) {
+    for (int c = 1; c <= GD_n_cluster(g); c++) {
+	final ST_Agraph_s clust = GD_clust(g).get_(c);
+	out.add(clust);
+	collectClustersRec(clust, out);
+    }
+}
+
+private static void collectSelfAndDescendants(ST_Agraph_s clust, java.util.Set<ST_Agraph_s> out) {
+    out.add(clust);
+    for (int c = 1; c <= GD_n_cluster(clust); c++) {
+	collectSelfAndDescendants(GD_clust(clust).get_(c), out);
+    }
 }
 
 

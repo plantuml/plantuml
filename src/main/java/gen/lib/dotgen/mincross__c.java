@@ -122,6 +122,7 @@ import static smetana.core.Macro.elist_append;
 import static smetana.core.Macro.flatindex;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 
 import gen.annotation.Difficult;
 import gen.annotation.Original;
@@ -176,9 +177,14 @@ try {
     
     merge2(zz, g);
     
+    // [DEBUG-cluster-layout] Test_7 (SMETANA.md): skeleton order after phase 1
+    dumpSkeletonOrder(zz, g, "after phase-1 mincross + merge2");
+    
     /* run mincross on contents of each cluster */
     for (c = 1; c <= GD_n_cluster(g); c++) {
 	nc += mincross_clust(zz, g, GD_clust(g).get_(c), doBalance);
+	// [DEBUG-cluster-layout] Test_7 (SMETANA.md): order after this cluster's expansion
+	dumpSkeletonOrder(zz, g, "after mincross_clust #" + c);
     }
     
     
@@ -188,6 +194,8 @@ try {
 	mark_lowclusters(zz, g);
 	zz.ReMincross = true;
 	nc = mincross_(zz, g, 2, 2, doBalance);
+	// [DEBUG-cluster-layout] Test_7 (SMETANA.md): order after the ReMincross pass
+	dumpSkeletonOrder(zz, g, "after ReMincross");
     }
     cleanup2(zz, g, nc);
 } finally {
@@ -316,6 +324,11 @@ try {
     flat_breakcycles(zz, g);
     flat_reorder(zz, g);
     nc = mincross_(zz, g, 2, 2, doBalance);
+    // [DEBUG-cluster-layout] Test_7 (SMETANA.md): sibling skeleton order right
+    // after this cluster's own mincross pass, before nested expansions -- this
+    // is the exact moment the relative order of this cluster's sub-clusters is
+    // decided (they are still skeletons here, orderable at CL_CROSS penalty).
+    dumpSkeletonOrder(zz, g, "inside mincross_clust(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ") after own mincross_");
     
     for (c = 1; c <= GD_n_cluster(g); c++)
 	nc += mincross_clust(zz, g, GD_clust(g).get_(c), doBalance);
@@ -530,6 +543,14 @@ try {
 	    c1 += out_cross(w, v);
 	}
 	if ((c1 < c0) || ((c0 > 0) && reverse && (c1 == c0))) {
+	    // [DEBUG-cluster-layout] Test_7 (SMETANA.md): watch skeleton-vnode
+	    // exchanges (rare, decisive for sibling-cluster side consistency).
+	    if (ND_ranktype(v) == 7 && ND_ranktype(w) == 7) {
+		if (false) SMETANA_TRACE("mincross__c", "transpose_step: EXCHANGING skeleton vnodes rank=" + r
+			+ " v.clust=" + smetana.core.debug.SmetanaDebug.safeName(zz, ND_clust(v))
+			+ " w.clust=" + smetana.core.debug.SmetanaDebug.safeName(zz, ND_clust(w))
+			+ " c0=" + c0 + " c1=" + c1 + " reverse=" + reverse);
+	    }
 	    exchange(zz, v, w);
 	    rv += (c0 - c1);
 	    GD_rank(zz.Root).get__(r).valid= 0;
@@ -590,7 +611,7 @@ try {
     
     if (startpass > 1) {
 	cur_cross = best_cross = ncross(zz, g);
-	save_best(g);
+	save_best(zz, g);
     } else
 	cur_cross = best_cross = INT_MAX;
     for (pass = startpass; pass <= endpass; pass++) {
@@ -603,7 +624,7 @@ try {
 	    flat_reorder(zz, g);
 	    
 	    if ((cur_cross = ncross(zz, g)) <= best_cross) {
-		save_best(g);
+		save_best(zz, g);
 		best_cross = cur_cross;
 	    }
 	    trying = 0;
@@ -615,17 +636,17 @@ try {
 	}
 	trying = 0;
 	for (iter = 0; iter < maxthispass; iter++) {
-	    /*if (Verbose)
-		fprintf(stderr,
-			"mincross: pass %d iter %d trying %d cur_cross %d best_cross %d\n",
-			pass, iter, trying, cur_cross, best_cross);*/
+	    // [DEBUG-cluster-layout] Test_7 (SMETANA.md): this is upstream's
+	    if (false) SMETANA_TRACE("mincross__c", "mincross_(" + smetana.core.debug.SmetanaDebug.safeName(zz, g)
+		    + "): pass " + pass + " iter " + iter + " trying " + trying
+		    + " cur_cross " + cur_cross + " best_cross " + best_cross);
 	    if (trying++ >= zz.MinQuit)
 		break;
 	    if (cur_cross == 0)
 		break;
 	    mincross_step(zz, g, iter);
 	    if ((cur_cross = ncross(zz, g)) <= best_cross) {
-		save_best(g);
+		save_best(zz, g);
 		if (cur_cross < zz.Convergence * best_cross)
 		    trying = 0;
 		best_cross = cur_cross;
@@ -634,12 +655,34 @@ try {
 	if (cur_cross == 0)
 	    break;
     }
-    if (cur_cross > best_cross)
+    if (cur_cross > best_cross) {
+	// [DEBUG-cluster-layout] Test_7 (SMETANA.md): dump the order that's
+	// ABOUT to be thrown away (cur_cross, worse than best_cross) right
+	// before restore_best overwrites it, so the restored order can be
+	// compared against it afterwards (inside restore_best's own dump).
+	if (false) SMETANA_TRACE("mincross__c", "mincross_(" + smetana.core.debug.SmetanaDebug.safeName(zz, g)
+		+ "): cur_cross=" + cur_cross + " > best_cross=" + best_cross
+		+ " -> calling restore_best; order BEFORE restore:");
+	dumpSkeletonOrder(zz, g, "before restore_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
 	restore_best(zz, g);
+    }
     if (best_cross > 0) {
 	transpose(zz, g, false);
 	best_cross = ncross(zz, g);
+	// [DEBUG-cluster-layout] Test_7 (SMETANA.md): dump the order right
+	// after the final transpose(g, FALSE) + ncross recompute, so we can
+	// tell whether a SIDE-SWAP present after restore_best gets fixed,
+	// left alone, or reintroduced by this last local-transposition pass.
+	dumpSkeletonOrder(zz, g, "after final transpose in mincross_(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
     }
+    // [DEBUG-cluster-layout] Test_7 (SMETANA.md): final crossing count of this
+    // mincross_ call. If a skeleton-chain x skeleton-chain crossing (cost
+    // ~10^6, see CL_CROSS) is still present, best_cross will be >= ~1000000:
+    // the heuristic SAW the crossing and failed to remove it. If best_cross is
+    // small while dumpSkeletonOrder reports a SIDE-SWAP, the crossing is
+    // INVISIBLE to rcross -- a counting/structure problem.
+    if (false) SMETANA_TRACE("mincross__c", "mincross_(" + smetana.core.debug.SmetanaDebug.safeName(zz, g)
+	    + "): DONE best_cross=" + best_cross);
     if (doBalance) {
 	for (iter = 0; iter < maxthispass; iter++)
 	    balance(g);
@@ -659,17 +702,41 @@ LEAVING("7lrk2rxqnwwdau8cx85oqkpmv","mincross_");
 public static void restore_best(Globals zz, ST_Agraph_s g) {
 ENTERING("520049zkz9mafaeklgvm6s8e5","restore_best");
 try {
-    ST_Agnode_s n;
-    int r;
+    int r, i;
     
-    for (n = GD_nlist(g); n!=null; n = ND_next(n))
-	ND_order(n, (int)ND_coord(n).x);
+    // Arnaud/Claude 2026-07-08 (SMETANA.md, Test_7 root cause): deliberately
+    // NOT a line-for-line port anymore. Upstream (and the original Java port)
+    // walks GD_nlist(g) here, but for a cluster g whose expand_cluster() has
+    // already run, merge_ranks() has moved every one of g's nodes -- including
+    // the skeleton rankleader nodes of g's own nested sub-clusters -- out of
+    // GD_nlist(g) and into GD_nlist(root) (delete_fast_node(subg,v);
+    // fast_node(root,v);). So GD_nlist(g) is empty by the time this runs for
+    // any already-expanded cluster's own mincross_() call, making the original
+    // GD_nlist-based loop a silent no-op: save_best/restore_best never
+    // actually saved or restored anything for such a call, confirmed by
+    // direct before/after tracing (see SMETANA.md). Walking GD_rank(g)[r].v[]
+    // instead is equivalent in intent (every node whose order matters for g's
+    // own ncross()/transpose() calls is reachable this way) and is immune to
+    // which graph's GD_nlist a node currently happens to be linked into.
+    for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
+	for (i = 0; i < GD_rank(g).get__(r).n; i++) {
+	    ST_Agnode_s n = GD_rank(g).get__(r).v.get_(i);
+	    ND_order(n, (int)ND_coord(n).x);
+	}
+    }
     for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
 	GD_rank(zz.Root).get__(r).valid= 0;
     qsort(zz, GD_rank(g).get__(r).v,
     	    GD_rank(g).get__(r).n,
     	    mincross__c.nodeposcmpf);
     }
+    // [DEBUG-cluster-layout] Test_7 (SMETANA.md): dump the order right after
+    // restoring it from the saved snapshot (ND_order/GD_rank(g)[r].v are both
+    // already updated at this point) -- compare against the "before
+    // restore_best" dump logged by the caller, and against the snapshot-time
+    // dump logged inside save_best when this snapshot was taken.
+    if (false) SMETANA_TRACE("mincross__c", "restore_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + "): order AFTER restore:");
+    dumpSkeletonOrder(zz, g, "after restore_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
 } finally {
 LEAVING("520049zkz9mafaeklgvm6s8e5","restore_best");
 }
@@ -680,12 +747,27 @@ LEAVING("520049zkz9mafaeklgvm6s8e5","restore_best");
 
 @Reviewed(when = "15/11/2020")
 @Original(version="2.38.0", path="lib/dotgen/mincross.c", name="save_best", key="8uyqc48j0oul206l3np85wj9p", definition="static void save_best(graph_t * g)")
-public static void save_best(ST_Agraph_s g) {
+public static void save_best(Globals zz, ST_Agraph_s g) {
 ENTERING("8uyqc48j0oul206l3np85wj9p","save_best");
 try {
-    ST_Agnode_s n;
-    for (n = GD_nlist(g); n!=null; n = ND_next(n))
-    (ND_coord(n)).x = ND_order(n);
+    // Arnaud/Claude 2026-07-08 (SMETANA.md, Test_7 root cause): see the note
+    // in restore_best() -- walking GD_rank(g)[r].v[] instead of GD_nlist(g),
+    // for the same reason (GD_nlist(g) is empty for an already-expanded
+    // cluster, since merge_ranks() relocated every node to GD_nlist(root)).
+    int r, i;
+    for (r = GD_minrank(g); r <= GD_maxrank(g); r++) {
+	for (i = 0; i < GD_rank(g).get__(r).n; i++) {
+	    ST_Agnode_s n = GD_rank(g).get__(r).v.get_(i);
+	    (ND_coord(n)).x = ND_order(n);
+	}
+    }
+    // [DEBUG-cluster-layout] Test_7 (SMETANA.md): snapshot just taken -- dump
+    // the skeleton order of g's direct sibling sub-clusters (if any) right
+    // now, so we can tell whether a SIDE-SWAP is already baked into this
+    // "best" snapshot at the moment it's recorded, before any later
+    // (possibly worse) iterations run.
+    if (false) SMETANA_TRACE("mincross__c", "save_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + "): snapshot taken");
+    dumpSkeletonOrder(zz, g, "inside save_best(" + smetana.core.debug.SmetanaDebug.safeName(zz, g) + ")");
 } finally {
 LEAVING("8uyqc48j0oul206l3np85wj9p","save_best");
 }
@@ -1997,6 +2079,79 @@ UNSUPPORTED("38po81l36cibw6jc3qlsscpcu"); // 	MaxIter = ((1)>(MaxIter * f)?(1):(
 } finally {
 LEAVING("7ru09oqbudpeofsthzveig2m2","mincross_options");
 }
+}
+
+
+/*
+ * [DEBUG-cluster-layout] Ad-hoc tracing for the zdev.Test_7 investigation
+ * (see SMETANA.md "sibling clusters swap sides across ranks"). Dumps, per
+ * cluster (recursively), the LEFTMOST position occupied by the cluster on
+ * each rank of the root order: before expansion this is
+ * ND_order(GD_rankleader(c)[r]) (the skeleton node's position); after
+ * expand_cluster/merge_ranks it is ND_order(GD_rank(c)[r].v[0]) (the local
+ * rank slice points into the root array). Then, for every pair of sibling
+ * clusters with overlapping rank spans, logs a SIDE-SWAP line if their
+ * relative left-right order differs across shared ranks. Called at three
+ * points in dot_mincross (after the phase-1 component loop + merge2, after
+ * each mincross_clust, after the ReMincross pass) to pinpoint WHICH phase
+ * first produces the crossed skeletons that later make position__c's
+ * separate_subclust/keepout constraints contradictory. Pure TRACE, no side
+ * effect, not in upstream Graphviz.
+ */
+private static int leftPosOfCluster(ST_Agraph_s c, int r) {
+    if (GD_rankleader(c) != null && GD_rankleader(c).get_(r) != null) {
+	return ND_order(GD_rankleader(c).get_(r));
+    }
+    if (GD_rank(c) != null && r >= GD_minrank(c) && r <= GD_maxrank(c) && GD_rank(c).get__(r).n > 0
+	    && GD_rank(c).get__(r).v.get_(0) != null) {
+	return ND_order(GD_rank(c).get__(r).v.get_(0));
+    }
+    return -1;
+}
+
+public static void dumpSkeletonOrder(Globals zz, ST_Agraph_s g, String phase) {
+    for (int i = 1; i <= GD_n_cluster(g); i++) {
+	final ST_Agraph_s c = GD_clust(g).get_(i);
+	final StringBuilder sb = new StringBuilder();
+	for (int r = GD_minrank(c); r <= GD_maxrank(c); r++) {
+	    sb.append(" r").append(r).append(":").append(leftPosOfCluster(c, r));
+	}
+	if (false) SMETANA_TRACE("mincross__c", "dumpSkeletonOrder " + phase + ": cluster "
+		+ smetana.core.debug.SmetanaDebug.safeName(zz, c)
+		+ " span=[" + GD_minrank(c) + "," + GD_maxrank(c) + "] leftpos:" + sb);
+	dumpSkeletonOrder(zz, c, phase);
+    }
+    for (int i = 1; i <= GD_n_cluster(g); i++) {
+	for (int j = i + 1; j <= GD_n_cluster(g); j++) {
+	    final ST_Agraph_s c1 = GD_clust(g).get_(i);
+	    final ST_Agraph_s c2 = GD_clust(g).get_(j);
+	    if (GD_minrank(c1) > GD_maxrank(c2) || GD_minrank(c2) > GD_maxrank(c1)) {
+		continue;
+	    }
+	    final int lo = Math.max(GD_minrank(c1), GD_minrank(c2));
+	    final int hi = Math.min(GD_maxrank(c1), GD_maxrank(c2));
+	    int firstSide = 0;
+	    int firstSideRank = 0;
+	    for (int r = lo; r <= hi; r++) {
+		final int p1 = leftPosOfCluster(c1, r);
+		final int p2 = leftPosOfCluster(c2, r);
+		if (p1 < 0 || p2 < 0) {
+		    continue;
+		}
+		final int side = p1 < p2 ? 1 : -1;
+		if (firstSide == 0) {
+		    firstSide = side;
+		    firstSideRank = r;
+		} else if (side != firstSide) {
+		    if (false) SMETANA_TRACE("mincross__c", "dumpSkeletonOrder " + phase
+			    + ": SIDE-SWAP between " + smetana.core.debug.SmetanaDebug.safeName(zz, c1)
+			    + " and " + smetana.core.debug.SmetanaDebug.safeName(zz, c2)
+			    + " -- rank " + firstSideRank + " vs rank " + r
+			    + " (p1=" + p1 + ", p2=" + p2 + ")");
+		}
+	    }
+	}
+    }
 }
 
 

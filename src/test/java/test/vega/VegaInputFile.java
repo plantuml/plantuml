@@ -324,7 +324,8 @@ public class VegaInputFile {
 						"Empty output for " + path + " [" + fileFormat + " image " + (imageIndex + 1) + "]");
 
 				if (getActualStringException() != null)
-					assertNotNull(getExpectedException(), "No expected-exception declared in " + path);
+					assertNotNull(getExpectedException(),
+							"No expected-exception declared in " + path + " " + getActualStringException());
 
 				if (getExpectedException() != null || getActualStringException() != null)
 					assertEquals(getExpectedException(), getActualStringException(),

@@ -85,6 +85,7 @@ import static smetana.core.Macro.TOP;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 
 import gen.annotation.Comment;
 import gen.annotation.Original;
@@ -281,8 +282,15 @@ public static ST_bezier new_spline(ST_Agedge_s e, int sz) {
 ENTERING("bdirexg1qdtophlh0ofjvsmj7","new_spline");
 try {
     ST_bezier rv;
+    // [DEBUG-Test_8] Investigation (SMETANA.md): this is the real ED_spl
+    // attachment point. Log the incoming edge identity and edge_type BEFORE
+    // the ED_edge_type walk, since that walk can redirect which object
+    // actually receives ED_spl.
+    if (false) SMETANA_TRACE("splines__c", "new_spline: ENTER edgeIdentityHash=" + System.identityHashCode(e)
+		+ " ED_edge_type=" + ED_edge_type(e) + " ED_to_orig=" + (ED_to_orig(e) == null ? "null" : System.identityHashCode(ED_to_orig(e))));
     while (ED_edge_type(e) != 0)
 	e = ED_to_orig(e);
+    if (false) SMETANA_TRACE("splines__c", "new_spline: AFTER walk, installing ED_spl on edgeIdentityHash=" + System.identityHashCode(e));
     if (ED_spl(e) == null)
 	ED_spl(e, new ST_splines());
     ED_spl(e).list = CArray.<ST_bezier> REALLOC__(ED_spl(e).size + 1, ED_spl(e).list, ZType.ST_bezier);
@@ -1203,6 +1211,8 @@ try {
     }
     tx = Math.min(dx, 3*(np.x + dx - tp.x));
     hx = Math.min(dx, 3*(np.x + dx - hp.x));
+    if (false) SMETANA_TRACE("splines__c", "selfRight: ENTER edgeIdentityHash=" + System.identityHashCode(e)
+		+ " cnt=" + cnt + " node=" + System.identityHashCode(n));
     for (i = 0; i < cnt; i++) {
         e = edges.get_(ind++);
         dx += stepx; tx += stepx; hx += stepx; dy += sgn*stepy;
@@ -1228,7 +1238,11 @@ try {
 	    if (width > stepx)
 		dx += width - stepx;
         }
+	if (false) SMETANA_TRACE("splines__c", "selfRight: iter=" + i + " edgeIdentityHash=" + System.identityHashCode(e)
+		+ " pointn=" + pointn + " ED_spl BEFORE clip_and_install=" + (ED_spl(e) == null ? "null" : "present"));
 	clip_and_install(zz, e, aghead(e), points, pointn, sinfo);
+	if (false) SMETANA_TRACE("splines__c", "selfRight: iter=" + i + " edgeIdentityHash=" + System.identityHashCode(e)
+		+ " ED_spl AFTER clip_and_install=" + (ED_spl(e) == null ? "null" : "present"));
     }
     return;
 } finally {
@@ -1361,6 +1375,15 @@ ENTERING("bt3fwgprixbc5rceeewozdqr9","makeSelfEdge");
 try {
     ST_Agedge_s e;
     e = edges.get_(ind);
+    // [DEBUG-Test_8] Investigation (SMETANA.md): confirm which branch makeSelfEdge
+    // dispatches to. Only selfRight is a faithful port; selfTop/selfLeft/selfBottom
+    // are UNSUPPORTED stubs. Since Test_8's self-loop has no ports defined, this
+    // should always print "selfRight" -- if it prints anything else, that stub
+    // would throw UnsupportedOperationException (which would abort the whole
+    // layout, not just leave ED_spl null), so this trace is mainly a sanity check.
+    if (false) SMETANA_TRACE("splines__c", "makeSelfEdge: edgeIdentityHash=" + System.identityHashCode(e)
+		+ " tailPortDefined=" + ED_tail_port(e).defined + " headPortDefined=" + ED_head_port(e).defined
+		+ " tailPortSide=" + ED_tail_port(e).side + " headPortSide=" + ED_head_port(e).side);
     /* self edge without ports or
      * self edge with all ports inside, on the right, or at most 1 on top 
      * and at most 1 on bottom 
@@ -1371,23 +1394,28 @@ try {
          (ED_head_port(e).side & (1<<3)) == 0 &&
           ((ED_tail_port(e).side != ED_head_port(e).side) || 
           ((ED_tail_port(e).side & ((1<<2)|(1<<0))) == 0)))) {
+	if (false) SMETANA_TRACE("splines__c", "makeSelfEdge: dispatching to selfRight");
 	selfRight(zz, edges, ind, cnt, sizex, sizey, sinfo);
     }
     /* self edge with port on left side */
     else if ((ED_tail_port(e).side & (1<<3))!=0 || (ED_head_port(e).side & (1<<3))!=0) {
 	/* handle L-R specially */
 	if ((ED_tail_port(e).side & (1<<1))!=0 || (ED_head_port(e).side & (1<<1))!=0) {
+	    if (false) SMETANA_TRACE("splines__c", "makeSelfEdge: dispatching to selfTop (UNSUPPORTED stub)");
 	    selfTop(edges, ind, cnt, sizex, sizey, sinfo);
 	}
 	else {
+	    if (false) SMETANA_TRACE("splines__c", "makeSelfEdge: dispatching to selfLeft (UNSUPPORTED stub)");
 	    selfLeft(edges, ind, cnt, sizex, sizey, sinfo);
 	}
     }
     /* self edge with both ports on top side */
     else if ((ED_tail_port(e).side & (1<<2))!=0) {
+	if (false) SMETANA_TRACE("splines__c", "makeSelfEdge: dispatching to selfTop (UNSUPPORTED stub)");
 	selfTop(edges, ind, cnt, sizex, sizey, sinfo);
     }
     else if ((ED_tail_port(e).side & (1<<0))!=0) {
+	if (false) SMETANA_TRACE("splines__c", "makeSelfEdge: dispatching to selfBottom (UNSUPPORTED stub)");
 	selfBottom(edges, ind, cnt, sizex, sizey, sinfo);
     }
     else assert(false);

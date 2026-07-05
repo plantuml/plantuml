@@ -102,6 +102,8 @@ import static smetana.core.Macro.GVSPLINES;
 import static smetana.core.Macro.IGNORED;
 import static smetana.core.Macro.MAKEFWDEDGE;
 import static smetana.core.Macro.M_PI;
+import static smetana.core.Macro.M_aghead;
+import static smetana.core.Macro.M_agtail;
 import static smetana.core.Macro.ND_alg;
 import static smetana.core.Macro.ND_clust;
 import static smetana.core.Macro.ND_coord;
@@ -125,6 +127,7 @@ import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.VIRTUAL;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 
 import gen.annotation.Difficult;
 import gen.annotation.Original;
@@ -483,6 +486,11 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    if (ND_alg(n)!=null) {
 		ST_Agedge_s fe = (ST_Agedge_s) ND_alg(n);
 		assert (ED_label(fe)!=null);
+		// [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+		if (false) SMETANA_TRACE("dotsplines__c", "_dot_splines: label vnode rank=" + i + " order=" + j
+			+ " coord=(" + ND_coord(n).x + "," + ND_coord(n).y + ")"
+			+ " feIdentityHash=" + System.identityHashCode(fe)
+			+ " ED_label(fe)=" + (ED_label(fe) == null ? "NULL!" : "present -> copying pos"));
 		ED_label(fe).pos.___(ND_coord(n));
 		ED_label(fe).set= false ? 0 : 1;
 	    }
@@ -494,6 +502,10 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		    || (ED_edge_type(e) == IGNORED))
 		    continue;
 		setflags(e, REGULAREDGE, FWDEDGE, MAINGRAPH);
+		// [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md)
+		if (false) SMETANA_TRACE("dotsplines__c", "_dot_splines collect[ND_out]: e=" + System.identityHashCode(e)
+			+ " edge_type=" + ED_edge_type(e) + " tailRank=" + ND_rank(agtail(e)) + " headRank=" + ND_rank(aghead(e))
+			+ " tail=" + System.identityHashCode(agtail(e)) + " head=" + System.identityHashCode(aghead(e)));
 		edges.set_(n_edges++, e);
 		if (n_edges % CHUNK == 0)
 		    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);
@@ -501,6 +513,10 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    if (ND_flat_out(n).list!=null)
 		for (k = 0; (e = ND_flat_out(n).list.get_(k))!=null; k++) {
 		    setflags(e, FLATEDGE, 0, AUXGRAPH);
+		    // [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md)
+		    if (false) SMETANA_TRACE("dotsplines__c", "_dot_splines collect[flat_out]: e=" + System.identityHashCode(e)
+			    + " edge_type=" + ED_edge_type(e) + " tailRank=" + ND_rank(agtail(e)) + " headRank=" + ND_rank(aghead(e))
+			    + " tail=" + System.identityHashCode(agtail(e)) + " head=" + System.identityHashCode(aghead(e)));
 			edges.set_(n_edges++, e);
 		    if (n_edges % CHUNK == 0)
 			    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);
@@ -518,6 +534,10 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		}
 		for (k = 0; (e = ND_other(n).list.get_(k))!=null; k++) {
 		    setflags(e, 0, 0, AUXGRAPH);
+		    // [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md)
+		    if (false) SMETANA_TRACE("dotsplines__c", "_dot_splines collect[other]: e=" + System.identityHashCode(e)
+			    + " edge_type=" + ED_edge_type(e) + " tailRank=" + ND_rank(agtail(e)) + " headRank=" + ND_rank(aghead(e))
+			    + " tail=" + System.identityHashCode(agtail(e)) + " head=" + System.identityHashCode(aghead(e)));
 			edges.set_(n_edges++, e);
 		    if (n_edges % CHUNK == 0)
 			    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);
@@ -593,6 +613,12 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		break;
 	}
 	
+	// [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md): dispatch decision
+	if (false) SMETANA_TRACE("dotsplines__c", "_dot_splines dispatch: ind=" + ind + " cnt=" + cnt
+		+ " e0=" + System.identityHashCode(e0) + " le0=" + System.identityHashCode(le0)
+		+ " tailRank=" + ND_rank(agtail(e0)) + " headRank=" + ND_rank(aghead(e0))
+		+ " -> " + (agtail(e0) == aghead(e0) ? "SELF"
+			: (ND_rank(agtail(e0)) == ND_rank(aghead(e0)) ? "make_flat_edge" : "make_regular_edge")));
 	if (agtail(e0) == aghead(e0)) {
 	    int b, sizey, r;
 	    n = agtail(e0);
@@ -1126,6 +1152,9 @@ try {
 	if (ED_label(e)!=null) labels++;
 	if (ED_tail_port(e).defined || ED_head_port(e).defined) ports = 1;
     }
+    // [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+    if (false) SMETANA_TRACE("dotsplines__c", "make_flat_adj_edges: ind=" + ind + " cnt=" + cnt
+	    + " labels=" + labels + " ports=" + ports);
     if (ports == 0) {
 	/* flat edges without ports and labels can go straight left to right */
 	if (labels == 0) {
@@ -1272,6 +1301,37 @@ LEAVING("fybar4mljnmkh3kure5k1eod","makeFlatEnd");
 
 
 
+/* findLabelVnodeByAlg:
+ * [FIX-flat-label] Not part of upstream Graphviz -- Option A mitigation for
+ * the Test_5 label-placement bug documented in SMETANA.md. flat_node()
+ * (flat__c.java) documents its own label vnode as "characterized by being
+ * virtual and having a non-NULL ND_alg pointing to e" -- a structural
+ * invariant independent of ED_to_virt wiring. This scans the rank directly
+ * above e's real endpoints (the rank flat_node() always places a flat-edge
+ * label vnode into: r = ND_rank(agtail(e)) - 1) for the node satisfying
+ * that invariant, instead of trusting the ED_to_virt chain from e (which
+ * can be wrong for an "equivalent duplicate" labeled flat edge living in
+ * ND_other -- see SMETANA.md for the confirmed trace). Returns null if no
+ * such node is found (e.g. r is out of range, or this invariant genuinely
+ * doesn't apply), so callers fall back to the original chain-walk.
+ */
+private static ST_Agnode_s findLabelVnodeByAlg(ST_Agraph_s g, ST_Agedge_s e) {
+    final int r = ND_rank(agtail(e)) - 1;
+    if (r < GD_minrank(g))
+	return null;
+    final CArrayOfStar<ST_Agnode_s> v = GD_rank(g).get__(r).v;
+    final int n = GD_rank(g).get__(r).n;
+    for (int i = 0; i < n; i++) {
+	final ST_Agnode_s cand = v.get_(i);
+	if (cand != null && ND_alg(cand) == e)
+	    return cand;
+    }
+    return null;
+}
+
+
+
+
 //3 w8ptjibydq995d2lexg85mku
 // static void make_flat_labeled_edge(graph_t* g, spline_info_t* sp, path* P, edge_t* e, int et) 
 @Unused
@@ -1289,8 +1349,27 @@ try {
     final CArray<ST_pointf> points = CArray.<ST_pointf>ALLOC__(7, ZType.ST_pointf);
     tn = agtail(e);
     hn = aghead(e);
-    for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));
-    ln = agtail(f);
+    // [FIX-flat-label] Option A (see SMETANA.md, Test_5 label-placement bug):
+    // resolve the label vnode ln via the structural invariant flat_node()
+    // documents for it ("characterized by being virtual and having a
+    // non-NULL ND_alg pointing to e") instead of trusting the ED_to_virt
+    // chain-walk below. For an "equivalent duplicate" labeled flat edge (one
+    // that lives in ND_other because an earlier, unlabeled parallel edge is
+    // the ND_flat_out representative), that chain can terminate at a real
+    // endpoint node instead of at this edge's own label vnode -- confirmed
+    // by the Test_5 trace in SMETANA.md (ln resolved to node A3 instead of
+    // the rank -1 label vnode). Falls back to the original chain-walk when
+    // the invariant search finds nothing, so this is purely additive and
+    // cannot change behavior for any edge not affected by that bug.
+    ln = findLabelVnodeByAlg(g, e);
+    if (ln == null) {
+	for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));
+	ln = agtail(f);
+    }
+    // [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+    if (false) SMETANA_TRACE("dotsplines__c", "make_flat_labeled_edge: e identityHash=" + System.identityHashCode(e)
+	    + " label vnode ln identityHash=" + System.identityHashCode(ln)
+	    + " ln coord=(" + ND_coord(ln).x + "," + ND_coord(ln).y + ") -> setting ED_label(e).pos");
     ED_label(e).pos.___(ND_coord(ln));
     ED_label(e).set= false ? 0 : 1;
     if (et == (1 << 1)) {
@@ -1459,6 +1538,15 @@ try {
 	    isAdjacent = 1;
 	    break;
 	}
+    }
+    // [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+    for (i = 0; i < cnt; i++) {
+	if (false) SMETANA_TRACE("dotsplines__c", "make_flat_edge: class ind=" + ind + " cnt=" + cnt
+		+ " isAdjacent=" + isAdjacent + " member[" + i + "] identityHash="
+		+ System.identityHashCode(edges.get_(ind + i)) + " ED_label="
+		+ (ED_label(edges.get_(ind + i)) == null ? "null" : "PRESENT")
+		+ " | sample e identityHash=" + System.identityHashCode(e)
+		+ " ED_label(e)=" + (ED_label(e) == null ? "null" : "PRESENT"));
     }
     /* The lead edge edges[ind] might not have been marked earlier as adjacent,
      * so check them all.
@@ -1651,30 +1739,30 @@ try {
     e = edges.get_(ind);
     hackflag = 0;
     if (Math.abs(ND_rank(agtail(e)) - ND_rank(aghead(e))) > 1) {
-UNSUPPORTED("8f17srpa5iisomehrb4b01h51"); // 	fwdedgeai = *(Agedgeinfo_t*)e->base.data;
-UNSUPPORTED("97znyysf99vzzwpgnqcpp5yek"); // 	fwdedgea.out = *e;
-UNSUPPORTED("b6jipryp9p354gtq9lwa35lzj"); // 	fwdedgea.out.base.data = (Agrec_t*)&fwdedgeai;
-UNSUPPORTED("568s5ftes1chv9n1s98g9cncf"); // 	if (ED_tree_index(e) & 32) {
-UNSUPPORTED("9hw2l0eu91vauhvj3cxf3andc"); // 	    MAKEFWDEDGE(&fwdedgeb.out, e);
-UNSUPPORTED("1rql0qzotc0yyozcfkj9p8xkm"); // 	    agtail(&fwdedgea.out) = aghead(e);
-UNSUPPORTED("dw3p473qmkgjvxewsr8pimi2h"); // 	    ED_tail_port(&fwdedgea.out) = ED_head_port(e);
-UNSUPPORTED("7yhr8hn3r6wohafwxrt85b2j2"); // 	} else {
-UNSUPPORTED("2gys0bodxz4fbasfnrvx6ivg2"); // 	    fwdedgebi = *(Agedgeinfo_t*)e->base.data;
-UNSUPPORTED("1qqbo2mfls7xhbdno0no8xq54"); // 	    fwdedgeb.out = *e;
-UNSUPPORTED("980ksnsma7kvvr9755ge8bhzh"); // 	    fwdedgeb.out.base.data = (Agrec_t*)&fwdedgebi;
-UNSUPPORTED("6le0rehxs2odmv3zg1qg5wvd4"); // 	    agtail(&fwdedgea.out) = agtail(e);
-UNSUPPORTED("flupwh3kosf3fkhkxllllt1"); // 	}
-UNSUPPORTED("3p0d08nntark676jlv1jl0j27"); // 	le = getmainedge(e);
-UNSUPPORTED("6tmwmfqoz3y8k44xamrpv82tl"); // 	while (ED_to_virt(le))
-UNSUPPORTED("1c19c7ftue4zoibf7d2tm6uxy"); // 	    le = ED_to_virt(le);
-UNSUPPORTED("d29k9lzj5g3d8dfxigwogdnoe"); // 	aghead(&fwdedgea.out) = aghead(le);
-UNSUPPORTED("36l0czce101bg0wbmu68xjd7z"); // 	ED_head_port(&fwdedgea.out).defined = 0;
-UNSUPPORTED("497rb9p6jdgdoyem0y42ecy6c"); // 	ED_edge_type(&fwdedgea.out) = 1;
-UNSUPPORTED("4tjj1vbw4mog2qlouazrdirvw"); // 	ED_head_port(&fwdedgea.out).p.x = ED_head_port(&fwdedgea.out).p.y = 0;
-UNSUPPORTED("8kdma1vi9aibo7isrge0lunrh"); // 	ED_to_orig(&fwdedgea.out) = e;
-UNSUPPORTED("eih8eaai768x1un5mixrtgstp"); // 	e = &fwdedgea.out;
-UNSUPPORTED("bxkpl0bp0qhtxaj6rspd19d1k"); // 	hackflag = NOT(0);
-    } else {
+    	fwdedgeai.___((ST_Agedgeinfo_t) e.base.data);
+    	fwdedgea.out.___(e);
+    	fwdedgea.out.base.data = fwdedgeai;
+    	if ((ED_tree_index(e) & 32) != 0) {
+    	    MAKEFWDEDGE(fwdedgeb.out, e);
+    	    M_agtail(fwdedgea.out, aghead(e));
+    	    ED_tail_port(fwdedgea.out, ED_head_port(e));
+    	} else {
+    	    fwdedgebi.___((ST_Agedgeinfo_t) e.base.data);
+    	    fwdedgeb.out.___(e);
+    	    fwdedgeb.out.base.data = fwdedgebi;
+    	    M_agtail(fwdedgea.out, agtail(e));
+    	}
+    	le = getmainedge(e);
+    	while (ED_to_virt(le) != null)
+    	    le = ED_to_virt(le);
+    	M_aghead(fwdedgea.out, aghead(le));
+    	ED_head_port(fwdedgea.out).defined = false;
+    	ED_edge_type(fwdedgea.out, 1);
+    	ED_head_port(fwdedgea.out).p.x = ED_head_port(fwdedgea.out).p.y = 0;
+    	ED_to_orig(fwdedgea.out, e);
+    	e = fwdedgea.out;
+    	hackflag = 1;
+    	} else {
 	if ((ED_tree_index(e) & BWDEDGE)!=0) {
 	    MAKEFWDEDGE(fwdedgea.out, e);
 	    e = fwdedgea.out;

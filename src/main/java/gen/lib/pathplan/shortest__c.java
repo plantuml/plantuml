@@ -77,6 +77,20 @@ public class shortest__c {
 // static jmp_buf jbuf
 private static jmp_buf jbuf = new jmp_buf();
 
+/**
+ * Emulates a C longjmp(jbuf, 1) back to the setjmp() call in Pshortestpath.
+ * The real C triangulate() calls longjmp(jbuf, 1) when it fails to find a
+ * diagonal (a genuine abort of the current Pshortestpath computation, not a
+ * translation artifact - see SMETANA.md). Since Java has no longjmp, this
+ * exception is thrown instead and caught in Pshortestpath itself, exactly
+ * where "if (setjmp(jbuf) != 0) return -2;" would have taken over in C.
+ */
+private static final class PathplanAbort extends RuntimeException {
+    PathplanAbort(String message) {
+        super(message);
+    }
+}
+
 
 
 /* Pshortestpath:
@@ -101,8 +115,8 @@ try {
     CArray<ST_triangle_t> trip;
     int splitindex;
     
-    if (setjmp(jbuf)!=0)
-	return -2;
+    setjmp(jbuf);
+    try {
     /* make space */
     growpnls(zz, polyp.pn);
     zz.pnll = 0;
@@ -276,6 +290,9 @@ UNSUPPORTED("2cii65lhw4wb8nyvjv702v7md"); // 		lpnlp = trip->e[ei].pnl1p, rpnlp 
     output.ps = zz.ops_shortest;
     
     return 0;
+    } catch (PathplanAbort abort) {
+	return -2;
+    }
 } finally {
 LEAVING("2gub5b19vo2qexn56nw23wage","Pshortestpath");
 }
@@ -308,7 +325,8 @@ try {
 				return;
 			}
 		}
-		throw new IllegalStateException("libpath/%s:%d: %s\n" + "graphviz-2.38.0\\lib\\pathplan\\shortest.c" + 26 + ("triangulation failed"));
+		System.err.println("libpath/%s:%d: %s" + "graphviz-2.38.0\\lib\\pathplan\\shortest.c" + 26 + ("triangulation failed"));
+			throw new PathplanAbort("triangulation failed");
     } 
 	else
 		loadtriangle(zz, pnlps[0], pnlps[1], pnlps[2]);
