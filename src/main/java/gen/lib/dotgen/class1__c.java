@@ -69,8 +69,6 @@ import static smetana.core.Macro.ND_node_type;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
-import static smetana.core.debug.SmetanaDebug.TRACE;
-import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -159,44 +157,33 @@ try {
     for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {
 	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {
 		
-	    TRACE("[DEBUG-2735] class1_: examining edge " + safeName(zz, agtail(e)) + " -> " + safeName(zz, aghead(e)));
 	    /* skip edges already processed */
-	    if (ED_to_virt(e)!=null) {
-		TRACE("[DEBUG-2735] class1_: skip (already has ED_to_virt)");
+	    if (ED_to_virt(e)!=null)
 		continue;
-	    }
 	    
 	    /* skip edges that we want to ignore in this phase */
-	    if (nonconstraint_edge(zz, e)) {
-		TRACE("[DEBUG-2735] class1_: skip (nonconstraint_edge)");
+	    if (nonconstraint_edge(zz, e))
 		continue;
-	    }
 	    
 	    t = UF_find(agtail(e));
 	    
 	    h = UF_find(aghead(e));
 	    /* skip self, flat, and intra-cluster edges */
-	    if (t == h) {
-		TRACE("[DEBUG-2735] class1_: skip self/flat/intra-cluster edge " + safeName(zz, agtail(e)) + " -> " + safeName(zz, aghead(e)) + " (t==h==" + safeName(zz, t) + ")");
+	    if (t == h)
 		continue;
-	    }
 	    
 	    
 	    /* inter-cluster edges require special treatment */
 	    if (ND_clust(t)!=null || ND_clust(h)!=null) {
-		TRACE("[DEBUG-2735] class1_: inter-cluster edge " + safeName(zz, agtail(e)) + " -> " + safeName(zz, aghead(e)));
 		interclust1(g, agtail(e), aghead(e), e);
 		continue;
 	    }
 	    
 	    
-	    if ((rep = find_fast_edge(t, h))!=null) {
-		TRACE("[DEBUG-2735] class1_: merge_oneway edge " + safeName(zz, t) + " -> " + safeName(zz, h) + " into existing fast edge");
+	    if ((rep = find_fast_edge(t, h))!=null)
 		merge_oneway(e, rep);
-	    } else {
-		TRACE("[DEBUG-2735] class1_: virtual_edge (new fast edge) " + safeName(zz, t) + " -> " + safeName(zz, h));
+	    else
 		virtual_edge(t, h, e);
-	    }
 	}
     }
 } finally {

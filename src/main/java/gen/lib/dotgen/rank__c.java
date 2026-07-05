@@ -683,7 +683,6 @@ try {
 	UNSUPPORTED("evcjt85irnaa02v8cam07i009"); // 	asp->badGraph = 1;
 	UNSUPPORTED("45nxv6kczal9hnytkfcyt2jk8"); // 	asp = NULL;
     }
-    acyclic__c.debugZz = zz; // [DEBUG-2735] let acyclic_()/dfs() print node names
     acyclic_(g);
     if (minmax_edges2(g, p))
     UNSUPPORTED("800vpyk6y4hcx2txwyrr2boxu"); // 	decompose(g, 0);

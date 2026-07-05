@@ -58,8 +58,6 @@ import static smetana.core.Macro.ND_onstack;
 import static smetana.core.Macro.ND_out;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
-import static smetana.core.debug.SmetanaDebug.TRACE;
-import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -67,12 +65,8 @@ import gen.annotation.Unused;
 import h.ST_Agedge_s;
 import h.ST_Agnode_s;
 import h.ST_Agraph_s;
-import smetana.core.Globals;
 
 public class acyclic__c {
-
-// Set by dot1_rank() (rank__c.java) right before calling acyclic_(), only used for [DEBUG-2735] traces below.
-static Globals debugZz;
 
 
 //3 9hm902ya6q6bq246ewuh67h38
@@ -83,18 +77,11 @@ public static void reverse_edge(ST_Agedge_s e) {
 ENTERING("9hm902ya6q6bq246ewuh67h38","reverse_edge");
 try {
     ST_Agedge_s f;
-    if (debugZz != null)
-	TRACE("[DEBUG-2735] acyclic: reverse_edge " + safeName(debugZz, agtail(e)) + " -> " + safeName(debugZz, aghead(e)) + " (back-edge found, will become virtual reversed edge)");
     delete_fast_edge(e);
-    if ((f = find_fast_edge(aghead(e), agtail(e)))!=null) {
-	if (debugZz != null)
-	    TRACE("[DEBUG-2735] acyclic: reverse_edge -> merge_oneway into existing opposite fast edge");
+    if ((f = find_fast_edge(aghead(e), agtail(e)))!=null)
 	merge_oneway(e, f);
-    } else {
-	if (debugZz != null)
-	    TRACE("[DEBUG-2735] acyclic: reverse_edge -> new virtual reversed edge");
+    else
 	virtual_edge(aghead(e), agtail(e), e);
-    }
 } finally {
 LEAVING("9hm902ya6q6bq246ewuh67h38","reverse_edge");
 }
@@ -114,8 +101,6 @@ try {
     
     if (ND_mark(n)!=0)
 	return;
-    if (debugZz != null)
-	TRACE("[DEBUG-2735] acyclic: dfs entering " + safeName(debugZz, n));
     ND_mark(n, 1);
     ND_onstack(n, 1);
     for (i = 0; (e = (ST_Agedge_s) ND_out(n).list.get_(i))!=null; i++) {
@@ -149,8 +134,6 @@ try {
     	GD_nlist(g, GD_comp(g).list.get_(c));
 	for (n = GD_nlist(g); n!=null; n = ND_next(n))
 	    ND_mark(n, 0);
-	if (debugZz != null)
-	    TRACE("[DEBUG-2735] acyclic_: processing component " + c);
 	for (n = GD_nlist(g); n!=null; n = ND_next(n))
 	    dfs(n);
     }
