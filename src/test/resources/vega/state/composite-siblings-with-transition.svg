@@ -1,31 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="264px" preserveAspectRatio="none" style="width:96px;height:264px;background:#FFFFFF;" version="1.1" viewBox="0 0 96 264" width="96px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="264px" preserveAspectRatio="none" style="width:97px;height:264px;background:#FFFFFF;" version="1.1" viewBox="0 0 97 264" width="97px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <g class="entity" data-qualified-name="A" data-source-line="2" id="ent0001">
-      <path d="M18.5,12 L67.5,12 A12.5,12.5 0 0 1 80,24.5 L80,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
-      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="74" x="6" y="12"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="80" y1="36" y2="36"/>
-      <text fill="#000" font-size="14" x="38.319" y="27.889">A</text>
+      <path d="M18.5,12 L68.5,12 A12.5,12.5 0 0 1 81,24.5 L81,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="81" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="38.819" y="27.889">A</text>
       <g class="entity" data-qualified-name="A.A1" data-source-line="3" id="ent0002">
-        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="11" y="47"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="11" x2="61" y1="71" y2="71"/>
-        <text fill="#000" font-size="14" textLength="17.15" x="27.425" y="62.889">A1</text>
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="12" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="62" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="17.15" x="28.425" y="62.889">A1</text>
       </g>
     </g>
     <g class="entity" data-qualified-name="B" data-source-line="5" id="ent0003">
-      <path d="M18.5,148 L67.5,148 A12.5,12.5 0 0 1 80,160.5 L80,172 L6,172 L6,160.5 A12.5,12.5 0 0 1 18.5,148" fill="#F1F1F1"/>
-      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="74" x="6" y="148"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="80" y1="172" y2="172"/>
-      <text fill="#000" font-size="14" x="38.319" y="163.889">B</text>
+      <path d="M18.5,148 L68.5,148 A12.5,12.5 0 0 1 81,160.5 L81,172 L6,172 L6,160.5 A12.5,12.5 0 0 1 18.5,148" fill="#F1F1F1"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="6" y="148"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="81" y1="172" y2="172"/>
+      <text fill="#000" font-size="14" x="38.819" y="163.889">B</text>
       <g class="entity" data-qualified-name="B.B1" data-source-line="6" id="ent0004">
-        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="11" y="183"/>
-        <line style="stroke:#181818;stroke-width:0.5;" x1="11" x2="61" y1="207" y2="207"/>
-        <text fill="#000" font-size="14" textLength="17.15" x="27.425" y="198.889">B1</text>
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="12" y="183"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="62" y1="207" y2="207"/>
+        <text fill="#000" font-size="14" textLength="17.15" x="28.425" y="198.889">B1</text>
       </g>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
-      <polygon fill="#181818" points="43,147.87,47,138.87,43,142.87,39,138.87,43,147.87" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M43,112.136 C43,123.788 43,131.218 43,142.87" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <polygon fill="#181818" points="43.5,147.87,47.5,138.87,43.5,142.87,39.5,138.87,43.5,147.87" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M43.5,112.136 C43.5,123.788 43.5,131.218 43.5,142.87" fill="none" style="stroke:#181818;stroke-width:1;"/>
     </g>
   </g>
 </svg>

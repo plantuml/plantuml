@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="94px" preserveAspectRatio="none" style="width:215px;height:94px;background:#FFFFFF;" version="1.1" viewBox="0 0 215 94" width="215px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="94px" preserveAspectRatio="none" style="width:234px;height:94px;background:#FFFFFF;" version="1.1" viewBox="0 0 234 94" width="234px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <g class="entity" data-qualified-name="A" data-source-line="2" id="ent0001">
@@ -7,14 +7,14 @@
       <text fill="#000" font-size="14" x="26.319" y="35.889">A</text>
     </g>
     <g class="entity" data-qualified-name="CONC1.B" data-source-line="5" id="ent0003">
-      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="120" y="18"/>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="120" x2="170" y1="42" y2="42"/>
-      <text fill="#000" font-size="14" x="140.319" y="33.889">B</text>
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="121" y="18"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="121" x2="171" y1="42" y2="42"/>
+      <text fill="#000" font-size="14" x="141.319" y="33.889">B</text>
     </g>
     <g class="link" data-entity-1="ent0003" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
-      <polygon fill="#181818" points="170.176,52.338,178.997,56.718,175.171,52.551,179.338,48.725,170.176,52.338" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M170.176,33.662 C179.91,33.247 188,36.359 188,43 C188,49.641 184.905,52.966 175.171,52.551" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-size="13" textLength="24.537" x="190" y="46.611">evt2</text>
+      <polygon fill="#181818" points="171.176,52.338,179.997,56.718,176.171,52.551,180.338,48.725,171.176,52.338" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M171.176,33.662 C180.91,33.247 189,36.359 189,43 C189,49.641 185.905,52.966 176.171,52.551" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="24.537" x="191" y="46.611">evt2</text>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
       <polygon fill="#181818" points="56.176,54.338,64.997,58.718,61.171,54.551,65.338,50.725,56.176,54.338" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

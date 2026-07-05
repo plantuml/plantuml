@@ -80,6 +80,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.MinMaxMutable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
@@ -198,6 +199,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		private final YMirror ymirror;
 		private final MinMaxMutable minMax;
 		private final double canvasMargin;
+		private MinMax measuredMinMax;
 
 		public Drawing(double canvasMargin) {
 			this.minMax = getSmetanaMinMax();
@@ -205,11 +207,55 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			this.canvasMargin = canvasMargin;
 		}
 
+		private UTranslate getBaselineTranslate() {
+			return new UTranslate(canvasMargin, canvasMargin - minMax.getMinY());
+		}
+
+		private XDimension2D getBaselineDimension() {
+			return minMax.getDimension().delta(2 * canvasMargin + 4, canvasMargin + 16);
+		}
+
+		// The structural minMax (from Smetana's own node/cluster layout boxes) does not
+		// account for geometry drawn afterwards by our own code, such as self-loop edge
+		// curves (SmetanaEdge): a self-loop can visually extend past the rightmost node
+		// it is attached to. At the diagram root this went unnoticed because nothing
+		// framed the drawing tightly, but once this Drawing is used as the image of a
+		// region inside a ConcurrentStates/InnerStateAutonom, that extra geometry gets
+		// clipped by the surrounding border.
+		//
+		// To fix this in a way that cannot regress already-approved renders, we measure
+		// the actually-drawn bounding box once (same technique as SvekResult on the dot
+		// side: draw into a LimitFinder to record real extents), and only ADD extra
+		// margin/translation where the real drawing overflows the structural baseline.
+		// When there is no overflow (the common case), dimension and translate are
+		// byte-for-byte identical to the previous, purely structural computation.
+		private MinMax getMeasuredMinMax(StringBounder stringBounder) {
+			if (measuredMinMax == null) {
+				final UTranslate baseline = getBaselineTranslate();
+				measuredMinMax = TextBlockUtils.getMinMax(ug -> drawContent(ug.apply(baseline)), stringBounder, false);
+			}
+			return measuredMinMax;
+		}
+
 		public void drawU(UGraphic ug) {
+			final MinMax measured = getMeasuredMinMax(ug.getStringBounder());
+			final double extraLeft = Math.max(0, -measured.getMinX());
+			final double extraTop = Math.max(0, -measured.getMinY());
+
+			UGraphic shifted = ug.apply(getBaselineTranslate());
+			if (extraLeft != 0 || extraTop != 0)
+				shifted = shifted.apply(new UTranslate(extraLeft, extraTop));
+
+			drawContent(shifted);
+		}
+
+		// Draws the diagram content. The caller is responsible for positioning ug at
+		// the desired origin beforehand (no translation is applied here), so that this
+		// method can be reused both for the real draw and for the bounding-box
+		// measurement dry-run above.
+		private void drawContent(UGraphic ug) {
 
 			smetanaPathes.clear();
-
-			ug = ug.apply(new UTranslate(canvasMargin, canvasMargin - minMax.getMinY()));
 
 			for (Map.Entry<Link, ST_Agedge_s> ent : edges.entrySet()) {
 				final Link link = ent.getKey();
@@ -255,7 +301,16 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		@Fast
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-			return minMax.getDimension().delta(2 * canvasMargin + 4, canvasMargin + 16);
+			final MinMax measured = getMeasuredMinMax(stringBounder);
+			final XDimension2D baseline = getBaselineDimension();
+
+			final double extraLeft = Math.max(0, -measured.getMinX());
+			final double extraTop = Math.max(0, -measured.getMinY());
+			final double extraRight = Math.max(0, measured.getMaxX() - baseline.getWidth());
+			final double extraBottom = Math.max(0, measured.getMaxY() - baseline.getHeight());
+
+			return new XDimension2D(baseline.getWidth() + extraLeft + extraRight,
+					baseline.getHeight() + extraTop + extraBottom);
 		}
 
 		private XPoint2D getCorner(ST_Agnode_s n) {
