@@ -35,10 +35,15 @@
  */
 package net.sourceforge.plantuml.sdot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.svek.ConcurrentStates;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.InnerStateAutonom;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
@@ -50,8 +55,11 @@ import net.sourceforge.plantuml.svek.image.EntityImageState;
 // InnerStateAutonom, so the group can be turned into a leaf by
 // CucaDiagramSimplifierStateSmetana.
 //
-// NB: concurrent-region aggregation (ConcurrentStates) is not handled yet; the
-// simplifier deliberately does not route concurrent states here for now.
+// Concurrent states are handled like on the dot side: each region (a
+// CONCURRENT_STATE sub-group) has already been turned into a STATE_CONCURRENT
+// leaf by the bottom-up simplifier, so here we just stack the first region (the
+// group's own non-concurrent leaves) together with the pre-rendered region
+// images into a ConcurrentStates.
 public final class GroupMakerStateSmetana {
 
 	private final CucaDiagram diagram;
@@ -76,13 +84,38 @@ public final class GroupMakerStateSmetana {
 		if (group.getGroupType() != GroupType.STATE)
 			throw new UnsupportedOperationException(group.getGroupType().toString());
 
-		final IEntityImage image = subLayout();
+		final IEntityImage image;
+		if (containsSomeConcurrentStates()) {
+			final List<IEntityImage> inners = new ArrayList<>();
+			// First region: the group's own (non-concurrent) content. The nested
+			// sub-layout filters out the STATE_CONCURRENT leaves (see
+			// CucaDiagramFileMakerSmetana.getUnpackagedEntities).
+			inners.add(subLayout());
+			// Remaining regions: already rendered by the bottom-up simplifier.
+			for (Entity inner : group.leafs())
+				if (inner.getLeafType() == LeafType.STATE_CONCURRENT)
+					inners.add(inner.getSvekImage());
+
+			image = new ConcurrentStates(inners, group.getConcurrentSeparator(), diagram.getSkinParam(),
+					group.getStereotype());
+		} else {
+			image = subLayout();
+		}
+
 		return new InnerStateAutonom(image, group);
 	}
 
 	private IEntityImage subLayout() {
 		final CucaDiagramFileMakerSmetana maker = new CucaDiagramFileMakerSmetana(diagram, group);
 		return maker.getImage(stringBounder);
+	}
+
+	private boolean containsSomeConcurrentStates() {
+		for (Entity entity : group.leafs())
+			if (entity.getLeafType() == LeafType.STATE_CONCURRENT)
+				return true;
+
+		return false;
 	}
 
 }

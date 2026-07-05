@@ -425,8 +425,15 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	private Collection<Entity> getUnpackagedEntities() {
 		final List<Entity> result = new ArrayList<>();
 		for (Entity ent : diagram.leafs())
-			if (root == ent.getParentContainer())
+			if (root == ent.getParentContainer()) {
+				// In a nested sub-layout of a concurrent state, the STATE_CONCURRENT
+				// leaves are the other regions: they are stacked separately by
+				// GroupMakerStateSmetana, so they must not be laid out here.
+				if (isNestedLayout() && ent.getLeafType() == LeafType.STATE_CONCURRENT)
+					continue;
+
 				result.add(ent);
+			}
 
 		return result;
 	}

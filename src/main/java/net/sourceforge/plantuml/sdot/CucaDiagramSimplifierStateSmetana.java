@@ -65,37 +65,15 @@ public final class CucaDiagramSimplifierStateSmetana {
 			changed = false;
 			final Collection<Entity> groups = getOrdered(diagram.getRootGroup());
 			for (Entity g : groups)
-				if (shouldSimplify(g)) {
+				if (g.isAutarkic()) {
 					final GroupMakerStateSmetana maker = new GroupMakerStateSmetana(diagram, g, stringBounder);
 					final IEntityImage img = maker.getImage();
-					g.overrideImage(img, LeafType.STATE);
+					g.overrideImage(img, g.getGroupType() == GroupType.CONCURRENT_STATE ? LeafType.STATE_CONCURRENT
+							: LeafType.STATE);
 					changed = true;
 				}
 
 		} while (changed);
-	}
-
-	private boolean shouldSimplify(Entity g) {
-		if (g.isAutarkic() == false)
-			return false;
-
-		// Concurrency is not handled yet: leave concurrent regions and their
-		// enclosing states untouched.
-		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
-			return false;
-
-		if (containsConcurrentRegion(g))
-			return false;
-
-		return true;
-	}
-
-	private boolean containsConcurrentRegion(Entity g) {
-		for (Entity child : g.groups())
-			if (child.getGroupType() == GroupType.CONCURRENT_STATE)
-				return true;
-
-		return false;
 	}
 
 	private Collection<Entity> getOrdered(Entity root) {
