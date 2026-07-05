@@ -80,6 +80,8 @@ import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.free_list;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.TRACE;
+import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Difficult;
 import gen.annotation.HasND_Rank;
@@ -214,7 +216,9 @@ try {
     ST_Agedge_s e;
     Q = new_queue(zz.N_nodes);
     ctr = 0;
+    TRACE("[DEBUG-2735] init_rank: N_nodes=" + zz.N_nodes);
     for (v = GD_nlist(zz.G_ns); v!=null; v = ND_next(v)) {
+	TRACE("[DEBUG-2735] init_rank: node " + safeName(zz, v) + " initial priority=" + ND_priority(v));
 	if (ND_priority(v) == 0)
 	    enqueue(Q, v);
     }
@@ -225,15 +229,27 @@ try {
 	    ND_rank(v, Math.max(ND_rank(v), ND_rank(agtail(e)) + ED_minlen(e)));
 	for (i = 0; (e = ND_out(v).list.get_(i))!=null; i++) {
 	    ND_priority(aghead(e), ND_priority(aghead(e)) -1 );
+	    TRACE("[DEBUG-2735] init_rank: dequeued " + safeName(zz, v) + ", decremented priority of " + safeName(zz, aghead(e)) + " to " + ND_priority(aghead(e)));
 	    if ((ND_priority(aghead(e))) <= 0)
 		enqueue(Q, aghead(e));
 	}
     }
+    TRACE("[DEBUG-2735] init_rank: ctr=" + ctr + " N_nodes=" + zz.N_nodes);
     if (ctr != zz.N_nodes) {
-UNSUPPORTED("7sgp99x1l3hzfks5wykxa87gf"); // 	agerr(AGERR, "trouble in init_rank\n");
-UNSUPPORTED("bwwunxmw4kgz6qntbn6xp0cur"); // 	for (v = (((Agraphinfo_t*)(((Agobj_t*)(G))->data))->nlist); v; v = (((Agnodeinfo_t*)(((Agobj_t*)(v))->data))->next))
-UNSUPPORTED("3dk132mz1u2pf0tla64kl6hv0"); // 	    if ((((Agnodeinfo_t*)(((Agobj_t*)(v))->data))->priority))
-UNSUPPORTED("916bi45h6sjvte1rgig12b1v2"); // 		agerr(AGPREV, "\t%s %d\n", agnameof(v), (((Agnodeinfo_t*)(((Agobj_t*)(v))->data))->priority));
+	// NOTE: in the original C, this branch is only a diagnostic print (agerr),
+	// NOT followed by longjmp(jbuf,1) -- unlike other agerr+longjmp pairs in this file.
+	// So it must NOT abort here; we just log and let the algorithm continue,
+	// same as upstream Graphviz does.
+	TRACE("[DEBUG-2735] trouble in init_rank: residual cycle detected, nodes with non-zero priority:");
+	for (v = GD_nlist(zz.G_ns); v!=null; v = ND_next(v)) {
+	    if (ND_priority(v) != 0) {
+		TRACE("[DEBUG-2735]   node " + safeName(zz, v) + " priority=" + ND_priority(v));
+		for (i = 0; (e = ND_in(v).list.get_(i))!=null; i++)
+		    TRACE("[DEBUG-2735]     in-edge from " + safeName(zz, agtail(e)) + " minlen=" + ED_minlen(e));
+		for (i = 0; (e = ND_out(v).list.get_(i))!=null; i++)
+		    TRACE("[DEBUG-2735]     out-edge to " + safeName(zz, aghead(e)) + " minlen=" + ED_minlen(e));
+	    }
+	}
     }
     free_queue(Q);
 } finally {

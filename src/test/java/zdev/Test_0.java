@@ -18,19 +18,25 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-You can use this file to put a test you are working on.
-Here is a simple example:
-
 @startuml
-alice->bob: this is a test
+!pragma layout smetana
+
+' if the line is here it is working
+' [L_5161099] -right-> L_5098739 : "C-IAV"
+
+[L_5098739] -right-> S_5161051 : "C-LA"
+
+' if the line is here (like in orig) it is not working
+[L_5161099] -right-> L_5098739 : "C-IAV"
+
+S_5161051 -right-> L_5098861 : "C-LA"
+L_5098739 -right-> L_1338054 : "C-BFT"
+L_5098739 -right-> L_5098753 : "C-VD"
+L_5098741 -right-> L_5098737 : "C-IAV"
+L_5098859 -right-> L_5098861 : "C-IAV"
+L_5098859 -right-> L_5646095 : "C-VD"
+L_5098859 -right-> L_5646097 : "C-VD"
 @enduml
-
-So you can edit this file, but please do not push any modification in the "main" branch.
-Put your own tests on your own branches.
-
-However, if your test are interesting, you can add them to the "pdiff" project.
-See https://github.com/plantuml/pdiff
-
  */
 public class Test_0 {
 

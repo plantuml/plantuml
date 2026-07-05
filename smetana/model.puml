@@ -1,0 +1,272 @@
+@startuml
+!pragma layout smetana
+scale max 900 width
+set namespaceSeparator none
+hide empty members
+class "UNIVERSAL" << (N,lightblue) >> {
+    shortTitle
+    communityType
+    isDeleted
+    classesUserId
+    publishedDate
+    isActive
+    uid
+    isUpdated
+    id
+    isParent
+    url
+    lastUpdatedOn
+    isCertified
+    name
+    communityId
+    YyyDisplayName
+    upn
+    lastUpdatedBy
+    postType
+    cmsUri
+    lionLoginId
+    contentType
+    contentId
+}
+class "XxxBrand" << (N,lightblue) >> {
+
+}
+class "UserProfileTemplate" << (N,lightblue) >> {
+    classesUserId
+    name
+}
+class "SolutionHub" << (N,lightblue) >> {
+
+}
+class "XxxAgency" << (N,lightblue) >> {
+
+}
+class "XxxAgencyBrand" << (N,lightblue) >> {
+
+}
+class "Industry" << (N,lightblue) >> {
+    isCertified
+}
+class "ContentPiece" << (N,lightblue) >> {
+    isDeleted
+    publishedDate
+    shortTitle
+    isActive
+    name
+    uid
+    YyyDisplayName
+    isUpdated
+    id
+    url
+    contentType
+    contentId
+}
+class "XxxAgencyLocation" << (N,lightblue) >> {
+
+}
+class "Language" << (N,lightblue) >> {
+    code
+}
+class "Course" << (N,lightblue) >> {
+    id
+}
+class "SubRegion" << (N,lightblue) >> {
+
+}
+class "Position" << (N,lightblue) >> {
+    isPublic
+    name
+}
+class "Post" << (N,lightblue) >> {
+    publishedDate
+    postType
+    id
+}
+class "People" << (N,lightblue) >> {
+    lastUpdatedOn
+    name
+    upn
+    lastUpdatedBy
+    id
+    lionLoginId
+    careerSettingsId
+}
+class "ContentPlatform" << (N,lightblue) >> {
+    name
+    uid
+    YyyDisplayName
+    id
+}
+class "City" << (N,lightblue) >> {
+
+}
+class "JobFamily" << (N,lightblue) >> {
+    isCertified
+    isParent
+}
+class "Pronoun" << (N,lightblue) >> {
+    isCertified
+}
+class "Project" << (N,lightblue) >> {
+    id
+}
+class "Skill" << (N,lightblue) >> {
+    name
+}
+class "Continent" << (N,lightblue) >> {
+
+}
+class "Award" << (N,lightblue) >> {
+
+}
+class "State" << (N,lightblue) >> {
+
+}
+class "Region" << (N,lightblue) >> {
+
+}
+class "Country" << (N,lightblue) >> {
+
+}
+class "Community" << (N,lightblue) >> {
+    communityType
+    isActive
+    name
+    communityId
+    id
+    cmsUri
+}
+class "Recognition" << (N,lightblue) >> {
+    name
+}
+class "PEOPLE_RECOGNITION_HASTHELINKEDINRECOGNITION" << (R,orange) >> {
+
+}
+"People" -- "PEOPLE_RECOGNITION_HASTHELINKEDINRECOGNITION"
+"PEOPLE_RECOGNITION_HASTHELINKEDINRECOGNITION" --> "Recognition"
+class "PROJECT_AWARD_WONTHEAWARD" << (R,orange) >> {
+
+}
+"PROJECT_AWARD_WONTHEAWARD" --> "UNIVERSAL"
+"PROJECT_AWARD_WONTHEAWARD" --> "Award"
+class "SOLUTIONHUB_XxxAGENCY_COMPRISESTHEAGENCY" << (R,orange) >> {
+
+}
+"SOLUTIONHUB_XxxAGENCY_COMPRISESTHEAGENCY" .. "SolutionHub"
+"SOLUTIONHUB_XxxAGENCY_COMPRISESTHEAGENCY" .. "XxxAgency"
+class "REGION_SUBREGION_COMPRISESTHESUBREGION" << (R,orange) >> {
+
+}
+"REGION_SUBREGION_COMPRISESTHESUBREGION" .. "Region"
+"REGION_SUBREGION_COMPRISESTHESUBREGION" .. "SubRegion"
+class "HAS_PREFERRED_LANGUAGE_FOR_CONVERSION" << (R,orange) >> {
+    updated_date
+}
+"People" -- "HAS_PREFERRED_LANGUAGE_FOR_CONVERSION"
+"HAS_PREFERRED_LANGUAGE_FOR_CONVERSION" --> "Language"
+class "PEOPLE_POSITION_HELDTHELINKEDINPOSITION" << (R,orange) >> {
+
+}
+"PEOPLE_POSITION_HELDTHELINKEDINPOSITION" .. "Position"
+"PEOPLE_POSITION_HELDTHELINKEDINPOSITION" .. "People"
+class "PEOPLE_SKILL_HASTHELINKEDINSKILL" << (R,orange) >> {
+
+}
+"People" -- "PEOPLE_SKILL_HASTHELINKEDINSKILL"
+"PEOPLE_SKILL_HASTHELINKEDINSKILL" --> "Skill"
+class "XxxAGENCY_XxxAGENCYBRAND_ISAPARTOFTHEXxxAGENCYBRAND" << (R,orange) >> {
+
+}
+"XxxAGENCY_XxxAGENCYBRAND_ISAPARTOFTHEXxxAGENCYBRAND" .. "XxxAgency"
+"XxxAGENCY_XxxAGENCYBRAND_ISAPARTOFTHEXxxAGENCYBRAND" .. "XxxAgencyBrand"
+class "PEOPLE_SKILL_HASTHETOPLINKEDINSKILL" << (R,orange) >> {
+
+}
+"People" -- "PEOPLE_SKILL_HASTHETOPLINKEDINSKILL"
+"PEOPLE_SKILL_HASTHETOPLINKEDINSKILL" --> "Skill"
+class "XxxAGENCYLOCATION_CITY_ISLOCATEDINTHECITY" << (R,orange) >> {
+
+}
+"XxxAGENCYLOCATION_CITY_ISLOCATEDINTHECITY" .. "XxxAgencyLocation"
+"XxxAGENCYLOCATION_CITY_ISLOCATEDINTHECITY" .. "City"
+class "COUNTRY_CONTINENT_ISAPARTOFTHECONTINENT" << (R,orange) >> {
+
+}
+"COUNTRY_CONTINENT_ISAPARTOFTHECONTINENT" .. "Continent"
+"COUNTRY_CONTINENT_ISAPARTOFTHECONTINENT" .. "Country"
+class "PEOPLE_CONTENTPIECE_HASTHELINKEDINPUBLICATION" << (R,orange) >> {
+
+}
+"People" -- "PEOPLE_CONTENTPIECE_HASTHELINKEDINPUBLICATION"
+"PEOPLE_CONTENTPIECE_HASTHELINKEDINPUBLICATION" --> "ContentPiece"
+class "PEOPLE_COMMUNITY_ISAMEMBEROFTHECOMMUNITY" << (R,orange) >> {
+
+}
+"People" -- "PEOPLE_COMMUNITY_ISAMEMBEROFTHECOMMUNITY"
+"PEOPLE_COMMUNITY_ISAMEMBEROFTHECOMMUNITY" .. "Community"
+class "PROJECT_INDUSTRY_ISINTHEINDUSTRY2" << (R,orange) >> {
+
+}
+"PROJECT_INDUSTRY_ISINTHEINDUSTRY2" .. "Industry"
+"PROJECT_INDUSTRY_ISINTHEINDUSTRY2" .. "Project"
+class "PEOPLE_CONTENTPIECE_WROTETHESUPPRESSEDPUBLICATION" << (R,orange) >> {
+
+}
+"People" -- "PEOPLE_CONTENTPIECE_WROTETHESUPPRESSEDPUBLICATION"
+"PEOPLE_CONTENTPIECE_WROTETHESUPPRESSEDPUBLICATION" --> "ContentPiece"
+class "STATE_COUNTRY_ISAPARTOFTHECOUNTRY" << (R,orange) >> {
+
+}
+"STATE_COUNTRY_ISAPARTOFTHECOUNTRY" .. "State"
+"STATE_COUNTRY_ISAPARTOFTHECOUNTRY" .. "Country"
+class "CITY_STATE_ISLOCATEDINTHESTATE" << (R,orange) >> {
+
+}
+"CITY_STATE_ISLOCATEDINTHESTATE" .. "State"
+"CITY_STATE_ISLOCATEDINTHESTATE" .. "City"
+class "CLIENTUSER_COMMUNITY_ISAMEMBEROFTHECOMMUNITY" << (R,orange) >> {
+
+}
+"People" -- "CLIENTUSER_COMMUNITY_ISAMEMBEROFTHECOMMUNITY"
+class "XxxBRAND_XxxAGENCY_ISTHEBRANDFORTHEAGENCY" << (R,orange) >> {
+
+}
+"XxxBRAND_XxxAGENCY_ISTHEBRANDFORTHEAGENCY" .. "XxxBrand"
+"XxxBRAND_XxxAGENCY_ISTHEBRANDFORTHEAGENCY" .. "XxxAgency"
+class "PEOPLE_XxxAGENCY_WORKSFORTHEXxxAGENCY" << (R,orange) >> {
+
+}
+"PEOPLE_XxxAGENCY_WORKSFORTHEXxxAGENCY" .. "XxxAgency"
+class "PEOPLE_XxxAGENCYLOCATION_WORKSATTHEAGENCYLOCATION" << (R,orange) >> {
+
+}
+"PEOPLE_XxxAGENCYLOCATION_WORKSATTHEAGENCYLOCATION" .. "XxxAgencyLocation"
+class "PROJECT_XxxAGENCYLOCATION_WASCOMPLETEDBYTHEXxxAGENCYLOCATION" << (R,orange) >> {
+
+}
+"PROJECT_XxxAGENCYLOCATION_WASCOMPLETEDBYTHEXxxAGENCYLOCATION" .. "XxxAgencyLocation"
+class "XxxAGENCY_XxxAGENCYLOCATION_HASTHEXxxAGENCYLOCATION" << (R,orange) >> {
+
+}
+"XxxAGENCY_XxxAGENCYLOCATION_HASTHEXxxAGENCYLOCATION" .. "XxxAgencyLocation"
+"XxxAGENCY_XxxAGENCYLOCATION_HASTHEXxxAGENCYLOCATION" .. "XxxAgency"
+class "PEOPLE_INDUSTRY_ASPIRESTOWORKINTHEINDUSTRY" << (R,orange) >> {
+
+}
+"PEOPLE_INDUSTRY_ASPIRESTOWORKINTHEINDUSTRY" .. "Industry"
+class "PEOPLE_SKILL_HASFOLLOWINGSUPPRESSEDSKILL" << (R,orange) >> {
+
+}
+"People" -- "PEOPLE_SKILL_HASFOLLOWINGSUPPRESSEDSKILL"
+"PEOPLE_SKILL_HASFOLLOWINGSUPPRESSEDSKILL" --> "Skill"
+class "SUBREGION_COUNTRY_COMPRISESTHECOUNTRY" << (R,orange) >> {
+
+}
+"SUBREGION_COUNTRY_COMPRISESTHECOUNTRY" .. "Country"
+"SUBREGION_COUNTRY_COMPRISESTHECOUNTRY" .. "SubRegion"
+class "PEOPLE_RECOGNITION_RECEIVEDTHESUPPRESSEDRECOGNITION" << (R,orange) >> {
+
+}
+"People" -- "PEOPLE_RECOGNITION_RECEIVEDTHESUPPRESSEDRECOGNITION"
+"PEOPLE_RECOGNITION_RECEIVEDTHESUPPRESSEDRECOGNITION" --> "Recognition"
+@enduml

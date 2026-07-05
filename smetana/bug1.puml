@@ -1,0 +1,18 @@
+@startuml
+!pragma layout smetana
+
+left to right direction
+
+database "**Inventory Service**" as SYS1 
+rectangle "**Inventory API**" as SYS2 
+artifact "**User Interface**" as SYS3 
+cloud "**Monitoring and Reporting Service**" as SYS4 
+
+SYS1 <.r.> SYS2 : Sends inventory data\n real-time
+SYS1 <.d.> SYS4 : Sends periodic inventory snapshots\n daily
+SYS2 <.r.> SYS3 : 01234567890
+SYS3 <.l.> SYS2 : 012345678
+
+@enduml
+
+https://forum.plantuml.net/19032/smetana-layout-error?show=19032#q19032

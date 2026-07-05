@@ -64,6 +64,8 @@ import static smetana.core.Macro.ND_prev;
 import static smetana.core.Macro.ND_rank;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.TRACE;
+import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Difficult;
 import gen.annotation.Original;
@@ -194,6 +196,9 @@ try {
 	    begin_component(zz);
 	    search_component(zz, g, v);
 	    end_component(zz);
+	    TRACE("[DEBUG-2735] decompose: component #" + (GD_comp(g).size - 1) + " seeded by node " + safeName(zz, v));
+	    for (ST_Agnode_s dbgN = GD_comp(g).list.get_(GD_comp(g).size - 1); dbgN!=null; dbgN = ND_next(dbgN))
+		TRACE("[DEBUG-2735] decompose:   member " + safeName(zz, dbgN));
 	}
     }
 } finally {

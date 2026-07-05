@@ -1,0 +1,21 @@
+@startuml
+!pragma layout smetana
+
+' if the line is here it is working
+' [L_5161099] -right-> L_5098739 : "C-IAV"
+
+[L_5098739] -right-> S_5161051 : "C-LA"
+
+' if the line is here (like in orig) it is not working
+[L_5161099] -right-> L_5098739 : "C-IAV"
+
+S_5161051 -right-> L_5098861 : "C-LA"
+L_5098739 -right-> L_1338054 : "C-BFT"
+L_5098739 -right-> L_5098753 : "C-VD"
+L_5098741 -right-> L_5098737 : "C-IAV"
+L_5098859 -right-> L_5098861 : "C-IAV"
+L_5098859 -right-> L_5646095 : "C-VD"
+L_5098859 -right-> L_5646097 : "C-VD"
+@enduml
+
+https://forum.plantuml.net/18487/smetana-exception?show=18487#q18487

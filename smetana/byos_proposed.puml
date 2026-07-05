@@ -1,0 +1,70 @@
+@startuml
+
+!pragma layout smetana
+
+title "Auditboard Bring Your Own S3 Storage Architecture"
+caption byos_proposal.puml
+
+!include <awslib14/AWSCommon>
+!include <awslib14/Groups/all>
+!include <awslib14/Containers/all>
+!include <awslib14/Storage/all>
+!include <awslib14/AWSSimplified>
+!include <awslib14/SecurityIdentityCompliance/all>
+
+skinparam defaultTextAlignment center
+' skinparam linetype polyline
+skinparam legend {
+  backgroundColor #GhostWhite
+  entrySeparator #GhostWhite
+}
+
+actor cust as "Customer's User's Browser" #white
+
+AWSCloudGroup(cloud, Auditboard Cloud) {
+    RegionGroup(computeregion, "us-west-2"){
+        ElasticKubernetesService(eks, Auditboard EKS, i){
+            frame customer_namespace as "Customer Namespace"{
+                rectangle abrun as "Auditboard Runtime" #F8FBFB
+            }
+        }
+    }
+    RegionGroup(iamregion, "us-east-1") {
+        IdentityandAccessManagement(runtime_role, Runtime Role, i)
+        IdentityAccessManagementAWSSTS(sts, "STS", i)
+    }
+    SimpleStorageService(s3, Auditboard Owned Storage, i)
+}
+
+AWSCloudGroup(ccloud, Customer Cloud){
+
+    RegionGroup(ciamregion, "us-east-1"){
+        IdentityandAccessManagement(cruntime_role, S3 Role\nw/ Perms for XAccount, i)
+    }
+
+    SimpleStorageService(cs3, Customer Owned Storage, i)
+
+}
+
+eks --- sts : IRSA Role Provision for Runtime
+sts - runtime_role
+runtime_role -[dashed,#AF1345] s3 : Access\nControl
+abrun -[dashed,#AF1345]-- s3 : Pre-BYOS Presigned Key Gen
+
+cruntime_role -[#00CCCC] cs3 : Access\nControl
+abrun --[#00CCCC]- cs3 : Post-BYOS Presigned Key Gen
+
+abrun --> cust : Recieves Presigned Keys
+
+cust <-[#00CCCC]-> cs3 : Post-BYOS File Actions
+cust <-[dashed,#AF1345]-> s3 : Pre-BYOS File Actions
+
+
+legend
+   | <#AF1345>   | Removed/Defunct with BYOS |
+   | <#00CCCC>   | Added with BYOS |
+endlegend
+
+footer (C) 2025 Auditboard Inc.
+
+@enduml
