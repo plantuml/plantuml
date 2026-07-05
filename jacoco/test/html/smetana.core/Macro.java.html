@@ -1174,21 +1174,21 @@ import smetana.core.debug.SmetanaDebug;
 	// ED_to_orig(newp) = old; \
 
 	public static void MAKEFWDEDGE(ST_Agedge_s new_, ST_Agedge_s old) {
-<span class="nc" id="L1177">		SmetanaDebug.LOG(&quot;MAKEFWDEDGE&quot;);</span>
+<span class="fc" id="L1177">		SmetanaDebug.LOG(&quot;MAKEFWDEDGE&quot;);</span>
 		ST_Agedge_s newp;
 		ST_Agedgeinfo_t info;
-<span class="nc" id="L1180">		newp = new_;</span>
-<span class="nc" id="L1181">		info = (ST_Agedgeinfo_t) newp.base.data;</span>
-<span class="nc" id="L1182">		info.___((ST_Agedgeinfo_t) old.base.data);</span>
-<span class="nc" id="L1183">		newp.___(old);</span>
-<span class="nc" id="L1184">		newp.base.data = info;</span>
-<span class="nc" id="L1185">		M_agtail(newp, AGHEAD(old));</span>
-<span class="nc" id="L1186">		M_aghead(newp, AGTAIL(old));</span>
-<span class="nc" id="L1187">		ED_tail_port(newp, ED_head_port(old));</span>
-<span class="nc" id="L1188">		ED_head_port(newp, ED_tail_port(old));</span>
-<span class="nc" id="L1189">		ED_edge_type(newp, VIRTUAL);</span>
-<span class="nc" id="L1190">		ED_to_orig(newp, old);</span>
-<span class="nc" id="L1191">	}</span>
+<span class="fc" id="L1180">		newp = new_;</span>
+<span class="fc" id="L1181">		info = (ST_Agedgeinfo_t) newp.base.data;</span>
+<span class="fc" id="L1182">		info.___((ST_Agedgeinfo_t) old.base.data);</span>
+<span class="fc" id="L1183">		newp.___(old);</span>
+<span class="fc" id="L1184">		newp.base.data = info;</span>
+<span class="fc" id="L1185">		M_agtail(newp, AGHEAD(old));</span>
+<span class="fc" id="L1186">		M_aghead(newp, AGTAIL(old));</span>
+<span class="fc" id="L1187">		ED_tail_port(newp, ED_head_port(old));</span>
+<span class="fc" id="L1188">		ED_head_port(newp, ED_tail_port(old));</span>
+<span class="fc" id="L1189">		ED_edge_type(newp, VIRTUAL);</span>
+<span class="fc" id="L1190">		ED_to_orig(newp, old);</span>
+<span class="fc" id="L1191">	}</span>
 
 //	// #define ZALLOC(size,ptr,type,osize) (ptr?
 //	// (type*)zrealloc(ptr,size,sizeof(type),osize):(type*)zmalloc((size)*sizeof(type)))

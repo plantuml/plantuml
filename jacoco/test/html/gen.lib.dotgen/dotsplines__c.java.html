@@ -240,9 +240,9 @@ try {
 <span class="fc" id="L240">	return false;</span>
 <span class="pc bpc" id="L241" title="1 of 2 branches missed.">    if (ND_rank(aghead(e)) &lt; ND_rank(agtail(e)))</span>
 <span class="nc" id="L242">	return true;</span>
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">    if (ND_order(aghead(e)) &gt;= ND_order(agtail(e)))</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">    if (ND_order(aghead(e)) &gt;= ND_order(agtail(e)))</span>
 <span class="fc" id="L244">	return false;</span>
-<span class="nc" id="L245">    return true;</span>
+<span class="fc" id="L245">    return true;</span>
 } finally {
 <span class="fc" id="L247">LEAVING(&quot;36ofw2qfqlh5ci8gc8cfkqgg3&quot;,&quot;swap_ends_p&quot;);</span>
 }
@@ -287,33 +287,33 @@ try {
 @Reviewed(when = &quot;16/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;swap_bezier&quot;, key=&quot;10wbtt4gwnxgqutinpj4ymjpk&quot;, definition=&quot;static void swap_bezier(bezier * old, bezier * new)&quot;)
 public static void swap_bezier(CArray&lt;ST_bezier&gt; old, CArray&lt;ST_bezier&gt; new_) {
-<span class="nc" id="L290">ENTERING(&quot;10wbtt4gwnxgqutinpj4ymjpk&quot;,&quot;swap_bezier&quot;);</span>
+<span class="fc" id="L290">ENTERING(&quot;10wbtt4gwnxgqutinpj4ymjpk&quot;,&quot;swap_bezier&quot;);</span>
 try {
 	CArray&lt;ST_pointf&gt; list;
 	CArray&lt;ST_pointf&gt; lp;
 	CArray&lt;ST_pointf&gt; olp;
     int i, sz;
     
-<span class="nc" id="L297">    sz = old.get__(0).size;</span>
-<span class="nc" id="L298">	list = CArray.&lt;ST_pointf&gt;ALLOC__(sz, ZType.ST_pointf);</span>
-<span class="nc" id="L299">    lp = list;</span>
-<span class="nc" id="L300">    olp = old.get__(0).list.plus_(sz - 1);</span>
-<span class="nc bnc" id="L301" title="All 2 branches missed.">    for (i = 0; i &lt; sz; i++) {	/* reverse list of points */</span>
-<span class="nc" id="L302">	lp.get__(0).___(olp.get__(0));</span>
-<span class="nc" id="L303">	lp=lp.plus_(1);</span>
-<span class="nc" id="L304">	olp=olp.plus_(-1);</span>
+<span class="fc" id="L297">    sz = old.get__(0).size;</span>
+<span class="fc" id="L298">	list = CArray.&lt;ST_pointf&gt;ALLOC__(sz, ZType.ST_pointf);</span>
+<span class="fc" id="L299">    lp = list;</span>
+<span class="fc" id="L300">    olp = old.get__(0).list.plus_(sz - 1);</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">    for (i = 0; i &lt; sz; i++) {	/* reverse list of points */</span>
+<span class="fc" id="L302">	lp.get__(0).___(olp.get__(0));</span>
+<span class="fc" id="L303">	lp=lp.plus_(1);</span>
+<span class="fc" id="L304">	olp=olp.plus_(-1);</span>
     }
     
-<span class="nc" id="L307">    new_.get__(0).list = list;</span>
-<span class="nc" id="L308">    new_.get__(0).size = sz;</span>
-<span class="nc" id="L309">    new_.get__(0).sflag = old.get__(0).eflag;</span>
-<span class="nc" id="L310">    new_.get__(0).eflag = old.get__(0).sflag;</span>
-<span class="nc" id="L311">    new_.get__(0).sp.___(old.get__(0).ep);</span>
-<span class="nc" id="L312">    new_.get__(0).ep.___(old.get__(0).sp);</span>
+<span class="fc" id="L307">    new_.get__(0).list = list;</span>
+<span class="fc" id="L308">    new_.get__(0).size = sz;</span>
+<span class="fc" id="L309">    new_.get__(0).sflag = old.get__(0).eflag;</span>
+<span class="fc" id="L310">    new_.get__(0).eflag = old.get__(0).sflag;</span>
+<span class="fc" id="L311">    new_.get__(0).sp.___(old.get__(0).ep);</span>
+<span class="fc" id="L312">    new_.get__(0).ep.___(old.get__(0).sp);</span>
 } finally {
-<span class="nc" id="L314">LEAVING(&quot;10wbtt4gwnxgqutinpj4ymjpk&quot;,&quot;swap_bezier&quot;);</span>
+<span class="fc" id="L314">LEAVING(&quot;10wbtt4gwnxgqutinpj4ymjpk&quot;,&quot;swap_bezier&quot;);</span>
 }
-<span class="nc" id="L316">}</span>
+<span class="fc" id="L316">}</span>
 
 
 
@@ -323,31 +323,31 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotsplines.c&quot;, name=&quot;swap_spline&quot;, key=&quot;3256l3e2huarsy29dd97vqj85&quot;, definition=&quot;static void swap_spline(splines * s)&quot;)
 public static void swap_spline(ST_splines s) {
-<span class="nc" id="L326">ENTERING(&quot;3256l3e2huarsy29dd97vqj85&quot;,&quot;swap_spline&quot;);</span>
+<span class="fc" id="L326">ENTERING(&quot;3256l3e2huarsy29dd97vqj85&quot;,&quot;swap_spline&quot;);</span>
 try {
 	CArray&lt;ST_bezier&gt; list;
 	CArray&lt;ST_bezier&gt; lp;
 	CArray&lt;ST_bezier&gt; olp;
     int i, sz;
-<span class="nc" id="L332">    sz = s.size;</span>
-<span class="nc" id="L333">    list = CArray.&lt;ST_bezier&gt;ALLOC__(sz, ZType.ST_bezier);</span>
+<span class="fc" id="L332">    sz = s.size;</span>
+<span class="fc" id="L333">    list = CArray.&lt;ST_bezier&gt;ALLOC__(sz, ZType.ST_bezier);</span>
 	//list = new CStar&lt;ST_bezier&gt;(sz, ST_bezier.class);
-<span class="nc" id="L335">    lp = list;</span>
-<span class="nc" id="L336">    olp = s.list.plus_(sz - 1);</span>
-<span class="nc bnc" id="L337" title="All 2 branches missed.">    for (i = 0; i &lt; sz; i++) {	/* reverse and swap list of beziers */</span>
-<span class="nc" id="L338">	swap_bezier(olp, lp);</span>
-<span class="nc" id="L339">	olp = olp.plus_(-1);</span>
-<span class="nc" id="L340">	lp = lp.plus_(1);</span>
+<span class="fc" id="L335">    lp = list;</span>
+<span class="fc" id="L336">    olp = s.list.plus_(sz - 1);</span>
+<span class="fc bfc" id="L337" title="All 2 branches covered.">    for (i = 0; i &lt; sz; i++) {	/* reverse and swap list of beziers */</span>
+<span class="fc" id="L338">	swap_bezier(olp, lp);</span>
+<span class="fc" id="L339">	olp = olp.plus_(-1);</span>
+<span class="fc" id="L340">	lp = lp.plus_(1);</span>
     }
     /* free old structures */
-<span class="nc bnc" id="L343" title="All 2 branches missed.">    for (i = 0; i &lt; sz; i++)</span>
-<span class="nc" id="L344">	Memory.free(s.list.get__(i).list);</span>
-<span class="nc" id="L345">    Memory.free(s.list);</span>
-<span class="nc" id="L346">    s.list = list;</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">    for (i = 0; i &lt; sz; i++)</span>
+<span class="fc" id="L344">	Memory.free(s.list.get__(i).list);</span>
+<span class="fc" id="L345">    Memory.free(s.list);</span>
+<span class="fc" id="L346">    s.list = list;</span>
 } finally {
-<span class="nc" id="L348">LEAVING(&quot;3256l3e2huarsy29dd97vqj85&quot;,&quot;swap_spline&quot;);</span>
+<span class="fc" id="L348">LEAVING(&quot;3256l3e2huarsy29dd97vqj85&quot;,&quot;swap_spline&quot;);</span>
 }
-<span class="nc" id="L350">}</span>
+<span class="fc" id="L350">}</span>
 
 
 
@@ -363,8 +363,8 @@ try {
     ST_Agnode_s n;
 <span class="fc bfc" id="L364" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
 <span class="fc bfc" id="L365" title="All 2 branches covered.">	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e)) {</span>
-<span class="pc bpc" id="L366" title="3 of 4 branches missed.">	    if ((Boolean)zz.sinfo.swapEnds.exe(zz, e) &amp;&amp; ED_spl(e)!=null)</span>
-<span class="nc" id="L367">		swap_spline(ED_spl(e));</span>
+<span class="pc bpc" id="L366" title="1 of 4 branches missed.">	    if ((Boolean)zz.sinfo.swapEnds.exe(zz, e) &amp;&amp; ED_spl(e)!=null)</span>
+<span class="fc" id="L367">		swap_spline(ED_spl(e));</span>
 	}
     }
 } finally {
@@ -560,9 +560,9 @@ try {
 <span class="fc" id="L560">	    havePorts = false;</span>
 <span class="fc" id="L561">	    ea =  le0;</span>
 	}
-<span class="pc bpc" id="L563" title="1 of 2 branches missed.">	if ((ED_tree_index(ea) &amp; BWDEDGE)!=0) {</span>
-<span class="nc" id="L564">	    MAKEFWDEDGE(fwdedgea.out, ea);</span>
-<span class="nc" id="L565">	    ea = fwdedgea.out;</span>
+<span class="fc bfc" id="L563" title="All 2 branches covered.">	if ((ED_tree_index(ea) &amp; BWDEDGE)!=0) {</span>
+<span class="fc" id="L564">	    MAKEFWDEDGE(fwdedgea.out, ea);</span>
+<span class="fc" id="L565">	    ea = fwdedgea.out;</span>
 	}
 
 <span class="fc bfc" id="L568" title="All 2 branches covered.">	for (cnt = 1; i &lt; n_edges; cnt++, i++) {</span>
@@ -746,7 +746,7 @@ try {
 <span class="pc bpc" id="L746" title="1 of 2 branches missed.">	if (f1 == 1)</span>
 <span class="nc bnc" id="L747" title="All 2 branches missed.">	    f2 = (ND_rank(agtail(e)) &lt; ND_rank(aghead(e))) ? 16 : 32;</span>
 <span class="fc bfc" id="L748" title="All 2 branches covered.">	else if (f1 == 2)</span>
-<span class="pc bpc" id="L749" title="1 of 2 branches missed.">	    f2 = (ND_order(agtail(e)) &lt; ND_order(aghead(e))) ?  16 : 32;</span>
+<span class="fc bfc" id="L749" title="All 2 branches covered.">	    f2 = (ND_order(agtail(e)) &lt; ND_order(aghead(e))) ?  16 : 32;</span>
 	else			/* f1 == SELF*EDGE */
 <span class="fc" id="L751">	    f2 = 16;</span>
     }
@@ -1450,9 +1450,9 @@ try {
     /* Get sample edge; normalize to go from left to right */
 <span class="fc" id="L1451">    e = edges.get_(ind);</span>
 <span class="fc" id="L1452">    isAdjacent = ED_adjacent(e);</span>
-<span class="pc bpc" id="L1453" title="1 of 2 branches missed.">    if ((ED_tree_index(e) &amp; 32)!=0) {</span>
-<span class="nc" id="L1454">	MAKEFWDEDGE(fwdedge.out, e);</span>
-<span class="nc" id="L1455">	e = (ST_Agedge_s) fwdedge.out;</span>
+<span class="fc bfc" id="L1453" title="All 2 branches covered.">    if ((ED_tree_index(e) &amp; 32)!=0) {</span>
+<span class="fc" id="L1454">	MAKEFWDEDGE(fwdedge.out, e);</span>
+<span class="fc" id="L1455">	e = (ST_Agedge_s) fwdedge.out;</span>
     }
 <span class="pc bfc" id="L1457" title="All 2 branches covered.">    for (i = 1; i &lt; cnt; i++) {</span>
 <span class="pc bpc" id="L1458" title="1 of 2 branches missed.">	if (ED_adjacent(edges.get_(ind+i))!=0) {</span>
@@ -2249,8 +2249,8 @@ try {
     /* give this node all the available space up to its neighbors */
 <span class="fc" id="L2250">    b = (double)(ND_coord(vn).x - ND_lw(vn) - FUDGE);</span>
 <span class="fc bfc" id="L2251" title="All 2 branches covered.">    if ((left = neighbor(g, vn, ie, oe, -1))!=null) {</span>
-<span class="fc bfc" id="L2252" title="All 2 branches covered.">	if ((left_cl = cl_bound(g, vn, left))!=null)</span>
-<span class="fc" id="L2253">	    nb = GD_bb(left_cl).UR.x + (double)(sp.Splinesep);</span>
+<span class="pc bpc" id="L2252" title="1 of 2 branches missed.">	if ((left_cl = cl_bound(g, vn, left))!=null)</span>
+<span class="nc" id="L2253">	    nb = GD_bb(left_cl).UR.x + (double)(sp.Splinesep);</span>
 	else {
 <span class="fc" id="L2255">	    nb = (double)(ND_coord(left).x + ND_mval(left));</span>
 <span class="fc bfc" id="L2256" title="All 2 branches covered.">	    if (ND_node_type(left) == NORMAL)</span>

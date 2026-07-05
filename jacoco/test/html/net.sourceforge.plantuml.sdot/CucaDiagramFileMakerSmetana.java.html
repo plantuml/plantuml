@@ -63,6 +63,7 @@ import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityUtils;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
@@ -79,6 +80,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.MinMaxMutable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
@@ -112,549 +114,684 @@ import smetana.core.debug.SmetanaDebug;
 
 @DuplicateCode(reference = &quot;SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana&quot;)
 public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
-<span class="fc" id="L115">	private final Map&lt;Entity, ST_Agnode_s&gt; nodes = new LinkedHashMap&lt;Entity, ST_Agnode_s&gt;();</span>
-<span class="fc" id="L116">	private final Map&lt;Entity, ST_Agnode_s&gt; coreNodes = new LinkedHashMap&lt;Entity, ST_Agnode_s&gt;();</span>
-<span class="fc" id="L117">	private final Map&lt;Link, ST_Agedge_s&gt; edges = new LinkedHashMap&lt;Link, ST_Agedge_s&gt;();</span>
-<span class="fc" id="L118">	private final Map&lt;Link, SmetanaEdge&gt; smetanaPathes = new LinkedHashMap&lt;Link, SmetanaEdge&gt;();</span>
-<span class="fc" id="L119">	private final Map&lt;Entity, ST_Agraph_s&gt; clusters = new LinkedHashMap&lt;Entity, ST_Agraph_s&gt;();</span>
+<span class="fc" id="L117">	private final Map&lt;Entity, ST_Agnode_s&gt; nodes = new LinkedHashMap&lt;Entity, ST_Agnode_s&gt;();</span>
+<span class="fc" id="L118">	private final Map&lt;Entity, ST_Agnode_s&gt; coreNodes = new LinkedHashMap&lt;Entity, ST_Agnode_s&gt;();</span>
+<span class="fc" id="L119">	private final Map&lt;Link, ST_Agedge_s&gt; edges = new LinkedHashMap&lt;Link, ST_Agedge_s&gt;();</span>
+<span class="fc" id="L120">	private final Map&lt;Link, SmetanaEdge&gt; smetanaPathes = new LinkedHashMap&lt;Link, SmetanaEdge&gt;();</span>
+<span class="fc" id="L121">	private final Map&lt;Entity, ST_Agraph_s&gt; clusters = new LinkedHashMap&lt;Entity, ST_Agraph_s&gt;();</span>
 
 	private final Rankdir rankdir;
 
-	public CucaDiagramFileMakerSmetana(CucaDiagram diagram) {
-<span class="fc" id="L124">		super(diagram);</span>
-<span class="fc" id="L125">		this.rankdir = diagram.getSkinParam().getRankdir();</span>
+	private final Entity root;
 
-<span class="fc" id="L127">	}</span>
+	public CucaDiagramFileMakerSmetana(CucaDiagram diagram) {
+<span class="fc" id="L128">		this(diagram, diagram.getRootGroup());</span>
+<span class="fc" id="L129">	}</span>
+
+	public CucaDiagramFileMakerSmetana(CucaDiagram diagram, Entity root) {
+<span class="fc" id="L132">		super(diagram, root);</span>
+<span class="fc" id="L133">		this.root = root;</span>
+<span class="fc" id="L134">		this.rankdir = diagram.getSkinParam().getRankdir();</span>
+
+<span class="fc" id="L136">	}</span>
+
+	// Structural access relative to the local layout root.
+	// At the diagram root, these behave exactly like before (whole diagram).
+	// In a nested sub-layout (root is a group, e.g. a composite state rendered as a
+	// leaf), they restrict the scope to that group: concurrent sub-regions are
+	// filtered out of the group hierarchy, and only links fully internal to the
+	// group are laid out. This mirrors GroupMakerState.InnerGroupHierarchy /
+	// getPureInnerLinks on the dot side, and avoids trying to resolve links that
+	// touch the group itself or the outside world (which have no node in the
+	// sub-layout).
+	private boolean isNestedLayout() {
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		return root != diagram.getRootGroup();</span>
+	}
+
+	private Collection&lt;Entity&gt; getChildrenGroups(Entity parent) {
+<span class="fc bfc" id="L152" title="All 2 branches covered.">		if (isNestedLayout() == false)</span>
+<span class="fc" id="L153">			return diagram.getChildrenGroups(parent);</span>
+
+<span class="fc" id="L155">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">		for (Entity g : diagram.getChildrenGroups(parent))</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">			if (g.getGroupType() != GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L158">				result.add(g);</span>
+
+<span class="fc" id="L160">		return result;</span>
+	}
+
+	private Collection&lt;Link&gt; getLocalLinks() {
+<span class="fc bfc" id="L164" title="All 2 branches covered.">		if (isNestedLayout() == false)</span>
+<span class="fc" id="L165">			return diagram.getLinks();</span>
+
+<span class="fc" id="L167">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">		for (Link link : diagram.getLinks())</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">			if (EntityUtils.isPureInnerLink12(root, link))</span>
+<span class="fc" id="L170">				result.add(link);</span>
+
+<span class="fc" id="L172">		return result;</span>
+	}
 
 	private MinMaxMutable getSmetanaMinMax() {
-<span class="fc" id="L130">		final MinMaxMutable result = MinMaxMutable.getEmpty(false);</span>
-<span class="fc bfc" id="L131" title="All 2 branches covered.">		for (ST_Agnode_s n : nodes.values()) {</span>
-<span class="fc" id="L132">			final BoxInfo data = BoxInfo.fromNode(n);</span>
-<span class="fc" id="L133">			result.addPoint(data.getUpperRight());</span>
-<span class="fc" id="L134">			result.addPoint(data.getLowerLeft());</span>
-<span class="fc" id="L135">		}</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (ST_Agraph_s gr : clusters.values()) {</span>
-<span class="fc" id="L137">			final ST_Agrec_s tmp1 = gr.data;</span>
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">			if (tmp1 instanceof ST_Agraphinfo_t == false) {</span>
-<span class="nc" id="L139">				System.err.println(&quot;ERROR IN CucaDiagramFileMakerSmetana&quot;);</span>
-<span class="nc" id="L140">				continue;</span>
+<span class="fc" id="L176">		final MinMaxMutable result = MinMaxMutable.getEmpty(false);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (ST_Agnode_s n : nodes.values()) {</span>
+<span class="fc" id="L178">			final BoxInfo data = BoxInfo.fromNode(n);</span>
+<span class="fc" id="L179">			result.addPoint(data.getUpperRight());</span>
+<span class="fc" id="L180">			result.addPoint(data.getLowerLeft());</span>
+<span class="fc" id="L181">		}</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">		for (ST_Agraph_s gr : clusters.values()) {</span>
+<span class="fc" id="L183">			final ST_Agrec_s tmp1 = gr.data;</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">			if (tmp1 instanceof ST_Agraphinfo_t == false) {</span>
+<span class="nc" id="L185">				System.err.println(&quot;ERROR IN CucaDiagramFileMakerSmetana&quot;);</span>
+<span class="nc" id="L186">				continue;</span>
 			}
-<span class="fc" id="L142">			final ST_Agraphinfo_t info = (ST_Agraphinfo_t) tmp1;</span>
-<span class="fc" id="L143">			final BoxInfo data = BoxInfo.fromGraphInfo(info);</span>
-<span class="fc" id="L144">			result.addPoint(data.getUpperRight());</span>
-<span class="fc" id="L145">			result.addPoint(data.getLowerLeft());</span>
+<span class="fc" id="L188">			final ST_Agraphinfo_t info = (ST_Agraphinfo_t) tmp1;</span>
+<span class="fc" id="L189">			final BoxInfo data = BoxInfo.fromGraphInfo(info);</span>
+<span class="fc" id="L190">			result.addPoint(data.getUpperRight());</span>
+<span class="fc" id="L191">			result.addPoint(data.getLowerLeft());</span>
 
-<span class="fc" id="L147">		}</span>
-<span class="fc" id="L148">		return result;</span>
+<span class="fc" id="L193">		}</span>
+<span class="fc" id="L194">		return result;</span>
 	}
 
 	class Drawing implements TextBlock {
 
 		private final YMirror ymirror;
 		private final MinMaxMutable minMax;
+		private final double canvasMargin;
+		private MinMax measuredMinMax;
 
-<span class="fc" id="L156">		public Drawing() {</span>
-<span class="fc" id="L157">			this.minMax = getSmetanaMinMax();</span>
-<span class="fc" id="L158">			this.ymirror = new YMirror(minMax.getMaxY() + 6);</span>
-<span class="fc" id="L159">		}</span>
+<span class="fc" id="L204">		public Drawing(double canvasMargin) {</span>
+<span class="fc" id="L205">			this.minMax = getSmetanaMinMax();</span>
+<span class="fc" id="L206">			this.ymirror = new YMirror(minMax.getMaxY() + 6);</span>
+<span class="fc" id="L207">			this.canvasMargin = canvasMargin;</span>
+<span class="fc" id="L208">		}</span>
+
+		private UTranslate getBaselineTranslate() {
+<span class="fc" id="L211">			return new UTranslate(canvasMargin, canvasMargin - minMax.getMinY());</span>
+		}
+
+		private XDimension2D getBaselineDimension() {
+<span class="fc" id="L215">			return minMax.getDimension().delta(2 * canvasMargin + 4, canvasMargin + 16);</span>
+		}
+
+		// The structural minMax (from Smetana's own node/cluster layout boxes) does not
+		// account for geometry drawn afterwards by our own code, such as self-loop edge
+		// curves (SmetanaEdge): a self-loop can visually extend past the rightmost node
+		// it is attached to. At the diagram root this went unnoticed because nothing
+		// framed the drawing tightly, but once this Drawing is used as the image of a
+		// region inside a ConcurrentStates/InnerStateAutonom, that extra geometry gets
+		// clipped by the surrounding border.
+		//
+		// To fix this in a way that cannot regress already-approved renders, we measure
+		// the actually-drawn bounding box once (same technique as SvekResult on the dot
+		// side: draw into a LimitFinder to record real extents), and only ADD extra
+		// margin/translation where the real drawing overflows the structural baseline.
+		// When there is no overflow (the common case), dimension and translate are
+		// byte-for-byte identical to the previous, purely structural computation.
+		private MinMax getMeasuredMinMax(StringBounder stringBounder) {
+<span class="fc bfc" id="L233" title="All 2 branches covered.">			if (measuredMinMax == null) {</span>
+<span class="fc" id="L234">				final UTranslate baseline = getBaselineTranslate();</span>
+<span class="fc" id="L235">				measuredMinMax = TextBlockUtils.getMinMax(ug -&gt; drawContent(ug.apply(baseline)), stringBounder, false);</span>
+			}
+<span class="fc" id="L237">			return measuredMinMax;</span>
+		}
 
 		public void drawU(UGraphic ug) {
+<span class="fc" id="L241">			final MinMax measured = getMeasuredMinMax(ug.getStringBounder());</span>
+<span class="fc" id="L242">			final double extraLeft = Math.max(0, -measured.getMinX());</span>
+<span class="fc" id="L243">			final double extraTop = Math.max(0, -measured.getMinY());</span>
 
-<span class="fc" id="L163">			smetanaPathes.clear();</span>
+<span class="fc" id="L245">			UGraphic shifted = ug.apply(getBaselineTranslate());</span>
+<span class="fc bfc" id="L246" title="All 4 branches covered.">			if (extraLeft != 0 || extraTop != 0)</span>
+<span class="fc" id="L247">				shifted = shifted.apply(new UTranslate(extraLeft, extraTop));</span>
 
-<span class="fc" id="L165">			ug = ug.apply(new UTranslate(6, 6 - minMax.getMinY()));</span>
+<span class="fc" id="L249">			drawContent(shifted);</span>
+<span class="fc" id="L250">		}</span>
 
-<span class="fc bfc" id="L167" title="All 2 branches covered.">			for (Map.Entry&lt;Link, ST_Agedge_s&gt; ent : edges.entrySet()) {</span>
-<span class="fc" id="L168">				final Link link = ent.getKey();</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">				if (link.isInvis())</span>
-<span class="fc" id="L170">					continue;</span>
+		// Draws the diagram content. The caller is responsible for positioning ug at
+		// the desired origin beforehand (no translation is applied here), so that this
+		// method can be reused both for the real draw and for the bounding-box
+		// measurement dry-run above.
+		private void drawContent(UGraphic ug) {
 
-<span class="fc" id="L172">				final ST_Agedge_s edge = ent.getValue();</span>
-<span class="fc" id="L173">				final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);</span>
-<span class="fc" id="L174">				final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);</span>
-<span class="fc" id="L175">				final TextBlock role1 = getRoleLabel(ug.getStringBounder(), link, 1);</span>
-<span class="fc" id="L176">				final TextBlock role2 = getRoleLabel(ug.getStringBounder(), link, 2);</span>
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">				final TextBlock tailLabel = quantifier1 != null ? quantifier1 : role1;</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">				final TextBlock headLabel = quantifier2 != null ? quantifier2 : role2;</span>
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">				final TextBlock tailRole = quantifier1 != null ? role1 : null;</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">				final TextBlock headRole = quantifier2 != null ? role2 : null;</span>
-<span class="fc" id="L181">				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror,</span>
-<span class="fc" id="L182">						getLabel(ug.getStringBounder(), link), tailLabel, headLabel, tailRole, headRole,</span>
-<span class="fc" id="L183">						getBibliotekon(), diagram.getSkinParam());</span>
-<span class="fc" id="L184">				smetanaPathes.put(link, smetanaPath);</span>
-<span class="fc" id="L185">			}</span>
+<span class="fc" id="L258">			smetanaPathes.clear();</span>
 
-<span class="fc bfc" id="L187" title="All 2 branches covered.">			for (Map.Entry&lt;Entity, ST_Agraph_s&gt; ent : clusters.entrySet())</span>
-<span class="fc" id="L188">				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">			for (Map.Entry&lt;Link, ST_Agedge_s&gt; ent : edges.entrySet()) {</span>
+<span class="fc" id="L261">				final Link link = ent.getKey();</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">				if (link.isInvis())</span>
+<span class="fc" id="L263">					continue;</span>
 
-<span class="fc bfc" id="L190" title="All 2 branches covered.">			for (Map.Entry&lt;Entity, ST_Agnode_s&gt; ent : nodes.entrySet()) {</span>
-<span class="fc" id="L191">				final Entity leaf = ent.getKey();</span>
-<span class="fc" id="L192">				final ST_Agnode_s agnode = ent.getValue();</span>
-<span class="fc" id="L193">				final XPoint2D corner = getCorner(agnode);</span>
+<span class="fc" id="L265">				final ST_Agedge_s edge = ent.getValue();</span>
+<span class="fc" id="L266">				final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);</span>
+<span class="fc" id="L267">				final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);</span>
+<span class="fc" id="L268">				final TextBlock role1 = getRoleLabel(ug.getStringBounder(), link, 1);</span>
+<span class="fc" id="L269">				final TextBlock role2 = getRoleLabel(ug.getStringBounder(), link, 2);</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">				final TextBlock tailLabel = quantifier1 != null ? quantifier1 : role1;</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">				final TextBlock headLabel = quantifier2 != null ? quantifier2 : role2;</span>
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">				final TextBlock tailRole = quantifier1 != null ? role1 : null;</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">				final TextBlock headRole = quantifier2 != null ? role2 : null;</span>
+<span class="fc" id="L274">				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror,</span>
+<span class="fc" id="L275">						getLabel(ug.getStringBounder(), link), tailLabel, headLabel, tailRole, headRole,</span>
+<span class="fc" id="L276">						getBibliotekon(), diagram.getSkinParam());</span>
+<span class="fc" id="L277">				smetanaPathes.put(link, smetanaPath);</span>
+<span class="fc" id="L278">			}</span>
 
-<span class="fc" id="L195">				final SvekNode node = getBibliotekon().getNode(leaf);</span>
-<span class="fc" id="L196">				node.resetMove();</span>
-<span class="fc" id="L197">				node.moveDelta(corner.getX(), corner.getY());</span>
-<span class="fc" id="L198">				final IEntityImage image = node.getImage();</span>
-<span class="fc" id="L199">				image.drawU(ug.apply(UTranslate.point(corner)));</span>
-<span class="fc" id="L200">			}</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">			for (Map.Entry&lt;Entity, ST_Agraph_s&gt; ent : clusters.entrySet())</span>
+<span class="fc" id="L281">				drawGroup(ug, ymirror, ent.getKey(), ent.getValue());</span>
 
-<span class="fc bfc" id="L202" title="All 2 branches covered.">			for (Entry&lt;Link, SmetanaEdge&gt; ent : smetanaPathes.entrySet())</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">				if (ent.getKey().isOpale() == false)</span>
-<span class="fc" id="L204">					ent.getValue().drawU(ug);</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">			for (Map.Entry&lt;Entity, ST_Agnode_s&gt; ent : nodes.entrySet()) {</span>
+<span class="fc" id="L284">				final Entity leaf = ent.getKey();</span>
+<span class="fc" id="L285">				final ST_Agnode_s agnode = ent.getValue();</span>
+<span class="fc" id="L286">				final XPoint2D corner = getCorner(agnode);</span>
 
-<span class="fc" id="L206">		}</span>
+<span class="fc" id="L288">				final SvekNode node = getBibliotekon().getNode(leaf);</span>
+<span class="fc" id="L289">				node.resetMove();</span>
+<span class="fc" id="L290">				node.moveDelta(corner.getX(), corner.getY());</span>
+<span class="fc" id="L291">				final IEntityImage image = node.getImage();</span>
+<span class="fc" id="L292">				image.drawU(ug.apply(UTranslate.point(corner)));</span>
+<span class="fc" id="L293">			}</span>
+
+<span class="fc bfc" id="L295" title="All 2 branches covered.">			for (Entry&lt;Link, SmetanaEdge&gt; ent : smetanaPathes.entrySet())</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">				if (ent.getKey().isOpale() == false)</span>
+<span class="fc" id="L297">					ent.getValue().drawU(ug);</span>
+
+<span class="fc" id="L299">		}</span>
 
 		@Fast
 		@Override
 		public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="fc" id="L211">			return minMax.getDimension().delta(16, 6);</span>
+<span class="fc" id="L304">			final MinMax measured = getMeasuredMinMax(stringBounder);</span>
+<span class="fc" id="L305">			final XDimension2D baseline = getBaselineDimension();</span>
+
+<span class="fc" id="L307">			final double extraLeft = Math.max(0, -measured.getMinX());</span>
+<span class="fc" id="L308">			final double extraTop = Math.max(0, -measured.getMinY());</span>
+<span class="fc" id="L309">			final double extraRight = Math.max(0, measured.getMaxX() - baseline.getWidth());</span>
+<span class="fc" id="L310">			final double extraBottom = Math.max(0, measured.getMaxY() - baseline.getHeight());</span>
+
+<span class="fc" id="L312">			return new XDimension2D(baseline.getWidth() + extraLeft + extraRight,</span>
+<span class="fc" id="L313">					baseline.getHeight() + extraTop + extraBottom);</span>
 		}
 
 		private XPoint2D getCorner(ST_Agnode_s n) {
-<span class="fc" id="L215">			final BoxInfo data = BoxInfo.fromNode(n);</span>
-<span class="fc" id="L216">			return ymirror.getMirrored(data.getLowerLeft());</span>
+<span class="fc" id="L317">			final BoxInfo data = BoxInfo.fromNode(n);</span>
+<span class="fc" id="L318">			return ymirror.getMirrored(data.getLowerLeft());</span>
 		}
 
 		public HColor getBackcolor() {
-<span class="nc" id="L220">			return null;</span>
+<span class="nc" id="L322">			return null;</span>
 		}
 
 	}
 
 	// Duplicate GeneralImageBuilder
 	private boolean isOpalisable(Entity entity) {
-<span class="fc bfc" id="L227" title="All 2 branches covered.">		if (entity.isGroup())</span>
-<span class="fc" id="L228">			return false;</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (entity.isGroup())</span>
+<span class="fc" id="L330">			return false;</span>
 
-<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (entity.getLeafType() != LeafType.NOTE)</span>
-<span class="fc" id="L231">			return false;</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">		if (entity.getLeafType() != LeafType.NOTE)</span>
+<span class="fc" id="L333">			return false;</span>
 
-<span class="fc" id="L233">		final Link single = onlyOneLink(entity);</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">		if (single == null)</span>
-<span class="nc" id="L235">			return false;</span>
+<span class="fc" id="L335">		final Link single = onlyOneLink(entity);</span>
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">		if (single == null)</span>
+<span class="nc" id="L337">			return false;</span>
 
-<span class="pc bpc" id="L237" title="1 of 2 branches missed.">		return single.getOther(entity).getLeafType() != LeafType.NOTE;</span>
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">		return single.getOther(entity).getLeafType() != LeafType.NOTE;</span>
 	}
 
 	// Duplicate GeneralImageBuilder
 	private Link onlyOneLink(Entity ent) {
-<span class="fc" id="L242">		Link single = null;</span>
-<span class="fc bfc" id="L243" title="All 2 branches covered.">		for (Link link : diagram.getLinks()) {</span>
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">			if (link.isInvis())</span>
-<span class="nc" id="L245">				continue;</span>
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">			if (link.contains(ent) == false)</span>
-<span class="nc" id="L247">				continue;</span>
+<span class="fc" id="L344">		Link single = null;</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">		for (Link link : diagram.getLinks()) {</span>
+<span class="pc bpc" id="L346" title="1 of 2 branches missed.">			if (link.isInvis())</span>
+<span class="nc" id="L347">				continue;</span>
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">			if (link.contains(ent) == false)</span>
+<span class="nc" id="L349">				continue;</span>
 
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">			if (single != null)</span>
-<span class="nc" id="L250">				return null;</span>
-<span class="fc" id="L251">			single = link;</span>
-<span class="fc" id="L252">		}</span>
-<span class="fc" id="L253">		return single;</span>
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">			if (single != null)</span>
+<span class="nc" id="L352">				return null;</span>
+<span class="fc" id="L353">			single = link;</span>
+<span class="fc" id="L354">		}</span>
+<span class="fc" id="L355">		return single;</span>
 	}
 
 	private void drawGroup(UGraphic ug, YMirror ymirror, Entity group, ST_Agraph_s gr) {
-<span class="fc" id="L257">		JUtils.LOG2(&quot;drawGroup&quot;);</span>
+<span class="fc" id="L359">		JUtils.LOG2(&quot;drawGroup&quot;);</span>
 		try {
-<span class="fc" id="L259">			final ST_Agrec_s tmp1 = gr.data;</span>
-<span class="fc" id="L260">			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) tmp1;</span>
-<span class="fc" id="L261">			final BoxInfo boxInfo = BoxInfo.fromGraphInfo(data);</span>
-<span class="fc" id="L262">			final XPoint2D upperRight = ymirror.getMirrored(boxInfo.getUpperRight());</span>
-<span class="fc" id="L263">			final XPoint2D lowerLeft = ymirror.getMirrored(boxInfo.getLowerLeft());</span>
+<span class="fc" id="L361">			final ST_Agrec_s tmp1 = gr.data;</span>
+<span class="fc" id="L362">			final ST_Agraphinfo_t data = (ST_Agraphinfo_t) tmp1;</span>
+<span class="fc" id="L363">			final BoxInfo boxInfo = BoxInfo.fromGraphInfo(data);</span>
+<span class="fc" id="L364">			final XPoint2D upperRight = ymirror.getMirrored(boxInfo.getUpperRight());</span>
+<span class="fc" id="L365">			final XPoint2D lowerLeft = ymirror.getMirrored(boxInfo.getLowerLeft());</span>
 
-<span class="fc" id="L265">			final Cluster cluster = getBibliotekon().getCluster(group);</span>
-<span class="fc" id="L266">			cluster.setPosition(upperRight, lowerLeft);</span>
+<span class="fc" id="L367">			final Cluster cluster = getBibliotekon().getCluster(group);</span>
+<span class="fc" id="L368">			cluster.setPosition(upperRight, lowerLeft);</span>
 
-<span class="fc" id="L268">			final XDimension2D dimTitle = cluster.getTitleDimension(ug.getStringBounder());</span>
-<span class="pc bpc" id="L269" title="1 of 2 branches missed.">			if (dimTitle != null) {</span>
-<span class="fc" id="L270">				final double x = (upperRight.getX() + lowerLeft.getX()) / 2 - dimTitle.getWidth() / 2;</span>
-<span class="fc" id="L271">				cluster.setTitlePosition(new XPoint2D(x, Math.min(upperRight.getY(), lowerLeft.getY())));</span>
+<span class="fc" id="L370">			final XDimension2D dimTitle = cluster.getTitleDimension(ug.getStringBounder());</span>
+<span class="pc bpc" id="L371" title="1 of 2 branches missed.">			if (dimTitle != null) {</span>
+<span class="fc" id="L372">				final double x = (upperRight.getX() + lowerLeft.getX()) / 2 - dimTitle.getWidth() / 2;</span>
+<span class="fc" id="L373">				cluster.setTitlePosition(new XPoint2D(x, Math.min(upperRight.getY(), lowerLeft.getY())));</span>
 			}
-<span class="fc" id="L273">			JUtils.LOG2(&quot;cluster=&quot; + cluster);</span>
-<span class="fc" id="L274">			cluster.drawU(ug);</span>
+<span class="fc" id="L375">			JUtils.LOG2(&quot;cluster=&quot; + cluster);</span>
+<span class="fc" id="L376">			cluster.drawU(ug);</span>
 			// ug.apply(new UTranslate(llx, lly)).apply(HColors.BLUE).draw(new
 			// URectangle(urx - llx, ury - lly));
-<span class="nc" id="L277">		} catch (Exception e) {</span>
-<span class="nc" id="L278">			System.err.println(&quot;CANNOT DRAW GROUP&quot;);</span>
-<span class="fc" id="L279">		}</span>
-<span class="fc" id="L280">	}</span>
+<span class="nc" id="L379">		} catch (Exception e) {</span>
+<span class="nc" id="L380">			System.err.println(&quot;CANNOT DRAW GROUP&quot;);</span>
+<span class="fc" id="L381">		}</span>
+<span class="fc" id="L382">	}</span>
 
 	private void printAllSubgroups(StringBounder stringBounder, Entity parent) {
-<span class="fc bfc" id="L283" title="All 2 branches covered.">		for (Entity g : diagram.getChildrenGroups(parent)) {</span>
-<span class="pc bpc" id="L284" title="1 of 2 branches missed.">			if (g.isRemoved())</span>
-<span class="nc" id="L285">				continue;</span>
+<span class="fc bfc" id="L385" title="All 2 branches covered.">		for (Entity g : getChildrenGroups(parent)) {</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">			if (g.isRemoved())</span>
+<span class="nc" id="L387">				continue;</span>
 
-<span class="pc bpc" id="L287" title="1 of 4 branches missed.">			if (diagram.isEmpty(g) &amp;&amp; g.getGroupType() == GroupType.PACKAGE) {</span>
-<span class="fc" id="L288">				g.muteToType(LeafType.EMPTY_PACKAGE);</span>
-<span class="fc" id="L289">				this.printEntity(stringBounder, g);</span>
+<span class="pc bpc" id="L389" title="1 of 4 branches missed.">			if (diagram.isEmpty(g) &amp;&amp; g.getGroupType() == GroupType.PACKAGE) {</span>
+<span class="fc" id="L390">				g.muteToType(LeafType.EMPTY_PACKAGE);</span>
+<span class="fc" id="L391">				this.printEntity(stringBounder, g);</span>
 			} else {
-<span class="fc" id="L291">				this.printSingleGroup(stringBounder, g);</span>
+<span class="fc" id="L393">				this.printSingleGroup(stringBounder, g);</span>
 			}
-<span class="fc" id="L293">		}</span>
-<span class="fc" id="L294">	}</span>
+<span class="fc" id="L395">		}</span>
+<span class="fc" id="L396">	}</span>
 
 	private void printSingleGroup(StringBounder stringBounder, Entity g) {
-<span class="pc bpc" id="L297" title="1 of 2 branches missed.">		if (g.getGroupType() == GroupType.CONCURRENT_STATE)</span>
-<span class="nc" id="L298">			return;</span>
+<span class="pc bpc" id="L399" title="1 of 2 branches missed.">		if (g.getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="nc" id="L400">			return;</span>
 
-<span class="pc bpc" id="L300" title="1 of 2 branches missed.">		if (g.isPacked() == false) {</span>
-<span class="fc" id="L301">			final ClusterHeader clusterHeader = new ClusterHeader(g, diagram, stringBounder);</span>
-<span class="fc" id="L302">			clusterManager.openCluster(g, clusterHeader);</span>
+<span class="pc bpc" id="L402" title="1 of 2 branches missed.">		if (g.isPacked() == false) {</span>
+<span class="fc" id="L403">			final ClusterHeader clusterHeader = new ClusterHeader(g, diagram, stringBounder);</span>
+<span class="fc" id="L404">			clusterManager.openCluster(g, clusterHeader);</span>
 		}
 
-<span class="fc" id="L305">		this.printEntities(stringBounder, g.leafs());</span>
-<span class="fc" id="L306">		this.printAllSubgroups(stringBounder, g);</span>
+<span class="fc" id="L407">		this.printEntities(stringBounder, g.leafs());</span>
+<span class="fc" id="L408">		this.printAllSubgroups(stringBounder, g);</span>
 
-<span class="pc bpc" id="L308" title="1 of 2 branches missed.">		if (g.isPacked() == false)</span>
-<span class="fc" id="L309">			clusterManager.closeCluster();</span>
+<span class="pc bpc" id="L410" title="1 of 2 branches missed.">		if (g.isPacked() == false)</span>
+<span class="fc" id="L411">			clusterManager.closeCluster();</span>
 
-<span class="fc" id="L311">	}</span>
+<span class="fc" id="L413">	}</span>
 
 	private void printEntities(StringBounder stringBounder, Collection&lt;Entity&gt; entities) {
-<span class="fc bfc" id="L314" title="All 2 branches covered.">		for (Entity ent : entities) {</span>
-<span class="pc bpc" id="L315" title="1 of 2 branches missed.">			if (ent.isRemoved())</span>
-<span class="nc" id="L316">				continue;</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">		for (Entity ent : entities) {</span>
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">			if (ent.isRemoved())</span>
+<span class="nc" id="L418">				continue;</span>
 
-<span class="fc" id="L318">			this.printEntity(stringBounder, ent);</span>
-<span class="fc" id="L319">		}</span>
-<span class="fc" id="L320">	}</span>
+<span class="fc" id="L420">			this.printEntity(stringBounder, ent);</span>
+<span class="fc" id="L421">		}</span>
+<span class="fc" id="L422">	}</span>
 
 	private void exportEntities(Globals zz, ST_Agraph_s cluster, Collection&lt;Entity&gt; entities) {
-<span class="fc bfc" id="L323" title="All 2 branches covered.">		for (Entity ent : entities) {</span>
-<span class="pc bpc" id="L324" title="1 of 2 branches missed.">			if (ent.isRemoved())</span>
-<span class="nc" id="L325">				continue;</span>
-<span class="fc" id="L326">			exportEntity(zz, cluster, ent);</span>
-<span class="fc" id="L327">		}</span>
-<span class="fc" id="L328">	}</span>
+<span class="fc bfc" id="L425" title="All 2 branches covered.">		for (Entity ent : entities) {</span>
+<span class="pc bpc" id="L426" title="1 of 2 branches missed.">			if (ent.isRemoved())</span>
+<span class="nc" id="L427">				continue;</span>
+<span class="fc" id="L428">			exportEntity(zz, cluster, ent);</span>
+<span class="fc" id="L429">		}</span>
+<span class="fc" id="L430">	}</span>
 
 	private XDimension2D getDim(SvekNode node) {
-<span class="fc" id="L331">		final double width = node.getWidth() / 72;</span>
-<span class="fc" id="L332">		final double height = node.getHeight() / 72;</span>
-<span class="fc" id="L333">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L433">		final double width = node.getWidth() / 72;</span>
+<span class="fc" id="L434">		final double height = node.getHeight() / 72;</span>
+<span class="fc" id="L435">		return new XDimension2D(width, height);</span>
 	}
 
 	private ST_Agnode_s getCoreFromGroup(Globals zz, Entity group) {
-<span class="fc" id="L337">		ST_Agnode_s result = coreNodes.get(group);</span>
-<span class="fc bfc" id="L338" title="All 2 branches covered.">		if (result != null)</span>
-<span class="fc" id="L339">			return result;</span>
+<span class="fc" id="L439">		ST_Agnode_s result = coreNodes.get(group);</span>
+<span class="pc bpc" id="L440" title="1 of 2 branches missed.">		if (result != null)</span>
+<span class="nc" id="L441">			return result;</span>
 
-<span class="fc" id="L341">		final ST_Agraph_s cluster = clusters.get(group);</span>
-<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		if (cluster == null)</span>
-<span class="nc" id="L343">			throw new IllegalStateException();</span>
+<span class="fc" id="L443">		final ST_Agraph_s cluster = clusters.get(group);</span>
+<span class="pc bpc" id="L444" title="1 of 2 branches missed.">		if (cluster == null)</span>
+<span class="nc" id="L445">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L345">		result = agnode(zz, cluster, new CString(&quot;z&quot; + group.getUid()), true);</span>
-<span class="fc" id="L346">		agsafeset(zz, result, new CString(&quot;shape&quot;), new CString(&quot;box&quot;), new CString(&quot;&quot;));</span>
-<span class="fc" id="L347">		agsafeset(zz, result, new CString(&quot;width&quot;), new CString(&quot;0.1&quot;), new CString(&quot;&quot;));</span>
-<span class="fc" id="L348">		agsafeset(zz, result, new CString(&quot;height&quot;), new CString(&quot;0.1&quot;), new CString(&quot;&quot;));</span>
-<span class="fc" id="L349">		coreNodes.put(group, result);</span>
-<span class="fc" id="L350">		return result;</span>
+<span class="fc" id="L447">		result = agnode(zz, cluster, new CString(&quot;z&quot; + group.getUid()), true);</span>
+<span class="fc" id="L448">		agsafeset(zz, result, new CString(&quot;shape&quot;), new CString(&quot;box&quot;), new CString(&quot;&quot;));</span>
+<span class="fc" id="L449">		agsafeset(zz, result, new CString(&quot;width&quot;), new CString(&quot;0.1&quot;), new CString(&quot;&quot;));</span>
+<span class="fc" id="L450">		agsafeset(zz, result, new CString(&quot;height&quot;), new CString(&quot;0.1&quot;), new CString(&quot;&quot;));</span>
+<span class="fc" id="L451">		coreNodes.put(group, result);</span>
+<span class="fc" id="L452">		return result;</span>
 	}
 
 	private void exportEntity(Globals zz, ST_Agraph_s cluster, Entity leaf) {
-<span class="fc" id="L354">		final SvekNode node = getBibliotekon().getNode(leaf);</span>
-<span class="pc bpc" id="L355" title="1 of 2 branches missed.">		if (node == null) {</span>
-<span class="nc" id="L356">			System.err.println(&quot;CANNOT FIND NODE&quot;);</span>
-<span class="nc" id="L357">			return;</span>
+<span class="fc" id="L456">		final SvekNode node = getBibliotekon().getNode(leaf);</span>
+<span class="pc bpc" id="L457" title="1 of 2 branches missed.">		if (node == null) {</span>
+<span class="nc" id="L458">			System.err.println(&quot;CANNOT FIND NODE&quot;);</span>
+<span class="nc" id="L459">			return;</span>
 		}
-<span class="fc" id="L359">		final ST_Agnode_s agnode = agnode(zz, cluster, new CString(node.getUid()), true);</span>
-<span class="fc" id="L360">		agsafeset(zz, agnode, new CString(&quot;shape&quot;), new CString(&quot;box&quot;), new CString(&quot;&quot;));</span>
-<span class="fc" id="L361">		final XDimension2D dim = getDim(node);</span>
-<span class="fc" id="L362">		final String width = &quot;&quot; + dim.getWidth();</span>
-<span class="fc" id="L363">		final String height = &quot;&quot; + dim.getHeight();</span>
-<span class="fc" id="L364">		agsafeset(zz, agnode, new CString(&quot;width&quot;), new CString(width), new CString(&quot;&quot;));</span>
-<span class="fc" id="L365">		agsafeset(zz, agnode, new CString(&quot;height&quot;), new CString(height), new CString(&quot;&quot;));</span>
-<span class="fc" id="L366">		nodes.put(leaf, agnode);</span>
-<span class="fc" id="L367">	}</span>
+<span class="fc" id="L461">		final ST_Agnode_s agnode = agnode(zz, cluster, new CString(node.getUid()), true);</span>
+<span class="fc" id="L462">		agsafeset(zz, agnode, new CString(&quot;shape&quot;), new CString(&quot;box&quot;), new CString(&quot;&quot;));</span>
+<span class="fc" id="L463">		final XDimension2D dim = getDim(node);</span>
+<span class="fc" id="L464">		final String width = &quot;&quot; + dim.getWidth();</span>
+<span class="fc" id="L465">		final String height = &quot;&quot; + dim.getHeight();</span>
+<span class="fc" id="L466">		agsafeset(zz, agnode, new CString(&quot;width&quot;), new CString(width), new CString(&quot;&quot;));</span>
+<span class="fc" id="L467">		agsafeset(zz, agnode, new CString(&quot;height&quot;), new CString(height), new CString(&quot;&quot;));</span>
+<span class="fc" id="L468">		nodes.put(leaf, agnode);</span>
+<span class="fc" id="L469">	}</span>
 
 	private void printEntity(StringBounder stringBounder, Entity ent) {
-<span class="pc bpc" id="L370" title="1 of 2 branches missed.">		if (ent.isRemoved())</span>
-<span class="nc" id="L371">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L472" title="1 of 2 branches missed.">		if (ent.isRemoved())</span>
+<span class="nc" id="L473">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L373">		final IEntityImage image = printEntityInternal(ent);</span>
-<span class="fc" id="L374">		final SvekNode node = getBibliotekon().createNode(ent, image, stringBounder);</span>
-<span class="fc" id="L375">		clusterManager.addNode(node);</span>
-<span class="fc" id="L376">	}</span>
+<span class="fc" id="L475">		final IEntityImage image = printEntityInternal(ent);</span>
+<span class="fc" id="L476">		final SvekNode node = getBibliotekon().createNode(ent, image, stringBounder);</span>
+<span class="fc" id="L477">		clusterManager.addNode(node);</span>
+<span class="fc" id="L478">	}</span>
 
 	private Collection&lt;Entity&gt; getUnpackagedEntities() {
-<span class="fc" id="L379">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L380" title="All 2 branches covered.">		for (Entity ent : diagram.leafs())</span>
-<span class="fc bfc" id="L381" title="All 2 branches covered.">			if (diagram.getRootGroup() == ent.getParentContainer())</span>
-<span class="fc" id="L382">				result.add(ent);</span>
+<span class="fc" id="L481">		final List&lt;Entity&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">		for (Entity ent : diagram.leafs())</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">			if (root == ent.getParentContainer()) {</span>
+				// In a nested sub-layout of a concurrent state, the STATE_CONCURRENT
+				// leaves are the other regions: they are stacked separately by
+				// GroupMakerStateSmetana, so they must not be laid out here.
+<span class="fc bfc" id="L487" title="All 4 branches covered.">				if (isNestedLayout() &amp;&amp; ent.getLeafType() == LeafType.STATE_CONCURRENT)</span>
+<span class="fc" id="L488">					continue;</span>
 
-<span class="fc" id="L384">		return result;</span>
+<span class="fc" id="L490">				result.add(ent);</span>
+			}
+
+<span class="fc" id="L493">		return result;</span>
 	}
 
-<span class="fc" id="L387">	private static final Lock lock = new ReentrantLock();</span>
+<span class="fc" id="L496">	private static final Lock lock = new ReentrantLock();</span>
 
 	@Override
 	public TextBlock getTextBlock(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
-<span class="fc" id="L393">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),</span>
-<span class="fc" id="L394">				diagram.getPragma());</span>
+<span class="fc" id="L502">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),</span>
+<span class="fc" id="L503">				diagram.getPragma());</span>
 
-<span class="fc" id="L396">		this.printAllSubgroups(stringBounder, diagram.getRootGroup());</span>
-<span class="fc" id="L397">		this.printEntities(stringBounder, getUnpackagedEntities());</span>
+		// Turn composite states into pre-rendered leaves, mirroring the dot pipeline.
+		// Selective for now: concurrent states are left untouched (see the simplifier).
+<span class="fc bfc" id="L507" title="All 2 branches covered.">		if (diagram.getDiagramType() == DiagramType.STATE)</span>
+<span class="fc" id="L508">			new CucaDiagramSimplifierStateSmetana().simplify(diagram, stringBounder);</span>
 
-<span class="fc bfc" id="L399" title="All 2 branches covered.">		for (Link link : diagram.getLinks()) {</span>
-<span class="pc bpc" id="L400" title="1 of 2 branches missed.">			if (link.isRemoved())</span>
-<span class="nc" id="L401">				continue;</span>
+<span class="fc" id="L510">		return layoutAndGetTextBlock(stringBounder);</span>
+	}
 
-<span class="fc bfc" id="L403" title="All 2 branches covered.">			if (isOpalisable(link.getEntity1())) {</span>
-<span class="fc" id="L404">				final SvekNode node = getBibliotekon().getNode(link.getEntity1());</span>
-<span class="fc" id="L405">				final SvekNode other = getBibliotekon().getNode(link.getEntity2());</span>
-<span class="pc bpc" id="L406" title="1 of 2 branches missed.">				if (other != null) {</span>
-<span class="fc" id="L407">					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);</span>
-<span class="fc" id="L408">					link.setOpale(true);</span>
+	// Layout the current root and return the resulting drawable.
+	// Factored out of getTextBlock so that a sub-layout (e.g. a composite state
+	// rendered as a leaf) can be produced from a StringBounder alone, mirroring
+	// GraphvizImageBuilder.buildImage(stringBounder, ...) on the dot side.
+	private TextBlock layoutAndGetTextBlock(StringBounder stringBounder) {
+
+<span class="fc" id="L519">		this.printAllSubgroups(stringBounder, root);</span>
+<span class="fc" id="L520">		this.printEntities(stringBounder, getUnpackagedEntities());</span>
+
+<span class="fc bfc" id="L522" title="All 2 branches covered.">		for (Link link : getLocalLinks()) {</span>
+<span class="pc bpc" id="L523" title="1 of 2 branches missed.">			if (link.isRemoved())</span>
+<span class="nc" id="L524">				continue;</span>
+
+<span class="fc bfc" id="L526" title="All 2 branches covered.">			if (isOpalisable(link.getEntity1())) {</span>
+<span class="fc" id="L527">				final SvekNode node = getBibliotekon().getNode(link.getEntity1());</span>
+<span class="fc" id="L528">				final SvekNode other = getBibliotekon().getNode(link.getEntity2());</span>
+<span class="pc bpc" id="L529" title="1 of 2 branches missed.">				if (other != null) {</span>
+<span class="fc" id="L530">					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);</span>
+<span class="fc" id="L531">					link.setOpale(true);</span>
 				}
-<span class="pc bpc" id="L410" title="1 of 2 branches missed.">			} else if (isOpalisable(link.getEntity2())) {</span>
-<span class="nc" id="L411">				final SvekNode node = getBibliotekon().getNode(link.getEntity2());</span>
-<span class="nc" id="L412">				final SvekNode other = getBibliotekon().getNode(link.getEntity1());</span>
-<span class="nc bnc" id="L413" title="All 2 branches missed.">				if (other != null) {</span>
-<span class="nc" id="L414">					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);</span>
-<span class="nc" id="L415">					link.setOpale(true);</span>
+<span class="pc bpc" id="L533" title="1 of 2 branches missed.">			} else if (isOpalisable(link.getEntity2())) {</span>
+<span class="nc" id="L534">				final SvekNode node = getBibliotekon().getNode(link.getEntity2());</span>
+<span class="nc" id="L535">				final SvekNode other = getBibliotekon().getNode(link.getEntity1());</span>
+<span class="nc bnc" id="L536" title="All 2 branches missed.">				if (other != null) {</span>
+<span class="nc" id="L537">					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);</span>
+<span class="nc" id="L538">					link.setOpale(true);</span>
 				}
 			}
-<span class="fc" id="L418">		}</span>
+<span class="fc" id="L541">		}</span>
 
-<span class="fc" id="L420">		lock.lock();</span>
+<span class="fc" id="L543">		lock.lock();</span>
 		try {
-<span class="fc" id="L422">			final Globals zz = Globals.open();</span>
+<span class="fc" id="L545">			final Globals zz = Globals.open();</span>
 			try {
-<span class="fc" id="L424">				return getTextBlockInternal(stringBounder, zz);</span>
+<span class="fc" id="L547">				return getTextBlockInternal(stringBounder, zz);</span>
 			} finally {
-<span class="fc" id="L426">				Globals.close();</span>
+<span class="fc" id="L549">				Globals.close();</span>
 			}
 		} finally {
-<span class="fc" id="L429">			lock.unlock();</span>
+<span class="fc" id="L552">			lock.unlock();</span>
 		}
+	}
+
+	// Render the current root as a self-contained IEntityImage.
+	// Used when a composite state is turned into a leaf and laid out by a nested
+	// Smetana pass (see GroupMakerStateSmetana). The returned image is autonomous:
+	// the layout is fully computed here, so drawing later does not require an open
+	// Globals context.
+	public IEntityImage getImage(StringBounder stringBounder) {
+<span class="fc" id="L562">		final TextBlock textBlock = layoutAndGetTextBlock(stringBounder);</span>
+<span class="fc" id="L563">		return new TextBlockToEntityImage(textBlock);</span>
 	}
 
 	private TextBlock getTextBlockInternal(StringBounder stringBounder, Globals zz) {
 
-<span class="fc" id="L435">		final ST_Agraph_s g = agopen(zz, new CString(&quot;g&quot;), zz.Agdirected, null);</span>
+<span class="fc" id="L568">		final ST_Agraph_s g = agopen(zz, new CString(&quot;g&quot;), zz.Agdirected, null);</span>
 
-<span class="fc" id="L437">		exportEntities(zz, g, getUnpackagedEntities());</span>
-<span class="fc" id="L438">		exportGroups(zz, g, diagram.getRootGroup());</span>
+<span class="fc" id="L570">		exportEntities(zz, g, getUnpackagedEntities());</span>
+<span class="fc" id="L571">		exportGroups(zz, g, root);</span>
 
-<span class="fc bfc" id="L440" title="All 2 branches covered.">		for (Link link : diagram.getLinks()) {</span>
-<span class="fc" id="L441">			final ST_Agedge_s e = createEdge(stringBounder, zz, g, link);</span>
-<span class="pc bpc" id="L442" title="1 of 2 branches missed.">			if (e != null)</span>
-<span class="fc" id="L443">				edges.put(link, e);</span>
+<span class="fc bfc" id="L573" title="All 2 branches covered.">		for (Link link : getLocalLinks()) {</span>
+<span class="fc" id="L574">			final ST_Agedge_s e = createEdge(stringBounder, zz, g, link);</span>
+<span class="pc bpc" id="L575" title="1 of 2 branches missed.">			if (e != null)</span>
+<span class="fc" id="L576">				edges.put(link, e);</span>
 
-<span class="fc" id="L445">		}</span>
+<span class="fc" id="L578">		}</span>
 
-<span class="pc bpc" id="L447" title="1 of 4 branches missed.">		if (nodes.values().isEmpty() &amp;&amp; clusters.values().isEmpty())</span>
-<span class="fc" id="L448">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="pc bpc" id="L580" title="1 of 4 branches missed.">		if (nodes.values().isEmpty() &amp;&amp; clusters.values().isEmpty())</span>
+<span class="fc" id="L581">			return TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
 
-<span class="fc" id="L450">		final ST_GVC_s gvc = gvContext(zz);</span>
-<span class="fc" id="L451">		SmetanaDebug.reset();</span>
-<span class="fc bfc" id="L452" title="All 2 branches covered.">		if (rankdir == Rankdir.LEFT_TO_RIGHT)</span>
-<span class="fc" id="L453">			agsafeset(zz, g, new CString(&quot;rankdir&quot;), new CString(&quot;LR&quot;), new CString(&quot;LR&quot;));</span>
-<span class="fc" id="L454">		gvLayoutJobs(zz, gvc, g);</span>
-<span class="fc" id="L455">		SmetanaDebug.printMe();</span>
+<span class="fc" id="L583">		final ST_GVC_s gvc = gvContext(zz);</span>
+<span class="fc" id="L584">		SmetanaDebug.reset();</span>
+<span class="fc bfc" id="L585" title="All 2 branches covered.">		if (rankdir == Rankdir.LEFT_TO_RIGHT)</span>
+<span class="fc" id="L586">			agsafeset(zz, g, new CString(&quot;rankdir&quot;), new CString(&quot;LR&quot;), new CString(&quot;LR&quot;));</span>
+<span class="fc" id="L587">		gvLayoutJobs(zz, gvc, g);</span>
+<span class="fc" id="L588">		SmetanaDebug.printMe();</span>
 
-<span class="fc" id="L457">		final TextBlock drawable = new Drawing();</span>
-<span class="fc" id="L458">		return drawable;</span>
+		// At the diagram root, keep the historical canvas margin (6). In a nested
+		// sub-layout the surrounding InnerStateAutonom already provides the padding,
+		// so we drop this margin to avoid extra space inside the composite state.
+<span class="fc bfc" id="L593" title="All 2 branches covered.">		final double canvasMargin = isNestedLayout() ? 0 : 6;</span>
+<span class="fc" id="L594">		final TextBlock drawable = new Drawing(canvasMargin);</span>
+<span class="fc" id="L595">		return drawable;</span>
 	}
 
 	private void exportGroups(Globals zz, ST_Agraph_s graph, Entity parent) {
-<span class="fc bfc" id="L462" title="All 2 branches covered.">		for (Entity g : diagram.getChildrenGroups(parent)) {</span>
-<span class="pc bpc" id="L463" title="1 of 2 branches missed.">			if (g.isRemoved())</span>
-<span class="nc" id="L464">				continue;</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">		for (Entity g : getChildrenGroups(parent)) {</span>
+<span class="pc bpc" id="L600" title="1 of 2 branches missed.">			if (g.isRemoved())</span>
+<span class="nc" id="L601">				continue;</span>
 
-<span class="pc bpc" id="L466" title="3 of 4 branches missed.">			if (diagram.isEmpty(g) &amp;&amp; g.getGroupType() == GroupType.PACKAGE)</span>
-<span class="nc" id="L467">				exportEntity(zz, graph, g);</span>
+<span class="pc bpc" id="L603" title="3 of 4 branches missed.">			if (diagram.isEmpty(g) &amp;&amp; g.getGroupType() == GroupType.PACKAGE)</span>
+<span class="nc" id="L604">				exportEntity(zz, graph, g);</span>
 			else
-<span class="fc" id="L469">				exportGroup(zz, graph, g);</span>
+<span class="fc" id="L606">				exportGroup(zz, graph, g);</span>
 
-<span class="fc" id="L471">		}</span>
+<span class="fc" id="L608">		}</span>
 
-<span class="fc" id="L473">	}</span>
+<span class="fc" id="L610">	}</span>
 
 	private void exportGroup(Globals zz, ST_Agraph_s graph, Entity group) {
-<span class="pc bpc" id="L476" title="1 of 2 branches missed.">		if (group.isPacked()) {</span>
-<span class="nc" id="L477">			this.exportEntities(zz, graph, group.leafs());</span>
-<span class="nc" id="L478">			this.exportGroups(zz, graph, group);</span>
-<span class="nc" id="L479">			return;</span>
+<span class="pc bpc" id="L613" title="1 of 2 branches missed.">		if (group.isPacked()) {</span>
+<span class="nc" id="L614">			this.exportEntities(zz, graph, group.leafs());</span>
+<span class="nc" id="L615">			this.exportGroups(zz, graph, group);</span>
+<span class="nc" id="L616">			return;</span>
 		}
-<span class="fc" id="L481">		final Cluster cluster = getBibliotekon().getCluster(group);</span>
-<span class="pc bpc" id="L482" title="1 of 2 branches missed.">		if (cluster == null) {</span>
-<span class="nc" id="L483">			System.err.println(&quot;CucaDiagramFileMakerSmetana::exportGroup issue&quot;);</span>
-<span class="nc" id="L484">			return;</span>
+<span class="fc" id="L618">		final Cluster cluster = getBibliotekon().getCluster(group);</span>
+<span class="pc bpc" id="L619" title="1 of 2 branches missed.">		if (cluster == null) {</span>
+<span class="nc" id="L620">			System.err.println(&quot;CucaDiagramFileMakerSmetana::exportGroup issue&quot;);</span>
+<span class="nc" id="L621">			return;</span>
 		}
-<span class="fc" id="L486">		JUtils.LOG2(&quot;cluster = &quot; + cluster.getClusterId());</span>
-<span class="fc" id="L487">		final ST_Agraph_s cluster1 = agsubg(zz, graph, new CString(cluster.getClusterId()), true);</span>
-<span class="pc bpc" id="L488" title="1 of 2 branches missed.">		if (cluster.isLabel()) {</span>
-<span class="fc" id="L489">			final double width = cluster.getTitleAndAttributeWidth();</span>
-<span class="fc" id="L490">			final double height = cluster.getTitleAndAttributeHeight() - 5;</span>
-<span class="fc" id="L491">			agsafeset(zz, cluster1, new CString(&quot;label&quot;), createLabelDim(width, height), new CString(&quot;&quot;));</span>
+<span class="fc" id="L623">		JUtils.LOG2(&quot;cluster = &quot; + cluster.getClusterId());</span>
+<span class="fc" id="L624">		final ST_Agraph_s cluster1 = agsubg(zz, graph, new CString(cluster.getClusterId()), true);</span>
+<span class="pc bpc" id="L625" title="1 of 2 branches missed.">		if (cluster.isLabel()) {</span>
+<span class="fc" id="L626">			final double width = cluster.getTitleAndAttributeWidth();</span>
+<span class="fc" id="L627">			final double height = cluster.getTitleAndAttributeHeight() - 5;</span>
+<span class="fc" id="L628">			agsafeset(zz, cluster1, new CString(&quot;label&quot;), createLabelDim(width, height), new CString(&quot;&quot;));</span>
 		}
-<span class="fc" id="L493">		this.exportEntities(zz, cluster1, group.leafs());</span>
-<span class="fc" id="L494">		this.clusters.put(group, cluster1);</span>
-<span class="fc" id="L495">		this.exportGroups(zz, cluster1, group);</span>
-<span class="fc" id="L496">	}</span>
+<span class="fc" id="L630">		this.exportEntities(zz, cluster1, group.leafs());</span>
+<span class="fc" id="L631">		this.clusters.put(group, cluster1);</span>
+<span class="fc" id="L632">		this.exportGroups(zz, cluster1, group);</span>
+<span class="fc" id="L633">	}</span>
 
 	private CString createLabelDim(final double width, final double height) {
-<span class="fc" id="L499">		return Macro.createHackInitDimensionFromLabel((int) width, (int) height);</span>
+<span class="fc" id="L636">		return Macro.createHackInitDimensionFromLabel((int) width, (int) height);</span>
 	}
 
 	private Style getStyle() {
-<span class="fc" id="L503">		return StyleSignatureBasic.of(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)</span>
-<span class="fc" id="L504">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
+<span class="fc" id="L640">		return StyleSignatureBasic.of(SName.root, SName.element, diagram.getDiagramType().getStyleName(), SName.arrow)</span>
+<span class="fc" id="L641">				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());</span>
 	}
 
 	// Duplication from SvekEdge
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
-<span class="fc" id="L509">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
-<span class="pc bpc" id="L510" title="1 of 2 branches missed.">		if (stereotype != null)</span>
-<span class="nc" id="L511">			result = result.withTOBECHANGED(stereotype);</span>
+<span class="fc" id="L646">		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);</span>
+<span class="pc bpc" id="L647" title="1 of 2 branches missed.">		if (stereotype != null)</span>
+<span class="nc" id="L648">			result = result.withTOBECHANGED(stereotype);</span>
 
-<span class="fc" id="L513">		return result;</span>
+<span class="fc" id="L650">		return result;</span>
 	}
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
-<span class="fc" id="L517">		final SName styleName = skinParam.getDiagramType().getStyleName();</span>
+<span class="fc" id="L654">		final SName styleName = skinParam.getDiagramType().getStyleName();</span>
 
-<span class="fc" id="L519">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
-<span class="fc" id="L520">				.getMergedStyle(link.getStyleBuilder());</span>
-<span class="fc" id="L521">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L656">		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)</span>
+<span class="fc" id="L657">				.getMergedStyle(link.getStyleBuilder());</span>
+<span class="fc" id="L658">		return style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
 	}
 
 	private HorizontalAlignment getMessageTextAlignment(DiagramType diagramType, ISkinParam skinParam) {
-<span class="pc bpc" id="L525" title="1 of 2 branches missed.">		if (diagramType == DiagramType.STATE)</span>
-<span class="nc" id="L526">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
+<span class="fc bfc" id="L662" title="All 2 branches covered.">		if (diagramType == DiagramType.STATE)</span>
+<span class="fc" id="L663">			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);</span>
 
-<span class="fc" id="L528">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
+<span class="fc" id="L665">		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
 	}
 
 	private TextBlock addVisibilityModifier(TextBlock block, Link link, ISkinParam skinParam) {
-<span class="fc" id="L532">		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();</span>
-<span class="pc bpc" id="L533" title="1 of 2 branches missed.">		if (visibilityModifier != null) {</span>
-<span class="nc" id="L534">			final Rose rose = new Rose();</span>
-<span class="nc" id="L535">			final HColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());</span>
-<span class="nc" id="L536">			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);</span>
-<span class="nc" id="L537">			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);</span>
-<span class="nc" id="L538">			block = TextBlockUtils.mergeLR(visibility, block, VerticalAlignment.CENTER);</span>
+<span class="fc" id="L669">		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();</span>
+<span class="pc bpc" id="L670" title="1 of 2 branches missed.">		if (visibilityModifier != null) {</span>
+<span class="nc" id="L671">			final Rose rose = new Rose();</span>
+<span class="nc" id="L672">			final HColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());</span>
+<span class="nc" id="L673">			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);</span>
+<span class="nc" id="L674">			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);</span>
+<span class="nc" id="L675">			block = TextBlockUtils.mergeLR(visibility, block, VerticalAlignment.CENTER);</span>
 		}
-<span class="fc" id="L540">		final double marginLabel = 1; // startUid.equalsId(endUid) ? 6 : 1;</span>
-<span class="fc" id="L541">		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);</span>
+<span class="fc" id="L677">		final double marginLabel = 1; // startUid.equalsId(endUid) ? 6 : 1;</span>
+<span class="fc" id="L678">		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);</span>
 	}
 
 	private LinkArrow getLinkArrow(Link link) {
-<span class="fc" id="L545">		return link.getLinkArrow();</span>
+<span class="fc" id="L682">		return link.getLinkArrow();</span>
 	}
 
 	private TextBlock getLabel(StringBounder stringBounder, Link link) {
-<span class="fc" id="L549">		final ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="fc" id="L550">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
+<span class="fc" id="L686">		final ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="fc" id="L687">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
 
 		// final FontConfiguration labelFont =
 		// style.getFontConfiguration(skinParam.getIHtmlColorSet());
 //		TextBlock labelOnly = link.getLabel().create(labelFont,
 //				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 
-<span class="fc" id="L557">		final DiagramType type = skinParam.getDiagramType();</span>
-<span class="fc" id="L558">		final FontConfiguration font = getFontForLink(link, skinParam);</span>
+<span class="fc" id="L694">		final DiagramType type = skinParam.getDiagramType();</span>
+<span class="fc" id="L695">		final FontConfiguration font = getFontForLink(link, skinParam);</span>
 
 		TextBlock labelOnly;
 		// toto2
-<span class="fc bfc" id="L562" title="All 2 branches covered.">		if (Display.isNull(link.getLabel())) {</span>
-<span class="fc" id="L563">			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
-<span class="pc bpc" id="L564" title="1 of 2 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL) {</span>
+<span class="fc bfc" id="L699" title="All 2 branches covered.">		if (Display.isNull(link.getLabel())) {</span>
+<span class="fc" id="L700">			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;</span>
+<span class="pc bpc" id="L701" title="1 of 2 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL) {</span>
 				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 			}
 
 		} else {
-<span class="fc" id="L569">			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);</span>
-<span class="fc" id="L570">			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();</span>
+<span class="fc" id="L706">			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);</span>
+<span class="fc" id="L707">			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();</span>
 			final TextBlock block;
 			// if (hasSeveralGuideLines)
 			// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font,
 			// alignment, skinParam);
 			// else
-<span class="fc" id="L576">			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),</span>
-<span class="fc" id="L577">					skinParam.getDiagramType().getStyleName()).getMergedStyle(link.getStyleBuilder());</span>
-<span class="fc" id="L578">			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();</span>
-<span class="fc bfc" id="L579" title="All 2 branches covered.">			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() &gt; 0 ? styleWidth : skinParam.maxMessageSize();</span>
-<span class="fc" id="L580">			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth, CreoleMode.SIMPLE_LINE, null, null);</span>
+<span class="fc" id="L713">			final Style arrowStyle = getDefaultStyleDefinitionArrow(link.getStereotype(),</span>
+<span class="fc" id="L714">					skinParam.getDiagramType().getStyleName()).getMergedStyle(link.getStyleBuilder());</span>
+<span class="fc" id="L715">			final LineBreakStrategy styleWidth = arrowStyle.wrapWidth();</span>
+<span class="fc bfc" id="L716" title="All 2 branches covered.">			final LineBreakStrategy wrapWidth = styleWidth.getMaxWidth() &gt; 0 ? styleWidth : skinParam.maxMessageSize();</span>
+<span class="fc" id="L717">			block = link.getLabel().create0(font, alignment, skinParam, wrapWidth, CreoleMode.SIMPLE_LINE, null, null);</span>
 
-<span class="fc" id="L582">			labelOnly = addVisibilityModifier(block, link, skinParam);</span>
-<span class="pc bpc" id="L583" title="1 of 4 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {</span>
+<span class="fc" id="L719">			labelOnly = addVisibilityModifier(block, link, skinParam);</span>
+<span class="pc bpc" id="L720" title="1 of 4 branches missed.">			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL &amp;&amp; hasSeveralGuideLines == false) {</span>
 				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
 			}
 
 		}
 
-<span class="fc" id="L589">		final CucaNote note = link.getNote();</span>
-<span class="pc bpc" id="L590" title="1 of 2 branches missed.">		if (note == null) {</span>
-<span class="fc bfc" id="L591" title="All 2 branches covered.">			if (TextBlockUtils.isEmpty(labelOnly, stringBounder) == false)</span>
-<span class="fc" id="L592">				labelOnly = TextBlockUtils.withMargin(labelOnly, marginLabel, marginLabel);</span>
-<span class="fc" id="L593">			return labelOnly;</span>
+<span class="fc" id="L726">		final CucaNote note = link.getNote();</span>
+<span class="pc bpc" id="L727" title="1 of 2 branches missed.">		if (note == null) {</span>
+<span class="fc bfc" id="L728" title="All 2 branches covered.">			if (TextBlockUtils.isEmpty(labelOnly, stringBounder) == false)</span>
+<span class="fc" id="L729">				labelOnly = TextBlockUtils.withMargin(labelOnly, marginLabel, marginLabel);</span>
+<span class="fc" id="L730">			return labelOnly;</span>
 		}
-<span class="nc" id="L595">		final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
-<span class="nc" id="L596">				link.getStyleBuilder());</span>
+<span class="nc" id="L732">		final TextBlock noteOnly = new EntityImageNoteLink(note.getDisplay(), note.getColors(), skinParam,</span>
+<span class="nc" id="L733">				link.getStyleBuilder());</span>
 
-<span class="nc bnc" id="L598" title="All 2 branches missed.">		if (note.getPosition() == Position.LEFT)</span>
-<span class="nc" id="L599">			return TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);</span>
-<span class="nc bnc" id="L600" title="All 2 branches missed.">		else if (note.getPosition() == Position.RIGHT)</span>
-<span class="nc" id="L601">			return TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);</span>
-<span class="nc bnc" id="L602" title="All 2 branches missed.">		else if (note.getPosition() == Position.TOP)</span>
-<span class="nc" id="L603">			return TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);</span>
+<span class="nc bnc" id="L735" title="All 2 branches missed.">		if (note.getPosition() == Position.LEFT)</span>
+<span class="nc" id="L736">			return TextBlockUtils.mergeLR(noteOnly, labelOnly, VerticalAlignment.CENTER);</span>
+<span class="nc bnc" id="L737" title="All 2 branches missed.">		else if (note.getPosition() == Position.RIGHT)</span>
+<span class="nc" id="L738">			return TextBlockUtils.mergeLR(labelOnly, noteOnly, VerticalAlignment.CENTER);</span>
+<span class="nc bnc" id="L739" title="All 2 branches missed.">		else if (note.getPosition() == Position.TOP)</span>
+<span class="nc" id="L740">			return TextBlockUtils.mergeTB(noteOnly, labelOnly, HorizontalAlignment.CENTER);</span>
 		else
-<span class="nc" id="L605">			return TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);</span>
+<span class="nc" id="L742">			return TextBlockUtils.mergeTB(labelOnly, noteOnly, HorizontalAlignment.CENTER);</span>
 
 	}
 
 	private TextBlock getQuantifier(StringBounder stringBounder, Link link, int n) {
-<span class="fc bfc" id="L610" title="All 2 branches covered.">		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();</span>
-<span class="fc bfc" id="L611" title="All 2 branches covered.">		if (tmp == null)</span>
-<span class="fc" id="L612">			return null;</span>
+<span class="fc bfc" id="L747" title="All 2 branches covered.">		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();</span>
+<span class="fc bfc" id="L748" title="All 2 branches covered.">		if (tmp == null)</span>
+<span class="fc" id="L749">			return null;</span>
 
-<span class="fc" id="L614">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
-<span class="fc" id="L615">		ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="fc" id="L616">		final Style style = getStyle();</span>
-<span class="fc" id="L617">		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="fc" id="L618">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,</span>
-<span class="fc" id="L619">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
-<span class="pc bpc" id="L620" title="1 of 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
-<span class="nc" id="L621">			return label;</span>
+<span class="fc" id="L751">		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;</span>
+<span class="fc" id="L752">		ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="fc" id="L753">		final Style style = getStyle();</span>
+<span class="fc" id="L754">		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L755">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,</span>
+<span class="fc" id="L756">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
+<span class="pc bpc" id="L757" title="1 of 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
+<span class="nc" id="L758">			return label;</span>
 
-<span class="fc" id="L623">		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);</span>
+<span class="fc" id="L760">		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);</span>
 	}
 
 	private TextBlock getRoleLabel(StringBounder stringBounder, Link link, int n) {
-<span class="fc bfc" id="L627" title="All 2 branches covered.">		final String role = n == 1 ? link.getRole1() : link.getRole2();</span>
-<span class="pc bpc" id="L628" title="1 of 2 branches missed.">		if (role == null)</span>
-<span class="fc" id="L629">			return null;</span>
+<span class="fc bfc" id="L764" title="All 2 branches covered.">		final String role = n == 1 ? link.getRole1() : link.getRole2();</span>
+<span class="pc bpc" id="L765" title="1 of 2 branches missed.">		if (role == null)</span>
+<span class="fc" id="L766">			return null;</span>
 
-<span class="nc" id="L631">		final double marginLabel = 1;</span>
-<span class="nc" id="L632">		ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="nc" id="L633">		final Style style = getStyle();</span>
-<span class="nc" id="L634">		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L635">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,</span>
-<span class="nc" id="L636">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
-<span class="nc bnc" id="L637" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
-<span class="nc" id="L638">			return label;</span>
+<span class="nc" id="L768">		final double marginLabel = 1;</span>
+<span class="nc" id="L769">		ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="nc" id="L770">		final Style style = getStyle();</span>
+<span class="nc" id="L771">		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L772">		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), role).create(labelFont,</span>
+<span class="nc" id="L773">				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);</span>
+<span class="nc bnc" id="L774" title="All 2 branches missed.">		if (TextBlockUtils.isEmpty(label, stringBounder))</span>
+<span class="nc" id="L775">			return label;</span>
 
-<span class="nc" id="L640">		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);</span>
+<span class="nc" id="L777">		return TextBlockUtils.withMargin(label, marginLabel, marginLabel);</span>
 	}
 
 	private ST_Agnode_s getAgnodeFromLeaf(Entity entity) {
-<span class="fc" id="L644">		final ST_Agnode_s n = nodes.get(entity);</span>
-<span class="pc bpc" id="L645" title="1 of 2 branches missed.">		if (n != null)</span>
-<span class="fc" id="L646">			return n;</span>
+<span class="fc" id="L781">		final ST_Agnode_s n = nodes.get(entity);</span>
+<span class="pc bpc" id="L782" title="1 of 2 branches missed.">		if (n != null)</span>
+<span class="fc" id="L783">			return n;</span>
 
 		try {
-<span class="nc" id="L649">			final String id = getBibliotekon().getNodeUid((Entity) entity);</span>
-<span class="nc bnc" id="L650" title="All 2 branches missed.">			for (Map.Entry&lt;Entity, ST_Agnode_s&gt; ent : nodes.entrySet())</span>
-<span class="nc bnc" id="L651" title="All 2 branches missed.">				if (id.equals(getBibliotekon().getNodeUid(ent.getKey())))</span>
-<span class="nc" id="L652">					return ent.getValue();</span>
+<span class="nc" id="L786">			final String id = getBibliotekon().getNodeUid((Entity) entity);</span>
+<span class="nc bnc" id="L787" title="All 2 branches missed.">			for (Map.Entry&lt;Entity, ST_Agnode_s&gt; ent : nodes.entrySet())</span>
+<span class="nc bnc" id="L788" title="All 2 branches missed.">				if (id.equals(getBibliotekon().getNodeUid(ent.getKey())))</span>
+<span class="nc" id="L789">					return ent.getValue();</span>
 
-<span class="nc" id="L654">		} catch (IllegalStateException e) {</span>
-<span class="nc" id="L655">			System.err.println(&quot;UNKNOWN ENTITY&quot;);</span>
-<span class="nc" id="L656">		}</span>
-<span class="nc" id="L657">		return null;</span>
+<span class="nc" id="L791">		} catch (IllegalStateException e) {</span>
+<span class="nc" id="L792">			System.err.println(&quot;UNKNOWN ENTITY&quot;);</span>
+<span class="nc" id="L793">		}</span>
+<span class="nc" id="L794">		return null;</span>
 
 	}
 
@@ -663,71 +800,71 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final ST_Agnode_s node1;
 		final ST_Agnode_s node2;
 
-<span class="fc bfc" id="L666" title="All 2 branches covered.">		if (link.getEntity1().isGroup())</span>
-<span class="fc" id="L667">			node1 = getCoreFromGroup(zz, link.getEntity1());</span>
+<span class="fc bfc" id="L803" title="All 2 branches covered.">		if (link.getEntity1().isGroup())</span>
+<span class="fc" id="L804">			node1 = getCoreFromGroup(zz, link.getEntity1());</span>
 		else
-<span class="fc" id="L669">			node1 = getAgnodeFromLeaf(link.getEntity1());</span>
+<span class="fc" id="L806">			node1 = getAgnodeFromLeaf(link.getEntity1());</span>
 
-<span class="fc bfc" id="L671" title="All 2 branches covered.">		if (link.getEntity2().isGroup())</span>
-<span class="fc" id="L672">			node2 = getCoreFromGroup(zz, link.getEntity2());</span>
+<span class="fc bfc" id="L808" title="All 2 branches covered.">		if (link.getEntity2().isGroup())</span>
+<span class="fc" id="L809">			node2 = getCoreFromGroup(zz, link.getEntity2());</span>
 		else
-<span class="fc" id="L674">			node2 = getAgnodeFromLeaf(link.getEntity2());</span>
+<span class="fc" id="L811">			node2 = getAgnodeFromLeaf(link.getEntity2());</span>
 
-<span class="pc bpc" id="L676" title="2 of 4 branches missed.">		if (node1 == null || node2 == null)</span>
-<span class="nc" id="L677">			return null;</span>
+<span class="pc bpc" id="L813" title="2 of 4 branches missed.">		if (node1 == null || node2 == null)</span>
+<span class="nc" id="L814">			return null;</span>
 		// throw new IllegalStateException();
 
-<span class="fc" id="L680">		final ST_Agedge_s e = agedge(zz, g, node1, node2, null, true);</span>
-<span class="fc" id="L681">		agsafeset(zz, e, new CString(&quot;arrowtail&quot;), new CString(&quot;none&quot;), new CString(&quot;&quot;));</span>
-<span class="fc" id="L682">		agsafeset(zz, e, new CString(&quot;arrowhead&quot;), new CString(&quot;none&quot;), new CString(&quot;&quot;));</span>
+<span class="fc" id="L817">		final ST_Agedge_s e = agedge(zz, g, node1, node2, null, true);</span>
+<span class="fc" id="L818">		agsafeset(zz, e, new CString(&quot;arrowtail&quot;), new CString(&quot;none&quot;), new CString(&quot;&quot;));</span>
+<span class="fc" id="L819">		agsafeset(zz, e, new CString(&quot;arrowhead&quot;), new CString(&quot;none&quot;), new CString(&quot;&quot;));</span>
 
-<span class="fc" id="L684">		int length = link.getLength();</span>
-<span class="fc" id="L685">		agsafeset(zz, e, new CString(&quot;minlen&quot;), new CString(&quot;&quot; + (length - 1)), new CString(&quot;&quot;));</span>
+<span class="fc" id="L821">		int length = link.getLength();</span>
+<span class="fc" id="L822">		agsafeset(zz, e, new CString(&quot;minlen&quot;), new CString(&quot;&quot; + (length - 1)), new CString(&quot;&quot;));</span>
 
-<span class="fc" id="L687">		final TextBlock label = getLabel(stringBounder, link);</span>
-<span class="fc bfc" id="L688" title="All 2 branches covered.">		if (TextBlockUtils.isEmpty(label, stringBounder) == false) {</span>
-<span class="fc" id="L689">			final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
-<span class="fc" id="L690">			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());</span>
-<span class="fc" id="L691">			agsafeset(zz, e, new CString(&quot;label&quot;), hackDim, new CString(&quot;&quot;));</span>
+<span class="fc" id="L824">		final TextBlock label = getLabel(stringBounder, link);</span>
+<span class="fc bfc" id="L825" title="All 2 branches covered.">		if (TextBlockUtils.isEmpty(label, stringBounder) == false) {</span>
+<span class="fc" id="L826">			final XDimension2D dimLabel = label.calculateDimension(stringBounder);</span>
+<span class="fc" id="L827">			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());</span>
+<span class="fc" id="L828">			agsafeset(zz, e, new CString(&quot;label&quot;), hackDim, new CString(&quot;&quot;));</span>
 		}
-<span class="fc" id="L693">		final TextBlock q1 = getQuantifier(stringBounder, link, 1);</span>
-<span class="fc" id="L694">		final TextBlock r1 = getRoleLabel(stringBounder, link, 1);</span>
-<span class="pc bpc" id="L695" title="1 of 2 branches missed.">		final TextBlock tailForLayout = q1 != null ? q1 : r1;</span>
-<span class="pc bpc" id="L696" title="1 of 2 branches missed.">		if (tailForLayout != null) {</span>
-<span class="nc" id="L697">			final XDimension2D dimLabel = tailForLayout.calculateDimension(stringBounder);</span>
-<span class="nc" id="L698">			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());</span>
-<span class="nc" id="L699">			agsafeset(zz, e, new CString(&quot;taillabel&quot;), hackDim, new CString(&quot;&quot;));</span>
+<span class="fc" id="L830">		final TextBlock q1 = getQuantifier(stringBounder, link, 1);</span>
+<span class="fc" id="L831">		final TextBlock r1 = getRoleLabel(stringBounder, link, 1);</span>
+<span class="pc bpc" id="L832" title="1 of 2 branches missed.">		final TextBlock tailForLayout = q1 != null ? q1 : r1;</span>
+<span class="pc bpc" id="L833" title="1 of 2 branches missed.">		if (tailForLayout != null) {</span>
+<span class="nc" id="L834">			final XDimension2D dimLabel = tailForLayout.calculateDimension(stringBounder);</span>
+<span class="nc" id="L835">			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());</span>
+<span class="nc" id="L836">			agsafeset(zz, e, new CString(&quot;taillabel&quot;), hackDim, new CString(&quot;&quot;));</span>
 		}
-<span class="fc" id="L701">		final TextBlock q2 = getQuantifier(stringBounder, link, 2);</span>
-<span class="fc" id="L702">		final TextBlock r2 = getRoleLabel(stringBounder, link, 2);</span>
-<span class="fc bfc" id="L703" title="All 2 branches covered.">		final TextBlock headForLayout = q2 != null ? q2 : r2;</span>
-<span class="fc bfc" id="L704" title="All 2 branches covered.">		if (headForLayout != null) {</span>
-<span class="fc" id="L705">			final XDimension2D dimLabel = headForLayout.calculateDimension(stringBounder);</span>
-<span class="fc" id="L706">			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());</span>
-<span class="fc" id="L707">			agsafeset(zz, e, new CString(&quot;headlabel&quot;), hackDim, new CString(&quot;&quot;));</span>
+<span class="fc" id="L838">		final TextBlock q2 = getQuantifier(stringBounder, link, 2);</span>
+<span class="fc" id="L839">		final TextBlock r2 = getRoleLabel(stringBounder, link, 2);</span>
+<span class="fc bfc" id="L840" title="All 2 branches covered.">		final TextBlock headForLayout = q2 != null ? q2 : r2;</span>
+<span class="fc bfc" id="L841" title="All 2 branches covered.">		if (headForLayout != null) {</span>
+<span class="fc" id="L842">			final XDimension2D dimLabel = headForLayout.calculateDimension(stringBounder);</span>
+<span class="fc" id="L843">			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());</span>
+<span class="fc" id="L844">			agsafeset(zz, e, new CString(&quot;headlabel&quot;), hackDim, new CString(&quot;&quot;));</span>
 		}
-<span class="fc" id="L709">		return e;</span>
+<span class="fc" id="L846">		return e;</span>
 	}
 
 	private IEntityImage printEntityInternal(Entity ent) {
-<span class="pc bpc" id="L713" title="1 of 2 branches missed.">		if (ent.isRemoved())</span>
-<span class="nc" id="L714">			throw new IllegalStateException();</span>
+<span class="pc bpc" id="L850" title="1 of 2 branches missed.">		if (ent.isRemoved())</span>
+<span class="nc" id="L851">			throw new IllegalStateException();</span>
 
-<span class="fc bfc" id="L716" title="All 2 branches covered.">		if (ent.getSvekImage() == null) {</span>
-<span class="fc" id="L717">			ISkinParam skinParam = diagram.getSkinParam();</span>
-<span class="pc bpc" id="L718" title="1 of 2 branches missed.">			if (skinParam.sameClassWidth()) {</span>
-<span class="nc" id="L719">				System.err.println(&quot;NOT YET IMPLEMENTED&quot;);</span>
+<span class="fc bfc" id="L853" title="All 2 branches covered.">		if (ent.getSvekImage() == null) {</span>
+<span class="fc" id="L854">			ISkinParam skinParam = diagram.getSkinParam();</span>
+<span class="pc bpc" id="L855" title="1 of 2 branches missed.">			if (skinParam.sameClassWidth()) {</span>
+<span class="nc" id="L856">				System.err.println(&quot;NOT YET IMPLEMENTED&quot;);</span>
 //				throw new UnsupportedOperationException();
 				// final double width = getMaxWidth();
 				// skinParam = new SkinParamSameClassWidth(dotData.getSkinParam(), width);
 			}
 
-<span class="fc" id="L725">			final IEntityImage result = GeneralImageBuilder.createEntityImageBlock(ent,</span>
-<span class="fc" id="L726">					diagram.isHideEmptyDescriptionForState(), diagram, getBibliotekon(), null, diagram.getLinks());</span>
-<span class="fc" id="L727">			ent.setSvekImage(result);</span>
-<span class="fc" id="L728">			return result;</span>
+<span class="fc" id="L862">			final IEntityImage result = GeneralImageBuilder.createEntityImageBlock(ent,</span>
+<span class="fc" id="L863">					diagram.isHideEmptyDescriptionForState(), diagram, getBibliotekon(), null, diagram.getLinks());</span>
+<span class="fc" id="L864">			ent.setSvekImage(result);</span>
+<span class="fc" id="L865">			return result;</span>
 		}
-<span class="fc" id="L730">		return ent.getSvekImage();</span>
+<span class="fc" id="L867">		return ent.getSvekImage();</span>
 	}
 
 }

@@ -2756,7 +2756,7 @@ Total Classes: 19
 "net.sourceforge.plantuml.salt.factory" --> "net.sourceforge.plantuml.teavm"
 
 class "net.sourceforge.plantuml.sdot" %lighten("red", 100) {
-Total Classes: 3
+Total Classes: 6
 }
 "net.sourceforge.plantuml.sdot" --> "h"
 "net.sourceforge.plantuml.sdot" --> "java.io"
@@ -2771,6 +2771,7 @@ Total Classes: 3
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.klimt.shape"
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek"
+"net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek.image"
 
 class "net.sourceforge.plantuml.security" %lighten("red", 50) {
 Total Classes: 7
@@ -3147,7 +3148,7 @@ Total Classes: 55
 "net.sourceforge.plantuml.svek.extremity" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.svek.extremity" --> "net.sourceforge.plantuml.svek.image"
 
-class "net.sourceforge.plantuml.svek.image" %lighten("red", 71) {
+class "net.sourceforge.plantuml.svek.image" %lighten("red", 69) {
 Total Classes: 37
 }
 "net.sourceforge.plantuml.svek.image" --> "java.io"

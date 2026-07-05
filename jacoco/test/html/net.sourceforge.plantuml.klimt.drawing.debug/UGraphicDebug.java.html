@@ -131,12 +131,12 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 <span class="fc" id="L131">			outEmpty((UEmpty) shape);</span>
 <span class="fc bfc" id="L132" title="All 2 branches covered.">		} else if (shape instanceof UPath) {</span>
 <span class="fc" id="L133">			outPath((UPath) shape);</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
-<span class="fc" id="L135">			outComment((UComment) shape);</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
-<span class="fc" id="L137">			outPath(((DotPath) shape).toUPath());</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">		} else if (shape instanceof UCenteredCharacter) {</span>
-<span class="fc" id="L139">			outCenteredCharacter(((UCenteredCharacter) shape));</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		} else if (shape instanceof UComment) {</span>
+<span class="nc" id="L135">			outComment((UComment) shape);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		} else if (shape instanceof DotPath) {</span>
+<span class="nc" id="L137">			outPath(((DotPath) shape).toUPath());</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
+<span class="nc" id="L139">			outCenteredCharacter(((UCenteredCharacter) shape));</span>
 		} else {
 <span class="fc" id="L141">			System.err.println(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName());</span>
 <span class="fc" id="L142">			output.add(&quot;UGraphicDebug &quot; + shape.getClass().getSimpleName() + &quot; &quot; + new Date());</span>
@@ -177,18 +177,18 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 	}
 
 	private void outCenteredCharacter(UCenteredCharacter shape) {
-<span class="fc" id="L180">		output.add(&quot;CENTERED_CHAR:&quot;);</span>
-<span class="fc" id="L181">		output.add(&quot;  char: &quot; + shape.getChar());</span>
-<span class="fc" id="L182">		output.add(&quot;  position: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
-<span class="fc" id="L183">		output.add(&quot;  font: &quot; + shape.getFont().toString());</span>
-<span class="fc" id="L184">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
-<span class="fc" id="L185">		output.add(&quot;&quot;);</span>
+<span class="nc" id="L180">		output.add(&quot;CENTERED_CHAR:&quot;);</span>
+<span class="nc" id="L181">		output.add(&quot;  char: &quot; + shape.getChar());</span>
+<span class="nc" id="L182">		output.add(&quot;  position: &quot; + pointd(getTranslateX(), getTranslateY()));</span>
+<span class="nc" id="L183">		output.add(&quot;  font: &quot; + shape.getFont().toString());</span>
+<span class="nc" id="L184">		output.add(&quot;  color: &quot; + colorToString(getParam().getColor()));</span>
+<span class="nc" id="L185">		output.add(&quot;&quot;);</span>
 
-<span class="fc" id="L187">	}</span>
+<span class="nc" id="L187">	}</span>
 
 	private void outComment(UComment shape) {
-<span class="fc" id="L190">		output.add(&quot;COMMENT: &quot; + shape.getComment());</span>
-<span class="fc" id="L191">	}</span>
+<span class="nc" id="L190">		output.add(&quot;COMMENT: &quot; + shape.getComment());</span>
+<span class="nc" id="L191">	}</span>
 
 	private void outPath(UPath shape) {
 <span class="fc" id="L194">		output.add(&quot;PATH:&quot;);</span>
@@ -200,7 +200,7 @@ public class UGraphicDebug extends AbstractCommonUGraphic implements ClipContain
 <span class="fc" id="L200">				output.add(&quot;     radius: &quot; + pointd(coord[0], coord[1]));</span>
 <span class="fc" id="L201">				output.add(&quot;     angle: &quot; + coord[2]);</span>
 <span class="pc bpc" id="L202" title="1 of 2 branches missed.">				output.add(&quot;     largeArcFlag: &quot; + (coord[3] != 0));</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">				output.add(&quot;     sweepFlag: &quot; + (coord[4] != 0));</span>
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">				output.add(&quot;     sweepFlag: &quot; + (coord[4] != 0));</span>
 <span class="fc" id="L204">				output.add(&quot;     dest: &quot; + pointd(coord[5], coord[6]));</span>
 			} else
 <span class="fc bfc" id="L206" title="All 2 branches covered.">				for (int i = 0; i &lt; type.getNbPoints(); i++) {</span>

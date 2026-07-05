@@ -13987,11 +13987,11 @@
 
         <Package name="net.sourceforge.plantuml.sdot">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>13</Ce>
+                <Ce>14</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -14005,8 +14005,17 @@
                 <Class sourceFile="BoxInfo.java">
                     net.sourceforge.plantuml.sdot.BoxInfo
                 </Class>
-                <Class sourceFile="CucaDiagramFileMakerSmetana.java">
-                    net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana$Drawing
+                <Class sourceFile="CucaDiagramSimplifierStateSmetana.java">
+                    net.sourceforge.plantuml.sdot.CucaDiagramSimplifierStateSmetana
+                </Class>
+                <Class sourceFile="GroupMakerStateSmetana.java">
+                    net.sourceforge.plantuml.sdot.GroupMakerStateSmetana
+                </Class>
+                <Class sourceFile="PaddedEntityImage.java">
+                    net.sourceforge.plantuml.sdot.PaddedEntityImage
+                </Class>
+                <Class sourceFile="TextBlockToEntityImage.java">
+                    net.sourceforge.plantuml.sdot.TextBlockToEntityImage
                 </Class>
                 <Class sourceFile="YMirror.java">
                     net.sourceforge.plantuml.sdot.YMirror
@@ -14027,6 +14036,7 @@
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
+                <Package>net.sourceforge.plantuml.svek.image</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -16359,11 +16369,11 @@
                 <TotalClasses>37</TotalClasses>
                 <ConcreteClasses>35</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>12</Ca>
+                <Ca>13</Ca>
                 <Ce>23</Ce>
                 <A>0.05</A>
-                <I>0.66</I>
-                <D>0.29</D>
+                <I>0.64</I>
+                <D>0.31</D>
                 <V>1</V>
             </Stats>
 
@@ -16519,6 +16529,7 @@
                 <Package>net.sourceforge.plantuml.elk</Package>
                 <Package>net.sourceforge.plantuml.gantt.draw</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
+                <Package>net.sourceforge.plantuml.sdot</Package>
                 <Package>net.sourceforge.plantuml.skin.rose</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
@@ -20765,9 +20776,9 @@
         </Package>
 
         <Package Name="net.sourceforge.plantuml.sdot">
-            <Package>h</Package>
-            <Package>smetana.core</Package>
-            <Package>h</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
+            <Package>net.sourceforge.plantuml.klimt.geom</Package>
+            <Package>net.sourceforge.plantuml.klimt.font</Package>
         </Package>
 
         <Package Name="net.sourceforge.plantuml.security">

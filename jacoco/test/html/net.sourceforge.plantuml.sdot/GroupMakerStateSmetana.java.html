@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GroupMakerStateSmetana.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.sdot</a> &gt; <span class="el_source">GroupMakerStateSmetana.java</span></div><h1>GroupMakerStateSmetana.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ * 
+ *
+ */
+package net.sourceforge.plantuml.sdot;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.GroupType;
+import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.svek.ConcurrentStates;
+import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.InnerStateAutonom;
+import net.sourceforge.plantuml.svek.image.EntityImageState;
+
+// Smetana counterpart of GroupMakerState.
+//
+// For a composite state group, it lays out the group's content with a nested
+// Smetana pass (rooted on the group itself) and wraps the result in an
+// InnerStateAutonom, so the group can be turned into a leaf by
+// CucaDiagramSimplifierStateSmetana.
+//
+// Concurrent states are handled like on the dot side: each region (a
+// CONCURRENT_STATE sub-group) has already been turned into a STATE_CONCURRENT
+// leaf by the bottom-up simplifier, so here we just stack the first region (the
+// group's own non-concurrent leaves) together with the pre-rendered region
+// images into a ConcurrentStates.
+public final class GroupMakerStateSmetana {
+
+	// Breathing room added around each Smetana-rendered region before it is
+	// stacked by ConcurrentStates, which otherwise places adjacent regions
+	// edge-to-edge with no margin of its own (dot's own regions get this for free
+	// from SvekResult's built-in padding).
+	private static final double REGION_PADDING = 6;
+
+	// ConcurrentStates' separator is drawn a fixed amount (its private DASH
+	// constant, currently 8) longer than the total stacked dimension, so the dash
+	// deliberately overshoots past the declared bounding box on one side. Reserve
+	// that much extra room so it doesn't get clipped by the outer
+	// InnerStateAutonom border.
+	private static final double SEPARATOR_OVERSHOOT = 8;
+
+	private final CucaDiagram diagram;
+	private final Entity group;
+	private final StringBounder stringBounder;
+
+<span class="fc" id="L82">	public GroupMakerStateSmetana(CucaDiagram diagram, Entity group, StringBounder stringBounder) {</span>
+<span class="fc" id="L83">		this.diagram = diagram;</span>
+<span class="fc" id="L84">		this.group = group;</span>
+<span class="fc" id="L85">		this.stringBounder = stringBounder;</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (group.isGroup() == false)</span>
+<span class="nc" id="L87">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L88">	}</span>
+
+	public IEntityImage getImage() {
+<span class="pc bpc" id="L91" title="3 of 4 branches missed.">		if (group.countChildren() == 0 &amp;&amp; group.groups().size() == 0)</span>
+<span class="nc" id="L92">			return new EntityImageState(group);</span>
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (group.getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="fc" id="L95">			return PaddedEntityImage.uniform(subLayout(), REGION_PADDING);</span>
+
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (group.getGroupType() != GroupType.STATE)</span>
+<span class="nc" id="L98">			throw new UnsupportedOperationException(group.getGroupType().toString());</span>
+
+		final IEntityImage image;
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (containsSomeConcurrentStates()) {</span>
+<span class="fc" id="L102">			final List&lt;IEntityImage&gt; inners = new ArrayList&lt;&gt;();</span>
+			// First region: the group's own (non-concurrent) content. The nested
+			// sub-layout filters out the STATE_CONCURRENT leaves (see
+			// CucaDiagramFileMakerSmetana.getUnpackagedEntities).
+<span class="fc" id="L106">			inners.add(PaddedEntityImage.uniform(subLayout(), REGION_PADDING));</span>
+			// Remaining regions: already rendered (and padded) by the bottom-up
+			// simplifier, via the CONCURRENT_STATE branch above.
+<span class="fc bfc" id="L109" title="All 2 branches covered.">			for (Entity inner : group.leafs())</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">				if (inner.getLeafType() == LeafType.STATE_CONCURRENT)</span>
+<span class="fc" id="L111">					inners.add(inner.getSvekImage());</span>
+
+<span class="fc" id="L113">			final IEntityImage stacked = new ConcurrentStates(inners, group.getConcurrentSeparator(),</span>
+<span class="fc" id="L114">					diagram.getSkinParam(), group.getStereotype());</span>
+<span class="fc" id="L115">			image = withSeparatorOvershoot(stacked, group.getConcurrentSeparator());</span>
+<span class="fc" id="L116">		} else {</span>
+<span class="fc" id="L117">			image = subLayout();</span>
+		}
+
+<span class="fc" id="L120">		return new InnerStateAutonom(image, group);</span>
+	}
+
+	// The separator's dash overshoot is vertical (extends past the bottom) for a
+	// '|' (side-by-side regions), and horizontal (extends past the right) for a
+	// '-' (stacked regions) -- see ConcurrentStates.Separator.drawSeparator.
+	private IEntityImage withSeparatorOvershoot(IEntityImage stacked, char concurrentSeparator) {
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		final double bottom = concurrentSeparator == '|' ? SEPARATOR_OVERSHOOT : 0;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		final double right = concurrentSeparator == '-' ? SEPARATOR_OVERSHOOT : 0;</span>
+<span class="fc" id="L129">		return new PaddedEntityImage(stacked, 0, 0, right, bottom);</span>
+	}
+
+	private IEntityImage subLayout() {
+<span class="fc" id="L133">		final CucaDiagramFileMakerSmetana maker = new CucaDiagramFileMakerSmetana(diagram, group);</span>
+<span class="fc" id="L134">		return maker.getImage(stringBounder);</span>
+	}
+
+	private boolean containsSomeConcurrentStates() {
+<span class="fc bfc" id="L138" title="All 2 branches covered.">		for (Entity entity : group.leafs())</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			if (entity.getLeafType() == LeafType.STATE_CONCURRENT)</span>
+<span class="fc" id="L140">				return true;</span>
+
+<span class="fc" id="L142">		return false;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

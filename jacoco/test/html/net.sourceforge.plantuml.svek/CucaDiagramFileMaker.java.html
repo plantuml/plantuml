@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public abstract class CucaDiagramFileMaker {
@@ -48,16 +49,20 @@ public abstract class CucaDiagramFileMaker {
 	protected final Bibliotekon bibliotekon;
 	protected final ClusterManager clusterManager;
 
-<span class="fc" id="L51">	public CucaDiagramFileMaker(CucaDiagram diagram) {</span>
-<span class="fc" id="L52">		this.diagram = diagram;</span>
-<span class="fc" id="L53">		this.bibliotekon = new Bibliotekon(diagram.getLinks());</span>
-<span class="fc" id="L54">		final Cluster root = new Cluster(null, diagram, bibliotekon.getColorSequence(), diagram.getRootGroup());</span>
-<span class="fc" id="L55">		this.clusterManager = new ClusterManager(bibliotekon, root);</span>
+	public CucaDiagramFileMaker(CucaDiagram diagram) {
+<span class="fc" id="L53">		this(diagram, diagram.getRootGroup());</span>
+<span class="fc" id="L54">	}</span>
 
-<span class="fc" id="L57">	}</span>
+<span class="fc" id="L56">	public CucaDiagramFileMaker(CucaDiagram diagram, Entity root) {</span>
+<span class="fc" id="L57">		this.diagram = diagram;</span>
+<span class="fc" id="L58">		this.bibliotekon = new Bibliotekon(diagram.getLinks());</span>
+<span class="fc" id="L59">		final Cluster rootCluster = new Cluster(null, diagram, bibliotekon.getColorSequence(), root);</span>
+<span class="fc" id="L60">		this.clusterManager = new ClusterManager(bibliotekon, rootCluster);</span>
+
+<span class="fc" id="L62">	}</span>
 
 	protected final Bibliotekon getBibliotekon() {
-<span class="fc" id="L60">		return bibliotekon;</span>
+<span class="fc" id="L65">		return bibliotekon;</span>
 	}
 
 	public abstract TextBlock getTextBlock(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)

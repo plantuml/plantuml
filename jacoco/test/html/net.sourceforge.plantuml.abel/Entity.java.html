@@ -393,17 +393,17 @@ import net.sourceforge.plantuml.utils.Position;
 	// ---- other
 
 	public void overrideImage(IEntityImage img, LeafType leafType) {
-<span class="nc" id="L396">		checkGroup();</span>
-<span class="nc" id="L397">		this.svekImage = img;</span>
-<span class="nc" id="L398">		this.url = null;</span>
+<span class="fc" id="L396">		checkGroup();</span>
+<span class="fc" id="L397">		this.svekImage = img;</span>
+<span class="fc" id="L398">		this.url = null;</span>
 
-<span class="nc bnc" id="L400" title="All 2 branches missed.">		for (final Link link : new ArrayList&lt;&gt;(this.diagram.getLinks()))</span>
-<span class="nc bnc" id="L401" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink12(this, link))</span>
-<span class="nc" id="L402">				this.diagram.removeLink(link);</span>
+<span class="fc bfc" id="L400" title="All 2 branches covered.">		for (final Link link : new ArrayList&lt;&gt;(this.diagram.getLinks()))</span>
+<span class="fc bfc" id="L401" title="All 2 branches covered.">			if (EntityUtils.isPureInnerLink12(this, link))</span>
+<span class="fc" id="L402">				this.diagram.removeLink(link);</span>
 
-<span class="nc" id="L404">		this.groupType = null;</span>
-<span class="nc" id="L405">		this.leafType = leafType;</span>
-<span class="nc" id="L406">	}</span>
+<span class="fc" id="L404">		this.groupType = null;</span>
+<span class="fc" id="L405">		this.leafType = leafType;</span>
+<span class="fc" id="L406">	}</span>
 
 	public USymbol getUSymbol() {
 
@@ -493,12 +493,12 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 	public char getConcurrentSeparator() {
-<span class="nc" id="L496">		return concurrentSeparator;</span>
+<span class="fc" id="L496">		return concurrentSeparator;</span>
 	}
 
 	public void setConcurrentSeparator(char separator) {
-<span class="nc" id="L500">		this.concurrentSeparator = separator;</span>
-<span class="nc" id="L501">	}</span>
+<span class="fc" id="L500">		this.concurrentSeparator = separator;</span>
+<span class="fc" id="L501">	}</span>
 
 	public void setNeighborhood(Neighborhood neighborhood) {
 <span class="nc" id="L504">		this.neighborhood = neighborhood;</span>
@@ -667,7 +667,7 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 	public int countChildren() {
-<span class="nc" id="L670">		return getQuark().countChildren();</span>
+<span class="fc" id="L670">		return getQuark().countChildren();</span>
 	}
 
 	public boolean isRoot() {
@@ -688,30 +688,30 @@ import net.sourceforge.plantuml.utils.Position;
 	}
 
 	public boolean isAutarkic() {
-<span class="nc bnc" id="L691" title="All 2 branches missed.">		if (getGroupType() == GroupType.PACKAGE)</span>
+<span class="pc bpc" id="L691" title="1 of 2 branches missed.">		if (getGroupType() == GroupType.PACKAGE)</span>
 <span class="nc" id="L692">			return false;</span>
 
-<span class="nc bnc" id="L694" title="All 2 branches missed.">		if (getGroupType() == GroupType.INNER_ACTIVITY)</span>
+<span class="pc bpc" id="L694" title="1 of 2 branches missed.">		if (getGroupType() == GroupType.INNER_ACTIVITY)</span>
 <span class="nc" id="L695">			return true;</span>
 
-<span class="nc bnc" id="L697" title="All 2 branches missed.">		if (getGroupType() == GroupType.CONCURRENT_ACTIVITY)</span>
+<span class="pc bpc" id="L697" title="1 of 2 branches missed.">		if (getGroupType() == GroupType.CONCURRENT_ACTIVITY)</span>
 <span class="nc" id="L698">			return true;</span>
 
-<span class="nc bnc" id="L700" title="All 2 branches missed.">		if (getGroupType() == GroupType.CONCURRENT_STATE)</span>
-<span class="nc" id="L701">			return true;</span>
+<span class="fc bfc" id="L700" title="All 2 branches covered.">		if (getGroupType() == GroupType.CONCURRENT_STATE)</span>
+<span class="fc" id="L701">			return true;</span>
 
 //		if (diag.getChildrenGroups(this).size() &gt; 0)
 //			return false;
 
-<span class="nc bnc" id="L706" title="All 2 branches missed.">		for (Link link : this.diagram.getLinks())</span>
-<span class="nc bnc" id="L707" title="All 2 branches missed.">			if (EntityUtils.isPureInnerLink3(this, link) == false)</span>
-<span class="nc" id="L708">				return false;</span>
+<span class="fc bfc" id="L706" title="All 2 branches covered.">		for (Link link : this.diagram.getLinks())</span>
+<span class="fc bfc" id="L707" title="All 2 branches covered.">			if (EntityUtils.isPureInnerLink3(this, link) == false)</span>
+<span class="fc" id="L708">				return false;</span>
 
-<span class="nc bnc" id="L710" title="All 2 branches missed.">		for (Entity leaf : leafs())</span>
-<span class="nc bnc" id="L711" title="All 2 branches missed.">			if (leaf.getEntityPosition() != EntityPosition.NORMAL)</span>
+<span class="fc bfc" id="L710" title="All 2 branches covered.">		for (Entity leaf : leafs())</span>
+<span class="pc bpc" id="L711" title="1 of 2 branches missed.">			if (leaf.getEntityPosition() != EntityPosition.NORMAL)</span>
 <span class="nc" id="L712">				return false;</span>
 
-<span class="nc" id="L714">		return true;</span>
+<span class="fc" id="L714">		return true;</span>
 	}
 
 	public boolean canBePacked() {

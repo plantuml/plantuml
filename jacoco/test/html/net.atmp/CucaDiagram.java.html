@@ -159,8 +159,8 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	public void startingPass(ParserPass pass) {
 <span class="fc" id="L160">		this.setLastEntity(null);</span>
 <span class="fc" id="L161">		this.cpt2.set(0);</span>
-<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (stacks.size() &gt; 1)</span>
-<span class="nc" id="L163">			stacks.subList(1, stacks.size()).clear();</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (stacks.size() &gt; 1)</span>
+<span class="fc" id="L163">			stacks.subList(1, stacks.size()).clear();</span>
 <span class="fc" id="L164">	}</span>
 
 	public String getPortFor(String entString, Quark&lt;Entity&gt; ident) {
@@ -731,7 +731,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	}
 
 	public String getUniqueSequence2(String prefix) {
-<span class="nc" id="L734">		return prefix + cpt2.addAndGet(1);</span>
+<span class="fc" id="L734">		return prefix + cpt2.addAndGet(1);</span>
 	}
 
 	// Coming from EntityFactory
@@ -893,11 +893,11 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 	}
 
 	public void removeLink(Link link) {
-<span class="nc" id="L896">		final boolean ok = this.links.remove(link);</span>
-<span class="nc bnc" id="L897" title="All 2 branches missed.">		if (ok == false)</span>
+<span class="fc" id="L896">		final boolean ok = this.links.remove(link);</span>
+<span class="pc bpc" id="L897" title="1 of 2 branches missed.">		if (ok == false)</span>
 <span class="nc" id="L898">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L900">	}</span>
+<span class="fc" id="L900">	}</span>
 
 	public Collection&lt;Quark&lt;Entity&gt;&gt; quarks() {
 <span class="fc" id="L903">		final List&lt;Quark&lt;Entity&gt;&gt; result = new ArrayList&lt;&gt;();</span>

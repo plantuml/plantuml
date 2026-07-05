@@ -54,7 +54,7 @@ public class CommandConcurrentState extends SingleLineCommand2&lt;StateDiagram&g
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="nc bnc" id="L57" title="All 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
+<span class="pc bpc" id="L57" title="1 of 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
 	}
 
 	static IRegex getRegexConcat() {
@@ -77,8 +77,8 @@ public class CommandConcurrentState extends SingleLineCommand2&lt;StateDiagram&g
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (diagram.concurrentState(location, arg.get(&quot;TYPE&quot;, 0).charAt(0), currentPass))</span>
-<span class="nc" id="L81">			return CommandExecutionResult.ok();</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">		if (diagram.concurrentState(location, arg.get(&quot;TYPE&quot;, 0).charAt(0), currentPass))</span>
+<span class="fc" id="L81">			return CommandExecutionResult.ok();</span>
 
 <span class="nc" id="L83">		return CommandExecutionResult.error(&quot;Error 42&quot;);</span>
 	}

@@ -374,7 +374,7 @@ try {
 <span class="fc bfc" id="L374" title="All 2 branches covered.">	} else if (ND_lim(agtail(e)) &lt; ND_lim(v))</span>
 <span class="fc" id="L375">	    dfs_enter_inedge(zz, agtail(e));</span>
     }
-<span class="fc bfc" id="L377" title="All 4 branches covered.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_out(v).list.get_(i))!=null &amp;&amp; (zz.Slack &gt; 0); i++)</span>
+<span class="pc bpc" id="L377" title="1 of 4 branches missed.">    for (i = 0; (e = (ST_Agedge_s) ND_tree_out(v).list.get_(i))!=null &amp;&amp; (zz.Slack &gt; 0); i++)</span>
 <span class="fc bfc" id="L378" title="All 2 branches covered.">	if (ND_lim(aghead(e)) &lt; ND_lim(v))</span>
 <span class="fc" id="L379">	    dfs_enter_inedge(zz, aghead(e));</span>
 } finally {
@@ -614,12 +614,12 @@ try {
 <span class="fc bfc" id="L614" title="All 2 branches covered.">    if (delta &gt; 0) {</span>
 	int s;
 <span class="fc" id="L616">	s = ND_tree_in(agtail(e)).size + ND_tree_out(agtail(e)).size;</span>
-<span class="fc bfc" id="L617" title="All 2 branches covered.">	if (s == 1)</span>
-<span class="fc" id="L618">	    rerank(agtail(e), delta);</span>
+<span class="pc bpc" id="L617" title="1 of 2 branches missed.">	if (s == 1)</span>
+<span class="nc" id="L618">	    rerank(agtail(e), delta);</span>
 	else {
 <span class="fc" id="L620">	    s = ND_tree_in(aghead(e)).size + ND_tree_out(aghead(e)).size;</span>
-<span class="fc bfc" id="L621" title="All 2 branches covered.">	    if (s == 1)</span>
-<span class="fc" id="L622">		rerank(aghead(e), -delta);</span>
+<span class="pc bpc" id="L621" title="1 of 2 branches missed.">	    if (s == 1)</span>
+<span class="nc" id="L622">		rerank(aghead(e), -delta);</span>
 	    else {
 <span class="fc bfc" id="L624" title="All 2 branches covered.">		if (ND_lim(agtail(e)) &lt; ND_lim(aghead(e)))</span>
 <span class="fc" id="L625">		    rerank(agtail(e), delta);</span>

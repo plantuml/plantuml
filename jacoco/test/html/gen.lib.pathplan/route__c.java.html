@@ -223,11 +223,11 @@ try {
 <span class="fc" id="L223">    det01 = c[0][0] * c[1][1] - c[1][0] * c[0][1];</span>
 <span class="fc" id="L224">    det0X = c[0][0] * x[1] - c[0][1] * x[0];</span>
 <span class="fc" id="L225">    detX1 = x[0] * c[1][1] - x[1] * c[0][1];</span>
-<span class="pc bpc" id="L226" title="1 of 4 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &gt;= 1e-6) {</span>
-<span class="fc" id="L227">	scale0 = detX1 / det01;</span>
-<span class="fc" id="L228">	scale3 = det0X / det01;</span>
+<span class="pc bpc" id="L226" title="2 of 4 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &gt;= 1e-6) {</span>
+<span class="nc" id="L227">	scale0 = detX1 / det01;</span>
+<span class="nc" id="L228">	scale3 = det0X / det01;</span>
     }
-<span class="pc bpc" id="L230" title="3 of 8 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &lt; 1e-6 || scale0 &lt;= 0.0 || scale3 &lt;= 0.0) {</span>
+<span class="pc bpc" id="L230" title="6 of 8 branches missed.">    if (((det01) &gt;= 0 ? (det01) : -(det01)) &lt; 1e-6 || scale0 &lt;= 0.0 || scale3 &lt;= 0.0) {</span>
 <span class="fc" id="L231">	d01 = dist(inps.get__(0), inps.get__(inpn - 1)) / 3.0;</span>
 <span class="fc" id="L232">	scale0 = d01;</span>
 <span class="fc" id="L233">	scale3 = d01;</span>

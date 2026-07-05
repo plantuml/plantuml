@@ -75,11 +75,11 @@ public class FrontierCalculator {
 <span class="pc bpc" id="L75" title="1 of 2 branches missed.">			if (p.getX() == core.getMaxX())</span>
 <span class="nc" id="L76">				touchMaxX = true;</span>
 
-<span class="pc bpc" id="L78" title="1 of 2 branches missed.">			if (p.getY() == core.getMinY())</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">			if (p.getY() == core.getMinY())</span>
 <span class="fc" id="L79">				touchMinY = true;</span>
 
-<span class="pc bpc" id="L81" title="1 of 2 branches missed.">			if (p.getY() == core.getMaxY())</span>
-<span class="nc" id="L82">				touchMaxY = true;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			if (p.getY() == core.getMaxY())</span>
+<span class="fc" id="L82">				touchMaxY = true;</span>
 
 <span class="fc" id="L84">		}</span>
 <span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (touchMinX == false)</span>
@@ -88,10 +88,10 @@ public class FrontierCalculator {
 <span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (touchMaxX == false)</span>
 <span class="fc" id="L89">			core = core.withMaxX(initial.getMaxX());</span>
 
-<span class="pc bpc" id="L91" title="1 of 2 branches missed.">		if (touchMinY == false)</span>
-<span class="nc" id="L92">			core = core.withMinY(initial.getMinY());</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (touchMinY == false)</span>
+<span class="fc" id="L92">			core = core.withMinY(initial.getMinY());</span>
 
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (touchMaxY == false)</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (touchMaxY == false)</span>
 <span class="fc" id="L95">			core = core.withMaxY(initial.getMaxY());</span>
 
 <span class="fc" id="L97">		boolean pushMinX = false;</span>
@@ -99,7 +99,7 @@ public class FrontierCalculator {
 <span class="fc" id="L99">		boolean pushMinY = false;</span>
 <span class="fc" id="L100">		boolean pushMaxY = false;</span>
 <span class="fc bfc" id="L101" title="All 2 branches covered.">		for (XPoint2D p : points) {</span>
-<span class="pc bpc" id="L102" title="3 of 4 branches missed.">			if (p.getY() == core.getMinY() || p.getY() == core.getMaxY()) {</span>
+<span class="pc bpc" id="L102" title="1 of 4 branches missed.">			if (p.getY() == core.getMinY() || p.getY() == core.getMaxY()) {</span>
 <span class="pc bpc" id="L103" title="1 of 2 branches missed.">				if (Math.abs(p.getX() - core.getMaxX()) &lt; DELTA)</span>
 <span class="nc" id="L104">					pushMaxX = true;</span>
 
@@ -108,10 +108,10 @@ public class FrontierCalculator {
 
 			}
 <span class="pc bpc" id="L110" title="3 of 4 branches missed.">			if (p.getX() == core.getMinX() || p.getX() == core.getMaxX()) {</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">				if (Math.abs(p.getY() - core.getMaxY()) &lt; DELTA)</span>
-<span class="nc" id="L112">					pushMaxY = true;</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">				if (Math.abs(p.getY() - core.getMaxY()) &lt; DELTA)</span>
+<span class="fc" id="L112">					pushMaxY = true;</span>
 
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">				if (Math.abs(p.getY() - core.getMinY()) &lt; DELTA)</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">				if (Math.abs(p.getY() - core.getMinY()) &lt; DELTA)</span>
 <span class="fc" id="L115">					pushMinY = true;</span>
 
 			}
@@ -125,11 +125,11 @@ public class FrontierCalculator {
 <span class="nc" id="L125">					pushMaxX = false;</span>
 			} else {
 
-<span class="pc bpc" id="L128" title="4 of 6 branches missed.">				if (p.getY() == core.getMinY() &amp;&amp; (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))</span>
+<span class="pc bpc" id="L128" title="3 of 6 branches missed.">				if (p.getY() == core.getMinY() &amp;&amp; (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))</span>
 <span class="fc" id="L129">					pushMinY = false;</span>
 
-<span class="pc bpc" id="L131" title="5 of 6 branches missed.">				if (p.getY() == core.getMaxY() &amp;&amp; (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))</span>
-<span class="nc" id="L132">					pushMaxY = false;</span>
+<span class="pc bpc" id="L131" title="3 of 6 branches missed.">				if (p.getY() == core.getMaxY() &amp;&amp; (p.getX() == core.getMinX() || p.getX() == core.getMaxX()))</span>
+<span class="fc" id="L132">					pushMaxY = false;</span>
 			}
 
 <span class="fc" id="L135">		}</span>

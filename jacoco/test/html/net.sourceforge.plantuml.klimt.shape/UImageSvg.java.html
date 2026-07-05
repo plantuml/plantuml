@@ -120,39 +120,43 @@ public class UImageSvg implements UShape {
 <span class="fc bfc" id="L120" title="All 2 branches covered.">		if (m2.find()) {</span>
 <span class="fc bfc" id="L121" title="All 2 branches covered.">			if (&quot;width&quot;.equals(name)) {</span>
 <span class="fc" id="L122">				final String s = m2.group(3);</span>
-<span class="fc" id="L123">				final int width = (int) Double.parseDouble(s);</span>
-<span class="fc" id="L124">				return width;</span>
+				// Round up (not down): a floor here understates the declared box, and
+				// that undersized box is later reused as a hard viewport when this
+				// embedded SVG is re-wrapped without its own viewBox, clipping up to
+				// 1 unit of real content (see issue #2735, embedded-diagram overflow).
+<span class="fc" id="L127">				final int width = (int) Math.ceil(Double.parseDouble(s));</span>
+<span class="fc" id="L128">				return width;</span>
 			}
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			if (&quot;height&quot;.equals(name)) {</span>
-<span class="fc" id="L127">				final String s = m2.group(4);</span>
-<span class="fc" id="L128">				final int result = (int) Double.parseDouble(s);</span>
-<span class="fc" id="L129">				return result;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">			if (&quot;height&quot;.equals(name)) {</span>
+<span class="fc" id="L131">				final String s = m2.group(4);</span>
+<span class="fc" id="L132">				final int result = (int) Math.ceil(Double.parseDouble(s));</span>
+<span class="fc" id="L133">				return result;</span>
 			}
 		}
-<span class="fc" id="L132">		final Pattern p = Pattern.compile(&quot;(?i)&lt;svg[^&gt;]+&quot; + name + &quot;\\W+(\\d+)&quot;);</span>
-<span class="fc" id="L133">		final Matcher m = p.matcher(svg);</span>
-<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (m.find()) {</span>
-<span class="fc" id="L135">			final String s = m.group(1);</span>
-<span class="fc" id="L136">			return Integer.parseInt(s);</span>
+<span class="fc" id="L136">		final Pattern p = Pattern.compile(&quot;(?i)&lt;svg[^&gt;]+&quot; + name + &quot;\\W+(\\d+)&quot;);</span>
+<span class="fc" id="L137">		final Matcher m = p.matcher(svg);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (m.find()) {</span>
+<span class="fc" id="L139">			final String s = m.group(1);</span>
+<span class="fc" id="L140">			return Integer.parseInt(s);</span>
 		}
 
-<span class="nc" id="L139">		throw new IllegalStateException(&quot;Cannot find &quot; + name);</span>
+<span class="nc" id="L143">		throw new IllegalStateException(&quot;Cannot find &quot; + name);</span>
 	}
 
 	public double getHeight() {
-<span class="fc bfc" id="L143" title="All 2 branches covered.">		if (cachedHeight == -1)</span>
-<span class="fc" id="L144">			cachedHeight = getData(&quot;height&quot;);</span>
-<span class="fc" id="L145">		return cachedHeight * scale;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		if (cachedHeight == -1)</span>
+<span class="fc" id="L148">			cachedHeight = getData(&quot;height&quot;);</span>
+<span class="fc" id="L149">		return cachedHeight * scale;</span>
 	}
 
 	public double getWidth() {
-<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (cachedWidth == -1)</span>
-<span class="fc" id="L150">			cachedWidth = getData(&quot;width&quot;);</span>
-<span class="fc" id="L151">		return cachedWidth * scale;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		if (cachedWidth == -1)</span>
+<span class="fc" id="L154">			cachedWidth = getData(&quot;width&quot;);</span>
+<span class="fc" id="L155">		return cachedWidth * scale;</span>
 	}
 
 	public double getScale() {
-<span class="fc" id="L155">		return scale;</span>
+<span class="fc" id="L159">		return scale;</span>
 	}
 
 }

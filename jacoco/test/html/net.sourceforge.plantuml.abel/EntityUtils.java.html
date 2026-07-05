@@ -38,53 +38,53 @@ package net.sourceforge.plantuml.abel;
 <span class="nc" id="L38">public abstract class EntityUtils {</span>
 
 	private static boolean isParent(Entity groupToBeTested, Entity parentGroup) {
-<span class="nc bnc" id="L41" title="All 2 branches missed.">		if (groupToBeTested.isGroup() == false)</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">		if (groupToBeTested.isGroup() == false)</span>
 			// Very strange!
 <span class="nc" id="L43">			return false;</span>
 
-<span class="nc bnc" id="L45" title="All 2 branches missed.">		if (groupToBeTested.isGroup() == false)</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">		if (groupToBeTested.isGroup() == false)</span>
 <span class="nc" id="L46">			throw new IllegalArgumentException();</span>
 
-<span class="nc bnc" id="L48" title="All 2 branches missed.">		while (groupToBeTested.isRoot() == false) {</span>
-<span class="nc bnc" id="L49" title="All 2 branches missed.">			if (groupToBeTested == parentGroup)</span>
-<span class="nc" id="L50">				return true;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		while (groupToBeTested.isRoot() == false) {</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">			if (groupToBeTested == parentGroup)</span>
+<span class="fc" id="L50">				return true;</span>
 
-<span class="nc" id="L52">			groupToBeTested = groupToBeTested.getParentContainer();</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">			if (groupToBeTested.isGroup() == false)</span>
+<span class="fc" id="L52">			groupToBeTested = groupToBeTested.getParentContainer();</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">			if (groupToBeTested.isGroup() == false)</span>
 <span class="nc" id="L54">				return false;</span>
 			// throw new IllegalStateException();
 
 		}
-<span class="nc" id="L58">		return false;</span>
+<span class="fc" id="L58">		return false;</span>
 	}
 
 	public static boolean isPureInnerLink12(Entity group, Link link) {
-<span class="nc bnc" id="L62" title="All 2 branches missed.">		if (group.isGroup() == false)</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">		if (group.isGroup() == false)</span>
 <span class="nc" id="L63">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L65">		final Entity e1 = link.getEntity1();</span>
-<span class="nc" id="L66">		final Entity e2 = link.getEntity2();</span>
-<span class="nc" id="L67">		final Entity group1 = e1.getParentContainer();</span>
-<span class="nc" id="L68">		final Entity group2 = e2.getParentContainer();</span>
+<span class="fc" id="L65">		final Entity e1 = link.getEntity1();</span>
+<span class="fc" id="L66">		final Entity e2 = link.getEntity2();</span>
+<span class="fc" id="L67">		final Entity group1 = e1.getParentContainer();</span>
+<span class="fc" id="L68">		final Entity group2 = e2.getParentContainer();</span>
 
-<span class="nc bnc" id="L70" title="All 4 branches missed.">		if (isParent(group1, group) &amp;&amp; isParent(group2, group))</span>
-<span class="nc" id="L71">			return true;</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">		if (isParent(group1, group) &amp;&amp; isParent(group2, group))</span>
+<span class="fc" id="L71">			return true;</span>
 
-<span class="nc" id="L73">		return false;</span>
+<span class="fc" id="L73">		return false;</span>
 	}
 
 	public static boolean isPureInnerLink3(Entity group, Link link) {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (group.isGroup() == false)</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (group.isGroup() == false)</span>
 <span class="nc" id="L78">			throw new IllegalArgumentException();</span>
 
-<span class="nc" id="L80">		final Entity e1 = link.getEntity1();</span>
-<span class="nc" id="L81">		final Entity e2 = link.getEntity2();</span>
-<span class="nc" id="L82">		final Entity group1 = e1.getParentContainer();</span>
-<span class="nc" id="L83">		final Entity group2 = e2.getParentContainer();</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">		if (isParent(group2, group) == isParent(group1, group))</span>
-<span class="nc" id="L85">			return true;</span>
+<span class="fc" id="L80">		final Entity e1 = link.getEntity1();</span>
+<span class="fc" id="L81">		final Entity e2 = link.getEntity2();</span>
+<span class="fc" id="L82">		final Entity group1 = e1.getParentContainer();</span>
+<span class="fc" id="L83">		final Entity group2 = e2.getParentContainer();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (isParent(group2, group) == isParent(group1, group))</span>
+<span class="fc" id="L85">			return true;</span>
 
-<span class="nc" id="L87">		return false;</span>
+<span class="fc" id="L87">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -9666,12 +9666,12 @@ Used By:
 --------------------------------------------------
 
 Stats:
-    Total Classes: 3
-    Concrete Classes: 3
+    Total Classes: 6
+    Concrete Classes: 6
     Abstract Classes: 0
 
     Ca: 0
-    Ce: 13
+    Ce: 14
 
     A: 0
     I: 1
@@ -9681,7 +9681,10 @@ Abstract Classes:
 
 Concrete Classes:
     net.sourceforge.plantuml.sdot.BoxInfo
-    net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana$Drawing
+    net.sourceforge.plantuml.sdot.CucaDiagramSimplifierStateSmetana
+    net.sourceforge.plantuml.sdot.GroupMakerStateSmetana
+    net.sourceforge.plantuml.sdot.PaddedEntityImage
+    net.sourceforge.plantuml.sdot.TextBlockToEntityImage
     net.sourceforge.plantuml.sdot.YMirror
 
 Depends Upon:
@@ -9698,6 +9701,7 @@ Depends Upon:
     net.sourceforge.plantuml.klimt.geom
     net.sourceforge.plantuml.klimt.shape
     net.sourceforge.plantuml.svek
+    net.sourceforge.plantuml.svek.image
 
 Used By:
     Not used by any packages.
@@ -11171,12 +11175,12 @@ Stats:
     Concrete Classes: 35
     Abstract Classes: 2
 
-    Ca: 12
+    Ca: 13
     Ce: 23
 
     A: 0.05
-    I: 0.66
-    D: 0.29
+    I: 0.64
+    D: 0.31
 
 Abstract Classes:
     net.sourceforge.plantuml.svek.image.AbstractEntityImageBorder
@@ -11253,6 +11257,7 @@ Used By:
     net.sourceforge.plantuml.elk
     net.sourceforge.plantuml.gantt.draw
     net.sourceforge.plantuml.klimt.shape
+    net.sourceforge.plantuml.sdot
     net.sourceforge.plantuml.skin.rose
     net.sourceforge.plantuml.svek
     net.sourceforge.plantuml.svek.extremity
@@ -14464,9 +14469,9 @@ net.sourceforge.plantuml.salt.factory
 
 net.sourceforge.plantuml.sdot
     |
-    |-> h
-    |   smetana.core
-    |-> h
+    |-> net.sourceforge.plantuml.klimt.font
+    |   net.sourceforge.plantuml.klimt.geom
+    |-> net.sourceforge.plantuml.klimt.font
 
 net.sourceforge.plantuml.security
     |
@@ -15037,7 +15042,7 @@ net.sourceforge.plantuml.regexdiagram,5,0,0,13,0,1,0,1
 net.sourceforge.plantuml.salt,8,1,2,21,0.12,0.91,0.04,1
 net.sourceforge.plantuml.salt.element,32,3,3,16,0.09,0.84,0.06,1
 net.sourceforge.plantuml.salt.factory,19,2,1,8,0.11,0.89,0.01,1
-net.sourceforge.plantuml.sdot,3,0,0,13,0,1,0,1
+net.sourceforge.plantuml.sdot,6,0,0,14,0,1,0,1
 net.sourceforge.plantuml.security,7,0,19,19,0,0.5,0.5,1
 net.sourceforge.plantuml.security.authentication,6,3,4,3,0.5,0.43,0.07,1
 net.sourceforge.plantuml.security.authentication.basicauth,1,0,1,3,0,0.75,0.25,1
@@ -15060,7 +15065,7 @@ net.sourceforge.plantuml.style.parser,4,0,4,4,0,0.5,0.5,1
 net.sourceforge.plantuml.sudoku,4,1,0,8,0.25,1,0.25,1
 net.sourceforge.plantuml.svek,65,10,21,34,0.15,0.62,0.23,1
 net.sourceforge.plantuml.svek.extremity,55,4,3,11,0.07,0.79,0.14,1
-net.sourceforge.plantuml.svek.image,37,2,12,23,0.05,0.66,0.29,1
+net.sourceforge.plantuml.svek.image,37,2,13,23,0.05,0.64,0.31,1
 net.sourceforge.plantuml.svg.parser,11,1,0,13,0.09,1,0.09,1
 net.sourceforge.plantuml.swing,36,0,0,15,0,1,0,1
 net.sourceforge.plantuml.syntax,2,0,0,9,0,1,0,1

@@ -60,87 +60,87 @@ public final class ConcurrentStates extends TextBlockMemoized implements IEntity
 	private final ISkinParam skinParam;
 	private final Stereotype stereotype;
 
-<span class="nc" id="L63">	static enum Separator {</span>
-<span class="nc" id="L64">		VERTICAL, HORIZONTAL;</span>
+<span class="fc" id="L63">	static enum Separator {</span>
+<span class="fc" id="L64">		VERTICAL, HORIZONTAL;</span>
 
 		static Separator fromChar(char sep) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">			if (sep == '|')</span>
-<span class="nc" id="L68">				return VERTICAL;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">			if (sep == '|')</span>
+<span class="fc" id="L68">				return VERTICAL;</span>
 
-<span class="nc bnc" id="L70" title="All 2 branches missed.">			if (sep == '-')</span>
-<span class="nc" id="L71">				return HORIZONTAL;</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">			if (sep == '-')</span>
+<span class="fc" id="L71">				return HORIZONTAL;</span>
 
 <span class="nc" id="L73">			throw new IllegalArgumentException();</span>
 		}
 
 		UTranslate move(XDimension2D dim) {
-<span class="nc bnc" id="L77" title="All 2 branches missed.">			if (this == VERTICAL)</span>
-<span class="nc" id="L78">				return UTranslate.dx(dim.getWidth());</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">			if (this == VERTICAL)</span>
+<span class="fc" id="L78">				return UTranslate.dx(dim.getWidth());</span>
 
-<span class="nc" id="L80">			return UTranslate.dy(dim.getHeight());</span>
+<span class="fc" id="L80">			return UTranslate.dy(dim.getHeight());</span>
 		}
 
 		XDimension2D add(XDimension2D orig, XDimension2D other) {
-<span class="nc bnc" id="L84" title="All 2 branches missed.">			if (this == VERTICAL)</span>
-<span class="nc" id="L85">				return new XDimension2D(orig.getWidth() + other.getWidth(),</span>
-<span class="nc" id="L86">						Math.max(orig.getHeight(), other.getHeight()));</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">			if (this == VERTICAL)</span>
+<span class="fc" id="L85">				return new XDimension2D(orig.getWidth() + other.getWidth(),</span>
+<span class="fc" id="L86">						Math.max(orig.getHeight(), other.getHeight()));</span>
 
-<span class="nc" id="L88">			return new XDimension2D(Math.max(orig.getWidth(), other.getWidth()), orig.getHeight() + other.getHeight());</span>
+<span class="fc" id="L88">			return new XDimension2D(Math.max(orig.getWidth(), other.getWidth()), orig.getHeight() + other.getHeight());</span>
 		}
 
 		void drawSeparator(UGraphic ug, XDimension2D dimTotal) {
-<span class="nc" id="L92">			final double THICKNESS_BORDER = 1.5;</span>
-<span class="nc" id="L93">			final int DASH = 8;</span>
-<span class="nc" id="L94">			ug = ug.apply(new UStroke(DASH, 10, THICKNESS_BORDER));</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (this == VERTICAL)</span>
-<span class="nc" id="L96">				ug.draw(ULine.vline(dimTotal.getHeight() + DASH));</span>
+<span class="fc" id="L92">			final double THICKNESS_BORDER = 1.5;</span>
+<span class="fc" id="L93">			final int DASH = 8;</span>
+<span class="fc" id="L94">			ug = ug.apply(new UStroke(DASH, 10, THICKNESS_BORDER));</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">			if (this == VERTICAL)</span>
+<span class="fc" id="L96">				ug.draw(ULine.vline(dimTotal.getHeight() + DASH));</span>
 			else
-<span class="nc" id="L98">				ug.draw(ULine.hline(dimTotal.getWidth() + DASH));</span>
+<span class="fc" id="L98">				ug.draw(ULine.hline(dimTotal.getWidth() + DASH));</span>
 
-<span class="nc" id="L100">		}</span>
+<span class="fc" id="L100">		}</span>
 	}
 
 	public ConcurrentStates(List&lt;IEntityImage&gt; inners, char concurrentSeparator, ISkinParam skinParam,
-<span class="nc" id="L104">			Stereotype stereotype) {</span>
-<span class="nc" id="L105">		this.separator = Separator.fromChar(concurrentSeparator);</span>
-<span class="nc" id="L106">		this.skinParam = skinParam;</span>
-<span class="nc" id="L107">		this.stereotype = stereotype;</span>
-<span class="nc" id="L108">		this.inners = inners;</span>
-<span class="nc" id="L109">	}</span>
+<span class="fc" id="L104">			Stereotype stereotype) {</span>
+<span class="fc" id="L105">		this.separator = Separator.fromChar(concurrentSeparator);</span>
+<span class="fc" id="L106">		this.skinParam = skinParam;</span>
+<span class="fc" id="L107">		this.stereotype = stereotype;</span>
+<span class="fc" id="L108">		this.inners = inners;</span>
+<span class="fc" id="L109">	}</span>
 
 	private Style getStyle() {
-<span class="nc" id="L112">		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L112">		return getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
-<span class="nc" id="L116">		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state);</span>
+<span class="fc" id="L116">		return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L120">		final HColor borderColor = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
-<span class="nc" id="L121">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L122">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
+<span class="fc" id="L120">		final HColor borderColor = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L121">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L122">		final XDimension2D dimTotal = calculateDimension(stringBounder);</span>
 
-<span class="nc bnc" id="L124" title="All 2 branches missed.">		for (int i = 0; i &lt; inners.size(); i++) {</span>
-<span class="nc" id="L125">			final IEntityImage inner = inners.get(i);</span>
-<span class="nc" id="L126">			inner.drawU(ug);</span>
-<span class="nc" id="L127">			final XDimension2D dim = inner.calculateDimension(stringBounder);</span>
-<span class="nc" id="L128">			ug = ug.apply(separator.move(dim));</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">			if (i &lt; inners.size() - 1)</span>
-<span class="nc" id="L130">				separator.drawSeparator(ug.apply(borderColor), dimTotal);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		for (int i = 0; i &lt; inners.size(); i++) {</span>
+<span class="fc" id="L125">			final IEntityImage inner = inners.get(i);</span>
+<span class="fc" id="L126">			inner.drawU(ug);</span>
+<span class="fc" id="L127">			final XDimension2D dim = inner.calculateDimension(stringBounder);</span>
+<span class="fc" id="L128">			ug = ug.apply(separator.move(dim));</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			if (i &lt; inners.size() - 1)</span>
+<span class="fc" id="L130">				separator.drawSeparator(ug.apply(borderColor), dimTotal);</span>
 
 		}
 
-<span class="nc" id="L134">	}</span>
+<span class="fc" id="L134">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="nc" id="L138">		XDimension2D result = new XDimension2D(0, 0);</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		for (IEntityImage inner : inners) {</span>
-<span class="nc" id="L140">			final XDimension2D dim = inner.calculateDimension(stringBounder);</span>
-<span class="nc" id="L141">			result = separator.add(result, dim);</span>
-<span class="nc" id="L142">		}</span>
-<span class="nc" id="L143">		return result;</span>
+<span class="fc" id="L138">		XDimension2D result = new XDimension2D(0, 0);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (IEntityImage inner : inners) {</span>
+<span class="fc" id="L140">			final XDimension2D dim = inner.calculateDimension(stringBounder);</span>
+<span class="fc" id="L141">			result = separator.add(result, dim);</span>
+<span class="fc" id="L142">		}</span>
+<span class="fc" id="L143">		return result;</span>
 	}
 
 	public HColor getBackcolor() {

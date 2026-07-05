@@ -861,12 +861,12 @@ try {
 	    /* position flat edge endpoints */
 <span class="fc bfc" id="L862" title="All 2 branches covered.">	    for (k = 0; k &lt; ND_flat_out(u).size; k++) {</span>
 <span class="fc" id="L863">		e = (ST_Agedge_s) ND_flat_out(u).list.get_(k);</span>
-<span class="pc bpc" id="L864" title="1 of 2 branches missed.">		if (ND_order(agtail(e)) &lt; ND_order(aghead(e))) {</span>
+<span class="fc bfc" id="L864" title="All 2 branches covered.">		if (ND_order(agtail(e)) &lt; ND_order(aghead(e))) {</span>
 <span class="fc" id="L865">		    t0 = agtail(e);</span>
 <span class="fc" id="L866">		    h0 = aghead(e);</span>
 		} else {
-<span class="nc" id="L868">		    t0 = aghead(e);</span>
-<span class="nc" id="L869">		    h0 = agtail(e);</span>
+<span class="fc" id="L868">		    t0 = aghead(e);</span>
+<span class="fc" id="L869">		    h0 = agtail(e);</span>
 		}
 <span class="fc" id="L871">		width = ND_rw(t0) + ND_lw(h0);</span>
 <span class="fc" id="L872">		m0 = (int) (ED_minlen(e) * GD_nodesep(g) + width);</span>

@@ -704,8 +704,8 @@ public class SkinParam implements ISkinParam {
 <span class="fc" id="L704">		final HorizontalAlignment result = HorizontalAlignment.fromString(value);</span>
 <span class="pc bpc" id="L705" title="1 of 4 branches missed.">		if (result == null &amp;&amp; param == AlignmentParam.noteTextAlignment)</span>
 <span class="pc bpc" id="L706" title="1 of 2 branches missed.">			return getDefaultTextAlignment(overrideDefault == null ? HorizontalAlignment.LEFT : overrideDefault);</span>
-<span class="pc bpc" id="L707" title="2 of 4 branches missed.">		else if (result == null &amp;&amp; param == AlignmentParam.stateMessageAlignment)</span>
-<span class="nc" id="L708">			return getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
+<span class="pc bpc" id="L707" title="1 of 4 branches missed.">		else if (result == null &amp;&amp; param == AlignmentParam.stateMessageAlignment)</span>
+<span class="fc" id="L708">			return getDefaultTextAlignment(HorizontalAlignment.CENTER);</span>
 <span class="pc bpc" id="L709" title="1 of 2 branches missed.">		else if (result == null)</span>
 <span class="fc" id="L710">			return param.getDefaultValue();</span>
 

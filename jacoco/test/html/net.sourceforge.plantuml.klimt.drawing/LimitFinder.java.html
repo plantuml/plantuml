@@ -121,8 +121,8 @@ public final class LimitFinder extends UGraphicNo {
 <span class="fc" id="L121">			drawUPath(x, y, (UPath) shape);</span>
 <span class="fc bfc" id="L122" title="All 2 branches covered.">		} else if (shape instanceof URectangle) {</span>
 <span class="fc" id="L123">			drawRectangle(x, y, (URectangle) shape);</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		} else if (shape instanceof DotPath) {</span>
-<span class="nc" id="L125">			drawDotPath(x, y, (DotPath) shape);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		} else if (shape instanceof DotPath) {</span>
+<span class="fc" id="L125">			drawDotPath(x, y, (DotPath) shape);</span>
 <span class="fc bfc" id="L126" title="All 2 branches covered.">		} else if (shape instanceof UImage) {</span>
 <span class="fc" id="L127">			drawImage(x, y, (UImage) shape);</span>
 <span class="fc bfc" id="L128" title="All 2 branches covered.">		} else if (shape instanceof UImageSvg) {</span>
@@ -130,12 +130,12 @@ public final class LimitFinder extends UGraphicNo {
 <span class="pc bpc" id="L130" title="1 of 2 branches missed.">		} else if (shape instanceof UImageTikz) {</span>
 <span class="nc" id="L131">			drawImageTikz(x, y, (UImageTikz) shape);</span>
 <span class="fc bfc" id="L132" title="All 2 branches covered.">		} else if (shape instanceof UComment) {</span>
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">		} else if (shape instanceof UEmpty) {</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		} else if (shape instanceof UEmpty) {</span>
 <span class="fc" id="L134">			drawEmpty(x, y, (UEmpty) shape);</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		} else if (shape instanceof TextBlock) {</span>
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">		} else if (shape instanceof TextBlock) {</span>
 <span class="nc" id="L136">			final TextBlock tb = (TextBlock) shape;</span>
 <span class="nc" id="L137">			tb.drawU(this);</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		} else if (shape instanceof UCenteredCharacter) {</span>
 			// To be done
 <span class="nc bnc" id="L140" title="All 2 branches missed.">		} else if (shape instanceof CenteredText) {</span>
 			// Ignored
@@ -188,10 +188,10 @@ public final class LimitFinder extends UGraphicNo {
 <span class="fc" id="L188">	}</span>
 
 	private void drawDotPath(double x, double y, DotPath shape) {
-<span class="nc" id="L191">		final MinMax shapeMinMax = shape.getMinMax();</span>
-<span class="nc" id="L192">		addPoint(x + shapeMinMax.getMinX(), y + shapeMinMax.getMinY());</span>
-<span class="nc" id="L193">		addPoint(x + shapeMinMax.getMaxX(), y + shapeMinMax.getMaxY());</span>
-<span class="nc" id="L194">	}</span>
+<span class="fc" id="L191">		final MinMax shapeMinMax = shape.getMinMax();</span>
+<span class="fc" id="L192">		addPoint(x + shapeMinMax.getMinX(), y + shapeMinMax.getMinY());</span>
+<span class="fc" id="L193">		addPoint(x + shapeMinMax.getMaxX(), y + shapeMinMax.getMaxY());</span>
+<span class="fc" id="L194">	}</span>
 
 	private void drawImage(double x, double y, UImage shape) {
 <span class="fc" id="L197">		addPoint(x, y);</span>
@@ -225,7 +225,7 @@ public final class LimitFinder extends UGraphicNo {
 <span class="fc" id="L225">	}</span>
 
 	public ColorMapper getColorMapper() {
-<span class="nc" id="L228">		return ColorMapper.IDENTITY;</span>
+<span class="fc" id="L228">		return ColorMapper.IDENTITY;</span>
 	}
 
 	public double getMaxX() {
