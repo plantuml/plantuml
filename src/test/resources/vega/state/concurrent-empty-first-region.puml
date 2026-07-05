@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+state Parent {
+  --
+  state A
+  --
+  state B
+}
+@enduml
