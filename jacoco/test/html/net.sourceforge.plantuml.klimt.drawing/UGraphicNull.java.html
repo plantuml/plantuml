@@ -44,30 +44,29 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.geom.EnsureVisible;
 
 public class UGraphicNull extends AbstractUGraphic&lt;String&gt; implements EnsureVisible {
-    // ::remove file when __HAXE__
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-<span class="nc" id="L51">		final UGraphicNull result = new UGraphicNull(this);</span>
-<span class="nc" id="L52">		return result;</span>
+<span class="nc" id="L50">		final UGraphicNull result = new UGraphicNull(this);</span>
+<span class="nc" id="L51">		return result;</span>
 	}
 
 	private UGraphicNull(UGraphicNull other) {
-<span class="nc" id="L56">		super(FileFormat.PNG.getDefaultStringBounder());</span>
-<span class="nc" id="L57">		copy(other);</span>
-<span class="nc" id="L58">	}</span>
+<span class="nc" id="L55">		super(FileFormat.PNG.getDefaultStringBounder());</span>
+<span class="nc" id="L56">		copy(other);</span>
+<span class="nc" id="L57">	}</span>
 
 	public UGraphicNull() {
-<span class="nc" id="L61">		super(FileFormat.PNG.getDefaultStringBounder());</span>
-<span class="nc" id="L62">		copy(HColors.BLACK, ColorMapper.IDENTITY, &quot;foo&quot;);</span>
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L60">		super(FileFormat.PNG.getDefaultStringBounder());</span>
+<span class="nc" id="L61">		copy(HColors.BLACK, ColorMapper.IDENTITY, &quot;foo&quot;);</span>
+<span class="nc" id="L62">	}</span>
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-<span class="nc" id="L67">	}</span>
+<span class="nc" id="L66">	}</span>
 
 	public void ensureVisible(double x, double y) {
-<span class="nc" id="L70">	}</span>
+<span class="nc" id="L69">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

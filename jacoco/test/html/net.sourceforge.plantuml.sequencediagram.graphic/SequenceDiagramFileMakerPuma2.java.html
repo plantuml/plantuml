@@ -63,7 +63,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 <span class="nc" id="L64">	public SequenceDiagramFileMakerPuma2(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption) {</span>
 <span class="nc" id="L65">		this.diagram = diagram;</span>
-<span class="nc" id="L66">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+<span class="nc" id="L66">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(), diagram.getPragma());</span>
 <span class="nc" id="L67">		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, diagram.getSkinParam(),</span>
 <span class="nc" id="L68">				diagram.isShowFootbox(), /* diagram.getAutonewpage(), */ diagram.getCounter());</span>
 

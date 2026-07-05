@@ -1889,11 +1889,11 @@
                 <TotalClasses>37</TotalClasses>
                 <ConcreteClasses>24</ConcreteClasses>
                 <AbstractClasses>13</AbstractClasses>
-                <Ca>98</Ca>
+                <Ca>96</Ca>
                 <Ce>33</Ce>
                 <A>0.35</A>
-                <I>0.25</I>
-                <D>0.4</D>
+                <I>0.26</I>
+                <D>0.39</D>
                 <V>1</V>
             </Stats>
 
@@ -2131,11 +2131,9 @@
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
-                <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.statediagram</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
                 <Package>net.sourceforge.plantuml.stats</Package>
-                <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.sudoku</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
@@ -5558,10 +5556,10 @@
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
                 <Ca>80</Ca>
-                <Ce>40</Ce>
+                <Ce>41</Ce>
                 <A>0.17</A>
-                <I>0.33</I>
-                <D>0.5</D>
+                <I>0.34</I>
+                <D>0.49</D>
                 <V>1</V>
             </Stats>
 
@@ -5644,6 +5642,7 @@
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.teavm</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.tikz</Package>
                 <Package>net.sourceforge.plantuml.url</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
                 <Package>net.sourceforge.plantuml.version</Package>
@@ -15109,7 +15108,6 @@
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.cucadiagram</Package>
                 <Package>net.sourceforge.plantuml.decoration.symbol</Package>
@@ -15131,6 +15129,7 @@
                 <Package>net.sourceforge.plantuml.style</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.tikz</Package>
                 <Package>net.sourceforge.plantuml.warning</Package>
             </DependsUpon>
 
@@ -15693,7 +15692,6 @@
             <DependsUpon>
                 <Package>java.lang</Package>
                 <Package>java.util</Package>
-                <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
@@ -15708,6 +15706,7 @@
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.text</Package>
+                <Package>net.sourceforge.plantuml.tikz</Package>
             </DependsUpon>
 
             <UsedBy>
@@ -17162,11 +17161,11 @@
                 <TotalClasses>1</TotalClasses>
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>1</Ca>
+                <Ca>4</Ca>
                 <Ce>1</Ce>
                 <A>0</A>
-                <I>0.5</I>
-                <D>0.5</D>
+                <I>0.2</I>
+                <D>0.8</D>
                 <V>1</V>
             </Stats>
 
@@ -17174,8 +17173,8 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="LatexManager.java">
-                    net.sourceforge.plantuml.tikz.LatexManager$LruCache
+                <Class sourceFile="LatexTextMetrics.java">
+                    net.sourceforge.plantuml.tikz.LatexTextMetrics$LruCache
                 </Class>
             </ConcreteClasses>
 
@@ -17184,7 +17183,10 @@
             </DependsUpon>
 
             <UsedBy>
+                <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.tikz</Package>
+                <Package>net.sourceforge.plantuml.skin</Package>
+                <Package>net.sourceforge.plantuml.style</Package>
             </UsedBy>
         </Package>
 

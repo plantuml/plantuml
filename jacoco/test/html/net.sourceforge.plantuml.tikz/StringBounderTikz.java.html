@@ -36,70 +36,69 @@
 package net.sourceforge.plantuml.tikz;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class StringBounderTikz implements StringBounder {
 
-	private final LatexManager latexManager;
+	private final LatexTextMetrics latexManager;
 	private final FileFormat fileFormat;
 
-<span class="nc" id="L49">	public StringBounderTikz(TikzFontDistortion tikzFontDistortion, FileFormat latexManager) {</span>
-<span class="nc" id="L50">		this.fileFormat = latexManager;</span>
-<span class="nc" id="L51">		this.latexManager = new LatexManager(tikzFontDistortion.getTexSystem(), tikzFontDistortion.getTexPreamble());</span>
-<span class="nc" id="L52">	}</span>
+<span class="nc" id="L48">	public StringBounderTikz(LatexEngine latexEngine, TikzFontDistortion tikzFontDistortion, FileFormat fileFormat) {</span>
+<span class="nc" id="L49">		this.fileFormat = fileFormat;</span>
+<span class="nc" id="L50">		this.latexManager = new LatexTextMetrics(latexEngine, tikzFontDistortion.getTexPreamble());</span>
+<span class="nc" id="L51">	}</span>
 
 	@Override
 	public FileFormat getFileFormat() {
-<span class="nc" id="L56">		return fileFormat;</span>
+<span class="nc" id="L55">		return fileFormat;</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-<span class="nc" id="L61">		final double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));</span>
-<span class="nc" id="L62">		double height = widthHeightDepth[1] + widthHeightDepth[2];</span>
-<span class="nc bnc" id="L63" title="All 4 branches missed.">		if (height == 0.0 &amp;&amp; text.trim().isEmpty()) {</span>
+<span class="nc" id="L60">		final double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));</span>
+<span class="nc" id="L61">		double height = widthHeightDepth[1] + widthHeightDepth[2];</span>
+<span class="nc bnc" id="L62" title="All 4 branches missed.">		if (height == 0.0 &amp;&amp; text.trim().isEmpty()) {</span>
 			// avoid return 0 height for space, otherwise cause exception, case in #1259
-<span class="nc" id="L65">			height = latexManager.getWidthHeightDepth(styleText(font, &quot; &quot;))[0];</span>
+<span class="nc" id="L64">			height = latexManager.getWidthHeightDepth(styleText(font, &quot; &quot;))[0];</span>
 		}
-<span class="nc" id="L67">		return new XDimension2D(widthHeightDepth[0], height);</span>
+<span class="nc" id="L66">		return new XDimension2D(widthHeightDepth[0], height);</span>
 	}
 
 	@Override
 	public boolean matchesProperty(String propertyName) {
-<span class="nc" id="L72">		return &quot;TIKZ&quot;.equalsIgnoreCase(propertyName);</span>
+<span class="nc" id="L71">		return &quot;TIKZ&quot;.equalsIgnoreCase(propertyName);</span>
 	}
 
 	@Override
 	public double getDescent(UFont font, String text) {
-<span class="nc" id="L77">		final double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));</span>
-<span class="nc" id="L78">		return widthHeightDepth[2];</span>
+<span class="nc" id="L76">		final double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));</span>
+<span class="nc" id="L77">		return widthHeightDepth[2];</span>
 	}
 
 	protected String styleText(UFont font, String text) {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (font == null)</span>
-<span class="nc" id="L83">			return &quot;$&quot; + text + &quot;$&quot;;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (font == null)</span>
+<span class="nc" id="L82">			return &quot;$&quot; + text + &quot;$&quot;;</span>
 
-<span class="nc" id="L85">		final StringBuilder sb = new StringBuilder();</span>
-<span class="nc" id="L86">		final boolean italic = font.getFontFace().isItalic();</span>
-<span class="nc" id="L87">		final boolean bold = font.getFontFace().isBold();</span>
+<span class="nc" id="L84">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L85">		final boolean italic = font.getFontFace().isItalic();</span>
+<span class="nc" id="L86">		final boolean bold = font.getFontFace().isBold();</span>
 
-<span class="nc bnc" id="L89" title="All 2 branches missed.">		if (italic)</span>
-<span class="nc" id="L90">			sb.append(&quot;\\textit{&quot;);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (italic)</span>
+<span class="nc" id="L89">			sb.append(&quot;\\textit{&quot;);</span>
 
-<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (bold)</span>
-<span class="nc" id="L93">			sb.append(&quot;\\textbf{&quot;);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">		if (bold)</span>
+<span class="nc" id="L92">			sb.append(&quot;\\textbf{&quot;);</span>
 
-<span class="nc" id="L95">		sb.append(LatexManager.protectText(text));</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (bold)</span>
-<span class="nc" id="L97">			sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L94">		sb.append(LatexTextMetrics.protectText(text));</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (bold)</span>
+<span class="nc" id="L96">			sb.append(&quot;}&quot;);</span>
 
-<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (italic)</span>
-<span class="nc" id="L100">			sb.append(&quot;}&quot;);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (italic)</span>
+<span class="nc" id="L99">			sb.append(&quot;}&quot;);</span>
 
-<span class="nc" id="L102">		return sb.toString();</span>
+<span class="nc" id="L101">		return sb.toString();</span>
 	}
 
 }

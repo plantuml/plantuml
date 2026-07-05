@@ -346,7 +346,7 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc bfc" id="L346" title="All 2 branches covered.">			if (bold)</span>
 <span class="fc" id="L347">				sb.append(&quot;\\textbf{&quot;);</span>
 
-<span class="fc" id="L349">			sb.append(LatexManager.protectText(text));</span>
+<span class="fc" id="L349">			sb.append(LatexTextMetrics.protectText(text));</span>
 <span class="fc bfc" id="L350" title="All 2 branches covered.">			if (bold)</span>
 <span class="fc" id="L351">				sb.append(&quot;}&quot;);</span>
 
@@ -359,7 +359,7 @@ import net.sourceforge.plantuml.version.Version;
 		} else {
 <span class="nc" id="L360">			appendPendingUrl(sb);</span>
 <span class="nc" id="L361">			sb.append(&quot;{&quot;);</span>
-<span class="nc" id="L362">			sb.append(LatexManager.protectText(text));</span>
+<span class="nc" id="L362">			sb.append(LatexTextMetrics.protectText(text));</span>
 <span class="nc" id="L363">			sb.append(&quot;}&quot;);</span>
 		}
 <span class="fc" id="L365">		sb.append(&quot;};&quot;);</span>

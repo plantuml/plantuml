@@ -347,7 +347,7 @@ Total Classes: 3
 "net.atmp" --> "net.sourceforge.plantuml.klimt.geom"
 "net.atmp" --> "net.sourceforge.plantuml.klimt.shape"
 
-class "net.sourceforge.plantuml" %lighten("red", 60) {
+class "net.sourceforge.plantuml" %lighten("red", 61) {
 Total Classes: 37
 }
 "net.sourceforge.plantuml" --> "java.awt"
@@ -1008,7 +1008,7 @@ Total Classes: 8
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.text"
 "net.sourceforge.plantuml.command.note.sequence" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.core" %lighten("red", 50) {
+class "net.sourceforge.plantuml.core" %lighten("red", 51) {
 Total Classes: 12
 }
 "net.sourceforge.plantuml.core" --> "java.awt"
@@ -1047,6 +1047,7 @@ Total Classes: 12
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.teavm"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.text"
+"net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.tikz"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.utils"
 "net.sourceforge.plantuml.core" --> "net.sourceforge.plantuml.version"
@@ -2941,7 +2942,6 @@ Total Classes: 34
 "net.sourceforge.plantuml.skin" --> "java.io"
 "net.sourceforge.plantuml.skin" --> "java.lang"
 "net.sourceforge.plantuml.skin" --> "java.util"
-"net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.cucadiagram"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.decoration.symbol"
@@ -2963,6 +2963,7 @@ Total Classes: 34
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.style"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.text"
+"net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.tikz"
 "net.sourceforge.plantuml.skin" --> "net.sourceforge.plantuml.warning"
 
 class "net.sourceforge.plantuml.skin.rose" %lighten("red", 56) {
@@ -3057,7 +3058,6 @@ Total Classes: 23
 }
 "net.sourceforge.plantuml.style" --> "java.lang"
 "net.sourceforge.plantuml.style" --> "java.util"
-"net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.dot"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.klimt"
@@ -3072,6 +3072,7 @@ Total Classes: 23
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.stereo"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.text"
+"net.sourceforge.plantuml.style" --> "net.sourceforge.plantuml.tikz"
 
 class "net.sourceforge.plantuml.style.parser" %lighten("red", 50) {
 Total Classes: 4
@@ -3276,7 +3277,7 @@ Total Classes: 2
 "net.sourceforge.plantuml.theme" --> "net.sourceforge.plantuml.preproc"
 "net.sourceforge.plantuml.theme" --> "net.sourceforge.plantuml.text"
 
-class "net.sourceforge.plantuml.tikz" %lighten("red", 50) {
+class "net.sourceforge.plantuml.tikz" %lighten("red", 20) {
 Total Classes: 1
 }
 "net.sourceforge.plantuml.tikz" --> "java.util"

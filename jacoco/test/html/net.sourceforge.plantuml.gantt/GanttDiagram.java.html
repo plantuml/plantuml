@@ -182,7 +182,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) {
-<span class="fc" id="L185">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());</span>
+<span class="fc" id="L185">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam(), getPragma());</span>
 <span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (this.timeBounds.getPrintStart() == null) {</span>
 <span class="fc" id="L187">			initMinMax();</span>
 		} else {

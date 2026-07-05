@@ -40,66 +40,71 @@ import java.util.EnumMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.tikz.LatexEngine;
 import net.sourceforge.plantuml.warning.Warning;
 import net.sourceforge.plantuml.warning.WarningHandler;
 
 public class Pragma implements WarningHandler {
 
-<span class="fc" id="L48">	private final EnumMap&lt;PragmaKey, String&gt; values = new EnumMap&lt;&gt;(PragmaKey.class);</span>
+<span class="fc" id="L49">	private final EnumMap&lt;PragmaKey, String&gt; values = new EnumMap&lt;&gt;(PragmaKey.class);</span>
 
-<span class="fc" id="L50">	private final Set&lt;Warning&gt; warnings = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L51">	private final Set&lt;Warning&gt; warnings = new LinkedHashSet&lt;&gt;();</span>
 
-<span class="fc" id="L52">	private Pragma() {</span>
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L53">	private Pragma() {</span>
+<span class="fc" id="L54">	}</span>
 
 	public static Pragma createEmpty() {
-<span class="fc" id="L56">		return new Pragma();</span>
+<span class="fc" id="L57">		return new Pragma();</span>
 	}
 
 	public void define(String keyName, String value) {
-<span class="fc" id="L60">		final PragmaKey key = PragmaKey.lazyFrom(keyName);</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (key != null) {</span>
-<span class="pc bpc" id="L62" title="3 of 4 branches missed.">			if (value == null &amp;&amp; key.getDefaultValue() != null)</span>
-<span class="nc" id="L63">				value = key.getDefaultValue();</span>
-<span class="fc" id="L64">			values.put(key, value);</span>
+<span class="fc" id="L61">		final PragmaKey key = PragmaKey.lazyFrom(keyName);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		if (key != null) {</span>
+<span class="pc bpc" id="L63" title="3 of 4 branches missed.">			if (value == null &amp;&amp; key.getDefaultValue() != null)</span>
+<span class="nc" id="L64">				value = key.getDefaultValue();</span>
+<span class="fc" id="L65">			values.put(key, value);</span>
 		}
-<span class="fc" id="L66">	}</span>
+<span class="fc" id="L67">	}</span>
 
 	public boolean isDefine(PragmaKey key) {
-<span class="fc" id="L69">		return values.containsKey(key);</span>
+<span class="fc" id="L70">		return values.containsKey(key);</span>
 	}
 
 	public void undefine(PragmaKey key) {
-<span class="nc" id="L73">		values.remove(key);</span>
-<span class="nc" id="L74">	}</span>
+<span class="nc" id="L74">		values.remove(key);</span>
+<span class="nc" id="L75">	}</span>
 
 	public String getValue(PragmaKey key) {
-<span class="fc" id="L77">		return values.get(key);</span>
+<span class="fc" id="L78">		return values.get(key);</span>
+	}
+
+	public LatexEngine getLatexEngine() {
+<span class="nc" id="L82">		return LatexEngine.getSuggestedEngine(this);</span>
 	}
 
 	public boolean isTrue(PragmaKey key) {
-<span class="fc" id="L81">		final String value = getValue(key);</span>
-<span class="pc bpc" id="L82" title="1 of 4 branches missed.">		return &quot;true&quot;.equalsIgnoreCase(value) || &quot;on&quot;.equalsIgnoreCase(value);</span>
+<span class="fc" id="L86">		final String value = getValue(key);</span>
+<span class="pc bpc" id="L87" title="1 of 4 branches missed.">		return &quot;true&quot;.equalsIgnoreCase(value) || &quot;on&quot;.equalsIgnoreCase(value);</span>
 	}
 
 	public boolean isFalse(PragmaKey key) {
-<span class="fc" id="L86">		final String value = getValue(key);</span>
-<span class="pc bpc" id="L87" title="2 of 4 branches missed.">		return &quot;false&quot;.equalsIgnoreCase(value) || &quot;off&quot;.equalsIgnoreCase(value);</span>
+<span class="fc" id="L91">		final String value = getValue(key);</span>
+<span class="pc bpc" id="L92" title="2 of 4 branches missed.">		return &quot;false&quot;.equalsIgnoreCase(value) || &quot;off&quot;.equalsIgnoreCase(value);</span>
 	}
 
 	public static boolean legacyReplaceBackslashNByNewline() {
-<span class="fc" id="L91">		return true;</span>
+<span class="fc" id="L96">		return true;</span>
 	}
 
 	@Override
 	public void addWarning(Warning warning) {
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (warning != null)</span>
-<span class="fc" id="L97">			this.warnings.add(warning);</span>
-<span class="fc" id="L98">	}</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (warning != null)</span>
+<span class="fc" id="L102">			this.warnings.add(warning);</span>
+<span class="fc" id="L103">	}</span>
 
 	@Override
 	public Collection&lt;Warning&gt; getWarnings() {
-<span class="fc" id="L102">		return this.warnings;</span>
+<span class="fc" id="L107">		return this.warnings;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

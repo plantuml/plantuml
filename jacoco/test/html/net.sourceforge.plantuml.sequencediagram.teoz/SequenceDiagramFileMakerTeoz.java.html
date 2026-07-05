@@ -71,7 +71,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	public SequenceDiagramFileMakerTeoz(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption,
 <span class="fc" id="L73">			int index) {</span>
-<span class="fc" id="L74">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());</span>
+<span class="fc" id="L74">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(), diagram.getPragma());</span>
 <span class="fc" id="L75">		this.diagram = diagram;</span>
 <span class="fc" id="L76">		this.skin = skin;</span>
 <span class="fc" id="L77">		this.body = new PlayingSpaceWithParticipants(createMainTile());</span>

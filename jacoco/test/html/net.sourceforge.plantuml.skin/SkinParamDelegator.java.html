@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.skin;
 import java.util.Collection;
 import java.util.Map;
 
-import net.sourceforge.plantuml.TikzFontDistortion;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.klimt.Arrows;
@@ -69,6 +68,7 @@ import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.svek.PackageStyle;
 import net.sourceforge.plantuml.text.Guillemet;
+import net.sourceforge.plantuml.tikz.TikzFontDistortion;
 
 public class SkinParamDelegator implements ISkinParam {
 
