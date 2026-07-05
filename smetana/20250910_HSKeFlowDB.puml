@@ -1,0 +1,387 @@
+@startuml
+' use PlantUML to convert into PNG like
+' java -jar ~/plantuml-xxx.jar -tsvg -nometadata 2025xxxx_HSKeFlowDB.puml
+
+!pragma layout smetana
+
+' see https://jee.gr/database-modeling-tutorial-using-plantuml/
+' and https://plantuml.com/guide
+' and https://crashedmind.github.io/PlantUMLHitchhikersGuide/about/AboutThisGuide.html
+' and https://sarafian.github.io/tips/plantuml-tips-tricks-1/
+' and https://www.augmentedmind.de/2021/01/17/plantuml-layout-tutorial-styles/
+' and https://github.com/leungrhy/PlantUML-examples
+
+' configuration
+
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define column(x) <color:#efefef><&media-record></color> x
+!define table(x) entity x << (T, white) >>
+!define pack(x) package x
+
+' tables with relations
+' zero or one: |o--
+' exactly one: ||--
+' zero / many: }o--
+' one or many: }|--
+
+table(orgein) {
+  primary_key(oid): INTEGER
+  --
+  column(oelang): TEXT NOT NULL
+  column(oekurz): TEXT
+}
+
+pack(Beschäftigte) {
+
+table(function) {
+  primary_key(fid): INTEGER
+  --
+  column(fname): TEXT
+}
+
+table(rolle) {
+  primary_key(rid): INTEGER
+  --
+  column(rname): TEXT
+}
+
+table(person) {
+  primary_key(pid): INTEGER
+  --
+  column(login): TEXT
+  column(vorname): TEXT
+  column(nachname): TEXT
+  column(titel): TEXT
+  column(geschlecht): TEXT
+  column(mail): TEXT
+  foreign_key(oid): INTEGER REFERENCES orgein
+  foreign_key(fid): INTEGER REFERENCES funktion
+  column(absinform): INTEGER DEFAULT 0
+  column(pminform): INTEGER DEFAULT 0
+  column(bestinform): INTEGER DEFAULT 0
+  column(absauto): INTEGER DEFAULT 0
+  column(totpaktiv): INTEGER
+  column(totpgeheim): TEXT
+  column(sperrebis): TEXT
+}
+
+person }o--|| orgein: oid
+person }o--|| function: fid
+
+table(personrollen) {
+  foreign_key(primary_key(pid)): INTEGER NOT NULL REFERENCES person
+  foreign_key(primary_key(rid)): INTEGER NOT NULL REFERENCES rolle
+  foreign_key(primary_key(oid)): INTEGER NOT NULL REFERENCES orgein
+}
+
+personrollen }o--|| person: pid
+personrollen }o--|| rolle: rid
+personrollen }o--|| orgein: oid
+
+table(gruppe) {
+  primary_key(gid): INTEGER
+  --
+  column(gname): TEXT UNIQUE
+  foreign_key(besitzer): INTEGER REFERENCES person
+}
+
+gruppe }|--|| person: besitzer-pid
+
+table(gruppenpersonen) {
+  foreign_key(primary_key(gid)): INTEGER NOT NULL REFERENCES gruppe
+  foreign_key(primary_key(pid)): INTEGER NOT NULL REFERENCES person
+}
+
+gruppenpersonen }o--|| gruppe: gid
+gruppenpersonen }o--|| person: pid
+
+}
+' end package
+
+pack(Studenten) {
+
+table(stud) {
+  primary_key(mtknr): INTEGER NOT NULL
+  --
+  column(vorname): TEXT
+  column(nachname): TEXT
+  column(geschlecht): TEXT
+  column(mail): TEXT
+  foreign_key(oid): INTEGER REFERENCES orgein
+  column(exmatrikuliert): INTEGER DEFAULT 0
+}
+
+stud }o--|| orgein: oid
+
+table(stg) {
+  primary_key(sgkurz): TEXT
+  --
+  column(sglang): TEXT
+  foreign_key(oid): INTEGER REFERENCES orgein
+  column(abschluss): TEXT
+}
+
+stg }o--|| orgein: oid
+
+table(studstg) {
+  foreign_key(primary_key(mtknr)): INTEGER REFERENCES stud
+  foreign_key(primary_key(stg)): TEXT REFERENCES stg
+  --
+  column(fachsem): INTEGER
+  column(lehrsem): INTEGER
+}
+
+studstg }o--|| stud: mtknr
+studstg }o--|| stg: stg-sgkurz
+
+}
+' end package
+
+pack(Dateien) {
+
+table(datei) {
+  primary_key(did): INTEGER
+  --
+  column(origname): TEXT
+  column(internname): TEXT
+  foreign_key(pid): INTEGER REFERENCES person
+  column(erzeugung): DATE
+  column(loeschung): DATE
+  column(loeschtrigger): DATE
+  column(format): INTEGER DEFAULT 0
+  column(prfsumme): TEXT
+  column(groesse): INTEGER
+  column(freigabe): TEXT
+  column(isextern): INTEGER DEFAULT 0
+}
+
+datei }o--|| person: pid
+
+table(dateizugriff) {
+  foreign_key(primary_key(did)): INTEGER NOT NULL REFERENCES datei
+  foreign_key(primary_key(pid)): INTEGER NOT NULL REFERENCES person
+}
+
+dateizugriff }o--|| datei: did
+dateizugriff }o--|| person: pid
+
+table(dateigruppenzugriff) {
+  foreign_key(primary_key(did)): INTEGER NOT NULL
+  foreign_key(primary_key(gid)): INTEGER NOT NULL
+}
+
+dateigruppenzugriff }o--|| datei: did
+dateigruppenzugriff }o--|| gruppe: gid
+
+}
+' end package
+
+pack(Abschlussarbeiten) {
+
+table(absarbanmeld) {
+  primary_key(mid): INTEGER
+  --
+  foreign_key(mtknr): INTEGER NOT NULL REFERENCES stud
+  foreign_key(anfragpid): INTEGER REFERENCES person
+  column(anfragdatum): TEXT
+  foreign_key(bearbpid): INTEGER REFERENCES person
+  column(bearbdatum): TEXT
+  column(bearbstdg): TEXT
+  column(status): INTEGER
+  foreign_key(aufgstpid): INTEGER REFERENCES person
+  column(thema): TEXT
+  column(start): TEXT
+  column(themastartdatum): TEXT
+  column(kommentar): TEXT
+  column(prp): INTEGER
+  column(pid2Vorschlag): INTEGER
+  column(datumVorschlag): TEXT
+  column(kommentarFuerPK): TEXT
+  column(papieranf): INTEGER
+  column(ref): TEXT
+  column(chkDid): INTEGER
+  column(chkSum): TEXT
+  column(zustimmung): TEXT
+}
+
+absarbanmeld }o--|| stud: mtknr
+absarbanmeld }o--|| person: anfragpid-pid
+absarbanmeld }o--|| person: bearbpid-pid
+absarbanmeld }o--|| person: aufgstpid-pid
+
+together {
+
+table(absarb) {
+  primary_key(aid): INTEGER
+  --
+  foreign_key(mtknr): INTEGER REFERENCES stud
+  column(stg): TEXT
+  foreign_key(pid1): INTEGER REFERENCES person
+  foreign_key(pid2): INTEGER REFERENCES person
+  column(thema): TEXT
+  column(anmeld): DATE
+  column(abgabePlan): DATE
+  column(abgabeReal): DATE
+  column(notenfest): DATE
+  column(notenfestReal): DATE
+  column(prp): INTEGER
+  column(exanote): TEXT
+}
+
+' absarb }o--|| stud: mtknr
+absarb }o--|| person: pid1-pid
+absarb }o--|| person: pid2-pid
+
+table(absarbzweitp) {
+  foreign_key(primary_key(aid)): INTEGER REFERENCES absarb
+  --
+  foreign_key(pid2Vorschlag): INTEGER REFERENCES person
+  column(datumVorschlag): TEXT
+  foreign_key(pidpk): INTEGER REFERENCES person
+  foreign_key(pid2Beschluss): INTEGER REFERENCES person
+  column(datumBeschluss): TEXT
+  column(datumErledigt): TEXT
+  column(kommentarFuerPK): TEXT
+}
+
+absarbzweitp |o-|| absarb: aid
+absarbzweitp }o-o| person: pid2Vorschlag-pid
+absarbzweitp }o-o| person: pidpk-pid
+absarbzweitp }o-o| person: pid2Beschluss-pid
+
+table(absarbnote) {
+  foreign_key(primary_key(aid)): INTEGER REFERENCES absarb
+  --
+  column(typ): TEXT
+  column(deakt): TEXT
+  column(epnote): TEXT
+  column(epdatum): TEXT
+  column(epname): TEXT
+  foreign_key(eppid): INTEGER REFERENCES person
+  column(zpnote): TEXT
+  column(zpdatum): TEXT
+  column(zpname): TEXT
+  foreign_key(zppid): INTEGER REFERENCES person
+  column(pknote): TEXT
+  column(pkdatum): TEXT
+  column(pkname): TEXT
+  foreign_key(pkpid): INTEGER REFERENCES person
+  column(pksitzdatum): TEXT
+  column(kolloq1note): TEXT
+  column(kolloq1datum): TEXT
+  column(kolloq1name): TEXT
+  foreign_key(kolloq1pid): INTEGER REFERENCES person
+  column(kolloq1pkdatum): TEXT
+  column(kolloq1pkname): TEXT
+  foreign_key(kolloq1pkpid): INTEGER REFERENCES person
+  column(kolloq1pksitzdatum): TEXT
+  column(kolloq2datum): TEXT
+  column(kolloq2name): TEXT
+  foreign_key(kolloq2pid): INTEGER REFERENCES person
+  column(hist): TEXT
+}
+
+absarbnote |o-|| absarb: aid
+absarbnote }o-o| person: eppid-pid
+absarbnote }o-o| person: zppid-pid
+absarbnote }o-o| person: pkpid-pid
+absarbnote }o-o| person: kolloq1pid-pid
+absarbnote }o-o| person: kolloq1pkpid-pid
+absarbnote }o-o| person: kolloq2pid-pid
+
+}
+' end together
+
+absarbnote -[hidden]right- absarb
+absarb -[hidden]right- absarbzweitp
+
+}
+' end package
+
+pack(Prüfungsmeldungen) {
+
+table(prfmeld) {
+  primary_key(lid): INTEGER
+  --
+  column(pgid): TEXT
+  column(pruefungstext): TEXT
+  column(semester): INTEGER
+  column(status): TEXT
+  column(anmeldungen): INTEGER
+  column(vorbehalte): INTEGER
+  column(vorbprid): TEXT
+  column(vorbprtext): TEXT
+}
+
+table(prfmeldpers) {
+  foreign_key(primary_key(lid)): INTEGER REFERENCES prfmeld
+  foreign_key(primary_key(pid)): INTEGER REFERENCES person
+  --
+  column(pfunc): INTEGER
+}
+
+prfmeldpers }o-|| prfmeld: lid
+prfmeldpers }o-|| person: pid
+
+}
+' end package
+
+pack(Rechnerverwaltung) {
+
+table(rechnerbeschreibung) {
+  primary_key(bid): INTEGER
+  --
+  foreign_key(nba): INTEGER REFERENCES person
+  foreign_key(admin): INTEGER REFERENCES person
+  foreign_key(verantnutzer): INTEGER REFERENCES person
+  column(eigenverant): INTEGER
+  column(rechnertyp): TEXT
+  column(rechnerkategorie): TEXT
+  column(andbetrsys): TEXT
+  column(hinweis): TEXT
+  column(letztupd): TEXT
+}
+
+rechnerbeschreibung }o-o| person: nba-pid
+rechnerbeschreibung }o-o| person: admin-pid
+rechnerbeschreibung }o-o| person: verantnutzer-pid
+
+table(rechnerknoten) {
+  primary_key(kid): INTEGER
+  --
+  foreign_key(bid): INTEGER REFERENCES rechnerbeschreibung
+  column(ip): TEXT
+  column(mac): TEXT
+  column(knotenhinweis): TEXT
+  column(knotenletztupd): TEXT
+  column(freigabeTCP): TEXT
+  column(freigabeUDP): TEXT
+  column(freigabehinweis): TEXT
+}
+
+rechnerknoten }o-|| rechnerbeschreibung: bid
+
+table(betrsys) {
+  primary_key(sid): INTEGER
+  --
+  column(sname): TEXT NOT NULL
+}
+
+table(rechnerbetrsys) {
+  foreign_key(primary_key(bid)): INTEGER REFERENCES rechnerbeschreibung
+  foreign_key(primary_key(sid)): INTEGER REFERENCES betrsys
+}
+
+rechnerbetrsys }o-|| rechnerbeschreibung: bid
+rechnerbetrsys }o-|| betrsys: sid
+
+}
+' end package
+
+
+Beschäftigte -[hidden]right- Studenten
+Dateien -[hidden]down- Abschlussarbeiten
+
+@enduml
+

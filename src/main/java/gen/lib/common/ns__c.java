@@ -80,6 +80,7 @@ import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.free_list;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.LOG;
 
 import gen.annotation.Difficult;
 import gen.annotation.HasND_Rank;
@@ -230,10 +231,11 @@ try {
 	}
     }
     if (ctr != zz.N_nodes) {
-UNSUPPORTED("7sgp99x1l3hzfks5wykxa87gf"); // 	agerr(AGERR, "trouble in init_rank\n");
-UNSUPPORTED("bwwunxmw4kgz6qntbn6xp0cur"); // 	for (v = (((Agraphinfo_t*)(((Agobj_t*)(G))->data))->nlist); v; v = (((Agnodeinfo_t*)(((Agobj_t*)(v))->data))->next))
-UNSUPPORTED("3dk132mz1u2pf0tla64kl6hv0"); // 	    if ((((Agnodeinfo_t*)(((Agobj_t*)(v))->data))->priority))
-UNSUPPORTED("916bi45h6sjvte1rgig12b1v2"); // 		agerr(AGPREV, "\t%s %d\n", agnameof(v), (((Agnodeinfo_t*)(((Agobj_t*)(v))->data))->priority));
+	// NOTE: in the original C, this branch is only a diagnostic print (agerr),
+	// NOT followed by longjmp(jbuf,1) -- unlike other agerr+longjmp pairs in this file.
+	// So it must NOT abort here; the C code just logs a warning and lets the
+	// algorithm continue with whatever ranks were computed so far.
+	LOG("trouble in init_rank");
     }
     free_queue(Q);
 } finally {
