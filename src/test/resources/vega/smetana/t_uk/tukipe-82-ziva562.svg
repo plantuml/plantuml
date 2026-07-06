@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="110px" preserveAspectRatio="none" style="width:299px;height:110px;background:#FFFFFF;" version="1.1" viewBox="0 0 299 110" width="299px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Foo-->
+    <g class="cluster" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <polygon fill="none" points="14,14,24,4,283,4,283,76,273,86,14,86,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <line style="stroke:#181818;stroke-width:1;" x1="273" x2="283" y1="14" y2="4"/>
+        <line style="stroke:#181818;stroke-width:1;" x1="14" x2="273" y1="14" y2="14"/>
+        <line style="stroke:#181818;stroke-width:1;" x1="273" x2="273" y1="14" y2="86"/>
+        <text fill="#000" font-size="14" font-weight="700" textLength="24.15" x="132.425" y="27.889">Foo</text>
+      </a>
+    </g>
+    <!--entity component1-->
+    <g class="entity" data-qualified-name="Foo.component1" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117" x="157.5" y="34"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="254.5" y="39"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="252.5" y="41"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="252.5" y="45"/>
+      <text fill="#000" font-size="14" textLength="77" x="172.5" y="64.889">component1</text>
+    </g>
+    <!--entity component2-->
+    <g class="entity" data-qualified-name="Foo.component2" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117" x="22.5" y="34"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="119.5" y="39"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="117.5" y="41"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="117.5" y="45"/>
+      <text fill="#000" font-size="14" textLength="77" x="37.5" y="64.889">component2</text>
+    </g>
+  </g>
+</svg>

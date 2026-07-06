@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="160px" preserveAspectRatio="none" style="width:258px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 258 160" width="258px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity component1-->
+    <g class="entity" data-qualified-name="component1" data-source-line="14" id="ent0001">
+      <rect fill="#FFD700" height="48" rx="2.5" ry="2.5" style="stroke:#FFA500;stroke-width:0.5;" width="139" x="6" y="12"/>
+      <rect fill="#FFD700" height="10" style="stroke:#FFA500;stroke-width:0.5;" width="15" x="125" y="17"/>
+      <rect fill="#FFD700" height="2" style="stroke:#FFA500;stroke-width:0.5;" width="4" x="123" y="19"/>
+      <rect fill="#FFD700" height="2" style="stroke:#FFA500;stroke-width:0.5;" width="4" x="123" y="23"/>
+      <text fill="#777" font-size="18" textLength="99" x="21" y="46">component1</text>
+    </g>
+    <!--entity interface-->
+    <g class="entity" data-qualified-name="interface" data-source-line="15" id="ent0002">
+      <ellipse cx="172.5" cy="33" fill="#FFD700" rx="8" ry="8" style="stroke:#FFA500;stroke-width:0.5;"/>
+      <text fill="#777" font-size="18" textLength="68.962" x="138.019" y="64">interface</text>
+    </g>
+    <!--entity component2-->
+    <g class="entity" data-qualified-name="component2" data-source-line="18" id="ent0004">
+      <rect fill="#FFD700" height="48" rx="2.5" ry="2.5" style="stroke:#FFA500;stroke-width:0.5;" width="139" x="103" y="96"/>
+      <rect fill="#FFD700" height="10" style="stroke:#FFA500;stroke-width:0.5;" width="15" x="222" y="101"/>
+      <rect fill="#FFD700" height="2" style="stroke:#FFA500;stroke-width:0.5;" width="4" x="220" y="103"/>
+      <rect fill="#FFD700" height="2" style="stroke:#FFA500;stroke-width:0.5;" width="4" x="220" y="107"/>
+      <text fill="#777" font-size="18" textLength="99" x="118" y="130">component2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="163.122,36,154.122,32,158.122,36,154.122,40,163.122,36" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M145.219,36 C151.187,36 152.154,36 158.122,36" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="172.5,48.059,168.5,57.059,172.5,53.059,176.5,57.059,172.5,48.059" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M172.5,53.059 C172.5,65.212 172.5,80.082 172.5,95.706" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

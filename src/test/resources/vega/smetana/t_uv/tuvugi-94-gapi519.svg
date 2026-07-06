@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="111px" preserveAspectRatio="none" style="width:111px;height:111px;background:#FFFFFF;" version="1.1" viewBox="0 0 111 111" width="111px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster S-->
+    <g class="cluster" data-qualified-name="S" id="ent0003">
+      <path d="M26.5,4 L85.5,4 A12.5,12.5 0 0 1 98,16.5 L98,23 L14,23 L14,16.5 A12.5,12.5 0 0 1 26.5,4" fill="#F1F1F1"/>
+      <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="84" x="14" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="98" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" font-weight="700" x="51.319" y="14.889">S</text>
+    </g>
+    <g class="entity" data-qualified-name="S.I" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="22" y="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22" x2="72" y1="53" y2="53"/>
+      <text fill="#000" font-size="14" x="45.075" y="44.889">I</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk2">
+      <polygon fill="#181818" points="72.176,63.338,80.997,67.718,77.171,63.551,81.338,59.725,72.176,63.338" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M72.176,44.662 C81.91,44.247 90,47.359 90,54 C90,60.641 86.905,63.966 77.171,63.551" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

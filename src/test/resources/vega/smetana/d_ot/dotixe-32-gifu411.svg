@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="101px" preserveAspectRatio="none" style="width:141px;height:101px;background:#FFFFFF;" version="1.1" viewBox="0 0 141 101" width="141px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="20" font-weight="700" textLength="61.25" x="21.063" y="25.556">Simple</text>
+      <text fill="#000" font-size="20" font-weight="700" text-decoration="underline" textLength="31.125" x="82.313" y="25.556">title</text>
+    </g>
+    <g class="start_entity" data-qualified-name="start" data-source-line="3" id="ent0001">
+      <ellipse cx="16" cy="67" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="81.35" x="44.5" y="53"/>
+    <text fill="#000" font-size="12" textLength="61.35" x="54.5" y="72.333">First Activity</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="44.145,69,35.145,65,39.145,69,35.145,73,44.145,69" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.242,69 C32.21,69 33.177,69 39.145,69" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

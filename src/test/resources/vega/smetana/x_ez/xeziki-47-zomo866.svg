@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:272px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 272 78" width="272px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="n" data-source-line="3" id="ent0001">
+      <path d="M6,12.5 L6,61.5 L52.188,61.5 L52.188,22.5 L42.188,12.5 L6,12.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M42.188,12.5 L42.188,22.5 L52.188,22.5 L42.188,12.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" fill-opacity="0.125" font-size="13" textLength="25.188" x="12" y="27.611">12⬤</text>
+      <text fill="#F00" fill-opacity="0.502" font-size="13" textLength="25.188" x="12" y="40.611">13⬤</text>
+      <text fill="#F00" font-size="13" textLength="25.188" x="12" y="53.611">14⬤</text>
+    </g>
+    <g class="entity" data-qualified-name="A" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="70" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="120" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="85.638" y="27.889">A</text>
+      <text fill="#F00" fill-opacity="0.125" font-size="14" x="95" y="27.889">A</text>
+    </g>
+    <g class="entity" data-qualified-name="B" data-source-line="8" id="ent0003">
+      <rect fill="#F00" fill-opacity="0.502" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="138" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="138" x2="188" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="158.319" y="27.889">B</text>
+    </g>
+    <g class="entity" data-qualified-name="C" data-source-line="9" id="ent0004">
+      <rect fill="#F00" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="206" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="206" x2="256" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="225.925" y="27.889">C</text>
+    </g>
+  </g>
+</svg>

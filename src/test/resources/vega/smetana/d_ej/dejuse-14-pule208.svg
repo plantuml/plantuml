@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="188px" preserveAspectRatio="none" style="width:366px;height:188px;background:#FFFFFF;" version="1.1" viewBox="0 0 366 188" width="366px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Dummy1-->
+    <g class="entity" data-qualified-name="Dummy1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="160" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="162.85" x="6" y="12"/>
+      <ellipse cx="55.175" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="50.175" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="56" x="75.675" y="31.889">Dummy1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="167.85" y1="44" y2="44"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,51.5,21,55.5,17,59.5,13,55.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" textLength="33.512" x="26" y="58.889">field1</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,65.5,21,69.5,17,73.5,13,69.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="33.512" x="26" y="72.889">field2</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,79.5,21,83.5,17,87.5,13,83.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="33.512" x="26" y="86.889">field3</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,93.5,21,97.5,17,101.5,13,97.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="40.512" x="26" y="100.889">simple</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="167.85" y1="108" y2="108"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="120.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" textLength="136.85" x="26" y="122.889">thisIsALongmethod1()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="134.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="136.85" x="26" y="136.889">thisIsALongmethod2()</text>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="145.5"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="103.338" x="26" y="150.889">anotherMethod()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="162.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.063" x="26" y="164.889">normal()</text>
+    </g>
+    <!--class Dummy2-->
+    <g class="entity" data-qualified-name="Dummy2" data-source-line="13" id="ent0002">
+      <rect fill="#F1F1F1" height="160" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="162.85" x="187" y="12"/>
+      <ellipse cx="236.175" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="231.175" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="56" x="256.675" y="31.889">Dummy2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188" x2="348.85" y1="44" y2="44"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="198,51.5,202,55.5,198,59.5,194,55.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="207" y="58.889">field1</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="198,65.5,202,69.5,198,73.5,194,69.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="207" y="72.889">field2</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="198,79.5,202,83.5,198,87.5,194,83.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="207" y="86.889">field3</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="198,93.5,202,97.5,198,101.5,194,97.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="40.512" x="207" y="100.889">simple</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188" x2="348.85" y1="108" y2="108"/>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_METHOD">
+        <polygon fill="#4177AF" points="198,116.5,194,122.5,202,122.5" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="136.85" x="207" y="122.889">thisIsALongmethod1()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="198" cy="134.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="136.85" x="207" y="136.889">thisIsALongmethod1()</text>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="195" y="145.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="103.338" x="207" y="150.889">anotherMethod()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="198" cy="162.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.063" x="207" y="164.889">normal()</text>
+    </g>
+  </g>
+</svg>

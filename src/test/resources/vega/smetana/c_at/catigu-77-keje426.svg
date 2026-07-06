@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:64px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 64 76" width="64px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M8.5,12 L31.988,12 A3.75,3.75 0 0 1 34.488,14.5 L41.488,32 L45.988,32 A2.5,2.5 0 0 1 48.488,34.5 L48.488,57.5 A2.5,2.5 0 0 1 45.988,60 L8.5,60 A2.5,2.5 0 0 1 6,57.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="41.488" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.488" x="10" y="24.889">test</text>
+  </g>
+</svg>

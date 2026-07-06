@@ -1,0 +1,1213 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="1011.25px" preserveAspectRatio="none" style="width:1677px;height:1011px;background:#FFFFFF;" version="1.1" viewBox="0 0 1677 1011" width="1677.5px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f2dozbb6s8uep" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="1.25"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="2.5" dy="2.5" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="88.047" x="792.635" y="13.056">EME Component Model</text>
+    </g>
+    <g class="legend" data-source-line="38">
+      <rect fill="#DDD" height="52.5" rx="4.688" ry="4.688" style="stroke:#000;stroke-width:0.625;" width="104.523" x="784.396" y="29.375"/>
+      <text fill="#000" font-size="8.75" textLength="20.945" x="787.521" y="40.556">Color</text>
+      <text fill="#000" font-size="8.75" textLength="19.469" x="808.467" y="40.556">Type</text>
+      <rect fill="#8FF" height="8.75" style="stroke:none;" width="20.945" x="787.521" y="42.5"/>
+      <text fill="#000" font-size="8.75" x="787.521" y="49.306"> </text>
+      <text fill="#000" font-size="8.75" textLength="73.445" x="808.467" y="49.306">v3 EME Component</text>
+      <rect fill="#FC0" height="8.75" style="stroke:none;" width="20.945" x="787.521" y="51.25"/>
+      <text fill="#000" font-size="8.75" x="787.521" y="58.056"> </text>
+      <text fill="#000" font-size="8.75" textLength="73.445" x="808.467" y="58.056">v2 EME Component</text>
+      <rect fill="#8F8" height="8.75" style="stroke:none;" width="20.945" x="787.521" y="60"/>
+      <text fill="#000" font-size="8.75" x="787.521" y="66.806"> </text>
+      <text fill="#000" font-size="8.75" textLength="63.273" x="808.467" y="66.806">EPC Component</text>
+      <rect fill="#FF0" height="8.75" style="stroke:none;" width="20.945" x="787.521" y="68.75"/>
+      <text fill="#000" font-size="8.75" x="787.521" y="75.556"> </text>
+      <text fill="#000" font-size="8.75" textLength="77.328" x="808.467" y="75.556">External Component</text>
+      <line style="stroke:#000;stroke-width:0.625;" x1="787.521" x2="885.795" y1="33.75" y2="33.75"/>
+      <line style="stroke:#000;stroke-width:0.625;" x1="787.521" x2="885.795" y1="42.5" y2="42.5"/>
+      <line style="stroke:#000;stroke-width:0.625;" x1="787.521" x2="885.795" y1="51.25" y2="51.25"/>
+      <line style="stroke:#000;stroke-width:0.625;" x1="787.521" x2="885.795" y1="60" y2="60"/>
+      <line style="stroke:#000;stroke-width:0.625;" x1="787.521" x2="885.795" y1="68.75" y2="68.75"/>
+      <line style="stroke:#000;stroke-width:0.625;" x1="787.521" x2="885.795" y1="77.5" y2="77.5"/>
+      <line style="stroke:#000;stroke-width:0.625;" x1="787.521" x2="787.521" y1="33.75" y2="77.5"/>
+      <line style="stroke:#000;stroke-width:0.625;" x1="808.467" x2="808.467" y1="33.75" y2="77.5"/>
+      <line style="stroke:#000;stroke-width:0.625;" x1="885.795" x2="885.795" y1="33.75" y2="77.5"/>
+    </g>
+    <!--cluster Audit Service-->
+    <g class="cluster" data-qualified-name="Audit Service" data-source-line="69" id="ent0013">
+      <rect fill="#FFF" filter="url(#f2dozbb6s8uep)" height="48.125" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="168.125" x="1310.625" y="888.75"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1466.25" y="891.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1465" y="893.125"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1465" y="895.625"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="49.164" x="1370.105" y="903.681">Audit Service</text>
+    </g>
+    <!--cluster Bill Parser Service - Not Used-->
+    <g class="cluster" data-qualified-name="Bill Parser Service - Not Used" data-source-line="78" id="ent0019">
+      <rect fill="#F00" filter="url(#f2dozbb6s8uep)" height="48.125" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="109.375" x="1436.25" y="223.125"/>
+      <rect fill="#F00" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1533.125" y="226.25"/>
+      <rect fill="#F00" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1531.875" y="227.5"/>
+      <rect fill="#F00" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1531.875" y="230"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="103.688" x="1439.094" y="238.056">Bill Parser Service - Not Used</text>
+    </g>
+    <!--cluster CMS Service-->
+    <g class="cluster" data-qualified-name="CMS Service" data-source-line="85" id="ent0023">
+      <rect fill="#8FF" filter="url(#f2dozbb6s8uep)" height="130.313" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="230" x="67.5" y="297.5"/>
+      <rect fill="#8FF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="285" y="300.625"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="283.75" y="301.875"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="283.75" y="304.375"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="48.672" x="158.164" y="312.431">CMS Service</text>
+    </g>
+    <!--cluster Consumer Plan Service - Work In Progress-->
+    <g class="cluster" data-qualified-name="Consumer Plan Service - Work In Progress" data-source-line="101" id="ent0036">
+      <rect fill="#8FF" filter="url(#f2dozbb6s8uep)" height="195.938" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="158.75" x="1268.75" y="223.125"/>
+      <rect fill="#8FF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1415" y="226.25"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1413.75" y="227.5"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1413.75" y="230"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="152.688" x="1271.781" y="238.056">Consumer Plan Service - Work In Progress</text>
+    </g>
+    <!--cluster Contact Form Service - Work in Progress-->
+    <g class="cluster" data-qualified-name="Contact Form Service - Work in Progress" data-source-line="112" id="ent0045">
+      <rect fill="#FFF" filter="url(#f2dozbb6s8uep)" height="48.125" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="150.625" x="23.75" y="737.813"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="161.875" y="740.938"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="160.625" y="742.188"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="160.625" y="744.688"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="144.867" x="26.629" y="752.743">Contact Form Service - Work in Progress</text>
+    </g>
+    <!--cluster EPC-->
+    <g class="cluster" data-qualified-name="EPC" data-source-line="118" id="ent0049">
+      <rect fill="#8F8" filter="url(#f2dozbb6s8uep)" height="77.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="198.75" x="186.25" y="914.375"/>
+      <rect fill="#8F8" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="372.5" y="917.5"/>
+      <rect fill="#8F8" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="371.25" y="918.75"/>
+      <rect fill="#8F8" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="371.25" y="921.25"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="18.047" x="276.602" y="929.306">EPC</text>
+    </g>
+    <!--cluster EPC-EME Integration Service-->
+    <g class="cluster" data-qualified-name="EPC-EME Integration Service" data-source-line="129" id="ent0058">
+      <rect fill="#FC0" filter="url(#f2dozbb6s8uep)" height="226.875" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="131.25" x="222.5" y="637.5"/>
+      <rect fill="#FC0" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="341.25" y="640.625"/>
+      <rect fill="#FC0" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="340" y="641.875"/>
+      <rect fill="#FC0" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="340" y="644.375"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="110.414" x="232.918" y="652.431">EPC-EME Integration Service</text>
+    </g>
+    <!--cluster Location Service-->
+    <g class="cluster" data-qualified-name="Location Service" data-source-line="138" id="ent0064">
+      <rect fill="#8FF" filter="url(#f2dozbb6s8uep)" height="164.688" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="97.5" x="302.5" y="323.125"/>
+      <rect fill="#8FF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="387.5" y="326.25"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="386.25" y="327.5"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="386.25" y="330"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="62.289" x="320.105" y="338.056">Location Service</text>
+    </g>
+    <!--cluster Meter Data Service-->
+    <g class="cluster" data-qualified-name="Meter Data Service" data-source-line="147" id="ent0071">
+      <rect fill="#8FF" filter="url(#f2dozbb6s8uep)" height="121.563" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="115" x="621.25" y="297.5"/>
+      <rect fill="#8FF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="723.75" y="300.625"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="722.5" y="301.875"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="722.5" y="304.375"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="70" x="643.75" y="312.431">Meter Data Service</text>
+    </g>
+    <!--cluster Notification Service-->
+    <g class="cluster" data-qualified-name="Notification Service" data-source-line="156" id="ent0077">
+      <rect fill="#FFF" filter="url(#f2dozbb6s8uep)" height="107.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="117.5" x="52.5" y="888.75"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="157.5" y="891.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="156.25" y="893.125"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="156.25" y="895.625"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="72.516" x="74.992" y="903.681">Notification Service</text>
+    </g>
+    <!--cluster Organisation Service-->
+    <g class="cluster" data-qualified-name="Organisation Service" data-source-line="165" id="ent0083">
+      <rect fill="#FFF" filter="url(#f2dozbb6s8uep)" height="220.625" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="88.75" x="1563.75" y="637.5"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1640" y="640.625"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1638.75" y="641.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1638.75" y="644.375"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="78.805" x="1568.723" y="652.431">Organisation Service</text>
+    </g>
+    <!--cluster PDF Service-->
+    <g class="cluster" data-qualified-name="PDF Service" data-source-line="179" id="ent0092">
+      <rect fill="#FFF" height="48.125" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="137.5" x="1175" y="637.5"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1300" y="640.625"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1298.75" y="641.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1298.75" y="644.375"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="46.758" x="1220.371" y="652.431">PDF Service</text>
+    </g>
+    <!--cluster Plan Service (Retailer) - Work In Progress-->
+    <g class="cluster" data-qualified-name="Plan Service .Retailer. - Work In Progress" data-source-line="185" id="ent0096">
+      <rect fill="#FFF" filter="url(#f2dozbb6s8uep)" height="174.063" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="250" x="856.25" y="439.688"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1093.75" y="442.813"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1092.5" y="444.063"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1092.5" y="446.563"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="148.313" x="907.094" y="454.618">Plan Service (Retailer) - Work In Progress</text>
+    </g>
+    <!--cluster Portal Storage Service-->
+    <g class="cluster" data-qualified-name="Portal Storage Service" data-source-line="208" id="ent0112">
+      <rect fill="#FFF" filter="url(#f2dozbb6s8uep)" height="48.125" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="163.75" x="1317.5" y="637.5"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1468.75" y="640.625"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1467.5" y="641.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1467.5" y="644.375"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="82.688" x="1358.031" y="652.431">Portal Storage Service</text>
+    </g>
+    <!--cluster Pricing Engine (AKA Comparator)-->
+    <g class="cluster" data-qualified-name="Pricing Engine .AKA Comparator." data-source-line="216" id="ent0118">
+      <rect fill="#FFF" filter="url(#f2dozbb6s8uep)" height="110.313" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="187.5" x="643.125" y="509.688"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="818.125" y="512.813"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="816.875" y="514.063"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="816.875" y="516.563"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="123.594" x="675.078" y="524.618">Pricing Engine (AKA Comparator)</text>
+    </g>
+    <!--cluster Reference Data Service-->
+    <g class="cluster" data-qualified-name="Reference Data Service" data-source-line="229" id="ent0128">
+      <rect fill="#FFF" filter="url(#f2dozbb6s8uep)" height="232.188" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="740" x="402.5" y="631.875"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1130" y="635"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1128.75" y="636.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1128.75" y="638.75"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="88.047" x="728.477" y="646.806">Reference Data Service</text>
+    </g>
+    <!--cluster SiteOps Service\n(formerly Deployment Service)-->
+    <g class="cluster" data-qualified-name="SiteOps Service.n.formerly Deployment Service." data-source-line="285" id="ent0174">
+      <rect fill="#8FF" filter="url(#f2dozbb6s8uep)" height="77.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="123.125" x="1496.25" y="914.375"/>
+      <rect fill="#8FF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1606.875" y="917.5"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1605.625" y="918.75"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1605.625" y="921.25"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="60.32" x="1527.652" y="929.306">SiteOps Service</text>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="113.258" x="1501.184" y="938.056">(formerly Deployment Service)</text>
+    </g>
+    <!--cluster User Service-->
+    <g class="cluster" data-qualified-name="User Service" data-source-line="292" id="ent0179">
+      <rect fill="#FFF" filter="url(#f2dozbb6s8uep)" height="137.813" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="320" x="843.75" y="207.5"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1151.25" y="210.625"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1150" y="211.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1150" y="214.375"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="47.687" x="979.906" y="222.431">User Service</text>
+    </g>
+    <!--cluster Auth Service-->
+    <g class="cluster" data-qualified-name="User Service.Auth Service" data-source-line="296" id="ent0182">
+      <rect fill="#FFF" height="48.125" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.625;" width="202.5" x="856.25" y="223.125"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.625;" width="9.375" x="1046.25" y="226.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1045" y="227.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.625;" width="2.5" x="1045" y="230"/>
+      <text fill="#000" font-size="8.75" font-weight="700" textLength="47.195" x="933.902" y="238.056">Auth Service</text>
+    </g>
+    <!--entity ExistingConsumerWebsite-->
+    <g class="entity" data-qualified-name="ExistingConsumerWebsite" data-source-line="56" id="ent0001">
+      <rect fill="#FF0" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="127.648" x="308.125" y="92.5"/>
+      <rect fill="#FF0" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="423.273" y="95.625"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="422.023" y="96.875"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="422.023" y="99.375"/>
+      <text fill="#000" font-size="8.75" textLength="102.648" x="317.5" y="111.806">ExistingConsumerWebsite</text>
+    </g>
+    <!--entity V3ConsumerWebsite-->
+    <g class="entity" data-qualified-name="V3ConsumerWebsite" data-source-line="57" id="ent0002">
+      <rect fill="#8FF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="107.688" x="446.875" y="92.5"/>
+      <rect fill="#8FF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="542.063" y="95.625"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="540.813" y="96.875"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="540.813" y="99.375"/>
+      <text fill="#000" font-size="8.75" textLength="82.688" x="456.25" y="111.806">V3ConsumerWebsite</text>
+    </g>
+    <!--entity PortalWebsite-->
+    <g class="entity" data-qualified-name="PortalWebsite" data-source-line="58" id="ent0003">
+      <rect fill="#FF0" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="79.469" x="828.438" y="153.125"/>
+      <rect fill="#FF0" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="895.406" y="156.25"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="894.156" y="157.5"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="894.156" y="160"/>
+      <text fill="#000" font-size="8.75" textLength="54.469" x="837.813" y="172.431">PortalWebsite</text>
+    </g>
+    <!--entity BUS-->
+    <g class="entity" data-qualified-name="BUS" data-source-line="59" id="ent0004">
+      <rect fill="#8FF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="81.438" x="1464.375" y="831.875"/>
+      <rect fill="#8FF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1533.313" y="835"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1532.063" y="836.25"/>
+      <rect fill="#8FF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1532.063" y="838.75"/>
+      <text fill="#000" font-size="8.75" textLength="56.438" x="1473.75" y="851.181">EME Event Bus</text>
+    </g>
+    <!--entity APIG-->
+    <g class="entity" data-qualified-name="APIG" data-source-line="61" id="ent0005">
+      <rect fill="#FFF" height="36.25" rx="1.563" ry="1.563" style="stroke:#A00;stroke-width:0.313;" width="132.406" x="681.25" y="234.375"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#A00;stroke-width:0.313;" width="9.375" x="801.156" y="237.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#A00;stroke-width:0.313;" width="2.5" x="799.906" y="238.75"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#A00;stroke-width:0.313;" width="2.5" x="799.906" y="241.25"/>
+      <text fill="#A00" font-size="8.75" textLength="86.023" x="690.625" y="253.681">Protected API Gateway</text>
+      <text fill="#A00" font-size="8.75" textLength="107.406" x="690.625" y="262.431">(Portal/Authenticated Users)</text>
+    </g>
+    <!--entity APIGHTTP-->
+    <g class="entity" data-qualified-name="APIGHTTP" data-source-line="62" id="ent0006">
+      <ellipse cx="939.375" cy="165" fill="#A00" rx="5" ry="5" style="stroke:#A00;stroke-width:0.313;"/>
+      <text fill="#A00" font-size="8.75" textLength="28.766" x="924.992" y="182.431">HTTPS</text>
+    </g>
+    <!--entity PAPIG-->
+    <g class="entity" data-qualified-name="PAPIG" data-source-line="65" id="ent0009">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#0A0;stroke-width:0.313;" width="97.516" x="387.5" y="238.75"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#0A0;stroke-width:0.313;" width="9.375" x="472.516" y="241.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#0A0;stroke-width:0.313;" width="2.5" x="471.266" y="243.125"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#0A0;stroke-width:0.313;" width="2.5" x="471.266" y="245.625"/>
+      <text fill="#0A0" font-size="8.75" textLength="72.516" x="396.875" y="258.056">Public API Gateway</text>
+    </g>
+    <!--entity PAPIGHTTP-->
+    <g class="entity" data-qualified-name="PAPIGHTTP" data-source-line="66" id="ent0010">
+      <ellipse cx="436.25" cy="165" fill="#0A0" rx="5" ry="5" style="stroke:#0A0;stroke-width:0.313;"/>
+      <text fill="#0A0" font-size="8.75" textLength="28.766" x="421.867" y="182.431">HTTPS</text>
+    </g>
+    <g class="entity" data-qualified-name="Audit Service.ASH" data-source-line="70" id="ent0014">
+      <text fill="#000" font-size="8.75" textLength="31.609" x="1462.945" y="901.181">Lambda</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1475" y="910.625"/>
+    </g>
+    <!--entity AS-->
+    <g class="entity" data-qualified-name="Audit Service.AS" data-source-line="71" id="ent0015">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="74.164" x="1315.938" y="904.375"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1377.602" y="907.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1376.352" y="908.75"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1376.352" y="911.25"/>
+      <text fill="#000" font-size="8.75" textLength="49.164" x="1325.313" y="923.681">AuditService</text>
+    </g>
+    <!--entity ADB-->
+    <g class="entity" data-qualified-name="Audit Service.ADB" data-source-line="72" id="ent0016">
+      <path d="M1416.563,910.938 C1416.563,904.688 1440.094,904.688 1440.094,904.688 C1440.094,904.688 1463.625,904.688 1463.625,910.938 L1463.625,925.313 C1463.625,931.563 1440.094,931.563 1440.094,931.563 C1440.094,931.563 1416.563,931.563 1416.563,925.313 L1416.563,910.938" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M1416.563,910.938 C1416.563,917.188 1440.094,917.188 1440.094,917.188 C1440.094,917.188 1463.625,917.188 1463.625,910.938" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="34.563" x="1422.813" y="926.493">AuditLog</text>
+    </g>
+    <g class="entity" data-qualified-name="Bill Parser Service - Not Used.BSH" data-source-line="79" id="ent0020">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="1504.367" y="235.556">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1515" y="245"/>
+    </g>
+    <!--entity BP-->
+    <g class="entity" data-qualified-name="Bill Parser Service - Not Used.BP" data-source-line="80" id="ent0021">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="62.516" x="1441.25" y="238.75"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1491.266" y="241.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1490.016" y="243.125"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1490.016" y="245.625"/>
+      <text fill="#000" font-size="8.75" textLength="37.516" x="1450.625" y="258.056">BillParser</text>
+    </g>
+    <g class="entity" data-qualified-name="CMS Service.CMSH" data-source-line="86" id="ent0024">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="271.867" y="309.931">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="282.5" y="319.375"/>
+    </g>
+    <!--entity CCS-->
+    <g class="entity" data-qualified-name="CMS Service.CCS" data-source-line="87" id="ent0025">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="73.672" x="197.5" y="313.125"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="258.672" y="316.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="257.422" y="317.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="257.422" y="320"/>
+      <text fill="#000" font-size="8.75" textLength="48.672" x="206.875" y="332.431">CMSService</text>
+    </g>
+    <!--entity TLS-->
+    <g class="entity" data-qualified-name="CMS Service.TLS" data-source-line="88" id="ent0026">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="97.516" x="88.75" y="313.125"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="173.766" y="316.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="172.516" y="317.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="172.516" y="320"/>
+      <text fill="#000" font-size="8.75" textLength="72.516" x="98.125" y="332.431">TranslationService</text>
+    </g>
+    <!--entity MSTS-->
+    <g class="entity" data-qualified-name="CMS Service.MSTS" data-source-line="89" id="ent0027">
+      <rect fill="#FF0" height="45" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="68.313" x="72.813" y="377.813"/>
+      <rect fill="#FF0" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="128.625" y="380.938"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="127.375" y="382.188"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="127.375" y="384.688"/>
+      <text fill="#000" font-size="8.75" textLength="35.438" x="82.188" y="397.118">Microsoft</text>
+      <text fill="#000" font-size="8.75" textLength="43.313" x="82.188" y="405.868">Translation</text>
+      <text fill="#000" font-size="8.75" textLength="29.203" x="82.188" y="414.618">Service</text>
+    </g>
+    <!--entity CMS-->
+    <g class="entity" data-qualified-name="CMS Service.CMS" data-source-line="90" id="ent0028">
+      <rect fill="#FF0" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="73.18" x="219.063" y="386.563"/>
+      <rect fill="#FF0" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="279.742" y="389.688"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="278.492" y="390.938"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="278.492" y="393.438"/>
+      <text fill="#000" font-size="8.75" textLength="48.18" x="228.438" y="405.868">Prismic CMS</text>
+    </g>
+    <!--entity TLDB-->
+    <g class="entity" data-qualified-name="CMS Service.TLDB" data-source-line="91" id="ent0029">
+      <path d="M152.188,388.75 C152.188,382.5 180.094,382.5 180.094,382.5 C180.094,382.5 208,382.5 208,388.75 L208,411.875 C208,418.125 180.094,418.125 180.094,418.125 C180.094,418.125 152.188,418.125 152.188,411.875 L152.188,388.75" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M152.188,388.75 C152.188,395 180.094,395 180.094,395 C180.094,395 208,395 208,388.75" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="43.313" x="158.438" y="404.306">Translation</text>
+      <text fill="#000" font-size="8.75" textLength="25.32" x="158.438" y="413.056">Cache</text>
+    </g>
+    <g class="entity" data-qualified-name="Consumer Plan Service - Work In Progress.CPSH" data-source-line="102" id="ent0037">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="1386.867" y="235.556">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1397.5" y="245"/>
+    </g>
+    <!--entity CPS-->
+    <g class="entity" data-qualified-name="Consumer Plan Service - Work In Progress.CPS" data-source-line="103" id="ent0038">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="112.117" x="1274.063" y="238.75"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1373.68" y="241.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1372.43" y="243.125"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1372.43" y="245.625"/>
+      <text fill="#000" font-size="8.75" textLength="87.117" x="1283.438" y="258.056">ConsumerPlanService</text>
+    </g>
+    <!--entity PPS-->
+    <g class="entity" data-qualified-name="Consumer Plan Service - Work In Progress.PPS" data-source-line="104" id="ent0039">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="108.234" x="1275.313" y="386.563"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1371.047" y="389.688"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1369.797" y="390.938"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1369.797" y="393.438"/>
+      <text fill="#000" font-size="8.75" textLength="83.234" x="1284.688" y="405.868">PostcodePlanService</text>
+    </g>
+    <!--entity PPDB-->
+    <g class="entity" data-qualified-name="Consumer Plan Service - Work In Progress.PPDB" data-source-line="105" id="ent0040">
+      <path d="M1305,315.313 C1305,309.063 1329.488,309.063 1329.488,309.063 C1329.488,309.063 1353.977,309.063 1353.977,315.313 L1353.977,338.438 C1353.977,344.688 1329.488,344.688 1329.488,344.688 C1329.488,344.688 1305,344.688 1305,338.438 L1305,315.313" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M1305,315.313 C1305,321.563 1329.488,321.563 1329.488,321.563 C1329.488,321.563 1353.977,321.563 1353.977,315.313" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="36.477" x="1311.25" y="330.868">Postcode</text>
+      <text fill="#000" font-size="8.75" textLength="21.93" x="1311.25" y="339.618">Plans</text>
+    </g>
+    <g class="entity" data-qualified-name="Contact Form Service - Work in Progress.CFH" data-source-line="113" id="ent0046">
+      <text fill="#000" font-size="8.75" textLength="22.914" x="23.543" y="750.243">HTTP</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="31.25" y="759.688"/>
+    </g>
+    <!--entity CFS-->
+    <g class="entity" data-qualified-name="Contact Form Service - Work in Progress.CFS" data-source-line="114" id="ent0047">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="104.734" x="52.5" y="753.438"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="144.734" y="756.563"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="143.484" y="757.813"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="143.484" y="760.313"/>
+      <text fill="#000" font-size="8.75" textLength="79.734" x="61.875" y="772.743">ContactFormService</text>
+    </g>
+    <g class="entity" data-qualified-name="EPC.EPC_COGAPI" data-source-line="119" id="ent0050">
+      <text fill="#000" font-size="8.75" textLength="35.547" x="333.477" y="901.181">Login API</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="347.5" y="910.625"/>
+    </g>
+    <!--entity EPC_COG-->
+    <g class="entity" data-qualified-name="EPC.EPC_COG" data-source-line="120" id="ent0051">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="55.188" x="325" y="959.375"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="367.688" y="962.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="366.438" y="963.75"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="366.438" y="966.25"/>
+      <text fill="#000" font-size="8.75" textLength="30.188" x="334.375" y="978.681">Cognito</text>
+    </g>
+    <g class="entity" data-qualified-name="EPC.EPC_PMH" data-source-line="123" id="ent0054">
+      <text fill="#000" font-size="8.75" textLength="27.234" x="228.258" y="892.431">PM API</text>
+      <text fill="#000" font-size="8.75" textLength="43.203" x="220.273" y="901.181">(Protected)</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="238.125" y="910.625"/>
+    </g>
+    <!--entity EPC_PM-->
+    <g class="entity" data-qualified-name="EPC.EPC_PM" data-source-line="124" id="ent0055">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="122.781" x="191.25" y="959.375"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="301.531" y="962.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="300.281" y="963.75"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="300.281" y="966.25"/>
+      <text fill="#000" font-size="8.75" textLength="97.781" x="200.625" y="978.681">Plan Management Service</text>
+    </g>
+    <g class="entity" data-qualified-name="EPC-EME Integration Service.EEI_BULKH" data-source-line="130" id="ent0059">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="328.117" y="649.931">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="338.75" y="659.375"/>
+    </g>
+    <!--entity EEI_BULK-->
+    <g class="entity" data-qualified-name="EPC-EME Integration Service.EEI_BULK" data-source-line="131" id="ent0060">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="100.031" x="227.5" y="653.125"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="315.031" y="656.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="313.781" y="657.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="313.781" y="660"/>
+      <text fill="#000" font-size="8.75" textLength="75.031" x="236.875" y="672.431">BulkPublishService</text>
+    </g>
+    <!--entity EEI_PS-->
+    <g class="entity" data-qualified-name="EPC-EME Integration Service.EEI_PS" data-source-line="132" id="ent0061">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="107.25" x="241.25" y="831.875"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="336" y="835"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="334.75" y="836.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="334.75" y="838.75"/>
+      <text fill="#000" font-size="8.75" textLength="82.25" x="250.625" y="851.181">PlanStreamPublisher</text>
+    </g>
+    <g class="entity" data-qualified-name="Location Service.LH" data-source-line="139" id="ent0065">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="354.992" y="309.931">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="365.625" y="319.375"/>
+    </g>
+    <!--entity LS-->
+    <g class="entity" data-qualified-name="Location Service.LS" data-source-line="140" id="ent0066">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="87.289" x="307.5" y="386.563"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="382.289" y="389.688"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="381.039" y="390.938"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="381.039" y="393.438"/>
+      <text fill="#000" font-size="8.75" textLength="62.289" x="316.875" y="405.868">LocationService</text>
+    </g>
+    <!--entity APA-->
+    <g class="entity" data-qualified-name="Location Service.APA" data-source-line="141" id="ent0067">
+      <rect fill="#FF0" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="71.703" x="315.313" y="455.313"/>
+      <rect fill="#FF0" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="374.516" y="458.438"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="373.266" y="459.688"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="373.266" y="462.188"/>
+      <text fill="#000" font-size="8.75" textLength="46.703" x="324.688" y="474.618">AusPost API</text>
+    </g>
+    <g class="entity" data-qualified-name="Meter Data Service.MDH" data-source-line="148" id="ent0072">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="721.867" y="309.931">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="732.5" y="319.375"/>
+    </g>
+    <!--entity MDS-->
+    <g class="entity" data-qualified-name="Meter Data Service.MDS" data-source-line="149" id="ent0073">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="95" x="626.25" y="313.125"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="708.75" y="316.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="707.5" y="317.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="707.5" y="320"/>
+      <text fill="#000" font-size="8.75" textLength="70" x="635.625" y="332.431">MeterDataService</text>
+    </g>
+    <!--entity AEMO-->
+    <g class="entity" data-qualified-name="Meter Data Service.AEMO" data-source-line="150" id="ent0074">
+      <rect fill="#FF0" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="64.867" x="641.25" y="386.563"/>
+      <rect fill="#FF0" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="693.617" y="389.688"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="692.367" y="390.938"/>
+      <rect fill="#FF0" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="692.367" y="393.438"/>
+      <text fill="#000" font-size="8.75" textLength="39.867" x="650.625" y="405.868">AEMO API</text>
+    </g>
+    <g class="entity" data-qualified-name="Notification Service.NSL" data-source-line="157" id="ent0078">
+      <text fill="#000" font-size="8.75" textLength="31.609" x="154.195" y="901.181">Lambda</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="166.25" y="910.625"/>
+    </g>
+    <!--entity NS-->
+    <g class="entity" data-qualified-name="Notification Service.NS" data-source-line="158" id="ent0079">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="97.516" x="57.5" y="904.375"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="142.516" y="907.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="141.266" y="908.75"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="141.266" y="911.25"/>
+      <text fill="#000" font-size="8.75" textLength="72.516" x="66.875" y="923.681">NotificationService</text>
+    </g>
+    <!--entity SES-->
+    <g class="entity" data-qualified-name="Notification Service.SES" data-source-line="159" id="ent0080">
+      <rect fill="#FFF" height="36.25" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="102.93" x="57.813" y="955"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="148.242" y="958.125"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="146.992" y="959.375"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="146.992" y="961.875"/>
+      <text fill="#000" font-size="8.75" textLength="77.93" x="67.188" y="974.306">Simple Email Service</text>
+      <text fill="#000" font-size="8.75" textLength="25.758" x="67.188" y="983.056">(AWS)</text>
+    </g>
+    <g class="entity" data-qualified-name="Organisation Service.OSH" data-source-line="166" id="ent0084">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="1638.117" y="649.931">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1648.75" y="659.375"/>
+    </g>
+    <!--entity OS-->
+    <g class="entity" data-qualified-name="Organisation Service.OS" data-source-line="167" id="ent0085">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="68.75" x="1568.75" y="653.125"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1625" y="656.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1623.75" y="657.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1623.75" y="660"/>
+      <text fill="#000" font-size="8.75" textLength="43.75" x="1578.125" y="672.431">OrgService</text>
+    </g>
+    <!--entity ODB-->
+    <g class="entity" data-qualified-name="Organisation Service.ODB" data-source-line="168" id="ent0086">
+      <path d="M1569.375,703.75 C1569.375,697.5 1602.613,697.5 1602.613,697.5 C1602.613,697.5 1635.852,697.5 1635.852,703.75 L1635.852,718.125 C1635.852,724.375 1602.613,724.375 1602.613,724.375 C1602.613,724.375 1569.375,724.375 1569.375,718.125 L1569.375,703.75" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M1569.375,703.75 C1569.375,710 1602.613,710 1602.613,710 C1602.613,710 1635.852,710 1635.852,703.75" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="53.977" x="1575.625" y="719.306">Organisations</text>
+    </g>
+    <!--entity ODBS-->
+    <g class="entity" data-qualified-name="Organisation Service.ODBS" data-source-line="169" id="ent0087">
+      <ellipse cx="1617.5" cy="843.75" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="28.164" x="1603.418" y="861.181">Stream</text>
+    </g>
+    <g class="entity" data-qualified-name="PDF Service.PDFL" data-source-line="180" id="ent0093">
+      <text fill="#000" font-size="8.75" textLength="31.609" x="1159.195" y="649.931">Lambda</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1171.25" y="659.375"/>
+    </g>
+    <!--entity PDFS-->
+    <g class="entity" data-qualified-name="PDF Service.PDFS" data-source-line="181" id="ent0094">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="115.016" x="1192.5" y="653.125"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1295.016" y="656.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1293.766" y="657.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1293.766" y="660"/>
+      <text fill="#000" font-size="8.75" textLength="90.016" x="1201.875" y="672.431">PDF Generation Service</text>
+    </g>
+    <g class="entity" data-qualified-name="Plan Service .Retailer. - Work In Progress.PSH" data-source-line="186" id="ent0097">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="1091.867" y="452.118">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1102.5" y="461.563"/>
+    </g>
+    <!--entity PS-->
+    <g class="entity" data-qualified-name="Plan Service .Retailer. - Work In Progress.PS" data-source-line="187" id="ent0098">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="71.758" x="932.188" y="455.313"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="991.445" y="458.438"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="990.195" y="459.688"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="990.195" y="462.188"/>
+      <text fill="#000" font-size="8.75" textLength="46.758" x="941.563" y="474.618">PlanService</text>
+    </g>
+    <!--entity PDB-->
+    <g class="entity" data-qualified-name="Plan Service .Retailer. - Work In Progress.PDB" data-source-line="188" id="ent0099">
+      <path d="M1056.563,531.875 C1056.563,525.625 1073.777,525.625 1073.777,525.625 C1073.777,525.625 1090.992,525.625 1090.992,531.875 L1090.992,546.25 C1090.992,552.5 1073.777,552.5 1073.777,552.5 C1073.777,552.5 1056.563,552.5 1056.563,546.25 L1056.563,531.875" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M1056.563,531.875 C1056.563,538.125 1073.777,538.125 1073.777,538.125 C1073.777,538.125 1090.992,538.125 1090.992,531.875" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="21.93" x="1062.813" y="547.431">Plans</text>
+    </g>
+    <!--entity PSS-->
+    <g class="entity" data-qualified-name="Plan Service .Retailer. - Work In Progress.PSS" data-source-line="189" id="ent0100">
+      <ellipse cx="888.75" cy="599.375" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="28.164" x="874.668" y="616.806">Stream</text>
+    </g>
+    <g class="entity" data-qualified-name="Plan Service .Retailer. - Work In Progress.PGT" data-source-line="192" id="ent0102">
+      <text fill="#000" font-size="8.75" textLength="60.813" x="1075.844" y="545.868">PDF Generation</text>
+      <text fill="#000" font-size="8.75" textLength="39.484" x="1086.508" y="554.618">SNS Topic</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1102.5" y="531.563"/>
+    </g>
+    <!--entity PDFEXP-->
+    <g class="entity" data-qualified-name="Plan Service .Retailer. - Work In Progress.PDFEXP" data-source-line="193" id="ent0103">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="75.586" x="1015.313" y="455.313"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1078.398" y="458.438"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1077.148" y="459.688"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1077.148" y="462.188"/>
+      <text fill="#000" font-size="8.75" textLength="50.586" x="1024.688" y="474.618">PDFExporter</text>
+    </g>
+    <g class="entity" data-qualified-name="Plan Service .Retailer. - Work In Progress.GMN109" data-source-line="202" id="ent0110">
+      <path d="M861.25,523.75 L861.25,554.375 A0,0 0 0 0 861.25,554.375 L935.042,554.375 L894.594,595.093 L940.042,554.375 L1044.695,554.375 A0,0 0 0 0 1044.695,554.375 L1044.695,530 L1038.445,523.75 L861.25,523.75 A0,0 0 0 0 861.25,523.75" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M1038.445,523.75 L1038.445,530 L1044.695,530 L1038.445,523.75" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.125" textLength="165.801" x="865" y="533.194">TODO: The Plan (Retailer) Service avoids directly</text>
+      <text fill="#000" font-size="8.125" textLength="155.848" x="865" y="541.319">writing to the Plan-Postcode table by having the</text>
+      <text fill="#000" font-size="8.125" textLength="170.32" x="865" y="549.444">PostcodePlanService listen to the Plan DB Stream.</text>
+    </g>
+    <g class="entity" data-qualified-name="Portal Storage Service.POSH" data-source-line="209" id="ent0113">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="1466.867" y="649.931">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1477.5" y="659.375"/>
+    </g>
+    <!--entity POSS-->
+    <g class="entity" data-qualified-name="Portal Storage Service.POSS" data-source-line="210" id="ent0114">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="78.484" x="1322.5" y="653.125"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1388.484" y="656.25"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1387.234" y="657.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1387.234" y="660"/>
+      <text fill="#000" font-size="8.75" textLength="53.484" x="1331.875" y="672.431">PortalStorage</text>
+    </g>
+    <!--entity PSS3-->
+    <g class="entity" data-qualified-name="Portal Storage Service.PSS3" data-source-line="211" id="ent0115">
+      <path d="M1412.5,659.688 C1412.5,653.438 1439.422,653.438 1439.422,653.438 C1439.422,653.438 1466.344,653.438 1466.344,659.688 L1466.344,674.063 C1466.344,680.313 1439.422,680.313 1439.422,680.313 C1439.422,680.313 1412.5,680.313 1412.5,674.063 L1412.5,659.688" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M1412.5,659.688 C1412.5,665.938 1439.422,665.938 1439.422,665.938 C1439.422,665.938 1466.344,665.938 1466.344,659.688" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="41.344" x="1418.75" y="675.243">S3 Storage</text>
+    </g>
+    <g class="entity" data-qualified-name="Pricing Engine .AKA Comparator..PEL" data-source-line="217" id="ent0119">
+      <text fill="#000" font-size="8.75" textLength="31.609" x="803.57" y="522.118">Lambda</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="815.625" y="531.563"/>
+    </g>
+    <!--entity PCS-->
+    <g class="entity" data-qualified-name="Pricing Engine .AKA Comparator..PCS" data-source-line="218" id="ent0120">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="98.555" x="648.125" y="525.313"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="734.18" y="528.438"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="732.93" y="529.688"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="732.93" y="532.188"/>
+      <text fill="#000" font-size="8.75" textLength="73.555" x="657.5" y="544.618">Plan Pricing Service</text>
+    </g>
+    <!--entity D61-->
+    <g class="entity" data-qualified-name="Pricing Engine .AKA Comparator..D61" data-source-line="219" id="ent0121">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="82.422" x="743.125" y="587.5"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="813.047" y="590.625"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="811.797" y="591.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="811.797" y="594.375"/>
+      <text fill="#000" font-size="8.75" textLength="57.422" x="752.5" y="606.806">Get Calculation</text>
+    </g>
+    <g class="entity" data-qualified-name="Pricing Engine .AKA Comparator..D61Int" data-source-line="220" id="ent0122">
+      <text fill="#000" font-size="8.75" textLength="31.609" x="782.32" y="522.118">Lambda</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="794.375" y="531.563"/>
+    </g>
+    <g class="entity" data-qualified-name="Reference Data Service.RDSH" data-source-line="230" id="ent0129">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="685.617" y="773.993">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="696.25" y="759.688"/>
+    </g>
+    <!--entity RDS-->
+    <g class="entity" data-qualified-name="Reference Data Service.RDS" data-source-line="231" id="ent0130">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="86.305" x="783.75" y="753.438"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="857.555" y="756.563"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="856.305" y="757.813"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="856.305" y="760.313"/>
+      <text fill="#000" font-size="8.75" textLength="61.305" x="793.125" y="772.743">RefDataService</text>
+    </g>
+    <!--entity AemoDistributors-->
+    <g class="entity" data-qualified-name="Reference Data Service.AemoDistributors" data-source-line="233" id="ent0131">
+      <path d="M705.313,838.438 C705.313,832.188 745.113,832.188 745.113,832.188 C745.113,832.188 784.914,832.188 784.914,838.438 L784.914,852.813 C784.914,859.063 745.113,859.063 745.113,859.063 C745.113,859.063 705.313,859.063 705.313,852.813 L705.313,838.438" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M705.313,838.438 C705.313,844.688 745.113,844.688 745.113,844.688 C745.113,844.688 784.914,844.688 784.914,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="67.102" x="711.563" y="853.993">AemoDistributors</text>
+    </g>
+    <!--entity AemoRetailers-->
+    <g class="entity" data-qualified-name="Reference Data Service.AemoRetailers" data-source-line="234" id="ent0132">
+      <path d="M796.25,838.438 C796.25,832.188 831.211,832.188 831.211,832.188 C831.211,832.188 866.172,832.188 866.172,838.438 L866.172,852.813 C866.172,859.063 831.211,859.063 831.211,859.063 C831.211,859.063 796.25,859.063 796.25,852.813 L796.25,838.438" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M796.25,838.438 C796.25,844.688 831.211,844.688 831.211,844.688 C831.211,844.688 866.172,844.688 866.172,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="57.422" x="802.5" y="853.993">AemoRetailers</text>
+    </g>
+    <!--entity Benchmarks-->
+    <g class="entity" data-qualified-name="Reference Data Service.Benchmarks" data-source-line="235" id="ent0133">
+      <path d="M877.5,838.438 C877.5,832.188 908.059,832.188 908.059,832.188 C908.059,832.188 938.617,832.188 938.617,838.438 L938.617,852.813 C938.617,859.063 908.059,859.063 908.059,859.063 C908.059,859.063 877.5,859.063 877.5,852.813 L877.5,838.438" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M877.5,838.438 C877.5,844.688 908.059,844.688 908.059,844.688 C908.059,844.688 938.617,844.688 938.617,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="48.617" x="883.75" y="853.993">Benchmarks</text>
+    </g>
+    <!--entity ClimateZones-->
+    <g class="entity" data-qualified-name="Reference Data Service.ClimateZones" data-source-line="236" id="ent0134">
+      <path d="M793.75,659.688 C793.75,653.438 827.016,653.438 827.016,653.438 C827.016,653.438 860.281,653.438 860.281,659.688 L860.281,674.063 C860.281,680.313 827.016,680.313 827.016,680.313 C827.016,680.313 793.75,680.313 793.75,674.063 L793.75,659.688" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M793.75,659.688 C793.75,665.938 827.016,665.938 827.016,665.938 C827.016,665.938 860.281,665.938 860.281,659.688" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="54.031" x="800" y="675.243">ClimateZones</text>
+    </g>
+    <!--entity Distributors-->
+    <g class="entity" data-qualified-name="Reference Data Service.Distributors" data-source-line="237" id="ent0135">
+      <path d="M725.313,659.688 C725.313,653.438 753.684,653.438 753.684,653.438 C753.684,653.438 782.055,653.438 782.055,659.688 L782.055,674.063 C782.055,680.313 753.684,680.313 753.684,680.313 C753.684,680.313 725.313,680.313 725.313,674.063 L725.313,659.688" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M725.313,659.688 C725.313,665.938 753.684,665.938 753.684,665.938 C753.684,665.938 782.055,665.938 782.055,659.688" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="44.242" x="731.563" y="675.243">Distributors</text>
+    </g>
+    <!--entity FuelType-->
+    <g class="entity" data-qualified-name="Reference Data Service.FuelType" data-source-line="238" id="ent0136">
+      <path d="M665,659.688 C665,653.438 689.516,653.438 689.516,653.438 C689.516,653.438 714.031,653.438 714.031,659.688 L714.031,674.063 C714.031,680.313 689.516,680.313 689.516,680.313 C689.516,680.313 665,680.313 665,674.063 L665,659.688" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M665,659.688 C665,665.938 689.516,665.938 689.516,665.938 C689.516,665.938 714.031,665.938 714.031,659.688" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="36.531" x="671.25" y="675.243">FuelType</text>
+    </g>
+    <!--entity Notifications-->
+    <g class="entity" data-qualified-name="Reference Data Service.Notifications" data-source-line="239" id="ent0137">
+      <path d="M950,838.438 C950,832.188 980.094,832.188 980.094,832.188 C980.094,832.188 1010.188,832.188 1010.188,838.438 L1010.188,852.813 C1010.188,859.063 980.094,859.063 980.094,859.063 C980.094,859.063 950,859.063 950,852.813 L950,838.438" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M950,838.438 C950,844.688 980.094,844.688 980.094,844.688 C980.094,844.688 1010.188,844.688 1010.188,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="47.688" x="956.25" y="853.993">Notifications</text>
+    </g>
+    <!--entity Organisations-->
+    <g class="entity" data-qualified-name="Reference Data Service.Organisations" data-source-line="240" id="ent0138">
+      <path d="M1021.25,838.438 C1021.25,832.188 1054.488,832.188 1054.488,832.188 C1054.488,832.188 1087.727,832.188 1087.727,838.438 L1087.727,852.813 C1087.727,859.063 1054.488,859.063 1054.488,859.063 C1054.488,859.063 1021.25,859.063 1021.25,852.813 L1021.25,838.438" fill="#FFF" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M1021.25,838.438 C1021.25,844.688 1054.488,844.688 1054.488,844.688 C1054.488,844.688 1087.727,844.688 1087.727,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="53.977" x="1027.5" y="853.993">Organisations</text>
+    </g>
+    <!--entity PMEC-->
+    <g class="entity" data-qualified-name="Reference Data Service.PMEC" data-source-line="241" id="ent0139">
+      <path d="M1099.063,838.438 C1099.063,832.188 1117.973,832.188 1117.973,832.188 C1117.973,832.188 1136.883,832.188 1136.883,838.438 L1136.883,852.813 C1136.883,859.063 1117.973,859.063 1117.973,859.063 C1117.973,859.063 1099.063,859.063 1099.063,852.813 L1099.063,838.438" fill="#FA0" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M1099.063,838.438 C1099.063,844.688 1117.973,844.688 1117.973,844.688 C1117.973,844.688 1136.883,844.688 1136.883,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="25.32" x="1105.313" y="853.993">PMEC</text>
+    </g>
+    <!--entity ParentOrganisations-->
+    <g class="entity" data-qualified-name="Reference Data Service.ParentOrganisations" data-source-line="242" id="ent0140">
+      <path d="M975,659.688 C975,653.438 1021.117,653.438 1021.117,653.438 C1021.117,653.438 1067.234,653.438 1067.234,659.688 L1067.234,674.063 C1067.234,680.313 1021.117,680.313 1021.117,680.313 C1021.117,680.313 975,680.313 975,674.063 L975,659.688" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M975,659.688 C975,665.938 1021.117,665.938 1021.117,665.938 C1021.117,665.938 1067.234,665.938 1067.234,659.688" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="79.734" x="981.25" y="675.243">ParentOrganisations</text>
+    </g>
+    <!--entity PaymentOptionType-->
+    <g class="entity" data-qualified-name="Reference Data Service.PaymentOptionType" data-source-line="243" id="ent0141">
+      <path d="M407.5,838.438 C407.5,832.188 453.617,832.188 453.617,832.188 C453.617,832.188 499.734,832.188 499.734,838.438 L499.734,852.813 C499.734,859.063 453.617,859.063 453.617,859.063 C453.617,859.063 407.5,859.063 407.5,852.813 L407.5,838.438" fill="#F00" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M407.5,838.438 C407.5,844.688 453.617,844.688 453.617,844.688 C453.617,844.688 499.734,844.688 499.734,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="79.734" x="413.75" y="853.993">PaymentOptionType</text>
+    </g>
+    <!--entity PostcodeExceptions-->
+    <g class="entity" data-qualified-name="Reference Data Service.PostcodeExceptions" data-source-line="244" id="ent0142">
+      <path d="M871.563,659.688 C871.563,653.438 917.461,653.438 917.461,653.438 C917.461,653.438 963.359,653.438 963.359,659.688 L963.359,674.063 C963.359,680.313 917.461,680.313 917.461,680.313 C917.461,680.313 871.563,680.313 871.563,674.063 L871.563,659.688" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M871.563,659.688 C871.563,665.938 917.461,665.938 917.461,665.938 C917.461,665.938 963.359,665.938 963.359,659.688" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="79.297" x="877.813" y="675.243">PostcodeExceptions</text>
+    </g>
+    <!--entity RoleAction-->
+    <g class="entity" data-qualified-name="Reference Data Service.RoleAction" data-source-line="245" id="ent0143">
+      <path d="M717.5,760 C717.5,753.75 744.941,753.75 744.941,753.75 C744.941,753.75 772.383,753.75 772.383,760 L772.383,774.375 C772.383,780.625 744.941,780.625 744.941,780.625 C744.941,780.625 717.5,780.625 717.5,774.375 L717.5,760" fill="#F00" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M717.5,760 C717.5,766.25 744.941,766.25 744.941,766.25 C744.941,766.25 772.383,766.25 772.383,760" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="42.383" x="723.75" y="775.556">RoleAction</text>
+    </g>
+    <!--entity States-->
+    <g class="entity" data-qualified-name="Reference Data Service.States" data-source-line="246" id="ent0144">
+      <path d="M511.25,838.438 C511.25,832.188 529.887,832.188 529.887,832.188 C529.887,832.188 548.523,832.188 548.523,838.438 L548.523,852.813 C548.523,859.063 529.887,859.063 529.887,859.063 C529.887,859.063 511.25,859.063 511.25,852.813 L511.25,838.438" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M511.25,838.438 C511.25,844.688 529.887,844.688 529.887,844.688 C529.887,844.688 548.523,844.688 548.523,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="24.773" x="517.5" y="853.993">States</text>
+    </g>
+    <!--entity SupplyAreas-->
+    <g class="entity" data-qualified-name="Reference Data Service.SupplyAreas" data-source-line="247" id="ent0145">
+      <path d="M560.313,838.438 C560.313,832.188 591.391,832.188 591.391,832.188 C591.391,832.188 622.469,832.188 622.469,838.438 L622.469,852.813 C622.469,859.063 591.391,859.063 591.391,859.063 C591.391,859.063 560.313,859.063 560.313,852.813 L560.313,838.438" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M560.313,838.438 C560.313,844.688 591.391,844.688 591.391,844.688 C591.391,844.688 622.469,844.688 622.469,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="49.656" x="566.563" y="853.993">SupplyAreas</text>
+    </g>
+    <!--entity ThirdParties-->
+    <g class="entity" data-qualified-name="Reference Data Service.ThirdParties" data-source-line="248" id="ent0146">
+      <path d="M633.75,838.438 C633.75,832.188 663.598,832.188 663.598,832.188 C663.598,832.188 693.445,832.188 693.445,838.438 L693.445,852.813 C693.445,859.063 663.598,859.063 663.598,859.063 C663.598,859.063 633.75,859.063 633.75,852.813 L633.75,838.438" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M633.75,838.438 C633.75,844.688 663.598,844.688 663.598,844.688 C663.598,844.688 693.445,844.688 693.445,838.438" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="47.195" x="640" y="853.993">ThirdParties</text>
+    </g>
+    <g class="entity" data-qualified-name="Reference Data Service.GMN168" data-source-line="268" id="ent0169">
+      <path d="M453.75,647.5 L453.75,686.25 A0,0 0 0 0 453.75,686.25 L607.406,686.25 L733.276,753.714 L612.406,686.25 L653.852,686.25 A0,0 0 0 0 653.852,686.25 L653.852,653.75 L647.602,647.5 L453.75,647.5 A0,0 0 0 0 453.75,647.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M647.602,647.5 L647.602,653.75 L653.852,653.75 L647.602,647.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.125" textLength="146.758" x="457.5" y="656.944">In v1, the intent was to allow Admins to edit the</text>
+      <text fill="#000" font-size="8.125" textLength="186.977" x="457.5" y="665.069">permissions that roles had. This was never implemented</text>
+      <text fill="#000" font-size="8.125" textLength="161.688" x="457.5" y="673.194">and is core-logic that should not be user-editable.</text>
+      <text fill="#000" font-size="8.125" textLength="179.715" x="457.5" y="681.319">The actual role-permission matrix remains in the code.</text>
+    </g>
+    <g class="entity" data-qualified-name="Reference Data Service.GMN171" data-source-line="275" id="ent0172">
+      <path d="M535,735.625 L535,798.75 A0,0 0 0 0 535,798.75 L684.93,798.75 A0,0 0 0 0 684.93,798.75 L684.93,798.75 L1021.113,833.204 L684.93,793.75 L684.93,741.875 L678.68,735.625 L535,735.625 A0,0 0 0 0 535,735.625" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M678.68,735.625 L678.68,741.875 L684.93,741.875 L678.68,735.625" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.125" textLength="129.238" x="538.75" y="745.069">This is a copy of the organisation table in</text>
+      <text fill="#000" font-size="8.125" textLength="118.32" x="538.75" y="753.194">the Organisation Service. There is a</text>
+      <text fill="#000" font-size="8.125" textLength="130.914" x="538.75" y="761.319">DynamoDB stream on the source table,</text>
+      <text fill="#000" font-size="8.125" textLength="130.051" x="538.75" y="769.444">connected to a Lambda which creates a</text>
+      <text fill="#000" font-size="8.125" textLength="130.051" x="538.75" y="777.569">record in RefData whenever the source</text>
+      <text fill="#000" font-size="8.125" textLength="125.176" x="538.75" y="785.694">data is changed. This allows access to</text>
+      <text fill="#000" font-size="8.125" textLength="136.805" x="538.75" y="793.819">this commonly-used data via this service.</text>
+    </g>
+    <g class="entity" data-qualified-name="SiteOps Service.n.formerly Deployment Service..SIH" data-source-line="286" id="ent0175">
+      <text fill="#000" font-size="8.75" textLength="31.609" x="1512.945" y="901.181">Lambda</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1525" y="910.625"/>
+    </g>
+    <!--entity SI-->
+    <g class="entity" data-qualified-name="SiteOps Service.n.formerly Deployment Service..SI" data-source-line="287" id="ent0176">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="56.117" x="1501.875" y="959.375"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1545.492" y="962.5"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1544.242" y="963.75"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1544.242" y="966.25"/>
+      <text fill="#000" font-size="8.75" textLength="31.117" x="1511.25" y="978.681">SiteOps</text>
+    </g>
+    <g class="entity" data-qualified-name="User Service.USH" data-source-line="293" id="ent0180">
+      <text fill="#000" font-size="8.75" textLength="28.766" x="1149.367" y="235.556">HTTPS</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1160" y="245"/>
+    </g>
+    <g class="entity" data-qualified-name="User Service.CAL" data-source-line="294" id="ent0181">
+      <text fill="#000" font-size="8.75" textLength="31.609" x="827.945" y="235.556">Lambda</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="840" y="245"/>
+    </g>
+    <!--entity US-->
+    <g class="entity" data-qualified-name="User Service.US" data-source-line="305" id="ent0189">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="72.687" x="1076.25" y="238.75"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1136.438" y="241.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1135.188" y="243.125"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1135.188" y="245.625"/>
+      <text fill="#000" font-size="8.75" textLength="47.687" x="1085.625" y="258.056">UserService</text>
+    </g>
+    <!--entity COGDB-->
+    <g class="entity" data-qualified-name="User Service.COGDB" data-source-line="307" id="ent0190">
+      <path d="M1015,319.688 C1015,313.438 1054.363,313.438 1054.363,313.438 C1054.363,313.438 1093.727,313.438 1093.727,319.688 L1093.727,334.063 C1093.727,340.313 1054.363,340.313 1054.363,340.313 C1054.363,340.313 1015,340.313 1015,334.063 L1015,319.688" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.313;"/>
+      <path d="M1015,319.688 C1015,325.938 1054.363,325.938 1054.363,325.938 C1054.363,325.938 1093.727,325.938 1093.727,319.688" fill="none" style="stroke:#181818;stroke-width:0.313;"/>
+      <text fill="#000" font-size="8.75" textLength="66.227" x="1021.25" y="335.243">Cognito UserPool</text>
+    </g>
+    <!--entity COG-->
+    <g class="entity" data-qualified-name="User Service.Auth Service.COG" data-source-line="297" id="ent0183">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="55.188" x="861.25" y="238.75"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="903.938" y="241.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="902.688" y="243.125"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="902.688" y="245.625"/>
+      <text fill="#000" font-size="8.75" textLength="30.188" x="870.625" y="258.056">Cognito</text>
+    </g>
+    <!--entity CUSTA-->
+    <g class="entity" data-qualified-name="User Service.Auth Service.CUSTA" data-source-line="298" id="ent0184">
+      <rect fill="#FFF" height="27.5" rx="1.563" ry="1.563" style="stroke:#181818;stroke-width:0.313;" width="95.055" x="948.75" y="238.75"/>
+      <rect fill="#FFF" height="6.25" style="stroke:#181818;stroke-width:0.313;" width="9.375" x="1031.305" y="241.875"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1030.055" y="243.125"/>
+      <rect fill="#FFF" height="1.25" style="stroke:#181818;stroke-width:0.313;" width="2.5" x="1030.055" y="245.625"/>
+      <text fill="#000" font-size="8.75" textLength="70.055" x="958.125" y="258.056">CognitoAuthoriser</text>
+    </g>
+    <g class="entity" data-qualified-name="User Service.Auth Service.COGHTTP" data-source-line="299" id="ent0185">
+      <text fill="#000" font-size="8.75" textLength="48.672" x="1034.414" y="235.556">AWS Amplify</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="1055" y="245"/>
+    </g>
+    <g class="entity" data-qualified-name="User Service.Auth Service.COGAPI" data-source-line="300" id="ent0186">
+      <text fill="#000" font-size="8.75" textLength="14.109" x="924.195" y="235.556">API</text>
+      <rect fill="#F1F1F1" height="7.5" style="stroke:#181818;stroke-width:0.938;" width="7.5" x="927.5" y="245"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0005" data-link-type="association" id="lnk8">
+      <path d="M933.684,174.348 C926.309,182.669 912.595,196.357 897.5,202.5 C870.663,213.421 860.354,199.522 832.5,207.5 C811.856,213.413 790.434,224.635 774.26,234.313" fill="none" style="stroke:#A00;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0009" data-link-type="association" id="lnk12">
+      <path d="M436.25,174.405 C436.25,188.416 436.25,220.397 436.25,238.584" fill="none" style="stroke:#0A0;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0014" data-link-type="association" id="lnk17">
+      <path d="M1367.837,904.348 C1379.836,894.115 1397.769,880.989 1416.25,875.313 C1436.165,869.196 1445.341,864.461 1463.125,875.313 C1475.196,882.678 1478.642,900.325 1479.619,910.515" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0016" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="1416.49,918.125,1410.865,915.625,1413.365,918.125,1410.865,920.625,1416.49,918.125" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1390.472,918.125 C1399.302,918.125 1405.349,918.125 1413.365,918.125" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="13.102" x="1397.188" y="913.194">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0020" data-link-type="association" id="lnk22">
+      <path d="M1503.857,252.5 C1507.557,252.5 1511.256,252.5 1514.955,252.5" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0024" data-link-type="association" id="lnk30">
+      <path d="M271.313,326.875 C275.023,326.875 278.732,326.875 282.442,326.875" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0026" data-entity-2="ent0024" data-link-type="association" id="lnk31">
+      <path d="M151.611,313 C162.956,302.878 179.862,289.989 197.5,284.375 C228.734,274.434 243.886,266.331 271.25,284.375 C282.857,292.028 286.185,309.246 287.132,319.26" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0029" data-link-type="dependency" id="lnk32">
+      <polygon fill="#181818" points="192.99,382.443,198.371,379.454,194.87,379.947,194.377,376.446,192.99,382.443" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M224.402,340.74 C215.572,352.463 204.507,367.153 194.87,379.947" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="20.313" x="213.75" y="363.507">reads</text>
+    </g>
+    <g class="link" data-entity-1="ent0026" data-entity-2="ent0029" data-link-type="dependency" id="lnk33">
+      <polygon fill="#181818" points="167.259,382.474,166.08,376.433,165.466,379.915,161.985,379.301,167.259,382.474" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M143.483,340.779 C147.091,348.461 151.935,358.227 156.875,366.563 C160.021,371.872 161.945,374.886 165.466,379.915" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="21.227" x="158.125" y="363.507">writes</text>
+    </g>
+    <g class="link" data-entity-1="ent0026" data-entity-2="ent0027" data-link-type="dependency" id="lnk34">
+      <polygon fill="#181818" points="114.061,377.639,118.287,373.163,115.099,374.692,113.57,371.504,114.061,377.639" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M129.927,340.904 C127.416,345.589 124.702,350.93 122.5,355.938 C119.449,362.878 117.569,367.672 115.099,374.692" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="17.164" x="123.75" y="363.507">uses</text>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0028" data-link-type="dependency" id="lnk35">
+      <polygon fill="#181818" points="251.752,386.531,252.562,380.429,250.87,383.533,247.765,381.841,251.752,386.531" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M238.273,340.74 C242.107,353.765 247.044,370.537 250.87,383.533" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="17.164" x="247.5" y="363.507">uses</text>
+    </g>
+    <g class="link" data-entity-1="ent0038" data-entity-2="ent0037" data-link-type="association" id="lnk41">
+      <path d="M1386.074,252.5 C1389.838,252.5 1393.603,252.5 1397.367,252.5" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0038" data-entity-2="ent0040" data-link-type="dependency" id="lnk42">
+      <polygon fill="#181818" points="1329.523,308.97,1332.071,303.367,1329.549,305.845,1327.071,303.324,1329.523,308.97" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1329.887,266.367 C1329.785,278.303 1329.661,292.804 1329.549,305.845" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="20.313" x="1331.25" y="289.444">reads</text>
+    </g>
+    <g class="link" data-entity-1="ent0040" data-entity-2="ent0039" data-link-type="dependency" id="lnk44">
+      <polygon fill="#181818" points="1329.375,344.791,1326.875,350.416,1329.375,347.916,1331.875,350.416,1329.375,344.791" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1329.375,347.916 C1329.375,360.679 1329.375,374.67 1329.375,386.377" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="21.227" x="1330.625" y="363.507">writes</text>
+    </g>
+    <g class="link" data-entity-1="ent0046" data-entity-2="ent0047" data-link-type="association" id="lnk48">
+      <path d="M41.353,767.188 C44.999,767.188 48.645,767.188 52.292,767.188" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0050" data-entity-2="ent0051" data-link-type="association" id="lnk53">
+      <path d="M352.5,925.777 C352.5,934.257 352.5,948.694 352.5,959.28" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0054" data-entity-2="ent0055" data-link-type="association" id="lnk57">
+      <path d="M244.351,925.777 C245.83,934.257 248.348,948.694 250.194,959.28" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0060" data-entity-2="ent0059" data-link-type="association" id="lnk62">
+      <path d="M327.705,666.875 C331.382,666.875 335.059,666.875 338.736,666.875" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0065" data-entity-2="ent0066" data-link-type="association" id="lnk69">
+      <path d="M368.767,334.422 C365.566,346.349 358.957,370.972 354.835,386.33" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0066" data-entity-2="ent0067" data-link-type="dependency" id="lnk70">
+      <polygon fill="#181818" points="351.25,455.296,353.75,449.671,351.25,452.171,348.75,449.671,351.25,455.296" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M351.25,414.112 C351.25,426.006 351.25,440.287 351.25,452.171" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0073" data-entity-2="ent0072" data-link-type="association" id="lnk75">
+      <path d="M721.313,326.875 C725.023,326.875 728.732,326.875 732.442,326.875" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0073" data-entity-2="ent0074" data-link-type="dependency" id="lnk76">
+      <polygon fill="#181818" points="673.75,386.531,676.25,380.906,673.75,383.406,671.25,380.906,673.75,386.531" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M673.75,340.74 C673.75,353.765 673.75,370.41 673.75,383.406" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0079" data-entity-2="ent0078" data-link-type="association" id="lnk81">
+      <path d="M155,918.125 C158.724,918.125 162.448,918.125 166.172,918.125" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0079" data-entity-2="ent0080" data-link-type="dependency" id="lnk82">
+      <polygon fill="#181818" points="108.352,954.904,110.521,949.143,108.171,951.784,105.53,949.433,108.352,954.904" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.022,932.037 C107.424,938.938 107.738,944.342 108.171,951.784" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0085" data-entity-2="ent0084" data-link-type="association" id="lnk88">
+      <path d="M1637.534,666.875 C1641.25,666.875 1644.966,666.875 1648.683,666.875" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0085" data-entity-2="ent0086" data-link-type="dependency" id="lnk89">
+      <polygon fill="#181818" points="1602.688,697.449,1605.27,691.861,1602.733,694.325,1600.27,691.788,1602.688,697.449" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1602.931,680.811 C1602.853,686.113 1602.81,689.068 1602.733,694.325" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0086" data-entity-2="ent0087" data-link-type="association" id="lnk90">
+      <path d="M1603.966,724.6 C1607.091,752.405 1614.322,816.727 1616.715,838.017" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0087" data-entity-2="ent0085" data-link-type="dependency" id="lnk91">
+      <polygon fill="#181818" points="1622.928,680.627,1625.533,686.204,1625.286,682.677,1628.813,682.43,1622.928,680.627" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1620.937,837.859 C1631.018,815.851 1658.436,747.526 1636.25,697.5 C1633.356,690.975 1630.623,687.315 1625.286,682.677" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="27.066" x="1645.625" y="769.444">triggers</text>
+    </g>
+    <g class="link" data-entity-1="ent0093" data-entity-2="ent0094" data-link-type="association" id="lnk95">
+      <path d="M1181.436,666.875 C1185.096,666.875 1188.756,666.875 1192.417,666.875" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0099" data-entity-2="ent0100" data-link-type="association" id="lnk101">
+      <path d="M1056.367,551.459 C1054.47,552.521 1052.534,553.518 1050.625,554.375 C992.5,580.477 915.984,595.663 894.549,599.596" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0103" data-entity-2="ent0102" data-link-type="association" id="lnk104">
+      <path d="M1080.818,482.935 C1085.399,486.079 1089.748,489.786 1093.125,494.063 C1101.958,505.248 1105.44,522.028 1106.754,531.423" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0098" data-entity-2="ent0097" data-link-type="association" id="lnk105">
+      <path d="M981.487,455.237 C990.181,447.272 1002.245,438.017 1015,433.75 C1030.937,428.419 1075.187,427.11 1090.625,433.75 C1101.298,438.341 1105.242,452.555 1106.684,461.487" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0098" data-entity-2="ent0099" data-link-type="dependency" id="lnk106">
+      <polygon fill="#181818" points="1066.653,525.475,1065.6,519.41,1064.914,522.878,1061.446,522.192,1066.653,525.475" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M973.326,482.915 C977.092,490.63 982.982,499.782 991.25,504.688 C1014.026,518.2 1027.243,497.254 1050.625,509.688 C1057.299,513.236 1060.995,517.025 1064.914,522.878" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="13.102" x="992.5" y="501.632">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0098" data-entity-2="ent0102" data-link-type="dependency" id="lnk107">
+      <polygon fill="#181818" points="1106.849,531.492,1108.469,525.554,1106.376,528.404,1103.526,526.311,1106.849,531.492" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M989.549,482.996 C1004.124,491.793 1022.232,502.153 1030.625,504.688 C1044.626,508.915 1084.492,500.989 1096.25,509.688 C1103.144,514.788 1105.342,521.654 1106.376,528.404" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="25.797" x="1033.125" y="501.632">publish</text>
+    </g>
+    <g class="link" data-entity-1="ent0103" data-entity-2="ent0099" data-link-type="dependency" id="lnk108">
+      <polygon fill="#181818" points="1069.855,525.456,1070.634,519.35,1068.957,522.462,1065.845,520.786,1069.855,525.456" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1057.102,482.943 C1060.777,495.195 1065.308,510.298 1068.957,522.462" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="24.832" x="1065" y="501.632">update</text>
+    </g>
+    <g class="link" data-entity-1="ent0114" data-entity-2="ent0113" data-link-type="association" id="lnk116">
+      <path d="M1374.049,652.935 C1383.447,643.3 1397.368,631.29 1412.5,625.938 C1423.761,621.954 1455.278,621.218 1466.25,625.938 C1478.753,631.316 1481.726,649.006 1482.376,659.287" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0114" data-entity-2="ent0115" data-link-type="dependency" id="lnk117">
+      <polygon fill="#181818" points="1412.472,666.875,1406.847,664.375,1409.347,666.875,1406.847,669.375,1412.472,666.875" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1401.533,666.875 C1405.179,666.875 1405.701,666.875 1409.347,666.875" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0120" data-entity-2="ent0119" data-link-type="association" id="lnk123">
+      <path d="M712.466,525.297 C733.895,507.336 774.074,480.26 804.375,498.75 C815.583,505.589 819.062,521.755 820.141,531.409" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0120" data-entity-2="ent0122" data-link-type="dependency" id="lnk124">
+      <polygon fill="#181818" points="794.247,539.653,788.386,537.771,791.14,539.988,788.922,542.742,794.247,539.653" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M747.012,541.277 C757.429,541.443 768.349,541.395 778.542,540.938 C783.911,540.696 786.928,540.442 791.14,539.988" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0120" data-entity-2="ent0122" data-link-type="dependency" id="lnk125">
+      <polygon fill="#181818" points="797.632,531.558,798.667,525.491,796.861,528.53,793.822,526.724,797.632,531.558" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M718.224,525.195 C728.146,519.37 740.467,513.268 752.5,510.313 C760.323,508.391 782.14,505.708 788.75,510.313 C792.33,512.806 794.913,520.876 796.861,528.53" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0120" data-entity-2="ent0122" data-link-type="dependency" id="lnk126">
+      <polygon fill="#181818" points="794.277,539.063,788.652,536.563,791.152,539.063,788.652,541.563,794.277,539.063" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M746.945,539.063 C766.007,539.063 782.223,539.063 791.152,539.063" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="23.512" x="759.158" y="517.882">invoke</text>
+      <text fill="#000" font-size="8.125" textLength="28.031" x="756.898" y="526.007">multiple</text>
+      <text fill="#000" font-size="8.125" textLength="34.328" x="753.75" y="534.132">instances</text>
+    </g>
+    <g class="link" data-entity-1="ent0122" data-entity-2="ent0121" data-link-type="association" id="lnk127">
+      <path d="M797.654,546.678 C795.223,556.557 790.734,574.791 787.654,587.304" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0129" data-link-type="association" id="lnk147">
+      <path d="M818.285,753.226 C808.948,739.523 792.632,719.477 772.5,710.938 C749.996,701.392 737.037,696.246 717.5,710.938 C702.308,722.362 700.64,747.11 700.844,759.621" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0131" data-link-type="dependency" id="lnk148">
+      <polygon fill="#181818" points="758.619,832.161,764.427,830.121,760.893,830.017,760.997,826.483,758.619,832.161" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M812.8,781.082 C797.621,795.392 775.893,815.876 760.893,830.017" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0132" data-link-type="dependency" id="lnk149">
+      <polygon fill="#181818" points="830.522,832.161,832.7,826.403,830.345,829.041,827.708,826.686,830.522,832.161" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M827.627,781.082 C828.438,795.392 829.544,814.899 830.345,829.041" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0133" data-link-type="dependency" id="lnk150">
+      <polygon fill="#181818" points="894.61,832.161,892.254,826.474,892.344,830.008,888.81,830.099,894.61,832.161" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M840.842,781.082 C855.906,795.392 877.459,815.867 892.344,830.008" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0134" data-entity-2="ent0130" data-link-type="dependency" id="lnk152">
+      <polygon fill="#181818" points="826.875,680.451,824.375,686.076,826.875,683.576,829.375,686.076,826.875,680.451" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M826.875,683.576 C826.875,702.456 826.875,734.233 826.875,753.292" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0135" data-entity-2="ent0130" data-link-type="dependency" id="lnk154">
+      <polygon fill="#181818" points="763.31,680.451,764.639,686.461,765.166,682.965,768.662,683.492,763.31,680.451" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M765.166,682.965 C779.103,701.845 803.011,734.233 817.079,753.292" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0136" data-entity-2="ent0130" data-link-type="dependency" id="lnk156">
+      <polygon fill="#181818" points="707.351,680.451,710.453,685.767,709.886,682.277,713.376,681.71,707.351,680.451" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M709.886,682.277 C736.092,701.158 782.002,734.233 808.456,753.292" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0137" data-link-type="dependency" id="lnk157">
+      <polygon fill="#181818" points="954.469,832.13,950.571,827.366,951.678,830.723,948.32,831.831,954.469,832.13" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M853.024,780.994 C881.383,795.289 923.563,816.551 951.678,830.723" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0138" data-link-type="dependency" id="lnk158">
+      <polygon fill="#181818" points="1021.231,833.755,1016.708,829.58,1018.272,832.751,1015.101,834.315,1021.231,833.755" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M865.725,780.994 C909.508,795.849 976.983,818.742 1018.272,832.751" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0140" data-entity-2="ent0130" data-link-type="dependency" id="lnk160">
+      <polygon fill="#181818" points="996.038,680.349,989.891,680.676,993.254,681.768,992.162,685.131,996.038,680.349" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M993.254,681.768 C956.172,700.667 890.068,734.356 852.661,753.421" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0141" data-link-type="dependency" id="lnk161">
+      <polygon fill="#181818" points="495.752,832.108,501.848,832.961,498.756,831.247,500.47,828.155,495.752,832.108" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M810.791,780.955 C801.759,787.547 789.952,794.925 778.125,798.75 C738.541,811.552 632.356,803.59 591.25,810 C558.758,815.067 525.766,823.506 498.756,831.247" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0139" data-link-type="dependency" id="lnk162">
+      <polygon fill="#181818" points="1098.963,834.339,1094.906,829.709,1096.126,833.027,1092.808,834.247,1098.963,834.339" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M870.04,774.802 C923.526,784.228 1016.92,803.21 1093.125,831.875 C1095.052,832.6 1094.183,832.129 1096.126,833.027" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0142" data-entity-2="ent0130" data-link-type="dependency" id="lnk164">
+      <polygon fill="#181818" points="905.652,680.451,900.011,682.914,903.543,682.756,903.7,686.288,905.652,680.451" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M903.543,682.756 C886.271,701.637 856.451,734.233 839.015,753.292" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0144" data-link-type="dependency" id="lnk165">
+      <polygon fill="#181818" points="548.905,834.105,555.06,834.047,551.748,832.809,552.986,829.497,548.905,834.105" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M810.281,781.064 C801.288,787.516 789.675,794.731 778.125,798.75 C732.755,814.538 718.159,803.052 670.625,810 C618.604,817.603 603.939,814.344 554.375,831.875 C552.563,832.516 553.565,831.981 551.748,832.809" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0145" data-link-type="dependency" id="lnk166">
+      <polygon fill="#181818" points="622.348,833.636,628.466,834.312,625.326,832.688,626.95,829.548,622.348,833.636" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M809.424,781.041 C800.482,787.246 789.171,794.247 778.125,798.75 C755.776,807.861 748.577,804.842 725,810 C681.88,819.434 670.521,819.591 628.125,831.875 C626.232,832.423 627.273,832.068 625.326,832.688" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0146" data-link-type="dependency" id="lnk167">
+      <polygon fill="#181818" points="693.778,833.568,699.925,833.879,696.694,832.445,698.128,829.214,693.778,833.568" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M807.898,780.986 C799.067,786.819 788.288,793.525 778.125,798.75 C762.934,806.56 725.189,821.468 696.694,832.445" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0175" data-entity-2="ent0176" data-link-type="association" id="lnk178">
+      <path d="M1530,925.777 C1530,934.257 1530,948.694 1530,959.28" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0183" data-entity-2="ent0185" data-link-type="association" id="lnk187">
+      <path d="M893.454,238.682 C899.088,224.572 910.017,203.447 927.5,194.063 C950.262,181.845 1022.244,179.75 1043.75,194.063 C1060.319,205.089 1061.28,231.686 1060.648,244.853" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0183" data-entity-2="ent0186" data-link-type="association" id="lnk188">
+      <path d="M916.265,252.5 C919.985,252.5 923.706,252.5 927.426,252.5" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0184" data-entity-2="ent0181" data-link-type="association" id="lnk191">
+      <path d="M987.205,238.508 C977.067,224.253 959.176,203.007 937.5,194.063 C905.403,180.818 888.282,174.826 859.375,194.063 C842.936,205.002 842.935,231.641 844.06,244.835" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0189" data-entity-2="ent0180" data-link-type="association" id="lnk192">
+      <path d="M1148.799,252.5 C1152.512,252.5 1156.224,252.5 1159.937,252.5" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0184" data-entity-2="ent0190" data-link-type="dependency" id="lnk193">
+      <polygon fill="#181818" points="1044.122,313.352,1042.579,307.393,1042.178,310.905,1038.665,310.504,1044.122,313.352" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1006.776,266.367 C1017.376,279.702 1031.677,297.694 1042.178,310.905" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0189" data-entity-2="ent0190" data-link-type="dependency" id="lnk194">
+      <polygon fill="#181818" points="1064.628,313.352,1070.085,310.504,1066.572,310.905,1066.171,307.393,1064.628,313.352" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1101.974,266.367 C1091.374,279.702 1077.073,297.694 1066.572,310.905" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0010" data-link-type="dependency" id="lnk195">
+      <polygon fill="#0A0" points="430.473,160.922,428.034,155.271,428.176,158.803,424.644,158.946,430.473,160.922" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M386.162,120.052 C400.09,132.898 418.277,149.673 428.176,158.803" fill="none" style="stroke:#0A0;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#0A0" font-size="8.125" textLength="13.102" x="409.375" y="138.819">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0010" data-link-type="dependency" id="lnk196">
+      <polygon fill="#0A0" points="442.027,160.922,447.856,158.946,444.324,158.803,444.466,155.271,442.027,160.922" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M486.338,120.052 C472.41,132.898 454.223,149.673 444.324,158.803" fill="none" style="stroke:#0A0;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#0A0" font-size="8.125" textLength="13.102" x="473.75" y="138.819">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" id="lnk197">
+      <polygon fill="#A00" points="933.725,166.875,928.1,164.375,930.6,166.875,928.1,169.375,933.725,166.875" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M907.916,166.875 C918.117,166.875 924.73,166.875 930.6,166.875" fill="none" style="stroke:#A00;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#A00" font-size="8.125" textLength="13.102" x="914.531" y="161.944">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0185" data-link-type="dependency" id="lnk198">
+      <polygon fill="#A00" points="1060.44,244.943,1063.063,239.375,1060.509,241.819,1058.064,239.265,1060.44,244.943" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M907.813,176.192 C961.061,187.862 1049.054,207.185 1049.375,207.5 C1059.491,217.437 1060.723,232.049 1060.509,241.819" fill="none" style="stroke:#A00;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#A00" font-size="8.125" textLength="13.102" x="1028.125" y="199.444">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0020" data-link-type="dependency" id="lnk199">
+      <polygon fill="#0A0" points="1520.648,244.853,1523.415,239.354,1520.798,241.731,1518.421,239.114,1520.648,244.853" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M480.172,238.726 C528.774,224.264 609.701,202.477 681.25,194.063 C726.632,188.725 1465.709,168.747 1503.75,194.063 C1520.319,205.089 1521.43,228.565 1520.798,241.731" fill="none" style="stroke:#0A0;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0046" data-link-type="dependency" id="lnk200">
+      <polygon fill="#0A0" points="37.362,759.618,40.689,754.439,37.838,756.529,35.747,753.678,37.362,759.618" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M387.353,253.991 C299.232,256.353 118.005,265.12 65,297.5 C51.851,305.533 45.625,310.841 45.625,326.25 C45.625,326.25 45.625,326.25 45.625,667.5 C45.625,702.223 40.321,740.401 37.838,756.529" fill="none" style="stroke:#0A0;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0024" data-link-type="dependency" id="lnk201">
+      <polygon fill="#0A0" points="288.856,319.131,292.625,314.264,289.601,316.096,287.769,313.072,288.856,319.131" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M387.441,258.918 C358.96,264.558 324.023,275.663 300,297.5 C293.717,303.211 291.195,309.603 289.601,316.096" fill="none" style="stroke:#0A0;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0037" data-link-type="dependency" id="lnk202">
+      <polygon fill="#0A0" points="1403.052,244.859,1405.75,239.327,1403.163,241.736,1400.753,239.149,1403.052,244.859" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M480.172,238.726 C528.774,224.264 609.701,202.477 681.25,194.063 C720.114,189.492 1353.047,172.383 1385.625,194.063 C1402.24,205.12 1403.631,228.579 1403.163,241.736" fill="none" style="stroke:#0A0;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0065" data-link-type="dependency" id="lnk203">
+      <polygon fill="#0A0" points="375.711,320.582,381.329,318.066,377.799,318.257,377.608,314.726,375.711,320.582" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M424.366,266.367 C409.887,282.501 388.164,306.706 377.799,318.257" fill="none" style="stroke:#0A0;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0072" data-link-type="dependency" id="lnk204">
+      <polygon fill="#0A0" points="736.885,319.172,738.544,313.244,736.432,316.08,733.596,313.969,736.885,319.172" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M485.138,254.705 C558.088,258.018 690.733,268.024 726.875,297.5 C733.39,302.814 735.458,309.428 736.432,316.08" fill="none" style="stroke:#0A0;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0129" data-link-type="dependency" id="lnk205">
+      <polygon fill="#0A0" points="700.801,759.567,702.619,753.686,700.432,756.464,697.654,754.277,700.801,759.567" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M436.25,266.335 C436.25,280.98 436.25,305.303 436.25,326.25 C436.25,326.25 436.25,326.25 436.25,667.5 C436.25,677.364 440.004,680.652 448.125,686.25 C450.955,688.201 688.042,733.357 690.625,735.625 C697.539,741.694 699.588,749.368 700.432,756.464" fill="none" style="stroke:#0A0;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0084" data-link-type="dependency" id="lnk206">
+      <polygon fill="#A00" points="1653.236,659.107,1655.058,653.227,1652.869,656.004,1650.093,653.814,1653.236,659.107" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M813.933,268.181 C820.189,269.33 826.451,270.379 832.5,271.25 C870.552,276.729 1148.935,271.77 1177.5,297.5 C1221.242,336.901 1166.363,380.392 1201.25,427.813 C1329.44,602.058 1500.527,469.21 1643.125,631.875 C1649.878,639.578 1651.972,648.416 1652.869,656.004" fill="none" style="stroke:#A00;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0097" data-link-type="dependency" id="lnk207">
+      <polygon fill="#A00" points="1106.437,461.371,1107.757,455.358,1105.81,458.309,1102.859,456.362,1106.437,461.371" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M759.649,270.793 C774.605,291.333 801.823,325.003 832.5,345.313 C936.313,414.039 1006.932,352.954 1096.25,439.688 C1102.249,445.512 1104.486,451.853 1105.81,458.309" fill="none" style="stroke:#A00;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0129" data-link-type="dependency" id="lnk208">
+      <polygon fill="#A00" points="701.621,759.475,704.714,754.153,701.958,756.368,699.743,753.613,701.621,759.475" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M681.1,262.252 C644.689,271.413 606.875,289.72 606.875,326.25 C606.875,326.25 606.875,326.25 606.875,601.875 C606.875,618.901 624.172,615.621 640.625,620 C663.853,626.183 1056.363,614.647 1073.125,631.875 C1089.977,649.196 1089.014,668.041 1073.125,686.25 C966.58,808.348 837.069,632.737 711.875,735.625 C704.767,741.466 702.738,749.197 701.958,756.368" fill="none" style="stroke:#A00;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0181" data-link-type="dependency" id="lnk209">
+      <polygon fill="#A00" points="839.913,252.5,834.288,250,836.788,252.5,834.288,255,839.913,252.5" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M813.882,252.5 C824.807,252.5 831.241,252.5 836.788,252.5" fill="none" style="stroke:#A00;stroke-width:0.625;"/>
+      <text fill="#A00" font-size="8.125" textLength="13.102" x="820.625" y="247.569">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0180" data-link-type="dependency" id="lnk210">
+      <polygon fill="#A00" points="1165.648,244.853,1168.415,239.354,1165.798,241.731,1163.421,239.114,1165.648,244.853" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M768.088,234.252 C785.41,220.197 811.546,201.889 838.125,194.063 C871.233,184.313 1120.017,174.941 1148.75,194.063 C1165.319,205.089 1166.43,228.565 1165.798,241.731" fill="none" style="stroke:#A00;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0059" data-link-type="dependency" id="lnk211">
+      <polygon fill="#A00" points="343.719,659.172,346.458,653.66,343.853,656.05,341.462,653.445,343.719,659.172" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M681.115,260.757 C583.452,273.86 412.5,304.774 412.5,360.625 C412.5,360.625 412.5,360.625 412.5,601.875 C412.5,631.938 370.584,608.343 351.875,631.875 C345.616,639.747 344.176,648.519 343.853,656.05" fill="none" style="stroke:#A00;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0072" data-link-type="dependency" id="lnk212">
+      <polygon fill="#A00" points="738.462,319.218,741.701,313.983,738.885,316.122,736.747,313.306,738.462,319.218" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M745.105,270.64 C742.978,286.189 740.403,305.018 738.885,316.122" fill="none" style="stroke:#A00;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0038" data-entity-2="ent0119" data-link-type="dependency" id="lnk213">
+      <polygon fill="#181818" points="817.364,531.359,817.551,525.206,816.182,528.466,812.922,527.097,817.364,531.359" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1317.835,266.407 C1298.695,286.498 1259.512,324.479 1218.75,345.313 C1069.551,421.569 992.879,346.315 853.75,439.688 C828.701,456.498 822.638,465.435 813.125,494.063 C808.887,506.816 812.548,519.57 816.182,528.466" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+    </g>
+    <g class="link" data-entity-1="ent0098" data-entity-2="ent0119" data-link-type="dependency" id="lnk214">
+      <polygon fill="#181818" points="818.014,531.501,818.656,525.379,817.05,528.529,813.9,526.923,818.014,531.501" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M932.146,470.454 C893.003,472.138 834.104,477.447 820,494.063 C811.125,504.518 813.929,518.915 817.05,528.529" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="78.609" x="821.25" y="501.632">benchmark calculation</text>
+    </g>
+    <g class="link" data-entity-1="ent0186" data-entity-2="ent0184" data-link-type="dependency" id="lnk215">
+      <polygon fill="#181818" points="937.729,252.5,943.354,255,940.854,252.5,943.354,250,937.729,252.5" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M940.854,252.5 C944.512,252.5 945.045,252.5 948.702,252.5" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0039" data-entity-2="ent0100" data-link-type="dependency" id="lnk216">
+      <polygon fill="#181818" points="883.024,594.754,881.018,588.935,880.894,592.468,877.36,592.344,883.024,594.754" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1294.171,414.133 C1278.57,419.376 1259.853,424.856 1242.5,427.813 C1207.836,433.719 954.942,419.359 926.25,439.688 C900.912,457.639 925.29,485.822 900.625,504.688 C892.633,510.8 862.335,502.19 855.625,509.688 C832.429,535.604 866.272,576.78 880.894,592.468" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="40.219" x="911.25" y="501.632">Subscribes</text>
+    </g>
+    <g class="link" data-entity-1="ent0100" data-entity-2="ent0061" data-link-type="dependency" id="lnk217">
+      <polygon fill="#000" points="883.044,604.344,876.89,604.209,880.161,605.55,878.82,608.821,883.044,604.344" style="stroke:#000;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M880.161,605.55 C870.237,609.703 851.941,616.747 833.125,620 C827.195,621.025 405.419,629.257 400,631.875 C371.594,645.598 381.441,670.044 354.375,686.25 C333.435,698.788 316.372,678.853 300.625,697.5 C283.76,717.47 290.202,799.277 293.514,831.687" fill="none" style="stroke:#000;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="97.145" x="301.875" y="713.194">Plan DB Stream subscription</text>
+    </g>
+    <g class="link" data-entity-1="ent0060" data-entity-2="ent0130" data-link-type="dependency" id="lnk218">
+      <polygon fill="#181818" points="810.271,753.34,807.154,748.032,807.73,751.52,804.242,752.097,810.271,753.34" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M312.788,680.657 C319.471,682.787 326.458,684.775 333.125,686.25 C381.697,697 731.192,719.129 778.125,735.625 C789.662,739.68 798.734,745.077 807.73,751.52" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="13.102" x="711.25" y="713.194">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0061" data-link-type="dependency" id="lnk220">
+      <polygon fill="#181818" points="810.815,781.03,804.8,782.338,808.294,782.877,807.755,786.371,810.815,781.03" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M808.294,782.877 C799.269,789.491 789.981,795.019 778.125,798.75 C724.284,815.694 580.549,804.485 524.375,810 C463.939,815.933 395.141,827.016 348.787,835.125" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="13.102" x="525.625" y="817.569">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0060" data-entity-2="ent0050" data-link-type="dependency" id="lnk221">
+      <polygon fill="#0A0" points="354.148,910.617,357.789,905.654,354.814,907.564,352.903,904.589,354.148,910.617" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M278.003,680.762 C278.806,692.543 280.883,710.063 286.25,724.375 C306.11,777.338 336.87,778.088 354.375,831.875 C363.486,859.87 358.047,892.728 354.814,907.564" fill="none" style="stroke:#0A0;stroke-width:0.625;"/>
+      <text fill="#0A0" font-size="8.125" textLength="17.215" x="351.875" y="817.569">login</text>
+    </g>
+    <g class="link" data-entity-1="ent0061" data-entity-2="ent0050" data-link-type="dependency" id="lnk222">
+      <polygon fill="#0A0" points="349.807,910.586,349.97,904.433,348.614,907.698,345.349,906.342,349.807,910.586" style="stroke:#0A0;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M315.002,859.496 C319.218,862.826 323.427,866.607 326.875,870.625 C337.625,883.154 344.621,898.034 348.614,907.698" fill="none" style="stroke:#0A0;stroke-width:0.625;"/>
+      <text fill="#0A0" font-size="8.125" textLength="17.215" x="336.25" y="878.194">login</text>
+    </g>
+    <g class="link" data-entity-1="ent0060" data-entity-2="ent0054" data-link-type="dependency" id="lnk223">
+      <polygon fill="#A00" points="239.702,910.475,239.61,904.32,238.39,907.638,235.072,906.418,239.702,910.475" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M270.2,680.728 C257.11,705.295 230.126,760.018 220.625,810 C213.396,848.026 230.468,890.505 238.39,907.638" fill="none" style="stroke:#A00;stroke-width:0.625;"/>
+      <text fill="#A00" font-size="8.125" textLength="54.285" x="221.875" y="817.569">published plans</text>
+    </g>
+    <g class="link" data-entity-1="ent0061" data-entity-2="ent0054" data-link-type="dependency" id="lnk224">
+      <polygon fill="#A00" points="241.086,910.494,242.171,904.434,240.34,907.459,237.316,905.628,241.086,910.494" style="stroke:#A00;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M254.993,859.463 C250.562,862.472 246.621,866.146 243.75,870.625 C235.931,882.821 237.937,897.684 240.34,907.459" fill="none" style="stroke:#A00;stroke-width:0.625;"/>
+      <text fill="#A00" font-size="8.125" textLength="80.945" x="245" y="878.194">published plan changes</text>
+    </g>
+    <g class="link" data-entity-1="ent0085" data-entity-2="ent0138" data-link-type="dependency" id="lnk225">
+      <polygon fill="#181818" points="1087.552,833.727,1093.679,834.317,1090.516,832.737,1092.095,829.574,1087.552,833.727" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1568.744,678.388 C1486.464,704.486 1271.769,772.836 1093.125,831.875 C1091.304,832.477 1092.4,832.108 1090.516,832.737" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0175" data-link-type="dependency" id="lnk226">
+      <polygon fill="#181818" points="1529.579,910.582,1531.614,904.773,1529.325,907.468,1526.631,905.179,1529.579,910.582" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1515.308,859.627 C1517.555,863.062 1519.717,866.856 1521.25,870.625 C1526.739,884.122 1528.563,898.102 1529.325,907.468" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0085" data-entity-2="ent0004" data-link-type="dependency" id="lnk227">
+      <polygon fill="#AAA" points="1526.869,831.873,1532.814,830.279,1529.298,829.908,1529.669,826.392,1526.869,831.873" style="stroke:#AAA;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1583.933,680.714 C1578.318,685.426 1572.648,691.156 1568.75,697.5 C1539.197,745.604 1568.813,773.647 1537.5,820.625 C1534.683,824.85 1533.31,826.662 1529.298,829.908" fill="none" style="stroke:#AAA;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0098" data-entity-2="ent0004" data-link-type="dependency" id="lnk228">
+      <polygon fill="#AAA" points="1464.364,844.555,1458.798,841.928,1461.24,844.484,1458.683,846.926,1464.364,844.555" style="stroke:#AAA;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M994.271,482.816 C999.184,484.808 1004.357,486.6 1009.375,487.813 C1031.826,493.237 1091.725,485.371 1113.125,494.063 C1137.898,504.125 1153.75,511.699 1153.75,538.438 C1153.75,538.438 1153.75,538.438 1153.75,767.813 C1153.75,830.795 1368.78,842.374 1461.24,844.484" fill="none" style="stroke:#AAA;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0130" data-entity-2="ent0004" data-link-type="dependency" id="lnk229">
+      <polygon fill="#AAA" points="1464.121,843.523,1458.601,840.798,1460.998,843.397,1458.399,845.794,1464.121,843.523" style="stroke:#AAA;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M870.167,776.369 C931.204,788.119 1046.154,809.101 1145,820.625 C1260.266,834.063 1394.101,840.69 1460.998,843.397" fill="none" style="stroke:#AAA;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0184" data-entity-2="ent0004" data-link-type="dependency" id="lnk230">
+      <polygon fill="#AAA" points="1505.983,831.834,1508.863,826.394,1506.197,828.716,1503.875,826.051,1505.983,831.834" style="stroke:#AAA;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1031.379,266.299 C1037.323,268.184 1043.479,269.929 1049.375,271.25 C1113.815,285.691 1147.144,252.659 1195.625,297.5 C1207.029,308.047 1240.261,413.48 1246.25,427.813 C1257.516,454.773 1254.923,464.955 1273.125,487.813 C1303.702,526.209 1320.356,527.229 1361.25,554.375 C1389.87,573.373 1477.155,602.523 1495,631.875 C1515.494,665.583 1509.022,787.623 1506.197,828.716" fill="none" style="stroke:#AAA;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0189" data-entity-2="ent0004" data-link-type="dependency" id="lnk231">
+      <polygon fill="#AAA" points="1510.665,831.815,1514.91,827.358,1511.716,828.872,1510.201,825.677,1510.665,831.815" style="stroke:#AAA;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1140.306,266.28 C1144.935,268.144 1149.739,269.887 1154.375,271.25 C1182.195,279.432 1196.756,262.976 1218.75,281.875 C1270.485,326.329 1227.849,371.439 1266.25,427.813 C1346.512,545.641 1452.941,502.926 1513.75,631.875 C1549.531,707.75 1528.135,737.979 1513.75,820.625 C1513.102,824.346 1512.988,825.306 1511.716,828.872" fill="none" style="stroke:#AAA;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0014" data-link-type="dependency" id="lnk232">
+      <polygon fill="#181818" points="1477.864,910.468,1478.86,904.393,1477.074,907.444,1474.023,905.658,1477.864,910.468" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1486.154,859.499 C1482.892,862.736 1479.962,866.478 1478.125,870.625 C1472.318,883.731 1474.592,897.948 1477.074,907.444" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="38.391" x="1479.375" y="878.194">Audit event</text>
+    </g>
+    <g class="link" data-entity-1="ent0103" data-entity-2="ent0113" data-link-type="dependency" id="lnk233">
+      <polygon fill="#181818" points="1482.565,659.099,1484.814,653.369,1482.427,655.977,1479.819,653.59,1482.565,659.099" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1081.408,482.896 C1086.468,484.827 1091.76,486.577 1096.875,487.813 C1113.536,491.836 1159.912,483.949 1173.75,494.063 C1205.631,517.363 1186.359,542.898 1207.5,576.25 C1223.816,601.99 1226.007,614.261 1253.75,626.875 C1264.784,631.892 1462.203,624.569 1471.875,631.875 C1480.248,638.201 1482.069,647.906 1482.427,655.977" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="38.391" x="1208.75" y="573.194">store PDFs</text>
+    </g>
+    <g class="link" data-entity-1="ent0098" data-entity-2="ent0130" data-link-type="dependency" id="lnk234">
+      <polygon fill="#181818" points="870.043,765.758,875.747,768.072,873.167,765.656,875.583,763.075,870.043,765.758" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M994.509,482.847 C999.354,484.809 1004.441,486.583 1009.375,487.813 C1045.593,496.839 1057.654,482.444 1093.125,494.063 C1105.577,498.141 1111.773,498.227 1118.125,509.688 C1132.518,535.656 1131.404,686.176 1093.75,724.375 C1063.29,755.276 940.607,763.445 873.167,765.656" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+      <text fill="#000" font-size="8.125" textLength="13.102" x="1128.125" y="603.507">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0103" data-entity-2="ent0093" data-link-type="dependency" id="lnk235">
+      <polygon fill="#181818" points="1176.21,659.206,1178.665,653.562,1176.185,656.081,1173.666,653.601,1176.21,659.206" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1081.423,482.837 C1086.481,484.774 1091.769,486.542 1096.875,487.813 C1111.091,491.35 1152.221,483.625 1162.5,494.063 C1174.258,506.001 1175.941,625.212 1176.185,656.081" fill="none" style="stroke:#181818;stroke-width:0.625;"/>
+      <text fill="#000" font-size="8.125" textLength="13.102" x="1175.625" y="573.194">use</text>
+    </g>
+    <g class="link" data-entity-1="ent0047" data-entity-2="ent0078" data-link-type="dependency" id="lnk236">
+      <polygon fill="#181818" points="169.106,910.468,169.806,904.352,168.17,907.486,165.036,905.85,169.106,910.468" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M111.835,781.096 C122.855,802.779 144.904,847.275 160.625,886.25 C163.926,894.434 166.164,901.099 168.17,907.486" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0060" data-entity-2="ent0078" data-link-type="dependency" id="lnk237">
+      <polygon fill="#181818" points="173.812,910.604,178.092,906.18,174.885,907.669,173.396,904.463,173.812,910.604" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M262.688,680.817 C249.553,693.537 230.985,713.936 221.25,735.625 C193.882,796.598 202.992,817.246 183.75,881.25 C180.645,891.578 177.537,900.416 174.885,907.669" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+    <g class="link" data-entity-1="ent0103" data-entity-2="ent0078" data-link-type="dependency" id="lnk238">
+      <polygon fill="#181818" points="171.385,910.52,174.014,904.954,171.457,907.396,169.016,904.839,171.385,910.52" style="stroke:#181818;stroke-width:0.625;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1023.52,482.862 C1018.842,484.679 1014.016,486.402 1009.375,487.813 C995.823,491.932 991.596,489.687 978.125,494.063 C967.367,497.556 966.03,502.183 955,504.688 C937.966,508.556 655.622,500.732 640.625,509.688 C621.086,521.355 634.053,541.021 615.625,554.375 C470.54,659.513 347.239,505.724 220,631.875 C178.918,672.606 172.377,867.578 171.457,907.396" fill="none" style="stroke:#181818;stroke-width:0.625;stroke-dasharray:4.375,4.375;"/>
+    </g>
+  </g>
+</svg>

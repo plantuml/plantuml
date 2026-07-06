@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="275px" preserveAspectRatio="none" style="width:175px;height:275px;background:#FFFFFF;" version="1.1" viewBox="0 0 175 275" width="175px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster outputs-->
+    <g class="cluster" data-qualified-name="outputs" data-source-line="1" id="ent0001">
+      <path d="M48.5,174 L95.35,174 A3.75,3.75 0 0 1 97.85,176.5 L104.85,194 L127.5,194 A2.5,2.5 0 0 1 130,196.5 L130,248.5 A2.5,2.5 0 0 1 127.5,251 L48.5,251 A2.5,2.5 0 0 1 46,248.5 L46,176.5 A2.5,2.5 0 0 1 48.5,174" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="46" x2="104.85" y1="194" y2="194"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.85" x="50" y="186.889">outputs</text>
+    </g>
+    <!--cluster processors-->
+    <g class="cluster" data-qualified-name="processors" data-source-line="6" id="ent0005">
+      <path d="M44.5,89 L113.925,89 A3.75,3.75 0 0 1 116.425,91.5 L123.425,109 L131.5,109 A2.5,2.5 0 0 1 134,111.5 L134,163.5 A2.5,2.5 0 0 1 131.5,166 L44.5,166 A2.5,2.5 0 0 1 42,163.5 L42,91.5 A2.5,2.5 0 0 1 44.5,89" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="42" x2="123.425" y1="109" y2="109"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="68.425" x="46" y="101.889">processors</text>
+    </g>
+    <!--cluster inputs-->
+    <g class="cluster" data-qualified-name="inputs" data-source-line="12" id="ent0009">
+      <path d="M16.5,4 L54.863,4 A3.75,3.75 0 0 1 57.363,6.5 L64.363,24 L164.5,24 A2.5,2.5 0 0 1 167,26.5 L167,78.5 A2.5,2.5 0 0 1 164.5,81 L16.5,81 A2.5,2.5 0 0 1 14,78.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="64.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="18" y="16.889">inputs</text>
+    </g>
+    <!--entity out2-->
+    <g class="entity" data-qualified-name="outputs.out2" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.213" x="54.5" y="199"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="101.713" y="204"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="99.713" y="206"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="99.713" y="210"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="69.5" y="229.889">out2</text>
+    </g>
+    <!--entity proc1-->
+    <g class="entity" data-qualified-name="processors.proc1" data-source-line="7" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="50.5" y="114"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="105.5" y="119"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="103.5" y="121"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="103.5" y="125"/>
+      <text fill="#000" font-size="14" textLength="35" x="65.5" y="144.889">proc1</text>
+    </g>
+    <!--entity in1-->
+    <g class="entity" data-qualified-name="inputs.in1" data-source-line="13" id="ent0010">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.725" x="99.5" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="138.225" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="136.225" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="136.225" y="40"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="114.5" y="59.889">in1</text>
+    </g>
+    <!--entity in2-->
+    <g class="entity" data-qualified-name="inputs.in2" data-source-line="14" id="ent0011">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.725" x="22.5" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="61.225" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="59.225" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="59.225" y="40"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="37.5" y="59.889">in2</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0006" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="98.381,113.985,105.953,107.688,100.595,109.502,98.78,104.144,98.381,113.985" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M118.441,73.375 C112.273,85.863 106.733,97.076 100.595,109.502" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0006" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="78.885,113.985,78.974,104.137,76.896,109.398,71.634,107.32,78.885,113.985" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.271,73.375 C66.687,85.863 71.506,96.972 76.896,109.398" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0003" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="88,198.985,92,189.985,88,193.985,84,189.985,88,198.985" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M88,158.375 C88,170.863 88,181.559 88,193.985" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

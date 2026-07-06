@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="199px" preserveAspectRatio="none" style="width:480px;height:199px;background:#FFFFFF;" version="1.1" viewBox="0 0 480 199" width="480px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.275" x="225.113" y="20.889">toto</text>
+    </g>
+    <!--entity toto-->
+    <g class="entity" data-qualified-name="toto" data-source-line="4" id="ent0001">
+      <a href="http://toto" target="_top" title="http://toto" xlink:actuate="onRequest" xlink:href="http://toto" xlink:show="new" xlink:title="http://toto" xlink:type="simple">
+        <ellipse cx="170" cy="55.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M170,63.5 L170,90.5 M157,71.5 L183,71.5 M170,90.5 L157,105.5 M170,90.5 L183,105.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="14" textLength="23.275" x="158.363" y="117.889">toto</text>
+      </a>
+    </g>
+    <!--entity UseCase-->
+    <g class="entity" data-qualified-name="UseCase" data-source-line="5" id="ent0002">
+      <a href="http://UseCase" target="_top" title="http://UseCase" xlink:actuate="onRequest" xlink:href="http://UseCase" xlink:show="new" xlink:title="http://UseCase" xlink:type="simple">
+        <ellipse cx="169.774" cy="169.899" fill="#F1F1F1" rx="43.774" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="14" textLength="57.663" x="140.942" y="173.399">UseCase</text>
+      </a>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="10" id="ent0005">
+      <a href="http://note" target="_top" title="http://note" xlink:actuate="onRequest" xlink:href="http://note" xlink:show="new" xlink:title="http://note" xlink:type="simple">
+        <path d="M6,72 L6,95 A0,0 0 0 0 6,95 L137.581,95 A0,0 0 0 0 137.581,95 L137.581,90 L156.099,84 L137.581,82 L137.581,82 L127.581,72 L6,72 A0,0 0 0 0 6,72" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M127.581,72 L127.581,82 L137.581,82 L127.581,72" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="13" textLength="110.581" x="12" y="87.111">this is my a link to here</text>
+      </a>
+    </g>
+    <g class="entity" data-qualified-name="GMN7" data-source-line="14" id="ent0008">
+      <path d="M201.5,59.5 L201.5,80 L183.689,84 L201.5,88 L201.5,108.5 A0,0 0 0 0 201.5,108.5 L464.463,108.5 A0,0 0 0 0 464.463,108.5 L464.463,69.5 L454.463,59.5 L201.5,59.5 A0,0 0 0 0 201.5,59.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M454.463,59.5 L454.463,69.5 L464.463,69.5 L454.463,59.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="84.581" x="207.5" y="74.611">this is my a link to</text>
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="131.381" x="292.081" y="74.611">http://www.google.com</text>
+      </a>
+      <text fill="#000" font-size="13" textLength="26" x="423.463" y="74.611">here</text>
+      <text fill="#000" font-size="13" textLength="58.581" x="207.5" y="87.611">And here is</text>
+      <a href="http://www.yahoo.fr" target="_top" title="http://www.yahoo.fr" xlink:actuate="onRequest" xlink:href="http://www.yahoo.fr" xlink:show="new" xlink:title="http://www.yahoo.fr" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="35.425" x="266.081" y="87.611">yahoo</text>
+      </a>
+      <text fill="#000" font-size="13" x="301.506" y="87.611">.</text>
+      <text fill="#000" font-size="13" textLength="58.581" x="207.5" y="100.611">And here is</text>
+      <a href="http://www.yahoo.fr" target="_top" title="This is a toolip" xlink:actuate="onRequest" xlink:href="http://www.yahoo.fr" xlink:show="new" xlink:title="This is a toolip" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="35.425" x="266.081" y="100.611">yahoo</text>
+      </a>
+      <text fill="#000" font-size="13" x="301.506" y="100.611">.</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="170,156.875,174,147.875,170,151.875,166,147.875,170,156.875" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M170,121.111 C170,133.917 170,142.469 170,151.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

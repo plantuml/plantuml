@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="132px" preserveAspectRatio="none" style="width:195px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 195 132" width="195px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity component1-->
+    <g class="entity" data-qualified-name="component1" data-source-line="2" id="ent0001">
+      <rect fill="#ADFF2F" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="77" x="16" y="32.889">component1</text>
+    </g>
+    <!--entity interface-->
+    <g class="entity" data-qualified-name="interface" data-source-line="3" id="ent0002">
+      <ellipse cx="130.5" cy="26" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="53.637" x="103.681" y="53.889">interface</text>
+    </g>
+    <!--entity component2-->
+    <g class="entity" data-qualified-name="component2" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97" x="82" y="82"/>
+      <text fill="#000" font-size="14" textLength="77" x="92" y="102.889">component2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="121.111,29,112.111,25,116.111,29,112.111,33,121.111,29" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M103.188,29 C109.162,29 110.137,29 116.111,29" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="130.5,41.229,126.5,50.229,130.5,46.229,134.5,50.229,130.5,41.229" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M130.5,46.229 C130.5,57.319 130.5,69.392 130.5,81.92" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

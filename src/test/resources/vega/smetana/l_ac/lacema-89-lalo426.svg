@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="172px" preserveAspectRatio="none" style="width:339px;height:172px;background:#FFFFFF;" version="1.1" viewBox="0 0 339 172" width="339px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity App_Func1-->
+    <g class="entity" data-qualified-name="App_Func1" data-source-line="1" id="ent0001">
+      <rect fill="#C2F0FF" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.875" x="81.5" y="12"/>
+      <path d="M133.697,26.32 L124.734,30.289 A0.5,0.5 0 0 0 124.437,30.746 L124.437,38.783 A0.5,0.5 0 0 0 125.138,39.24 L133.933,35.361 L142.726,39.24 A0.5,0.5 0 0 0 143.429,38.783 L143.429,30.779 A0.5,0.5 0 0 0 143.13,30.322 L134.103,26.32 A0.5,0.5 0 0 0 133.697,26.32 M133.9,27.324 L142.429,31.103 L142.429,38.017 L134.134,34.357 A0.5,0.5 0 0 0 133.73,34.357 L125.437,38.017 L125.437,31.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="84.875" x="91.5" y="52.889">Do Something</text>
+    </g>
+    <!--entity SomeMotivation-->
+    <g class="entity" data-qualified-name="SomeMotivation" data-source-line="2" id="ent0002">
+      <rect fill="#CCF" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.363" x="6" y="112"/>
+      <text fill="#000" font-size="14" textLength="100.363" x="16" y="132.889">SomeMotivation</text>
+    </g>
+    <!--entity Some Function2-->
+    <g class="entity" data-qualified-name="Some Function2" data-source-line="6" id="ent0004">
+      <rect fill="#C2F0FF" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.088" x="205" y="12"/>
+      <path d="M263.803,26.32 L254.84,30.289 A0.5,0.5 0 0 0 254.543,30.746 L254.543,38.783 A0.5,0.5 0 0 0 255.244,39.24 L264.039,35.361 L272.832,39.24 A0.5,0.5 0 0 0 273.535,38.783 L273.535,30.779 A0.5,0.5 0 0 0 273.236,30.322 L264.209,26.32 A0.5,0.5 0 0 0 263.803,26.32 M264.006,27.324 L272.535,31.103 L272.535,38.017 L264.24,34.357 A0.5,0.5 0 0 0 263.836,34.357 L255.543,38.017 L255.543,31.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="98.088" x="215" y="52.889">Some Function2</text>
+    </g>
+    <!--entity App_Func4-->
+    <g class="entity" data-qualified-name="App_Func4" data-source-line="7" id="ent0005">
+      <rect fill="#C2F0FF" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.088" x="144" y="102"/>
+      <path d="M202.803,116.32 L193.84,120.289 A0.5,0.5 0 0 0 193.543,120.746 L193.543,128.783 A0.5,0.5 0 0 0 194.244,129.24 L203.039,125.361 L211.832,129.24 A0.5,0.5 0 0 0 212.535,128.783 L212.535,120.779 A0.5,0.5 0 0 0 212.236,120.322 L203.209,116.32 A0.5,0.5 0 0 0 202.803,116.32 M203.006,117.324 L211.535,121.103 L211.535,128.017 L203.24,124.357 A0.5,0.5 0 0 0 202.836,124.357 L194.543,128.017 L194.543,121.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="98.088" x="154" y="142.889">SomeFunction3</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="78.485,111.843,87.153,107.168,81.542,107.887,80.823,102.276,78.485,111.843" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M113.598,66.403 C102.174,81.186 91.357,95.186 81.542,107.887" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="182.55,101.919,180.145,92.368,179.465,97.984,173.849,97.305,182.55,101.919" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M154.702,66.403 C163.515,77.642 170.68,86.781 179.465,97.984" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="87px" preserveAspectRatio="none" style="width:111px;height:87px;background:#FFFFFF;" version="1.1" viewBox="0 0 111 87" width="111px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="84.788" x="10" y="20.889">hide members</text>
+    </g>
+    <g class="entity" data-qualified-name="A" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="18" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="18.894" y="47"/>
+      <text fill="#000" font-size="14" x="25.894" y="59.889">A</text>
+    </g>
+    <g class="entity" data-qualified-name="B" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="18" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="59.894" y="47"/>
+      <text fill="#000" font-size="14" x="66.894" y="59.889">B</text>
+    </g>
+  </g>
+</svg>

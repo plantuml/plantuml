@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="121px" preserveAspectRatio="none" style="width:300px;height:121px;background:#FFFFFF;" version="1.1" viewBox="0 0 300 121" width="300px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="101.025" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.275" x="15" y="22.889">fruit</text>
+    <text fill="#000" font-size="14" textLength="35.875" x="70.15" y="22.889">Apple</text>
+    <line style="stroke:#000;stroke-width:1;" x1="65.15" x2="65.15" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="111.025" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="15" y="40.889">size</text>
+    <text fill="#000" font-size="14" textLength="35.788" x="70.15" y="40.889">Large</text>
+    <line style="stroke:#000;stroke-width:1;" x1="65.15" x2="65.15" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="111.025" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="15" y="58.889">color</text>
+    <text fill="#000" font-size="14" textLength="25.725" x="70.15" y="58.889">Red</text>
+    <line style="stroke:#000;stroke-width:1;" x1="65.15" x2="65.15" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="111.025" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="15" y="76.889">options</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="70.15" y="76.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="65.15" x2="65.15" y1="64" y2="82"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="101.025" x="10" y="10"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="140.638" x="148" y="37"/>
+    <text fill="#000" font-size="14" textLength="87.325" x="153" y="49.889">New York Bulls</text>
+    <line style="stroke:#000;stroke-width:1;" x1="148" x2="288.638" y1="55" y2="55"/>
+    <text fill="#000" font-size="14" textLength="108.325" x="153" y="67.889">Los Angeles Kings</text>
+    <line style="stroke:#000;stroke-width:1;" x1="148" x2="288.638" y1="73" y2="73"/>
+    <text fill="#000" font-size="14" textLength="130.638" x="153" y="85.889">Golden State Warriros</text>
+    <line style="stroke:#000;stroke-width:1;" x1="148" x2="288.638" y1="91" y2="91"/>
+    <text fill="#000" font-size="14" textLength="87.938" x="153" y="103.889">Huston Rocket</text>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="140.638" x="148" y="37"/>
+    <path d="M99,73 L112,73 C121.293,73 131.045,73 140.713,73" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M140.713,76.09 L143.03,73 L140.713,69.91 L148.438,73 L140.713,76.09" fill="#000"/>
+    <ellipse cx="99" cy="73" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="76px" preserveAspectRatio="none" style="width:118px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 118 76" width="118px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="27" x="10" y="28"/>
+    <text fill="#000" font-size="14" font-weight="700" x="15" y="40.889">k</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="32" y="40.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="27" x2="27" y1="28" y2="46"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="27" x="10" y="28"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="32.575" x="74" y="10"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="79" y="22.889">v1a</text>
+    <line style="stroke:#000;stroke-width:1;" x1="74" x2="106.575" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" textLength="22.575" x="79" y="40.889">v2b</text>
+    <line style="stroke:#000;stroke-width:1;" x1="74" x2="106.575" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" textLength="21.787" x="79" y="58.889">v3c</text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="32.575" x="74" y="10"/>
+    <path d="M25,37 L38,37 C47.262,37 57.452,37 66.338,37" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M66.338,40.092 L68.658,37 L66.338,33.908 L74.069,37 L66.338,40.092" fill="#000"/>
+    <ellipse cx="25" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

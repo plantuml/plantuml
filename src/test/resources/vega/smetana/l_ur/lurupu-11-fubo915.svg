@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="150px" preserveAspectRatio="none" style="width:451px;height:150px;background:#FFFFFF;" version="1.1" viewBox="0 0 451 150" width="451px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Implement-->
+    <g class="entity" data-qualified-name="Implement" data-source-line="1" id="ent0001">
+      <ellipse cx="98.911" cy="112.982" fill="#F1F1F1" rx="92.911" ry="20.982" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="165.638" x="16.092" y="116.482">&#128513; &#128640; Implement the changes</text>
+    </g>
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="2" id="ent0002">
+      <ellipse cx="218.884" cy="33.899" fill="#F1F1F1" rx="51.384" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="68.425" x="184.671" y="37.399">this is ∞ long</text>
+    </g>
+    <!--entity bar-->
+    <g class="entity" data-qualified-name="bar" data-source-line="3" id="ent0003">
+      <ellipse cx="362.007" cy="34.101" fill="#F1F1F1" rx="73.507" ry="17.101" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="300.801" y="37.601">this is also ∞</text>
+      <text fill="#000" font-family="Segoe UI Emoji" font-size="14" font-weight="700" textLength="28.262" x="368.438" y="37.601">&#128640;☺</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.512" x="396.701" y="37.601">long</text>
+    </g>
+    <!--entity Company-->
+    <g class="entity" data-qualified-name="Company" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.938" x="49" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="128.938" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="126.938" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="126.938" y="23"/>
+      <text fill="#000" font-size="14" textLength="59.938" x="64" y="42.889">Company</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="99,91.782,103,82.782,99,86.782,95,82.782,99,91.782" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M99,56.041 C99,67.173 99,75.775 99,86.782" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

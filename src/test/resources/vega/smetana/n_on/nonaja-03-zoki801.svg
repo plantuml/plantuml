@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:512px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 512 104" width="512px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class PragmaStringMultiTest-->
+    <g class="entity" data-qualified-name="PragmaStringMultiTest" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="174.363" x="226" y="12"/>
+      <ellipse cx="241" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="236" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="142.363" x="255" y="31.889">PragmaStringMultiTest</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="227" x2="399.363" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="237" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="15.575" x="246" y="58.889">p1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="227" x2="399.363" y1="66" y2="66"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="237" cy="78.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="65.275" x="246" y="80.889">myMethod</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="8" id="ent0003">
+      <path d="M6,19 L6,81 A0,0 0 0 0 6,81 L208.35,81 A0,0 0 0 0 208.35,81 L208.35,54 L225.962,50 L208.35,46 L208.35,29 L198.35,19 L6,19 A0,0 0 0 0 6,19" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M198.35,19 L198.35,29 L208.35,29 L198.35,19" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="134.388" x="12" y="34.111">This note corrupts the link</text>
+      <text fill="#000" font-size="13" textLength="181.35" x="12" y="47.111">between PragmaStringMultiTest</text>
+      <text fill="#000" font-size="13" textLength="159.494" x="12" y="60.111">and MyItem. Remove the note</text>
+      <text fill="#000" font-size="13" textLength="114.319" x="12" y="73.111">and the link will be OK.</text>
+    </g>
+    <!--class MyItem-->
+    <g class="entity" data-qualified-name="MyItem" data-source-line="14" id="ent0005">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.762" x="418" y="12"/>
+      <ellipse cx="433" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="428" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="45.762" x="447" y="31.889">MyItem</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="419" x2="494.763" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="429" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="48.212" x="438" y="58.889">MyProp</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="419" x2="494.763" y1="66" y2="66"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="429" cy="78.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="45.762" x="438" y="80.889">MyItem</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="association" id="lnk7">
+      <path d="M400.188,50 C406.105,50 412.023,50 417.941,50" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="409.941" y="46.111">1</text>
+    </g>
+  </g>
+</svg>

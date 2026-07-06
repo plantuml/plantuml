@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="344px" preserveAspectRatio="none" style="width:272px;height:344px;background:#FFFFFF;" version="1.1" viewBox="0 0 272 344" width="272px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Comp-->
+    <g class="cluster" data-qualified-name="Comp" data-source-line="1" id="ent0001">
+      <path d="M40.5,78 L189.5,78 A12.5,12.5 0 0 1 202,90.5 L202,97 L28,97 L28,90.5 A12.5,12.5 0 0 1 40.5,78" fill="#F1F1F1"/>
+      <rect fill="none" height="146" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="174" x="28" y="78"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28" x2="202" y1="97" y2="97"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="96.319" y="93.889">Comp</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="14" id="ent0013">
+      <ellipse cx="133" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Foo" data-source-line="15" id="ent0015">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="124" y="278"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="124" x2="174" y1="302" y2="302"/>
+      <text fill="#000" font-size="14" textLength="24.15" x="136.925" y="293.889">Foo</text>
+    </g>
+    <g class="entity" data-qualified-name="Foo1" data-source-line="16" id="ent0017">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="51.938" x="212" y="132"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="212" x2="263.938" y1="156" y2="156"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="222" y="147.889">Foo1</text>
+    </g>
+    <text fill="#000" font-size="14" textLength="38.85" x="111.575" y="56.889">entry1</text>
+    <ellipse cx="131" cy="78" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="38.85" x="8.575" y="129.889">entry2</text>
+    <ellipse cx="28" cy="151" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="31.15" x="131.425" y="240.889">exitA</text>
+    <ellipse cx="147" cy="224" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="151.389" x2="143.611" y1="228.389" y2="220.611"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="151.389" x2="143.611" y1="220.611" y2="228.389"/>
+    <g class="entity" data-qualified-name="Comp.sin" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="56" y="132"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="56" x2="106" y1="156" y2="156"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="72.031" y="147.889">sin</text>
+    </g>
+    <g class="entity" data-qualified-name="Comp.sin2" data-source-line="8" id="ent0008">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="124" y="132"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="124" x2="174" y1="156" y2="156"/>
+      <text fill="#000" font-size="14" textLength="25.725" x="136.138" y="147.889">sin2</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="98.75,131.764,107.295,126.867,101.704,127.731,100.841,122.14,98.75,131.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M124.875,96.094 C117.905,105.61 110.568,115.628 101.704,127.731" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="55.687,157,46.687,153,50.687,157,46.687,161,55.687,157" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M38.367,157 C44.14,157 44.914,157 50.687,157" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="123.942,157,114.942,153,118.942,157,114.942,161,123.942,157" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M106.234,157 C112.137,157 113.039,157 118.942,157" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0004" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="149,217.72,153,208.72,149,212.72,145,208.72,149,217.72" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M149,182.037 C149,194.106 149,203.155 149,212.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0004" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="140.974,220.62,137.638,211.354,137.516,217.009,131.86,216.887,140.974,220.62" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M104.022,182.037 C116.814,195.394 128.47,207.564 137.516,217.009" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="141.353,89.763,146.918,97.889,145.61,92.386,151.114,91.078,141.353,89.763" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M157.046,221.241 C165.39,212.583 177.912,197.713 183,182 C189.845,160.858 191.82,152.397 183,132 C174.488,112.317 157.484,99.7 145.61,92.386" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0002" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="133,71.851,137,62.851,133,66.851,129,62.851,133,71.851" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M133,36.183 C133,46.453 133,56.592 133,66.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0015" data-link-type="dependency" id="lnk16">
+      <polygon fill="#181818" points="149,277.764,153,268.764,149,272.764,145,268.764,149,277.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M149,242.094 C149,251.61 149,260.662 149,272.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0003" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="33.668,144.701,40.536,137.642,35.399,140.01,33.03,134.873,33.668,144.701" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M220.232,131.72 C213.809,124.628 205.913,117.817 197,114 C168.197,101.666 83.293,98.609 56,114 C44.45,120.514 39.18,129.761 35.399,140.01" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="162px" preserveAspectRatio="none" style="width:229px;height:162px;background:#FFFFFF;" version="1.1" viewBox="0 0 229 162" width="229px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Active-->
+    <g class="cluster" data-qualified-name="Active" data-source-line="1" id="ent0001">
+      <path d="M26.5,55 L203.5,55 A12.5,12.5 0 0 1 216,67.5 L216,74 L14,74 L14,67.5 A12.5,12.5 0 0 1 26.5,55" fill="#F1F1F1"/>
+      <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="202" x="14" y="55"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="216" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="95.925" y="65.889">Active</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="6" id="ent0006">
+      <ellipse cx="172" cy="14" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Active.Stopped" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="72.15" x="136" y="80"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="136" x2="208.15" y1="104" y2="104"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="146" y="95.889">Stopped</text>
+    </g>
+    <g class="entity" data-qualified-name="Active.Running" data-source-line="2" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="72.238" x="22" y="80"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22" x2="94.238" y1="104" y2="104"/>
+      <text fill="#000" font-size="14" textLength="52.238" x="32" y="95.889">Running</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="94.07,105,103.07,109,99.07,105,103.07,101,94.07,105" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M135.773,105 C122.452,105 112.378,105 99.07,105" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="105" y="97.111">ev1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="135.838,122.592,126.04,121.586,131.085,124.145,128.526,129.19,135.838,122.592" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M94.162,122.592 C97.105,123.554 100.073,124.379 103,125 C113.434,127.214 116.566,127.214 127,125 C129.927,124.379 128.142,125.107 131.085,124.145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="105" y="120.111">ev2</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="172,79.942,176,70.942,172,74.942,168,70.942,172,79.942" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M172,28.019 C172,41.004 172,57.962 172,74.942" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

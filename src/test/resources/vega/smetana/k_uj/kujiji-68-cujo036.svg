@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="141.649px" preserveAspectRatio="none" style="width:900px;height:141px;background:#FFFFFF;" version="1.1" viewBox="0 0 900 141" width="900.377px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class CatalogController-->
+    <g class="entity" data-qualified-name="CatalogController" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="36.166" rx="1.884" ry="1.884" style="stroke:#181818;stroke-width:0.377;" width="106.256" x="93.428" y="19.59"/>
+      <ellipse cx="104.73" cy="31.645" fill="#ADD1B2" rx="8.288" ry="8.288" style="stroke:#181818;stroke-width:0.753;"/>
+      <text fill="#000" font-family="monospace" font-size="10.548" x="100.963" y="35.412">C</text>
+      <text fill="#000" font-size="10.548" textLength="82.145" x="115.278" y="34.575">CatalogController</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="94.182" x2="198.931" y1="43.7" y2="43.7"/>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="94.182" x2="198.931" y1="49.728" y2="49.728"/>
+    </g>
+    <!--class CatalogLocalController-->
+    <g class="entity" data-qualified-name="CatalogLocalController" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="36.166" rx="1.884" ry="1.884" style="stroke:#181818;stroke-width:0.377;" width="131.506" x="4.521" y="93.428"/>
+      <ellipse cx="15.823" cy="105.483" fill="#ADD1B2" rx="8.288" ry="8.288" style="stroke:#181818;stroke-width:0.753;"/>
+      <text fill="#000" font-family="monospace" font-size="10.548" x="12.055" y="109.251">C</text>
+      <text fill="#000" font-size="10.548" textLength="107.395" x="26.371" y="108.414">CatalogLocalController</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="5.274" x2="135.273" y1="117.539" y2="117.539"/>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="5.274" x2="135.273" y1="123.566" y2="123.566"/>
+    </g>
+    <!--class CatalogExternalController-->
+    <g class="entity" data-qualified-name="CatalogExternalController" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="36.166" rx="1.884" ry="1.884" style="stroke:#181818;stroke-width:0.377;" width="144.955" x="150.314" y="93.428"/>
+      <ellipse cx="161.616" cy="105.483" fill="#ADD1B2" rx="8.288" ry="8.288" style="stroke:#181818;stroke-width:0.753;"/>
+      <text fill="#000" font-family="monospace" font-size="10.548" x="157.848" y="109.251">C</text>
+      <text fill="#000" font-size="10.548" textLength="120.844" x="172.164" y="108.414">CatalogExternalController</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="151.067" x2="294.515" y1="117.539" y2="117.539"/>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="151.067" x2="294.515" y1="123.566" y2="123.566"/>
+    </g>
+    <!--class DBAbstractModel-->
+    <g class="entity" data-qualified-name="DBAbstractModel" data-source-line="6" id="ent0006">
+      <rect fill="#F1F1F1" height="36.166" rx="1.884" ry="1.884" style="stroke:#181818;stroke-width:0.377;" width="106.19" x="522.143" y="19.59"/>
+      <ellipse cx="533.445" cy="31.645" fill="#ADD1B2" rx="8.288" ry="8.288" style="stroke:#181818;stroke-width:0.753;"/>
+      <text fill="#000" font-family="monospace" font-size="10.548" x="529.678" y="35.412">C</text>
+      <text fill="#000" font-size="10.548" textLength="82.079" x="543.993" y="34.575">DBAbstractModel</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="522.897" x2="627.58" y1="43.7" y2="43.7"/>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="522.897" x2="627.58" y1="49.728" y2="49.728"/>
+    </g>
+    <!--class CatalogLocalModel-->
+    <g class="entity" data-qualified-name="CatalogLocalModel" data-source-line="6" id="ent0007">
+      <rect fill="#F1F1F1" height="36.166" rx="1.884" ry="1.884" style="stroke:#181818;stroke-width:0.377;" width="114.497" x="308.539" y="93.428"/>
+      <ellipse cx="319.841" cy="105.483" fill="#ADD1B2" rx="8.288" ry="8.288" style="stroke:#181818;stroke-width:0.753;"/>
+      <text fill="#000" font-family="monospace" font-size="10.548" x="316.074" y="109.251">C</text>
+      <text fill="#000" font-size="10.548" textLength="90.386" x="330.389" y="108.414">CatalogLocalModel</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="309.293" x2="422.282" y1="117.539" y2="117.539"/>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="309.293" x2="422.282" y1="123.566" y2="123.566"/>
+    </g>
+    <!--class CatalogExternalModel-->
+    <g class="entity" data-qualified-name="CatalogExternalModel" data-source-line="7" id="ent0009">
+      <rect fill="#F1F1F1" height="36.166" rx="1.884" ry="1.884" style="stroke:#181818;stroke-width:0.377;" width="127.946" x="436.626" y="93.428"/>
+      <ellipse cx="447.928" cy="105.483" fill="#ADD1B2" rx="8.288" ry="8.288" style="stroke:#181818;stroke-width:0.753;"/>
+      <text fill="#000" font-family="monospace" font-size="10.548" x="444.161" y="109.251">C</text>
+      <text fill="#000" font-size="10.548" textLength="103.835" x="458.476" y="108.414">CatalogExternalModel</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="437.38" x2="563.819" y1="117.539" y2="117.539"/>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="437.38" x2="563.819" y1="123.566" y2="123.566"/>
+    </g>
+    <!--class CatalogParametersModel-->
+    <g class="entity" data-qualified-name="CatalogParametersModel" data-source-line="8" id="ent0011">
+      <rect fill="#F1F1F1" height="36.166" rx="1.884" ry="1.884" style="stroke:#181818;stroke-width:0.377;" width="143.702" x="578.652" y="93.428"/>
+      <ellipse cx="589.954" cy="105.483" fill="#ADD1B2" rx="8.288" ry="8.288" style="stroke:#181818;stroke-width:0.753;"/>
+      <text fill="#000" font-family="monospace" font-size="10.548" x="586.187" y="109.251">C</text>
+      <text fill="#000" font-size="10.548" textLength="119.592" x="600.502" y="108.414">CatalogParametersModel</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="579.406" x2="721.601" y1="117.539" y2="117.539"/>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="579.406" x2="721.601" y1="123.566" y2="123.566"/>
+    </g>
+    <!--class CatalogProfileHistoryModel-->
+    <g class="entity" data-qualified-name="CatalogProfileHistoryModel" data-source-line="9" id="ent0013">
+      <rect fill="#F1F1F1" height="36.166" rx="1.884" ry="1.884" style="stroke:#181818;stroke-width:0.377;" width="152.009" x="736.501" y="93.428"/>
+      <ellipse cx="747.802" cy="105.483" fill="#ADD1B2" rx="8.288" ry="8.288" style="stroke:#181818;stroke-width:0.753;"/>
+      <text fill="#000" font-family="monospace" font-size="10.548" x="744.035" y="109.251">C</text>
+      <text fill="#000" font-size="10.548" textLength="127.899" x="758.351" y="108.414">CatalogProfileHistoryModel</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="737.254" x2="887.756" y1="117.539" y2="117.539"/>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="737.254" x2="887.756" y1="123.566" y2="123.566"/>
+    </g>
+    <!--class MessageHandlerSingleton-->
+    <g class="entity" data-qualified-name="MessageHandlerSingleton" data-source-line="12" id="ent0015">
+      <rect fill="#F1F1F1" height="57.262" rx="1.884" ry="1.884" style="stroke:#181818;stroke-width:0.377;" width="147.922" x="642.319" y="9.041"/>
+      <ellipse cx="653.621" cy="21.097" fill="#ADD1B2" rx="8.288" ry="8.288" style="stroke:#181818;stroke-width:0.753;"/>
+      <text fill="#000" font-family="monospace" font-size="10.548" x="649.853" y="24.864">C</text>
+      <text fill="#000" font-size="10.548" textLength="123.811" x="664.169" y="24.027">MessageHandlerSingleton</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="643.072" x2="789.487" y1="33.152" y2="33.152"/>
+      <text fill="#000" font-size="10.548" textLength="39.227" x="646.84" y="44.37">int status</text>
+      <line style="stroke:#181818;stroke-width:0.377;" x1="643.072" x2="789.487" y1="49.728" y2="49.728"/>
+      <text fill="#000" font-size="10.548" textLength="109.505" x="646.84" y="60.946">String[] messageStack()</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="128.125,55.936,115.181,62.002,121.41,68.556,128.125,55.936" style="stroke:#181818;stroke-width:0.753;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M118.295,65.279 C106.331,76.651 100.63,82.069 88.7,93.409" fill="none" style="stroke:#181818;stroke-width:0.753;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="164.968,55.936,171.684,68.556,177.913,62.002,164.968,55.936" style="stroke:#181818;stroke-width:0.753;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M174.798,65.279 C186.763,76.651 192.463,82.069 204.394,93.409" fill="none" style="stroke:#181818;stroke-width:0.753;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="524.824,55.843,510.529,55.997,513.48,64.543,524.824,55.843" style="stroke:#181818;stroke-width:0.753;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M512.005,60.27 C479.078,71.64 449.075,82.001 416.164,93.366" fill="none" style="stroke:#181818;stroke-width:0.753;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0009" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="557.205,55.936,544.322,62.131,550.616,68.622,557.205,55.936" style="stroke:#181818;stroke-width:0.753;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M547.469,65.377 C535.741,76.749 530.255,82.069 518.56,93.409" fill="none" style="stroke:#181818;stroke-width:0.753;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0011" data-link-type="extension" id="lnk12">
+      <polygon fill="none" points="593.501,55.936,600.153,68.589,606.415,62.067,593.501,55.936" style="stroke:#181818;stroke-width:0.753;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M603.284,65.328 C615.13,76.7 620.723,82.069 632.536,93.409" fill="none" style="stroke:#181818;stroke-width:0.753;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0013" data-link-type="extension" id="lnk14">
+      <polygon fill="none" points="609.862,55.772,620.328,65.511,624.078,57.284,609.862,55.772" style="stroke:#181818;stroke-width:0.753;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M622.203,61.397 C630.491,65.175 627.058,63.308 635.538,66.304 C667.962,77.758 704.707,87.489 736.286,94.899" fill="none" style="stroke:#181818;stroke-width:0.753;"/>
+    </g>
+  </g>
+</svg>

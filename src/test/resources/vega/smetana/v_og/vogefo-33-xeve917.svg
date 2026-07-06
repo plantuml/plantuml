@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:258px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 258 72" width="258px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Aria-->
+    <g class="entity" data-qualified-name="Aria" data-source-line="1" id="ent0001">
+      <path d="M6,22.5 C6,12.5 28.469,12.5 28.469,12.5 C28.469,12.5 50.938,12.5 50.938,22.5 L50.938,45.5 C50.938,55.5 28.469,55.5 28.469,55.5 C28.469,55.5 6,55.5 6,45.5 L6,22.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,22.5 C6,32.5 28.469,32.5 28.469,32.5 C28.469,32.5 50.938,32.5 50.938,22.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="16" y="47.389">Aria</text>
+    </g>
+    <!--entity Telemetry API-->
+    <g class="entity" data-qualified-name="Telemetry API" data-source-line="2" id="ent0002">
+      <polygon fill="#F1F1F1" points="69,22,79,12,193.788,12,193.788,46,183.788,56,69,56,69,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="183.788" x2="193.788" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="69" x2="183.788" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="183.788" x2="183.788" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="84.788" x="84" y="42.889">Telemetry API</text>
+    </g>
+    <!--entity ##3-->
+    <g class="entity" data-qualified-name="..3" data-source-line="3" id="ent0004">
+      <path d="M220.913,27.23 C220.356,24.732 222.003,23.574 224.256,24.433 C223.51,21.796 225.325,19.796 228.007,20.189 C230.913,19.619 232.451,20.251 231.976,23.608 C234.547,23.063 236.144,24.56 235.192,27.184 C237.494,27.016 238.43,28.856 237.363,30.744 C240.181,30.918 240.684,32.333 239.565,34.699 C240.513,36.705 239.275,37.855 237.308,37.566 C238.051,39.715 237.141,41.563 234.574,41.263 C235.252,43.873 234.327,45.504 231.361,44.863 C231.516,46.982 230.532,48.414 228.173,47.544 C225.811,48.26 224.32,47.444 224.553,44.772 C221.665,45.706 219.834,44.059 220.732,41.077 C218.658,40.991 218.07,39.949 218.697,38.048 C216.353,38.098 215.663,36.431 216.465,34.501 C215.691,32.301 216.93,30.962 219.113,30.997 C217.862,28.954 218.395,27.471 220.913,27.23" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+  </g>
+</svg>

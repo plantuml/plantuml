@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="444px" preserveAspectRatio="none" style="width:397px;height:444px;background:#FFFFFF;" version="1.1" viewBox="0 0 397 444" width="397px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="82.513" x="153.744" y="20.889">class diagram</text>
+    </g>
+    <!--cluster PCAN_DRV-->
+    <g class="cluster" data-qualified-name="PCAN_DRV" data-source-line="3" id="ent0002">
+      <path d="M46.5,130 L123.975,130 A3.75,3.75 0 0 1 126.475,132.5 L133.475,150 L378.5,150 A2.5,2.5 0 0 1 381,152.5 L381,417.5 A2.5,2.5 0 0 1 378.5,420 L46.5,420 A2.5,2.5 0 0 1 44,417.5 L44,132.5 A2.5,2.5 0 0 1 46.5,130" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="44" x2="133.475" y1="150" y2="150"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="76.475" x="48" y="142.889">PCAN_DRV</text>
+    </g>
+    <!--cluster Bus_Tx-->
+    <g class="cluster" data-qualified-name="PCAN_DRV.Bus_Tx" data-source-line="12" id="ent0008">
+      <path d="M105.5,246 L154.013,246 A3.75,3.75 0 0 1 156.513,248.5 L163.513,266 L230.5,266 A2.5,2.5 0 0 1 233,268.5 L233,409.5 A2.5,2.5 0 0 1 230.5,412 L105.5,412 A2.5,2.5 0 0 1 103,409.5 L103,248.5 A2.5,2.5 0 0 1 105.5,246" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="103" x2="163.513" y1="266" y2="266"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="47.512" x="107" y="258.889">Bus_Tx</text>
+    </g>
+    <!--cluster Bus_Rx-->
+    <g class="cluster" data-qualified-name="PCAN_DRV.Bus_Rx" data-source-line="13" id="ent0010">
+      <path d="M243.5,246 L293.588,246 A3.75,3.75 0 0 1 296.088,248.5 L303.088,266 L370.5,266 A2.5,2.5 0 0 1 373,268.5 L373,409.5 A2.5,2.5 0 0 1 370.5,412 L243.5,412 A2.5,2.5 0 0 1 241,409.5 L241,248.5 A2.5,2.5 0 0 1 243.5,246" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="241" x2="303.088" y1="266" y2="266"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49.088" x="245" y="258.889">Bus_Rx</text>
+    </g>
+    <!--class VCAN_DRV-->
+    <g class="entity" data-qualified-name="VCAN_DRV" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.475" x="6" y="39"/>
+      <ellipse cx="21" cy="55" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="60">C</text>
+      <text fill="#000" font-size="14" textLength="76.475" x="35" y="58.889">VCAN_DRV</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="113.475" y1="71" y2="71"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="113.475" y1="79" y2="79"/>
+    </g>
+    <!--class PCAN_DRV-->
+    <g class="entity" data-qualified-name="PCAN_DRV.PCAN_DRV" data-source-line="11" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.475" x="265" y="155"/>
+      <ellipse cx="280" cy="171" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="275" y="176">C</text>
+      <text fill="#000" font-size="14" textLength="76.475" x="294" y="174.889">PCAN_DRV</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="266" x2="372.475" y1="187" y2="187"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="266" x2="372.475" y1="195" y2="195"/>
+    </g>
+    <!--class Bus_Control-->
+    <g class="entity" data-qualified-name="PCAN_DRV.Bus_Control" data-source-line="11" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.088" x="86.5" y="155"/>
+      <ellipse cx="101.5" cy="171" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="96.5" y="176">C</text>
+      <text fill="#000" font-size="14" textLength="77.088" x="115.5" y="174.889">Bus_Control</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87.5" x2="194.588" y1="187" y2="187"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87.5" x2="194.588" y1="195" y2="195"/>
+    </g>
+    <!--class Bus_Tx-->
+    <g class="entity" data-qualified-name="PCAN_DRV.Bus_Tx.Bus_Tx" data-source-line="22" id="ent0012">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79.512" x="145" y="271"/>
+      <ellipse cx="160" cy="287" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="155" y="292">C</text>
+      <text fill="#000" font-size="14" textLength="47.512" x="174" y="290.889">Bus_Tx</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="146" x2="223.513" y1="303" y2="303"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="146" x2="223.513" y1="311" y2="311"/>
+    </g>
+    <!--class Tx_FIFO-->
+    <g class="entity" data-qualified-name="PCAN_DRV.Bus_Tx.Tx_FIFO" data-source-line="22" id="ent0013">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="137.5" y="356"/>
+      <ellipse cx="152.5" cy="372" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="147.5" y="377">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="166.5" y="375.889">Tx_FIFO</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="138.5" x2="223.713" y1="388" y2="388"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="138.5" x2="223.713" y1="396" y2="396"/>
+    </g>
+    <!--class Bus_Rx-->
+    <g class="entity" data-qualified-name="PCAN_DRV.Bus_Rx.Bus_Rx" data-source-line="32" id="ent0015">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.088" x="283.5" y="271"/>
+      <ellipse cx="298.5" cy="287" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="293.5" y="292">C</text>
+      <text fill="#000" font-size="14" textLength="49.088" x="312.5" y="290.889">Bus_Rx</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="284.5" x2="363.588" y1="303" y2="303"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="284.5" x2="363.588" y1="311" y2="311"/>
+    </g>
+    <!--class Rx_FIFO-->
+    <g class="entity" data-qualified-name="PCAN_DRV.Bus_Rx.Rx_FIFO" data-source-line="32" id="ent0016">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.788" x="275.5" y="356"/>
+      <ellipse cx="290.5" cy="372" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="285.5" y="377">C</text>
+      <text fill="#000" font-size="14" textLength="56.788" x="304.5" y="375.889">Rx_FIFO</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="276.5" x2="363.288" y1="388" y2="388"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="276.5" x2="363.288" y1="396" y2="396"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="60,87.07,56,93.07,60,99.07,64,93.07,60,87.07" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M60,99.07 C60,111.171 60,114.48 60,129.07 C60,129.298 60,129.525 60,129.753" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="62" y="117.111">1 .. 1</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0004" data-link-type="composition" id="lnk7">
+      <polygon fill="#181818" points="264.934,179,258.934,175,252.934,179,258.934,183,264.934,179" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M195.858,179 C217.82,179 231.052,179 252.934,179" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="48.425" x="206.25" y="171.111">contains</text>
+      <text fill="#000" font-size="13" x="256.934" y="190.111">1</text>
+      <text fill="#000" font-size="13" x="196.858" y="175.111">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0008" data-link-type="composition" id="lnk9">
+      <polygon fill="#181818" points="264.677,186.959,258.023,184.179,252.898,189.252,259.552,192.032,264.677,186.959" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M252.898,189.252 C232.699,193.185 220.911,197 198.093,206.451 C186.684,211.177 175.462,216.738 164.941,223.281 C159.681,226.552 154.597,230.069 149.752,233.849 C147.329,235.74 144.966,237.696 142.672,239.72 C141.525,240.732 140.394,241.761 139.282,242.808 C138.726,243.331 138.174,243.859 137.627,244.391 C137.354,244.657 137.081,244.924 136.81,245.192 C136.674,245.326 136.539,245.461 136.404,245.595" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="167" y="233.111">1..1</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0010" data-link-type="composition" id="lnk11">
+      <polygon fill="#181818" points="301.75,203.028,295.017,205.61,294.811,212.818,301.544,210.236,301.75,203.028" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M294.811,212.818 C290.442,218.982 292.608,216.197 287.97,223.53 C285.652,227.196 283.366,230.944 281.182,234.711 C280.09,236.594 279.023,238.482 277.99,240.366 C277.474,241.308 276.965,242.249 276.467,243.189 C276.217,243.658 275.97,244.127 275.726,244.596 C275.604,244.83 275.482,245.065 275.361,245.299 C275.301,245.416 275.24,245.532 275.18,245.649 C275.15,245.708 275.12,245.766 275.09,245.825" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="291" y="233.111">1..1</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0013" data-link-type="composition" id="lnk14">
+      <polygon fill="#181818" points="183.886,319.12,179.602,324.921,183.308,331.106,187.592,325.306,183.886,319.12" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M183.308,331.106 C182.758,342.522 182.673,344.278 182.122,355.716" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="174.122" y="351.827">n</text>
+      <text fill="#000" font-size="13" x="175.886" y="330.231">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0016" data-link-type="composition" id="lnk17">
+      <polygon fill="#181818" points="322.886,319.12,318.602,324.921,322.308,331.106,326.592,325.306,322.886,319.12" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M322.308,331.106 C321.758,342.522 321.673,344.278 321.122,355.716" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="313.122" y="351.827">n</text>
+      <text fill="#000" font-size="13" x="314.886" y="330.231">1</text>
+    </g>
+  </g>
+</svg>

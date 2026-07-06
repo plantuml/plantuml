@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:230px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 230 78" width="230px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="208.125" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="214.125" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="105.381" y="27.889">A</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="11" y="51.889">foo</text>
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <text fill="#00F" font-size="14" text-decoration="underline" textLength="141.488" x="30.425" y="51.889">http://www.google.com</text>
+      </a>
+      <text fill="#000" font-size="14" textLength="27.213" x="171.913" y="51.889">foo2</text>
+    </g>
+  </g>
+</svg>

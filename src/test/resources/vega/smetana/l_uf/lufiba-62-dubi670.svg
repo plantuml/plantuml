@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="268px" preserveAspectRatio="none" style="width:432px;height:268px;background:#FFFFFF;" version="1.1" viewBox="0 0 432 268" width="432px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster node3-->
+    <g class="cluster" data-qualified-name="node3" data-source-line="11" id="ent0006">
+      <polygon fill="#F0F" points="302.5,22,312.5,12,416.5,12,416.5,84,406.5,94,302.5,94,302.5,22" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#008000;stroke-width:1;" x1="406.5" x2="416.5" y1="22" y2="12"/>
+      <line style="stroke:#008000;stroke-width:1;" x1="302.5" x2="406.5" y1="22" y2="22"/>
+      <line style="stroke:#008000;stroke-width:1;" x1="406.5" x2="406.5" y1="22" y2="94"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="336.031" y="35.889">node3</text>
+    </g>
+    <!--entity AA-->
+    <g class="entity" data-qualified-name="AA" data-source-line="4" id="ent0001">
+      <rect fill="#BDB76B" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.725" x="24" y="42"/>
+      <rect fill="#BDB76B" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="62.725" y="47"/>
+      <rect fill="#BDB76B" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="60.725" y="49"/>
+      <rect fill="#BDB76B" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="60.725" y="53"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="39" y="72.889">AA</text>
+    </g>
+    <!--entity BB-->
+    <g class="entity" data-qualified-name="BB" data-source-line="5" id="ent0002">
+      <rect fill="#008000" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.45" x="101.5" y="35"/>
+      <rect fill="#008000" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="195.95" y="40"/>
+      <rect fill="#008000" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="193.95" y="42"/>
+      <rect fill="#008000" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="193.95" y="46"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="72.45" x="117.5" y="65.889">«shared lib»</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="144.363" y="79.889">BB</text>
+    </g>
+    <!--entity CC-->
+    <g class="entity" data-qualified-name="CC" data-source-line="6" id="ent0003">
+      <rect fill="#BDB76B" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.3" x="233.5" y="42"/>
+      <rect fill="#BDB76B" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="273.8" y="47"/>
+      <rect fill="#BDB76B" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="271.8" y="49"/>
+      <rect fill="#BDB76B" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="271.8" y="53"/>
+      <text fill="#000" font-size="14" textLength="20.3" x="248.5" y="72.889">CC</text>
+    </g>
+    <!--entity node1-->
+    <g class="entity" data-qualified-name="node1" data-source-line="8" id="ent0004">
+      <polygon fill="#FF0" points="14,139,24,129,92.938,129,92.938,163,82.938,173,14,173,14,139" style="stroke:#008000;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="82.938" x2="92.938" y1="139" y2="129"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="14" x2="82.938" y1="139" y2="139"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="82.938" x2="82.938" y1="139" y2="173"/>
+      <text fill="#000" font-size="14" textLength="38.938" x="29" y="159.889">node1</text>
+    </g>
+    <!--entity node2-->
+    <g class="entity" data-qualified-name="node2" data-source-line="9" id="ent0005">
+      <polygon fill="#F0F" points="111,139,121,129,189.938,129,189.938,163,179.938,173,111,173,111,139" style="stroke:#008000;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="179.938" x2="189.938" y1="139" y2="129"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="111" x2="179.938" y1="139" y2="139"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="179.938" x2="179.938" y1="139" y2="173"/>
+      <text fill="#000" font-size="14" textLength="38.938" x="126" y="159.889">node2</text>
+    </g>
+    <!--entity Production-->
+    <g class="entity" data-qualified-name="Production" data-source-line="15" id="ent0008">
+      <path d="M208,139.5 C208,129.5 251.469,129.5 251.469,129.5 C251.469,129.5 294.938,129.5 294.938,139.5 L294.938,162.5 C294.938,172.5 251.469,172.5 251.469,172.5 C251.469,172.5 208,172.5 208,162.5 L208,139.5" fill="#0FF" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M208,139.5 C208,149.5 251.469,149.5 251.469,149.5 C251.469,149.5 294.938,149.5 294.938,139.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="218" y="164.389">Production</text>
+    </g>
+    <!--entity Production2-->
+    <g class="entity" data-qualified-name="Production2" data-source-line="16" id="ent0009">
+      <path d="M6,219 C6,209 53.363,209 53.363,209 C53.363,209 100.725,209 100.725,219 L100.725,242 C100.725,252 53.363,252 53.363,252 C53.363,252 6,252 6,242 L6,219" fill="#0FF" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,219 C6,229 53.363,229 53.363,229 C53.363,229 100.725,229 100.725,219" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="16" y="243.889">Production2</text>
+    </g>
+    <!--entity foo1-->
+    <g class="entity" data-qualified-name="node3.foo1" data-source-line="12" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.213" x="326" y="42"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="373.213" y="47"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="371.213" y="49"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="371.213" y="53"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="341" y="72.889">foo1</text>
+    </g>
+  </g>
+</svg>

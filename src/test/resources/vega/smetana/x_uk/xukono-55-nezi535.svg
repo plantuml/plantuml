@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="369px" preserveAspectRatio="none" style="width:192px;height:369px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 369" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster common-->
+    <g class="cluster" data-qualified-name="common" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L71.137,4 A3.75,3.75 0 0 1 73.637,6.5 L80.637,24 L181.5,24 A2.5,2.5 0 0 1 184,26.5 L184,342.5 A2.5,2.5 0 0 1 181.5,345 L16.5,345 A2.5,2.5 0 0 1 14,342.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="80.637" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="18" y="16.889">common</text>
+    </g>
+    <!--cluster profiles-->
+    <g class="cluster" data-qualified-name="common.profiles" data-source-line="2" id="ent0002">
+      <path d="M26.5,163 L119.375,163 A3.75,3.75 0 0 1 121.875,165.5 L128.875,183 L167.5,183 A2.5,2.5 0 0 1 170,185.5 L170,334.5 A2.5,2.5 0 0 1 167.5,337 L26.5,337 A2.5,2.5 0 0 1 24,334.5 L24,165.5 A2.5,2.5 0 0 1 26.5,163" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="24" x2="128.875" y1="183" y2="183"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="91.875" x="28" y="175.889">«profile» profile</text>
+    </g>
+    <!--cluster classes-->
+    <g class="cluster" data-qualified-name="common.classes" data-source-line="6" id="ent0006">
+      <path d="M24.5,29 L72.225,29 A3.75,3.75 0 0 1 74.725,31.5 L81.725,49 L173.5,49 A2.5,2.5 0 0 1 176,51.5 L176,125.5 A2.5,2.5 0 0 1 173.5,128 L24.5,128 A2.5,2.5 0 0 1 22,125.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="81.725" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="46.725" x="26" y="41.889">classes</text>
+    </g>
+    <!--class X-->
+    <g class="entity" data-qualified-name="common.profiles.X" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.35" x="66.5" y="188"/>
+      <ellipse cx="81.5" cy="206" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="76.5" y="211">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="67.35" x="93.5" y="202.333">«metaclass»</text>
+      <text fill="#000" font-size="14" x="122.494" y="215.889">X</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67.5" x2="160.85" y1="224" y2="224"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67.5" x2="160.85" y1="232" y2="232"/>
+    </g>
+    <!--class Y-->
+    <g class="entity" data-qualified-name="common.profiles.Y" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.3" x="64.5" y="277"/>
+      <ellipse cx="79.5" cy="295" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="74.5" y="300">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="69.3" x="91.5" y="291.333">«stereotype»</text>
+      <text fill="#000" font-size="14" x="121.469" y="304.889">Y</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65.5" x2="160.8" y1="313" y2="313"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65.5" x2="160.8" y1="321" y2="321"/>
+    </g>
+    <!--class myClass-->
+    <g class="entity" data-qualified-name="common.classes.myClass" data-source-line="7" id="ent0007">
+      <rect fill="#F1F1F1" height="66" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.05" x="64" y="54"/>
+      <ellipse cx="87.246" cy="72" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="82.246" y="77">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="19.35" x="120.266" y="68.333">«y»</text>
+      <text fill="#000" font-size="14" textLength="53.725" x="103.079" y="81.889">myClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65" x2="167.05" y1="90" y2="90"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="75" cy="102.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="78.05" x="84" y="104.889">x : str = "value"</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65" x2="167.05" y1="112" y2="112"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="113.711,240.164,107.504,258.094,119.503,258.232,113.711,240.164" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M113.504,258.163 C113.371,269.705 113.421,265.357 113.289,276.893" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="39.197,162.787,43.052,153.724,39.117,157.787,35.053,153.852,39.197,162.787" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M38.643,128.159 C38.645,128.304 38.647,128.449 38.65,128.594 C38.687,130.921 38.725,133.294 38.763,135.698 C38.84,140.506 38.919,145.438 38.998,150.371 C39.037,152.838 39.077,155.305 39.116,157.756 C39.136,158.982 39.155,160.204 39.175,161.421 C39.18,161.725 39.184,162.029 39.189,162.332 C39.192,162.484 39.114,157.636 39.117,157.787" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="54.031" x="41" y="150.111">&lt;apply&gt;&gt;</text>
+    </g>
+  </g>
+</svg>

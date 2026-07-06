@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="86px" preserveAspectRatio="none" style="width:196px;height:86px;background:#FFFFFF;" version="1.1" viewBox="0 0 196 86" width="196px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity FlowDetails_TP_ON_AD-->
+    <g class="entity" data-qualified-name="FlowDetails_TP_ON_AD" data-source-line="3" id="ent0001">
+      <rect fill="#FFF" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="174.05" x="6" y="12"/>
+      <path d="M64.017,12 L64.017,17 L57.017,24 L6,24" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="72.538" x="21" y="42.889">Flow Details</text>
+      <text fill="#F00" font-size="14" textLength="134.05" x="21" y="56.889">TRICKPLAY_ON_AD</text>
+    </g>
+  </g>
+</svg>

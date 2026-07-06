@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="226px" preserveAspectRatio="none" style="width:445px;height:226px;background:#FFFFFF;" version="1.1" viewBox="0 0 445 226" width="445px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Iteration (Over each day of the week)-->
+    <g class="cluster" data-qualified-name="Iteration .Over each day of the week." data-source-line="1" id="ent0001">
+      <polygon fill="none" points="14,4,226.763,4,233.763,24,254,24,254,129,14,129,14,4" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="233.763" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="206.763" x="18" y="16.889">Iteration (Over each day of the week)</text>
+    </g>
+    <!--cluster cspTemporalProcessor_GetScheduledPaymentsToProcess-->
+    <g class="cluster" data-qualified-name="cspTemporalProcessor_GetScheduledPaymentsToProcess" data-source-line="5" id="ent0005">
+      <polygon fill="#87CEFA" points="17,137,392.6,137,399.6,157,429,157,429,202,17,202,17,137" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="17" x2="399.6" y1="157" y2="157"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="369.6" x="21" y="149.889">cspTemporalProcessor_GetScheduledPaymentsToProcess</text>
+    </g>
+    <g class="start_entity" data-qualified-name="Iteration .Over each day of the week..start" data-source-line="2" id="ent0002">
+      <ellipse cx="134" cy="39" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="222.725" x="22.5" y="89"/>
+    <text fill="#000" font-size="12" textLength="202.725" x="32.5" y="108.333">Lookup last time temporal processing ran</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="218.075" x="25" y="162"/>
+    <text fill="#000" font-size="12" textLength="198.075" x="35" y="181.333">Lookup scheduled payments to process</text>
+    <g class="entity" data-qualified-name="cspTemporalProcessor_GetScheduledPaymentsToProcess.GN8" data-source-line="7" id="ent0009">
+      <path d="M261.5,166 L261.5,174 L243.16,178 L261.5,182 L261.5,189 A0,0 0 0 0 261.5,189 L420.381,189 A0,0 0 0 0 420.381,189 L420.381,176 L410.381,166 L261.5,166 A0,0 0 0 0 261.5,166" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M410.381,166 L410.381,176 L420.381,176 L410.381,166" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="137.881" x="267.5" y="181.111">Parameters and result set</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="134,88.587,138,79.587,134,83.587,130,79.587,134,88.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M134,53.084 C134,62.976 134,72.56 134,83.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="134,161.964,138,152.964,134,156.964,130,152.964,134,161.964" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M134,121.057 C134,133.106 134,144.921 134,156.964" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

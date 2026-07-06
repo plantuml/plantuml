@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="122px" preserveAspectRatio="none" style="width:208px;height:122px;background:#FFFFFF;" version="1.1" viewBox="0 0 208 122" width="208px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="29.362" x="33.5" y="12"/>
+      <text fill="#000" font-size="14" x="43.5" y="25.889">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="29.362" x="80.5" y="12"/>
+      <text fill="#000" font-size="14" x="90.5" y="25.889">B</text>
+    </g>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="C" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="30.15" x="128" y="12"/>
+      <text fill="#000" font-size="14" x="138" y="25.889">C</text>
+    </g>
+    <!--entity D-->
+    <g class="entity" data-qualified-name="D" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.212" x="6" y="72"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="62.212" x="17" y="85.889">«stereo3»</text>
+      <text fill="#000" font-size="14" x="43.031" y="99.889">D</text>
+    </g>
+    <!--entity E-->
+    <g class="entity" data-qualified-name="E" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.212" x="108" y="72"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="62.212" x="119" y="85.889">«stereo3»</text>
+      <text fill="#000" font-size="14" x="145.425" y="99.889">E</text>
+    </g>
+  </g>
+</svg>

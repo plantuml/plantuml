@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="190px" preserveAspectRatio="none" style="width:204px;height:190px;background:#FFFFFF;" version="1.1" viewBox="0 0 204 190" width="204px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Something-->
+    <g class="cluster" data-qualified-name="Something" data-source-line="1" id="ent0001">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="144" x="14" y="4"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="138" y="9"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="136" y="11"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="136" y="15"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="66.938" x="52.531" y="27.889">Something</text>
+    </g>
+    <!--cluster SomethingElse-->
+    <g class="cluster" data-qualified-name="SomethingElse" data-source-line="7" id="ent0005">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="110" x="86" y="89"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="176" y="94"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="174" y="96"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="174" y="100"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="94.238" x="93.881" y="112.889">SomethingElse</text>
+    </g>
+    <!--entity Provider-->
+    <g class="entity" data-qualified-name="Something.Provider" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.15" x="22" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="94.15" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="92.15" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="92.15" y="40"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="37" y="59.889">Provider</text>
+    </g>
+    <!--entity Interface-->
+    <g class="entity" data-qualified-name="Something.Interface" data-source-line="3" id="ent0003">
+      <ellipse cx="141" cy="48" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <!--entity User-->
+    <g class="entity" data-qualified-name="SomethingElse.User" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.575" x="106" y="114"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="155.575" y="119"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="153.575" y="121"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="153.575" y="125"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="121" y="144.889">User</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M114.195,51 C120.059,51 125.922,51 131.786,51" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" id="lnk7">
+      <path d="M132.543,66.272 A9,9 0 0 0 149.457 66.272" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M141,73.194 C141,86.114 141,97.653 141,113.777" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

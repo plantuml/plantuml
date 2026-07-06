@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="109px" preserveAspectRatio="none" style="width:148px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 148 109" width="148px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Foo-->
+    <g class="cluster" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <path d="M60.5,4 L85.65,4 A3.75,3.75 0 0 1 88.15,6.5 L95.15,24 L129.5,24 A2.5,2.5 0 0 1 132,26.5 L132,82.5 A2.5,2.5 0 0 1 129.5,85 L60.5,85 A2.5,2.5 0 0 1 58,82.5 L58,6.5 A2.5,2.5 0 0 1 60.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="58" x2="95.15" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.15" x="62" y="16.889">Foo</text>
+    </g>
+    <path d="M8.5,29 L31.288,29 A3.75,3.75 0 0 1 33.788,31.5 L40.788,49 L45.288,49 A2.5,2.5 0 0 1 47.788,51.5 L47.788,74.5 A2.5,2.5 0 0 1 45.288,77 L8.5,77 A2.5,2.5 0 0 1 6,74.5 L6,31.5 A2.5,2.5 0 0 1 8.5,29" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="40.788" y1="49" y2="49"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="21.788" x="10" y="41.889">Bar</text>
+    <!--class Quz-->
+    <g class="entity" data-qualified-name="Foo.Quz" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.638" x="66" y="29"/>
+      <ellipse cx="81" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="76" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="25.638" x="95" y="48.889">Quz</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67" x2="122.638" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67" x2="122.638" y1="69" y2="69"/>
+    </g>
+  </g>
+</svg>

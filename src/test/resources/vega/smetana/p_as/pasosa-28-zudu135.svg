@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="651px" preserveAspectRatio="none" style="width:248px;height:651px;background:#FFFFFF;" version="1.1" viewBox="0 0 248 651" width="248px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster State2-->
+    <g class="cluster" data-qualified-name="State2" data-source-line="11" id="ent0002">
+      <path d="M26.5,166 L112.5,166 A12.5,12.5 0 0 1 125,178.5 L125,185 L14,185 L14,178.5 A12.5,12.5 0 0 1 26.5,166" fill="#F1F1F1"/>
+      <rect fill="none" height="370" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="111" x="14" y="166"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="125" y1="185" y2="185"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="49.288" y="176.889">State2</text>
+    </g>
+    <g class="entity" data-qualified-name="Playing1" data-source-line="5" id="ent0001">
+      <path d="M146,371 L222.374,371 A12.5,12.5 0 0 1 234.874,383.5 L234.874,395 L133.5,395 L133.5,383.5 A12.5,12.5 0 0 1 146,371" fill="#F1F1F1"/>
+      <rect fill="none" height="264" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="101.374" x="133.5" y="371"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="133.5" x2="234.874" y1="395" y2="395"/>
+      <text fill="#000" font-size="14" textLength="53.812" x="157.281" y="386.889">Playing1</text>
+      <ellipse cx="177.106" cy="417" fill="#F1F1F1" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="172.031" y="420.889">H</text>
+      <g class="entity" data-qualified-name="Playing1.Moving" data-source-line="6" id="ent0007">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="65.15" x="144.606" y="467"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="144.606" x2="209.756" y1="491" y2="491"/>
+        <text fill="#000" font-size="14" textLength="45.15" x="154.606" y="482.889">Moving</text>
+      </g>
+      <g class="entity" data-qualified-name="Playing1.Shooting" data-source-line="7" id="ent0009">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75.3" x="139.606" y="570"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="139.606" x2="214.906" y1="594" y2="594"/>
+        <text fill="#000" font-size="14" textLength="55.3" x="149.606" y="585.889">Shooting</text>
+      </g>
+      <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+        <polygon fill="#181818" points="177.106,466.724,181.106,457.724,177.106,461.724,173.106,457.724,177.106,466.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M177.106,430.25 C177.106,439.979 177.106,449.384 177.106,461.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+        <polygon fill="#181818" points="156.645,569.966,155.297,560.21,154.008,565.718,148.5,564.429,156.645,569.966" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M157.621,517.089 C154.117,522.665 150.985,528.793 149.106,535 C145.492,546.937 147.516,555.261 154.008,565.718" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="31.769" x="151.106" y="547.111">shoot</text>
+      </g>
+      <g class="link" data-entity-1="ent0009" data-entity-2="ent0007" data-link-type="dependency" id="lnk11">
+        <polygon fill="#181818" points="181.862,517.345,179.35,526.868,182.66,522.28,187.248,525.591,181.862,517.345" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M182.163,569.926 C183.838,559.245 185.059,546.513 184.106,535 C183.63,529.254 183.593,528.046 182.66,522.28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="31.769" x="186.106" y="547.111">move</text>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="3" id="ent0003">
+      <ellipse cx="109" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="State1" data-source-line="3" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="79" y="73"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="79" x2="139.425" y1="97" y2="97"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="89" y="88.889">State1</text>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="19" id="ent0020">
+      <ellipse cx="144" cy="292" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="144" cy="292" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <ellipse cx="67" cy="202" fill="#F1F1F1" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="61.925" y="205.889">H</text>
+    <g class="entity" data-qualified-name="State2.Initializing" data-source-line="12" id="ent0013">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="81.6" x="26" y="268"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="26" x2="107.6" y1="292" y2="292"/>
+      <text fill="#000" font-size="14" textLength="61.6" x="36" y="283.889">Initializing</text>
+    </g>
+    <g class="entity" data-qualified-name="State2.Playing2" data-source-line="14" id="ent0016">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="73.813" x="22" y="478"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22" x2="95.813" y1="502" y2="502"/>
+      <text fill="#000" font-size="14" textLength="53.812" x="32" y="493.889">Playing2</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="109,72.724,113,63.724,109,67.724,105,63.724,109,72.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M109,36.25 C109,45.979 109,55.384 109,67.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0013" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="67,267.666,71,258.666,67,262.666,63,258.666,67,267.666" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M67,215.145 C67,228.28 67,245.49 67,262.666" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0001" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="166.319,370.668,166.664,360.826,164.449,366.031,159.244,363.817,166.319,370.668" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108.083,311.67 C124.817,319.635 141.517,328.838 147,336 C154.987,346.434 159.445,353.618 164.449,366.031" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="52" x="159" y="348.111">play_first</text>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0016" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="59.927,477.887,64.27,469.048,60.12,472.891,56.276,468.74,59.927,477.887" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M66.067,318.267 C64.525,358.347 61.657,432.913 60.12,472.891" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="73.044" x="68" y="348.111">play_second</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="87.324,165.997,86.885,156.158,85.091,161.523,79.726,159.729,87.324,165.997" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M91.585,123.32 C88.457,128.882 85.666,134.946 84,141 C81.996,148.285 82.07,150.695 84,158 C84.449,159.699 85.368,161.941 86.599,164.515 C86.753,164.837 86.912,165.164 87.075,165.496 C87.157,165.662 85.007,161.355 85.091,161.523" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.188" x="86" y="153.111">start</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="111.719,123.402,108.564,132.732,112.179,128.381,116.53,131.996,111.719,123.402" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M112.715,165.962 C112.719,165.893 112.723,165.824 112.727,165.755 C112.735,165.617 112.742,165.479 112.75,165.34 C112.765,165.064 112.78,164.787 112.795,164.51 C112.854,163.4 112.907,162.282 112.955,161.16 C113.05,158.916 113.121,156.652 113.162,154.39 C113.244,149.865 113.207,145.346 113,141 C112.729,135.293 112.712,134.144 112.179,128.381" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="35.425" x="116" y="153.111">pause</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0020" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="139.603,280.945,139.994,271.104,137.755,276.299,132.56,274.061,139.603,280.945" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M125.046,244.344 C125.084,244.44 125.122,244.535 125.16,244.63 C125.311,245.011 125.463,245.393 125.615,245.774 C125.918,246.537 126.222,247.301 126.526,248.065 C131.388,260.29 134.4,267.863 137.755,276.299" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="129" y="245.111">quit</text>
+    </g>
+  </g>
+</svg>

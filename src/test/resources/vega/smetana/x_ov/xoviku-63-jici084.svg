@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="123px" preserveAspectRatio="none" style="width:134px;height:123px;background:#FFFFFF;" version="1.1" viewBox="0 0 134 123" width="134px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="14" id="ent0001">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27.788" x="92.344" y="12"/>
+      <text fill="#000" font-size="14" x="102.344" y="25.889">a</text>
+    </g>
+    <!--entity b-->
+    <g class="entity" data-qualified-name="b" data-source-line="15" id="ent0002">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27.788" x="92.344" y="89"/>
+      <text fill="#000" font-size="14" x="102.344" y="102.889">b</text>
+    </g>
+    <line style="stroke:#F00;stroke-width:3;stroke-dasharray:3,2;" x1="106.238" x2="106.238" y1="32" y2="89"/>
+    <polygon fill="#F00" points="106.238,89,110.238,80,106.238,84,102.238,80,106.238,89" style="stroke:#F00;stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#008000" font-size="13" textLength="88.238" x="14" y="64.111">Should be green</text>
+  </g>
+</svg>

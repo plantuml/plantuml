@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="178px" preserveAspectRatio="none" style="width:94px;height:178px;background:#FFFFFF;" version="1.1" viewBox="0 0 94 178" width="94px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster comp1-->
+    <g class="cluster" data-qualified-name="comp1" data-source-line="1" id="ent0001">
+      <path d="M41,97 L68,97 A12.5,12.5 0 0 1 80.5,109.5 L80.5,116 L28.5,116 L28.5,109.5 A12.5,12.5 0 0 1 41,97" fill="#F1F1F1"/>
+      <rect fill="none" height="31" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="52" x="28.5" y="97"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28.5" x2="80.5" y1="116" y2="116"/>
+      <text fill="#000" font-size="14" textLength="42" x="33.5" y="112.889">comp1</text>
+    </g>
+    <g class="entity" data-qualified-name="action2" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="65.15" x="17.5" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17.5" x2="82.65" y1="28" y2="28"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="27.5" y="19.889">action2</text>
+    </g>
+    <text fill="#000" font-size="14" textLength="23.363" x="36.319" y="144.889">en2</text>
+    <ellipse cx="48" cy="128" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="50,121.937,54,112.937,50,116.937,46,112.937,50,121.937" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M50,54.149 C50,75.555 50,100.841 50,116.937" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="28.194" x="52" y="84.111">info2</text>
+    </g>
+  </g>
+</svg>

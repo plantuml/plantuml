@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="200px" preserveAspectRatio="none" style="width:174px;height:200px;background:#FFFFFF;" version="1.1" viewBox="0 0 174 200" width="174px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity UC1-->
+    <g class="entity" data-qualified-name="UC1" data-source-line="1" id="ent0001">
+      <ellipse cx="53.237" cy="42.829" fill="#F1F1F1" rx="43.237" ry="30.829" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="60.725" x="22.874" y="35.068">Modeliser</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="44.268" y="49.068">les</text>
+      <text fill="#000" font-size="14" textLength="42" x="32.237" y="63.068">projets</text>
+    </g>
+    <!--entity inter-->
+    <g class="entity" data-qualified-name="inter" data-source-line="2" id="ent0002">
+      <ellipse cx="136.242" cy="42.899" fill="#F1F1F1" rx="22.242" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="122.636" y="46.399">inter</text>
+    </g>
+    <!--entity toto-->
+    <g class="entity" data-qualified-name="toto" data-source-line="3" id="ent0003">
+      <ellipse cx="53.075" cy="118.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M53.075,126.5 L53.075,153.5 M40.075,134.5 L66.075,134.5 M53.075,153.5 L40.075,168.5 M53.075,153.5 L66.075,168.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="94.15" x="6" y="180.889">Le Fameux Toto</text>
+    </g>
+  </g>
+</svg>

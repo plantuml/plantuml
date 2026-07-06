@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="166px" preserveAspectRatio="none" style="width:155px;height:166px;background:#FFFFFF;" version="1.1" viewBox="0 0 155 166" width="155px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class dummy-->
+    <g class="entity" data-qualified-name="dummy" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.85" x="33.5" y="102"/>
+      <ellipse cx="48.5" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="43.5" y="123">C</text>
+      <text fill="#000" font-size="14" textLength="45.85" x="62.5" y="121.889">dummy</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="34.5" x2="110.35" y1="134" y2="134"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="34.5" x2="110.35" y1="142" y2="142"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="3" id="ent0003">
+      <path d="M6,12 L6,66 A0,0 0 0 0 6,66 L68.5,66 L72.5,101.752 L76.5,66 L138.913,66 A0,0 0 0 0 138.913,66 L138.913,22 L128.913,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M128.913,12 L128.913,22 L138.913,22 L128.913,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="38.269" x="12" y="32.111">In java,</text>
+      <text fill="#000" font-size="18" textLength="43.988" x="50.269" y="31">every</text>
+      <text fill="#000" font-size="13" x="94.256" y="32.111"> </text>
+      <text fill="#000" font-size="13" text-decoration="underline" textLength="29.656" x="94.256" y="32.111">class</text>
+      <text fill="#000" font-size="13" font-weight="700" textLength="45.5" x="12" y="45.111">extends</text>
+      <text fill="#000" font-size="13" font-style="italic" textLength="20.231" x="12" y="58.111">this</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="32.231" y="58.111">one.</text>
+    </g>
+  </g>
+</svg>

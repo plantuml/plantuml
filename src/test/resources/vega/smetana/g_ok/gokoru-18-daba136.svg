@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="223px" preserveAspectRatio="none" style="width:196px;height:223px;background:#FFFFFF;" version="1.1" viewBox="0 0 196 223" width="196px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M14.5,105 L45.863,105 A3.75,3.75 0 0 1 48.363,107.5 L55.363,125 L179.5,125 A2.5,2.5 0 0 1 182,127.5 L182,205.5 A2.5,2.5 0 0 1 179.5,208 L14.5,208 A2.5,2.5 0 0 1 12,205.5 L12,107.5 A2.5,2.5 0 0 1 14.5,105" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="12" x2="55.363" y1="125" y2="125"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="16" y="117.889">color</text>
+    <!--class red-->
+    <g class="entity" data-qualified-name="color.red" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.213" x="114.788" y="145"/>
+      <ellipse cx="129.788" cy="161" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="124.788" y="166">C</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="143.788" y="164.889">red</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="115.788" x2="166" y1="177" y2="177"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="115.788" x2="166" y1="185" y2="185"/>
+    </g>
+    <!--class green-->
+    <g class="entity" data-qualified-name="color.green" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.788" x="27" y="145"/>
+      <ellipse cx="42" cy="161" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="37" y="166">C</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="56" y="164.889">green</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28" x2="93.788" y1="177" y2="177"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28" x2="93.788" y1="185" y2="185"/>
+    </g>
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.425" x="115.181" y="12"/>
+      <ellipse cx="130.181" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="125.181" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="144.181" y="31.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="116.181" x2="165.606" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="116.181" x2="165.606" y1="52" y2="52"/>
+    </g>
+    <!--class bar-->
+    <g class="entity" data-qualified-name="bar" data-source-line="9" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.213" x="42.969" y="12"/>
+      <ellipse cx="57.969" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="52.969" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="71.969" y="31.889">bar</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43.969" x2="94.181" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43.969" x2="94.181" y1="52" y2="52"/>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="140.894" x2="140.894" y1="60" y2="145"/>
+    <polygon fill="#181818" points="140.894,145,144.894,136,140.894,140,136.894,136,140.894,145" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

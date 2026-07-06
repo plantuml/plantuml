@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="121px" preserveAspectRatio="none" style="width:126px;height:121px;" version="1.1" viewBox="0 0 126 121" width="126px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster n-->
+    <g class="cluster" data-qualified-name="n" data-source-line="7" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,110,4,110,76,100,86,14,86,14,14" style="stroke:#E7E7E7;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#E7E7E7;stroke-width:1;" x1="100" x2="110" y1="14" y2="4"/>
+      <line style="stroke:#E7E7E7;stroke-width:1;" x1="14" x2="100" y1="14" y2="14"/>
+      <line style="stroke:#E7E7E7;stroke-width:1;" x1="100" x2="100" y1="14" y2="86"/>
+      <text fill="#FFF" font-size="14" font-weight="700" x="54.106" y="27.889">n</text>
+    </g>
+    <!--entity f-->
+    <g class="entity" data-qualified-name="n.f" data-source-line="8" id="ent0002">
+      <path d="M78,41.5 L78,70.5 A2.5,2.5 0 0 0 80.5,73 L99.35,73 A2.5,2.5 0 0 0 101.85,70.5 L101.85,49 L91.85,39 L80.5,39 A2.5,2.5 0 0 0 78,41.5" fill="#0E0E0E" style="stroke:#E7E7E7;stroke-width:0.5;"/>
+      <path d="M91.85,39 L91.85,46.5 A2.5,2.5 0 0 0 94.35,49 L101.85,49" fill="#0E0E0E" style="stroke:#E7E7E7;stroke-width:0.5;"/>
+      <text fill="#FFF" font-size="14" x="88" y="59.889">f</text>
+    </g>
+    <!--entity c-->
+    <g class="entity" data-qualified-name="n.c" data-source-line="9" id="ent0003">
+      <path d="M30.735,42.793 C31.564,39.851 34.076,39.688 35.766,41.963 C37.29,39.067 39.482,38.773 41.803,41.03 C43.924,38.931 45.177,39.749 46.29,42.057 C48.499,39.836 51.494,39.767 52.352,43.445 C60.169,45.584 63.017,49.336 58.285,56.977 C63.495,63.845 59.778,69.615 51.907,70.149 C50.861,75.871 46.24,78.848 41.102,74.572 C37.126,79.101 32.278,77.421 30.813,71.981 C23.193,67.983 24.335,61.915 30.048,57.226 C22.842,52.294 24.064,47.064 30.735,42.793" fill="#0E0E0E" style="stroke:#E7E7E7;stroke-width:0.5;"/>
+      <text fill="#FFF" font-size="14" x="37.5" y="59.889">c</text>
+    </g>
+    <g class="footer" data-source-line="11">
+      <text fill="#777" font-size="10" textLength="105.563" x="6.719" y="111.778">Observed on V1.2020.19</text>
+    </g>
+  </g>
+</svg>

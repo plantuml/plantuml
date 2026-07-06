@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="203px" preserveAspectRatio="none" style="width:317px;height:203px;background:#FFFFFF;" version="1.1" viewBox="0 0 317 203" width="317px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <path d="M70,4 L80.363,4 A3.75,3.75 0 0 1 82.863,6.5 L89.863,24 L299,24 A2.5,2.5 0 0 1 301.5,26.5 L301.5,176.5 A2.5,2.5 0 0 1 299,179 L70,179 A2.5,2.5 0 0 1 67.5,176.5 L67.5,6.5 A2.5,2.5 0 0 1 70,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="67.5" x2="89.863" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="71.5" y="16.889">A</text>
+    </g>
+    <!--cluster physical1-->
+    <g class="cluster" data-qualified-name="A.physical1" data-source-line="3" id="ent0003">
+      <polygon fill="none" points="159.5,39,169.5,29,293.5,29,293.5,161,283.5,171,159.5,171,159.5,39" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="283.5" x2="293.5" y1="39" y2="29"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="159.5" x2="283.5" y1="39" y2="39"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="283.5" x2="283.5" y1="39" y2="171"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="58.45" x="193.275" y="52.889">physical1</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="8" id="ent0005">
+      <path d="M8.5,62.5 L30.862,62.5 A3.75,3.75 0 0 1 33.363,65 L40.363,82.5 L54.863,82.5 A2.5,2.5 0 0 1 57.363,85 L57.363,97 A2.5,2.5 0 0 1 54.863,99.5 L8.5,99.5 A2.5,2.5 0 0 1 6,97 L6,65 A2.5,2.5 0 0 1 8.5,62.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="40.363" y1="82.5" y2="82.5"/>
+      <text fill="#000" font-size="14" font-weight="700" x="16" y="76.389">B</text>
+    </g>
+    <!--entity router-->
+    <g class="entity" data-qualified-name="A.router" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.488" x="75.5" y="59"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="131.988" y="64"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="129.988" y="66"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="129.988" y="70"/>
+      <text fill="#000" font-size="14" textLength="36.488" x="90.5" y="89.889">router</text>
+    </g>
+    <!--entity L-->
+    <g class="entity" data-qualified-name="A.physical1.L" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.788" x="203.5" y="59"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="231.288" y="64"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="229.288" y="66"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="229.288" y="70"/>
+      <text fill="#000" font-size="14" x="218.5" y="89.889">L</text>
+    </g>
+    <!--entity A.physical1.L-->
+    <g class="entity" data-qualified-name="A.physical1.A.physical1.L" data-source-line="11" id="ent0006">
+      <ellipse cx="227.5" cy="148" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="83.3" x="185.85" y="175.889">A.physical1.L</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M227.5,103.143 C227.5,114.995 227.5,129.292 227.5,138.952" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

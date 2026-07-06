@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="196px" preserveAspectRatio="none" style="width:231px;height:196px;background:#FFFFFF;" version="1.1" viewBox="0 0 231 196" width="231px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Db1-->
+    <g class="entity" data-qualified-name="Db1" data-source-line="1" id="ent0001">
+      <path d="M6,29 C6,19 35.317,19 35.317,19 C35.317,19 64.633,19 64.633,29 L64.633,52 C64.633,62 35.317,62 35.317,62 C35.317,62 6,62 6,52 L6,29" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,29 C6,39 35.317,39 35.317,39 C35.317,39 64.633,39 64.633,29" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.3" x="16" y="53.889">DB 1</text>
+      <path d="M44.3,44.167 L44.3,53.5 L52.467,53.5 L52.467,48.833 L47.8,48.833 L47.8,44.167 L44.3,44.167 M48.967,44.167 L48.967,47.667 L52.467,47.667 L48.967,44.167" fill="#000"/>
+    </g>
+    <!--entity Db2-->
+    <g class="entity" data-qualified-name="Db2" data-source-line="2" id="ent0002">
+      <path d="M83,22 C83,12 115.438,12 115.438,12 C115.438,12 147.875,12 147.875,22 L147.875,59 C147.875,69 115.438,69 115.438,69 C115.438,69 83,69 83,59 L83,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M83,22 C83,32 115.438,32 115.438,32 C115.438,32 147.875,32 147.875,22" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="42.875" x="94" y="46.889">«&amp;file»</text>
+      <text fill="#000" font-size="14" textLength="27.3" x="101.788" y="60.889">DB 2</text>
+    </g>
+    <!--entity Db3-->
+    <g class="entity" data-qualified-name="Db3" data-source-line="3" id="ent0003">
+      <path d="M166,22 C166,12 190.454,12 190.454,12 C190.454,12 214.908,12 214.908,22 L214.908,59 C214.908,69 190.454,69 190.454,69 C190.454,69 166,69 166,59 L166,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M166,22 C166,32 190.454,32 190.454,32 C190.454,32 214.908,32 214.908,22" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" x="177" y="46.889">«</text>
+      <path d="M185.788,37.167 L185.788,46.5 L193.954,46.5 L193.954,41.833 L189.288,41.833 L189.288,37.167 L185.788,37.167 M190.454,37.167 L190.454,40.667 L193.954,40.667 L190.454,37.167" fill="#000"/>
+      <text fill="#000" font-size="14" font-style="italic" x="196.121" y="46.889">»</text>
+      <text fill="#000" font-size="14" textLength="27.3" x="176.804" y="60.889">DB 3</text>
+    </g>
+    <!--entity Db4_valid-->
+    <g class="entity" data-qualified-name="Db4_valid" data-source-line="4" id="ent0004">
+      <path d="M6,131 C6,121 35.317,121 35.317,121 C35.317,121 64.633,121 64.633,131 L64.633,154 C64.633,164 35.317,164 35.317,164 C35.317,164 6,164 6,154 L6,131" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,131 C6,141 35.317,141 35.317,141 C35.317,141 64.633,141 64.633,131" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.3" x="16" y="155.889">DB 4</text>
+      <path d="M44.3,146.167 L44.3,155.5 L52.467,155.5 L52.467,150.833 L47.8,150.833 L47.8,146.167 L44.3,146.167 M48.967,146.167 L48.967,149.667 L52.467,149.667 L48.967,146.167" fill="#000"/>
+    </g>
+    <!--entity Db4-->
+    <g class="entity" data-qualified-name="Db4" data-source-line="5" id="ent0005">
+      <path d="M83,126.5 C83,116.5 106.65,116.5 106.65,116.5 C106.65,116.5 130.3,116.5 130.3,126.5 L130.3,158.833 C130.3,168.833 106.65,168.833 106.65,168.833 C106.65,168.833 83,168.833 83,158.833 L83,126.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M83,126.5 C83,136.5 106.65,136.5 106.65,136.5 C106.65,136.5 130.3,136.5 130.3,126.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M94,140.5 L94,149.833 L102.167,149.833 L102.167,145.167 L97.5,145.167 L97.5,140.5 L94,140.5 M98.667,140.5 L98.667,144 L102.167,144 L98.667,140.5" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="27.3" x="93" y="160.722">DB 4</text>
+    </g>
+    <!--entity Db5-->
+    <g class="entity" data-qualified-name="Db5" data-source-line="6" id="ent0006">
+      <path d="M148.5,115 C148.5,105 174.5,105 174.5,105 C174.5,105 200.5,105 200.5,115 L200.5,170 C200.5,180 174.5,180 174.5,180 C174.5,180 148.5,180 148.5,170 L148.5,115" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M148.5,115 C148.5,125 174.5,125 174.5,125 C174.5,125 200.5,125 200.5,115" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <image height="32" width="32" x="158.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABRklEQVR4XsWUy22FMBBFXyuUQAk0EIkSKIESKIF9NpRACZRACayzogJH15Ktyb3EMTxpsjh8DtgznjG8zvN8/ScivBHhjQhvRHgjwhsR3ojwRsRTjuP4YFeDiCdM0xSapgld14V93z/5eQkRNczzHIZhCOM4xjOCJ5AMv19CRAmUGatE0GVZMm3b5gSQHI8r8eMG5Sv1su/7uGr227Z9Iam7wUGewK7iqowIANi/SzzY4Il1XWMwJIeyY/Wl6tSA6gG7UWNfOXiCE8P9O9i5Uit/rQD6iUwZVAYVwRhc8/MSaCHGYuPmCuAAYYOj3Fw+Biuoec9y1cJ8gQyx6tT7GtK/gD3mSJ/oX/OJuEP6L/BXwy3lcRYRd0Hl0p7AGfB+4jEWEU+xm821AldgL1n4uUWENyK8EeGNCG9EeCPCGxHeiPBGhDffaEvi8oHY2soAAAAASUVORK5CYII=" y="129"/>
+      <text fill="#000" font-size="14" textLength="27.3" x="160.85" y="171.889">DB 5</text>
+    </g>
+  </g>
+</svg>

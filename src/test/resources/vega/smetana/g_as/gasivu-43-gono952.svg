@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="446px" preserveAspectRatio="none" style="width:400px;height:446px;background:#FFFFFF;" version="1.1" viewBox="0 0 400 446" width="400px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class User-->
+    <g class="entity" data-qualified-name="User" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="254.813" x="129" y="12"/>
+      <ellipse cx="237.369" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="232.369" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="257.869" y="31.889">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="130" x2="382.813" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="130" x2="382.813" y1="52" y2="52"/>
+      <text fill="#000" font-size="14" textLength="217.963" x="135" y="66.889">boolean hasRight(Right rightToTest)</text>
+      <text fill="#000" font-size="14" textLength="192.325" x="135" y="80.889">void addRight(Right rightToAdd)</text>
+      <text fill="#000" font-size="14" textLength="242.813" x="135" y="94.889">void removeRight(Right rightToRemove)</text>
+      <text fill="#000" font-size="14" textLength="124.513" x="135" y="108.889">Vector getAllRights()</text>
+      <text fill="#000" font-size="14" textLength="222.338" x="135" y="122.889">Vector getRights(Group groupToGet)</text>
+      <text fill="#000" font-size="14" textLength="130.638" x="135" y="136.889">Vector getAllGroups()</text>
+    </g>
+    <!--class Group-->
+    <g class="entity" data-qualified-name="Group" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="254.813" x="6" y="197"/>
+      <ellipse cx="109.731" cy="213" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="104.731" y="218">C</text>
+      <text fill="#000" font-size="14" textLength="38.85" x="130.231" y="216.889">Group</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="259.813" y1="229" y2="229"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="259.813" y1="237" y2="237"/>
+      <text fill="#000" font-size="14" textLength="124.513" x="12" y="251.889">Vector getAllRights()</text>
+      <text fill="#000" font-size="14" textLength="192.325" x="12" y="265.889">void addRight(Right rightToAdd)</text>
+      <text fill="#000" font-size="14" textLength="242.813" x="12" y="279.889">void removeRight(Right rightToRemove)</text>
+      <text fill="#000" font-size="14" textLength="124.513" x="12" y="293.889">Vector getAllRights()</text>
+    </g>
+    <!--class Right-->
+    <g class="entity" data-qualified-name="Right" data-source-line="9" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="248.513" x="116" y="354"/>
+      <ellipse cx="219.644" cy="370" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="214.644" y="375">C</text>
+      <text fill="#000" font-size="14" textLength="32.725" x="240.144" y="373.889">Right</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="117" x2="363.513" y1="386" y2="386"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="117" x2="363.513" y1="394" y2="394"/>
+      <text fill="#000" font-size="14" textLength="186.025" x="122" y="408.889">void addUser(User userToAdd)</text>
+      <text fill="#000" font-size="14" textLength="236.513" x="122" y="422.889">void removeUser(User userToRemove)</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="aggregation" id="lnk3">
+      <polygon fill="none" points="208.945,144.34,202.18,146.837,201.884,154.042,208.648,151.545,208.945,144.34" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M201.884,154.042 C189.174,171.504 182.688,180.417 170.631,196.983" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="57.769" x="197.5" y="174.111">appartient</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="aggregation" id="lnk5">
+      <polygon fill="none" points="267.638,144.441,264.445,150.906,269.185,156.341,272.378,149.875,267.638,144.441" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M269.185,156.341 C274.957,200.743 277.71,248.749 269.5,301 C266.697,318.839 260.948,337.964 255.303,353.977" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="276.5" y="252.611">possede</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="aggregation" id="lnk6">
+      <polygon fill="none" points="172.432,301.303,172.873,308.501,179.686,310.862,179.246,303.665,172.432,301.303" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M179.686,310.862 C192.832,328.185 199.994,337.623 212.162,353.657" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="45.5" x="199.5" y="331.111">contient</text>
+    </g>
+  </g>
+</svg>

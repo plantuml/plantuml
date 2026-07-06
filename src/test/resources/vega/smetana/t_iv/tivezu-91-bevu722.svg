@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="100px" preserveAspectRatio="none" style="width:169px;height:100px;background:#FFFFFF;" version="1.1" viewBox="0 0 169 100" width="169px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="34" id="ent0001">
+      <rect fill="#F1F1F1" height="72.308" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.429" x="6" y="12"/>
+      <image height="10" width="28" x="11.475" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAKCAYAAACngj4SAAAAVUlEQVR4XrXN0QkAIAgEUPff1gmMAkFM8iT9uECleyREgoaZ6Se74zxIob/7GUkK2l12R3KBWXxBFW0BK2gbiKDa0Qa+UN23gxFq5xHQIv7PGBhhuls/qbMPzCqEagAAAABJRU5ErkJggg==" y="19"/>
+      <text fill="#000" font-size="14" textLength="24.15" x="42.803" y="27.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="70.429" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="23.275" x="12" y="50.889">I am</text>
+      <image height="11" width="30" x="35.275" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAALCAYAAABoKz2KAAABQ0lEQVR4XmNgYGD4TyzW0tK6+PHjRwZKsaSk5GMGZIMXLlwYcv36dWlsGCSnra19EdkAQ0PDM6dPn9ZEN5gQlpKSeoJi8datWx2QFUydOjWxsrKyHsQGyaFbDLLU3d19y/79+03QDceHMSzW1dU9b2Njsx+GFRQU7kpISDwDsUFy6BaD8IEDB0yjoqLmb9++3RZdDhfGsJgQxmYxCIMszczMnLBx40YXdDlsmGoWgzDI0uLi4ta1a9d6oMvB8Js3b1hTUlKmcnFxfaGaxSAMsrSioqJhzZo1nuhyjx8/5i8sLOxoaGgo5+Pj+0BVi0EYZCnIcmSf3717V7S+vr6itLS0BeRrqgY1MgZZCgp2UPDfvHlTsrOzMy8/P78LJk8zi0EYZCkowfX19WVmZWX1IcuRbDGpJdfixYsDQVkRXRxUcgEAD4qjt+IVkRoAAAAASUVORK5CYII=" y="43.231"/>
+      <text fill="#000" font-size="14" x="12" y="69.197">Y</text>
+      <image height="18" width="2" x="21.362" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAASCAYAAABxYA+/AAAAfklEQVR4Xh3NMREDIRQFwCcgM+cABygABaAAFJyDc0CRHgWgAARkoEuqc4CD65PmJT/F1gsA/Nu2jQJKKQporSlgjKG1lnDO0XtPhBAYYyT2fafAcRwUSClRIOdMgVIKa61Ea+3de/9gjPGcc75wnuddYK3lBa7rugn8wof4ArjHT4cQ3nnmAAAAAElFTkSuQmCC" y="54"/>
+      <text fill="#000" font-size="14" textLength="35.788" x="23.516" y="69.197">ou are</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="70.429" y1="76.308" y2="76.308"/>
+    </g>
+    <!--class Foo2-->
+    <g class="entity" data-qualified-name="Foo2" data-source-line="39" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.938" x="89.5" y="24"/>
+      <ellipse cx="104.5" cy="40" fill="#F00" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="99.5" y="45">F</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="118.5" y="43.889">Foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="90.5" x2="152.438" y1="56" y2="56"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="90.5" x2="152.438" y1="64" y2="64"/>
+    </g>
+  </g>
+</svg>

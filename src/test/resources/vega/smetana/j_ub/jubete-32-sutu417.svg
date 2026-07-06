@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="HCL" height="157px" preserveAspectRatio="none" style="width:1282px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 1282 157" width="1282px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="510.875" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="15" y="22.889">source</text>
+    <text fill="#000" font-size="14" textLength="407.575" x="108.3" y="22.889">terraform-google-modules/iam/google/modules/organizations_iam</text>
+    <line style="stroke:#000;stroke-width:1;" x1="103.3" x2="103.3" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="520.875" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="83.3" x="15" y="40.889">organizations</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="108.3" y="40.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="103.3" x2="103.3" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="520.875" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="15" y="58.889">mode</text>
+    <text fill="#000" font-size="14" textLength="76.212" x="108.3" y="58.889">authoritative</text>
+    <line style="stroke:#000;stroke-width:1;" x1="103.3" x2="103.3" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="520.875" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.238" x="15" y="76.889">bindings</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="108.3" y="76.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="103.3" x2="103.3" y1="64" y2="82"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="510.875" x="10" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="140.725" x="631" y="10"/>
+    <text fill="#000" font-size="14" textLength="130.725" x="636" y="22.889">my-organization_one</text>
+    <line style="stroke:#000;stroke-width:1;" x1="631" x2="771.725" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" textLength="129.15" x="636" y="40.889">my-organization_two</text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="140.725" x="631" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="286.875" x="558" y="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="266.875" x="563" y="76.889">roles/resourcemanager.organizationViewer</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="839.875" y="76.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="834.875" x2="834.875" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="558" x2="844.875" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="234.85" x="563" y="94.889">roles/resourcemanager.projectDeleter</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="839.875" y="94.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="834.875" x2="834.875" y1="82" y2="100"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="286.875" x="558" y="64"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="388.087" x="882" y="19"/>
+    <text fill="#000" font-size="14" textLength="378.087" x="887" y="31.889">serviceAccount:my-sa@my-project.iam.gserviceaccount.com</text>
+    <line style="stroke:#000;stroke-width:1;" x1="882" x2="1270.087" y1="37" y2="37"/>
+    <text fill="#000" font-size="14" textLength="186.725" x="887" y="49.889">group:my-group@my-org.com</text>
+    <line style="stroke:#000;stroke-width:1;" x1="882" x2="1270.087" y1="55" y2="55"/>
+    <text fill="#000" font-size="14" textLength="169.575" x="887" y="67.889">user:my-user@my-org.com</text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="388.087" x="882" y="19"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="388.087" x="882" y="91"/>
+    <text fill="#000" font-size="14" textLength="378.087" x="887" y="103.889">serviceAccount:my-sa@my-project.iam.gserviceaccount.com</text>
+    <line style="stroke:#000;stroke-width:1;" x1="882" x2="1270.087" y1="109" y2="109"/>
+    <text fill="#000" font-size="14" textLength="186.725" x="887" y="121.889">group:my-group@my-org.com</text>
+    <line style="stroke:#000;stroke-width:1;" x1="882" x2="1270.087" y1="127" y2="127"/>
+    <text fill="#000" font-size="14" textLength="169.575" x="887" y="139.889">user:my-user@my-org.com</text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="388.087" x="882" y="91"/>
+    <path d="M509,37 L522,37 C555.274,37 591.984,35.43 623.453,33.601" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M623.641,36.754 L625.818,33.46 L623.265,30.448 L631.335,33.131 L623.641,36.754" fill="#000"/>
+    <ellipse cx="509" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M833,73 L846,73 C855.339,73 864.876,72.777 874.5,72.371" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M874.645,75.465 L876.82,72.262 L874.354,69.277 L882.234,72.007 L874.645,75.465" fill="#000"/>
+    <ellipse cx="833" cy="73" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M833,91 L846,91 C855.339,91 864.876,91.223 874.5,91.629" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M874.354,94.723 L876.82,91.738 L874.645,88.535 L882.234,91.993 L874.354,94.723" fill="#000"/>
+    <ellipse cx="833" cy="91" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M509,73 L522,73 C531.33,73 540.93,73.123 550.609,73.341" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M550.531,76.452 L552.941,73.4 L550.686,70.231 L558.384,73.536 L550.531,76.452" fill="#000"/>
+    <ellipse cx="509" cy="73" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

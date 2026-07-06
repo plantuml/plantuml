@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="468px" preserveAspectRatio="none" style="width:568px;height:468px;background:#FFFFFF;" version="1.1" viewBox="0 0 568 468" width="568px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster App-->
+    <g class="cluster" data-qualified-name="App" data-source-line="3" id="ent0002">
+      <path d="M208,12 L233.938,12 A3.75,3.75 0 0 1 236.438,14.5 L243.438,32 L345,32 A2.5,2.5 0 0 1 347.5,34.5 L347.5,156.5 A2.5,2.5 0 0 1 345,159 L208,159 A2.5,2.5 0 0 1 205.5,156.5 L205.5,14.5 A2.5,2.5 0 0 1 208,12" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="205.5" x2="243.438" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="209.5" y="24.889">App</text>
+    </g>
+    <!--cluster Http-->
+    <g class="cluster" data-qualified-name="App.Http" data-source-line="3" id="ent0003">
+      <path d="M216,37 L242.638,37 A3.75,3.75 0 0 1 245.138,39.5 L252.138,57 L337,57 A2.5,2.5 0 0 1 339.5,59.5 L339.5,148.5 A2.5,2.5 0 0 1 337,151 L216,151 A2.5,2.5 0 0 1 213.5,148.5 L213.5,39.5 A2.5,2.5 0 0 1 216,37" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="213.5" x2="252.138" y1="57" y2="57"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.637" x="217.5" y="49.889">Http</text>
+    </g>
+    <!--cluster Controllers-->
+    <g class="cluster" data-qualified-name="App.Http.Controllers" data-source-line="3" id="ent0004">
+      <path d="M224,62 L292.725,62 A3.75,3.75 0 0 1 295.225,64.5 L302.225,82 L329,82 A2.5,2.5 0 0 1 331.5,84.5 L331.5,140.5 A2.5,2.5 0 0 1 329,143 L224,143 A2.5,2.5 0 0 1 221.5,140.5 L221.5,64.5 A2.5,2.5 0 0 1 224,62" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="221.5" x2="302.225" y1="82" y2="82"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="67.725" x="225.5" y="74.889">Controllers</text>
+    </g>
+    <!--class FOOController-->
+    <g class="entity" data-qualified-name="FOOController" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="174" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="259.1" x="6" y="278"/>
+      <ellipse cx="85.8" cy="294" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="80.8" y="299">C</text>
+      <text fill="#000" font-size="14" textLength="91" x="106.3" y="297.889">FOOController</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="264.1" y1="310" y2="310"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="322.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="30.275" x="26" y="324.889">FOO</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="264.1" y1="332" y2="332"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="344.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="233.1" x="26" y="346.889">__construct( FOORepositoryInterface )</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="358.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="42.787" x="26" y="360.889">index()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="372.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="48.125" x="26" y="374.889">create()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="386.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="40.337" x="26" y="388.889">store()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="400.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="42" x="26" y="402.889">show()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="414.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="31.85" x="26" y="416.889">edit()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="428.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.062" x="26" y="430.889">update()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="442.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="55.125" x="26" y="444.889">destroy()</text>
+    </g>
+    <!--class NAMEController-->
+    <g class="entity" data-qualified-name="NAMEController" data-source-line="3" id="ent0008">
+      <rect fill="#F1F1F1" height="174" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="269.338" x="283" y="278"/>
+      <ellipse cx="362.8" cy="294" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="357.8" y="299">C</text>
+      <text fill="#000" font-size="14" textLength="101.238" x="383.3" y="297.889">NAMEController</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="284" x2="551.338" y1="310" y2="310"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="294" cy="322.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="40.512" x="303" y="324.889">NAME</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="284" x2="551.338" y1="332" y2="332"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="294" cy="344.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="243.338" x="303" y="346.889">__construct( NAMERepositoryInterface )</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="294" cy="358.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="42.787" x="303" y="360.889">index()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="294" cy="372.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="48.125" x="303" y="374.889">create()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="294" cy="386.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="40.337" x="303" y="388.889">store()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="294" cy="400.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="42" x="303" y="402.889">show()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="294" cy="414.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="31.85" x="303" y="416.889">edit()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="294" cy="428.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.062" x="303" y="430.889">update()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="294" cy="442.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="55.125" x="303" y="444.889">destroy()</text>
+    </g>
+    <!--class Controller-->
+    <g class="entity" data-qualified-name="App.Http.Controllers.Controller" data-source-line="3" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.725" x="230" y="87"/>
+      <ellipse cx="245" cy="103" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="240" y="108">C</text>
+      <text fill="#000" font-size="14" textLength="60.725" x="259" y="106.889">Controller</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="231" x2="321.725" y1="119" y2="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="231" x2="321.725" y1="127" y2="127"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="263.488,135.256,249.463,148.034,259.935,153.894,263.488,135.256" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M254.699,150.964 C236.666,183.192 211.897,227.46 183.667,277.915" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="45.5" x="226.5" y="217.111">extends</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0008" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="289.512,135.256,293.065,153.894,303.537,148.034,289.512,135.256" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M298.301,150.964 C316.334,183.192 341.103,227.46 369.333,277.915" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="45.5" x="338.5" y="217.111">extends</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="97px" preserveAspectRatio="none" style="width:82px;height:97px;" version="1.1" viewBox="0 0 82 97" width="82px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity r-->
+    <g class="entity" data-qualified-name="r" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.638" x="26" y="32"/>
+      <text fill="#000" font-size="14" x="36" y="52.889">r</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="170px" preserveAspectRatio="none" style="width:486px;height:170px;background:#FFFFFF;" version="1.1" viewBox="0 0 486 170" width="486px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster SuperC-->
+    <g class="cluster" data-qualified-name="SuperC" data-source-line="3" id="ent0001">
+      <rect fill="none" height="110" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="464" x="14" y="36"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="458" y="41"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="456" y="43"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="456" y="47"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="47.512" x="222.244" y="59.889">SuperC</text>
+    </g>
+    <!--cluster SubC1-->
+    <g class="cluster" data-qualified-name="SuperC.SubC1" data-source-line="4" id="ent0002">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="205" x="265" y="61"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="450" y="66"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="448" y="68"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="448" y="72"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42.875" x="346.063" y="84.889">SubC1</text>
+    </g>
+    <!--cluster SubC2-->
+    <g class="cluster" data-qualified-name="SuperC.SubC2" data-source-line="9" id="ent0005">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="209" x="48" y="61"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="237" y="66"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="235" y="68"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="235" y="72"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42.875" x="131.063" y="84.889">SubC2</text>
+    </g>
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="14" id="ent0008">
+      <ellipse cx="30" cy="13" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="20.287" y="40.889">foo</text>
+    </g>
+    <!--entity Comp 1-->
+    <g class="entity" data-qualified-name="SuperC.SubC1.Comp 1" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="376.5" y="86"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="441.65" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="439.65" y="93"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="439.65" y="97"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="391.5" y="116.889">Comp 1</text>
+    </g>
+    <!--entity Comp 2-->
+    <g class="entity" data-qualified-name="SuperC.SubC1.Comp 2" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="273.5" y="86"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="338.65" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="336.65" y="93"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="336.65" y="97"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="288.5" y="116.889">Comp 2</text>
+    </g>
+    <!--entity Comp A-->
+    <g class="entity" data-qualified-name="SuperC.SubC2.Comp A" data-source-line="10" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.725" x="161.5" y="86"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="228.225" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="226.225" y="93"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="226.225" y="97"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="176.5" y="116.889">Comp A</text>
+    </g>
+    <!--entity Comp B-->
+    <g class="entity" data-qualified-name="SuperC.SubC2.Comp B" data-source-line="11" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.725" x="56.5" y="86"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="123.225" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="121.225" y="93"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="121.225" y="97"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="71.5" y="116.889">Comp B</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0001" data-link-type="extension" id="lnk9">
+      <polygon fill="none" points="30,28.036,24,46.036,36,46.036,30,28.036" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M30,46.036 C30,46.198 30,35.524 30,35.688 C30,35.77 30,35.852 30,35.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

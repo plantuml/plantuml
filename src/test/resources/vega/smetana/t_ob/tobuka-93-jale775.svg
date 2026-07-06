@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="272px" preserveAspectRatio="none" style="width:1486px;height:272px;background:#FFFFFF;" version="1.1" viewBox="0 0 1486 272" width="1486px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Verbund" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="400" x="975" y="82"/>
+      <text fill="#000" font-size="14" textLength="52.938" x="1148.531" y="94.889">Verbund</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="976" x2="1374" y1="100" y2="100"/>
+    </g>
+    <g class="entity" data-qualified-name="Wert" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="400" x="1070" y="222"/>
+      <text fill="#000" font-size="14" textLength="29.488" x="1255.256" y="234.889">Wert</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1071" x2="1469" y1="240" y2="240"/>
+    </g>
+    <g class="entity" data-qualified-name="Attribut" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="400" x="842" y="152"/>
+      <text fill="#000" font-size="14" textLength="44.275" x="1019.863" y="164.889">Attribut</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="843" x2="1241" y1="170" y2="170"/>
+    </g>
+    <g class="entity" data-qualified-name="Produkt" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="400" x="975" y="12"/>
+      <text fill="#000" font-size="14" textLength="48.212" x="1150.894" y="24.889">Produkt</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="976" x2="1374" y1="30" y2="30"/>
+    </g>
+    <g class="entity" data-qualified-name="Werteliste" data-source-line="9" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="400" x="424" y="222"/>
+      <text fill="#000" font-size="14" textLength="62.213" x="592.894" y="234.889">Werteliste</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="425" x2="823" y1="240" y2="240"/>
+    </g>
+    <g class="entity" data-qualified-name="Einheiten" data-source-line="10" id="ent0006">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="400" x="424" y="152"/>
+      <text fill="#000" font-size="14" textLength="58.45" x="594.775" y="164.889">Einheiten</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="425" x2="823" y1="170" y2="170"/>
+    </g>
+    <g class="entity" data-qualified-name="Werte" data-source-line="11" id="ent0007">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="400" x="6" y="152"/>
+      <text fill="#000" font-size="14" textLength="37.275" x="187.363" y="164.889">Werte</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="405" y1="170" y2="170"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk8">
+      <path d="M1209.403,116.082 C1224.327,124.724 1240.709,136.765 1251,152 C1265.294,173.16 1269.024,203.31 1269.89,221.717" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1263.89" y="217.828">*</text>
+      <text fill="#000" font-size="13" x="1201.403" y="127.193">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="association" id="lnk9">
+      <path d="M1291.039,46.036 C1332.243,54.297 1371.536,66.055 1384,82 C1423.044,131.949 1342.301,193.175 1297.362,221.801" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1291.362" y="217.912">*</text>
+      <text fill="#000" font-size="13" x="1283.039" y="57.148">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="association" id="lnk10">
+      <path d="M1095.744,186.029 C1132.081,196.866 1179.879,211.122 1216.222,221.961" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1210.222" y="218.072">*</text>
+      <text fill="#000" font-size="13" x="1087.744" y="197.14">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk11">
+      <path d="M1143.481,116.115 C1122.433,126.876 1094.85,140.979 1073.754,151.765" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1067.754" y="147.876">*</text>
+      <text fill="#000" font-size="13" x="1137.481" y="127.226">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="association" id="lnk12">
+      <path d="M943.469,186.029 C876.852,196.866 789.223,211.122 722.593,221.961" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="716.593" y="218.072">*</text>
+      <text fill="#000" font-size="13" x="937.469" y="197.14">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0005" data-link-type="extension" id="lnk13">
+      <polygon fill="none" points="624,221.528,630,203.528,618,203.528,624,221.528" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M624,186.115 C624,196.798 624,192.773 624,203.528" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="extension" id="lnk14">
+      <polygon fill="none" points="525.407,221.961,508.604,213.149,506.677,224.993,525.407,221.961" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M304.531,186.029 C371.148,196.866 441.011,208.231 507.641,219.071" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="association" id="lnk15">
+      <path d="M1058.961,46.036 C1017.757,54.297 978.464,66.055 966,82 C956.694,93.905 958.95,102.634 966,116 C974.279,131.696 989.667,143.557 1004.442,151.958" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="998.442" y="148.069">*</text>
+      <text fill="#000" font-size="13" x="1052.961" y="57.148">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="association" id="lnk16">
+      <path d="M1175,46.115 C1175,56.798 1175,70.773 1175,81.528" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1169" y="77.639">*</text>
+      <text fill="#000" font-size="13" x="1169" y="57.226">*</text>
+    </g>
+  </g>
+</svg>

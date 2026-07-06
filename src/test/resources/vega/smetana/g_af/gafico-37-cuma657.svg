@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="166px" preserveAspectRatio="none" style="width:592px;height:166px;background:#FFFFFF;" version="1.1" viewBox="0 0 592 166" width="592px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="3" id="ent0001">
+      <polygon fill="#F1F1F1" points="216,29,226,19,370.45,19,370.45,53,360.45,63,216,63,216,29" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="360.45" x2="370.45" y1="29" y2="19"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="216" x2="360.45" y1="29" y2="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="360.45" x2="360.45" y1="29" y2="63"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="231" y="49.889">aaa 
+ bbb</text>
+      <text fill="#000" font-size="14" textLength="21" x="277.725" y="49.889">ccc</text>
+      <line style="stroke:#00F;stroke-width:0.5;" x1="277.725" x2="298.725" y1="50.889" y2="50.889"/>
+      <text fill="#008000" font-size="14" textLength="46.725" x="298.725" y="49.889">ddd 
+ eee</text>
+      <line style="stroke:#00F;stroke-width:0.5;" x1="298.725" x2="345.45" y1="50.889" y2="50.889"/>
+    </g>
+    <!--entity b-->
+    <g class="entity" data-qualified-name="b" data-source-line="5" id="ent0002">
+      <polygon fill="#F1F1F1" points="388.5,22,398.5,12,545.225,12,545.225,60,535.225,70,388.5,70,388.5,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="535.225" x2="545.225" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="388.5" x2="535.225" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="535.225" x2="535.225" y1="22" y2="70"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="403.5" y="42.889">aaa 
+ bbb</text>
+      <text fill="#000" font-size="14" textLength="21" x="450.225" y="42.889">ccc</text>
+      <line style="stroke:#00F;stroke-width:0.5;" x1="450.225" x2="471.225" y1="43.889" y2="43.889"/>
+      <text fill="#008000" font-size="14" textLength="46.725" x="471.225" y="42.889">ddd 
+ eee</text>
+      <line style="stroke:#00F;stroke-width:0.5;" x1="471.225" x2="517.95" y1="43.889" y2="43.889"/>
+      <text fill="#000" font-size="14" textLength="116.725" x="403.5" y="56.889">on multi-line context</text>
+    </g>
+    <!--entity c-->
+    <g class="entity" data-qualified-name="c" data-source-line="10" id="ent0003">
+      <polygon fill="#F1F1F1" points="10,116,20,106,575.7,106,575.7,140,565.7,150,10,150,10,116" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="565.7" x2="575.7" y1="116" y2="106"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="565.7" y1="116" y2="116"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="565.7" x2="565.7" y1="116" y2="150"/>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="525.7" x="25" y="136.889">aaa &lt;U+000A&gt; bbb &lt;U+000A&gt; &lt;u:blue&gt;ccc &lt;U+000A&gt; &lt;color:green&gt;ddd &lt;U+000A&gt; eee</text>
+    </g>
+  </g>
+</svg>

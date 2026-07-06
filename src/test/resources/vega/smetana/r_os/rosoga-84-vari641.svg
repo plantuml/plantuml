@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="125px" preserveAspectRatio="none" style="width:146px;height:125px;" version="1.1" viewBox="0 0 146 125" width="146.875px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster 2-->
+    <g class="cluster" data-qualified-name="2" data-source-line="3" id="ent0002">
+      <path d="M68.75,14.583 L73.62,14.583 A6.25,6.25 0 0 1 77.786,18.75 L85.078,33.333 L120.833,33.333 A4.167,4.167 0 0 1 125,37.5 L125,90.625 A4.167,4.167 0 0 1 120.833,94.792 L68.75,94.792 A4.167,4.167 0 0 1 64.583,90.625 L64.583,18.75 A4.167,4.167 0 0 1 68.75,14.583" fill="none" style="stroke:#E95420;stroke-width:2.083;"/>
+      <line style="stroke:#E95420;stroke-width:2.083;" x1="64.583" x2="85.078" y1="33.333" y2="33.333"/>
+      <text fill="#E95420" font-family="'Verdana'" font-size="12.5" x="68.75" y="26.389">2</text>
+    </g>
+    <!--class 0-->
+    <g class="entity" data-qualified-name="0" data-source-line="3" id="ent0003">
+      <rect fill="#E95420" height="47.917" rx="4.167" ry="4.167" style="stroke:#D24C1D;stroke-width:1.042;" width="37.624" x="16.667" y="38.542"/>
+      <rect fill="#EB6536" height="31.25" rx="4.167" ry="4.167" style="stroke:#EB6536;stroke-width:1.042;" width="37.624" x="16.667" y="38.542"/>
+      <rect fill="#EB6536" height="4.167" style="stroke:#EB6536;stroke-width:1.042;" width="37.624" x="16.667" y="65.625"/>
+      <rect fill="none" height="47.917" rx="4.167" ry="4.167" style="stroke:#D24C1D;stroke-width:1.042;" width="37.624" x="16.667" y="38.542"/>
+      <ellipse cx="31.25" cy="54.167" fill="#B6B0A9" rx="10.417" ry="10.417" style="stroke:#9D968F;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14.583" x="26.042" y="59.375">C</text>
+      <text fill="#772953" font-family="'Verdana'" font-size="11.458" x="44.792" y="57.35">0</text>
+      <line style="stroke:#D24C1D;stroke-width:1.042;" x1="17.708" x2="53.249" y1="69.792" y2="69.792"/>
+      <line style="stroke:#D24C1D;stroke-width:1.042;" x1="17.708" x2="53.249" y1="78.125" y2="78.125"/>
+    </g>
+    <!--class 13-->
+    <g class="entity" data-qualified-name="2.13" data-source-line="3" id="ent0001">
+      <rect fill="#E95420" height="47.917" rx="4.167" ry="4.167" style="stroke:#D24C1D;stroke-width:1.042;" width="43.997" x="72.917" y="38.542"/>
+      <rect fill="#EB6536" height="31.25" rx="4.167" ry="4.167" style="stroke:#EB6536;stroke-width:1.042;" width="43.997" x="72.917" y="38.542"/>
+      <rect fill="#EB6536" height="4.167" style="stroke:#EB6536;stroke-width:1.042;" width="43.997" x="72.917" y="65.625"/>
+      <rect fill="none" height="47.917" rx="4.167" ry="4.167" style="stroke:#D24C1D;stroke-width:1.042;" width="43.997" x="72.917" y="38.542"/>
+      <ellipse cx="87.5" cy="54.167" fill="#B6B0A9" rx="10.417" ry="10.417" style="stroke:#9D968F;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14.583" x="82.292" y="59.375">C</text>
+      <text fill="#772953" font-family="'Verdana'" font-size="11.458" textLength="12.747" x="101.042" y="57.35">13</text>
+      <line style="stroke:#D24C1D;stroke-width:1.042;" x1="73.958" x2="115.872" y1="69.792" y2="69.792"/>
+      <line style="stroke:#D24C1D;stroke-width:1.042;" x1="73.958" x2="115.872" y1="78.125" y2="78.125"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M72.722,62.5 C66.626,62.5 60.531,62.5 54.435,62.5" fill="none" style="stroke:#EB6536;stroke-width:3.125;stroke-dasharray:7.292,7.292;"/>
+    </g>
+  </g>
+</svg>

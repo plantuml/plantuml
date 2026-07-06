@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="90px" preserveAspectRatio="none" style="width:160px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 160 90" width="160px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Pause" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="138.125" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="144.125" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="39.725" x="55.2" y="27.889">Pause</text>
+      <text fill="#000" font-size="14" textLength="105.7" x="11" y="51.889">entry / lock screen,</text>
+      <text fill="#000" font-size="14" textLength="118.125" x="11" y="65.889">start coffee machine</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="100px" preserveAspectRatio="none" style="width:65px;height:100px;background:#FFFFFF;" version="1.1" viewBox="0 0 65 100" width="65px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster DB-->
+    <g class="cluster" data-qualified-name="DB" data-source-line="1" id="ent0001">
+      <path d="M14,14 C14,4 31.5,4 31.5,4 C31.5,4 49,4 49,14 L49,66 C49,76 31.5,76 31.5,76 C31.5,76 14,76 14,66 L14,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M14,14 C14,24 31.5,24 31.5,24 C31.5,24 49,24 49,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.512" x="21.744" y="36.889">DB</text>
+    </g>
+    <!--entity DB_at_CQL-->
+    <g class="entity" data-qualified-name="DB.DB_at_CQL" data-source-line="4" id="ent0002">
+      <ellipse cx="31" cy="53" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.787" x="16.606" y="80.889">CQL</text>
+    </g>
+  </g>
+</svg>

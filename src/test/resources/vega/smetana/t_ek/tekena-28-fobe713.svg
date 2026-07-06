@@ -1,0 +1,446 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="1124px" preserveAspectRatio="none" style="width:1851px;height:1124px;background:#FFFFFF;" version="1.1" viewBox="0 0 1851 1124" width="1851px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster simulator-->
+    <g class="cluster" data-qualified-name="simulator" data-source-line="6" id="ent0002">
+      <path d="M146.5,4 L204.288,4 A3.75,3.75 0 0 1 206.788,6.5 L213.788,24 L1832.5,24 A2.5,2.5 0 0 1 1835,26.5 L1835,1097.5 A2.5,2.5 0 0 1 1832.5,1100 L146.5,1100 A2.5,2.5 0 0 1 144,1097.5 L144,6.5 A2.5,2.5 0 0 1 146.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="144" x2="213.788" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56.787" x="148" y="16.889">simulator</text>
+    </g>
+    <!--cluster potentials-->
+    <g class="cluster" data-qualified-name="simulator.potentials" data-source-line="10" id="ent0003">
+      <path d="M1109.5,361 L1170.438,361 A3.75,3.75 0 0 1 1172.938,363.5 L1179.938,381 L1824.5,381 A2.5,2.5 0 0 1 1827,383.5 L1827,1089.5 A2.5,2.5 0 0 1 1824.5,1092 L1109.5,1092 A2.5,2.5 0 0 1 1107,1089.5 L1107,363.5 A2.5,2.5 0 0 1 1109.5,361" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="1107" x2="1179.938" y1="381" y2="381"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="59.938" x="1111" y="373.889">potentials</text>
+    </g>
+    <!--cluster waves-->
+    <g class="cluster" data-qualified-name="simulator.waves" data-source-line="68" id="ent0032">
+      <path d="M154.5,29 L195.225,29 A3.75,3.75 0 0 1 197.725,31.5 L204.725,49 L1096.5,49 A2.5,2.5 0 0 1 1099,51.5 L1099,718.5 A2.5,2.5 0 0 1 1096.5,721 L154.5,721 A2.5,2.5 0 0 1 152,718.5 L152,31.5 A2.5,2.5 0 0 1 154.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="152" x2="204.725" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="39.725" x="156" y="41.889">waves</text>
+    </g>
+    <!--class SimulationState-->
+    <g class="entity" data-qualified-name="SimulationState" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="130.088" x="6" y="99"/>
+      <ellipse cx="21" cy="115" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="120">C</text>
+      <text fill="#000" font-size="14" textLength="98.088" x="35" y="118.889">SimulationState</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="135.088" y1="131" y2="131"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="135.088" y1="139" y2="139"/>
+    </g>
+    <!--class Potential-->
+    <g class="entity" data-qualified-name="simulator.potentials.Potential" data-source-line="12" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="270.038" x="1129" y="403"/>
+      <ellipse cx="1232.513" cy="419" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1227.513" y="424">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="54.512" x="1253.013" y="422.889">Potential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1130" x2="1398.038" y1="435" y2="435"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="1140" cy="447.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.238" x="1149" y="449.889">enabled : bool</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1130" x2="1398.038" y1="457" y2="457"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="1140" cy="469.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="244.038" x="1149" y="471.889">computePotential(i : int, j : int, time : int) : float</text>
+    </g>
+    <!--class CompositePotential-->
+    <g class="entity" data-qualified-name="simulator.potentials.CompositePotential" data-source-line="16" id="ent0005">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="153.45" x="1115.5" y="1008"/>
+      <ellipse cx="1130.5" cy="1024" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1125.5" y="1029">C</text>
+      <text fill="#000" font-size="14" textLength="121.45" x="1144.5" y="1027.889">CompositePotential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1116.5" x2="1267.95" y1="1040" y2="1040"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1116.5" x2="1267.95" y1="1048" y2="1048"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="1126.5" cy="1060.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="108.85" x="1135.5" y="1062.889">getPotential() : List</text>
+    </g>
+    <!--class SlitPotential-->
+    <g class="entity" data-qualified-name="simulator.potentials.SlitPotential" data-source-line="19" id="ent0006">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="238.538" x="1183.5" y="588"/>
+      <ellipse cx="1261.506" cy="604" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1256.506" y="609">C</text>
+      <text fill="#000" font-size="14" textLength="74.025" x="1282.006" y="607.889">SlitPotential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1184.5" x2="1421.038" y1="620" y2="620"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1184.5" x2="1421.038" y1="628" y2="628"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="1194.5" cy="640.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="212.538" x="1203.5" y="642.889">setEnabled(enabled : boolean) : void</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="1194.5" cy="654.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="103.425" x="1203.5" y="656.889">setOneSlit() : void</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="1194.5" cy="668.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="110.513" x="1203.5" y="670.889">setTwoSlits() : void</text>
+    </g>
+    <!--class WallPotential-->
+    <g class="entity" data-qualified-name="simulator.potentials.WallPotential" data-source-line="24" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="113.813" x="1287" y="1015"/>
+      <ellipse cx="1302" cy="1031" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1297" y="1036">C</text>
+      <text fill="#000" font-size="14" textLength="81.813" x="1316" y="1034.889">WallPotential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1288" x2="1399.813" y1="1047" y2="1047"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1288" x2="1399.813" y1="1055" y2="1055"/>
+    </g>
+    <!--class VerticalSingleSlit-->
+    <g class="entity" data-qualified-name="simulator.potentials.VerticalSingleSlit" data-source-line="26" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.263" x="1471.5" y="893"/>
+      <ellipse cx="1486.5" cy="909" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1481.5" y="914">C</text>
+      <text fill="#000" font-size="14" textLength="105.263" x="1500.5" y="912.889">VerticalSingleSlit</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1472.5" x2="1607.763" y1="925" y2="925"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1472.5" x2="1607.763" y1="933" y2="933"/>
+    </g>
+    <!--class VerticalDoubleSlit-->
+    <g class="entity" data-qualified-name="simulator.potentials.VerticalDoubleSlit" data-source-line="30" id="ent0011">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.688" x="1310.5" y="893"/>
+      <ellipse cx="1325.5" cy="909" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1320.5" y="914">C</text>
+      <text fill="#000" font-size="14" textLength="110.688" x="1339.5" y="912.889">VerticalDoubleSlit</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1311.5" x2="1452.188" y1="925" y2="925"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1311.5" x2="1452.188" y1="933" y2="933"/>
+    </g>
+    <!--class PrecomputedPotential-->
+    <g class="entity" data-qualified-name="simulator.potentials.PrecomputedPotential" data-source-line="34" id="ent0014">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="400.15" x="1419" y="994"/>
+      <ellipse cx="1545.962" cy="1010" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1540.962" y="1015">C</text>
+      <text fill="#000" font-size="14" textLength="137.725" x="1566.462" y="1013.889">PrecomputedPotential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1420" x2="1818.15" y1="1026" y2="1026"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1420" x2="1818.15" y1="1034" y2="1034"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="1430" cy="1046.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="374.15" x="1439" y="1048.889">PrecomputedPotential(potential : Potential, width : int, length : int)</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="1430" cy="1060.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="223.3" x="1439" y="1062.889">setPotential(potential : Potential) : void</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="1430" cy="1074.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="238" x="1439" y="1076.889">setLatticeSize(width : int, length : int) : void</text>
+    </g>
+    <!--class ConstantPotential-->
+    <g class="entity" data-qualified-name="simulator.potentials.ConstantPotential" data-source-line="41" id="ent0017">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.513" x="1149.5" y="893"/>
+      <ellipse cx="1164.5" cy="909" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1159.5" y="914">C</text>
+      <text fill="#000" font-size="14" textLength="110.513" x="1178.5" y="912.889">ConstantPotential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1150.5" x2="1291.013" y1="925" y2="925"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1150.5" x2="1291.013" y1="933" y2="933"/>
+    </g>
+    <!--class VerticalBarrier-->
+    <g class="entity" data-qualified-name="simulator.potentials.VerticalBarrier" data-source-line="49" id="ent0022">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.513" x="1374" y="766"/>
+      <ellipse cx="1392.954" cy="782" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1387.954" y="787">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="88.725" x="1407.833" y="785.889">VerticalBarrier</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1375" x2="1502.513" y1="798" y2="798"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="1385" cy="810.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="103.513" x="1394" y="812.889">slitSeparation : int</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="1385" cy="824.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="63.088" x="1394" y="826.889">slitSize : int</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="1385" cy="838.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="77" x="1394" y="840.889">thickness : int</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1375" x2="1502.513" y1="848" y2="848"/>
+    </g>
+    <!--class Oscillator-->
+    <g class="entity" data-qualified-name="simulator.waves.Oscillator" data-source-line="70" id="ent0033">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117" x="222.5" y="71"/>
+      <ellipse cx="249.487" cy="87" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="244.487" y="92">C</text>
+      <text fill="#000" font-size="14" textLength="58.363" x="266.151" y="90.889">Oscillator</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="223.5" x2="338.5" y1="103" y2="103"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="233.5" cy="115.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.238" x="242.5" y="117.889">enabled :bool</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="233.5" cy="129.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.938" x="242.5" y="131.889">location : Pnt3</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="233.5" cy="143.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="91" x="242.5" y="145.889">amplitude : float</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="233.5" cy="157.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="69.213" x="242.5" y="159.889">period : float</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="223.5" x2="338.5" y1="167" y2="167"/>
+    </g>
+    <!--class WaveModel-->
+    <g class="entity" data-qualified-name="simulator.waves.WaveModel" data-source-line="77" id="ent0035">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="286.488" x="216" y="228"/>
+      <ellipse cx="318.025" cy="244" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="313.025" y="249">C</text>
+      <text fill="#000" font-size="14" textLength="73.938" x="338.525" y="247.889">WaveModel</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="217" x2="501.488" y1="260" y2="260"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="227" cy="272.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="111.3" x="236" y="274.889">potential : Potential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="217" x2="501.488" y1="282" y2="282"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="227" cy="294.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="101.85" x="236" y="296.889">propagate() : void</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="227" cy="308.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="260.488" x="236" y="310.889">setSourceValue(x : int, y : int, value : float) : void</text>
+    </g>
+    <!--class Lattice-->
+    <g class="entity" data-qualified-name="simulator.waves.Lattice" data-source-line="83" id="ent0037">
+      <rect fill="#F1F1F1" height="160" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="353.425" x="180.5" y="553"/>
+      <ellipse cx="332.356" cy="569" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="327.356" y="574">C</text>
+      <text fill="#000" font-size="14" textLength="41.213" x="352.856" y="572.889">Lattice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="181.5" x2="532.925" y1="585" y2="585"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="188.5" y="594.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="102.638" x="200.5" y="599.889">amplitude : Matrix</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="181.5" x2="532.925" y1="607" y2="607"/>
+      <text fill="#000" font-size="14" textLength="162.488" x="186.5" y="621.889">Lattice(width : int, length : int)</text>
+      <text fill="#000" font-size="14" textLength="341.425" x="186.5" y="635.889">computeAverageValue(x : int, y : int, windowWidth : int) : float</text>
+      <text fill="#000" font-size="14" textLength="149.975" x="186.5" y="649.889">getValue(x : int, y : int) : float</text>
+      <text fill="#000" font-size="14" textLength="216.125" x="186.5" y="663.889">setValue(x : int, y : int, value : float) : void</text>
+      <text fill="#000" font-size="14" textLength="196.788" x="186.5" y="677.889">setSize(width : int, length : int) : void</text>
+      <text fill="#000" font-size="14" textLength="83.125" x="186.5" y="691.889">getWidth() : int</text>
+      <text fill="#000" font-size="14" textLength="90.125" x="186.5" y="705.889">getLength() : int</text>
+    </g>
+    <!--class ClassicalWavePropagator-->
+    <g class="entity" data-qualified-name="simulator.waves.ClassicalWavePropagator" data-source-line="97" id="ent0041">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="325.425" x="253.5" y="382"/>
+      <ellipse cx="331.375" cy="398" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="326.375" y="403">C</text>
+      <text fill="#000" font-size="14" textLength="161.175" x="351.875" y="401.889">ClassicalWavePropagator</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="254.5" x2="577.925" y1="414" y2="414"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="264.5" cy="426.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="111.3" x="273.5" y="428.889">potential : Potential</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="261.5" y="437.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="113.488" x="273.5" y="442.889">prevLattice : Lattice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="254.5" x2="577.925" y1="450" y2="450"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="264.5" cy="462.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="281.75" x="273.5" y="464.889">ClassicalWavePropagator(potential : Potential)</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="264.5" cy="476.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="299.425" x="273.5" y="478.889">setBoundaryCondition(x : int, y : int, value : float) : void</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="264.5" cy="490.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="183.488" x="273.5" y="492.889">propagate(lattice : Lattice) : void</text>
+    </g>
+    <!--class DampedClassicalWavePropagator-->
+    <g class="entity" data-qualified-name="simulator.waves.DampedClassicalWavePropagator" data-source-line="104" id="ent0042">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="494.387" x="597" y="396"/>
+      <ellipse cx="732.887" cy="412" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="727.887" y="417">C</text>
+      <text fill="#000" font-size="14" textLength="214.113" x="753.387" y="415.889">DampedClassicalWavePropagator</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="598" x2="1090.387" y1="428" y2="428"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="605" y="437.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="63" x="617" y="442.889">dampX : int</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="605" y="451.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="63" x="617" y="456.889">dampY : int</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="598" x2="1090.387" y1="464" y2="464"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="608" cy="476.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="468.387" x="617" y="478.889">DampedClassicalWavePropagator(potential : Potential, dampX : int, dampY : int)</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0005" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="1228.971,1007.962,1238.583,1005.817,1232.988,1004.985,1233.82,999.39,1228.971,1007.962" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1471.252,938.94 C1468.136,939.678 1465.041,940.37 1462,941 C1397.547,954.354 1376.912,936.654 1315,959 C1283.728,970.287 1256.27,987.733 1232.988,1004.985" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="1317" y="971.111">creates</text>
+      <text fill="#000" font-size="13" x="1220.971" y="1004.073">1</text>
+      <text fill="#000" font-size="13" x="1463.252" y="935.051">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0007" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="1378.005,1014.776,1387.711,1013.102,1382.163,1011.998,1383.266,1006.45,1378.005,1014.776" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1499.228,941.014 C1473.424,955.78 1439.487,975.574 1410,994 C1399.489,1000.568 1392.369,1005.178 1382.163,1011.998" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="1469" y="971.111">creates</text>
+      <text fill="#000" font-size="13" x="1370.005" y="1010.887">2</text>
+      <text fill="#000" font-size="13" x="1491.228" y="952.125">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0005" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="1198.036,1007.734,1204.389,1000.208,1199.432,1002.933,1196.707,997.975,1198.036,1007.734" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1310.49,938.478 C1307.286,939.341 1304.111,940.185 1301,941 C1267.838,949.684 1252.22,936.917 1226,959 C1211.382,971.312 1204.277,986.261 1199.432,1002.933" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="1228" y="971.111">creates</text>
+      <text fill="#000" font-size="13" x="1190.036" y="1003.845">1</text>
+      <text fill="#000" font-size="13" x="1302.49" y="934.589">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0007" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="1351.304,1014.934,1357.835,1007.561,1352.814,1010.167,1350.208,1005.146,1351.304,1014.934" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1374.673,941.137 C1367.944,962.386 1359.536,988.94 1352.814,1010.167" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="1371" y="971.111">creates</text>
+      <text fill="#000" font-size="13" x="1343.304" y="1011.045">3</text>
+      <text fill="#000" font-size="13" x="1366.673" y="952.248">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0014" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="1612.277,993.86,1613.782,984.127,1610.968,989.034,1606.061,986.221,1612.277,993.86" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1579.687,941.094 C1586.193,946.303 1592.325,952.303 1597,959 C1604.171,969.273 1607.703,976.993 1610.968,989.034" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="1607" y="971.111">creates</text>
+      <text fill="#000" font-size="13" x="1604.277" y="989.971">1</text>
+      <text fill="#000" font-size="13" x="1571.687" y="952.205">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0014" data-link-type="dependency" id="lnk16">
+      <polygon fill="#181818" points="1569.591,993.922,1565.005,985.206,1565.667,990.824,1560.049,991.486,1569.591,993.922" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1453.678,938.559 C1482.623,947.09 1510.716,955.753 1517,959 C1535.307,968.46 1549.705,978.225 1565.667,990.824" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="1546" y="971.111">creates</text>
+      <text fill="#000" font-size="13" x="1561.591" y="990.033">1</text>
+      <text fill="#000" font-size="13" x="1454.678" y="934.671">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0017" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="1223.353,892.753,1228.346,884.264,1223.919,887.785,1220.398,883.358,1223.353,892.753" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1281.199,678.27 C1269.566,703.465 1255.862,735.912 1247,766 C1234.082,809.861 1227.316,857.975 1223.919,887.785" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="1249" y="814.611">creates</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="1201.353" y="888.864">0..1</text>
+      <text fill="#000" font-size="13" x="1273.199" y="689.381">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="1541.366,892.785,1545.565,883.876,1541.478,887.787,1537.567,883.699,1541.366,892.785" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1408.769,678.033 C1447.254,699.173 1487.518,728.258 1513,766 C1539.133,804.706 1542.176,856.343 1541.478,887.787" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="1543" y="814.611">creates</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="1519.366" y="888.896">0..1</text>
+      <text fill="#000" font-size="13" x="1400.769" y="689.144">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0011" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="1349.165,892.971,1344.948,884.071,1345.373,889.712,1339.732,890.138,1349.165,892.971" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1297.159,678.054 C1292.985,724.611 1292.123,799.037 1319,856 C1325.768,870.343 1333.79,879.754 1345.373,889.712" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="1321" y="814.611">creates</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="1327.165" y="889.083">0..1</text>
+      <text fill="#000" font-size="13" x="1289.159" y="689.166">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="1115.297,1037.665,1106.331,1033.59,1110.297,1037.623,1106.264,1041.59,1115.297,1037.665" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M77.118,147.138 C84.229,176.108 95,227.358 95,272 C95,272 95,272 95,918 C95,1020.799 861.059,1035.532 1110.297,1037.623" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="97" y="636.611">has</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="1095.297" y="1033.776">1..*</text>
+      <text fill="#000" font-size="13" x="69.118" y="158.249">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0022" data-link-type="extension" id="lnk23">
+      <polygon fill="none" points="1351.656,479.21,1364.241,493.408,1370.243,483.017,1351.656,479.21" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1367.242,488.212 C1397.828,505.878 1413.315,521.208 1431,553 C1468.108,619.707 1459.211,711.967 1449.213,765.879" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0022" data-entity-2="ent0008" data-link-type="extension" id="lnk24">
+      <polygon fill="none" points="1481.833,856.105,1490.069,873.198,1498.678,864.838,1481.833,856.105" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1494.373,869.018 C1506.632,881.641 1506.967,881.986 1517.479,892.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0022" data-entity-2="ent0011" data-link-type="extension" id="lnk25">
+      <polygon fill="none" points="1414.827,856.105,1400.914,869.006,1411.437,874.774,1414.827,856.105" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1406.176,871.89 C1399.258,884.513 1400.642,881.986 1394.71,892.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="extension" id="lnk26">
+      <polygon fill="none" points="1201.686,479.07,1183.944,485.796,1191.528,495.096,1201.686,479.07" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1187.736,490.446 C1164.408,509.47 1155.131,523.49 1145,553 C1130.992,593.802 1120.492,899.16 1131,941 C1137.004,964.906 1150.161,989.35 1162.889,1007.719" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="aggregation" id="lnk27">
+      <polygon fill="#181818" points="1218.054,479.07,1208.65,481.996,1214.294,482.366,1213.924,488.011,1218.054,479.07" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="none" points="1178.586,1007.719,1179.103,1000.526,1172.663,997.283,1172.146,1004.475,1178.586,1007.719" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1214.294,482.366 C1192.598,501.39 1173.131,523.49 1163,553 C1148.992,593.802 1138.492,899.16 1149,941 C1155.004,964.906 1162.238,978.914 1172.663,997.283" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1170.586" y="1003.83">1</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="1198.054" y="490.181">0..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0014" data-link-type="extension" id="lnk28">
+      <polygon fill="none" points="1399.242,450.302,1416.313,458.584,1417.868,446.685,1399.242,450.302" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1417.091,452.634 C1535.526,468.11 1671,509.474 1671,632 C1671,632 1671,632 1671,918 C1671,944.565 1660.138,971.913 1648.343,993.78" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="extension" id="lnk29">
+      <polygon fill="none" points="1399.023,457.649,1415.523,467.016,1417.843,455.242,1399.023,457.649" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1416.683,461.129 C1520.274,481.543 1628,524.894 1628,632 C1628,632 1628,632 1628,875 C1628,904.668 1638.408,919.466 1618,941 C1590.838,969.659 1564.807,938.599 1531,959 C1522.62,964.057 1525.473,971.1 1517,976 C1475.253,1000.14 1454.831,976.232 1410,994 C1397.07,999.125 1384.069,1007.054 1373.066,1014.778" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="extension" id="lnk30">
+      <polygon fill="none" points="1271.612,479.085,1269.354,497.924,1281.109,495.511,1271.612,479.085" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1275.231,496.717 C1281.616,527.82 1287.13,554.683 1293.899,587.663" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0017" data-link-type="extension" id="lnk31">
+      <polygon fill="none" points="1222.972,479.187,1206.234,488.121,1214.942,496.377,1222.972,479.187" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1210.588,492.249 C1191.789,512.076 1183.905,525.056 1174,553 C1130.583,675.486 1186.523,833.921 1210.788,892.71" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0033" data-link-type="dependency" id="lnk34">
+      <polygon fill="#181818" points="222.36,123,213.36,119,217.36,123,213.36,127,222.36,123" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M136.007,123 C163.592,123 190.507,123 217.36,123" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="169.25" y="115.111">has</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="200.36" y="119.111">1..2</text>
+      <text fill="#000" font-size="13" x="137.007" y="119.111">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0035" data-link-type="dependency" id="lnk36">
+      <polygon fill="#181818" points="254.93,227.996,248.376,220.644,250.374,225.937,245.081,227.934,254.93,227.996" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M103.655,147.238 C117.098,156.376 133.009,166.655 148,175 C181.994,193.924 215.785,210.304 250.374,225.937" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="246.93" y="224.107">1</text>
+      <text fill="#000" font-size="13" x="95.655" y="158.349">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0035" data-entity-2="ent0005" data-link-type="dependency" id="lnk38">
+      <polygon fill="#181818" points="1156.272,1007.694,1152.77,998.489,1152.749,1004.145,1147.092,1004.125,1156.272,1007.694" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M502.237,281.428 C705.673,293.372 1058.397,319.771 1100,361 C1125.138,385.912 1110,404.609 1110,440 C1110,440 1110,440 1110,918 C1110,953.074 1130.652,981.889 1152.749,1004.145" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="1112" y="743.111">has</text>
+    </g>
+    <g class="link" data-entity-1="ent0033" data-entity-2="ent0035" data-link-type="dependency" id="lnk39">
+      <polygon fill="#181818" points="335.622,227.642,334.965,217.815,333.291,223.219,327.887,221.545,335.622,227.642" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M308.062,175.348 C317.038,192.379 324.616,206.759 333.291,223.219" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="70.769" x="327" y="205.111">has, updates</text>
+      <text fill="#000" font-size="13" x="327.622" y="223.753">1</text>
+      <text fill="#000" font-size="13" x="300.062" y="186.459">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0035" data-entity-2="ent0037" data-link-type="dependency" id="lnk40">
+      <polygon fill="#181818" points="227.149,552.978,223.409,543.867,223.535,549.522,217.88,549.648,227.149,552.978" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M230.253,318.267 C213.053,329.569 197.691,343.611 187,361 C154.644,413.627 159.835,444.515 187,500 C196.694,519.8 207.336,534.03 223.535,549.522" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="53.463" x="189" y="444.611">produces</text>
+    </g>
+    <g class="link" data-entity-1="ent0035" data-entity-2="ent0041" data-link-type="dependency" id="lnk43">
+      <polygon fill="#181818" points="396.075,381.974,396.936,372.163,394.452,377.245,389.369,374.761,396.075,381.974" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M374.125,318.049 C380.854,337.644 387.244,356.255 394.452,377.245" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="388" y="348.111">has</text>
+      <text fill="#000" font-size="13" x="388.075" y="378.085">1</text>
+      <text fill="#000" font-size="13" x="366.125" y="329.16">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0035" data-entity-2="ent0042" data-link-type="dependency" id="lnk44">
+      <polygon fill="#181818" points="715.122,395.889,707.902,389.19,710.392,394.27,705.312,396.759,715.122,395.889" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M487.698,318.049 C557.996,342.11 640.065,370.2 710.392,394.27" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="589" y="348.111">creates</text>
+      <text fill="#000" font-size="13" x="707.122" y="392">1</text>
+      <text fill="#000" font-size="13" x="479.698" y="329.16">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0041" data-entity-2="ent0037" data-link-type="dependency" id="lnk45">
+      <polygon fill="#181818" points="381.539,552.975,388.028,545.566,383.022,548.2,380.388,543.193,381.539,552.975" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M397.977,500.039 C392.793,516.736 388.53,530.463 383.022,548.2" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="78" x="394" y="530.111">has, produces</text>
+      <text fill="#000" font-size="13" x="373.539" y="549.086">2</text>
+      <text fill="#000" font-size="13" x="389.977" y="511.15">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0041" data-entity-2="ent0004" data-link-type="dependency" id="lnk46">
+      <polygon fill="#181818" points="1208.253,402.973,1202.602,394.906,1203.968,400.395,1198.479,401.762,1208.253,402.973" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M526.027,381.81 C546.139,373.327 567.318,365.845 588,361 C702.024,334.287 1001.76,331.14 1115,361 C1147.791,369.647 1177.038,384.198 1203.968,400.395" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="831" y="348.111">has</text>
+    </g>
+    <g class="link" data-entity-1="ent0041" data-entity-2="ent0042" data-link-type="extension" id="lnk47">
+      <polygon fill="none" points="578.59,441,596.59,447,596.59,435,578.59,441" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M596.59,441 C602.724,441 590.858,441 596.992,441" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

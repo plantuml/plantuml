@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="244px" preserveAspectRatio="none" style="width:74px;height:244px;background:#FFFFFF;" version="1.1" viewBox="0 0 74 244" width="74px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class cl1-->
+    <g class="entity" data-qualified-name="cl1" data-source-line="2" id="ent0001">
+      <rect fill="#00F" height="90" rx="2.5" ry="2.5" style="stroke:#FF0;stroke-width:0.5;" width="52.337" x="6" y="12"/>
+      <ellipse cx="22.08" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="17.08" y="33">C</text>
+      <text fill="#F00" font-size="14" textLength="17.938" x="36.32" y="31.889">cl1</text>
+      <line style="stroke:#FF0;stroke-width:0.5;" x1="7" x2="57.337" y1="44" y2="44"/>
+      <text fill="#F00" font-size="14" textLength="31.063" x="12" y="58.889">toto1</text>
+      <text fill="#F00" font-size="14" textLength="31.063" x="12" y="72.889">toto2</text>
+      <line style="stroke:#FF0;stroke-width:0.5;" x1="7" x2="57.337" y1="80" y2="80"/>
+      <text fill="#F00" font-size="14" textLength="40.337" x="12" y="94.889">toto3()</text>
+    </g>
+    <!--class cl2-->
+    <g class="entity" data-qualified-name="cl2" data-source-line="8" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.337" x="6" y="138"/>
+      <ellipse cx="22.08" cy="154" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="17.08" y="159">C</text>
+      <text fill="#00F" font-size="14" textLength="17.938" x="36.32" y="157.889">cl2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="57.337" y1="170" y2="170"/>
+      <text fill="#00F" font-size="14" textLength="31.063" x="12" y="184.889">toto1</text>
+      <text fill="#00F" font-size="14" textLength="31.063" x="12" y="198.889">toto2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="57.337" y1="206" y2="206"/>
+      <text fill="#00F" font-size="14" textLength="40.337" x="12" y="220.889">toto3()</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="32,137.657,36,128.657,32,132.657,28,128.657,32,137.657" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M32,102.067 C32,113.622 32,121.087 32,132.657" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

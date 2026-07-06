@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="310px" preserveAspectRatio="none" style="width:214px;height:310px;background:#FFFFFF;" version="1.1" viewBox="0 0 214 310" width="214px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Catalog-->
+    <g class="cluster" data-qualified-name="Catalog" data-source-line="2" id="ent0001">
+      <path d="M132.5,102 L181.8,102 A3.75,3.75 0 0 1 184.3,104.5 L191.3,122 L203.5,122 A2.5,2.5 0 0 1 206,124.5 L206,180.5 A2.5,2.5 0 0 1 203.5,183 L132.5,183 A2.5,2.5 0 0 1 130,180.5 L130,104.5 A2.5,2.5 0 0 1 132.5,102" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="130" x2="191.3" y1="122" y2="122"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="48.3" x="134" y="114.889">Catalog</text>
+    </g>
+    <!--cluster User-->
+    <g class="cluster" data-qualified-name="User" data-source-line="7" id="ent0003">
+      <path d="M20.5,191 L51.075,191 A3.75,3.75 0 0 1 53.575,193.5 L60.575,211 L115.5,211 A2.5,2.5 0 0 1 118,213.5 L118,283.5 A2.5,2.5 0 0 1 115.5,286 L20.5,286 A2.5,2.5 0 0 1 18,283.5 L18,193.5 A2.5,2.5 0 0 1 20.5,191" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="18" x2="60.575" y1="211" y2="211"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="22" y="203.889">User</text>
+    </g>
+    <!--cluster Pu-->
+    <g class="cluster" data-qualified-name="Pu" data-source-line="13" id="ent0005">
+      <path d="M16.5,4 L76.65,4 A3.75,3.75 0 0 1 79.15,6.5 L86.15,24 L119.5,24 A2.5,2.5 0 0 1 122,26.5 L122,180.5 A2.5,2.5 0 0 1 119.5,183 L16.5,183 A2.5,2.5 0 0 1 14,180.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="86.15" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="59.15" x="18" y="16.889">Purchase</text>
+    </g>
+    <!--class Item-->
+    <g class="entity" data-qualified-name="Catalog.Item" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.125" x="138.5" y="127"/>
+      <ellipse cx="153.5" cy="143" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="148.5" y="148">C</text>
+      <text fill="#000" font-size="14" textLength="27.125" x="167.5" y="146.889">Item</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139.5" x2="196.625" y1="159" y2="159"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139.5" x2="196.625" y1="167" y2="167"/>
+    </g>
+    <!--class User-->
+    <g class="entity" data-qualified-name="User.User" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.575" x="26" y="216"/>
+      <ellipse cx="50.9" cy="232" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="45.9" y="237">C</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="67.1" y="235.889">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="108.575" y1="248" y2="248"/>
+      <text fill="#000" font-size="14" textLength="71.575" x="32" y="262.889">String name</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="108.575" y1="270" y2="270"/>
+    </g>
+    <!--class Purchase-->
+    <g class="entity" data-qualified-name="Pu.Purchase" data-source-line="14" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.15" x="22.5" y="127"/>
+      <ellipse cx="37.5" cy="143" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="148">C</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="51.5" y="146.889">Purchase</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="112.65" y1="159" y2="159"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="112.65" y1="167" y2="167"/>
+    </g>
+    <!--class LineItem-->
+    <g class="entity" data-qualified-name="Pu.LineItem" data-source-line="17" id="ent0007">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.637" x="26" y="29"/>
+      <ellipse cx="41" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="36" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="53.637" x="55" y="48.889">LineItem</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="110.637" y1="61" y2="61"/>
+      <text fill="#000" font-size="14" textLength="63.787" x="32" y="75.889">int quantity</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="110.637" y1="83" y2="83"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="149.347,126.548,146.547,117.105,146.101,122.745,140.462,122.299,149.347,126.548" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M112.165,90.422 C116.96,94.163 121.67,98.064 126,102 C134.194,109.448 139.149,114.598 146.101,122.745" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="68,215.929,72,206.929,68,210.929,64,206.929,68,215.929" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M68,175.236 C68,187.523 68,197.75 68,210.929" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0006" data-link-type="composition" id="lnk10">
+      <polygon fill="#181818" points="68.661,91.131,64.594,97.086,68.527,103.131,72.594,97.176,68.661,91.131" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M68.527,103.131 C68.395,114.83 68.382,116.015 68.259,126.936" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

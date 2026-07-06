@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="95px" preserveAspectRatio="none" style="width:178px;height:95px;background:#FFFFFF;" version="1.1" viewBox="0 0 178 95" width="178px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster hhname1-->
+    <g class="cluster" data-qualified-name="hhname1" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L54.863,4 A3.75,3.75 0 0 1 57.363,6.5 L64.363,24 L85.5,24 A2.5,2.5 0 0 1 88,26.5 L88,68.5 A2.5,2.5 0 0 1 85.5,71 L16.5,71 A2.5,2.5 0 0 1 14,68.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="64.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="18" y="16.889">desc1</text>
+    </g>
+    <!--cluster hhdesc2-->
+    <g class="cluster" data-qualified-name="hhdesc2" data-source-line="6" id="ent0003">
+      <path d="M98.5,4 L142.288,4 A3.75,3.75 0 0 1 144.788,6.5 L151.788,24 L167.5,24 A2.5,2.5 0 0 1 170,26.5 L170,68.5 A2.5,2.5 0 0 1 167.5,71 L98.5,71 A2.5,2.5 0 0 1 96,68.5 L96,6.5 A2.5,2.5 0 0 1 98.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="96" x2="151.788" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42.788" x="100" y="16.889">name2</text>
+    </g>
+    <!--entity test1a-->
+    <g class="entity" data-qualified-name="hhname1.test1a" data-source-line="3" id="ent0002">
+      <path d="M22,31.5 L22,60.5 A2.5,2.5 0 0 0 24.5,63 L77.563,63 A2.5,2.5 0 0 0 80.063,60.5 L80.063,39 L70.063,29 L24.5,29 A2.5,2.5 0 0 0 22,31.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M70.063,29 L70.063,36.5 A2.5,2.5 0 0 0 72.563,39 L80.063,39" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.063" x="32" y="49.889">test1a</text>
+    </g>
+    <!--entity test2b-->
+    <g class="entity" data-qualified-name="hhdesc2.test2b" data-source-line="7" id="ent0004">
+      <path d="M104,31.5 L104,60.5 A2.5,2.5 0 0 0 106.5,63 L159.563,63 A2.5,2.5 0 0 0 162.063,60.5 L162.063,39 L152.063,29 L106.5,29 A2.5,2.5 0 0 0 104,31.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M152.063,29 L152.063,36.5 A2.5,2.5 0 0 0 154.563,39 L162.063,39" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.063" x="114" y="49.889">test2b</text>
+    </g>
+  </g>
+</svg>

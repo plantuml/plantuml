@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="235px" preserveAspectRatio="none" style="width:292px;height:235px;background:#FFFFFF;" version="1.1" viewBox="0 0 292 235" width="292px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster SFML-->
+    <g class="cluster" data-qualified-name="SFML" data-source-line="3" id="ent0001">
+      <path d="M16.5,4 L54.863,4 A3.75,3.75 0 0 1 57.363,6.5 L64.363,24 L281.5,24 A2.5,2.5 0 0 1 284,26.5 L284,208.5 A2.5,2.5 0 0 1 281.5,211 L16.5,211 A2.5,2.5 0 0 1 14,208.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="64.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="18" y="16.889">SFML</text>
+    </g>
+    <!--entity System-->
+    <g class="entity" data-qualified-name="SFML.System" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.637" x="100.5" y="29"/>
+      <text fill="#000" font-size="14" textLength="46.637" x="110.5" y="49.889">System</text>
+    </g>
+    <!--entity Window-->
+    <g class="entity" data-qualified-name="SFML.Window" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.875" x="22" y="99"/>
+      <text fill="#000" font-size="14" textLength="49.875" x="32" y="119.889">Window</text>
+    </g>
+    <!--entity Graphics-->
+    <g class="entity" data-qualified-name="SFML.Graphics" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="47" y="169"/>
+      <text fill="#000" font-size="14" textLength="56" x="57" y="189.889">Graphics</text>
+    </g>
+    <!--entity Audio-->
+    <g class="entity" data-qualified-name="SFML.Audio" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.875" x="130" y="99"/>
+      <text fill="#000" font-size="14" textLength="35.875" x="140" y="119.889">Audio</text>
+    </g>
+    <!--entity Network-->
+    <g class="entity" data-qualified-name="SFML.Network" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.363" x="204.5" y="99"/>
+      <text fill="#000" font-size="14" textLength="51.363" x="214.5" y="119.889">Network</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="115.752,63.115,106.358,66.074,112.004,66.425,111.654,72.071,115.752,63.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M112.004,66.425 C99.819,77.186 87.597,87.979 75.384,98.765" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="63.636,133.115,63.364,142.96,65.539,137.738,70.761,139.914,63.636,133.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M65.539,137.738 C69.938,148.421 73.789,157.773 78.218,168.528" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="128.283,63.1,121.502,70.243,126.61,67.812,129.041,72.92,128.283,63.1" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M126.61,67.812 C117.219,94.261 100.298,141.915 90.832,168.574" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="139.688,63.115,138.911,72.933,141.352,67.83,146.455,70.271,139.688,63.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M141.352,67.83 C145.122,78.513 148.391,87.773 152.186,98.528" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="159.121,63.115,164.536,71.341,163.329,65.815,168.856,64.608,159.121,63.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M163.329,65.815 C180.104,76.576 197.879,87.979 214.692,98.765" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

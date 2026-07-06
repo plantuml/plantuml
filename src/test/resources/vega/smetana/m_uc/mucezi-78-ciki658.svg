@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="151px" preserveAspectRatio="none" style="width:1163px;height:151px;background:#FFFFFF;" version="1.1" viewBox="0 0 1163 151" width="1163px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Dummy12-->
+    <g class="cluster" data-qualified-name="Dummy12" data-source-line="1" id="ent0001">
+      <rect fill="none" height="98" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="114" x="186" y="22"/>
+      <polygon fill="none" points="283,27,283,41,295,41,295,33,289,27,283,27" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="289" x2="289" y1="27" y2="33"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="295" x2="289" y1="33" y2="33"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="59.063" x="213.469" y="34.889">«Artifact»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="63.787" x="211.106" y="48.889">Dummy12</text>
+    </g>
+    <!--cluster Dummy1-->
+    <g class="cluster" data-qualified-name="Dummy1" data-source-line="5" id="ent0003">
+      <path d="M310.5,14.5 L367.5,14.5 A3.75,3.75 0 0 1 370,17 L377,34.5 L411.5,34.5 A2.5,2.5 0 0 1 414,37 L414,125 A2.5,2.5 0 0 1 411.5,127.5 L310.5,127.5 A2.5,2.5 0 0 1 308,125 L308,17 A2.5,2.5 0 0 1 310.5,14.5" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="308" x2="377" y1="34.5" y2="34.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56" x="312" y="27.389">Dummy1</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="55.3" x="337.35" y="47.389">«Folder»</text>
+    </g>
+    <!--cluster Dummy5-->
+    <g class="cluster" data-qualified-name="Dummy5" data-source-line="9" id="ent0005">
+      <rect fill="none" height="105" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="116" x="422" y="18.5"/>
+      <path d="M488,18.5 L488,25.5 L478,35.5 L422,35.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56" x="425" y="30.389">Dummy5</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="56" x="456" y="48.389">«Frame»</text>
+    </g>
+    <!--cluster Dummy3-->
+    <g class="cluster" data-qualified-name="Dummy3" data-source-line="15" id="ent0008">
+      <polygon fill="none" points="546,23.5,556,13.5,677,13.5,677,113.5,667,123.5,546,123.5,546,23.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="667" x2="677" y1="23.5" y2="13.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="546" x2="667" y1="23.5" y2="23.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="667" x2="667" y1="23.5" y2="123.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="49.087" x="582.956" y="37.389">«Node»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56" x="579.5" y="51.389">Dummy3</text>
+    </g>
+    <!--cluster Dummy6-->
+    <g class="cluster" data-qualified-name="Dummy6" data-source-line="19" id="ent0010">
+      <path d="M700.433,27.418 C703.19,20.705 709.166,17.634 714.738,24.438 C717.87,18.008 721.456,16.866 726.911,21.99 C728.978,14.678 733.987,13.487 739.457,18.536 C744.929,13.01 750.07,15.137 752.643,21.698 C757.43,16.108 762.399,18.57 764.525,24.453 C774.334,16.707 782.912,21.395 783,33.5 C783.394,33.383 783.548,33.538 783.532,33.929 C790.486,36.422 789.842,42.842 784.844,46.574 C790.4,50.566 790.687,55.09 785.395,59.543 C792.12,61.578 792.785,66.898 787.992,71.446 C794.291,76.023 793.683,82.535 785.902,84.93 C791.542,88.448 791.704,92.435 786.057,96.109 C791.262,106.38 787.816,114.058 776,115.5 C776.241,115.633 776.31,115.78 776.1,116.003 C773.898,121.78 769.133,123.773 764.479,118.608 C761.619,124.517 755.113,126.654 750.809,120.205 C747.545,125.813 742.718,127.078 738.299,121.496 C733.539,127.096 728.381,126.118 725.738,119.346 C722.003,123.87 717.045,123.762 714.287,118.233 C703.525,126.133 694.25,121.402 693,108.5 C693.705,109.01 693.896,109.508 693.106,110.116 C686.524,105.665 686.516,99.274 694.384,96.144 C688.934,93.67 687.757,89.047 692.611,84.942 C688.063,80.467 687.305,76.584 693.496,72.898 C686.458,69.504 686.089,63.217 692.558,58.917 C687.907,55.451 688.448,50.302 693.984,48.191 C684.713,39.413 689.418,29.772 700,26.5 C700.597,26.581 700.786,26.889 700.433,27.418" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="52.238" x="711.881" y="42.389">«Cloud»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56" x="710" y="56.389">Dummy6</text>
+    </g>
+    <!--cluster Dummy61-->
+    <g class="cluster" data-qualified-name="Dummy61" data-source-line="23" id="ent0012">
+      <path d="M807.626,41.328 C810.161,34.617 815.5,35.027 819.426,39.912 C823.002,33.489 826.723,31.975 832.045,38.165 C835.595,31.7 839.866,30.741 845.609,35.52 C848.165,30.374 852.342,28.655 856.653,33.599 C861.266,28.593 865.011,28.314 868.753,34.537 C874.395,29.036 878.449,29.279 881.485,37.04 C886.911,31.927 891.158,32.888 894.05,39.708 C898.424,34.691 901.941,34.769 905.209,40.822 C911.036,43.467 912.478,48.892 906.871,53.086 C913.536,55.387 915.161,61.618 909.031,66.05 C916.039,69.396 917.903,74.124 911.127,79.602 C916.201,83.636 916.808,89.177 909.839,91.956 C915.403,96.07 914.165,101.597 908.56,104.58 C913.132,109.486 912.027,115.072 905.073,116.647 C902.488,122.665 897.941,123.776 893.888,118.044 C892.425,125.619 887.092,125.984 881.949,121.769 C879.107,129.629 874.254,129.303 868.886,124.343 C866.718,129.468 861.662,130.271 858.08,125.962 C853.899,131.541 847.024,131.545 844.556,124.173 C838.344,129.457 834.08,127.898 831.862,120.252 C827.616,124.636 823.528,124.248 821.158,118.308 C817.198,124.584 810.931,123.954 808.082,117.195 C800.6,114.484 800.296,108.402 805.264,103.187 C799.394,100.851 798.04,95.301 803.685,91.42 C797.162,89.131 795.785,85.39 800.298,79.865 C794.659,75.244 796.098,68.64 802.475,65.89 C797.742,60.226 799.161,56.758 805.702,54.209 C801.111,49.079 801.497,44.857 807.626,41.328" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="63.787" x="824.106" y="56.389">Dummy61</text>
+    </g>
+    <!--cluster Dummy7-->
+    <g class="cluster" data-qualified-name="Dummy7" data-source-line="27" id="ent0014">
+      <path d="M921,14 C921,4 978,4 978,4 C978,4 1035,4 1035,14 L1035,113 C1035,123 978,123 978,123 C978,123 921,123 921,113 L921,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M921,14 C921,24 978,24 978,24 C978,24 1035,24 1035,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="75.513" x="940.244" y="36.889">«Database»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56" x="950" y="50.889">Dummy7</text>
+    </g>
+    <!--cluster Dummy8-->
+    <g class="cluster" data-qualified-name="Dummy8" data-source-line="31" id="ent0016">
+      <rect fill="none" height="95" rx="35" ry="35" style="stroke:#181818;stroke-width:1;" width="104" x="1043" y="23.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="64.575" x="1062.713" y="39.389">«Storage»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56" x="1067" y="55.389">Dummy8</text>
+    </g>
+    <!--entity Dummy2-->
+    <g class="entity" data-qualified-name="Dummy2" data-source-line="13" id="ent0007">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="6" y="69.5"/>
+      <text fill="#000" font-size="14" textLength="56" x="16" y="90.389">Dummy2</text>
+    </g>
+    <!--entity Dummy9-->
+    <g class="entity" data-qualified-name="Dummy9" data-source-line="35" id="ent0018">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="100" y="62.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="52.15" x="111.925" y="83.389">«Agent»</text>
+      <text fill="#000" font-size="14" textLength="56" x="110" y="97.389">Dummy9</text>
+    </g>
+    <!--entity Dummy12i-->
+    <g class="entity" data-qualified-name="Dummy12.Dummy12i" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="51" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.937" x="194.5" y="61"/>
+      <polygon fill="#F1F1F1" points="274.438,66,274.438,80,286.438,80,286.438,72,280.438,66,274.438,66" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="280.438" x2="280.438" y1="66" y2="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="286.438" x2="280.438" y1="72" y2="72"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="59.063" x="208.438" y="84.889">«Artifact»</text>
+      <text fill="#000" font-size="14" textLength="66.937" x="204.5" y="98.889">Dummy12i</text>
+    </g>
+    <!--entity Dummy1i-->
+    <g class="entity" data-qualified-name="Dummy1.Dummy1i" data-source-line="6" id="ent0004">
+      <path d="M319,53.5 L360,53.5 A3.75,3.75 0 0 1 362.5,56 L369.5,74.5 L403.15,74.5 A2.5,2.5 0 0 1 405.65,77 L405.65,117 A2.5,2.5 0 0 1 403.15,119.5 L319,119.5 A2.5,2.5 0 0 1 316.5,117 L316.5,56 A2.5,2.5 0 0 1 319,53.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="316.5" x2="369.5" y1="74.5" y2="74.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="55.3" x="328.425" y="92.389">«Folder»</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="326.5" y="106.389">Dummy1i</text>
+    </g>
+    <!--entity Dummy5i-->
+    <g class="entity" data-qualified-name="Dummy5.Dummy5i" data-source-line="10" id="ent0006">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.15" x="430.5" y="57.5"/>
+      <path d="M463.55,57.5 L463.55,62.5 L456.55,69.5 L430.5,69.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="56" x="447.075" y="88.389">«Frame»</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="445.5" y="102.389">Dummy5i</text>
+    </g>
+    <!--entity Dummy3i-->
+    <g class="entity" data-qualified-name="Dummy3.Dummy3i" data-source-line="16" id="ent0009">
+      <polygon fill="#F1F1F1" points="561.5,67.5,571.5,57.5,660.65,57.5,660.65,105.5,650.65,115.5,561.5,115.5,561.5,67.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="650.65" x2="660.65" y1="67.5" y2="57.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="561.5" x2="650.65" y1="67.5" y2="67.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="650.65" x2="650.65" y1="67.5" y2="115.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="49.087" x="581.531" y="88.389">«Node»</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="576.5" y="102.389">Dummy3i</text>
+    </g>
+    <!--entity Dummy6i-->
+    <g class="entity" data-qualified-name="Dummy6.Dummy6i" data-source-line="20" id="ent0011">
+      <path d="M703.122,66.685 C706.158,60.391 710.631,59.33 715.385,64.909 C717.716,59.008 720.99,56.95 726.293,61.93 C728.084,53.71 732.542,52.824 738.752,57.738 C744.186,53.602 749.219,55.236 751.009,61.881 C755.418,56.186 761.456,58.216 763.549,64.338 C767.825,59.411 773.276,60.397 776.132,66.031 C787.561,69.259 788.23,79.246 780.988,86.833 C789.079,96.891 786.821,104.775 774.699,109.131 C772.57,115.047 766.84,115.17 763.238,110.767 C761.874,117.47 755.78,118.629 751.203,114.259 C747.564,120.39 743.761,119.954 739.637,114.755 C734.241,121.308 729.544,119.484 726.086,112.776 C721.924,118.037 716.869,117.94 714.124,111.347 C710.026,115.491 705.886,115.847 703.557,109.555 C692.419,105.512 691.526,94.974 700.309,87.937 C690.516,79.738 690.642,71.935 703.122,66.685" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="52.238" x="711.956" y="83.389">«Cloud»</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="708.5" y="97.389">Dummy6i</text>
+    </g>
+    <!--entity Dummy61i-->
+    <g class="entity" data-qualified-name="Dummy61.Dummy61i" data-source-line="24" id="ent0013">
+      <path d="M817.582,67.225 C819.542,61.294 824.169,59.403 829.023,64.114 C831.611,56.775 836.913,54.69 842.847,60.633 C845.255,52.769 851.024,51.906 856.117,58.098 C861.564,51.643 867.127,52.851 869.99,60.619 C876.495,54.731 880.219,57.139 883.069,64.286 C887.613,57.565 894.293,58.325 896.77,66.223 C909.772,70.541 912.144,77.795 902.821,88.247 C910.791,98.213 909.695,105.501 896.775,109.534 C892.804,115.234 888.713,117.07 883.716,110.638 C882.152,116.695 876.823,119.716 871.657,114.487 C868.241,121.149 863.808,122.977 858.015,117.066 C851.902,124.231 844.683,120.512 842.653,112.839 C838.547,117.312 833.794,117.768 830.65,111.738 C824.52,116.818 819.279,115.912 817.212,107.646 C811.271,106.589 809.084,103.586 811.86,97.793 C806.865,96.163 805.957,91.878 809.69,88.261 C805.307,82.998 806.536,78.629 812.925,76.273 C810.208,71.221 812.027,68.02 817.582,67.225" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="52.238" x="829.85" y="83.389">«Cloud»</text>
+      <text fill="#000" font-size="14" textLength="66.937" x="822.5" y="97.389">Dummy61i</text>
+    </g>
+    <!--entity Dummy7i-->
+    <g class="entity" data-qualified-name="Dummy7.Dummy7i" data-source-line="28" id="ent0015">
+      <path d="M929,68 C929,58 977.756,58 977.756,58 C977.756,58 1026.513,58 1026.513,68 L1026.513,105 C1026.513,115 977.756,115 977.756,115 C977.756,115 929,115 929,105 L929,68" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M929,68 C929,78 977.756,78 977.756,78 C977.756,78 1026.513,78 1026.513,68" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="75.513" x="940" y="92.889">«Database»</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="948.181" y="106.889">Dummy7i</text>
+    </g>
+    <!--entity Dummy8i-->
+    <g class="entity" data-qualified-name="Dummy8.Dummy8i" data-source-line="32" id="ent0017">
+      <rect fill="#F1F1F1" height="48" rx="35" ry="35" style="stroke:#181818;stroke-width:0.5;" width="86.575" x="1051.5" y="62.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="64.575" x="1062.5" y="83.389">«Storage»</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="1065.213" y="97.389">Dummy8i</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="85px" preserveAspectRatio="none" style="width:322px;height:85px;background:#FFFFFF;" version="1.1" viewBox="0 0 322 85" width="322px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="39.425" x="10" y="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="15" y="40.889">top</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="44.425" y="40.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="39.425" x2="39.425" y1="28" y2="46"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="39.425" x="10" y="28"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="86" y="28"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="91" y="40.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="86" y="28"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="51.063" x="133" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" x="138" y="22.889">a</text>
+    <text fill="#000" font-size="14" x="171.275" y="22.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="166.275" x2="166.275" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="133" x2="184.063" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" x="138" y="40.889">b</text>
+    <text fill="#000" font-size="14" x="171.275" y="40.889">2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="166.275" x2="166.275" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="133" x2="184.063" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.275" x="138" y="58.889">rest</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="171.275" y="58.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="166.275" x2="166.275" y1="46" y2="64"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="51.063" x="133" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="17" x="221" y="37"/>
+    <text fill="#000" font-size="14" x="226" y="49.889">c</text>
+    <line style="stroke:#000;stroke-width:1;" x1="221" x2="238" y1="55" y2="55"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="226" y="67.889">   </text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="17" x="221" y="37"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="35.575" x="275" y="55"/>
+    <text fill="#000" font-size="14" font-weight="700" x="280" y="67.889">d</text>
+    <text fill="#000" font-size="14" x="297.788" y="67.889">4</text>
+    <line style="stroke:#000;stroke-width:1;" x1="292.788" x2="292.788" y1="55" y2="73"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="35.575" x="275" y="55"/>
+    <path d="M226,64 L239,64 C248.339,64 258.595,64 267.607,64" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M267.607,67.018 L269.871,64 L267.607,60.982 L275.152,64 L267.607,67.018" fill="#000"/>
+    <ellipse cx="226" cy="64" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M172,55 L185,55 C194.51,55 205.177,55 213.626,55" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M213.626,58.034 L215.902,55 L213.626,51.966 L221.211,55 L213.626,58.034" fill="#000"/>
+    <ellipse cx="172" cy="55" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M83.718,37 L96.718,37 C103.087,37 114.395,37 125.578,37" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M125.578,40.064 L127.876,37 L125.578,33.936 L133.238,37 L125.578,40.064" fill="#000"/>
+    <ellipse cx="83.718" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M37,37 L50,37 C59.604,37 70.49,37 78.555,37" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M78.555,40.075 L80.861,37 L78.555,33.925 L86.243,37 L78.555,40.075" fill="#000"/>
+    <ellipse cx="37" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

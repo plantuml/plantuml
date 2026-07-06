@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="188px" preserveAspectRatio="none" style="width:338px;height:188px;background:#FFFFFF;" version="1.1" viewBox="0 0 338 188" width="338px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Dummy1-->
+    <g class="entity" data-qualified-name="Dummy1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="160" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.85" x="6" y="12"/>
+      <ellipse cx="48.383" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="43.383" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="56" x="68.468" y="31.889">Dummy1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="153.85" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="33.512" x="12" y="58.889">field1</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="33.512" x="12" y="72.889">field2</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="33.512" x="12" y="86.889">field3</text>
+      <text fill="#000" font-size="14" textLength="40.512" x="12" y="100.889">simple</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="153.85" y1="108" y2="108"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="136.85" x="12" y="122.889">thisIsALongmethod1()</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="136.85" x="12" y="136.889">thisIsALongmethod2()</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="103.338" x="12" y="150.889">anotherMethod()</text>
+      <text fill="#000" font-size="14" textLength="52.063" x="12" y="164.889">normal()</text>
+    </g>
+    <!--class Dummy2-->
+    <g class="entity" data-qualified-name="Dummy2" data-source-line="13" id="ent0002">
+      <rect fill="#F1F1F1" height="160" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.85" x="173" y="12"/>
+      <ellipse cx="215.383" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="210.383" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="56" x="235.468" y="31.889">Dummy2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="174" x2="320.85" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="179" y="58.889">field1</text>
+      <text fill="#000" font-size="14" textLength="33.512" x="179" y="72.889">field2</text>
+      <text fill="#000" font-size="14" textLength="33.512" x="179" y="86.889">field3</text>
+      <text fill="#000" font-size="14" textLength="40.512" x="179" y="100.889">simple</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="174" x2="320.85" y1="108" y2="108"/>
+      <text fill="#000" font-size="14" textLength="136.85" x="179" y="122.889">thisIsALongmethod1()</text>
+      <text fill="#000" font-size="14" textLength="136.85" x="179" y="136.889">thisIsALongmethod1()</text>
+      <text fill="#000" font-size="14" textLength="103.338" x="179" y="150.889">anotherMethod()</text>
+      <text fill="#000" font-size="14" textLength="52.063" x="179" y="164.889">normal()</text>
+    </g>
+  </g>
+</svg>

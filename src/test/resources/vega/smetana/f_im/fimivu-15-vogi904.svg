@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="218px" preserveAspectRatio="none" style="width:289px;height:218px;background:#FFFFFF;" version="1.1" viewBox="0 0 289 218" width="289px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <path d="M18.5,12 L88.5,12 A12.5,12.5 0 0 1 101,24.5 L101,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="none" height="190" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="95" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="101" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="48.819" y="27.889">A</text>
+      <g class="entity" data-qualified-name="A.B" data-source-line="2" id="ent0002">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="18" y="53"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="68" y1="77" y2="77"/>
+        <text fill="#000" font-size="14" x="38.319" y="68.889">B</text>
+      </g>
+      <line style="stroke:#181818;stroke-width:1.5;stroke-dasharray:8,10;" x1="11" x2="86" y1="119" y2="119"/>
+      <g class="entity" data-qualified-name="A.CONC1.C" data-source-line="4" id="ent0004">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="18" y="131"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="68" y1="155" y2="155"/>
+        <text fill="#000" font-size="14" x="37.925" y="146.889">C</text>
+      </g>
+    </g>
+    <g class="entity" data-qualified-name="D" data-source-line="7" id="ent0005">
+      <path d="M132,47 L261,47 A12.5,12.5 0 0 1 273.5,59.5 L273.5,71 L119.5,71 L119.5,59.5 A12.5,12.5 0 0 1 132,47" fill="#F1F1F1"/>
+      <rect fill="none" height="120" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="154" x="119.5" y="47"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="119.5" x2="273.5" y1="71" y2="71"/>
+      <text fill="#000" font-size="14" x="191.425" y="62.889">D</text>
+      <g class="entity" data-qualified-name="D.E" data-source-line="8" id="ent0006">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="131.5" y="88"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="131.5" x2="181.5" y1="112" y2="112"/>
+        <text fill="#000" font-size="14" x="151.819" y="103.889">E</text>
+      </g>
+      <line style="stroke:#181818;stroke-width:1.5;stroke-dasharray:8,10;" x1="191.5" x2="191.5" y1="76" y2="162"/>
+      <g class="entity" data-qualified-name="D.CONC2.F" data-source-line="10" id="ent0008">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="198.5" y="88"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="198.5" x2="248.5" y1="112" y2="112"/>
+        <text fill="#000" font-size="14" x="219.213" y="103.889">F</text>
+      </g>
+    </g>
+  </g>
+</svg>

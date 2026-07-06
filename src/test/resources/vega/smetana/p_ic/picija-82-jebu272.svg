@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:293px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 293 160" width="293px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class C1-->
+    <g class="entity" data-qualified-name="C1" data-source-line="9" id="ent0001">
+      <rect fill="#ADD8E6" height="132" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="101.388" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#FF0" font-size="14" textLength="69.388" x="35" y="31.889">ClassTitle1</text>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="7" x2="106.388" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="53.5"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="54.425" x="26" y="58.889">atribute1</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="70.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="54.425" x="26" y="72.889">atribute2</text>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_FIELD">
+        <polygon fill="none" points="17,80.5,13,86.5,21,86.5" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="54.425" x="26" y="86.889">atribute3</text>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="7" x2="106.388" y1="94" y2="94"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="103.5"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="63.7" x="26" y="108.889">method1()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="120.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="63.7" x="26" y="122.889">method2()</text>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_METHOD">
+        <polygon fill="#4177AF" points="17,130.5,13,136.5,21,136.5" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="63.7" x="26" y="136.889">method3()</text>
+    </g>
+    <!--class C2-->
+    <g class="entity" data-qualified-name="C2" data-source-line="17" id="ent0002">
+      <rect fill="#ADD8E6" height="132" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="101.388" x="176" y="12"/>
+      <ellipse cx="191" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="186" y="33">C</text>
+      <text fill="#FF0" font-size="14" textLength="69.388" x="205" y="31.889">ClassTitle2</text>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="177" x2="276.388" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="184" y="53.5"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="54.425" x="196" y="58.889">atribute1</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="187" cy="70.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="54.425" x="196" y="72.889">atribute2</text>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_FIELD">
+        <polygon fill="none" points="187,80.5,183,86.5,191,86.5" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="54.425" x="196" y="86.889">atribute3</text>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="177" x2="276.388" y1="94" y2="94"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="184" y="103.5"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="63.7" x="196" y="108.889">method1()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="187" cy="120.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="63.7" x="196" y="122.889">method2()</text>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_METHOD">
+        <polygon fill="#4177AF" points="187,130.5,183,136.5,191,136.5" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#FFD700" font-size="14" textLength="63.7" x="196" y="136.889">method3()</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#800080" points="175.856,78,166.856,74,170.856,78,166.856,82,175.856,78" style="stroke:#800080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.045,78 C128.773,78 149.117,78 170.856,78" fill="none" style="stroke:#800080;stroke-width:1;"/>
+      <text fill="#FFA500" font-size="13" textLength="47.775" x="118" y="70.111">Relation</text>
+    </g>
+  </g>
+</svg>

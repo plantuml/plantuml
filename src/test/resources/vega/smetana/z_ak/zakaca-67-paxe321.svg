@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="167px" preserveAspectRatio="none" style="width:119px;height:167px;background:#FFC0CB;" version="1.1" viewBox="0 0 119 167" width="119px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC0CB" height="167" style="stroke:none;" width="119" x="0" y="0"/>
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="75.513" x="10" y="20.889">Shape Stack</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="85.513" y="20.889">K0</text>
+    </g>
+    <!--entity stack1-->
+    <g class="entity" data-qualified-name="stack1" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:none;" width="60.425" x="24.831" y="47"/>
+      <path d="M9.831,47 L22.331,47 A2.5,2.5 0 0 1 24.831,49.5 L24.831,78.5 A2.5,2.5 0 0 0 27.331,81 L82.756,81 A2.5,2.5 0 0 0 85.256,78.5 L85.256,49.5 A2.5,2.5 0 0 1 87.756,47 L100.256,47" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="34.831" y="67.889">stack1</text>
+    </g>
+    <!--entity stack-->
+    <g class="entity" data-qualified-name="stack" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:none;" width="52.637" x="28.331" y="117"/>
+      <path d="M13.331,117 L25.831,117 A2.5,2.5 0 0 1 28.331,119.5 L28.331,148.5 A2.5,2.5 0 0 0 30.831,151 L78.469,151 A2.5,2.5 0 0 0 80.969,148.5 L80.969,119.5 A2.5,2.5 0 0 1 83.469,117 L95.969,117" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="32.637" x="38.331" y="137.889">stack</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M54.831,81.115 C54.831,91.798 54.831,105.773 54.831,116.528" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

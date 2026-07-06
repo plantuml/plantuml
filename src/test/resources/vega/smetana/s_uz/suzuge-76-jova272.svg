@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="240px" preserveAspectRatio="none" style="width:275px;height:240px;background:#FFFFFF;" version="1.1" viewBox="0 0 275 240" width="275px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster bb-->
+    <g class="cluster" data-qualified-name="bb" data-source-line="11" id="ent0001">
+      <rect fill="none" height="212" rx="12.5" ry="12.5" style="stroke:#F00;stroke-width:1;stroke-dasharray:7,7;" width="253" x="14" y="4"/>
+      <text fill="#ABABAB" font-size="14" font-style="italic" textLength="114.363" x="83.319" y="16.889">«System Boundry»</text>
+      <text fill="#ABABAB" font-size="14" font-weight="700" textLength="53.025" x="113.988" y="30.889">blahblah</text>
+    </g>
+    <!--cluster fst-->
+    <g class="cluster" data-qualified-name="bb.fst" data-source-line="12" id="ent0002">
+      <rect fill="none" height="165" rx="12.5" ry="12.5" style="stroke:#F00;stroke-width:1;stroke-dasharray:7,7;" width="161" x="98" y="43"/>
+      <text fill="#ABABAB" font-size="14" font-style="italic" textLength="114.363" x="121.319" y="55.889">«System Boundry»</text>
+      <text fill="#ABABAB" font-size="14" font-weight="700" textLength="22.488" x="167.256" y="69.889">first</text>
+    </g>
+    <!--entity scnd-->
+    <g class="entity" data-qualified-name="bb.scnd" data-source-line="17" id="ent0006">
+      <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:7,7;" width="65.15" x="22.5" y="82"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="32.5" y="102.889">second</text>
+    </g>
+    <!--entity third-->
+    <g class="entity" data-qualified-name="bb.fst.third" data-source-line="13" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:7,7;" width="47.213" x="140.5" y="82"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="150.5" y="102.889">third</text>
+    </g>
+    <!--entity forth-->
+    <g class="entity" data-qualified-name="bb.fst.forth" data-source-line="14" id="ent0004">
+      <ellipse cx="228.237" cy="98.899" fill="#F1F1F1" rx="22.737" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.912" x="214.281" y="102.399">forth</text>
+    </g>
+    <!--entity fifth-->
+    <g class="entity" data-qualified-name="bb.fst.fifth" data-source-line="15" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="12.5" ry="12.5" style="stroke:#F00;stroke-width:1;stroke-dasharray:7,7;" width="136.363" x="106" y="152"/>
+      <text fill="#ABABAB" font-size="14" font-style="italic" textLength="114.363" x="117" y="172.889">«System Boundry»</text>
+      <text fill="#ABABAB" font-size="14" textLength="22.488" x="162.938" y="186.889">fifth</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="87.727,99,96.727,103,92.727,99,96.727,95,87.727,99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M97.958,99 C97.934,99 97.911,99 97.887,99 C97.511,99 97.134,99 96.758,99 C93.748,99 95.737,99 92.727,99" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="84px" preserveAspectRatio="none" style="width:237px;height:84px;background:#FFFFFF;" version="1.1" viewBox="0 0 237 84" width="237px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class MyClass-->
+    <g class="entity" data-qualified-name="MyClass" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="56" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="215.125" x="6" y="12"/>
+      <ellipse cx="21" cy="32" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="37">C</text>
+      <text fill="#000" font-size="14" textLength="53.725" x="35" y="35.889">MyClass</text>
+      <rect fill="#FFF" height="38" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="127.4" x="96.725" y="9"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="114.75" x="103.05" y="19.333">S extends SomeClass,</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="125.4" x="97.725" y="31.333">A extends AnotherClass,</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="98.1" x="111.375" y="43.333">Y YetAnotherClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="220.125" y1="52" y2="52"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="220.125" y1="60" y2="60"/>
+    </g>
+  </g>
+</svg>

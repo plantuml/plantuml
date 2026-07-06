@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="140px" preserveAspectRatio="none" style="width:182px;height:140px;background:#FFFFFF;" version="1.1" viewBox="0 0 182 140" width="182px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Does work now-->
+    <g class="entity" data-qualified-name="Does work now" data-source-line="2" id="ent0001">
+      <ellipse cx="44.012" cy="105" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="88.025" x="0" y="132.889">Does work now</text>
+    </g>
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.425" x="18.512" y="12"/>
+      <ellipse cx="33.512" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="28.512" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="47.512" y="31.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="19.512" x2="68.938" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="19.512" x2="68.938" y1="52" y2="52"/>
+    </g>
+    <!--class dummy-->
+    <g class="entity" data-qualified-name="dummy" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.85" x="88.012" y="12"/>
+      <ellipse cx="103.012" cy="28" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="98.012" y="33">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="45.85" x="117.012" y="31.889">dummy</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="89.012" x2="164.863" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="89.012" x2="164.863" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk4">
+      <path d="M44.012,60.309 C44.012,72.24 44.012,86.22 44.012,95.751" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

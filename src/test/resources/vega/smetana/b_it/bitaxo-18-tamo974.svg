@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="90px" preserveAspectRatio="none" style="width:189px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 189 90" width="189px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster C-->
+    <g class="cluster" data-qualified-name="C" data-source-line="8" id="ent0003">
+      <path d="M149.5,9 L160.5,9 A12.5,12.5 0 0 1 173,21.5 L173,28 L137,28 L137,21.5 A12.5,12.5 0 0 1 149.5,9" fill="#F1F1F1"/>
+      <rect fill="none" height="31" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="36" x="137" y="9"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="137" x2="173" y1="28" y2="28"/>
+      <text fill="#000" font-size="14" x="149.925" y="24.889">C</text>
+    </g>
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="13" y="26"/>
+    <text fill="#000" font-size="14" x="33.319" y="49.889">A</text>
+    <g class="entity" data-qualified-name="B" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="81" y="21"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="81" x2="131" y1="45" y2="45"/>
+      <text fill="#000" font-size="14" x="101.319" y="36.889">B</text>
+    </g>
+    <text fill="#000" font-size="14" x="151.106" y="56.889">d</text>
+    <ellipse cx="155" cy="40" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+  </g>
+</svg>

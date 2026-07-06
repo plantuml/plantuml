@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="129px" preserveAspectRatio="none" style="width:181px;height:129px;background:#FFFFFF;" version="1.1" viewBox="0 0 181 129" width="181px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity usecase-->
+    <g class="entity" data-qualified-name="usecase" data-source-line="2" id="ent0001">
+      <ellipse cx="85.716" cy="62.52" fill="#F1F1F1" rx="79.716" ry="50.52" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="37.416" y="36.101">This is a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.15" x="81.866" y="36.101">usecase</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="15.991" x2="155.44" y1="39.212" y2="39.212"/>
+      <text fill="#000" font-size="14" textLength="129.15" x="21.141" y="54.101">You can use separator</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7.027" x2="164.405" y1="61.212" y2="61.212"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7.007" x2="164.424" y1="63.212" y2="63.212"/>
+      <text fill="#000" font-size="14" textLength="87.85" x="41.791" y="76.101">of different kind</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="13.993" x2="157.439" y1="83.212" y2="83.212"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="59.641" y="98.101">and style</text>
+    </g>
+  </g>
+</svg>

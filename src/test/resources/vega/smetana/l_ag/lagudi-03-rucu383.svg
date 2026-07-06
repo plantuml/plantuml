@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="323px" preserveAspectRatio="none" style="width:357px;height:323px;background:#FFFFFF;" version="1.1" viewBox="0 0 357 323" width="357px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="26.803" y="12"/>
+      <ellipse cx="41.803" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="36.803" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="55.803" y="31.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27.803" x2="85.016" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27.803" x2="85.016" y1="52" y2="52"/>
+    </g>
+    <!--class foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="110" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="158.7" x="91.213" y="110"/>
+      <ellipse cx="106.213" cy="136" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="101.213" y="141">C</text>
+      <text fill="#000" font-size="14" textLength="58.45" x="154.338" y="125.889">This class</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="168.381" y="139.889">has a</text>
+      <text fill="#000" font-size="14" textLength="126.7" x="120.213" y="153.889">very long name for test</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="92.213" x2="248.913" y1="162" y2="162"/>
+      <text fill="#000" font-size="14" textLength="53.638" x="97.213" y="176.889">dummy1</text>
+      <text fill="#000" font-size="14" textLength="53.638" x="97.213" y="190.889">dummy2</text>
+      <text fill="#000" font-size="14" textLength="53.638" x="97.213" y="204.889">dummy3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="92.213" x2="248.913" y1="212" y2="212"/>
+    </g>
+    <!--class foo3-->
+    <g class="entity" data-qualified-name="foo3" data-source-line="9" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="12" y="110"/>
+      <ellipse cx="27" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="22" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="41" y="129.889">foo3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="13" x2="70.213" y1="142" y2="142"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="13" x2="70.213" y1="150" y2="150"/>
+    </g>
+    <!--class foo4-->
+    <g class="entity" data-qualified-name="foo4" data-source-line="11" id="ent0004">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.638" x="269.913" y="142"/>
+      <ellipse cx="287.804" cy="158" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="282.804" y="163">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="302.446" y="161.889">foo4</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="270.913" x2="334.55" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" textLength="53.638" x="275.913" y="188.889">dummy4</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="270.913" x2="334.55" y1="196" y2="196"/>
+    </g>
+    <!--class red-->
+    <g class="entity" data-qualified-name="red" data-source-line="19" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.213" x="153.158" y="260"/>
+      <ellipse cx="168.158" cy="276" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="163.158" y="281">C</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="182.158" y="279.889">red</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="154.158" x2="204.371" y1="292" y2="292"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="154.158" x2="204.371" y1="300" y2="300"/>
+    </g>
+    <!--class blue-->
+    <g class="entity" data-qualified-name="blue" data-source-line="21" id="ent0011">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.512" x="284.415" y="260"/>
+      <ellipse cx="299.415" cy="276" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="294.415" y="281">C</text>
+      <text fill="#000" font-size="14" textLength="26.512" x="313.415" y="279.889">blue</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="285.415" x2="341.927" y1="292" y2="292"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="285.415" x2="341.927" y1="300" y2="300"/>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="56.409" x2="56.409" y1="60" y2="80"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="56.409" x2="170.563" y1="80" y2="80"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="170.563" x2="170.563" y1="80" y2="110"/>
+    <polygon fill="#181818" points="170.563,110,174.563,101,170.563,105,166.563,101,170.563,110" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="41.606" x2="41.606" y1="60" y2="110"/>
+    <polygon fill="#181818" points="41.606,110,45.606,101,41.606,105,37.606,101,41.606,110" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="71.213" x2="71.213" y1="60" y2="70"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="71.213" x2="302.731" y1="70" y2="70"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="302.731" x2="302.731" y1="70" y2="142"/>
+    <polygon fill="#181818" points="302.731,142,306.731,133,302.731,137,298.731,133,302.731,142" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="170.563" x2="170.563" y1="220" y2="260"/>
+    <polygon fill="#181818" points="170.563,260,174.563,251,170.563,255,166.563,251,170.563,260" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="291.792" x2="291.792" y1="204" y2="250"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="291.792" x2="187.967" y1="250" y2="250"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="187.967" x2="187.967" y1="250" y2="260"/>
+    <polygon fill="#181818" points="187.967,260,191.967,251,187.967,255,183.967,251,187.967,260" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="313.671" x2="313.671" y1="204" y2="260"/>
+    <polygon fill="#181818" points="313.671,260,317.671,251,313.671,255,309.671,251,313.671,260" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+  </g>
+</svg>

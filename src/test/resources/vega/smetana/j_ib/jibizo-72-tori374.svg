@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="100.402px" preserveAspectRatio="none" style="width:71px;height:100px;background:#FFFFFF;" version="1.1" viewBox="0 0 71 100" width="71.486px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0001">
+      <ellipse cx="33.735" cy="48.594" fill="#222" rx="4.016" ry="4.016" style="stroke:#222;stroke-width:0.402;"/>
+    </g>
+    <g class="entity" data-qualified-name="left" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="20.08" rx="5.02" ry="5.02" style="stroke:#181818;stroke-width:0.201;" width="20.08" x="2.41" y="39.357"/>
+      <line style="stroke:#181818;stroke-width:0.201;" x1="2.41" x2="22.49" y1="48.996" y2="48.996"/>
+      <text fill="#000" font-size="5.622" textLength="7.485" x="8.707" y="45.739">left</text>
+    </g>
+    <g class="entity" data-qualified-name="right" data-source-line="3" id="ent0005">
+      <rect fill="#F1F1F1" height="20.08" rx="5.02" ry="5.02" style="stroke:#181818;stroke-width:0.201;" width="20.08" x="44.98" y="39.357"/>
+      <line style="stroke:#181818;stroke-width:0.201;" x1="44.98" x2="65.06" y1="48.996" y2="48.996"/>
+      <text fill="#000" font-size="5.622" textLength="10.929" x="49.556" y="45.739">right</text>
+    </g>
+    <g class="entity" data-qualified-name="up" data-source-line="4" id="ent0007">
+      <rect fill="#F1F1F1" height="20.08" rx="5.02" ry="5.02" style="stroke:#181818;stroke-width:0.201;" width="20.08" x="23.695" y="4.819"/>
+      <line style="stroke:#181818;stroke-width:0.201;" x1="23.695" x2="43.775" y1="14.458" y2="14.458"/>
+      <text fill="#000" font-size="5.622" textLength="6.255" x="30.607" y="11.2">up</text>
+    </g>
+    <g class="entity" data-qualified-name="down" data-source-line="5" id="ent0010">
+      <rect fill="#F1F1F1" height="20.08" rx="5.02" ry="5.02" style="stroke:#181818;stroke-width:0.201;" width="21.491" x="22.892" y="73.896"/>
+      <line style="stroke:#181818;stroke-width:0.201;" x1="22.892" x2="44.383" y1="83.534" y2="83.534"/>
+      <text fill="#000" font-size="5.622" textLength="13.459" x="26.908" y="80.277">down</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="22.593,49.398,26.208,51.004,24.602,49.398,26.208,47.791,22.593,49.398" style="stroke:#181818;stroke-width:0.402;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.602,49.398 C26.923,49.398 27.236,49.398 29.557,49.398" fill="none" style="stroke:#181818;stroke-width:0.402;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="44.85,49.398,41.236,47.791,42.842,49.398,41.236,51.004,44.85,49.398" style="stroke:#181818;stroke-width:0.402;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M37.892,49.398 C40.212,49.398 40.523,49.398 42.842,49.398" fill="none" style="stroke:#181818;stroke-width:0.402;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="33.735,25.019,32.129,28.633,33.735,27.027,35.341,28.633,33.735,25.019" style="stroke:#181818;stroke-width:0.402;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M33.735,27.027 C33.735,33.409 33.735,39.446 33.735,44.405" fill="none" style="stroke:#181818;stroke-width:0.402;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="33.735,73.812,35.341,70.198,33.735,71.804,32.129,70.198,33.735,73.812" style="stroke:#181818;stroke-width:0.402;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M33.735,54.349 C33.735,59.313 33.735,65.398 33.735,71.804" fill="none" style="stroke:#181818;stroke-width:0.402;"/>
+    </g>
+  </g>
+</svg>

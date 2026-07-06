@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="328px" preserveAspectRatio="none" style="width:307px;height:328px;background:#FFFFFF;" version="1.1" viewBox="0 0 307 328" width="307px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class AbstractEventItem-->
+    <g class="entity" data-qualified-name="AbstractEventItem" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="174" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.6" x="76" y="12"/>
+      <ellipse cx="92.986" cy="28" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="87.986" y="33">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="114.188" x="107.427" y="31.889">AbstractEventItem</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="77" x2="225.6" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="75.425" x="82" y="58.889">name:String</text>
+      <text fill="#000" font-size="14" textLength="108.15" x="82" y="72.889">description:String</text>
+      <text fill="#000" font-size="14" textLength="84.088" x="82" y="86.889">iconUrl:String</text>
+      <text fill="#000" font-size="14" textLength="138.6" x="82" y="100.889">iconClassName:String</text>
+      <text fill="#000" font-size="14" textLength="88.638" x="82" y="114.889">startTime:long</text>
+      <text fill="#000" font-size="14" textLength="77.613" x="82" y="128.889">sortOrder:int</text>
+      <text fill="#000" font-size="14" textLength="116.55" x="82" y="142.889">status:EventStatus</text>
+      <text fill="#000" font-size="14" textLength="111.213" x="82" y="156.889">resultString:String</text>
+      <text fill="#000" font-size="14" textLength="61.512" x="82" y="170.889">link:String</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="77" x2="225.6" y1="178" y2="178"/>
+    </g>
+    <!--class RacingEventItem-->
+    <g class="entity" data-qualified-name="RacingEventItem" data-source-line="16" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.575" x="6" y="222"/>
+      <ellipse cx="21" cy="238" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="243">C</text>
+      <text fill="#000" font-size="14" textLength="106.575" x="35" y="241.889">RacingEventItem</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="143.575" y1="254" y2="254"/>
+      <text fill="#000" font-size="14" textLength="95.638" x="12" y="268.889">raceNumber:int</text>
+      <text fill="#000" font-size="14" textLength="101.15" x="12" y="282.889">flags:RaceFlag[]</text>
+      <text fill="#000" font-size="14" textLength="80.063" x="12" y="296.889">meetingId:int</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="143.575" y1="304" y2="304"/>
+    </g>
+    <!--class SportEventItem-->
+    <g class="entity" data-qualified-name="SportEventItem" data-source-line="22" id="ent0004">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128.338" x="163.5" y="236"/>
+      <ellipse cx="178.5" cy="252" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="173.5" y="257">C</text>
+      <text fill="#000" font-size="14" textLength="96.338" x="192.5" y="255.889">SportEventItem</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="164.5" x2="290.838" y1="268" y2="268"/>
+      <text fill="#000" font-size="14" textLength="98.7" x="169.5" y="282.889">marketCount:int</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="164.5" x2="290.838" y1="290" y2="290"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="111.942,186.403,98.993,200.272,109.904,205.267,111.942,186.403" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M104.449,202.77 C98.822,215.059 100.734,210.883 95.694,221.893" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="191.058,186.403,193.096,205.267,204.007,200.272,191.058,186.403" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M198.551,202.77 C206.702,220.574 207.265,221.803 213.721,235.904" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="170px" preserveAspectRatio="none" style="width:226px;height:170px;background:#FFFFFF;" version="1.1" viewBox="0 0 226 170" width="226px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity User-->
+    <g class="entity" data-qualified-name="User" data-source-line="1" id="ent0001">
+      <ellipse cx="29.787" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M29.787,28.5 L29.787,55.5 M16.787,36.5 L42.787,36.5 M29.787,55.5 L16.787,70.5 M29.787,55.5 L42.787,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="15" y="82.889">User</text>
+    </g>
+    <!--entity Admin-->
+    <g class="entity" data-qualified-name="Admin" data-source-line="2" id="ent0002">
+      <a href="http://www.admin.fr" target="_top" title="http://www.admin.fr" xlink:actuate="onRequest" xlink:href="http://www.admin.fr" xlink:show="new" xlink:title="http://www.admin.fr" xlink:type="simple">
+        <ellipse cx="98.044" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M98.044,28.5 L98.044,55.5 M85.044,36.5 L111.044,36.5 M98.044,55.5 L85.044,70.5 M98.044,55.5 L111.044,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="14" textLength="70.088" x="63" y="82.889">Main Admin</text>
+      </a>
+    </g>
+    <!--entity Start-->
+    <g class="entity" data-qualified-name="Start" data-source-line="4" id="ent0003">
+      <ellipse cx="29.851" cy="137.899" fill="#F1F1F1" rx="23.851" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.488" x="15.107" y="141.399">Start</text>
+    </g>
+    <!--entity Use-->
+    <g class="entity" data-qualified-name="Use" data-source-line="5" id="ent0004">
+      <a href="http://start" target="_top" title="http://start" xlink:actuate="onRequest" xlink:href="http://start" xlink:show="new" xlink:title="http://start" xlink:type="simple">
+        <ellipse cx="140.778" cy="138.156" fill="#F1F1F1" rx="68.778" ry="16.156" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="14" textLength="111.388" x="85.085" y="141.656">Use the application</text>
+      </a>
+    </g>
+  </g>
+</svg>

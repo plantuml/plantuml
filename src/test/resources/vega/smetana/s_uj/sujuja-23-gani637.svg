@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="198px" preserveAspectRatio="none" style="width:275px;height:198px;background:#FFFFFF;" version="1.1" viewBox="0 0 275 198" width="275px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster bb-->
+    <g class="cluster" data-qualified-name="bb" data-source-line="2" id="ent0001">
+      <rect fill="none" height="170" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,3;" width="253" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="53.025" x="113.988" y="16.889">blahblah</text>
+    </g>
+    <!--cluster fst-->
+    <g class="cluster" data-qualified-name="bb.fst" data-source-line="3" id="ent0002">
+      <rect fill="#77F" height="137" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;" width="161" x="98" y="29"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.275" x="163.363" y="41.889">first3</text>
+    </g>
+    <!--entity scnd-->
+    <g class="entity" data-qualified-name="bb.scnd" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.15" x="22.5" y="54"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="32.5" y="74.889">second</text>
+    </g>
+    <!--entity third-->
+    <g class="entity" data-qualified-name="bb.fst.third" data-source-line="4" id="ent0003">
+      <rect fill="#F00" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;" width="47.213" x="140.5" y="54"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="150.5" y="74.889">third</text>
+    </g>
+    <!--entity forth-->
+    <g class="entity" data-qualified-name="bb.fst.forth" data-source-line="5" id="ent0004">
+      <ellipse cx="228.237" cy="70.899" fill="#F1F1F1" rx="22.737" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.912" x="214.281" y="74.399">forth</text>
+    </g>
+    <!--entity fifth-->
+    <g class="entity" data-qualified-name="bb.fst.fifth" data-source-line="6" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:2;" width="42.488" x="143" y="124"/>
+      <text fill="#000" font-size="14" textLength="22.488" x="153" y="144.889">fifth</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="87.727,71,96.727,75,92.727,71,96.727,67,87.727,71" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M97.958,71 C97.934,71 97.911,71 97.887,71 C97.511,71 97.134,71 96.758,71 C93.748,71 95.737,71 92.727,71" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

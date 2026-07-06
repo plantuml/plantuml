@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="250px" preserveAspectRatio="none" style="width:310px;height:250px;background:#FFFFFF;" version="1.1" viewBox="0 0 310 250" width="310px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity card2-->
+    <g class="entity" data-qualified-name="card2" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.663" x="34.5" y="43"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="44.5" y="56.889">This is a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="88.95" y="56.889">card</text>
+    </g>
+    <!--entity card-->
+    <g class="entity" data-qualified-name="card" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="86" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="149.15" x="145" y="12"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="155" y="25.889">This is a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="199.45" y="25.889">card</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="146" x2="293.15" y1="29" y2="29"/>
+      <text fill="#000" font-size="14" textLength="129.15" x="155" y="43.889">You can use separator</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="146" x2="293.15" y1="51" y2="51"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="146" x2="293.15" y1="53" y2="53"/>
+      <text fill="#000" font-size="14" textLength="87.85" x="155" y="65.889">of different kind</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="146" x2="293.15" y1="73" y2="73"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="155" y="87.889">and style</text>
+    </g>
+    <!--entity rectangle-->
+    <g class="entity" data-qualified-name="rectangle" data-source-line="15" id="ent0003">
+      <rect fill="#F1F1F1" height="100" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="149.15" x="6" y="134"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="16" y="154.889">This is a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="60.45" y="154.889">rectangle</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="154.15" y1="158" y2="158"/>
+      <text fill="#000" font-size="14" textLength="129.15" x="16" y="172.889">You can use separator</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="154.15" y1="180" y2="180"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="154.15" y1="182" y2="182"/>
+      <text fill="#000" font-size="14" textLength="87.85" x="16" y="194.889">of different kind</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="154.15" y1="202" y2="202"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="16" y="216.889">and style</text>
+    </g>
+  </g>
+</svg>

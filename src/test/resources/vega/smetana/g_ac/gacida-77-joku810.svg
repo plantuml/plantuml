@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:234px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 234 72" width="234px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <a href="My_component_1" target="_top" title="My_component_1" xlink:actuate="onRequest" xlink:href="My_component_1" xlink:show="new" xlink:title="My_component_1" xlink:type="simple">
+        <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.85" x="6" y="12"/>
+        <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="78.85" y="17"/>
+        <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="76.85" y="19"/>
+        <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="76.85" y="23"/>
+        <text fill="#000" font-size="14" textLength="52.85" x="21" y="42.889">My comp</text>
+      </a>
+    </g>
+    <!--entity foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="2" id="ent0002">
+      <a href="My_component_2" target="_top" title="My_component_2" xlink:actuate="onRequest" xlink:href="My_component_2" xlink:show="new" xlink:title="My_component_2" xlink:type="simple">
+        <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="100.637" x="117" y="12"/>
+        <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="197.638" y="17"/>
+        <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="195.638" y="19"/>
+        <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="195.638" y="23"/>
+        <text fill="#000" font-size="14" textLength="60.637" x="132" y="42.889">My comp2</text>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="116.823,34,107.823,30,111.823,34,107.823,38,116.823,34" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M99.219,34 C105.087,34 105.955,34 111.823,34" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

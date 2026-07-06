@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="645px" preserveAspectRatio="none" style="width:568px;height:645px;background:#FFFFFF;" version="1.1" viewBox="0 0 568 645" width="568px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="314.721" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="136.475" x="246.721" y="73"/>
+    <text fill="#000" font-size="12" textLength="116.475" x="256.721" y="92.333">Получение uid на вход</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="147.8" x="240.721" y="142"/>
+    <text fill="#000" font-size="12" textLength="127.8" x="250.721" y="161.333">Получение параметров</text>
+    <g class="entity" data-qualified-name=".6" id="ent0007">
+      <polygon fill="#F1F1F1" points="314.721,211,326.721,223,314.721,235,302.721,223,314.721,211" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <g class="entity" data-qualified-name=".9" id="ent0010">
+      <polygon fill="#F1F1F1" points="276.721,286,288.721,298,276.721,310,264.721,298,276.721,286" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="206.075" x="59.721" y="361"/>
+    <text fill="#000" font-size="12" textLength="186.075" x="69.721" y="380.333">Получаем акционный тариф/пакет</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="250.325" x="33.721" y="486"/>
+    <text fill="#000" font-size="12" textLength="230.325" x="43.721" y="505.333">Перемещаем установленный тариф/пакет</text>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="257.721" y="605"/>
+    <g class="entity" data-qualified-name=".18" id="ent0019">
+      <polygon fill="#F1F1F1" points="298.721,365,310.721,377,298.721,389,286.721,377,298.721,365" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="221.675" x="186.721" y="536"/>
+    <text fill="#000" font-size="12" textLength="201.675" x="196.721" y="555.333">Получаем тариф/пакет по умолчанию</text>
+    <g class="entity" data-qualified-name=".24" id="ent0025">
+      <polygon fill="#F1F1F1" points="345.721,444,357.721,456,345.721,468,333.721,456,345.721,444" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="306.721" y="286"/>
+    <g class="end_entity" data-qualified-name="end" data-source-line="24" id="ent0032">
+      <ellipse cx="346.721" cy="376" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="346.721" cy="376" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="314.721,72.81,318.721,63.81,314.721,67.81,310.721,63.81,314.721,72.81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M314.721,36.263 C314.721,46.456 314.721,56.552 314.721,67.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="314.721,141.857,318.721,132.857,314.721,136.857,310.721,132.857,314.721,141.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M314.721,105.203 C314.721,116.168 314.721,125.906 314.721,136.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="314.721,210.641,318.721,201.641,314.721,205.641,310.721,201.641,314.721,210.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M314.721,174.251 C314.721,185.467 314.721,195.468 314.721,205.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="118.181" x="195.721" y="207.197">Параметры корректны?</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="282.547,285.809,290.251,279.672,284.856,281.373,283.155,275.978,282.547,285.809" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M308.95,235.087 C301.808,248.808 292.023,267.605 284.856,281.373" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="13.544" x="300.721" y="263.556">Да</text>
+      <text fill="#000" font-size="11" textLength="136.95" x="145.547" y="282.364">Выполнены условия акции?</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="184.981,360.965,194.678,359.242,189.124,358.166,190.2,352.613,184.981,360.965" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M264.521,307.24 C245.567,320.043 212.899,342.108 189.124,358.166" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="13.544" x="235.721" y="338.556">Да</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0014" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="159.216,485.794,163.506,476.929,159.378,480.797,155.511,476.669,159.216,485.794" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M162.231,393.082 C161.463,416.689 160.149,457.114 159.378,480.797" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0016" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="257.437,609.278,249.641,603.259,252.579,608.093,247.745,611.031,257.437,609.278" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M159.452,518.238 C160.922,532.712 165.232,554.249 177.721,568 C198.389,590.756 226.445,601.718 252.579,608.093" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0019" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="295.575,364.988,296.949,355.236,294.202,360.181,289.257,357.433,295.575,364.988" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M279.874,310.032 C284.056,324.67 290.022,345.553 294.202,360.181" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="19.113" x="290.721" y="338.556">Нет</text>
+      <text fill="#000" font-size="11" textLength="264.894" x="296.575" y="361.544">Установленный тариф/пакет является ``одиночкой``?</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0021" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="297.809,535.942,301.86,526.965,297.837,530.942,293.861,526.919,297.809,535.942" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M298.657,389.085 C298.484,419.065 298.035,496.783 297.837,530.942" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="13.544" x="299.721" y="459.056">Да</text>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0016" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="292.39,604.641,294.864,595.108,291.572,599.709,286.971,596.417,292.39,604.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M291.843,568.251 C290.521,579.467 289.885,589.535 291.572,599.709" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0025" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="339,443.988,337.725,434.222,336.395,439.72,330.897,438.39,339,443.988" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M305.455,389.032 C314.39,403.67 327.467,425.093 336.395,439.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="19.113" x="329.721" y="421.556">Нет</text>
+      <text fill="#000" font-size="11" textLength="331.994" x="7" y="440.544">Установленный тариф/пакет является ``запрещенным`` на адресе?</text>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0021" data-link-type="dependency" id="lnk27">
+      <polygon fill="#181818" points="305.469,535.827,313.125,529.631,307.743,531.374,306,525.993,305.469,535.827" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M340.027,468.152 C331.434,484.979 317.409,512.445 307.743,531.374" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="13.544" x="331.721" y="505.056">Да</text>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0016" data-link-type="dependency" id="lnk28">
+      <polygon fill="#181818" points="303.053,604.641,308.471,596.417,303.871,599.709,300.579,595.108,303.053,604.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M303.6,568.251 C304.922,579.467 305.558,589.535 303.871,599.709" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0016" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="337.874,611.504,347.477,613.694,342.781,610.54,345.934,605.844,337.874,611.504" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M357.848,464.875 C384.458,483.144 443.605,529.769 417.721,568 C399.984,594.198 370.289,605.135 342.781,610.54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0030" data-link-type="dependency" id="lnk31">
+      <polygon fill="#181818" points="341.816,285.809,341.866,275.96,339.808,281.229,334.539,279.172,341.816,285.809" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M319.582,235.087 C325.596,248.808 333.773,267.46 339.808,281.229" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="19.113" x="334.721" y="263.556">Нет</text>
+    </g>
+    <g class="link" data-entity-1="ent0030" data-entity-2="ent0032" data-link-type="dependency" id="lnk33">
+      <polygon fill="#181818" points="346.721,364.988,350.721,355.988,346.721,359.988,342.721,355.988,346.721,364.988" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M346.721,310.032 C346.721,324.67 346.721,345.361 346.721,359.988" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

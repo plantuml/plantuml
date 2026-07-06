@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:164px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 160" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.787" x="6" y="12"/>
+      <ellipse cx="30.191" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="25.191" y="33">C</text>
+      <text fill="#000" font-size="14" x="46.234" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="66.788" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="49.787" x="12" y="58.889">i : integer</text>
+      <text fill="#000" font-size="14" textLength="37.275" x="12" y="72.889">x : float</text>
+      <text fill="#000" font-size="14" textLength="11.55" x="12" y="86.889">...</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="66.788" y1="94" y2="94"/>
+      <text fill="#000" font-size="14" textLength="31.762" x="12" y="108.889">setI()</text>
+      <text fill="#000" font-size="14" textLength="32.55" x="12" y="122.889">getI()</text>
+      <text fill="#000" font-size="14" textLength="11.55" x="12" y="136.889">...</text>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="11" id="ent0002">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.787" x="86" y="12"/>
+      <ellipse cx="110.191" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="105.191" y="33">C</text>
+      <text fill="#000" font-size="14" x="126.234" y="31.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87" x2="146.788" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="49.787" x="92" y="58.889">i : integer</text>
+      <text fill="#000" font-size="14" textLength="37.275" x="92" y="72.889">x : float</text>
+      <text fill="#000" font-size="14" textLength="11.55" x="92" y="86.889">...</text>
+      <text fill="#000" font-size="14" textLength="11.55" x="92" y="100.889">...</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87" x2="146.788" y1="108" y2="108"/>
+      <text fill="#000" font-size="14" textLength="31.762" x="92" y="122.889">setI()</text>
+      <text fill="#000" font-size="14" textLength="32.55" x="92" y="136.889">getI()</text>
+    </g>
+  </g>
+</svg>

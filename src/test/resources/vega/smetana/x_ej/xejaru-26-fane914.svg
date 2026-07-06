@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="72px" preserveAspectRatio="none" style="width:86px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 86 72" width="86px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity DD-->
+    <g class="entity" data-qualified-name="DD" data-source-line="3" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,22,20,12,70.3,12,70.3,46,60.3,56,10,56,10,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60.3" x2="70.3" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="60.3" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60.3" x2="60.3" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="20.3" x="25" y="42.889">DD</text>
+    </g>
+  </g>
+</svg>

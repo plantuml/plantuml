@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="132px" preserveAspectRatio="none" style="width:96px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 96 132" width="96px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity comp-->
+    <g class="entity" data-qualified-name="comp" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.213" x="6" y="72"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="60.213" y="77"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="58.213" y="79"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="58.213" y="83"/>
+      <text fill="#000" font-size="14" textLength="34.213" x="21" y="102.889">comp</text>
+    </g>
+    <!--entity inter-->
+    <g class="entity" data-qualified-name="inter" data-source-line="2" id="ent0002">
+      <ellipse cx="43" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="29.394" y="48.889">inter</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" id="lnk4">
+      <path d="M34.543,39.307 A9,9 0 0 0 51.457 39.307" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M43,46.229 C43,55.886 43,60.079 43,71.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

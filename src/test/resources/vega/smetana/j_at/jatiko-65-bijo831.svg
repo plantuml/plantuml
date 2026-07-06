@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="277px" preserveAspectRatio="none" style="width:553px;height:277px;background:#FFFFFF;" version="1.1" viewBox="0 0 553 277" width="553px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="125.3" x="210.501" y="20.889">Subway turnstile v0.1</text>
+    </g>
+    <g class="entity" data-qualified-name="Locked" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="79.85" x="72.54" y="108"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="72.54" x2="152.39" y1="132" y2="132"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="89.89" y="123.889">Locked</text>
+      <text fill="#000" font-size="14" textLength="59.85" x="77.54" y="147.889">entry/lock</text>
+    </g>
+    <g class="entity" data-qualified-name="Unlocked" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="95.425" x="11.04" y="211"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="11.04" x2="106.465" y1="235" y2="235"/>
+      <text fill="#000" font-size="14" textLength="58.45" x="29.527" y="226.889">Unlocked</text>
+      <text fill="#000" font-size="14" textLength="75.425" x="16.04" y="250.889">entry/unlock</text>
+    </g>
+    <g class="entity" data-qualified-name="Violation" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="73.813" x="222.54" y="211"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="222.54" x2="296.352" y1="235" y2="235"/>
+      <text fill="#000" font-size="14" textLength="53.813" x="232.54" y="226.889">Violation</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="12" id="ent0004">
+      <ellipse cx="112.54" cy="57" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="112.54,107.724,116.54,98.724,112.54,102.724,108.54,98.724,112.54,107.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M112.54,71.25 C112.54,80.979 112.54,90.384 112.54,102.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="20.616,210.895,16.612,201.896,16.903,207.546,11.254,207.837,20.616,210.895" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M72.425,139.366 C49.887,144.659 23.545,155.165 9.54,176 C1.443,188.045 5.412,197.18 16.903,207.546" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="23.888" x="11.54" y="188.111">coin</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="222.22,216.588,216.155,208.828,217.807,214.238,212.396,215.889,222.22,216.588" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M138.465,158.009 C151.25,169.277 167.191,182.503 182.54,193 C194.983,201.51 204.904,207.37 217.807,214.238" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="63.537" x="184.54" y="188.111">pass/alarm</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="73.437,158.069,64.122,161.269,69.775,161.474,69.57,167.127,73.437,158.069" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M54.388,210.923 C53.578,199.768 54.277,186.655 59.54,176 C62.868,169.263 64.182,166.675 69.775,161.474" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="27.463" x="61.54" y="188.111">pass</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="105.298,158.248,98.615,165.483,103.689,162.982,106.19,168.056,105.298,158.248" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M78.763,210.955 C82.988,205.281 87.175,199.101 90.54,193 C96.558,182.087 99.971,173.928 103.689,162.982" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="100.54" y="188.111">timeout</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0002" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="106.23,245.098,115.54,248.311,111.212,244.669,114.853,240.34,106.23,245.098" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M106.23,226.902 C116.553,227.792 124.04,230.824 124.04,236 C124.04,241.176 121.535,243.779 111.212,244.669" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="64.269" x="126.04" y="239.611">coin/refund</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="152.776,135.414,161.297,140.353,157.748,135.948,162.152,132.399,152.776,135.414" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M261.05,210.963 C260.522,199.143 257.835,185.446 249.54,176 C225.41,148.521 188.79,139.286 157.748,135.948" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="102.538" x="260.54" y="188.111">Ready/reset alarm</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0003" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="296.555,239.106,305.613,242.973,301.555,239.032,305.495,234.974,296.555,239.106" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M296.555,232.894 C306.75,233.044 314.54,234.079 314.54,236 C314.54,237.921 311.749,238.882 301.555,239.032" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="63.537" x="316.54" y="239.611">pass/alarm</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0003" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="296.747,241.258,305.479,245.813,301.737,241.571,305.98,237.829,296.747,241.258" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M296.747,230.742 C333.79,228.421 381.54,230.173 381.54,236 C381.54,241.827 338.78,243.892 301.737,241.571" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="64.269" x="383.54" y="239.611">coin/refund</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0003" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="296.712,242.571,305.307,247.381,301.691,243.03,306.042,239.415,296.712,242.571" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M296.712,229.429 C354.026,224.142 449.54,226.332 449.54,236 C449.54,245.668 359.005,248.318 301.691,243.03" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="93.763" x="451.54" y="239.611">reset/reset alarm</text>
+    </g>
+  </g>
+</svg>

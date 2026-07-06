@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="62px" preserveAspectRatio="none" style="width:61px;height:62px;background:#FFFFFF;" version="1.1" viewBox="0 0 61 62" width="61px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity rec-->
+    <g class="entity" data-qualified-name="rec" data-source-line="5" id="ent0001">
+      <path d="M16,12 L35.425,12 L45.425,22 L45.425,36 L35.425,46 L16,46 L6,36 L6,22 L16,12" fill="#F1F1F1" style="stroke:#F00;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="16" y="32.889">rec</text>
+    </g>
+  </g>
+</svg>

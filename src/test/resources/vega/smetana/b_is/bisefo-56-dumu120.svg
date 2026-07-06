@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:122px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 122 76" width="122px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="ghwwyxnv1hwzc0" x1="0%" x2="100%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" x="35" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="52" y2="52"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="65" y="12"/>
+      <ellipse cx="80" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="75" y="33">C</text>
+      <text fill="#000" font-size="14" x="94" y="31.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="66" x2="105.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="66" x2="105.363" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M47.242,36 C53.12,36 58.998,36 64.877,36" fill="none" style="stroke:url(#ghwwyxnv1hwzc0);stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

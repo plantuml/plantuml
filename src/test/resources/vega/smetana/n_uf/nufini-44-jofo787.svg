@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="320px" preserveAspectRatio="none" style="width:310px;height:320px;background:#FFFFFF;" version="1.1" viewBox="0 0 310 320" width="310px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class C1-->
+    <g class="entity" data-qualified-name="C1" data-source-line="12" id="ent0001">
+      <rect fill="#F1F1F1" height="68" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.6" x="6" y="138"/>
+      <ellipse cx="21" cy="164" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="169">C</text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="35" y="153.889">Long</text>
+      <text fill="#008000" font-size="14" x="66.15" y="153.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="66.15" y="153.889">Long</text>
+      <text fill="#008000" font-size="14" x="97.3" y="153.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="97.3" y="153.889">Long</text>
+      <text fill="#008000" font-size="14" x="128.45" y="153.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="128.45" y="153.889">Long</text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="35" y="167.889">Long</text>
+      <text fill="#008000" font-size="14" x="66.15" y="167.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="66.15" y="167.889">Long</text>
+      <text fill="#008000" font-size="14" x="97.3" y="167.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="97.3" y="167.889">Long</text>
+      <text fill="#008000" font-size="14" x="128.45" y="167.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="128.45" y="167.889">Long</text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="50.181" y="181.889">Long</text>
+      <text fill="#008000" font-size="14" x="81.331" y="181.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="81.331" y="181.889">Long</text>
+      <text fill="#008000" font-size="14" x="112.481" y="181.889"> </text>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="31.938" x="112.481" y="181.889">class</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="161.6" y1="190" y2="190"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="161.6" y1="198" y2="198"/>
+    </g>
+    <!--class C2-->
+    <g class="entity" data-qualified-name="C2" data-source-line="13" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.6" x="157" y="12"/>
+      <ellipse cx="212.081" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="207.081" y="33">C</text>
+      <text fill="#008000" font-size="14" textLength="17.938" x="232.581" y="31.889">C2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="158" x2="292.6" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="158" x2="292.6" y1="52" y2="52"/>
+      <text fill="#008000" font-size="14" textLength="31.15" x="163" y="66.889">Long</text>
+      <text fill="#008000" font-size="14" x="194.15" y="66.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="194.15" y="66.889">Long</text>
+      <text fill="#008000" font-size="14" x="225.3" y="66.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="225.3" y="66.889">Long</text>
+      <text fill="#008000" font-size="14" x="256.45" y="66.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="256.45" y="66.889">Long</text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="163" y="80.889">Long</text>
+      <text fill="#008000" font-size="14" x="194.15" y="80.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="194.15" y="80.889">Long</text>
+      <text fill="#008000" font-size="14" x="225.3" y="80.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="225.3" y="80.889">Long</text>
+      <text fill="#008000" font-size="14" x="256.45" y="80.889"> </text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="256.45" y="80.889">Long</text>
+      <text fill="#008000" font-size="14" textLength="31.15" x="163" y="94.889">Long</text>
+      <text fill="#008000" font-size="14" x="194.15" y="94.889"> </text>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="55.912" x="194.15" y="94.889">Method()</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN3" data-source-line="16" id="ent0004">
+      <path d="M30.5,26 L30.5,88 A0,0 0 0 0 30.5,88 L80.5,88 L84.5,137.853 L88.5,88 L138.275,88 A0,0 0 0 0 138.275,88 L138.275,36 L128.275,26 L30.5,26 A0,0 0 0 0 30.5,26" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M128.275,26 L128.275,36 L138.275,36 L128.275,26" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#F00" font-size="13" textLength="28.925" x="36.5" y="41.111">Long</text>
+      <text fill="#F00" font-size="13" x="65.425" y="41.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="65.425" y="41.111">Long</text>
+      <text fill="#F00" font-size="13" x="94.35" y="41.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="94.35" y="41.111">Long</text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="36.5" y="54.111">Long</text>
+      <text fill="#F00" font-size="13" x="65.425" y="54.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="65.425" y="54.111">Long</text>
+      <text fill="#F00" font-size="13" x="94.35" y="54.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="94.35" y="54.111">Long</text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="36.5" y="67.111">Long</text>
+      <text fill="#F00" font-size="13" x="65.425" y="67.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="65.425" y="67.111">Long</text>
+      <text fill="#F00" font-size="13" x="94.35" y="67.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="94.35" y="67.111">Long</text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="36.5" y="80.111">Long</text>
+      <text fill="#F00" font-size="13" x="65.425" y="80.111"> </text>
+      <text fill="#F00" font-size="13" font-weight="700" textLength="25.269" x="65.425" y="80.111">note</text>
+    </g>
+    <g class="entity" data-qualified-name="N1" data-source-line="17" id="ent0006">
+      <path d="M24.5,242 L24.5,304 A0,0 0 0 0 24.5,304 L144.625,304 A0,0 0 0 0 144.625,304 L144.625,252 L134.625,242 L88.5,242 L84.5,206.241 L80.5,242 L24.5,242 A0,0 0 0 0 24.5,242" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M134.625,242 L134.625,252 L144.625,252 L134.625,242" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#F00" font-size="13" textLength="24.619" x="30.5" y="257.111">This</text>
+      <text fill="#F00" font-size="13" x="55.119" y="257.111"> </text>
+      <text fill="#F00" font-size="13" textLength="9.425" x="55.119" y="257.111">is</text>
+      <text fill="#F00" font-size="13" x="64.544" y="257.111"> </text>
+      <text fill="#F00" font-size="13" x="64.544" y="257.111">a</text>
+      <text fill="#F00" font-size="13" x="71.775" y="257.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="71.775" y="257.111">Long</text>
+      <text fill="#F00" font-size="13" x="100.7" y="257.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="100.7" y="257.111">Long</text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="30.5" y="270.111">Long</text>
+      <text fill="#F00" font-size="13" x="59.425" y="270.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="59.425" y="270.111">Long</text>
+      <text fill="#F00" font-size="13" x="88.35" y="270.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="88.35" y="270.111">Long</text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="30.5" y="283.111">Long</text>
+      <text fill="#F00" font-size="13" x="59.425" y="283.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="59.425" y="283.111">Long</text>
+      <text fill="#F00" font-size="13" x="88.35" y="283.111"> </text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="88.35" y="283.111">Long</text>
+      <text fill="#F00" font-size="13" textLength="28.925" x="30.5" y="296.111">Long</text>
+      <text fill="#F00" font-size="13" x="59.425" y="296.111"> </text>
+      <text fill="#F00" font-size="13" font-weight="700" textLength="41.925" x="59.425" y="296.111">floating</text>
+      <text fill="#F00" font-size="13" font-weight="700" x="101.35" y="296.111"> </text>
+      <text fill="#F00" font-size="13" font-weight="700" textLength="25.269" x="101.35" y="296.111">note</text>
+    </g>
+  </g>
+</svg>

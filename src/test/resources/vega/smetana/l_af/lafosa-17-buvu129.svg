@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="248px" preserveAspectRatio="none" style="width:429px;height:248px;background:#FFFFFF;" version="1.1" viewBox="0 0 429 248" width="429px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class MyInterface-->
+    <g class="entity" data-qualified-name="MyInterface" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.975" x="12" y="26"/>
+      <ellipse cx="27" cy="42" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="22" y="47">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="72.975" x="41" y="45.889">MyInterface</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="13" x2="115.975" y1="58" y2="58"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="23" cy="70.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="41.65" x="32" y="72.889">x : int = 1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="13" x2="115.975" y1="80" y2="80"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="20" y="89.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="45.85" x="32" y="94.889">z() : void</text>
+    </g>
+    <!--class MyAbstractClass-->
+    <g class="entity" data-qualified-name="MyAbstractClass" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137" x="135" y="33"/>
+      <ellipse cx="150" cy="49" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="145" y="54">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="105" x="164" y="52.889">MyAbstractClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="136" x2="271" y1="65" y2="65"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="146" cy="77.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="84.438" x="155" y="79.889">qaz : float = 134</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="136" x2="271" y1="87" y2="87"/>
+    </g>
+    <!--class MyClass-->
+    <g class="entity" data-qualified-name="MyClass" data-source-line="15" id="ent0003">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122.95" x="290" y="12"/>
+      <ellipse cx="321.751" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="316.751" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="53.725" x="339.474" y="31.889">MyClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="291" x2="411.95" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="301" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" textLength="17.15" x="310" y="58.889">pA</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="298" y="67.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="96.95" x="310" y="72.889">p : int = 76876876</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="291" x2="411.95" y1="80" y2="80"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="298" y="89.5"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35" x="310" y="94.889">pFA()</text>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="298" y="103.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="44.275" x="310" y="108.889">pF() : int</text>
+    </g>
+    <!--class MyMetaClass-->
+    <g class="entity" data-qualified-name="MyMetaClass" data-source-line="28" id="ent0004">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116.788" x="6" y="166"/>
+      <ellipse cx="21" cy="184" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="189">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="67.35" x="43.719" y="180.333">«metaclass»</text>
+      <text fill="#000" font-size="14" textLength="84.788" x="35" y="193.889">MyMetaClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="121.788" y1="202" y2="202"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="121.788" y1="210" y2="210"/>
+    </g>
+    <!--class MyStereotype-->
+    <g class="entity" data-qualified-name="MyStereotype" data-source-line="37" id="ent0005">
+      <rect fill="#F1F1F1" height="80" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.275" x="141.5" y="152"/>
+      <ellipse cx="156.5" cy="170" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="151.5" y="175">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="69.3" x="178.988" y="166.333">«stereotype»</text>
+      <text fill="#000" font-size="14" textLength="86.275" x="170.5" y="179.889">MyStereotype</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="142.5" x2="258.775" y1="188" y2="188"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="152.5" cy="200.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="88.375" x="161.5" y="202.889">x : int = 8879797</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="142.5" x2="258.775" y1="210" y2="210"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="149.5" y="219.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="62.125" x="161.5" y="224.889">qwert() : int</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="83px" preserveAspectRatio="none" style="width:149px;height:83px;" version="1.1" viewBox="0 0 149 83" width="149px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="legend" data-source-line="2">
+      <rect fill="none" height="52" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="118.238" x="12" y="12"/>
+      <text fill="#000" font-size="14" textLength="42.087" x="17" y="27.889">legend</text>
+      <text fill="#000" font-size="14" textLength="22.488" x="17" y="41.889">test</text>
+      <text fill="#000" font-size="14" textLength="108.238" x="17" y="55.889">BackgroundColor</text>
+    </g>
+  </g>
+</svg>

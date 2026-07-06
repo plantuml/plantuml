@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="88px" preserveAspectRatio="none" style="width:192px;height:88px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 88" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class MyEnum-->
+    <g class="entity" data-qualified-name="MyEnum" data-source-line="10" id="ent0001">
+      <rect fill="#F1F1F1" height="60" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="169.875" x="6" y="12"/>
+      <ellipse cx="63.025" cy="28" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="58.025" y="33">E</text>
+      <text fill="#000" font-family="consolas" font-size="12" font-style="italic" textLength="47.325" x="83.525" y="31.333">MyEnum</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="174.875" y1="44" y2="44"/>
+      <text fill="#000" font-family="consolas" font-size="12" font-style="italic" textLength="157.875" x="12" y="57.333">MyEnumValue1 = 0x00000001</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="174.875" y1="64" y2="64"/>
+    </g>
+  </g>
+</svg>

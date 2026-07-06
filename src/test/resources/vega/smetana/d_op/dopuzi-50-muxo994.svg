@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="109px" preserveAspectRatio="none" style="width:124px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 124 109" width="124px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo-->
+    <g class="cluster" data-qualified-name="foo" data-source-line="1" id="ent0001">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <path d="M16.5,4 L36.925,4 A3.75,3.75 0 0 1 39.425,6.5 L46.425,24 L113.5,24 A2.5,2.5 0 0 1 116,26.5 L116,82.5 A2.5,2.5 0 0 1 113.5,85 L16.5,85 A2.5,2.5 0 0 1 14,82.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+        <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="46.425" y1="24" y2="24"/>
+        <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="18" y="16.889">foo</text>
+      </a>
+    </g>
+    <!--class dummy2-->
+    <g class="entity" data-qualified-name="foo.dummy2" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.638" x="22" y="29"/>
+      <ellipse cx="37" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="53.638" x="51" y="48.889">dummy2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="106.638" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="106.638" y1="69" y2="69"/>
+    </g>
+  </g>
+</svg>

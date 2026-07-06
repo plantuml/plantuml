@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="154px" preserveAspectRatio="none" style="width:242px;height:154px;background:#FFFFFF;" version="1.1" viewBox="0 0 242 154" width="242px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity component1-->
+    <g class="entity" data-qualified-name="component1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="103" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101" y="23"/>
+      <text fill="#000" font-size="14" textLength="77" x="21" y="42.889">component1</text>
+    </g>
+    <!--entity database1-->
+    <g class="entity" data-qualified-name="database1" data-source-line="2" id="ent0002">
+      <path d="M141,22.5 C141,12.5 183.681,12.5 183.681,12.5 C183.681,12.5 226.363,12.5 226.363,22.5 L226.363,45.5 C226.363,55.5 183.681,55.5 183.681,55.5 C183.681,55.5 141,55.5 141,45.5 L141,22.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M141,22.5 C141,32.5 183.681,32.5 183.681,32.5 C183.681,32.5 226.363,32.5 226.363,22.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="65.363" x="151" y="47.389">database1</text>
+    </g>
+    <!--entity queue2-->
+    <g class="entity" data-qualified-name="queue2" data-source-line="3" id="ent0003">
+      <path d="M36,103 L92.725,103 C97.725,103 97.725,115 97.725,115 C97.725,115 97.725,127 92.725,127 L36,127 C31,127 31,115 31,115 C31,115 31,103 36,103" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M92.725,103 C87.725,103 87.725,115 87.725,115 C87.725,127 92.725,127 92.725,127" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="36" y="118.889">queue2</text>
+    </g>
+    <!--entity queue3-->
+    <g class="entity" data-qualified-name="queue3" data-source-line="4" id="ent0004">
+      <path d="M121,92 L177.725,92 C182.725,92 182.725,115 182.725,115 C182.725,115 182.725,138 177.725,138 L121,138 C116,138 116,115 116,115 C116,115 116,92 121,92" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M177.725,92 C172.725,92 172.725,115 172.725,115 C172.725,138 177.725,138 177.725,138" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="121" y="107.889">queue1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="117" x2="172.595" y1="111" y2="111"/>
+      <text fill="#000" font-size="14" textLength="23.275" x="121" y="125.889">toto</text>
+    </g>
+  </g>
+</svg>

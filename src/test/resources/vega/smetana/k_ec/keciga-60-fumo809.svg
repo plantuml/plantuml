@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="95px" preserveAspectRatio="none" style="width:299px;height:95px;background:#FFFFFF;" version="1.1" viewBox="0 0 299 95" width="299px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Rec1-->
+    <g class="cluster" data-qualified-name="Rec1" data-source-line="4" id="ent0001">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="128" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="61.638" y="16.889">Rec1</text>
+    </g>
+    <!--cluster Rec2-->
+    <g class="cluster" data-qualified-name="Rec2" data-source-line="11" id="ent0005">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="141" x="150" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="204.138" y="16.889">Rec2</text>
+    </g>
+    <!--entity One-->
+    <g class="entity" data-qualified-name="Rec1.One" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.425" x="22" y="29"/>
+      <text fill="#000" font-size="14" textLength="26.425" x="32" y="49.889">One</text>
+    </g>
+    <!--entity Two-->
+    <g class="entity" data-qualified-name="Rec1.Two" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.512" x="86.5" y="29"/>
+      <text fill="#000" font-size="14" textLength="26.512" x="96.5" y="49.889">Two</text>
+    </g>
+    <!--entity Three-->
+    <g class="entity" data-qualified-name="Rec2.Three" data-source-line="12" id="ent0006">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.575" x="158.5" y="29"/>
+      <text fill="#000" font-size="14" textLength="36.575" x="168.5" y="49.889">Three</text>
+    </g>
+    <!--entity Four-->
+    <g class="entity" data-qualified-name="Rec2.Four" data-source-line="13" id="ent0007">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.787" x="233.5" y="29"/>
+      <text fill="#000" font-size="14" textLength="28.787" x="243.5" y="49.889">Four</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="86.434,46,77.434,42,81.434,46,77.434,50,86.434,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M68.105,46 C74.215,46 75.325,46 81.434,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="233.468,46,224.468,42,228.468,46,224.468,50,233.468,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M215.566,46 C221.534,46 222.501,46 228.468,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

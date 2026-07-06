@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="52px" preserveAspectRatio="none" style="width:48px;height:52px;background:#FFFFFF;" version="1.1" viewBox="0 0 48 52" width="48px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-size="14" textLength="42" x="0" y="34.889">myExit</text>
+    <ellipse cx="21" cy="18" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="25.389" x2="17.611" y1="22.389" y2="14.611"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="25.389" x2="17.611" y1="14.611" y2="22.389"/>
+  </g>
+</svg>

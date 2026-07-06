@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:948px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 948 105" width="948px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Website-->
+    <g class="entity" data-qualified-name="Website" data-source-line="1" id="ent0001">
+      <ellipse cx="178.15" cy="14.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M178.15,22.5 L178.15,49.5 M165.15,30.5 L191.15,30.5 M178.15,49.5 L165.15,64.5 M178.15,49.5 L191.15,64.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="111.3" x="122.5" y="76.889">Website/Webview</text>
+    </g>
+    <!--entity SDK-->
+    <g class="entity" data-qualified-name="SDK" data-source-line="2" id="ent0002">
+      <ellipse cx="494.938" cy="14.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M494.938,22.5 L494.938,49.5 M481.938,30.5 L507.938,30.5 M494.938,49.5 L481.938,64.5 M494.938,49.5 L507.938,64.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.875" x="480.5" y="76.889">SDK</text>
+    </g>
+    <!--entity Vertical-->
+    <g class="entity" data-qualified-name="Vertical" data-source-line="4" id="ent0005">
+      <ellipse cx="756.863" cy="14.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M756.863,22.5 L756.863,49.5 M743.863,30.5 L769.863,30.5 M756.863,49.5 L743.863,64.5 M756.863,49.5 L769.863,64.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="733.5" y="76.889">Vertical</text>
+    </g>
+    <!--entity User-->
+    <g class="entity" data-qualified-name="User" data-source-line="5" id="ent0007">
+      <ellipse cx="20.787" cy="14.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M20.787,22.5 L20.787,49.5 M7.787,30.5 L33.787,30.5 M20.787,49.5 L7.787,64.5 M20.787,49.5 L33.787,64.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="6" y="76.889">User</text>
+    </g>
+    <!--entity Facebook App-->
+    <g class="entity" data-qualified-name="Facebook App" data-source-line="10" id="ent0013">
+      <ellipse cx="889.225" cy="14.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M889.225,22.5 L889.225,49.5 M876.225,30.5 L902.225,30.5 M889.225,49.5 L876.225,64.5 M889.225,49.5 L902.225,64.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="86.45" x="846" y="76.889">Facebook App</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="233.847,60.526,241.796,66.341,238.734,61.585,243.49,58.522,233.847,60.526" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M480.249,55.882 C476.075,58.792 471.342,61.471 466.5,63 C443.297,70.329 271.595,66.398 247.5,63 C243.024,62.369 243.32,62.578 238.734,61.585" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="215.475" x="249.5" y="58.111">/loginstart?clientid=?&amp;client_secret=?</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="480.338,27.927,475.466,19.368,476.313,24.961,470.72,25.808,480.338,27.927" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M233.696,24.607 C236.655,23.983 239.602,23.439 242.5,23 C267.657,19.189 447.621,14.214 471.5,23 C474.617,24.147 473.578,22.945 476.313,24.961" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="211.413" x="251.5" y="12.111">/selectprovider?uihint=selectprovider</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="733.357,51.422,723.562,50.385,728.599,52.96,726.024,57.997,733.357,51.422" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M509.965,49.287 C522.326,54.121 540.464,60.399 557,63 C585.318,67.454 657.603,66.923 686,63 C702.111,60.774 714.953,57.373 728.599,52.96" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="125.613" x="559" y="58.111">notify('selectprovider')</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0001" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="122.479,43,113.479,39,117.479,43,113.479,47,122.479,43" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M36.054,43 C55.855,43 86.744,43 117.479,43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="65.731" x="46.75" y="35.111">(Facebook)</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="480.246,43,471.246,39,475.246,43,471.246,47,480.246,43" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M233.58,43 C308.336,43 431.905,43 475.246,43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="225.063" x="244.5" y="35.111">/login?uihint=login&amp;provider=Facebook</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="733.307,43,724.307,39,728.307,43,724.307,47,733.307,43" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M509.837,43 C553.246,43 675.27,43 728.307,43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="202.15" x="520.5" y="35.111">notify('login', {'provider': 'Facebook'})</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="509.662,27.927,519.28,25.808,513.687,24.961,514.534,19.368,509.662,27.927" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M733.191,26.381 C730.36,25.007 727.432,23.83 724.5,23 C702.476,16.766 539.981,15.097 518.5,23 C515.383,24.147 516.422,22.945 513.687,24.961" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="37.619" x="603" y="12.111">cancel</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="231.679,80.048,238.18,87.447,236.221,82.14,241.527,80.181,231.679,80.048" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M480.475,73.417 C476.657,78.476 472.023,83.034 466.5,86 C455.781,91.755 259.203,89.328 247.5,86 C242.177,84.487 241.405,84.528 236.221,82.14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="37.619" x="338.5" y="81.111">cancel</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0013" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="845.864,43,836.864,39,840.864,43,836.864,47,845.864,43" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M780.599,43 C798.693,43 819.16,43 840.864,43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="44.769" x="791.25" y="35.111">switch()</text>
+    </g>
+  </g>
+</svg>

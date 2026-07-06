@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="194px" preserveAspectRatio="none" style="width:395px;height:194px;background:#FFFFFF;" version="1.1" viewBox="0 0 395 194" width="395px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity act1-->
+    <g class="entity" data-qualified-name="act1" data-source-line="7" id="ent0001">
+      <ellipse cx="51.425" cy="27.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M51.425,35.5 L51.425,62.5 M38.425,43.5 L64.425,43.5 M51.425,62.5 L38.425,77.5 M51.425,62.5 L64.425,77.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.85" x="32" y="89.889">actor 1</text>
+    </g>
+    <!--entity act2-->
+    <g class="entity" data-qualified-name="act2" data-source-line="8" id="ent0002">
+      <ellipse cx="124.456" cy="34.5" fill="#0F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M124.456,42.5 L124.456,69.5 M111.456,50.5 L137.456,50.5 M124.456,69.5 L111.456,84.5 M124.456,69.5 L137.456,84.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="69.913" x="89.5" y="96.889">actor 2 -tech</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="42" x="103.456" y="22.889">«tech»</text>
+    </g>
+    <!--entity act3-->
+    <g class="entity" data-qualified-name="act3" data-source-line="9" id="ent0003">
+      <ellipse cx="212.456" cy="34.5" fill="#0F0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M212.456,42.5 L212.456,69.5 M199.456,50.5 L225.456,50.5 M212.456,69.5 L199.456,84.5 M212.456,69.5 L225.456,84.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="69.913" x="177.5" y="96.889">actor 3 -tech</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="42" x="191.456" y="22.889">«tech»</text>
+    </g>
+    <!--entity uc1-->
+    <g class="entity" data-qualified-name="uc1" data-source-line="11" id="ent0004">
+      <ellipse cx="51.382" cy="156.899" fill="#F1F1F1" rx="45.382" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="59.938" x="21.413" y="160.399">use case 1</text>
+    </g>
+    <!--entity uc2-->
+    <g class="entity" data-qualified-name="uc2" data-source-line="12" id="ent0005">
+      <ellipse cx="176.361" cy="156.957" fill="#0F0" rx="61.361" ry="20.957" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="42" x="155.361" y="150.703">«tech»</text>
+      <text fill="#000" font-size="14" textLength="91" x="130.861" y="164.703">use case 2 -tech</text>
+    </g>
+    <!--entity uc3-->
+    <g class="entity" data-qualified-name="uc3" data-source-line="13" id="ent0006">
+      <ellipse cx="317.361" cy="156.957" fill="#0F0" rx="61.361" ry="20.957" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="42" x="296.361" y="150.703">«tech»</text>
+      <text fill="#000" font-size="14" textLength="91" x="271.861" y="164.703">use case 3 -tech</text>
+    </g>
+  </g>
+</svg>

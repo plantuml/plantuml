@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="114px" preserveAspectRatio="none" style="width:288px;height:114px;background:#FFFFFF;" version="1.1" viewBox="0 0 288 114" width="288px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo-->
+    <g class="cluster" data-qualified-name="foo" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,131,4,131,80,121,90,14,90,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="121" x2="131" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="121" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="121" x2="121" y1="14" y2="90"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="58.787" y="27.889">foo</text>
+    </g>
+    <!--cluster foo1-->
+    <g class="cluster" data-qualified-name="foo1" data-source-line="8" id="ent0004">
+      <polygon fill="none" points="139,14,149,4,272,4,272,80,262,90,139,90,139,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="262" x2="272" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="139" x2="262" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="262" x2="262" y1="14" y2="90"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="187.894" y="27.889">foo1</text>
+    </g>
+    <!--class A-->
+    <g class="entity" data-qualified-name="foo.A" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="81.5" y="34"/>
+      <ellipse cx="96.5" cy="50" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="91.5" y="55">C</text>
+      <text fill="#000" font-size="14" x="110.5" y="53.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="82.5" x2="121.863" y1="66" y2="66"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="82.5" x2="121.863" y1="74" y2="74"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="foo.B" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="22.5" y="34"/>
+      <ellipse cx="37.5" cy="50" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="55">C</text>
+      <text fill="#000" font-size="14" x="51.5" y="53.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="62.863" y1="66" y2="66"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="62.863" y1="74" y2="74"/>
+    </g>
+    <!--class A1-->
+    <g class="entity" data-qualified-name="foo1.A1" data-source-line="9" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="214.5" y="34"/>
+      <ellipse cx="229.5" cy="50" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="224.5" y="55">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="243.5" y="53.889">A1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="215.5" x2="262.65" y1="66" y2="66"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="215.5" x2="262.65" y1="74" y2="74"/>
+    </g>
+    <!--class B1-->
+    <g class="entity" data-qualified-name="foo1.B1" data-source-line="10" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="147.5" y="34"/>
+      <ellipse cx="162.5" cy="50" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="157.5" y="55">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="176.5" y="53.889">B1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="148.5" x2="195.65" y1="66" y2="66"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="148.5" x2="195.65" y1="74" y2="74"/>
+    </g>
+  </g>
+</svg>

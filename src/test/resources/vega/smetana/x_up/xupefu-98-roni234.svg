@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="381px" preserveAspectRatio="none" style="width:430px;height:381px;background:#FFFFFF;" version="1.1" viewBox="0 0 430 381" width="430px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="112.788" x="155.497" y="20.889">Test State Machine</text>
+    </g>
+    <g class="entity" data-qualified-name="state1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="117.287" y="315"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="117.287" x2="177.712" y1="339" y2="339"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="127.287" y="330.889">State 1</text>
+    </g>
+    <g class="entity" data-qualified-name="compound" data-source-line="8" id="ent0002">
+      <path d="M34.287,47 L130.437,47 A12.5,12.5 0 0 1 142.937,59.5 L142.937,71 L21.787,71 L21.787,59.5 A12.5,12.5 0 0 1 34.287,47" fill="#F1F1F1"/>
+      <rect fill="none" height="160" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="121.15" x="21.787" y="47"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="21.787" x2="142.937" y1="71" y2="71"/>
+      <text fill="#000" font-size="14" textLength="101.15" x="31.787" y="62.889">Compound State</text>
+      <g class="entity" data-qualified-name="compound.state2" data-source-line="9" id="ent0003">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="77.575" x="27.787" y="142"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="27.787" x2="105.362" y1="166" y2="166"/>
+        <text fill="#000" font-size="14" textLength="57.575" x="37.787" y="157.889">Sub State</text>
+      </g>
+      <g class="start_entity" data-qualified-name="compound..start.compound" data-source-line="10" id="ent0007">
+        <ellipse cx="66.787" cy="92" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+        <polygon fill="#181818" points="66.787,141.764,70.787,132.764,66.787,136.764,62.787,132.764,66.787,141.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M66.787,106.094 C66.787,115.61 66.787,124.662 66.787,136.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="3" id="ent0004">
+      <ellipse cx="400.287" cy="125" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="177.724,337.993,186.895,341.584,182.719,337.768,186.536,333.592,177.724,337.993" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M403.217,139.284 C410.286,169.366 424.781,252.232 383.287,297 C355.916,326.53 240.085,335.19 182.719,337.768" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="117.177,338.582,108.495,333.932,112.19,338.215,107.908,341.911,117.177,338.582" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M22.257,207.238 C7.133,237.158 0,270.373 19.287,297 C41.513,327.685 81.88,335.986 112.19,338.215" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.775" x="54.977" y="248.111">label1</text>
+      <path d="M24.287,257 L24.287,280 L120.287,280 L120.287,267 L110.287,257 L24.287,257" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M110.287,257 L110.287,267 L120.287,267 L110.287,257" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="75.156" x="30.287" y="272.111">this works fine</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="144.211,314.587,146.903,305.113,143.506,309.637,138.983,306.24,144.211,314.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119.085,207.108 C121.34,213.104 123.44,219.112 125.287,225 C134.758,255.196 140.183,286.281 143.506,309.637" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M146.287,230 L146.287,292 L374.287,292 L374.287,240 L364.287,230 L146.287,230" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M364.287,230 L364.287,240 L374.287,240 L364.287,230" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="207.35" x="152.287" y="245.111">Any text here generates eclipse popup:</text>
+      <text fill="#000" font-size="13" textLength="166.481" x="152.287" y="258.111">"Error during image generation</text>
+      <text fill="#000" font-size="13" textLength="24.944" x="152.287" y="271.111">null"</text>
+      <text fill="#000" font-size="13" textLength="154.131" x="152.287" y="284.111">when using PlantUML plugin</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="257px" preserveAspectRatio="none" style="width:224px;height:257px;background:#FFFFFF;" version="1.1" viewBox="0 0 224 257" width="224px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f17z896z6fshvc" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Legend-->
+    <g class="cluster" data-qualified-name="Legend" data-source-line="25" id="ent0001">
+      <polygon fill="none" filter="url(#f17z896z6fshvc)" points="14,4,60.05,4,67.05,22,208,22,208,233,14,233,14,4" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="67.05" y1="22" y2="22"/>
+      <text fill="#000" font-size="12" font-weight="700" textLength="40.05" x="18" y="15.333">Legend</text>
+    </g>
+    <!--entity CU-->
+    <g class="entity" data-qualified-name="Legend.CU" data-source-line="26" id="ent0002">
+      <rect fill="#FFFFE0" filter="url(#f17z896z6fshvc)" height="32" style="stroke:#A80036;stroke-width:1;" width="113.375" x="54.5" y="105"/>
+      <text fill="#000" font-size="12" textLength="93.375" x="64.5" y="124.333">Conformance Unit</text>
+    </g>
+    <!--entity Facet-->
+    <g class="entity" data-qualified-name="Legend.Facet" data-source-line="27" id="ent0003">
+      <polygon fill="#90EE90" filter="url(#f17z896z6fshvc)" points="76,37,86,27,146,27,146,59,136,69,76,69,76,37" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="136" x2="146" y1="37" y2="27"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="76" x2="136" y1="37" y2="37"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="136" x2="136" y1="37" y2="69"/>
+      <text fill="#000" font-size="12" textLength="30" x="91" y="56.333">Facet</text>
+    </g>
+    <!--entity FacetA-->
+    <g class="entity" data-qualified-name="Legend.FacetA" data-source-line="30" id="ent0006">
+      <polygon fill="#90EE90" filter="url(#f17z896z6fshvc)" points="22,188,32,178,100.025,178,100.025,210,90.025,220,22,220,22,188" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="90.025" x2="100.025" y1="188" y2="178"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="90.025" y1="188" y2="188"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="90.025" x2="90.025" y1="188" y2="220"/>
+      <text fill="#000" font-size="12" textLength="38.025" x="37" y="207.333">Facet A</text>
+    </g>
+    <!--entity FacetB-->
+    <g class="entity" data-qualified-name="Legend.FacetB" data-source-line="31" id="ent0007">
+      <polygon fill="#90EE90" filter="url(#f17z896z6fshvc)" points="118,183,128,173,200.375,173,200.375,215,190.375,225,118,225,118,183" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="190.375" x2="200.375" y1="183" y2="173"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="118" x2="190.375" y1="183" y2="183"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="190.375" x2="190.375" y1="183" y2="225"/>
+      <text fill="#000" font-size="5" font-style="italic" textLength="40.375" x="134" y="196.889">«Application Role»</text>
+      <text fill="#000" font-size="12" textLength="38.025" x="133" y="212.333">Facet B</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#A80036" points="105.342,104.763,108.226,95.346,104.738,99.8,100.284,96.312,105.342,104.763" style="stroke:#A80036;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M104.845,69.156 C103.911,80.471 103.473,89.398 104.738,99.8" fill="none" style="stroke:#A80036;stroke-width:1;"/>
+      <text fill="#000" font-size="12" textLength="56.625" x="48.342" y="101.097">mandatory</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#A80036" points="116.658,104.763,121.716,96.312,117.262,99.8,113.774,95.346,116.658,104.763" style="stroke:#A80036;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M117.155,69.156 C118.089,80.471 118.527,89.398 117.262,99.8" fill="none" style="stroke:#A80036;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="12" textLength="42.075" x="117.658" y="101.097">optional</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" id="lnk10">
+      <rect fill="#FFF" height="10" style="stroke:#00F;stroke-width:1.5;" width="10" x="75.307" y="172.834"/>
+      <path d="M106.625,137.015 C100.399,148.695 92.824,161.004 83.291,173.822" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#000" font-size="12" textLength="55.35" x="24.307" y="174.168">at least one</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" id="lnk11">
+      <rect fill="#FFF" height="10" style="stroke:#00F;stroke-width:1.5;" width="10" x="144.506" y="167.842"/>
+      <path d="M125.987,137.015 C133.709,147.224 140.203,156.643 147.016,168.506" fill="none" style="stroke:#00F;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="289px" preserveAspectRatio="none" style="width:219px;height:289px;background:#FFFFFF;" version="1.1" viewBox="0 0 219 289" width="219px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="192.938" x="10" y="20.889">Embedding for interface note fails</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.363" x="74.025" y="47"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="103.388" y="52"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.388" y="54"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.388" y="58"/>
+      <text fill="#000" font-size="14" x="89.025" y="77.889">B</text>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.363" x="74.025" y="212"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="103.388" y="217"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.388" y="219"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.388" y="223"/>
+      <text fill="#000" font-size="14" x="89.025" y="242.889">A</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="98.525,91.309,94.525,100.309,98.525,96.309,102.525,100.309,98.525,91.309" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="98.525,211.944,102.525,202.944,98.525,206.944,94.525,202.944,98.525,211.944" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M98.525,96.309 C98.525,127.635 98.525,175.764 98.525,206.944" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="111.738" y="121.111">API</text>
+      <text fill="#000" font-size="13" textLength="43.387" x="100.525" y="134.111">Details:</text>
+      <image height="151" width="92" x="101.219" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE1MSIgd2lkdGg9IjkyIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PGRlZnMvPjxnIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciPjxnPjxyZWN0IGZpbGw9IiNGRkZGRkYiIHN0eWxlPSJ3aWR0aDo5MnB4O2hlaWdodDoxNTFweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB3aWR0aD0iOTIiIGhlaWdodD0iMTUxIi8+IDx0aXRsZT5hPC90aXRsZT48cmVjdCB4PSIxNy4zOTQiIHk9IjM5IiB3aWR0aD0iOCIgaGVpZ2h0PSI3MiIgZmlsbD0iIzAwMCIgZmlsbC1vcGFjaXR5PSIwIi8+PGxpbmUgeDE9IjIwLjg5NCIgeTE9IjM5IiB4Mj0iMjAuODk0IiB5Mj0iMTExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTtzdHJva2UtZGFzaGFycmF5OjUsNTsiLz48L2c+PGc+PHRpdGxlPmI8L3RpdGxlPjxyZWN0IHg9IjY2LjY2MyIgeT0iMzkiIHdpZHRoPSI4IiBoZWlnaHQ9IjcyIiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAiLz48bGluZSB4MT0iNzAuMTYzIiB5MT0iMzkiIHgyPSI3MC4xNjMiIHkyPSIxMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1kYXNoYXJyYXk6NSw1OyIvPjwvZz48cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSIyMS43ODgiIGhlaWdodD0iMjgiIGZpbGw9IiNFMkUyRjAiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgcng9IjIuNSIgcnk9IjIuNSIvPjx0ZXh0IHg9IjE3IiB5PSIyNy44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiPmE8L3RleHQ+PHJlY3QgeD0iNTkuMjY5IiB5PSIxMCIgd2lkdGg9IjIxLjc4OCIgaGVpZ2h0PSIyOCIgZmlsbD0iI0UyRTJGMCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiByeD0iMi41IiByeT0iMi41Ii8+PHRleHQgeD0iNjYuMjY5IiB5PSIyNy44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiPmI8L3RleHQ+PHJlY3QgeD0iMTAiIHk9IjExMSIgd2lkdGg9IjIxLjc4OCIgaGVpZ2h0PSIyOCIgZmlsbD0iI0UyRTJGMCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiByeD0iMi41IiByeT0iMi41Ii8+PHRleHQgeD0iMTciIHk9IjEyOC44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiPmE8L3RleHQ+PHJlY3QgeD0iNTkuMjY5IiB5PSIxMTEiIHdpZHRoPSIyMS43ODgiIGhlaWdodD0iMjgiIGZpbGw9IiNFMkUyRjAiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgcng9IjIuNSIgcnk9IjIuNSIvPjx0ZXh0IHg9IjY2LjI2OSIgeT0iMTI4Ljg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCI+YjwvdGV4dD48cG9seWdvbiBwb2ludHM9IjU4LjE2Miw2Miw2OC4xNjMsNjYsNTguMTYyLDcwLDYyLjE2Miw2NiIgZmlsbD0iIzE4MTgxOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxO3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48bGluZSB4MT0iMjAuODk0IiB5MT0iNjYiIHgyPSI2NC4xNjMiIHkyPSI2NiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjx0ZXh0IHg9IjI3Ljg5NCIgeT0iNjEuMTExIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiB0ZXh0TGVuZ3RoPSIxOC43NjkiPnJlcTwvdGV4dD48bGluZSB4MT0iMjEuODk0IiB5MT0iOTMiIHgyPSIzMS44OTQiIHkyPSI4OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSIyMS44OTQiIHkxPSI5MyIgeDI9IjMxLjg5NCIgeTI9Ijk3IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgeDE9IjIwLjg5NCIgeTE9IjkzIiB4Mj0iNjkuMTYzIiB5Mj0iOTMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTtzdHJva2UtZGFzaGFycmF5OjIsMjsiLz48dGV4dCB4PSIzNy44OTQiIHk9Ijg4LjExMSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxMyIgdGV4dExlbmd0aD0iMjUuMjY5Ij5yZXNwPC90ZXh0PjwvZz48L3N2Zz4=" y="137"/>
+      <text fill="#000" font-size="13" x="122.219" y="189.111"> </text>
+    </g>
+  </g>
+</svg>

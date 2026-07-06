@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="141px" preserveAspectRatio="none" style="width:88px;height:141px;background:#FFFFFF;" version="1.1" viewBox="0 0 88 141" width="88px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity data-->
+    <g class="entity" data-qualified-name="data" data-source-line="1" id="ent0001">
+      <path d="M15.5,92 C15.5,82 39.106,82 39.106,82 C39.106,82 62.713,82 62.713,92 L62.713,115 C62.713,125 39.106,125 39.106,125 C39.106,125 15.5,125 15.5,115 L15.5,92" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M15.5,92 C15.5,102 39.106,102 39.106,102 C39.106,102 62.713,102 62.713,92" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="25.5" y="116.889">data</text>
+    </g>
+    <!--entity FooBar-->
+    <g class="entity" data-qualified-name="FooBar" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="30" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.938" x="10" y="16"/>
+      <rect fill="#F1F1F1" height="30" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.938" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="45.937" x="14" y="30.889">FooBar</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="39,46.09,35,52.09,39,58.09,43,52.09,39,46.09" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M39,58.09 C39,68.603 39,70.432 39,81.767" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

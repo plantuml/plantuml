@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="612px" preserveAspectRatio="none" style="width:248px;height:612px;background:#FFFFFF;" version="1.1" viewBox="0 0 248 612" width="248px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <polygon fill="none" points="12,141,22,131,214.625,131,214.625,574,204.625,584,12,584,12,141" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="204.625" x2="214.625" y1="141" y2="131"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="12" x2="204.625" y1="141" y2="141"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="204.625" x2="204.625" y1="141" y2="584"/>
+    <text fill="#000" font-size="14" font-weight="700" x="104.238" y="154.889">H</text>
+    <path d="M84.387,347 L94.75,347 A3.75,3.75 0 0 1 97.25,349.5 L104.25,367 L181.05,367 A2.5,2.5 0 0 1 183.55,369.5 L183.55,460.5 A2.5,2.5 0 0 1 181.05,463 L84.387,463 A2.5,2.5 0 0 1 81.887,460.5 L81.887,349.5 A2.5,2.5 0 0 1 84.387,347" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="81.887" x2="104.25" y1="367" y2="367"/>
+    <text fill="#000" font-size="14" font-weight="700" x="85.887" y="359.889">A</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="67.638" x="102.9" y="379.889">«program»</text>
+    <path d="M40.5,171 L51.65,171 A3.75,3.75 0 0 1 54.15,173.5 L61.15,191 L137.163,191 A2.5,2.5 0 0 1 139.663,193.5 L139.663,284.5 A2.5,2.5 0 0 1 137.163,287 L40.5,287 A2.5,2.5 0 0 1 38,284.5 L38,173.5 A2.5,2.5 0 0 1 40.5,171" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="38" x2="61.15" y1="191" y2="191"/>
+    <text fill="#000" font-size="14" font-weight="700" x="42" y="183.889">D</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="67.638" x="59.012" y="203.889">«program»</text>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="H.C" data-source-line="10" id="ent0006">
+      <path d="M42.525,518 L65.675,518 A3.75,3.75 0 0 1 68.175,520.5 L75.175,538 L137.163,538 A2.5,2.5 0 0 1 139.663,540.5 L139.663,566.5 A2.5,2.5 0 0 1 137.163,569 L42.525,569 A2.5,2.5 0 0 1 40.025,566.5 L40.025,520.5 A2.5,2.5 0 0 1 42.525,518" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="40.025" x2="75.175" y1="538" y2="538"/>
+      <text fill="#000" font-size="14" font-weight="700" x="50.025" y="531.889">C</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="67.638" x="51.025" y="555.889">«program»</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="H.A.B" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.663" x="96.887" y="390"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="148.55" y="395"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="146.55" y="397"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="146.55" y="401"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="29.662" x="112.887" y="420.889">«lib»</text>
+      <text fill="#000" font-size="14" x="123.038" y="434.889">B</text>
+    </g>
+    <!--entity E-->
+    <g class="entity" data-qualified-name="H.D.E" data-source-line="13" id="ent0008">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.663" x="53" y="214"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="104.663" y="219"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="102.663" y="221"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="102.663" y="225"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="29.662" x="69" y="244.889">«lib»</text>
+      <text fill="#000" font-size="14" x="79.15" y="258.889">E</text>
+    </g>
+    <!--entity F-->
+    <g class="entity" data-qualified-name="F" data-source-line="3" id="ent0001">
+      <path d="M146.374,35.084 C149.012,28.931 154.585,30.199 157.561,34.73 C160.847,29.997 165.99,30.667 168.726,35.38 C178.567,36.434 181.336,41.372 175.948,49.966 C178.855,58.079 177.093,63.615 167.381,64.059 C165.449,68.301 161.507,68.878 158.279,65.634 C153.957,70.66 148.518,70.416 145.687,63.993 C137.098,62.882 133.083,57.386 137.6,49.139 C133.736,41.156 137.084,34.856 146.374,35.084" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="151.804" y="52.889">F</text>
+    </g>
+    <!--entity G-->
+    <g class="entity" data-qualified-name="G" data-source-line="4" id="ent0002">
+      <ellipse cx="27" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M27,28.5 L27,55.5 M14,36.5 L40,36.5 M27,55.5 L14,70.5 M27,55.5 L40,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="21.575" y="82.889">G</text>
+    </g>
+    <line style="stroke:#008000;stroke-width:2;" x1="149.663" x2="149.663" y1="463" y2="599"/>
+    <line style="stroke:#008000;stroke-width:2;" x1="149.663" x2="224.625" y1="599" y2="599"/>
+    <line style="stroke:#008000;stroke-width:2;" x1="224.625" x2="224.625" y1="599" y2="96"/>
+    <line style="stroke:#008000;stroke-width:2;" x1="224.625" x2="162.521" y1="96" y2="96"/>
+    <line style="stroke:#008000;stroke-width:2;" x1="162.521" x2="162.521" y1="96" y2="71"/>
+    <text fill="#000" font-size="13" textLength="33.231" x="165.521" y="83.111">2 (bla)</text>
+    <line style="stroke:#008000;stroke-width:2;" x1="149.663" x2="149.663" y1="71" y2="367"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="152.663" y="342.111">3 (bla ok)</text>
+    <line style="stroke:#008000;stroke-width:2;" x1="27" x2="27" y1="86" y2="508"/>
+    <line style="stroke:#008000;stroke-width:2;" x1="27" x2="73.238" y1="508" y2="508"/>
+    <line style="stroke:#008000;stroke-width:2;" x1="73.238" x2="73.238" y1="508" y2="538"/>
+    <line style="stroke:#F00;stroke-width:2;" x1="115.775" x2="115.775" y1="463" y2="488"/>
+    <line style="stroke:#F00;stroke-width:2;" x1="115.775" x2="106.45" y1="488" y2="488"/>
+    <line style="stroke:#F00;stroke-width:2;" x1="106.45" x2="106.45" y1="488" y2="538"/>
+    <text fill="#000" font-size="13" textLength="41.844" x="118.775" y="475.111">4 (argh)</text>
+    <line style="stroke:#00F;stroke-width:2;" x1="88.831" x2="88.831" y1="272" y2="322"/>
+    <line style="stroke:#00F;stroke-width:2;" x1="88.831" x2="115.775" y1="322" y2="322"/>
+    <line style="stroke:#00F;stroke-width:2;" x1="115.775" x2="115.775" y1="322" y2="367"/>
+    <text fill="#000" font-size="13" textLength="30.306" x="118.775" y="342.111">1 (url)</text>
+  </g>
+</svg>

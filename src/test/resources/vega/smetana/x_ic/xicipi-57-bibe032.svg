@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:372px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 372 76" width="372px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Bob-->
+    <g class="entity" data-qualified-name="Bob" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.938" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="35" y="31.889">Bob</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="61.938" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="61.938" y1="52" y2="52"/>
+    </g>
+    <!--class Alice-->
+    <g class="entity" data-qualified-name="Alice" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.45" x="294.5" y="12"/>
+      <ellipse cx="309.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="304.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="30.45" x="323.5" y="31.889">Alice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="295.5" x2="355.95" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="295.5" x2="355.95" y1="52" y2="52"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN3" data-source-line="4" id="ent0004">
+      <path d="M81,24 L81,47 A0,0 0 0 0 81,47 L276.119,47 A0,0 0 0 0 276.119,47 L276.119,42 L294.25,36 L276.119,34 L276.119,34 L266.119,24 L81,24 A0,0 0 0 0 81,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M266.119,24 L266.119,34 L276.119,34 L266.119,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="87" y="39.111">hello</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="114.544" y="39.111">toto</text>
+      <line style="stroke:#F00;stroke-width:0.464;" x1="114.544" x2="136.156" y1="40.04" y2="40.04"/>
+      <text fill="#000" font-size="13" textLength="21.694" x="136.156" y="39.111">and</text>
+      <text fill="#000" font-size="13" text-decoration="wavy underline" textLength="33.231" x="157.85" y="39.111">green</text>
+      <text fill="#000" font-size="13" textLength="21.694" x="191.081" y="39.111">and</text>
+      <text fill="#000" font-size="13" textLength="31.038" x="212.775" y="39.111">strike</text>
+      <line style="stroke:#0FF;stroke-width:0.464;" x1="212.775" x2="243.812" y1="35.861" y2="35.861"/>
+      <text fill="#000" font-size="13" textLength="17.306" x="243.812" y="39.111">ok.</text>
+    </g>
+  </g>
+</svg>

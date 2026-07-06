@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="207px" preserveAspectRatio="none" style="width:649px;height:207px;background:#FFFFFF;" version="1.1" viewBox="0 0 649 207" width="649px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity fx-->
+    <g class="entity" data-qualified-name="fx" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="211" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="197" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="195" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="195" y="23"/>
+      <image height="29" width="431" x="21" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iNDMxIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48dGV4dCB4PSI1IiB5PSIxOS4wNzUiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjQyMC4wNjgiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlAoeXxcbWF0aGJme3h9KcKgXG1ib3h7wqBvcsKgfcKgZihcbWF0aGJme3h9KStcZXBzaWxvbjwvdGV4dD48L2c+PC9zdmc+" y="32"/>
+    </g>
+    <!--entity D-->
+    <g class="entity" data-qualified-name="D" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="64" x="254.5" y="69"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="298.5" y="74"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="296.5" y="76"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="296.5" y="80"/>
+      <image height="29" width="103" x="269.5" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iMTAzIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48dGV4dCB4PSI1IiB5PSIxOS4wNzUiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjkyLjQxNSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+XG1hdGhjYWx7RH08L3RleHQ+PC9nPjwvc3ZnPg==" y="89"/>
+    </g>
+    <!--entity H-->
+    <g class="entity" data-qualified-name="H" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65" x="254" y="139"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="299" y="144"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="297" y="146"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="297" y="150"/>
+      <image height="29" width="103" x="269" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iMTAzIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48dGV4dCB4PSI1IiB5PSIxOS4wNzUiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjkyLjQxNSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+XG1hdGhjYWx7SH08L3RleHQ+PC9nPjwvc3ZnPg==" y="159"/>
+    </g>
+    <!--entity g-->
+    <g class="entity" data-qualified-name="g" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="51" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58" x="530" y="35.5"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="568" y="40.5"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="566" y="42.5"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="566" y="46.5"/>
+      <image height="29" width="103" x="545" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iMTAzIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48dGV4dCB4PSI1IiB5PSIxOS4wNzUiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjkyLjQxNSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+XG1hdGhjYWx7Z308L3RleHQ+PC9nPjwvc3ZnPg==" y="55.5"/>
+    </g>
+    <!--entity Px-->
+    <g class="entity" data-qualified-name="Px" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92" x="65.5" y="88"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="137.5" y="93"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="135.5" y="95"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="135.5" y="99"/>
+      <image height="29" width="120" x="80.5" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iMTIwIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48dGV4dCB4PSI1IiB5PSIxOS4wNzUiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjEwOS4yMTgiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlAoXG1hdGhiZnt4fSk8L3RleHQ+PC9nPjwvc3ZnPg==" y="108"/>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="8" id="ent0006">
+      <ellipse cx="472.45" cy="94.96" fill="#F1F1F1" rx="20.45" ry="16.96" style="stroke:#181818;stroke-width:0.5;"/>
+      <image height="29" width="103" x="460.95" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iMTAzIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48dGV4dCB4PSI1IiB5PSIxOS4wNzUiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjkyLjQxNSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+XG1hdGhjYWx7QX08L3RleHQ+PC9nPjwvc3ZnPg==" y="82.46"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="254.359,98.96,244.926,96.127,249.399,99.591,245.935,104.064,254.359,98.96" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M157.502,111.277 C187.937,107.407 222.395,103.025 249.399,99.591" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="254.337,85.273,246.938,78.773,249.564,83.783,244.554,86.409,254.337,85.273" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M205.583,70.055 C223.178,75.547 235.635,79.435 249.564,83.783" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="451.775,95,442.775,91,446.775,95,442.775,99,451.775,95" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M318.713,95 C356.752,95 414.886,95 446.775,95" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="451.871,102.468,442.037,101.929,447.198,104.246,444.881,109.406,451.871,102.468" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M319.131,152.967 C357.251,138.464 415.456,116.321 447.198,104.246" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="529.863,72.322,520.02,71.97,525.224,74.188,523.006,79.392,529.863,72.322" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M493.098,87.114 C504.019,82.72 513.168,79.039 525.224,74.188" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="217.231,45.702,226.043,50.101,222.226,45.926,226.402,42.109,217.231,45.702" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M529.603,59.725 C467.983,56.959 324.34,50.51 222.226,45.926" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <image height="29" width="145" x="339" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iMTQ1IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48dGV4dCB4PSI1IiB5PSIxOS4wNzUiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjEzNC40MjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlxtYm94e0xvc3N9KGYsZyk8L3RleHQ+PC9nPjwvc3ZnPg==" y="22"/>
+    </g>
+  </g>
+</svg>

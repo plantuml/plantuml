@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:106px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 106 105" width="106px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo2-->
+    <g class="cluster" data-qualified-name="foo1.foo2" data-source-line="5" id="ent0002">
+      <path d="M16.5,4 L75.775,4 A3.75,3.75 0 0 1 78.275,6.5 L85.275,24 L95.5,24 A2.5,2.5 0 0 1 98,26.5 L98,78.5 A2.5,2.5 0 0 1 95.5,81 L16.5,81 A2.5,2.5 0 0 1 14,78.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="85.275" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="58.275" x="18" y="16.889">foo1.foo2</text>
+    </g>
+    <!--entity foo3-->
+    <g class="entity" data-qualified-name="foo1.foo2.foo3" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.213" x="22.5" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="69.713" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="67.713" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="67.713" y="40"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="37.5" y="59.889">foo3</text>
+    </g>
+  </g>
+</svg>

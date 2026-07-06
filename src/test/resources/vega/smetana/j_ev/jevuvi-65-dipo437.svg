@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="131px" preserveAspectRatio="none" style="width:147px;height:131px;background:#FFFFFF;" version="1.1" viewBox="0 0 147 131" width="147px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="102.721" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="124.6" x="6" y="12"/>
+      <ellipse cx="51.975" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="46.975" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="72.475" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="129.6" y1="44" y2="44"/>
+      <path d="M16.701,48 L13,51.701 L14.89,53.591 L19.563,58.343 L14.89,63.015 L13,64.826 L16.701,68.606 L18.591,66.716 L23.343,61.965 L28.015,66.716 L29.826,68.606 L33.606,64.826 L31.716,63.015 L26.965,58.343 L31.716,53.591 L33.606,51.701 L29.826,48 L28.015,49.89 L23.343,54.563 L18.591,49.89 L16.701,48" fill="#FE0000"/>
+      <text fill="#000" font-size="14" textLength="89.6" x="35" y="73.764">someBadField</text>
+      <image height="26" width="26" x="12" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAACBUlEQVR4Xr2VPUgCYRjHpW8IooaiDyMHIZCoqbHCIeIQBOcWEQcJGioSZ21uaCtaG6ohSFBoCBzcagvpw0MRiigHvTvT6zzffKOz7nm8e5Ow4Tfc/3ne/5+He+5eS7FYtPwHSGAhJhJLAs9PQZ0FEkx5fR1TBwdJxe9/QjUGSDCjEgg81CwWQhFSqW1YNwMJZqgDA6oWJK+u8rBuBhKMKAeDvBbySV8fEe7uArDPCCQ0Q8jlJnUh2lQezy3sNQIJzXjb2UnCEIra30+ETMYF+5vx/fD4OCNeXXFSPM6VDg93KxsbRF5ZIerQEAqAqKOjRHa7STkUItLR0ZZ0ecmJNzccDnp+ttc6OpDBX5G93gc0kRSL7cPGv1C1WgmeiFIodH6GdXWhQ62iOBykvkDjzYO0yaLRtVpvLzr8W5TZWSKk0w7oi4IopePjTfqdQBMWyvw8DZmDfoZBFOnkZBsamaHY7XTV0STMICGbXYZmZiiLi7qXD0GCRn0x9qAZi/pCdUMfZlA5Emk5SLi/132kvwqq+Hyn0IiFmEy2HqQsLCCjd4+HiNfXnHR+7q9OT6O6dHbWelB1YqJhILtcBSmRWNf11G/b0sHBbtVma/SVw+HGLweCBI1aTw95dzp58eJiC9Z05PPD9H2qIyP0MjTcPCT8NEAai5cXK9K+QEK7QEK7QEK7+AA/qNDnCnWYpAAAAABJRU5ErkJggg==" y="76.875"/>
+      <text fill="#000" font-size="14" textLength="31.85" x="37.846" y="99.61">other</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="129.6" y1="106.721" y2="106.721"/>
+    </g>
+  </g>
+</svg>

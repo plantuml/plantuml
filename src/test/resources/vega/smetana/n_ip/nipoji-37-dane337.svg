@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="264px" preserveAspectRatio="none" style="width:146px;height:264px;background:#FFFFFF;" version="1.1" viewBox="0 0 146 264" width="146px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster First partition-->
+    <g class="cluster" data-qualified-name="First partition" data-source-line="1" id="ent0002">
+      <polygon fill="none" points="14,39,97,39,104,59,130,59,130,104,14,104,14,39" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="104" y1="59" y2="59"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77" x="18" y="51.889">First partition</text>
+    </g>
+    <!--cluster Last Partition-->
+    <g class="cluster" data-qualified-name="Last Partition" data-source-line="3" id="ent0007">
+      <polygon fill="none" points="24,175,107.788,175,114.788,195,120,195,120,240,24,240,24,175" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="24" x2="114.788" y1="195" y2="195"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.788" x="28" y="187.889">Last Partition</text>
+    </g>
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="72" cy="14" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="86.6" x="28.5" y="132"/>
+    <text fill="#000" font-size="12" textLength="66.6" x="38.5" y="151.333">Other activity</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="99.35" x="22.5" y="64"/>
+    <text fill="#000" font-size="12" textLength="79.35" x="32.5" y="83.333">StartingActivity</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="79.325" x="32.5" y="200"/>
+    <text fill="#000" font-size="12" textLength="59.325" x="42.5" y="219.333">Last activity</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="72,63.587,76,54.587,72,58.587,68,54.587,72,63.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M72,28.084 C72,37.976 72,47.56 72,58.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="72,131.775,76,122.775,72,126.775,68,122.775,72,131.775" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M72,96.308 C72,106.97 72,116.131 72,126.775" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="72,199.775,76,190.775,72,194.775,68,190.775,72,199.775" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M72,164.308 C72,174.97 72,184.131 72,194.775" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

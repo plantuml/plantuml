@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="65px" preserveAspectRatio="none" style="width:94px;height:65px;background:#FFFFFF;" version="1.1" viewBox="0 0 94 65" width="94px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity artifact-->
+    <g class="entity" data-qualified-name="artifact" data-source-line="1" id="ent0001">
+      <rect fill="#F0F8FF" height="37" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="71.913" x="6" y="12"/>
+      <polygon fill="#F0F8FF" points="60.912,17,60.912,31,72.913,31,72.913,23,66.913,17,60.912,17" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="66.913" x2="66.913" y1="17" y2="23"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="72.913" x2="66.913" y1="23" y2="23"/>
+      <text fill="#00F" font-size="14" textLength="41.913" x="16" y="35.889">artifact</text>
+    </g>
+  </g>
+</svg>

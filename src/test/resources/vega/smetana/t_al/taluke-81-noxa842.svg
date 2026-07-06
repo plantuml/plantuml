@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:154px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 154 78" width="154px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="16" id="ent0001">
+      <ellipse cx="16" cy="35" fill="#222" rx="10" ry="10" style="stroke:#F00;stroke-width:5;"/>
+    </g>
+    <g class="entity" data-qualified-name="State" data-source-line="16" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#008000;stroke-width:5;" width="52.637" x="44.5" y="12"/>
+      <line style="stroke:#008000;stroke-width:5;" x1="44.5" x2="97.137" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="32.637" x="54.5" y="27.889">State</text>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="17" id="ent0004">
+      <ellipse cx="127" cy="36" fill="none" rx="11" ry="11" style="stroke:#00F;stroke-width:5;"/>
+      <ellipse cx="127" cy="36" fill="#222" rx="6" ry="6" style="stroke:#00F;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="44.467,37,35.467,33,39.467,37,35.467,41,44.467,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.313,37 C32.364,37 33.415,37 39.467,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="115.55,37,106.55,33,110.55,37,106.55,41,115.55,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M97.688,37 C103.642,37 104.596,37 110.55,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

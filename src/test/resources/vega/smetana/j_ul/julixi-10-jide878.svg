@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="352px" preserveAspectRatio="none" style="width:576px;height:352px;background:#FFFFFF;" version="1.1" viewBox="0 0 576 352" width="576px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class csprob2dtd-->
+    <g class="entity" data-qualified-name="csprob2dtd" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="38" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="204.5" x="154" y="298"/>
+      <ellipse cx="169" cy="317" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="164" y="322">C</text>
+      <text fill="#000" font-size="14" textLength="101.15" x="183" y="313.889">CuttingStockPrb</text>
+      <text fill="#000" font-size="14" x="233.575" y="327.889"> </text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="69.35" x="292.15" y="295"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="67.35" x="293.15" y="305.333">two_dims_td</text>
+    </g>
+    <!--class orderabstr2dtd-->
+    <g class="entity" data-qualified-name="orderabstr2dtd" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="38" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="204.5" x="159" y="12"/>
+      <ellipse cx="174" cy="31" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="169" y="36">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="101.15" x="188" y="27.889">CuttingStockPrb</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="76.038" x="200.556" y="41.889">::OrderAbstr</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="69.35" x="297.15" y="9"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="67.35" x="298.15" y="19.333">two_dims_td</text>
+    </g>
+    <!--class orderbyheight2dtd-->
+    <g class="entity" data-qualified-name="orderbyheight2dtd" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="88" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="204.5" x="34" y="93"/>
+      <ellipse cx="49" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="44" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="101.15" x="63" y="108.889">CuttingStockPrb</text>
+      <text fill="#000" font-size="14" textLength="100.275" x="63.438" y="122.889">::OrderByHeight</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="69.35" x="172.15" y="90"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="67.35" x="173.15" y="100.333">two_dims_td</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35" x2="237.5" y1="131" y2="131"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="45,152.5,49,156.5,45,160.5,41,156.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.15" x="54" y="145.889">LazyCopyPtr</text>
+      <text fill="#000" font-size="14" textLength="120.138" x="54" y="159.889">&lt;MapOrderContent</text>
+      <text fill="#000" font-size="14" textLength="130.463" x="54" y="173.889">&lt;two_dims_td&gt; &gt; map</text>
+    </g>
+    <!--class orderbywidth2dtd-->
+    <g class="entity" data-qualified-name="orderbywidth2dtd" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="102" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="236" x="269.5" y="86"/>
+      <ellipse cx="298.675" cy="105" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="293.675" y="110">C</text>
+      <text fill="#000" font-size="14" textLength="101.15" x="315.825" y="101.889">CuttingStockPrb</text>
+      <text fill="#000" font-size="14" textLength="95.55" x="318.625" y="115.889">::OrderByWidth</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="69.35" x="439.15" y="83"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="67.35" x="440.15" y="93.333">two_dims_td</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="270.5" x2="504.5" y1="124" y2="124"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="280.5,152.5,284.5,156.5,280.5,160.5,276.5,156.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.15" x="289.5" y="138.889">LazyCopyPtr</text>
+      <text fill="#000" font-size="14" textLength="111.913" x="289.5" y="152.889">MapOrderContent</text>
+      <text fill="#000" font-size="14" textLength="90.65" x="289.5" y="166.889">&lt;two_dims_td,</text>
+      <text fill="#000" font-size="14" textLength="210" x="289.5" y="180.889">LessY&lt;Element&lt;two_dims_td&gt; &gt; &gt;</text>
+    </g>
+    <!--class contentx-->
+    <g class="entity" data-qualified-name="contentx" data-source-line="11" id="ent0005">
+      <rect fill="#F1F1F1" height="38" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="215.263" x="6" y="224"/>
+      <ellipse cx="21" cy="243" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="248">C</text>
+      <text fill="#000" font-size="14" textLength="111.913" x="35" y="239.889">MapOrderContent</text>
+      <text fill="#000" font-size="14" x="90.956" y="253.889"> </text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="69.35" x="154.913" y="221"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="67.35" x="155.913" y="231.333">two_dims_td</text>
+    </g>
+    <!--class contenty-->
+    <g class="entity" data-qualified-name="contenty" data-source-line="12" id="ent0006">
+      <rect fill="#F1F1F1" height="38" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="320.863" x="239" y="224"/>
+      <ellipse cx="254" cy="243" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="249" y="248">C</text>
+      <text fill="#000" font-size="14" textLength="111.913" x="268" y="239.889">MapOrderContent</text>
+      <text fill="#000" font-size="14" x="323.956" y="253.889"> </text>
+      <rect fill="#FFF" height="26" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="174.95" x="387.913" y="221"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="70.65" x="440.063" y="231.333">two_dims_td,</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="172.95" x="388.913" y="243.333">LessY&lt;Element&lt;two_dims_td&gt;&gt;</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="239.727,50.115,222.052,57.015,229.727,66.24,239.727,50.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M225.89,61.628 C211.69,73.442 206.36,77.876 188.397,92.822" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="283.448,50.115,293.51,66.201,301.149,56.946,283.448,50.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M297.33,61.574 C309.457,71.583 311.297,73.102 326.83,85.923" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="aggregation" id="lnk9">
+      <polygon fill="none" points="117.497,223.927,122.698,218.933,120.088,212.21,114.887,217.205,117.497,223.927" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M126.946,181.202 C123.638,196.158 122.7,200.398 120.088,212.21" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="109.497" y="220.038">1</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="106.946" y="192.313">1..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="aggregation" id="lnk10">
+      <polygon fill="none" points="397.378,223.613,400.664,217.194,396.003,211.692,392.717,218.111,397.378,223.613" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M393.289,188.172 C394.751,200.846 394.855,201.744 396.003,211.692" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="389.378" y="219.724">1</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="373.289" y="199.283">1..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="aggregation" id="lnk11">
+      <polygon fill="none" points="220.427,297.837,216.866,291.566,209.709,292.441,213.269,298.712,220.427,297.837" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M149.585,262.169 C171.263,273.083 188.033,281.527 209.709,292.441" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="212.427" y="293.948">1</text>
+      <text fill="#000" font-size="13" x="143.585" y="273.28">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="aggregation" id="lnk12">
+      <polygon fill="none" points="292.573,297.837,299.731,298.712,303.291,292.441,296.134,291.566,292.573,297.837" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M363.415,262.169 C341.737,273.083 324.967,281.527 303.291,292.441" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="284.573" y="293.948">1</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="343.415" y="273.28">1..*</text>
+    </g>
+  </g>
+</svg>

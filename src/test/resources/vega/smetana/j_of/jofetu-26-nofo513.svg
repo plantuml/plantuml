@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="680px" preserveAspectRatio="none" style="width:2664px;height:680px;background:#FFFFFF;" version="1.1" viewBox="0 0 2664 680" width="2664px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity <$SVG_NO_BEZIER>-->
+    <g class="entity" data-qualified-name="..SVG_NO_BEZIER." data-source-line="13" id="ent0001">
+      <rect fill="#F1F1F1" height="652.154" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="1312.308" x="6" y="12"/>
+      <path d="M231.385,338.077 L446.769,68.846 L662.154,338.077 L877.538,607.308 L1092.923,338.077" fill="none" style="stroke:#888;stroke-width:2.154;"/>
+    </g>
+    <!--entity <$SVG_WITH_BEZIER>-->
+    <g class="entity" data-qualified-name="..SVG_WITH_BEZIER." data-source-line="16" id="ent0002">
+      <rect fill="#F1F1F1" height="652.154" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="1312.308" x="1336" y="12"/>
+      <path d="M1561.385,338.077 C1776.769,68.846 1776.769,68.846 1992.154,338.077 C2207.538,607.308 2207.538,607.308 2422.923,338.077" fill="none" style="stroke:#F00;stroke-width:5.385;"/>
+    </g>
+  </g>
+</svg>

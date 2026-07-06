@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="133px" preserveAspectRatio="none" style="width:506px;height:133px;background:#FFFFFF;" version="1.1" viewBox="0 0 506 133" width="506px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Person-->
+    <g class="entity" data-qualified-name="Person" data-source-line="2" id="ent0001">
+      <ellipse cx="22.181" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="44.363" x="0" y="48.889">Person</text>
+    </g>
+    <!--entity Group-->
+    <g class="entity" data-qualified-name="Group" data-source-line="4" id="ent0003">
+      <ellipse cx="220.181" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.85" x="200.756" y="48.889">Group</text>
+    </g>
+    <!--entity Item-->
+    <g class="entity" data-qualified-name="Item" data-source-line="4" id="ent0004">
+      <ellipse cx="175.181" cy="98" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.125" x="161.619" y="125.889">Item</text>
+    </g>
+    <!--entity Item1-->
+    <g class="entity" data-qualified-name="Item1" data-source-line="5" id="ent0006">
+      <ellipse cx="265.181" cy="98" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="34.913" x="247.725" y="125.889">Item1</text>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="7" id="ent0008">
+      <ellipse cx="354.181" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="349.5" y="48.889">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="7" id="ent0009">
+      <ellipse cx="481.181" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="476.5" y="48.889">B</text>
+    </g>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="C" data-source-line="8" id="ent0011">
+      <ellipse cx="354.181" cy="98" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="349.106" y="125.889">C</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="composition" id="lnk2">
+      <polygon fill="#181818" points="31.31,18.239,38.292,20.042,42.642,14.29,35.66,12.487,31.31,18.239" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M42.642,14.29 C51.214,11.303 49.181,17.172 49.181,24 C49.181,30.828 39.882,32.749 31.31,29.761" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="140.075" x="51.181" y="27.611">parent" contains "children</text>
+      <text fill="#000" font-size="13" x="32.31" y="40.872">*</text>
+      <text fill="#000" font-size="13" x="32.31" y="14.35">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="172.634,88.654,175.154,79.133,171.84,83.718,167.255,80.404,172.634,88.654" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M211.113,30.674 C198.525,38.593 177.177,52.198 176.181,54 C170.308,64.627 170.262,73.915 171.84,83.718" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="63.375" x="178.181" y="66.111">" "members</text>
+      <text fill="#000" font-size="13" x="166.634" y="84.766">*</text>
+      <text fill="#000" font-size="13" x="203.113" y="26.785">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="260.607,88.664,260.776,78.817,258.655,84.061,253.411,81.94,260.607,88.664" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M229.299,35.32 C233.787,40.679 239.096,47.46 243.181,54 C250.216,65.262 254.608,74.516 258.655,84.061" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="62.075" x="253.181" y="66.111">" is a "leader</text>
+      <text fill="#000" font-size="13" x="252.607" y="84.775">1</text>
+      <text fill="#000" font-size="13" x="221.299" y="46.431">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0009" data-link-type="composition" id="lnk10">
+      <polygon fill="#181818" points="363.315,24,369.315,28,375.315,24,369.315,20,363.315,24" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M375.315,24 C398.747,24 448.789,24 472.13,24" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="87.344" x="374.181" y="16.111">contains "Bees"</text>
+      <text fill="#000" font-size="13" x="466.13" y="20.111">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0011" data-link-type="aggregation" id="lnk12">
+      <polygon fill="none" points="354.181,36.067,350.181,42.067,354.181,48.067,358.181,42.067,354.181,36.067" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M354.181,48.067 C354.181,62.246 354.181,74.686 354.181,88.888" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="356.181" y="66.111">a</text>
+      <text fill="#000" font-size="13" x="346.181" y="84.999">1</text>
+    </g>
+  </g>
+</svg>

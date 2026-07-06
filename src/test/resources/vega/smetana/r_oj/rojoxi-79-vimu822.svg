@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="193px" preserveAspectRatio="none" style="width:301px;height:193px;background:#FFFFFF;" version="1.1" viewBox="0 0 301 193" width="301px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Classic Collections2-->
+    <g class="cluster" data-qualified-name="Classic Collections2" data-source-line="2" id="ent0002">
+      <path d="M150.5,4 L273.125,4 A3.75,3.75 0 0 1 275.625,6.5 L282.625,24 L282.5,24 A2.5,2.5 0 0 1 285,26.5 L285,166.5 A2.5,2.5 0 0 1 282.5,169 L150.5,169 A2.5,2.5 0 0 1 148,166.5 L148,6.5 A2.5,2.5 0 0 1 150.5,4" fill="#DDD" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="148" x2="282.625" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="121.625" x="152" y="16.889">Classic Collections2</text>
+    </g>
+    <path d="M8.5,29 L123.338,29 A3.75,3.75 0 0 1 125.838,31.5 L132.838,49 L137.338,49 A2.5,2.5 0 0 1 139.838,51.5 L139.838,74.5 A2.5,2.5 0 0 1 137.338,77 L8.5,77 A2.5,2.5 0 0 1 6,74.5 L6,31.5 A2.5,2.5 0 0 1 8.5,29" fill="#DDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="132.838" y1="49" y2="49"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="113.838" x="10" y="41.889">Classic Collections</text>
+    <!--class Object-->
+    <g class="entity" data-qualified-name="Classic Collections2.Object" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.425" x="180" y="29"/>
+      <ellipse cx="195" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="190" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="209" y="48.889">Object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="181" x2="251.425" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="181" x2="251.425" y1="69" y2="69"/>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="Classic Collections2.ArrayList" data-source-line="3" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="172.5" y="113"/>
+      <ellipse cx="187.5" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="182.5" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="201.5" y="132.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="173.5" x2="258.713" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="173.5" x2="258.713" y1="153" y2="153"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="216,77.279,210,95.279,222,95.279,216,77.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M216,95.279 C216,106.453 216,101.802 216,112.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

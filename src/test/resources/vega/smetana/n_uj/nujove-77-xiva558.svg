@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="152px" preserveAspectRatio="none" style="width:105px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 105 152" width="105px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity node1-->
+    <g class="entity" data-qualified-name="node1" data-source-line="1" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,22,20,12,88.938,12,88.938,46,78.938,56,10,56,10,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="78.938" x2="88.938" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="78.938" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="78.938" x2="78.938" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="38.938" x="25" y="42.889">node1</text>
+    </g>
+    <!--entity node2-->
+    <g class="entity" data-qualified-name="node2" data-source-line="2" id="ent0002">
+      <polygon fill="#F1F1F1" points="10,102,20,92,88.938,92,88.938,126,78.938,136,10,136,10,102" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="78.938" x2="88.938" y1="102" y2="92"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="78.938" y1="102" y2="102"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="78.938" x2="78.938" y1="102" y2="136"/>
+      <text fill="#000" font-size="14" textLength="38.938" x="25" y="122.889">node2</text>
+    </g>
+  </g>
+</svg>

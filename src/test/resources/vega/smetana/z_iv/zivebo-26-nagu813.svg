@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="174px" preserveAspectRatio="none" style="width:89px;height:174px;background:#FFFFFF;" version="1.1" viewBox="0 0 89 174" width="89px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity test_bullet_list_creole-->
+    <g class="entity" data-qualified-name="test_bullet_list_creole" data-source-line="1" id="ent0001">
+      <path d="M6,14.5 L6,155.5 A2.5,2.5 0 0 0 8.5,158 L70.863,158 A2.5,2.5 0 0 0 73.363,155.5 L73.363,22 L63.363,12 L8.5,12 A2.5,2.5 0 0 0 6,14.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M63.363,12 L63.363,19.5 A2.5,2.5 0 0 0 65.863,22 L73.363,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <ellipse cx="21.5" cy="28.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" x="28" y="32.889">a</text>
+      <ellipse cx="21.5" cy="42.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" x="28" y="46.889">b</text>
+      <rect fill="#000" height="3.5" width="3.5" x="25" y="54"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="32" y="60.889">b0</text>
+      <rect fill="#000" height="3.5" width="3.5" x="25" y="68"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="32" y="74.889">b1</text>
+      <rect fill="#000" height="3.5" width="3.5" x="33" y="82"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="40" y="88.889">b10</text>
+      <rect fill="#000" height="3.5" width="3.5" x="33" y="96"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="40" y="102.889">b11</text>
+      <rect fill="#000" height="3.5" width="3.5" x="33" y="110"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="40" y="116.889">b12</text>
+      <rect fill="#000" height="3.5" width="3.5" x="33" y="124"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="40" y="130.889">b13</text>
+      <rect fill="#000" height="3.5" width="3.5" x="25" y="138"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="32" y="144.889">b2</text>
+    </g>
+  </g>
+</svg>

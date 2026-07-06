@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="183px" preserveAspectRatio="none" style="width:316px;height:183px;background:#FFFFFF;" version="1.1" viewBox="0 0 316 183" width="316px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster 41-->
+    <g class="cluster" data-qualified-name="41" data-source-line="1" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,300,4,300,149,290,159,14,159,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="290" x2="300" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="290" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="290" x2="290" y1="14" y2="159"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="59.938" x="123.031" y="27.889">«Docker»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="210.875" x="47.562" y="41.889">Docker Container - Database Server</text>
+    </g>
+    <!--cluster 42-->
+    <g class="cluster" data-qualified-name="41.42" data-source-line="2" id="ent0002">
+      <polygon fill="none" points="32,58,42,48,282,48,282,141,272,151,32,151,32,58" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="272" x2="282" y1="58" y2="48"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="32" x2="272" y1="58" y2="58"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="272" x2="272" y1="58" y2="151"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="73.238" x="116.381" y="71.889">«HSQLDB»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="101.15" x="102.425" y="85.889">Database Server</text>
+    </g>
+    <!--entity 43-->
+    <g class="entity" data-qualified-name="41.42.43" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="51" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.3" x="166" y="92"/>
+      <polygon fill="#F1F1F1" points="257.3,97,257.3,111,269.3,111,269.3,103,263.3,97,257.3,97" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="263.3" x2="263.3" y1="97" y2="103"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="269.3" x2="263.3" y1="103" y2="103"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="76.3" x="177" y="115.889">«Container»</text>
+      <text fill="#000" font-size="14" textLength="69.3" x="180.5" y="129.889">DatabaseA</text>
+    </g>
+    <!--entity 44-->
+    <g class="entity" data-qualified-name="41.42.44" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="51" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.3" x="40" y="92"/>
+      <polygon fill="#F1F1F1" points="131.3,97,131.3,111,143.3,111,143.3,103,137.3,97,131.3,97" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="137.3" x2="137.3" y1="97" y2="103"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="143.3" x2="137.3" y1="103" y2="103"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="76.3" x="51" y="115.889">«Container»</text>
+      <text fill="#000" font-size="14" textLength="69.3" x="54.5" y="129.889">DatabaseB</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="102px" preserveAspectRatio="none" style="width:180px;height:102px;background:#FFFFFF;" version="1.1" viewBox="0 0 180 102" width="180px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity component-->
+    <g class="entity" data-qualified-name="component" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.213" x="6" y="27"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="95.213" y="32"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="93.213" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="93.213" y="38"/>
+      <text fill="#000" font-size="14" textLength="69.213" x="21" y="57.889">component</text>
+    </g>
+    <!--entity actor-->
+    <g class="entity" data-qualified-name="actor" data-source-line="2" id="ent0002">
+      <ellipse cx="148.531" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M148.531,28.5 L148.531,55.5 M135.531,36.5 L161.531,36.5 M148.531,55.5 L135.531,70.5 M148.531,55.5 L161.531,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="31.062" x="133" y="82.889">actor</text>
+    </g>
+  </g>
+</svg>

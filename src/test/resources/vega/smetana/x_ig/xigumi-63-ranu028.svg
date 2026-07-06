@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="231px" preserveAspectRatio="none" style="width:130px;height:231px;background:#FFFFFF;" version="1.1" viewBox="0 0 130 231" width="130px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster common-->
+    <g class="cluster" data-qualified-name="common" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L71.137,4 A3.75,3.75 0 0 1 73.637,6.5 L80.637,24 L119.5,24 A2.5,2.5 0 0 1 122,26.5 L122,204.5 A2.5,2.5 0 0 1 119.5,207 L16.5,207 A2.5,2.5 0 0 1 14,204.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="80.637" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="18" y="16.889">common</text>
+    </g>
+    <!--cluster profiles-->
+    <g class="cluster" data-qualified-name="common.profiles" data-source-line="3" id="ent0002">
+      <path d="M24.5,118 L70.65,118 A3.75,3.75 0 0 1 73.15,120.5 L80.15,138 L111.5,138 A2.5,2.5 0 0 1 114,140.5 L114,196.5 A2.5,2.5 0 0 1 111.5,199 L24.5,199 A2.5,2.5 0 0 1 22,196.5 L22,120.5 A2.5,2.5 0 0 1 24.5,118" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="80.15" y1="138" y2="138"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="26" y="130.889">profiles</text>
+    </g>
+    <!--cluster classes-->
+    <g class="cluster" data-qualified-name="common.classes" data-source-line="6" id="ent0004">
+      <path d="M24.5,29 L72.225,29 A3.75,3.75 0 0 1 74.725,31.5 L81.725,49 L111.5,49 A2.5,2.5 0 0 1 114,51.5 L114,107.5 A2.5,2.5 0 0 1 111.5,110 L24.5,110 A2.5,2.5 0 0 1 22,107.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="81.725" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="46.725" x="26" y="41.889">classes</text>
+    </g>
+    <!--class X-->
+    <g class="entity" data-qualified-name="common.profiles.X" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="64.5" y="143"/>
+      <ellipse cx="79.5" cy="159" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="74.5" y="164">C</text>
+      <text fill="#000" font-size="14" x="93.5" y="162.889">X</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65.5" x2="104.863" y1="175" y2="175"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65.5" x2="104.863" y1="183" y2="183"/>
+    </g>
+    <!--class Z-->
+    <g class="entity" data-qualified-name="common.classes.Z" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.575" x="64.5" y="54"/>
+      <ellipse cx="79.5" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="74.5" y="75">C</text>
+      <text fill="#000" font-size="14" x="93.5" y="73.889">Z</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65.5" x2="104.075" y1="86" y2="86"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="65.5" x2="104.075" y1="94" y2="94"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="38,117.972,42,108.972,38,112.972,34,108.972,38,117.972" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M38,110.125 C38,110.487 38,110.85 38,111.214 C38,111.942 38,112.675 38,113.412 C38,114.885 38,116.372 38,117.867 C38,117.89 38,117.914 38,117.937 C38,117.949 38,112.96 38,112.972" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

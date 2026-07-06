@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="235px" preserveAspectRatio="none" style="width:192px;height:235px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 235" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster a_$a-->
+    <g class="cluster" data-qualified-name="a_.a" data-source-line="1" id="ent0001">
+      <path d="M39,12 L71.15,12 A3.75,3.75 0 0 1 73.65,14.5 L80.65,32 L174,32 A2.5,2.5 0 0 1 176.5,34.5 L176.5,156.5 A2.5,2.5 0 0 1 174,159 L39,159 A2.5,2.5 0 0 1 36.5,156.5 L36.5,14.5 A2.5,2.5 0 0 1 39,12" fill="#FF0" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="36.5" x2="80.65" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.15" x="40.5" y="24.889">a_$a</text>
+    </g>
+    <!--cluster java-->
+    <g class="cluster" data-qualified-name="a_.a.java" data-source-line="3" id="ent0004">
+      <path d="M71,37 L97.725,37 A3.75,3.75 0 0 1 100.225,39.5 L107.225,57 L166,57 A2.5,2.5 0 0 1 168.5,59.5 L168.5,148.5 A2.5,2.5 0 0 1 166,151 L71,151 A2.5,2.5 0 0 1 68.5,148.5 L68.5,39.5 A2.5,2.5 0 0 1 71,37" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="68.5" x2="107.225" y1="57" y2="57"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="72.5" y="49.889">java</text>
+    </g>
+    <!--cluster lang-->
+    <g class="cluster" data-qualified-name="a_.a.java.lang" data-source-line="2" id="ent0002">
+      <path d="M79,62 L106.512,62 A3.75,3.75 0 0 1 109.012,64.5 L116.012,82 L158,82 A2.5,2.5 0 0 1 160.5,84.5 L160.5,140.5 A2.5,2.5 0 0 1 158,143 L79,143 A2.5,2.5 0 0 1 76.5,140.5 L76.5,64.5 A2.5,2.5 0 0 1 79,62" fill="#FFF" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="76.5" x2="116.012" y1="82" y2="82"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.512" x="80.5" y="74.889">lang</text>
+    </g>
+    <!--class dummy$2-->
+    <g class="entity" data-qualified-name="dummy.2" data-source-line="6" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.425" x="6" y="171"/>
+      <ellipse cx="21" cy="187" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="192">C</text>
+      <text fill="#000" font-size="14" textLength="61.425" x="35" y="190.889">dummy$2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="98.425" y1="203" y2="203"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="98.425" y1="211" y2="211"/>
+    </g>
+    <!--class foo$1-->
+    <g class="entity" data-qualified-name="a_.a.java.lang.foo.1" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="85" y="87"/>
+      <ellipse cx="100" cy="103" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="95" y="108">C</text>
+      <text fill="#000" font-size="14" textLength="35" x="114" y="106.889">foo$1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="86" x2="151" y1="119" y2="119"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="86" x2="151" y1="127" y2="127"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="52.5,170.706,56.5,161.706,52.5,165.706,48.5,161.706,52.5,170.706" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52.5,159.175 C52.5,159.44 52.5,159.704 52.5,159.968 C52.5,160.497 52.5,161.024 52.5,161.549 C52.5,162.598 52.5,163.64 52.5,164.671 C52.5,166.734 52.5,163.753 52.5,165.706" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

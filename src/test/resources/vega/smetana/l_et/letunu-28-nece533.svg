@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="553px" preserveAspectRatio="none" style="width:243px;height:553px;background:#FFFFFF;" version="1.1" viewBox="0 0 243 553" width="243px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="108" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="151.4" x="32.5" y="73"/>
+    <text fill="#000" font-size="12" textLength="131.4" x="42.5" y="92.333">Datensendung stornieren</text>
+    <g class="entity" data-qualified-name=".4" id="ent0005">
+      <polygon fill="#F1F1F1" points="108,142,120,154,108,166,96,154,108,142" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="84.05" x="66" y="217"/>
+    <text fill="#000" font-size="12" textLength="64.05" x="76" y="236.333">AD05 prüfen</text>
+    <g class="entity" data-qualified-name=".9" id="ent0010">
+      <polygon fill="#F1F1F1" points="108,286,120,298,108,310,96,298,108,286" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="144.05" x="36" y="361"/>
+    <text fill="#000" font-size="12" textLength="124.05" x="46" y="380.333">Stornierung akzeptieren</text>
+    <g class="end_entity" data-qualified-name="end" data-source-line="6" id="ent0014">
+      <ellipse cx="108" cy="441" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="108" cy="441" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="169.4" x="23.5" y="505"/>
+    <text fill="#000" font-size="12" textLength="149.4" x="33.5" y="524.333">Stornierung nicht akzeptieren</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="108,72.81,112,63.81,108,67.81,104,63.81,108,72.81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108,36.263 C108,46.456 108,56.552 108,67.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="108,141.641,112,132.641,108,136.641,104,132.641,108,141.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108,105.251 C108,116.467 108,126.468 108,136.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="100.306" x="7" y="138.197">aktive Datensendung</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="108,216.741,112,207.741,108,211.741,104,207.741,108,216.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108,166.032 C108,179.339 108,196.781 108,211.741" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="11.619" x="110" y="194.556">Ja</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="108,285.641,112,276.641,108,280.641,104,276.641,108,285.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108,249.251 C108,260.467 108,270.468 108,280.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="82.569" x="25" y="282.197">AD05 empfangen</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="108,360.741,112,351.741,108,355.741,104,351.741,108,360.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108,310.032 C108,323.339 108,340.781 108,355.741" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="11.619" x="110" y="338.556">Ja</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0014" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="108,429.641,112,420.641,108,424.641,104,420.641,108,429.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108,393.251 C108,404.467 108,414.468 108,424.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0016" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="108,504.741,112,495.741,108,499.741,104,495.741,108,504.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108,454.032 C108,467.339 108,484.781 108,499.741" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="22.688" x="110" y="482.556">Nein</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0016" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="192.836,527.531,202.213,530.541,197.807,526.994,201.354,522.588,192.836,527.531" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M192.836,514.469 C203.489,515.62 210.5,517.797 210.5,521 C210.5,524.203 208.46,525.843 197.807,526.994" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="22.688" x="212.5" y="524.056">Nein</text>
+    </g>
+  </g>
+</svg>

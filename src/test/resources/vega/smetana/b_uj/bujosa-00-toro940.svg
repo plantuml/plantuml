@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="130px" preserveAspectRatio="none" style="width:194px;height:130px;background:#FFFFFF;" version="1.1" viewBox="0 0 194 130" width="194px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster big-->
+    <g class="cluster" data-qualified-name="big" data-source-line="2" id="ent0001">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="108" x="70" y="39"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="114.638" y="51.889">big</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN3" data-source-line="7" id="ent0004">
+      <path d="M6,69 L6,92 L59.5,92 L59.5,79 L49.5,69 L6,69" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M49.5,69 L49.5,79 L59.5,79 L49.5,69" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="32.5" x="12" y="84.111">note1</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN6" data-source-line="10" id="ent0007">
+      <path d="M59,4 L59,27 L112.5,27 L112.5,14 L102.5,4 L59,4" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M102.5,4 L102.5,14 L112.5,14 L102.5,4" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="32.5" x="65" y="19.111">note2</text>
+    </g>
+    <!--entity inside-->
+    <g class="entity" data-qualified-name="big.inside" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.663" x="112.5" y="64"/>
+      <text fill="#000" font-size="14" textLength="36.663" x="122.5" y="84.889">inside</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="association" id="lnk5">
+      <path d="M60.328,81 C63.27,81 66.211,81 69.153,81 C69.337,81 69.521,81 69.704,81 C69.796,81 69.888,81 69.98,81" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0001" data-link-type="association" id="lnk8">
+      <path d="M86,28.263 C86,31.13 86,34.385 86,37.833 C86,38.048 86,38.264 86,38.481 C86,38.59 86,38.698 86,38.807 C86,38.862 86,38.916 86,38.971" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="260px" preserveAspectRatio="none" style="width:133px;height:260px;background:#FFFFFF;" version="1.1" viewBox="0 0 133 260" width="133px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="120" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="13" y="12"/>
+      <ellipse cx="28" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="23" y="33">C</text>
+      <text fill="#000" font-size="14" x="42" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="53.363" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="19" y="58.889">a1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="53.363" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="19" y="80.889">a2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="53.363" y1="88" y2="88"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="19" y="102.889">a3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="53.363" y1="110" y2="110"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="19" y="124.889">a4</text>
+    </g>
+    <!--class C-->
+    <g class="entity" data-qualified-name="C" data-source-line="13" id="ent0002">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="45.425" x="72" y="34"/>
+      <ellipse cx="88.474" cy="50" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="83.474" y="55">C</text>
+      <text fill="#000" font-size="14" x="102.801" y="53.889">C</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="73" x2="116.425" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="78" y="80.889">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="73" x2="116.425" y1="88" y2="88"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="80" y="97.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="19.425" x="92" y="102.889">foo</text>
+    </g>
+    <!--class D-->
+    <g class="entity" data-qualified-name="D" data-source-line="17" id="ent0003">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.488" x="6" y="168"/>
+      <ellipse cx="27.002" cy="184" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="22.002" y="189">C</text>
+      <text fill="#000" font-size="14" x="42.336" y="187.889">D</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="60.488" y1="200" y2="200"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="212.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="29.488" x="26" y="214.889">bar()</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="60.488" y1="222" y2="222"/>
+      <text fill="#000" font-size="14" textLength="37.275" x="12" y="236.889">bar2()</text>
+    </g>
+  </g>
+</svg>

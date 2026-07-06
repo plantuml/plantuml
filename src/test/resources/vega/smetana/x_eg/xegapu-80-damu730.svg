@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="212px" preserveAspectRatio="none" style="width:239px;height:212px;background:#FFFFFF;" version="1.1" viewBox="0 0 239 212" width="239px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity 有土可种桑麻-->
+    <g class="entity" data-qualified-name="......" data-source-line="1" id="ent0001">
+      <ellipse cx="48" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M48,28.5 L48,55.5 M35,36.5 L61,36.5 M48,55.5 L35,70.5 M48,55.5 L61,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="84" x="6" y="82.889">有土可种桑麻</text>
+    </g>
+    <!--entity 有水克养鱼虾-->
+    <g class="entity" data-qualified-name="......" data-source-line="2" id="ent0002">
+      <ellipse cx="150" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M150,28.5 L150,55.5 M137,36.5 L163,36.5 M150,55.5 L137,70.5 M150,55.5 L163,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="84" x="108" y="82.889">有水克养鱼虾</text>
+    </g>
+    <!--entity 有人非你非我-->
+    <g class="entity" data-qualified-name="......" data-source-line="3" id="ent0003">
+      <ellipse cx="48" cy="130.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M48,138.5 L48,165.5 M35,146.5 L61,146.5 M48,165.5 L35,180.5 M48,165.5 L61,180.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="84" x="6" y="192.889">有人非你非我</text>
+    </g>
+    <!--entity 有马克走天涯-->
+    <g class="entity" data-qualified-name="......" data-source-line="4" id="ent0004">
+      <ellipse cx="166.172" cy="158.934" fill="#F1F1F1" rx="57.672" ry="13.934" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="84" x="124.172" y="162.434">有马克走天涯</text>
+    </g>
+  </g>
+</svg>

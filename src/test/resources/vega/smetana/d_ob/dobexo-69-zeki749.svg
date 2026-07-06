@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="104px" preserveAspectRatio="none" style="width:245px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 245 104" width="245px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster comp1-->
+    <g class="cluster" data-qualified-name="comp1" data-source-line="2" id="ent0001">
+      <path d="M29.5,4 L210.5,4 A12.5,12.5 0 0 1 223,16.5 L223,23 L17,23 L17,16.5 A12.5,12.5 0 0 1 29.5,4" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="19" style="stroke:#F1F1F1;stroke-width:1;" width="206" x="17" y="23"/>
+      <rect fill="none" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="206" x="17" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="223" y1="23" y2="23"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="223" y1="42" y2="42"/>
+      <text fill="#000" font-size="14" textLength="42" x="99" y="19.889">comp1</text>
+      <text fill="#000" font-size="14" textLength="98.613" x="22" y="36.389">entry / do_entry()</text>
+    </g>
+    <text fill="#000" font-size="14" textLength="69.125" x="170.438" y="70.889">entrystate1</text>
+    <ellipse cx="205" cy="54" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="69.125" x="136.438" y="70.889">entrystate2</text>
+    <ellipse cx="171" cy="54" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="69.125" x="102.438" y="70.889">entrystate3</text>
+    <ellipse cx="137" cy="54" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="69.125" x="68.438" y="70.889">entrystate4</text>
+    <ellipse cx="103" cy="54" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="69.125" x="34.438" y="70.889">entrystate5</text>
+    <ellipse cx="69" cy="54" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="69.125" x="0.438" y="70.889">entrystate6</text>
+    <ellipse cx="35" cy="54" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+  </g>
+</svg>

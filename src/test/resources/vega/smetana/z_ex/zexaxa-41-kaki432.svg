@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="182px" preserveAspectRatio="none" style="width:325px;height:182px;background:#FFFFFF;" version="1.1" viewBox="0 0 325 182" width="325px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster wfp2_real_helpers-->
+    <g class="cluster" data-qualified-name="wfp2_real_helpers" data-source-line="2" id="ent0001">
+      <path d="M64.5,63 L179.95,63 A3.75,3.75 0 0 1 182.45,65.5 L189.45,83 L309.5,83 A2.5,2.5 0 0 1 312,85.5 L312,155.5 A2.5,2.5 0 0 1 309.5,158 L64.5,158 A2.5,2.5 0 0 1 62,155.5 L62,65.5 A2.5,2.5 0 0 1 64.5,63" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="62" x2="189.45" y1="83" y2="83"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="114.45" x="66" y="75.889">wfp2_real_helpers</text>
+    </g>
+    <!--class wfp2_real_lottery-->
+    <g class="entity" data-qualified-name="wfp2_real_lottery" data-source-line="9" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.575" x="8.5" y="4"/>
+      <ellipse cx="23.5" cy="20" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="18.5" y="25">C</text>
+      <text fill="#000" font-size="14" textLength="106.575" x="37.5" y="23.889">wfp2_real_lottery</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="9.5" x2="146.075" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="9.5" x2="146.075" y1="44" y2="44"/>
+    </g>
+    <!--class emconf_wfp2_real_helpers-->
+    <g class="entity" data-qualified-name="wfp2_real_helpers.emconf_wfp2_real_helpers" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200.088" x="104" y="88"/>
+      <ellipse cx="119" cy="104" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="114" y="109">C</text>
+      <text fill="#000" font-size="14" textLength="168.088" x="133" y="107.889">emconf_wfp2_real_helpers</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="105" x2="303.088" y1="120" y2="120"/>
+      <text fill="#000" font-size="14" textLength="91" x="110" y="134.889">StoryPoints : 10</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="105" x2="303.088" y1="142" y2="142"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="extension" id="lnk4">
+      <polygon fill="none" points="78,62.956,84,44.956,72,44.956,78,62.956" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M78,52.384 C78,54.573 78,56.85 78,59.187 C78,60.355 78,61.538 78,62.732 C78,62.806 78,44.881 78,44.956" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="70.688" x="7" y="102.8">V 1.1.0-0.0.0</text>
+    </g>
+  </g>
+</svg>

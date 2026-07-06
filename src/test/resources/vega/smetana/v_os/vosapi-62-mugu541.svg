@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="393px" preserveAspectRatio="none" style="width:632px;height:393px;background:#FFFFFF;" version="1.1" viewBox="0 0 632 393" width="632px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Package-->
+    <g class="cluster" data-qualified-name="Package" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L72.012,4 A3.75,3.75 0 0 1 74.512,6.5 L81.512,24 L621.5,24 A2.5,2.5 0 0 1 624,26.5 L624,366.5 A2.5,2.5 0 0 1 621.5,369 L16.5,369 A2.5,2.5 0 0 1 14,366.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="81.512" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="54.512" x="18" y="16.889">Package</text>
+    </g>
+    <!--cluster node1-->
+    <g class="cluster" data-qualified-name="Package.node1" data-source-line="3" id="ent0002">
+      <polygon fill="none" points="323,39,333,29,616,29,616,181,606,191,323,191,323,39" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="606" x2="616" y1="39" y2="29"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="323" x2="606" y1="39" y2="39"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="606" x2="606" y1="39" y2="191"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="446.031" y="52.889">node1</text>
+    </g>
+    <!--cluster node2-->
+    <g class="cluster" data-qualified-name="Package.node2" data-source-line="8" id="ent0006">
+      <polygon fill="none" points="22,39,32,29,315,29,315,181,305,191,22,191,22,39" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="305" x2="315" y1="39" y2="29"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="22" x2="305" y1="39" y2="39"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="305" x2="305" y1="39" y2="191"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="145.031" y="52.889">node2</text>
+    </g>
+    <!--cluster node3-->
+    <g class="cluster" data-qualified-name="Package.node3" data-source-line="13" id="ent0010">
+      <polygon fill="none" points="323,209,333,199,616,199,616,351,606,361,323,361,323,209" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="606" x2="616" y1="209" y2="199"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="323" x2="606" y1="209" y2="209"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="606" x2="606" y1="209" y2="361"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="446.031" y="222.889">node3</text>
+    </g>
+    <!--cluster node4-->
+    <g class="cluster" data-qualified-name="Package.node4" data-source-line="18" id="ent0014">
+      <polygon fill="none" points="22,209,32,199,315,199,315,351,305,361,22,361,22,209" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="305" x2="315" y1="209" y2="199"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="22" x2="305" y1="209" y2="209"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="305" x2="305" y1="209" y2="361"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="145.031" y="222.889">node4</text>
+    </g>
+    <!--entity component1-1-->
+    <g class="entity" data-qualified-name="Package.node1.component1-1" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="331.5" y="59"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="440.925" y="64"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.925" y="66"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.925" y="70"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="346.5" y="89.889">component1-1</text>
+    </g>
+    <!--entity component1-2-->
+    <g class="entity" data-qualified-name="Package.node1.component1-2" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="478.5" y="59"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="587.925" y="64"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="585.925" y="66"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="585.925" y="70"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="493.5" y="89.889">component1-2</text>
+    </g>
+    <!--entity component1-3-->
+    <g class="entity" data-qualified-name="Package.node1.component1-3" data-source-line="6" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="331.5" y="139"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="440.925" y="144"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.925" y="146"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.925" y="150"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="346.5" y="169.889">component1-3</text>
+    </g>
+    <!--entity component2-1-->
+    <g class="entity" data-qualified-name="Package.node2.component2-1" data-source-line="9" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="30.5" y="59"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="139.925" y="64"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="137.925" y="66"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="137.925" y="70"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="45.5" y="89.889">component2-1</text>
+    </g>
+    <!--entity component2-2-->
+    <g class="entity" data-qualified-name="Package.node2.component2-2" data-source-line="10" id="ent0008">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="177.5" y="59"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="286.925" y="64"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="284.925" y="66"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="284.925" y="70"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="192.5" y="89.889">component2-2</text>
+    </g>
+    <!--entity component2-3-->
+    <g class="entity" data-qualified-name="Package.node2.component2-3" data-source-line="11" id="ent0009">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="30.5" y="139"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="139.925" y="144"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="137.925" y="146"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="137.925" y="150"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="45.5" y="169.889">component2-3</text>
+    </g>
+    <!--entity component3-1-->
+    <g class="entity" data-qualified-name="Package.node3.component3-1" data-source-line="14" id="ent0011">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="331.5" y="229"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="440.925" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.925" y="236"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.925" y="240"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="346.5" y="259.889">component3-1</text>
+    </g>
+    <!--entity component3-2-->
+    <g class="entity" data-qualified-name="Package.node3.component3-2" data-source-line="15" id="ent0012">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="478.5" y="229"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="587.925" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="585.925" y="236"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="585.925" y="240"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="493.5" y="259.889">component3-2</text>
+    </g>
+    <!--entity component3-3-->
+    <g class="entity" data-qualified-name="Package.node3.component3-3" data-source-line="16" id="ent0013">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="331.5" y="309"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="440.925" y="314"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.925" y="316"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.925" y="320"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="346.5" y="339.889">component3-3</text>
+    </g>
+    <!--entity component4-1-->
+    <g class="entity" data-qualified-name="Package.node4.component4-1" data-source-line="19" id="ent0015">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="30.5" y="229"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="139.925" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="137.925" y="236"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="137.925" y="240"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="45.5" y="259.889">component4-1</text>
+    </g>
+    <!--entity component4-2-->
+    <g class="entity" data-qualified-name="Package.node4.component4-2" data-source-line="20" id="ent0016">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="177.5" y="229"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="286.925" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="284.925" y="236"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="284.925" y="240"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="192.5" y="259.889">component4-2</text>
+    </g>
+    <!--entity component4-3-->
+    <g class="entity" data-qualified-name="Package.node4.component4-3" data-source-line="21" id="ent0017">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="30.5" y="309"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="139.925" y="314"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="137.925" y="316"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="137.925" y="320"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="45.5" y="339.889">component4-3</text>
+    </g>
+  </g>
+</svg>

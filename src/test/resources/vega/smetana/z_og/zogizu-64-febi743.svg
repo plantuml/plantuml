@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="137px" preserveAspectRatio="none" style="width:348px;height:137px;background:#FF0000;" version="1.1" viewBox="0 0 348 137" width="348px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F00" height="137" style="stroke:none;" width="348" x="0" y="0"/>
+    <!--cluster d-->
+    <g class="cluster" data-qualified-name="d" data-source-line="14" id="ent0001">
+      <path d="M14,14 C14,4 173,4 173,4 C173,4 332,4 332,14 L332,103 C332,113 173,113 173,113 C173,113 14,113 14,103 L14,14" fill="#00F" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M14,14 C14,24 173,24 173,24 C173,24 332,24 332,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="187.513" x="79.244" y="36.889">Group mode database (#yellow)</text>
+    </g>
+    <!--entity simpledatabase-->
+    <g class="entity" data-qualified-name="d.simpledatabase" data-source-line="15" id="ent0002">
+      <path d="M206,63 C206,53 265.044,53 265.044,53 C265.044,53 324.088,53 324.088,63 L324.088,86 C324.088,96 265.044,96 265.044,96 C265.044,96 206,96 206,86 L206,63" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M206,63 C206,73 265.044,73 265.044,73 C265.044,73 324.088,73 324.088,63" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="98.088" x="216" y="87.889">simpledatabase</text>
+    </g>
+    <!--entity multilinedatabase-->
+    <g class="entity" data-qualified-name="d.multilinedatabase" data-source-line="16" id="ent0003">
+      <path d="M22,54 C22,44 105.069,44 105.069,44 C105.069,44 188.138,44 188.138,54 L188.138,95 C188.138,105 105.069,105 105.069,105 C105.069,105 22,105 22,95 L22,54" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M22,54 C22,64 105.069,64 105.069,64 C105.069,64 188.138,64 188.138,54" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="18" font-weight="700" textLength="146.138" x="32" y="82">Multi-line database</text>
+      <text fill="#000" font-size="14" textLength="123.725" x="32" y="96.889">More detail goes here</text>
+    </g>
+  </g>
+</svg>

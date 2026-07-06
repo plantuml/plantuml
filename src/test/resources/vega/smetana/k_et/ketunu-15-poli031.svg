@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="238px" preserveAspectRatio="none" style="width:559px;height:238px;background:#FFFFFF;" version="1.1" viewBox="0 0 559 238" width="559px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="114.15" x="10" y="73"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.488" x="15" y="85.889">test</text>
+    <text fill="#000" font-size="14" x="66.213" y="85.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="61.213" x2="61.213" y1="73" y2="91"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="124.15" y1="91" y2="91"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="41.213" x="15" y="103.889">the key</text>
+    <text fill="#000" font-size="14" textLength="52.938" x="66.213" y="103.889">the value</text>
+    <line style="stroke:#000;stroke-width:1;" x1="61.213" x2="61.213" y1="91" y2="109"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="124.15" y1="109" y2="109"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="33.425" x="15" y="121.889">types</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="66.213" y="121.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="61.213" x2="61.213" y1="109" y2="127"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="114.15" x="10" y="73"/>
+    <rect fill="#F1F1F1" height="216" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="386.712" x="161" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="166" y="22.889">bool</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="229.638" y="22.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="166" y="40.889">byte</text>
+    <text fill="#000" font-size="14" textLength="12.425" x="229.638" y="40.889">-1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.063" x="166" y="58.889">short</text>
+    <text fill="#000" font-size="14" textLength="31.15" x="229.638" y="58.889">3200</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="14.787" x="166" y="76.889">int</text>
+    <text fill="#000" font-size="14" textLength="82.513" x="229.638" y="76.889">-2100000000</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.512" x="166" y="94.889">long</text>
+    <text fill="#000" font-size="14" textLength="101.238" x="229.638" y="94.889">1234321425321</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="166" y="112.889">float</text>
+    <text fill="#000" font-size="14" textLength="66.15" x="229.638" y="112.889">3.1415926</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42.088" x="166" y="130.889">double</text>
+    <text fill="#000" font-size="14" textLength="151.813" x="229.638" y="130.889">123413.4567654567654</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="166" y="148.889">char</text>
+    <text fill="#000" font-size="14" x="229.638" y="148.889">c</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="136" y2="154"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="154" y2="154"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="34.213" x="166" y="166.889">string</text>
+    <text fill="#000" font-size="14" textLength="73.938" x="229.638" y="166.889">this is a string</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="154" y2="172"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="172" y2="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="51.45" x="166" y="184.889">multiline</text>
+    <text fill="#000" font-size="14" textLength="88.988" x="229.638" y="184.889">line 1 line 2 line 3</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="172" y2="190"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.488" x="166" y="202.889">text</text>
+    <text fill="#000" font-size="14" textLength="313.075" x="229.638" y="202.889">def func(x) do
+# do something
+print x = x * 2
+end
+# datetime</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="190" y2="208"/>
+    <line style="stroke:#000;stroke-width:1;" x1="161" x2="547.712" y1="208" y2="208"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="53.638" x="166" y="220.889">datetime</text>
+    <text fill="#000" font-size="14" textLength="126" x="229.638" y="220.889">1997-01-06 23:12:10</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224.638" x2="224.638" y1="208" y2="226"/>
+    <rect fill="none" height="216" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="386.712" x="161" y="10"/>
+    <path d="M111.5,118 L124.5,118 C134.105,118 143.935,118 153.864,118" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M153.864,121.044 L156.147,118 L153.864,114.956 L161.474,118 L153.864,121.044" fill="#000"/>
+    <ellipse cx="111.5" cy="118" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

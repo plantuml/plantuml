@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="456px" preserveAspectRatio="none" style="width:219px;height:456px;background:#FFFFFF;" version="1.1" viewBox="0 0 219 456" width="219px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="NotShooting" data-source-line="3" id="ent0001">
+      <path d="M18.5,73 L135.313,73 A12.5,12.5 0 0 1 147.813,85.5 L147.813,97 L6,97 L6,85.5 A12.5,12.5 0 0 1 18.5,73" fill="#F1F1F1"/>
+      <rect fill="none" height="264" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="141.813" x="6" y="73"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="147.813" y1="97" y2="97"/>
+      <text fill="#000" font-size="14" textLength="77.087" x="38.363" y="88.889">NotShooting</text>
+      <g class="start_entity" data-qualified-name="NotShooting..start.NotShooting" data-source-line="4" id="ent0004">
+        <ellipse cx="58" cy="118" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="NotShooting.Idle" data-source-line="4" id="ent0005">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="33" y="169"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="33" x2="83" y1="193" y2="193"/>
+        <text fill="#000" font-size="14" textLength="22.575" x="46.713" y="184.889">Idle</text>
+      </g>
+      <g class="entity" data-qualified-name="NotShooting.Configuring" data-source-line="5" id="ent0007">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="91.663" x="12" y="272"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="103.663" y1="296" y2="296"/>
+        <text fill="#000" font-size="14" textLength="71.663" x="22" y="287.889">Configuring</text>
+      </g>
+      <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+        <polygon fill="#181818" points="58,168.724,62,159.724,58,163.724,54,159.724,58,168.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M58,132.25 C58,141.979 58,151.384 58,163.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+        <polygon fill="#181818" points="29.84,271.954,27.151,262.479,26.639,268.113,21.006,267.601,29.84,271.954" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M32.823,216.85 C27.599,222.805 22.828,229.659 20,237 C15.27,249.279 18.093,257.857 26.639,268.113" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="52.813" x="22" y="249.111">EvConfig</text>
+      </g>
+      <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="dependency" id="lnk9">
+        <polygon fill="#181818" points="71.083,219.135,70.718,228.977,72.943,223.776,78.144,226.001,71.083,219.135" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M70.385,271.667 C72.709,266.007 74.788,259.906 76,254 C78.39,242.356 77.183,234.358 72.943,223.776" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="52.813" x="78" y="249.111">EvConfig</text>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0002">
+      <ellipse cx="77" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Shooting" data-source-line="9" id="ent0010">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75.3" x="39.5" y="390"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="114.8" y1="414" y2="414"/>
+      <text fill="#000" font-size="14" textLength="55.3" x="49.5" y="405.889">Shooting</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="77,72.868,81,63.868,77,67.868,73,63.868,77,72.868" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M77,36.197 C77,44.846 77,52.851 77,67.868" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="39.193,399.522,33.248,391.67,34.816,397.105,29.381,398.673,39.193,399.522" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M13.505,337.406 C11.787,343.285 10.269,349.165 9,355 C7.395,362.383 5.32,365.401 9,372 C15.691,383.997 23,390.579 34.816,397.105" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="112.044" x="11" y="367.111">EvShutterReleased</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0001" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="132.449,337.329,128.3,346.262,132.366,342.329,136.299,346.395,132.449,337.329" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M112.083,389.933 C117.327,384.67 121.98,378.655 125,372 C130.021,360.936 132.168,354.217 132.366,342.329" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="80.194" x="131" y="367.111">EvShutterHalf</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="50.667px" preserveAspectRatio="none" style="width:112px;height:50px;background:#FFFFFF;" version="1.1" viewBox="0 0 112 50" width="112px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo1-->
+    <g class="entity" data-qualified-name="Foo1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="32" rx="1.667" ry="1.667" style="stroke:#181818;stroke-width:0.333;" width="42.625" x="4" y="8"/>
+      <ellipse cx="14" cy="18.667" fill="#ADD1B2" rx="7.333" ry="7.333" style="stroke:#181818;stroke-width:0.667;"/>
+      <text fill="#000" font-family="monospace" font-size="9.333" x="10.667" y="22">C</text>
+      <text fill="#000" font-size="9.333" textLength="21.292" x="23.333" y="21.259">Foo1</text>
+      <line style="stroke:#181818;stroke-width:0.333;" x1="4.667" x2="45.958" y1="29.333" y2="29.333"/>
+      <line style="stroke:#181818;stroke-width:0.333;" x1="4.667" x2="45.958" y1="34.667" y2="34.667"/>
+    </g>
+    <!--class Foo2-->
+    <g class="entity" data-qualified-name="Foo2" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="32" rx="1.667" ry="1.667" style="stroke:#181818;stroke-width:0.333;" width="42.625" x="58.667" y="8"/>
+      <ellipse cx="68.667" cy="18.667" fill="#ADD1B2" rx="7.333" ry="7.333" style="stroke:#181818;stroke-width:0.667;"/>
+      <text fill="#000" font-family="monospace" font-size="9.333" x="65.333" y="22">C</text>
+      <text fill="#000" font-size="9.333" textLength="21.292" x="78" y="21.259">Foo2</text>
+      <line style="stroke:#181818;stroke-width:0.333;" x1="59.333" x2="100.625" y1="29.333" y2="29.333"/>
+      <line style="stroke:#181818;stroke-width:0.333;" x1="59.333" x2="100.625" y1="34.667" y2="34.667"/>
+    </g>
+  </g>
+</svg>

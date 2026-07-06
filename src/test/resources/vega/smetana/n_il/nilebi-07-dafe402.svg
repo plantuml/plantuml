@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="164px" preserveAspectRatio="none" style="width:81px;height:164px;background:#FFFFFF;" version="1.1" viewBox="0 0 81 164" width="81px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity joe-->
+    <g class="entity" data-qualified-name="joe" data-source-line="1" id="ent0001">
+      <ellipse cx="35.5" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="33.556" x2="43.26" y1="28.26" y2="18.556"/>
+      <path d="M35.5,28.5 L35.5,55.5 M22.5,36.5 L48.5,36.5 M35.5,55.5 L22.5,70.5 M35.5,55.5 L48.5,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="26.138" y="82.889">joe</text>
+    </g>
+    <!--entity action-->
+    <g class="entity" data-qualified-name="action" data-source-line="1" id="ent0002">
+      <ellipse cx="35.419" cy="134.899" fill="#F1F1F1" rx="29.419" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="16.738" y="138.399">action</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="35.5,121.875,39.5,112.875,35.5,116.875,31.5,112.875,35.5,121.875" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M35.5,86.111 C35.5,98.917 35.5,107.469 35.5,116.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

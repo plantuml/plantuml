@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="173px" preserveAspectRatio="none" style="width:272px;height:173px;background:#FFFFFF;" version="1.1" viewBox="0 0 272 173" width="272px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster  End to End\nbusiness process-->
+    <g class="cluster" data-qualified-name=" End to End.nbusiness process" data-source-line="22" id="ent0001">
+      <rect fill="none" height="145" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="250" x="14" y="4"/>
+      <image height="32" width="32" x="123" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA1ElEQVR4XuWV2wnEIBBFLcFSLMGS7MSStgRLsQR378cQyCVkmOxePzZwQI+g81CSUkprMyTUkFBDQg0JNSTUkFBDIkzOeZZSBsD4vH4BiTA4uPfeAMbn9QtIhKm1vj5fHWOU1lp3VoJEGAtgzpkRhLMSx8R6iI0iIGscvNZKwFmJY2I9RBYRcCCytwCclTgmVkLb4FvcVOL3AdxU4g8CcLdg+yXc/gyfYi10Zm6QCGMBODM3SISxO+TM3CARZvvvOAgJNSTUkFBDQg0JNSTUkFBDQsobQik7DBTl2+8AAAAASUVORK5CYII=" y="6"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="61.512" x="108.244" y="48.889">End to End</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="104.3" x="86.85" y="62.889">business process</text>
+    </g>
+    <!--entity src-->
+    <g class="entity" data-qualified-name=" End to End.nbusiness process.src" data-source-line="23" id="ent0002">
+      <rect fill="#F1F1F1" height="66" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.938" x="22" y="75"/>
+      <image height="32" width="32" x="59.969" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA5ElEQVR4XuWTsQ2DQBAEvwPcCJILIHA7n7kMMldD7ITcPdCARQW2NlghsUKczvYSOBjpf17i7/aeUkp5HYwINyLciHAjwo0INyLciEjTNM2zbdsHwHp9voGINLi47/srwHp9voGINF3X3YdhuIzjeK613oJJiEjDAqZpOqGIYBLLhjPEhzKga1w8z3MBwSSWDWeILjLgQnTPAoJJLBtGyA98i50kfl/AThJ/UEB4BIc/wsN/w0/hCIOdExFpWECwcyIiDd9QsHMiIg3fULBzIsKNCDci3IhwI8KNCDci3IhwI8LKG2kaIMxoGH9jAAAAAElFTkSuQmCC" y="85"/>
+      <text fill="#000" font-size="14" textLength="87.938" x="32" y="127.889">inner process 1</text>
+    </g>
+    <!--entity tgt-->
+    <g class="entity" data-qualified-name=" End to End.nbusiness process.tgt" data-source-line="24" id="ent0003">
+      <rect fill="#F1F1F1" height="66" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.938" x="148" y="75"/>
+      <image height="32" width="32" x="185.969" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA5ElEQVR4XuWTsQ2DQBAEvwPcCJILIHA7n7kMMldD7ITcPdCARQW2NlghsUKczvYSOBjpf17i7/aeUkp5HYwINyLciHAjwo0INyLciEjTNM2zbdsHwHp9voGINLi47/srwHp9voGINF3X3YdhuIzjeK613oJJiEjDAqZpOqGIYBLLhjPEhzKga1w8z3MBwSSWDWeILjLgQnTPAoJJLBtGyA98i50kfl/AThJ/UEB4BIc/wsN/w0/hCIOdExFpWECwcyIiDd9QsHMiIg3fULBzIsKNCDci3IhwI8KNCDci3IhwI8LKG2kaIMxoGH9jAAAAAElFTkSuQmCC" y="85"/>
+      <text fill="#000" font-size="14" textLength="87.938" x="158" y="127.889">inner process 2</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="147.825,108,138.825,104,142.825,108,138.825,112,147.825,108" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M130.141,108 C136.035,108 136.93,108 142.825,108" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

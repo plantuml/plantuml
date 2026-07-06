@@ -1,0 +1,1472 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="1350px" preserveAspectRatio="none" style="width:4188px;height:1350px;background:#FFFFFF;" version="1.1" viewBox="0 0 4188 1350" width="4188px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Work-->
+    <g class="entity" data-qualified-name="Work" data-source-line="7" id="ent0001">
+      <rect fill="#F5F5F5" height="328" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="346.337" x="2170" y="12"/>
+      <ellipse cx="2322.6" cy="28" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2317.6" y="33">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="32.637" x="2343.1" y="31.889">Work</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2171" x2="2515.338" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2178" y="71.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="2190" y="76.889">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2178" y="85.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="2190" y="90.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2178" y="99.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="49" x="2190" y="104.889">id: string</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2171" x2="2314.425" y1="59" y2="59"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="2314.425" y="62.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2371.913" x2="2515.337" y1="59" y2="59"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,129.5,2185,133.5,2181,137.5,2177,133.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="153.038" x="2190" y="136.889">attributes: WorkAttributes</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,143.5,2185,147.5,2181,151.5,2177,147.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="179.025" x="2190" y="150.889">counterClaims: CounterClaim</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,157.5,2185,161.5,2181,165.5,2177,161.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="186.725" x="2190" y="164.889">activityTriggers: ActivityTrigger</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,171.5,2185,175.5,2181,179.5,2177,175.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="81.725" x="2190" y="178.889">admin: Admin</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,185.5,2185,189.5,2181,193.5,2177,189.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="181.913" x="2190" y="192.889">partyNames: WorkPartyName</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,199.5,2185,203.5,2181,207.5,2177,203.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="320.337" x="2190" y="206.889">gemaShareArrangements: GemaShareArrangement</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,213.5,2185,217.5,2181,221.5,2177,217.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="154.875" x="2190" y="220.889">permissions: Permissions</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,227.5,2185,231.5,2181,235.5,2177,231.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="178.238" x="2190" y="234.889">otherRelations: WorkRelation</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,241.5,2185,245.5,2181,249.5,2177,245.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="112.087" x="2190" y="248.889">claims: WorkClaim</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,255.5,2185,259.5,2181,263.5,2177,259.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="136.938" x="2190" y="262.889">societies: WorkSociety</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,269.5,2185,273.5,2181,277.5,2177,273.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="140.875" x="2190" y="276.889">relations: WorkRelation</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,283.5,2185,287.5,2181,291.5,2177,287.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="168.7" x="2190" y="290.889">repertoires: WorkRepertoire</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,297.5,2185,301.5,2181,305.5,2177,301.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="165.725" x="2190" y="304.889">recordings: WorkRecording</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,311.5,2185,315.5,2181,319.5,2177,315.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="191.363" x="2190" y="318.889">contributions: WorkContribution</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2181,325.5,2185,329.5,2181,333.5,2177,329.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="133.788" x="2190" y="332.889">conflicts: ConflictWork</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2171" x2="2303.838" y1="119" y2="119"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="2303.838" y="122.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2382.5" x2="2515.338" y1="119" y2="119"/>
+    </g>
+    <!--class WorkScore-->
+    <g class="entity" data-qualified-name="WorkScore" data-source-line="29" id="ent0002">
+      <rect fill="#F5F5F5" height="135" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="129.425" x="3846.5" y="108.5"/>
+      <ellipse cx="3874.196" cy="124.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="3869.196" y="129.5">C</text>
+      <text fill="#000" font-size="14" textLength="69.213" x="3891.017" y="128.389">WorkScore</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3847.5" x2="3974.925" y1="140.5" y2="140.5"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3854.5" y="168"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="85.488" x="3866.5" y="173.389">score: number</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3854.5" y="182"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="3866.5" y="187.389">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3854.5" y="196"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="103.425" x="3866.5" y="201.389">scoreType: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3854.5" y="210"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="49" x="3866.5" y="215.389">id: string</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3847.5" x2="3882.469" y1="155.5" y2="155.5"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="3882.469" y="158.889">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3939.956" x2="3974.925" y1="155.5" y2="155.5"/>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3847.5" x2="3871.881" y1="229.5" y2="229.5"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="3871.881" y="232.889">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3950.544" x2="3974.925" y1="229.5" y2="229.5"/>
+    </g>
+    <!--class WorkRecording-->
+    <g class="entity" data-qualified-name="WorkRecording" data-source-line="38" id="ent0003">
+      <rect fill="#F5F5F5" height="160" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="175.8" x="6" y="593"/>
+      <ellipse cx="42.279" cy="609" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="37.279" y="614">C</text>
+      <text fill="#000" font-size="14" textLength="96.513" x="61.008" y="612.889">WorkRecording</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="7" x2="180.8" y1="625" y2="625"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="652.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="26" y="657.889">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="666.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="26" y="671.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="680.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="149.8" x="26" y="685.889">tags: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="694.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="108.063" x="26" y="699.889">recordingId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="708.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="79.275" x="26" y="713.889">workId: string</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="65.156" y1="640" y2="640"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="65.156" y="643.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="122.644" x2="180.8" y1="640" y2="640"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,738.5,21,742.5,17,746.5,13,742.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="126.088" x="26" y="745.889">recording: Recording</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="54.569" y1="728" y2="728"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="54.569" y="731.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="133.231" x2="180.8" y1="728" y2="728"/>
+    </g>
+    <!--class WorkClaim-->
+    <g class="entity" data-qualified-name="WorkClaim" data-source-line="49" id="ent0004">
+      <rect fill="#F5F5F5" height="328" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="253.063" x="1782.5" y="509"/>
+      <ellipse cx="1870.525" cy="525" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1865.525" y="530">C</text>
+      <text fill="#000" font-size="14" textLength="68.513" x="1891.025" y="528.889">WorkClaim</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1783.5" x2="2034.563" y1="541" y2="541"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="568.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="171.85" x="1802.5" y="573.889">claimantPartyNameId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="582.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="1802.5" y="587.889">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="596.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="1802.5" y="601.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="610.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="149.8" x="1802.5" y="615.889">tags: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="624.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="195.913" x="1802.5" y="629.889">claimShares: {array:WorkShare}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="638.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="79.275" x="1802.5" y="643.889">workId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="652.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="89.338" x="1802.5" y="657.889">parentId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="666.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="82.425" x="1802.5" y="671.889">claimId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="680.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="124.6" x="1802.5" y="685.889">role: WorkClaimRole</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="694.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="101.85" x="1802.5" y="699.889">claimantId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="708.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="134.488" x="1802.5" y="713.889">claimantPartyId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="722.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="129.938" x="1802.5" y="727.889">type: WorkClaimType</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="736.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="227.063" x="1802.5" y="741.889">ownershipShares: {array:WorkShare}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="750.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="116.55" x="1802.5" y="755.889">agreementId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1790.5" y="764.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="190.313" x="1802.5" y="769.889">extensions: {map:{array:string}}</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1783.5" x2="1880.288" y1="556" y2="556"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="1880.288" y="559.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1937.775" x2="2034.563" y1="556" y2="556"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1793.5,794.5,1797.5,798.5,1793.5,802.5,1789.5,798.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="143.85" x="1802.5" y="801.889">WorkShare: WorkShare</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1793.5,808.5,1797.5,812.5,1793.5,816.5,1789.5,812.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="158.638" x="1802.5" y="815.889">claimant: PartyNameParty</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1793.5,822.5,1797.5,826.5,1793.5,830.5,1789.5,826.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="139.125" x="1802.5" y="829.889">agreement: Agreement</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1783.5" x2="1869.7" y1="784" y2="784"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="1869.7" y="787.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1948.363" x2="2034.563" y1="784" y2="784"/>
+    </g>
+    <!--class WorkRelation-->
+    <g class="entity" data-qualified-name="WorkRelation" data-source-line="72" id="ent0005">
+      <rect fill="#F5F5F5" height="244" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="191.025" x="2136.5" y="551"/>
+      <ellipse cx="2185.719" cy="567" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2180.719" y="572">C</text>
+      <text fill="#000" font-size="14" textLength="84.088" x="2206.219" y="570.889">WorkRelation</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2137.5" x2="2326.525" y1="583" y2="583"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="610.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="81.55" x="2156.5" y="615.889">otherId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="624.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="2156.5" y="629.889">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="638.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="133.788" x="2156.5" y="643.889">partWeighing: number</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="652.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="2156.5" y="657.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="666.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="149.8" x="2156.5" y="671.889">tags: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="680.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="165.025" x="2156.5" y="685.889">relation: WorkRelationType</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="694.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="79.275" x="2156.5" y="699.889">workId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="708.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="107.363" x="2156.5" y="713.889">partDuration: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="722.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="88.638" x="2156.5" y="727.889">partTitle: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2144.5" y="736.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="140.875" x="2156.5" y="741.889">sequenceNumber: long</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2137.5" x2="2203.269" y1="598" y2="598"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="2203.269" y="601.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2260.756" x2="2326.525" y1="598" y2="598"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2147.5,766.5,2151.5,770.5,2147.5,774.5,2143.5,770.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="74.638" x="2156.5" y="773.889">owner: Work</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2147.5,780.5,2151.5,784.5,2147.5,788.5,2143.5,784.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="68.337" x="2156.5" y="787.889">other: Work</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2137.5" x2="2192.681" y1="756" y2="756"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="2192.681" y="759.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2271.344" x2="2326.525" y1="756" y2="756"/>
+    </g>
+    <!--class Instrumentation-->
+    <g class="entity" data-qualified-name="Instrumentation" data-source-line="89" id="ent0006">
+      <rect fill="#F5F5F5" height="135" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="191.463" x="238.5" y="1060.5"/>
+      <ellipse cx="281.906" cy="1076.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="276.906" y="1081.5">C</text>
+      <text fill="#000" font-size="14" textLength="96.338" x="302.219" y="1080.389">Instrumentation</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="239.5" x2="428.963" y1="1092.5" y2="1092.5"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="246.5" y="1120"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="165.463" x="258.5" y="1125.389">numberOfInstruments: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="246.5" y="1134"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="136.85" x="258.5" y="1139.389">instrumentCode: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="246.5" y="1148"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="139.213" x="258.5" y="1153.389">numberOfPlayers: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="246.5" y="1162"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="125.125" x="258.5" y="1167.389">numberOfParts: long</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="239.5" x2="305.488" y1="1107.5" y2="1107.5"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="305.488" y="1110.889">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="362.975" x2="428.963" y1="1107.5" y2="1107.5"/>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="239.5" x2="294.9" y1="1181.5" y2="1181.5"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="294.9" y="1184.889">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="373.563" x2="428.963" y1="1181.5" y2="1181.5"/>
+    </g>
+    <!--class WorkAttributes-->
+    <g class="entity" data-qualified-name="WorkAttributes" data-source-line="98" id="ent0007">
+      <rect fill="#F5F5F5" height="594" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="321.925" x="555" y="376"/>
+      <ellipse cx="665.863" cy="392" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="660.863" y="397">C</text>
+      <text fill="#000" font-size="14" textLength="91.7" x="686.363" y="395.889">WorkAttributes</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="556" x2="875.925" y1="408" y2="408"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="435.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="575" y="440.889">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="449.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="88.638" x="575" y="454.889">purpose: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="463.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="72.363" x="575" y="468.889">origin: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="477.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="115.238" x="575" y="482.889">prohibited: boolean</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="491.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="85.663" x="575" y="496.889">isRef: boolean</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="505.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="122.15" x="575" y="510.889">musicVersion: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="519.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="163.45" x="575" y="524.889">shareDivisionOwner: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="533.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="95.725" x="575" y="538.889">language: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="547.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="118.3" x="575" y="552.889">lyricAdaption: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="561.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.063" x="575" y="566.889">source: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="575.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="174.3" x="575" y="580.889">textMusicRelationship: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="589.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="177.1" x="575" y="594.889">societyMarkers: {array:string}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="603.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="155.488" x="575" y="608.889">musicArrangement: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="617.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="134.663" x="575" y="622.889">publicationDate: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="631.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="122.063" x="575" y="636.889">musicExcerpt: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="645.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="73.85" x="575" y="650.889">genre: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="659.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.938" x="575" y="664.889">duration: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="673.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="49" x="575" y="678.889">id: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="687.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="184.363" x="575" y="692.889">musicCopyrightNumber: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="701.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="189" x="575" y="706.889">musicRecordedIndicator: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="715.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="295.925" x="575" y="720.889">standardInstrumentation: {array:Instrumentation}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="729.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="177.1" x="575" y="734.889">titles: {map:{array:WorkTitle}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="743.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="575" y="748.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="757.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="149.8" x="575" y="762.889">tags: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="771.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="76.212" x="575" y="776.889">owner: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="785.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="164.15" x="575" y="790.889">musicCopyrightDate: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="799.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="279.825" x="575" y="804.889">copyrightOverrides: {array:CopyrightOverride}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="813.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="126" x="575" y="818.889">firstReferral: boolean</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="827.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="141.575" x="575" y="832.889">musicComposite: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="841.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="187.075" x="575" y="846.889">instruments: {array:Instrument}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="855.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="91.7" x="575" y="860.889">category: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="869.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.338" x="575" y="874.889">status: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="563" y="883.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="190.313" x="575" y="888.889">extensions: {map:{array:string}}</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="556" x2="687.219" y1="423" y2="423"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="687.219" y="426.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="744.706" x2="875.925" y1="423" y2="423"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="566,913.5,570,917.5,566,921.5,562,917.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="135.8" x="575" y="920.889">Instrument: Instrument</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="566,927.5,570,931.5,566,935.5,562,931.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="231" x="575" y="934.889">CopyrightOverride: CopyrightOverride</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="566,941.5,570,945.5,566,949.5,562,945.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="196.525" x="575" y="948.889">Instrumentation: Instrumentation</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="566,955.5,570,959.5,566,963.5,562,959.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="176.575" x="575" y="962.889">mapWorkTitle: mapWorkTitle</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="556" x2="676.631" y1="903" y2="903"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="676.631" y="906.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="755.294" x2="875.925" y1="903" y2="903"/>
+    </g>
+    <!--class WorkAgreement-->
+    <g class="entity" data-qualified-name="WorkAgreement" data-source-line="140" id="ent0008">
+      <rect fill="#F5F5F5" height="230" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="241.425" x="1440.5" y="1013"/>
+      <ellipse cx="1506.431" cy="1029" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1501.431" y="1034">C</text>
+      <text fill="#000" font-size="14" textLength="101.063" x="1526.931" y="1032.889">WorkAgreement</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1441.5" x2="1680.925" y1="1045" y2="1045"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1448.5" y="1072.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="1460.5" y="1077.889">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1448.5" y="1086.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="115.763" x="1460.5" y="1091.889">contributorId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1448.5" y="1100.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="98.175" x="1460.5" y="1105.889">include: boolean</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1448.5" y="1114.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="1460.5" y="1119.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1448.5" y="1128.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="149.8" x="1460.5" y="1133.889">tags: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1448.5" y="1142.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="61.425" x="1460.5" y="1147.889">role: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1448.5" y="1156.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="79.275" x="1460.5" y="1161.889">workId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1448.5" y="1170.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="116.55" x="1460.5" y="1175.889">agreementId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1448.5" y="1184.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="196.613" x="1460.5" y="1189.889">shares: {array:AgreementShare}</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1441.5" x2="1532.469" y1="1060" y2="1060"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="1532.469" y="1063.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1589.956" x2="1680.925" y1="1060" y2="1060"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1451.5,1214.5,1455.5,1218.5,1451.5,1222.5,1447.5,1218.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="215.425" x="1460.5" y="1221.889">AgreementShare: AgreementShare</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1451.5,1228.5,1455.5,1232.5,1451.5,1236.5,1447.5,1232.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="139.125" x="1460.5" y="1235.889">agreement: Agreement</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1441.5" x2="1521.881" y1="1204" y2="1204"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="1521.881" y="1207.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1600.544" x2="1680.925" y1="1204" y2="1204"/>
+    </g>
+    <!--class WorkContribution-->
+    <g class="entity" data-qualified-name="WorkContribution" data-source-line="156" id="ent0009">
+      <rect fill="#F5F5F5" height="314" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="305.825" x="1259" y="516"/>
+      <ellipse cx="1353.588" cy="532" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1348.588" y="537">C</text>
+      <text fill="#000" font-size="14" textLength="108.15" x="1374.088" y="535.889">WorkContribution</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1260" x2="1563.825" y1="548" y2="548"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="575.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="148.4" x="1279" y="580.889">contributorPartyId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="589.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="164.238" x="1279" y="594.889">role: WorkContributionRole</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="603.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="1279" y="608.889">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="617.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="115.763" x="1279" y="622.889">contributorId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="631.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="185.763" x="1279" y="636.889">contributorPartyNameId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="645.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="1279" y="650.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="659.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="149.8" x="1279" y="664.889">tags: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="673.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="231.613" x="1279" y="678.889">manuscriptShares: {array:WorkShare}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="687.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="279.825" x="1279" y="692.889">copyrightOverrides: {array:CopyrightOverride}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="701.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="79.275" x="1279" y="706.889">workId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="715.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="141.313" x="1279" y="720.889">territories: {array:string}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1267" y="729.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="190.313" x="1279" y="734.889">extensions: {map:{array:string}}</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1260" x2="1383.169" y1="563" y2="563"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="1383.169" y="566.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1440.656" x2="1563.825" y1="563" y2="563"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1270,759.5,1274,763.5,1270,767.5,1266,763.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="231" x="1279" y="766.889">CopyrightOverride: CopyrightOverride</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1270,773.5,1274,777.5,1270,781.5,1266,777.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="143.85" x="1279" y="780.889">WorkShare: WorkShare</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1270,787.5,1274,791.5,1270,795.5,1266,791.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="178.763" x="1279" y="794.889">agreements: WorkAgreement</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1270,801.5,1274,805.5,1270,809.5,1266,805.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="104.125" x="1279" y="808.889">countries: Integer</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1270,815.5,1274,819.5,1270,823.5,1266,819.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="172.55" x="1279" y="822.889">contributor: PartyNameParty</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1260" x2="1372.581" y1="749" y2="749"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="1372.581" y="752.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1451.244" x2="1563.825" y1="749" y2="749"/>
+    </g>
+    <!--class WorkSociety-->
+    <g class="entity" data-qualified-name="WorkSociety" data-source-line="178" id="ent0010">
+      <rect fill="#F5F5F5" height="216" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="216.313" x="2346" y="565"/>
+      <ellipse cx="2410.619" cy="581" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2405.619" y="586">C</text>
+      <text fill="#000" font-size="14" textLength="78.575" x="2431.119" y="584.889">WorkSociety</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2347" x2="2561.313" y1="597" y2="597"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2354" y="624.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="2366" y="629.889">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2354" y="638.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="2366" y="643.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2354" y="652.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="149.8" x="2366" y="657.889">tags: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2354" y="666.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="180.863" x="2366" y="671.889">attributes: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2354" y="680.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="145.338" x="2366" y="685.889">grading: {array:Grading}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2354" y="694.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="79.275" x="2366" y="699.889">workId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2354" y="708.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="93.275" x="2366" y="713.889">societyId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2354" y="722.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="190.313" x="2366" y="727.889">extensions: {map:{array:string}}</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2347" x2="2425.413" y1="612" y2="612"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="2425.413" y="615.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2482.9" x2="2561.313" y1="612" y2="612"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2357,752.5,2361,756.5,2357,760.5,2353,756.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="103.425" x="2366" y="759.889">Grading: Grading</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2357,766.5,2361,770.5,2357,774.5,2353,770.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="93.363" x="2366" y="773.889">society: Society</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2347" x2="2414.825" y1="742" y2="742"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="2414.825" y="745.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2493.488" x2="2561.313" y1="742" y2="742"/>
+    </g>
+    <!--class WorkShare-->
+    <g class="entity" data-qualified-name="WorkShare" data-source-line="193" id="ent0011">
+      <rect fill="#F5F5F5" height="216" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="214.3" x="1170" y="1020"/>
+      <ellipse cx="1237.9" cy="1036" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1232.9" y="1041">C</text>
+      <text fill="#000" font-size="14" textLength="70" x="1258.4" y="1039.889">WorkShare</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1171" x2="1383.3" y1="1052" y2="1052"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1178" y="1079.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="91" x="1190" y="1084.889">endDate: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1178" y="1093.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="148.4" x="1190" y="1098.889">rightTypes: {array:string}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1178" y="1107.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="65.363" x="1190" y="1112.889">share: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1178" y="1121.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="134.663" x="1190" y="1126.889">unauthorized: boolean</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1178" y="1135.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="94.763" x="1190" y="1140.889">startDate: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1178" y="1149.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="141.313" x="1190" y="1154.889">territories: {array:string}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1178" y="1163.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="153.3" x="1190" y="1168.889">priorRoyaltiesDate: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="1178" y="1177.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="188.3" x="1190" y="1182.889">postTermCollectionDate: string</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1171" x2="1248.406" y1="1067" y2="1067"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="1248.406" y="1070.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1305.894" x2="1383.3" y1="1067" y2="1067"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1181,1207.5,1185,1211.5,1181,1215.5,1177,1211.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="104.125" x="1190" y="1214.889">countries: Integer</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1181,1221.5,1185,1225.5,1181,1229.5,1177,1225.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="154.875" x="1190" y="1228.889">permissions: Permissions</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1171" x2="1237.819" y1="1197" y2="1197"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="1237.819" y="1200.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="1316.481" x2="1383.3" y1="1197" y2="1197"/>
+    </g>
+    <!--class WorkPartyName-->
+    <g class="entity" data-qualified-name="WorkPartyName" data-source-line="208" id="ent0012">
+      <rect fill="#F5F5F5" height="188" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="216.313" x="2580" y="579"/>
+      <ellipse cx="2632.588" cy="595" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2627.588" y="600">C</text>
+      <text fill="#000" font-size="14" textLength="102.638" x="2653.088" y="598.889">WorkPartyName</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2581" x2="2795.313" y1="611" y2="611"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2588" y="638.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="2600" y="643.889">ns: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2588" y="652.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="118.125" x="2600" y="657.889">partyNameId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2588" y="666.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="2600" y="671.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2588" y="680.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="149.8" x="2600" y="685.889">tags: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2588" y="694.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="79.275" x="2600" y="699.889">workId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2588" y="708.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="158.725" x="2600" y="713.889">role: WorkPartyNameRole</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2588" y="722.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="190.313" x="2600" y="727.889">extensions: {map:{array:string}}</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2581" x2="2659.413" y1="626" y2="626"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="2659.413" y="629.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2716.9" x2="2795.313" y1="626" y2="626"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2591,752.5,2595,756.5,2591,760.5,2587,756.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="142.275" x="2600" y="759.889">partyName: PartyName</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2581" x2="2648.825" y1="742" y2="742"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="2648.825" y="745.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2727.488" x2="2795.313" y1="742" y2="742"/>
+    </g>
+    <!--class WorkTitle-->
+    <g class="entity" data-qualified-name="WorkTitle" data-source-line="221" id="ent0013">
+      <rect fill="#F5F5F5" height="121" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="166.875" x="3993.5" y="115.5"/>
+      <ellipse cx="4043.113" cy="131.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="4038.113" y="136.5">C</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="4063.613" y="135.389">WorkTitle</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3994.5" x2="4159.375" y1="147.5" y2="147.5"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="4001.5" y="175"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="95.725" x="4013.5" y="180.389">titleValue: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="4001.5" y="189"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.938" x="4013.5" y="194.389">duration: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="4001.5" y="203"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="140.875" x="4013.5" y="208.389">sequenceNumber: long</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3994.5" x2="4048.194" y1="162.5" y2="162.5"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="4048.194" y="165.889">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="4105.681" x2="4159.375" y1="162.5" y2="162.5"/>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3994.5" x2="4037.606" y1="222.5" y2="222.5"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="4037.606" y="225.889">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="4116.269" x2="4159.375" y1="222.5" y2="222.5"/>
+    </g>
+    <!--class WorkRepertoire-->
+    <g class="entity" data-qualified-name="WorkRepertoire" data-source-line="229" id="ent0014">
+      <rect fill="#F5F5F5" height="160" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="256.388" x="2814" y="593"/>
+      <ellipse cx="2888.944" cy="609" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2883.944" y="614">C</text>
+      <text fill="#000" font-size="14" textLength="98" x="2909.444" y="612.889">WorkRepertoire</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2815" x2="3069.388" y1="625" y2="625"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2822" y="652.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="109.55" x="2834" y="657.889">repertoireId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2822" y="666.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.513" x="2834" y="671.889">version: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2822" y="680.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="230.388" x="2834" y="685.889">relation: WorkRepertoireRelationType</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2822" y="694.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="79.275" x="2834" y="699.889">workId: string</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2815" x2="2913.45" y1="640" y2="640"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="2913.45" y="643.389">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2970.938" x2="3069.388" y1="640" y2="640"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2825,724.5,2829,728.5,2825,732.5,2821,728.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="107.363" x="2834" y="731.889">owner: Repertoire</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="2825,738.5,2829,742.5,2825,746.5,2821,742.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="66.063" x="2834" y="745.889">work: Work</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2815" x2="2902.863" y1="714" y2="714"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="2902.863" y="717.389">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2981.525" x2="3069.388" y1="714" y2="714"/>
+    </g>
+    <!--class WorkMatch-->
+    <g class="entity" data-qualified-name="WorkMatch" data-source-line="240" id="ent0015">
+      <rect fill="#F5F5F5" height="205" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="242.125" x="3790" y="570.5"/>
+      <ellipse cx="3871.463" cy="586.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="3866.463" y="591.5">C</text>
+      <text fill="#000" font-size="14" textLength="70.7" x="3891.963" y="590.389">WorkMatch</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3791" x2="4031.125" y1="602.5" y2="602.5"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3798" y="630"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="72.275" x="3810" y="635.389">stage: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3798" y="644"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="165.55" x="3810" y="649.389">targetWorkIdVersion: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3798" y="658"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="149.8" x="3810" y="663.389">tags: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3798" y="672"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="72.275" x="3810" y="677.389">result: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3798" y="686"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="146.65" x="3810" y="691.389">refs: {map:{array:string}}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3798" y="700"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="83.913" x="3810" y="705.389">kmodId: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3798" y="714"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="216.125" x="3810" y="719.389">kmodIdTargetWorkIdVersion: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3798" y="728"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="171.85" x="3810" y="733.389">sourceWorkIdVersion: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="3798" y="742"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="208.425" x="3810" y="747.389">sourceWorkIdVersionStage: string</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3791" x2="3882.319" y1="617.5" y2="617.5"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="3882.319" y="620.889">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3939.806" x2="4031.125" y1="617.5" y2="617.5"/>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3791" x2="3871.731" y1="761.5" y2="761.5"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="3871.731" y="764.889">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="3950.394" x2="4031.125" y1="761.5" y2="761.5"/>
+    </g>
+    <!--class Instrument-->
+    <g class="entity" data-qualified-name="Instrument" data-source-line="254" id="ent0016">
+      <rect fill="#F5F5F5" height="121" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="191.463" x="447.5" y="1067.5"/>
+      <ellipse cx="505.994" cy="1083.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="500.994" y="1088.5">C</text>
+      <text fill="#000" font-size="14" textLength="65.975" x="526.494" y="1087.389">Instrument</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="448.5" x2="637.963" y1="1099.5" y2="1099.5"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="455.5" y="1127"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="165.463" x="467.5" y="1132.389">numberOfInstruments: long</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="455.5" y="1141"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="136.85" x="467.5" y="1146.389">instrumentCode: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="455.5" y="1155"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="139.213" x="467.5" y="1160.389">numberOfPlayers: long</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="448.5" x2="514.488" y1="1114.5" y2="1114.5"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="514.488" y="1117.889">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="571.975" x2="637.963" y1="1114.5" y2="1114.5"/>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="448.5" x2="503.9" y1="1174.5" y2="1174.5"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="503.9" y="1177.889">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="582.563" x2="637.963" y1="1174.5" y2="1174.5"/>
+    </g>
+    <!--class CopyrightOverride-->
+    <g class="entity" data-qualified-name="CopyrightOverride" data-source-line="262" id="ent0017">
+      <rect fill="#F5F5F5" height="121" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="171.25" x="793.5" y="1067.5"/>
+      <ellipse cx="820.054" cy="1083.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="815.054" y="1088.5">C</text>
+      <text fill="#000" font-size="14" textLength="113.575" x="836.621" y="1087.389">CopyrightOverride</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="794.5" x2="963.75" y1="1099.5" y2="1099.5"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="801.5" y="1127"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="139.825" x="813.5" y="1132.389">countries: {array:string}</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="801.5" y="1141"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="129.063" x="813.5" y="1146.389">protectionDate: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="801.5" y="1155"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="145.25" x="813.5" y="1160.389">societyIds: {array:string}</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="794.5" x2="850.381" y1="1114.5" y2="1114.5"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="850.381" y="1117.889">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="907.869" x2="963.75" y1="1114.5" y2="1114.5"/>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="794.5" x2="839.794" y1="1174.5" y2="1174.5"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="839.794" y="1177.889">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="918.456" x2="963.75" y1="1174.5" y2="1174.5"/>
+    </g>
+    <!--class Grading-->
+    <g class="entity" data-qualified-name="Grading" data-source-line="270" id="ent0018">
+      <rect fill="#F5F5F5" height="135" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="159.088" x="2485.5" y="1060.5"/>
+      <ellipse cx="2535.9" cy="1076.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2530.9" y="1081.5">C</text>
+      <text fill="#000" font-size="14" textLength="49.788" x="2556.4" y="1080.389">Grading</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2486.5" x2="2643.588" y1="1092.5" y2="1092.5"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2493.5" y="1120"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="124.425" x="2505.5" y="1125.389">gradingStatus: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2493.5" y="1134"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="133.088" x="2505.5" y="1139.389">gradingDecider: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2493.5" y="1148"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="114.363" x="2505.5" y="1153.389">gradingDate: string</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="2493.5" y="1162"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="120.663" x="2505.5" y="1167.389">gradingValue: string</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2486.5" x2="2536.3" y1="1107.5" y2="1107.5"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="2536.3" y="1110.889">attributes</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2593.788" x2="2643.588" y1="1107.5" y2="1107.5"/>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2486.5" x2="2525.713" y1="1181.5" y2="1181.5"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="2525.713" y="1184.889">relationships</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="2604.375" x2="2643.588" y1="1181.5" y2="1181.5"/>
+    </g>
+    <!--class WorkClaimRole-->
+    <g class="entity" data-qualified-name="WorkClaimRole" data-source-line="278" id="ent0019">
+      <rect fill="#F5F5F5" height="244" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="129.388" x="1891.5" y="1006"/>
+      <ellipse cx="1906.5" cy="1022" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1901.5" y="1027">E</text>
+      <text fill="#000" font-size="14" textLength="97.388" x="1920.5" y="1025.889">WorkClaimRole</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1892.5" x2="2019.888" y1="1038" y2="1038"/>
+      <text fill="#000" font-size="14" x="1897.5" y="1052.889">E</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="1897.5" y="1066.889">SE</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="1897.5" y="1080.889">ES</text>
+      <text fill="#000" font-size="14" textLength="21" x="1897.5" y="1094.889">AM</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="1897.5" y="1108.889">AQ</text>
+      <text fill="#000" font-size="14" x="1897.5" y="1122.889">C</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="1897.5" y="1136.889">CA</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="1897.5" y="1150.889">AR</text>
+      <text fill="#000" font-size="14" x="1897.5" y="1164.889">A</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="1897.5" y="1178.889">SA</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="1897.5" y="1192.889">TR</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="1897.5" y="1206.889">AD</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="1897.5" y="1220.889">SR</text>
+      <text fill="#000" font-size="14" textLength="74.025" x="1897.5" y="1234.889">UNKNOWN</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1892.5" x2="2019.888" y1="1242" y2="1242"/>
+    </g>
+    <!--class WorkContributionRole-->
+    <g class="entity" data-qualified-name="WorkContributionRole" data-source-line="295" id="ent0020">
+      <rect fill="#F5F5F5" height="174" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="169.025" x="982.5" y="1041"/>
+      <ellipse cx="997.5" cy="1057" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="992.5" y="1062">E</text>
+      <text fill="#000" font-size="14" textLength="137.025" x="1011.5" y="1060.889">WorkContributionRole</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="983.5" x2="1150.525" y1="1073" y2="1073"/>
+      <text fill="#000" font-size="14" x="988.5" y="1087.889">C</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="988.5" y="1101.889">CA</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="988.5" y="1115.889">AR</text>
+      <text fill="#000" font-size="14" x="988.5" y="1129.889">A</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="988.5" y="1143.889">SA</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="988.5" y="1157.889">TR</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="988.5" y="1171.889">AD</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="988.5" y="1185.889">SR</text>
+      <text fill="#000" font-size="14" textLength="74.025" x="988.5" y="1199.889">UNKNOWN</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="983.5" x2="1150.525" y1="1207" y2="1207"/>
+    </g>
+    <!--class WorkClaimType-->
+    <g class="entity" data-qualified-name="WorkClaimType" data-source-line="307" id="ent0021">
+      <rect fill="#F5F5F5" height="90" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="166.175" x="2039" y="1083"/>
+      <ellipse cx="2069.531" cy="1099" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2064.531" y="1104">E</text>
+      <text fill="#000" font-size="14" textLength="99.663" x="2086.982" y="1102.889">WorkClaimType</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2040" x2="2204.175" y1="1115" y2="1115"/>
+      <text fill="#000" font-size="14" textLength="68.6" x="2045" y="1129.889">CREATOR</text>
+      <text fill="#000" font-size="14" textLength="154.175" x="2045" y="1143.889">ORIGINAL_PUBLISHER</text>
+      <text fill="#000" font-size="14" textLength="116.2" x="2045" y="1157.889">SUB_PUBLISHER</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2040" x2="2204.175" y1="1165" y2="1165"/>
+    </g>
+    <!--class WorkRelationType-->
+    <g class="entity" data-qualified-name="WorkRelationType" data-source-line="313" id="ent0022">
+      <rect fill="#F5F5F5" height="230" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="147.238" x="2223.5" y="1013"/>
+      <ellipse cx="2238.5" cy="1029" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2233.5" y="1034">E</text>
+      <text fill="#000" font-size="14" textLength="115.238" x="2252.5" y="1032.889">WorkRelationType</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2224.5" x2="2369.738" y1="1045" y2="1045"/>
+      <text fill="#000" font-size="14" textLength="32.725" x="2229.5" y="1059.889">REVI</text>
+      <text fill="#000" font-size="14" textLength="42" x="2229.5" y="1073.889">MERG</text>
+      <text fill="#000" font-size="14" textLength="32.638" x="2229.5" y="1087.889">MOD</text>
+      <text fill="#000" font-size="14" textLength="41.212" x="2229.5" y="1101.889">NOMT</text>
+      <text fill="#000" font-size="14" textLength="38.15" x="2229.5" y="1115.889">SMPL</text>
+      <text fill="#000" font-size="14" textLength="38.238" x="2229.5" y="1129.889">EXCP</text>
+      <text fill="#000" font-size="14" textLength="32.725" x="2229.5" y="1143.889">DISP</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="2229.5" y="1157.889">XREF</text>
+      <text fill="#000" font-size="14" textLength="40.513" x="2229.5" y="1171.889">MTCH</text>
+      <text fill="#000" font-size="14" textLength="38.938" x="2229.5" y="1185.889">POSS</text>
+      <text fill="#000" font-size="14" textLength="42" x="2229.5" y="1199.889">COMP</text>
+      <text fill="#000" font-size="14" textLength="40.512" x="2229.5" y="1213.889">ARRG</text>
+      <text fill="#000" font-size="14" textLength="38.15" x="2229.5" y="1227.889">MCFL</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2224.5" x2="2369.738" y1="1235" y2="1235"/>
+    </g>
+    <!--class WorkTitleType-->
+    <g class="entity" data-qualified-name="WorkTitleType" data-source-line="329" id="ent0023">
+      <rect fill="#F5F5F5" height="258" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="122.3" x="4050" y="544"/>
+      <ellipse cx="4065" cy="560" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="4060" y="565">E</text>
+      <text fill="#000" font-size="14" textLength="90.3" x="4079" y="563.889">WorkTitleType</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="4051" x2="4171.3" y1="576" y2="576"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="4056" y="590.889">OT</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="4056" y="604.889">OV</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="4056" y="618.889">AT</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="4056" y="632.889">TE</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="4056" y="646.889">FT</text>
+      <text fill="#000" font-size="14" textLength="12.425" x="4056" y="660.889">IT</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="4056" y="674.889">TT</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="4056" y="688.889">PT</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="4056" y="702.889">RT</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="4056" y="716.889">ET</text>
+      <text fill="#000" font-size="14" textLength="18.638" x="4056" y="730.889">OL</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="4056" y="744.889">AL</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="4056" y="758.889">DT</text>
+      <text fill="#000" font-size="14" textLength="16.363" x="4056" y="772.889">LT</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="4056" y="786.889">NT</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="4051" x2="4171.3" y1="794" y2="794"/>
+    </g>
+    <!--class WorkRepertoireRelationType-->
+    <g class="entity" data-qualified-name="WorkRepertoireRelationType" data-source-line="347" id="ent0024">
+      <rect fill="#F5F5F5" height="62" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="212.6" x="3080.5" y="1097"/>
+      <ellipse cx="3095.5" cy="1113" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="3090.5" y="1118">E</text>
+      <text fill="#000" font-size="14" textLength="180.6" x="3109.5" y="1116.889">WorkRepertoireRelationType</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3081.5" x2="3292.1" y1="1129" y2="1129"/>
+      <text fill="#000" font-size="14" textLength="61.6" x="3086.5" y="1143.889">INCLUDE</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3081.5" x2="3292.1" y1="1151" y2="1151"/>
+    </g>
+    <!--class WorkPartyNameRole-->
+    <g class="entity" data-qualified-name="WorkPartyNameRole" data-source-line="351" id="ent0025">
+      <rect fill="#F5F5F5" height="118" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="163.513" x="2783" y="1069"/>
+      <ellipse cx="2798" cy="1085" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2793" y="1090">E</text>
+      <text fill="#000" font-size="14" textLength="131.513" x="2812" y="1088.889">WorkPartyNameRole</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2784" x2="2945.513" y1="1101" y2="1101"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="2789" y="1115.889">PA</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="2789" y="1129.889">PG</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="2789" y="1143.889">PU</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="2789" y="1157.889">PX</text>
+      <text fill="#000" font-size="14" textLength="19.512" x="2789" y="1171.889">RS</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2784" x2="2945.513" y1="1179" y2="1179"/>
+    </g>
+    <!--class Recording-->
+    <g class="entity" data-qualified-name="Recording" data-source-line="358" id="ent0026">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="95.875" x="46" y="1104"/>
+      <ellipse cx="61" cy="1120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="56" y="1125">C</text>
+      <text fill="#000" font-size="14" textLength="63.875" x="75" y="1123.889">Recording</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="47" x2="140.875" y1="1136" y2="1136"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="47" x2="140.875" y1="1144" y2="1144"/>
+    </g>
+    <!--class PartyName-->
+    <g class="entity" data-qualified-name="PartyName" data-source-line="360" id="ent0029">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="102" x="2663" y="1104"/>
+      <ellipse cx="2678" cy="1120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2673" y="1125">C</text>
+      <text fill="#000" font-size="14" textLength="70" x="2692" y="1123.889">PartyName</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2664" x2="2764" y1="1136" y2="1136"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2664" x2="2764" y1="1144" y2="1144"/>
+    </g>
+    <!--class Repertoire-->
+    <g class="entity" data-qualified-name="Repertoire" data-source-line="362" id="ent0032">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="97.363" x="2965.5" y="1104"/>
+      <ellipse cx="2980.5" cy="1120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2975.5" y="1125">C</text>
+      <text fill="#000" font-size="14" textLength="65.363" x="2994.5" y="1123.889">Repertoire</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2966.5" x2="3061.863" y1="1136" y2="1136"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2966.5" x2="3061.863" y1="1144" y2="1144"/>
+    </g>
+    <!--class CounterClaim-->
+    <g class="entity" data-qualified-name="CounterClaim" data-source-line="365" id="ent0036">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="117.662" x="3088" y="649"/>
+      <ellipse cx="3103" cy="665" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="3098" y="670">C</text>
+      <text fill="#000" font-size="14" textLength="85.662" x="3117" y="668.889">CounterClaim</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3089" x2="3204.663" y1="681" y2="681"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3089" x2="3204.663" y1="689" y2="689"/>
+    </g>
+    <!--class ActivityTrigger-->
+    <g class="entity" data-qualified-name="ActivityTrigger" data-source-line="366" id="ent0038">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="120.725" x="3224.5" y="649"/>
+      <ellipse cx="3239.5" cy="665" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="3234.5" y="670">C</text>
+      <text fill="#000" font-size="14" textLength="88.725" x="3253.5" y="668.889">ActivityTrigger</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3225.5" x2="3344.225" y1="681" y2="681"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3225.5" x2="3344.225" y1="689" y2="689"/>
+    </g>
+    <!--class Admin-->
+    <g class="entity" data-qualified-name="Admin" data-source-line="367" id="ent0040">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="71.725" x="3364" y="649"/>
+      <ellipse cx="3379" cy="665" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="3374" y="670">C</text>
+      <text fill="#000" font-size="14" textLength="39.725" x="3393" y="668.889">Admin</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3365" x2="3434.725" y1="681" y2="681"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3365" x2="3434.725" y1="689" y2="689"/>
+    </g>
+    <!--class GemaShareArrangement-->
+    <g class="entity" data-qualified-name="GemaShareArrangement" data-source-line="369" id="ent0043">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="188.275" x="3454" y="649"/>
+      <ellipse cx="3469" cy="665" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="3464" y="670">C</text>
+      <text fill="#000" font-size="14" textLength="156.275" x="3483" y="668.889">GemaShareArrangement</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3455" x2="3641.275" y1="681" y2="681"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3455" x2="3641.275" y1="689" y2="689"/>
+    </g>
+    <!--class Permissions-->
+    <g class="entity" data-qualified-name="Permissions" data-source-line="370" id="ent0045">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="108.3" x="702" y="1286"/>
+      <ellipse cx="717" cy="1302" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="712" y="1307">C</text>
+      <text fill="#000" font-size="14" textLength="76.3" x="731" y="1305.889">Permissions</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="703" x2="809.3" y1="1318" y2="1318"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="703" x2="809.3" y1="1326" y2="1326"/>
+    </g>
+    <!--class ConflictWork-->
+    <g class="entity" data-qualified-name="ConflictWork" data-source-line="378" id="ent0054">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="111.363" x="3660.5" y="649"/>
+      <ellipse cx="3675.5" cy="665" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="3670.5" y="670">C</text>
+      <text fill="#000" font-size="14" textLength="79.363" x="3689.5" y="668.889">ConflictWork</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3661.5" x2="3770.863" y1="681" y2="681"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="3661.5" x2="3770.863" y1="689" y2="689"/>
+    </g>
+    <!--class PartyNameParty-->
+    <g class="entity" data-qualified-name="PartyNameParty" data-source-line="385" id="ent0062">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="134.638" x="1699.5" y="1104"/>
+      <ellipse cx="1714.5" cy="1120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1709.5" y="1125">C</text>
+      <text fill="#000" font-size="14" textLength="102.638" x="1728.5" y="1123.889">PartyNameParty</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1700.5" x2="1833.138" y1="1136" y2="1136"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1700.5" x2="1833.138" y1="1144" y2="1144"/>
+    </g>
+    <!--class Agreement-->
+    <g class="entity" data-qualified-name="Agreement" data-source-line="386" id="ent0064">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="100.425" x="1730" y="1286"/>
+      <ellipse cx="1745" cy="1302" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1740" y="1307">C</text>
+      <text fill="#000" font-size="14" textLength="68.425" x="1759" y="1305.889">Agreement</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1731" x2="1829.425" y1="1318" y2="1318"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1731" x2="1829.425" y1="1326" y2="1326"/>
+    </g>
+    <!--class mapWorkTitle-->
+    <g class="entity" data-qualified-name="mapWorkTitle" data-source-line="390" id="ent0069">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="118.363" x="657" y="1104"/>
+      <ellipse cx="672" cy="1120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="667" y="1125">C</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="686" y="1123.889">mapWorkTitle</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="658" x2="774.363" y1="1136" y2="1136"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="658" x2="774.363" y1="1144" y2="1144"/>
+    </g>
+    <!--class Integer-->
+    <g class="entity" data-qualified-name="Integer" data-source-line="395" id="ent0075">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="75.488" x="1306.5" y="1286"/>
+      <ellipse cx="1321.5" cy="1302" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1316.5" y="1307">C</text>
+      <text fill="#000" font-size="14" textLength="43.488" x="1335.5" y="1305.889">Integer</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1307.5" x2="1380.988" y1="1318" y2="1318"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1307.5" x2="1380.988" y1="1326" y2="1326"/>
+    </g>
+    <!--class AgreementShare-->
+    <g class="entity" data-qualified-name="AgreementShare" data-source-line="397" id="ent0078">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="137.788" x="1492" y="1286"/>
+      <ellipse cx="1507" cy="1302" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1502" y="1307">C</text>
+      <text fill="#000" font-size="14" textLength="105.788" x="1521" y="1305.889">AgreementShare</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1493" x2="1628.788" y1="1318" y2="1318"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="1493" x2="1628.788" y1="1326" y2="1326"/>
+    </g>
+    <!--class Society-->
+    <g class="entity" data-qualified-name="Society" data-source-line="400" id="ent0082">
+      <rect fill="#F5F5F5" height="48" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="77.938" x="2389" y="1104"/>
+      <ellipse cx="2404" cy="1120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="2399" y="1125">C</text>
+      <text fill="#000" font-size="14" textLength="45.938" x="2418" y="1123.889">Society</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2390" x2="2465.938" y1="1136" y2="1136"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="2390" x2="2465.938" y1="1144" y2="1144"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0026" data-link-type="dependency" id="lnk27">
+      <polygon fill="#000" points="94,1103.628,98,1094.628,94,1098.628,90,1094.628,94,1103.628" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M94,753.166 C94,858.671 94,1034.519 94,1098.628" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="88" y="1099.739">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0025" data-link-type="dependency" id="lnk28">
+      <polygon fill="#000" points="2842.303,1068.912,2842.754,1059.074,2840.484,1064.255,2835.302,1061.985,2842.303,1068.912" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2724.353,767.038 C2759.762,857.663 2810.665,987.94 2840.484,1064.255" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2836.303" y="1065.023">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0029" data-link-type="dependency" id="lnk30">
+      <polygon fill="#000" points="2712.67,1103.824,2716.148,1094.61,2712.383,1098.833,2708.161,1095.068,2712.67,1103.824" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2693.34,767.038 C2699.478,873.975 2708.87,1037.617 2712.383,1098.833" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2706.67" y="1099.935">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0024" data-link-type="dependency" id="lnk31">
+      <polygon fill="#000" points="3163.886,1096.726,3161.713,1087.119,3160.897,1092.717,3155.3,1091.901,3163.886,1096.726" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2974.27,753.084 C3000.057,813.766 3038.484,898.91 3079,970 C3105.21,1015.989 3137.857,1061.811 3160.897,1092.717" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="3157.886" y="1092.837">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0032" data-link-type="dependency" id="lnk33">
+      <polygon fill="#000" points="3010.285,1103.628,3012.823,1094.112,3009.5,1098.69,3004.922,1095.368,3010.285,1103.628" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2954.583,753.166 C2971.352,858.671 2999.311,1034.581 3009.5,1098.69" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="3004.285" y="1099.739">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0001" data-link-type="dependency" id="lnk34">
+      <polygon fill="#000" points="2516.166,216.265,2523.591,222.735,2520.944,217.735,2525.944,215.089,2516.166,216.265" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2929.658,592.911 C2911.678,527.302 2875.062,435.45 2814,376 C2732.341,296.497 2618.659,247.808 2520.944,217.735" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2517.166" y="212.376">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="dependency" id="lnk35">
+      <polygon fill="#000" points="877.164,564.429,886.919,563.075,881.41,561.79,882.696,556.281,877.164,564.429" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2169.532,191.025 C1950.1,212.701 1563.091,264.148 1250,376 C1117.988,423.161 984.106,497.951 881.41,561.79" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="878.164" y="560.541">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0036" data-link-type="dependency" id="lnk37">
+      <polygon fill="#000" points="3149.033,648.7,3153.587,639.967,3149.345,643.71,3145.603,639.468,3149.033,648.7" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2516.354,202.907 C2708.587,235.131 3001.839,295.83 3079,376 C3153.042,452.93 3152.808,588.373 3149.345,643.71" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="3143.033" y="644.811">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0038" data-link-type="dependency" id="lnk39">
+      <polygon fill="#000" points="3287.026,648.9,3291.584,640.17,3287.341,643.91,3283.6,639.667,3287.026,648.9" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2516.347,194.901 C2741.683,221.706 3117.928,279.687 3215,376 C3291.097,451.501 3290.839,588.397 3287.341,643.91" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="3281.026" y="645.011">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0040" data-link-type="dependency" id="lnk41">
+      <polygon fill="#000" points="3404.306,648.982,3409.684,640.731,3405.1,644.045,3401.786,639.461,3404.306,648.982" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2516.137,187.6 C2773.986,207.129 3240.762,258.118 3354,376 C3427.136,452.135 3414.002,588.713 3405.1,644.045" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="3398.306" y="645.093">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0012" data-link-type="dependency" id="lnk42">
+      <polygon fill="#000" points="2663.759,578.998,2664.934,569.219,2662.288,574.219,2657.288,571.573,2663.759,578.998" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2516.005,311.61 C2536.116,331.808 2555.09,353.468 2571,376 C2614.507,437.615 2643.41,512.899 2662.288,574.219" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2657.759" y="575.109">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0043" data-link-type="dependency" id="lnk44">
+      <polygon fill="#000" points="3547.4,648.837,3550.949,639.65,3547.153,643.843,3542.959,640.046,3547.4,648.837" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2516.233,187.286 C2790.544,206.945 3307.889,258.793 3445,376 C3529.166,447.948 3544.359,587.559 3547.153,643.843" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="3541.4" y="644.948">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0045" data-link-type="dependency" id="lnk46">
+      <polygon fill="#000" points="701.593,1306.939,692.77,1302.563,696.598,1306.728,692.432,1310.556,701.593,1306.939" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2169.694,186.823 C1745.076,212.204 677.726,284.433 546,376 C376.357,493.924 91.276,1095.997 229,1250 C260.146,1284.827 568.278,1301.309 696.598,1306.728" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="695.593" y="1303.05">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk47">
+      <polygon fill="#000" points="2241.466,550.892,2246.996,542.742,2242.351,545.971,2239.122,541.326,2241.466,550.892" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2287.259,340.11 C2270.012,408.844 2253.763,482.521 2242.351,545.971" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2235.466" y="547.003">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk48">
+      <polygon fill="#000" points="2020.704,508.621,2029.257,503.739,2023.665,504.593,2022.812,499.001,2020.704,508.621" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2169.958,330.782 C2155.057,345.699 2140.525,360.904 2127,376 C2090.162,417.117 2056.29,460.214 2023.665,504.593" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2014.704" y="504.732">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0010" data-link-type="dependency" id="lnk49">
+      <polygon fill="#000" points="2429.934,564.677,2431.867,555.02,2428.84,559.798,2424.061,556.77,2429.934,564.677" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2379.576,340.11 C2396.126,413.914 2414.133,494.213 2428.84,559.798" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2423.934" y="560.788">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk50">
+      <polygon fill="#000" points="2253.26,550.892,2259.02,542.903,2254.285,545.998,2251.19,541.263,2253.26,550.892" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2300.035,340.11 C2284.011,408.844 2267.575,482.548 2254.285,545.998" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2247.26" y="547.003">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0014" data-link-type="dependency" id="lnk51">
+      <polygon fill="#000" points="2915.316,592.911,2916.295,583.111,2913.75,588.163,2908.698,585.617,2915.316,592.911" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2516.081,221.279 C2608.482,251.803 2718.721,300.762 2796,376 C2857.062,435.45 2892.112,522.553 2913.75,588.163" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2909.316" y="589.022">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk52">
+      <polygon fill="#000" points="98.361,592.759,103.416,584.306,98.963,587.796,95.474,583.343,98.361,592.759" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2169.759,182.386 C1686.694,198.873 350.017,255.058 196,376 C130.273,427.613 107.306,519.034 98.963,587.796" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="92.361" y="588.87">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0009" data-link-type="dependency" id="lnk53">
+      <polygon fill="#000" points="1565.368,526.106,1574.801,523.272,1569.16,522.847,1569.585,517.206,1565.368,526.106" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2169.826,220.291 C2053.232,253.49 1898.459,305.603 1773,376 C1699.668,417.148 1630.274,470.301 1569.16,522.847" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1566.368" y="522.218">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0054" data-link-type="dependency" id="lnk55">
+      <polygon fill="#000" points="3718.779,648.995,3723.616,640.416,3719.254,644.018,3715.653,639.656,3718.779,648.995" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2516.273,179.8 C2833.509,188.611 3489.922,225.093 3651,376 C3729.135,449.201 3724.597,588.089 3719.254,644.018" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="3712.779" y="645.106">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0022" data-link-type="dependency" id="lnk56">
+      <polygon fill="#000" points="2280.631,1012.919,2283.312,1003.442,2279.921,1007.969,2275.393,1004.578,2280.631,1012.919" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2249.376,795.098 C2259.079,862.717 2270.385,941.516 2279.921,1007.969" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2274.631" y="1009.03">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk57">
+      <polygon fill="#000" points="2312.812,340.11,2307.007,348.066,2311.76,344.998,2314.828,349.751,2312.812,340.11" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2265.055,550.892 C2280.222,487.442 2296.958,413.732 2311.76,344.998" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2306.812" y="351.221">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk58">
+      <polygon fill="#000" points="2325.589,340.11,2319.921,348.164,2324.62,345.015,2327.769,349.715,2325.589,340.11" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2276.85,550.892 C2293.894,487.442 2311.041,413.749 2324.62,345.015" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2319.589" y="351.221">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0019" data-link-type="dependency" id="lnk59">
+      <polygon fill="#000" points="1943.428,1005.825,1946.478,996.46,1942.912,1000.852,1938.52,997.286,1943.428,1005.825" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1925.935,837.223 C1931.709,892.876 1937.542,949.096 1942.912,1000.852" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1937.428" y="1001.936">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0011" data-link-type="dependency" id="lnk60">
+      <polygon fill="#000" points="1384.283,1033.791,1393.963,1031.978,1388.4,1030.954,1389.424,1025.39,1384.283,1033.791" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1782.46,811.887 C1723.968,868.292 1650.55,929.645 1574,970 C1516.024,1000.563 1489.833,977.122 1431,1006 C1415.128,1013.791 1403.467,1020.572 1388.4,1030.954" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1385.283" y="1029.902">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0021" data-link-type="dependency" id="lnk61">
+      <polygon fill="#000" points="2101.096,1082.543,2100.886,1072.696,2098.969,1078.018,2093.647,1076.1,2101.096,1082.543" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1985.747,837.223 C2026.877,924.695 2072.315,1021.332 2098.969,1078.018" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2095.096" y="1078.654">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0062" data-link-type="dependency" id="lnk63">
+      <polygon fill="#000" points="1774.261,1103.838,1780.77,1096.446,1775.756,1099.066,1773.136,1094.053,1774.261,1103.838" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1857.835,837.223 C1826.521,937.119 1791.106,1050.097 1775.756,1099.066" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1768.261" y="1099.949">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0064" data-link-type="dependency" id="lnk65">
+      <polygon fill="#000" points="1813.178,1285.742,1822.615,1282.923,1816.975,1282.489,1817.409,1276.849,1813.178,1285.742" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1896.095,837.044 C1882.718,994.299 1861.25,1213.725 1843,1250 C1836.063,1263.788 1828.307,1272.778 1816.975,1282.489" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1807.178" y="1281.853">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0016" data-link-type="dependency" id="lnk66">
+      <polygon fill="#000" points="565.767,1067.384,572.715,1060.404,567.551,1062.713,565.241,1057.549,565.767,1067.384" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M602.9,970.151 C588.947,1006.689 577.8,1035.876 567.551,1062.713" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="559.767" y="1063.495">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0017" data-link-type="dependency" id="lnk67">
+      <polygon fill="#000" points="857.549,1067.384,858.265,1057.562,855.856,1062.68,850.738,1060.27,857.549,1067.384" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M822.562,970.151 C835.709,1006.689 846.199,1035.843 855.856,1062.68" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="851.549" y="1063.495">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0006" data-link-type="dependency" id="lnk68">
+      <polygon fill="#000" points="390.122,1060.447,398.981,1056.146,393.345,1056.625,392.866,1050.988,390.122,1060.447" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M554.828,865.128 C496.144,934.719 436.831,1005.056 393.345,1056.625" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="384.122" y="1056.558">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0069" data-link-type="dependency" id="lnk70">
+      <polygon fill="#000" points="716,1103.856,720,1094.856,716,1098.856,712,1094.856,716,1103.856" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M716,970.151 C716,1026.298 716,1071.119 716,1098.856" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="710" y="1099.967">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0017" data-link-type="dependency" id="lnk71">
+      <polygon fill="#000" points="920.319,1067.475,928.934,1062.703,923.332,1063.485,922.55,1057.882,920.319,1067.475" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1258.815,774.836 C1170.655,836.427 1060.387,919.739 973,1006 C954.163,1024.594 938.782,1043.023 923.332,1063.485" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="914.319" y="1063.586">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0020" data-link-type="dependency" id="lnk72">
+      <polygon fill="#000" points="1132.521,1040.968,1141.156,1036.231,1135.551,1036.99,1134.792,1031.384,1132.521,1040.968" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1293.029,830.214 C1239.253,900.824 1180.802,977.573 1135.551,1036.99" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1126.521" y="1037.079">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0011" data-link-type="dependency" id="lnk73">
+      <polygon fill="#000" points="1308.936,1019.838,1315.34,1012.355,1310.364,1015.046,1307.673,1010.07,1308.936,1019.838" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1365.446,830.214 C1346.805,892.766 1327.226,958.464 1310.364,1015.046" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1302.936" y="1015.949">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0008" data-link-type="dependency" id="lnk74">
+      <polygon fill="#000" points="1523.446,1012.827,1524.434,1003.028,1521.884,1008.077,1516.835,1005.527,1523.446,1012.827" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1463.382,830.214 C1483.115,890.207 1503.687,952.753 1521.884,1008.077" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1517.446" y="1008.938">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0075" data-link-type="dependency" id="lnk76">
+      <polygon fill="#000" points="1369.334,1285.841,1378.369,1281.92,1372.717,1282.159,1372.478,1276.507,1369.334,1285.841" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1418.118,830.119 C1421.727,974.017 1421.068,1176.108 1393,1250 C1387.941,1263.319 1381.934,1272.129 1372.717,1282.159" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1363.334" y="1281.952">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0062" data-link-type="dependency" id="lnk77">
+      <polygon fill="#000" points="1753.389,1103.662,1752.228,1093.882,1750.834,1099.364,1745.351,1097.971,1753.389,1103.662" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1549.95,830.193 C1596.062,884.605 1646.703,946.856 1690,1006 C1713.974,1038.749 1736.08,1074.551 1750.834,1099.364" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1747.389" y="1099.773">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0078" data-link-type="dependency" id="lnk79">
+      <polygon fill="#000" points="1561,1285.994,1565,1276.994,1561,1280.994,1557,1276.994,1561,1285.994" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1561,1243.252 C1561,1259.388 1561,1269.4 1561,1280.994" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1555" y="1282.105">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0064" data-link-type="dependency" id="lnk80">
+      <polygon fill="#000" points="1741.328,1285.722,1735.869,1277.524,1737.105,1283.044,1731.585,1284.28,1741.328,1285.722" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1681.285,1243.016 C1684.197,1245.39 1687.105,1247.721 1690,1250 C1706.149,1262.711 1720.814,1272.715 1737.105,1283.044" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1735.328" y="1281.833">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0018" data-link-type="dependency" id="lnk81">
+      <polygon fill="#000" points="2548.665,1060.335,2550.408,1050.641,2547.475,1055.478,2542.638,1052.545,2548.665,1060.335" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2480.235,781.068 C2501.453,867.66 2529.474,982.014 2547.475,1055.478" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2542.665" y="1056.446">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0082" data-link-type="dependency" id="lnk83">
+      <polygon fill="#000" points="2429.342,1103.624,2433.851,1094.868,2429.628,1098.632,2425.864,1094.409,2429.342,1103.624" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M2447.855,781.068 C2441.714,888.065 2433.001,1039.874 2429.628,1098.632" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="2423.342" y="1099.735">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0075" data-link-type="dependency" id="lnk84">
+      <polygon fill="#000" points="1335.345,1285.748,1335.954,1275.918,1333.601,1281.062,1328.457,1278.708,1335.345,1285.748" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1316.845,1236.047 C1323.814,1254.77 1328.659,1267.785 1333.601,1281.062" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="1329.345" y="1281.859">*</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0045" data-link-type="dependency" id="lnk85">
+      <polygon fill="#000" points="810.009,1305.437,819.277,1308.768,814.995,1305.071,818.692,1300.789,810.009,1305.437" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1182.684,1236.056 C1175.381,1241.279 1167.801,1246.002 1160,1250 C1099.916,1280.794 910.527,1298.063 814.995,1305.071" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="811.009" y="1301.548">*</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="132px" preserveAspectRatio="none" style="width:126px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 126 132" width="126px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Side-->
+    <g class="entity" data-qualified-name="Side" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.088" x="8" y="12"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="18" y="32.889">Side</text>
+    </g>
+    <!--entity By-->
+    <g class="entity" data-qualified-name="By" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="36.363" x="74" y="12"/>
+      <text fill="#000" font-size="14" textLength="16.363" x="84" y="32.889">By</text>
+    </g>
+    <!--entity Side.-->
+    <g class="entity" data-qualified-name="Side." data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.938" x="6" y="82"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="16" y="102.889">Side.</text>
+    </g>
+  </g>
+</svg>

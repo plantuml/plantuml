@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="143px" preserveAspectRatio="none" style="width:160px;height:143px;background:#FFFFFF;" version="1.1" viewBox="0 0 160 143" width="160px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster company-->
+    <g class="cluster" data-qualified-name="company" data-source-line="3" id="ent0001">
+      <path d="M16.5,4 L98.625,4 A3.75,3.75 0 0 1 101.125,6.5 L108.125,30 L149.5,30 A2.5,2.5 0 0 1 152,32.5 L152,116.5 A2.5,2.5 0 0 1 149.5,119 L16.5,119 A2.5,2.5 0 0 1 14,116.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="108.125" y1="30" y2="30"/>
+      <text fill="#000" font-size="20" font-weight="700" textLength="81.125" x="18" y="21.556">company</text>
+    </g>
+    <!--class Employee-->
+    <g class="entity" data-qualified-name="company.Employee" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="121" x="22.5" y="35"/>
+      <ellipse cx="37.5" cy="51" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="56">C</text>
+      <text fill="#000" font-size="20" textLength="89" x="51.5" y="56.556">Employee</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="142.5" y1="67" y2="67"/>
+      <text fill="#000" font-size="14" textLength="45.937" x="28.5" y="81.889">id: Long</text>
+      <text fill="#000" font-size="14" textLength="75.425" x="28.5" y="95.889">name: String</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="142.5" y1="103" y2="103"/>
+    </g>
+  </g>
+</svg>

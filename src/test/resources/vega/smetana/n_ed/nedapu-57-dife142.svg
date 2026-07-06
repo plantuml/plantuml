@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:306px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 306 72" width="306px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Object1-->
+    <g class="entity" data-qualified-name="Object1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.213" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="74.213" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="72.213" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="72.213" y="23"/>
+      <text fill="#000" font-size="14" textLength="48.213" x="21" y="42.889">Object1</text>
+    </g>
+    <!--entity Interface1-->
+    <g class="entity" data-qualified-name="Interface1" data-source-line="2" id="ent0002">
+      <ellipse cx="121" cy="31" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="62.125" x="89.938" y="58.889">Interface1</text>
+    </g>
+    <!--entity Object2-->
+    <g class="entity" data-qualified-name="Object2" data-source-line="3" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.213" x="202" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="270.213" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="268.213" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="268.213" y="23"/>
+      <text fill="#000" font-size="14" textLength="48.213" x="217" y="42.889">Object2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M94.098,34 C99.983,34 105.867,34 111.752,34" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="130.395,34,139.395,38,135.395,34,139.395,30,130.395,34" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M135.395,34 C150.441,34 175.881,34 201.75,34" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="50.538" x="141" y="26.111">Test Text</text>
+    </g>
+  </g>
+</svg>

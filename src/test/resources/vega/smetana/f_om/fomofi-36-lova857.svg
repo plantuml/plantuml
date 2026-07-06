@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="82px" preserveAspectRatio="none" style="width:228px;height:82px;background:#FFFFFF;" version="1.1" viewBox="0 0 228 82" width="228px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class X-->
+    <g class="entity" data-qualified-name="X" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="171" y="12"/>
+      <ellipse cx="186" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="181" y="33">C</text>
+      <text fill="#000" font-size="14" x="200" y="31.889">X</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="172" x2="211.363" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="26.425" x="177" y="58.889">a : int</text>
+    </g>
+    <path d="M6,12 L6,56 A0,0 0 0 0 6,56 L152.531,56 A0,0 0 0 0 152.531,56 L152.531,38 L177,55 L152.531,30 L152.531,22 L142.531,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M142.531,12 L142.531,22 L152.531,22 L142.531,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="125.531" x="12" y="27.111">no "--" may be used here</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="7" x2="151.531" y1="30" y2="30"/>
+    <text fill="#000" font-size="13" textLength="115.7" x="12" y="44.111">to draw horizontal line</text>
+  </g>
+</svg>

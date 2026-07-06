@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="170px" preserveAspectRatio="none" style="width:98px;height:170px;background:#FFFFFF;" version="1.1" viewBox="0 0 98 170" width="98px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class TestOne-->
+    <g class="entity" data-qualified-name="TestOne" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="60" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.637" x="14" y="12"/>
+      <text fill="#000" font-size="14" textLength="53.637" x="17" y="27.889">TestOne</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15" x2="72.637" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="27.913" x="20" y="50.889">attr1</text>
+      <text fill="#000" font-size="14" textLength="27.913" x="20" y="64.889">attr2</text>
+    </g>
+    <!--class Test Two-->
+    <g class="entity" data-qualified-name="Test Two" data-source-line="8" id="ent0002">
+      <rect fill="#F1F1F1" height="46" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.7" x="6" y="108"/>
+      <text fill="#000" font-size="14" textLength="53.725" x="16.987" y="123.889">Test Two</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="80.7" y1="132" y2="132"/>
+      <text fill="#000" font-size="14" textLength="63.7" x="12" y="146.889">symmetric</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="44,72.454,38,90.454,50,90.454,44,72.454" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M44,90.454 C44,101.989 44,97.001 44,107.729" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

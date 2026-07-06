@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:147px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 147 105" width="147px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster f1-->
+    <g class="cluster" data-qualified-name="f1" data-source-line="1" id="ent0001">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="66" x="65.5" y="4"/>
+      <path d="M87.138,4 L87.138,11 L77.138,21 L65.5,21" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="11.638" x="68.5" y="15.889">f1</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.363" x="6" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="35.363" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="33.363" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="33.363" y="40"/>
+      <text fill="#000" font-size="14" x="21" y="59.889">B</text>
+    </g>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="f1.C" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.15" x="73.5" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="103.65" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.65" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.65" y="40"/>
+      <text fill="#000" font-size="14" x="88.5" y="59.889">C</text>
+    </g>
+  </g>
+</svg>

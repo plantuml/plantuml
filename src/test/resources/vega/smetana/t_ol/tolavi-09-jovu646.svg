@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="174px" preserveAspectRatio="none" style="width:84px;height:174px;background:#FFFF00;" version="1.1" viewBox="0 0 84 174" width="84px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FF0" height="174" style="stroke:none;" width="84" x="0" y="0"/>
+    <!--class Bob-->
+    <g class="entity" data-qualified-name="Bob" data-source-line="19" id="ent0001">
+      <rect fill="#008000" height="62" rx="2.5" ry="2.5" style="stroke:#ADD8E6;stroke-width:0.5;" width="56.938" x="8.5" y="96"/>
+      <ellipse cx="23.5" cy="112" fill="#008000" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#00F" font-family="monospace" font-size="14" x="18.5" y="117">C</text>
+      <text fill="#00F" font-size="14" textLength="24.938" x="37.5" y="115.889">Bob</text>
+      <line style="stroke:#ADD8E6;stroke-width:0.5;" x1="9.5" x2="64.438" y1="128" y2="128"/>
+      <text fill="#00F" font-size="14" textLength="29.663" x="14.5" y="142.889">hello</text>
+      <line style="stroke:#ADD8E6;stroke-width:0.5;" x1="9.5" x2="64.438" y1="150" y2="150"/>
+    </g>
+    <!--class Sally-->
+    <g class="entity" data-qualified-name="Sally" data-source-line="24" id="ent0002">
+      <rect fill="#008000" height="48" rx="2.5" ry="2.5" style="stroke:#ADD8E6;stroke-width:0.5;" width="62.45" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#008000" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#00F" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#00F" font-size="14" textLength="30.45" x="35" y="31.889">Sally</text>
+      <line style="stroke:#ADD8E6;stroke-width:0.5;" x1="7" x2="67.45" y1="44" y2="44"/>
+      <line style="stroke:#ADD8E6;stroke-width:0.5;" x1="7" x2="67.45" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#FF0" points="37,95.733,41,86.733,37,90.733,33,86.733,37,95.733" style="stroke:#FF0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M37,60.384 C37,71.199 37,79.181 37,90.733" fill="none" style="stroke:#FF0;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

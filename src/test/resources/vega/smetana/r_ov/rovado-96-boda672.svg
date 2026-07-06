@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="240px" preserveAspectRatio="none" style="width:298px;height:240px;background:#FFFFFF;" version="1.1" viewBox="0 0 298 240" width="298px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="6">
+      <text fill="#F00" font-family="monospace" font-size="10" textLength="21.188" x="135.156" y="7.778">line 1</text>
+      <text fill="#888" font-family="monospace" font-size="10" textLength="21.188" x="135.156" y="17.778">line 2</text>
+    </g>
+    <g class="entity" data-qualified-name="A" data-source-line="10" id="ent0001">
+      <rect fill="#F1F1F1" height="80" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="170.188" x="59.25" y="93"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="59.25" x2="229.438" y1="163" y2="163"/>
+      <text fill="#F00" font-family="monospace" font-size="30" textLength="56.812" x="69.25" y="121.333">blah</text>
+      <text fill="#000" font-family="monospace" font-size="30" textLength="150.188" x="69.25" y="151.333">bleh&lt;/font&gt;</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="8" id="ent0002">
+      <ellipse cx="144.25" cy="43" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="144.25,92.697,148.25,83.697,144.25,87.697,140.25,83.697,144.25,92.697" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M144.25,57.243 C144.25,66.349 144.25,74.748 144.25,87.697" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="footer" data-source-line="12">
+      <text fill="#F00" font-family="monospace" font-size="40" textLength="291.5" x="0" y="214.111">line 1\nnot line 1.5</text>
+      <text fill="#888" font-family="monospace" font-size="10" textLength="21.188" x="135.156" y="230.778">line 2</text>
+    </g>
+  </g>
+</svg>

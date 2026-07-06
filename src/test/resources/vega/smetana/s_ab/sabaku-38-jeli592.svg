@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="168px" preserveAspectRatio="none" style="width:238px;height:168px;background:#FFFFFF;" version="1.1" viewBox="0 0 238 168" width="238px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Biz-->
+    <g class="cluster" data-qualified-name="Biz" data-source-line="2" id="ent0003">
+      <path d="M16.5,63 L37.012,63 A3.75,3.75 0 0 1 39.512,65.5 L46.512,83 L227.5,83 A2.5,2.5 0 0 1 230,85.5 L230,141.5 A2.5,2.5 0 0 1 227.5,144 L16.5,144 A2.5,2.5 0 0 1 14,141.5 L14,65.5 A2.5,2.5 0 0 1 16.5,63" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="46.512" y1="83" y2="83"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.512" x="18" y="75.889">Biz</text>
+    </g>
+    <!--class XBaseClass-->
+    <g class="entity" data-qualified-name="XBaseClass" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.388" x="63" y="4"/>
+      <ellipse cx="78" cy="20" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="73" y="25">C</text>
+      <text fill="#000" font-size="14" textLength="76.388" x="92" y="23.889">XBaseClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="64" x2="170.388" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="64" x2="170.388" y1="44" y2="44"/>
+    </g>
+    <!--class BaseClass-->
+    <g class="entity" data-qualified-name="Biz.BaseClass" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.025" x="122.5" y="88"/>
+      <ellipse cx="137.5" cy="104" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="132.5" y="109">C</text>
+      <text fill="#000" font-size="14" textLength="67.025" x="151.5" y="107.889">BaseClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="123.5" x2="220.525" y1="120" y2="120"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="123.5" x2="220.525" y1="128" y2="128"/>
+    </g>
+    <!--class Meeting-->
+    <g class="entity" data-qualified-name="Biz.Meeting" data-source-line="3" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.788" x="22" y="88"/>
+      <ellipse cx="37" cy="104" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32" y="109">C</text>
+      <text fill="#000" font-size="14" textLength="49.788" x="51" y="107.889">Meeting</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="102.788" y1="120" y2="120"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="102.788" y1="128" y2="128"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk4">
+      <polygon fill="none" points="132.614,52.279,137.657,70.57,147.623,63.885,132.614,52.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M142.64,67.227 C150.135,78.402 149.062,76.802 156.538,87.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="extension" id="lnk6">
+      <polygon fill="none" points="101.67,52.279,86.759,64.012,96.781,70.612,101.67,52.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M91.77,67.312 C84.412,78.486 85.521,76.802 78.181,87.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

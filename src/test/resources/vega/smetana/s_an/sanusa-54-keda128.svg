@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:236px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 236 104" width="236px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class WInstallationRecord-->
+    <g class="entity" data-qualified-name="WInstallationRecord" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="166" x="54" y="12"/>
+      <ellipse cx="72.915" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="67.915" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="125.3" x="87.785" y="31.889">WInstallationRecord</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55" x2="219" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="65" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="140" x="74" y="58.889">reportedVersion: String</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="65" cy="70.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="115.938" x="74" y="72.889">reported: RFC3339</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55" x2="219" y1="80" y2="80"/>
+    </g>
+    <path d="M6,17 L6,40 A0,0 0 0 0 6,40 L35.694,40 A0,0 0 0 0 35.694,40 L35.694,35 L60,55 L35.694,27 L35.694,27 L25.694,17 L6,17 A0,0 0 0 0 6,17" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.694,17 L25.694,27 L35.694,27 L25.694,17" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" x="12" y="32.111">A</text>
+    <path d="M6,50 L6,73 A0,0 0 0 0 6,73 L35.694,73 A0,0 0 0 0 35.694,73 L35.694,68 L60,69 L35.694,60 L35.694,60 L25.694,50 L6,50 A0,0 0 0 0 6,50" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M25.694,50 L25.694,60 L35.694,60 L25.694,50" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" x="12" y="65.111">B</text>
+  </g>
+</svg>

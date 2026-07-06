@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="409px" preserveAspectRatio="none" style="width:133px;height:409px;background:#FFFFFF;" version="1.1" viewBox="0 0 133 409" width="133px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="61.938" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="32.075" x="45.938" y="73"/>
+    <text fill="#000" font-size="12" textLength="12.075" x="55.938" y="92.333">lol</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="110.825" x="6.438" y="142"/>
+    <text fill="#000" font-size="12" textLength="90.825" x="16.438" y="161.333">debut boucle ligne</text>
+    <g class="entity" data-qualified-name=".6" id="ent0007">
+      <polygon fill="#F1F1F1" points="61.938,225,73.938,237,61.938,249,49.938,237,61.938,225" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="69.35" x="27.438" y="300"/>
+    <text fill="#000" font-size="12" textLength="49.35" x="37.438" y="319.333">continuer</text>
+    <g class="end_entity" data-qualified-name="end" data-source-line="7" id="ent0012">
+      <ellipse cx="61.938" cy="380" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="61.938" cy="380" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="61.938,72.81,65.938,63.81,61.938,67.81,57.938,63.81,61.938,72.81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.938,36.263 C61.938,46.456 61.938,56.552 61.938,67.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="61.938,141.857,65.938,132.857,61.938,136.857,57.938,132.857,61.938,141.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.938,105.203 C61.938,116.168 61.938,125.906 61.938,136.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="61,224.993,64.299,215.713,60.617,220.007,56.323,216.325,61,224.993" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M60.718,174.131 C60.103,183.579 59.559,195.997 59.938,207 C60.143,212.952 60.201,214.593 60.617,220.007" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="53.213" x="7" y="221.548">reste lignes</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0004" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="61.938,174.213,57.938,183.213,61.938,179.213,65.938,183.213,61.938,174.213" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.938,224.811 C61.938,211.472 61.938,194.114 61.938,179.213" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="61.806" x="63.938" y="202.556">Liste nonvide</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="61.938,299.741,65.938,290.741,61.938,294.741,57.938,290.741,61.938,299.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.938,249.032 C61.938,262.339 61.938,279.781 61.938,294.741" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="43.45" x="63.938" y="277.556">Liste vide</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="61.938,368.641,65.938,359.641,61.938,363.641,57.938,359.641,61.938,368.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.938,332.251 C61.938,343.467 61.938,353.468 61.938,363.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

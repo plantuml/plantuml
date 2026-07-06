@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="292px" preserveAspectRatio="none" style="width:1356px;height:292px;background:#FFFFFF;" version="1.1" viewBox="0 0 1356 292" width="1356px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="77.575" x="10" y="162"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="15" y="174.889">problems</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="82.575" y="174.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="77.575" x2="77.575" y1="162" y2="180"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="77.575" x="10" y="162"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="125" y="162"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="130" y="174.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="125" y="162"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="75.3" x="172" y="153"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="55.3" x="177" y="165.889">Diabetes</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="242.3" y="165.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="237.3" x2="237.3" y1="153" y2="171"/>
+    <line style="stroke:#000;stroke-width:1;" x1="172" x2="247.3" y1="171" y2="171"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="177" y="183.889">Asthma</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="242.3" y="183.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="237.3" x2="237.3" y1="171" y2="189"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="75.3" x="172" y="153"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="284" y="142"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="289" y="154.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="284" y="142"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="94.725" x="331" y="131"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="74.725" x="336" y="143.889">medications</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="420.725" y="143.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="415.725" x2="415.725" y1="131" y2="149"/>
+    <line style="stroke:#000;stroke-width:1;" x1="331" x2="425.725" y1="149" y2="149"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="336" y="161.889">labs</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="420.725" y="161.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="415.725" x2="415.725" y1="149" y2="167"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="94.725" x="331" y="131"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="463" y="122"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="468" y="134.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="463" y="122"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="144.6" x="532.5" y="122"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="124.6" x="537.5" y="134.889">medicationsClasses</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="672.1" y="134.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="667.1" x2="667.1" y1="122" y2="140"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="144.6" x="532.5" y="122"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="737" y="122"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="742" y="134.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="737" y="122"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="97.088" x="784" y="113"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="69.3" x="789" y="125.889">className</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="876.088" y="125.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="871.088" x2="871.088" y1="113" y2="131"/>
+    <line style="stroke:#000;stroke-width:1;" x1="784" x2="881.088" y1="131" y2="131"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="77.088" x="789" y="143.889">className2</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="876.088" y="143.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="871.088" x2="871.088" y1="131" y2="149"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="97.088" x="784" y="113"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="918" y="104"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="923" y="116.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="918" y="104"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="132.875" x="965" y="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="97.3" x="970" y="94.889">associatedDrug</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1092.875" y="94.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1087.875" x2="1087.875" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="965" x2="1097.875" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="112.875" x="970" y="112.889">associatedDrug#2</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1092.875" y="112.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1087.875" x2="1087.875" y1="100" y2="118"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="132.875" x="965" y="82"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="1135" y="46"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1140" y="58.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="1135" y="46"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="113.275" x="1206.5" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1211.5" y="22.889">name</text>
+    <text fill="#000" font-size="14" textLength="38.15" x="1271.988" y="22.889">asprin</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1266.988" x2="1266.988" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1206.5" x2="1319.775" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="1211.5" y="40.889">dose</text>
+    <text fill="#000" font-size="14" x="1271.988" y="40.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1266.988" x2="1266.988" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1206.5" x2="1319.775" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="50.488" x="1211.5" y="58.889">strength</text>
+    <text fill="#000" font-size="14" textLength="42.788" x="1271.988" y="58.889">500 mg</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1266.988" x2="1266.988" y1="46" y2="64"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="113.275" x="1206.5" y="10"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="1135" y="100"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1140" y="112.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="1135" y="100"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="162.363" x="1182" y="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1187" y="94.889">name</text>
+    <text fill="#000" font-size="14" textLength="91.875" x="1247.488" y="94.889">somethingElse</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.488" x2="1242.488" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1182" x2="1344.363" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="1187" y="112.889">dose</text>
+    <text fill="#000" font-size="14" x="1247.488" y="112.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.488" x2="1242.488" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1182" x2="1344.363" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="50.488" x="1187" y="130.889">strength</text>
+    <text fill="#000" font-size="14" textLength="42.788" x="1247.488" y="130.889">500 mg</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.488" x2="1242.488" y1="118" y2="136"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="162.363" x="1182" y="82"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="918" y="167"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="923" y="179.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="918" y="167"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="132.875" x="965" y="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="97.3" x="970" y="184.889">associatedDrug</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1092.875" y="184.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1087.875" x2="1087.875" y1="172" y2="190"/>
+    <line style="stroke:#000;stroke-width:1;" x1="965" x2="1097.875" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="112.875" x="970" y="202.889">associatedDrug#2</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1092.875" y="202.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1087.875" x2="1087.875" y1="190" y2="208"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="132.875" x="965" y="172"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="1135" y="172"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1140" y="184.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="1135" y="172"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="113.275" x="1206.5" y="154"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1211.5" y="166.889">name</text>
+    <text fill="#000" font-size="14" textLength="38.15" x="1271.988" y="166.889">asprin</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1266.988" x2="1266.988" y1="154" y2="172"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1206.5" x2="1319.775" y1="172" y2="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="1211.5" y="184.889">dose</text>
+    <text fill="#000" font-size="14" x="1271.988" y="184.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1266.988" x2="1266.988" y1="172" y2="190"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1206.5" x2="1319.775" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="50.488" x="1211.5" y="202.889">strength</text>
+    <text fill="#000" font-size="14" textLength="42.788" x="1271.988" y="202.889">500 mg</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1266.988" x2="1266.988" y1="190" y2="208"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="113.275" x="1206.5" y="154"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="1135" y="226"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1140" y="238.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="1135" y="226"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="162.363" x="1182" y="226"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1187" y="238.889">name</text>
+    <text fill="#000" font-size="14" textLength="91.875" x="1247.488" y="238.889">somethingElse</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.488" x2="1242.488" y1="226" y2="244"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1182" x2="1344.363" y1="244" y2="244"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="1187" y="256.889">dose</text>
+    <text fill="#000" font-size="14" x="1247.488" y="256.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.488" x2="1242.488" y1="244" y2="262"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1182" x2="1344.363" y1="262" y2="262"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="50.488" x="1187" y="274.889">strength</text>
+    <text fill="#000" font-size="14" textLength="42.788" x="1247.488" y="274.889">500 mg</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.488" x2="1242.488" y1="262" y2="280"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="162.363" x="1182" y="226"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="463" y="158"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="468" y="170.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="463" y="158"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="189.838" x="510" y="158"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="81.025" x="515" y="170.889">missing_field</text>
+    <text fill="#000" font-size="14" textLength="88.813" x="606.025" y="170.889">missing_value</text>
+    <line style="stroke:#000;stroke-width:1;" x1="601.025" x2="601.025" y1="158" y2="176"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="189.838" x="510" y="158"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="284" y="182"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="289" y="194.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="284" y="182"/>
+    <rect fill="#F1F1F1" height="15" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="30" x="370.5" y="185.5"/>
+    <rect fill="none" height="15" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="30" x="370.5" y="185.5"/>
+    <path d="M1132.881,56.124 L1145.742,54.227 C1155.454,52.794 1177.281,49.573 1199.468,46.3" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1199.912,49.308 L1201.724,45.967 L1199.024,43.291 L1206.989,45.19 L1199.912,49.308" fill="#000"/>
+    <ellipse cx="1132.881" cy="56.124" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1093,94 L1093,81 C1093,65.219 1113.657,58.924 1127.434,56.481" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1127.879,59.591 L1129.767,56.148 L1126.99,53.371 L1135.209,55.37 L1127.879,59.591" fill="#000"/>
+    <ellipse cx="1093" cy="94" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1132.742,109 L1145.742,109 C1151.728,109 1162.317,109 1174.755,109" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1174.755,112.007 L1177.01,109 L1174.755,105.993 L1182.272,109 L1174.755,112.007" fill="#000"/>
+    <ellipse cx="1132.742" cy="109" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1086,109 L1099,109 C1108.604,109 1119.49,109 1127.555,109" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1127.555,112.075 L1129.861,109 L1127.555,105.925 L1135.243,109 L1127.555,112.075" fill="#000"/>
+    <ellipse cx="1086" cy="109" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M915.779,113.934 L928.685,112.373 C934.75,111.64 945.552,110.333 957.931,108.836" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M958.291,111.815 L960.165,108.566 L957.57,105.858 L965.377,107.936 L958.291,111.815" fill="#000"/>
+    <ellipse cx="915.779" cy="113.934" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M869,122 L882,122 C891.944,122 902.942,119.382 910.965,116.97" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M911.926,119.909 L913.169,116.25 L910.004,114.032 L918.312,114.568 L911.926,119.909" fill="#000"/>
+    <ellipse cx="869" cy="122" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1132.742,181 L1145.742,181 C1155.454,181 1177.281,181 1199.468,181" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1199.468,184.008 L1201.724,181 L1199.468,177.992 L1206.989,181 L1199.468,184.008" fill="#000"/>
+    <ellipse cx="1132.742" cy="181" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1086,181 L1099,181 C1108.604,181 1119.49,181 1127.555,181" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1127.555,184.075 L1129.861,181 L1127.555,177.925 L1135.243,181 L1127.555,184.075" fill="#000"/>
+    <ellipse cx="1086" cy="181" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1132.881,233.876 L1145.742,235.773 C1151.728,236.657 1162.317,238.219 1174.755,240.054" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1174.312,243.061 L1177.01,240.387 L1175.199,237.047 L1182.272,241.163 L1174.312,243.061" fill="#000"/>
+    <ellipse cx="1132.881" cy="233.876" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1093,196 L1093,209 C1093,224.781 1113.657,231.076 1127.434,233.519" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1126.99,236.629 L1129.767,233.852 L1127.879,230.409 L1135.209,234.63 L1126.99,236.629" fill="#000"/>
+    <ellipse cx="1093" cy="196" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M915.794,174.996 L928.685,176.675 C934.75,177.465 945.552,178.872 957.931,180.484" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M957.543,183.463 L960.165,180.775 L958.319,177.505 L965.377,181.454 L957.543,183.463" fill="#000"/>
+    <ellipse cx="915.794" cy="174.996" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M876,137 L876,150 C876,165.781 896.657,172.076 910.434,174.519" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M909.99,177.629 L912.767,174.852 L910.879,171.409 L918.209,175.63 L909.99,177.629" fill="#000"/>
+    <ellipse cx="876" cy="137" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M734.568,131 L747.568,131 C753.693,131 764.69,131 776.767,131" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M776.767,134.05 L779.055,131 L776.767,127.95 L784.392,131 L776.767,134.05" fill="#000"/>
+    <ellipse cx="734.568" cy="131" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M665.5,131 L678.5,131 C696.279,131 716.879,131 729.551,131" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M729.551,134.069 L731.852,131 L729.551,127.931 L737.222,131 L729.551,134.069" fill="#000"/>
+    <ellipse cx="665.5" cy="131" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M460.665,131 L473.665,131 C482.907,131 503.379,131 525.447,131" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M525.447,134.012 L527.706,131 L525.447,127.988 L532.978,131 L525.447,134.012" fill="#000"/>
+    <ellipse cx="460.665" cy="131" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M414,140 L427,140 C436.944,140 447.942,137.382 455.965,134.97" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M456.926,137.909 L458.169,134.25 L455.004,132.032 L463.312,132.568 L456.926,137.909" fill="#000"/>
+    <ellipse cx="414" cy="140" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M460.665,167 L473.665,167 C479.587,167 490.12,167 502.729,167" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M502.729,170.058 L505.022,167 L502.729,163.942 L510.374,167 L502.729,170.058" fill="#000"/>
+    <ellipse cx="460.665" cy="167" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M414,158 L427,158 C436.944,158 447.942,160.618 455.965,163.03" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M455.004,165.968 L458.169,163.75 L456.926,160.091 L463.312,165.432 L455.004,165.968" fill="#000"/>
+    <ellipse cx="414" cy="158" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M281.515,151.18 L294.512,150.887 C300.628,150.749 311.66,150.499 323.743,150.226" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M323.812,153.276 L326.03,150.174 L323.674,147.176 L331.367,150.054 L323.812,153.276" fill="#000"/>
+    <ellipse cx="281.515" cy="151.18" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M235,162 L248,162 C258.166,162 269.282,158.732 277.292,155.759" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M278.429,158.58 L279.408,154.906 L276.155,152.938 L284.345,152.916 L278.429,158.58" fill="#000"/>
+    <ellipse cx="235" cy="162" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M281.515,190.82 L294.512,191.113 C307.566,191.408 343.006,192.209 363.267,192.667" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M363.198,195.725 L365.561,192.719 L363.336,189.609 L370.912,192.84 L363.198,195.725" fill="#000"/>
+    <ellipse cx="281.515" cy="190.82" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M235,180 L248,180 C258.166,180 269.282,183.268 277.292,186.241" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M276.155,189.062 L279.408,187.094 L278.429,183.42 L284.345,189.084 L276.155,189.062" fill="#000"/>
+    <ellipse cx="235" cy="180" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M122.651,171 L135.651,171 C141.862,171 152.935,171 164.624,171" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M164.624,174.09 L166.942,171 L164.624,167.91 L172.35,171 L164.624,174.09" fill="#000"/>
+    <ellipse cx="122.651" cy="171" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M76,171 L89,171 C98.604,171 109.49,171 117.555,171" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M117.555,174.075 L119.861,171 L117.555,167.925 L125.243,171 L117.555,174.075" fill="#000"/>
+    <ellipse cx="76" cy="171" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:458px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 458 160" width="458px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Wwwwwwwwwwwwwwww-->
+    <g class="entity" data-qualified-name="Wwwwwwwwwwwwwwww" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="197.462" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="165.462" x="35" y="31.889">Wwwwwwwwwwwwwwww</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="202.462" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="202.462" y1="52" y2="52"/>
+    </g>
+    <!--class Uuuuuuuuuuuuuuuuuuuuuuuu-->
+    <g class="entity" data-qualified-name="Uuuuuuuuuuuuuuuuuuuuuuuu" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="221.263" x="221" y="12"/>
+      <ellipse cx="236" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="231" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="189.263" x="250" y="31.889">Uuuuuuuuuuuuuuuuuuuuuuuu</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="222" x2="441.263" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="222" x2="441.263" y1="52" y2="52"/>
+    </g>
+    <!--class iiiiii-->
+    <g class="entity" data-qualified-name="iiiiii" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.9" x="79" y="96"/>
+      <ellipse cx="94" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="89" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="18.9" x="108" y="115.889">iiiiii</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="80" x2="128.9" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="80" x2="128.9" y1="136" y2="136"/>
+    </g>
+    <!--class Licensing-->
+    <g class="entity" data-qualified-name="Licensing" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.238" x="148" y="96"/>
+      <ellipse cx="163" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="158" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="59.238" x="177" y="115.889">Licensing</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="149" x2="238.238" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="149" x2="238.238" y1="136" y2="136"/>
+    </g>
+  </g>
+</svg>

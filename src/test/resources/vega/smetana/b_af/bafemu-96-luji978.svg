@@ -1,0 +1,564 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="1145px" preserveAspectRatio="none" style="width:2806px;height:1145px;background:#FFFFFF;" version="1.1" viewBox="0 0 2806 1145" width="2806px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="90" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="111.175" x="10" y="280"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.238" x="15" y="292.889">apiVersion</text>
+    <text fill="#000" font-size="14" textLength="14.787" x="91.238" y="292.889">v1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="280" y2="298"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="121.175" y1="298" y2="298"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="15" y="310.889">kind</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="91.238" y="310.889">Pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="298" y2="316"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="121.175" y1="316" y2="316"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="58.275" x="15" y="328.889">metadata</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="91.238" y="328.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="316" y2="334"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="121.175" y1="334" y2="334"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="15" y="346.889">spec</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="91.238" y="346.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="334" y2="352"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="121.175" y1="352" y2="352"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.275" x="15" y="364.889">status</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="91.238" y="364.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="352" y2="370"/>
+    <rect fill="none" height="90" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="111.175" x="10" y="280"/>
+    <rect fill="#F1F1F1" height="162" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="559.087" x="158" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="119" x="163" y="22.889">creationTimestamp</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="292" y="22.889">2020-12-25T00:26:06Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="92.575" x="163" y="40.889">generateName</text>
+    <text fill="#000" font-size="14" textLength="178.238" x="292" y="40.889">blazorindocker-7966669766-</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="36.663" x="163" y="58.889">labels</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="292" y="58.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="163" y="76.889">name</text>
+    <text fill="#000" font-size="14" textLength="211.75" x="292" y="76.889">blazorindocker-7966669766-9j2bk</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="72.363" x="163" y="94.889">namespace</text>
+    <text fill="#000" font-size="14" textLength="42" x="292" y="94.889">default</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="109.725" x="163" y="112.889">ownerReferences</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="292" y="112.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="101.938" x="163" y="130.889">resourceVersion</text>
+    <text fill="#000" font-size="14" textLength="46.725" x="292" y="130.889">941757</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.512" x="163" y="148.889">selfLink</text>
+    <text fill="#000" font-size="14" textLength="420.087" x="292" y="148.889">/api/v1/namespaces/default/pods/blazorindocker-7966669766-9j2bk</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="136" y2="154"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="154" y2="154"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="163" y="166.889">uid</text>
+    <text fill="#000" font-size="14" textLength="258.3" x="292" y="166.889">7cb40e09-eb3f-4a34-b12e-b6ec84441fdb</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="154" y2="172"/>
+    <rect fill="none" height="162" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="559.087" x="158" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="214.513" x="754" y="37"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="759" y="49.889">app</text>
+    <text fill="#000" font-size="14" textLength="38.15" x="885.638" y="49.889">blazor</text>
+    <line style="stroke:#000;stroke-width:1;" x1="880.638" x2="880.638" y1="37" y2="55"/>
+    <line style="stroke:#000;stroke-width:1;" x1="754" x2="968.513" y1="55" y2="55"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="116.638" x="759" y="67.889">pod-template-hash</text>
+    <text fill="#000" font-size="14" textLength="77.875" x="885.638" y="67.889">7966669766</text>
+    <line style="stroke:#000;stroke-width:1;" x1="880.638" x2="880.638" y1="55" y2="73"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="214.513" x="754" y="37"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="856.5" y="96"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="108.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="856.5" y="96"/>
+    <rect fill="#F1F1F1" height="108" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="399.75" x="1242.5" y="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.238" x="1247.5" y="40.889">apiVersion</text>
+    <text fill="#000" font-size="14" textLength="49" x="1382.888" y="40.889">apps/v1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1377.888" x2="1377.888" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.5" x2="1642.25" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="125.388" x="1247.5" y="58.889">blockOwnerDeletion</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="1382.888" y="58.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1377.888" x2="1377.888" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.5" x2="1642.25" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="1247.5" y="76.889">controller</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="1382.888" y="76.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1377.888" x2="1377.888" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.5" x2="1642.25" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="1247.5" y="94.889">kind</text>
+    <text fill="#000" font-size="14" textLength="67.813" x="1382.888" y="94.889">ReplicaSet</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1377.888" x2="1377.888" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.5" x2="1642.25" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1247.5" y="112.889">name</text>
+    <text fill="#000" font-size="14" textLength="173.6" x="1382.888" y="112.889">blazorindocker-7966669766</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1377.888" x2="1377.888" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1242.5" x2="1642.25" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="1247.5" y="130.889">uid</text>
+    <text fill="#000" font-size="14" textLength="254.363" x="1382.888" y="130.889">dfb3148b-cff3-42d5-8ac4-e55e3d5450d7</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1377.888" x2="1377.888" y1="118" y2="136"/>
+    <rect fill="none" height="108" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="399.75" x="1242.5" y="28"/>
+    <rect fill="#F1F1F1" height="252" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="356.875" x="259" y="217"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="264" y="229.889">containers</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="476.3" y="229.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="217" y2="235"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="235" y2="235"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="60.025" x="264" y="247.889">dnsPolicy</text>
+    <text fill="#000" font-size="14" textLength="71.575" x="476.3" y="247.889">ClusterFirst</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="235" y2="253"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="253" y2="253"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="121.538" x="264" y="265.889">enableServiceLinks</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="476.3" y="265.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="253" y2="271"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="271" y2="271"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="68.513" x="264" y="283.889">nodeName</text>
+    <text fill="#000" font-size="14" textLength="95.638" x="476.3" y="283.889">docker-desktop</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="271" y2="289"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="289" y2="289"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="107.45" x="264" y="301.889">preemptionPolicy</text>
+    <text fill="#000" font-size="14" textLength="134.575" x="476.3" y="301.889">PreemptLowerPriority</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="289" y2="307"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="307" y2="307"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42" x="264" y="319.889">priority</text>
+    <text fill="#000" font-size="14" x="476.3" y="319.889">0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="307" y2="325"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="325" y2="325"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="77" x="264" y="337.889">restartPolicy</text>
+    <text fill="#000" font-size="14" textLength="44.45" x="476.3" y="337.889">Always</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="325" y2="343"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="343" y2="343"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="98.087" x="264" y="355.889">schedulerName</text>
+    <text fill="#000" font-size="14" textLength="107.363" x="476.3" y="355.889">default-scheduler</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="343" y2="361"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="361" y2="361"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="96.425" x="264" y="373.889">securityContext</text>
+    <text fill="#000" font-size="14" textLength="9.275" x="476.3" y="373.889">{}</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="361" y2="379"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="379" y2="379"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="94.938" x="264" y="391.889">serviceAccount</text>
+    <text fill="#000" font-size="14" textLength="42" x="476.3" y="391.889">default</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="379" y2="397"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="397" y2="397"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="132.3" x="264" y="409.889">serviceAccountName</text>
+    <text fill="#000" font-size="14" textLength="42" x="476.3" y="409.889">default</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="397" y2="415"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="415" y2="415"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="202.3" x="264" y="427.889">terminationGracePeriodSeconds</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="476.3" y="427.889">30</text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="415" y2="433"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="433" y2="433"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="264" y="445.889">tolerations</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="476.3" y="445.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="433" y2="451"/>
+    <line style="stroke:#000;stroke-width:1;" x1="259" x2="615.875" y1="451" y2="451"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.15" x="264" y="463.889">volumes</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="476.3" y="463.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="471.3" x2="471.3" y1="451" y2="469"/>
+    <rect fill="none" height="252" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="356.875" x="259" y="217"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="856.5" y="217"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="229.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="856.5" y="217"/>
+    <rect fill="#F1F1F1" height="144" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="328.175" x="1278.5" y="154"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="1283.5" y="166.889">image</text>
+    <text fill="#000" font-size="14" textLength="144.725" x="1456.95" y="166.889">piotrzan/blazorindocker</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1451.95" x2="1451.95" y1="154" y2="172"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1278.5" x2="1606.675" y1="172" y2="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="99.05" x="1283.5" y="184.889">imagePullPolicy</text>
+    <text fill="#000" font-size="14" textLength="44.45" x="1456.95" y="184.889">Always</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1451.95" x2="1451.95" y1="172" y2="190"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1278.5" x2="1606.675" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1283.5" y="202.889">name</text>
+    <text fill="#000" font-size="14" textLength="33.513" x="1456.95" y="202.889">nginx</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1451.95" x2="1451.95" y1="190" y2="208"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1278.5" x2="1606.675" y1="208" y2="208"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.063" x="1283.5" y="220.889">ports</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1456.95" y="220.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1451.95" x2="1451.95" y1="208" y2="226"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1278.5" x2="1606.675" y1="226" y2="226"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="61.425" x="1283.5" y="238.889">resources</text>
+    <text fill="#000" font-size="14" textLength="9.275" x="1456.95" y="238.889">{}</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1451.95" x2="1451.95" y1="226" y2="244"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1278.5" x2="1606.675" y1="244" y2="244"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="154.788" x="1283.5" y="256.889">terminationMessagePath</text>
+    <text fill="#000" font-size="14" textLength="122.85" x="1456.95" y="256.889">/dev/termination-log</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1451.95" x2="1451.95" y1="244" y2="262"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1278.5" x2="1606.675" y1="262" y2="262"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="163.45" x="1283.5" y="274.889">terminationMessagePolicy</text>
+    <text fill="#000" font-size="14" textLength="22.662" x="1456.95" y="274.889">File</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1451.95" x2="1451.95" y1="262" y2="280"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1278.5" x2="1606.675" y1="280" y2="280"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="91" x="1283.5" y="292.889">volumeMounts</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1456.95" y="292.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1451.95" x2="1451.95" y1="280" y2="298"/>
+    <rect fill="none" height="144" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="328.175" x="1278.5" y="154"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="2021.5" y="208"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2026.5" y="220.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="2021.5" y="208"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="131.3" x="2419" y="199"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="83.213" x="2424" y="211.889">containerPort</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="2517.213" y="211.889">80</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2512.213" x2="2512.213" y1="199" y2="217"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2419" x2="2550.3" y1="217" y2="217"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49.788" x="2424" y="229.889">protocol</text>
+    <text fill="#000" font-size="14" textLength="28.087" x="2517.213" y="229.889">TCP</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2512.213" x2="2512.213" y1="217" y2="235"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="131.3" x="2419" y="199"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="2021.5" y="280"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2026.5" y="292.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="2021.5" y="280"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="368.95" x="2300" y="262"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2305" y="274.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="281.312" x="2382.638" y="274.889">/var/run/secrets/kubernetes.io/serviceaccount</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2377.638" x2="2377.638" y1="262" y2="280"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2300" x2="2668.95" y1="280" y2="280"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2305" y="292.889">name</text>
+    <text fill="#000" font-size="14" textLength="123.638" x="2382.638" y="292.889">default-token-826vh</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2377.638" x2="2377.638" y1="280" y2="298"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2300" x2="2668.95" y1="298" y2="298"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2305" y="310.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="2382.638" y="310.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2377.638" x2="2377.638" y1="298" y2="316"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="368.95" x="2300" y="262"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="856.5" y="415"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="427.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="856.5" x2="866.5" y1="433" y2="433"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="445.889">   </text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="856.5" y="415"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="314" x="1285.5" y="316"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="34.125" x="1290.5" y="328.889">effect</text>
+    <text fill="#000" font-size="14" textLength="68.513" x="1412.588" y="328.889">NoExecute</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1407.588" x2="1407.588" y1="316" y2="334"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1285.5" x2="1599.5" y1="334" y2="334"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="1290.5" y="346.889">key</text>
+    <text fill="#000" font-size="14" textLength="181.913" x="1412.588" y="346.889">node.kubernetes.io/not-ready</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1407.588" x2="1407.588" y1="334" y2="352"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1285.5" x2="1599.5" y1="352" y2="352"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.062" x="1290.5" y="364.889">operator</text>
+    <text fill="#000" font-size="14" textLength="37.363" x="1412.588" y="364.889">Exists</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1407.588" x2="1407.588" y1="352" y2="370"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1285.5" x2="1599.5" y1="370" y2="370"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="112.088" x="1290.5" y="382.889">tolerationSeconds</text>
+    <text fill="#000" font-size="14" textLength="23.363" x="1412.588" y="382.889">300</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1407.588" x2="1407.588" y1="370" y2="388"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="314" x="1285.5" y="316"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="332.025" x="1276.5" y="406"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="34.125" x="1281.5" y="418.889">effect</text>
+    <text fill="#000" font-size="14" textLength="68.513" x="1403.588" y="418.889">NoExecute</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1398.588" x2="1398.588" y1="406" y2="424"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1276.5" x2="1608.525" y1="424" y2="424"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="1281.5" y="436.889">key</text>
+    <text fill="#000" font-size="14" textLength="199.938" x="1403.588" y="436.889">node.kubernetes.io/unreachable</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1398.588" x2="1398.588" y1="424" y2="442"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1276.5" x2="1608.525" y1="442" y2="442"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.062" x="1281.5" y="454.889">operator</text>
+    <text fill="#000" font-size="14" textLength="37.363" x="1403.588" y="454.889">Exists</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1398.588" x2="1398.588" y1="442" y2="460"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1276.5" x2="1608.525" y1="460" y2="460"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="112.088" x="1281.5" y="472.889">tolerationSeconds</text>
+    <text fill="#000" font-size="14" textLength="23.363" x="1403.588" y="472.889">300</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1398.588" x2="1398.588" y1="460" y2="478"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="332.025" x="1276.5" y="406"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="856.5" y="487"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="499.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="856.5" y="487"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="181.7" x="1351.5" y="496"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1356.5" y="508.889">name</text>
+    <text fill="#000" font-size="14" textLength="123.638" x="1404.563" y="508.889">default-token-826vh</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1399.563" x2="1399.563" y1="496" y2="514"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1351.5" x2="1533.2" y1="514" y2="514"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.063" x="1356.5" y="526.889">secret</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1404.563" y="526.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1399.563" x2="1399.563" y1="514" y2="532"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="181.7" x="1351.5" y="496"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="220.638" x="1916" y="505"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="77" x="1921" y="517.889">defaultMode</text>
+    <text fill="#000" font-size="14" textLength="23.363" x="2008" y="517.889">420</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2003" x2="2003" y1="505" y2="523"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1916" x2="2136.638" y1="523" y2="523"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="75.425" x="1921" y="535.889">secretName</text>
+    <text fill="#000" font-size="14" textLength="123.638" x="2008" y="535.889">default-token-826vh</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2003" x2="2003" y1="523" y2="541"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="220.638" x="1916" y="505"/>
+    <rect fill="#F1F1F1" height="126" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="275.15" x="300" y="809"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="63.087" x="305" y="821.889">conditions</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="427" y="821.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="422" x2="422" y1="809" y2="827"/>
+    <line style="stroke:#000;stroke-width:1;" x1="300" x2="575.15" y1="827" y2="827"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="112" x="305" y="839.889">containerStatuses</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="427" y="839.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="422" x2="422" y1="827" y2="845"/>
+    <line style="stroke:#000;stroke-width:1;" x1="300" x2="575.15" y1="845" y2="845"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="305" y="857.889">phase</text>
+    <text fill="#000" font-size="14" textLength="52.238" x="427" y="857.889">Running</text>
+    <line style="stroke:#000;stroke-width:1;" x1="422" x2="422" y1="845" y2="863"/>
+    <line style="stroke:#000;stroke-width:1;" x1="300" x2="575.15" y1="863" y2="863"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="36.575" x="305" y="875.889">podIP</text>
+    <text fill="#000" font-size="14" textLength="66.063" x="427" y="875.889">10.1.1.215</text>
+    <line style="stroke:#000;stroke-width:1;" x1="422" x2="422" y1="863" y2="881"/>
+    <line style="stroke:#000;stroke-width:1;" x1="300" x2="575.15" y1="881" y2="881"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="43.575" x="305" y="893.889">podIPs</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="427" y="893.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="422" x2="422" y1="881" y2="899"/>
+    <line style="stroke:#000;stroke-width:1;" x1="300" x2="575.15" y1="899" y2="899"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="57.663" x="305" y="911.889">qosClass</text>
+    <text fill="#000" font-size="14" textLength="61.338" x="427" y="911.889">BestEffort</text>
+    <line style="stroke:#000;stroke-width:1;" x1="422" x2="422" y1="899" y2="917"/>
+    <line style="stroke:#000;stroke-width:1;" x1="300" x2="575.15" y1="917" y2="917"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="58.275" x="305" y="929.889">startTime</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="427" y="929.889">2020-12-25T00:26:06Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="422" x2="422" y1="917" y2="935"/>
+    <rect fill="none" height="126" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="275.15" x="300" y="809"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="856.5" y="721"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="733.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="856.5" x2="866.5" y1="739" y2="739"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="751.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="856.5" x2="866.5" y1="757" y2="757"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="769.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="856.5" x2="866.5" y1="775" y2="775"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="787.889">   </text>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="856.5" y="721"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="277.6" x="1303.5" y="550"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="90.3" x="1308.5" y="562.889">lastProbeTime</text>
+    <text fill="#000" font-size="14" textLength="21.875" x="1432.95" y="562.889">null</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="550" y2="568"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="568" y2="568"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="114.45" x="1308.5" y="580.889">lastTransitionTime</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="1432.95" y="580.889">2020-12-25T00:26:06Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="568" y2="586"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="586" y2="586"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.275" x="1308.5" y="598.889">status</text>
+    <text fill="#000" font-size="14" textLength="28.787" x="1432.95" y="598.889">True</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="586" y2="604"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="604" y2="604"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="1308.5" y="616.889">type</text>
+    <text fill="#000" font-size="14" textLength="58.45" x="1432.95" y="616.889">Initialized</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="604" y2="622"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="277.6" x="1303.5" y="550"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="277.6" x="1303.5" y="640"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="90.3" x="1308.5" y="652.889">lastProbeTime</text>
+    <text fill="#000" font-size="14" textLength="21.875" x="1432.95" y="652.889">null</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="640" y2="658"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="658" y2="658"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="114.45" x="1308.5" y="670.889">lastTransitionTime</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="1432.95" y="670.889">2021-01-02T12:26:24Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="658" y2="676"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="676" y2="676"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.275" x="1308.5" y="688.889">status</text>
+    <text fill="#000" font-size="14" textLength="28.787" x="1432.95" y="688.889">True</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="676" y2="694"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="694" y2="694"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="1308.5" y="706.889">type</text>
+    <text fill="#000" font-size="14" textLength="40.512" x="1432.95" y="706.889">Ready</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="694" y2="712"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="277.6" x="1303.5" y="640"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="277.6" x="1303.5" y="730"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="90.3" x="1308.5" y="742.889">lastProbeTime</text>
+    <text fill="#000" font-size="14" textLength="21.875" x="1432.95" y="742.889">null</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="730" y2="748"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="748" y2="748"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="114.45" x="1308.5" y="760.889">lastTransitionTime</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="1432.95" y="760.889">2021-01-02T12:26:24Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="748" y2="766"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="766" y2="766"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.275" x="1308.5" y="778.889">status</text>
+    <text fill="#000" font-size="14" textLength="28.787" x="1432.95" y="778.889">True</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="766" y2="784"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="784" y2="784"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="1308.5" y="796.889">type</text>
+    <text fill="#000" font-size="14" textLength="108.238" x="1432.95" y="796.889">ContainersReady</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="784" y2="802"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="277.6" x="1303.5" y="730"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="277.6" x="1303.5" y="820"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="90.3" x="1308.5" y="832.889">lastProbeTime</text>
+    <text fill="#000" font-size="14" textLength="21.875" x="1432.95" y="832.889">null</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="820" y2="838"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="838" y2="838"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="114.45" x="1308.5" y="850.889">lastTransitionTime</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="1432.95" y="850.889">2020-12-25T00:26:06Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="838" y2="856"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="856" y2="856"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.275" x="1308.5" y="868.889">status</text>
+    <text fill="#000" font-size="14" textLength="28.787" x="1432.95" y="868.889">True</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="856" y2="874"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1303.5" x2="1581.1" y1="874" y2="874"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="1308.5" y="886.889">type</text>
+    <text fill="#000" font-size="14" textLength="91.175" x="1432.95" y="886.889">PodScheduled</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1427.95" x2="1427.95" y1="874" y2="892"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="277.6" x="1303.5" y="820"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="856.5" y="896"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="908.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="856.5" y="896"/>
+    <rect fill="#F1F1F1" height="162" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="872.862" x="1006" y="910"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="71.575" x="1011" y="922.889">containerID</text>
+    <text fill="#000" font-size="14" textLength="538.562" x="1097.913" y="922.889">docker://7a968933232bc39d4d10d5106976ee720e57971df50da9b71ab9403f196261fc</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1092.913" x2="1092.913" y1="910" y2="928"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1878.862" y1="928" y2="928"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="1011" y="940.889">image</text>
+    <text fill="#000" font-size="14" textLength="182" x="1097.913" y="940.889">piotrzan/blazorindocker:latest</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1092.913" x2="1092.913" y1="928" y2="946"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1878.862" y1="946" y2="946"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.15" x="1011" y="958.889">imageID</text>
+    <text fill="#000" font-size="14" textLength="775.95" x="1097.913" y="958.889">docker-pullable://piotrzan/blazorindocker@sha256:d1f1174d0fddd9d490ff1615a699bb47f38cf05f4ef1d217a5c31f1711772e9c</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1092.913" x2="1092.913" y1="946" y2="964"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1878.862" y1="964" y2="964"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="54.425" x="1011" y="976.889">lastState</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1097.913" y="976.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1092.913" x2="1092.913" y1="964" y2="982"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1878.862" y1="982" y2="982"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1011" y="994.889">name</text>
+    <text fill="#000" font-size="14" textLength="33.513" x="1097.913" y="994.889">nginx</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1092.913" x2="1092.913" y1="982" y2="1000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1878.862" y1="1000" y2="1000"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1011" y="1012.889">ready</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="1097.913" y="1012.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1092.913" x2="1092.913" y1="1000" y2="1018"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1878.862" y1="1018" y2="1018"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="76.913" x="1011" y="1030.889">restartCount</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="1097.913" y="1030.889">11</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1092.913" x2="1092.913" y1="1018" y2="1036"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1878.862" y1="1036" y2="1036"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42.7" x="1011" y="1048.889">started</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="1097.913" y="1048.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1092.913" x2="1092.913" y1="1036" y2="1054"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1878.862" y1="1054" y2="1054"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.275" x="1011" y="1066.889">state</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1097.913" y="1066.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1092.913" x2="1092.913" y1="1054" y2="1072"/>
+    <rect fill="none" height="162" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="872.862" x="1006" y="910"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="86.063" x="1983.5" y="964"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="1988.5" y="976.889">terminated</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="2064.563" y="976.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2059.563" x2="2059.563" y1="964" y2="982"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="86.063" x="1983.5" y="964"/>
+    <rect fill="#F1F1F1" height="90" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="620.687" x="2174" y="928"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="71.575" x="2179" y="940.889">containerID</text>
+    <text fill="#000" font-size="14" textLength="529.112" x="2260.575" y="940.889">docker://4c8e0a7ccd42ba13b695b3412b9399a91d61fdfbf4659bf3909ea6192c15f0b7</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2255.575" x2="2255.575" y1="928" y2="946"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2174" x2="2794.687" y1="946" y2="946"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="55.3" x="2179" y="958.889">exitCode</text>
+    <text fill="#000" font-size="14" textLength="23.363" x="2260.575" y="958.889">255</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2255.575" x2="2255.575" y1="946" y2="964"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2174" x2="2794.687" y1="964" y2="964"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="61.512" x="2179" y="976.889">finishedAt</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="2260.575" y="976.889">2021-01-02T12:26:12Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2255.575" x2="2255.575" y1="964" y2="982"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2174" x2="2794.687" y1="982" y2="982"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42.788" x="2179" y="994.889">reason</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="2260.575" y="994.889">Error</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2255.575" x2="2255.575" y1="982" y2="1000"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2174" x2="2794.687" y1="1000" y2="1000"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="55.913" x="2179" y="1012.889">startedAt</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="2260.575" y="1012.889">2021-01-02T00:19:04Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2255.575" x2="2255.575" y1="1000" y2="1018"/>
+    <rect fill="none" height="90" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="620.687" x="2174" y="928"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="66.725" x="1993" y="1054"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="46.725" x="1998" y="1066.889">running</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="2054.725" y="1066.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2049.725" x2="2049.725" y1="1054" y2="1072"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="66.725" x="1993" y="1054"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="219.063" x="2375" y="1054"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="55.913" x="2380" y="1066.889">startedAt</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="2445.913" y="1066.889">2021-01-02T12:26:23Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2440.913" x2="2440.913" y1="1054" y2="1072"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="219.063" x="2375" y="1054"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="856.5" y="941"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="953.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="856.5" y="941"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="97" x="1394" y="1090"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="10.938" x="1399" y="1102.889">ip</text>
+    <text fill="#000" font-size="14" textLength="66.063" x="1419.938" y="1102.889">10.1.1.215</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1414.938" x2="1414.938" y1="1090" y2="1108"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="97" x="1394" y="1090"/>
+    <path d="M705,55 L718,55 C727.305,55 736.951,55 746.638,55" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M746.638,58.109 L748.969,55 L746.638,51.891 L754.41,55 L746.638,58.109" fill="#000"/>
+    <ellipse cx="705" cy="55" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M854.024,105.316 L867.014,104.801 C899.515,103.512 1083.75,96.206 1235.049,90.207" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1235.17,93.26 L1237.339,90.116 L1234.928,87.153 L1242.682,89.904 L1235.17,93.26" fill="#000"/>
+    <ellipse cx="854.024" cy="105.316" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M705,109 L718,109 C766.45,109 824.097,106.677 848.791,105.572" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M848.933,108.677 L851.119,105.465 L848.648,102.467 L856.553,105.215 L848.933,108.677" fill="#000"/>
+    <ellipse cx="705" cy="109" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M109,325 L122,325 C176.406,325 121.471,248.32 158,208 C168.456,196.459 180.232,186.023 192.882,176.589" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M194.702,179.1 L194.765,175.223 L191.061,174.077 L199.16,172.038 L194.702,179.1" fill="#000"/>
+    <ellipse cx="109" cy="325" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2019.132,217 L2032.132,217 C2068.835,217 2293.351,217 2411.476,217" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2411.476,220.049 L2413.763,217 L2411.476,213.951 L2419.099,217 L2411.476,220.049" fill="#000"/>
+    <ellipse cx="2019.132" cy="217" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1594,217 L1607,217 C1768.279,217 1964.478,217 2014.143,217" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2014.143,220.091 L2016.461,217 L2014.143,213.909 L2021.871,217 L2014.143,220.091" fill="#000"/>
+    <ellipse cx="1594" cy="217" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2019.132,289 L2032.132,289 C2058.47,289 2181.517,289 2292.565,289" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2292.565,292.054 L2294.855,289 L2292.565,285.946 L2300.199,289 L2292.565,292.054" fill="#000"/>
+    <ellipse cx="2019.132" cy="289" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1594,289 L1607,289 C1768.279,289 1964.478,289 2014.143,289" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2014.143,292.091 L2016.461,289 L2014.143,285.909 L2021.871,289 L2014.143,292.091" fill="#000"/>
+    <ellipse cx="1594" cy="289" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M854.014,226 L867.014,226 C902.129,226 1114.357,226 1270.808,226" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1270.808,229.15 L1273.171,226 L1270.808,222.85 L1278.683,226 L1270.808,229.15" fill="#000"/>
+    <ellipse cx="854.014" cy="226" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M604,226 L617,226 C706.438,226 814.317,226 849.384,226" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M849.384,229.037 L851.662,226 L849.384,222.963 L856.976,226 L849.384,229.037" fill="#000"/>
+    <ellipse cx="604" cy="226" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M855,424 L868,424 C930.496,424 944.187,406.218 1006,397 C1095.591,383.64 1196.132,372.975 1278.07,365.387" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1278.36,368.536 L1280.431,365.17 L1277.78,362.239 L1285.94,364.663 L1278.36,368.536" fill="#000"/>
+    <ellipse cx="855" cy="424" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M855,442 L868,442 C1002.676,442 1155.125,442 1269.05,442" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1269.05,445.117 L1271.388,442 L1269.05,438.883 L1276.841,442 L1269.05,445.117" fill="#000"/>
+    <ellipse cx="855" cy="442" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M604,442 L617,442 C706.499,442 814.338,435.878 849.39,433.732" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M849.579,436.768 L851.666,433.591 L849.201,430.697 L856.978,433.26 L849.579,436.768" fill="#000"/>
+    <ellipse cx="604" cy="442" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1522,523 L1535,523 C1662.733,523 1809.159,523 1908.63,523" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1908.63,526.071 L1910.933,523 L1908.63,519.929 L1916.307,523 L1908.63,526.071" fill="#000"/>
+    <ellipse cx="1522" cy="523" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M854.02,495.752 L867.014,496.156 C908.063,497.43 1191.145,506.215 1344.223,510.966" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1344.128,514.021 L1346.515,511.037 L1344.317,507.91 L1351.862,511.203 L1344.128,514.021" fill="#000"/>
+    <ellipse cx="854.02" cy="495.752" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M604,460 L617,460 C707.013,460 813.724,484.274 849.015,492.957" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M848.245,496.032 L851.321,493.535 L849.785,489.882 L856.702,494.883 L848.245,496.032" fill="#000"/>
+    <ellipse cx="604" cy="460" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M109,343 L122,343 C163.917,343 208.971,343 251.527,343" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M251.527,346.055 L253.818,343 L251.527,339.945 L259.164,343 L251.527,346.055" fill="#000"/>
+    <ellipse cx="109" cy="343" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M855,730 L868,730 C943.484,730 935.424,657.773 1006,631 C1098.467,595.923 1209.417,584.863 1296.253,582.475" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1296.328,585.487 L1298.512,582.419 L1296.178,579.463 L1303.783,582.288 L1296.328,585.487" fill="#000"/>
+    <ellipse cx="855" cy="730" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M855,748 L868,748 C930.496,748 944.187,730.218 1006,721 C1102.256,706.646 1211.151,695.403 1296.035,687.745" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1296.308,690.793 L1298.321,687.54 L1295.762,684.698 L1303.654,687.062 L1296.308,690.793" fill="#000"/>
+    <ellipse cx="855" cy="748" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M855,766 L868,766 C1013.78,766 1180.386,766 1296.414,766" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1296.414,769.027 L1298.684,766 L1296.414,762.973 L1303.982,766 L1296.414,769.027" fill="#000"/>
+    <ellipse cx="855" cy="766" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M855,784 L868,784 C930.496,784 944.187,801.782 1006,811 C1102.256,825.354 1211.151,836.597 1296.035,844.255" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1295.762,847.302 L1298.321,844.46 L1296.308,841.207 L1303.654,844.938 L1295.762,847.302" fill="#000"/>
+    <ellipse cx="855" cy="784" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M563,818 L576,818 C684.667,818 811.582,775.071 849.654,761.239" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M850.697,764.066 L851.774,760.457 L848.611,758.413 L856.721,758.632 L850.697,764.066" fill="#000"/>
+    <ellipse cx="563" cy="818" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2057,973 L2070,973 C2101.274,973 2133.877,973 2166.454,973" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2166.454,976.133 L2168.804,973 L2166.454,969.867 L2174.287,973 L2166.454,976.133" fill="#000"/>
+    <ellipse cx="2057" cy="973" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1867,973 L1880,973 C1911.973,973 1947.885,973 1976.091,973" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1976.091,976.097 L1978.414,973 L1976.091,969.903 L1983.833,973 L1976.091,976.097" fill="#000"/>
+    <ellipse cx="1867" cy="973" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2048,1063 L2061,1063 C2164.721,1063 2282.748,1063 2367.725,1063" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2367.725,1066.041 L2370.006,1063 L2367.725,1059.959 L2375.327,1063 L2367.725,1066.041" fill="#000"/>
+    <ellipse cx="2048" cy="1063" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1867,1063 L1880,1063 C1915.716,1063 1956.347,1063 1985.662,1063" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1985.662,1066.03 L1987.935,1063 L1985.662,1059.97 L1993.238,1063 L1985.662,1066.03" fill="#000"/>
+    <ellipse cx="1867" cy="1063" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M854.155,903.837 L867.014,905.743 C882.659,908.063 933.464,915.596 998.83,925.289" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M998.378,928.337 L1001.116,925.628 L999.282,922.24 L1006.451,926.419 L998.378,928.337" fill="#000"/>
+    <ellipse cx="854.155" cy="903.837" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M563,836 L576,836 C685.33,836 811.795,884.559 849.705,900.205" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M848.525,903.019 L851.816,901.09 L850.885,897.39 L856.741,903.154 L848.525,903.019" fill="#000"/>
+    <ellipse cx="563" cy="836" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M859.66,946.932 L867.187,957.531 C883.942,981.124 939.41,1053.65 1006,1081 C1134.058,1133.595 1301.45,1120.276 1386.774,1108.345" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1387.203,1111.344 L1389.023,1108.022 L1386.344,1105.345 L1394.271,1107.27 L1387.203,1111.344" fill="#000"/>
+    <ellipse cx="859.66" cy="946.932" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M563,890 L576,890 C604.143,890 798.884,935.378 849.171,947.208" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M848.471,950.179 L851.4,947.733 L849.872,944.236 L856.6,948.959 L848.471,950.179" fill="#000"/>
+    <ellipse cx="563" cy="890" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M109,361 L122,361 C176.406,361 133.977,429.185 158,478 C218.506,600.95 315.521,727.554 377.736,803" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M375.419,804.916 L379.173,804.737 L380.052,801.084 L382.526,808.791 L375.419,804.916" fill="#000"/>
+    <ellipse cx="109" cy="361" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

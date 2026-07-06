@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="74px" preserveAspectRatio="none" style="width:197px;height:74px;background:#FFFFFF;" version="1.1" viewBox="0 0 197 74" width="197px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity test15-->
+    <g class="entity" data-qualified-name="test15" data-source-line="1" id="ent0001">
+      <ellipse cx="93.331" cy="34.799" fill="#CCC" rx="87.331" ry="22.799" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.063" x="74.3" y="29.688">test 15</text>
+      <text fill="#000" font-size="14" textLength="105.263" x="40.7" y="43.688">multiline with alias</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="173.702" x2="148.88" y1="26.851" y2="51.673"/>
+    </g>
+  </g>
+</svg>

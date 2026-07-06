@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="99px" preserveAspectRatio="none" style="width:216px;height:99px;background:#FFFFFF;" version="1.1" viewBox="0 0 216 99" width="216px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Outer-->
+    <g class="cluster" data-qualified-name="Outer" data-source-line="32" id="ent0001">
+      <rect fill="#FFF" height="71" rx="2.5" ry="2.5" style="stroke:#D3D3D3;stroke-width:1;" width="194" x="14" y="4"/>
+      <text fill="#2F4F4F" font-family="'Roboto'" font-size="16" font-weight="700" textLength="39.9" x="91.05" y="18.444">Outer</text>
+    </g>
+    <!--entity MyCard-->
+    <g class="entity" data-qualified-name="Outer.MyCard" data-source-line="33" id="ent0002">
+      <rect fill="#D3D3D3" height="22" rx="2.5" ry="2.5" style="stroke:#D3D3D3;stroke-width:0.5;" width="76" x="124" y="37"/>
+      <text fill="#2F4F4F" font-family="'Inconsolata'" font-size="16" textLength="56" x="134" y="52.444">MyCard</text>
+    </g>
+    <!--entity c10-->
+    <g class="entity" data-qualified-name="Outer.c10" data-source-line="34" id="ent0003">
+      <rect fill="#E9F4F7" height="36" rx="25" ry="25" style="stroke:#E9F4F7;stroke-width:0.5;" width="83.1" x="22.5" y="31"/>
+      <text fill="#383F42" font-family="'Inconsolata'" font-size="16" textLength="63.1" x="32.5" y="53.444">MyAgent</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#383F42" points="123.752,49,114.752,45,118.752,49,114.752,53,123.752,49" style="stroke:#383F42;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M105.727,49 C111.735,49 112.743,49 118.752,49" fill="none" style="stroke:#383F42;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

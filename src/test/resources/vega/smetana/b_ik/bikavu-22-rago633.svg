@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="59px" preserveAspectRatio="none" style="width:141px;height:59px;background:#FFFFFF;" version="1.1" viewBox="0 0 141 59" width="141px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="8">
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.238" x="10" y="22.889">Field1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.238" x="48.238" y="22.889">Field 2</text>
+      <text fill="#000" font-size="14" font-weight="700" x="86.475" y="22.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" x="86.475" y="36.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="86.475" y="22.889">row 1</text>
+      <text fill="#000" font-size="14" font-weight="700" x="116.838" y="22.889">2</text>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="124.625" y1="12" y2="12"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="124.625" y1="40" y2="40"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="10" y1="12" y2="40"/>
+      <line style="stroke:#000;stroke-width:1;" x1="48.238" x2="48.238" y1="12" y2="40"/>
+      <line style="stroke:#000;stroke-width:1;" x1="86.475" x2="86.475" y1="12" y2="40"/>
+      <line style="stroke:#000;stroke-width:1;" x1="86.475" x2="86.475" y1="12" y2="40"/>
+      <line style="stroke:#000;stroke-width:1;" x1="116.838" x2="116.838" y1="12" y2="40"/>
+      <line style="stroke:#000;stroke-width:1;" x1="124.625" x2="124.625" y1="12" y2="40"/>
+    </g>
+  </g>
+</svg>

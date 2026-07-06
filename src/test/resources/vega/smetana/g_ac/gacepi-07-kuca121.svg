@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="132px" preserveAspectRatio="none" style="width:71px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 71 132" width="71px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0001">
+      <ellipse cx="30.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="49.4" x="6" y="72"/>
+    <text fill="#000" font-size="12" textLength="27.375" x="16" y="91.333">this is</text>
+    <text fill="#000" font-size="12" textLength="29.4" x="16" y="103.333">a long</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="30.5,71.857,34.5,62.857,30.5,66.857,26.5,62.857,30.5,71.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M30.5,36.229 C30.5,45.886 30.5,55.079 30.5,66.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="166px" preserveAspectRatio="none" style="width:191px;height:166px;background:#FFFFFF;" version="1.1" viewBox="0 0 191 166" width="191px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="126" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="102.163" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" x="15" y="22.889">a</text>
+    <text fill="#000" font-size="14" textLength="36.138" x="65.513" y="22.889">☑ true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="60.513" x2="60.513" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="112.163" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="15" y="40.889">desc</text>
+    <text fill="#000" font-size="14" x="65.513" y="40.889">a</text>
+    <line style="stroke:#000;stroke-width:1;" x1="60.513" x2="60.513" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="112.163" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="15" y="58.889">addP</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="65.513" y="58.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="60.513" x2="60.513" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="112.163" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.513" x="15" y="76.889">addP1</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="65.513" y="76.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="60.513" x2="60.513" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="112.163" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.513" x="15" y="94.889">addP2</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="65.513" y="94.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="60.513" x2="60.513" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="112.163" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.513" x="15" y="112.889">addP3</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="65.513" y="112.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="60.513" x2="60.513" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="112.163" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="28.787" x="15" y="130.889">allOf</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="65.513" y="130.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="60.513" x2="60.513" y1="118" y2="136"/>
+    <rect fill="none" height="126" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="102.163" x="10" y="10"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="30.825" x="149" y="100"/>
+    <text fill="#000" font-size="14" textLength="20.825" x="154" y="112.889">{ ... }</text>
+    <line style="stroke:#000;stroke-width:1;" x1="149" x2="179.825" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" textLength="20.825" x="154" y="130.889">{ ... }</text>
+    <line style="stroke:#000;stroke-width:1;" x1="149" x2="179.825" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" textLength="20.825" x="154" y="148.889">{ ... }</text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="30.825" x="149" y="100"/>
+    <path d="M99.5,127 L112.5,127 C122.043,127 132.581,127 141.625,127" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M141.625,130 L143.875,127 L141.625,124 L149.126,127 L141.625,130" fill="#000"/>
+    <ellipse cx="99.5" cy="127" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

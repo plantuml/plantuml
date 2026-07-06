@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="118px" preserveAspectRatio="none" style="width:141px;height:118px;background:#FFFFFF;" version="1.1" viewBox="0 0 141 118" width="141px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="119.363" x="6" y="12"/>
+      <ellipse cx="56.75" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="51.75" y="33">C</text>
+      <text fill="#000" font-size="14" x="77.25" y="31.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="124.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="124.363" y1="52" y2="52"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="64.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="18.638" x="26" y="66.889">B()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="78.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="26.863" x="26" y="80.889">~B()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="92.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="93.363" x="26" y="94.889">B(in a : const B&amp;)</text>
+    </g>
+  </g>
+</svg>

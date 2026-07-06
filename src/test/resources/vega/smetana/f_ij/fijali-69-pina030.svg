@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="388px" preserveAspectRatio="none" style="width:555px;height:388px;background:#FFFFFF;" version="1.1" viewBox="0 0 555 388" width="555px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class GenericServlet-->
+    <g class="entity" data-qualified-name="GenericServlet" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="248" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="315.363" x="6" y="124"/>
+      <ellipse cx="113.144" cy="140" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="108.144" y="145">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="92.575" x="133.644" y="143.889">GenericServlet</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="320.363" y1="156" y2="156"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="186.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.85" x="26" y="188.889">void destroy()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="200.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="196.875" x="26" y="202.889">ServletConfig getServletConfig()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="214.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="132.125" x="26" y="216.889">String getServletInfo()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="228.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="137.025" x="26" y="230.889">void init(ServletConfig)</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="115.075" y1="171" y2="171"/>
+      <text fill="#000" font-size="14" textLength="97.213" x="115.075" y="174.389">interface Servlet</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="212.288" x2="320.363" y1="171" y2="171"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="260.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="185.763" x="26" y="262.889">String getInitParameter(String)</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="274.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="289.363" x="26" y="276.889">Enumeration&lt;String&gt; getInitParameterNames()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="288.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="212.275" x="26" y="290.889">ServletContext getServletContext()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="302.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="146.213" x="26" y="304.889">String getServletName()</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="94.819" y1="245" y2="245"/>
+      <text fill="#000" font-size="14" textLength="137.725" x="94.819" y="248.389">interface ServletConfig</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="232.544" x2="320.363" y1="245" y2="245"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="334.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.937" x="26" y="336.889">void init()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="348.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="90.3" x="26" y="350.889">void log(String)</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="362.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="159.6" x="26" y="364.889">void log(String,Throwable)</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="105.319" y1="319" y2="319"/>
+      <text fill="#000" font-size="14" textLength="116.725" x="105.319" y="322.389">methodes utilitaires</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="222.044" x2="320.363" y1="319" y2="319"/>
+    </g>
+    <!--class Servlet-->
+    <g class="entity" data-qualified-name="Servlet" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.575" x="125.5" y="26"/>
+      <ellipse cx="140.5" cy="42" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="135.5" y="47">C</text>
+      <text fill="#000" font-size="14" textLength="43.575" x="154.5" y="45.889">Servlet</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="126.5" x2="200.075" y1="58" y2="58"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="126.5" x2="200.075" y1="66" y2="66"/>
+    </g>
+    <!--class Object-->
+    <g class="entity" data-qualified-name="Object" data-source-line="19" id="ent0004">
+      <a href="http://www.yahoo.com" target="_top" title="http://www.yahoo.com" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com" xlink:show="new" xlink:title="http://www.yahoo.com" xlink:type="simple">
+        <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.425" x="351.5" y="26"/>
+        <ellipse cx="366.5" cy="42" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="361.5" y="47">C</text>
+        <text fill="#000" font-size="14" textLength="40.425" x="380.5" y="45.889">Object</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="352.5" x2="422.925" y1="58" y2="58"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="352.5" x2="422.925" y1="66" y2="66"/>
+      </a>
+    </g>
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="19" id="ent0005">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.7" x="339" y="210"/>
+        <ellipse cx="372.248" cy="226" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="367.248" y="231">C</text>
+        <text fill="#000" font-size="14" textLength="24.15" x="390.303" y="229.889">Foo</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="340" x2="434.7" y1="242" y2="242"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="340" x2="434.7" y1="250" y2="250"/>
+      </a>
+      <a href="http://www.yahoo.com/A1" target="_top" title="Some explainations about this method" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A1" xlink:show="new" xlink:title="Some explainations about this method" xlink:type="simple">
+        <rect fill="#F1F1F1" height="10" style="stroke:none;" width="20" x="345" y="257.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www.yahoo.com/A1" target="_top" title="Some explainations about this method" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A1" xlink:show="new" xlink:title="Some explainations about this method" xlink:type="simple">
+          <ellipse cx="350" cy="262.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www.yahoo.com/A1" target="_top" title="Some explainations about this method" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A1" xlink:show="new" xlink:title="Some explainations about this method" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="70.7" x="359" y="264.889">methods1()</text>
+      </a>
+      <a href="http://www.yahoo.com/A2" target="_top" title="http://www.yahoo.com/A2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A2" xlink:show="new" xlink:title="http://www.yahoo.com/A2" xlink:type="simple">
+        <rect fill="#F1F1F1" height="10" style="stroke:none;" width="20" x="345" y="271.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www.yahoo.com/A2" target="_top" title="http://www.yahoo.com/A2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A2" xlink:show="new" xlink:title="http://www.yahoo.com/A2" xlink:type="simple">
+          <ellipse cx="350" cy="276.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www.yahoo.com/A2" target="_top" title="http://www.yahoo.com/A2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A2" xlink:show="new" xlink:title="http://www.yahoo.com/A2" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="70.7" x="359" y="278.889">methods2()</text>
+      </a>
+    </g>
+    <!--class Foo2-->
+    <g class="entity" data-qualified-name="Foo2" data-source-line="25" id="ent0007">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.7" x="442" y="12"/>
+      <ellipse cx="471.743" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="466.743" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="489.019" y="31.889">Foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="443" x2="537.7" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="443" x2="537.7" y1="52" y2="52"/>
+      <a href="http://www.yahoo.com/B1" target="_top" title="http://www.yahoo.com/B1" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B1" xlink:show="new" xlink:title="http://www.yahoo.com/B1" xlink:type="simple">
+        <rect fill="#F1F1F1" height="10" style="stroke:none;" width="20" x="448" y="59.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www.yahoo.com/B1" target="_top" title="http://www.yahoo.com/B1" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B1" xlink:show="new" xlink:title="http://www.yahoo.com/B1" xlink:type="simple">
+          <ellipse cx="453" cy="64.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www.yahoo.com/B1" target="_top" title="http://www.yahoo.com/B1" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B1" xlink:show="new" xlink:title="http://www.yahoo.com/B1" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="70.7" x="462" y="66.889">methods1()</text>
+      </a>
+      <a href="http://www.yahoo.com/B2" target="_top" title="http://www.yahoo.com/B2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B2" xlink:show="new" xlink:title="http://www.yahoo.com/B2" xlink:type="simple">
+        <rect fill="#F1F1F1" height="10" style="stroke:none;" width="20" x="448" y="73.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www.yahoo.com/B2" target="_top" title="http://www.yahoo.com/B2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B2" xlink:show="new" xlink:title="http://www.yahoo.com/B2" xlink:type="simple">
+          <ellipse cx="453" cy="78.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www.yahoo.com/B2" target="_top" title="http://www.yahoo.com/B2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B2" xlink:show="new" xlink:title="http://www.yahoo.com/B2" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="70.7" x="462" y="80.889">methods2()</text>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="163.5,74.253,157.5,92.253,169.5,92.253,163.5,74.253" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M163.5,92.253 C163.5,105.334 163.5,104.79 163.5,123.585" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="extension" id="lnk6">
+      <polygon fill="none" points="387.5,74.253,381.5,92.253,393.5,92.253,387.5,74.253" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M387.5,92.253 C387.5,125.716 387.5,169.806 387.5,209.719" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="146px" preserveAspectRatio="none" style="width:161px;height:146px;background:#FFFFFF;" version="1.1" viewBox="0 0 161 146" width="161px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity rect1-->
+    <g class="entity" data-qualified-name="rect1" data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="12.5" ry="12.5" style="stroke:#008000;stroke-width:0.5;stroke-dasharray:7,7;" width="139.425" x="6" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="117.425" x="17" y="32.889">«Software System»</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="60.181" y="46.889">rect1</text>
+    </g>
+    <!--entity rect2-->
+    <g class="entity" data-qualified-name="rect2" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:0.5;stroke-dasharray:1,1;" width="51.063" x="50" y="96"/>
+      <text fill="#000" font-size="14" textLength="31.063" x="60" y="116.889">rect2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="75.5,95.827,79.5,86.827,75.5,90.827,71.5,86.827,75.5,95.827" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M75.5,60.319 C75.5,71.844 75.5,80.463 75.5,90.827" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

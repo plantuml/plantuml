@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="335px" preserveAspectRatio="none" style="width:196px;height:335px;background:#FFFFFF;" version="1.1" viewBox="0 0 196 335" width="196px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.275" x="82.863" y="20.889">toto</text>
+    </g>
+    <!--class Object-->
+    <g class="entity" data-qualified-name="Object" data-source-line="2" id="ent0001">
+      <a href="http://www.fr" target="_top" title="http://www.fr" xlink:actuate="onRequest" xlink:href="http://www.fr" xlink:show="new" xlink:title="http://www.fr" xlink:type="simple">
+        <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.425" x="56.5" y="47"/>
+        <ellipse cx="71.5" cy="63" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="66.5" y="68">C</text>
+        <text fill="#000" font-size="14" textLength="40.425" x="85.5" y="66.889">Object</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="57.5" x2="127.925" y1="79" y2="79"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="57.5" x2="127.925" y1="87" y2="87"/>
+      </a>
+    </g>
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="2" id="ent0002">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.7" x="6" y="131"/>
+        <ellipse cx="39.248" cy="147" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="34.248" y="152">C</text>
+        <text fill="#000" font-size="14" textLength="24.15" x="57.303" y="150.889">Foo</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="101.7" y1="163" y2="163"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="101.7" y1="171" y2="171"/>
+      </a>
+      <a href="http://www.yahoo.com/A1" target="_top" title="Some explainations about this method" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A1" xlink:show="new" xlink:title="Some explainations about this method" xlink:type="simple">
+        <rect fill="#F1F1F1" height="10" style="stroke:none;" width="20" x="12" y="178.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www.yahoo.com/A1" target="_top" title="Some explainations about this method" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A1" xlink:show="new" xlink:title="Some explainations about this method" xlink:type="simple">
+          <ellipse cx="17" cy="183.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www.yahoo.com/A1" target="_top" title="Some explainations about this method" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A1" xlink:show="new" xlink:title="Some explainations about this method" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="70.7" x="26" y="185.889">methods1()</text>
+      </a>
+      <a href="http://www.yahoo.com/A2" target="_top" title="http://www.yahoo.com/A2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A2" xlink:show="new" xlink:title="http://www.yahoo.com/A2" xlink:type="simple">
+        <rect fill="#F1F1F1" height="10" style="stroke:none;" width="20" x="12" y="192.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www.yahoo.com/A2" target="_top" title="http://www.yahoo.com/A2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A2" xlink:show="new" xlink:title="http://www.yahoo.com/A2" xlink:type="simple">
+          <ellipse cx="17" cy="197.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www.yahoo.com/A2" target="_top" title="http://www.yahoo.com/A2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/A2" xlink:show="new" xlink:title="http://www.yahoo.com/A2" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="70.7" x="26" y="199.889">methods2()</text>
+      </a>
+    </g>
+    <!--class Foo2-->
+    <g class="entity" data-qualified-name="Foo2" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.7" x="83" y="243"/>
+      <ellipse cx="112.743" cy="259" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="107.743" y="264">C</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="130.019" y="262.889">Foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="84" x2="178.7" y1="275" y2="275"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="84" x2="178.7" y1="283" y2="283"/>
+      <a href="http://www.yahoo.com/B1" target="_top" title="http://www.yahoo.com/B1" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B1" xlink:show="new" xlink:title="http://www.yahoo.com/B1" xlink:type="simple">
+        <rect fill="#F1F1F1" height="10" style="stroke:none;" width="20" x="89" y="290.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www.yahoo.com/B1" target="_top" title="http://www.yahoo.com/B1" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B1" xlink:show="new" xlink:title="http://www.yahoo.com/B1" xlink:type="simple">
+          <ellipse cx="94" cy="295.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www.yahoo.com/B1" target="_top" title="http://www.yahoo.com/B1" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B1" xlink:show="new" xlink:title="http://www.yahoo.com/B1" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="70.7" x="103" y="297.889">methods1()</text>
+      </a>
+      <a href="http://www.yahoo.com/B2" target="_top" title="http://www.yahoo.com/B2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B2" xlink:show="new" xlink:title="http://www.yahoo.com/B2" xlink:type="simple">
+        <rect fill="#F1F1F1" height="10" style="stroke:none;" width="20" x="89" y="304.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www.yahoo.com/B2" target="_top" title="http://www.yahoo.com/B2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B2" xlink:show="new" xlink:title="http://www.yahoo.com/B2" xlink:type="simple">
+          <ellipse cx="94" cy="309.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www.yahoo.com/B2" target="_top" title="http://www.yahoo.com/B2" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/B2" xlink:show="new" xlink:title="http://www.yahoo.com/B2" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="70.7" x="103" y="311.889">methods2()</text>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="83.301,95.239,71.098,109.767,82.255,114.184,83.301,95.239" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M76.676,111.975 C72.459,122.63 73.979,118.789 69.246,130.746" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="101.575,95.231,102.052,114.199,113.337,110.119,101.575,95.231" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.695,112.159 C111.578,122.9 109.727,118.986 112.5,131 C121.18,168.606 126.174,212.53 128.843,242.898" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

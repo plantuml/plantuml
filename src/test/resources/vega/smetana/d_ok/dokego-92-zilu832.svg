@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="174px" preserveAspectRatio="none" style="width:140px;height:174px;background:#FFFFFF;" version="1.1" viewBox="0 0 140 174" width="140px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class C1-->
+    <g class="entity" data-qualified-name="C1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="6" y="19"/>
+      <ellipse cx="21" cy="35" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="40">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="35" y="38.889">C1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.938" y1="51" y2="51"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.938" y1="59" y2="59"/>
+    </g>
+    <!--class C2-->
+    <g class="entity" data-qualified-name="C2" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="40" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.938" x="19" y="114"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="22" y="129.889">C2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20" x2="41.938" y1="138" y2="138"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20" x2="41.938" y1="146" y2="146"/>
+    </g>
+    <!--class D1-->
+    <g class="entity" data-qualified-name="D1" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="74" y="12"/>
+      <ellipse cx="89" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="84" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="103" y="31.889">D1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="75" x2="122.938" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="85" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="15.487" x="94" y="58.889">try</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="75" x2="122.938" y1="66" y2="66"/>
+    </g>
+    <!--class D2-->
+    <g class="entity" data-qualified-name="D2" data-source-line="9" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="74" y="110"/>
+      <ellipse cx="89" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="84" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="103" y="129.889">D2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="75" x2="122.938" y1="142" y2="142"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="75" x2="122.938" y1="150" y2="150"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M31,67.384 C31,81.907 31,100.338 31,113.965" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="23" y="110.076">1</text>
+      <text fill="#000" font-size="13" x="23" y="78.495">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="association" id="lnk6">
+      <path d="M99,74.131 C99,85.831 99,99.015 99,109.936" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="91" y="106.047">1</text>
+      <text fill="#000" font-size="13" x="91" y="85.242">1</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="178px" preserveAspectRatio="none" style="width:362px;height:178px;background:#FFFFFF;" version="1.1" viewBox="0 0 362 178" width="362px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class SomeClass A-->
+    <g class="entity" data-qualified-name="SomeClass A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="150" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="161.188" x="6" y="12"/>
+      <ellipse cx="42.673" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="37.673" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="81.025" x="61.489" y="31.889">SomeClass A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="166.188" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="53.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="71.575" x="26" y="58.889">_someVar1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="166.188" y1="66" y2="66"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="78.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="88.725" x="26" y="80.889">SomeClass1()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="92.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="100.275" x="26" y="94.889">SomeMethod1()</text>
+      <text fill="#000" font-size="14" textLength="70.788" x="24" y="114.889">Tree item 11</text>
+      <text fill="#000" font-size="14" textLength="70.788" x="24" y="128.889">Tree item 12</text>
+      <text fill="#000" font-size="14" textLength="70.788" x="24" y="142.889">Tree item 13</text>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="110"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="111" y2="111"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="104" y2="111"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="124"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="125" y2="125"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="111" y2="125"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="138"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="139" y2="139"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="125" y2="139"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="156.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="135.188" x="26" y="158.889">SomeOtherMethod1()</text>
+    </g>
+    <!--class SomeClass B-->
+    <g class="entity" data-qualified-name="SomeClass B" data-source-line="13" id="ent0002">
+      <rect fill="#F1F1F1" height="150" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="161.188" x="185" y="12"/>
+      <ellipse cx="221.673" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="216.673" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="81.025" x="240.489" y="31.889">SomeClass B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="186" x2="345.188" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="193" y="53.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="71.575" x="205" y="58.889">_someVar2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="186" x2="345.188" y1="66" y2="66"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="196" cy="78.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="88.725" x="205" y="80.889">SomeClass2()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="196" cy="92.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="100.275" x="205" y="94.889">SomeMethod2()</text>
+      <text fill="#000" font-size="14" textLength="70.788" x="203" y="114.889">Tree item 21</text>
+      <text fill="#000" font-size="14" textLength="70.788" x="203" y="128.889">Tree item 22</text>
+      <text fill="#000" font-size="14" textLength="70.788" x="203" y="142.889">Tree item 23</text>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="200" y="110"/>
+      <line style="stroke:#000;stroke-width:1;" x1="193" x2="201" y1="111" y2="111"/>
+      <line style="stroke:#000;stroke-width:1;" x1="193" x2="193" y1="104" y2="111"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="200" y="124"/>
+      <line style="stroke:#000;stroke-width:1;" x1="193" x2="201" y1="125" y2="125"/>
+      <line style="stroke:#000;stroke-width:1;" x1="193" x2="193" y1="111" y2="125"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="200" y="138"/>
+      <line style="stroke:#000;stroke-width:1;" x1="193" x2="201" y1="139" y2="139"/>
+      <line style="stroke:#000;stroke-width:1;" x1="193" x2="193" y1="125" y2="139"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="196" cy="156.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="135.188" x="205" y="158.889">SomeOtherMethod2()</text>
+    </g>
+  </g>
+</svg>

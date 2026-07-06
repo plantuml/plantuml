@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="138px" preserveAspectRatio="none" style="width:250px;height:138px;background:#FFFFFF;" version="1.1" viewBox="0 0 250 138" width="250px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster p1-->
+    <g class="cluster" data-qualified-name="p1" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L34.65,4 A3.75,3.75 0 0 1 37.15,6.5 L44.15,24 L129.5,24 A2.5,2.5 0 0 1 132,26.5 L132,111.5 A2.5,2.5 0 0 1 129.5,114 L16.5,114 A2.5,2.5 0 0 1 14,111.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="44.15" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="18" y="16.889">P1</text>
+    </g>
+    <!--cluster p2-->
+    <g class="cluster" data-qualified-name="p1.p2" data-source-line="5" id="ent0002">
+      <path d="M24.5,29 L42.65,29 A3.75,3.75 0 0 1 45.15,31.5 L52.15,49 L121.5,49 A2.5,2.5 0 0 1 124,51.5 L124,103.5 A2.5,2.5 0 0 1 121.5,106 L24.5,106 A2.5,2.5 0 0 1 22,103.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="52.15" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="26" y="41.889">P2</text>
+    </g>
+    <!--cluster p3-->
+    <g class="cluster" data-qualified-name="p3" data-source-line="13" id="ent0004">
+      <path d="M142.5,29 L160.65,29 A3.75,3.75 0 0 1 163.15,31.5 L170.15,49 L239.5,49 A2.5,2.5 0 0 1 242,51.5 L242,103.5 A2.5,2.5 0 0 1 239.5,106 L142.5,106 A2.5,2.5 0 0 1 140,103.5 L140,31.5 A2.5,2.5 0 0 1 142.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="140" x2="170.15" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="144" y="41.889">P3</text>
+    </g>
+    <!--entity Comp1-->
+    <g class="entity" data-qualified-name="p1.p2.Comp1" data-source-line="10" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="30.5" y="54"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="95.65" y="59"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="93.65" y="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="93.65" y="65"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="45.5" y="84.889">Comp1</text>
+    </g>
+    <!--entity Comp2-->
+    <g class="entity" data-qualified-name="p3.Comp2" data-source-line="17" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="148.5" y="54"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="213.65" y="59"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="211.65" y="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="211.65" y="65"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="163.5" y="84.889">Comp2</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="160px" preserveAspectRatio="none" style="width:356px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 356 160" width="356px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity usecase1-->
+    <g class="entity" data-qualified-name="usecase1" data-source-line="6" id="ent0001">
+      <ellipse cx="84.659" cy="35.843" fill="#F1F1F1" rx="78.659" ry="20.843" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#008000" font-size="14" font-style="italic" textLength="116.725" x="26.296" y="34.989">«styleStereoType»</text>
+      <text fill="#000" font-size="14" textLength="54.512" x="57.403" y="48.989">Usecase</text>
+    </g>
+    <!--entity process1-->
+    <g class="entity" data-qualified-name="process1" data-source-line="7" id="ent0002">
+      <polygon fill="#F1F1F1" points="181,12,329.725,12,339.725,36,329.725,60,181,60,191,36" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#008000" font-size="14" font-style="italic" textLength="116.725" x="202" y="32.889">«styleStereoType»</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="235.075" y="46.889">Process</text>
+    </g>
+    <!--entity rectangle1-->
+    <g class="entity" data-qualified-name="rectangle1" data-source-line="8" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.725" x="15" y="96"/>
+      <text fill="#008000" font-size="14" font-style="italic" textLength="116.725" x="26" y="116.889">«styleStereoType»</text>
+      <text fill="#000" font-size="14" textLength="63.087" x="52.819" y="130.889">Rectangle</text>
+    </g>
+  </g>
+</svg>

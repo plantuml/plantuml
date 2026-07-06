@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="197px" preserveAspectRatio="none" style="width:156px;height:197px;background:#FFFFFF;" version="1.1" viewBox="0 0 156 197" width="156px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="p1" data-source-line="6" id="ent0001">
+      <rect fill="#F1F1F1" height="82" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.713" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="63.788" x="40.963" y="24.889">#1: Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="138.713" y1="30" y2="30"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="12" style="stroke:#C82930;stroke-width:1;" width="12" x="14" y="38"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="107.713" x="26" y="46.389">String toto = "hello"</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="20,53,27,60,20,67,13,60" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="107.713" x="26" y="63.389">String toto = "hello"</text>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_FIELD">
+        <polygon fill="none" points="20,71,13,83,27,83" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="107.713" x="26" y="80.389">String toto = "hello"</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="20" cy="95" fill="none" rx="6" ry="6" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="107.713" x="26" y="97.389">String toto = "hello"</text>
+    </g>
+    <g class="entity" data-qualified-name="p2" data-source-line="12" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.788" x="34" y="147"/>
+      <text fill="#000" font-size="14" textLength="63.788" x="41" y="159.889">#1: Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35" x2="110.788" y1="165" y2="165"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="73,146.768,77,137.768,73,141.768,69,137.768,73,146.768" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M73,94.278 C73,112.471 73,127.938 73,141.768" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.881" x="75" y="124.111">test</text>
+    </g>
+  </g>
+</svg>

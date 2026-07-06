@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="452px" preserveAspectRatio="none" style="width:328px;height:452px;background:#DDDDDD;" version="1.1" viewBox="0 0 328 452" width="328px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#DDD" height="452" style="stroke:none;" width="328" x="0" y="0"/>
+    <g class="title" data-source-line="56">
+      <rect fill="#98FB98" height="99" style="stroke:none;" width="226.45" x="50" y="50"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="191.45" x="55" y="65.889">padding/margin needs example:</text>
+    </g>
+    <!--cluster package-->
+    <g class="cluster" data-qualified-name="package" data-source-line="58" id="ent0001">
+      <path d="M156.975,172.5 L156.975,238.5 A2.5,2.5 0 0 0 159.475,241 L259.475,241 A2.5,2.5 0 0 0 261.975,238.5 L261.975,180 L251.975,170 L159.475,170 A2.5,2.5 0 0 0 156.975,172.5" fill="#FFE4C4" style="stroke:#F00;stroke-width:1;"/>
+      <path d="M251.975,170 L251.975,177.5 A2.5,2.5 0 0 0 254.475,180 L261.975,180" fill="#FFE4C4" style="stroke:#F00;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="200.506" y="182.889">file</text>
+      <text fill="#000" font-size="14" font-weight="700" x="209.475" y="196.889"> </text>
+    </g>
+    <!--entity c2-->
+    <g class="entity" data-qualified-name="c2" data-source-line="62" id="ent0004">
+      <rect fill="#0FF" height="54" rx="5" ry="5" style="stroke:#00F;stroke-width:0.5;" width="65.35" x="81.475" y="194"/>
+      <rect fill="#0FF" height="10" style="stroke:#00F;stroke-width:0.5;" width="15" x="126.825" y="199"/>
+      <rect fill="#0FF" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="124.825" y="201"/>
+      <rect fill="#0FF" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="124.825" y="205"/>
+      <text fill="#8A2BE2" font-size="24" font-style="italic" textLength="25.35" x="96.475" y="232.667">c2</text>
+    </g>
+    <!--entity acc1-->
+    <g class="entity" data-qualified-name="package.acc1" data-source-line="59" id="ent0002">
+      <ellipse cx="173.975" cy="218" fill="#ADFF2F" rx="8" ry="8" style="stroke:#4B0082;stroke-width:0.5;"/>
+    </g>
+    <!--entity acc2-->
+    <g class="entity" data-qualified-name="package.acc2" data-source-line="60" id="ent0003">
+      <ellipse cx="244.975" cy="218" fill="#ADFF2F" rx="8" ry="8" style="stroke:#4B0082;stroke-width:0.5;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk5">
+      <path d="M183.257,221 C196.939,221 222.361,221 235.915,221" fill="none" style="stroke:#00BFFF;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#191970" font-size="10" font-weight="700" textLength="31.125" x="193.975" y="213.778">access</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+      <polygon fill="#00BFFF" points="179.551,233.09,180.347,242.906,181.944,237.48,187.371,239.077,179.551,233.09" style="stroke:#00BFFF;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M181.944,237.48 C186.684,246.173 191.998,252.846 202.475,258 C217.398,265.342 231.243,246.617 238.861,233.207" fill="none" style="stroke:#00BFFF;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#191970" font-size="10" font-weight="700" x="207.975" y="253.778">r</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk7">
+      <polygon fill="#00BFFF" points="235.681,209.744,231.741,200.718,231.992,206.369,226.341,206.62,235.681,209.744" style="stroke:#00BFFF;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M183.269,209.744 C185.823,207.407 188.78,205.27 191.975,204 C206.43,198.253 212.52,198.253 226.975,204 C230.17,205.27 229.438,204.032 231.992,206.369" fill="none" style="stroke:#00BFFF;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#191970" font-size="10" font-weight="700" x="205.975" y="193.778">w</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+      <polygon fill="#00BFFF" points="183.145,228.207,188.232,236.641,187.244,231.071,192.814,230.083,183.145,228.207" style="stroke:#00BFFF;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#00BFFF" points="235.805,228.207,226.136,230.083,231.706,231.071,230.718,236.641,235.805,228.207" style="stroke:#00BFFF;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M187.244,231.071 C192.562,234.787 195.477,236.071 202.475,238 C208.474,239.653 210.476,239.653 216.475,238 C223.473,236.071 226.388,234.787 231.706,231.071" fill="none" style="stroke:#00BFFF;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#191970" font-size="10" font-weight="700" textLength="10.563" x="204.475" y="233.778">rw</text>
+    </g>
+    <g class="caption" data-source-line="69">
+      <rect fill="#98FB98" height="150" style="stroke:none;" width="255.338" x="45.556" y="270.042"/>
+      <text fill="#000" font-size="14" textLength="157.5" x="94.475" y="320.931">What I'd love to be able to do:</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="85.375" y="334.931">1.</text>
+      <text fill="#000" font-size="14" textLength="142.275" x="100.863" y="334.931">±25px bottom padding to</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="17.938" x="243.138" y="334.931">file</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="62.844" y="348.931">2.</text>
+      <text fill="#000" font-size="14" textLength="205.275" x="78.331" y="348.931">add ±10px top margin to the diagram</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="51.556" y="362.931">3.</text>
+      <text fill="#000" font-size="14" textLength="227.85" x="67.044" y="362.931">±5px left&amp;right padding to the document</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="62.406" y="376.931">4.</text>
+      <text fill="#000" font-size="14" textLength="118.3" x="77.894" y="376.931">fix the missing space</text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="28" x="196.194" y="376.931">here</text>
+      <text fill="#000" font-size="14" textLength="59.85" x="224.194" y="376.931">(and on 1.)</text>
+    </g>
+  </g>
+</svg>

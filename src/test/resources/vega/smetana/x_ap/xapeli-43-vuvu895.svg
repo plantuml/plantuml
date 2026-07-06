@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="143px" preserveAspectRatio="none" style="width:96px;height:143px;background:#FFFFFF;" version="1.1" viewBox="0 0 96 143" width="96px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity II1-->
+    <g class="entity" data-qualified-name="II1" data-source-line="8" id="ent0001">
+      <ellipse cx="35.5" cy="32.611" fill="#0FF" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="15.488" x="27.756" y="60.5">II1</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="22.288" y="12.5">«st»</text>
+    </g>
+    <!--entity II2-->
+    <g class="entity" data-qualified-name="II2" data-source-line="9" id="ent0002">
+      <ellipse cx="71.5" cy="32.611" fill="#00F" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="15.488" x="63.756" y="60.5">II2</text>
+    </g>
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="10" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.425" x="6" y="83.611"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="45.425" y="88.611"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="43.425" y="90.611"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="43.425" y="94.611"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="21" y="114.5">foo</text>
+    </g>
+  </g>
+</svg>

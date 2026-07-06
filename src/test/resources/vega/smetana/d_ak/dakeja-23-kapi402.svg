@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="104px" preserveAspectRatio="none" style="width:216px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 216 104" width="216px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity p-name\n\n**Post Entry**\n""<div class="h-entry">..</div>""-->
+    <g class="entity" data-qualified-name="p-name.n.n..Post Entry...n...div class..h-entry......div..." data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="193.95" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="47.425" x="16" y="32.889">p-name</text>
+      <text fill="#000" font-size="14" x="16" y="46.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="60.637" x="16" y="60.889">Post Entry</text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="173.95" x="16" y="74.889">&lt;div class="h-entry"&gt;..&lt;/div&gt;</text>
+    </g>
+  </g>
+</svg>

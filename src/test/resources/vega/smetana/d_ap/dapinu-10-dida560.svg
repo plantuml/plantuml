@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="66px" preserveAspectRatio="none" style="width:98px;height:66px;background:#0B58A8;" version="1.1" viewBox="0 0 98 66" width="98px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#0B58A8" height="66" style="stroke:none;" width="98" x="0" y="0"/>
+    <rect fill="#0B58A8" height="54" rx="5" ry="5" style="stroke:#0B58A8;stroke-width:1;" width="86.238" x="5" y="5"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="23.275" x="10" y="17.889">fruit</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="35.875" x="50.363" y="17.889">Apple</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="45.363" x2="45.363" y1="5" y2="23"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="5" x2="91.238" y1="23" y2="23"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="24.938" x="10" y="35.889">size</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="35.788" x="50.363" y="35.889">Large</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="45.363" x2="45.363" y1="23" y2="41"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="5" x2="91.238" y1="41" y2="41"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="30.362" x="10" y="53.889">color</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="25.725" x="50.363" y="53.889">Red</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="45.363" x2="45.363" y1="41" y2="59"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#FFF;stroke-width:1;" width="86.238" x="5" y="5"/>
+  </g>
+</svg>

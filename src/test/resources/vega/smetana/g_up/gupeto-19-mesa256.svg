@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="120px" preserveAspectRatio="none" style="width:169px;height:120px;background:#FFFFFF;" version="1.1" viewBox="0 0 169 120" width="169px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="State" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="92" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="147" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="153" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="32.637" x="63.181" y="27.889">State</text>
+      <image height="29" width="145" x="11" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iMTQ1IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48dGV4dCB4PSI1IiB5PSIxOS4wNzUiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjEzNC40MjIiIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPlMmbHQ7PTEvKEYrKDEtRikvTik8L3RleHQ+PC9nPjwvc3ZnPg==" y="41"/>
+    </g>
+  </g>
+</svg>

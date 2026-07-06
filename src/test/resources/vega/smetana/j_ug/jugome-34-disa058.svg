@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="173px" preserveAspectRatio="none" style="width:64px;height:173px;background:#FFFFFF;" version="1.1" viewBox="0 0 64 173" width="64px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <ellipse cx="27" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M27,28.5 L27,55.5 M14,36.5 L40,36.5 M27,55.5 L14,70.5 M27,55.5 L40,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="23.106" y="82.889">a</text>
+    </g>
+    <!--entity b\n - c-->
+    <g class="entity" data-qualified-name="b.n - c" data-source-line="1" id="ent0002">
+      <ellipse cx="27.189" cy="139.551" fill="#F1F1F1" rx="21.189" ry="17.551" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="23.295" y="135.837">b</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="21.37" y="149.837">- c</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="27,121.541,31,112.541,27,116.541,23,112.541,27,121.541" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M27,86.252 C27,98.472 27,106.534 27,116.541" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

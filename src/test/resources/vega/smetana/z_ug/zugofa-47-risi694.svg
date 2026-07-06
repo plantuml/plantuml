@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="110px" preserveAspectRatio="none" style="width:242px;height:110px;background:#FFFFFF;" version="1.1" viewBox="0 0 242 110" width="242px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Office-->
+    <g class="cluster" data-qualified-name="Office" data-source-line="1" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,226,4,226,76,216,86,14,86,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="216" x2="226" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="216" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="216" x2="216" y1="14" y2="86"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="36.488" x="97.756" y="27.889">Office</text>
+    </g>
+    <!--entity Dummy-->
+    <g class="entity" data-qualified-name="Office.Dummy" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="196.363" x="22" y="34"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="198.363" y="39"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="196.363" y="41"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="196.363" y="45"/>
+      <text fill="#000" font-size="14" textLength="156.363" x="37" y="64.889">Dummy with a very long text</text>
+    </g>
+  </g>
+</svg>

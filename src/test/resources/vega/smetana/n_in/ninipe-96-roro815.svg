@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="236px" preserveAspectRatio="none" style="width:252px;height:236px;background:#FFFFFF;" version="1.1" viewBox="0 0 252 236" width="252px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster pack2-->
+    <g class="cluster" data-qualified-name="pack2" data-source-line="8" id="ent0002">
+      <path d="M62.5,99.833 L223.625,99.833 A3.75,3.75 0 0 1 226.125,102.333 L233.125,165.833 L233.5,165.833 A2.5,2.5 0 0 1 236,168.333 L236,210.333 A2.5,2.5 0 0 1 233.5,212.833 L62.5,212.833 A2.5,2.5 0 0 1 60,210.333 L60,102.333 A2.5,2.5 0 0 1 62.5,99.833" fill="none" style="stroke:#000;stroke-width:1.5;stroke-dasharray:7,7;"/>
+      <line style="stroke:#000;stroke-width:1.5;stroke-dasharray:7,7;" x1="60" x2="233.125" y1="165.833" y2="165.833"/>
+      <text fill="#008000" font-size="60" font-weight="700" textLength="160.125" x="64" y="148.5">pack2</text>
+    </g>
+    <!--entity pack1-->
+    <g class="entity" data-qualified-name="pack1" data-source-line="7" id="ent0001">
+      <path d="M8.5,8.833 L181.625,8.833 A3.75,3.75 0 0 1 184.125,11.333 L191.125,74.833 L205.625,74.833 A2.5,2.5 0 0 1 208.125,77.333 L208.125,89.333 A2.5,2.5 0 0 1 205.625,91.833 L8.5,91.833 A2.5,2.5 0 0 1 6,89.333 L6,11.333 A2.5,2.5 0 0 1 8.5,8.833" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:7,7;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:7,7;" x1="6" x2="191.125" y1="74.833" y2="74.833"/>
+      <text fill="#008000" font-size="60" font-weight="700" textLength="160.125" x="16" y="58.5">pack1</text>
+    </g>
+    <!--entity myBox-->
+    <g class="entity" data-qualified-name="pack2.myBox" data-source-line="9" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.788" x="148.5" y="170.833"/>
+      <text fill="#000" font-size="14" textLength="42.788" x="158.5" y="191.722">myBox</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="107,99.581,111,90.581,107,94.581,103,90.581,107,99.581" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107,91.988 C107,93.79 107,95.624 107,97.481 C107,97.946 107,98.412 107,98.879 C107,99.113 107,94.347 107,94.581" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="264px" preserveAspectRatio="none" style="width:236px;height:264px;background:#FFFFFF;" version="1.1" viewBox="0 0 236 264" width="236px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster CompositeState-->
+    <g class="cluster" data-qualified-name="CompositeState" data-source-line="1" id="ent0001">
+      <path d="M45.5,4 L210.5,4 A12.5,12.5 0 0 1 223,16.5 L223,23 L33,23 L33,16.5 A12.5,12.5 0 0 1 45.5,4" fill="#F1F1F1"/>
+      <rect fill="none" height="236" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="190" x="33" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="33" x2="223" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" textLength="99.575" x="78.212" y="19.889">CompositeState</text>
+    </g>
+    <!--cluster SubComposite-->
+    <g class="cluster" data-qualified-name="CompositeState.SubComposite" data-source-line="4" id="ent0003">
+      <path d="M63.5,29 L172.5,29 A12.5,12.5 0 0 1 185,41.5 L185,48 L51,48 L51,41.5 A12.5,12.5 0 0 1 63.5,29" fill="#F1F1F1"/>
+      <rect fill="none" height="203" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="134" x="51" y="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="51" x2="185" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" textLength="91.875" x="72.063" y="39.889">SubComposite</text>
+    </g>
+    <text fill="#000" font-size="14" textLength="38.85" x="13.575" y="38.889">entry1</text>
+    <ellipse cx="33" cy="60" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <g class="start_entity" data-qualified-name="CompositeState..start.CompositeState" data-source-line="9" id="ent0012">
+      <ellipse cx="205" cy="137" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="start_entity" data-qualified-name="CompositeState.SubComposite..start.SubComposite" data-source-line="5" id="ent0004">
+      <ellipse cx="133" cy="64" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="CompositeState.SubComposite.A" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="127" y="114"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="127" x2="177" y1="138" y2="138"/>
+      <text fill="#000" font-size="14" x="147.319" y="129.889">A</text>
+    </g>
+    <g class="entity" data-qualified-name="CompositeState.SubComposite.B" data-source-line="6" id="ent0007">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="59" y="114"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="59" x2="109" y1="138" y2="138"/>
+      <text fill="#000" font-size="14" x="79.319" y="129.889">B</text>
+    </g>
+    <g class="end_entity" data-qualified-name="CompositeState.SubComposite..end.SubComposite" data-source-line="7" id="ent0010">
+      <ellipse cx="84" cy="211" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="84" cy="211" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="145.514,113.764,147.052,104.036,144.222,108.934,139.324,106.104,145.514,113.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M135.969,78.094 C138.515,87.61 140.983,96.832 144.222,108.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="109.234,139,118.234,143,114.234,139,118.234,135,109.234,139" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M114.234,139 C120.137,139 121.039,139 126.942,139" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="84,199.72,88,190.72,84,194.72,80,190.72,84,199.72" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M84,164.037 C84,176.106 84,185.155 84,194.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0012" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="185.06,98.673,185.562,108.509,187.321,103.133,192.697,104.891,185.06,98.673" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M187.321,103.133 C187.879,104.233 186.387,101.291 186.947,102.396 C191.43,111.236 195.916,120.085 199.296,126.75" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="67.274,113.764,65.454,104.085,64.434,109.649,58.87,108.629,67.274,113.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M42.656,78.094 C49.224,87.61 56.081,97.546 64.434,109.649" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

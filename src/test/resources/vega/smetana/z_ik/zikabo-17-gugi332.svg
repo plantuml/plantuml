@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="135px" preserveAspectRatio="none" style="width:87px;height:135px;background:#FFFFFF;" version="1.1" viewBox="0 0 87 135" width="87px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class C-->
+    <g class="entity" data-qualified-name="C" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="96" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54" x="6" y="12"/>
+      <ellipse cx="26.333" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="21.333" y="33">C</text>
+      <text fill="#000" font-size="14" x="41.518" y="31.889">C</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="59" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="53.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="25.725" x="26" y="58.889">field</text>
+      <image height="72" width="74" x="12" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjcyIiB3aWR0aD0iNzQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGxlbmd0aEFkanVzdD0ic3BhY2luZyI+PCEtLWVudGl0eSBuLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0ibiIgaWQ9ImVudDAwMDEiIGRhdGEtc291cmNlLWxpbmU9IjEiPjxwb2x5Z29uIHBvaW50cz0iMTAsMjIsMjAsMTIsNTcuNzg4LDEyLDU3Ljc4OCw0Niw0Ny43ODgsNTYsMTAsNTYsMTAsMjIiIGZpbGw9IiNGMUYxRjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48bGluZSB4MT0iNDcuNzg4IiB5MT0iMjIiIHgyPSI1Ny43ODgiIHkyPSIxMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PGxpbmUgeDE9IjEwIiB5MT0iMjIiIHgyPSI0Ny43ODgiIHkyPSIyMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PGxpbmUgeDE9IjQ3Ljc4OCIgeTE9IjIyIiB4Mj0iNDcuNzg4IiB5Mj0iNTYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IHg9IjI1IiB5PSI0Mi44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiPm48L3RleHQ+PC9nPjwvZz48L3N2Zz4=" y="62"/>
+    </g>
+  </g>
+</svg>

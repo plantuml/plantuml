@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="69px" preserveAspectRatio="none" style="width:85px;height:69px;background:#FFFFFF;" version="1.1" viewBox="0 0 85 69" width="85px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Kubernetes-->
+    <g class="entity" data-qualified-name="Kubernetes" data-source-line="12" id="ent0001">
+      <polygon fill="#F1F1F1" points="5,11,10,6,76.756,6,76.756,56,71.756,61,5,61,5,11" style="stroke:#181818;stroke-width:0.25;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.25;" x1="71.756" x2="76.756" y1="11" y2="6"/>
+      <line style="stroke:#181818;stroke-width:0.25;" x1="5" x2="71.756" y1="11" y2="11"/>
+      <line style="stroke:#181818;stroke-width:0.25;" x1="71.756" x2="71.756" y1="11" y2="61"/>
+      <image height="24" width="24" x="26.378" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAD7ElEQVR4XrWYy1HlQAxFXwqEQAiEQNUkQAiEQAjsZksIhEAI7NkQAiEQAVPHNXp1fVvqj8ezOFU8ua1fS+o2l+/v78v/4u3t7ef9/f3D5WfSCM7g+fn55+bm5udyuWzwNzJfdwaN4ChfX1+/np6edo47PGMNa/39ozSCVcJxd3bEWYE0glk+Pz9/Pz4+No6tgg50uf5ZGsEIjD08PDSO/CvoPBJII6hgmqw6Ts33eiIDGyuTqxE4KLu/v28MzUCNg8tnwOZMII0gYIbf3d01ile4GkmezYIP+OL+dQM4mnGHmgaXHwGf3M80gCMjsYISAJcfBd/c3yaA29vb5sUj0Lyhc7WRK/DN/d39ONpwARPk9fU1PaCQ8Wx1kjmue2cEA/4CkEEaqTq4kLviHqzt6cJWtWv4WAZQ1T+TINaoYYxkow6ZTo7qVuqOao1XE9D7YKewegnY+sgyN0umgmddL3OsD3mUTXYrZUqh6+XlZZPHb7cfaDKbAHxxhm8heCaBnYrnXi40Y7YjBOH2MtIAcMIXZuh0Cdx56AUA6URJ7GVoeV5fZmt9YYaWRkAp+XTRWvXeynRAr3QULcPll/XG6Ee8loAa0eR4CaqO2UNPT+WroqwMHG2gcDaaL4jvBA00k1U6eoMk0DK+GvBFGZpVNeSjbQYtK03MbClHMraXZrs/Jkd2YmvTjsiaOkbybBnFrm0KvQErwkg1sbS+yRCZBS2d6rSPXsiSkxGDYFM6e4GrnMBJLyMdCn4Vpky81jV4t5sRY3g6YggDZKt3cQOtcQ8u0AvebrYntjM23z2bFXR+5WwFdepTagQ2ZiYibL77IaPQbGx3L9NAjbOGtb11PMMeQWVXCV0X+nr+bc+8FgO/dLHF6hxOZL3Ty3g27dChtkiG26pG61/f2wehGIM6ofQAqcadGo5Pyvhd9Zuu0fLBdpWoK7P1Fui08PGrdxx1VoPqvTPbj8Hme7U9FX6L1OzoJNHDSg853Tne1eC6mU7YfM+yMkLHIg5QixpYdjXRw4y17nyvWTN2B9mR6L1ZtY6zhOhh5hNotXQ0WVclZGi1HzwIIKtZMqpzZNV59Ohu7pRVd5we1SUOZzEEmeOQXepG+DdIo3S1qTOlMxxJlp9N0CiGrIZ7RLYpHWodQzgY5wB/I0Mva5BVZ0JF9RnaCILqhHYiK7OfpBANPbvb/q+UqQBmmjqmwWo2Ifoia3jFm9ZpBMqoTlczqczu3Ki/GoEzcm6UwR6jHc6a1mkEGatNfQZV0zqNoGK2qc+g17ROI6ig6UZbfgbViV3RCHpU3wBn4vekEY1gxOrdZQX91pilEczAFjPezmSlbJQ/8ncibz32uHgAAAAASUVORK5CYII=" y="16"/>
+      <text fill="#000" font-size="9" font-weight="700" textLength="46.012" x="12.5" y="47">Kubernetes</text>
+      <text fill="#000" font-size="7" textLength="51.756" x="12.5" y="54.444">Description of k8s</text>
+    </g>
+  </g>
+</svg>

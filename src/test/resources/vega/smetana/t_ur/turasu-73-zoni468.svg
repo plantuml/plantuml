@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="182px" preserveAspectRatio="none" style="width:341px;height:182px;background:#FFFFFF;" version="1.1" viewBox="0 0 341 182" width="341px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity TInterface-->
+    <g class="entity" data-qualified-name="TInterface" data-source-line="15" id="ent0001">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="146.788" x="14" y="12"/>
+      <path d="M89.889,25.33 C86.551,25.375 83.855,28.062 83.767,31.371 L78.394,31.371 A0.5,0.5 0 0 0 77.895,31.871 A0.5,0.5 0 0 0 78.394,32.371 L83.821,32.371 C84.232,35.43 86.874,37.782 90.037,37.75 C93.456,37.715 96.213,34.906 96.183,31.486 C96.154,28.067 93.351,25.307 89.932,25.33 A0.5,0.5 0 0 0 89.92,25.341 A0.5,0.5 0 0 0 89.889,25.33 M89.912,26.32 A0.5,0.5 0 0 0 89.937,26.33 C92.817,26.31 95.159,28.617 95.184,31.496 C95.208,34.376 92.907,36.721 90.027,36.75 C87.148,36.78 84.798,34.481 84.763,31.602 C84.729,28.722 87.023,26.369 89.902,26.33 A0.5,0.5 0 0 0 89.912,26.32" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="126.788" x="24" y="52.889">Technology Interface</text>
+    </g>
+    <!--entity TFunction-->
+    <g class="entity" data-qualified-name="TFunction" data-source-line="16" id="ent0002">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="146.175" x="179.5" y="12"/>
+      <path d="M252.347,26.32 L243.384,30.289 A0.5,0.5 0 0 0 243.087,30.746 L243.087,38.783 A0.5,0.5 0 0 0 243.788,39.24 L252.583,35.361 L261.376,39.24 A0.5,0.5 0 0 0 262.079,38.783 L262.079,30.779 A0.5,0.5 0 0 0 261.78,30.322 L252.753,26.32 A0.5,0.5 0 0 0 252.347,26.32 M252.55,27.324 L261.079,31.103 L261.079,38.017 L252.784,34.357 A0.5,0.5 0 0 0 252.38,34.357 L244.087,38.017 L244.087,31.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="126.175" x="189.5" y="52.889">Technology Function</text>
+    </g>
+    <!--entity TDevice-->
+    <g class="entity" data-qualified-name="TDevice" data-source-line="17" id="ent0003">
+      <polygon fill="#C9FFC9" points="10,112,20,102,165.325,102,165.325,156,155.325,166,10,166,10,112" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="155.325" x2="165.325" y1="112" y2="102"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="155.325" y1="112" y2="112"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="155.325" x2="155.325" y1="112" y2="166"/>
+      <path d="M74.613,125.06 A0.5,0.5 0 0 0 74.112,125.556 L74.019,135.472 A0.5,0.5 0 0 0 74.518,135.976 L77.555,135.976 L75.298,138.107 A0.5,0.5 0 0 0 75.64,138.97 L89.577,139.017 A0.5,0.5 0 0 0 89.956,138.187 L88.019,135.976 L90.702,135.976 A0.5,0.5 0 0 0 91.202,135.474 L91.155,125.558 A0.5,0.5 0 0 0 90.655,125.06 M75.107,126.06 L90.158,126.06 L90.2,134.976 L75.022,134.976 M78.484,136.476 L87.128,136.476 L88.474,138.013 L76.894,137.974" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="115.325" x="25" y="152.889">Technology Device</text>
+    </g>
+  </g>
+</svg>

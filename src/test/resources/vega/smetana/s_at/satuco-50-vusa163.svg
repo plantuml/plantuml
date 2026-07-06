@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="172px" preserveAspectRatio="none" style="width:104px;height:172px;background:#FFFFFF;" version="1.1" viewBox="0 0 104 172" width="104px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="AAAA" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.3" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="37.45" x="28.425" y="24.889">AAA A</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="88.3" y1="30" y2="30"/>
+      <text fill="#000" font-size="14" textLength="15.4" x="18.875" y="42.889">ffff</text>
+      <text fill="#000" font-size="14" textLength="15.4" x="52.15" y="42.889">ffff</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="47.15" x2="47.15" y1="30" y2="48"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="88.3" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="11" y="60.889">gggg</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="52.15" y="60.889">gggg</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="47.15" x2="47.15" y1="48" y2="66"/>
+    </g>
+    <g class="entity" data-qualified-name="CCCC" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.3" x="6" y="84"/>
+      <text fill="#000" font-size="14" textLength="40.6" x="26.85" y="96.889">CCC C</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="88.3" y1="102" y2="102"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="11" y="114.889">oooo</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="52.15" y="114.889">pppp</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="47.15" x2="47.15" y1="102" y2="120"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="88.3" y1="120" y2="120"/>
+      <text fill="#000" font-size="14" textLength="28" x="12.575" y="132.889">ssss</text>
+      <text fill="#000" font-size="14" textLength="15.4" x="52.15" y="132.889">tttt</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="47.15" x2="47.15" y1="120" y2="138"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="88.3" y1="138" y2="138"/>
+      <text fill="#000" font-size="14" x="26.575" y="150.889"> </text>
+      <text fill="#000" font-size="14" textLength="28" x="52.15" y="150.889">yyyy</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="47.15" x2="47.15" y1="138" y2="156"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="77.382,83.93,82.803,75.707,78.201,78.997,74.911,74.396,77.382,83.93" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M74.347,66.028 C77.362,71.995 79.192,73.03 78.201,78.997" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="16.618,83.93,19.089,74.396,15.799,78.997,11.197,75.707,16.618,83.93" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M19.653,66.028 C16.638,71.995 14.808,73.03 15.799,78.997" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

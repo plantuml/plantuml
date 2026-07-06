@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="147px" preserveAspectRatio="none" style="width:158px;height:147px;background:#FFFFFF;" version="1.1" viewBox="0 0 158 147" width="158px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="6" font-weight="700" textLength="9.638" x="70.681" y="14.667">test</text>
+    </g>
+    <!--entity actor-->
+    <g class="entity" data-qualified-name="actor" data-source-line="3" id="ent0001">
+      <ellipse cx="26.863" cy="65.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M26.863,73.5 L26.863,100.5 M13.863,81.5 L39.863,81.5 M26.863,100.5 L13.863,115.5 M26.863,100.5 L39.863,115.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="31.062" x="11.331" y="127.889">actor</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="39.725" x="7" y="53.889">«Foo»</text>
+    </g>
+    <!--entity use case-->
+    <g class="entity" data-qualified-name="use case" data-source-line="4" id="ent0002">
+      <ellipse cx="103.994" cy="86.789" fill="#F1F1F1" rx="37.994" ry="21.789" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="39.725" x="84.132" y="81.82">«Foo»</text>
+      <text fill="#000" font-size="14" textLength="52.15" x="77.919" y="95.82">use case</text>
+    </g>
+  </g>
+</svg>

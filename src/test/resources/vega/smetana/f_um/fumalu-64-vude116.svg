@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="101px" preserveAspectRatio="none" style="width:89px;height:101px;background:#FFFFFF;" version="1.1" viewBox="0 0 89 101" width="89px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="24">
+      <rect fill="#D3D3D3" height="10" style="stroke:none;" width="77.813" x="4.187" y="0"/>
+      <text fill="#F00" font-size="10" textLength="77.813" x="4.187" y="7.778">some page header</text>
+    </g>
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="26" id="ent0001">
+      <rect fill="#FF0" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.5" x="6" y="23"/>
+      <rect fill="#F00" height="32" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:0.5;" width="66.5" x="6" y="23"/>
+      <rect fill="#F00" height="2.5" style="stroke:#F00;stroke-width:0.5;" width="66.5" x="6" y="52.5"/>
+      <rect fill="none" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.5" x="6" y="23"/>
+      <ellipse cx="21" cy="39" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="44">C</text>
+      <text fill="#008000" font-size="20" textLength="34.5" x="35" y="44.556">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="71.5" y1="55" y2="55"/>
+      <text fill="#00F" font-size="14" textLength="45.85" x="12" y="69.889">dummy</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="71.5" y1="77" y2="77"/>
+    </g>
+  </g>
+</svg>

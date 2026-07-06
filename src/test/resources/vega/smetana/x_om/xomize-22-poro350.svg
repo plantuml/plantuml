@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="214px" preserveAspectRatio="none" style="width:193px;height:214px;background:#FFFFFF;" version="1.1" viewBox="0 0 193 214" width="193px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Foo1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="51.938" x="6" y="80"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="57.938" y1="104" y2="104"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="16" y="95.889">Foo1</text>
+    </g>
+    <g class="entity" data-qualified-name="Inner1" data-source-line="3" id="ent0002">
+      <path d="M89,12 L165,12 A12.5,12.5 0 0 1 177.5,24.5 L177.5,36 L76.5,36 L76.5,24.5 A12.5,12.5 0 0 1 89,12" fill="#F00"/>
+      <path d="M76.5,36 L177.5,36 L177.5,185.5 A12.5,12.5 0 0 1 165,198 L89,198 A12.5,12.5 0 0 1 76.5,185.5 L76.5,36" fill="#F00"/>
+      <rect fill="none" height="186" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="101" x="76.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="76.5" x2="177.5" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="39.637" x="107.181" y="27.889">Inner1</text>
+      <g class="entity" data-qualified-name="Inner1.Dummy1" data-source-line="4" id="ent0003">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="82.5" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="82.5" x2="158.5" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="56" x="92.5" y="62.889">Dummy1</text>
+      </g>
+      <g class="entity" data-qualified-name="Inner1.Dummy2" data-source-line="5" id="ent0004">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="82.5" y="133"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="82.5" x2="158.5" y1="157" y2="157"/>
+        <text fill="#000" font-size="14" textLength="56" x="92.5" y="148.889">Dummy2</text>
+      </g>
+      <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+        <polygon fill="#00F" points="120.5,132.758,124.5,123.758,120.5,127.758,116.5,123.758,120.5,132.758" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M120.5,97.296 C120.5,108.441 120.5,116.621 120.5,127.758" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      </g>
+    </g>
+  </g>
+</svg>

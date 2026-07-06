@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:172px;height:76px;background:#808080;" version="1.1" viewBox="0 0 172 76" width="172px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#808080" height="76" style="stroke:none;" width="172" x="0" y="0"/>
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="12" id="ent0001">
+      <rect fill="#808080" height="48" rx="2.5" ry="2.5" style="stroke:#FFF;stroke-width:0.5;" width="41.363" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#808080" rx="11" ry="11" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#FFF" font-size="14" x="35" y="31.889">A</text>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="7" x2="46.363" y1="44" y2="44"/>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="7" x2="46.363" y1="52" y2="52"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="13" id="ent0002">
+      <rect fill="#808080" height="48" rx="2.5" ry="2.5" style="stroke:#FFF;stroke-width:0.5;" width="41.363" x="115" y="12"/>
+      <ellipse cx="130" cy="28" fill="#808080" rx="11" ry="11" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="125" y="33">C</text>
+      <text fill="#FFF" font-size="14" x="144" y="31.889">B</text>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="116" x2="155.363" y1="44" y2="44"/>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="116" x2="155.363" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#FFF" points="114.719,36,105.719,32,109.719,36,105.719,40,114.719,36" style="stroke:#FFF;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M47.002,36 C66.366,36 90.264,36 109.719,36" fill="none" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-size="13" textLength="46.231" x="58" y="28.111">that A2B</text>
+    </g>
+  </g>
+</svg>

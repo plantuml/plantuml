@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="124px" preserveAspectRatio="none" style="width:377px;height:124px;background:#FFFFFF;" version="1.1" viewBox="0 0 377 124" width="377px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster AA-->
+    <g class="cluster" data-qualified-name="AA" data-source-line="5" id="ent0001">
+      <polygon fill="#ADD8E6" points="157,14,167,4,259,4,259,90,249,100,157,100,157,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="249" x2="259" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="157" x2="249" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="249" x2="249" y1="14" y2="100"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="190.788" y="27.889">«st»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="194.638" y="41.889">AA</text>
+    </g>
+    <!--cluster BB-->
+    <g class="cluster" data-qualified-name="BB" data-source-line="8" id="ent0003">
+      <polygon fill="#FF0" points="267,28,277,18,361,18,361,90,351,100,267,100,267,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="351" x2="361" y1="28" y2="18"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="267" x2="351" y1="28" y2="28"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="351" x2="351" y1="28" y2="100"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="300.638" y="41.889">BB</text>
+    </g>
+    <!--entity CC-->
+    <g class="entity" data-qualified-name="CC" data-source-line="11" id="ent0005">
+      <polygon fill="#FF0" points="10,58,20,48,70.3,48,70.3,82,60.3,92,10,92,10,58" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60.3" x2="70.3" y1="58" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="60.3" y1="58" y2="58"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60.3" x2="60.3" y1="58" y2="92"/>
+      <text fill="#000" font-size="14" textLength="20.3" x="25" y="78.889">CC</text>
+    </g>
+    <!--entity DD-->
+    <g class="entity" data-qualified-name="DD" data-source-line="13" id="ent0006">
+      <polygon fill="#FF0" points="88,58,98,48,148.3,48,148.3,82,138.3,92,88,92,88,58" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="138.3" x2="148.3" y1="58" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88" x2="138.3" y1="58" y2="58"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="138.3" x2="138.3" y1="58" y2="92"/>
+      <text fill="#000" font-size="14" textLength="20.3" x="103" y="78.889">DD</text>
+    </g>
+    <!--entity ZZ-->
+    <g class="entity" data-qualified-name="AA.ZZ" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.15" x="179.5" y="48"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="216.65" y="53"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="214.65" y="55"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="214.65" y="59"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="194.5" y="78.889">ZZ</text>
+    </g>
+    <!--entity XX-->
+    <g class="entity" data-qualified-name="BB.XX" data-source-line="9" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.725" x="284.5" y="48"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="323.225" y="53"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="321.225" y="55"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="321.225" y="59"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="299.5" y="78.889">XX</text>
+    </g>
+  </g>
+</svg>

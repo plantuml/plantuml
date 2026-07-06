@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:213px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 213 76" width="213px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.475" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="35" y="31.889">Foo</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="37.325" x="67.15" y="9"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="35.325" x="68.15" y="19.333">Param</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="100.475" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="100.475" y1="52" y2="52"/>
+    </g>
+    <!--class Bar-->
+    <g class="entity" data-qualified-name="Bar" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.413" x="119.5" y="12"/>
+      <ellipse cx="134.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="129.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="21.788" x="148.5" y="31.889">Bar</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="22.625" x="178.288" y="9"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="20.625" x="179.288" y="19.333">P, Q</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="120.5" x2="196.913" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="120.5" x2="196.913" y1="52" y2="52"/>
+    </g>
+  </g>
+</svg>

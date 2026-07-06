@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="342px" preserveAspectRatio="none" style="width:115px;height:342px;background:#FFFFFF;" version="1.1" viewBox="0 0 115 342" width="115px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster a-->
+    <g class="cluster" data-qualified-name="a" data-source-line="3" id="ent0006">
+      <path d="M64.5,261 L77.5,261 A12.5,12.5 0 0 1 90,273.5 L90,280 L52,280 L52,273.5 A12.5,12.5 0 0 1 64.5,261" fill="#F1F1F1"/>
+      <rect fill="none" height="57" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="38" x="52" y="261"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52" x2="90" y1="280" y2="280"/>
+      <text fill="#000" font-size="14" x="67.106" y="271.889">a</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0001">
+      <ellipse cx="66" cy="14" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="41" y="65"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41" x2="91" y1="89" y2="89"/>
+      <text fill="#000" font-size="14" textLength="24.15" x="53.925" y="80.889">Foo</text>
+    </g>
+    <g class="entity" data-qualified-name="Bar" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="168"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="192" y2="192"/>
+      <text fill="#000" font-size="14" textLength="21.788" x="20.106" y="183.889">Bar</text>
+    </g>
+    <ellipse cx="71" cy="297" fill="#F1F1F1" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="65.925" y="300.889">H</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="66,64.724,70,55.724,66,59.724,62,55.724,66,64.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M66,28.25 C66,37.979 66,47.384 66,59.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="39.436,167.655,46.163,160.461,41.073,162.931,38.604,157.842,39.436,167.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M57.617,115.192 C52.116,131.066 46.585,147.027 41.073,162.931" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="22.425" x="53" y="145.111">Ev1</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="73.274,285.846,78.885,277.751,74.208,280.934,71.025,276.257,73.274,285.846" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M74.147,115.183 C75.745,120.955 77.18,127.142 78,133 C85.397,185.818 82.203,199.833 78,253 C77.11,264.258 75.892,272.074 74.208,280.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="22.425" x="85" y="196.611">Ev2</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="65.954,285.872,65.934,276.023,63.914,281.307,58.63,279.287,65.954,285.872" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M39.227,218.246 C42.965,228.959 47.542,241.668 52,253 C56.447,264.305 59.962,272.461 63.914,281.307" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="22.425" x="54" y="248.111">Ev3</text>
+    </g>
+  </g>
+</svg>

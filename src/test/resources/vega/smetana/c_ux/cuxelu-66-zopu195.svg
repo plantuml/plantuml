@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:268px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 268 105" width="268px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Component-->
+    <g class="cluster" data-qualified-name="Component" data-source-line="2" id="ent0001">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="227" x="33" y="4"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="240" y="9"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="238" y="11"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="238" y="15"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="72.363" x="110.319" y="27.889">Component</text>
+    </g>
+    <!--entity API Server-->
+    <g class="entity" data-qualified-name="Component.API Server" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.788" x="148" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="231.788" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="229.788" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="229.788" y="40"/>
+      <text fill="#000" font-size="14" textLength="63.787" x="163" y="59.889">API Server</text>
+    </g>
+    <g class="entity" data-qualified-name="Component.httpout" data-source-line="4" id="ent0003">
+      <text fill="#000" font-size="14" textLength="36.663" x="14.669" y="23.889">HTTP</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="27" y="39"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="43.409,51,52.409,55,48.409,51,52.409,47,43.409,51" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M147.952,51 C110.161,51 67.454,51 48.409,51" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="83.2" x="54" y="43.111">label not shown</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="147.689,69.316,138.031,67.388,142.811,70.413,139.786,75.193,147.689,69.316" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M42.652,63.36 C45.214,66.427 48.36,69.317 52,71 C69.548,79.115 119.909,74.05 139,71 C141.861,70.543 139.893,71.069 142.811,70.413" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="83.2" x="54" y="66.111">label not shown</text>
+    </g>
+  </g>
+</svg>

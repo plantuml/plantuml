@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="193px" preserveAspectRatio="none" style="width:215px;height:193px;background:#FFFFFF;" version="1.1" viewBox="0 0 215 193" width="215px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="86">
+      <text fill="#000" font-size="14" font-weight="700" textLength="36.663" x="76.765" y="23.043">This is</text>
+      <image height="16" width="18" x="113.427" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAQCAYAAAAbBi9cAAACb0lEQVR4XpWT3WtScRjHd1XtLoLdBYNddhH9B10JRjejISgIG74gRhc52nR6MXE6UVLchfMlZoo2tXl8QzLZhnShjHyBkYO8mE4JdYkXKkgq8ut5BovtnFp14MvB38vH5/t8nzNFCJmiy2azOaPR6Cp9/SYxFlB2u/3NVVCxWHxiMpn26OduBJXLZbNMJuvodLpGrVZ7iWtHR0fP1tfX0/SzDJDZbN5Tq9VplFAo/D4/P08WFxeJ0+ms+Xy+9NraWimVSv0dhKXjv+7u7pZEIhHZhufg4MACrzOxWEy4XC4Bu+lGozG7srJCKZVK/2g0usUAXardbj/d2NgoRCIRbzKZ9Hs8nneJROJ1IBDIYWVWq5Xa3Nwker1+DIG8xV52Op37v0DhcFgJBw2tVmsuFotRW1tbTa/X6zs5OXk8HA5nz8/PXxQKhYTD4SgbjUayv78/gjBUGEi3251hgCiKUkE6X9Ce3+/3DAaDB71e72GlUtGfnp6+B1gKQiAWi2UwHo+n/2gtHo+/WlhYqLLZbOJyuY6bzaayXq+rs9ns10wmk8vn8yWoAns2DIVCz6EyUb/fv8cAobCZfD4fG34Glz9iJblcLgMVk2AwSBDE4XAuUoVefTg8PBSgPQZIpVJRBoOBaLVaVA1gabBUAvsEbONIEB6PN4GUP0FyM9D0nWq1+ugaBJo6B5XswBgcw4VjgUDQWF5evqgEhRCwNVIoFJ8Bcufq3Wsg/Axwpi5/u93uVRaLRZaWlghAf0gkkm9yuTxPd8EA0YUgqVQ6hj4MMDH6/n+BNBqNazKZTINu0/f/CYSzBUOphzm6S9/7nX4CZcAh8Moyj5QAAAAASUVORK5CYII=" y="10"/>
+    </g>
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="87" id="ent0001">
+      <rect fill="#F1F1F1" height="127.538" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116.462" x="6" y="49.154"/>
+      <image height="14" width="19" x="38.781" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAOCAYAAADNGCeJAAAA40lEQVR4XqWTyw2DMBAF3QolUAJSGqAESqAEbrlSAiVQAvdcKIESnP9XDmNp0cYy8YHDCJB2x+tnY+w07eDc9y7k0nWea9su3JrGc69rj/SD0bLTMBxosNaafzyqygmbZc+ydO88dzyjMraDjC2EzT/MtUio2yab647juH8Vhc8rKfOhhhIloiYpI6tVmRIBeRF+UsZB6NOiAZgGRAR8R2Vkpe/X2r3SiyRlIpKJNLFpozJW1RNR7Izx2yIvkND1tpMyuUOI9C/Du0iSMhFR9MmyJUM5xVC0KqNY56EJBQKTa9kXOcz9Dfhr0mwAAAAASUVORK5CYII=" y="54.154"/>
+      <text fill="#000" font-size="14" textLength="24.15" x="66.531" y="65.043">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="121.462" y1="73.154" y2="73.154"/>
+      <text fill="#000" font-size="14" textLength="34.213" x="12" y="89.12">I have</text>
+      <image height="15" width="20" x="46.213" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAYAAADkmO9VAAACvklEQVR4Xn2U30taYRjHuxlsY/9BeLV/IC+8GQRZGkn0c1oRFUVCWVnoXEp4oxgGIWVmlF30AwsiUQslsjSSWlIwCJQhrEOCLSvoGKNtjNmz5zlQtDzt4sv7nhfO5zzP9/u8pyCVSklIm5ubJ2tra/BYKysrsLCwALOzs2C32zmNjY2ByWTipNVqQaPRwN7envaeU3C/CYVCzNbW1sni4mI2Fot9vLy8LLy4uCjMZDKczs/PH3R6evpWpVL97OzsBNLu7u4HXmA4HE7Oz8+zR0dHypubm4LndHV19aq5uflHcXEx1NTUQCQSyQf6/X4Gocnp6Wn24ODgWWA2m32BFb5raGj41dPTA7gCFpIP9Hg8DPqYnJqaYvf393mBLMu+TKfTouPjY31lZeVv8q+pqen/QDSdRU/ygAh7TbBEIqGLRqOB8vLyP319fdDY2MgPXFpaYjY2NpKjo6Pszs7OP8Dr6+s39zC0w7e9vf0Z/ctRIAqFgh84NzfHBIPBJK4sJu3xer2DpNXV1UG32212uVxum832aXh4OG00Gs9kMtldW1sbVFdXA05HPhBfYHw+XyYQCNyOj4+DXq8HnU4H/f39oFQqob29HeRyOdTX14NUKuWeW1paAFsHtCofODExwWDbgFUBVgjYOmAlYDAYuAEeGBiA7u5u6O3thY6ODg5GcIlEwg/EMBi6FQTDpDlARUUFlJaW0mjcYqIpPPtG1ba2tkJdXR1UVVVBWVkZPxC9YZxOJwej66VWq6GoqAgEAgHtE/F43IjpOuicfCPRx8Ri8fNAh8MBk5OTYDabubbIH0pxZmYmxjDM+8PDQ21XVxcHeSxeoNVq/ToyMnJnsVgArxUIhUIuDPJ0fX2dpVFZXl7+8hRWUlLCD8Q/RnBoaOg7TT75Q3eUVkq2trb2DqvNYbq5p0CRSAQ4bg/Av8HM/7MrRp/IAAAAAElFTkSuQmCC" y="77.154"/>
+      <text fill="#000" font-size="14" textLength="49.787" x="66.674" y="89.12">(disk16)</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="121.462" y1="96.231" y2="96.231"/>
+      <text fill="#000" font-size="14" textLength="34.213" x="12" y="112.197">I have</text>
+      <image height="15" width="20" x="46.213" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAYAAADkmO9VAAACWUlEQVR4XqWTzWsaURTFs01XhS6zLORPEKELXRgEs/Ez0WJcVTRqNEIcQwmuImggqJAKajDkA62oQbtQFwERTP1syVBJNkoXBsQkGtxYStLc3jegi2RMS7s485hh5jfn3XPe1GAwmCI6OTmh0+k0sCkSiYDP53uitbU1sFqtcHZ2xhtxmMsIWCqVMtFo9Hu5XLZdXV3NjNTtdmc6nc5Y7Xb79fr6+g8CI6Jpms8KrFQqSXTTrNVq70bP2XRzczO9tLQ05PF4IJVKoVqt/h/w+vp6enFxcWiz2UCpVAJ+9+/A29vbF+fn5/qFhYWfFEWBSqV6HhgIBJrFYpEV2O/3X7ZaLU29Xv+AwDuz2QzolB14fHxMn56eJr1ebzOfzz8B9nq9Vwh7iwH4CHBubu7OZDJNBh4cHNCFQiF5dHTUxKQTmUyGIkqlUhTeU4eHh26/31/c2dkpOp3OzxKJ5NfKysrzwGw2+wXVxW3D5uYmOBwOIHMyGAyg0+lAo9GAWq2G+fl5WF1dBa1WC3K5fDIwFosxRY7H44Bbh42NjbHsdjssLy8zvSMiP5DJZIBO2YG7u7s0bg0SiQQEg0GwWCwgEolAIBAABjBEyCWqS5zp9XqmfwQ2Eehyuej9/X0IhULMsSJADocDs7OzgGl+u7i4sGNoHpLsCPRH4N7eHuNue3ubmZtQKASFQgHhcPgTqQxC3xiNxr8Dbm1tfXW73Q8ej4eZFZ/PB1ILrBPkcrkWqQqm/vExTCwWswMbjcZ7BF7iGWXmQ14kK0kRXT6QIuN6/xjI5XIB6zYG/gainwZjSHFUDwAAAABJRU5ErkJggg==" y="100.231"/>
+      <text fill="#000" font-size="14" textLength="42" x="66.674" y="112.197">(disk8)</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="121.462" y1="119.308" y2="119.308"/>
+      <text fill="#000" font-size="14" textLength="34.213" x="12" y="135.274">I have</text>
+      <image height="15" width="20" x="46.213" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAPCAYAAADkmO9VAAABpklEQVR4Xq3Uv2vCQBQHcLfi39Cxe7esVlxdRKu70EEE8WfioKODGlEcHBRBXHSwhxUhkxiCIChUDIiIuLg4RB1cbCktr3eBhJrGX+DwDbyQfMi9dxfDbrczkHQ6HbHVasE1iUajEAwGYTwePymOfFHAxWLx3Ov1uMlkQkuSdH8sq9XqIR6Pf4RCIRkURdGsCy6XS3O/30ez2exFua+XzWZjZBhmb7FYwOPx3A7MZrPysm8GJhIJoGn6NNhoNNBgMLgIJP0728NSqYR4nj8Jrtdro9Pp3Pt8vvNgs9lE9Xr9leM4Ri/tdpspFAoxu93+dRYcjUZst9t9LxaLkE6nD0L6RV4miNVqhUAgINcnwb+btlarQblcVpPP51VAG10QL1VECKlgLpcDr9cLbrebfI2EQZ5l2aEWOwomk0mxWq0egA6HAyiKAjxRRJ6Zz+ePWuwikHwprsHlcgGeJlQqlevBTCYzxOAPXjqkUimw2WzyAEiNz/cb2XvT6ZTSYn6/n/wc/oPb7fYO90kIh8NADr0yRVJHIpFvspHxqfjUgiaTCQRBUMFf0RkjhRNJla4AAAAASUVORK5CYII=" y="123.308"/>
+      <text fill="#000" font-size="14" textLength="42" x="66.674" y="135.274">(disk4)</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="121.462" y1="142.385" y2="142.385"/>
+      <text fill="#000" font-size="14" textLength="34.213" x="12" y="161.581">I have</text>
+      <image height="18" width="20" x="46.213" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAYAAABb0P4QAAABZElEQVR4XmP4+PEjAwjv2bPn4saNG/+TgsvLy/8XFhb+v3Dhgj3MHDABwq9fvxZ79eqVNCn4yZMn0o8fP5Z++/YtO4aB5ODJkyfv7ujouHj9+nUTmBiGImLwu3fv2KdMmbKjpKTkB8jLFy9edKDIwDdv3nCWlZV9AxlGVQO3b99eWl9f/5hqBi5btmxaTU3NK7wGnjx5MuDWrVt66OLYDCTKy7NmzVq7f//+FHRxsg3ctm1bKRCXnThxIggXPnr0aAQwhn8SZSAIAwO7ZOLEifuRcWdn53mYAeiYoIEg/PTpU0lQWMLwgQMHktANwmvgs2fPxJCz0Jo1azphGkpLS78Bk8eT2tral+iG4TQQlIWQJZANBEUUSAzkUnTDBsZAoGFdFRUVn4AJdyqoNHn+/LkQyQbeu3dPbe7cuStABldVVb0FKQTlAhAfhltaWm6iG4bTQBC+efOmAUiSVPzy5UsBmBkAI7rII4CC1xYAAAAASUVORK5CYII=" y="146.385"/>
+      <text fill="#000" font-size="14" textLength="42" x="66.674" y="161.581">(disk2)</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="121.462" y1="168.692" y2="168.692"/>
+    </g>
+    <!--class Foo2-->
+    <g class="entity" data-qualified-name="Foo2" data-source-line="98" id="ent0002">
+      <rect fill="#F1F1F1" height="41" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.938" x="140.5" y="92.654"/>
+      <image height="15" width="17" x="144.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAPCAYAAAACsSQRAAAArUlEQVR4XpWS0QmFMAxFXclRHMVRXOP9OYqjVEQeIlTux5GYxIIfB+0lPUmrXSml8xzDUH3WIgSZxK89IdjmuZ59X/X8JFERSMB7Jsx4LFRM13VZflauTELRlAhtQICMtZrQyB7x3khopwEv8o3DFNyJNiFFkjUIEmElsE/T4yjUNCUU2wn+43jnHAlRkFDEPTFBdqHpJL7A/jNvgiDxcLTsi3yS+CwjBPA2esYFrw3TZlUPVV0AAAAASUVORK5CYII=" y="97.654"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="164.5" y="109.043">Foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141.5" x2="198.438" y1="117.654" y2="117.654"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141.5" x2="198.438" y1="125.654" y2="125.654"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="216px" preserveAspectRatio="none" style="width:213px;height:216px;background:#FFFFFF;" version="1.1" viewBox="0 0 213 216" width="213px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity JunctionAnd-->
+    <g class="entity" data-qualified-name="JunctionAnd" data-source-line="4" id="ent0001">
+      <ellipse cx="132" cy="181" fill="#F5F5F5" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="77.088" x="93.456" y="208.889">JunctionAnd</text>
+    </g>
+    <!--entity JunctionOr-->
+    <g class="entity" data-qualified-name="JunctionOr" data-source-line="5" id="ent0002">
+      <ellipse cx="61" cy="36" fill="#000" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="67.638" x="27.181" y="63.889">JunctionOr</text>
+    </g>
+    <!--entity vpnServerA-->
+    <g class="entity" data-qualified-name="vpnServerA" data-source-line="7" id="ent0003">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.088" x="88" y="12"/>
+      <path d="M124.994,25.06 A0.5,0.5 0 0 0 124.494,25.556 L124.4,35.472 A0.5,0.5 0 0 0 124.9,35.976 L127.937,35.976 L125.679,38.107 A0.5,0.5 0 0 0 126.021,38.97 L139.958,39.017 A0.5,0.5 0 0 0 140.337,38.187 L138.4,35.976 L141.083,35.976 A0.5,0.5 0 0 0 141.583,35.474 L141.536,25.558 A0.5,0.5 0 0 0 141.036,25.06 M125.488,26.06 L140.539,26.06 L140.582,34.976 L125.404,34.976 M128.865,36.476 L137.509,36.476 L138.855,38.013 L127.275,37.974" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="70.088" x="98" y="52.889">VPN Server</text>
+    </g>
+    <!--entity GO-->
+    <g class="entity" data-qualified-name="GO" data-source-line="9" id="ent0004">
+      <rect fill="#90EE90" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.7" x="6" y="102"/>
+      <text fill="#000" font-size="14" textLength="21.7" x="16" y="122.889">GO</text>
+    </g>
+    <!--entity STOP-->
+    <g class="entity" data-qualified-name="STOP" data-source-line="10" id="ent0005">
+      <rect fill="#F00" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.15" x="66" y="102"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="76" y="122.889">STOP</text>
+    </g>
+    <!--entity WAIT-->
+    <g class="entity" data-qualified-name="WAIT" data-source-line="11" id="ent0006">
+      <rect fill="#FFA500" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55" x="142.5" y="102"/>
+      <text fill="#000" font-size="14" textLength="35" x="152.5" y="122.889">WAIT</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="56.129,51.175,48.866,57.827,54.131,55.759,56.199,61.024,56.129,51.175" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M54.131,55.759 C48.328,69.07 40.591,86.822 33.987,101.971" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="65.871,51.175,65.801,61.024,67.869,55.759,73.134,57.827,65.871,51.175" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M67.869,55.759 C73.672,69.07 81.409,86.822 88.013,101.971" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="125.533,171.988,124.424,162.202,123.001,167.677,117.526,166.253,125.533,171.988" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M104.528,136.224 C111.123,147.453 117.193,157.788 123.001,167.677" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="138.642,171.988,146.716,166.347,141.225,167.707,139.865,162.215,138.642,171.988" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M160.214,136.224 C153.441,147.453 147.189,157.818 141.225,167.707" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

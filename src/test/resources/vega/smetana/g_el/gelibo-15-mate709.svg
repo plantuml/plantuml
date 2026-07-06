@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="172px" preserveAspectRatio="none" style="width:414px;height:172px;background:#FFFFFF;" version="1.1" viewBox="0 0 414 172" width="414px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity JunctionAnd-->
+    <g class="entity" data-qualified-name="JunctionAnd" data-source-line="1" id="ent0001">
+      <ellipse cx="65" cy="36" fill="#000" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="77.088" x="26.456" y="63.889">JunctionAnd</text>
+    </g>
+    <!--entity JunctionOr-->
+    <g class="entity" data-qualified-name="JunctionOr" data-source-line="2" id="ent0002">
+      <ellipse cx="101" cy="36" fill="#F5F5F5" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="67.638" x="67.181" y="63.889">JunctionOr</text>
+    </g>
+    <!--entity App_Func1-->
+    <g class="entity" data-qualified-name="App_Func1" data-source-line="3" id="ent0003">
+      <rect fill="#C2F0FF" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.875" x="217.5" y="12"/>
+      <path d="M269.697,26.32 L260.734,30.289 A0.5,0.5 0 0 0 260.437,30.746 L260.437,38.783 A0.5,0.5 0 0 0 261.138,39.24 L269.933,35.361 L278.726,39.24 A0.5,0.5 0 0 0 279.429,38.783 L279.429,30.779 A0.5,0.5 0 0 0 279.13,30.322 L270.103,26.32 A0.5,0.5 0 0 0 269.697,26.32 M269.9,27.324 L278.429,31.103 L278.429,38.017 L270.134,34.357 A0.5,0.5 0 0 0 269.73,34.357 L261.437,38.017 L261.437,31.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="84.875" x="227.5" y="52.889">Do Something</text>
+    </g>
+    <!--entity SomeMotivation-->
+    <g class="entity" data-qualified-name="SomeMotivation" data-source-line="4" id="ent0004">
+      <rect fill="#CCF" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.363" x="142" y="112"/>
+      <text fill="#000" font-size="14" textLength="100.363" x="152" y="132.889">SomeMotivation</text>
+    </g>
+    <!--entity Some Function2-->
+    <g class="entity" data-qualified-name="Some Function2" data-source-line="8" id="ent0006">
+      <rect fill="#C2F0FF" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.088" x="6" y="102"/>
+      <path d="M64.803,116.32 L55.84,120.289 A0.5,0.5 0 0 0 55.543,120.746 L55.543,128.783 A0.5,0.5 0 0 0 56.244,129.24 L65.039,125.361 L73.832,129.24 A0.5,0.5 0 0 0 74.535,128.783 L74.535,120.779 A0.5,0.5 0 0 0 74.236,120.322 L65.209,116.32 A0.5,0.5 0 0 0 64.803,116.32 M65.006,117.324 L73.535,121.103 L73.535,128.017 L65.24,124.357 A0.5,0.5 0 0 0 64.836,124.357 L56.543,128.017 L56.543,121.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="98.088" x="16" y="142.889">Some Function2</text>
+    </g>
+    <!--entity App_Func4-->
+    <g class="entity" data-qualified-name="App_Func4" data-source-line="9" id="ent0007">
+      <rect fill="#C2F0FF" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.088" x="280" y="102"/>
+      <path d="M338.803,116.32 L329.84,120.289 A0.5,0.5 0 0 0 329.543,120.746 L329.543,128.783 A0.5,0.5 0 0 0 330.244,129.24 L339.039,125.361 L347.832,129.24 A0.5,0.5 0 0 0 348.535,128.783 L348.535,120.779 A0.5,0.5 0 0 0 348.236,120.322 L339.209,116.32 A0.5,0.5 0 0 0 338.803,116.32 M339.006,117.324 L347.535,121.103 L347.535,128.017 L339.24,124.357 A0.5,0.5 0 0 0 338.836,124.357 L330.543,128.017 L330.543,121.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="98.088" x="290" y="142.889">SomeFunction3</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="214.485,111.843,223.153,107.168,217.542,107.887,216.823,102.276,214.485,111.843" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M249.598,66.403 C238.174,81.186 227.357,95.186 217.542,107.887" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="318.55,101.919,316.145,92.368,315.465,97.984,309.849,97.305,318.55,101.919" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M290.702,66.403 C299.515,77.642 306.68,86.781 315.465,97.984" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="94px" preserveAspectRatio="none" style="width:111px;height:94px;background:#FFFFFF;" version="1.1" viewBox="0 0 111 94" width="111px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Event_or-->
+    <g class="entity" data-qualified-name="Event_or" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="66" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="89.088" x="6" y="12"/>
+      <ellipse cx="21.489" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16.489" y="35">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="43.35" x="41.923" y="26.333">«Entity»</text>
+      <text fill="#000" font-size="14" textLength="56" x="35.598" y="39.889">Event_or</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="94.088" y1="48" y2="48"/>
+      <a href="https://www.openresearch.org/wiki/Property:Event_in_series" target="_top" title="foreign key(pagename) of the Event series this event belongs to" xlink:actuate="onRequest" xlink:href="https://www.openresearch.org/wiki/Property:Event_in_series" xlink:show="new" xlink:title="foreign key(pagename) of the Event series this event belongs to" xlink:type="simple">
+        <text fill="#00F" font-size="14" text-decoration="underline" textLength="37.363" x="12" y="62.889">series</text>
+      </a>
+      <text fill="#000" font-size="14" textLength="39.725" x="49.363" y="62.889">: TEXT</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="94.088" y1="70" y2="70"/>
+    </g>
+  </g>
+</svg>

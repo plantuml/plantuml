@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="125px" preserveAspectRatio="none" style="width:170px;height:125px;background:#FFFFFF;" version="1.1" viewBox="0 0 170 125" width="170px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="29">
+      <text fill="#000" font-size="14" font-weight="700" textLength="143.15" x="10" y="20.889">produces a red rectangle</text>
+    </g>
+    <!--entity C1-->
+    <g class="entity" data-qualified-name="C1" data-source-line="30" id="ent0001">
+      <path d="M29.575,47 L130.725,47 L148.725,65 L148.725,91 L130.725,109 L29.575,109 L11.575,91 L11.575,65 L29.575,47" fill="#FFF" style="stroke:#8B0000;stroke-width:0.5;"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="102.025" x="29.138" y="67.889">«RedContainer»</text>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="115.15" x="22.575" y="81.889">«GreenContainer»</text>
+      <text fill="#F00" font-size="14" textLength="17.938" x="71.181" y="95.889">C1</text>
+    </g>
+  </g>
+</svg>

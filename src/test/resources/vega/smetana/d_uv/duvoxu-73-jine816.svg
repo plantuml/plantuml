@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="328px" preserveAspectRatio="none" style="width:276px;height:328px;background:#FFFFFF;" version="1.1" viewBox="0 0 276 328" width="276px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A0-->
+    <g class="entity" data-qualified-name="A0" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="59" y="12"/>
+      <ellipse cx="74" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="69" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="88" y="31.889">A0</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60" x2="107.15" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60" x2="107.15" y1="52" y2="52"/>
+    </g>
+    <!--class A1-->
+    <g class="entity" data-qualified-name="A1" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="59" y="96"/>
+      <ellipse cx="74" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="69" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="88" y="115.889">A1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60" x2="107.15" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60" x2="107.15" y1="136" y2="136"/>
+    </g>
+    <!--class A2-->
+    <g class="entity" data-qualified-name="A2" data-source-line="3" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="183" y="96"/>
+      <ellipse cx="198" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="193" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="212" y="115.889">A2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="184" x2="231.15" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="184" x2="231.15" y1="136" y2="136"/>
+    </g>
+    <!--class A3-->
+    <g class="entity" data-qualified-name="A3" data-source-line="4" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="6" y="180"/>
+      <ellipse cx="21" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="201">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="35" y="199.889">A3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.15" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.15" y1="220" y2="220"/>
+    </g>
+    <!--class A5-->
+    <g class="entity" data-qualified-name="A5" data-source-line="6" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="59" y="264"/>
+      <ellipse cx="74" cy="280" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="69" y="285">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="88" y="283.889">A5</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60" x2="107.15" y1="296" y2="296"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="60" x2="107.15" y1="304" y2="304"/>
+    </g>
+    <!--class A4-->
+    <g class="entity" data-qualified-name="A4" data-source-line="7" id="ent0010">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="147" y="180"/>
+      <ellipse cx="162" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="157" y="201">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="176" y="199.889">A4</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="148" x2="195.15" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="148" x2="195.15" y1="220" y2="220"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN14" data-source-line="12" id="ent0015">
+      <path d="M126.5,108 L126.5,116 L108.203,120 L126.5,124 L126.5,131 A0,0 0 0 0 126.5,131 L164.806,131 A0,0 0 0 0 164.806,131 L164.806,118 L154.806,108 L126.5,108 A0,0 0 0 0 126.5,108" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M154.806,108 L154.806,118 L164.806,118 L154.806,108" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="17.306" x="132.5" y="123.111">left</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN17" data-source-line="13" id="ent0018">
+      <path d="M214.5,192 L214.5,200 L196.25,204 L214.5,208 L214.5,215 A0,0 0 0 0 214.5,215 L260.769,215 A0,0 0 0 0 260.769,215 L260.769,202 L250.769,192 L214.5,192 A0,0 0 0 0 214.5,192" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M250.769,192 L250.769,202 L260.769,202 L250.769,192" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="220.5" y="207.111">right</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M83.5,60.279 C83.5,71.453 83.5,84.802 83.5,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M108.01,52.931 C126.143,64.75 151.418,81.295 173.5,96 C176.466,97.975 179.57,100.056 182.646,102.126" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M67.63,60.193 C61.105,70.71 54.031,83.559 49.5,96 C39.363,123.833 34.514,157.771 32.279,179.858" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0008" data-link-type="association" id="lnk9">
+      <path d="M83.5,144.082 C83.5,175.707 83.5,232.185 83.5,263.847" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0010" data-link-type="association" id="lnk11">
+      <path d="M197.28,144.279 C192.374,155.453 186.514,168.802 181.621,179.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0008" data-link-type="association" id="lnk12">
+      <path d="M146.987,227.842 C134.883,239.12 120.314,252.696 108.187,263.997" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="association" id="lnk13">
+      <path d="M45.546,228.279 C52.768,239.453 61.397,252.802 68.6,263.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="343px" preserveAspectRatio="none" style="width:503px;height:343px;background:#FFFFFF;" version="1.1" viewBox="0 0 503 343" width="503px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity UC1-->
+    <g class="entity" data-qualified-name="UC1" data-source-line="1" id="ent0001">
+      <ellipse cx="101.441" cy="88.952" fill="#F1F1F1" rx="95.441" ry="76.952" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="62.109" y="32.528">This usecase</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="33.617" x2="169.265" y1="35.639" y2="35.639"/>
+      <text fill="#000" font-size="14" textLength="99.75" x="51.566" y="50.528">is on several lines</text>
+      <text fill="#000" font-size="14" textLength="155.75" x="20.566" y="82.528">and have a long description</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="11.889" x2="91.728" y1="64.639" y2="64.639"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="91.728" y="68.028">foo</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="111.153" x2="190.992" y1="64.639" y2="64.639"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="83.834" y="114.528">foo2</text>
+      <text fill="#000" font-size="14" x="93.941" y="128.528">x</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7.477" x2="87.834" y1="96.639" y2="96.639"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="87.834" y="100.028">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="115.047" x2="195.404" y1="96.639" y2="96.639"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="26.571" x2="176.31" y1="135.639" y2="135.639"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="28.53" x2="174.351" y1="137.639" y2="137.639"/>
+      <text fill="#000" font-size="14" textLength="54.337" x="74.272" y="150.528">other text</text>
+    </g>
+    <!--entity UC2-->
+    <g class="entity" data-qualified-name="UC2" data-source-line="13" id="ent0002">
+      <ellipse cx="238.361" cy="88.899" fill="#F1F1F1" rx="22.861" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="224.317" y="92.399">UC2</text>
+    </g>
+    <!--entity UC3-->
+    <g class="entity" data-qualified-name="UC3" data-source-line="15" id="ent0003">
+      <ellipse cx="383.402" cy="89.075" fill="#F1F1F1" rx="103.402" ry="30.075" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="344.071" y="74.664">This usecase</text>
+      <text fill="#000" font-size="14" textLength="99.75" x="333.527" y="88.664">is on several lines</text>
+      <text fill="#000" font-size="14" textLength="155.75" x="305.527" y="102.664">and have a long description</text>
+    </g>
+    <!--entity DB1-->
+    <g class="entity" data-qualified-name="DB1" data-source-line="19" id="ent0004">
+      <path d="M78,253 C78,243 101.65,243 101.65,243 C101.65,243 125.3,243 125.3,253 L125.3,276 C125.3,286 101.65,286 101.65,286 C101.65,286 78,286 78,276 L78,253" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M78,253 C78,263 101.65,263 101.65,263 C101.65,263 125.3,263 125.3,253" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.3" x="88" y="277.889">DB1</text>
+    </g>
+    <!--entity DB2-->
+    <g class="entity" data-qualified-name="DB2" data-source-line="21" id="ent0005">
+      <path d="M143,212 C143,202 212.481,202 212.481,202 C212.481,202 281.963,202 281.963,212 L281.963,317 C281.963,327 212.481,327 212.481,327 C212.481,327 143,327 143,317 L143,212" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M143,212 C143,222 212.481,222 212.481,222 C212.481,222 281.963,222 281.963,212" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="58.45" x="153" y="236.889">this is long</text>
+      <path d="M143,235 C143,245 212.481,245 212.481,245 C212.481,245 281.963,245 281.963,235" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="47.425" x="153" y="254.889">another</text>
+      <text fill="#000" font-size="14" textLength="21.875" x="153" y="268.889">line</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="153" y="300.889">to finish</text>
+      <text fill="#000" font-size="14" textLength="112.963" x="153" y="314.889">and on several lines</text>
+      <path d="M143,278 C143,288 212.481,288 212.481,288 C212.481,288 281.963,288 281.963,278" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;"/>
+      <rect fill="#F1F1F1" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" width="47.425" x="188.769" y="275.5"/>
+      <text fill="#000" font-size="14" textLength="47.425" x="188.769" y="286.389">with text</text>
+    </g>
+  </g>
+</svg>

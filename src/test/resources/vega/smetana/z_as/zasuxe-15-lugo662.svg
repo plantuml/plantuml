@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="157px" preserveAspectRatio="none" style="width:732px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 732 157" width="732px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster abc-->
+    <g class="cluster" data-qualified-name="abc" data-source-line="6" id="ent0001">
+      <path d="M16.5,4 L254.313,4 A3.75,3.75 0 0 1 256.813,6.5 L263.813,40 L565.5,40 A2.5,2.5 0 0 1 568,42.5 L568,130.5 A2.5,2.5 0 0 1 565.5,133 L16.5,133 A2.5,2.5 0 0 1 14,130.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="263.813" y1="40" y2="40"/>
+      <a href="link" target="_top" title="link" xlink:actuate="onRequest" xlink:href="link" xlink:show="new" xlink:title="link" xlink:type="simple">
+        <text fill="#00F" font-size="30" font-weight="700" text-decoration="underline" textLength="236.813" x="18" y="29.333">to confluence page</text>
+      </a>
+    </g>
+    <!--cluster page-->
+    <g class="cluster" data-qualified-name="page" data-source-line="11" id="ent0005">
+      <path d="M578.5,4 L646.25,4 A3.75,3.75 0 0 1 648.75,6.5 L655.75,40 L721.5,40 A2.5,2.5 0 0 1 724,42.5 L724,130.5 A2.5,2.5 0 0 1 721.5,133 L578.5,133 A2.5,2.5 0 0 1 576,130.5 L576,6.5 A2.5,2.5 0 0 1 578.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="576" x2="655.75" y1="40" y2="40"/>
+      <a href="link/to/another/page" target="_top" title="link/to/another/page" xlink:actuate="onRequest" xlink:href="link/to/another/page" xlink:show="new" xlink:title="link/to/another/page" xlink:type="simple">
+        <text fill="#00F" font-size="30" font-weight="700" text-decoration="underline" textLength="66.75" x="580" y="29.333">page</text>
+      </a>
+    </g>
+    <path d="M408.5,45 L543,45 A3.75,3.75 0 0 1 545.5,47.5 L552.5,81 L557,81 A2.5,2.5 0 0 1 559.5,83.5 L559.5,122.5 A2.5,2.5 0 0 1 557,125 L408.5,125 A2.5,2.5 0 0 1 406,122.5 L406,47.5 A2.5,2.5 0 0 1 408.5,45" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="406" x2="552.5" y1="81" y2="81"/>
+    <text fill="#000" font-size="30" font-weight="700" textLength="133.5" x="410" y="70.333">Example1</text>
+    <path d="M236.5,45 L371,45 A3.75,3.75 0 0 1 373.5,47.5 L380.5,81 L385,81 A2.5,2.5 0 0 1 387.5,83.5 L387.5,122.5 A2.5,2.5 0 0 1 385,125 L236.5,125 A2.5,2.5 0 0 1 234,122.5 L234,47.5 A2.5,2.5 0 0 1 236.5,45" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="234" x2="380.5" y1="81" y2="81"/>
+    <text fill="#000" font-size="30" font-weight="700" textLength="133.5" x="238" y="70.333">Example2</text>
+    <!--entity abc-service-->
+    <g class="entity" data-qualified-name="abc.abc-service" data-source-line="9" id="ent0004">
+      <rect fill="#F1F1F1" height="60" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="193.375" x="22.5" y="55"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="195.875" y="60"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="193.875" y="62"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="193.875" y="66"/>
+      <text fill="#000" font-size="30" textLength="153.375" x="37.5" y="98.333">abc-service</text>
+    </g>
+    <path d="M586.5,45 L699.25,45 A3.75,3.75 0 0 1 701.75,47.5 L708.75,81 L713.25,81 A2.5,2.5 0 0 1 715.75,83.5 L715.75,122.5 A2.5,2.5 0 0 1 713.25,125 L586.5,125 A2.5,2.5 0 0 1 584,122.5 L584,47.5 A2.5,2.5 0 0 1 586.5,45" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="584" x2="708.75" y1="81" y2="81"/>
+    <text fill="#000" font-size="30" font-weight="700" textLength="111.75" x="588" y="70.333">subpack</text>
+  </g>
+</svg>

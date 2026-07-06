@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="137px" preserveAspectRatio="none" style="width:346px;height:137px;background:#FFFFFF;" version="1.1" viewBox="0 0 346 137" width="346px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Name1-->
+    <g class="cluster" data-qualified-name="Name1" data-source-line="2" id="ent0002">
+      <path d="M16.5,4 L62.65,4 A3.75,3.75 0 0 1 65.15,6.5 L72.15,24 L225.5,24 A2.5,2.5 0 0 1 228,26.5 L228,110.5 A2.5,2.5 0 0 1 225.5,113 L16.5,113 A2.5,2.5 0 0 1 14,110.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="72.15" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="18" y="16.889">Name1</text>
+    </g>
+    <!--cluster Name2-->
+    <g class="cluster" data-qualified-name="Name2" data-source-line="6" id="ent0004">
+      <path d="M238.5,11 L284.65,11 A3.75,3.75 0 0 1 287.15,13.5 L294.15,31 L335.5,31 A2.5,2.5 0 0 1 338,33.5 L338,103.5 A2.5,2.5 0 0 1 335.5,106 L238.5,106 A2.5,2.5 0 0 1 236,103.5 L236,13.5 A2.5,2.5 0 0 1 238.5,11" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="236" x2="294.15" y1="31" y2="31"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="240" y="23.889">Name2</text>
+    </g>
+    <!--class ClassA-->
+    <g class="entity" data-qualified-name="Name1..ClassA" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="197.85" x="22" y="29"/>
+      <ellipse cx="94.45" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="89.45" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="44.45" x="114.95" y="48.889">ClassA</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="218.85" y1="61" y2="61"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="33" cy="73.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="171.85" x="42" y="75.889">Name2::ClassB m_Member;</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="218.85" y1="83" y2="83"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="33" cy="95.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="58.275" x="42" y="97.889">void foo();</text>
+    </g>
+    <!--class ClassB-->
+    <g class="entity" data-qualified-name="Name2..ClassB" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.062" x="244.5" y="36"/>
+      <ellipse cx="263.376" cy="52" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="258.376" y="57">C</text>
+      <text fill="#000" font-size="14" textLength="44.45" x="278.237" y="55.889">ClassB</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="245.5" x2="328.563" y1="68" y2="68"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="245.5" x2="328.563" y1="76" y2="76"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="255.5" cy="88.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="59.062" x="264.5" y="90.889">void bar();</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="composition" id="lnk5">
+      <polygon fill="#181818" points="220.211,67,226.211,71,232.211,67,226.211,63,220.211,67" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M232.211,67 C240.299,67 236.386,67 244.474,67" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

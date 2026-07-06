@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="144px" preserveAspectRatio="none" style="width:261px;height:144px;background:#FFFFFF;" version="1.1" viewBox="0 0 261 144" width="261px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="deepCSS0" data-source-line="2" id="ent0001">
+      <path d="M6,12 L6,52 L103.619,52 L103.619,22 L93.619,12 L6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M93.619,12 L93.619,22 L103.619,22 L93.619,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <rect fill="#FFF" height="13" style="stroke:none;" width="76.619" x="12" y="19"/>
+      <text fill="#000" font-size="13" textLength="76.619" x="12" y="29.111">Husky / Yorkie</text>
+      <rect fill="#DCDCDC" height="13" style="stroke:none;" width="76.619" x="12" y="32"/>
+      <text fill="#000" font-size="13" textLength="75.156" x="12" y="42.111">SourceTree0</text>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="88.619" y1="19" y2="19"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="88.619" y1="32" y2="32"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="88.619" y1="45" y2="45"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="12" y1="19" y2="45"/>
+      <line style="stroke:#000;stroke-width:1;" x1="88.619" x2="88.619" y1="19" y2="45"/>
+    </g>
+    <g class="entity" data-qualified-name="deepCSS1" data-source-line="7" id="ent0002">
+      <path d="M122.5,12 L122.5,52 L245.388,52 L245.388,22 L235.388,12 L122.5,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M235.388,12 L235.388,22 L245.388,22 L235.388,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <rect fill="#FFF" height="13" style="stroke:none;" width="76.619" x="128.5" y="19"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="76.619" x="128.5" y="29.111">Husky / Yorkie</text>
+      <text fill="#000" font-size="13" font-weight="700" textLength="22.425" x="205.119" y="29.111">Foo</text>
+      <rect fill="#DCDCDC" height="13" style="stroke:none;" width="76.619" x="128.5" y="32"/>
+      <text fill="#000" font-size="13" textLength="75.156" x="129.962" y="42.111">SourceTree1</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="205.119" y="42.111">foo1</text>
+      <line style="stroke:#000;stroke-width:1;" x1="128.5" x2="230.388" y1="19" y2="19"/>
+      <line style="stroke:#000;stroke-width:1;" x1="128.5" x2="230.388" y1="32" y2="32"/>
+      <line style="stroke:#000;stroke-width:1;" x1="128.5" x2="230.388" y1="45" y2="45"/>
+      <line style="stroke:#000;stroke-width:1;" x1="128.5" x2="128.5" y1="19" y2="45"/>
+      <line style="stroke:#000;stroke-width:1;" x1="205.119" x2="205.119" y1="19" y2="45"/>
+      <line style="stroke:#000;stroke-width:1;" x1="230.388" x2="230.388" y1="19" y2="45"/>
+    </g>
+    <g class="entity" data-qualified-name="deepCSS2" data-source-line="12" id="ent0003">
+      <path d="M6,88 L6,128 L103.619,128 L103.619,98 L93.619,88 L6,88" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M93.619,88 L93.619,98 L103.619,98 L93.619,88" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="76.619" x="12" y="105.111">Husky / Yorkie</text>
+      <rect fill="#DCDCDC" height="13" style="stroke:none;" width="76.619" x="12" y="108"/>
+      <text fill="#000" font-size="13" textLength="75.156" x="12" y="118.111">SourceTree2</text>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="88.619" y1="95" y2="95"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="88.619" y1="108" y2="108"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="88.619" y1="121" y2="121"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="12" y1="95" y2="121"/>
+      <line style="stroke:#000;stroke-width:1;" x1="88.619" x2="88.619" y1="95" y2="121"/>
+    </g>
+    <g class="entity" data-qualified-name="deepCSS3" data-source-line="17" id="ent0004">
+      <path d="M122.5,88 L122.5,128 L245.388,128 L245.388,98 L235.388,88 L122.5,88" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M235.388,88 L235.388,98 L245.388,98 L235.388,88" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <rect fill="#FFF" height="13" style="stroke:none;" width="101.887" x="128.5" y="95"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="76.619" x="128.5" y="105.111">Husky / Yorkie</text>
+      <text fill="#000" font-size="13" font-weight="700" textLength="22.425" x="205.119" y="105.111">Foo</text>
+      <rect fill="#DCDCDC" height="13" style="stroke:none;" width="76.619" x="128.5" y="108"/>
+      <text fill="#000" font-size="13" textLength="75.156" x="128.5" y="118.111">SourceTree1</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="205.119" y="118.111">foo1</text>
+      <line style="stroke:#000;stroke-width:1;" x1="128.5" x2="230.388" y1="95" y2="95"/>
+      <line style="stroke:#000;stroke-width:1;" x1="128.5" x2="230.388" y1="108" y2="108"/>
+      <line style="stroke:#000;stroke-width:1;" x1="128.5" x2="230.388" y1="121" y2="121"/>
+      <line style="stroke:#000;stroke-width:1;" x1="128.5" x2="128.5" y1="95" y2="121"/>
+      <line style="stroke:#000;stroke-width:1;" x1="205.119" x2="205.119" y1="95" y2="121"/>
+      <line style="stroke:#000;stroke-width:1;" x1="230.388" x2="230.388" y1="95" y2="121"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="245px" preserveAspectRatio="none" style="width:148px;height:245px;background:#FFFFFF;" version="1.1" viewBox="0 0 148 245" width="148px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="101.238" x="19.881" y="20.889">minimal example</text>
+    </g>
+    <!--entity f-->
+    <g class="entity" data-qualified-name="f" data-source-line="3" id="ent0001">
+      <path d="M6,49.5 L6,226.5 A2.5,2.5 0 0 0 8.5,229 L129.288,229 A2.5,2.5 0 0 0 131.788,226.5 L131.788,57 L121.788,47 L8.5,47 A2.5,2.5 0 0 0 6,49.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M121.788,47 L121.788,54.5 A2.5,2.5 0 0 0 124.288,57 L131.788,57" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <a href="" target="_top" title="a b" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="a b" xlink:type="simple">
+        <text fill="#00F" font-size="14" text-decoration="underline" textLength="59.85" x="16" y="67.889">tooltip test</text>
+      </a>
+      <text fill="#000" font-size="14" x="16" y="81.889"> </text>
+      <text fill="#000" font-size="14" x="16" y="97.889"> </text>
+      <a href="" target="_top" title="a b" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="a b" xlink:type="simple">
+        <text fill="#00F" font-size="14" text-decoration="underline" textLength="105.788" x="16" y="97.889">tooltip test on table</text>
+      </a>
+      <text fill="#000" font-size="14" x="121.788" y="97.889"> </text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="121.788" y1="87" y2="87"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="121.788" y1="101" y2="101"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="16" y1="87" y2="101"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="121.788" x2="121.788" y1="87" y2="101"/>
+      <text fill="#000" font-size="14" x="16" y="113.889"> </text>
+      <a href="" target="_top" title="a b print(&quot;abc &quot;);" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="a b print(&quot;abc &quot;);" xlink:type="simple">
+        <text fill="#00F" font-size="14" text-decoration="underline" textLength="59.85" x="16" y="127.889">tooltip test</text>
+      </a>
+      <a href="" target="_top" title="a b &lt;code&gt;print(&quot;abc &quot;);&lt;/code&gt;" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="a b &lt;code&gt;print(&quot;abc &quot;);&lt;/code&gt;" xlink:type="simple">
+        <text fill="#00F" font-size="14" text-decoration="underline" textLength="59.85" x="16" y="141.889">tooltip test</text>
+      </a>
+      <text fill="#000" font-size="14" x="16" y="155.889"> </text>
+      <a href="" target="_top" title="a b print(&quot;abc\ &quot;);" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="a b print(&quot;abc\ &quot;);" xlink:type="simple">
+        <text fill="#00F" font-size="14" text-decoration="underline" textLength="59.85" x="16" y="169.889">tooltip test</text>
+      </a>
+      <a href="" target="_top" title="a b &lt;code&gt;print(&quot;abc\ &quot;);&lt;/code&gt;" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="a b &lt;code&gt;print(&quot;abc\ &quot;);&lt;/code&gt;" xlink:type="simple">
+        <text fill="#00F" font-size="14" text-decoration="underline" textLength="59.85" x="16" y="183.889">tooltip test</text>
+      </a>
+      <text fill="#000" font-size="14" x="16" y="197.889"> </text>
+      <text fill="#000" font-size="14" x="16" y="213.889"> </text>
+      <a href="" target="_top" title="a b &lt;code&gt;print(&quot;abc &quot;);&lt;/code&gt;" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="a b &lt;code&gt;print(&quot;abc &quot;);&lt;/code&gt;" xlink:type="simple">
+        <text fill="#00F" font-size="14" text-decoration="underline" textLength="105.788" x="16" y="213.889">tooltip test on table</text>
+      </a>
+      <text fill="#000" font-size="14" x="121.788" y="213.889"> </text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="121.788" y1="203" y2="203"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="121.788" y1="217" y2="217"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="16" y1="203" y2="217"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="121.788" x2="121.788" y1="203" y2="217"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="226px" preserveAspectRatio="none" style="width:127px;height:226px;background:#FFFFFF;" version="1.1" viewBox="0 0 127 226" width="127px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity XX-->
+    <g class="entity" data-qualified-name="XX" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.725" x="6" y="34"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="44.725" y="39"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="42.725" y="41"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="42.725" y="45"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="21" y="64.889">XX</text>
+    </g>
+    <!--entity AA-->
+    <g class="entity" data-qualified-name="AA" data-source-line="6" id="ent0002">
+      <ellipse cx="97.713" cy="34.5" fill="#ADD8E6" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M97.713,42.5 L97.713,69.5 M84.713,50.5 L110.713,50.5 M97.713,69.5 L84.713,84.5 M97.713,69.5 L110.713,84.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="88.35" y="96.889">AA</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="84.5" y="22.889">«st»</text>
+    </g>
+    <!--entity BB-->
+    <g class="entity" data-qualified-name="BB" data-source-line="7" id="ent0003">
+      <ellipse cx="35.5" cy="144.5" fill="#FF0" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M35.5,152.5 L35.5,179.5 M22.5,160.5 L48.5,160.5 M35.5,179.5 L22.5,194.5 M35.5,179.5 L48.5,194.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="26.138" y="206.889">BB</text>
+    </g>
+  </g>
+</svg>

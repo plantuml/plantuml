@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:161px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 161 104" width="161px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class test-->
+    <g class="entity" data-qualified-name="test" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.788" x="6" y="12"/>
+      <ellipse cx="59.9" cy="28" fill="#F0D" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="54.9" y="33">A</text>
+      <text fill="#000" font-size="14" textLength="22.488" x="80.4" y="31.889">test</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="143.788" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="12" y="58.889">id: int4</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="143.788" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="126.788" x="12" y="80.889">do_something(): void</text>
+    </g>
+  </g>
+</svg>

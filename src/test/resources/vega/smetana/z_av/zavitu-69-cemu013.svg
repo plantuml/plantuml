@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="660px" preserveAspectRatio="none" style="width:861px;height:660px;background:#FFFFFF;" version="1.1" viewBox="0 0 861 660" width="861px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="cluster" data-qualified-name="..3" data-source-line="3" id="ent0004">
+      <path d="M129.514,178.913 C132.168,172.677 137.851,171.786 142.482,176.589 C145.28,170.893 150.534,171.465 153.739,176.148 C158.055,170.151 162.329,169.682 167.383,175.28 C170.292,168.991 176.209,169.102 179.927,174.404 C183.463,166.702 190.303,167.729 193.964,174.28 C197.792,167.513 204.312,168.619 207.596,174.851 C212.283,170.208 217.78,170.51 219.946,177.522 C223.253,172.059 228.504,171.173 232.156,177.155 C238.589,180.24 239.88,184.301 235.082,189.953 C239.526,193.331 240.652,197.579 234.936,200.82 C239.12,204.015 238.442,208.589 233.754,210.725 C239.253,214.829 239.035,219.016 232.965,222.333 C229.355,229.89 223.555,229.234 219.248,223.029 C216.888,228.716 211.727,229.917 207.632,224.915 C204.585,231.91 198.78,232.685 194.343,226.295 C189.55,233.967 184.445,233.239 179.887,226.066 C176.333,230.712 170.88,231.58 167.891,225.438 C163.102,232.328 157.096,229.837 154.15,223.52 C151.324,229.146 145.535,228.611 142.452,223.808 C137.704,230.206 131.254,230.179 127.589,222.652 C122.258,219.124 122.289,213.987 127.758,210.611 C122.386,209.635 120.028,204.954 124.323,200.646 C119.354,195.995 118.711,191.056 126.049,188.098 C123.252,183.708 124.176,180.233 129.514,178.913" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <!--cluster Linode-->
+    <g class="cluster" data-qualified-name="Linode" data-source-line="10" id="ent0009">
+      <polygon fill="none" points="37.5,320,47.5,310,821.5,310,821.5,626,811.5,636,37.5,636,37.5,320" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="811.5" x2="821.5" y1="320" y2="310"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="37.5" x2="811.5" y1="320" y2="320"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="811.5" x2="811.5" y1="320" y2="636"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42.087" x="404.456" y="333.889">Linode</text>
+    </g>
+    <!--cluster Nanode (139.123.123.123)-->
+    <g class="cluster" data-qualified-name="Linode.Nanode .139.123.123.123." data-source-line="11" id="ent0010">
+      <rect fill="none" height="217" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="528" x="285.5" y="411"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="793.5" y="416"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="791.5" y="418"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="791.5" y="422"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="153.388" x="472.806" y="434.889">«Ubuntu Virtual Machine»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="163.363" x="467.819" y="448.889">Nanode (139.123.123.123)</text>
+    </g>
+    <!--cluster root_folder-->
+    <g class="cluster" data-qualified-name="Linode.Nanode .139.123.123.123..root_folder" data-source-line="14" id="ent0013">
+      <path d="M296,535 L324.913,535 A3.75,3.75 0 0 1 327.413,537.5 L334.413,555 L625,555 A2.5,2.5 0 0 1 627.5,557.5 L627.5,613.5 A2.5,2.5 0 0 1 625,616 L296,616 A2.5,2.5 0 0 1 293.5,613.5 L293.5,537.5 A2.5,2.5 0 0 1 296,535" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="293.5" x2="334.413" y1="555" y2="555"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.912" x="297.5" y="547.889">/root</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="50.575" x="439.213" y="567.889">«folder»</text>
+    </g>
+    <!--entity Customer-->
+    <g class="entity" data-qualified-name="Customer" data-source-line="1" id="ent0001">
+      <ellipse cx="36.319" cy="12.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M36.319,20.5 L36.319,47.5 M23.319,28.5 L49.319,28.5 M36.319,47.5 L23.319,62.5 M36.319,47.5 L49.319,62.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="60.637" x="6" y="74.889">Customer</text>
+    </g>
+    <!--entity Hacker-->
+    <g class="entity" data-qualified-name="Hacker" data-source-line="2" id="ent0002">
+      <ellipse cx="470.681" cy="170.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="468.737" x2="478.442" y1="178.26" y2="168.556"/>
+      <path d="M470.681,178.5 L470.681,205.5 M457.681,186.5 L483.681,186.5 M470.681,205.5 L457.681,220.5 M470.681,205.5 L483.681,220.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="44.363" x="448.5" y="232.889">Hacker</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN6" data-source-line="7" id="ent0007">
+      <path d="M180,29 L180,52 A0,0 0 0 0 180,52 L321.282,52 L231.805,189.146 L329.282,52 L466.85,52 A0,0 0 0 0 466.85,52 L466.85,39 L456.85,29 L180,29 A0,0 0 0 0 180,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M456.85,29 L456.85,39 L466.85,39 L456.85,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="265.85" x="186" y="44.111">Analyze every request and send to Server if secure</text>
+    </g>
+    <!--entity Cloudflare-->
+    <g class="entity" data-qualified-name="..3.Cloudflare" data-source-line="4" id="ent0005">
+      <polygon fill="#F1F1F1" points="127.5,187,137.5,177,231.375,177,231.375,211,221.375,221,127.5,221,127.5,187" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="221.375" x2="231.375" y1="187" y2="177"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="127.5" x2="221.375" y1="187" y2="187"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="221.375" x2="221.375" y1="187" y2="221"/>
+      <text fill="#000" font-size="14" textLength="63.875" x="142.5" y="207.889">Cloudflare</text>
+    </g>
+    <!--entity Linode Firewall-->
+    <g class="entity" data-qualified-name="Linode.Linode Firewall" data-source-line="21" id="ent0018">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="130.475" x="239.5" y="340"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="349.975" y="345"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="347.975" y="347"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="347.975" y="351"/>
+      <text fill="#000" font-size="14" textLength="90.475" x="254.5" y="370.889">Linode Firewall</text>
+    </g>
+    <g class="entity" data-qualified-name="Linode.GMN19" data-source-line="22" id="ent0020">
+      <path d="M46,467 L46,490 A0,0 0 0 0 46,490 L277.438,490 A0,0 0 0 0 277.438,490 L277.438,477 L267.438,467 L179.423,467 L278.272,384.093 L171.423,467 L46,467 A0,0 0 0 0 46,467" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M267.438,467 L267.438,477 L277.438,477 L267.438,467" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="31.2" x="52" y="482.111">Allow</text>
+      <text fill="#000" font-size="13" font-weight="700" textLength="35.425" x="83.2" y="482.111">ONLY</text>
+      <text fill="#000" font-size="13" textLength="143.813" x="118.625" y="482.111">Cloudflare IPs and port 443</text>
+    </g>
+    <!--entity nginx-->
+    <g class="entity" data-qualified-name="Linode.Nanode .139.123.123.123..nginx" data-source-line="12" id="ent0011">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.575" x="493.5" y="450"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="601.075" y="455"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="599.075" y="457"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="599.075" y="461"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="85.575" x="509.5" y="480.889">«Web Server»</text>
+      <text fill="#000" font-size="14" textLength="33.513" x="535.531" y="494.889">nginx</text>
+    </g>
+    <!--entity AppServer-->
+    <g class="entity" data-qualified-name="Linode.Nanode .139.123.123.123..AppServer" data-source-line="13" id="ent0012">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="167.388" x="638" y="562"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="785.388" y="567"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="783.388" y="569"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="783.388" y="573"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="125.388" x="654" y="592.889">«Application Server»</text>
+      <text fill="#000" font-size="14" textLength="66.15" x="683.619" y="606.889">AppServer</text>
+    </g>
+    <g class="entity" data-qualified-name="Linode.Nanode .139.123.123.123..N1" data-source-line="18" id="ent0016">
+      <path d="M295.5,467 L295.5,490 L475.506,490 L475.506,477 L465.506,467 L295.5,467" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M465.506,467 L465.506,477 L475.506,477 L465.506,467" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="159.006" x="301.5" y="482.111">Cloudflare Origin Certificates</text>
+    </g>
+    <!--entity ssl_certificate.pem-->
+    <g class="entity" data-qualified-name="Linode.Nanode .139.123.123.123..root_folder.ssl_certificate.pem" data-source-line="15" id="ent0014">
+      <path d="M483.5,576.5 L483.5,605.5 A2.5,2.5 0 0 0 486,608 L616.85,608 A2.5,2.5 0 0 0 619.35,605.5 L619.35,584 L609.35,574 L486,574 A2.5,2.5 0 0 0 483.5,576.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M609.35,574 L609.35,581.5 A2.5,2.5 0 0 0 611.85,584 L619.35,584" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="115.85" x="493.5" y="594.889">ssl_certificate.pem</text>
+    </g>
+    <!--entity ssl_certificate.key-->
+    <g class="entity" data-qualified-name="Linode.Nanode .139.123.123.123..root_folder.ssl_certificate.key" data-source-line="16" id="ent0015">
+      <path d="M335.5,576.5 L335.5,605.5 A2.5,2.5 0 0 0 338,608 L463.425,608 A2.5,2.5 0 0 0 465.925,605.5 L465.925,584 L455.925,574 L338,574 A2.5,2.5 0 0 0 335.5,576.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M455.925,574 L455.925,581.5 A2.5,2.5 0 0 0 458.425,584 L465.925,584" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="110.425" x="345.5" y="594.889">ssl_certificate.key</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0013" data-link-type="association" id="lnk17">
+      <path d="M369.535,491.127 C362.889,496.148 354.939,502.638 347.246,510.112 C343.399,513.849 339.617,517.831 336.094,522 C334.333,524.084 332.637,526.214 331.029,528.383 C330.226,529.468 329.445,530.562 328.689,531.665 C328.311,532.217 327.939,532.771 327.574,533.327 C327.392,533.604 327.211,533.883 327.032,534.162 C326.942,534.301 326.853,534.441 326.765,534.581 C326.72,534.65 326.676,534.72 326.632,534.79" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="27.423,78.078,22.138,86.389,26.685,83.023,30.051,87.57,27.423,78.078" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="127.256,192.654,119.198,186.99,122.35,191.688,117.653,194.839,127.256,192.654" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.685,83.023 C23.548,104.049 24.338,125.112 37.5,144 C57.706,172.997 90.759,185.467 122.35,191.688" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="116.106" x="115.644" y="107.111">https://example.com</text>
+      <path d="M42.5,116 L42.5,139 L304.5,139 L304.5,126 L294.5,116 L42.5,116" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M294.5,116 L294.5,126 L304.5,126 L294.5,116" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="241.394" x="48.5" y="131.111">Free SSL Certificate Managed Automatically</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0018" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="173.561,221.377,167.736,229.319,172.496,226.262,175.552,231.023,173.561,221.377" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="239.379,345.402,232.46,338.393,234.724,343.577,229.54,345.841,239.379,345.402" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M172.496,226.262 C167.697,248.282 165.061,277.82 180.5,302 C193.843,322.898 212.155,334.728 234.724,343.577" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="222.219" x="203.759" y="265.111">https://example.com (139.123.123.123)</text>
+      <path d="M185.5,274 L185.5,297 L443.5,297 L443.5,284 L433.5,274 L185.5,274" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M433.5,274 L433.5,284 L443.5,284 L433.5,274" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="237.738" x="191.5" y="289.111">Encrypted connection via Origin Certificates</text>
+    </g>
+    <g class="link" data-entity-1="ent0018" data-entity-2="ent0011" data-link-type="dependency" id="lnk24">
+      <polygon fill="#181818" points="532.908,449.767,529.498,440.527,529.421,446.184,523.764,446.106,532.908,449.767" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M369.817,372.574 C405.306,379.662 449.052,391.562 484.5,411 C502.6,420.925 516.284,432.684 529.421,446.184" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0012" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="679.483,561.818,674.237,553.483,675.331,559.033,669.781,560.127,679.483,561.818" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M599.308,508.042 C623.888,524.528 650.715,542.522 675.331,559.033" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0013" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="326.817,534.726,336.263,531.937,330.624,531.485,331.077,525.846,326.817,534.726" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M493.243,505.435 C490.304,506.349 487.38,507.21 484.5,508 C467.325,512.712 434.519,513.589 402.66,516.225 C386.73,517.543 371.037,519.3 357.653,522.196 C350.961,523.644 344.846,525.377 339.568,527.482 C336.929,528.534 334.498,529.68 332.31,530.929 C331.215,531.554 330.181,532.204 329.212,532.883 C328.727,533.222 328.258,533.567 327.806,533.92 C327.58,534.097 327.358,534.275 327.14,534.455 C327.031,534.545 330.731,531.394 330.624,531.485" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0018" data-link-type="nested" id="lnk27">
+      <ellipse cx="377.296" cy="346.254" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="384.948" x2="369.644" y1="343.92" y2="348.587"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="379.63" x2="374.963" y1="353.906" y2="338.601"/>
+      <path d="M470.785,236.194 C469.141,257.523 463.737,283.806 448.5,302 C428.638,325.716 413.041,335.353 384.948,343.92" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="136.338" x="595.856" y="265.111">https://139.123.123.123</text>
+      <path d="M472.5,274 L472.5,297 L855.5,297 L855.5,284 L845.5,274 L472.5,274" fill="#808080" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M845.5,274 L845.5,284 L855.5,284 L845.5,274" fill="#808080" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="362.05" x="478.5" y="289.111">Bypass not allowed, all requests must go through Cloudflare security</text>
+    </g>
+  </g>
+</svg>

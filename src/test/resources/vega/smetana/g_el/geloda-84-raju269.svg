@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="248px" preserveAspectRatio="none" style="width:252px;height:248px;background:#FFFFFF;" version="1.1" viewBox="0 0 252 248" width="252px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="5" id="ent0001">
+      <ellipse cx="174" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="45.275" x="151.5" y="72"/>
+    <text fill="#000" font-size="12" textLength="25.275" x="161.5" y="91.333">Start</text>
+    <g class="entity" data-qualified-name=".4" id="ent0005">
+      <polygon fill="#F1F1F1" points="174,140,186,152,174,164,162,152,174,140" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="64.1" x="101" y="200"/>
+    <text fill="#000" font-size="12" textLength="44.1" x="111" y="219.333">Choice1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="64.1" x="183" y="200"/>
+    <text fill="#000" font-size="12" textLength="44.1" x="193" y="219.333">Choice2</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="174,71.587,178,62.587,174,66.587,170,62.587,174,71.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M174,36.084 C174,45.976 174,55.56 174,66.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="174,139.822,178,130.822,174,134.822,170,130.822,174,139.822" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M174,104.008 C174,115.047 174,124.81 174,134.822" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="166.994" x="7" y="136.377">"Branch" as Branch«BLUE_DARK»</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="143.192,199.587,151.493,194.286,145.95,195.416,144.82,189.874,143.192,199.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M166.67,164.084 C160.129,173.976 153.242,184.389 145.95,195.416" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="204.808,199.587,203.18,189.874,202.05,195.416,196.507,194.286,204.808,199.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M181.33,164.084 C187.871,173.976 194.758,184.389 202.05,195.416" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

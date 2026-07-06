@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="265px" preserveAspectRatio="none" style="width:144px;height:265px;background:#FFFFFF;" version="1.1" viewBox="0 0 144 265" width="144px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster checkout-->
+    <g class="cluster" data-qualified-name="checkout" data-source-line="3" id="ent0003">
+      <rect fill="none" height="136" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="98" x="14" y="105"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56" x="35" y="117.889">checkout</text>
+    </g>
+    <!--entity customer-->
+    <g class="entity" data-qualified-name="customer" data-source-line="1" id="ent0001">
+      <ellipse cx="59.244" cy="12.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M59.244,20.5 L59.244,47.5 M46.244,28.5 L72.244,28.5 M59.244,47.5 L46.244,62.5 M59.244,47.5 L72.244,62.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="30.5" y="74.889">customer</text>
+    </g>
+    <!--entity clerk-->
+    <g class="entity" data-qualified-name="clerk" data-source-line="2" id="ent0002">
+      <ellipse cx="120.788" cy="12.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M120.788,20.5 L120.788,47.5 M107.788,28.5 L133.788,28.5 M120.788,47.5 L107.788,62.5 M120.788,47.5 L133.788,62.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="106" y="74.889">clerk</text>
+    </g>
+    <!--entity payment-->
+    <g class="entity" data-qualified-name="checkout.payment" data-source-line="5" id="ent0005">
+      <ellipse cx="62.927" cy="219.899" fill="#F1F1F1" rx="40.927" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="53.637" x="36.109" y="223.399">payment</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M59,78.021 C59,82.61 59,87.366 59,92.115 C59,94.489 59,96.861 59,99.21 C59,100.384 59,101.553 59,102.712 C59,103.292 59,103.87 59,104.445 C59,104.589 59,104.732 59,104.876" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="62.368,206.986,65.889,197.789,62.105,201.993,57.9,198.209,62.368,206.986" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M59.59,154.214 C60.333,168.335 61.342,187.505 62.105,201.993" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="41.275" x="63" y="184.111">include</text>
+    </g>
+  </g>
+</svg>

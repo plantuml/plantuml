@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="180px" preserveAspectRatio="none" style="width:86px;height:180px;background:#FFFFFF;" version="1.1" viewBox="0 0 86 180" width="86px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="GN1" data-source-line="2" id="ent0002">
+      <path d="M6,12 L6,35 A0,0 0 0 0 6,35 L34,35 L38,71.851 L42,35 L69.575,35 A0,0 0 0 0 69.575,35 L69.575,22 L59.575,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M59.575,12 L59.575,22 L69.575,22 L59.575,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="12" y="27.111">my note</text>
+    </g>
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0003">
+      <ellipse cx="38" cy="82" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="39.95" x="18" y="132"/>
+    <text fill="#000" font-size="12" textLength="19.95" x="28" y="151.333">toto</text>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="38,131.587,42,122.587,38,126.587,34,122.587,38,131.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M38,96.084 C38,105.976 38,115.56 38,126.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

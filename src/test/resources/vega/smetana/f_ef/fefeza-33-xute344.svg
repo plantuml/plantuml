@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="76px" preserveAspectRatio="none" style="width:139px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 139 76" width="139px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f5ubkvfa1n984" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity web_app-->
+    <g class="entity" data-qualified-name="web_app" data-source-line="8" id="ent0001">
+      <rect fill="#438DD5" filter="url(#f5ubkvfa1n984)" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.388" x="6" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="66.238" x="31.575" y="32.889">«webApp»</text>
+      <text fill="#000" font-size="14" textLength="97.388" x="16" y="46.889">Web Application</text>
+    </g>
+  </g>
+</svg>

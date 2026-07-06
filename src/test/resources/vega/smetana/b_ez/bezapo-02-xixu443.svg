@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="114px" preserveAspectRatio="none" style="width:222px;height:114px;background:#FFFFFF;" version="1.1" viewBox="0 0 222 114" width="222px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class agent-->
+    <g class="entity" data-qualified-name="agent" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="86" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200.038" x="6" y="12"/>
+      <ellipse cx="56.313" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="51.313" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="90.913" x="76.813" y="31.889">ulan:{m}-agent</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="205.038" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="188.038" x="12" y="58.889">a schema:Person    | Organization</text>
+      <text fill="#000" font-size="14" textLength="120.575" x="12" y="90.889">schema:description</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="32.169" y1="73" y2="73"/>
+      <text fill="#000" font-size="14" textLength="147.7" x="32.169" y="76.389">from preferred Biography</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="179.869" x2="205.038" y1="73" y2="73"/>
+    </g>
+  </g>
+</svg>

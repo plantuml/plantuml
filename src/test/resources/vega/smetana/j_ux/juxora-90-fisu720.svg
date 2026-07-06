@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="364px" preserveAspectRatio="none" style="width:328px;height:364px;background:#FFFFFF;" version="1.1" viewBox="0 0 328 364" width="328px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class FlatWorks-->
+    <g class="entity" data-qualified-name="FlatWorks" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95" x="6" y="21"/>
+      <ellipse cx="21" cy="37" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="42">C</text>
+      <text fill="#000" font-size="14" textLength="63" x="35" y="40.889">FlatWorks</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="100" y1="53" y2="53"/>
+      <text fill="#000" font-size="14" textLength="28" x="12" y="67.889">prop</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="12" y="81.889">prop2</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="12" y="95.889">prop3</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="12" y="109.889">prop3.1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="100" y1="117" y2="117"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="71.575" x="12" y="131.889">Foo (Model)</text>
+      <text fill="#000" font-size="14" textLength="44.275" x="12" y="145.889">prop4 :(</text>
+    </g>
+    <!--class FlatBar-->
+    <g class="entity" data-qualified-name="FlatBar" data-source-line="10" id="ent0002">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.212" x="119" y="21"/>
+      <ellipse cx="135.828" cy="37" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="130.828" y="42">C</text>
+      <text fill="#000" font-size="14" textLength="45.15" x="150.234" y="40.889">FlatBar</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="120" x2="199.212" y1="53" y2="53"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="69.212" x="125" y="67.889">Bar (Model)</text>
+      <text fill="#000" font-size="14" textLength="28" x="125" y="81.889">prop</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="125" y="95.889">prop2</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="125" y="109.889">prop3</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="125" y="123.889">prop3.1</text>
+      <text fill="#000" font-size="14" textLength="44.275" x="125" y="137.889">prop4 :(</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="120" x2="199.212" y1="145" y2="145"/>
+    </g>
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="26" id="ent0004">
+      <rect fill="#F1F1F1" height="150" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.212" x="218.5" y="12"/>
+      <ellipse cx="250.628" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="245.628" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="268.434" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="219.5" x2="311.713" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="69.212" x="224.5" y="58.889">Bar (Model)</text>
+      <text fill="#000" font-size="14" textLength="28" x="236.5" y="78.889">prop</text>
+      <text fill="#000" font-size="14" x="236.5" y="92.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="76.212" x="236.5" y="92.889">Bom (Model)</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="244.5" y="106.889">prop2</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="244.5" y="120.889">prop3</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="252.5" y="134.889">prop3.1</text>
+      <text fill="#000" font-size="14" textLength="44.275" x="236.5" y="148.889">prop4 :(</text>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="233.5" y="74"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="234.5" y1="75" y2="75"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="226.5" y1="68" y2="75"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="233.5" y="88"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="234.5" y1="89" y2="89"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="226.5" y1="75" y2="89"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="241.5" y="102"/>
+      <line style="stroke:#000;stroke-width:1;" x1="234.5" x2="242.5" y1="103" y2="103"/>
+      <line style="stroke:#000;stroke-width:1;" x1="234.5" x2="234.5" y1="89" y2="103"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="241.5" y="116"/>
+      <line style="stroke:#000;stroke-width:1;" x1="234.5" x2="242.5" y1="117" y2="117"/>
+      <line style="stroke:#000;stroke-width:1;" x1="234.5" x2="234.5" y1="103" y2="117"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="249.5" y="130"/>
+      <line style="stroke:#000;stroke-width:1;" x1="242.5" x2="250.5" y1="131" y2="131"/>
+      <line style="stroke:#000;stroke-width:1;" x1="242.5" x2="242.5" y1="117" y2="131"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="233.5" y="144"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="234.5" y1="145" y2="145"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="226.5" y1="89" y2="145"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="219.5" x2="311.713" y1="154" y2="154"/>
+    </g>
+    <!--class Bar-->
+    <g class="entity" data-qualified-name="Bar" data-source-line="38" id="ent0005">
+      <rect fill="#F1F1F1" height="150" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.212" x="218.5" y="198"/>
+      <ellipse cx="251.691" cy="214" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="246.691" y="219">C</text>
+      <text fill="#000" font-size="14" textLength="21.788" x="269.734" y="217.889">Bar</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="219.5" x2="311.713" y1="230" y2="230"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="69.212" x="224.5" y="244.889">Bar (Model)</text>
+      <text fill="#000" font-size="14" textLength="28" x="236.5" y="264.889">prop</text>
+      <text fill="#000" font-size="14" x="236.5" y="278.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="76.212" x="236.5" y="278.889">Bom (Model)</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="244.5" y="292.889">prop2</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="244.5" y="306.889">prop3</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="252.5" y="320.889">prop3.1</text>
+      <text fill="#000" font-size="14" textLength="44.275" x="236.5" y="334.889">prop4 :(</text>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="233.5" y="260"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="234.5" y1="261" y2="261"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="226.5" y1="254" y2="261"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="233.5" y="274"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="234.5" y1="275" y2="275"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="226.5" y1="261" y2="275"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="241.5" y="288"/>
+      <line style="stroke:#000;stroke-width:1;" x1="234.5" x2="242.5" y1="289" y2="289"/>
+      <line style="stroke:#000;stroke-width:1;" x1="234.5" x2="234.5" y1="275" y2="289"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="241.5" y="302"/>
+      <line style="stroke:#000;stroke-width:1;" x1="234.5" x2="242.5" y1="303" y2="303"/>
+      <line style="stroke:#000;stroke-width:1;" x1="234.5" x2="234.5" y1="289" y2="303"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="249.5" y="316"/>
+      <line style="stroke:#000;stroke-width:1;" x1="242.5" x2="250.5" y1="317" y2="317"/>
+      <line style="stroke:#000;stroke-width:1;" x1="242.5" x2="242.5" y1="303" y2="317"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="233.5" y="330"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="234.5" y1="331" y2="331"/>
+      <line style="stroke:#000;stroke-width:1;" x1="226.5" x2="226.5" y1="275" y2="331"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="219.5" x2="311.713" y1="340" y2="340"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="118.906,87,109.906,83,113.906,87,109.906,91,118.906,87" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M101.117,87 C107.047,87 107.976,87 113.906,87" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="265.5,197.808,269.5,188.808,265.5,192.808,261.5,188.808,265.5,197.808" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M265.5,162.044 C265.5,173.828 265.5,181.021 265.5,192.808" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

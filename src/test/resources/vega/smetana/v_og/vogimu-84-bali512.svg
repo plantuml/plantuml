@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="248px" preserveAspectRatio="none" style="width:209px;height:248px;background:#FFFFFF;" version="1.1" viewBox="0 0 209 248" width="209px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="ma" data-source-line="3" id="ent0001">
+      <path d="M18.5,72 L83.587,72 A12.5,12.5 0 0 1 96.087,84.5 L96.087,96 L6,96 L6,84.5 A12.5,12.5 0 0 1 18.5,72" fill="#008000"/>
+      <path d="M6,96 L96.087,96 L96.087,219.5 A12.5,12.5 0 0 1 83.587,232 L18.5,232 A12.5,12.5 0 0 1 6,219.5 L6,96" fill="#008000"/>
+      <rect fill="none" height="160" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="90.087" x="6" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="96.087" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="70.087" x="16" y="87.889">midgeAdult</text>
+      <g class="entity" data-qualified-name="ma.Foo1" data-source-line="4" id="ent0002">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="51.938" x="12" y="167"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="63.938" y1="191" y2="191"/>
+        <text fill="#000" font-size="14" textLength="31.938" x="22" y="182.889">Foo1</text>
+      </g>
+      <g class="start_entity" data-qualified-name="ma..start.ma" data-source-line="5" id="ent0005">
+        <ellipse cx="38" cy="117" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+        <polygon fill="#181818" points="38,166.764,42,157.764,38,161.764,34,157.764,38,166.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M38,131.094 C38,140.61 38,149.662 38,161.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0003">
+      <ellipse cx="102" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="ma..Foo1" data-source-line="8" id="ent0007">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="79.063" x="114.5" y="127"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="114.5" x2="193.563" y1="151" y2="151"/>
+      <text fill="#000" font-size="14" textLength="59.063" x="124.5" y="142.889">ma::Foo1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="83.073,71.761,90.157,64.919,84.949,67.126,82.742,61.918,83.073,71.761" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M97.474,36.182 C93.964,44.855 90.628,53.097 84.949,67.126" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="144.012,126.799,144.276,116.954,142.105,122.177,136.881,120.006,144.012,126.799" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M106.615,36.182 C114.966,56.418 130.856,94.921 142.105,122.177" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:154px;height:105px;" version="1.1" viewBox="0 0 154 105" width="154px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster package1-->
+    <g class="cluster" data-qualified-name="package1" data-source-line="17" id="ent0001">
+      <path d="M16.5,4 L78.225,4 A3.75,3.75 0 0 1 80.725,6.5 L87.725,24 L143.5,24 A2.5,2.5 0 0 1 146,26.5 L146,78.5 A2.5,2.5 0 0 1 143.5,81 L16.5,81 A2.5,2.5 0 0 1 14,78.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="#98FB98" style="stroke:#000;stroke-width:2;stroke-dasharray:2,2;"/>
+      <line style="stroke:#000;stroke-width:2;stroke-dasharray:2,2;" x1="14" x2="87.725" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="60.725" x="18" y="16.889">package1</text>
+    </g>
+    <!--entity n-->
+    <g class="entity" data-qualified-name="package1.n" data-source-line="18" id="ent0002">
+      <polygon fill="#F1F1F1" points="90,39,100,29,137.788,29,137.788,63,127.788,73,90,73,90,39" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="127.788" x2="137.788" y1="39" y2="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="90" x2="127.788" y1="39" y2="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="127.788" x2="127.788" y1="39" y2="73"/>
+      <text fill="#000" font-size="14" x="105" y="59.889">n</text>
+    </g>
+    <!--entity p-->
+    <g class="entity" data-qualified-name="package1.p" data-source-line="19" id="ent0003">
+      <path d="M24.5,32.5 L45.288,32.5 A3.75,3.75 0 0 1 47.788,35 L54.788,52.5 L69.288,52.5 A2.5,2.5 0 0 1 71.788,55 L71.788,67 A2.5,2.5 0 0 1 69.288,69.5 L24.5,69.5 A2.5,2.5 0 0 1 22,67 L22,35 A2.5,2.5 0 0 1 24.5,32.5" fill="#98FB98" style="stroke:#181818;stroke-width:2;stroke-dasharray:2,2;"/>
+      <line style="stroke:#181818;stroke-width:2;stroke-dasharray:2,2;" x1="22" x2="54.788" y1="52.5" y2="52.5"/>
+      <text fill="#000" font-size="14" font-weight="700" x="32" y="46.389">p</text>
+    </g>
+  </g>
+</svg>

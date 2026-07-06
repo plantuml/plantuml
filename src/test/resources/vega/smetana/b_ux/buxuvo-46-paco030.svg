@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:171px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 171 72" width="171px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity storage-->
+    <g class="entity" data-qualified-name="storage" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="35" ry="35" style="stroke:#181818;stroke-width:0.5;" width="66.637" x="6" y="17"/>
+      <text fill="#000" font-size="14" textLength="46.637" x="16" y="37.889">storage</text>
+    </g>
+    <!--entity cloud-->
+    <g class="entity" data-qualified-name="cloud" data-source-line="4" id="ent0002">
+      <path d="M101.594,20.65 C105.311,15.362 108.461,16.502 111.873,20.972 C114.136,13.966 120.116,13.305 124.493,18.844 C128.623,13.623 132.037,13.843 135.241,19.74 C140,13.792 143.633,15.716 147.18,21.026 C154.931,23.583 155.712,27.778 151.327,34.166 C158.593,39.08 156.932,46.123 149.032,48.63 C148.097,55.79 141.996,57.32 136.766,53.374 C135.15,61.339 130.009,63.295 123.585,58.243 C118.358,62.202 113.845,60.223 113.35,53.646 C108.088,58.162 101.692,56.958 100.447,49.366 C92.404,48.884 88.185,43.97 91.662,35.946 C87.562,26.21 91.428,21.122 101.594,20.65" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="106.5" y="37.889">cloud</text>
+    </g>
+  </g>
+</svg>

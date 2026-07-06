@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="110px" preserveAspectRatio="none" style="width:452px;height:110px;" version="1.1" viewBox="0 0 452 110" width="452px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster n_level_1-->
+    <g class="cluster" data-qualified-name="n_level_1" data-source-line="23" id="ent0002">
+      <polygon fill="#00F" points="76,14,86,4,330,4,330,76,320,86,76,86,76,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="320" x2="330" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="76" x2="320" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="320" x2="320" y1="14" y2="86"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="60.025" x="168.988" y="27.889">n_level_1</text>
+    </g>
+    <!--cluster f_level_1-->
+    <g class="cluster" data-qualified-name="f_level_1" data-source-line="30" id="ent0006">
+      <path d="M338,16.5 L338,78.5 A2.5,2.5 0 0 0 340.5,81 L433.5,81 A2.5,2.5 0 0 0 436,78.5 L436,24 L426,14 L340.5,14 A2.5,2.5 0 0 0 338,16.5" fill="#00F" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M426,14 L426,21.5 A2.5,2.5 0 0 0 428.5,24 L436,24" fill="#00F" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56.088" x="358.956" y="26.889">f_level_1</text>
+    </g>
+    <!--entity n0-->
+    <g class="entity" data-qualified-name="n0" data-source-line="21" id="ent0001">
+      <polygon fill="#008000" points="10,44,20,34,65.575,34,65.575,68,55.575,78,10,78,10,44" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.575" x2="65.575" y1="44" y2="34"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="55.575" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.575" x2="55.575" y1="44" y2="78"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="25" y="64.889">n0</text>
+    </g>
+    <!--entity nn-->
+    <g class="entity" data-qualified-name="n_level_1.nn" data-source-line="24" id="ent0003">
+      <polygon fill="#008000" points="266,44,276,34,321.575,34,321.575,68,311.575,78,266,78,266,44" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="311.575" x2="321.575" y1="44" y2="34"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="266" x2="311.575" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="311.575" x2="311.575" y1="44" y2="78"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="281" y="64.889">nn</text>
+    </g>
+    <!--entity nc-->
+    <g class="entity" data-qualified-name="n_level_1.nc" data-source-line="25" id="ent0004">
+      <path d="M212.335,44.179 C215.077,37.015 219.934,34.38 226.046,40.77 C231.208,34.783 237.877,34.224 241.29,42.624 C248.576,47.463 247.726,51.987 241.044,56.581 C246.817,62.224 246.143,66.952 239.69,71.484 C236.194,79.666 231.021,78.727 225.533,73.604 C220.208,78.623 215.83,78.044 212.102,71.713 C203.729,69.281 200.247,64.921 205.969,56.722 C203.04,50.056 204.014,45.135 212.335,44.179" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="14.787" x="217.5" y="59.889">nc</text>
+    </g>
+    <!--entity n_level_2-->
+    <g class="entity" data-qualified-name="n_level_1.n_level_2" data-source-line="26" id="ent0005">
+      <polygon fill="#008000" points="84,44,94,34,184.025,34,184.025,68,174.025,78,84,78,84,44" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="174.025" x2="184.025" y1="44" y2="34"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="84" x2="174.025" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="174.025" x2="174.025" y1="44" y2="78"/>
+      <text fill="#000" font-size="14" textLength="60.025" x="99" y="64.889">n_level_2</text>
+    </g>
+    <!--entity f1-->
+    <g class="entity" data-qualified-name="f_level_1.f1" data-source-line="31" id="ent0007">
+      <path d="M396,41.5 L396,70.5 A2.5,2.5 0 0 0 398.5,73 L425.138,73 A2.5,2.5 0 0 0 427.638,70.5 L427.638,49 L417.638,39 L398.5,39 A2.5,2.5 0 0 0 396,41.5" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M417.638,39 L417.638,46.5 A2.5,2.5 0 0 0 420.138,49 L427.638,49" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="406" y="59.889">f1</text>
+    </g>
+    <!--entity f2-->
+    <g class="entity" data-qualified-name="f_level_1.f2" data-source-line="32" id="ent0008">
+      <path d="M346,41.5 L346,70.5 A2.5,2.5 0 0 0 348.5,73 L375.138,73 A2.5,2.5 0 0 0 377.638,70.5 L377.638,49 L367.638,39 L348.5,39 A2.5,2.5 0 0 0 346,41.5" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M367.638,39 L367.638,46.5 A2.5,2.5 0 0 0 370.138,49 L377.638,49" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="356" y="59.889">f2</text>
+    </g>
+  </g>
+</svg>

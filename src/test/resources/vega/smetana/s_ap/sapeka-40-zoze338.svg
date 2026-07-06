@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="74px" preserveAspectRatio="none" style="width:143px;height:74px;background:#FFFFFF;" version="1.1" viewBox="0 0 143 74" width="143px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity gC-->
+    <g class="entity" data-qualified-name="gC" data-source-line="11" id="ent0001">
+      <rect fill="#F1F1F1" height="46" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="120.7" x="6" y="12"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="98.7" x="17" y="31.333">«GreenContainer»</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="58.563" y="44.889">25</text>
+    </g>
+  </g>
+</svg>

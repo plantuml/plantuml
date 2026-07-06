@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="141px" preserveAspectRatio="none" style="width:540px;height:141px;background:#FFFFFF;" version="1.1" viewBox="0 0 540 141" width="540px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster r1-->
+    <g class="cluster" data-qualified-name="r1" data-source-line="1" id="ent0001">
+      <path d="M14,60.5 L78.75,4 L467.25,4 L532,60.5 L467.25,117 L78.75,117 L14,60.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="12.425" x="266.788" y="16.889">r1</text>
+    </g>
+    <!--entity VeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg-->
+    <g class="entity" data-qualified-name="r1.VeryLOOOOOOOOOOOOOOOOOOOg.nVeryLOOOOOOOOOOOOOOOOOOOg.nVeryLOOOOOOOOOOOOOOOOOOOg.nVeryLOOOOOOOOOOOOOOOOOOOg.nVeryLOOOOOOOOOOOOOOOOOOOg" data-source-line="2" id="ent0002">
+      <text fill="#000" font-size="14" textLength="250.513" x="147.756" y="44.889">VeryLOOOOOOOOOOOOOOOOOOOg</text>
+      <text fill="#000" font-size="14" textLength="250.513" x="147.756" y="58.889">VeryLOOOOOOOOOOOOOOOOOOOg</text>
+      <text fill="#000" font-size="14" textLength="250.513" x="147.756" y="72.889">VeryLOOOOOOOOOOOOOOOOOOOg</text>
+      <text fill="#000" font-size="14" textLength="250.513" x="147.756" y="86.889">VeryLOOOOOOOOOOOOOOOOOOOg</text>
+      <text fill="#000" font-size="14" textLength="250.513" x="147.756" y="100.889">VeryLOOOOOOOOOOOOOOOOOOOg</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="246px" preserveAspectRatio="none" style="width:139px;height:246px;background:#FFFFFF;" version="1.1" viewBox="0 0 139 246" width="139px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class person-->
+    <g class="entity" data-qualified-name="person" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102.913" x="13" y="12"/>
+      <ellipse cx="40.656" cy="28" fill="#808000" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="35.656" y="33">T</text>
+      <text fill="#000" font-size="14" textLength="42.788" x="57.469" y="31.889">person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="114.913" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="114.913" y1="52" y2="52"/>
+      <text fill="#000" font-size="14" textLength="54.425" x="19" y="66.889">id:int(11)</text>
+      <image height="13" width="18" x="73.425" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAANCAYAAACkTj4ZAAABvElEQVR4Xq2SS0sCURTHXfUZWkSLtkGfwX3LcNFKCAyklZQbFxqCi0IhBEXTHB/4SnwzPuDq+EQRGRzJnCGUsRlbCm7bTOe6iHzMRhr4wdxzz/mfc//3KpbLpeI/2AoUi0UPfCKm2WwaNvflWFsUCoWXfr9/xfP8GcdxFwghol6vmzaLdrEm0mq1niaTiWo+nysFQThnWVZLUZQ7Ho9TcoiiePIrlEwmn6GzvdFolEOhUDedTneHw+HjbDZTjcfjm06nY5UjkUhEp9Pp6UrIZrOJg8Hg1u/3v6nVakmn00mpVOqDpmnU6/VQtVpFsEbhcBh5vV7kdDpLUHyJG9nt9tloNFKuhCwWiwjqbp/Px2s0Gkmv10sw5ReIMBBnSqUSD00kh8MhGY3Gb8gbkCSZjUajmXK5fA/HO14J5fN5A3Rr5XK590gkwoII2263KTwNeMcQBMEHg8HPWq3mw0KQS1cqFStM+QB+Hq6Znc1mTdg8ECAZhnnFIplMRoCjsOCbBwTv4AKO8D80cywWi4Odt4aBQjOMW4GJ2oFAQHS5XBw8Ae3fHDm2ArFYzAyeURh4nNeb+3JsBfZlK7AvP2mGja3xDvhFAAAAAElFTkSuQmCC" y="57.077"/>
+      <text fill="#000" font-size="14" textLength="90.913" x="19" y="80.889">name:char(32)</text>
+    </g>
+    <!--class car-->
+    <g class="entity" data-qualified-name="car" data-source-line="12" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117" x="6" y="140"/>
+      <ellipse cx="50.538" cy="156" fill="#808000" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="45.538" y="161">T</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="71.038" y="159.889">car</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="122" y1="172" y2="172"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="122" y1="180" y2="180"/>
+      <text fill="#000" font-size="14" textLength="54.425" x="12" y="194.889">id:int(11)</text>
+      <image height="13" width="18" x="66.425" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAANCAYAAACkTj4ZAAABvElEQVR4Xq2SS0sCURTHXfUZWkSLtkGfwX3LcNFKCAyklZQbFxqCi0IhBEXTHB/4SnwzPuDq+EQRGRzJnCGUsRlbCm7bTOe6iHzMRhr4wdxzz/mfc//3KpbLpeI/2AoUi0UPfCKm2WwaNvflWFsUCoWXfr9/xfP8GcdxFwghol6vmzaLdrEm0mq1niaTiWo+nysFQThnWVZLUZQ7Ho9TcoiiePIrlEwmn6GzvdFolEOhUDedTneHw+HjbDZTjcfjm06nY5UjkUhEp9Pp6UrIZrOJg8Hg1u/3v6nVakmn00mpVOqDpmnU6/VQtVpFsEbhcBh5vV7kdDpLUHyJG9nt9tloNFKuhCwWiwjqbp/Px2s0Gkmv10sw5ReIMBBnSqUSD00kh8MhGY3Gb8gbkCSZjUajmXK5fA/HO14J5fN5A3Rr5XK590gkwoII2263KTwNeMcQBMEHg8HPWq3mw0KQS1cqFStM+QB+Hq6Znc1mTdg8ECAZhnnFIplMRoCjsOCbBwTv4AKO8D80cywWi4Odt4aBQjOMW4GJ2oFAQHS5XBw8Ae3fHDm2ArFYzAyeURh4nNeb+3JsBfZlK7AvP2mGja3xDvhFAAAAAElFTkSuQmCC" y="185.077"/>
+      <text fill="#000" font-size="14" textLength="105" x="12" y="208.889">person_id:int(11)</text>
+      <text fill="#000" font-size="14" textLength="90.913" x="12" y="222.889">name:char(32)</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="crowfoot" id="lnk3">
+      <line style="stroke:#181818;stroke-width:1;" x1="64.5" x2="72.5" y1="131.597" y2="139.597"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="64.5" x2="56.5" y1="131.597" y2="139.597"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="64.5" x2="64.5" y1="131.597" y2="139.597"/>
+      <path d="M64.5,88.048 C64.5,104.035 64.5,114.869 64.5,131.597" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <image height="12" width="17" x="66.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAMCAYAAACEJVa/AAAAmklEQVR4XqWQAQ3EIAxF5wktZwELWMACFmYBC1jAAhZ690h6gXZLLrslL0Db/9h2iMjxL65QShHF9u5wAt2PMV6/ijYBQcv6ZpZNknOeglqrpJSE1cquIOckCEIIU9RamyDkVmaoxxi/F2wSmr338/PMQVbOCiIgxBkpc+6fqMiGqWtg3a9sh1WkAhu4whX4ZsX27nCFJ7jCE96y71cK07ZrvQAAAABJRU5ErkJggg==" y="108"/>
+      <text fill="#000" font-size="13" x="56.5" y="135.708">n</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="42.5" y="99.159">0..1</text>
+    </g>
+  </g>
+</svg>

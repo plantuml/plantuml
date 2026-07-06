@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:146px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 146 160" width="146px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M8.5,12 L113.8,12 A3.75,3.75 0 0 1 116.3,14.5 L123.3,32 L127.8,32 A2.5,2.5 0 0 1 130.3,34.5 L130.3,57.5 A2.5,2.5 0 0 1 127.8,60 L8.5,60 A2.5,2.5 0 0 1 6,57.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="123.3" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="104.3" x="10" y="24.889">bk2k_opengraph</text>
+    <path d="M20.5,96 L101.65,96 A3.75,3.75 0 0 1 104.15,98.5 L111.15,116 L115.65,116 A2.5,2.5 0 0 1 118.15,118.5 L118.15,141.5 A2.5,2.5 0 0 1 115.65,144 L20.5,144 A2.5,2.5 0 0 1 18,141.5 L18,98.5 A2.5,2.5 0 0 1 20.5,96" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="111.15" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="80.15" x="22" y="108.889">gridelements</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="68,95.947,74,77.947,62,77.947,68,95.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M68,60.279 C68,71.453 68,66.802 68,77.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

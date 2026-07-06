@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="97px" preserveAspectRatio="none" style="width:388px;height:97px;background:#0B58A8;" version="1.1" viewBox="0 0 388 97" width="388px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#0B58A8" height="97" style="stroke:none;" width="388" x="0" y="0"/>
+    <rect fill="#FFC" height="15" rx="2.5" ry="2.5" style="stroke:#FD8;stroke-width:3;" width="367.5" x="8" y="8"/>
+    <text fill="#000" font-family="monospace" font-size="10" textLength="258.625" x="15" y="17">Please use CSS style instead of skinparam ParticipantPadding</text>
+    <!--class Bob-->
+    <g class="entity" data-qualified-name="Bob" data-source-line="1" id="ent0001">
+      <rect fill="#0B58A8" height="44" rx="2.5" ry="2.5" style="stroke:#FFF;stroke-width:1;" width="52.938" x="11" y="37"/>
+      <ellipse cx="24" cy="51" fill="#FFF" rx="9" ry="9" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="19" y="56">C</text>
+      <text fill="#FFF" font-family="Verdana" font-size="14" textLength="24.938" x="36" y="54.889">Bob</text>
+      <line style="stroke:#FFF;stroke-width:1;" x1="12" x2="62.938" y1="65" y2="65"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="12" x2="62.938" y1="73" y2="73"/>
+    </g>
+    <!--class Alice-->
+    <g class="entity" data-qualified-name="Alice" data-source-line="1" id="ent0002">
+      <rect fill="#0B58A8" height="44" rx="2.5" ry="2.5" style="stroke:#FFF;stroke-width:1;" width="58.45" x="112.5" y="37"/>
+      <ellipse cx="125.5" cy="51" fill="#FFF" rx="9" ry="9" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="120.5" y="56">C</text>
+      <text fill="#FFF" font-family="Verdana" font-size="14" textLength="30.45" x="137.5" y="54.889">Alice</text>
+      <line style="stroke:#FFF;stroke-width:1;" x1="113.5" x2="169.95" y1="65" y2="65"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="113.5" x2="169.95" y1="73" y2="73"/>
+    </g>
+    <!--class Lars-->
+    <g class="entity" data-qualified-name="Lars" data-source-line="153" id="ent0004">
+      <rect fill="#0B58A8" height="44" rx="2.5" ry="2.5" style="stroke:#FFF;stroke-width:1;" width="55.213" x="189" y="37"/>
+      <ellipse cx="202" cy="51" fill="#FFF" rx="9" ry="9" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="197" y="56">C</text>
+      <text fill="#FFF" font-family="Verdana" font-size="14" textLength="27.213" x="214" y="54.889">Lars</text>
+      <line style="stroke:#FFF;stroke-width:1;" x1="190" x2="243.213" y1="65" y2="65"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="190" x2="243.213" y1="73" y2="73"/>
+    </g>
+    <!--class Laura-->
+    <g class="entity" data-qualified-name="Laura" data-source-line="153" id="ent0005">
+      <rect fill="#0B58A8" height="44" rx="2.5" ry="2.5" style="stroke:#FFF;stroke-width:1;" width="63.788" x="308.5" y="37"/>
+      <ellipse cx="321.5" cy="51" fill="#FFF" rx="9" ry="9" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="316.5" y="56">C</text>
+      <text fill="#FFF" font-family="Verdana" font-size="14" textLength="35.788" x="333.5" y="54.889">Laura</text>
+      <line style="stroke:#FFF;stroke-width:1;" x1="309.5" x2="371.288" y1="65" y2="65"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="309.5" x2="371.288" y1="73" y2="73"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#FFF" points="112.475,59,103.475,55,107.475,59,103.475,63,112.475,59" style="stroke:#FFF;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M64.013,59 C78.817,59 92.283,59 107.475,59" fill="none" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="74.75" y="51.111">hello</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="association" id="lnk6">
+      <path d="M244.02,59 C262.999,59 288.299,59 308.229,59" fill="none" style="stroke:#FFF;stroke-width:1;"/>
+      <text fill="#FFF" font-family="Verdana" font-size="13" textLength="43.387" x="254.75" y="51.111">gogogo</text>
+    </g>
+  </g>
+</svg>

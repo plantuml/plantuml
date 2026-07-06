@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="475px" preserveAspectRatio="none" style="width:1181px;height:475px;background:#FFFFFF;" version="1.1" viewBox="0 0 1181 475" width="1181.25px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Alice-->
+    <g class="entity" data-qualified-name="Alice" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="300" rx="15.625" ry="15.625" style="stroke:#181818;stroke-width:3.125;" width="390.313" x="37.5" y="75"/>
+      <ellipse cx="131.25" cy="175" fill="#ADD1B2" rx="68.75" ry="68.75" style="stroke:#181818;stroke-width:6.25;"/>
+      <text fill="#000" font-family="monospace" font-size="87.5" x="100" y="206.25">C</text>
+      <text fill="#000" font-size="87.5" textLength="190.312" x="218.75" y="199.306">Alice</text>
+      <line style="stroke:#181818;stroke-width:3.125;" x1="43.75" x2="421.562" y1="275" y2="275"/>
+      <line style="stroke:#181818;stroke-width:3.125;" x1="43.75" x2="421.562" y1="325" y2="325"/>
+    </g>
+    <!--class Bob-->
+    <g class="entity" data-qualified-name="Bob" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="300" rx="15.625" ry="15.625" style="stroke:#181818;stroke-width:3.125;" width="355.859" x="728.125" y="75"/>
+      <ellipse cx="821.875" cy="175" fill="#ADD1B2" rx="68.75" ry="68.75" style="stroke:#181818;stroke-width:6.25;"/>
+      <text fill="#000" font-family="monospace" font-size="87.5" x="790.625" y="206.25">C</text>
+      <text fill="#000" font-size="87.5" textLength="155.859" x="909.375" y="199.306">Bob</text>
+      <line style="stroke:#181818;stroke-width:3.125;" x1="734.375" x2="1077.734" y1="275" y2="275"/>
+      <line style="stroke:#181818;stroke-width:3.125;" x1="734.375" x2="1077.734" y1="325" y2="325"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="aggregation" id="lnk3">
+      <polygon fill="none" points="727.604,225,690.104,200,652.604,225,690.104,250,727.604,225" style="stroke:#181818;stroke-width:6.25;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M426.488,225 C521.492,225 559.905,225 652.604,225" fill="none" style="stroke:#181818;stroke-width:6.25;"/>
+      <text fill="#000" font-size="81.25" textLength="172.148" x="492.188" y="175.694">hello</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="245px" preserveAspectRatio="none" style="width:600px;height:245px;background:#FFFFFF;" version="1.1" viewBox="0 0 600 245" width="600px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.875" x="257.563" y="20.889">This is the title</text>
+    </g>
+    <!--entity Admin-->
+    <g class="entity" data-qualified-name="Admin" data-source-line="4" id="ent0001">
+      <ellipse cx="199.044" cy="163.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M199.044,171.5 L199.044,198.5 M186.044,179.5 L212.044,179.5 M199.044,198.5 L186.044,213.5 M199.044,198.5 L212.044,213.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="70.088" x="164" y="225.889">Main Admin</text>
+    </g>
+    <!--entity Use-->
+    <g class="entity" data-qualified-name="Use" data-source-line="5" id="ent0002">
+      <ellipse cx="514.778" cy="117.156" fill="#F1F1F1" rx="68.778" ry="16.156" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="111.388" x="459.085" y="120.656">Use the application</text>
+    </g>
+    <!--entity User-->
+    <g class="entity" data-qualified-name="User" data-source-line="7" id="ent0003">
+      <ellipse cx="66.788" cy="63.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M66.788,71.5 L66.788,98.5 M53.787,79.5 L79.788,79.5 M66.788,98.5 L53.787,113.5 M66.788,98.5 L79.788,113.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="52" y="125.889">User</text>
+    </g>
+    <!--entity Start-->
+    <g class="entity" data-qualified-name="Start" data-source-line="7" id="ent0004">
+      <ellipse cx="198.851" cy="114.899" fill="#F1F1F1" rx="23.851" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.488" x="184.107" y="118.399">Start</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN8" data-source-line="12" id="ent0009">
+      <path d="M6,180 L6,203 A0,0 0 0 0 6,203 L128.238,203 A0,0 0 0 0 128.238,203 L128.238,198 L163.732,192 L128.238,190 L128.238,190 L118.238,180 L6,180 A0,0 0 0 0 6,180" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M118.238,180 L118.238,190 L128.238,190 L118.238,180" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="101.238" x="12" y="195.111">This is an example.</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN11" data-source-line="13" id="ent0012">
+      <path d="M317,191 L317,197.23 L234.003,194.691 L317,205.23 L317,214 A0,0 0 0 0 317,214 L363.269,214 A0,0 0 0 0 363.269,214 L363.269,201 L353.269,191 L317,191 A0,0 0 0 0 317,191" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M353.269,191 L353.269,201 L363.269,201 L353.269,191" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="323" y="206.111">right</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN14" data-source-line="16" id="ent0015">
+      <path d="M455.5,47 L455.5,83 A0,0 0 0 0 455.5,83 L511,83 L515,100.75 L519,83 L574.163,83 A0,0 0 0 0 574.163,83 L574.163,57 L564.163,47 L455.5,47 A0,0 0 0 0 455.5,47" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M564.163,47 L564.163,57 L574.163,57 L564.163,47" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="78.813" x="461.5" y="62.111">A note can also</text>
+      <text fill="#000" font-size="13" textLength="97.663" x="461.5" y="75.111">be on several lines</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN17" data-source-line="20" id="ent0018">
+      <path d="M484.5,151 L484.5,174 A0,0 0 0 0 484.5,174 L545.15,174 A0,0 0 0 0 545.15,174 L545.15,161 L535.15,151 L519,151 L515,133.099 L511,151 L484.5,151 A0,0 0 0 0 484.5,151" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M535.15,151 L535.15,161 L545.15,161 L535.15,151" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="39.65" x="490.5" y="166.111">bottom</text>
+    </g>
+    <g class="entity" data-qualified-name="N2" data-source-line="22" id="ent0020">
+      <path d="M270,99 L270,135 L410.275,135 L410.275,109 L400.275,99 L270,99" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M400.275,99 L400.275,109 L410.275,109 L400.275,99" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="119.275" x="276" y="114.111">This note is connected</text>
+      <text fill="#000" font-size="13" textLength="97.5" x="276" y="127.111">to several objects.</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="174.664,110.871,166.498,105.364,169.74,110,165.104,113.242,174.664,110.871" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M82.16,94.505 C104.402,98.44 142.838,105.241 169.74,110" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="462.93,100.987,455.278,94.787,458.101,99.688,453.2,102.512,462.93,100.987" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M82.089,90.588 C128.935,86.174 283.664,73.868 410,90 C427.486,92.233 441.406,95.198 458.101,99.688" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="453.583,133.005,443.868,131.386,448.742,134.257,445.871,139.131,453.583,133.005" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M234.264,184.492 C275.896,175.294 348.235,159.073 410,144 C424.135,140.55 434.471,137.949 448.742,134.257" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0020" data-link-type="association" id="lnk21">
+      <path d="M223.265,115.335 C236.172,115.52 252.972,115.762 269.752,116.004" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0002" data-link-type="association" id="lnk22">
+      <path d="M410.369,117 C422.025,117 434.114,117 445.742,117" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

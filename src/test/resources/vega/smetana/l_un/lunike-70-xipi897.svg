@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="305.208px" preserveAspectRatio="none" style="width:203px;height:305px;" version="1.1" viewBox="0 0 203 305" width="203.125px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g152wm3iqa0x4w0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F18E3E"/>
+      <stop offset="100%" stop-color="#EC7211"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="London" data-source-line="3" id="ent0001">
+      <rect fill="url(#g152wm3iqa0x4w0)" height="32.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="52.826" x="133.854" y="99.479"/>
+      <path d="M138.021,99.479 L182.513,99.479 A4.167,4.167 0 0 1 186.68,103.646 L186.68,115.104 L133.854,115.104 L133.854,103.646 A4.167,4.167 0 0 1 138.021,99.479" fill="url(#g152wm3iqa0x4w0)" style="stroke:#EC7211;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="38.242" x="141.146" y="110.475">London</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="134.896" x2="185.638" y1="115.104" y2="115.104"/>
+    </g>
+    <g class="entity" data-qualified-name="Washington" data-source-line="4" id="ent0002">
+      <rect fill="url(#g152wm3iqa0x4w0)" height="32.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="75.098" x="6.25" y="186.458"/>
+      <path d="M10.417,186.458 L77.181,186.458 A4.167,4.167 0 0 1 81.348,190.625 L81.348,202.083 L6.25,202.083 L6.25,190.625 A4.167,4.167 0 0 1 10.417,186.458" fill="url(#g152wm3iqa0x4w0)" style="stroke:#EC7211;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="60.514" x="13.542" y="197.454">Washington</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="7.292" x2="80.306" y1="202.083" y2="202.083"/>
+    </g>
+    <g class="entity" data-qualified-name="Berlin" data-source-line="5" id="ent0003">
+      <rect fill="url(#g152wm3iqa0x4w0)" height="32.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="43.945" x="88.542" y="256.25"/>
+      <path d="M92.708,256.25 L128.32,256.25 A4.167,4.167 0 0 1 132.487,260.417 L132.487,271.875 L88.542,271.875 L88.542,260.417 A4.167,4.167 0 0 1 92.708,256.25" fill="url(#g152wm3iqa0x4w0)" style="stroke:#EC7211;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="29.362" x="95.833" y="267.245">Berlin</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="89.583" x2="131.445" y1="271.875" y2="271.875"/>
+    </g>
+    <g class="entity" data-qualified-name="NewYork" data-source-line="6" id="ent0004">
+      <rect fill="url(#g152wm3iqa0x4w0)" height="32.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="61.133" x="46.354" y="12.5"/>
+      <path d="M50.521,12.5 L103.32,12.5 A4.167,4.167 0 0 1 107.487,16.667 L107.487,28.125 L46.354,28.125 L46.354,16.667 A4.167,4.167 0 0 1 50.521,12.5" fill="url(#g152wm3iqa0x4w0)" style="stroke:#EC7211;stroke-width:1.042;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="46.549" x="53.646" y="23.495">NewYork</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="47.396" x2="106.445" y1="28.125" y2="28.125"/>
+    </g>
+    <g class="entity" data-qualified-name="CapitalCity" data-source-line="8" id="ent0005">
+      <rect fill="url(#g152wm3iqa0x4w0)" height="66.667" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:0.521;" width="75.13" x="39.583" y="82.292"/>
+      <path d="M43.75,82.292 L110.547,82.292 A4.167,4.167 0 0 1 114.714,86.458 L114.714,98.958 L39.583,98.958 L39.583,86.458 A4.167,4.167 0 0 1 43.75,82.292" fill="url(#g152wm3iqa0x4w0)" style="stroke:#EC7211;stroke-width:0.521;"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="60.547" x="46.875" y="94.097">CapitalCity</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="39.583" x2="114.714" y1="98.958" y2="98.958"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="17.422" x="68.438" y="110.764">UK</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="39.583" x2="114.714" y1="115.625" y2="115.625"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="25.781" x="64.258" y="127.431">USA</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="39.583" x2="114.714" y1="132.292" y2="132.292"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="12.5" textLength="51.328" x="51.484" y="144.097">Germany</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#EC7211" points="133.714,115.625,124.339,111.458,128.505,115.625,124.339,119.792,133.714,115.625" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M114.844,115.625 C121.134,115.625 122.215,115.625 128.505,115.625" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+      <polygon fill="#EC7211" points="49.767,186.238,57.072,179.034,51.671,181.39,49.315,175.988,49.767,186.238" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M64.291,149.247 C59.297,161.966 55.716,171.087 51.671,181.39" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+      <polygon fill="#EC7211" points="107.091,255.922,109.19,245.88,105.994,250.831,101.043,247.635,107.091,255.922" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M84.071,149.094 C91.135,181.873 100.65,226.033 105.994,250.831" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk9">
+      <polygon fill="#EC7211" points="77.083,81.95,81.25,72.575,77.083,76.742,72.917,72.575,77.083,81.95" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M77.083,44.865 C77.083,55.167 77.083,63.977 77.083,76.742" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+  </g>
+</svg>

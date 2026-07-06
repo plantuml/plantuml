@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="70px" preserveAspectRatio="none" style="width:97px;height:70px;background:#FFFFFF;" version="1.1" viewBox="0 0 97 70" width="97px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Start-->
+    <g class="entity" data-qualified-name="Start" data-source-line="1" id="ent0001">
+      <ellipse cx="43.535" cy="32.915" fill="#F1F1F1" rx="37.535" ry="20.915" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="51.975" x="17.548" y="31.616">«τρέχει»</text>
+      <text fill="#000" font-size="14" textLength="29.488" x="28.792" y="45.616">Start</text>
+    </g>
+  </g>
+</svg>

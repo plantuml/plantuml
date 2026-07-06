@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="39px" preserveAspectRatio="none" style="width:261px;height:39px;background:#FFFFFF;" version="1.1" viewBox="0 0 261 39" width="261px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <text fill="#000" font-family="monospace" font-size="14" textLength="230.388" x="15" y="22.889">Your data does not sound like JSON data</text>
+  </g>
+</svg>

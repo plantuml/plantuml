@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="58px" preserveAspectRatio="none" style="width:248px;height:58px;background:#FFFFFF;" version="1.1" viewBox="0 0 248 58" width="248px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="56.663" x="10" y="19"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="36.663" x="15" y="31.889">level1</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="61.663" y="31.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="56.663" x2="56.663" y1="19" y2="37"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="56.663" x="10" y="19"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="132.875" x="104" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="48.3" x="109" y="22.889">level1.1</text>
+    <text fill="#000" font-size="14" textLength="64.575" x="167.3" y="22.889">data: value</text>
+    <line style="stroke:#000;stroke-width:1;" x1="162.3" x2="162.3" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="104" x2="236.875" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="48.3" x="109" y="40.889">level1.2</text>
+    <text fill="#000" font-size="14" textLength="64.575" x="167.3" y="40.889">data:value</text>
+    <line style="stroke:#000;stroke-width:1;" x1="162.3" x2="162.3" y1="28" y2="46"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="132.875" x="104" y="10"/>
+    <path d="M55,28 L68,28 C77.292,28 87.06,28 96.719,28" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M96.719,31.085 L99.032,28 L96.719,24.915 L104.43,28 L96.719,31.085" fill="#000"/>
+    <ellipse cx="55" cy="28" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

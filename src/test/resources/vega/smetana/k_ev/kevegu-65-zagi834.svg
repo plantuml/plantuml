@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="328px" preserveAspectRatio="none" style="width:342px;height:328px;background:#FFFFFF;" version="1.1" viewBox="0 0 342 328" width="342px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Reporter-->
+    <g class="entity" data-qualified-name="Reporter" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.425" x="65" y="12"/>
+      <ellipse cx="80" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="75" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="54.425" x="94" y="31.889">Reporter</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="66" x2="150.425" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="66" x2="150.425" y1="52" y2="52"/>
+    </g>
+    <!--class Queue-->
+    <g class="entity" data-qualified-name="Queue" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74" x="71" y="96"/>
+      <ellipse cx="86" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="81" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="42" x="100" y="115.889">Queue</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="72" x2="144" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="72" x2="144" y1="136" y2="136"/>
+    </g>
+    <!--class WorkerPool-->
+    <g class="entity" data-qualified-name="WorkerPool" data-source-line="3" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="105.15" x="219.5" y="96"/>
+      <ellipse cx="234.5" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="229.5" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="73.15" x="248.5" y="115.889">WorkerPool</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="220.5" x2="323.65" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="220.5" x2="323.65" y1="136" y2="136"/>
+    </g>
+    <!--class Report-->
+    <g class="entity" data-qualified-name="Report" data-source-line="4" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74" x="6" y="180"/>
+      <ellipse cx="21" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="201">C</text>
+      <text fill="#000" font-size="14" textLength="42" x="35" y="199.889">Report</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="79" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="79" y1="220" y2="220"/>
+    </g>
+    <!--class QueueEntry-->
+    <g class="entity" data-qualified-name="QueueEntry" data-source-line="6" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.638" x="54.5" y="264"/>
+      <ellipse cx="69.5" cy="280" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="64.5" y="285">C</text>
+      <text fill="#000" font-size="14" textLength="74.638" x="83.5" y="283.889">QueueEntry</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.5" x2="160.138" y1="296" y2="296"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.5" x2="160.138" y1="304" y2="304"/>
+    </g>
+    <!--class Worker-->
+    <g class="entity" data-qualified-name="Worker" data-source-line="7" id="ent0010">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.063" x="184.5" y="180"/>
+      <ellipse cx="199.5" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="194.5" y="201">C</text>
+      <text fill="#000" font-size="14" textLength="45.062" x="213.5" y="199.889">Worker</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="185.5" x2="260.563" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="185.5" x2="260.563" y1="220" y2="220"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN14" data-source-line="12" id="ent0015">
+      <path d="M163,108 L163,116 L145.289,120 L163,124 L163,131 A0,0 0 0 0 163,131 L201.306,131 A0,0 0 0 0 201.306,131 L201.306,118 L191.306,108 L163,108 A0,0 0 0 0 163,108" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M191.306,108 L191.306,118 L201.306,118 L191.306,108" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="17.306" x="169" y="123.111">left</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN17" data-source-line="13" id="ent0018">
+      <path d="M280,192 L280,200 L261.75,204 L280,208 L280,215 A0,0 0 0 0 280,215 L326.269,215 A0,0 0 0 0 326.269,215 L326.269,202 L316.269,192 L280,192 A0,0 0 0 0 280,192" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M316.269,192 L316.269,202 L326.269,202 L316.269,192" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="286" y="207.111">right</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M108,60.279 C108,71.453 108,84.802 108,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M151.089,58.545 C174.056,70.028 202.324,84.162 225.751,95.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M85.614,60.227 C76.954,70.451 67.76,83.067 62,96 C49.873,123.231 45.477,157.608 43.89,179.936" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0008" data-link-type="association" id="lnk9">
+      <path d="M108,144.082 C108,175.707 108,232.185 108,263.847" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0010" data-link-type="association" id="lnk11">
+      <path d="M258.09,144.279 C251.412,155.453 243.435,168.802 236.776,179.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0008" data-link-type="association" id="lnk12">
+      <path d="M190.66,228.06 C174.982,239.239 156.195,252.635 140.496,263.829" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="association" id="lnk13">
+      <path d="M61.453,228.279 C70.31,239.453 80.892,252.802 89.726,263.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

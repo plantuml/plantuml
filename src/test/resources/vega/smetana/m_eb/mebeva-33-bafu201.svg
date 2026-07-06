@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="120px" preserveAspectRatio="none" style="width:242px;height:120px;background:#FFFFFF;" version="1.1" viewBox="0 0 242 120" width="242px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster db1-->
+    <g class="cluster" data-qualified-name="db1" data-source-line="1" id="ent0001">
+      <path d="M14,14 C14,4 65,4 65,4 C65,4 116,4 116,14 L116,86 C116,96 65,96 65,96 C65,96 14,96 14,86 L14,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M14,14 C14,24 65,24 65,24 C65,24 116,24 116,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="86.363" x="21.819" y="36.889">My Database1</text>
+    </g>
+    <!--cluster db2-->
+    <g class="cluster" data-qualified-name="db2" data-source-line="4" id="ent0003">
+      <path d="M124,14 C124,4 175,4 175,4 C175,4 226,4 226,14 L226,86 C226,96 175,96 175,96 C175,96 124,96 124,86 L124,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M124,14 C124,24 175,24 175,24 C175,24 226,24 226,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="86.363" x="131.819" y="36.889">My Database2</text>
+    </g>
+    <!--entity test1-->
+    <g class="entity" data-qualified-name="db1.test1" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.275" x="30" y="44"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="80.275" y="49"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="78.275" y="51"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="78.275" y="55"/>
+      <text fill="#000" font-size="14" textLength="30.275" x="45" y="74.889">test1</text>
+    </g>
+    <!--entity test2-->
+    <g class="entity" data-qualified-name="db2.test2" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.275" x="140" y="44"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="190.275" y="49"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="188.275" y="51"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="188.275" y="55"/>
+      <text fill="#000" font-size="14" textLength="30.275" x="155" y="74.889">test2</text>
+    </g>
+  </g>
+</svg>

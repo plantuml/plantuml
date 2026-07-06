@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="123px" preserveAspectRatio="none" style="width:80px;height:123px;background:#FFFFFF;" version="1.1" viewBox="0 0 80 123" width="80px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Foo-->
+    <g class="cluster" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <rect fill="none" height="95" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="58" x="14" y="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="72" y1="60" y2="60"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.15" x="30.925" y="16.889">Foo</text>
+      <text fill="#000" font-size="14" font-weight="700" x="39.5" y="30.889">x</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="30.925" x2="55.075" y1="39" y2="39"/>
+      <ellipse cx="39" cy="50.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" font-weight="700" x="45.5" y="54.889">y</text>
+    </g>
+    <!--entity Bar-->
+    <g class="entity" data-qualified-name="Foo.Bar" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.788" x="22" y="67"/>
+      <text fill="#000" font-size="14" textLength="21.788" x="32" y="80.889">Bar</text>
+    </g>
+  </g>
+</svg>

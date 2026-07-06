@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="188px" preserveAspectRatio="none" style="width:860px;height:188px;background:#FFFFFF;" version="1.1" viewBox="0 0 860 188" width="860px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foobar_bee_bar1-->
+    <g class="entity" data-qualified-name="foobar_bee_bar1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.55" x="6" y="19"/>
+      <ellipse cx="21" cy="35" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="40">C</text>
+      <text fill="#000" font-size="14" textLength="95.55" x="35" y="38.889">foobar/fee-bar1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="132.55" y1="51" y2="51"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="132.55" y1="59" y2="59"/>
+    </g>
+    <!--class foobar_bee_bar2-->
+    <g class="entity" data-qualified-name="foobar_bee_bar2" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.55" x="152" y="19"/>
+      <ellipse cx="167" cy="35" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="162" y="40">C</text>
+      <text fill="#000" font-size="14" textLength="95.55" x="181" y="38.889">foobar/fee-bar2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="153" x2="278.55" y1="51" y2="51"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="153" x2="278.55" y1="59" y2="59"/>
+    </g>
+    <!--class foobar/fee-bar3-->
+    <g class="entity" data-qualified-name="foobar.fee-bar3" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.55" x="6" y="117"/>
+      <ellipse cx="21" cy="133" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="138">C</text>
+      <text fill="#000" font-size="14" textLength="95.55" x="35" y="136.889">foobar/fee-bar3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="132.55" y1="149" y2="149"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="132.55" y1="157" y2="157"/>
+    </g>
+    <!--class foobar_bee_bar4-->
+    <g class="entity" data-qualified-name="foobar_bee_bar4" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.55" x="360" y="110"/>
+      <ellipse cx="375" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="370" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="95.55" x="389" y="129.889">foobar/fee-bar4</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="361" x2="486.55" y1="142" y2="142"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="366" y="156.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="361" x2="486.55" y1="164" y2="164"/>
+    </g>
+    <!--class foobar_bee_bar5-->
+    <g class="entity" data-qualified-name="foobar_bee_bar5" data-source-line="10" id="ent0005">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.55" x="152" y="110"/>
+      <ellipse cx="167" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="162" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="95.55" x="181" y="129.889">foobar/fee-bar5</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="153" x2="278.55" y1="142" y2="142"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="158" y="156.889">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="153" x2="278.55" y1="164" y2="164"/>
+    </g>
+    <!--class foobar/fee-bar6-->
+    <g class="entity" data-qualified-name="foobar.fee-bar6" data-source-line="14" id="ent0006">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.55" x="422" y="12"/>
+      <ellipse cx="437" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="432" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="95.55" x="451" y="31.889">foobar/fee-bar6</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="423" x2="548.55" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="428" y="58.889">foo3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="423" x2="548.55" y1="66" y2="66"/>
+    </g>
+    <!--class this is my class-->
+    <g class="entity" data-qualified-name="this is my class" data-source-line="18" id="ent0007">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="196.188" x="574" y="110"/>
+      <ellipse cx="626.588" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="621.588" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="82.513" x="647.088" y="129.889">this is my class</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="575" x2="769.188" y1="142" y2="142"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="575" x2="769.188" y1="150" y2="150"/>
+      <text fill="#000" font-size="14" textLength="184.188" x="580" y="164.889">dummy() with stange chars$%//</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN10" data-source-line="21" id="ent0011">
+      <path d="M506.5,129 L506.5,152 A0,0 0 0 0 506.5,152 L555.044,152 A0,0 0 0 0 555.044,152 L555.044,147 L573.711,141 L555.044,139 L555.044,139 L545.044,129 L506.5,129 A0,0 0 0 0 506.5,129" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M545.044,129 L545.044,139 L555.044,139 L545.044,129" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="512.5" y="144.111">hello</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN13" data-source-line="24" id="ent0014">
+      <path d="M788,129 L788,137 L770.156,141 L788,145 L788,152 A0,0 0 0 0 788,152 L843.775,152 A0,0 0 0 0 843.775,152 L843.775,139 L833.775,129 L788,129 A0,0 0 0 0 788,129" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M833.775,129 L833.775,139 L843.775,139 L833.775,129" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="34.775" x="794" y="144.111">hello2</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="composition" id="lnk8">
+      <polygon fill="#181818" points="544.341,74.112,547.838,80.418,555.005,79.615,551.508,73.309,544.341,74.112" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M555.005,79.615 C577.165,91.053 591.725,98.568 613.866,109.995" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="composition" id="lnk9">
+      <polygon fill="#181818" points="466.553,74.112,459.938,76.982,460.043,84.192,466.658,81.322,466.553,74.112" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M460.043,84.192 C452.656,95.629 450.758,98.568 443.378,109.995" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="434.378" y="106.106">B</text>
+      <text fill="#000" font-size="13" x="457.553" y="85.223">A</text>
+    </g>
+  </g>
+</svg>

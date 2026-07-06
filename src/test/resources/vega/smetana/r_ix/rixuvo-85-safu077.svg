@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="82px" preserveAspectRatio="none" style="width:146px;height:82px;background:#FFFFFF;" version="1.1" viewBox="0 0 146 82" width="146px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity business process-->
+    <g class="entity" data-qualified-name="business process" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="124.3" x="6" y="12"/>
+      <path d="M71.879,25.5 A0.5,0.5 0 0 0 71.551,25.975 L71.576,28.611 L59.019,28.615 A0.5,0.5 0 0 0 58.519,29.115 L58.515,35.164 A0.5,0.5 0 0 0 59.017,35.664 L71.546,35.617 L71.546,37.943 A0.5,0.5 0 0 0 72.429,38.264 L77.423,32.311 A0.5,0.5 0 0 0 77.425,31.67 L72.435,25.65 A0.5,0.5 0 0 0 71.878,25.5 M72.565,27.373 L76.391,31.988 L72.547,36.568 L72.547,35.115 A0.5,0.5 0 0 0 72.045,34.615 L59.516,34.662 L59.52,29.615 L72.081,29.611 A0.5,0.5 0 0 0 72.581,29.107" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="104.3" x="16" y="52.889">business process</text>
+    </g>
+  </g>
+</svg>

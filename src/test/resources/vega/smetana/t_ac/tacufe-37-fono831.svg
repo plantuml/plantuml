@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="198px" preserveAspectRatio="none" style="width:82px;height:198px;background:#FFFFFF;" version="1.1" viewBox="0 0 82 198" width="82px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="15" id="ent0001">
+      <ellipse cx="36" cy="22" fill="#98FB98" rx="10" ry="10" style="stroke:#FFC0CB;stroke-width:2.5;"/>
+    </g>
+    <g class="entity" data-qualified-name="State1" data-source-line="15" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="6" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="66.425" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="16" y="87.889">State1</text>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="16" id="ent0004">
+      <ellipse cx="36" cy="169" fill="none" rx="11" ry="11" style="stroke:#008000;stroke-width:2.5;"/>
+      <ellipse cx="36" cy="169" fill="#98FB98" rx="6" ry="6" style="stroke:#008000;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="36,71.764,40,62.764,36,66.764,32,62.764,36,71.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M36,36.094 C36,45.61 36,54.662 36,66.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="36,157.72,40,148.72,36,152.72,32,148.72,36,157.72" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M36,122.037 C36,134.106 36,143.155 36,152.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

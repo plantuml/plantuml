@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="285px" preserveAspectRatio="none" style="width:368px;height:285px;background:#FFFFFF;" version="1.1" viewBox="0 0 368 285" width="368px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster tempSensor-->
+    <g class="cluster" data-qualified-name="tempSensor" data-source-line="6" id="ent0001">
+      <rect fill="none" height="45" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="140" x="46" y="39"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="166" y="44"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="164" y="46"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="164" y="50"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="91.85" y="62.889">«block»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="124.425" x="53.787" y="76.889">Temperature Sensor</text>
+    </g>
+    <!--cluster tempProcessing-->
+    <g class="cluster" data-qualified-name="tempProcessing" data-source-line="12" id="ent0003">
+      <rect fill="none" height="45" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="165" x="21" y="120"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="166" y="125"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="164" y="127"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="164" y="131"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="79.35" y="143.889">«block»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="149.363" x="28.819" y="157.889">Temperature Processing</text>
+    </g>
+    <!--cluster displayTemp-->
+    <g class="cluster" data-qualified-name="displayTemp" data-source-line="18" id="ent0006">
+      <rect fill="none" height="231" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="152" x="208" y="4"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="340" y="9"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="338" y="11"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="338" y="15"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="259.85" y="27.889">«block»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="79.45" x="244.275" y="41.889">displayTemp</text>
+    </g>
+    <!--cluster internals-->
+    <g class="cluster" data-qualified-name="displayTemp.internals" data-source-line="23" id="ent0009">
+      <rect fill="none" height="158" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="124" x="228" y="43"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.938" x="263.531" y="55.889">internals</text>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.tempSensor_temp_dK_raw" data-source-line="7" id="ent0002">
+      <text fill="#000" font-size="14" textLength="86.363" x="124.819" y="100.889">temp_dK_raw</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="162" y="78"/>
+    </g>
+    <g class="entity" data-qualified-name="tempProcessing.tempProcessing_temp_dK_raw_in" data-source-line="14" id="ent0004">
+      <text fill="#000" font-size="14" textLength="86.363" x="124.819" y="181.889">temp_dK_raw</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="162" y="159"/>
+    </g>
+    <g class="entity" data-qualified-name="tempProcessing.tempProcessing_temp_dC_filtered_out" data-source-line="15" id="ent0005">
+      <text fill="#000" font-size="14" textLength="106.575" x="80.712" y="181.889">temp_dC_filtered</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="128" y="159"/>
+    </g>
+    <g class="entity" data-qualified-name="displayTemp.temp_dC_displayTemp" data-source-line="20" id="ent0007">
+      <text fill="#000" font-size="14" textLength="56.787" x="213.606" y="251.889">temp_dC</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="236" y="229"/>
+    </g>
+    <g class="entity" data-qualified-name="displayTemp.temp_dF_displayTemp" data-source-line="21" id="ent0008">
+      <text fill="#000" font-size="14" textLength="55.212" x="180.394" y="62.889">temp_dF</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="202" y="78"/>
+    </g>
+    <!--entity display-->
+    <g class="entity" data-qualified-name="displayTemp.internals.display" data-source-line="24" id="ent0010">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.663" x="236" y="149"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="299.663" y="154"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="297.663" y="156"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="297.663" y="160"/>
+      <text fill="#000" font-size="14" textLength="43.663" x="251" y="179.889">display</text>
+    </g>
+    <!--entity conversion-->
+    <g class="entity" data-qualified-name="displayTemp.internals.conversion" data-source-line="25" id="ent0011">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.725" x="236" y="68"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="323.725" y="73"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="321.725" y="75"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="321.725" y="79"/>
+      <text fill="#000" font-size="14" textLength="67.725" x="251" y="98.889">conversion</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0007" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="267.429,193.143,259.826,199.404,265.192,197.615,266.981,202.982,267.429,193.143" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M265.192,197.615 C259.266,209.467 254.354,219.292 249.524,228.952" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="256.879,148.982,253.5,139.731,253.404,145.387,247.748,145.291,256.879,148.982" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M217.085,102.353 C219.208,105.548 221.609,108.975 224,112 C234.152,124.844 243.059,134.685 253.404,145.387" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0010" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="286.784,112.171,281.478,120.468,286.033,117.114,289.387,121.669,286.784,112.171" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="281.225,148.771,286.531,140.474,281.976,143.828,278.622,139.272,281.225,148.771" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M286.033,117.114 C284.312,128.449 283.699,132.484 281.976,143.828" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk16">
+      <polygon fill="#181818" points="170,158.702,174,149.702,170,153.702,166,149.702,170,158.702" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M170,102.319 C170,117.337 170,138.695 170,153.702" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="235.774,238.309,227.88,232.42,230.898,237.205,226.113,240.223,235.774,238.309" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M140.433,183.077 C143.281,189.035 147.485,196.136 153,201 C178.396,223.397 213.718,233.314 230.898,237.205" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

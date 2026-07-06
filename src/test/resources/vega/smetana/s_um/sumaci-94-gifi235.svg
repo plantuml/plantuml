@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="95px" preserveAspectRatio="none" style="width:160px;height:95px;background:#FFFFFF;" version="1.1" viewBox="0 0 160 95" width="160px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster a-->
+    <g class="cluster" data-qualified-name="a" id="ent0004">
+      <path d="M16.5,4 L25.288,4 A3.75,3.75 0 0 1 27.788,6.5 L34.788,24 L149.5,24 A2.5,2.5 0 0 1 152,26.5 L152,68.5 A2.5,2.5 0 0 1 149.5,71 L16.5,71 A2.5,2.5 0 0 1 14,68.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="34.788" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="18" y="16.889">a</text>
+    </g>
+    <!--entity hello-->
+    <g class="entity" data-qualified-name="a.hello" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.663" x="22" y="29"/>
+      <text fill="#000" font-size="14" textLength="29.663" x="32" y="49.889">hello</text>
+    </g>
+    <!--entity world-->
+    <g class="entity" data-qualified-name="a.world" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.513" x="90" y="29"/>
+      <text fill="#000" font-size="14" textLength="33.513" x="100" y="49.889">world</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="89.673,46,80.673,42,84.673,46,80.673,50,89.673,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M72.156,46 C77.995,46 78.834,46 84.673,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:302px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 302 105" width="302px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="A" data-source-line="3" id="ent0001">
+      <path d="M16.5,4 L26.862,4 A3.75,3.75 0 0 1 29.362,6.5 L36.363,24 L147.5,24 A2.5,2.5 0 0 1 150,26.5 L150,78.5 A2.5,2.5 0 0 1 147.5,81 L16.5,81 A2.5,2.5 0 0 1 14,78.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="36.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="18" y="16.889">A</text>
+    </g>
+    <!--cluster B-->
+    <g class="cluster" data-qualified-name="B" data-source-line="6" id="ent0003">
+      <path d="M160.5,4 L170.863,4 A3.75,3.75 0 0 1 173.363,6.5 L180.363,24 L291.5,24 A2.5,2.5 0 0 1 294,26.5 L294,78.5 A2.5,2.5 0 0 1 291.5,81 L160.5,81 A2.5,2.5 0 0 1 158,78.5 L158,6.5 A2.5,2.5 0 0 1 160.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="158" x2="180.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="162" y="16.889">B</text>
+    </g>
+    <!--entity Component1-->
+    <g class="entity" data-qualified-name="A.Component1" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.15" x="22" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="122.15" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="120.15" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="120.15" y="40"/>
+      <text fill="#000" font-size="14" textLength="80.15" x="37" y="59.889">Component1</text>
+    </g>
+    <!--entity Component2-->
+    <g class="entity" data-qualified-name="B.Component2" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.15" x="166" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="266.15" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="264.15" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="264.15" y="40"/>
+      <text fill="#000" font-size="14" textLength="80.15" x="181" y="59.889">Component2</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="165.76,51,156.76,47,160.76,51,156.76,55,165.76,51" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M142.188,51 C150.045,51 152.902,51 160.76,51" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

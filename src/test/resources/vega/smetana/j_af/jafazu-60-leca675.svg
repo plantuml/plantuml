@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="108px" preserveAspectRatio="none" style="width:246px;height:108px;background:#FFFFFF;" version="1.1" viewBox="0 0 246 108" width="246px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="32"/>
+    <text fill="#000" font-size="14" x="27.106" y="55.889">a</text>
+    <rect fill="#F1F1F1" height="80" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="155.6" x="74" y="12"/>
+    <text fill="#000" font-size="14" textLength="11.638" x="79" y="27.889">In</text>
+    <text fill="#000" font-size="14" x="90.638" y="27.889"> </text>
+    <text fill="#000" font-size="14" textLength="18.638" x="90.638" y="27.889">my</text>
+    <text fill="#000" font-size="14" x="109.275" y="27.889"> </text>
+    <text fill="#000" font-size="14" textLength="45.938" x="109.275" y="27.889">humble</text>
+    <text fill="#000" font-size="14" x="155.213" y="27.889"> </text>
+    <text fill="#000" font-size="14" textLength="45.238" x="155.213" y="27.889">opinion</text>
+    <text fill="#000" font-size="14" x="200.45" y="27.889"> </text>
+    <text fill="#000" font-size="14" textLength="21.788" x="200.45" y="27.889">this</text>
+    <text fill="#000" font-size="14" textLength="10.15" x="79" y="41.889">is</text>
+    <text fill="#000" font-size="14" x="89.15" y="41.889"> </text>
+    <text fill="#000" font-size="14" textLength="65.45" x="89.15" y="41.889">definitively</text>
+    <text fill="#000" font-size="14" x="154.6" y="41.889"> </text>
+    <text fill="#000" font-size="14" textLength="19.425" x="154.6" y="41.889">too</text>
+    <text fill="#000" font-size="14" x="174.025" y="41.889"> </text>
+    <text fill="#000" font-size="14" textLength="26.512" x="174.025" y="41.889">long</text>
+    <text fill="#000" font-size="14" x="200.538" y="41.889"> </text>
+    <text fill="#000" font-size="14" textLength="16.275" x="200.538" y="41.889">for</text>
+    <text fill="#000" font-size="14" x="216.813" y="41.889"> </text>
+    <text fill="#000" font-size="14" x="216.813" y="41.889">a</text>
+    <text fill="#000" font-size="14" textLength="30.275" x="79" y="55.889">state</text>
+    <text fill="#000" font-size="14" x="109.275" y="55.889"> </text>
+    <text fill="#000" font-size="14" textLength="35" x="109.275" y="55.889">name</text>
+    <text fill="#000" font-size="14" x="144.275" y="55.889"> </text>
+    <text fill="#000" font-size="14" textLength="23.363" x="144.275" y="55.889">one</text>
+    <text fill="#000" font-size="14" x="167.638" y="55.889"> </text>
+    <text fill="#000" font-size="14" textLength="26.513" x="167.638" y="55.889">liner</text>
+    <text fill="#000" font-size="14" x="194.15" y="55.889"> </text>
+    <text fill="#000" font-size="14" textLength="23.363" x="194.15" y="55.889">and</text>
+    <text fill="#000" font-size="14" textLength="36.663" x="79" y="69.889">would</text>
+    <text fill="#000" font-size="14" x="115.663" y="69.889"> </text>
+    <text fill="#000" font-size="14" textLength="42" x="115.663" y="69.889">benefit</text>
+    <text fill="#000" font-size="14" x="157.663" y="69.889"> </text>
+    <text fill="#000" font-size="14" textLength="27.913" x="157.663" y="69.889">from</text>
+    <text fill="#000" font-size="14" textLength="56.875" x="79" y="83.889">wrapping</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="73.666,52,64.666,48,68.666,52,64.666,56,73.666,52" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56.051,52 C61.923,52 62.795,52 68.666,52" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

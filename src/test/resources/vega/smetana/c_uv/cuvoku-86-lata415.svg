@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="146px" preserveAspectRatio="none" style="width:306px;height:146px;background:#FFFFFF;" version="1.1" viewBox="0 0 306 146" width="306px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Settings-->
+    <g class="entity" data-qualified-name="Settings" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.513" x="6" y="12"/>
+      <ellipse cx="42.122" cy="28" fill="#FAA" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="37.122" y="33">T</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="60.816" y="31.889">Settings</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="134.513" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="117.513" x="12" y="58.889">Table for all settings.</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="134.513" y1="66" y2="66"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="134.513" y1="68" y2="68"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="38.85" x="12" y="80.889">userId</text>
+      <text fill="#000" font-size="14" textLength="39.637" x="50.85" y="80.889">int(11)</text>
+      <text fill="#000" font-size="14" textLength="115.763" x="12" y="94.889">int(10) -- A comment</text>
+      <text fill="#000" font-size="14" textLength="73.15" x="12" y="108.889">field1 int(10)</text>
+      <text fill="#000" font-size="14" textLength="112.788" x="12" y="122.889">field2 varchar(128)</text>
+    </g>
+    <!--class Mitarbeiter-->
+    <g class="entity" data-qualified-name="Mitarbeiter" data-source-line="13" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="113.15" x="177.5" y="26"/>
+      <ellipse cx="199.289" cy="42" fill="#FAA" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="194.289" y="47">T</text>
+      <text fill="#000" font-size="14" textLength="66.063" x="214.798" y="45.889">Mitarbeiter</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="178.5" x2="289.65" y1="58" y2="58"/>
+      <text fill="#000" font-size="14" textLength="101.15" x="183.5" y="72.889">Table Mitarbeiter</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="178.5" x2="289.65" y1="80" y2="80"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="178.5" x2="289.65" y1="82" y2="82"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="188.5" cy="92.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="197.5" y="94.889">field3</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="188.5" cy="106.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="197.5" y="108.889">field4</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="177.293,71,168.293,67,172.293,71,168.293,75,177.293,71" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M136.359,71 C149.91,71 159.082,71 172.293,71" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.881" x="146.75" y="63.111">test</text>
+    </g>
+  </g>
+</svg>

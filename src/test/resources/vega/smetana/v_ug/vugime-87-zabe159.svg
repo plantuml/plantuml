@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:239px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 239 104" width="239px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="b8ckxihxppsm60" width="1" x="0" y="0">
+      <feFlood flood-color="#0000FF" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+    <filter height="1" id="b8ckxihxppsm61" width="1" x="0" y="0">
+      <feFlood flood-color="#5F9EA0" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+    <filter height="1" id="b8ckxihxppsm62" width="1" x="0" y="0">
+      <feFlood flood-color="#FFA500" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity f-->
+    <g class="entity" data-qualified-name="f" data-source-line="1" id="ent0001">
+      <path d="M6,14.5 L6,85.5 A2.5,2.5 0 0 0 8.5,88 L220.463,88 A2.5,2.5 0 0 0 222.963,85.5 L222.963,22 L212.963,12 L8.5,12 A2.5,2.5 0 0 0 6,14.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M212.963,12 L212.963,19.5 A2.5,2.5 0 0 0 215.463,22 L222.963,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" filter="url(#b8ckxihxppsm60)" font-size="14" textLength="23.363" x="16" y="32.889">aaa</text>
+      <text fill="#000" font-size="14" textLength="93.45" x="16" y="46.889">You can change</text>
+      <text fill="#000" filter="url(#b8ckxihxppsm61)" font-size="14" textLength="103.513" x="109.45" y="46.889">background color</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="16" y="60.889">This is</text>
+      <text fill="#00F" font-size="14" textLength="28.088" x="52.663" y="60.889">Blue</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="16" y="74.889">This is</text>
+      <text fill="#000" filter="url(#b8ckxihxppsm62)" font-size="14" textLength="119.788" x="52.663" y="74.889">Orange background</text>
+    </g>
+  </g>
+</svg>

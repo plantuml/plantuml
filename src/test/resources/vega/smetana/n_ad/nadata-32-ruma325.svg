@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="60px" preserveAspectRatio="none" style="width:205px;height:60px;background:#FFFFFF;" version="1.1" viewBox="0 0 205 60" width="205px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="34.7" x="6" y="12"/>
+    <text fill="#000" font-size="12" textLength="14.7" x="16" y="31.333">A1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="129.5" x="59.5" y="12"/>
+    <text fill="#000" font-size="12" textLength="109.5" x="69.5" y="31.333">A2 A3 -&gt; A2 A3 -&gt; A2 : b }</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="59.464,28,50.464,24,54.464,28,50.464,32,59.464,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M41.254,28 C47.324,28 48.394,28 54.464,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

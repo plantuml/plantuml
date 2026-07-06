@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="330px" preserveAspectRatio="none" style="width:204px;height:330px;background:#FFFFFF;" version="1.1" viewBox="0 0 204 330" width="204px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity test_bullet_list_creole-->
+    <g class="entity" data-qualified-name="test_bullet_list_creole" data-source-line="1" id="ent0001">
+      <path d="M6,14.5 L6,311.5 A2.5,2.5 0 0 0 8.5,314 L185.738,314 A2.5,2.5 0 0 0 188.238,311.5 L188.238,22 L178.238,12 L8.5,12 A2.5,2.5 0 0 0 6,14.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M178.238,12 L178.238,19.5 A2.5,2.5 0 0 0 180.738,22 L188.238,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <ellipse cx="21.5" cy="28.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="50.663" x="28" y="32.889">bullet list</text>
+      <ellipse cx="21.5" cy="42.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="52.938" x="28" y="46.889">no space</text>
+      <ellipse cx="21.5" cy="56.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="28" y="60.889">space</text>
+      <ellipse cx="21.5" cy="70.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="62.3" x="28" y="74.889">space with</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="90.3" y="74.889">bold</text>
+      <ellipse cx="21.5" cy="84.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="28" y="88.889">bold</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="187.238" y1="92" y2="92"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="187.238" y1="94" y2="94"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="84.875" x="16" y="106.889">*bold no space</text>
+      <ellipse cx="21.5" cy="116.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="132.3" x="28" y="120.889">space with end asterik *</text>
+      <text fill="#000" font-size="14" textLength="153.3" x="16" y="134.889">*no space with end asterik*</text>
+      <ellipse cx="21.5" cy="144.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="150.238" x="28" y="148.889">space with middle * asterik</text>
+      <text fill="#000" font-size="14" textLength="153.3" x="16" y="162.889">*no space with end * asterik</text>
+      <ellipse cx="21.5" cy="172.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="109.025" x="28" y="176.889">space with middle *</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.212" x="137.025" y="176.889">asterik</text>
+      <text fill="#000" font-size="14" textLength="112.088" x="16" y="190.889">*no space with end *</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.212" x="128.088" y="190.889">asterik</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="187.238" y1="198" y2="198"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="187.238" y1="200" y2="200"/>
+      <ellipse cx="21.5" cy="208.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="79.45" x="28" y="212.889">bold no space</text>
+      <ellipse cx="21.5" cy="222.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="132.3" x="28" y="226.889">space with end asterik *</text>
+      <ellipse cx="21.5" cy="236.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="147.875" x="28" y="240.889">no space with end asterik*</text>
+      <ellipse cx="21.5" cy="250.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="150.238" x="28" y="254.889">space with middle * asterik</text>
+      <ellipse cx="21.5" cy="264.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="147.875" x="28" y="268.889">no space with end * asterik</text>
+      <ellipse cx="21.5" cy="278.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="109.025" x="28" y="282.889">space with middle *</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.212" x="137.025" y="282.889">asterik</text>
+      <ellipse cx="21.5" cy="292.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="106.663" x="28" y="296.889">no space with end *</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.212" x="134.663" y="296.889">asterik</text>
+    </g>
+  </g>
+</svg>

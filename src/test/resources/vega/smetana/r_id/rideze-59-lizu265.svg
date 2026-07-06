@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="98px" preserveAspectRatio="none" style="width:150px;height:98px;background:#FFFFFF;" version="1.1" viewBox="0 0 150 98" width="150px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Dwelling-->
+    <g class="entity" data-qualified-name="Dwelling" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="70" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.696" x="6" y="12"/>
+      <ellipse cx="40.162" cy="28" fill="#F70" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="35.162" y="33">X</text>
+      <text fill="#000" font-size="14" textLength="53.113" x="58.421" y="31.889">Dwelling</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="132.696" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="60.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <path d="M35,48 C30.6,48 27,51.6 27,56 C27,60.4 30.6,64 35,64 C39.4,64 43,60.4 43,56 C43,51.6 39.4,48 35,48 M35,50 C36.32,50 37.52,50.42 38.5,51.12 L30.12,59.5 C29.42,58.52 29,57.32 29,56 C29,52.68 31.68,50 35,50 M39.88,52.5 C40.58,53.48 41,54.68 41,56 C41,59.32 38.32,62 35,62 C33.68,62 32.48,61.58 31.5,60.88 L39.88,52.5" fill="#F00"/>
+      <text fill="#000" font-size="14" textLength="72.363" x="44" y="66.889">IntWindows</text>
+      <path d="M122.578,57.167 C122.356,57.19 122.146,57.342 122.029,57.563 C121.878,57.867 120.758,60.118 120.536,60.34 C120.314,60.562 120.023,60.667 119.696,60.667 L119.696,65.333 L123.779,65.333 C124.024,65.333 124.234,65.182 124.328,64.972 C124.328,64.972 125.529,61.577 125.529,61.25 C125.529,60.923 125.273,60.667 124.946,60.667 L123.196,60.667 C122.869,60.667 122.613,60.375 122.613,60.083 C122.613,59.792 123.068,58.24 123.161,57.937 C123.254,57.633 123.102,57.307 122.799,57.202 C122.718,57.178 122.659,57.155 122.578,57.167 M117.363,60.667 L117.363,65.333 L118.529,65.333 L118.529,60.667 L117.363,60.667" fill="#000"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="132.696" y1="74" y2="74"/>
+    </g>
+  </g>
+</svg>

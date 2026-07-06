@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="240px" preserveAspectRatio="none" style="width:680px;height:240px;background:#FFFFFF;" version="1.1" viewBox="0 0 680 240" width="680px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster AA-->
+    <g class="cluster" data-qualified-name="AA" data-source-line="13" id="ent0012">
+      <path d="M309,59 L328.725,59 A3.75,3.75 0 0 1 331.225,61.5 L338.225,79 L508,79 A2.5,2.5 0 0 1 510.5,81.5 L510.5,213.5 A2.5,2.5 0 0 1 508,216 L309,216 A2.5,2.5 0 0 1 306.5,213.5 L306.5,61.5 A2.5,2.5 0 0 1 309,59" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="306.5" x2="338.225" y1="79" y2="79"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="310.5" y="71.889">AA</text>
+    </g>
+    <!--entity AA_ok-->
+    <g class="entity" data-qualified-name="AA_ok" data-source-line="2" id="ent0001">
+      <path d="M107.5,87.5 L161.8,87.5 A3.75,3.75 0 0 1 164.3,90 L171.3,107.5 L185.8,107.5 A2.5,2.5 0 0 1 188.3,110 L188.3,122 A2.5,2.5 0 0 1 185.8,124.5 L107.5,124.5 A2.5,2.5 0 0 1 105,122 L105,90 A2.5,2.5 0 0 1 107.5,87.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="105" x2="171.3" y1="107.5" y2="107.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.3" x="115" y="101.389">AA_ok</text>
+    </g>
+    <!--entity up_ok-->
+    <g class="entity" data-qualified-name="up_ok" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.15" x="107.5" y="4"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="165.65" y="9"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="163.65" y="11"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="163.65" y="15"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="122.5" y="34.889">up_ok</text>
+    </g>
+    <!--entity down_ok-->
+    <g class="entity" data-qualified-name="down_ok" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.087" x="98.5" y="164"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="174.587" y="169"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="172.587" y="171"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="172.587" y="175"/>
+      <text fill="#000" font-size="14" textLength="56.087" x="113.5" y="194.889">down_ok</text>
+    </g>
+    <!--entity right_ok-->
+    <g class="entity" data-qualified-name="right_ok" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="89.788" x="206.5" y="84"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="276.288" y="89"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="274.288" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="274.288" y="95"/>
+      <text fill="#000" font-size="14" textLength="49.788" x="221.5" y="114.889">right_ok</text>
+    </g>
+    <!--entity left_ok-->
+    <g class="entity" data-qualified-name="left_ok" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.212" x="6" y="84"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="67.212" y="89"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="65.212" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="65.212" y="95"/>
+      <text fill="#000" font-size="14" textLength="41.212" x="21" y="114.889">left_ok</text>
+    </g>
+    <!--entity up-->
+    <g class="entity" data-qualified-name="up" data-source-line="18" id="ent0016">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.575" x="380.5" y="4"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="416.075" y="9"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="414.075" y="11"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="414.075" y="15"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="395.5" y="34.889">up</text>
+    </g>
+    <!--entity down-->
+    <g class="entity" data-qualified-name="down" data-source-line="19" id="ent0017">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="73.512" x="518.5" y="164"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="572.013" y="169"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="570.013" y="171"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="570.013" y="175"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="533.5" y="194.889">down</text>
+    </g>
+    <!--entity right-->
+    <g class="entity" data-qualified-name="right" data-source-line="20" id="ent0018">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.213" x="520" y="84"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="567.213" y="89"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="565.213" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="565.213" y="95"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="535" y="114.889">right</text>
+    </g>
+    <!--entity left-->
+    <g class="entity" data-qualified-name="left" data-source-line="21" id="ent0019">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.637" x="605" y="84"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="643.638" y="89"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="641.638" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="641.638" y="95"/>
+      <text fill="#000" font-size="14" textLength="18.637" x="620" y="114.889">left</text>
+    </g>
+    <!--entity BB1-->
+    <g class="entity" data-qualified-name="AA.BB1" data-source-line="14" id="ent0013">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.512" x="315" y="84"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="361.513" y="89"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="359.513" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="359.513" y="95"/>
+      <text fill="#000" font-size="14" textLength="26.512" x="330" y="114.889">BB1</text>
+    </g>
+    <!--entity BB2-->
+    <g class="entity" data-qualified-name="AA.BB2" data-source-line="15" id="ent0014">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.512" x="435" y="84"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="481.513" y="89"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="479.513" y="91"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="479.513" y="95"/>
+      <text fill="#000" font-size="14" textLength="26.512" x="450" y="114.889">BB2</text>
+    </g>
+    <!--entity BB_next_line-->
+    <g class="entity" data-qualified-name="AA.BB_next_line" data-source-line="16" id="ent0015">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122.6" x="315" y="164"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="417.6" y="169"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="415.6" y="171"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="415.6" y="175"/>
+      <text fill="#000" font-size="14" textLength="82.6" x="330" y="194.889">BB_next_line</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="146.5,48.314,142.5,57.314,146.5,53.314,150.5,57.314,146.5,48.314" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M146.5,53.314 C146.5,65.583 146.5,75.814 146.5,87.398" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="146.5,163.765,150.5,154.765,146.5,158.765,142.5,154.765,146.5,163.765" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M146.5,124.699 C146.5,136.296 146.5,146.517 146.5,158.765" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="206.101,106,197.101,102,201.101,106,197.101,110,206.101,106" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M188.336,106 C194.258,106 195.179,106 201.101,106" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="87.125,106,96.125,110,92.125,106,96.125,102,87.125,106" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M92.125,106 C98.001,106 98.876,106 104.752,106" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0012" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="408.5,48.314,404.5,57.314,408.5,53.314,412.5,57.314,408.5,48.314" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M408.5,53.314 C408.5,55.141 408.5,52.033 408.5,53.969 C408.5,54.938 408.5,55.917 408.5,56.904 C408.5,57.398 408.5,57.894 408.5,58.391 C408.5,58.515 408.5,58.64 408.5,58.764 C408.5,58.827 408.5,58.889 408.5,58.951" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0017" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="518.471,165.856,512.055,158.384,513.954,163.712,508.625,165.612,518.471,165.856" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M510.534,162.225 C510.678,162.288 510.822,162.351 510.967,162.414 C512.123,162.92 513.3,163.449 514.5,164 C515.808,164.601 512.617,163.078 513.954,163.712" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0018" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="541.483,83.807,539.809,74.101,538.705,79.649,533.157,78.546,541.483,83.807" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M426.535,58.958 C426.547,58.944 426.558,58.93 426.57,58.916 C426.593,58.888 426.616,58.861 426.639,58.833 C426.686,58.778 426.731,58.724 426.777,58.671 C426.868,58.564 426.957,58.46 427.046,58.358 C427.222,58.156 427.394,57.963 427.562,57.781 C427.899,57.417 428.221,57.092 428.537,56.799 C429.168,56.214 429.777,55.758 430.432,55.375 C431.743,54.609 433.244,54.135 435.5,53.5 C450.474,49.287 490.526,49.287 505.5,53.5 C521.074,57.882 530.5,67.369 538.705,79.649" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0012" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="622.86,83.777,621.31,74.051,620.136,79.585,614.602,78.411,622.86,83.777" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M620.136,79.585 C612.148,67.294 602.927,57.841 587.5,53.5 C571.242,48.926 451.758,48.926 435.5,53.5 C433.403,54.09 431.469,54.944 429.684,56.013 C428.791,56.548 427.936,57.137 427.117,57.774 C426.707,58.092 426.307,58.423 425.915,58.764 C425.866,58.807 425.817,58.85 425.768,58.893" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

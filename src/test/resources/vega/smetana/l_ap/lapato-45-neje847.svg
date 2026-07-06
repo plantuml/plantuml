@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="82px" preserveAspectRatio="none" style="width:183px;height:82px;background:#98FB98;" version="1.1" viewBox="0 0 183 82" width="183px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#98FB98" height="82" style="stroke:none;" width="183" x="0" y="0"/>
+    <g class="entity" data-qualified-name="o1" data-source-line="8" id="ent0001">
+      <rect fill="#98FB98" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="29.575" x="6" y="22"/>
+      <text fill="#F00" font-size="14" textLength="15.575" x="13" y="34.889">o1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="34.575" y1="40" y2="40"/>
+    </g>
+    <g class="entity" data-qualified-name="user" data-source-line="9" id="ent0002">
+      <rect fill="#98FB98" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="113.413" x="54.5" y="12"/>
+      <text fill="#F00" font-size="14" textLength="27.213" x="97.6" y="24.889">user</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.5" x2="166.913" y1="30" y2="30"/>
+      <text fill="#F00" font-size="14" textLength="101.413" x="60.5" y="44.889">name = "Dummy"</text>
+      <text fill="#F00" font-size="14" textLength="42.525" x="60.5" y="58.889">id = 123</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="54.253,39,45.253,35,49.253,39,45.253,43,54.253,39" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M36.117,39 C42.162,39 43.208,39 49.253,39" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

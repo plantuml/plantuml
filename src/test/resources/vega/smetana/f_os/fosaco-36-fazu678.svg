@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="188px" preserveAspectRatio="none" style="width:85px;height:188px;background:#FFFFFF;" version="1.1" viewBox="0 0 85 188" width="85px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="37.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="63.35" x="6" y="72"/>
+    <text fill="#000" font-size="12" textLength="43.35" x="16" y="91.333">activity1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="63.35" x="6" y="140"/>
+    <text fill="#000" font-size="12" textLength="43.35" x="16" y="159.333">activity2</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <a href="http://www.yahoo.com" target="_top" title="http://www.yahoo.com" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com" xlink:show="new" xlink:title="http://www.yahoo.com" xlink:type="simple">
+        <polygon fill="#181818" points="37.5,71.587,41.5,62.587,37.5,66.587,33.5,62.587,37.5,71.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M37.5,36.084 C37.5,45.976 37.5,55.56 37.5,66.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <polygon fill="#181818" points="37.5,139.775,41.5,130.775,37.5,134.775,33.5,130.775,37.5,139.775" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M37.5,104.308 C37.5,114.97 37.5,124.131 37.5,134.775" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </a>
+    </g>
+  </g>
+</svg>

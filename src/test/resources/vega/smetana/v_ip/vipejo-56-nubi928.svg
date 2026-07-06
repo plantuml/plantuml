@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:616px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 616 104" width="616px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.763" x="272.5" y="12"/>
+      <ellipse cx="337.95" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="332.95" y="33">C</text>
+      <text fill="#000" font-size="14" x="358.45" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="273.5" x2="420.263" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="61.425" x="278.5" y="58.889">int counter</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="273.5" x2="420.263" y1="66" y2="66"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="283.5" cy="78.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" textLength="122.763" x="292.5" y="80.889">void start(int timeout)</text>
+    </g>
+    <path d="M440,33.5 L440,41 L339.925,55 L440,49 L440,56.5 A0,0 0 0 0 440,56.5 L600.425,56.5 A0,0 0 0 0 600.425,56.5 L600.425,43.5 L590.425,33.5 L440,33.5 A0,0 0 0 0 440,33.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M590.425,33.5 L590.425,43.5 L600.425,43.5 L590.425,33.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="139.425" x="446" y="48.611">This member is annotated</text>
+    <path d="M6,33.5 L6,56.5 A0,0 0 0 0 6,56.5 L254.094,56.5 A0,0 0 0 0 254.094,56.5 L254.094,51.5 L278.5,77 L254.094,43.5 L254.094,43.5 L244.094,33.5 L6,33.5 A0,0 0 0 0 6,33.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M244.094,33.5 L244.094,43.5 L254.094,43.5 L244.094,33.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="227.094" x="12" y="48.611">This method is now explained in a UML note</text>
+  </g>
+</svg>

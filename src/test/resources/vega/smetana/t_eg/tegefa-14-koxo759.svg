@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="574px" preserveAspectRatio="none" style="width:419px;height:574px;background:#FFFFFF;" version="1.1" viewBox="0 0 419 574" width="419px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M14.5,12 L53.65,12 A3.75,3.75 0 0 1 56.15,14.5 L63.15,32 L302.888,32 A2.5,2.5 0 0 1 305.388,34.5 L305.388,432.5 A2.5,2.5 0 0 1 302.888,435 L14.5,435 A2.5,2.5 0 0 1 12,432.5 L12,14.5 A2.5,2.5 0 0 1 14.5,12" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="12" x2="63.15" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="16" y="24.889">image</text>
+    <path d="M45.875,212 L77.238,212 A3.75,3.75 0 0 1 79.738,214.5 L86.738,232 L173.575,232 A2.5,2.5 0 0 1 176.075,234.5 L176.075,417.5 A2.5,2.5 0 0 1 173.575,420 L45.875,420 A2.5,2.5 0 0 1 43.375,417.5 L43.375,214.5 A2.5,2.5 0 0 1 45.875,212" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="43.375" x2="86.738" y1="232" y2="232"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="47.375" y="224.889">color</text>
+    <path d="M29.5,52 L55.438,52 A3.75,3.75 0 0 1 57.938,54.5 L64.938,72 L189.95,72 A2.5,2.5 0 0 1 192.45,74.5 L192.45,152.5 A2.5,2.5 0 0 1 189.95,155 L29.5,155 A2.5,2.5 0 0 1 27,152.5 L27,54.5 A2.5,2.5 0 0 1 29.5,52" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+    <line style="stroke:#000;stroke-width:1.5;" x1="27" x2="64.938" y1="72" y2="72"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="31" y="64.889">size</text>
+    <!--class image1-->
+    <g class="entity" data-qualified-name="image.image1" data-source-line="14" id="ent0009">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.938" x="196.075" y="357"/>
+      <ellipse cx="211.075" cy="373" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="206.075" y="378">C</text>
+      <text fill="#000" font-size="14" textLength="45.938" x="225.075" y="376.889">image1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="197.075" x2="273.013" y1="389" y2="389"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="197.075" x2="273.013" y1="397" y2="397"/>
+    </g>
+    <!--class image2-->
+    <g class="entity" data-qualified-name="image.image2" data-source-line="15" id="ent0010">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.938" x="212.45" y="79.5"/>
+      <ellipse cx="227.45" cy="95.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="222.45" y="100.5">C</text>
+      <text fill="#000" font-size="14" textLength="45.938" x="241.45" y="99.389">image2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="213.45" x2="289.388" y1="111.5" y2="111.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="213.45" x2="289.388" y1="119.5" y2="119.5"/>
+    </g>
+    <!--class red-->
+    <g class="entity" data-qualified-name="image.color.red" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.213" x="101.075" y="252"/>
+      <ellipse cx="116.075" cy="268" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="111.075" y="273">C</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="130.075" y="271.889">red</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="102.075" x2="152.288" y1="284" y2="284"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="102.075" x2="152.288" y1="292" y2="292"/>
+    </g>
+    <!--class green-->
+    <g class="entity" data-qualified-name="image.color.green" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.788" x="93.288" y="357"/>
+      <ellipse cx="108.288" cy="373" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="103.288" y="378">C</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="122.288" y="376.889">green</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="94.288" x2="160.075" y1="389" y2="389"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="94.288" x2="160.075" y1="397" y2="397"/>
+    </g>
+    <!--class big-->
+    <g class="entity" data-qualified-name="image.size.big" data-source-line="11" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.725" x="42" y="92"/>
+      <ellipse cx="57" cy="108" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="52" y="113">C</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="71" y="111.889">big</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43" x2="91.725" y1="124" y2="124"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43" x2="91.725" y1="132" y2="132"/>
+    </g>
+    <!--class small-->
+    <g class="entity" data-qualified-name="image.size.small" data-source-line="12" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="64.725" x="112.725" y="92"/>
+      <ellipse cx="127.725" cy="108" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="122.725" y="113">C</text>
+      <text fill="#000" font-size="14" textLength="32.725" x="141.725" y="111.889">small</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="113.725" x2="176.45" y1="124" y2="124"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="113.725" x2="176.45" y1="132" y2="132"/>
+    </g>
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="20" id="ent0012">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.425" x="325.388" y="387"/>
+      <ellipse cx="340.388" cy="403" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="335.388" y="408">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="354.388" y="406.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="326.388" x2="375.813" y1="419" y2="419"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="326.388" x2="375.813" y1="427" y2="427"/>
+    </g>
+    <!--class bar-->
+    <g class="entity" data-qualified-name="bar" data-source-line="21" id="ent0013">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.213" x="217.64" y="512"/>
+      <ellipse cx="232.64" cy="528" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="227.64" y="533">C</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="246.64" y="531.889">bar</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="218.64" x2="268.852" y1="544" y2="544"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="218.64" x2="268.852" y1="552" y2="552"/>
+    </g>
+    <line style="stroke:#181818;stroke-width:1;" x1="127.181" x2="127.181" y1="300" y2="357"/>
+    <polygon fill="#181818" points="127.181,357,131.181,348,127.181,352,123.181,348,127.181,357" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="62.806" x="60.375" y="332.111">red to green</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="109.725" x2="109.725" y1="155" y2="232"/>
+    <polygon fill="#181818" points="109.725,232,113.725,223,109.725,227,105.725,223,109.725,232" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="20.231" x="85.494" y="187.111">yes</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="351.1" x2="351.1" y1="435" y2="487"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="351.1" x2="252.448" y1="487" y2="487"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="252.448" x2="252.448" y1="487" y2="512"/>
+    <polygon fill="#181818" points="252.448,512,256.448,503,252.448,507,248.448,503,252.448,512" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="47.613" x="356.1" y="472.111">foo to bar</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="235.044" x2="235.044" y1="405" y2="512"/>
+    <polygon fill="#181818" points="235.044,512,239.044,503,235.044,507,231.044,503,235.044,512" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" x="238.044" y="417.111">1</text>
+    <text fill="#000" font-size="13" x="238.044" y="507.111">*</text>
+  </g>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="228px" preserveAspectRatio="none" style="width:181px;height:228px;background:#FFFFFF;" version="1.1" viewBox="0 0 181 228" width="181px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity c0-->
+    <g class="entity" data-qualified-name="c0" data-source-line="31" id="ent0001">
+      <rect fill="#AAA" height="49" rx="7.5" ry="7.5" style="stroke:#3600A8;stroke-width:1;" width="60.069" x="6" y="31"/>
+      <rect fill="#AAA" height="10" style="stroke:#3600A8;stroke-width:1;" width="15" x="46.069" y="36"/>
+      <rect fill="#AAA" height="2" style="stroke:#3600A8;stroke-width:1;" width="4" x="44.069" y="38"/>
+      <rect fill="#AAA" height="2" style="stroke:#3600A8;stroke-width:1;" width="4" x="44.069" y="42"/>
+      <text fill="#008000" font-size="19" textLength="20.069" x="21" y="65.778">c0</text>
+    </g>
+    <!--entity c-->
+    <g class="entity" data-qualified-name="c" data-source-line="32" id="ent0002">
+      <rect fill="#AAA" height="87" rx="7.5" ry="7.5" style="stroke:#3600A8;stroke-width:1;" width="81.206" x="84.5" y="12"/>
+      <rect fill="#AAA" height="10" style="stroke:#3600A8;stroke-width:1;" width="15" x="145.706" y="17"/>
+      <rect fill="#AAA" height="2" style="stroke:#3600A8;stroke-width:1;" width="4" x="143.706" y="19"/>
+      <rect fill="#AAA" height="2" style="stroke:#3600A8;stroke-width:1;" width="4" x="143.706" y="23"/>
+      <text fill="#008000" font-size="19" x="130.138" y="46.778">a</text>
+      <text fill="#008000" font-size="19" textLength="30.638" x="110.069" y="65.778">abc</text>
+      <text fill="#008000" font-size="19" textLength="41.206" x="99.5" y="84.778">a b c d</text>
+    </g>
+    <!--entity lab0-->
+    <g class="entity" data-qualified-name="lab0" data-source-line="38" id="ent0003">
+      <text fill="#008000" font-size="19" textLength="35.981" x="18" y="178.778">lab0</text>
+    </g>
+    <!--entity lab-->
+    <g class="entity" data-qualified-name="lab" data-source-line="39" id="ent0004">
+      <text fill="#008000" font-size="19" x="123.138" y="159.778">a</text>
+      <text fill="#008000" font-size="19" textLength="30.638" x="103.069" y="178.778">abc</text>
+      <text fill="#008000" font-size="19" textLength="41.206" x="92.5" y="197.778">a b c d</text>
+    </g>
+  </g>
+</svg>

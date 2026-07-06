@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="1022px" preserveAspectRatio="none" style="width:196px;height:1022px;background:#FFFFFF;" version="1.1" viewBox="0 0 196 1022" width="196px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="119" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="70.775" x="83.5" y="73"/>
+    <text fill="#000" font-size="12" textLength="50.775" x="93.5" y="92.333">beginDay</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="84.125" x="77" y="142"/>
+    <text fill="#000" font-size="12" textLength="64.125" x="87" y="161.333">newFlowers</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="89.375" x="74.5" y="211"/>
+    <text fill="#000" font-size="12" textLength="69.375" x="84.5" y="230.333">newGrePods</text>
+    <g class="entity" data-qualified-name="rw" id="ent0008">
+      <polygon fill="#F1F1F1" points="119,280,131,292,119,304,107,292,119,280" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="95.45" x="8.5" y="355"/>
+    <text fill="#000" font-size="12" textLength="75.45" x="18.5" y="374.333">releaseWeavil</text>
+    <g class="entity" data-qualified-name="rm" id="ent0012">
+      <polygon fill="#F1F1F1" points="113,424,125,436,113,448,101,436,113,424" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="92.075" x="6" y="499"/>
+    <text fill="#000" font-size="12" textLength="72.075" x="16" y="518.333">releaseMidge</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="112.85" x="50.5" y="568"/>
+    <text fill="#000" font-size="12" textLength="92.85" x="60.5" y="587.333">ovipositionWeavil</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="87.5" x="63" y="637"/>
+    <text fill="#000" font-size="12" textLength="67.5" x="73" y="656.333">gallingMidge</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="112.7" x="50.5" y="706"/>
+    <text fill="#000" font-size="12" textLength="92.7" x="60.5" y="725.333">emergenceMidge</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="116.075" x="49" y="775"/>
+    <text fill="#000" font-size="12" textLength="96.075" x="59" y="794.333">emergenceWeavil</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="146.075" x="34" y="844"/>
+    <text fill="#000" font-size="12" textLength="126.075" x="44" y="863.333">stateAgingDeterministic</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="61.4" x="76.5" y="913"/>
+    <text fill="#000" font-size="12" textLength="41.4" x="86.5" y="932.333">endDay</text>
+    <g class="end_entity" data-qualified-name="end" data-source-line="20" id="ent0030">
+      <ellipse cx="107" cy="993" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="107" cy="993" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="119,72.81,123,63.81,119,67.81,115,63.81,119,72.81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119,36.263 C119,46.456 119,56.552 119,67.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="119,141.857,123,132.857,119,136.857,115,132.857,119,141.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119,105.203 C119,116.168 119,125.906 119,136.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="119,210.857,123,201.857,119,205.857,115,201.857,119,210.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119,174.203 C119,185.168 119,194.906 119,205.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="119,279.641,123,270.641,119,274.641,115,270.641,119,279.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119,243.251 C119,254.467 119,264.468 119,274.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="98.519" x="20" y="276.197">release Date Weavil?</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="68.484,354.741,77.279,350.309,71.651,350.871,71.088,345.243,68.484,354.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M109.974,304.032 C99.086,317.339 83.891,335.911 71.651,350.871" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="18.906" x="97" y="332.556">true</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="102.723,423.641,99.651,414.284,99.369,419.934,93.719,419.651,102.723,423.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M69.798,387.251 C79.946,398.467 90.164,409.76 99.369,419.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="93.569" x="8.723" y="420.197">release date Midge?</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0014" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="64.088,498.741,72.812,494.171,67.193,494.822,66.541,489.203,64.088,498.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M104.26,448.032 C93.718,461.339 79.044,479.862 67.193,494.822" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="18.906" x="92" y="476.556">true</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0016" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="94.569,567.857,91.95,558.363,91.397,563.992,85.767,563.438,94.569,567.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M64.48,531.203 C73.481,542.168 82.407,553.041 91.397,563.992" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0016" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="109.408,567.87,114.67,559.545,110.133,562.923,106.755,558.386,109.408,567.87" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M114.439,448.272 C115.053,453.632 115.698,460.136 116,466 C117.889,502.622 113.397,540.64 110.133,562.923" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="23.238" x="119" y="518.056">false</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0012" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="114.578,423.787,119.721,415.388,115.232,418.83,111.79,414.341,114.578,423.787" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119.938,304.007 C120.354,309.422 120.795,316.048 121,322 C122.286,359.345 117.911,398.544 115.232,418.83" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="23.238" x="123" y="374.056">false</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0020" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="107,636.857,111,627.857,107,631.857,103,627.857,107,636.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107,600.203 C107,611.168 107,620.906 107,631.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0022" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="107,705.857,111,696.857,107,700.857,103,696.857,107,705.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107,669.203 C107,680.168 107,689.906 107,700.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0022" data-entity-2="ent0024" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="107,774.857,111,765.857,107,769.857,103,765.857,107,774.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107,738.203 C107,749.168 107,758.906 107,769.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0024" data-entity-2="ent0026" data-link-type="dependency" id="lnk27">
+      <polygon fill="#181818" points="107,843.857,111,834.857,107,838.857,103,834.857,107,843.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107,807.203 C107,818.168 107,827.906 107,838.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0026" data-entity-2="ent0028" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="107,912.857,111,903.857,107,907.857,103,903.857,107,912.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107,876.203 C107,887.168 107,896.906 107,907.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0028" data-entity-2="ent0030" data-link-type="dependency" id="lnk31">
+      <polygon fill="#181818" points="107,981.641,111,972.641,107,976.641,103,972.641,107,981.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107,945.251 C107,956.467 107,966.468 107,976.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

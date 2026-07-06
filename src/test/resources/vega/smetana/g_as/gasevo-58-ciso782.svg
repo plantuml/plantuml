@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="157px" preserveAspectRatio="none" style="width:236px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 236 157" width="236px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo-->
+    <g class="cluster" data-qualified-name="foo" data-source-line="3" id="ent0001">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="60" x="160" y="12"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="180.288" y="24.889">foo</text>
+    </g>
+    <!--entity func0-->
+    <g class="entity" data-qualified-name="func0" data-source-line="15" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.637" x="7" y="37"/>
+      <text fill="#000" font-size="14" textLength="39.637" x="17" y="57.889">foobar</text>
+    </g>
+    <!--entity func1-->
+    <g class="entity" data-qualified-name="func1" data-source-line="19" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.15" x="85.5" y="37"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="95.5" y="57.889">bazqux</text>
+    </g>
+    <!--entity func2-->
+    <g class="entity" data-qualified-name="func2" data-source-line="24" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62" x="6" y="107"/>
+      <text fill="#000" font-size="14" textLength="42" x="16" y="127.889">fooqux</text>
+    </g>
+    <!--entity baz-->
+    <g class="entity" data-qualified-name="foo.baz" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.575" x="168.5" y="37"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="178.5" y="57.889">baz</text>
+    </g>
+  </g>
+</svg>

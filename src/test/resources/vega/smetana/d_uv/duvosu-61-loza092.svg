@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="210px" preserveAspectRatio="none" style="width:121px;height:210px;background:#FFFFFF;" version="1.1" viewBox="0 0 121 210" width="121px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="37" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="62" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="62" x="6" y="72"/>
+    <image height="90" width="104" x="16" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjkwIiB3aWR0aD0iMTA0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PGRlZnMvPjxnIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDQiIGhlaWdodD0iOTAiIGZpbGw9IiMwMEYiIHN0eWxlPSJzdHJva2U6bm9uZTsiLz48dGV4dCB4PSI2IiB5PSIxNS4zMzMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTIiIHRleHRMZW5ndGg9IjU4LjcyNSIgZm9udC13ZWlnaHQ9IjcwMCI+YW4gZXhhbXBsZTwvdGV4dD48dGV4dCB4PSI2IiB5PSIyOS4zMzMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTIiIHRleHRMZW5ndGg9IjkxLjQyNSI+Y2hvb3NlIG9uZSBvcHRpb248L3RleHQ+PHRleHQgeD0iMjYiIHk9IjQzLjMzMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxMiIgdGV4dExlbmd0aD0iMjAuMDI1Ij5vbmU8L3RleHQ+PGVsbGlwc2UgY3g9IjEzIiBjeT0iNDAiIHJ4PSI1IiByeT0iNSIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgeD0iMjYiIHk9IjU3LjMzMyIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxMiIgdGV4dExlbmd0aD0iMTguNjc1Ij50d288L3RleHQ+PGVsbGlwc2UgY3g9IjEzIiBjeT0iNTQiIHJ4PSI1IiByeT0iNSIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxLjU7Ii8+PHJlY3QgeD0iOC41IiB5PSI2NC41IiB3aWR0aD0iMjAiIGhlaWdodD0iMTYiIGZpbGw9IiNFRUUiIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6Mi41OyIgcng9IjUiIHJ5PSI1Ii8+PHRleHQgeD0iMTIuMTYzIiB5PSI3NS44MzMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTIiIHRleHRMZW5ndGg9IjEyLjY3NSI+b2s8L3RleHQ+PGxpbmUgeDE9IjUiIHkxPSI1IiB4Mj0iOTguNDI1IiB5Mj0iNSIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSI1IiB5MT0iODQiIHgyPSI5OC40MjUiIHkyPSI4NCIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSI1IiB5MT0iNSIgeDI9IjUiIHkyPSIxOSIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSI5OC40MjUiIHkxPSIxOSIgeDI9Ijk4LjQyNSIgeTI9IjMzIiBzdHlsZT0ic3Ryb2tlOiMwMDA7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgeDE9Ijk4LjQyNSIgeTE9IjUiIHgyPSI5OC40MjUiIHkyPSIxOSIgc3R5bGU9InN0cm9rZTojMDAwO3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSI1IiB5MT0iNjEiIHgyPSI1IiB5Mj0iODQiIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6MTsiLz48bGluZSB4MT0iNSIgeTE9IjQ3IiB4Mj0iNSIgeTI9IjYxIiBzdHlsZT0ic3Ryb2tlOiMwMDA7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgeDE9Ijk4LjQyNSIgeTE9IjYxIiB4Mj0iOTguNDI1IiB5Mj0iODQiIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6MTsiLz48bGluZSB4MT0iNSIgeTE9IjMzIiB4Mj0iNSIgeTI9IjQ3IiBzdHlsZT0ic3Ryb2tlOiMwMDA7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgeDE9Ijk4LjQyNSIgeTE9IjQ3IiB4Mj0iOTguNDI1IiB5Mj0iNjEiIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6MTsiLz48bGluZSB4MT0iNSIgeTE9IjE5IiB4Mj0iNSIgeTI9IjMzIiBzdHlsZT0ic3Ryb2tlOiMwMDA7c3Ryb2tlLXdpZHRoOjE7Ii8+PGxpbmUgeDE9Ijk4LjQyNSIgeTE9IjMzIiB4Mj0iOTguNDI1IiB5Mj0iNDciIHN0eWxlPSJzdHJva2U6IzAwMDtzdHJva2Utd2lkdGg6MTsiLz48L2c+PC9zdmc+" y="82"/>
+    <g class="end_entity" data-qualified-name="end" data-source-line="13" id="ent0004">
+      <ellipse cx="37" cy="181" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="37" cy="181" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="37,71.706,41,62.706,37,66.706,33,62.706,37,71.706" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M37,36.032 C37,45.347 37,54.138 37,66.706" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="37,169.773,41,160.773,37,164.773,33,160.773,37,169.773" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M37,134.432 C37,146.875 37,155.495 37,164.773" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

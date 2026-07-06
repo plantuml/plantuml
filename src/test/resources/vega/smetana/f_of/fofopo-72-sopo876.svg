@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="465px" preserveAspectRatio="none" style="width:312px;height:465px;background:#FFFFFF;" version="1.1" viewBox="0 0 312 465" width="312px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="5">
+      <text fill="#000" font-size="14" font-weight="700" textLength="75.6" x="10" y="22.889">original color</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="125.3" x="85.6" y="22.889">reverse_hsluv_color</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="84.788" x="210.9" y="22.889">reverse_color</text>
+      <rect fill="#00F" height="14" style="stroke:none;" width="75.6" x="10" y="26"/>
+      <text fill="#AEAEFF" font-size="14" font-weight="700" textLength="26.512" x="10" y="36.889">blue</text>
+      <rect fill="#AEAEFF" height="14" style="stroke:none;" width="125.3" x="85.6" y="26"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="62.387" x="85.6" y="36.889">#AEAEFF</text>
+      <rect fill="#FF0" height="14" style="stroke:none;" width="84.787" x="210.9" y="26"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="57.663" x="210.9" y="36.889">#FFFF00</text>
+      <rect fill="#F00" height="14" style="stroke:none;" width="75.6" x="10" y="40"/>
+      <text fill="#530000" font-size="14" font-weight="700" textLength="20.213" x="10" y="50.889">red</text>
+      <rect fill="#530000" height="14" style="stroke:none;" width="125.3" x="85.6" y="40"/>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="50.889">#530000</text>
+      <rect fill="#0FF" height="14" style="stroke:none;" width="84.787" x="210.9" y="40"/>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="57.662" x="210.9" y="50.889">#00FFFF</text>
+      <rect fill="#008000" height="14" style="stroke:none;" width="75.6" x="10" y="54"/>
+      <text fill="#00F400" font-size="14" font-weight="700" textLength="35.788" x="10" y="64.889">green</text>
+      <rect fill="#00F400" height="14" style="stroke:none;" width="125.3" x="85.6" y="54"/>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="55.3" x="85.6" y="64.889">#00F400</text>
+      <rect fill="#FF7FFF" height="14" style="stroke:none;" width="84.787" x="210.9" y="54"/>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="58.45" x="210.9" y="64.889">#FF7FFF</text>
+      <rect fill="#0F0" height="14" style="stroke:none;" width="75.6" x="10" y="68"/>
+      <text fill="#007000" font-size="14" font-weight="700" textLength="48.3" x="10" y="78.889">00FF00</text>
+      <rect fill="#007000" height="14" style="stroke:none;" width="125.3" x="85.6" y="68"/>
+      <text fill="#0F0" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="78.889">#007000</text>
+      <rect fill="#F0F" height="14" style="stroke:none;" width="84.787" x="210.9" y="68"/>
+      <text fill="#0F0" font-size="14" font-weight="700" textLength="57.663" x="210.9" y="78.889">#FF00FF</text>
+      <rect fill="#FF0" height="14" style="stroke:none;" width="75.6" x="10" y="82"/>
+      <text fill="#747400" font-size="14" font-weight="700" textLength="39.025" x="10" y="92.889">yellow</text>
+      <rect fill="#747400" height="14" style="stroke:none;" width="125.3" x="85.6" y="82"/>
+      <text fill="#FF0" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="92.889">#747400</text>
+      <rect fill="#00F" height="14" style="stroke:none;" width="84.787" x="210.9" y="82"/>
+      <text fill="#FF0" font-size="14" font-weight="700" textLength="56.087" x="210.9" y="92.889">#0000FF</text>
+      <rect fill="#757500" height="14" style="stroke:none;" width="75.6" x="10" y="96"/>
+      <text fill="#DD0" font-size="14" font-weight="700" textLength="46.725" x="10" y="106.889">757500</text>
+      <rect fill="#DD0" height="14" style="stroke:none;" width="125.3" x="85.6" y="96"/>
+      <text fill="#757500" font-size="14" font-weight="700" textLength="63.963" x="85.6" y="106.889">#DDDD00</text>
+      <rect fill="#8A8AFF" height="14" style="stroke:none;" width="84.787" x="210.9" y="96"/>
+      <text fill="#757500" font-size="14" font-weight="700" textLength="59.237" x="210.9" y="106.889">#8A8AFF</text>
+      <rect fill="#000" height="14" style="stroke:none;" width="75.6" x="10" y="110"/>
+      <text fill="#767676" font-size="14" font-weight="700" textLength="23.363" x="10" y="120.889">000</text>
+      <rect fill="#767676" height="14" style="stroke:none;" width="125.3" x="85.6" y="110"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="120.889">#767676</text>
+      <rect fill="#FFF" height="14" style="stroke:none;" width="84.787" x="210.9" y="110"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="59.238" x="210.9" y="120.889">#FFFFFF</text>
+      <rect fill="#111" height="14" style="stroke:none;" width="75.6" x="10" y="124"/>
+      <text fill="#808080" font-size="14" font-weight="700" textLength="23.363" x="10" y="134.889">111</text>
+      <rect fill="#808080" height="14" style="stroke:none;" width="125.3" x="85.6" y="124"/>
+      <text fill="#111" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="134.889">#808080</text>
+      <rect fill="#EEE" height="14" style="stroke:none;" width="84.787" x="210.9" y="124"/>
+      <text fill="#111" font-size="14" font-weight="700" textLength="63.963" x="210.9" y="134.889">#EEEEEE</text>
+      <rect fill="#222" height="14" style="stroke:none;" width="75.6" x="10" y="138"/>
+      <text fill="#909090" font-size="14" font-weight="700" textLength="23.363" x="10" y="148.889">222</text>
+      <rect fill="#909090" height="14" style="stroke:none;" width="125.3" x="85.6" y="138"/>
+      <text fill="#222" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="148.889">#909090</text>
+      <rect fill="#DDD" height="14" style="stroke:none;" width="84.787" x="210.9" y="138"/>
+      <text fill="#222" font-size="14" font-weight="700" textLength="68.688" x="210.9" y="148.889">#DDDDDD</text>
+      <rect fill="#333" height="14" style="stroke:none;" width="75.6" x="10" y="152"/>
+      <text fill="#9F9F9F" font-size="14" font-weight="700" textLength="23.363" x="10" y="162.889">333</text>
+      <rect fill="#9F9F9F" height="14" style="stroke:none;" width="125.3" x="85.6" y="152"/>
+      <text fill="#333" font-size="14" font-weight="700" textLength="56.875" x="85.6" y="162.889">#9F9F9F</text>
+      <rect fill="#CCC" height="14" style="stroke:none;" width="84.787" x="210.9" y="152"/>
+      <text fill="#333" font-size="14" font-weight="700" textLength="68.688" x="210.9" y="162.889">#CCCCCC</text>
+      <rect fill="#444" height="14" style="stroke:none;" width="75.6" x="10" y="166"/>
+      <text fill="#AFAFAF" font-size="14" font-weight="700" textLength="23.363" x="10" y="176.889">444</text>
+      <rect fill="#AFAFAF" height="14" style="stroke:none;" width="125.3" x="85.6" y="166"/>
+      <text fill="#444" font-size="14" font-weight="700" textLength="61.6" x="85.6" y="176.889">#AFAFAF</text>
+      <rect fill="#BBB" height="14" style="stroke:none;" width="84.787" x="210.9" y="166"/>
+      <text fill="#444" font-size="14" font-weight="700" textLength="63.963" x="210.9" y="176.889">#BBBBBB</text>
+      <rect fill="#555" height="14" style="stroke:none;" width="75.6" x="10" y="180"/>
+      <text fill="#BEBEBE" font-size="14" font-weight="700" textLength="23.363" x="10" y="190.889">555</text>
+      <rect fill="#BEBEBE" height="14" style="stroke:none;" width="125.3" x="85.6" y="180"/>
+      <text fill="#555" font-size="14" font-weight="700" textLength="63.963" x="85.6" y="190.889">#BEBEBE</text>
+      <rect fill="#AAA" height="14" style="stroke:none;" width="84.787" x="210.9" y="180"/>
+      <text fill="#555" font-size="14" font-weight="700" textLength="63.963" x="210.9" y="190.889">#AAAAAA</text>
+      <rect fill="#666" height="14" style="stroke:none;" width="75.6" x="10" y="194"/>
+      <text fill="#CCC" font-size="14" font-weight="700" textLength="23.363" x="10" y="204.889">666</text>
+      <rect fill="#CCC" height="14" style="stroke:none;" width="125.3" x="85.6" y="194"/>
+      <text fill="#666" font-size="14" font-weight="700" textLength="68.688" x="85.6" y="204.889">#CCCCCC</text>
+      <rect fill="#999" height="14" style="stroke:none;" width="84.787" x="210.9" y="194"/>
+      <text fill="#666" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="204.889">#999999</text>
+      <rect fill="#777" height="14" style="stroke:none;" width="75.6" x="10" y="208"/>
+      <text fill="#DADADA" font-size="14" font-weight="700" textLength="23.363" x="10" y="218.889">777</text>
+      <rect fill="#DADADA" height="14" style="stroke:none;" width="125.3" x="85.6" y="208"/>
+      <text fill="#777" font-size="14" font-weight="700" textLength="66.325" x="85.6" y="218.889">#DADADA</text>
+      <rect fill="#888" height="14" style="stroke:none;" width="84.787" x="210.9" y="208"/>
+      <text fill="#777" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="218.889">#888888</text>
+      <rect fill="#888" height="14" style="stroke:none;" width="75.6" x="10" y="222"/>
+      <text fill="#2A2A2A" font-size="14" font-weight="700" textLength="23.363" x="10" y="232.889">888</text>
+      <rect fill="#2A2A2A" height="14" style="stroke:none;" width="125.3" x="85.6" y="222"/>
+      <text fill="#888" font-size="14" font-weight="700" textLength="59.237" x="85.6" y="232.889">#2A2A2A</text>
+      <rect fill="#777" height="14" style="stroke:none;" width="84.787" x="210.9" y="222"/>
+      <text fill="#888" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="232.889">#777777</text>
+      <rect fill="#999" height="14" style="stroke:none;" width="75.6" x="10" y="236"/>
+      <text fill="#353535" font-size="14" font-weight="700" textLength="23.363" x="10" y="246.889">999</text>
+      <rect fill="#353535" height="14" style="stroke:none;" width="125.3" x="85.6" y="236"/>
+      <text fill="#999" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="246.889">#353535</text>
+      <rect fill="#666" height="14" style="stroke:none;" width="84.787" x="210.9" y="236"/>
+      <text fill="#999" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="246.889">#666666</text>
+      <rect fill="#AAA" height="14" style="stroke:none;" width="75.6" x="10" y="250"/>
+      <text fill="#3F3F3F" font-size="14" font-weight="700" textLength="28.087" x="10" y="260.889">AAA</text>
+      <rect fill="#3F3F3F" height="14" style="stroke:none;" width="125.3" x="85.6" y="250"/>
+      <text fill="#AAA" font-size="14" font-weight="700" textLength="56.875" x="85.6" y="260.889">#3F3F3F</text>
+      <rect fill="#555" height="14" style="stroke:none;" width="84.787" x="210.9" y="250"/>
+      <text fill="#AAA" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="260.889">#555555</text>
+      <rect fill="#BBB" height="14" style="stroke:none;" width="75.6" x="10" y="264"/>
+      <text fill="#4A4A4A" font-size="14" font-weight="700" textLength="28.087" x="10" y="274.889">BBB</text>
+      <rect fill="#4A4A4A" height="14" style="stroke:none;" width="125.3" x="85.6" y="264"/>
+      <text fill="#BBB" font-size="14" font-weight="700" textLength="59.237" x="85.6" y="274.889">#4A4A4A</text>
+      <rect fill="#444" height="14" style="stroke:none;" width="84.787" x="210.9" y="264"/>
+      <text fill="#BBB" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="274.889">#444444</text>
+      <rect fill="#CCC" height="14" style="stroke:none;" width="75.6" x="10" y="278"/>
+      <text fill="#555" font-size="14" font-weight="700" textLength="30.45" x="10" y="288.889">CCC</text>
+      <rect fill="#555" height="14" style="stroke:none;" width="125.3" x="85.6" y="278"/>
+      <text fill="#CCC" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="288.889">#555555</text>
+      <rect fill="#333" height="14" style="stroke:none;" width="84.787" x="210.9" y="278"/>
+      <text fill="#CCC" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="288.889">#333333</text>
+      <rect fill="#DDD" height="14" style="stroke:none;" width="75.6" x="10" y="292"/>
+      <text fill="#606060" font-size="14" font-weight="700" textLength="30.45" x="10" y="302.889">DDD</text>
+      <rect fill="#606060" height="14" style="stroke:none;" width="125.3" x="85.6" y="292"/>
+      <text fill="#DDD" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="302.889">#606060</text>
+      <rect fill="#222" height="14" style="stroke:none;" width="84.787" x="210.9" y="292"/>
+      <text fill="#DDD" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="302.889">#222222</text>
+      <rect fill="#EEE" height="14" style="stroke:none;" width="75.6" x="10" y="306"/>
+      <text fill="#6B6B6B" font-size="14" font-weight="700" textLength="28.087" x="10" y="316.889">EEE</text>
+      <rect fill="#6B6B6B" height="14" style="stroke:none;" width="125.3" x="85.6" y="306"/>
+      <text fill="#EEE" font-size="14" font-weight="700" textLength="59.237" x="85.6" y="316.889">#6B6B6B</text>
+      <rect fill="#111" height="14" style="stroke:none;" width="84.787" x="210.9" y="306"/>
+      <text fill="#EEE" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="316.889">#111111</text>
+      <rect fill="#FFF" height="14" style="stroke:none;" width="75.6" x="10" y="320"/>
+      <text fill="#767676" font-size="14" font-weight="700" textLength="25.725" x="10" y="330.889">FFF</text>
+      <rect fill="#767676" height="14" style="stroke:none;" width="125.3" x="85.6" y="320"/>
+      <text fill="#FFF" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="330.889">#767676</text>
+      <rect fill="#000" height="14" style="stroke:none;" width="84.787" x="210.9" y="320"/>
+      <text fill="#FFF" font-size="14" font-weight="700" textLength="54.512" x="210.9" y="330.889">#000000</text>
+      <rect fill="#C35353" height="14" style="stroke:none;" width="75.6" x="10" y="334"/>
+      <text fill="#EED5D5" font-size="14" font-weight="700" textLength="45.937" x="10" y="344.889">c35353</text>
+      <rect fill="#EED5D5" height="14" style="stroke:none;" width="125.3" x="85.6" y="334"/>
+      <text fill="#C35353" font-size="14" font-weight="700" textLength="62.387" x="85.6" y="344.889">#EED5D5</text>
+      <rect fill="#3CACAC" height="14" style="stroke:none;" width="84.787" x="210.9" y="334"/>
+      <text fill="#C35353" font-size="14" font-weight="700" textLength="64.75" x="210.9" y="344.889">#3CACAC</text>
+      <rect fill="#54695F" height="14" style="stroke:none;" width="75.6" x="10" y="348"/>
+      <text fill="#ACD4C1" font-size="14" font-weight="700" textLength="42.788" x="10" y="358.889">54695f</text>
+      <rect fill="#ACD4C1" height="14" style="stroke:none;" width="125.3" x="85.6" y="348"/>
+      <text fill="#54695F" font-size="14" font-weight="700" textLength="63.175" x="85.6" y="358.889">#ACD4C1</text>
+      <rect fill="#AB96A0" height="14" style="stroke:none;" width="84.787" x="210.9" y="348"/>
+      <text fill="#54695F" font-size="14" font-weight="700" textLength="59.238" x="210.9" y="358.889">#AB96A0</text>
+      <rect fill="#85AEF1" height="14" style="stroke:none;" width="75.6" x="10" y="362"/>
+      <text fill="#1D426E" font-size="14" font-weight="700" textLength="42.788" x="10" y="372.889">85aef1</text>
+      <rect fill="#1D426E" height="14" style="stroke:none;" width="125.3" x="85.6" y="362"/>
+      <text fill="#85AEF1" font-size="14" font-weight="700" textLength="58.45" x="85.6" y="372.889">#1D426E</text>
+      <rect fill="#7A510E" height="14" style="stroke:none;" width="84.787" x="210.9" y="362"/>
+      <text fill="#85AEF1" font-size="14" font-weight="700" textLength="57.662" x="210.9" y="372.889">#7A510E</text>
+      <rect fill="#38E4A7" height="14" style="stroke:none;" width="75.6" x="10" y="376"/>
+      <text fill="#115F44" font-size="14" font-weight="700" textLength="46.725" x="10" y="386.889">38e4a7</text>
+      <rect fill="#115F44" height="14" style="stroke:none;" width="125.3" x="85.6" y="376"/>
+      <text fill="#38E4A7" font-size="14" font-weight="700" textLength="55.3" x="85.6" y="386.889">#115F44</text>
+      <rect fill="#C71B58" height="14" style="stroke:none;" width="84.787" x="210.9" y="376"/>
+      <text fill="#38E4A7" font-size="14" font-weight="700" textLength="58.45" x="210.9" y="386.889">#C71B58</text>
+      <rect fill="#BCAE23" height="14" style="stroke:none;" width="75.6" x="10" y="390"/>
+      <text fill="#474107" font-size="14" font-weight="700" textLength="45.937" x="10" y="400.889">bcae23</text>
+      <rect fill="#474107" height="14" style="stroke:none;" width="125.3" x="85.6" y="390"/>
+      <text fill="#BCAE23" font-size="14" font-weight="700" textLength="54.512" x="85.6" y="400.889">#474107</text>
+      <rect fill="#4351DC" height="14" style="stroke:none;" width="84.787" x="210.9" y="390"/>
+      <text fill="#BCAE23" font-size="14" font-weight="700" textLength="59.238" x="210.9" y="400.889">#4351DC</text>
+      <rect fill="#9A2FF4" height="14" style="stroke:none;" width="75.6" x="10" y="404"/>
+      <text fill="#DDCAFC" font-size="14" font-weight="700" textLength="38.85" x="10" y="414.889">9a2ff4</text>
+      <rect fill="#DDCAFC" height="14" style="stroke:none;" width="125.3" x="85.6" y="404"/>
+      <text fill="#9A2FF4" font-size="14" font-weight="700" textLength="66.325" x="85.6" y="414.889">#DDCAFC</text>
+      <rect fill="#65D00B" height="14" style="stroke:none;" width="84.787" x="210.9" y="404"/>
+      <text fill="#9A2FF4" font-size="14" font-weight="700" textLength="58.45" x="210.9" y="414.889">#65D00B</text>
+      <rect fill="#012345" height="14" style="stroke:none;" width="75.6" x="10" y="418"/>
+      <text fill="#2592FD" font-size="14" font-weight="700" textLength="46.725" x="10" y="428.889">012345</text>
+      <rect fill="#2592FD" height="14" style="stroke:none;" width="125.3" x="85.6" y="418"/>
+      <text fill="#012345" font-size="14" font-weight="700" textLength="57.662" x="85.6" y="428.889">#2592FD</text>
+      <rect fill="#FEDCBA" height="14" style="stroke:none;" width="84.787" x="210.9" y="418"/>
+      <text fill="#012345" font-size="14" font-weight="700" textLength="64.75" x="210.9" y="428.889">#FEDCBA</text>
+      <rect fill="#AB5C12" height="14" style="stroke:none;" width="75.6" x="10" y="432"/>
+      <text fill="#FDCAB5" font-size="14" font-weight="700" textLength="45.938" x="10" y="442.889">ab5c12</text>
+      <rect fill="#FDCAB5" height="14" style="stroke:none;" width="125.3" x="85.6" y="432"/>
+      <text fill="#AB5C12" font-size="14" font-weight="700" textLength="63.175" x="85.6" y="442.889">#FDCAB5</text>
+      <rect fill="#54A3ED" height="14" style="stroke:none;" width="84.787" x="210.9" y="432"/>
+      <text fill="#AB5C12" font-size="14" font-weight="700" textLength="60.025" x="210.9" y="442.889">#54A3ED</text>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="12" y2="12"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="26" y2="26"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="40" y2="40"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="54" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="68" y2="68"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="82" y2="82"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="96" y2="96"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="110" y2="110"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="124" y2="124"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="138" y2="138"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="152" y2="152"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="166" y2="166"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="180" y2="180"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="194" y2="194"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="208" y2="208"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="222" y2="222"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="236" y2="236"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="250" y2="250"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="264" y2="264"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="278" y2="278"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="292" y2="292"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="306" y2="306"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="320" y2="320"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="334" y2="334"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="348" y2="348"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="362" y2="362"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="376" y2="376"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="390" y2="390"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="404" y2="404"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="418" y2="418"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="432" y2="432"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="295.688" y1="446" y2="446"/>
+      <line style="stroke:#000;stroke-width:1;" x1="10" x2="10" y1="12" y2="446"/>
+      <line style="stroke:#000;stroke-width:1;" x1="85.6" x2="85.6" y1="12" y2="446"/>
+      <line style="stroke:#000;stroke-width:1;" x1="210.9" x2="210.9" y1="12" y2="446"/>
+      <line style="stroke:#000;stroke-width:1;" x1="295.688" x2="295.688" y1="12" y2="446"/>
+    </g>
+  </g>
+</svg>

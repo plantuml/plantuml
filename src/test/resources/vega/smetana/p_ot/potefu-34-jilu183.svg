@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="123px" preserveAspectRatio="none" style="width:180px;height:123px;background:#FFFFFF;" version="1.1" viewBox="0 0 180 123" width="180px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster N1-->
+    <g class="cluster" data-qualified-name="N1" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L35.438,4 A3.75,3.75 0 0 1 37.938,6.5 L44.938,24 L169.5,24 A2.5,2.5 0 0 1 172,26.5 L172,96.5 A2.5,2.5 0 0 1 169.5,99 L16.5,99 A2.5,2.5 0 0 1 14,96.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="44.938" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="18" y="16.889">N1</text>
+    </g>
+    <!--class A-->
+    <g class="entity" data-qualified-name="N1.A" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.788" x="102" y="29"/>
+      <ellipse cx="126.191" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="121.191" y="50">C</text>
+      <text fill="#000" font-size="14" x="142.234" y="48.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="103" x2="162.788" y1="61" y2="61"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="110" y="70.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="35.788" x="122" y="75.889">prop1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="103" x2="162.788" y1="83" y2="83"/>
+    </g>
+    <!--class TC-->
+    <g class="entity" data-qualified-name="N1.TC" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.788" x="22" y="29"/>
+      <ellipse cx="41.978" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="36.978" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="57.084" y="48.889">TC</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="82.788" y1="61" y2="61"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="30" y="70.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="35.788" x="42" y="75.889">prop1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="82.788" y1="83" y2="83"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="association" id="lnk4">
+      <path d="M84.25,60 C90.09,60 95.93,60 101.77,60" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

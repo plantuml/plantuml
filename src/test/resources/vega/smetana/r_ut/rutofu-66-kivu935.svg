@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="112px" preserveAspectRatio="none" style="width:73px;height:112px;background:#FFFFFF;" version="1.1" viewBox="0 0 73 112" width="73px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="90" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="51.65" x="10" y="10"/>
+    <text fill="#000" font-size="14" x="15" y="22.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="61.65" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" x="15" y="40.889">2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="61.65" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" textLength="36.138" x="15" y="58.889">☑ true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="61.65" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" textLength="41.65" x="15" y="76.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="61.65" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" x="15" y="94.889">3</text>
+    <rect fill="none" height="90" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="51.65" x="10" y="10"/>
+  </g>
+</svg>

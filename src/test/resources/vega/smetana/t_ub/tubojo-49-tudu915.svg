@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="144px" preserveAspectRatio="none" style="width:203px;height:144px;background:#FFFFFF;" version="1.1" viewBox="0 0 203 144" width="203px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster B-->
+    <g class="cluster" data-qualified-name="B" data-source-line="1" id="ent0003">
+      <path d="M26.5,4 L177.5,4 A12.5,12.5 0 0 1 190,16.5 L190,23 L14,23 L14,16.5 A12.5,12.5 0 0 1 26.5,4" fill="#F1F1F1"/>
+      <rect fill="none" height="116" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="176" x="14" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="190" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" x="97.319" y="14.889">B</text>
+    </g>
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="B.A" data-source-line="1" id="ent0002">
+      <path d="M60.5,29 L169.5,29 A12.5,12.5 0 0 1 182,41.5 L182,48 L48,48 L48,41.5 A12.5,12.5 0 0 1 60.5,29" fill="#F1F1F1"/>
+      <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="134" x="48" y="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="48" x2="182" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" x="110.319" y="39.889">A</text>
+    </g>
+    <g class="entity" data-qualified-name="B.A.X" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="124" y="54"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="124" x2="174" y1="78" y2="78"/>
+      <text fill="#000" font-size="14" x="144.319" y="69.889">X</text>
+    </g>
+    <g class="entity" data-qualified-name="B.A.Y" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="56" y="54"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="56" x2="106" y1="78" y2="78"/>
+      <text fill="#000" font-size="14" x="76.319" y="69.889">Y</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="55.687,79,46.687,75,50.687,79,46.687,83,55.687,79" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M38.367,79 C44.14,79 44.914,79 50.687,79" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

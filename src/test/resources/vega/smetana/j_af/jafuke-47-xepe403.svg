@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="59px" preserveAspectRatio="none" style="width:152px;height:59px;background:#FFFFFF;" version="1.1" viewBox="0 0 152 59" width="152px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity uU1-->
+    <g class="entity" data-qualified-name="uU1" data-source-line="1" id="ent0001">
+      <ellipse cx="9" cy="22" fill="#F1F1F1" rx="3" ry="3" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <!--entity uU2-->
+    <g class="entity" data-qualified-name="uU2" data-source-line="2" id="ent0002">
+      <ellipse cx="123" cy="22" fill="#F1F1F1" rx="3" ry="3" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="119.876,31,110.876,27,114.876,31,110.876,35,119.876,31" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M22.199,31 C43.232,31 93.924,31 114.876,31" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <path d="M36,0 L36,23 L106,23 L106,10 L96,0 L36,0" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M96,0 L96,10 L106,10 L96,0" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="42" y="15.111">Link note</text>
+    </g>
+  </g>
+</svg>

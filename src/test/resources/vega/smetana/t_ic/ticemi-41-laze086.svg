@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="85px" preserveAspectRatio="none" style="width:220px;height:85px;background:#FFFFFF;" version="1.1" viewBox="0 0 220 85" width="220px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster a-->
+    <g class="cluster" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L25.288,4 A3.75,3.75 0 0 1 27.788,6.5 L34.788,24 L91.5,24 A2.5,2.5 0 0 1 94,26.5 L94,58.5 A2.5,2.5 0 0 1 91.5,61 L16.5,61 A2.5,2.5 0 0 1 14,58.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="34.788" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="18" y="16.889">a</text>
+    </g>
+    <!--cluster b-->
+    <g class="cluster" data-qualified-name="b" data-source-line="5" id="ent0003">
+      <path d="M104.5,4 L113.288,4 A3.75,3.75 0 0 1 115.788,6.5 L122.788,24 L209.5,24 A2.5,2.5 0 0 1 212,26.5 L212,58.5 A2.5,2.5 0 0 1 209.5,61 L104.5,61 A2.5,2.5 0 0 1 102,58.5 L102,6.5 A2.5,2.5 0 0 1 104.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="102" x2="122.788" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="106" y="16.889">b</text>
+    </g>
+    <g class="entity" data-qualified-name="a.M" data-source-line="2" id="ent0002">
+      <path d="M22,29 L22,52 L85.575,52 L85.575,39 L75.575,29 L22,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M75.575,29 L75.575,39 L85.575,39 L75.575,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="28" y="44.111">my note</text>
+    </g>
+    <g class="entity" data-qualified-name="b.M" data-source-line="6" id="ent0004">
+      <path d="M110.5,29 L110.5,52 L203.65,52 L203.65,39 L193.65,29 L110.5,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M193.65,29 L193.65,39 L203.65,39 L193.65,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="72.15" x="116.5" y="44.111">my other note</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="92px" preserveAspectRatio="none" style="width:162px;height:92px;background:#FFFFFF;" version="1.1" viewBox="0 0 162 92" width="162px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity SMC-->
+    <g class="entity" data-qualified-name="SMC" data-source-line="5" id="ent0001">
+      <rect fill="#90EE90" height="64" rx="0.5" ry="0.5" style="stroke:#181818;stroke-width:0.5;" width="140" x="6" y="12"/>
+      <path d="M117.08,27.182 A0.5,0.5 0 0 0 116.578,27.682 L116.578,37.105 A0.5,0.5 0 0 0 117.078,37.606 L132,37.606 A0.5,0.5 0 0 0 132.5,37.112 L132.517,35.332 L134.062,35.315 A0.5,0.5 0 0 0 134.556,34.815 L134.556,29.832 A0.5,0.5 0 0 0 134.062,29.332 L132.556,29.315 L132.547,27.701 A0.5,0.5 0 0 0 132.046,27.205 M117.578,28.182 L131.549,28.203 L131.565,30.488 L131.504,36.606 L117.578,36.606 M122.008,29.481 A0.25,0.25 0 0 0 121.758,29.731 L121.77,35.01 A0.25,0.25 0 0 0 121.778,35.075 A0.25,0.25 0 0 0 121.788,35.106 A0.25,0.25 0 0 0 122.019,35.26 A0.25,0.25 0 0 0 122.269,35.01 L122.257,29.731 A0.25,0.25 0 0 0 122.008,29.481 M119.099,29.487 A0.25,0.25 0 0 0 118.849,29.736 L118.83,34.979 A0.25,0.25 0 0 0 119.08,35.231 A0.25,0.25 0 0 0 119.33,34.98 L119.35,29.738 A0.25,0.25 0 0 0 119.099,29.487 M124.965,29.49 A0.25,0.25 0 0 0 124.715,29.738 L124.705,35 A0.25,0.25 0 0 0 124.955,35.25 A0.25,0.25 0 0 0 125.205,35.002 L125.215,29.74 A0.25,0.25 0 0 0 124.965,29.49 M132.566,30.315 L133.556,30.326 L133.556,34.321 L132.588,34.332 L132.564,30.449" fill="#000"/>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="32.775" x="43.262" y="51.333">Social</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="76.038" y="51.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="32.7" x="76.038" y="51.333">Media</text>
+      <text fill="#000" font-family="Verdana" font-size="12" x="42.325" y="63.333"> </text>
+      <text fill="#000" font-family="Verdana" font-size="12" textLength="67.35" x="42.325" y="63.333">Competency</text>
+    </g>
+  </g>
+</svg>

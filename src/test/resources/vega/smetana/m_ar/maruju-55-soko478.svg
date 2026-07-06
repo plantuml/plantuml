@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="128px" preserveAspectRatio="none" style="width:258px;height:128px;background:#FFFFFF;" version="1.1" viewBox="0 0 258 128" width="258px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="stateA" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="37"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="61" y2="61"/>
+      <text fill="#000" font-size="14" x="26.319" y="52.889">A</text>
+    </g>
+    <g class="entity" data-qualified-name="stateC" data-source-line="2" id="ent0002">
+      <path d="M87,12 L137,12 A12.5,12.5 0 0 1 149.5,24.5 L149.5,36 L74.5,36 L74.5,24.5 A12.5,12.5 0 0 1 87,12" fill="#F1F1F1"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="74.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="74.5" x2="149.5" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="106.925" y="27.889">C</text>
+      <g class="entity" data-qualified-name="stateC.B" data-source-line="3" id="ent0003">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="80.5" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="80.5" x2="130.5" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" x="100.819" y="62.889">B</text>
+      </g>
+    </g>
+    <g class="entity" data-qualified-name="foo1" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.425" x="168" y="44"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="191.606" y="56.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="205.213" x2="205.213" y1="62" y2="80"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="168" x2="242.425" y1="62" y2="62"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="173" y="74.889">foo2</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="210.213" y="74.889">foo3</text>
+    </g>
+  </g>
+</svg>

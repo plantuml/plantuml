@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="625px" preserveAspectRatio="none" style="width:733px;height:625px;background:#FFFFFF;" version="1.1" viewBox="0 0 733 625" width="733px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="304.763" x="210.619" y="20.889">Домашняя библиотека - диаграмма прецедентов</text>
+    </g>
+    <!--entity ВЗАИМОДЕЙСТВИЕ-->
+    <g class="entity" data-qualified-name=".............." data-source-line="6" id="ent0001">
+      <ellipse cx="111.358" cy="385.472" fill="#F1F1F1" rx="105.358" ry="23.472" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="9.933" x2="27.489" y1="379.972" y2="379.972"/>
+      <text fill="#000" font-size="14" textLength="167.738" x="27.489" y="383.36">Взаимодействие с книгами</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="195.227" x2="212.783" y1="379.972" y2="379.972"/>
+    </g>
+    <!--entity Владелец-->
+    <g class="entity" data-qualified-name="........" data-source-line="9" id="ent0002">
+      <ellipse cx="111.594" cy="278" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M111.594,286 L111.594,313 M98.594,294 L124.594,294 M111.594,313 L98.594,328 M111.594,313 L124.594,328" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="65.188" x="79" y="340.389">Владелец</text>
+    </g>
+    <!--entity Человек-->
+    <g class="entity" data-qualified-name="......." data-source-line="9" id="ent0003">
+      <ellipse cx="347.713" cy="86" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M347.713,94 L347.713,121 M334.713,102 L360.713,102 M347.713,121 L334.713,136 M347.713,121 L360.713,136" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="54.425" x="320.5" y="148.389">Человек</text>
+    </g>
+    <!--entity Купить книги-->
+    <g class="entity" data-qualified-name="...... ....." data-source-line="11" id="ent0005">
+      <ellipse cx="347.649" cy="183.53" fill="#F1F1F1" rx="55.649" ry="13.53" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="308.318" y="187.03">Купить книги</text>
+    </g>
+    <!--entity Переставить книги-->
+    <g class="entity" data-qualified-name="........... ....." data-source-line="12" id="ent0007">
+      <ellipse cx="347.579" cy="231.716" fill="#F1F1F1" rx="71.579" ry="16.716" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="117.95" x="288.604" y="235.216">Переставить книги</text>
+    </g>
+    <!--entity Добавить полки-->
+    <g class="entity" data-qualified-name="........ ....." data-source-line="13" id="ent0009">
+      <ellipse cx="347.287" cy="281.657" fill="#F1F1F1" rx="63.787" ry="15.157" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="99.4" x="297.587" y="285.157">Добавить полки</text>
+    </g>
+    <!--entity Взять книги на время-->
+    <g class="entity" data-qualified-name="..... ..... .. ....." data-source-line="14" id="ent0011">
+      <ellipse cx="628.605" cy="64.521" fill="#F1F1F1" rx="75.605" ry="17.521" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="127.225" x="564.993" y="68.021">Взять книги на время</text>
+    </g>
+    <!--entity Вернуть книги-->
+    <g class="entity" data-qualified-name="....... ....." data-source-line="15" id="ent0013">
+      <ellipse cx="628.63" cy="114.726" fill="#F1F1F1" rx="59.13" ry="14.226" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="87.763" x="584.749" y="118.226">Вернуть книги</text>
+    </g>
+    <!--entity Сообщить об утере-->
+    <g class="entity" data-qualified-name="........ .. ....." data-source-line="16" id="ent0015">
+      <ellipse cx="628.682" cy="163.336" fill="#F1F1F1" rx="72.182" ry="16.836" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="119.35" x="569.007" y="166.836">Сообщить об утере</text>
+    </g>
+    <!--entity Подарить книги другу-->
+    <g class="entity" data-qualified-name="........ ..... ....." data-source-line="17" id="ent0017">
+      <ellipse cx="347.416" cy="332.483" fill="#F1F1F1" rx="77.916" ry="17.983" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="132.475" x="281.178" y="335.983">Подарить книги другу</text>
+    </g>
+    <!--entity Друг-->
+    <g class="entity" data-qualified-name="...." data-source-line="18" id="ent0019">
+      <ellipse cx="628.656" cy="330" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M628.656,338 L628.656,365 M615.656,346 L641.656,346 M628.656,365 L615.656,380 M628.656,365 L641.656,380" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.313" x="614" y="392.389">Друг</text>
+    </g>
+    <!--entity Обменять книги-->
+    <g class="entity" data-qualified-name="........ ....." data-source-line="19" id="ent0021">
+      <ellipse cx="347.43" cy="383.686" fill="#F1F1F1" rx="63.93" ry="15.186" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="99.75" x="297.555" y="387.186">Обменять книги</text>
+    </g>
+    <!--entity Проверить состояние книг-->
+    <g class="entity" data-qualified-name="......... ......... ...." data-source-line="21" id="ent0024">
+      <ellipse cx="347.485" cy="497.297" fill="#F1F1F1" rx="91.985" ry="20.797" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="163.625" x="265.672" y="500.797">Проверить состояние книг</text>
+    </g>
+    <!--entity Отреставрировать книги-->
+    <g class="entity" data-qualified-name="................ ....." data-source-line="22" id="ent0026">
+      <ellipse cx="628.458" cy="497.592" fill="#F1F1F1" rx="88.458" ry="20.092" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="155.925" x="550.496" y="501.092">Отреставрировать книги</text>
+    </g>
+    <!--entity Реставратор-->
+    <g class="entity" data-qualified-name="..........." data-source-line="23" id="ent0028">
+      <ellipse cx="628.65" cy="544" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M628.65,552 L628.65,579 M615.65,560 L641.65,560 M628.65,579 L615.65,594 M628.65,579 L641.65,594" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="83.3" x="587" y="606.389">Реставратор</text>
+    </g>
+    <!--entity Подарить книги владельцу-->
+    <g class="entity" data-qualified-name="........ ..... ........." data-source-line="26" id="ent0032">
+      <ellipse cx="347.637" cy="437.627" fill="#F1F1F1" rx="93.637" ry="21.127" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="167.213" x="264.03" y="441.127">Подарить книги владельцу</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="extension" id="lnk4">
+      <polygon fill="none" points="320.445,124.628,301.529,126.107,306.199,137.161,320.445,124.628" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M142.14,269.468 C168.924,237.698 210.687,192.164 254,160.5 C274.705,145.364 284.56,139.79 303.864,131.634" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="291.529,192.889,281.827,191.19,286.678,194.101,283.767,198.951,291.529,192.889" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M144.265,278.3 C171.567,255.483 212.924,224.175 254,205.5 C265.721,200.171 274.036,197.259 286.678,194.101" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="285.645,248.05,275.89,246.687,280.838,249.429,278.097,254.377,285.645,248.05" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M144.074,294.964 C172.633,284.673 215.92,269.433 254,257.5 C264.188,254.307 270.256,252.465 280.838,249.429" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="283.371,288.245,273.997,285.223,278.4,288.776,274.847,293.178,283.371,288.245" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M144.058,303.128 C179.612,299.33 233.339,293.59 278.4,288.776" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0011" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="552.834,77.881,543.27,75.531,547.913,78.763,544.681,83.406,552.834,77.881" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M374.748,109.796 C415.104,102.564 488.975,89.325 547.913,78.763" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0013" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="569.449,114.5,560.449,110.5,564.449,114.5,560.449,118.5,569.449,114.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M374.748,114.5 C419.038,114.5 504.624,114.5 564.449,114.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0015" data-link-type="dependency" id="lnk16">
+      <polygon fill="#181818" points="556.375,151.009,548.203,145.512,551.451,150.144,546.819,153.391,556.375,151.009" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M374.748,119.11 C415.918,126.34 492.166,139.732 551.451,150.144" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0017" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="269.231,323.915,260.728,318.945,264.262,323.362,259.844,326.896,269.231,323.915" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M144.058,310.006 C175.994,313.555 221.635,318.626 264.262,323.362" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0019" data-link-type="association" id="lnk20">
+      <path d="M425.847,339.708 C491.482,345.824 580.192,354.091 613.817,357.225" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0021" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="284.546,368.382,276.904,362.169,279.72,367.076,274.814,369.892,284.546,368.382" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M144.201,319.461 C172.662,330.836 215.73,347.404 254,359.5 C263.808,362.6 269.465,364.3 279.72,367.076" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0019" data-link-type="association" id="lnk23">
+      <path d="M411.809,377.827 C478.209,371.877 577.831,362.951 613.874,359.721" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0024" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="265.022,476.462,259.747,468.145,260.86,473.691,255.314,474.805,265.022,476.462" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M144.029,313.037 C167.211,319.396 197.886,331.3 217,352.5 C252.953,392.377 216.079,429.49 254,467.5 C257.339,470.846 256.891,471.049 260.86,473.691" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0024" data-entity-2="ent0026" data-link-type="extension" id="lnk27">
+      <polygon fill="none" points="439.855,497.5,457.855,503.5,457.855,491.5,439.855,497.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M457.855,497.5 C489.957,497.5 507.937,497.5 539.737,497.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="59.963" x="461" y="492.611">«extends»</text>
+    </g>
+    <g class="link" data-entity-1="ent0026" data-entity-2="ent0028" data-link-type="association" id="lnk29">
+      <path d="M628.5,517.578 C628.5,523.483 628.5,529.388 628.5,535.293" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0019" data-link-type="extension" id="lnk31">
+      <polygon fill="none" points="374.618,124.542,388.896,137.039,393.538,125.973,374.618,124.542" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M391.217,131.506 C410.553,139.618 420.404,145.217 441,160.5 C515.328,215.655 585.164,302.418 613.817,340.058" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0032" data-entity-2="ent0019" data-link-type="dependency" id="lnk34">
+      <polygon fill="#181818" points="422.9,416.433,432.65,417.83,427.711,415.071,430.47,410.133,422.9,416.433" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M427.711,415.071 C493.573,396.422 579.579,372.069 613.757,362.392" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0032" data-link-type="association" id="lnk36">
+      <path d="M144.313,315.307 C166.457,322.606 195.715,334.694 217,352.5 C239.597,371.403 230.477,389.762 254,407.5 C258.313,410.753 262.994,413.661 267.882,416.26" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

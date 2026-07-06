@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="150px" preserveAspectRatio="none" style="width:294px;height:150px;background:#FFFFFF;" version="1.1" viewBox="0 0 294 150" width="294px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity UC1-->
+    <g class="entity" data-qualified-name="UC1" data-source-line="1" id="ent0001">
+      <ellipse cx="61.361" cy="25.399" fill="#F1F1F1" rx="22.861" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="47.317" y="28.899">UC1</text>
+    </g>
+    <!--entity UC2-->
+    <g class="entity" data-qualified-name="UC2" data-source-line="2" id="ent0002">
+      <ellipse cx="125.361" cy="25.399" fill="#F1F1F1" rx="22.861" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="111.317" y="28.899">UC2</text>
+    </g>
+    <!--entity UC3-->
+    <g class="entity" data-qualified-name="UC3" data-source-line="3" id="ent0003">
+      <ellipse cx="222.617" cy="25.523" fill="#F1F1F1" rx="55.617" ry="13.523" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="78.575" x="183.329" y="29.023">My usecase3</text>
+    </g>
+    <!--entity UC4-->
+    <g class="entity" data-qualified-name="UC4" data-source-line="4" id="ent0004">
+      <ellipse cx="61.617" cy="104.523" fill="#F1F1F1" rx="55.617" ry="13.523" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="78.575" x="22.329" y="108.023">My usecase4</text>
+    </g>
+    <!--entity UC5-->
+    <g class="entity" data-qualified-name="UC5" data-source-line="5" id="ent0005">
+      <ellipse cx="200.473" cy="104.305" fill="#F00" rx="65.473" ry="29.305" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="78.575" x="161.186" y="94.352">My usecase5</text>
+      <text fill="#000" font-size="14" textLength="99.75" x="150.598" y="108.352">is on several lines</text>
+      <text fill="#000" font-size="14" textLength="71.663" x="164.642" y="122.352">and finished</text>
+    </g>
+  </g>
+</svg>

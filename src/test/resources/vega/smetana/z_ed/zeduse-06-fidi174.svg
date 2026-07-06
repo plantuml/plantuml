@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="67px" preserveAspectRatio="none" style="width:352px;height:67px;background:#FFFFFF;" version="1.1" viewBox="0 0 352 67" width="352px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="10" y="19"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="15" y="31.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="10" y="19"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="125" x="57" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="33.425" x="62" y="22.889">hosts</text>
+    <text fill="#000" font-size="14" textLength="71.575" x="105.425" y="22.889">webservers</text>
+    <line style="stroke:#000;stroke-width:1;" x1="100.425" x2="100.425" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="57" x2="182" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="62" y="40.889">vars</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="105.425" y="40.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="100.425" x2="100.425" y1="28" y2="46"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="125" x="57" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="117.3" x="219" y="19"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="55.125" x="224" y="31.889">http_port</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="307.938" y="31.889">80</text>
+    <line style="stroke:#000;stroke-width:1;" x1="302.938" x2="302.938" y1="19" y2="37"/>
+    <line style="stroke:#000;stroke-width:1;" x1="219" x2="336.3" y1="37" y2="37"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="73.938" x="224" y="49.889">max_clients</text>
+    <text fill="#000" font-size="14" textLength="23.363" x="307.938" y="49.889">200</text>
+    <line style="stroke:#000;stroke-width:1;" x1="302.938" x2="302.938" y1="37" y2="55"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="117.3" x="219" y="19"/>
+    <path d="M170,37 L183,37 C192.271,37 202.057,37 211.673,37" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M211.673,40.065 L213.971,37 L211.673,33.935 L219.334,37 L211.673,40.065" fill="#000"/>
+    <ellipse cx="170" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M7.775,28 L20.775,28 C26.847,28 37.565,28 49.749,28" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M49.749,31.099 L52.074,28 L49.749,24.901 L57.497,28 L49.749,31.099" fill="#000"/>
+    <ellipse cx="7.775" cy="28" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

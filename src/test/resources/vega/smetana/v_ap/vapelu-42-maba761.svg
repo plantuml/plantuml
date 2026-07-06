@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="95px" preserveAspectRatio="none" style="width:90px;height:95px;background:#FFFFFF;" version="1.1" viewBox="0 0 90 95" width="90px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f6g93a0na1af4" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Foo5-->
+    <g class="cluster" data-qualified-name="Foo5" data-source-line="9" id="ent0001">
+      <rect fill="#ADD8E6" height="67" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;" width="68" x="14" y="4"/>
+      <path d="M55.938,4 L55.938,11 L45.938,21 L14,21" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.938" x="17" y="15.889">Foo5</text>
+    </g>
+    <!--entity Foo6-->
+    <g class="entity" data-qualified-name="Foo5.Foo6" data-source-line="10" id="ent0002">
+      <rect fill="#90EE90" filter="url(#f6g93a0na1af4)" height="34" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="51.938" x="22" y="29"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="32" y="49.889">Foo6</text>
+    </g>
+  </g>
+</svg>

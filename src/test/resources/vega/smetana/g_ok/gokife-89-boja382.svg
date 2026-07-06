@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="325px" preserveAspectRatio="none" style="width:629px;height:325px;background:#FFFFFF;" version="1.1" viewBox="0 0 629 325" width="629px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="8E437FA1B6DC905" data-source-line="13" id="ent0001">
+      <path d="M18.5,12 L600.5,12 A12.5,12.5 0 0 1 613,24.5 L613,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#FFFFE0"/>
+      <rect fill="#FFFFE0" height="47" style="stroke:#FFFFE0;stroke-width:1;" width="607" x="6" y="36"/>
+      <path d="M6,83 L613,83 L613,296.5 A12.5,12.5 0 0 1 600.5,309 L18.5,309 A12.5,12.5 0 0 1 6,296.5 L6,83" fill="#FFFFE0"/>
+      <rect fill="none" height="297" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="607" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="613" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="613" y1="83" y2="83"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="265.213" x="176.894" y="27.889">«statechart» Master Switchgear Model - Logic</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="11" y="46.889">Rule:</text>
+      <text fill="#000" font-size="14" textLength="119.7" x="11" y="60.889">if ('openStatus') then</text>
+      <text fill="#000" font-size="14" textLength="179.375" x="11" y="74.889">'switchgearStatus' := $OPEN$</text>
+      <g class="entity" data-qualified-name="8E437FA1B6DC905.6D4FA3B201978C" data-source-line="15" id="ent0002">
+        <path d="M24.5,94 L576.5,94 A12.5,12.5 0 0 1 589,106.5 L589,118 L12,118 L12,106.5 A12.5,12.5 0 0 1 24.5,94" fill="#FFFFE0"/>
+        <path d="M12,118 L589,118 L589,281.5 A12.5,12.5 0 0 1 576.5,294 L24.5,294 A12.5,12.5 0 0 1 12,281.5 L12,118" fill="#FFFFE0"/>
+        <rect fill="none" height="200" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="577" x="12" y="94"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="589" y1="118" y2="118"/>
+        <text fill="#000" font-size="14" font-weight="700" textLength="155.575" x="222.712" y="109.889">«statemachine» smSwOp</text>
+        <g class="entity" data-qualified-name="8E437FA1B6DC905.6D4FA3B201978C.368F54ED2A907" data-source-line="17" id="ent0003">
+          <rect fill="#FFFFE0" height="90" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="552.262" x="18" y="189"/>
+          <line style="stroke:#000;stroke-width:0.5;" x1="18" x2="570.262" y1="213" y2="213"/>
+          <text fill="#000" font-size="14" font-weight="700" textLength="107.363" x="240.45" y="204.889">«initialstate» stInit</text>
+          <text fill="#000" font-size="14" font-weight="700" textLength="55.125" x="23" y="228.889">OnEntry:</text>
+          <text fill="#000" font-size="14" textLength="307.125" x="23" y="242.889">'operatingMode' := $Switchgear Model Initialisation$</text>
+          <text fill="#000" font-size="14" textLength="532.262" x="23" y="256.889">'setOperatingModeInfo' := $Set 1 for Auto Mode, Set 2 for RTDS Mode, Set 3 for Manual Mode$</text>
+          <text fill="#000" font-size="14" x="23" y="270.889"> </text>
+        </g>
+        <g class="start_entity" data-qualified-name="8E437FA1B6DC905.6D4FA3B201978C..start.6D4FA3B201978C" data-source-line="16" id="ent0004">
+          <ellipse cx="294" cy="139" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+        </g>
+        <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+          <polygon fill="#00F" points="294,188.683,298,179.683,294,183.683,290,179.683,294,188.683" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+          <path d="M294,153.158 C294,162.176 294,170.496 294,183.683" fill="none" style="stroke:#00F;stroke-width:2;"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

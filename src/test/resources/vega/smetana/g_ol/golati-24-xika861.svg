@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="308px" preserveAspectRatio="none" style="width:748px;height:308px;background:#FFFFFF;" version="1.1" viewBox="0 0 748 308" width="748px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Component-->
+    <g class="entity" data-qualified-name="Component" data-source-line="22" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="112.363" x="278.5" y="116"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#008000;stroke-width:0.5;" width="15" x="370.863" y="121"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#008000;stroke-width:0.5;" width="4" x="368.863" y="123"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#008000;stroke-width:0.5;" width="4" x="368.863" y="127"/>
+      <text fill="#008000" font-size="14" textLength="72.363" x="293.5" y="146.889">Component</text>
+    </g>
+    <!--entity Participant-->
+    <g class="entity" data-qualified-name="Participant" data-source-line="23" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="106.15" x="281.5" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#008000;stroke-width:0.5;" width="15" x="367.65" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#008000;stroke-width:0.5;" width="4" x="365.65" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#008000;stroke-width:0.5;" width="4" x="365.65" y="23"/>
+      <text fill="#008000" font-size="14" textLength="66.15" x="296.5" y="42.889">Participant</text>
+    </g>
+    <!--entity Participant10-->
+    <g class="entity" data-qualified-name="Participant10" data-source-line="24" id="ent0003">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:0.5;" width="121.725" x="49.5" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#F00;stroke-width:0.5;" width="15" x="151.225" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="149.225" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="149.225" y="120"/>
+      <text fill="#008000" font-size="14" font-style="italic" textLength="42" x="84.363" y="139.889">«v1.0»</text>
+      <text fill="#008000" font-size="14" textLength="81.725" x="64.5" y="153.889">Participant10</text>
+    </g>
+    <!--entity Participant11-->
+    <g class="entity" data-qualified-name="Participant11" data-source-line="25" id="ent0004">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="121.725" x="497.5" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#008000;stroke-width:0.5;" width="15" x="599.225" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#008000;stroke-width:0.5;" width="4" x="597.225" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#008000;stroke-width:0.5;" width="4" x="597.225" y="120"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="42" x="532.363" y="139.889">«v1.1»</text>
+      <text fill="#F00" font-size="14" textLength="81.725" x="512.5" y="153.889">Participant11</text>
+    </g>
+    <!--entity Participant1011-->
+    <g class="entity" data-qualified-name="Participant1011" data-source-line="26" id="ent0005">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:0.5;" width="137.3" x="6" y="220"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#F00;stroke-width:0.5;" width="15" x="123.3" y="225"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="121.3" y="227"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="121.3" y="231"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="42" x="48.65" y="250.889">«v1.0»</text>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="42" x="48.65" y="264.889">«v1.1»</text>
+      <text fill="#F00" font-size="14" textLength="97.3" x="21" y="278.889">Participant1011</text>
+    </g>
+    <!--entity Participant1110-->
+    <g class="entity" data-qualified-name="Participant1110" data-source-line="27" id="ent0006">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:0.5;" width="137.3" x="266" y="220"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#F00;stroke-width:0.5;" width="15" x="383.3" y="225"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="381.3" y="227"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="381.3" y="231"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="42" x="308.65" y="250.889">«v1.0»</text>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="42" x="308.65" y="264.889">«v1.1»</text>
+      <text fill="#F00" font-size="14" textLength="97.3" x="281" y="278.889">Participant1110</text>
+    </g>
+    <!--entity Participant1011_WithoutSimulation-->
+    <g class="entity" data-qualified-name="Participant1011_WithoutSimulation" data-source-line="29" id="ent0007">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:0.5;" width="257.963" x="465.5" y="220"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#F00;stroke-width:0.5;" width="15" x="703.463" y="225"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="701.463" y="227"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="701.463" y="231"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="42" x="568.481" y="250.889">«v1.0»</text>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="42" x="568.481" y="264.889">«v1.1»</text>
+      <text fill="#F00" font-size="14" textLength="217.963" x="480.5" y="278.889">Participant1011_WithoutSimulation</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#008000" points="334.5,56.134,330.5,65.134,334.5,61.134,338.5,65.134,334.5,56.134" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M334.5,61.134 C334.5,78.64 334.5,98.394 334.5,115.893" fill="none" style="stroke:#008000;stroke-width:1;"/>
+      <text fill="#008000" font-size="13" textLength="75.075" x="336.5" y="86.111">no stereotype</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk11">
+      <polygon fill="#F00" points="171.709,138,180.709,142,176.709,138,180.709,134,171.709,138" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M176.709,138 C210,138 245.886,138 278.355,138" fill="none" style="stroke:#F00;stroke-width:1;"/>
+      <text fill="#008000" font-size="13" textLength="85.15" x="182.5" y="130.111">v1.0 stereotype</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk12">
+      <polygon fill="#008000" points="497.121,138,488.121,134,492.121,138,488.121,142,497.121,138" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M390.736,138 C423.135,138 458.892,138 492.121,138" fill="none" style="stroke:#008000;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="85.15" x="401.5" y="130.111">v1.1 stereotype</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk13">
+      <polygon fill="#F00" points="76.48,219.684,82.144,211.627,77.446,214.779,74.295,210.081,76.48,219.684" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M278.202,149.37 C207.521,162.443 95.211,183.415 93.5,185 C83.893,193.9 79.922,202.216 77.446,214.779" fill="none" style="stroke:#F00;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="233.919" x="95.5" y="197.111">v1.0 and v1.1 stereotype (should be red/red)</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="dependency" id="lnk14">
+      <polygon fill="#F00" points="334.5,219.579,338.5,210.579,334.5,214.579,330.5,210.579,334.5,219.579" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M334.5,160.007 C334.5,176.59 334.5,195.098 334.5,214.579" fill="none" style="stroke:#F00;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="233.919" x="336.5" y="197.111">v1.1 and v1.0 stereotype (should be red/red)</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="dependency" id="lnk15">
+      <polygon fill="#008000" points="590.983,219.964,592.797,210.283,589.829,215.099,585.013,212.13,590.983,219.964" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M390.764,149.143 C460.05,161.739 569.08,181.948 572.5,185 C582.48,193.906 586.819,202.417 589.829,215.099" fill="none" style="stroke:#008000;stroke-width:1;"/>
+      <text fill="#008000" font-size="13" textLength="154.456" x="586.5" y="197.111">simulated v1.0 v1.1 (red/red)</text>
+    </g>
+  </g>
+</svg>

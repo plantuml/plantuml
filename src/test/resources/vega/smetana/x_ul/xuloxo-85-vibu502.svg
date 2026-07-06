@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="308px" preserveAspectRatio="none" style="width:324px;height:308px;background:#FFFFFF;" version="1.1" viewBox="0 0 324 308" width="324px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity __instance__2__class__Renderer_rendering-->
+    <g class="entity" data-qualified-name="__instance__2__class__Renderer_rendering" data-source-line="178" id="ent0001">
+      <rect fill="#08427B" height="127.692" style="stroke:#073B6F;stroke-width:0.5;" width="142.238" x="6" y="12"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="50.025" x="52.106" y="31.333">«person»</text>
+      <image height="52" width="52" x="51.273" xlink:href="data:image/png;base64,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" y="34"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="39.2" x="57.519" y="98.137">Label</text>
+      <text fill="#FFF" font-size="14" x="77.119" y="112.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="52.15" x="16" y="126.581">Optional</text>
+      <text fill="#FFF" font-size="14" x="68.15" y="126.581"> </text>
+      <text fill="#FFF" font-size="14" textLength="70.088" x="68.15" y="126.581">Description</text>
+    </g>
+    <!--entity __instance__3__class__Renderer_rendering-->
+    <g class="entity" data-qualified-name="__instance__3__class__Renderer_rendering" data-source-line="71" id="ent0002">
+      <rect fill="#438DD5" height="88" style="stroke:#3C7FC0;stroke-width:0.5;" width="142.238" x="6" y="204"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="62.7" x="45.769" y="223.333">«container»</text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="39.2" x="57.519" y="238.444">Label</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="68.7" x="42.769" y="251.333">[Technology]</text>
+      <text fill="#FFF" font-size="14" x="77.119" y="264.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="52.15" x="16" y="278.889">Optional</text>
+      <text fill="#FFF" font-size="14" x="68.15" y="278.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="70.088" x="68.15" y="278.889">Description</text>
+    </g>
+    <!--entity __instance__1__class__Renderer_rendering-->
+    <g class="entity" data-qualified-name="__instance__1__class__Renderer_rendering" data-source-line="197" id="ent0003">
+      <rect fill="#1168BD" height="76" style="stroke:#3C7FC0;stroke-width:0.5;" width="142.238" x="166" y="38"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="51.3" x="211.469" y="57.333">«system»</text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="39.2" x="217.519" y="72.444">Label</text>
+      <text fill="#FFF" font-size="14" x="237.119" y="86.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="52.15" x="176" y="100.889">Optional</text>
+      <text fill="#FFF" font-size="14" x="228.15" y="100.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="70.088" x="228.15" y="100.889">Description</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="none" points="77,203.772,80,195.772,74,195.772,77,203.772" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M77,140.302 C77,161.448 77,176.514 77,195.772" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="29.4" x="121" y="169.333">Label</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="48" x="79" y="181.333">[Optional</text>
+      <text fill="#666" font-size="12" font-style="italic" x="127" y="181.333"> </text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="65.4" x="127" y="181.333">Technology]</text>
+    </g>
+  </g>
+</svg>

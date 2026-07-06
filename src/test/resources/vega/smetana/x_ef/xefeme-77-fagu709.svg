@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="233px" preserveAspectRatio="none" style="width:148px;height:233px;background:#FFFFFF;" version="1.1" viewBox="0 0 148 233" width="148px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.512" x="39" y="12"/>
+      <ellipse cx="55.513" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="50.513" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="69.849" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="40" x2="97.512" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="50" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="59" y="58.889">field1</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="50" cy="70.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="59" y="72.889">field2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="40" x2="97.512" y1="80" y2="80"/>
+    </g>
+    <!--class Bar-->
+    <g class="entity" data-qualified-name="Bar" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.363" x="6" y="141"/>
+      <ellipse cx="54.038" cy="157" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="49.038" y="162">C</text>
+      <text fill="#000" font-size="14" textLength="21.788" x="74.538" y="160.889">Bar</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="131.363" y1="173" y2="173"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="185.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="26" y="187.889">field3</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="199.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="100.363" x="26" y="201.889">!!field4 with some</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="131.363" y1="209" y2="209"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="52.775,140.953,53.711,131.149,51.188,136.212,46.125,133.688,52.775,140.953" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M51.281,88.023 C47.839,99.155 45.875,111.476 48,123 C49.094,128.93 49.212,130.307 51.188,136.212" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="18.038" x="50" y="118.111">foo</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="69.769,140.724,73.914,131.79,69.85,135.724,65.916,131.66,69.769,140.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M69.845,88.369 C70.009,99.51 70.102,111.749 70,123 C69.948,128.73 69.946,129.796 69.85,135.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="18.769" x="72" y="118.111">bar</text>
+    </g>
+  </g>
+</svg>

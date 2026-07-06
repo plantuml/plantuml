@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="68px" preserveAspectRatio="none" style="width:312px;height:68px;background:#FFFFFF;" version="1.1" viewBox="0 0 312 68" width="312px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="12"/>
+    <text fill="#000" font-size="14" textLength="31.063" x="15.469" y="35.889">Error</text>
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="74" y="12"/>
+    <text fill="#000" font-size="14" textLength="32.725" x="82.638" y="35.889">Send</text>
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.575" x="142.5" y="12"/>
+    <text fill="#000" font-size="14" textLength="50.575" x="147.5" y="35.889">Process</text>
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="74.575" x="221.5" y="12"/>
+    <text fill="#000" font-size="14" textLength="64.575" x="226.5" y="35.889">Confirmed</text>
+  </g>
+</svg>

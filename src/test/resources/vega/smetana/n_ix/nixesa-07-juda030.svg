@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="87px" preserveAspectRatio="none" style="width:1064px;height:87px;background:#FFFFFF;" version="1.1" viewBox="0 0 1064 87" width="1064px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="8" id="ent0001">
+      <ellipse cx="16" cy="44" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Pending" data-source-line="8" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="71.45" x="195.5" y="21"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="195.5" x2="266.95" y1="45" y2="45"/>
+      <text fill="#000" font-size="14" textLength="51.45" x="205.5" y="36.889">Pending</text>
+    </g>
+    <g class="entity" data-qualified-name="Processing" data-source-line="9" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="89.3" x="435.5" y="21"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="435.5" x2="524.8" y1="45" y2="45"/>
+      <text fill="#000" font-size="14" textLength="69.3" x="445.5" y="36.889">Processing</text>
+    </g>
+    <g class="entity" data-qualified-name="Shipped" data-source-line="10" id="ent0006">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="71.45" x="694.5" y="21"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="694.5" x2="765.95" y1="45" y2="45"/>
+      <text fill="#000" font-size="14" textLength="51.45" x="704.5" y="36.889">Shipped</text>
+    </g>
+    <g class="entity" data-qualified-name="Delivered" data-source-line="11" id="ent0008">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="79.238" x="928.5" y="21"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="928.5" x2="1007.738" y1="45" y2="45"/>
+      <text fill="#000" font-size="14" textLength="59.238" x="938.5" y="36.889">Delivered</text>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="12" id="ent0010">
+      <ellipse cx="1037" cy="45" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="1037" cy="45" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="195.444,46,186.444,42,190.444,46,186.444,50,195.444,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.082,46 C55.969,46 140.136,46 190.444,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="25.269" x="38.619" y="12.111">user</text>
+      <text fill="#F00" font-size="13" x="63.888" y="12.111"> </text>
+      <text fill="#F00" font-size="13" textLength="44.769" x="63.888" y="12.111">submits</text>
+      <text fill="#F00" font-size="13" x="108.656" y="12.111"> </text>
+      <text fill="#F00" font-size="13" textLength="30.306" x="108.656" y="12.111">order</text>
+      <text fill="#F00" font-size="13" x="138.963" y="12.111"> </text>
+      <text fill="#F00" font-size="13" textLength="44.037" x="138.963" y="12.111">through</text>
+      <text fill="#F00" font-size="13" textLength="52" x="36.75" y="25.111">checkout</text>
+      <text fill="#F00" font-size="13" x="88.75" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="23.156" x="88.75" y="25.111">flow</text>
+      <text fill="#F00" font-size="13" x="111.906" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="23.156" x="111.906" y="25.111">with</text>
+      <text fill="#F00" font-size="13" x="135.063" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="49.806" x="135.063" y="25.111">payment</text>
+      <text fill="#F00" font-size="13" textLength="37.619" x="92" y="38.111">details</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="435.12,46,426.12,42,430.12,46,426.12,50,435.12,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M266.676,46 C311.052,46 381.844,46 430.12,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="49.806" x="277.5" y="12.111">payment</text>
+      <text fill="#F00" font-size="13" x="327.306" y="12.111"> </text>
+      <text fill="#F00" font-size="13" textLength="48.425" x="327.306" y="12.111">gateway</text>
+      <text fill="#F00" font-size="13" x="375.731" y="12.111"> </text>
+      <text fill="#F00" font-size="13" textLength="49.075" x="375.731" y="12.111">confirms</text>
+      <text fill="#F00" font-size="13" textLength="60.694" x="300.941" y="25.111">successful</text>
+      <text fill="#F00" font-size="13" x="361.634" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="39.731" x="361.634" y="25.111">charge</text>
+      <text fill="#F00" font-size="13" textLength="74.425" x="313.941" y="38.111">authorization</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="694.187,46,685.187,42,689.187,46,685.187,50,694.187,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M524.695,46 C573.149,46 644.521,46 689.187,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="63.619" x="535.5" y="12.111">warehouse</text>
+      <text fill="#F00" font-size="13" x="599.119" y="12.111"> </text>
+      <text fill="#F00" font-size="13" textLength="35.344" x="599.119" y="12.111">marks</text>
+      <text fill="#F00" font-size="13" x="634.463" y="12.111"> </text>
+      <text fill="#F00" font-size="13" textLength="49.156" x="634.463" y="12.111">package</text>
+      <text fill="#F00" font-size="13" textLength="13.731" x="536.922" y="25.111">as</text>
+      <text fill="#F00" font-size="13" x="550.653" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="62.888" x="550.653" y="25.111">dispatched</text>
+      <text fill="#F00" font-size="13" x="613.541" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="23.156" x="613.541" y="25.111">with</text>
+      <text fill="#F00" font-size="13" x="636.697" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="45.5" x="636.697" y="25.111">tracking</text>
+      <text fill="#F00" font-size="13" textLength="44.037" x="587.541" y="38.111">number</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="928.147,46,919.147,42,923.147,46,919.147,50,928.147,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M765.631,46 C809.202,46 877.739,46 923.147,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="36.806" x="776.5" y="25.111">carrier</text>
+      <text fill="#F00" font-size="13" x="813.306" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="49.075" x="813.306" y="25.111">confirms</text>
+      <text fill="#F00" font-size="13" x="862.381" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="44.85" x="862.381" y="25.111">delivery</text>
+      <text fill="#F00" font-size="13" x="907.231" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="10.806" x="907.231" y="25.111">at</text>
+      <text fill="#F00" font-size="13" textLength="62.888" x="792.709" y="38.111">destination</text>
+      <text fill="#F00" font-size="13" x="855.597" y="38.111"> </text>
+      <text fill="#F00" font-size="13" textLength="46.231" x="855.597" y="38.111">address</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="1025.983,46,1016.983,42,1020.983,46,1016.983,50,1025.983,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1007.621,46 C1013.742,46 1014.862,46 1020.983,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="125px" preserveAspectRatio="none" style="width:739px;height:125px;background:#FFFFFF;" version="1.1" viewBox="0 0 739 125" width="739px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class OrderService-->
+    <g class="entity" data-qualified-name="OrderService" data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.425" x="6" y="61.253"/>
+      <ellipse cx="21" cy="77.253" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="82.253">C</text>
+      <text fill="#000" font-size="14" textLength="82.425" x="35" y="81.142">OrderService</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="119.425" y1="93.253" y2="93.253"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="119.425" y1="101.253" y2="101.253"/>
+    </g>
+    <!--class PaymentGateway-->
+    <g class="entity" data-qualified-name="PaymentGateway" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.425" x="280" y="61.253"/>
+      <ellipse cx="295" cy="77.253" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="290" y="82.253">C</text>
+      <text fill="#000" font-size="14" textLength="110.425" x="309" y="81.142">PaymentGateway</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="281" x2="421.425" y1="93.253" y2="93.253"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="281" x2="421.425" y1="101.253" y2="101.253"/>
+    </g>
+    <!--class InventoryManager-->
+    <g class="entity" data-qualified-name="InventoryManager" data-source-line="10" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="144.7" x="578.5" y="61.253"/>
+      <ellipse cx="593.5" cy="77.253" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="588.5" y="82.253">C</text>
+      <text fill="#000" font-size="14" textLength="112.7" x="607.5" y="81.142">InventoryManager</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="579.5" x2="722.2" y1="93.253" y2="93.253"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="579.5" x2="722.2" y1="101.253" y2="101.253"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="279.828,85.253,270.828,81.253,274.828,85.253,270.828,89.253,279.828,85.253" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M120.244,85.253 C166.094,85.253 225.651,85.253 274.828,85.253" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="59.231" x="145.828" y="51.364">processes</text>
+      <text fill="#F00" font-size="13" x="205.059" y="51.364"> </text>
+      <text fill="#F00" font-size="13" textLength="49.806" x="205.059" y="51.364">payment</text>
+      <text fill="#F00" font-size="13" textLength="44.037" x="131" y="64.364">through</text>
+      <text fill="#F00" font-size="13" x="175.038" y="64.364"> </text>
+      <text fill="#F00" font-size="13" textLength="46.231" x="175.038" y="64.364">external</text>
+      <text fill="#F00" font-size="13" x="221.269" y="64.364"> </text>
+      <text fill="#F00" font-size="13" textLength="48.425" x="221.269" y="64.364">gateway</text>
+      <text fill="#F00" font-size="13" textLength="41.194" x="140.669" y="77.364">service</text>
+      <text fill="#F00" font-size="13" x="181.863" y="77.364"> </text>
+      <text fill="#F00" font-size="13" textLength="23.156" x="181.863" y="77.364">with</text>
+      <text fill="#F00" font-size="13" x="205.019" y="77.364"> </text>
+      <text fill="#F00" font-size="13" textLength="55.006" x="205.019" y="77.364">validation</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="578.331,85.253,569.331,81.253,573.331,85.253,569.331,89.253,578.331,85.253" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M422.096,85.253 C469.225,85.253 525.882,85.253 573.331,85.253" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="46.231" x="432.75" y="51.364">updates</text>
+      <text fill="#F00" font-size="13" x="478.981" y="51.364"> </text>
+      <text fill="#F00" font-size="13" textLength="30.306" x="478.981" y="51.364">stock</text>
+      <text fill="#F00" font-size="13" x="509.288" y="51.364"> </text>
+      <text fill="#F00" font-size="13" textLength="33.313" x="509.288" y="51.364">levels</text>
+      <text fill="#F00" font-size="13" x="542.6" y="51.364"> </text>
+      <text fill="#F00" font-size="13" textLength="25.919" x="542.6" y="51.364">after</text>
+      <text fill="#F00" font-size="13" textLength="60.694" x="445.384" y="64.364">successful</text>
+      <text fill="#F00" font-size="13" x="506.078" y="64.364"> </text>
+      <text fill="#F00" font-size="13" textLength="49.806" x="506.078" y="64.364">payment</text>
+      <text fill="#F00" font-size="13" textLength="70.769" x="465.25" y="77.364">confirmation</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="116.403,61.135,126.25,61.343,121.014,59.202,123.156,53.966,116.403,61.135" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M593.467,61.126 C547.15,43.074 479.88,19.908 418.5,10.253 C357.473,0.654 340.421,0 279.5,10.253 C222.033,19.925 164.049,41.155 121.014,59.202" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="40.381" x="281.5" y="12.364">returns</text>
+      <text fill="#F00" font-size="13" x="321.881" y="12.364"> </text>
+      <text fill="#F00" font-size="13" textLength="60.125" x="321.881" y="12.364">availability</text>
+      <text fill="#F00" font-size="13" x="382.006" y="12.364"> </text>
+      <text fill="#F00" font-size="13" textLength="34.613" x="382.006" y="12.364">status</text>
+      <text fill="#F00" font-size="13" textLength="21.694" x="306.078" y="25.364">and</text>
+      <text fill="#F00" font-size="13" x="327.772" y="25.364"> </text>
+      <text fill="#F00" font-size="13" textLength="64.269" x="327.772" y="25.364">reservation</text>
+      <text fill="#F00" font-size="13" textLength="70.769" x="313.675" y="38.364">confirmation</text>
+    </g>
+  </g>
+</svg>

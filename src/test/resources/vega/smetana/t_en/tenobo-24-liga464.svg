@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="118px" preserveAspectRatio="none" style="width:521px;height:118px;background:#FFFFFF;" version="1.1" viewBox="0 0 521 118" width="521px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.913" x="157.5" y="12"/>
+      <ellipse cx="190.748" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="185.748" y="33">C</text>
+      <text fill="#000" font-size="14" x="208.803" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="158.5" x2="238.413" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="59.063" x="163.5" y="58.889">member1</text>
+      <text fill="#000" font-size="14" textLength="59.063" x="163.5" y="72.889">member2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="158.5" x2="238.413" y1="80" y2="80"/>
+      <text fill="#000" font-size="14" textLength="69.913" x="163.5" y="94.889">memberB()</text>
+    </g>
+    <path d="M257.5,24 L257.5,31.5 L222.563,55 L257.5,39.5 L257.5,47 A0,0 0 0 0 257.5,47 L417.925,47 A0,0 0 0 0 417.925,47 L417.925,34 L407.925,24 L257.5,24 A0,0 0 0 0 257.5,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M407.925,24 L407.925,34 L417.925,34 L407.925,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="139.425" x="263.5" y="39.111">This member is annotated</text>
+    <path d="M257.5,57 L257.5,64.5 L233.413,91 L257.5,72.5 L257.5,80 A0,0 0 0 0 257.5,80 L505.594,80 A0,0 0 0 0 505.594,80 L505.594,67 L495.594,57 L257.5,57 A0,0 0 0 0 257.5,57" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M495.594,57 L495.594,67 L505.594,67 L495.594,57" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="227.094" x="263.5" y="72.111">This method is now explained in a UML note</text>
+    <path d="M6,34 L6,70 A0,0 0 0 0 6,70 L139.044,70 A0,0 0 0 0 139.044,70 L139.044,56 L163.5,69 L139.044,48 L139.044,44 L129.044,34 L6,34 A0,0 0 0 0 6,34" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M129.044,34 L129.044,44 L139.044,44 L129.044,34" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="19.5" x="12" y="49.111">Yet</text>
+    <text fill="#000" font-size="13" font-weight="700" textLength="44.037" x="31.5" y="49.111">another</text>
+    <text fill="#000" font-size="13" textLength="112.044" x="12" y="62.111">note on several lines.</text>
+  </g>
+</svg>

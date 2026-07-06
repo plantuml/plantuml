@@ -1,0 +1,354 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="783px" preserveAspectRatio="none" style="width:558px;height:783px;background:#FFFFFF;" version="1.1" viewBox="0 0 558 783" width="558px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="242.725" x="154.388" y="20.889">m2uml_apply_test.youemel_poi_1_test</text>
+    </g>
+    <!--class youemel_poi-->
+    <g class="entity" data-qualified-name="youemel_poi" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.725" x="28" y="75"/>
+      <ellipse cx="44.474" cy="91" fill="#E6FFE6" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="39.474" y="96">H</text>
+      <text fill="#000" font-size="14" textLength="79.45" x="58.801" y="94.889">youemel_poi</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="29" x2="141.725" y1="107" y2="107"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="29" x2="141.725" y1="115" y2="115"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="39" cy="127.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="88.725" x="48" y="129.889">youemel_poi()</text>
+    </g>
+    <!--class UmlClass-->
+    <g class="entity" data-qualified-name="UmlClass" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="440" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.513" x="183" y="201"/>
+      <ellipse cx="224.319" cy="217" fill="#E6FFE6" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="219.319" y="222">H</text>
+      <text fill="#000" font-size="14" textLength="60.025" x="244.168" y="220.889">UmlClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="184" x2="332.513" y1="233" y2="233"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="194" cy="245.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="57.663" x="203" y="247.889">class_file</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="194" cy="259.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="74.725" x="203" y="261.889">class_name</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="194" cy="273.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="61.425" x="203" y="275.889">dot_string</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="194" cy="287.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="70.788" x="203" y="289.889">meta_class</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="194" cy="301.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.938" x="203" y="303.889">relations</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="184" x2="332.513" y1="311" y2="311"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="323.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="69.3" x="203" y="325.889">UmlClass()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="337.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="75.425" x="203" y="339.889">add_break()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="351.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="76.125" x="203" y="353.889">add_footer()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="365.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="84" x="203" y="367.889">add_header()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="379.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="87.063" x="203" y="381.889">add_method()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="393.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="94.063" x="203" y="395.889">add_methods()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="407.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="102.638" x="203" y="409.889">add_properties()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="421.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="91.7" x="203" y="423.889">add_property()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="435.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="62.912" x="203" y="437.889">add_text()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="449.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="62.212" x="203" y="451.889">add_title()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="463.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="124.513" x="203" y="465.889">apply_appearance()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="477.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="117.338" x="203" y="479.889">create_dot_string()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="491.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="96.513" x="203" y="493.889">find_line_num()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="505.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.063" x="203" y="507.889">get_access()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="519.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="110.425" x="203" y="521.889">get_appearance()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="533.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="72.187" x="203" y="535.889">get_footer()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="547.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.063" x="203" y="549.889">get_header()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="561.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="73.85" x="203" y="563.889">get_inputs()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="575.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="83.125" x="203" y="577.889">get_method()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="589.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="87.763" x="203" y="591.889">get_property()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="603.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.062" x="203" y="605.889">get_url()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="617.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="36.488" x="203" y="619.889">print()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="194" cy="631.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="87.063" x="203" y="633.889">strip_access()</text>
+    </g>
+    <!--class UmlDiagram-->
+    <g class="entity" data-qualified-name="UmlDiagram" data-source-line="35" id="ent0003">
+      <rect fill="#F1F1F1" height="426" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="159.088" x="6" y="208"/>
+      <ellipse cx="43.146" cy="224" fill="#E6FFE6" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="38.146" y="229">H</text>
+      <text fill="#000" font-size="14" textLength="77.875" x="62.067" y="227.889">UmlDiagram</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="164.088" y1="240" y2="240"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="252.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="46.725" x="26" y="254.889">classes</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="266.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="42.7" x="26" y="268.889">dot_str</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="280.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="18.725" x="26" y="282.889">dpi</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="294.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="70.788" x="26" y="296.889">draw_order</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="308.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="23.275" x="26" y="310.889">font</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="322.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="56" x="26" y="324.889">font_size</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="336.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="35.7" x="26" y="338.889">footer</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="350.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="43.575" x="26" y="352.889">header</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="364.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="35" x="26" y="366.889">name</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="378.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="34.213" x="26" y="380.889">paths</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="392.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.938" x="26" y="394.889">relations</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="406.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="38.15" x="26" y="408.889">shape</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="420.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="43.663" x="26" y="422.889">splines</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="431.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.938" x="26" y="436.889">digraph_opts</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="445.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="65.363" x="26" y="450.889">edge_opts</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="459.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="70" x="26" y="464.889">graph_opts</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="473.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="65.363" x="26" y="478.889">node_opts</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="164.088" y1="486" y2="486"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="498.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="87.15" x="26" y="500.889">UmlDiagram()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="512.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="89.425" x="26" y="514.889">add_defaults()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="526.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="133.088" x="26" y="528.889">add_digraph_option()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="540.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="117.513" x="26" y="542.889">add_edge_option()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="554.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="122.15" x="26" y="556.889">add_graph_option()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="568.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="117.513" x="26" y="570.889">add_node_option()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="582.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="59.15" x="26" y="584.889">is_class()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="596.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="90.3" x="26" y="598.889">load_classes()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="610.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="96.513" x="26" y="612.889">load_relations()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="624.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="36.488" x="26" y="626.889">print()</text>
+    </g>
+    <!--class UmlGeneralization-->
+    <g class="entity" data-qualified-name="UmlGeneralization" data-source-line="64" id="ent0004">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.513" x="191" y="677"/>
+      <ellipse cx="207.474" cy="693" fill="#E6FFE6" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="202.474" y="698">H</text>
+      <text fill="#000" font-size="14" textLength="115.237" x="221.801" y="696.889">UmlGeneralization</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="192" x2="340.513" y1="709" y2="709"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="202" cy="721.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="46.725" x="211" y="723.889">general</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="202" cy="735.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="46.725" x="211" y="737.889">specific</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="192" x2="340.513" y1="745" y2="745"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="202" cy="757.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="124.513" x="211" y="759.889">UmlGeneralization()</text>
+    </g>
+    <!--class UmlDirectedRelationship-->
+    <g class="entity" data-qualified-name="UmlDirectedRelationship" data-source-line="69" id="ent0005">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="189.538" x="352.5" y="376"/>
+      <ellipse cx="368.974" cy="392" fill="#E6FFE6" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="363.974" y="397">H</text>
+      <text fill="#000" font-size="14" textLength="154.263" x="383.301" y="395.889">UmlDirectedRelationship</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="353.5" x2="541.038" y1="408" y2="408"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="363.5" cy="420.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="42" x="372.5" y="422.889">source</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="363.5" cy="434.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="35.7" x="372.5" y="436.889">target</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="353.5" x2="541.038" y1="444" y2="444"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="363.5" cy="456.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="163.538" x="372.5" y="458.889">UmlDirectedRelationship()</text>
+    </g>
+    <!--class UmlRelationship-->
+    <g class="entity" data-qualified-name="UmlRelationship" data-source-line="74" id="ent0006">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="134.113" x="380.5" y="47"/>
+      <ellipse cx="395.5" cy="63" fill="#E6FFE6" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="390.5" y="68">A</text>
+      <text fill="#000" font-size="14" textLength="102.113" x="409.5" y="66.889">UmlRelationship</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="381.5" x2="513.613" y1="79" y2="79"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="391.5" cy="91.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="77" x="400.5" y="93.889">dot_modifier</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="391.5" cy="105.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="42.7" x="400.5" y="107.889">dot_str</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="391.5" cy="119.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="94.15" x="400.5" y="121.889">relatedElement</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="391.5" cy="133.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="84.788" x="400.5" y="135.889">source_arrow</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="391.5" cy="147.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="78.487" x="400.5" y="149.889">target_arrow</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="381.5" x2="513.613" y1="157" y2="157"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0005" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="447.5,165.139,441.5,183.139,453.5,183.139,447.5,165.139" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M447.5,183.139 C447.5,244.132 447.5,320.646 447.5,375.812" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0004" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="431.104,466.148,418.916,480.689,430.079,485.093,431.104,466.148" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M424.498,482.891 C406.406,528.74 381.262,584.756 342.5,641 C334.021,653.304 323.653,665.537 313.335,676.6" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="85.5,207.95,89.5,198.95,85.5,202.95,81.5,198.95,85.5,207.95" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M85.5,137.012 C85.5,155.22 85.5,175.251 85.5,202.95" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="182.728,421,173.728,417,177.728,421,173.728,425,182.728,421" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M165.242,421 C171.071,421 171.899,421 177.728,421" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="176.728" y="417.111">*</text>
+      <text fill="#000" font-size="13" x="166.242" y="417.111">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="206.229,676.621,202.212,667.629,202.511,673.278,196.862,673.578,206.229,676.621" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M165.138,628.705 C167.851,632.897 170.638,637.002 173.5,641 C182.673,653.816 190.596,662.563 202.511,673.278" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="200.229" y="672.732">*</text>
+      <text fill="#000" font-size="13" x="166.138" y="624.816">1</text>
+    </g>
+  </g>
+</svg>

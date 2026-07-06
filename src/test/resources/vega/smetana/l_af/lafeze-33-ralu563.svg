@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="82px" preserveAspectRatio="none" style="width:265px;height:82px;background:#FFFFFF;" version="1.1" viewBox="0 0 265 82" width="265px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Do Something-->
+    <g class="entity" data-qualified-name="Do Something" data-source-line="1" id="ent0001">
+      <rect fill="#C2F0FF" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.875" x="6" y="12"/>
+      <path d="M58.197,26.32 L49.234,30.289 A0.5,0.5 0 0 0 48.937,30.746 L48.937,38.783 A0.5,0.5 0 0 0 49.638,39.24 L58.433,35.361 L67.226,39.24 A0.5,0.5 0 0 0 67.929,38.783 L67.929,30.779 A0.5,0.5 0 0 0 67.63,30.322 L58.603,26.32 A0.5,0.5 0 0 0 58.197,26.32 M58.4,27.324 L66.929,31.103 L66.929,38.017 L58.634,34.357 A0.5,0.5 0 0 0 58.23,34.357 L49.937,38.017 L49.937,31.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="84.875" x="16" y="52.889">Do Something</text>
+    </g>
+    <!--entity SomeMotivation-->
+    <g class="entity" data-qualified-name="SomeMotivation" data-source-line="2" id="ent0002">
+      <rect fill="#CCF" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.363" x="129.5" y="22"/>
+      <text fill="#000" font-size="14" textLength="100.363" x="139.5" y="42.889">SomeMotivation</text>
+    </g>
+  </g>
+</svg>

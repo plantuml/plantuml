@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="288px" preserveAspectRatio="none" style="width:296px;height:288px;background:#FFFFFF;" version="1.1" viewBox="0 0 296 288" width="296px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity n-->
+    <g class="entity" data-qualified-name="n" data-source-line="7" id="ent0001">
+      <polygon fill="#F1F1F1" points="40,88,80,48,231.15,48,231.15,184,191.15,224,40,224,40,88" style="stroke:#181818;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:2;" x1="191.15" x2="231.15" y1="88" y2="48"/>
+      <line style="stroke:#181818;stroke-width:2;" x1="40" x2="191.15" y1="88" y2="88"/>
+      <line style="stroke:#181818;stroke-width:2;" x1="191.15" x2="191.15" y1="88" y2="224"/>
+      <text fill="#000" font-size="56" x="100" y="171.556">n</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="636px" preserveAspectRatio="none" style="width:607px;height:636px;background:#FFFFFF;" version="1.1" viewBox="0 0 607 636" width="607px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="State3" data-source-line="7" id="ent0001">
+      <path d="M18.5,279 L362.044,279 A12.5,12.5 0 0 1 374.544,291.5 L374.544,303 L6,303 L6,291.5 A12.5,12.5 0 0 1 18.5,279" fill="#F1F1F1"/>
+      <rect fill="none" height="264" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="368.544" x="6" y="279"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="374.544" y1="303" y2="303"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="170.059" y="294.889">State3</text>
+      <g class="start_entity" data-qualified-name="State3..start.State3" data-source-line="8" id="ent0011">
+        <ellipse cx="148" cy="324" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="State3.AccumulateEnoughDataLongStateName" data-source-line="8" id="ent0012">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="272.175" x="12" y="375"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="284.175" y1="399" y2="399"/>
+        <text fill="#000" font-size="14" textLength="252.175" x="22" y="390.889">AccumulateEnoughDataLongStateName</text>
+      </g>
+      <g class="entity" data-qualified-name="State3.ProcessData" data-source-line="10" id="ent0015">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100.15" x="98" y="478"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="98" x2="198.15" y1="502" y2="502"/>
+        <text fill="#000" font-size="14" textLength="80.15" x="108" y="493.889">ProcessData</text>
+      </g>
+      <g class="link" data-entity-1="ent0011" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+        <polygon fill="#181818" points="148,374.724,152,365.724,148,369.724,144,365.724,148,374.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M148,338.25 C148,347.979 148,357.384 148,369.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0012" data-entity-2="ent0012" data-link-type="dependency" id="lnk14">
+        <polygon fill="#181818" points="284.167,406.027,293.577,408.935,289.132,405.436,292.631,400.991,284.167,406.027" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M284.167,393.973 C295.176,395.284 302,397.293 302,400 C302,402.707 300.141,404.125 289.132,405.436" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="53.544" x="304" y="403.611">New Data</text>
+      </g>
+      <g class="link" data-entity-1="ent0012" data-entity-2="ent0015" data-link-type="dependency" id="lnk16">
+        <polygon fill="#181818" points="148,477.655,152,468.655,148,472.655,144,468.655,148,477.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M148,425.192 C148,441.066 148,456.751 148,472.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="72.313" x="150" y="455.111">Enough Data</text>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0002">
+      <ellipse cx="503.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="State1" data-source-line="2" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="473.5" y="73"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="473.5" x2="533.925" y1="97" y2="97"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="483.5" y="88.889">State1</text>
+    </g>
+    <g class="entity" data-qualified-name="State2" data-source-line="3" id="ent0005">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="431.5" y="176"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="431.5" x2="491.925" y1="200" y2="200"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="441.5" y="191.889">State2</text>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="4" id="ent0007">
+      <ellipse cx="429.5" cy="607" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="429.5" cy="607" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="503.5,72.724,507.5,63.724,503.5,67.724,499.5,63.724,503.5,72.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M503.5,36.25 C503.5,45.979 503.5,55.384 503.5,67.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="457.949,175.917,461.416,166.698,457.656,170.925,453.429,167.166,457.949,175.917" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M473.957,123.337 C469.31,128.644 465.167,134.605 462.5,141 C457.965,151.873 457.01,159.892 457.656,170.925" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="65.081" x="464.5" y="153.111">Succeeded</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="440.743,603.002,450.581,603.465,445.402,601.188,447.679,596.01,440.743,603.002" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M522.984,123.089 C526.488,128.665 529.621,134.793 531.5,141 C533.689,148.231 531.608,150.445 531.5,158 C529.055,329.163 601.547,392.221 520.5,543 C503.034,575.494 465.634,593.313 445.402,601.188" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="45.5" x="541.5" y="256.111">Aborted</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="338.461,278.847,348.01,276.438,342.394,275.76,343.072,270.144,338.461,278.847" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M431.444,216.827 C417.128,224.332 400.007,233.967 385.5,244 C369.868,254.811 357.952,263.554 342.394,275.76" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="65.081" x="387.5" y="256.111">Succeeded</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="435.705,595.775,443.275,589.475,437.918,591.292,436.101,585.935,435.705,595.775" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M463.325,226.192 C467.228,286.569 473.67,448.358 442.5,578 C441.03,584.116 440.503,586.052 437.918,591.292" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="45.5" x="469.5" y="414.611">Aborted</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="375.157,431.51,385.006,431.567,379.738,429.506,381.799,424.238,375.157,431.51" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M375.157,390.49 C386.307,395.368 393,402.205 393,411 C393,419.795 390.888,424.627 379.738,429.506" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="35.506" x="395" y="414.611">Failed</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="418.483,606.958,409.523,602.87,413.484,606.909,409.444,610.869,418.483,606.958" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M205.802,543.285 C211.845,556.334 219.878,568.31 230.5,578 C258.357,603.412 375.877,606.537 413.484,606.909" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="135.2" x="232.5" y="573.111">Succeeded / Save Result</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="418.173,597.759,413.729,588.97,414.299,594.598,408.671,595.168,418.173,597.759" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M351.242,543.15 C379.614,566.298 400.577,583.401 414.299,594.598" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="45.5" x="391.5" y="573.111">Aborted</text>
+    </g>
+  </g>
+</svg>

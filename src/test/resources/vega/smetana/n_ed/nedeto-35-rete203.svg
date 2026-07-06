@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="76px" preserveAspectRatio="none" style="width:608px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 608 76" width="608px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity c1-->
+    <g class="entity" data-qualified-name="c1" data-source-line="16" id="ent0001">
+      <rect fill="#335DA5" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="248.025" x="6" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="126.088" x="66.969" y="32.889">«backend container»</text>
+      <text fill="#000" font-size="14" textLength="228.025" x="16" y="46.889">Backend with space in stereotype name</text>
+    </g>
+    <!--entity c2-->
+    <g class="entity" data-qualified-name="c2" data-source-line="18" id="ent0002">
+      <rect fill="#335DA5" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="319.6" x="272" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="133.875" x="364.862" y="32.889">«backend_container»</text>
+      <text fill="#000" font-size="14" textLength="299.6" x="282" y="46.889">Backend_with_underscore_in_stereotype_name</text>
+    </g>
+  </g>
+</svg>

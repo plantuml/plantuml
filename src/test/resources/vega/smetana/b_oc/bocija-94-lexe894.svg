@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="230px" preserveAspectRatio="none" style="width:224px;height:230px;background:#FFFFFF;" version="1.1" viewBox="0 0 224 230" width="224px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity pack1-->
+    <g class="entity" data-qualified-name="pack1" data-source-line="7" id="ent0001">
+      <path d="M8.5,12 L181.625,12 A3.75,3.75 0 0 1 184.125,14.5 L191.125,78 L205.625,78 A2.5,2.5 0 0 1 208.125,80.5 L208.125,92.5 A2.5,2.5 0 0 1 205.625,95 L8.5,95 A2.5,2.5 0 0 1 6,92.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:7,7;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:7,7;" x1="6" x2="191.125" y1="78" y2="78"/>
+      <text fill="#008000" font-size="60" font-weight="700" textLength="160.125" x="16" y="61.667">pack1</text>
+    </g>
+    <!--entity pack3-->
+    <g class="entity" data-qualified-name="pack3" data-source-line="8" id="ent0002">
+      <path d="M8.5,131 L181.625,131 A3.75,3.75 0 0 1 184.125,133.5 L191.125,197 L205.625,197 A2.5,2.5 0 0 1 208.125,199.5 L208.125,211.5 A2.5,2.5 0 0 1 205.625,214 L8.5,214 A2.5,2.5 0 0 1 6,211.5 L6,133.5 A2.5,2.5 0 0 1 8.5,131" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:7,7;"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:7,7;" x1="6" x2="191.125" y1="197" y2="197"/>
+      <text fill="#008000" font-size="60" font-weight="700" textLength="160.125" x="16" y="180.667">pack3</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="107,130.979,111,121.979,107,125.979,103,121.979,107,130.979" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107,95.093 C107,106.709 107,114.367 107,125.979" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

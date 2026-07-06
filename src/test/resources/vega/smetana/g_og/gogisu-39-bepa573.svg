@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="88px" preserveAspectRatio="none" style="width:149px;height:88px;background:#FFFFFF;" version="1.1" viewBox="0 0 149 88" width="149px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class EFG-->
+    <g class="entity" data-qualified-name="EFG" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.787" x="6" y="18"/>
+      <ellipse cx="21" cy="34" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="39">E</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="35" y="37.889">EFG</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="65.788" y1="50" y2="50"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="65.788" y1="58" y2="58"/>
+    </g>
+    <!--entity ABC-->
+    <g class="entity" data-qualified-name="ABC" data-source-line="2" id="ent0002">
+      <ellipse cx="109.65" cy="28" fill="#F1F1F1" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="97.65" x2="121.65" y1="42" y2="42"/>
+      <text fill="#000" font-size="14" textLength="48.3" x="85.5" y="54.889">details1</text>
+      <text fill="#000" font-size="14" textLength="48.3" x="85.5" y="68.889">details2</text>
+    </g>
+  </g>
+</svg>

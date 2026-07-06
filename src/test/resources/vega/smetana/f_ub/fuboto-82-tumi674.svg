@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="180px" preserveAspectRatio="none" style="width:142px;height:180px;background:#FFC0CB;" version="1.1" viewBox="0 0 142 180" width="142px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC0CB" height="180" style="stroke:none;" width="142" x="0" y="0"/>
+    <!--cluster ff-->
+    <g class="cluster" data-qualified-name="ff" data-source-line="7" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,126,4,126,118,116,128,14,128,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="116" x2="126" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="116" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="116" x2="116" y1="14" y2="128"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="7.7" x="62.15" y="27.889">ff</text>
+    </g>
+    <!--entity nn-->
+    <g class="entity" data-qualified-name="ff.nn" data-source-line="8" id="ent0002">
+      <polygon fill="#F1F1F1" points="22.5,44,32.5,34,117.012,34,117.012,110,107.012,120,22.5,120,22.5,44" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="107.012" x2="117.012" y1="44" y2="34"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22.5" x2="107.012" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="107.012" x2="107.012" y1="44" y2="120"/>
+      <text fill="#000" font-size="14" textLength="54.512" x="37.5" y="64.889">node nn2</text>
+      <image height="111" width="74" x="37.5" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjExMSIgd2lkdGg9Ijc0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PGRlZnMvPjxnIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciPjxnPjxyZWN0IGZpbGw9IiNGRkZGRkYiIHN0eWxlPSJ3aWR0aDo3NHB4O2hlaWdodDoxMTFweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB3aWR0aD0iNzQiIGhlaWdodD0iMTExIi8+IDx0aXRsZT5hPC90aXRsZT48cmVjdCB4PSIxNy4zOTQiIHk9IjM5IiB3aWR0aD0iOCIgaGVpZ2h0PSIzMiIgZmlsbD0iIzAwMCIgZmlsbC1vcGFjaXR5PSIwIi8+PGxpbmUgeDE9IjIwLjg5NCIgeTE9IjM5IiB4Mj0iMjAuODk0IiB5Mj0iNzEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1kYXNoYXJyYXk6NSw1OyIvPjwvZz48Zz48dGl0bGU+YjwvdGl0bGU+PHJlY3QgeD0iNDkuMTgxIiB5PSIzOSIgd2lkdGg9IjgiIGhlaWdodD0iMzIiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMCIvPjxsaW5lIHgxPSI1Mi42ODEiIHkxPSIzOSIgeDI9IjUyLjY4MSIgeTI9IjcxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTtzdHJva2UtZGFzaGFycmF5OjUsNTsiLz48L2c+PHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iMjEuNzg4IiBoZWlnaHQ9IjI4IiBmaWxsPSIjRTJFMkYwIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHJ4PSIyLjUiIHJ5PSIyLjUiLz48dGV4dCB4PSIxNyIgeT0iMjcuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0Ij5hPC90ZXh0PjxyZWN0IHg9IjQxLjc4OCIgeT0iMTAiIHdpZHRoPSIyMS43ODgiIGhlaWdodD0iMjgiIGZpbGw9IiNFMkUyRjAiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgcng9IjIuNSIgcnk9IjIuNSIvPjx0ZXh0IHg9IjQ4Ljc4OCIgeT0iMjcuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0Ij5iPC90ZXh0PjxyZWN0IHg9IjEwIiB5PSI3MSIgd2lkdGg9IjIxLjc4OCIgaGVpZ2h0PSIyOCIgZmlsbD0iI0UyRTJGMCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiByeD0iMi41IiByeT0iMi41Ii8+PHRleHQgeD0iMTciIHk9Ijg4Ljg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCI+YTwvdGV4dD48cmVjdCB4PSI0MS43ODgiIHk9IjcxIiB3aWR0aD0iMjEuNzg4IiBoZWlnaHQ9IjI4IiBmaWxsPSIjRTJFMkYwIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHJ4PSIyLjUiIHJ5PSIyLjUiLz48dGV4dCB4PSI0OC43ODgiIHk9Ijg4Ljg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCI+YjwvdGV4dD48cG9seWdvbiBwb2ludHM9IjQwLjY4MSw0OSw1MC42ODEsNTMsNDAuNjgxLDU3LDQ0LjY4MSw1MyIgZmlsbD0iIzE4MTgxOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxO3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48bGluZSB4MT0iMjAuODk0IiB5MT0iNTMiIHgyPSI0Ni42ODEiIHkyPSI1MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjwvZz48L3N2Zz4=" y="68"/>
+    </g>
+  </g>
+</svg>

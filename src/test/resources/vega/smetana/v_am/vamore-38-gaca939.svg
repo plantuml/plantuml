@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="231px" preserveAspectRatio="none" style="width:423px;height:231px;background:#FFFFFF;" version="1.1" viewBox="0 0 423 231" width="423px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="NewValuePreview" data-source-line="6" id="ent0001">
+      <path d="M108.72,12 L246.72,12 A12.5,12.5 0 0 1 259.22,24.5 L259.22,36 L96.22,36 L96.22,24.5 A12.5,12.5 0 0 1 108.72,12" fill="#F1F1F1"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="163" x="96.22" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="96.22" x2="259.22" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="113.838" x="120.802" y="27.889">NewValuePreview</text>
+      <g class="entity" data-qualified-name="NewValuePreview.State1" data-source-line="7" id="ent0008">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="102.22" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="102.22" x2="162.645" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="40.425" x="112.22" y="62.889">State1</text>
+      </g>
+      <g class="entity" data-qualified-name="NewValuePreview.State2" data-source-line="7" id="ent0009">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="180.22" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="180.22" x2="240.645" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="40.425" x="190.22" y="62.889">State2</text>
+      </g>
+      <g class="link" data-entity-1="ent0008" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+        <polygon fill="#181818" points="179.949,72,170.949,68,174.949,72,170.949,76,179.949,72" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M162.384,72 C168.239,72 169.094,72 174.949,72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0002">
+      <ellipse cx="408.72" cy="60" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="NewValueSelection" data-source-line="1" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="141.625" x="175.72" y="165"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="175.72" x2="317.345" y1="189" y2="189"/>
+      <text fill="#000" font-size="14" textLength="121.625" x="185.72" y="180.889">NewValueSelection</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="317.835,178.986,327.582,180.398,322.648,177.631,325.414,172.697,317.835,178.986" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M407.833,74.208 C405.819,92.094 399.329,127.1 378.72,147 C362.199,162.953 344.448,171.494 322.648,177.631" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="259.262,95.187,264.547,103.498,263.427,97.953,268.972,96.834,259.262,95.187" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M282.773,164.924 C293.531,154.664 300.791,142.249 293.72,130 C285.524,115.8 277.209,107.106 263.427,97.953" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="74.588" x="298.72" y="142.111">EvNewValue</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="175.493,185.016,166.865,180.266,170.511,184.592,166.186,188.238,175.493,185.016" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M96.057,79.249 C47.452,92.629 0,114.696 26.72,147 C45.432,169.622 113.629,179.745 170.511,184.592" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="125.938" x="28.72" y="142.111">EvNewValueRejected</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="190.594,164.747,185.989,156.041,186.663,161.658,181.046,162.331,190.594,164.747" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M167.187,112.285 C166.927,124.276 168.761,136.624 174.72,147 C178.685,153.902 180.337,156.687 186.663,161.658" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="111.475" x="176.72" y="142.111">EvNewValueSaved</text>
+    </g>
+  </g>
+</svg>

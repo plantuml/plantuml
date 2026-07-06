@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="117px" preserveAspectRatio="none" style="width:239px;height:117px;background:#FFFFFF;" version="1.1" viewBox="0 0 239 117" width="239px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster c1-->
+    <g class="cluster" data-qualified-name="c1" data-source-line="37" id="ent0001">
+      <rect fill="none" height="89" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;" width="217" x="14" y="4"/>
+      <text fill="#008000" font-size="6" font-style="italic" textLength="31.688" x="106.656" y="10.667">«boundary»</text>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="47.513" x="98.744" y="26.889">Sample</text>
+    </g>
+    <!--entity sub_sys-->
+    <g class="entity" data-qualified-name="c1.sub_sys" data-source-line="38" id="ent0002">
+      <rect fill="none" height="44" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;stroke-dasharray:7,7;" width="86.85" x="135.5" y="40"/>
+      <text fill="#008000" font-size="6" font-style="italic" textLength="31.688" x="163.081" y="54.667">«boundary»</text>
+      <text fill="#008000" font-size="14" textLength="66.85" x="145.5" y="70.889">sub system</text>
+    </g>
+    <!--entity web_app-->
+    <g class="entity" data-qualified-name="c1.web_app" data-source-line="39" id="ent0003">
+      <rect fill="#F1F1F1" height="46" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.675" x="22.5" y="39"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="72.675" x="33.5" y="58.333">«component»</text>
+      <text fill="#000" font-size="14" textLength="69.213" x="35.231" y="71.889">component</text>
+    </g>
+  </g>
+</svg>

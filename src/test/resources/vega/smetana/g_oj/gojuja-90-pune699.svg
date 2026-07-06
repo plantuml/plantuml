@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="308px" preserveAspectRatio="none" style="width:125px;height:308px;background:#FFFFFF;" version="1.1" viewBox="0 0 125 308" width="125px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="A" data-source-line="5" id="ent0001">
+      <path d="M26.5,47 L71.5,47 A12.5,12.5 0 0 1 84,59.5 L84,66 L14,66 L14,59.5 A12.5,12.5 0 0 1 26.5,47" fill="#F1F1F1"/>
+      <rect fill="none" height="57" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="70" x="14" y="47"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="84" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" x="44.319" y="57.889">A</text>
+    </g>
+    <g class="entity" data-qualified-name="Configuring" data-source-line="9" id="ent0002">
+      <path d="M32.5,132 L99.163,132 A12.5,12.5 0 0 1 111.663,144.5 L111.663,156 L20,156 L20,144.5 A12.5,12.5 0 0 1 32.5,132" fill="#F1F1F1"/>
+      <rect fill="none" height="160" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="91.663" x="20" y="132"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20" x2="111.663" y1="156" y2="156"/>
+      <text fill="#000" font-size="14" textLength="71.663" x="30" y="147.889">Configuring</text>
+      <g class="start_entity" data-qualified-name="Configuring..start.Configuring" data-source-line="10" id="ent0007">
+        <ellipse cx="51" cy="177" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="Configuring.Z" data-source-line="10" id="ent0008">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="26" y="227"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="26" x2="76" y1="251" y2="251"/>
+        <text fill="#000" font-size="14" x="46.713" y="242.889">Z</text>
+      </g>
+      <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+        <polygon fill="#181818" points="51,226.764,55,217.764,51,221.764,47,217.764,51,226.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M51,191.094 C51,200.61 51,209.662 51,221.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="3" id="ent0003">
+      <ellipse cx="30" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="start_entity" data-qualified-name="A..start.A" data-source-line="6" id="ent0005">
+      <ellipse cx="66" cy="82" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="30,46.94,34,37.94,30,41.94,26,37.94,30,46.94" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M30,36.183 C30,38.751 30,41.622 30,44.646 C30,45.402 30,41.168 30,41.94" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="66,131.761,70,122.761,66,126.761,62,122.761,66,131.761" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M66,96.182 C66,104.855 66,112.731 66,126.761" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

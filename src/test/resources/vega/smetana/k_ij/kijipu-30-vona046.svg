@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="109px" preserveAspectRatio="none" style="width:124px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 124 109" width="124px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster rect2-->
+    <g class="cluster" data-qualified-name="rect2" data-source-line="15" id="ent0002">
+      <rect fill="none" height="81" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="56" x="52" y="4"/>
+      <text fill="#F00" font-size="14" font-weight="700" x="55" y="16.889">b</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="15.575" x="55" y="30.889">b b</text>
+    </g>
+    <!--entity rect1-->
+    <g class="entity" data-qualified-name="rect1" data-source-line="14" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="35.575" x="6" y="36"/>
+      <text fill="#008000" font-size="14" x="16" y="56.889">a</text>
+      <text fill="#008000" font-size="14" textLength="15.575" x="16" y="70.889">a a</text>
+    </g>
+    <!--entity rec-->
+    <g class="entity" data-qualified-name="rect2.rec" data-source-line="16" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.425" x="60.5" y="43"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="70.5" y="63.889">rec</text>
+    </g>
+  </g>
+</svg>

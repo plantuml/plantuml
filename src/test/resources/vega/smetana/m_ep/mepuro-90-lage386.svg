@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="455px" preserveAspectRatio="none" style="width:490px;height:455px;background:#FFFFFF;" version="1.1" viewBox="0 0 490 455" width="490px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="242.725" x="120.138" y="20.889">Test of filling with "fill" &amp; outline with "stroke"</text>
+    </g>
+    <!--entity <$TEST_1>-->
+    <g class="entity" data-qualified-name="..TEST_1." data-source-line="27" id="ent0001">
+      <rect fill="#F1F1F1" height="178.308" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="224.615" x="6" y="47"/>
+      <path d="M26.769,136.154 C59.077,60.769 86,60.769 118.308,136.154 C150.615,211.538 177.538,211.538 209.846,136.154" fill="#98FB98" style="stroke:#00F;stroke-width:0.5;"/>
+    </g>
+    <!--entity <$TEST_2>-->
+    <g class="entity" data-qualified-name="..TEST_2." data-source-line="28" id="ent0002">
+      <rect fill="#F1F1F1" height="178.308" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="224.615" x="249" y="47"/>
+      <path d="M269.769,136.154 C302.077,60.769 329,60.769 361.308,136.154 C393.615,211.538 420.538,211.538 452.846,136.154" fill="#98FB98" style="stroke:#00F;stroke-width:0.5;"/>
+    </g>
+    <!--entity <$TEST_3>-->
+    <g class="entity" data-qualified-name="..TEST_3." data-source-line="29" id="ent0003">
+      <rect fill="#F1F1F1" height="178.308" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="224.615" x="6" y="261"/>
+      <path d="M26.769,350.154 C118.308,274.769 118.308,274.769 209.846,350.154" fill="#98FB98" style="stroke:#000;stroke-width:0.5;"/>
+    </g>
+    <!--entity <$TEST_4>-->
+    <g class="entity" data-qualified-name="..TEST_4." data-source-line="30" id="ent0004">
+      <rect fill="#F1F1F1" height="178.308" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="224.615" x="249" y="261"/>
+      <path d="M269.769,350.154 C315.538,274.769 315.538,274.769 361.308,350.154 C407.077,425.538 407.077,425.538 452.846,350.154" fill="#98FB98" style="stroke:#000;stroke-width:0.5;"/>
+    </g>
+  </g>
+</svg>

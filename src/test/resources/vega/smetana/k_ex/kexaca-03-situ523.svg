@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="181px" preserveAspectRatio="none" style="width:219px;height:181px;background:#FFFFFF;" version="1.1" viewBox="0 0 219 181" width="219px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Class01-->
+    <g class="entity" data-qualified-name="Class01" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.663" x="6" y="12"/>
+      <ellipse cx="21" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="35">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="34.05" x="43.306" y="26.333">«Foo»</text>
+      <text fill="#000" font-size="14" textLength="50.663" x="35" y="39.889">Class01</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="87.663" y1="48" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="87.663" y1="56" y2="56"/>
+    </g>
+    <!--class Class02-->
+    <g class="entity" data-qualified-name="Class02" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.663" x="6" y="117"/>
+      <ellipse cx="21" cy="133" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="138">C</text>
+      <text fill="#000" font-size="14" textLength="50.663" x="35" y="136.889">Class02</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="87.663" y1="149" y2="149"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="87.663" y1="157" y2="157"/>
+    </g>
+    <!--class Class03-->
+    <g class="entity" data-qualified-name="Class03" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.663" x="107" y="12"/>
+      <ellipse cx="122" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="117" y="35">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="34.05" x="144.306" y="26.333">«Foo»</text>
+      <text fill="#000" font-size="14" textLength="50.663" x="136" y="39.889">Class03</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108" x2="188.663" y1="48" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108" x2="188.663" y1="56" y2="56"/>
+    </g>
+    <!--class Class04-->
+    <g class="entity" data-qualified-name="Class04" data-source-line="6" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.663" x="107" y="117"/>
+      <ellipse cx="122" cy="133" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="117" y="138">C</text>
+      <text fill="#000" font-size="14" textLength="50.663" x="136" y="136.889">Class04</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108" x2="188.663" y1="149" y2="149"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108" x2="188.663" y1="157" y2="157"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="47.5,64.226,43.5,70.226,47.5,76.226,51.5,70.226,47.5,64.226" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M47.5,76.226 C47.5,92.352 47.5,101.112 47.5,116.823" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="48.425" x="49.5" y="94.111">contains</text>
+      <text fill="#000" font-size="13" textLength="31.769" x="15.5" y="112.934">many</text>
+      <text fill="#000" font-size="13" x="39.5" y="75.337">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="aggregation" id="lnk6">
+      <polygon fill="none" points="148.5,64.226,144.5,70.226,148.5,76.226,152.5,70.226,148.5,64.226" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M148.5,76.226 C148.5,92.352 148.5,101.112 148.5,116.823" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="61.425" x="150.5" y="94.111">agregation</text>
+    </g>
+  </g>
+</svg>

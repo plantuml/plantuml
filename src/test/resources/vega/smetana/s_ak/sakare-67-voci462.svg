@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="180px" preserveAspectRatio="none" style="width:170px;height:180px;background:#FFFFFF;" version="1.1" viewBox="0 0 170 180" width="170px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <polygon fill="#F1F1F1" points="17.5,29,27.5,19,65.288,19,65.288,53,55.288,63,17.5,63,17.5,29" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.288" x2="65.288" y1="29" y2="19"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17.5" x2="55.288" y1="29" y2="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.288" x2="55.288" y1="29" y2="63"/>
+      <text fill="#000" font-size="14" x="32.5" y="49.889">a</text>
+    </g>
+    <!--entity b\na b c-->
+    <g class="entity" data-qualified-name="b.na b c" data-source-line="2" id="ent0002">
+      <polygon fill="#F1F1F1" points="84,22,94,12,146.575,12,146.575,60,136.575,70,84,70,84,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="136.575" x2="146.575" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="84" x2="136.575" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="136.575" x2="136.575" y1="22" y2="70"/>
+      <text fill="#000" font-size="14" x="99" y="42.889">b</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="99" y="56.889">a b c</text>
+    </g>
+    <!--entity c\na b c-->
+    <g class="entity" data-qualified-name="c.na b c" data-source-line="10" id="ent0003">
+      <polygon fill="#F1F1F1" points="10,116,20,106,72.575,106,72.575,154,62.575,164,10,164,10,116" style="stroke:#00F;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:0.5;" x1="62.575" x2="72.575" y1="116" y2="106"/>
+      <line style="stroke:#00F;stroke-width:0.5;" x1="10" x2="62.575" y1="116" y2="116"/>
+      <line style="stroke:#00F;stroke-width:0.5;" x1="62.575" x2="62.575" y1="116" y2="164"/>
+      <text fill="#008000" font-size="14" x="40.575" y="136.889">c</text>
+      <text fill="#008000" font-size="14" textLength="22.575" x="25" y="150.889">a b c</text>
+    </g>
+    <!--entity d\na b c-->
+    <g class="entity" data-qualified-name="d.na b c" data-source-line="17" id="ent0004">
+      <polygon fill="#F1F1F1" points="91,116,101,106,153.575,106,153.575,154,143.575,164,91,164,91,116" style="stroke:#F00;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#F00;stroke-width:0.5;" x1="143.575" x2="153.575" y1="116" y2="106"/>
+      <line style="stroke:#F00;stroke-width:0.5;" x1="91" x2="143.575" y1="116" y2="116"/>
+      <line style="stroke:#F00;stroke-width:0.5;" x1="143.575" x2="143.575" y1="116" y2="164"/>
+      <text fill="#F00" font-size="14" x="120.788" y="136.889">d</text>
+      <text fill="#F00" font-size="14" textLength="22.575" x="106" y="150.889">a b c</text>
+    </g>
+  </g>
+</svg>

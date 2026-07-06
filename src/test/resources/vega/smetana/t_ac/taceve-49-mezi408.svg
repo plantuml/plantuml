@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:259px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 259 160" width="259px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g1e9uepaia7nhk0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEFECE"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+    <linearGradient id="g1e9uepaia7nhk1" x1="0%" x2="100%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF0"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+    <linearGradient id="g1e9uepaia7nhk2" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF0"/>
+      <stop offset="100%" stop-color="#00F"/>
+    </linearGradient>
+    <linearGradient id="g1e9uepaia7nhk3" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF0"/>
+      <stop offset="100%" stop-color="#00F"/>
+    </linearGradient>
+    <linearGradient id="g1e9uepaia7nhk4" x1="0%" x2="100%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#FF0"/>
+      <stop offset="100%" stop-color="#00F"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Red-->
+    <g class="entity" data-qualified-name="Red" data-source-line="3" id="ent0001">
+      <rect fill="url(#g1e9uepaia7nhk0)" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.725" x="10.5" y="12"/>
+      <rect fill="url(#g1e9uepaia7nhk0)" height="32" rx="2.5" ry="2.5" style="stroke:url(#g1e9uepaia7nhk0);stroke-width:0.5;" width="57.725" x="10.5" y="12"/>
+      <rect fill="url(#g1e9uepaia7nhk0)" height="2.5" style="stroke:url(#g1e9uepaia7nhk0);stroke-width:0.5;" width="57.725" x="10.5" y="41.5"/>
+      <rect fill="none" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.725" x="10.5" y="12"/>
+      <ellipse cx="25.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="20.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="25.725" x="39.5" y="31.889">Red</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="11.5" x2="67.225" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="11.5" x2="67.225" y1="52" y2="52"/>
+    </g>
+    <!--class Blue-->
+    <g class="entity" data-qualified-name="Blue" data-source-line="4" id="ent0002">
+      <rect fill="#00F" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.088" x="86.5" y="12"/>
+      <ellipse cx="101.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="96.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="28.088" x="115.5" y="31.889">Blue</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87.5" x2="145.588" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87.5" x2="145.588" y1="52" y2="52"/>
+    </g>
+    <!--class Test1-->
+    <g class="entity" data-qualified-name="Test1" data-source-line="6" id="ent0003">
+      <rect fill="url(#g1e9uepaia7nhk1)" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="165" y="12"/>
+      <ellipse cx="180" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="175" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="35" x="194" y="31.889">Test1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="166" x2="231" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="166" x2="231" y1="52" y2="52"/>
+    </g>
+    <!--class Test2-->
+    <g class="entity" data-qualified-name="Test2" data-source-line="7" id="ent0004">
+      <rect fill="url(#g1e9uepaia7nhk2)" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="6" y="96"/>
+      <ellipse cx="21" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="35" x="35" y="115.889">Test2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="72" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="72" y1="136" y2="136"/>
+    </g>
+    <!--class Test3-->
+    <g class="entity" data-qualified-name="Test3" data-source-line="8" id="ent0005">
+      <rect fill="url(#g1e9uepaia7nhk3)" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="91" y="96"/>
+      <ellipse cx="106" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="101" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="35" x="120" y="115.889">Test3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="92" x2="157" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="92" x2="157" y1="136" y2="136"/>
+    </g>
+    <!--class Test4-->
+    <g class="entity" data-qualified-name="Test4" data-source-line="9" id="ent0006">
+      <rect fill="url(#g1e9uepaia7nhk4)" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="176" y="96"/>
+      <ellipse cx="191" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="186" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="35" x="205" y="115.889">Test4</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="177" x2="242" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="177" x2="242" y1="136" y2="136"/>
+    </g>
+  </g>
+</svg>

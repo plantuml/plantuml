@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="227px" preserveAspectRatio="none" style="width:370px;height:227px;background:#FFFFFF;" version="1.1" viewBox="0 0 370 227" width="370px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="13">
+      <text fill="#888" font-size="10" textLength="47.313" x="0" y="7.778">this is a long</text>
+      <text fill="#888" font-size="10" font-weight="700" textLength="31.125" x="16.188" y="17.778">header</text>
+    </g>
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="55.213" x="154.144" y="41.889">Mon Titre</text>
+    </g>
+    <!--class List-->
+    <g class="entity" data-qualified-name="List" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.787" x="31.5" y="68"/>
+      <ellipse cx="46.5" cy="84" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="41.5" y="89">C</text>
+      <text fill="#000" font-size="14" textLength="21.787" x="60.5" y="87.889">List</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="32.5" x2="84.288" y1="100" y2="100"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="32.5" x2="84.288" y1="108" y2="108"/>
+    </g>
+    <!--class AbstractList-->
+    <g class="entity" data-qualified-name="AbstractList" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="105.063" x="6" y="152"/>
+      <ellipse cx="21" cy="168" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="173">C</text>
+      <text fill="#000" font-size="14" textLength="73.063" x="35" y="171.889">AbstractList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="110.063" y1="184" y2="184"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="110.063" y1="192" y2="192"/>
+    </g>
+    <!--class Collection-->
+    <g class="entity" data-qualified-name="Collection" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.6" x="154.5" y="68"/>
+      <ellipse cx="169.5" cy="84" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="164.5" y="89">C</text>
+      <text fill="#000" font-size="14" textLength="61.6" x="183.5" y="87.889">Collection</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="155.5" x2="247.1" y1="100" y2="100"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="155.5" x2="247.1" y1="108" y2="108"/>
+    </g>
+    <!--class AbstractCollection-->
+    <g class="entity" data-qualified-name="AbstractCollection" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="144.875" x="129" y="152"/>
+      <ellipse cx="144" cy="168" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="139" y="173">C</text>
+      <text fill="#000" font-size="14" textLength="112.875" x="158" y="171.889">AbstractCollection</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="130" x2="272.875" y1="184" y2="184"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="130" x2="272.875" y1="192" y2="192"/>
+    </g>
+    <!--class TimeUnit-->
+    <g class="entity" data-qualified-name="TimeUnit" data-source-line="7" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.088" x="266.5" y="68"/>
+      <ellipse cx="281.5" cy="84" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="276.5" y="89">E</text>
+      <text fill="#000" font-size="14" textLength="56.088" x="295.5" y="87.889">TimeUnit</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="267.5" x2="353.588" y1="100" y2="100"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="267.5" x2="353.588" y1="108" y2="108"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="58.5,116.279,52.5,134.279,64.5,134.279,58.5,116.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M58.5,134.279 C58.5,145.453 58.5,140.802 58.5,151.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="extension" id="lnk6">
+      <polygon fill="none" points="201.5,116.279,195.5,134.279,207.5,134.279,201.5,116.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M201.5,134.279 C201.5,145.453 201.5,140.802 201.5,151.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="footer" data-source-line="9">
+      <text fill="#888" font-size="10" textLength="53.875" x="0" y="217.778">this is a footer</text>
+    </g>
+  </g>
+</svg>

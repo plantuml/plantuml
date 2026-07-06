@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="HCL" height="67px" preserveAspectRatio="none" style="width:498px;height:67px;background:#FFFFFF;" version="1.1" viewBox="0 0 498 67" width="498px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="206.025" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="92.575" x="15" y="22.889">dummy_org_id</text>
+    <text fill="#000" font-size="14" textLength="93.45" x="117.575" y="22.889">640841790890</text>
+    <line style="stroke:#000;stroke-width:1;" x1="112.575" x2="112.575" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="216.025" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="84.788" x="15" y="40.889">creation_date</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="117.575" y="40.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="112.575" x2="112.575" y1="28" y2="46"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="206.025" x="10" y="10"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="96.038" x="253" y="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="76.038" x="258" y="40.889">formatdate()</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="344.038" y="40.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="339.038" x2="339.038" y1="28" y2="46"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="96.038" x="253" y="28"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="100.3" x="386" y="19"/>
+    <text fill="#000" font-size="14" textLength="90.3" x="391" y="31.889">YYYY-MM-DD</text>
+    <line style="stroke:#000;stroke-width:1;" x1="386" x2="486.3" y1="37" y2="37"/>
+    <text fill="#000" font-size="14" textLength="64.488" x="391" y="49.889">timestamp</text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="100.3" x="386" y="19"/>
+    <path d="M336.5,37 L349.5,37 C358.925,37 368.931,37 378.658,37" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M378.658,40.09 L380.976,37 L378.658,33.91 L386.383,37 L378.658,40.09" fill="#000"/>
+    <ellipse cx="336.5" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M203.5,37 L216.5,37 C225.936,37 235.968,37 245.692,37" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M245.692,40.086 L248.007,37 L245.692,33.914 L253.407,37 L245.692,40.086" fill="#000"/>
+    <ellipse cx="203.5" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

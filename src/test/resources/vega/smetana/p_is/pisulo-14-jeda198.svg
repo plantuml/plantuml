@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="334px" preserveAspectRatio="none" style="width:171px;height:334px;background:#FFFFFF;" version="1.1" viewBox="0 0 171 334" width="171px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="116" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="77.375" x="77.5" y="73"/>
+    <text fill="#000" font-size="12" textLength="57.375" x="87.5" y="92.333">check input</text>
+    <g class="entity" data-qualified-name=".4" id="ent0005">
+      <polygon fill="#F1F1F1" points="116,142,128,154,116,166,104,154,116,142" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="101.975" x="6" y="217"/>
+    <text fill="#000" font-size="12" textLength="81.975" x="16" y="236.333">turn on verbosity</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="89.975" x="65" y="286"/>
+    <text fill="#000" font-size="12" textLength="69.975" x="75" y="305.333">run command</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="116,72.81,120,63.81,116,67.81,112,63.81,116,72.81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M116,36.263 C116,46.456 116,56.552 116,67.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="116,141.641,120,132.641,116,136.641,112,132.641,116,141.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M116,105.251 C116,116.467 116,126.468 116,136.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="70.95" x="45" y="138.197">input is verbose</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="68.692,216.741,77.341,212.03,71.733,212.772,70.991,207.164,68.692,216.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.547,166.032 C97.35,179.339 83.196,197.812 71.733,212.772" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="18.975" x="96" y="194.556">Yes</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="98.021,285.857,95.575,276.317,94.919,281.935,89.3,281.28,98.021,285.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M69.027,249.203 C77.7,260.168 86.256,270.984 94.919,281.935" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="112.785,285.867,118.228,277.659,113.618,280.937,110.339,276.327,112.785,285.867" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M117.918,166.256 C118.737,171.613 119.596,178.118 120,184 C122.513,220.61 117.381,258.65 113.618,280.937" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

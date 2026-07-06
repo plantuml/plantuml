@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="62px" preserveAspectRatio="none" style="width:126px;height:62px;background:#FFFFFF;" version="1.1" viewBox="0 0 126 62" width="126px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity XXX-->
+    <g class="entity" data-qualified-name="XXX" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.087" x="62" y="12"/>
+      <text fill="#000" font-size="14" textLength="28.087" x="72" y="32.889">XXX</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="6" id="ent0003">
+      <path d="M6,17 L6,40 A0,0 0 0 0 6,40 L44.388,40 A0,0 0 0 0 44.388,40 L44.388,35 L61.755,29 L44.388,27 L44.388,27 L34.388,17 L6,17 A0,0 0 0 0 6,17" fill="#000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M34.388,17 L34.388,27 L44.388,27 L34.388,17" fill="#000" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="17.388" x="12" y="32.111">bla</text>
+    </g>
+  </g>
+</svg>

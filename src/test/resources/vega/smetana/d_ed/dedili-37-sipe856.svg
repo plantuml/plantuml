@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="111px" preserveAspectRatio="none" style="width:654px;height:111px;background:#FFFFFF;" version="1.1" viewBox="0 0 654 111" width="654px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity web-->
+    <g class="entity" data-qualified-name="web" data-source-line="8" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,34,20,24,120,24,120,58,110,68,10,68,10,34" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="120" y1="34" y2="24"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="110" y1="34" y2="34"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="110" y1="34" y2="68"/>
+      <text fill="#000" font-size="14" textLength="70" x="25" y="54.889">Web Server</text>
+    </g>
+    <!--entity app-->
+    <g class="entity" data-qualified-name="app" data-source-line="9" id="ent0002">
+      <polygon fill="#F1F1F1" points="269,34,279,24,375.15,24,375.15,58,365.15,68,269,68,269,34" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="365.15" x2="375.15" y1="34" y2="24"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="269" x2="365.15" y1="34" y2="34"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="365.15" x2="365.15" y1="34" y2="68"/>
+      <text fill="#000" font-size="14" textLength="66.15" x="284" y="54.889">App Server</text>
+    </g>
+    <!--entity db-->
+    <g class="entity" data-qualified-name="db" data-source-line="10" id="ent0003">
+      <path d="M542,34.5 C542,24.5 590.106,24.5 590.106,24.5 C590.106,24.5 638.213,24.5 638.213,34.5 L638.213,57.5 C638.213,67.5 590.106,67.5 590.106,67.5 C590.106,67.5 542,67.5 542,57.5 L542,34.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M542,34.5 C542,44.5 590.106,44.5 590.106,44.5 C590.106,44.5 638.213,44.5 638.213,34.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="76.213" x="552" y="59.389">PostgreSQL</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="268.718,46,259.718,42,263.718,46,259.718,50,268.718,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M120.133,46 C164.085,46 220.259,46 263.718,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="49.806" x="131" y="12.111">forwards</text>
+      <text fill="#F00" font-size="13" x="180.806" y="12.111"> </text>
+      <text fill="#F00" font-size="13" textLength="78" x="180.806" y="12.111">authenticated</text>
+      <text fill="#F00" font-size="13" textLength="49.806" x="136.363" y="25.111">requests</text>
+      <text fill="#F00" font-size="13" x="186.169" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="23.156" x="186.169" y="25.111">with</text>
+      <text fill="#F00" font-size="13" x="209.325" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="44.119" x="209.325" y="25.111">session</text>
+      <text fill="#F00" font-size="13" textLength="38.269" x="131.366" y="38.111">tokens</text>
+      <text fill="#F00" font-size="13" x="169.634" y="38.111"> </text>
+      <text fill="#F00" font-size="13" textLength="21.694" x="169.634" y="38.111">and</text>
+      <text fill="#F00" font-size="13" x="191.328" y="38.111"> </text>
+      <text fill="#F00" font-size="13" textLength="25.269" x="191.328" y="38.111">user</text>
+      <text fill="#F00" font-size="13" x="216.597" y="38.111"> </text>
+      <text fill="#F00" font-size="13" textLength="41.844" x="216.597" y="38.111">context</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="541.784,46,532.784,42,536.784,46,532.784,50,541.784,46" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M375.269,46 C423.811,46 489.889,46 536.784,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="52" x="391.444" y="12.111">executes</text>
+      <text fill="#F00" font-size="13" x="443.444" y="12.111"> </text>
+      <text fill="#F00" font-size="13" textLength="83.038" x="443.444" y="12.111">parameterized</text>
+      <text fill="#F00" font-size="13" textLength="42.656" x="386" y="25.111">queries</text>
+      <text fill="#F00" font-size="13" x="428.656" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="41.925" x="428.656" y="25.111">against</text>
+      <text fill="#F00" font-size="13" x="470.581" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="18.038" x="470.581" y="25.111">the</text>
+      <text fill="#F00" font-size="13" x="488.619" y="25.111"> </text>
+      <text fill="#F00" font-size="13" textLength="43.306" x="488.619" y="25.111">primary</text>
+      <text fill="#F00" font-size="13" textLength="57.769" x="410.903" y="38.111">read-write</text>
+      <text fill="#F00" font-size="13" x="468.672" y="38.111"> </text>
+      <text fill="#F00" font-size="13" textLength="38.35" x="468.672" y="38.111">replica</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="346.482,68.116,351.117,76.806,350.424,71.192,356.039,70.499,346.482,68.116" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M568.183,67.606 C557.12,77.048 542.89,87.08 528,92 C513.336,96.846 403.751,96.576 389,92 C373.503,87.192 362.35,80.497 350.424,71.192" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="40.381" x="399.369" y="61.111">returns</text>
+      <text fill="#F00" font-size="13" x="439.75" y="61.111"> </text>
+      <text fill="#F00" font-size="13" textLength="31.769" x="439.75" y="61.111">result</text>
+      <text fill="#F00" font-size="13" x="471.519" y="61.111"> </text>
+      <text fill="#F00" font-size="13" textLength="23.806" x="471.519" y="61.111">sets</text>
+      <text fill="#F00" font-size="13" x="495.325" y="61.111"> </text>
+      <text fill="#F00" font-size="13" textLength="23.156" x="495.325" y="61.111">with</text>
+      <text fill="#F00" font-size="13" textLength="60.044" x="391" y="74.111">pagination</text>
+      <text fill="#F00" font-size="13" x="451.044" y="74.111"> </text>
+      <text fill="#F00" font-size="13" textLength="54.113" x="451.044" y="74.111">metadata</text>
+      <text fill="#F00" font-size="13" x="505.156" y="74.111"> </text>
+      <text fill="#F00" font-size="13" textLength="21.694" x="505.156" y="74.111">and</text>
+      <text fill="#F00" font-size="13" textLength="34.694" x="418.097" y="87.111">cache</text>
+      <text fill="#F00" font-size="13" x="452.791" y="87.111"> </text>
+      <text fill="#F00" font-size="13" textLength="46.963" x="452.791" y="87.111">headers</text>
+    </g>
+  </g>
+</svg>

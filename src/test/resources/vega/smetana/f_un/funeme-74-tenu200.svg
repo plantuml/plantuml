@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="229px" preserveAspectRatio="none" style="width:103px;height:229px;background:#FFFFFF;" version="1.1" viewBox="0 0 103 229" width="103px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <ellipse cx="18.924" cy="47.939" fill="#F1F1F1" rx="12.924" ry="10.939" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="14.242" y="51.439">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="2" id="ent0002">
+      <ellipse cx="74" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M74,28.5 L74,55.5 M61,36.5 L87,36.5 M74,55.5 L61,70.5 M74,55.5 L87,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="69.319" y="82.889">B</text>
+    </g>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="C" data-source-line="3" id="ent0004">
+      <ellipse cx="74" cy="147.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M74,155.5 L74,182.5 M61,163.5 L87,163.5 M74,182.5 L61,197.5 M74,182.5 L87,197.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="68.925" y="209.889">C</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M32.034,49 C40.548,49 51.647,49 60.292,49" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="42.75" y="41.111">a</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M74,86.155 C74,102.739 74,122.352 74,138.926" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="76" y="116.111">c</text>
+    </g>
+  </g>
+</svg>

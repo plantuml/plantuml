@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="209px" preserveAspectRatio="none" style="width:169px;height:209px;background:#FFFFFF;" version="1.1" viewBox="0 0 169 209" width="169px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.213" x="7.5" y="33.5"/>
+      <polygon fill="#F1F1F1" points="47.713,38.5,47.713,52.5,59.713,52.5,59.713,44.5,53.713,38.5,47.713,38.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="53.713" x2="53.713" y1="38.5" y2="44.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="59.713" x2="53.713" y1="44.5" y2="44.5"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="17.5" y="57.389">foo1</text>
+    </g>
+    <!--entity foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="80" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.725" x="83" y="12"/>
+      <polygon fill="#F1F1F1" points="135.725,17,135.725,31,147.725,31,147.725,23,141.725,17,135.725,17" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141.725" x2="141.725" y1="17" y2="23"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="147.725" x2="141.725" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" textLength="39.725" x="93" y="35.889">this isa</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="84" x2="151.725" y1="39" y2="39"/>
+      <text fill="#000" font-size="14" textLength="29.662" x="93" y="53.889">a line</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="84" x2="106.969" y1="68" y2="68"/>
+      <text fill="#000" font-size="14" textLength="21.787" x="106.969" y="71.389">title</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="128.756" x2="151.725" y1="68" y2="68"/>
+    </g>
+    <!--entity foo3-->
+    <g class="entity" data-qualified-name="foo3" data-source-line="8" id="ent0003">
+      <path d="M6,138 C6,128 35.863,128 35.863,128 C35.863,128 65.725,128 65.725,138 L65.725,183 C65.725,193 35.863,193 35.863,193 C35.863,193 6,193 6,183 L6,138" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,138 C6,148 35.863,148 35.863,148 C35.863,148 65.725,148 65.725,138" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="39.725" x="16" y="162.889">this isd</text>
+      <path d="M6,161 C6,171 35.863,171 35.863,171 C35.863,171 65.725,171 65.725,161" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="29.662" x="16" y="180.889">a line</text>
+    </g>
+  </g>
+</svg>

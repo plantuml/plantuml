@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:225px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 225 104" width="225px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class AvailabilityCheckRequestor-->
+    <g class="entity" data-qualified-name="AvailabilityCheckRequestor" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="202.625" x="6" y="12"/>
+      <ellipse cx="21" cy="42" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="47">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="63.45" x="88.588" y="26.333">«Singleton»</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="51.975" x="94.325" y="38.333">«Startup»</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="133.5" x="53.563" y="50.333">«Stateless Session Bean»</text>
+      <text fill="#000" font-size="14" textLength="170.625" x="35" y="63.889">AvailabilityCheckRequestor</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="207.625" y1="72" y2="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="207.625" y1="80" y2="80"/>
+    </g>
+  </g>
+</svg>

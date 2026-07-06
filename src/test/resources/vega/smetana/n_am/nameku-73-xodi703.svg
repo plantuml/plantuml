@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="428px" preserveAspectRatio="none" style="width:900px;height:428px;background:#FFFFFF;" version="1.1" viewBox="0 0 900 428" width="900px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster SysAdmin-->
+    <g class="cluster" data-qualified-name="SysAdmin" data-source-line="12" id="ent0027">
+      <polygon fill="none" points="14,180,83.087,180,90.087,200,697,200,697,360,14,360,14,180" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="90.087" y1="200" y2="200"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="63.087" x="18" y="192.889">SysAdmin</text>
+    </g>
+    <!--cluster WarehouseTasks-->
+    <g class="cluster" data-qualified-name="WarehouseTasks" data-source-line="31" id="ent0039">
+      <polygon fill="none" points="529,107,643.938,107,650.938,127,653,127,653,172,529,172,529,107" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="529" x2="650.938" y1="127" y2="127"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="108.938" x="533" y="119.889">WarehouseTasks</text>
+    </g>
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="349" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="309" y="72"/>
+    <g class="entity" data-qualified-name="GN4" data-source-line="2" id="ent0005">
+      <path d="M223,72 L223,95 A0,0 0 0 0 223,95 L290.963,95 A0,0 0 0 0 290.963,95 L290.963,90 L308.77,84 L290.963,82 L290.963,82 L280.963,72 L223,72 A0,0 0 0 0 223,72" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M280.963,72 L280.963,82 L290.963,82 L280.963,72" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="46.963" x="229" y="87.111">T - 2 days</text>
+    </g>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="440" y="136"/>
+    <g class="entity" data-qualified-name="GN9" data-source-line="4" id="ent0010">
+      <path d="M292.5,136 L292.5,159 A0,0 0 0 0 292.5,159 L421.156,159 A0,0 0 0 0 421.156,159 L421.156,154 L439.577,148 L421.156,146 L421.156,146 L411.156,136 L292.5,136 A0,0 0 0 0 292.5,136" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M411.156,136 L411.156,146 L421.156,146 L411.156,136" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="107.656" x="298.5" y="151.111">T - 1 day 5 hrs 30 mins</text>
+    </g>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="812" y="230.5"/>
+    <g class="entity" data-qualified-name="GN14" data-source-line="6" id="ent0015">
+      <path d="M706.5,230.5 L706.5,253.5 A0,0 0 0 0 706.5,253.5 L793.231,253.5 A0,0 0 0 0 793.231,253.5 L793.231,248.5 L811.552,242.5 L793.231,240.5 L793.231,240.5 L783.231,230.5 L706.5,230.5 A0,0 0 0 0 706.5,230.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M783.231,230.5 L783.231,240.5 L793.231,240.5 L783.231,230.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="65.731" x="712.5" y="245.611">T - 1 day 2 hrs</text>
+    </g>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="798" y="322"/>
+    <g class="entity" data-qualified-name="GN19" data-source-line="8" id="ent0020">
+      <path d="M718.5,322 L718.5,345 A0,0 0 0 0 718.5,345 L779.963,345 A0,0 0 0 0 779.963,345 L779.963,340 L797.846,334 L779.963,332 L779.963,332 L769.963,322 L718.5,322 A0,0 0 0 0 718.5,322" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M769.963,322 L769.963,332 L779.963,332 L769.963,322" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="40.463" x="724.5" y="337.111">T - 1 day</text>
+    </g>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="798" y="388"/>
+    <g class="entity" data-qualified-name="GN24" data-source-line="10" id="ent0025">
+      <path d="M758.5,388 L758.5,398 A0,0 0 0 0 758.5,398 L779.5,398 A0,0 0 0 0 779.5,398 L779.5,404 L797.789,400 L779.5,396 L779.5,398 L769.5,388 L758.5,388 A0,0 0 0 0 758.5,388" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M769.5,388 L769.5,398 L779.5,398 L769.5,388" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="215.45" x="22.5" y="226.5"/>
+    <text fill="#000" font-size="12" textLength="195.45" x="32.5" y="245.833">1. Run prepareForWebsiteUpdate.linq</text>
+    <g class="entity" data-qualified-name="SysAdmin.GMN30" data-source-line="15" id="ent0031">
+      <path d="M255.5,205 L255.5,238.5 L237.543,242.5 L255.5,246.5 L255.5,280 A0,0 0 0 0 255.5,280 L688.031,280 A0,0 0 0 0 688.031,280 L688.031,215 L678.031,205 L255.5,205 A0,0 0 0 0 255.5,205" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M678.031,205 L678.031,215 L688.031,215 L678.031,205" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="275.031" x="261.5" y="220.111">Run this LINQPad script with 'saveChanges = false',</text>
+      <text fill="#000" font-size="13" textLength="287.219" x="261.5" y="233.111">check it doesn't complain about tasks already existing,</text>
+      <text fill="#000" font-size="13" textLength="217.181" x="261.5" y="246.111">then run again with 'saveChanges = true'.</text>
+      <text fill="#000" font-size="13" textLength="291.525" x="261.5" y="259.111">The output will contain commands highlighted in yellow</text>
+      <text fill="#000" font-size="13" textLength="411.531" x="261.5" y="272.111">for you to run on some machines in order to set up the required automated tasks.</text>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="234.875" x="79.5" y="318"/>
+    <text fill="#000" font-size="12" textLength="214.875" x="89.5" y="337.333">Run prepareForWebsiteUpdate.linq again</text>
+    <g class="entity" data-qualified-name="SysAdmin.GMN36" data-source-line="26" id="ent0037">
+      <path d="M333,316 L333,330 L314.729,334 L333,338 L333,352 A0,0 0 0 0 333,352 L630.9,352 A0,0 0 0 0 630.9,352 L630.9,326 L620.9,316 L333,316 A0,0 0 0 0 333,316" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M620.9,316 L620.9,326 L630.9,326 L620.9,316" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="275.031" x="339" y="331.111">Run this LINQPad script with 'saveChanges = false',</text>
+      <text fill="#000" font-size="13" textLength="276.9" x="339" y="344.111">and it should now show you any tasks which have run.</text>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="78.575" x="538.5" y="132"/>
+    <text fill="#000" font-size="12" textLength="58.575" x="548.5" y="151.333">flickrImport</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="349,71.851,353,62.851,349,66.851,345,62.851,349,71.851" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M349,36.183 C349,46.453 349,56.592 349,66.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="469.029,135.989,465.223,126.905,465.39,132.56,459.736,132.727,469.029,135.989" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M389.341,92.51 C402.716,95.89 417.398,100.599 430,107 C444.867,114.551 455.839,123.557 465.39,132.56" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="846.932,230.383,846.464,220.545,844.687,225.915,839.316,224.137,846.932,230.383" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M497.233,160.089 C505.327,164.687 515.31,169.519 525,172 C554.936,179.664 775.357,166.187 803,180 C824.493,190.74 837.348,211.313 844.687,225.915" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0017" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="839.759,321.757,845.102,313.483,840.531,316.817,837.198,312.247,839.759,321.757" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M850.227,254.835 C847.534,272.051 843.216,299.656 840.531,316.817" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0022" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="838,387.98,842,378.98,838,382.98,834,378.98,838,387.98" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M838,346.148 C838,357.895 838,371.281 838,382.98" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0028" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="143.254,226.398,152.259,222.409,146.609,222.691,146.327,217.041,143.254,226.398" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M308.802,95.553 C300.01,98.631 290.959,102.427 283,107 C224.427,140.649 171.442,195.251 146.609,222.691" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0028" data-entity-2="ent0033" data-link-type="dependency" id="lnk34">
+      <polygon fill="#181818" points="185.579,317.743,183.387,308.141,182.582,313.74,176.983,312.935,185.579,317.743" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M141.366,258.682 C153.686,275.14 170.24,297.253 182.582,313.74" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0033" data-link-type="dependency" id="lnk35">
+      <polygon fill="#181818" points="245.174,317.99,254.944,319.236,249.964,316.554,252.646,311.573,245.174,317.99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M823.367,321.686 C812.259,313.186 796.184,302.614 780,298 C684.474,270.764 431.503,285.184 333,298 C303.33,301.86 275.704,308.833 249.964,316.554" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0040" data-link-type="dependency" id="lnk41">
+      <polygon fill="#181818" points="538.259,148,529.259,144,533.259,148,529.259,152,538.259,148" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M520.195,148 C526.217,148 527.238,148 533.259,148" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

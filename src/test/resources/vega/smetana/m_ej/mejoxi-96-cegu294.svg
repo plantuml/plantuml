@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="100px" preserveAspectRatio="none" style="width:516px;height:100px;background:#FFFFFF;" version="1.1" viewBox="0 0 516 100" width="516px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="238.1" x="6" y="19"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="224.1" y="24"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="222.1" y="26"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="222.1" y="30"/>
+      <text fill="#000" font-size="14" textLength="26.775" x="21" y="49.889">"this</text>
+      <text fill="#000" font-size="14" x="47.775" y="49.889"> </text>
+      <text fill="#000" font-size="14" textLength="10.15" x="47.775" y="49.889">is</text>
+      <text fill="#000" font-size="14" x="57.925" y="49.889"> </text>
+      <text fill="#000" font-size="14" x="57.925" y="49.889">a</text>
+      <text fill="#000" font-size="14" x="65.713" y="49.889"> </text>
+      <text fill="#000" font-size="14" textLength="73.063" x="65.713" y="49.889">component,</text>
+      <text fill="#000" font-size="14" x="138.775" y="49.889"> </text>
+      <text fill="#000" font-size="14" textLength="23.363" x="138.775" y="49.889">and</text>
+      <text fill="#000" font-size="14" x="162.138" y="49.889"> </text>
+      <text fill="#000" font-size="14" textLength="7" x="162.138" y="49.889">it</text>
+      <text fill="#000" font-size="14" x="169.138" y="49.889"> </text>
+      <text fill="#000" font-size="14" textLength="19.6" x="169.138" y="49.889">will</text>
+      <text fill="#000" font-size="14" x="188.738" y="49.889"> </text>
+      <text fill="#000" font-size="14" textLength="30.362" x="188.738" y="49.889">wrap</text>
+      <text fill="#000" font-size="14" textLength="21.788" x="21" y="63.889">this</text>
+      <text fill="#000" font-size="14" x="42.788" y="63.889"> </text>
+      <text fill="#000" font-size="14" textLength="76.563" x="42.788" y="63.889">descripttion"</text>
+    </g>
+    <!--entity b-->
+    <g class="entity" data-qualified-name="b" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="238.363" x="262" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="480.363" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="478.363" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="478.363" y="23"/>
+      <text fill="#000" font-size="14" x="277" y="42.889">"</text>
+      <text fill="#000" font-size="14" x="281.988" y="42.889">这</text>
+      <text fill="#000" font-size="14" x="295.988" y="42.889">也</text>
+      <text fill="#000" font-size="14" x="309.988" y="42.889">是</text>
+      <text fill="#000" font-size="14" x="323.988" y="42.889">一</text>
+      <text fill="#000" font-size="14" x="337.988" y="42.889">个</text>
+      <text fill="#000" font-size="14" x="351.988" y="42.889">组</text>
+      <text fill="#000" font-size="14" x="365.988" y="42.889">件</text>
+      <text fill="#000" font-size="14" x="379.988" y="42.889">，</text>
+      <text fill="#000" font-size="14" x="391.363" y="42.889">但</text>
+      <text fill="#000" font-size="14" x="405.363" y="42.889">是</text>
+      <text fill="#000" font-size="14" x="419.363" y="42.889">这</text>
+      <text fill="#000" font-size="14" x="433.363" y="42.889">段</text>
+      <text fill="#000" font-size="14" x="447.363" y="42.889">文</text>
+      <text fill="#000" font-size="14" x="461.363" y="42.889">件</text>
+      <text fill="#000" font-size="14" x="277" y="56.889">不</text>
+      <text fill="#000" font-size="14" x="291" y="56.889">会</text>
+      <text fill="#000" font-size="14" x="305" y="56.889">自</text>
+      <text fill="#000" font-size="14" x="319" y="56.889">动</text>
+      <text fill="#000" font-size="14" x="333" y="56.889">换</text>
+      <text fill="#000" font-size="14" x="347" y="56.889">行</text>
+      <text fill="#000" font-size="14" x="361" y="56.889">下</text>
+      <text fill="#000" font-size="14" x="375" y="56.889">去</text>
+      <text fill="#000" font-size="14" x="389" y="56.889">，</text>
+      <text fill="#000" font-size="14" x="400.375" y="56.889">这</text>
+      <text fill="#000" font-size="14" x="414.375" y="56.889">是</text>
+      <text fill="#000" font-size="14" x="428.375" y="56.889">为</text>
+      <text fill="#000" font-size="14" x="442.375" y="56.889">什</text>
+      <text fill="#000" font-size="14" x="456.375" y="56.889">么</text>
+      <text fill="#000" font-size="14" x="277" y="70.889">呢</text>
+      <text fill="#000" font-size="14" x="291" y="70.889">。</text>
+      <text fill="#000" font-size="14" x="305" y="70.889">"</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="244px" preserveAspectRatio="none" style="width:383px;height:244px;background:#FFFFFF;" version="1.1" viewBox="0 0 383 244" width="383px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M20,96 L90.3,96 A3.75,3.75 0 0 1 92.8,98.5 L99.8,116 L104.3,116 A2.5,2.5 0 0 1 106.8,118.5 L106.8,141.5 A2.5,2.5 0 0 1 104.3,144 L20,144 A2.5,2.5 0 0 1 17.5,141.5 L17.5,98.5 A2.5,2.5 0 0 1 20,96" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="17.5" x2="99.8" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="69.3" x="21.5" y="108.889">Employees</text>
+    <path d="M12,180 L97.7,180 A3.75,3.75 0 0 1 100.2,182.5 L107.2,200 L111.7,200 A2.5,2.5 0 0 1 114.2,202.5 L114.2,225.5 A2.5,2.5 0 0 1 111.7,228 L12,228 A2.5,2.5 0 0 1 9.5,225.5 L9.5,182.5 A2.5,2.5 0 0 1 12,180" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="9.5" x2="107.2" y1="200" y2="200"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="84.7" x="13.5" y="192.889">Programmers</text>
+    <path d="M257.5,96 L350.988,96 A3.75,3.75 0 0 1 353.488,98.5 L360.488,116 L364.988,116 A2.5,2.5 0 0 1 367.488,118.5 L367.488,141.5 A2.5,2.5 0 0 1 364.988,144 L257.5,144 A2.5,2.5 0 0 1 255,141.5 L255,98.5 A2.5,2.5 0 0 1 257.5,96" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="255" x2="360.488" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="92.488" x="259" y="108.889">Programmers1</text>
+    <path d="M127.5,96 L220.988,96 A3.75,3.75 0 0 1 223.488,98.5 L230.488,116 L234.988,116 A2.5,2.5 0 0 1 237.488,118.5 L237.488,141.5 A2.5,2.5 0 0 1 234.988,144 L127.5,144 A2.5,2.5 0 0 1 125,141.5 L125,98.5 A2.5,2.5 0 0 1 127.5,96" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="125" x2="230.488" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="92.488" x="129" y="108.889">Programmers2</text>
+    <path d="M8.5,12 L101.988,12 A3.75,3.75 0 0 1 104.488,14.5 L111.488,32 L115.988,32 A2.5,2.5 0 0 1 118.488,34.5 L118.488,57.5 A2.5,2.5 0 0 1 115.988,60 L8.5,60 A2.5,2.5 0 0 1 6,57.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="111.488" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="92.488" x="10" y="24.889">Programmers3</text>
+    <path d="M138.5,12 L231.988,12 A3.75,3.75 0 0 1 234.488,14.5 L241.488,32 L245.988,32 A2.5,2.5 0 0 1 248.488,34.5 L248.488,57.5 A2.5,2.5 0 0 1 245.988,60 L138.5,60 A2.5,2.5 0 0 1 136,57.5 L136,14.5 A2.5,2.5 0 0 1 138.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="136" x2="241.488" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="92.488" x="140" y="24.889">Programmers4</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="nested" id="lnk7">
+      <ellipse cx="62" cy="152.279" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="62" x2="62" y1="160.279" y2="144.279"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="54" x2="70" y1="152.279" y2="152.279"/>
+      <path d="M62,160.279 C62,171.453 62,168.802 62,179.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="nested" id="lnk8">
+      <ellipse cx="97.139" cy="91.193" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="103.682" x2="90.597" y1="86.589" y2="95.796"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="101.743" x2="92.536" y1="97.735" y2="84.65"/>
+      <path d="M103.682,86.589 C113.881,79.412 112.796,81.695 125,78 C172.642,63.575 188.871,65.294 237,78 C250.997,81.695 265.122,88.716 277.226,95.975" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="nested" id="lnk9">
+      <ellipse cx="114.625" cy="120" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="122.625" x2="106.625" y1="120" y2="120"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="114.625" x2="114.625" y1="128" y2="112"/>
+      <path d="M122.625,120 C128.726,120 118.827,120 124.928,120" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="nested" id="lnk11">
+      <ellipse cx="62" cy="87.947" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="62" x2="62" y1="79.947" y2="95.947"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="70" x2="54" y1="87.947" y2="87.947"/>
+      <path d="M62,60.279 C62,71.453 62,68.802 62,79.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

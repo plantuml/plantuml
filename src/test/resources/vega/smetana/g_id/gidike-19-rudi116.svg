@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="86px" preserveAspectRatio="none" style="width:195px;height:86px;background:#FFFFFF;" version="1.1" viewBox="0 0 195 86" width="195px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity dummy-->
+    <g class="entity" data-qualified-name="dummy" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.263" x="67.375" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="159.638" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="157.638" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="157.638" y="23"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="70.263" x="83.375" y="42.889">&lt;&lt; Comp &gt;&gt;</text>
+      <text fill="#000" font-size="14" textLength="45.85" x="95.581" y="56.889">dummy</text>
+    </g>
+    <!--entity dummyIfc-->
+    <g class="entity" data-qualified-name="dummyIfc" data-source-line="6" id="ent0002">
+      <ellipse cx="40.375" cy="38" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="14.7" x="33.025" y="65.889">Ifc</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="78.75" x="1" y="17.889">&lt;&lt; IfcTyoe &gt;&gt;</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk3">
+      <path d="M49.453,41 C55.421,41 61.388,41 67.356,41" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

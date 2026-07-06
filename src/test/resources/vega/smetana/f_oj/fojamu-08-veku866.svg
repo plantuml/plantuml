@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="124px" preserveAspectRatio="none" style="width:247px;height:124px;background:#FFFFFF;" version="1.1" viewBox="0 0 247 124" width="247px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster tempSensor-->
+    <g class="cluster" data-qualified-name="tempSensor" data-source-line="5" id="ent0001">
+      <rect fill="none" height="96" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="196" x="43.181" y="4"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="219.181" y="9"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="217.181" y="11"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="217.181" y="15"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="117.031" y="27.889">«block»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="124.425" x="78.969" y="41.889">Temperature Sensor</text>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.tempSensor_TVs" data-source-line="7" id="ent0002">
+      <path d="M71.681,43 L71.681,92 L230.725,92 L230.725,53 L220.725,43 L71.681,43" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M220.725,43 L220.725,53 L230.725,53 L220.725,43" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="138.044" x="77.681" y="58.111">1some tagged value table</text>
+      <text fill="#000" font-size="13" textLength="74.506" x="77.681" y="71.111">would be here</text>
+      <text fill="#000" font-size="13" textLength="44.119" x="77.681" y="84.111">usually.</text>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.tempSensor_temp_dK_raw" data-source-line="12" id="ent0003">
+      <text fill="#000" font-size="14" textLength="86.363" x="0" y="78.389">temp_dK_raw</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="37.181" y="55.5"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="102px" preserveAspectRatio="none" style="width:188px;height:102px;background:#FFFFFF;" version="1.1" viewBox="0 0 188 102" width="188px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class dummy-->
+    <g class="entity" data-qualified-name="dummy" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.2" x="6" y="20"/>
+      <ellipse cx="21" cy="36" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="41">C</text>
+      <text fill="#000" font-size="8" textLength="26.2" x="35" y="37.222">dummy</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="63.2" y1="52" y2="52"/>
+      <text fill="#000" font-size="8" textLength="34.7" x="12" y="62.222">example1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="63.2" y1="70" y2="70"/>
+    </g>
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="8" id="ent0002">
+      <rect fill="#F1F1F1" height="74" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.075" x="82" y="12"/>
+      <ellipse cx="109.611" cy="32" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="104.611" y="37">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="34.05" x="124.414" y="26.333">«Foo»</text>
+      <text fill="#000" font-size="18" textLength="24.975" x="128.951" y="43">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="83" x2="171.075" y1="52" y2="52"/>
+      <text fill="#000" font-size="18" textLength="78.075" x="88" y="70">example2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="83" x2="171.075" y1="78" y2="78"/>
+    </g>
+  </g>
+</svg>

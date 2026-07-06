@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:155px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 155 72" width="155px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.363" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="35.363" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="33.363" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="33.363" y="23"/>
+      <text fill="#000" font-size="14" x="21" y="42.889">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="2" id="ent0002">
+      <ellipse cx="82.5" cy="31" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="77.819" y="58.889">B</text>
+    </g>
+    <!--entity ##4-->
+    <g class="entity" data-qualified-name="..4" data-source-line="4" id="ent0005">
+      <path d="M117.913,27.23 C117.356,24.732 119.003,23.574 121.256,24.433 C120.51,21.796 122.325,19.796 125.007,20.189 C127.913,19.619 129.451,20.251 128.976,23.608 C131.547,23.063 133.144,24.56 132.192,27.184 C134.494,27.016 135.43,28.856 134.363,30.744 C137.181,30.918 137.684,32.333 136.565,34.699 C137.513,36.705 136.275,37.855 134.308,37.566 C135.051,39.715 134.141,41.563 131.574,41.263 C132.252,43.873 131.327,45.504 128.361,44.863 C128.516,46.982 127.532,48.414 125.173,47.544 C122.811,48.26 121.32,47.444 121.553,44.772 C118.665,45.706 116.834,44.059 117.732,41.077 C115.658,40.991 115.07,39.949 115.697,38.048 C113.353,38.098 112.663,36.431 113.465,34.501 C112.691,32.301 113.93,30.962 116.113,30.997 C114.862,28.954 115.395,27.471 117.913,27.23" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M55.281,34 C61.235,34 67.189,34 73.144,34" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

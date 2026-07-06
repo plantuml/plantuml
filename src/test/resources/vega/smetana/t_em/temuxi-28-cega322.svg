@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="296px" preserveAspectRatio="none" style="width:1038px;height:296px;background:#FFFFFF;" version="1.1" viewBox="0 0 1038 296" width="1038px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster module-->
+    <g class="cluster" data-qualified-name="module" data-source-line="2" id="ent0001">
+      <path d="M33.5,4 L1012.5,4 A12.5,12.5 0 0 1 1025,16.5 L1025,23 L21,23 L21,16.5 A12.5,12.5 0 0 1 33.5,4" fill="#F1F1F1"/>
+      <rect fill="none" height="268" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="1004" x="21" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="21" x2="1025" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" textLength="45.938" x="500.031" y="19.889">module</text>
+    </g>
+    <!--cluster Somp-->
+    <g class="cluster" data-qualified-name="module.Somp" data-source-line="3" id="ent0002">
+      <path d="M41.5,164 L200.5,164 A12.5,12.5 0 0 1 213,176.5 L213,183 L29,183 L29,176.5 A12.5,12.5 0 0 1 41.5,164" fill="#F1F1F1"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="184" x="29" y="164"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="29" x2="213" y1="183" y2="183"/>
+      <text fill="#000" font-size="14" textLength="36.575" x="102.713" y="179.889">Somp</text>
+    </g>
+    <!--cluster flop-->
+    <g class="cluster" data-qualified-name="module.flop" data-source-line="10" id="ent0006">
+      <path d="M704.5,164 L986.5,164 A12.5,12.5 0 0 1 999,176.5 L999,183 L692,183 L692,176.5 A12.5,12.5 0 0 1 704.5,164" fill="#F1F1F1"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="307" x="692" y="164"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="692" x2="999" y1="183" y2="183"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="834.213" y="179.889">flop</text>
+    </g>
+    <!--cluster counter-->
+    <g class="cluster" data-qualified-name="module.counter" data-source-line="20" id="ent0011">
+      <path d="M251.5,29 L671.5,29 A12.5,12.5 0 0 1 684,41.5 L684,48 L239,48 L239,41.5 A12.5,12.5 0 0 1 251.5,29" fill="#F1F1F1"/>
+      <rect fill="none" height="235" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="445" x="239" y="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="239" x2="684" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" textLength="46.637" x="438.181" y="44.889">counter</text>
+    </g>
+    <text fill="#000" font-size="14" textLength="14.787" x="213.606" y="68.889">ex</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="215" y="84"/>
+    <text fill="#000" font-size="14" textLength="38.15" x="167.925" y="68.889">exitAx</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="181" y="84"/>
+    <text fill="#000" font-size="14" textLength="38.85" x="193.575" y="241.889">entry1</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="207" y="219"/>
+    <text fill="#000" font-size="14" textLength="38.85" x="159.575" y="241.889">entry2</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="173" y="219"/>
+    <g class="entity" data-qualified-name="module.Somp.sin" data-source-line="6" id="ent0005">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="37" y="206"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="37" x2="87" y1="230" y2="230"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="53.031" y="221.889">sin</text>
+    </g>
+    <g class="entity" data-qualified-name="module.Somp.sin2" data-source-line="7" id="ent0020">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="105" y="206"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="105" x2="155" y1="230" y2="230"/>
+      <text fill="#000" font-size="14" textLength="25.725" x="117.138" y="221.889">sin2</text>
+    </g>
+    <text fill="#000" font-size="14" textLength="36.663" x="980.669" y="241.889">sig_in</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="993" y="219"/>
+    <text fill="#000" font-size="14" textLength="33.425" x="948.288" y="241.889">sig_ff</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="959" y="219"/>
+    <g class="entity" data-qualified-name="module.flop.flop_0" data-source-line="13" id="ent0009">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="73.288" x="738.5" y="206"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="738.5" x2="811.788" y1="230" y2="230"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="756.069" y="221.889">flop_0</text>
+      <text fill="#000" font-size="14" textLength="53.287" x="743.5" y="245.889">sig_ff := 0</text>
+    </g>
+    <g class="entity" data-qualified-name="module.flop.flop_1" data-source-line="14" id="ent0010">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="73.288" x="867.5" y="206"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="867.5" x2="940.788" y1="230" y2="230"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="885.069" y="221.889">flop_1</text>
+      <text fill="#000" font-size="14" textLength="53.287" x="872.5" y="245.889">sig_ff := 1</text>
+    </g>
+    <g class="start_entity" data-qualified-name="module.flop..start.flop" data-source-line="15" id="ent0022">
+      <ellipse cx="710" cy="229" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="69.125" x="619.438" y="68.889">count_start</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="648" y="84"/>
+    <text fill="#000" font-size="14" textLength="73.15" x="560.425" y="68.889">count_done</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="591" y="84"/>
+    <text fill="#000" font-size="14" textLength="87.063" x="472.469" y="68.889">count_val[3:0]</text>
+    <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="510" y="84"/>
+    <g class="entity" data-qualified-name="module.counter.count_idle" data-source-line="26" id="ent0015">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="99.8" x="299" y="71"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="299" x2="398.8" y1="95" y2="95"/>
+      <text fill="#000" font-size="14" textLength="63.875" x="316.963" y="86.889">count_idle</text>
+      <text fill="#000" font-size="14" textLength="79.8" x="304" y="110.889">count_val := 0</text>
+    </g>
+    <g class="entity" data-qualified-name="module.counter.count_ongoing" data-source-line="27" id="ent0016">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="167.963" x="247" y="206"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="247" x2="414.963" y1="230" y2="230"/>
+      <text fill="#000" font-size="14" textLength="91.875" x="285.044" y="221.889">count_ongoing</text>
+      <text fill="#000" font-size="14" textLength="147.963" x="252" y="245.889">count_val := count_val +1</text>
+    </g>
+    <g class="entity" data-qualified-name="module.counter.count_finish" data-source-line="29" id="ent0017">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="113.013" x="562.5" y="206"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="562.5" x2="675.513" y1="230" y2="230"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="581.644" y="221.889">count_finish</text>
+      <text fill="#000" font-size="14" textLength="93.013" x="567.5" y="245.889">count_done:=1</text>
+    </g>
+    <g class="start_entity" data-qualified-name="module.counter..start.counter" data-source-line="24" id="ent0025">
+      <ellipse cx="271" cy="94" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0020" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="104.942,231,95.942,227,99.942,231,95.942,235,104.942,231" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M87.234,231 C93.137,231 94.039,231 99.942,231" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0022" data-entity-2="ent0009" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="738.152,231,729.152,227,733.152,231,729.152,235,738.152,231" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M720.156,231 C726.155,231 727.153,231 733.152,231" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0010" data-link-type="dependency" id="lnk24">
+      <polygon fill="#181818" points="867.287,231,858.287,227,862.287,231,858.287,235,867.287,231" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M811.621,231 C829.051,231 844.845,231 862.287,231" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.044" x="822.5" y="223.111">sig_in</text>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0015" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="298.837,96,289.837,92,293.837,96,289.837,100,298.837,96" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M281.055,96 C286.982,96 287.91,96 293.837,96" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0016" data-link-type="dependency" id="lnk27">
+      <polygon fill="#181818" points="334.296,205.644,339.467,197.262,334.967,200.69,331.539,196.189,334.296,205.644" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M345.74,121.085 C342.498,145.04 338.222,176.641 334.967,200.69" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="64.188" x="345" y="151.111">count_start</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0017" data-link-type="dependency" id="lnk28">
+      <polygon fill="#181818" points="562.193,231,553.193,227,557.193,231,553.193,235,562.193,231" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M415.076,231 C462.394,231 515.22,231 557.193,231" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="126.913" x="425.75" y="223.111">count_val != MAX_VAL</text>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0015" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="397.895,121.085,404.201,128.651,402.38,123.295,407.736,121.474,397.895,121.085" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M570.013,205.87 C521.2,181.824 451.161,147.324 402.38,123.295" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0003" data-link-type="dependency" id="lnk30">
+      <polygon fill="#181818" points="212.789,218.689,214.988,209.089,211.83,213.782,207.136,210.624,212.789,218.689" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M191.217,108.34 C196.129,133.467 206.923,188.681 211.83,213.782" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0004" data-link-type="dependency" id="lnk31">
+      <polygon fill="#181818" points="181.311,218.913,185.891,210.194,181.638,213.924,177.908,209.671,181.311,218.913" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M967.938,218.752 C968.372,203.217 966.419,176.901 950,164 C886.743,114.296 306.447,157.389 226,157 C213.173,156.938 205.718,153.754 198,164 C185.725,180.295 182.583,199.504 181.638,213.924" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="12.838" x="212" y="151.111">"!"</text>
+    </g>
+  </g>
+</svg>

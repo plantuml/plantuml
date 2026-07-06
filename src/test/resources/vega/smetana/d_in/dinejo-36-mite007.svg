@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="152px" preserveAspectRatio="none" style="width:435px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 435 152" width="435px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity GroupA-->
+    <g class="entity" data-qualified-name="GroupA" data-source-line="1" id="ent0001">
+      <polygon fill="#F1F1F1" points="170,102,180,92,258.213,92,258.213,126,248.212,136,170,136,170,102" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="248.212" x2="258.213" y1="102" y2="92"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="170" x2="248.212" y1="102" y2="102"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="248.212" x2="248.212" y1="102" y2="136"/>
+      <text fill="#000" font-size="14" textLength="48.212" x="185" y="122.889">GroupA</text>
+    </g>
+    <!--entity Group B-->
+    <g class="entity" data-qualified-name="Group B" data-source-line="2" id="ent0002">
+      <polygon fill="#F1F1F1" points="10,22,20,12,98.212,12,98.212,46,88.212,56,10,56,10,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88.212" x2="98.212" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="88.212" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88.212" x2="88.212" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="48.212" x="25" y="42.889">Group B</text>
+    </g>
+    <!--entity GroupC-->
+    <g class="entity" data-qualified-name="GroupC" data-source-line="4" id="ent0003">
+      <polygon fill="#F1F1F1" points="116.5,22,126.5,12,205.5,12,205.5,46,195.5,56,116.5,56,116.5,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="195.5" x2="205.5" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="116.5" x2="195.5" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="195.5" x2="195.5" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="49" x="131.5" y="42.889">GroupC</text>
+    </g>
+    <!--entity GroupD-->
+    <g class="entity" data-qualified-name="GroupD" data-source-line="6" id="ent0004">
+      <polygon fill="#F1F1F1" points="223.5,22,233.5,12,312.5,12,312.5,46,302.5,56,223.5,56,223.5,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="302.5" x2="312.5" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="223.5" x2="302.5" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="302.5" x2="302.5" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="49" x="238.5" y="42.889">Group D</text>
+    </g>
+    <!--entity GroupE-->
+    <g class="entity" data-qualified-name="GroupE" data-source-line="7" id="ent0005">
+      <polygon fill="#F1F1F1" points="331,22,341,12,419.213,12,419.213,46,409.213,56,331,56,331,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="409.213" x2="419.213" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="331" x2="409.213" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="409.213" x2="409.213" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="48.212" x="346" y="42.889">GroupE</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="170.667,91.875,164.33,84.336,166.173,89.684,160.824,91.527,170.667,91.875" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M97.298,56.108 C120.065,67.207 143.401,78.583 166.173,89.684" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="199.719,91.982,197.969,82.29,196.908,87.846,191.352,86.786,199.719,91.982" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M175.482,56.314 C183.022,67.41 189.398,76.794 196.908,87.846" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="228.551,91.982,236.963,86.859,231.397,87.871,230.385,82.305,228.551,91.982" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M253.244,56.314 C245.562,67.41 239.049,76.818 231.397,87.871" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="257.604,91.875,267.447,91.551,262.103,89.695,263.959,84.351,257.604,91.875" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M331.431,56.108 C308.522,67.207 285.018,78.594 262.103,89.695" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

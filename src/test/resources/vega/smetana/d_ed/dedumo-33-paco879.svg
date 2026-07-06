@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:131px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 131 90" width="131px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class user_role-->
+    <g class="entity" data-qualified-name="user_role" data-source-line="6" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.3" x="6" y="12"/>
+      <ellipse cx="29.522" cy="28" fill="#FAA" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="24.522" y="33">T</text>
+      <text fill="#000" font-size="14" textLength="58.363" x="45.416" y="31.889">user_role</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="114.3" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" font-weight="700" text-decoration="underline" textLength="10.938" x="12" y="58.889">id</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="22.938" y="58.889">BIGINTEGER</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="114.3" y1="66" y2="66"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:69px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 69 160" width="69px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M8.5,12 L36.713,12 A3.75,3.75 0 0 1 39.213,14.5 L46.213,32 L50.713,32 A2.5,2.5 0 0 1 53.213,34.5 L53.213,57.5 A2.5,2.5 0 0 1 50.713,60 L8.5,60 A2.5,2.5 0 0 1 6,57.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="46.213" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="10" y="24.889">foo1</text>
+    <path d="M8.5,96 L36.713,96 A3.75,3.75 0 0 1 39.213,98.5 L46.213,116 L50.713,116 A2.5,2.5 0 0 1 53.213,118.5 L53.213,141.5 A2.5,2.5 0 0 1 50.713,144 L8.5,144 A2.5,2.5 0 0 1 6,141.5 L6,98.5 A2.5,2.5 0 0 1 8.5,96" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="46.213" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="10" y="108.889">foo2</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="crowfoot" id="lnk3">
+      <line style="stroke:#181818;stroke-width:1;" x1="29.5" x2="21.5" y1="68.279" y2="60.279"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="29.5" x2="37.5" y1="68.279" y2="60.279"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="29.5" x2="29.5" y1="68.279" y2="60.279"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="29.5" x2="37.5" y1="87.947" y2="95.947"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="29.5" x2="21.5" y1="87.947" y2="95.947"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="29.5" x2="29.5" y1="87.947" y2="95.947"/>
+      <path d="M29.5,68.279 C29.5,79.453 29.5,76.802 29.5,87.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

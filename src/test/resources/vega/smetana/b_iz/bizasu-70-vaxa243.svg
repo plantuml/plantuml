@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="172px" preserveAspectRatio="none" style="width:358px;height:172px;background:#FFFFFF;" version="1.1" viewBox="0 0 358 172" width="358px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="myJsonArray" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.638" x="6.5" y="12"/>
+      <text fill="#000" font-size="14" textLength="81.638" x="13.5" y="24.889">myJsonArray</text>
+      <text fill="#000" font-size="14" x="11.5" y="42.889">1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="6.5" x2="102.138" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" x="11.5" y="60.889">2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="6.5" x2="102.138" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" x="11.5" y="78.889">3</text>
+    </g>
+    <g class="entity" data-qualified-name="myJsonNumber" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112" x="120.5" y="30"/>
+      <text fill="#000" font-size="14" textLength="98" x="127.5" y="42.889">myJsonNumber</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="125.5" y="60.889">123</text>
+    </g>
+    <g class="entity" data-qualified-name="myJsonTrue" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91" x="251" y="30"/>
+      <text fill="#000" font-size="14" textLength="77" x="258" y="42.889">myJsonTrue</text>
+      <text fill="#000" font-size="14" textLength="24.063" x="256" y="60.889">true</text>
+    </g>
+    <g class="entity" data-qualified-name="myJsonFalse" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.513" x="6" y="120"/>
+      <text fill="#000" font-size="14" textLength="82.513" x="13" y="132.889">myJsonFalse</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="11" y="150.889">false</text>
+    </g>
+    <g class="entity" data-qualified-name="myJsonString" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.788" x="121" y="120"/>
+      <text fill="#000" font-size="14" textLength="84.788" x="128" y="132.889">myJsonString</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="126" y="150.889">a b c</text>
+    </g>
+    <g class="entity" data-qualified-name="myJsonNull" data-source-line="6" id="ent0006">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.45" x="238.5" y="120"/>
+      <text fill="#000" font-size="14" textLength="72.45" x="245.5" y="132.889">myJsonNull</text>
+      <text fill="#000" font-size="14" textLength="21.875" x="243.5" y="150.889">null</text>
+    </g>
+  </g>
+</svg>

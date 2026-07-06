@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="309px" preserveAspectRatio="none" style="width:190px;height:309px;background:#FFFFFF;" version="1.1" viewBox="0 0 190 309" width="190px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster net-->
+    <g class="cluster" data-qualified-name="net" data-source-line="2" id="ent0003">
+      <path d="M16.5,4 L36.925,4 A3.75,3.75 0 0 1 39.425,6.5 L46.425,24 L179.5,24 A2.5,2.5 0 0 1 182,26.5 L182,282.5 A2.5,2.5 0 0 1 179.5,285 L16.5,285 A2.5,2.5 0 0 1 14,282.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="46.425" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="18" y="16.889">net</text>
+    </g>
+    <!--cluster sourceforge-->
+    <g class="cluster" data-qualified-name="net.sourceforge" data-source-line="2" id="ent0004">
+      <path d="M24.5,29 L99.35,29 A3.75,3.75 0 0 1 101.85,31.5 L108.85,49 L171.5,49 A2.5,2.5 0 0 1 174,51.5 L174,274.5 A2.5,2.5 0 0 1 171.5,277 L24.5,277 A2.5,2.5 0 0 1 22,274.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="108.85" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="73.85" x="26" y="41.889">sourceforge</text>
+    </g>
+    <!--cluster plantuml-->
+    <g class="cluster" data-qualified-name="net.sourceforge.plantuml" data-source-line="1" id="ent0001">
+      <path d="M32.5,54 L86.438,54 A3.75,3.75 0 0 1 88.938,56.5 L95.938,74 L163.5,74 A2.5,2.5 0 0 1 166,76.5 L166,266.5 A2.5,2.5 0 0 1 163.5,269 L32.5,269 A2.5,2.5 0 0 1 30,266.5 L30,56.5 A2.5,2.5 0 0 1 32.5,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="95.938" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="34" y="66.889">plantuml</text>
+    </g>
+    <!--cluster classic-->
+    <g class="cluster" data-qualified-name="net.sourceforge.plantuml.classic" data-source-line="2" id="ent0005">
+      <path d="M40.5,79 L83.588,79 A3.75,3.75 0 0 1 86.088,81.5 L93.088,99 L155.5,99 A2.5,2.5 0 0 1 158,101.5 L158,190.5 A2.5,2.5 0 0 1 155.5,193 L40.5,193 A2.5,2.5 0 0 1 38,190.5 L38,81.5 A2.5,2.5 0 0 1 40.5,79" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="38" x2="93.088" y1="99" y2="99"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42.088" x="42" y="91.889">classic</text>
+    </g>
+    <!--cluster collections-->
+    <g class="cluster" data-qualified-name="net.sourceforge.plantuml.classic.collections" data-source-line="2" id="ent0006">
+      <path d="M48.5,104 L114.95,104 A3.75,3.75 0 0 1 117.45,106.5 L124.45,124 L147.5,124 A2.5,2.5 0 0 1 150,126.5 L150,182.5 A2.5,2.5 0 0 1 147.5,185 L48.5,185 A2.5,2.5 0 0 1 46,182.5 L46,106.5 A2.5,2.5 0 0 1 48.5,104" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="46" x2="124.45" y1="124" y2="124"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="65.45" x="50" y="116.889">collections</text>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="net.sourceforge.plantuml.ArrayList" data-source-line="2" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="54.5" y="213"/>
+      <ellipse cx="69.5" cy="229" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="64.5" y="234">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="83.5" y="232.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.5" x2="140.713" y1="245" y2="245"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.5" x2="140.713" y1="253" y2="253"/>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="net.sourceforge.plantuml.classic.collections.ArrayList" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="54.5" y="129"/>
+      <ellipse cx="69.5" cy="145" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="64.5" y="150">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="83.5" y="148.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.5" x2="140.713" y1="161" y2="161"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.5" x2="140.713" y1="169" y2="169"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="98,177.279,92,195.279,104,195.279,98,177.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M98,195.279 C98,206.453 98,201.802 98,212.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

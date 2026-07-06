@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="341px" preserveAspectRatio="none" style="width:1028px;height:341px;background:#FFFFFF;" version="1.1" viewBox="0 0 1028 341" width="1028px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Mirrorix-->
+    <g class="cluster" data-qualified-name="Mirrorix" data-source-line="4" id="ent0004">
+      <path d="M153,4 L200.638,4 A3.75,3.75 0 0 1 203.138,6.5 L210.138,24 L1010,24 A2.5,2.5 0 0 1 1012.5,26.5 L1012.5,314.5 A2.5,2.5 0 0 1 1010,317 L153,317 A2.5,2.5 0 0 1 150.5,314.5 L150.5,6.5 A2.5,2.5 0 0 1 153,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="150.5" x2="210.138" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="46.638" x="154.5" y="16.889">Mirrorix</text>
+    </g>
+    <!--cluster Operations-->
+    <g class="cluster" data-qualified-name="Mirrorix.Operations" data-source-line="27" id="ent0012">
+      <path d="M443,102 L512.425,102 A3.75,3.75 0 0 1 514.925,104.5 L521.925,122 L876,122 A2.5,2.5 0 0 1 878.5,124.5 L878.5,306.5 A2.5,2.5 0 0 1 876,309 L443,309 A2.5,2.5 0 0 1 440.5,306.5 L440.5,104.5 A2.5,2.5 0 0 1 443,102" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="440.5" x2="521.925" y1="122" y2="122"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="68.425" x="444.5" y="114.889">Operations</text>
+    </g>
+    <!--class foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="6" y="36"/>
+      <ellipse cx="21" cy="52" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="57">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="35" y="55.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="64.213" y1="68" y2="68"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="64.213" y1="76" y2="76"/>
+    </g>
+    <!--class foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="83" y="36"/>
+      <ellipse cx="98" cy="52" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="93" y="57">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="112" y="55.889">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="84" x2="141.213" y1="68" y2="68"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="84" x2="141.213" y1="76" y2="76"/>
+    </g>
+    <!--class foo3-->
+    <g class="entity" data-qualified-name="foo3" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="6" y="141"/>
+      <ellipse cx="21" cy="157" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="162">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="35" y="160.889">foo3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="64.213" y1="173" y2="173"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="64.213" y1="181" y2="181"/>
+    </g>
+    <!--class CashFlow-->
+    <g class="entity" data-qualified-name="Mirrorix.CashFlow" data-source-line="6" id="ent0005">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.387" x="816.5" y="29"/>
+      <ellipse cx="831.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="826.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="62.387" x="845.5" y="48.889">CashFlow</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="817.5" x2="909.888" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="817.5" x2="909.888" y1="69" y2="69"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="822.5" y="83.889">method()</text>
+    </g>
+    <!--class Logger-->
+    <g class="entity" data-qualified-name="Mirrorix.Logger" data-source-line="9" id="ent0006">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.575" x="928.5" y="29"/>
+      <ellipse cx="943.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="938.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="43.575" x="957.5" y="48.889">Logger</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="929.5" x2="1003.075" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="929.5" x2="1003.075" y1="69" y2="69"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="934.5" y="83.889">method()</text>
+    </g>
+    <!--class Mute-->
+    <g class="entity" data-qualified-name="Mirrorix.Mute" data-source-line="12" id="ent0007">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.913" x="158.5" y="134"/>
+      <ellipse cx="175.683" cy="150" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="170.683" y="155">C</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="190.168" y="153.889">Mute</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="159.5" x2="225.413" y1="166" y2="166"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="159.5" x2="225.413" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="164.5" y="188.889">method()</text>
+    </g>
+    <!--class Program-->
+    <g class="entity" data-qualified-name="Mirrorix.Program" data-source-line="15" id="ent0008">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.637" x="349.5" y="29"/>
+      <ellipse cx="364.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="359.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="53.637" x="378.5" y="48.889">Program</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="350.5" x2="434.138" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="350.5" x2="434.138" y1="69" y2="69"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="355.5" y="83.889">method()</text>
+    </g>
+    <!--class QtomCnx-->
+    <g class="entity" data-qualified-name="Mirrorix.QtomCnx" data-source-line="18" id="ent0009">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.063" x="245" y="134"/>
+      <ellipse cx="260" cy="150" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="255" y="155">C</text>
+      <text fill="#000" font-size="14" textLength="59.063" x="274" y="153.889">QtomCnx</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="246" x2="335.063" y1="166" y2="166"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="246" x2="335.063" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="251" y="188.889">method()</text>
+    </g>
+    <!--class SqlCnx-->
+    <g class="entity" data-qualified-name="Mirrorix.SqlCnx" data-source-line="21" id="ent0010">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.238" x="354" y="134"/>
+      <ellipse cx="369" cy="150" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="364" y="155">C</text>
+      <text fill="#000" font-size="14" textLength="45.238" x="383" y="153.889">SqlCnx</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="355" x2="430.238" y1="166" y2="166"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="355" x2="430.238" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="360" y="188.889">method()</text>
+    </g>
+    <!--class XmlNavigator-->
+    <g class="entity" data-qualified-name="Mirrorix.XmlNavigator" data-source-line="24" id="ent0011">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116.088" x="888.5" y="134"/>
+      <ellipse cx="903.5" cy="150" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="898.5" y="155">C</text>
+      <text fill="#000" font-size="14" textLength="84.088" x="917.5" y="153.889">XmlNavigator</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="889.5" x2="1003.588" y1="166" y2="166"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="889.5" x2="1003.588" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="894.5" y="188.889">method()</text>
+    </g>
+    <!--class Annonces-->
+    <g class="entity" data-qualified-name="Mirrorix.Operations.Annonces" data-source-line="28" id="ent0013">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.3" x="776.5" y="127"/>
+      <ellipse cx="791.5" cy="143" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="786.5" y="148">C</text>
+      <text fill="#000" font-size="14" textLength="62.3" x="805.5" y="146.889">Annonces</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="777.5" x2="869.8" y1="159" y2="159"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="777.5" x2="869.8" y1="167" y2="167"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="782.5" y="181.889">method()</text>
+      <text fill="#000" font-size="14" textLength="55.912" x="782.5" y="195.889">method()</text>
+    </g>
+    <!--class MMDeals-->
+    <g class="entity" data-qualified-name="Mirrorix.Operations.MMDeals" data-source-line="34" id="ent0014">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.15" x="566" y="134"/>
+      <ellipse cx="581" cy="150" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="576" y="155">C</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="595" y="153.889">MMDeals</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="567" x2="656.15" y1="166" y2="166"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="567" x2="656.15" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="572" y="188.889">method()</text>
+    </g>
+    <!--class FxDeals-->
+    <g class="entity" data-qualified-name="Mirrorix.Operations.FxDeals" data-source-line="37" id="ent0015">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.45" x="675" y="134"/>
+      <ellipse cx="690" cy="150" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="685" y="155">C</text>
+      <text fill="#000" font-size="14" textLength="51.45" x="704" y="153.889">FxDeals</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="676" x2="757.45" y1="166" y2="166"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="676" x2="757.45" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="681" y="188.889">method()</text>
+    </g>
+    <!--class PayInterco-->
+    <g class="entity" data-qualified-name="Mirrorix.Operations.PayInterco" data-source-line="40" id="ent0016">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.85" x="449" y="134"/>
+      <ellipse cx="464" cy="150" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="459" y="155">C</text>
+      <text fill="#000" font-size="14" textLength="66.85" x="478" y="153.889">PayInterco</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="450" x2="546.85" y1="166" y2="166"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="450" x2="546.85" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="455" y="188.889">method()</text>
+    </g>
+    <!--class FxHedge-->
+    <g class="entity" data-qualified-name="Mirrorix.Operations.FxHedge" data-source-line="43" id="ent0017">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.875" x="567" y="239"/>
+      <ellipse cx="582" cy="255" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="577" y="260">C</text>
+      <text fill="#000" font-size="14" textLength="56.875" x="596" y="258.889">FxHedge</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="568" x2="654.875" y1="271" y2="271"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="568" x2="654.875" y1="279" y2="279"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="573" y="293.889">method()</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0009" data-link-type="composition" id="lnk18">
+      <polygon fill="#181818" points="356.078,91.114,348.942,92.155,347.158,99.142,354.294,98.101,356.078,91.114" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M347.158,99.142 C343.174,102.727 348.16,98.375 344.5,102 C334.46,111.944 324.109,123.469 315.19,133.866" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0013" data-link-type="composition" id="lnk19">
+      <polygon fill="#181818" points="435.553,61.896,441.439,66.062,447.548,62.231,441.662,58.065,435.553,61.896" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M447.548,62.231 C533.372,64.63 710.424,72.824 767.5,102 C778.994,107.876 789.265,117.16 797.773,126.772" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0016" data-link-type="composition" id="lnk20">
+      <polygon fill="#181818" points="432.335,91.142,434.337,98.07,441.502,98.887,439.5,91.959,432.335,91.142" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M441.502,98.887 C445.704,102.438 440.67,98.353 444.5,102 C454.837,111.844 465.338,123.457 474.297,133.956" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="composition" id="lnk21">
+      <polygon fill="#181818" points="392.5,91.069,388.5,97.069,392.5,103.069,396.5,97.069,392.5,91.069" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M392.5,103.069 C392.5,116.488 392.5,120.271 392.5,133.716" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0007" data-link-type="composition" id="lnk22">
+      <polygon fill="#181818" points="349.468,64.111,343.015,60.893,337.562,65.613,344.015,68.83,349.468,64.111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M337.562,65.613 C303.95,69.851 269.329,78.36 235.5,102 C223.904,110.104 214.439,122.405 207.371,133.919" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

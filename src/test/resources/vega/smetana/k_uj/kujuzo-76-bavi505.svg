@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:173px;height:78px;" version="1.1" viewBox="0 0 173 78" width="173px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g1dox0d4trqh9n0" x1="0%" x2="100%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#FF0"/>
+    </linearGradient>
+    <linearGradient id="g1dox0d4trqh9n1" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#000"/>
+      <stop offset="100%" stop-color="#FF0"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="s1" data-source-line="2" id="ent0001">
+      <rect fill="url(#g1dox0d4trqh9n0)" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="14.787" x="23.606" y="27.889">s1</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="4" id="ent0003">
+      <path d="M74.5,25 L74.5,33 L56.234,37 L74.5,41 L74.5,48 A0,0 0 0 0 74.5,48 L157.656,48 A0,0 0 0 0 157.656,48 L157.656,35 L147.656,25 L74.5,25 A0,0 0 0 0 74.5,25" fill="url(#g1dox0d4trqh9n1)" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M147.656,25 L147.656,35 L157.656,35 L147.656,25" fill="url(#g1dox0d4trqh9n1)" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="62.156" x="80.5" y="40.111">this is a note</text>
+    </g>
+  </g>
+</svg>

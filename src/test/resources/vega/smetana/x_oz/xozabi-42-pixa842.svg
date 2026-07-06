@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="195px" preserveAspectRatio="none" style="width:144px;height:195px;background:#FFFFFF;" version="1.1" viewBox="0 0 144 195" width="144px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Bob-->
+    <g class="entity" data-qualified-name="Bob" data-source-line="24" id="ent0001">
+      <ellipse cx="25" cy="27.5" fill="#FF0" rx="8" ry="8" style="stroke:#000;stroke-width:0.5;"/>
+      <path d="M25,35.5 L25,62.5 M12,43.5 L38,43.5 M25,62.5 L12,77.5 M25,62.5 L38,77.5" fill="none" style="stroke:#000;stroke-width:0.5;"/>
+      <text fill="#0F0" font-size="14" textLength="24.938" x="12.531" y="89.889">Bob</text>
+    </g>
+    <!--entity Sally-->
+    <g class="entity" data-qualified-name="Sally" data-source-line="26" id="ent0002">
+      <ellipse cx="93.181" cy="34.5" fill="#F00" rx="8" ry="8" style="stroke:#000;stroke-width:0.5;"/>
+      <path d="M93.181,42.5 L93.181,69.5 M80.181,50.5 L106.181,50.5 M93.181,69.5 L80.181,84.5 M93.181,69.5 L106.181,84.5" fill="none" style="stroke:#000;stroke-width:0.5;"/>
+      <text fill="#0FF" font-size="14" textLength="30.45" x="77.956" y="96.889">Sally</text>
+      <text fill="#0FF" font-size="14" font-style="italic" textLength="65.363" x="60.5" y="22.889">«myStyle»</text>
+    </g>
+    <!--entity uc1-->
+    <g class="entity" data-qualified-name="uc1" data-source-line="28" id="ent0003">
+      <ellipse cx="24.963" cy="165.899" fill="#0F0" rx="18.963" ry="12.899" style="stroke:#00F;stroke-width:0.5;"/>
+      <text fill="#FFF" font-size="14" textLength="22.575" x="13.675" y="169.399">uc1</text>
+    </g>
+    <!--entity uc2-->
+    <g class="entity" data-qualified-name="uc2" data-source-line="29" id="ent0005">
+      <ellipse cx="92.963" cy="165.899" fill="#0F0" rx="18.963" ry="12.899" style="stroke:#00F;stroke-width:0.5;"/>
+      <text fill="#FFF" font-size="14" textLength="22.575" x="81.675" y="169.399">uc2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#00F" points="25,152.952,29,143.952,25,147.952,21,143.952,25,152.952" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M25,93.263 C25,113.975 25,133.604 25,147.952" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#0F0" font-size="13" textLength="41.925" x="27" y="130.111">desc_1</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#00F" points="93,152.929,97,143.929,93,147.929,89,143.929,93,152.929" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M93,100.305 C93,119.319 93,135.176 93,147.929" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#0F0" font-size="13" textLength="41.925" x="95" y="130.111">desc_2</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="123px" preserveAspectRatio="none" style="width:457px;height:123px;background:#FFFFFF;" version="1.1" viewBox="0 0 457 123" width="457px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster r_nested_dashed1-->
+    <g class="cluster" data-qualified-name="r_nested_dashed1" data-source-line="13" id="ent0004">
+      <rect fill="#FFC0CB" height="95" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;stroke-dasharray:5,5;" width="152" x="289.5" y="4"/>
+      <text fill="#008000" font-size="14" font-style="italic" textLength="61.512" x="334.744" y="16.889">«dashed»</text>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="115.938" x="307.531" y="30.889">r_nested_dashed1</text>
+    </g>
+    <!--entity r-->
+    <g class="entity" data-qualified-name="r" data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.638" x="6" y="50"/>
+      <text fill="#000" font-size="14" x="16" y="70.889">r</text>
+    </g>
+    <!--entity r_dashed-->
+    <g class="entity" data-qualified-name="r_dashed" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" width="83.512" x="49.5" y="43"/>
+      <text fill="#008000" font-size="14" font-style="italic" textLength="61.512" x="60.5" y="63.889">«dashed»</text>
+      <text fill="#008000" font-size="14" textLength="58.363" x="62.075" y="77.889">r_dashed</text>
+    </g>
+    <!--entity r_nested_dashed-->
+    <g class="entity" data-qualified-name="r_nested_dashed" data-source-line="10" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" width="128.15" x="151.5" y="43"/>
+      <text fill="#008000" font-size="14" font-style="italic" textLength="61.512" x="184.819" y="63.889">«dashed»</text>
+      <text fill="#008000" font-size="14" textLength="108.15" x="161.5" y="77.889">r_nested_dashed</text>
+    </g>
+    <!--entity r1-->
+    <g class="entity" data-qualified-name="r_nested_dashed1.r1" data-source-line="14" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="32.425" x="401.5" y="50"/>
+      <text fill="#000" font-size="14" textLength="12.425" x="411.5" y="70.889">r1</text>
+    </g>
+    <!--entity r_dashed1-->
+    <g class="entity" data-qualified-name="r_nested_dashed1.r_dashed1" data-source-line="15" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" width="86.15" x="297.5" y="43"/>
+      <text fill="#008000" font-size="14" font-style="italic" textLength="61.512" x="309.819" y="63.889">«dashed»</text>
+      <text fill="#008000" font-size="14" textLength="66.15" x="307.5" y="77.889">r_dashed1</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:202px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 202 76" width="202px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="12" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.15" x="130" y="12"/>
+      <ellipse cx="145" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="140" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="159" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="131" x2="185.15" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="131" x2="185.15" y1="52" y2="52"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="13" id="ent0003">
+      <path d="M6,24 L6,44 A0,0 0 0 0 6,44 L111.5,44 A0,0 0 0 0 111.5,44 L111.5,42 L129.836,36 L111.5,34 L111.5,34 L101.5,24 L6,24 A0,0 0 0 0 6,24" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M101.5,24 L101.5,34 L111.5,34 L101.5,24" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="10" textLength="84.5" x="12" y="36.778">On last defined class</text>
+    </g>
+  </g>
+</svg>

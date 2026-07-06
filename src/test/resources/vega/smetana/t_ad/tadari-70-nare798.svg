@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="118px" preserveAspectRatio="none" style="width:183px;height:118px;background:#0B58A8;" version="1.1" viewBox="0 0 183 118" width="183px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#0B58A8" height="118" style="stroke:none;" width="183" x="0" y="0"/>
+    <g class="title">
+      <text fill="#FFF" font-family="Verdana" font-size="22" font-weight="700" textLength="30.525" x="75.663" y="32.111">foo</text>
+    </g>
+    <rect fill="#0B58A8" height="54" rx="5" ry="5" style="stroke:#0B58A8;stroke-width:1;" width="86.238" x="5" y="48"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="23.275" x="10" y="60.889">fruit</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="35.875" x="50.363" y="60.889">Apple</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="45.363" x2="45.363" y1="48" y2="66"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="5" x2="91.238" y1="66" y2="66"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="24.938" x="10" y="78.889">size</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="35.788" x="50.363" y="78.889">Large</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="45.363" x2="45.363" y1="66" y2="84"/>
+    <line style="stroke:#FFF;stroke-width:1;" x1="5" x2="91.238" y1="84" y2="84"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" font-weight="700" textLength="30.362" x="10" y="96.889">color</text>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="11.55" x="50.363" y="96.889">   </text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="45.363" x2="45.363" y1="84" y2="102"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#FFF;stroke-width:1;" width="86.238" x="5" y="48"/>
+    <rect fill="#0B58A8" height="36" rx="5" ry="5" style="stroke:#0B58A8;stroke-width:1;" width="48.85" x="128" y="75"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="25.725" x="133" y="87.889">Red</text>
+    <line style="stroke:#FFF;stroke-width:1;" x1="128" x2="176.85" y1="93" y2="93"/>
+    <text fill="#FFF" font-family="Verdana" font-size="14" textLength="38.85" x="133" y="105.889">Green</text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#FFF;stroke-width:1;" width="48.85" x="128" y="75"/>
+    <path d="M78.5,93 L91.5,93 C101.019,93 111.38,93 120.794,93" fill="none" style="stroke:#FFF;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M120.794,96.058 L123.088,93 L120.794,89.942 L128.44,93 L120.794,96.058" fill="#FFF"/>
+    <ellipse cx="78.5" cy="93" fill="#FFF" rx="3" ry="3" style="stroke:#FFF;stroke-width:1;"/>
+  </g>
+</svg>

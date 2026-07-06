@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:104px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 104 90" width="104px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="N1" data-source-line="3" id="ent0001">
+      <path d="M6,12 L6,74 L87.775,74 L87.775,22 L77.775,12 L6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M77.775,12 L77.775,22 L87.775,22 L77.775,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="38.269" x="34.506" y="27.111">&#128081; right</text>
+      <text fill="#000" font-size="13" textLength="60.775" x="12" y="40.111">Keep Calm</text>
+      <text fill="#000" font-size="13" textLength="21.694" x="51.081" y="53.111">and</text>
+      <text fill="#000" font-size="13" textLength="59.394" x="13.381" y="66.111">Align Right</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="213px" preserveAspectRatio="none" style="width:128px;height:213px;background:#FFFFFF;" version="1.1" viewBox="0 0 128 213" width="128px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster accentué-->
+    <g class="cluster" data-qualified-name="accentu." data-source-line="1" id="ent0001">
+      <polygon fill="none" points="14,4,76.788,4,83.788,24,112,24,112,189,14,189,14,4" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="83.788" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56.787" x="18" y="16.889">accentué</text>
+    </g>
+    <g class="start_entity" data-qualified-name="accentu..start" data-source-line="2" id="ent0002">
+      <ellipse cx="63" cy="39" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="80.675" x="22.5" y="89"/>
+    <text fill="#000" font-size="12" textLength="60.675" x="32.5" y="108.333">mon activité</text>
+    <g class="end_entity" data-qualified-name="accentu..end" data-source-line="3" id="ent0005">
+      <ellipse cx="63" cy="168" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="63" cy="168" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="63,88.587,67,79.587,63,83.587,59,79.587,63,88.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M63,53.084 C63,62.976 63,72.56 63,83.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="63,156.822,67,147.822,63,151.822,59,147.822,63,156.822" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M63,121.008 C63,132.047 63,141.81 63,151.822" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

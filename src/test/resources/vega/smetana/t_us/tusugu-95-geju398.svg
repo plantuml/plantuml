@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="267px" preserveAspectRatio="none" style="width:304px;height:267px;background:#FFFFFF;" version="1.1" viewBox="0 0 304 267" width="304px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="218.663" x="39.169" y="20.889">you should not see comp5 but 1-4 and 6</text>
+    </g>
+    <!--entity comp1-->
+    <g class="entity" data-qualified-name="comp1" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="106" y="47"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="168" y="52"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="166" y="54"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="166" y="58"/>
+      <text fill="#000" font-size="14" textLength="42" x="121" y="77.889">comp1</text>
+    </g>
+    <!--entity comp2-->
+    <g class="entity" data-qualified-name="comp2" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="6" y="127"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="68" y="132"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="66" y="134"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="66" y="138"/>
+      <text fill="#000" font-size="14" textLength="42" x="21" y="157.889">comp2</text>
+    </g>
+    <!--entity comp3-->
+    <g class="entity" data-qualified-name="comp3" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="106" y="127"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="168" y="132"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="166" y="134"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="166" y="138"/>
+      <text fill="#000" font-size="14" textLength="42" x="121" y="157.889">comp3</text>
+    </g>
+    <!--entity comp4-->
+    <g class="entity" data-qualified-name="comp4" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="206" y="127"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="268" y="132"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="266" y="134"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="266" y="138"/>
+      <text fill="#000" font-size="14" textLength="42" x="221" y="157.889">comp4</text>
+    </g>
+    <!--entity comp5-->
+    <g class="entity" data-qualified-name="comp5" data-source-line="8" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="106" y="207"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="168" y="212"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="166" y="214"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="166" y="218"/>
+      <text fill="#000" font-size="14" textLength="42" x="121" y="237.889">comp5</text>
+    </g>
+    <!--entity comp6-->
+    <g class="entity" data-qualified-name="comp6" data-source-line="9" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="206" y="207"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="268" y="212"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="266" y="214"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="266" y="218"/>
+      <text fill="#000" font-size="14" textLength="42" x="221" y="237.889">comp6</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk7">
+      <path d="M119.939,91.108 C105.709,102.207 88.316,115.774 74.083,126.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk8">
+      <path d="M147,91.314 C147,102.41 147,115.929 147,126.982" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk9">
+      <path d="M174.061,91.108 C188.291,102.207 205.684,115.774 219.917,126.875" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="association" id="lnk11">
+      <path d="M247,171.314 C247,182.41 247,195.929 247,206.982" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

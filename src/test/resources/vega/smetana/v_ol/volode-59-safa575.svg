@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="177px" preserveAspectRatio="none" style="width:94px;height:177px;background:#FFFFFF;" version="1.1" viewBox="0 0 94 177" width="94px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Car-->
+    <g class="entity" data-qualified-name="Car" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.575" x="14.5" y="12"/>
+      <ellipse cx="29.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="24.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="43.5" y="31.889">Car</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15.5" x2="68.075" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15.5" x2="68.075" y1="52" y2="52"/>
+    </g>
+    <!--class Wheel-->
+    <g class="entity" data-qualified-name="Wheel" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.725" x="6" y="113"/>
+      <ellipse cx="21" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="39.725" x="35" y="132.889">Wheel</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="76.725" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="76.725" y1="153" y2="153"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M42,60.211 C42,76.099 42,97.077 42,112.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <a href="http://google.com" target="_top" title="http://google.com" xlink:actuate="onRequest" xlink:href="http://google.com" xlink:show="new" xlink:title="http://google.com" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="20.881" x="44" y="90.111">test</text>
+      </a>
+    </g>
+  </g>
+</svg>

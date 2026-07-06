@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="129px" preserveAspectRatio="none" style="width:150px;height:129px;background:#FFFFFF;" version="1.1" viewBox="0 0 150 129" width="150px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster rect1-->
+    <g class="cluster" data-qualified-name="rect1" data-source-line="15" id="ent0002">
+      <rect fill="none" height="95" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="68" x="66" y="10"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="22.575" x="88.713" y="22.889">«s»</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="31.063" x="99.938" y="36.889">rect1</text>
+    </g>
+    <!--entity r-->
+    <g class="entity" data-qualified-name="r" data-source-line="9" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.363" x="6" y="35"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="22.575" x="22.788" y="55.889">«s»</text>
+      <text fill="#000" font-size="14" x="38.575" y="69.889">a</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="23.788" y="83.889">abc</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="16" y="97.889">a b c d</text>
+    </g>
+    <!--entity rect2-->
+    <g class="entity" data-qualified-name="rect1.rect2" data-source-line="16" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.063" x="74.5" y="49"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="22.575" x="91.988" y="69.889">«s»</text>
+      <text fill="#F00" font-size="14" textLength="31.063" x="84.5" y="83.889">rect2</text>
+    </g>
+  </g>
+</svg>

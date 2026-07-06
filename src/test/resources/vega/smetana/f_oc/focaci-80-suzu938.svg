@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:127px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 127 160" width="127px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Transaction-->
+    <g class="entity" data-qualified-name="Transaction" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="105.15" x="10.5" y="12"/>
+      <ellipse cx="25.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="20.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="73.15" x="39.5" y="31.889">Transaction</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="11.5" x2="114.65" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="11.5" x2="114.65" y1="52" y2="52"/>
+    </g>
+    <!--class ActorRole-->
+    <g class="entity" data-qualified-name="ActorRole" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.512" x="16" y="96"/>
+      <ellipse cx="31" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="26" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="61.512" x="45" y="115.889">ActorRole</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="108.512" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="108.512" y1="136" y2="136"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="63,95.947,67,86.947,63,90.947,59,86.947,63,95.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M63,60.279 C63,71.453 63,79.802 63,90.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="53.463" x="9" y="92.058">* initiators</text>
+      <text fill="#000" font-size="13" textLength="55.006" x="7" y="71.39">1 initiating</text>
+    </g>
+  </g>
+</svg>

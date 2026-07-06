@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="252px" preserveAspectRatio="none" style="width:216px;height:252px;background:#FFFFFF;" version="1.1" viewBox="0 0 216 252" width="216px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0001">
+      <ellipse cx="190" cy="128" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="76" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="156.2" x="6" y="92"/>
+    <text fill="#000" font-size="12" textLength="18.675" x="16" y="119.333">this</text>
+    <text fill="#000" font-size="20" textLength="61.125" x="34.675" y="117.556">activity</text>
+    <text fill="#000" font-size="12" textLength="8.7" x="16" y="131.333">is</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="22.65" x="24.7" y="131.333">very</text>
+    <text fill="#000" font-size="12" x="47.35" y="131.333"> </text>
+    <text fill="#F00" font-size="12" textLength="22.725" x="47.35" y="131.333">long</text>
+    <text fill="#000" font-size="12" textLength="136.2" x="16" y="143.333">and defined on several lines</text>
+    <text fill="#000" font-size="12" textLength="93.975" x="16" y="155.333">that contains many</text>
+    <text fill="#000" font-size="12" font-style="italic" textLength="19.275" x="109.975" y="155.333">text</text>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="98.675" x="34.5" y="12"/>
+    <text fill="#000" font-size="12" textLength="78.675" x="44.5" y="31.333">Another activity</text>
+    <text fill="#000" font-size="12" textLength="76.8" x="44.5" y="43.333">on several lines</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="85.325" x="41.5" y="204"/>
+    <text fill="#000" font-size="12" textLength="65.325" x="51.5" y="223.333">Short activity</text>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="162.258,130,171.258,134,167.258,130,171.258,126,162.258,130" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M167.258,130 C173.037,130 173.817,130 179.597,130" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="84,56.33,80,65.33,84,61.33,88,65.33,84,56.33" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M84,61.33 C84,71.839 84,79.817 84,91.885" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="84,203.899,88,194.899,84,198.899,80,194.899,84,203.899" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M84,168.065 C84,180.653 84,189.019 84,198.899" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

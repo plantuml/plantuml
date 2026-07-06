@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="178px" preserveAspectRatio="none" style="width:122px;height:178px;background:#FFFFFF;" version="1.1" viewBox="0 0 122 178" width="122px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="S" data-source-line="1" id="ent0001">
+      <a href="" target="_top" title="S" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="S" xlink:type="simple">
+        <path d="M18.5,12 L93.5,12 A12.5,12.5 0 0 1 106,24.5 L106,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+        <rect fill="none" height="150" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100" x="6" y="12"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="106" y1="36" y2="36"/>
+        <text fill="#000" font-size="14" x="51.319" y="27.889">S</text>
+      </a>
+      <g class="entity" data-qualified-name="S.a" data-source-line="2" id="ent0002">
+        <a href="" target="_top" title="a" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="a" xlink:type="simple">
+          <path d="M24.5,47 L74.5,47 A12.5,12.5 0 0 1 87,59.5 L87,71 L12,71 L12,59.5 A12.5,12.5 0 0 1 24.5,47" fill="#F1F1F1"/>
+          <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="12" y="47"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="87" y1="71" y2="71"/>
+          <text fill="#000" font-size="14" x="45.606" y="62.889">a</text>
+        </a>
+        <g class="entity" data-qualified-name="S.a.b" data-source-line="3" id="ent0003">
+          <a href="" target="_top" title="a" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="a" xlink:type="simple">
+            <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="18" y="82"/>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="68" y1="106" y2="106"/>
+            <text fill="#000" font-size="14" x="39.106" y="97.889">b</text>
+          </a>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="256px" preserveAspectRatio="none" style="width:171px;height:256px;background:#FFFFFF;" version="1.1" viewBox="0 0 171 256" width="171px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="118.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="39.95" x="98.5" y="72"/>
+    <text fill="#000" font-size="12" textLength="19.95" x="108.5" y="91.333">toto</text>
+    <g class="entity" data-qualified-name=".4" id="ent0005">
+      <polygon fill="#F1F1F1" points="118.5,144,130.5,156,118.5,168,106.5,156,118.5,144" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="63.35" x="25" y="140"/>
+    <text fill="#000" font-size="12" textLength="43.35" x="35" y="159.333">activity 5</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="63.35" x="87" y="208"/>
+    <text fill="#000" font-size="12" textLength="43.35" x="97" y="227.333">activity 6</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="63.35" x="6" y="208"/>
+    <text fill="#000" font-size="12" textLength="43.35" x="16" y="227.333">activity 7</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="118.5,71.587,122.5,62.587,118.5,66.587,114.5,62.587,118.5,71.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M118.5,36.084 C118.5,45.976 118.5,55.56 118.5,66.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="118.5,143.692,122.5,134.692,118.5,138.692,114.5,134.692,118.5,143.692" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M118.5,104.308 C118.5,116.341 118.5,127.83 118.5,138.692" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="45.1" x="119.5" y="140.247">Other test</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="88.469,156,97.469,160,93.469,156,97.469,152,88.469,156" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M93.469,156 C99.412,156 100.356,156 106.3,156" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="118.5,207.781,122.5,198.781,118.5,202.781,114.5,198.781,118.5,207.781" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M118.5,168.196 C118.5,179.082 118.5,190.698 118.5,202.781" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0010" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="69.141,224,78.141,228,74.141,224,78.141,220,69.141,224" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M74.141,224 C80.053,224 80.966,224 86.879,224" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

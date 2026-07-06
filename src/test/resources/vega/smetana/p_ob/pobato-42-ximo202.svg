@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="322px" preserveAspectRatio="none" style="width:248px;height:322px;background:#FFFFFF;" version="1.1" viewBox="0 0 248 322" width="248px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster spring-->
+    <g class="cluster" data-qualified-name="spring" data-source-line="1" id="ent0003">
+      <path d="M98.5,12 L137.65,12 A3.75,3.75 0 0 1 140.15,14.5 L147.15,32 L229.5,32 A2.5,2.5 0 0 1 232,34.5 L232,123.5 A2.5,2.5 0 0 1 229.5,126 L98.5,126 A2.5,2.5 0 0 1 96,123.5 L96,14.5 A2.5,2.5 0 0 1 98.5,12" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="96" x2="147.15" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="100" y="24.889">spring</text>
+    </g>
+    <!--cluster security-->
+    <g class="cluster" data-qualified-name="spring.security" data-source-line="1" id="ent0004">
+      <path d="M106.5,37 L155.712,37 A3.75,3.75 0 0 1 158.212,39.5 L165.212,57 L221.5,57 A2.5,2.5 0 0 1 224,59.5 L224,115.5 A2.5,2.5 0 0 1 221.5,118 L106.5,118 A2.5,2.5 0 0 1 104,115.5 L104,39.5 A2.5,2.5 0 0 1 106.5,37" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="104" x2="165.212" y1="57" y2="57"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="48.212" x="108" y="49.889">security</text>
+    </g>
+    <!--class User-->
+    <g class="entity" data-qualified-name="User" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.35" x="34.5" y="153"/>
+      <ellipse cx="49.5" cy="171" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="44.5" y="176">E</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="67.35" x="61.5" y="167.333">«aggregate»</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="80.388" y="180.889">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35.5" x2="128.85" y1="189" y2="189"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35.5" x2="128.85" y1="197" y2="197"/>
+    </g>
+    <!--class Session-->
+    <g class="entity" data-qualified-name="Session" data-source-line="1" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.875" x="6" y="62"/>
+      <ellipse cx="21" cy="78" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="83">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="49.875" x="35" y="81.889">Session</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="86.875" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="86.875" y1="102" y2="102"/>
+    </g>
+    <!--class Role-->
+    <g class="entity" data-qualified-name="Role" data-source-line="2" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.875" x="51.5" y="258"/>
+      <ellipse cx="66.5" cy="274" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="61.5" y="279">C</text>
+      <text fill="#000" font-size="14" textLength="28.875" x="80.5" y="277.889">Role</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52.5" x2="111.375" y1="290" y2="290"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52.5" x2="111.375" y1="298" y2="298"/>
+    </g>
+    <!--class UserDetails-->
+    <g class="entity" data-qualified-name="spring.security.UserDetails" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.45" x="112" y="62"/>
+      <ellipse cx="127" cy="78" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="122" y="83">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="72.45" x="141" y="81.889">UserDetails</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="113" x2="215.45" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="113" x2="215.45" y1="102" y2="102"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="142.883,110.435,126.376,119.79,135.291,127.823,142.883,110.435" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M130.833,123.807 C119.16,136.761 116.699,139.493 104.772,152.729" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="56.013,110.435,56.875,129.389,68.075,125.081,56.013,110.435" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M62.475,127.235 C67.458,140.19 67.19,139.493 72.28,152.729" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0008" data-link-type="aggregation" id="lnk9">
+      <polygon fill="none" points="82,205.226,78,211.226,82,217.226,86,211.226,82,205.226" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="82,257.823,86,248.823,82,252.823,78,248.823,82,257.823" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M82,217.226 C82,233.352 82,237.112 82,252.823" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="60.694" x="84" y="235.111">authorized</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="62" y="253.934">1..*</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="62" y="216.337">0..*</text>
+    </g>
+  </g>
+</svg>

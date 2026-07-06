@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="171px" preserveAspectRatio="none" style="width:114px;height:171px;background:#FFFFFF;" version="1.1" viewBox="0 0 114 171" width="114px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="bz23kcsdiojxy0" width="1" x="0" y="0">
+      <feFlood flood-color="#FF0000" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+    <filter height="1" id="bz23kcsdiojxy1" width="1" x="0" y="0">
+      <feFlood flood-color="#00FF00" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+    <filter height="1" id="bz23kcsdiojxy2" width="1" x="0" y="0">
+      <feFlood flood-color="#0000FF" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.425" x="26.619" y="12"/>
+      <ellipse cx="41.619" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="36.619" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="55.619" y="31.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27.619" x2="77.044" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27.619" x2="77.044" y1="52" y2="52"/>
+    </g>
+    <g class="legend" data-source-line="3">
+      <rect fill="#DDD" height="70" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="83.238" x="12" y="82"/>
+      <text fill="#000" font-size="14" font-weight="700" x="17" y="99.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.15" x="17" y="99.889">Type</text>
+      <text fill="#000" filter="url(#bz23kcsdiojxy0)" font-size="14" textLength="11.55" x="17" y="113.889">   </text>
+      <text fill="#000" font-size="14" textLength="72.45" x="17" y="113.889">Type A class</text>
+      <text fill="#000" filter="url(#bz23kcsdiojxy1)" font-size="14" textLength="11.55" x="17" y="127.889">   </text>
+      <text fill="#000" font-size="14" textLength="72.45" x="17" y="127.889">Type B class</text>
+      <text fill="#000" filter="url(#bz23kcsdiojxy2)" font-size="14" textLength="11.55" x="17" y="141.889">   </text>
+      <text fill="#000" font-size="14" textLength="73.238" x="17" y="141.889">Type C class</text>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="90.238" y1="89" y2="89"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="90.238" y1="103" y2="103"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="90.238" y1="117" y2="117"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="90.238" y1="131" y2="131"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="90.238" y1="145" y2="145"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="17" y1="89" y2="145"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="17" y1="89" y2="145"/>
+      <line style="stroke:#000;stroke-width:1;" x1="90.238" x2="90.238" y1="89" y2="145"/>
+    </g>
+  </g>
+</svg>

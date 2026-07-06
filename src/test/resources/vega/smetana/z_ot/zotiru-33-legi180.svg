@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="126px" preserveAspectRatio="none" style="width:677px;height:126px;background:#FFFFFF;" version="1.1" viewBox="0 0 677 126" width="677px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster nested-->
+    <g class="cluster" data-qualified-name="nested" data-source-line="17" id="ent0005">
+      <path d="M347.5,45.5 L390.5,45.5 A3.75,3.75 0 0 1 393,48 L400,65.5 L658.5,65.5 A2.5,2.5 0 0 1 661,68 L661,100 A2.5,2.5 0 0 1 658.5,102.5 L347.5,102.5 A2.5,2.5 0 0 1 345,100 L345,48 A2.5,2.5 0 0 1 347.5,45.5" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="345" x2="400" y1="65.5" y2="65.5"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="42" x="349" y="58.389">nested</text>
+    </g>
+    <!--entity not_nested-->
+    <g class="entity" data-qualified-name="not_nested" data-source-line="14" id="ent0001">
+      <path d="M8.5,64 L309.5,64 A3.75,3.75 0 0 1 312,66.5 L319,84 L333.5,84 A2.5,2.5 0 0 1 336,86.5 L336,98.5 A2.5,2.5 0 0 1 333.5,101 L8.5,101 A2.5,2.5 0 0 1 6,98.5 L6,66.5 A2.5,2.5 0 0 1 8.5,64" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="319" y1="84" y2="84"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="69.213" x="125.394" y="77.889">not_nested</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="15" id="ent0003">
+      <path d="M134.5,4 L134.5,27 A0,0 0 0 0 134.5,27 L167,27 L171,63.832 L175,27 L207.5,27 A0,0 0 0 0 207.5,27 L207.5,14 L197.5,4 L134.5,4 A0,0 0 0 0 134.5,4" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M197.5,4 L197.5,14 L207.5,14 L197.5,4" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="52" x="140.5" y="19.111">Width OK</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN7" data-source-line="20" id="ent0008">
+      <path d="M443.5,4 L443.5,27 L516.5,27 L516.5,14 L506.5,4 L443.5,4" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M506.5,4 L506.5,14 L516.5,14 L506.5,4" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="52" x="449.5" y="19.111">Width KO</text>
+    </g>
+    <!--entity c-->
+    <g class="entity" data-qualified-name="nested.c" data-source-line="18" id="ent0006">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27" x="565.5" y="70.5"/>
+      <text fill="#000" font-size="14" x="575.5" y="84.389">c</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0005" data-link-type="association" id="lnk9">
+      <path d="M480,28.235 C480,31.195 480,34.573 480,38.159 C480,39.952 480,41.797 480,43.668 C480,44.136 480,44.605 480,45.076 C480,45.194 480,45.311 480,45.429" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

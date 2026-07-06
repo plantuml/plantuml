@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="189px" preserveAspectRatio="none" style="width:561px;height:189px;background:#FFFFFF;" version="1.1" viewBox="0 0 561 189" width="561px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="cluster" data-qualified-name="..3" data-source-line="3" id="ent0004">
+      <path d="M149.5,31.5 L149.5,79.5 A2.5,2.5 0 0 0 152,82 L341,82 A2.5,2.5 0 0 0 343.5,79.5 L343.5,39 L333.5,29 L152,29 A2.5,2.5 0 0 0 149.5,31.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M333.5,29 L333.5,36.5 A2.5,2.5 0 0 0 336,39 L343.5,39" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <!--cluster MyFile-->
+    <g class="cluster" data-qualified-name="MyFile" data-source-line="7" id="ent0007">
+      <path d="M351.5,14.5 L351.5,79.5 A2.5,2.5 0 0 0 354,82 L543,82 A2.5,2.5 0 0 0 545.5,79.5 L545.5,22 L535.5,12 L354,12 A2.5,2.5 0 0 0 351.5,14.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M535.5,12 L535.5,19.5 A2.5,2.5 0 0 0 538,22 L545.5,22" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.3" x="427.85" y="24.889">MyFile</text>
+    </g>
+    <!--entity folder-->
+    <g class="entity" data-qualified-name="folder" data-source-line="1" id="ent0001">
+      <path d="M16,29.5 L57,29.5 A3.75,3.75 0 0 1 59.5,32 L66.5,50.5 L81,50.5 A2.5,2.5 0 0 1 83.5,53 L83.5,79 A2.5,2.5 0 0 1 81,81.5 L16,81.5 A2.5,2.5 0 0 1 13.5,79 L13.5,32 A2.5,2.5 0 0 1 16,29.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="13.5" x2="66.5" y1="50.5" y2="50.5"/>
+      <text fill="#000" font-size="14" textLength="35" x="23.5" y="68.389">folder</text>
+    </g>
+    <!--entity file-->
+    <g class="entity" data-qualified-name="file" data-source-line="2" id="ent0002">
+      <path d="M101.5,41 L101.5,70 A2.5,2.5 0 0 0 104,72.5 L136.938,72.5 A2.5,2.5 0 0 0 139.438,70 L139.438,48.5 L129.438,38.5 L104,38.5 A2.5,2.5 0 0 0 101.5,41" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M129.438,38.5 L129.438,46 A2.5,2.5 0 0 0 131.938,48.5 L139.438,48.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="111.5" y="59.389">file</text>
+    </g>
+    <!--entity MyOtherFile-->
+    <g class="entity" data-qualified-name="MyOtherFile" data-source-line="11" id="ent0010">
+      <path d="M6,120 L6,171 A2.5,2.5 0 0 0 8.5,173.5 L88.863,173.5 A2.5,2.5 0 0 0 91.363,171 L91.363,127.5 L81.363,117.5 L8.5,117.5 A2.5,2.5 0 0 0 6,120" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M81.363,117.5 L81.363,125 A2.5,2.5 0 0 0 83.863,127.5 L91.363,127.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="65.363" x="16" y="138.389">Simple text</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="90.363" y1="141.5" y2="141.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="90.363" y1="143.5" y2="143.5"/>
+      <text fill="#000" font-size="14" textLength="57.4" x="16" y="156.389">Other text</text>
+    </g>
+    <!--entity artifact1-->
+    <g class="entity" data-qualified-name="..3.artifact1" data-source-line="4" id="ent0005">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79.7" x="255.5" y="37"/>
+      <polygon fill="#F1F1F1" points="318.2,42,318.2,56,330.2,56,330.2,48,324.2,42,318.2,42" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="324.2" x2="324.2" y1="42" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="330.2" x2="324.2" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" textLength="49.7" x="265.5" y="60.889">artifact1</text>
+    </g>
+    <!--entity artifact2-->
+    <g class="entity" data-qualified-name="..3.artifact2" data-source-line="5" id="ent0006">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79.7" x="157.5" y="37"/>
+      <polygon fill="#F1F1F1" points="220.2,42,220.2,56,232.2,56,232.2,48,226.2,42,220.2,42" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="226.2" x2="226.2" y1="42" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="232.2" x2="226.2" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" textLength="49.7" x="167.5" y="60.889">artifact2</text>
+    </g>
+    <!--entity artifact3-->
+    <g class="entity" data-qualified-name="MyFile.artifact3" data-source-line="8" id="ent0008">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79.7" x="457.5" y="37"/>
+      <polygon fill="#F1F1F1" points="520.2,42,520.2,56,532.2,56,532.2,48,526.2,42,520.2,42" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="526.2" x2="526.2" y1="42" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="532.2" x2="526.2" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" textLength="49.7" x="467.5" y="60.889">artifact3</text>
+    </g>
+    <!--entity artifact4-->
+    <g class="entity" data-qualified-name="MyFile.artifact4" data-source-line="9" id="ent0009">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79.7" x="359.5" y="37"/>
+      <polygon fill="#F1F1F1" points="422.2,42,422.2,56,434.2,56,434.2,48,428.2,42,422.2,42" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="428.2" x2="428.2" y1="42" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="434.2" x2="428.2" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" textLength="49.7" x="369.5" y="60.889">artifact4</text>
+    </g>
+  </g>
+</svg>

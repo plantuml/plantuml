@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="191px" preserveAspectRatio="none" style="width:301px;height:191px;background:#FFFFFF;" version="1.1" viewBox="0 0 301 191" width="301px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster r2-->
+    <g class="cluster" data-qualified-name="r2" data-source-line="10" id="ent0005">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="88" x="197" y="12"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="12.425" x="234.788" y="24.889">r2</text>
+    </g>
+    <!--entity actor-->
+    <g class="entity" data-qualified-name="actor" data-source-line="5" id="ent0001">
+      <ellipse cx="45.031" cy="30.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M45.031,38.5 L45.031,65.5 M32.031,46.5 L58.031,46.5 M45.031,65.5 L32.031,80.5 M45.031,65.5 L58.031,80.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="31.062" x="29.5" y="92.889">actor</text>
+    </g>
+    <!--entity component-->
+    <g class="entity" data-qualified-name="component" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.213" x="78.5" y="37"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="167.713" y="42"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="165.713" y="44"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="165.713" y="48"/>
+      <text fill="#000" font-size="14" textLength="69.213" x="93.5" y="67.889">component</text>
+    </g>
+    <!--entity rectangle-->
+    <g class="entity" data-qualified-name="rectangle" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.575" x="6" y="136.5"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="16" y="157.389">rectangle</text>
+    </g>
+    <!--entity database-->
+    <g class="entity" data-qualified-name="database" data-source-line="8" id="ent0004">
+      <path d="M102,142 C102,132 140.788,132 140.788,132 C140.788,132 179.575,132 179.575,142 L179.575,165 C179.575,175 140.788,175 140.788,175 C140.788,175 102,175 102,165 L102,142" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M102,142 C102,152 140.788,152 140.788,152 C140.788,152 179.575,152 179.575,142" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="112" y="166.889">database</text>
+    </g>
+    <!--entity node-->
+    <g class="entity" data-qualified-name="r2.node" data-source-line="11" id="ent0006">
+      <polygon fill="#F1F1F1" points="205.5,47,215.5,37,276.65,37,276.65,71,266.65,81,205.5,81,205.5,47" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="266.65" x2="276.65" y1="47" y2="37"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="205.5" x2="266.65" y1="47" y2="47"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="266.65" x2="266.65" y1="47" y2="81"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="220.5" y="67.889">node</text>
+    </g>
+  </g>
+</svg>

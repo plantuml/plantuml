@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="296px" preserveAspectRatio="none" style="width:494px;height:296px;background:#FFFFFF;" version="1.1" viewBox="0 0 494 296" width="494px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster V-->
+    <g class="cluster" data-qualified-name="V" data-source-line="2" id="ent0001">
+      <polygon fill="none" points="318,186,328,176,478,176,478,262,468,272,318,272,318,186" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="468" x2="478" y1="186" y2="176"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="318" x2="468" y1="186" y2="186"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="468" x2="468" y1="186" y2="272"/>
+      <text fill="#000" font-size="14" font-weight="700" x="389.319" y="199.889">V</text>
+    </g>
+    <!--cluster tomcatJIRA-->
+    <g class="cluster" data-qualified-name="tomcatJIRA" data-source-line="5" id="ent0003">
+      <rect fill="none" height="166" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="296" x="14" y="99"/>
+      <path d="M27.85,99 L27.85,106 L17.85,116 L14,116" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" x="17" y="110.889">f</text>
+    </g>
+    <!--entity REST_JIRA-->
+    <g class="entity" data-qualified-name="REST_JIRA" data-source-line="11" id="ent0008">
+      <ellipse cx="132" cy="73" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="75.6" x="94.2" y="100.889">REST_JIRA</text>
+    </g>
+    <!--entity appLinkJIRA-->
+    <g class="entity" data-qualified-name="appLinkJIRA" data-source-line="12" id="ent0011">
+      <ellipse cx="168" cy="73" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="79.45" x="128.275" y="100.889">appLinkJIRA</text>
+    </g>
+    <!--entity appLinkTZ-->
+    <g class="entity" data-qualified-name="appLinkTZ" data-source-line="13" id="ent0014">
+      <ellipse cx="168" cy="13" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="134.881" y="40.889">appLinkTZ</text>
+    </g>
+    <!--entity DC1-->
+    <g class="entity" data-qualified-name="V.DC1" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="143.425" x="326.5" y="206"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="449.925" y="211"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="447.925" y="213"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="447.925" y="217"/>
+      <text fill="#000" font-size="14" textLength="72.45" x="341.5" y="236.889">Win Domain</text>
+      <text fill="#000" font-size="14" textLength="103.425" x="341.5" y="250.889">Master Controller</text>
+    </g>
+    <!--entity JIRA Core-->
+    <g class="entity" data-qualified-name="tomcatJIRA.JIRA Core" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="100.725" x="22.5" y="124"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="103.225" y="129"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.225" y="131"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.225" y="135"/>
+      <text fill="#000" font-size="14" textLength="60.725" x="37.5" y="154.889">JIRA Core</text>
+    </g>
+    <!--entity JIRA Software-->
+    <g class="entity" data-qualified-name="tomcatJIRA.JIRA Software" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="125.575" x="176" y="124"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="281.575" y="129"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="279.575" y="131"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="279.575" y="135"/>
+      <text fill="#000" font-size="14" textLength="85.575" x="191" y="154.889">JIRA Software</text>
+    </g>
+    <!--entity JIRA Portfolio-->
+    <g class="entity" data-qualified-name="tomcatJIRA.JIRA Portfolio" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="121.725" x="22" y="213"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="123.725" y="218"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="121.725" y="220"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="121.725" y="224"/>
+      <text fill="#000" font-size="14" textLength="81.725" x="37" y="243.889">JIRA Portfolio</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="366.389,205.988,361.704,197.325,362.43,202.935,356.819,203.661,366.389,205.988" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M310.123,174.885 C310.398,174.951 310.669,175.019 310.937,175.088 C312.011,175.366 313.033,175.669 314,176 C332.95,182.477 347.577,191.483 362.43,202.935" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0003" data-link-type="association" id="lnk10">
+      <path d="M134.972,88.229 C135.811,91.398 136.779,95.055 137.811,98.954" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0003" data-link-type="association" id="lnk13">
+      <path d="M165.028,88.229 C164.189,91.398 163.221,95.055 162.189,98.954" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0011" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="168,63.851,172,54.851,168,58.851,164,54.851,168,63.851" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M168,28.183 C168,38.453 168,48.592 168,58.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

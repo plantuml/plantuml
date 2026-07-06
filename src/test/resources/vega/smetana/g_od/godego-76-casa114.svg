@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="142px" preserveAspectRatio="none" style="width:232px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 232 142" width="232px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Foo-->
+    <g class="cluster" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <path d="M60.5,4 L85.65,4 A3.75,3.75 0 0 1 88.15,6.5 L95.15,24 L213.5,24 A2.5,2.5 0 0 1 216,26.5 L216,115.5 A2.5,2.5 0 0 1 213.5,118 L60.5,118 A2.5,2.5 0 0 1 58,115.5 L58,6.5 A2.5,2.5 0 0 1 60.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="58" x2="95.15" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.15" x="62" y="16.889">Foo</text>
+    </g>
+    <!--cluster Bar-->
+    <g class="cluster" data-qualified-name="Foo.Bar" data-source-line="2" id="ent0002">
+      <path d="M136.5,29 L159.288,29 A3.75,3.75 0 0 1 161.788,31.5 L168.788,49 L205.5,49 A2.5,2.5 0 0 1 208,51.5 L208,107.5 A2.5,2.5 0 0 1 205.5,110 L136.5,110 A2.5,2.5 0 0 1 134,107.5 L134,31.5 A2.5,2.5 0 0 1 136.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="134" x2="168.788" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="21.788" x="138" y="41.889">Bar</text>
+    </g>
+    <path d="M8.5,54 L31.288,54 A3.75,3.75 0 0 1 33.788,56.5 L40.788,74 L45.288,74 A2.5,2.5 0 0 1 47.788,76.5 L47.788,99.5 A2.5,2.5 0 0 1 45.288,102 L8.5,102 A2.5,2.5 0 0 1 6,99.5 L6,56.5 A2.5,2.5 0 0 1 8.5,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="40.788" y1="74" y2="74"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="21.788" x="10" y="66.889">Bar</text>
+    <!--class Quz-->
+    <g class="entity" data-qualified-name="Foo.Quz" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.638" x="66" y="54"/>
+      <ellipse cx="81" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="76" y="75">C</text>
+      <text fill="#000" font-size="14" textLength="25.638" x="95" y="73.889">Quz</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67" x2="122.638" y1="86" y2="86"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67" x2="122.638" y1="94" y2="94"/>
+    </g>
+    <!--class Quz-->
+    <g class="entity" data-qualified-name="Foo.Bar.Quz" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.638" x="142" y="54"/>
+      <ellipse cx="157" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="152" y="75">C</text>
+      <text fill="#000" font-size="14" textLength="25.638" x="171" y="73.889">Quz</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="143" x2="198.638" y1="86" y2="86"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="143" x2="198.638" y1="94" y2="94"/>
+    </g>
+  </g>
+</svg>

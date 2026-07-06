@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="202px" preserveAspectRatio="none" style="width:448px;height:202px;background:#FFFFFF;" version="1.1" viewBox="0 0 448 202" width="448px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster DataONE-->
+    <g class="cluster" data-qualified-name="DataONE" data-source-line="5" id="ent0003">
+      <path d="M201.5,4 L262.438,4 A3.75,3.75 0 0 1 264.938,6.5 L271.938,24 L429.5,24 A2.5,2.5 0 0 1 432,26.5 L432,175.5 A2.5,2.5 0 0 1 429.5,178 L201.5,178 A2.5,2.5 0 0 1 199,175.5 L199,6.5 A2.5,2.5 0 0 1 201.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="199" x2="271.938" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="59.938" x="203" y="16.889">DataONE</text>
+    </g>
+    <!--entity client-->
+    <g class="entity" data-qualified-name="client" data-source-line="3" id="ent0001">
+      <ellipse cx="20.787" cy="37.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M20.787,45.5 L20.787,72.5 M7.787,53.5 L33.787,53.5 M20.787,72.5 L7.787,87.5 M20.787,72.5 L33.787,87.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="6" y="99.889">User</text>
+    </g>
+    <!--entity authen-->
+    <g class="entity" data-qualified-name="authen" data-source-line="4" id="ent0002">
+      <ellipse cx="121.914" cy="65.883" fill="#F1F1F1" rx="67.414" ry="15.883" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="108.15" x="67.839" y="69.383">12. Authentication</text>
+    </g>
+    <!--entity CN-->
+    <g class="entity" data-qualified-name="DataONE.CN" data-source-line="6" id="ent0004">
+      <ellipse cx="263.981" cy="37.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M263.981,45.5 L263.981,72.5 M250.981,53.5 L276.981,53.5 M263.981,72.5 L250.981,87.5 M263.981,72.5 L276.981,87.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="112.963" x="207.5" y="99.889">Coordinating Node</text>
+    </g>
+    <!--entity MN-->
+    <g class="entity" data-qualified-name="DataONE.MN" data-source-line="7" id="ent0005">
+      <ellipse cx="380.894" cy="37.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M380.894,45.5 L380.894,72.5 M367.894,53.5 L393.894,53.5 M380.894,72.5 L367.894,87.5 M380.894,72.5 L393.894,87.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="84.788" x="338.5" y="99.889">Member Node</text>
+    </g>
+    <!--entity author-->
+    <g class="entity" data-qualified-name="DataONE.author" data-source-line="8" id="ent0006">
+      <ellipse cx="272.005" cy="154.301" fill="#F1F1F1" rx="64.505" ry="15.301" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="101.15" x="221.43" y="157.801">13. Authorization</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="96px" preserveAspectRatio="none" style="width:136px;height:96px;background:#FFFFFF;" version="1.1" viewBox="0 0 136 96" width="136px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity VPN-->
+    <g class="entity" data-qualified-name="VPN" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="68" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.238" x="6" y="12"/>
+      <path d="M55.069,25.06 A0.5,0.5 0 0 0 54.569,25.556 L54.475,35.472 A0.5,0.5 0 0 0 54.975,35.976 L58.012,35.976 L55.754,38.107 A0.5,0.5 0 0 0 56.096,38.97 L70.033,39.017 A0.5,0.5 0 0 0 70.412,38.187 L68.475,35.976 L71.158,35.976 A0.5,0.5 0 0 0 71.658,35.474 L71.611,25.558 A0.5,0.5 0 0 0 71.111,25.06 M55.563,26.06 L70.614,26.06 L70.657,34.976 L55.479,34.976 M58.94,36.476 L67.584,36.476 L68.93,38.013 L57.35,37.974" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="94.238" x="16" y="52.889">long description</text>
+      <text fill="#000" font-size="14" textLength="89.6" x="16" y="66.889">on several lines</text>
+    </g>
+  </g>
+</svg>

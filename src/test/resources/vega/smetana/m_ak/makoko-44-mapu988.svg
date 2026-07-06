@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="136px" preserveAspectRatio="none" style="width:209px;height:136px;background:#FFFFFF;" version="1.1" viewBox="0 0 209 136" width="209px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class dummy-->
+    <g class="entity" data-qualified-name="dummy" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.85" x="78.531" y="72"/>
+      <ellipse cx="93.531" cy="88" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="88.531" y="93">C</text>
+      <text fill="#000" font-size="14" textLength="45.85" x="107.531" y="91.889">dummy</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="79.531" x2="155.381" y1="104" y2="104"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="79.531" x2="155.381" y1="112" y2="112"/>
+    </g>
+    <g class="entity" data-qualified-name="dummylol2" data-source-line="2" id="ent0003">
+      <ellipse cx="46.531" cy="17" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="31" y="32.889">toto1</text>
+    <g class="entity" data-qualified-name="dummylol5" data-source-line="3" id="ent0006">
+      <ellipse cx="80.531" cy="17" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="65" y="32.889">toto2</text>
+    <g class="entity" data-qualified-name="dummylol8" data-source-line="4" id="ent0009">
+      <ellipse cx="114.531" cy="17" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="99" y="32.889">toto3</text>
+    <g class="entity" data-qualified-name="dummylol11" data-source-line="6" id="ent0012">
+      <ellipse cx="15.531" cy="89" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="0" y="104.889">tutu1</text>
+    <g class="entity" data-qualified-name="dummylol14" data-source-line="7" id="ent0015">
+      <ellipse cx="49.531" cy="89" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="34" y="104.889">tutu2</text>
+    <g class="entity" data-qualified-name="dummylol17" data-source-line="8" id="ent0018">
+      <ellipse cx="148.531" cy="17" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="133" y="32.889">tutu3</text>
+    <g class="entity" data-qualified-name="dummylol20" data-source-line="9" id="ent0021">
+      <ellipse cx="182.531" cy="17" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="167" y="32.889">tutu4</text>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="association" id="lnk4">
+      <path d="M57.599,33.305 C66.746,42.721 82.058,58.483 94.915,71.718" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="association" id="lnk7">
+      <path d="M88.994,36.247 C93.649,45.831 100.49,59.915 106.307,71.891" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0001" data-link-type="association" id="lnk10">
+      <path d="M117.531,36.247 C117.531,45.831 117.531,59.915 117.531,71.891" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0001" data-link-type="association" id="lnk13">
+      <path d="M22.28,83.978 C26.113,73.961 33.144,60.343 44.531,54 C50.744,50.539 53.776,51.78 60.531,54 C71.859,57.723 82.785,64.654 91.989,71.828" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0001" data-link-type="association" id="lnk16">
+      <path d="M60.656,96 C66.581,96 72.505,96 78.43,96" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0018" data-entity-2="ent0001" data-link-type="association" id="lnk19">
+      <path d="M146.069,36.247 C141.413,45.831 134.572,59.915 128.755,71.891" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0001" data-link-type="association" id="lnk22">
+      <path d="M177.464,33.305 C168.317,42.721 153.005,58.483 140.148,71.718" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

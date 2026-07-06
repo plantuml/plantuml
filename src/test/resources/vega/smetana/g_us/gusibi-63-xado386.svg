@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="279px" preserveAspectRatio="none" style="width:812px;height:279px;background:#FFFFFF;" version="1.1" viewBox="0 0 812 279" width="812px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Company-->
+    <g class="cluster" data-qualified-name="Company" data-source-line="6" id="ent0003">
+      <rect fill="none" height="251" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="645" x="151.5" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="59.938" x="444.031" y="16.889">Company</text>
+    </g>
+    <!--cluster Project-->
+    <g class="cluster" data-qualified-name="Company.Project" data-source-line="10" id="ent0006">
+      <rect fill="none" height="218" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="425" x="363.5" y="29"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="43.575" x="554.213" y="41.889">Project</text>
+    </g>
+    <!--cluster System-->
+    <g class="cluster" data-qualified-name="Company.Project.System" data-source-line="15" id="ent0010">
+      <rect fill="none" height="169.5" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="254" x="526.5" y="54"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="46.637" x="630.181" y="66.889">System</text>
+    </g>
+    <!--entity Visitor-->
+    <g class="entity" data-qualified-name="Visitor" data-source-line="3" id="ent0001">
+      <ellipse cx="25.469" cy="63.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M25.469,71.5 L25.469,98.5 M12.469,79.5 L38.469,79.5 M25.469,98.5 L12.469,113.5 M25.469,98.5 L38.469,113.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.937" x="6" y="125.889">Visitor</text>
+    </g>
+    <!--entity AdsManager-->
+    <g class="entity" data-qualified-name="AdsManager" data-source-line="4" id="ent0002">
+      <ellipse cx="102.681" cy="63.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M102.681,71.5 L102.681,98.5 M89.681,79.5 L115.681,79.5 M102.681,98.5 L89.681,113.5 M102.681,98.5 L115.681,113.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="79.363" x="63" y="125.889">AdsManager</text>
+    </g>
+    <!--entity ProjectOwner-->
+    <g class="entity" data-qualified-name="Company.ProjectOwner" data-source-line="7" id="ent0004">
+      <ellipse cx="311.394" cy="63.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M311.394,71.5 L311.394,98.5 M298.394,79.5 L324.394,79.5 M311.394,98.5 L298.394,113.5 M311.394,98.5 L324.394,113.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="84.788" x="269" y="125.889">ProjectOwner</text>
+    </g>
+    <!--entity OrderAds-->
+    <g class="entity" data-qualified-name="Company.OrderAds" data-source-line="8" id="ent0005">
+      <ellipse cx="205.32" cy="91.899" fill="#F1F1F1" rx="45.32" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="59.85" x="175.395" y="95.399">OrderAds</text>
+    </g>
+    <!--entity ProjectUser-->
+    <g class="entity" data-qualified-name="Company.Project.ProjectUser" data-source-line="11" id="ent0007">
+      <ellipse cx="408.575" cy="63.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M408.575,71.5 L408.575,98.5 M395.575,79.5 L421.575,79.5 M408.575,98.5 L395.575,113.5 M408.575,98.5 L421.575,113.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="73.15" x="372" y="125.889">ProjectUser</text>
+    </g>
+    <!--entity Personel-->
+    <g class="entity" data-qualified-name="Company.Project.Personel" data-source-line="12" id="ent0008">
+      <ellipse cx="490.65" cy="63.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M490.65,71.5 L490.65,98.5 M477.65,79.5 L503.65,79.5 M490.65,98.5 L477.65,113.5 M490.65,98.5 L503.65,113.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="55.3" x="463" y="125.889">Personel</text>
+    </g>
+    <!--entity Newbie-->
+    <g class="entity" data-qualified-name="Company.Project.Newbie" data-source-line="13" id="ent0009">
+      <ellipse cx="408.406" cy="173.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M408.406,181.5 L408.406,208.5 M395.406,189.5 L421.406,189.5 M408.406,208.5 L395.406,223.5 M408.406,208.5 L421.406,223.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="46.813" x="385" y="235.889">Newbie</text>
+    </g>
+    <!--entity useService-->
+    <g class="entity" data-qualified-name="Company.Project.System.useService" data-source-line="16" id="ent0011">
+      <ellipse cx="590.502" cy="91.899" fill="#F1F1F1" rx="52.002" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="69.3" x="555.852" y="95.399">useService</text>
+    </g>
+    <!--entity ServSys-->
+    <g class="entity" data-qualified-name="Company.Project.System.ServSys" data-source-line="17" id="ent0012">
+      <ellipse cx="700.376" cy="91.899" fill="#F1F1F1" rx="39.876" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="674.301" y="95.399">ServSys</text>
+    </g>
+    <!--entity PassTutorial-->
+    <g class="entity" data-qualified-name="Company.Project.System.PassTutorial" data-source-line="18" id="ent0013">
+      <ellipse cx="590.356" cy="201.971" fill="#F1F1F1" rx="55.356" ry="13.471" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="77.875" x="551.418" y="205.471">PassTutorial</text>
+    </g>
+    <!--entity SeeReports-->
+    <g class="entity" data-qualified-name="Company.Project.System.SeeReports" data-source-line="19" id="ent0014">
+      <ellipse cx="718.409" cy="202.182" fill="#F1F1F1" rx="53.909" ry="13.182" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="73.938" x="681.44" y="205.682">SeeReports</text>
+    </g>
+  </g>
+</svg>

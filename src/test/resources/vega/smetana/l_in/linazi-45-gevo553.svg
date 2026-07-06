@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="233px" preserveAspectRatio="none" style="width:331px;height:233px;background:#FFFFFF;" version="1.1" viewBox="0 0 331 233" width="331px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.213" x="108.569" y="20.889">KO</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="87.15" x="128.781" y="20.889">on V1.2020.16</text>
+    </g>
+    <g class="entity" data-qualified-name="Foo1" data-source-line="3" id="ent0001">
+      <rect fill="#FFC0CB" height="170" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="181.663" x="6" y="47"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="80.863" y="59.889">Foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="186.663" y1="65" y2="65"/>
+      <text fill="#000" font-size="14" textLength="70.087" x="12" y="79.889">You can use</text>
+      <text fill="#000" font-size="14" textLength="74.025" x="12" y="93.889">several lines</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="186.663" y1="101" y2="101"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="12" y="115.889">as you want</text>
+      <text fill="#000" font-size="14" textLength="59.15" x="12" y="129.889">and group</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="186.663" y1="137" y2="137"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="186.663" y1="139" y2="139"/>
+      <text fill="#000" font-size="14" textLength="92.488" x="12" y="151.889">things together.</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="186.663" y1="159" y2="159"/>
+      <text fill="#000" font-size="14" textLength="169.663" x="12" y="173.889">You can have as many groups</text>
+      <text fill="#000" font-size="14" textLength="66.938" x="12" y="187.889">as you want</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="186.663" y1="195" y2="195"/>
+      <text fill="#000" font-size="14" textLength="68.513" x="12" y="209.889">End of class</text>
+    </g>
+    <g class="entity" data-qualified-name="User" data-source-line="18" id="ent0002">
+      <rect fill="#FFC0CB" height="168" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.513" x="206.5" y="48"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="245.969" y="60.889">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="207.5" x2="314.013" y1="66" y2="66"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="217.5" cy="96.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="66.063" x="226.5" y="98.889">getName()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="217.5" cy="110.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.063" x="226.5" y="112.889">getAddress()</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="207.5" x2="219.938" y1="81" y2="81"/>
+      <text fill="#000" font-size="14" textLength="81.638" x="219.938" y="84.389">Simple Getter</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="301.575" x2="314.013" y1="81" y2="81"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="217.5" cy="142.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="65.275" x="226.5" y="144.889">setName()</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="207.5" x2="225.013" y1="127" y2="127"/>
+      <text fill="#000" font-size="14" textLength="71.488" x="225.013" y="130.389">Some setter</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="296.5" x2="314.013" y1="127" y2="127"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="212.5" y="176.889">int age</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="207.5" x2="226.15" y1="159" y2="159"/>
+      <text fill="#000" font-size="14" textLength="69.213" x="226.15" y="162.389">private data</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="295.363" x2="314.013" y1="159" y2="159"/>
+      <text fill="#000" font-size="14" textLength="96.513" x="212.5" y="208.889">String password</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="207.5" x2="230.044" y1="191" y2="191"/>
+      <text fill="#000" font-size="14" textLength="61.425" x="230.044" y="194.389">encrypted</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="291.469" x2="314.013" y1="191" y2="191"/>
+    </g>
+  </g>
+</svg>

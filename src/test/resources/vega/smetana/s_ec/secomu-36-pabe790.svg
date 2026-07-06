@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="111px" preserveAspectRatio="none" style="width:361px;height:111px;background:#FFFFFF;" version="1.1" viewBox="0 0 361 111" width="361px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="28.787" x="162.856" y="20.889">style</text>
+    </g>
+    <!--entity node-->
+    <g class="entity" data-qualified-name="node" data-source-line="4" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,59,20,49,81.15,49,81.15,83,71.15,93,10,93,10,59" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="71.15" x2="81.15" y1="59" y2="49"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="71.15" y1="59" y2="59"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="71.15" x2="71.15" y1="59" y2="93"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="25" y="79.889">node</text>
+    </g>
+    <path d="M101.5,47 L155.438,47 A3.75,3.75 0 0 1 157.938,49.5 L164.938,67 L169.438,67 A2.5,2.5 0 0 1 171.938,69.5 L171.938,92.5 A2.5,2.5 0 0 1 169.438,95 L101.5,95 A2.5,2.5 0 0 1 99,92.5 L99,49.5 A2.5,2.5 0 0 1 101.5,47" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="99" x2="164.938" y1="67" y2="67"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="103" y="59.889">package</text>
+    <!--entity queue-->
+    <g class="entity" data-qualified-name="queue" data-source-line="8" id="ent0003">
+      <path d="M195,59 L243.938,59 C248.938,59 248.938,71 248.938,71 C248.938,71 248.938,83 243.938,83 L195,83 C190,83 190,71 190,71 C190,71 190,59 195,59" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M243.938,59 C238.938,59 238.938,71 238.938,71 C238.938,83 243.938,83 243.938,83" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.938" x="195" y="74.889">queue</text>
+    </g>
+    <!--entity rectangle-->
+    <g class="entity" data-qualified-name="rectangle" data-source-line="10" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.575" x="267.5" y="54"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="277.5" y="74.889">rectangle</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:72px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 72 90" width="72px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity n-->
+    <g class="entity" data-qualified-name="n" data-source-line="2" id="ent0001">
+      <path d="M6,14.5 L6,71.5 A2.5,2.5 0 0 0 8.5,74 L53.162,74 A2.5,2.5 0 0 0 55.662,71.5 L55.662,22 L45.662,12 L8.5,12 A2.5,2.5 0 0 0 6,14.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M45.662,12 L45.662,19.5 A2.5,2.5 0 0 0 48.162,22 L55.662,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.662" x="16" y="32.889">line1</text>
+      <text fill="#000" font-size="14" textLength="29.662" x="16" y="46.889">line2</text>
+      <text fill="#000" font-size="14" textLength="29.662" x="16" y="60.889">line3</text>
+    </g>
+  </g>
+</svg>

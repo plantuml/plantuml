@@ -1,0 +1,402 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="802px" preserveAspectRatio="none" style="width:989px;height:802px;background:#FFFFFF;" version="1.1" viewBox="0 0 989 802" width="989px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster SRFRet-->
+    <g class="cluster" data-qualified-name="SRFRet" data-source-line="16" id="ent0005">
+      <rect fill="#EBE5D5" height="106" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:2;" width="488" x="476" y="60.5"/>
+      <text fill="#00F" font-size="14" font-weight="700" x="720" y="73.389"> </text>
+    </g>
+    <!--cluster ACRet-->
+    <g class="cluster" data-qualified-name="ACRet" data-source-line="35" id="ent0014">
+      <rect fill="#CCD4C9" height="398" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:2;" width="496" x="477" y="184.5"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="7.7" x="725" y="197.389">  </text>
+    </g>
+    <!--cluster PRRet-->
+    <g class="cluster" data-qualified-name="PRRet" data-source-line="90" id="ent0038">
+      <rect fill="#DBCE99" height="172" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:2;" width="378" x="468" y="590.5"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="11.55" x="657" y="603.389">   </text>
+    </g>
+    <!--entity ACRaiz-->
+    <g class="entity" data-qualified-name="ACRaiz" data-source-line="13" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.45" x="299" y="416.5"/>
+      <text fill="#000" font-size="14" textLength="58.45" x="309" y="437.389">ICP Brasil</text>
+      <text fill="#000" font-size="14" textLength="52.238" x="312.106" y="451.389">AC-Raiz</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="14" id="ent0003">
+      <path d="M6,416 L6,465 A0,0 0 0 0 6,465 L200.388,465 A0,0 0 0 0 200.388,465 L200.388,444.5 L298.906,440.5 L200.388,436.5 L200.388,426 L190.388,416 L6,416 A0,0 0 0 0 6,416" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M190.388,416 L190.388,426 L200.388,426 L190.388,416" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="153.237" x="22.075" y="431.111">Emite certificados ICP Brasil</text>
+      <text fill="#000" font-size="13" textLength="173.388" x="12" y="444.111">às autoridades certificadoras de</text>
+      <text fill="#000" font-size="13" textLength="78" x="59.694" y="457.111">primeiro nível.</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN11" data-source-line="24" id="ent0012">
+      <path d="M277,12 L277,139 L399.238,139 L399.238,22 L389.238,12 L277,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M389.238,12 L389.238,22 L399.238,22 L389.238,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="90.35" x="288.444" y="27.111">Somente as ACs</text>
+      <text fill="#000" font-size="13" textLength="41.275" x="312.981" y="40.111">ligadas</text>
+      <text fill="#000" font-size="13" textLength="80.925" x="293.156" y="53.111">à Secretaria da</text>
+      <text fill="#000" font-size="13" textLength="88.238" x="289.5" y="66.111">Receita Federal</text>
+      <text fill="#000" font-size="13" textLength="78.731" x="294.253" y="79.111">podem emitir o</text>
+      <text fill="#000" font-size="13" textLength="101.238" x="283" y="92.111">e-CPF e o e-CNPJ,</text>
+      <text fill="#000" font-size="13" textLength="97.5" x="284.869" y="105.111">certificados desti-</text>
+      <text fill="#000" font-size="13" textLength="98.313" x="284.463" y="118.111">nados a pessoas e</text>
+      <text fill="#000" font-size="13" textLength="60.613" x="303.313" y="131.111">empresas.</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN35" data-source-line="72" id="ent0036">
+      <path d="M278.5,157.5 L278.5,375.5 L397,375.5 L397,167.5 L387,157.5 L278.5,157.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M387,157.5 L387,167.5 L397,167.5 L387,157.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="83.931" x="291.284" y="172.611">Cada AC acima</text>
+      <text fill="#000" font-size="13" textLength="97.5" x="284.5" y="185.611">emite certificados</text>
+      <text fill="#000" font-size="13" textLength="74.506" x="295.997" y="198.611">para o público</text>
+      <text fill="#000" font-size="13" textLength="93.925" x="286.288" y="211.611">específico de sua</text>
+      <text fill="#000" font-size="13" textLength="88.156" x="289.172" y="224.611">cadeia de certifi-</text>
+      <text fill="#000" font-size="13" textLength="93.194" x="286.653" y="237.611">cação. A AC-Jus,</text>
+      <text fill="#000" font-size="13" textLength="71.5" x="297.5" y="250.611">por exemplo,</text>
+      <text fill="#000" font-size="13" textLength="97.5" x="284.5" y="263.611">emite certificados</text>
+      <text fill="#000" font-size="13" textLength="80.113" x="293.194" y="276.611">para magistra-</text>
+      <text fill="#000" font-size="13" textLength="95.388" x="285.556" y="289.611">dos, advogados e</text>
+      <text fill="#000" font-size="13" textLength="76.538" x="294.981" y="302.611">desembarga-</text>
+      <text fill="#000" font-size="13" textLength="90.269" x="288.116" y="315.611">dores, enquanto</text>
+      <text fill="#000" font-size="13" textLength="83.85" x="291.325" y="328.611">a CEF o faz para</text>
+      <text fill="#000" font-size="13" textLength="51.35" x="307.575" y="341.611">clientes e</text>
+      <text fill="#000" font-size="13" textLength="90.269" x="288.116" y="354.611">fornecedores da</text>
+      <text fill="#000" font-size="13" textLength="36.887" x="314.806" y="367.611">Caixa.</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN45" data-source-line="104" id="ent0046">
+      <path d="M236,698.5 L236,786.5 L439.731,786.5 L439.731,708.5 L429.731,698.5 L236,698.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M429.731,698.5 L429.731,708.5 L439.731,708.5 L429.731,698.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="156.163" x="255.284" y="713.611">A AC-PR e a AC-Imesp são as</text>
+      <text fill="#000" font-size="13" textLength="167.619" x="249.556" y="726.611">únicas que emitem certificados</text>
+      <text fill="#000" font-size="13" textLength="176.231" x="245.25" y="739.611">diretamente para uma pessoa ou</text>
+      <text fill="#000" font-size="13" textLength="155.431" x="255.65" y="752.611">para um órgão a elas ligado. A</text>
+      <text fill="#000" font-size="13" textLength="182.731" x="242" y="765.611">AC-PR, por exemplo, emite certifi-</text>
+      <text fill="#000" font-size="13" textLength="116.269" x="275.231" y="778.611">cados para ministros.</text>
+    </g>
+    <!--entity SRF-->
+    <g class="entity" data-qualified-name="SRFRet.SRF" data-source-line="17" id="ent0006">
+      <rect fill="#FFF" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.788" x="484" y="110.5"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="494" y="131.389">Sec. Rec.</text>
+      <text fill="#000" font-size="14" textLength="47.512" x="498.638" y="145.389">Federal</text>
+    </g>
+    <!--entity SRFCA-->
+    <g class="entity" data-qualified-name="SRFRet.SRFCA" data-source-line="18" id="ent0007">
+      <rect fill="#E4EAF0" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.363" x="605" y="96.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="620.819" y="117.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="615" y="131.389">Certificadoras</text>
+      <text fill="#000" font-size="14" textLength="28.087" x="644.138" y="145.389">SRF</text>
+    </g>
+    <!--entity SRFAR-->
+    <g class="entity" data-qualified-name="SRFRet.SRFAR" data-source-line="19" id="ent0008">
+      <rect fill="#D8BA7A" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.725" x="747" y="96.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="757" y="117.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="760.5" y="131.389">de Registro</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="779.969" y="145.389">(AR)</text>
+    </g>
+    <!--entity SRFeCPF-->
+    <g class="entity" data-qualified-name="SRFRet.SRFeCPF" data-source-line="20" id="ent0009">
+      <rect fill="#A3B172" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.512" x="891" y="122.5"/>
+      <text fill="#000" font-size="14" textLength="40.512" x="901" y="143.389">e-CPF</text>
+    </g>
+    <!--entity SRFeCNPJ-->
+    <g class="entity" data-qualified-name="SRFRet.SRFeCNPJ" data-source-line="21" id="ent0010">
+      <rect fill="#A3B172" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.087" x="887" y="70.5"/>
+      <text fill="#000" font-size="14" textLength="49.087" x="897" y="91.389">e-CNPJ</text>
+    </g>
+    <!--entity Serasa-->
+    <g class="entity" data-qualified-name="ACRet.Serasa" data-source-line="37" id="ent0015">
+      <rect fill="#FFF" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="64.363" x="490.5" y="512.5"/>
+      <text fill="#000" font-size="14" textLength="44.363" x="500.5" y="533.389">Serasa</text>
+    </g>
+    <!--entity SerasaCA-->
+    <g class="entity" data-qualified-name="ACRet.SerasaCA" data-source-line="38" id="ent0016">
+      <rect fill="#E4EAF0" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.363" x="605" y="512.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="620.819" y="533.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="615" y="547.389">Certificadoras</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="636" y="561.389">Serasa</text>
+    </g>
+    <!--entity SerasaAR-->
+    <g class="entity" data-qualified-name="ACRet.SerasaAR" data-source-line="39" id="ent0017">
+      <rect fill="#D8BA7A" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.725" x="747" y="512.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="757" y="533.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="760.5" y="547.389">de Registro</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="779.969" y="561.389">(AR)</text>
+    </g>
+    <!--entity SerasaCert-->
+    <g class="entity" data-qualified-name="ACRet.SerasaCert" data-source-line="40" id="ent0018">
+      <rect fill="#A3B172" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.938" x="878" y="519.5"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="888" y="540.389">Certificado</text>
+      <text fill="#000" font-size="14" textLength="39.025" x="901.956" y="554.389">Digital</text>
+    </g>
+    <!--entity Jus-->
+    <g class="entity" data-qualified-name="ACRet.Jus" data-source-line="44" id="ent0019">
+      <rect fill="#FFF" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.938" x="489.5" y="290.5"/>
+      <text fill="#000" font-size="14" textLength="45.937" x="499.5" y="311.389">AC-Jus</text>
+    </g>
+    <!--entity JusCA-->
+    <g class="entity" data-qualified-name="ACRet.JusCA" data-source-line="45" id="ent0020">
+      <rect fill="#E4EAF0" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.363" x="605" y="192.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="620.819" y="213.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="615" y="227.389">Certificadoras</text>
+      <text fill="#000" font-size="14" textLength="45.937" x="635.213" y="241.389">AC-Jus</text>
+    </g>
+    <!--entity JusAR-->
+    <g class="entity" data-qualified-name="ACRet.JusAR" data-source-line="46" id="ent0021">
+      <rect fill="#D8BA7A" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.725" x="747" y="192.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="757" y="213.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="760.5" y="227.389">de Registro</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="779.969" y="241.389">(AR)</text>
+    </g>
+    <!--entity JusCert-->
+    <g class="entity" data-qualified-name="ACRet.JusCert" data-source-line="47" id="ent0022">
+      <rect fill="#A3B172" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.938" x="878" y="199.5"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="888" y="220.389">Certificado</text>
+      <text fill="#000" font-size="14" textLength="39.025" x="901.956" y="234.389">Digital</text>
+    </g>
+    <!--entity Serpro-->
+    <g class="entity" data-qualified-name="ACRet.Serpro" data-source-line="51" id="ent0023">
+      <rect fill="#FFF" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62" x="491.5" y="342.5"/>
+      <text fill="#000" font-size="14" textLength="42" x="501.5" y="363.389">Serpro</text>
+    </g>
+    <!--entity SerproCA-->
+    <g class="entity" data-qualified-name="ACRet.SerproCA" data-source-line="52" id="ent0024">
+      <rect fill="#E4EAF0" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.363" x="605" y="272.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="620.819" y="293.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="615" y="307.389">Certificadoras</text>
+      <text fill="#000" font-size="14" textLength="66.15" x="625.106" y="321.389">AC-Serpro</text>
+    </g>
+    <!--entity SerproAR-->
+    <g class="entity" data-qualified-name="ACRet.SerproAR" data-source-line="53" id="ent0025">
+      <rect fill="#D8BA7A" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.725" x="747" y="272.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="757" y="293.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="760.5" y="307.389">de Registro</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="779.969" y="321.389">(AR)</text>
+    </g>
+    <!--entity SerproCert-->
+    <g class="entity" data-qualified-name="ACRet.SerproCert" data-source-line="54" id="ent0026">
+      <rect fill="#A3B172" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.938" x="878" y="279.5"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="888" y="300.389">Certificado</text>
+      <text fill="#000" font-size="14" textLength="39.025" x="901.956" y="314.389">Digital</text>
+    </g>
+    <!--entity CEF-->
+    <g class="entity" data-qualified-name="ACRet.CEF" data-source-line="58" id="ent0027">
+      <rect fill="#FFF" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="48.087" x="498.5" y="394.5"/>
+      <text fill="#000" font-size="14" textLength="28.087" x="508.5" y="415.389">CEF</text>
+    </g>
+    <!--entity CEFCA-->
+    <g class="entity" data-qualified-name="ACRet.CEFCA" data-source-line="59" id="ent0028">
+      <rect fill="#E4EAF0" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.363" x="605" y="352.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="620.819" y="373.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="615" y="387.389">Certificadoras</text>
+      <text fill="#000" font-size="14" textLength="28.087" x="644.138" y="401.389">CEF</text>
+    </g>
+    <!--entity CEFAR-->
+    <g class="entity" data-qualified-name="ACRet.CEFAR" data-source-line="60" id="ent0029">
+      <rect fill="#D8BA7A" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.725" x="747" y="352.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="757" y="373.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="760.5" y="387.389">de Registro</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="779.969" y="401.389">(AR)</text>
+    </g>
+    <!--entity CEFCert-->
+    <g class="entity" data-qualified-name="ACRet.CEFCert" data-source-line="61" id="ent0030">
+      <rect fill="#A3B172" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.938" x="878" y="359.5"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="888" y="380.389">Certificado</text>
+      <text fill="#000" font-size="14" textLength="39.025" x="901.956" y="394.389">Digital</text>
+    </g>
+    <!--entity Certisign-->
+    <g class="entity" data-qualified-name="ACRet.Certisign" data-source-line="65" id="ent0031">
+      <rect fill="#FFF" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.3" x="485" y="446.5"/>
+      <text fill="#000" font-size="14" textLength="55.3" x="495" y="467.389">Certisign</text>
+    </g>
+    <!--entity CertisignCA-->
+    <g class="entity" data-qualified-name="ACRet.CertisignCA" data-source-line="66" id="ent0032">
+      <rect fill="#E4EAF0" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.363" x="605" y="432.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="620.819" y="453.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="615" y="467.389">Certificadoras</text>
+      <text fill="#000" font-size="14" textLength="55.3" x="630.531" y="481.389">Certisign</text>
+    </g>
+    <!--entity CertisignAR-->
+    <g class="entity" data-qualified-name="ACRet.CertisignAR" data-source-line="67" id="ent0033">
+      <rect fill="#D8BA7A" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.725" x="747" y="432.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="757" y="453.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="760.5" y="467.389">de Registro</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="779.969" y="481.389">(AR)</text>
+    </g>
+    <!--entity CertisignCert-->
+    <g class="entity" data-qualified-name="ACRet.CertisignCert" data-source-line="68" id="ent0034">
+      <rect fill="#A3B172" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.938" x="878" y="439.5"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="888" y="460.389">Certificado</text>
+      <text fill="#000" font-size="14" textLength="39.025" x="901.956" y="474.389">Digital</text>
+    </g>
+    <!--entity PR-->
+    <g class="entity" data-qualified-name="PRRet.PR" data-source-line="92" id="ent0039">
+      <rect fill="#FFF" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.237" x="476" y="598.5"/>
+      <text fill="#000" font-size="14" textLength="73.237" x="486" y="619.389">Presidência</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="514.831" y="633.389">da</text>
+      <text fill="#000" font-size="14" textLength="62.387" x="491.425" y="647.389">República</text>
+    </g>
+    <!--entity PRAR-->
+    <g class="entity" data-qualified-name="PRRet.PRAR" data-source-line="93" id="ent0040">
+      <rect fill="#D8BA7A" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.725" x="610.5" y="598.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="620.5" y="619.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="624" y="633.389">de Registro</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="643.469" y="647.389">(AR)</text>
+    </g>
+    <!--entity PRCert-->
+    <g class="entity" data-qualified-name="PRRet.PRCert" data-source-line="94" id="ent0041">
+      <rect fill="#A3B172" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.938" x="751" y="605.5"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="761" y="626.389">Certificado</text>
+      <text fill="#000" font-size="14" textLength="39.025" x="774.956" y="640.389">Digital</text>
+    </g>
+    <!--entity IMESP-->
+    <g class="entity" data-qualified-name="PRRet.IMESP" data-source-line="98" id="ent0042">
+      <rect fill="#FFF" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.063" x="493.5" y="678.5"/>
+      <text fill="#000" font-size="14" textLength="38.063" x="503.5" y="699.389">Imesp</text>
+    </g>
+    <!--entity IMESPAR-->
+    <g class="entity" data-qualified-name="PRRet.IMESPAR" data-source-line="99" id="ent0043">
+      <rect fill="#D8BA7A" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.725" x="610.5" y="678.5"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="620.5" y="699.389">Autoridades</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="624" y="713.389">de Registro</text>
+      <text fill="#000" font-size="14" textLength="28.787" x="643.469" y="727.389">(AR)</text>
+    </g>
+    <!--entity IMESPCert-->
+    <g class="entity" data-qualified-name="PRRet.IMESPCert" data-source-line="100" id="ent0044">
+      <rect fill="#A3B172" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.938" x="751" y="685.5"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="761" y="706.389">Certificado</text>
+      <text fill="#000" font-size="14" textLength="39.025" x="774.956" y="720.389">Digital</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0005" data-link-type="association" id="lnk13">
+      <path d="M399.01,77.144 C420.515,77.733 444.653,78.395 465.78,78.973 C468.421,79.046 471.015,79.117 473.55,79.186 C474.184,79.204 474.815,79.221 475.441,79.238 C475.598,79.242 475.754,79.247 475.91,79.251" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0036" data-entity-2="ent0014" data-link-type="association" id="lnk37">
+      <path d="M397.749,264.569 C419.318,263.859 443.675,263.059 465.039,262.356 C467.709,262.268 470.333,262.182 472.899,262.098 C474.182,262.056 475.45,262.014 476.702,261.973" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0046" data-entity-2="ent0038" data-link-type="association" id="lnk47">
+      <path d="M440.124,742.5 C447.937,742.5 455.652,742.5 463.037,742.5 C463.96,742.5 464.878,742.5 465.79,742.5 C466.246,742.5 466.701,742.5 467.154,742.5 C467.381,742.5 467.607,742.5 467.833,742.5" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="dependency" id="lnk48">
+      <polygon fill="#181818" points="485.948,158.618,476.595,161.705,482.246,161.978,481.972,167.629,485.948,158.618" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M377.11,428.984 C399.06,420.327 425.159,406.17 440,384.5 C491.71,308.992 424.244,260.878 468,180.5 C472.451,172.323 475.272,168.308 482.246,161.978" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk49">
+      <polygon fill="#181818" points="604.8,130.237,595.603,126.714,599.807,130.499,596.022,134.703,604.8,130.237" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M561.042,132.531 C574.616,131.82 585.203,131.265 599.807,130.499" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="dependency" id="lnk50">
+      <polygon fill="#181818" points="746.907,127.5,737.907,123.5,741.907,127.5,737.907,131.5,746.907,127.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M711.001,127.5 C722.829,127.5 730.321,127.5 741.907,127.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0009" data-link-type="dependency" id="lnk51">
+      <polygon fill="#181818" points="890.966,136.665,882.389,131.823,885.989,136.187,881.625,139.786,890.966,136.665" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M842.045,131.968 C858.427,133.541 871.398,134.786 885.989,136.187" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="dependency" id="lnk52">
+      <polygon fill="#181818" points="886.802,98.283,877.011,97.217,882.04,99.807,879.449,104.836,886.802,98.283" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M842.045,112.605 C856.9,107.852 868.28,104.21 882.04,99.807" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0015" data-link-type="dependency" id="lnk53">
+      <polygon fill="#181818" points="490.264,514.267,483.928,506.727,485.77,512.076,480.421,513.917,490.264,514.267" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M377.258,459.157 C410.809,475.519 454.494,496.823 485.77,512.076" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0016" data-link-type="dependency" id="lnk54">
+      <polygon fill="#181818" points="604.739,538.019,596.206,533.103,599.767,537.498,595.371,541.059,604.739,538.019" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M554.8,532.782 C569.674,534.342 582.884,535.727 599.767,537.498" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0017" data-link-type="dependency" id="lnk55">
+      <polygon fill="#181818" points="746.907,543.5,737.907,539.5,741.907,543.5,737.907,547.5,746.907,543.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M711.001,543.5 C722.829,543.5 730.321,543.5 741.907,543.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0018" data-link-type="dependency" id="lnk56">
+      <polygon fill="#181818" points="877.635,543.5,868.635,539.5,872.635,543.5,868.635,547.5,877.635,543.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M842.045,543.5 C853.707,543.5 861.162,543.5 872.635,543.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0019" data-link-type="dependency" id="lnk57">
+      <polygon fill="#181818" points="489.453,319.116,479.613,319.531,484.974,321.338,483.168,326.698,489.453,319.116" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M377.383,425.466 C397.821,416.026 422.315,402.258 440,384.5 C458.246,366.177 449.267,351.324 468,333.5 C474.135,327.663 477.349,325.119 484.974,321.338" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0020" data-link-type="dependency" id="lnk58">
+      <polygon fill="#181818" points="610.772,254.761,601.057,256.38,606.599,257.515,605.464,263.057,610.772,254.761" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M554.006,290.424 C559.047,287.501 564.194,284.453 569,281.5 C582.719,273.071 593.232,266.337 606.599,257.515" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0021" data-link-type="dependency" id="lnk59">
+      <polygon fill="#181818" points="746.907,223.5,737.907,219.5,741.907,223.5,737.907,227.5,746.907,223.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M711.001,223.5 C722.829,223.5 730.321,223.5 741.907,223.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0022" data-link-type="dependency" id="lnk60">
+      <polygon fill="#181818" points="877.635,223.5,868.635,219.5,872.635,223.5,868.635,227.5,877.635,223.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M842.045,223.5 C853.707,223.5 861.162,223.5 872.635,223.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0023" data-link-type="dependency" id="lnk61">
+      <polygon fill="#181818" points="491.425,372.848,481.577,372.843,486.855,374.877,484.822,380.155,491.425,372.848" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M377.258,423.52 C411.227,408.443 455.621,388.74 486.855,374.877" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0023" data-entity-2="ent0024" data-link-type="dependency" id="lnk62">
+      <polygon fill="#181818" points="604.818,325.389,594.971,325.182,600.207,327.323,598.066,332.559,604.818,325.389" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M553.793,346.793 C568.871,340.468 582.919,334.575 600.207,327.323" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0024" data-entity-2="ent0025" data-link-type="dependency" id="lnk63">
+      <polygon fill="#181818" points="746.907,303.5,737.907,299.5,741.907,303.5,737.907,307.5,746.907,303.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M711.001,303.5 C722.829,303.5 730.321,303.5 741.907,303.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0026" data-link-type="dependency" id="lnk64">
+      <polygon fill="#181818" points="877.635,303.5,868.635,299.5,872.635,303.5,868.635,307.5,877.635,303.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M842.045,303.5 C853.707,303.5 861.162,303.5 872.635,303.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0027" data-link-type="dependency" id="lnk65">
+      <polygon fill="#181818" points="498.304,415.186,488.788,412.648,493.366,415.971,490.043,420.549,498.304,415.186" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M377.258,434.421 C413.84,428.608 462.874,420.816 493.366,415.971" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0027" data-entity-2="ent0028" data-link-type="dependency" id="lnk66">
+      <polygon fill="#181818" points="604.961,394.414,595.332,392.347,600.068,395.441,596.974,400.177,604.961,394.414" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M546.754,406.623 C562.815,403.254 579.934,399.664 600.068,395.441" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0028" data-entity-2="ent0029" data-link-type="dependency" id="lnk67">
+      <polygon fill="#181818" points="746.907,383.5,737.907,379.5,741.907,383.5,737.907,387.5,746.907,383.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M711.001,383.5 C722.829,383.5 730.321,383.5 741.907,383.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0029" data-entity-2="ent0030" data-link-type="dependency" id="lnk68">
+      <polygon fill="#181818" points="877.635,383.5,868.635,379.5,872.635,383.5,868.635,387.5,877.635,383.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M842.045,383.5 C853.707,383.5 861.162,383.5 872.635,383.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0031" data-link-type="dependency" id="lnk69">
+      <polygon fill="#181818" points="484.849,458.881,476.42,453.787,479.888,458.256,475.419,461.724,484.849,458.881" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M377.258,445.322 C408.928,449.313 448.67,454.321 479.888,458.256" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0031" data-entity-2="ent0032" data-link-type="dependency" id="lnk70">
+      <polygon fill="#181818" points="604.798,463.5,595.798,459.5,599.798,463.5,595.798,467.5,604.798,463.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M560.333,463.5 C574.071,463.5 584.94,463.5 599.798,463.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0032" data-entity-2="ent0033" data-link-type="dependency" id="lnk71">
+      <polygon fill="#181818" points="746.907,463.5,737.907,459.5,741.907,463.5,737.907,467.5,746.907,463.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M711.001,463.5 C722.829,463.5 730.321,463.5 741.907,463.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0033" data-entity-2="ent0034" data-link-type="dependency" id="lnk72">
+      <polygon fill="#181818" points="877.635,463.5,868.635,459.5,872.635,463.5,868.635,467.5,877.635,463.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M842.045,463.5 C853.707,463.5 861.162,463.5 872.635,463.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0039" data-link-type="dependency" id="lnk73">
+      <polygon fill="#181818" points="481.132,598.289,476.879,589.406,477.327,595.045,471.688,595.494,481.132,598.289" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M358.17,464.629 C382.403,494.537 426.037,546.45 468,586.5 C472.138,590.449 472.8,591.185 477.327,595.045" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0039" data-entity-2="ent0040" data-link-type="dependency" id="lnk74">
+      <polygon fill="#181818" points="610.273,629.5,601.273,625.5,605.273,629.5,601.273,633.5,610.273,629.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M569.07,629.5 C582.364,629.5 591.909,629.5 605.273,629.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0040" data-entity-2="ent0041" data-link-type="dependency" id="lnk75">
+      <polygon fill="#181818" points="750.974,629.5,741.974,625.5,745.974,629.5,741.974,633.5,750.974,629.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M705.664,629.5 C720.383,629.5 731.559,629.5 745.974,629.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0042" data-link-type="dependency" id="lnk76">
+      <polygon fill="#181818" points="493.388,685.689,486.865,678.31,488.84,683.611,483.54,685.586,493.388,685.689" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M347.066,464.667 C363.326,510.151 404.034,609.3 468,669.5 C475.219,676.294 480,679.571 488.84,683.611" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0042" data-entity-2="ent0043" data-link-type="dependency" id="lnk77">
+      <polygon fill="#181818" points="610.343,704.607,601.81,699.69,605.371,704.086,600.975,707.647,610.343,704.607" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M551.812,698.469 C568.803,700.251 585.863,702.04 605.371,704.086" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0043" data-entity-2="ent0044" data-link-type="dependency" id="lnk78">
+      <polygon fill="#181818" points="750.974,709.5,741.974,705.5,745.974,709.5,741.974,713.5,750.974,709.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M705.664,709.5 C720.383,709.5 731.559,709.5 745.974,709.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="52px" preserveAspectRatio="none" style="width:339px;height:52px;background:#FFFFFF;" version="1.1" viewBox="0 0 339 52" width="339px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="GN1" data-source-line="1" id="ent0002">
+      <path d="M230,12 L230,20 L211.754,24 L230,28 L230,35 A0,0 0 0 0 230,35 L323.231,35 A0,0 0 0 0 323.231,35 L323.231,22 L313.231,12 L230,12 A0,0 0 0 0 230,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M313.231,12 L313.231,22 L323.231,22 L313.231,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="72.231" x="236" y="27.111">%filename%</text>
+    </g>
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0003">
+      <ellipse cx="201.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="GN5" data-source-line="2" id="ent0006">
+      <path d="M6,12 L6,35 A0,0 0 0 0 6,35 L173.006,35 A0,0 0 0 0 173.006,35 L173.006,30 L191.28,24 L173.006,22 L173.006,22 L163.006,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M163.006,12 L163.006,22 L173.006,22 L163.006,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="146.006" x="12" y="27.111">%filenameNoExtension%</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="202px" preserveAspectRatio="none" style="width:412px;height:202px;background:#FFFFFF;" version="1.1" viewBox="0 0 412 202" width="412px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster OK-->
+    <g class="cluster" data-qualified-name="OK" data-source-line="23" id="ent0001">
+      <rect fill="none" height="158" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="180" x="14" y="20"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.213" x="93.894" y="32.889">OK</text>
+    </g>
+    <!--cluster package_KO-->
+    <g class="cluster" data-qualified-name="package_KO" data-source-line="28" id="ent0005">
+      <rect fill="none" height="100" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="202" x="202" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="80.938" x="262.531" y="16.889">package_KO</text>
+    </g>
+    <!--cluster e7-->
+    <g class="cluster" data-qualified-name="package_KO.e7" data-source-line="29" id="ent0006">
+      <path d="M347.5,29 L383.5,29 A3.75,3.75 0 0 1 386,31.5 L393,49 L393.5,49 A2.5,2.5 0 0 1 396,51.5 L396,93.5 A2.5,2.5 0 0 1 393.5,96 L347.5,96 A2.5,2.5 0 0 1 345,93.5 L345,31.5 A2.5,2.5 0 0 1 347.5,29" fill="#FFC0CB" style="stroke:#000;stroke-width:1;"/>
+      <line style="stroke:#000;stroke-width:1;" x1="345" x2="393" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35" x="349" y="41.889">folder</text>
+    </g>
+    <!--cluster e8-->
+    <g class="cluster" data-qualified-name="package_KO.e8" data-source-line="32" id="ent0008">
+      <rect fill="#98FB98" height="67" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1;" width="51" x="286" y="29"/>
+      <path d="M331.7,29 L331.7,36 L321.7,46 L286,46" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.7" x="289" y="40.889">frame</text>
+    </g>
+    <!--cluster e11-->
+    <g class="cluster" data-qualified-name="package_KO.e11" data-source-line="35" id="ent0010">
+      <path d="M212.5,29 L266.438,29 A3.75,3.75 0 0 1 268.938,31.5 L275.938,49 L275.5,49 A2.5,2.5 0 0 1 278,51.5 L278,93.5 A2.5,2.5 0 0 1 275.5,96 L212.5,96 A2.5,2.5 0 0 1 210,93.5 L210,31.5 A2.5,2.5 0 0 1 212.5,29" fill="#87CEFA" style="stroke:#000;stroke-width:1;"/>
+      <line style="stroke:#000;stroke-width:1;" x1="210" x2="275.938" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="214" y="41.889">package</text>
+    </g>
+    <!--entity folder-->
+    <g class="entity" data-qualified-name="OK.folder" data-source-line="24" id="ent0002">
+      <path d="M24.5,45 L65.5,45 A3.75,3.75 0 0 1 68,47.5 L75,66 L89.5,66 A2.5,2.5 0 0 1 92,68.5 L92,94.5 A2.5,2.5 0 0 1 89.5,97 L24.5,97 A2.5,2.5 0 0 1 22,94.5 L22,47.5 A2.5,2.5 0 0 1 24.5,45" fill="#FFC0CB" style="stroke:#000;stroke-width:1;"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="75" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="35" x="32" y="83.889">folder</text>
+    </g>
+    <!--entity frame-->
+    <g class="entity" data-qualified-name="OK.frame" data-source-line="25" id="ent0003">
+      <rect fill="#98FB98" height="44" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1;" width="75.7" x="110" y="49"/>
+      <path d="M135.233,49 L135.233,54 L128.233,61 L110,61" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="35.7" x="125" y="79.889">frame</text>
+    </g>
+    <!--entity package-->
+    <g class="entity" data-qualified-name="OK.package" data-source-line="26" id="ent0004">
+      <path d="M25,133 L90.938,133 A3.75,3.75 0 0 1 93.438,135.5 L100.438,153 L114.938,153 A2.5,2.5 0 0 1 117.438,155.5 L117.438,167.5 A2.5,2.5 0 0 1 114.938,170 L25,170 A2.5,2.5 0 0 1 22.5,167.5 L22.5,135.5 A2.5,2.5 0 0 1 25,133" fill="#87CEFA" style="stroke:#000;stroke-width:1;"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22.5" x2="100.438" y1="153" y2="153"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="32.5" y="146.889">package</text>
+    </g>
+    <!--entity f7-->
+    <g class="entity" data-qualified-name="package_KO.e7.f7" data-source-line="30" id="ent0007">
+      <path d="M354,56.5 L354,85.5 A2.5,2.5 0 0 0 356.5,88 L383.138,88 A2.5,2.5 0 0 0 385.638,85.5 L385.638,64 L375.638,54 L356.5,54 A2.5,2.5 0 0 0 354,56.5" fill="#BBB" style="stroke:#000;stroke-width:1;"/>
+      <path d="M375.638,54 L375.638,61.5 A2.5,2.5 0 0 0 378.138,64 L385.638,64" fill="#BBB" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="364" y="74.889">f7</text>
+    </g>
+    <!--entity f8-->
+    <g class="entity" data-qualified-name="package_KO.e8.f8" data-source-line="33" id="ent0009">
+      <path d="M295,56.5 L295,85.5 A2.5,2.5 0 0 0 297.5,88 L324.138,88 A2.5,2.5 0 0 0 326.638,85.5 L326.638,64 L316.638,54 L297.5,54 A2.5,2.5 0 0 0 295,56.5" fill="#BBB" style="stroke:#000;stroke-width:1;"/>
+      <path d="M316.638,54 L316.638,61.5 A2.5,2.5 0 0 0 319.138,64 L326.638,64" fill="#BBB" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="305" y="74.889">f8</text>
+    </g>
+    <!--entity f11-->
+    <g class="entity" data-qualified-name="package_KO.e11.f11" data-source-line="36" id="ent0011">
+      <path d="M224.5,56.5 L224.5,85.5 A2.5,2.5 0 0 0 227,88 L261.425,88 A2.5,2.5 0 0 0 263.925,85.5 L263.925,64 L253.925,54 L227,54 A2.5,2.5 0 0 0 224.5,56.5" fill="#BBB" style="stroke:#000;stroke-width:1;"/>
+      <path d="M253.925,54 L253.925,61.5 A2.5,2.5 0 0 0 256.425,64 L263.925,64" fill="#BBB" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="234.5" y="74.889">f11</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:348px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 348 160" width="348px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Group-->
+    <g class="entity" data-qualified-name="Group" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.85" x="162.5" y="12"/>
+      <ellipse cx="177.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="172.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="38.85" x="191.5" y="31.889">Group</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="163.5" x2="232.35" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="163.5" x2="232.35" y1="52" y2="52"/>
+    </g>
+    <!--class PLACEHOLDER-->
+    <g class="entity" data-qualified-name="PLACEHOLDER" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.475" x="6" y="96"/>
+      <ellipse cx="21" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="104.475" x="35" y="115.889">PLACEHOLDER</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="141.475" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="141.475" y1="136" y2="136"/>
+    </g>
+    <!--class Events-->
+    <g class="entity" data-qualified-name="Events" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.788" x="160.5" y="96"/>
+      <ellipse cx="175.5" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="170.5" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="42.788" x="189.5" y="115.889">Events</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="161.5" x2="234.288" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="161.5" x2="234.288" y1="136" y2="136"/>
+    </g>
+    <!--class Travels-->
+    <g class="entity" data-qualified-name="Travels" data-source-line="6" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.938" x="254" y="96"/>
+      <ellipse cx="269" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="264" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="45.938" x="283" y="115.889">Travels</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="255" x2="330.938" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="255" x2="330.938" y1="136" y2="136"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="198,60.279,192,78.279,204,78.279,198,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M198,78.279 C198,89.453 198,84.802 198,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="224.716,60.06,234.421,76.363,242.262,67.279,224.716,60.06" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M238.342,71.821 C251.293,83.001 253.187,84.635 266.156,95.829" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

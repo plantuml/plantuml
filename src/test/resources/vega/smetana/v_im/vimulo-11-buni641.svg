@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="344px" preserveAspectRatio="none" style="width:1812px;height:344px;background:#FFFFFF;" version="1.1" viewBox="0 0 1812 344" width="1812px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity fx-->
+    <g class="entity" data-qualified-name="fx" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="232" rx="10" ry="10" style="stroke:#181818;stroke-width:2;" width="844" x="24" y="48"/>
+      <rect fill="#F1F1F1" height="40" style="stroke:#181818;stroke-width:2;" width="60" x="788" y="68"/>
+      <rect fill="#F1F1F1" height="8" style="stroke:#181818;stroke-width:2;" width="16" x="780" y="76"/>
+      <rect fill="#F1F1F1" height="8" style="stroke:#181818;stroke-width:2;" width="16" x="780" y="92"/>
+      <image height="116" width="1724" x="84" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjExNiIgd2lkdGg9IjE3MjQiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48P3BsYW50dW1sICR2ZXJzaW9uJD8+PGRlZnMvPjxnIHRyYW5zZm9ybT0ic2NhbGUoNCw0KSIgIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciPjx0ZXh0IHg9IjUiIHk9IjE5LjA3NSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iNDIwLjA2OCIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+UCh5fFxtYXRoYmZ7eH0pwqBcbWJveHvCoG9ywqB9wqBmKFxtYXRoYmZ7eH0pK1xlcHNpbG9uPC90ZXh0PjwvZz48L3N2Zz4=" y="128"/>
+    </g>
+  </g>
+</svg>

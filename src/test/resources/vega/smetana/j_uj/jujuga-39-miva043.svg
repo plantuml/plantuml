@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="258px" preserveAspectRatio="none" style="width:175px;height:258px;background:#FFFFFF;" version="1.1" viewBox="0 0 175 258" width="175px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Eid1-->
+    <g class="cluster" data-qualified-name="Eid1" data-source-line="2" id="ent0001">
+      <rect fill="none" height="31" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="56" x="91.5" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="46.025" x="96.488" y="16.889">Vehicle</text>
+    </g>
+    <!--cluster Eid8-->
+    <g class="cluster" data-qualified-name="Eid8" data-source-line="5" id="ent0003">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="110" x="21" y="167"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.512" x="66.244" y="179.889">RV</text>
+    </g>
+    <!--cluster Eid14-->
+    <g class="cluster" data-qualified-name="Eid14" data-source-line="9" id="ent0005">
+      <rect fill="none" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="106" x="44" y="69"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35" x="79.5" y="81.889">rv: RV</text>
+    </g>
+    <!--cluster Eid17-->
+    <g class="cluster" data-qualified-name="Eid14.Eid17" data-source-line="10" id="ent0006">
+      <rect fill="none" height="31" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="84" x="52" y="94"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="74.025" x="56.988" y="106.889">cabin: Cabin</text>
+    </g>
+    <g class="entity" data-qualified-name="Eid1.Eid5" data-source-line="3" id="ent0002">
+      <text fill="#000" font-size="14" textLength="114.363" x="54.819" y="51.889">hitchReceiver: Port</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="106" y="29"/>
+    </g>
+    <!--entity Eid10-->
+    <g class="entity" data-qualified-name="Eid8.Eid10" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.025" x="29" y="192"/>
+      <text fill="#000" font-size="14" textLength="74.025" x="39" y="212.889">cabin: Cabin</text>
+    </g>
+    <g class="entity" data-qualified-name="Eid14.Eid17.Eid18" data-source-line="11" id="ent0007">
+      <text fill="#000" font-size="14" textLength="68.338" x="77.831" y="141.889">mount: Port</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="106" y="119"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="76,191.964,82,173.964,70,173.964,76,191.964" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M76,143.214 C76,156.097 76,159.336 76,173.964" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="association" id="lnk9">
+      <path d="M114,53.145 C114,70.072 114,102.072 114,118.945" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

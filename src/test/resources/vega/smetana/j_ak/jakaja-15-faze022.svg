@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="126px" preserveAspectRatio="none" style="width:116px;height:126px;background:#FFFFFF;" version="1.1" viewBox="0 0 116 126" width="116px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="100" style="stroke:#181818;stroke-width:1.5;" width="100.15" x="5" y="10"/>
+    <path d="M95.15,10 L95.15,17 L85.15,27 L5,27" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="80.15" x="8" y="21.889">This is a frame</text>
+    <!--class foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="16" y="47"/>
+      <ellipse cx="31" cy="63" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="26" y="68">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="45" y="66.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="74.213" y1="79" y2="79"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="74.213" y1="87" y2="87"/>
+    </g>
+  </g>
+</svg>

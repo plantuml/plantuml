@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="196px" preserveAspectRatio="none" style="width:82px;height:196px;background:#FFFFFF;" version="1.1" viewBox="0 0 82 196" width="82px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class C-->
+    <g class="entity" data-qualified-name="C" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="168" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.512" x="6" y="12"/>
+      <ellipse cx="28.813" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="23.813" y="33">C</text>
+      <text fill="#000" font-size="14" x="44.549" y="31.889">C</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="64.512" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="71.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="26" y="76.889">field1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="22.15" y1="59" y2="59"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="22.15" y="62.389">foo1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="49.363" x2="64.512" y1="59" y2="59"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="103.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="26" y="108.889">field2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="22.15" y1="91" y2="91"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="22.15" y="94.389">foo1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="49.363" x2="64.512" y1="91" y2="91"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="135.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="26" y="140.889">field3</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="22.15" y1="123" y2="123"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="22.15" y="126.389">foo1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="49.363" x2="64.512" y1="123" y2="123"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="167.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="33.512" x="26" y="172.889">field4</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="22.15" y1="155" y2="155"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="22.15" y="158.389">foo1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="49.363" x2="64.512" y1="155" y2="155"/>
+    </g>
+  </g>
+</svg>

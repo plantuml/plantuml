@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="99px" preserveAspectRatio="none" style="width:205px;height:99px;background:#FFFFFF;" version="1.1" viewBox="0 0 205 99" width="205px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A1-->
+    <g class="entity" data-qualified-name="A1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="6" y="35"/>
+      <ellipse cx="21" cy="51" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="56">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="35" y="54.889">A1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.15" y1="67" y2="67"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.15" y1="75" y2="75"/>
+    </g>
+    <!--class A2-->
+    <g class="entity" data-qualified-name="A2" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="140" y="35"/>
+      <ellipse cx="155" cy="51" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="150" y="56">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="169" y="54.889">A2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141" x2="188.15" y1="67" y2="67"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141" x2="188.15" y1="75" y2="75"/>
+    </g>
+    <!--class A3-->
+    <g class="entity" data-qualified-name="A3" data-source-line="4" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="73" y="35"/>
+      <ellipse cx="88" cy="51" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="83" y="56">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="102" y="54.889">A3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="74" x2="121.15" y1="67" y2="67"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="74" x2="121.15" y1="75" y2="75"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="156.327,34.955,156.117,25.109,154.199,30.43,148.877,28.513,156.327,34.955" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M55.047,37.361 C69.62,26.055 89.095,13.461 109,8 C119.715,5.06 124.335,2.519 134,8 C144.32,13.853 149.395,20.214 154.199,30.43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.694" x="111" y="12.111">bbb</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="156.327,34.955,156.117,25.109,154.199,30.43,148.877,28.513,156.327,34.955" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M55.047,37.361 C69.62,26.055 89.095,13.461 109,8 C119.715,5.06 124.335,2.519 134,8 C144.32,13.853 149.395,20.214 154.199,30.43" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="28.925" x="107.5" y="12.111">bbb1</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="139.988,59,130.988,55,134.988,59,130.988,63,139.988,59" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M122.102,59 C128.064,59 129.026,59 134.988,59" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

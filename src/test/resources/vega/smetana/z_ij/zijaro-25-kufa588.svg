@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="152px" preserveAspectRatio="none" style="width:113px;height:152px;background:#98FB98;" version="1.1" viewBox="0 0 113 152" width="113px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#98FB98" height="152" style="stroke:none;" width="113" x="0" y="0"/>
+    <!--entity r-->
+    <g class="entity" data-qualified-name="r" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.638" x="6" y="17"/>
+      <text fill="#000" font-size="14" x="16" y="37.889">r</text>
+    </g>
+    <!--entity n-->
+    <g class="entity" data-qualified-name="n" data-source-line="8" id="ent0002">
+      <polygon fill="#F1F1F1" points="49.5,22,59.5,12,97.288,12,97.288,46,87.288,56,49.5,56,49.5,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87.288" x2="97.288" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="49.5" x2="87.288" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87.288" x2="87.288" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" x="64.5" y="42.889">n</text>
+    </g>
+    <!--entity f-->
+    <g class="entity" data-qualified-name="f" data-source-line="9" id="ent0003">
+      <path d="M6.5,99.5 L6.5,128.5 A2.5,2.5 0 0 0 9,131 L27.85,131 A2.5,2.5 0 0 0 30.35,128.5 L30.35,107 L20.35,97 L9,97 A2.5,2.5 0 0 0 6.5,99.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M20.35,97 L20.35,104.5 A2.5,2.5 0 0 0 22.85,107 L30.35,107" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="16.5" y="117.889">f</text>
+    </g>
+    <!--entity c-->
+    <g class="entity" data-qualified-name="c" data-source-line="10" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47" x="49" y="92"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="76" y="97"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="74" y="99"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="74" y="103"/>
+      <text fill="#000" font-size="14" x="64" y="122.889">c</text>
+    </g>
+  </g>
+</svg>

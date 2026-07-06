@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="226px" preserveAspectRatio="none" style="width:1258px;height:226px;background:#FFFFFF;" version="1.1" viewBox="0 0 1258 226" width="1258px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Data Centre-->
+    <g class="cluster" data-qualified-name="Data Centre" data-source-line="18" id="ent0001">
+      <rect fill="#BDD0E5" height="122" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:1.5;" width="486" x="14" y="12"/>
+      <text fill="#F00" font-family="'Arial Black'" font-size="14" textLength="71.575" x="221.213" y="24.889">Data Centre</text>
+    </g>
+    <!--cluster Service Centre-->
+    <g class="cluster" data-qualified-name="Service Centre" data-source-line="28" id="ent0009">
+      <rect fill="#BDD0E5" height="57" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:1.5;" width="480" x="510" y="12"/>
+      <text fill="#F00" font-family="'Arial Black'" font-size="14" textLength="88.725" x="705.638" y="24.889">Service Centre</text>
+    </g>
+    <!--cluster Data Network-->
+    <g class="cluster" data-qualified-name="Data Network" data-source-line="35" id="ent0014">
+      <rect fill="#BDD0E5" height="57" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:1.5;" width="485" x="508" y="77"/>
+      <text fill="#F00" font-family="'Arial Black'" font-size="14" textLength="80.938" x="710.031" y="89.889">Data Network</text>
+    </g>
+    <!--cluster Workstations and Peripherals-->
+    <g class="cluster" data-qualified-name="Workstations and Peripherals" data-source-line="41" id="ent0018">
+      <rect fill="#BDD0E5" height="122" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:1.5;" width="249" x="1001" y="12"/>
+      <text fill="#F00" font-family="'Arial Black'" font-size="14" textLength="175.088" x="1037.956" y="24.889">Workstations and Peripherals</text>
+    </g>
+    <rect fill="#BDD0E5" height="48" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="83.175" x="482.5" y="162"/>
+    <text fill="#F00" font-family="'Arial Black'" font-size="14" textLength="63.175" x="492.5" y="174.889">DCN WAN</text>
+    <!--class UPS-->
+    <g class="entity" data-qualified-name="Data Centre.UPS" data-source-line="19" id="ent0002">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="28.688" x="462.5" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="22.688" x="465.5" y="50.556">UPS</text>
+    </g>
+    <!--class Data Backup-->
+    <g class="entity" data-qualified-name="Data Centre.Data Backup" data-source-line="20" id="ent0003">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="65.95" x="378" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="59.95" x="381" y="50.556">Data Backup</text>
+    </g>
+    <!--class File and Print Server-->
+    <g class="entity" data-qualified-name="Data Centre.File and Print Server" data-source-line="21" id="ent0004">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="97.163" x="98.5" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="91.163" x="101.5" y="50.556">File and Print Server</text>
+    </g>
+    <!--class Web Server-->
+    <g class="entity" data-qualified-name="Data Centre.Web Server" data-source-line="22" id="ent0005">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="61" x="298.5" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="55" x="301.5" y="50.556">Web Server</text>
+    </g>
+    <!--class Email Server-->
+    <g class="entity" data-qualified-name="Data Centre.Email Server" data-source-line="23" id="ent0006">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="65.95" x="214" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="59.95" x="217" y="50.556">Email Server</text>
+    </g>
+    <!--class App Server-->
+    <g class="entity" data-qualified-name="Data Centre.App Server" data-source-line="24" id="ent0007">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="57.975" x="22" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="51.975" x="25" y="50.556">App Server</text>
+    </g>
+    <!--class Shared Data-->
+    <g class="entity" data-qualified-name="Data Centre.Shared Data" data-source-line="25" id="ent0008">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="64.713" x="22.5" y="102"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="58.713" x="25.5" y="115.556">Shared Data</text>
+    </g>
+    <!--class LAN Management-->
+    <g class="entity" data-qualified-name="Service Centre.LAN Management" data-source-line="29" id="ent0010">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="91.594" x="890" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="85.594" x="893" y="50.556">LAN Management</text>
+    </g>
+    <!--class Computer Management-->
+    <g class="entity" data-qualified-name="Service Centre.Computer Management" data-source-line="30" id="ent0011">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="118.406" x="754" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="112.406" x="757" y="50.556">Computer Management</text>
+    </g>
+    <!--class Security Management-->
+    <g class="entity" data-qualified-name="Service Centre.Security Management" data-source-line="31" id="ent0012">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="109.881" x="626" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="103.881" x="629" y="50.556">Security Management</text>
+    </g>
+    <!--class Service Reporting-->
+    <g class="entity" data-qualified-name="Service Centre.Service Reporting" data-source-line="32" id="ent0013">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="90.425" x="518" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="84.425" x="521" y="50.556">Service Reporting</text>
+    </g>
+    <!--class Primary Distribution Hub/Switch-->
+    <g class="entity" data-qualified-name="Data Network.Primary Distribution Hub.Switch" data-source-line="36" id="ent0015">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="154.638" x="642.5" y="102"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="148.638" x="645.5" y="115.556">Primary Distribution Hub/Switch</text>
+    </g>
+    <!--class Secondary Distribution Hub/Switch-->
+    <g class="entity" data-qualified-name="Data Network.Secondary Distribution Hub.Switch" data-source-line="37" id="ent0016">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="169.35" x="815.5" y="102"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="163.35" x="818.5" y="115.556">Secondary Distribution Hub/Switch</text>
+    </g>
+    <!--class Access Router-->
+    <g class="entity" data-qualified-name="Data Network.Access Router" data-source-line="38" id="ent0017">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="74.475" x="550" y="102"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="68.475" x="553" y="115.556">Access Router</text>
+    </g>
+    <!--class Workstations-->
+    <g class="entity" data-qualified-name="Workstations and Peripherals.Workstations" data-source-line="42" id="ent0019">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="69.525" x="1172" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="63.525" x="1175" y="50.556">Workstations</text>
+    </g>
+    <!--class Print Monitor-->
+    <g class="entity" data-qualified-name="Workstations and Peripherals.Print Monitor" data-source-line="43" id="ent0020">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="65.263" x="1009.5" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="59.263" x="1012.5" y="50.556">Print Monitor</text>
+    </g>
+    <!--class Print Server-->
+    <g class="entity" data-qualified-name="Workstations and Peripherals.Print Server" data-source-line="44" id="ent0021">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="61" x="1092.5" y="37"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="55" x="1095.5" y="50.556">Print Server</text>
+    </g>
+    <!--class Printers-->
+    <g class="entity" data-qualified-name="Workstations and Peripherals.Printers" data-source-line="45" id="ent0022">
+      <rect fill="#FFF" height="21" rx="2.5" ry="2.5" style="stroke:#666;stroke-width:0.5;" width="43.881" x="1101" y="102"/>
+      <text fill="#333" font-family="Arial" font-size="11" textLength="37.881" x="1104" y="115.556">Printers</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0015" data-link-type="association" id="lnk24">
+      <path d="M175.19,61.1 C184.529,64.271 195.075,67.321 205,69 C298.794,84.872 539.874,57.587 633,77 C656.843,81.97 682.404,93.35 699.605,101.995" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0015" data-link-type="association" id="lnk25">
+      <path d="M348.342,61.159 C354.716,64.292 361.975,67.304 369,69 C426.055,82.773 575.612,64.689 633,77 C656.654,82.074 682.036,93.314 699.242,101.894" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0015" data-link-type="association" id="lnk26">
+      <path d="M267.359,61.188 C274.054,64.323 281.665,67.329 289,69 C363.554,85.988 558.18,61.225 633,77 C656.672,81.991 682.051,93.243 699.252,101.849" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0015" data-link-type="association" id="lnk27">
+      <path d="M68.915,61.022 C75.057,64.231 82.121,67.323 89,69 C147.73,83.321 573.797,64.782 633,77 C656.853,81.923 682.412,93.311 699.61,101.97" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="association" id="lnk28">
+      <path d="M51.715,61.263 C52.443,72.73 53.565,90.402 54.291,101.834" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0015" data-link-type="association" id="lnk29">
+      <path d="M908.091,61.01 C899.516,64.02 889.973,66.999 881,69 C848.281,76.297 838.469,68.662 806,77 C783.268,82.837 758.697,93.611 741.663,101.857" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0015" data-link-type="association" id="lnk30">
+      <path d="M796.373,61.263 C779.446,72.73 753.358,90.402 736.483,101.834" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0015" data-link-type="association" id="lnk31">
+      <path d="M687.972,61.263 C695.071,72.73 706.011,90.402 713.088,101.834" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0015" data-link-type="association" id="lnk32">
+      <path d="M592.01,61.009 C604.631,65.845 619.574,71.634 633,77 C653.491,85.19 676.565,94.753 693.798,101.964" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0023" data-link-type="association" id="lnk33">
+      <path d="M524,134.042 C524,134.086 524,134.131 524,134.176 C524,137.031 524,140.064 524,143.172 C524,149.388 524,155.903 524,161.891" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0019" data-link-type="association" id="lnk34">
+      <path d="M923.711,101.856 C942.987,93.376 971.131,82.292 997,77 C1069.365,62.198 1091.046,85.688 1163,69 C1170.619,67.233 1178.575,64.202 1185.594,61.073" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0015" data-link-type="association" id="lnk35">
+      <path d="M1018.562,61.089 C1010.901,64.219 1002.24,67.246 994,69 C912.201,86.411 887.625,58.791 806,77 C782.62,82.216 757.529,93.433 740.52,101.969" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0015" data-link-type="association" id="lnk36">
+      <path d="M1104.173,61.166 C1097.959,64.299 1090.875,67.31 1084,69 C1023.984,83.754 866.412,63.959 806,77 C782.584,82.055 757.499,93.297 740.501,101.883" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0022" data-link-type="association" id="lnk37">
+      <path d="M1123,61.263 C1123,72.73 1123,90.402 1123,101.834" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

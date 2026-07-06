@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="198px" preserveAspectRatio="none" style="width:705px;height:198px;background:#FFFFFF;" version="1.1" viewBox="0 0 705 198" width="705px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster P_SourceSystems-->
+    <g class="cluster" data-qualified-name="P_SourceSystems" data-source-line="3" id="ent0001">
+      <path d="M16.5,58.013 L115.5,58.013 A3.75,3.75 0 0 1 118,60.513 L125,78.013 L316.5,78.013 A2.5,2.5 0 0 1 319,80.513 L319,160.513 A2.5,2.5 0 0 1 316.5,163.013 L16.5,163.013 A2.5,2.5 0 0 1 14,160.513 L14,60.513 A2.5,2.5 0 0 1 16.5,58.013" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="125" y1="78.013" y2="78.013"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="98" x="18" y="70.901">Source Systems</text>
+    </g>
+    <!--cluster P_QRM-->
+    <g class="cluster" data-qualified-name="P_QRM" data-source-line="7" id="ent0004">
+      <path d="M329.5,33.013 L420.625,33.013 A3.75,3.75 0 0 1 423.125,35.513 L430.125,67.013 L694.5,67.013 A2.5,2.5 0 0 1 697,69.513 L697,171.513 A2.5,2.5 0 0 1 694.5,174.013 L329.5,174.013 A2.5,2.5 0 0 1 327,171.513 L327,35.513 A2.5,2.5 0 0 1 329.5,33.013" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="327" x2="430.125" y1="67.013" y2="67.013"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="90.125" x="331" y="45.901">QRM (GA-005)</text>
+      <text fill="#000" font-size="14" font-weight="700" x="376.063" y="59.901"> </text>
+    </g>
+    <!--entity SSProductSystems-->
+    <g class="entity" data-qualified-name="P_SourceSystems.SSProductSystems" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.088" x="193.5" y="83.013"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="290.588" y="88.013"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="288.588" y="90.013"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="288.588" y="94.013"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.088" x="208.5" y="113.901">SS-000-C01</text>
+      <text fill="#000" font-size="14" textLength="48.212" x="208.5" y="127.901">Product</text>
+      <text fill="#000" font-size="14" textLength="53.637" x="208.5" y="141.901">Systems</text>
+    </g>
+    <!--entity SSNonProductSystems-->
+    <g class="entity" data-qualified-name="P_SourceSystems.SSNonProductSystems" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.575" x="56.5" y="83.013"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="155.075" y="88.013"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="153.075" y="90.013"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="153.075" y="94.013"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.088" x="71.5" y="113.901">SS-000-C02</text>
+      <text fill="#000" font-size="14" textLength="78.575" x="71.5" y="127.901">Non-Product</text>
+      <text fill="#000" font-size="14" textLength="53.637" x="71.5" y="141.901">Systems</text>
+    </g>
+    <!--entity QRMCustAccts-->
+    <g class="entity" data-qualified-name="P_QRM.QRMCustAccts" data-source-line="8" id="ent0005">
+      <rect fill="#F1F1F1" height="86" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="171.425" x="517.5" y="76.013"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="668.925" y="81.013"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="666.925" y="83.013"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="666.925" y="87.013"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="78.575" x="532.5" y="106.901">GA-005-C01</text>
+      <text fill="#000" font-size="14" textLength="126" x="532.5" y="120.901">Customoer Accounts</text>
+      <text fill="#000" font-size="14" textLength="82.6" x="532.5" y="134.901">Balances with</text>
+      <text fill="#000" font-size="14" textLength="131.425" x="532.5" y="148.901">{Mapped Oracle COA}</text>
+    </g>
+    <!--entity QRMTPRates-->
+    <g class="entity" data-qualified-name="P_QRM.QRMTPRates" data-source-line="9" id="ent0006">
+      <path d="M371.5,72.013 L412.5,72.013 A3.75,3.75 0 0 1 415,74.513 L422,93.013 L496.075,93.013 A2.5,2.5 0 0 1 498.575,95.513 L498.575,163.513 A2.5,2.5 0 0 1 496.075,166.013 L371.5,166.013 A2.5,2.5 0 0 1 369,163.513 L369,74.513 A2.5,2.5 0 0 1 371.5,72.013" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="369" x2="422" y1="93.013" y2="93.013"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="78.575" x="379" y="110.901">GA-005-C02</text>
+      <text fill="#000" font-size="14" textLength="41.3" x="379" y="124.901">TP and</text>
+      <text fill="#000" font-size="14" textLength="99.575" x="379" y="138.901">Premiums Rates</text>
+      <text fill="#000" font-size="14" textLength="98" x="379" y="152.901">{Products Level}</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#00F" points="331.063,32.671,329.823,22.9,328.473,28.394,322.98,27.044,331.063,32.671" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M30.805,57.986 C30.834,57.849 30.864,57.711 30.893,57.574 C31.012,57.024 31.134,56.474 31.261,55.926 C31.515,54.829 31.785,53.736 32.073,52.649 C32.649,50.474 33.295,48.322 34.02,46.205 C35.469,41.973 37.229,37.885 39.357,34.052 C43.614,26.387 49.344,19.744 57,15.013 C81.291,0 289.709,0 314,15.013 C317.847,17.39 321.226,20.243 324.192,23.461 C325.675,25.069 327.054,26.769 328.337,28.547 C328.978,29.436 329.596,30.344 330.189,31.269 C330.486,31.732 328.188,27.922 328.473,28.394" fill="none" style="stroke:#00F;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

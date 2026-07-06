@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="132px" preserveAspectRatio="none" style="width:107px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 107 132" width="107px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Dummy-->
+    <g class="entity" data-qualified-name="Dummy" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.063" x="6" y="12"/>
+      <ellipse cx="23.183" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="18.183" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="48.212" x="37.668" y="31.889">Dummy</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="90.063" y1="44" y2="44"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,51.5,21,55.5,17,59.5,13,55.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="31.85" x="26" y="58.889">other</text>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_FIELD">
+        <polygon fill="none" points="17,66.5,13,72.5,21,72.5" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="21.787" x="26" y="72.889">last</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="90.063" y1="80" y2="80"/>
+      <g data-visibility-modifier="PROTECTED_METHOD">
+        <polygon fill="#FF4" points="17,87.5,21,91.5,17,95.5,13,91.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="59.063" x="26" y="94.889">other2H()</text>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_METHOD">
+        <polygon fill="#4177AF" points="17,102.5,13,108.5,21,108.5" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="38.85" x="26" y="108.889">last2()</text>
+    </g>
+  </g>
+</svg>

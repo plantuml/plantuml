@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:215px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 215 78" width="215px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="ERROR" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="70.663" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="76.663" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="50.663" x="16" y="27.889">ERROR</text>
+      <text fill="#000" font-size="14" textLength="40.513" x="11" y="51.889">details</text>
+    </g>
+    <g class="entity" data-qualified-name="REBOOTING" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="104" x="95.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="95.5" x2="199.5" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="84" x="105.5" y="27.889">REBOOTING</text>
+    </g>
+  </g>
+</svg>

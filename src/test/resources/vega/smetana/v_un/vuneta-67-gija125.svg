@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="303px" preserveAspectRatio="none" style="width:600px;height:303px;background:#FFFFFF;" version="1.1" viewBox="0 0 600 303" width="600px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster issues-->
+    <g class="cluster" data-qualified-name="issues" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L57.225,4 A3.75,3.75 0 0 1 59.725,6.5 L66.725,24 L311.5,24 A2.5,2.5 0 0 1 314,26.5 L314,276.5 A2.5,2.5 0 0 1 311.5,279 L16.5,279 A2.5,2.5 0 0 1 14,276.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="66.725" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="39.725" x="18" y="16.889">issues</text>
+    </g>
+    <!--cluster java-->
+    <g class="cluster" data-qualified-name="issues.java" data-source-line="10" id="ent0005">
+      <path d="M47.5,29 L74.225,29 A3.75,3.75 0 0 1 76.725,31.5 L83.725,49 L288.5,49 A2.5,2.5 0 0 1 291,51.5 L291,173.5 A2.5,2.5 0 0 1 288.5,176 L47.5,176 A2.5,2.5 0 0 1 45,173.5 L45,31.5 A2.5,2.5 0 0 1 47.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="45" x2="83.725" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="49" y="41.889">java</text>
+    </g>
+    <!--cluster util-->
+    <g class="cluster" data-qualified-name="issues.java.util" data-source-line="10" id="ent0006">
+      <path d="M55.5,54 L74.438,54 A3.75,3.75 0 0 1 76.938,56.5 L83.938,74 L280.5,74 A2.5,2.5 0 0 1 283,76.5 L283,165.5 A2.5,2.5 0 0 1 280.5,168 L55.5,168 A2.5,2.5 0 0 1 53,165.5 L53,56.5 A2.5,2.5 0 0 1 55.5,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="53" x2="83.938" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="57" y="66.889">util</text>
+    </g>
+    <!--cluster function-->
+    <g class="cluster" data-qualified-name="issues.java.util.function" data-source-line="10" id="ent0007">
+      <path d="M177.5,79 L227.5,79 A3.75,3.75 0 0 1 230,81.5 L237,99 L272.5,99 A2.5,2.5 0 0 1 275,101.5 L275,157.5 A2.5,2.5 0 0 1 272.5,160 L177.5,160 A2.5,2.5 0 0 1 175,157.5 L175,81.5 A2.5,2.5 0 0 1 177.5,79" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="175" x2="237" y1="99" y2="99"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49" x="179" y="91.889">function</text>
+    </g>
+    <!--cluster java-->
+    <g class="cluster" data-qualified-name="java" data-source-line="15" id="ent0013">
+      <path d="M324.5,22 L351.225,22 A3.75,3.75 0 0 1 353.725,24.5 L360.725,42 L589.5,42 A2.5,2.5 0 0 1 592,44.5 L592,180.5 A2.5,2.5 0 0 1 589.5,183 L324.5,183 A2.5,2.5 0 0 1 322,180.5 L322,24.5 A2.5,2.5 0 0 1 324.5,22" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="322" x2="360.725" y1="42" y2="42"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="326" y="34.889">java</text>
+    </g>
+    <!--cluster util-->
+    <g class="cluster" data-qualified-name="java.util" data-source-line="15" id="ent0014">
+      <path d="M332.5,47 L351.438,47 A3.75,3.75 0 0 1 353.938,49.5 L360.938,67 L581.5,67 A2.5,2.5 0 0 1 584,69.5 L584,172.5 A2.5,2.5 0 0 1 581.5,175 L332.5,175 A2.5,2.5 0 0 1 330,172.5 L330,49.5 A2.5,2.5 0 0 1 332.5,47" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="330" x2="360.938" y1="67" y2="67"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="334" y="59.889">util</text>
+    </g>
+    <!--cluster function-->
+    <g class="cluster" data-qualified-name="java.util.function" data-source-line="14" id="ent0011">
+      <path d="M466.5,72 L516.5,72 A3.75,3.75 0 0 1 519,74.5 L526,92 L573.5,92 A2.5,2.5 0 0 1 576,94.5 L576,164.5 A2.5,2.5 0 0 1 573.5,167 L466.5,167 A2.5,2.5 0 0 1 464,164.5 L464,74.5 A2.5,2.5 0 0 1 466.5,72" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="464" x2="526" y1="92" y2="92"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49" x="468" y="84.889">function</text>
+    </g>
+    <!--class MySupplier-->
+    <g class="entity" data-qualified-name="issues.MySupplier" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="113.438" x="192.5" y="209"/>
+      <ellipse cx="207.5" cy="225" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="202.5" y="230">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="70.087" x="221.5" y="228.889">MySupplier</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="9.35" x="299.588" y="206"/>
+      <text fill="#000" font-size="12" font-style="italic" x="300.588" y="216.333">T</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="193.5" x2="304.938" y1="241" y2="241"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="193.5" x2="304.938" y1="249" y2="249"/>
+    </g>
+    <!--class MySet-->
+    <g class="entity" data-qualified-name="issues.MySet" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151.825" x="22" y="195"/>
+      <ellipse cx="68.169" cy="211" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="63.169" y="216">C</text>
+      <text fill="#000" font-size="14" textLength="39.637" x="88.669" y="214.889">MySet</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="9.35" x="167.475" y="192"/>
+      <text fill="#000" font-size="12" font-style="italic" x="168.475" y="202.333">T</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="172.825" y1="227" y2="227"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="172.825" y1="235" y2="235"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="33" cy="247.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="125.825" x="42" y="249.889">iterator(): Iterator&lt;T&gt;</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="33" cy="261.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.85" x="42" y="263.889">size(): int</text>
+    </g>
+    <!--class AbstractSet-->
+    <g class="entity" data-qualified-name="issues.java.util.AbstractSet" data-source-line="11" id="ent0009">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.275" x="61" y="104"/>
+      <ellipse cx="76" cy="120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="71" y="125">C</text>
+      <text fill="#000" font-size="14" textLength="72.275" x="90" y="123.889">AbstractSet</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="62" x2="164.275" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="62" x2="164.275" y1="144" y2="144"/>
+    </g>
+    <!--class Supplier-->
+    <g class="entity" data-qualified-name="issues.java.util.function.Supplier" data-source-line="10" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.45" x="183.5" y="104"/>
+      <ellipse cx="198.5" cy="120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="193.5" y="125">C</text>
+      <text fill="#000" font-size="14" textLength="51.45" x="212.5" y="123.889">Supplier</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="184.5" x2="265.95" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="184.5" x2="265.95" y1="144" y2="144"/>
+    </g>
+    <!--class AbstractSet-->
+    <g class="entity" data-qualified-name="java.util.AbstractSet" data-source-line="21" id="ent0015">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116.3" x="338" y="104"/>
+      <ellipse cx="353" cy="120" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="348" y="125">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="72.275" x="367" y="123.889">AbstractSet</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="10.025" x="447.275" y="101"/>
+      <text fill="#000" font-size="12" font-style="italic" x="448.275" y="111.333">E</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="339" x2="453.3" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="339" x2="453.3" y1="144" y2="144"/>
+    </g>
+    <!--class Supplier-->
+    <g class="entity" data-qualified-name="java.util.function.Supplier" data-source-line="15" id="ent0012">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.8" x="472.5" y="97"/>
+      <ellipse cx="487.5" cy="113" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="482.5" y="118">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="51.45" x="501.5" y="116.889">Supplier</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="9.35" x="560.95" y="94"/>
+      <text fill="#000" font-size="12" font-style="italic" x="561.95" y="104.333">T</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="473.5" x2="566.3" y1="129" y2="129"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="473.5" x2="566.3" y1="137" y2="137"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="483.5" cy="149.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" textLength="41.125" x="492.5" y="151.889">get(): T</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="230.386,152.115,228.627,171.007,240.314,168.284,230.386,152.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M234.471,169.646 C238.423,186.609 239.684,192.017 243.632,208.962" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0003" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="109.634,152.115,101.102,169.063,112.977,170.792,109.634,152.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.04,169.927 C105.209,182.501 105.493,180.547 103.416,194.812" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

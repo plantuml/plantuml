@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="133px" preserveAspectRatio="none" style="width:381px;height:133px;background:#FFFFFF;" version="1.1" viewBox="0 0 381 133" width="381px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster outer-->
+    <g class="cluster" data-qualified-name="outer" data-source-line="3" id="ent0002">
+      <rect fill="none" height="105" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="233" x="132" y="4"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="55.212" x="220.894" y="16.889">«foobar»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.85" x="232.575" y="30.889">outer</text>
+    </g>
+    <!--entity empty rectangle-->
+    <g class="entity" data-qualified-name="empty rectangle" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="115.638" x="6" y="48"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="55.212" x="36.213" y="68.889">«foobar»</text>
+      <text fill="#000" font-size="14" textLength="95.638" x="16" y="82.889">empty rectangle</text>
+    </g>
+    <!--entity inner-->
+    <g class="entity" data-qualified-name="outer.inner" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.15" x="305.5" y="55"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="315.5" y="75.889">inner</text>
+    </g>
+    <!--entity empty component-->
+    <g class="entity" data-qualified-name="outer.empty component" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="147.275" x="140.5" y="43"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="267.775" y="48"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="265.775" y="50"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="265.775" y="54"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="55.212" x="181.531" y="73.889">«foobar»</text>
+      <text fill="#000" font-size="14" textLength="107.275" x="155.5" y="87.889">empty component</text>
+    </g>
+  </g>
+</svg>

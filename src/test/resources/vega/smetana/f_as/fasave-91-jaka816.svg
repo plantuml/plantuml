@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="115px" preserveAspectRatio="none" style="width:471px;height:115px;background:#FFFFFF;" version="1.1" viewBox="0 0 471 115" width="471px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity c0-->
+    <g class="entity" data-qualified-name="c0" data-source-line="45" id="ent0001">
+      <rect fill="#AAA" height="49" rx="7.5" ry="7.5" style="stroke:#3600A8;stroke-width:1;" width="60.069" x="6" y="31"/>
+      <rect fill="#AAA" height="10" style="stroke:#3600A8;stroke-width:1;" width="15" x="46.069" y="36"/>
+      <rect fill="#AAA" height="2" style="stroke:#3600A8;stroke-width:1;" width="4" x="44.069" y="38"/>
+      <rect fill="#AAA" height="2" style="stroke:#3600A8;stroke-width:1;" width="4" x="44.069" y="42"/>
+      <text fill="#008000" font-size="19" textLength="20.069" x="21" y="65.778">c0</text>
+    </g>
+    <!--entity c-->
+    <g class="entity" data-qualified-name="c" data-source-line="46" id="ent0002">
+      <rect fill="#AAA" height="87" rx="7.5" ry="7.5" style="stroke:#3600A8;stroke-width:1;" width="81.206" x="84.5" y="12"/>
+      <rect fill="#AAA" height="10" style="stroke:#3600A8;stroke-width:1;" width="15" x="145.706" y="17"/>
+      <rect fill="#AAA" height="2" style="stroke:#3600A8;stroke-width:1;" width="4" x="143.706" y="19"/>
+      <rect fill="#AAA" height="2" style="stroke:#3600A8;stroke-width:1;" width="4" x="143.706" y="23"/>
+      <text fill="#008000" font-size="19" x="130.138" y="46.778">a</text>
+      <text fill="#008000" font-size="19" textLength="30.638" x="110.069" y="65.778">abc</text>
+      <text fill="#008000" font-size="19" textLength="41.206" x="99.5" y="84.778">a b c d</text>
+    </g>
+    <!--entity col0-->
+    <g class="entity" data-qualified-name="col0" data-source-line="52" id="ent0003">
+      <rect fill="#AAA" height="35" rx="7.5" ry="7.5" style="stroke:#3600A8;stroke-width:1;" width="50.913" x="187.5" y="40"/>
+      <rect fill="#AAA" height="35" rx="7.5" ry="7.5" style="stroke:#3600A8;stroke-width:1;" width="50.913" x="183.5" y="36"/>
+      <text fill="#008000" font-size="19" textLength="34.913" x="191.5" y="58.778">col0</text>
+    </g>
+    <!--entity col-->
+    <g class="entity" data-qualified-name="col" data-source-line="53" id="ent0004">
+      <rect fill="#AAA" height="73" rx="7.5" ry="7.5" style="stroke:#3600A8;stroke-width:1;" width="57.206" x="260.5" y="21"/>
+      <rect fill="#AAA" height="73" rx="7.5" ry="7.5" style="stroke:#3600A8;stroke-width:1;" width="57.206" x="256.5" y="17"/>
+      <text fill="#008000" font-size="19" x="295.138" y="39.778">a</text>
+      <text fill="#008000" font-size="19" textLength="30.638" x="275.069" y="58.778">abc</text>
+      <text fill="#008000" font-size="19" textLength="41.206" x="264.5" y="77.778">a b c d</text>
+    </g>
+    <!--entity d0-->
+    <g class="entity" data-qualified-name="d0" data-source-line="59" id="ent0005">
+      <path d="M335.5,41.5 C335.5,31.5 356.069,31.5 356.069,31.5 C356.069,31.5 376.638,31.5 376.638,41.5 L376.638,69.5 C376.638,79.5 356.069,79.5 356.069,79.5 C356.069,79.5 335.5,79.5 335.5,69.5 L335.5,41.5" fill="#AAA" style="stroke:#3600A8;stroke-width:1;"/>
+      <path d="M335.5,41.5 C335.5,51.5 356.069,51.5 356.069,51.5 C356.069,51.5 376.638,51.5 376.638,41.5" fill="none" style="stroke:#3600A8;stroke-width:1;"/>
+      <text fill="#008000" font-size="19" textLength="21.138" x="345.5" y="70.278">d0</text>
+    </g>
+    <!--entity d-->
+    <g class="entity" data-qualified-name="d" data-source-line="60" id="ent0006">
+      <path d="M394.5,22.5 C394.5,12.5 425.103,12.5 425.103,12.5 C425.103,12.5 455.706,12.5 455.706,22.5 L455.706,88.5 C455.706,98.5 425.103,98.5 425.103,98.5 C425.103,98.5 394.5,98.5 394.5,88.5 L394.5,22.5" fill="#AAA" style="stroke:#3600A8;stroke-width:1;"/>
+      <path d="M394.5,22.5 C394.5,32.5 425.103,32.5 425.103,32.5 C425.103,32.5 455.706,32.5 455.706,22.5" fill="none" style="stroke:#3600A8;stroke-width:1;"/>
+      <text fill="#008000" font-size="19" x="435.138" y="51.278">a</text>
+      <text fill="#008000" font-size="19" textLength="30.638" x="415.069" y="70.278">abc</text>
+      <text fill="#008000" font-size="19" textLength="41.206" x="404.5" y="89.278">a b c d</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk7">
+      <path d="M66.246,55.5 C72.213,55.5 78.18,55.5 84.148,55.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="association" id="lnk8">
+      <path d="M238.609,55.5 C244.532,55.5 250.455,55.5 256.378,55.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="association" id="lnk9">
+      <path d="M376.754,55.5 C382.659,55.5 388.564,55.5 394.469,55.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

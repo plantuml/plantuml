@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="75px" preserveAspectRatio="none" style="width:103px;height:75px;background:#FFFFFF;" version="1.1" viewBox="0 0 103 75" width="103px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title">
+      <text fill="#000" font-size="14" font-weight="700" textLength="61.512" x="20" y="30.889">this is a title</text>
+    </g>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="43.363" x="29.075" y="45"/>
+    <text fill="#000" font-size="14" font-weight="700" x="34.075" y="57.889">a</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="51.863" y="57.889">61</text>
+    <line style="stroke:#000;stroke-width:1;" x1="46.863" x2="46.863" y1="45" y2="63"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="43.363" x="29.075" y="45"/>
+  </g>
+</svg>

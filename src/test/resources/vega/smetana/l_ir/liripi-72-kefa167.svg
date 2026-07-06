@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="166px" preserveAspectRatio="none" style="width:240px;height:166px;background:#FFFFFF;" version="1.1" viewBox="0 0 240 166" width="240px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster attribute_mapper-->
+    <g class="cluster" data-qualified-name="attribute_mapper" data-source-line="3" id="ent0001">
+      <path d="M36.5,4 L136.988,4 A3.75,3.75 0 0 1 139.488,6.5 L146.488,24 L229.5,24 A2.5,2.5 0 0 1 232,26.5 L232,139.5 A2.5,2.5 0 0 1 229.5,142 L36.5,142 A2.5,2.5 0 0 1 34,139.5 L34,6.5 A2.5,2.5 0 0 1 36.5,4" fill="#F99" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="34" x2="146.488" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="99.488" x="38" y="16.889">Attribute Mapper</text>
+    </g>
+    <!--cluster mapper_engine-->
+    <g class="cluster" data-qualified-name="attribute_mapper.mapper_engine" data-source-line="6" id="ent0004">
+      <rect fill="none" height="105" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="136" x="88" y="29"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="204" y="34"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="202" y="36"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="202" y="40"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="89.513" x="111.244" y="52.889">Mapper engine</text>
+    </g>
+    <g class="entity" data-qualified-name="attribute_mapper.maps_callbacks" data-source-line="4" id="ent0002">
+      <text fill="#000" font-size="14" textLength="95.025" x="20.487" y="100.889">Maps Callbacks</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="62" y="78"/>
+    </g>
+    <g class="entity" data-qualified-name="attribute_mapper.maps_evaluations" data-source-line="5" id="ent0003">
+      <text fill="#000" font-size="14" textLength="61.512" x="3.244" y="100.889">Maps Eval</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="28" y="78"/>
+    </g>
+    <g class="entity" data-qualified-name="attribute_mapper.mapper_engine.maps" data-source-line="7" id="ent0005">
+      <rect fill="#ACFFA0" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.525" x="96.5" y="54"/>
+      <text fill="#000" font-size="14" textLength="60.725" x="125.4" y="66.889">Mappings</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="96.5" x2="215.025" y1="72" y2="72"/>
+      <text fill="#000" font-size="14" textLength="36.663" x="101.5" y="84.889">Rule 1</text>
+      <text fill="#000" font-size="14" textLength="51.713" x="148.163" y="84.889">r'1 =  2 * r'2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="143.163" x2="143.163" y1="72" y2="90"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="96.5" x2="215.025" y1="90" y2="90"/>
+      <text fill="#000" font-size="14" textLength="36.663" x="101.5" y="102.889">Rule 2</text>
+      <text fill="#000" font-size="14" textLength="56.438" x="148.163" y="102.889">d'2 =  d'1 / 2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="143.163" x2="143.163" y1="90" y2="108"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="96.5" x2="215.025" y1="108" y2="108"/>
+      <text fill="#000" font-size="14" textLength="36.663" x="101.5" y="120.889">Rule 3</text>
+      <text fill="#000" font-size="14" textLength="61.863" x="148.163" y="120.889">r'3 =  r'4 + r'2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="143.163" x2="143.163" y1="108" y2="126"/>
+    </g>
+  </g>
+</svg>

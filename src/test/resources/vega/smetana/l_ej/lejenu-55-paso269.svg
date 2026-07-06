@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="157px" preserveAspectRatio="none" style="width:830px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 830 157" width="830px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster N3-->
+    <g class="cluster" data-qualified-name="N3" data-source-line="2" id="ent0001">
+      <path d="M186.5,38.707 L205.438,38.707 A3.75,3.75 0 0 1 207.938,41.207 L214.938,58.707 L811.5,58.707 A2.5,2.5 0 0 1 814,61.207 L814,131.207 A2.5,2.5 0 0 1 811.5,133.707 L186.5,133.707 A2.5,2.5 0 0 1 184,131.207 L184,41.207 A2.5,2.5 0 0 1 186.5,38.707" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="184" x2="214.938" y1="58.707" y2="58.707"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="188" y="51.596">N3</text>
+    </g>
+    <!--class ClassInN3Together_2-->
+    <g class="entity" data-qualified-name="ClassInN3Together_2" data-source-line="18" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="168.238" x="6" y="70.707"/>
+      <ellipse cx="21" cy="86.707" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="91.707">C</text>
+      <text fill="#000" font-size="14" textLength="136.238" x="35" y="90.596">ClassInN3Together_2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="173.238" y1="102.707" y2="102.707"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="173.238" y1="110.707" y2="110.707"/>
+    </g>
+    <!--class ClassInN3_1-->
+    <g class="entity" data-qualified-name="N3.ClassInN3_1" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.238" x="694" y="63.707"/>
+      <ellipse cx="709" cy="79.707" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="704" y="84.707">C</text>
+      <text fill="#000" font-size="14" textLength="80.238" x="723" y="83.596">ClassInN3_1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="695" x2="805.238" y1="95.707" y2="95.707"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="702" y="105.207"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="35.788" x="714" y="110.596">prop1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="695" x2="805.238" y1="117.707" y2="117.707"/>
+    </g>
+    <!--class ClassInN3_2-->
+    <g class="entity" data-qualified-name="N3.ClassInN3_2" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.238" x="378" y="63.707"/>
+      <ellipse cx="393" cy="79.707" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="388" y="84.707">C</text>
+      <text fill="#000" font-size="14" textLength="80.238" x="407" y="83.596">ClassInN3_2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="379" x2="489.238" y1="95.707" y2="95.707"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="386" y="105.207"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="35.788" x="398" y="110.596">prop2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="379" x2="489.238" y1="117.707" y2="117.707"/>
+    </g>
+    <!--class ClassInN3Together_1-->
+    <g class="entity" data-qualified-name="N3.ClassInN3Together_1" data-source-line="10" id="ent0004">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="168.238" x="508" y="63.707"/>
+      <ellipse cx="523" cy="79.707" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="518" y="84.707">C</text>
+      <text fill="#000" font-size="14" textLength="136.238" x="537" y="83.596">ClassInN3Together_1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="509" x2="675.238" y1="95.707" y2="95.707"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="516" y="105.207"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="35.788" x="528" y="110.596">prop3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="509" x2="675.238" y1="117.707" y2="117.707"/>
+    </g>
+    <!--class ClassInN3Together_2-->
+    <g class="entity" data-qualified-name="N3.ClassInN3Together_2" data-source-line="13" id="ent0005">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="168.238" x="192" y="63.707"/>
+      <ellipse cx="207" cy="79.707" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="202" y="84.707">C</text>
+      <text fill="#000" font-size="14" textLength="136.238" x="221" y="83.596">ClassInN3Together_2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="193" x2="359.238" y1="95.707" y2="95.707"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="200" y="105.207"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="35.788" x="212" y="110.596">prop4</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="193" x2="359.238" y1="117.707" y2="117.707"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="association" id="lnk6">
+      <path d="M676.246,94.707 C682.104,94.707 687.962,94.707 693.82,94.707" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="association" id="lnk8">
+      <path d="M412.495,63.618 C399.407,47.531 381.15,29.468 360,20.707 C324.893,6.165 225.06,8.72 189,20.707 C159.474,30.523 131.635,52.96 113.044,70.571" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="association" id="lnk9">
+      <path d="M490.164,94.707 C495.998,94.707 501.833,94.707 507.667,94.707" fill="none" style="stroke:#F00;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="association" id="lnk10">
+      <path d="M728.495,63.618 C715.407,47.531 697.15,29.468 676,20.707 C626.008,0 240.348,3.638 189,20.707 C159.474,30.523 131.635,52.96 113.044,70.571" fill="none" style="stroke:#00F;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="85px" preserveAspectRatio="none" style="width:220px;height:85px;background:#FFFFFF;" version="1.1" viewBox="0 0 220 85" width="220px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster X-->
+    <g class="cluster" data-qualified-name="X" data-source-line="5" id="ent0002">
+      <path d="M82.5,4 L92.863,4 A3.75,3.75 0 0 1 95.363,6.5 L102.363,24 L201.5,24 A2.5,2.5 0 0 1 204,26.5 L204,58.5 A2.5,2.5 0 0 1 201.5,61 L82.5,61 A2.5,2.5 0 0 1 80,58.5 L80,6.5 A2.5,2.5 0 0 1 82.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="80" x2="102.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="84" y="16.889">X</text>
+    </g>
+    <g class="entity" data-qualified-name="n" data-source-line="2" id="ent0001">
+      <path d="M6,29 L6,52 L69.575,52 L69.575,39 L59.575,29 L6,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M59.575,29 L59.575,39 L69.575,39 L59.575,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="12" y="44.111">my note</text>
+    </g>
+    <g class="entity" data-qualified-name="X.n" data-source-line="7" id="ent0003">
+      <path d="M88,29 L88,52 L195.613,52 L195.613,39 L185.613,29 L88,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M185.613,29 L185.613,39 L195.613,39 L185.613,29" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="86.613" x="94" y="44.111">my enother note</text>
+    </g>
+  </g>
+</svg>

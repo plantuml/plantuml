@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="175px" preserveAspectRatio="none" style="width:226px;height:175px;background:#FFFFFF;" version="1.1" viewBox="0 0 226 175" width="226px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="8E437FA1B6DC905" data-source-line="3" id="ent0001">
+      <path d="M18.5,12 L197.875,12 A12.5,12.5 0 0 1 210.375,24.5 L210.375,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="47" style="stroke:#F1F1F1;stroke-width:1;" width="204.375" x="6" y="36"/>
+      <rect fill="none" height="147" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="204.375" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="210.375" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="210.375" y1="83" y2="83"/>
+      <text fill="#000" font-size="14" textLength="127.05" x="44.663" y="27.889">8E437FA1B6DC905</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="11" y="46.889">Rule:</text>
+      <text fill="#000" font-size="14" textLength="119.7" x="11" y="60.889">if ('openStatus') then</text>
+      <text fill="#000" font-size="14" textLength="179.375" x="11" y="74.889">'switchgearStatus' := $OPEN$</text>
+      <g class="entity" data-qualified-name="8E437FA1B6DC905.6D4FA3B201978C" data-source-line="5" id="ent0002">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="137.688" x="12" y="94"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="149.688" y1="118" y2="118"/>
+        <text fill="#000" font-size="14" textLength="117.688" x="22" y="109.889">6D4FA3B201978C</text>
+      </g>
+    </g>
+  </g>
+</svg>

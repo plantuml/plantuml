@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="144px" preserveAspectRatio="none" style="width:341px;height:144px;background:#FFFFFF;" version="1.1" viewBox="0 0 341 144" width="341px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity C1-->
+    <g class="entity" data-qualified-name="C1" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.15" x="42" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="142.15" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="140.15" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="140.15" y="23"/>
+      <text fill="#000" font-size="14" textLength="80.15" x="57" y="42.889">Component 1</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="10" id="ent0003">
+      <path d="M70,92 L70,128 A0,0 0 0 0 70,128 L134.388,128 A0,0 0 0 0 134.388,128 L134.388,102 L124.387,92 L106,92 L102,56.007 L98,92 L70,92 A0,0 0 0 0 70,92" fill="#008000"/>
+      <path d="M124.387,92 L124.387,102 L134.388,102 L124.387,92" fill="#008000"/>
+      <text fill="#000" font-size="13" textLength="43.387" x="76" y="107.111">Legend</text>
+      <text fill="#000" font-size="13" textLength="20.881" x="76" y="120.111">text</text>
+    </g>
+    <g class="entity" data-qualified-name="N1" data-source-line="15" id="ent0005">
+      <path d="M180.5,16 L180.5,30 L162.164,34 L180.5,38 L180.5,52 A0,0 0 0 0 180.5,52 L325,52 A0,0 0 0 0 325,52 L325,26 L315,16 L180.5,16 A0,0 0 0 0 180.5,16" fill="#008000"/>
+      <path d="M315,16 L315,26 L325,26 L315,16" fill="#008000"/>
+      <text fill="#000" font-size="13" textLength="43.387" x="186.5" y="31.111">Legend</text>
+      <text fill="#000" font-size="13" textLength="123.5" x="186.5" y="44.111">stereotype not working</text>
+    </g>
+    <!--entity N2-->
+    <g class="entity" data-qualified-name="N2" data-source-line="20" id="ent0008">
+      <ellipse cx="15" cy="31" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="6.031" y="58.889">N2</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="41.808,34,32.808,30,36.808,34,32.808,38,41.808,34" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.176,34 C30.053,34 30.93,34 36.808,34" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

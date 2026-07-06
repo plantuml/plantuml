@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:226px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 226 104" width="226px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="110.788" x="99" y="12"/>
+      <ellipse cx="145.463" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="140.463" y="33">C</text>
+      <text fill="#000" font-size="14" x="165.963" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="100" x2="208.788" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="107" y="53.5"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="84.788" x="119" y="58.889">m_instance : A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="100" x2="208.788" y1="66" y2="66"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="107" y="75.5"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.338" x="119" y="80.889">test() : void</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="6" id="ent0003">
+      <path d="M6,38 L6,61 A0,0 0 0 0 6,61 L81.275,61 A0,0 0 0 0 81.275,61 L81.275,56 L98.97,50 L81.275,48 L81.275,48 L71.275,38 L6,38 A0,0 0 0 0 6,38" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M71.275,38 L71.275,48 L81.275,48 L71.275,38" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="29.656" x="12" y="53.111">this is</text>
+      <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="41.656" y="53.111">bold</text>
+    </g>
+  </g>
+</svg>

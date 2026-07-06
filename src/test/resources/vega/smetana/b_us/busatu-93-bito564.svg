@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="169px" preserveAspectRatio="none" style="width:153px;height:169px;background:#FFFFFF;" version="1.1" viewBox="0 0 153 169" width="153px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity MyComponent-->
+    <g class="entity" data-qualified-name="MyComponent" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="131" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="117" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="115" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="115" y="23"/>
+      <text fill="#000" font-size="14" textLength="91" x="21" y="42.889">My Component</text>
+    </g>
+    <!--entity UI-->
+    <g class="entity" data-qualified-name="UI" data-source-line="8" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54" x="44.5" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="78.5" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="76.5" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="76.5" y="120"/>
+      <text fill="#000" font-size="14" textLength="14" x="59.5" y="139.889">UI</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M71.5,56.084 C71.5,71.827 71.5,93.246 71.5,108.975" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.188" x="73.5" y="86.111">Item</text>
+    </g>
+  </g>
+</svg>

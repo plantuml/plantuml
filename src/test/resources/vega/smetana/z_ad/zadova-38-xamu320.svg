@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:222px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 222 160" width="222px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class ReferenceInstructionVisitor-->
+    <g class="entity" data-qualified-name="ReferenceInstructionVisitor" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200" x="6" y="96"/>
+      <ellipse cx="21" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="168" x="35" y="115.889">ReferenceInstructionVisitor</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="205" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="205" y1="136" y2="136"/>
+    </g>
+    <!--class Instruction$Visitor-->
+    <g class="entity" data-qualified-name="Instruction.Visitor" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="143.213" x="34.5" y="12"/>
+      <ellipse cx="49.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="44.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="111.213" x="63.5" y="31.889">Instruction$Visitor</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35.5" x2="176.713" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35.5" x2="176.713" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="106,60.279,100,78.279,112,78.279,106,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M106,78.279 C106,89.453 106,84.802 106,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

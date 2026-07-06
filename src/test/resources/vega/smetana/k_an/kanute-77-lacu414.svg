@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="176px" preserveAspectRatio="none" style="width:309px;height:176px;background:#FFFFFF;" version="1.1" viewBox="0 0 309 176" width="309px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity toto-->
+    <g class="entity" data-qualified-name="toto" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="124.788" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="110.788" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="108.788" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="108.788" y="23"/>
+      <text fill="#000" font-size="14" textLength="84.788" x="21" y="42.889">«component»</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="21" y="56.889">Foo</text>
+    </g>
+    <!--entity p1-->
+    <g class="entity" data-qualified-name="p1" data-source-line="3" id="ent0002">
+      <path d="M151.5,15.5 L180.075,15.5 A3.75,3.75 0 0 1 182.575,18 L189.575,35.5 L207.65,35.5 A2.5,2.5 0 0 1 210.15,38 L210.15,64 A2.5,2.5 0 0 1 207.65,66.5 L151.5,66.5 A2.5,2.5 0 0 1 149,64 L149,18 A2.5,2.5 0 0 1 151.5,15.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="149" x2="189.575" y1="35.5" y2="35.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="159" y="29.389">p1</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="159" y="53.389">p1 p1</text>
+    </g>
+    <!--entity p2-->
+    <g class="entity" data-qualified-name="p2" data-source-line="6" id="ent0003">
+      <path d="M153,123 L181.575,123 A3.75,3.75 0 0 1 184.075,125.5 L191.075,143 L205.575,143 A2.5,2.5 0 0 1 208.075,145.5 L208.075,157.5 A2.5,2.5 0 0 1 205.575,160 L153,160 A2.5,2.5 0 0 1 150.5,157.5 L150.5,125.5 A2.5,2.5 0 0 1 153,123" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="150.5" x2="191.075" y1="143" y2="143"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="160.5" y="136.889">p2</text>
+    </g>
+    <!--entity p11-->
+    <g class="entity" data-qualified-name="p11" data-source-line="10" id="ent0005">
+      <path d="M230.5,22.5 L266.863,22.5 A3.75,3.75 0 0 1 269.363,25 L276.363,42.5 L290.863,42.5 A2.5,2.5 0 0 1 293.363,45 L293.363,57 A2.5,2.5 0 0 1 290.863,59.5 L230.5,59.5 A2.5,2.5 0 0 1 228,57 L228,25 A2.5,2.5 0 0 1 230.5,22.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="228" x2="276.363" y1="42.5" y2="42.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="238" y="36.389">p11</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="179.5,122.706,183.5,113.706,179.5,117.706,175.5,113.706,179.5,122.706" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M179.5,66.602 C179.5,84.038 179.5,102.029 179.5,117.706" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="181.5" y="100.111">use</text>
+    </g>
+  </g>
+</svg>

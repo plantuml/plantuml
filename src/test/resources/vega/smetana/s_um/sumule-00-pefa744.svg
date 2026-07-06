@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="109px" preserveAspectRatio="none" style="width:88px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 88 109" width="88px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster D-->
+    <g class="cluster" data-qualified-name="A.B.C.D" data-source-line="2" id="ent0005">
+      <path d="M16.5,4 L68.075,4 A3.75,3.75 0 0 1 70.575,6.5 L77.575,24 L77.5,24 A2.5,2.5 0 0 1 80,26.5 L80,82.5 A2.5,2.5 0 0 1 77.5,85 L16.5,85 A2.5,2.5 0 0 1 14,82.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="77.575" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="50.575" x="18" y="16.889">A.B.C.D</text>
+    </g>
+    <!--class Z-->
+    <g class="entity" data-qualified-name="A.B.C.D.Z" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.575" x="26.5" y="29"/>
+      <ellipse cx="41.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="36.5" y="50">C</text>
+      <text fill="#000" font-size="14" x="55.5" y="48.889">Z</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27.5" x2="66.075" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27.5" x2="66.075" y1="69" y2="69"/>
+    </g>
+  </g>
+</svg>

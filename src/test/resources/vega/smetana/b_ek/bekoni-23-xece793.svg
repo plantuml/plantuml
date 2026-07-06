@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="236px" preserveAspectRatio="none" style="width:127px;height:236px;background:#FFFFFF;" version="1.1" viewBox="0 0 127 236" width="127px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity user-->
+    <g class="entity" data-qualified-name="user" data-source-line="12" id="ent0001">
+      <rect fill="#FFF" height="124" rx="2.5" ry="2.5" style="stroke:#F90;stroke-width:0.5;" width="105.3" x="6" y="12"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="38.7" x="39.3" y="31.333">«User»</text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="54.2" x="16" y="46.444">Trusted</text>
+      <text fill="#000" font-size="16" font-weight="700" x="70.2" y="46.444"> </text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="31.1" x="70.2" y="46.444">user</text>
+      <image height="64" width="64" x="26.65" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFgElEQVR4Xu1bQYgVRxCVEIKEICEEkSDhMzTDMnyG4R+W5dMMwyKLiAQP4imEHDxICJ5yCEECSwgiIQTJQWQRDyISJOTgSURykCASwh6CSFgkiIgsksOyBFlEkqo/3TM9z/3++X+me2aWfdCw/qquqp7urq6uavfs2cUunENE8n2vH/dFGC9xG/1NvyHfjsFgMHhTDfYitSfU/hvTmMY8S9wH5XQSNJgT1Na2Geykxn1OoLzOoBctfkgDuIsD88L4bxHKFfr7ay+KP+HGf/NvKe2VD3GXZaH8VsMLE0mGrxuDeEHtoh/JEHkRzMO8qo/uv84ykbeVIId2mAzeMoz/1e8nc8g3CdyH+xpytlg28rUKYhCz0RuG0T8mSTKzM+O+LMOQt8E6kK8V8P3hO8JwdrSfv0GeWcGyjI+wxrqQp3GQE1s2jPwF6VXBMnP5chnpjaIXJAfIsE1l4LqYn9+HPFXBMkn2M6Vjs9df3I88jcEL5Tk9O7RcP0d6XWDZuR55DumNgcLYh3r2gyB4C+l1gWWPVpjyBUhvBCIcBnpWRBSvIL1usI5MH+lGunOQIadzg+RRpNcN0nM01xefRrpz0L78ThvkImSdi5Ke1se6ke4cZMjVbEbEYWv7X4N1GCvgCtKdg4y4qYzZQJotiPzIvYk05yAjrusZsXkCaMAKuI5056B9eEEb1IAPuIB05zCDEzengMxOAQqGrAVdpUEGDYwPYD8OSJMpWt8A6e5x/PgbtAqeKqOe2szlqdyi1vWEdSNPIyBjzrpYliw7m/0oPov0xqDyfzoLtG7jvq7yDfoesOXC4U4F80ZI7WekVwXLNFZZe26CGqP7en4rZAdVW9KikGxhHRbyDbVARElERj7PZyo+X8lRpQ72vLGynrMOZGsV1DmdfQRqt2nJ+sg3CdyH+xYG7yDOqAUiLYOZ2eEXHLVxDRB5EapOyNGlWRdgWUvI22r4Ycwh6z1jELo9VAM8Y1SGzqjfDB+StXssC+V3A7SHaWCfjil5vbZxH/44lXxI0/Cj5JC6LD3CAZZoj6n94EVyiHJbDZW+/pIcVplBc5rb9BXj2mOK/Jbn5hffQ32tQZqxlTTw+J9tBrDmjQqe8mO+wARB8kqkyHn+9BiVp4j/EvfZRs6/HBOE4dLb2L9RkOEJGfcXGEsfQn7f60+uCI+DH8p5kdYGdUHEWBFJgvzOMSpeRvJbMuhlYeCR/GK7WZ4VPOOCT4ridnnJF6IqxddKUHv9VmFmonglCBas7VP2AelWynXSv+94g0NuQ2MvHO4n5X8ahjyjI+sI8tkC6fuIdRr6V509smJFpPC+oZw+RHIQ+WzDDxc/ADseWC+Y9nrJXlGI7uSdXpS8i3yuwNtNFN8h/Wa1NkFByTVD2e82Eh/TYuQgo/gPY1IuI08tIMEnjcFzPO9mz5WAHw15O3DkOLKP/NFJ5KkEvy89kVdj+FragmxsEWQX5yJ0Wm5jbiAPIM/MIIE3jNlvviI7BjTzXxl21lM1EundPtv39FNrb2fqVdmqtpdihAR5poZgz6oEcmiK9LbBD2N+pKk+gLyF9KmgYnw9+zeQ3laIQiqtgr8iAcax1/7Z1xD9ODYm7irSS0EFGdqrriK97SCbHyjbNw8uLOxF+kSkd/fMmVgrd9kC2Z2dCBTAHUP6RFDHn7SA1pWhSsB8RyBmeUoj8irsfaR1BSLPMj9C2mvhDSQXO7Xzs17ztwWy/Yoex1T5RFF8i3cK6V2Byi+OxsEZaqSPReHZSyRjpHcFohjFlg/h6XqZPX6k+FogvSugycuf8U5TreZ9n6+A+DNdwupaY9uzieRKdVkI8/Xnjmmy/FHoFf+Lyo5oPCYc53ikRc0juKS62ngsnS6y7sIi/ge19RI1BbaAWAAAAABJRU5ErkJggg==" y="50"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="6.6" x="55.35" y="123.333">[]</text>
+    </g>
+    <!--entity policy-->
+    <g class="entity" data-qualified-name="policy" data-source-line="14" id="ent0002">
+      <path d="M22,174.5 L22,217.5 A2.5,2.5 0 0 0 24.5,220 L92.95,220 A2.5,2.5 0 0 0 95.45,217.5 L95.45,182 L85.45,172 L24.5,172 A2.5,2.5 0 0 0 22,174.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M85.45,172 L85.45,179.5 A2.5,2.5 0 0 0 87.95,182 L95.45,182" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#00F" font-size="14" font-style="italic" textLength="51.45" x="33" y="192.889">«policy»</text>
+      <text fill="#00F" font-size="14" textLength="35.875" x="40.788" y="206.889">policy</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M58.5,136.055 C58.5,148.792 58.5,161.467 58.5,171.781" fill="none" style="stroke:#666;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

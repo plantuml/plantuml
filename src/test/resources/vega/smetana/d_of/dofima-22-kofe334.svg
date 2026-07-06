@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="272px" preserveAspectRatio="none" style="width:188px;height:272px;background:#FFFFFF;" version="1.1" viewBox="0 0 188 272" width="188px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class user-->
+    <g class="entity" data-qualified-name="user" data-source-line="14" id="ent0001">
+      <rect fill="#FF0" height="96" rx="10" ry="10" style="stroke:#000;stroke-width:0.5;" width="166.175" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="74.3" y="27.889">User</text>
+      <text fill="#000" font-size="14" textLength="114.275" x="31.95" y="41.889">(User in our system)</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="7" x2="171.175" y1="50" y2="50"/>
+      <path d="M18.5,57 C17.12,57 16,58.12 16,59.5 C16,59.66 16,59.82 16.03,59.97 L13,63 L13,65 L16,65 L16,63 L18,63 L18,62 L18.03,61.97 C18.18,62 18.34,62 18.5,62 C19.88,62 21,60.88 21,59.5 C21,58.12 19.88,57 18.5,57 M19,58 C19.55,58 20,58.45 20,59 C20,59.55 19.55,60 19,60 C18.45,60 18,59.55 18,59 C18,58.45 18.45,58 19,58" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="73.237" x="22" y="64.889">id INTEGER</text>
+      <text fill="#000" font-size="14" textLength="154.175" x="12" y="78.889">username VARCHAR[32]</text>
+      <text fill="#000" font-size="14" textLength="151.9" x="12" y="92.889">password VARCHAR[64]</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="7" x2="171.175" y1="100" y2="100"/>
+    </g>
+    <!--class session-->
+    <g class="entity" data-qualified-name="session" data-source-line="20" id="ent0002">
+      <rect fill="#FF0" height="82" rx="10" ry="10" style="stroke:#000;stroke-width:0.5;" width="120.238" x="29" y="174"/>
+      <text fill="#000" font-size="14" textLength="49.875" x="64.181" y="189.889">Session</text>
+      <text fill="#000" font-size="14" textLength="100.275" x="38.981" y="203.889">(session for user)</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="30" x2="148.238" y1="212" y2="212"/>
+      <path d="M41.5,219 C40.12,219 39,220.12 39,221.5 C39,221.66 39,221.82 39.03,221.97 L36,225 L36,227 L39,227 L39,225 L41,225 L41,224 L41.03,223.97 C41.18,224 41.34,224 41.5,224 C42.88,224 44,222.88 44,221.5 C44,220.12 42.88,219 41.5,219 M42,220 C42.55,220 43,220.45 43,221 C43,221.55 42.55,222 42,222 C41.45,222 41,221.55 41,221 C41,220.45 41.45,220 42,220" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="73.237" x="45" y="226.889">id INTEGER</text>
+      <text fill="#000" font-size="14" textLength="108.238" x="35" y="240.889">user_id INTEGER</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="30" x2="148.238" y1="248" y2="248"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="crowfoot" id="lnk3">
+      <line style="stroke:#000;stroke-width:1;" x1="85" x2="93" y1="112.153" y2="112.153"/>
+      <line style="stroke:#000;stroke-width:1;" x1="85" x2="93" y1="115.153" y2="115.153"/>
+      <line style="stroke:#000;stroke-width:1;" x1="89" x2="89" y1="116.153" y2="108.153"/>
+      <line style="stroke:#000;stroke-width:1;" x1="89" x2="95" y1="165.963" y2="173.963"/>
+      <line style="stroke:#000;stroke-width:1;" x1="89" x2="83" y1="165.963" y2="173.963"/>
+      <line style="stroke:#000;stroke-width:1;" x1="89" x2="89" y1="165.963" y2="173.963"/>
+      <line style="stroke:#000;stroke-width:1;" x1="93" x2="85" y1="163.963" y2="163.963"/>
+      <path d="M89,116.153 C89,137.226 89,145.8 89,165.963" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="86.694" x="91" y="138.111">A user may have</text>
+      <text fill="#000" font-size="13" textLength="82.388" x="93.153" y="151.111">many sessions</text>
+    </g>
+  </g>
+</svg>

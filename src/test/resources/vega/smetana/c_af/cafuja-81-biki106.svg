@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:86px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 86 90" width="86px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo1-->
+    <g class="entity" data-qualified-name="Foo1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.938" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="35" y="31.889">Foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="68.938" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="12" y="58.889">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="68.938" y1="66" y2="66"/>
+    </g>
+  </g>
+</svg>

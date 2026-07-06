@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="259px" preserveAspectRatio="none" style="width:356px;height:259px;background:#FFFFFF;" version="1.1" viewBox="0 0 356 259" width="356px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFF" height="184" style="stroke:#181818;stroke-width:1.5;" width="340.35" x="5" y="10"/>
+    <path d="M125.513,10 L125.513,17 L115.513,27 L5,27" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="8" y="21.889">This is a</text>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="52.45" y="21.889">mainframe</text>
+    <!--class a-->
+    <g class="entity" data-qualified-name="a" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="152" y="47"/>
+      <ellipse cx="167" cy="63" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="162" y="68">C</text>
+      <text fill="#000" font-size="14" x="181" y="66.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="153" x2="190.788" y1="79" y2="79"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="153" x2="190.788" y1="87" y2="87"/>
+    </g>
+    <!--class bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-->
+    <g class="entity" data-qualified-name="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="312.35" x="16" y="131"/>
+      <ellipse cx="31" cy="147" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="26" y="152">C</text>
+      <text fill="#000" font-size="14" textLength="280.35" x="45" y="150.889">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="327.35" y1="163" y2="163"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="327.35" y1="171" y2="171"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M172,95.279 C172,106.453 172,119.802 172,130.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="legend" data-source-line="3">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="136.556" y="216"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="141.556" y="231.889">The legend</text>
+    </g>
+  </g>
+</svg>

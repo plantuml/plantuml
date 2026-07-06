@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:144px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 144 72" width="144px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <path d="M6,22.5 C6,12.5 29.606,12.5 29.606,12.5 C29.606,12.5 53.213,12.5 53.213,22.5 L53.213,45.5 C53.213,55.5 29.606,55.5 29.606,55.5 C29.606,55.5 6,55.5 6,45.5 L6,22.5" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,22.5 C6,32.5 29.606,32.5 29.606,32.5 C29.606,32.5 53.213,32.5 53.213,22.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="16" y="47.389">foo1</text>
+    </g>
+    <!--entity foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="2" id="ent0002">
+      <path d="M79.084,20.89 C86.126,10.524 93.796,10.797 101.131,20.568 C107.834,12.166 115.37,11.074 121.16,21.538 C128.787,22.032 131.952,27.738 128.294,34.461 C132.952,42.717 128.657,48.103 120.268,49.301 C117.705,59.928 110.698,63.899 100.866,57.666 C89.937,65.443 83.429,62.584 81.087,49.517 C72.166,46.327 71.08,40.378 78.125,34.116 C71.924,29.598 71.88,24.435 79.084,20.89" fill="#F00" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="86" y="37.889">foo2</text>
+    </g>
+  </g>
+</svg>

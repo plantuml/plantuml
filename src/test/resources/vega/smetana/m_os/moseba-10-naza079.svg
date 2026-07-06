@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="86px" preserveAspectRatio="none" style="width:675px;height:86px;background:#FFFFFF;" version="1.1" viewBox="0 0 675 86" width="675px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F0E68C" height="16" rx="5" ry="5" style="stroke:#F0E68C;stroke-width:1.5;" width="42.05" x="10" y="34"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="22.05" x="15" y="45.333">quiz</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="9.9" x="47.05" y="45.333">   </text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="42.05" x2="42.05" y1="34" y2="50"/>
+    <rect fill="none" height="16" rx="5" ry="5" style="stroke:#ADD8E6;stroke-width:1.5;" width="42.05" x="10" y="34"/>
+    <rect fill="#F0E68C" height="16" rx="5" ry="5" style="stroke:#F0E68C;stroke-width:1.5;" width="46.625" x="89" y="34"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="26.625" x="94" y="45.333">sport</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="9.9" x="130.625" y="45.333">   </text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="125.625" x2="125.625" y1="34" y2="50"/>
+    <rect fill="none" height="16" rx="5" ry="5" style="stroke:#ADD8E6;stroke-width:1.5;" width="46.625" x="89" y="34"/>
+    <rect fill="#F0E68C" height="16" rx="5" ry="5" style="stroke:#F0E68C;stroke-width:1.5;" width="33.35" x="173" y="34"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="13.35" x="178" y="45.333">q1</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="9.9" x="201.35" y="45.333">   </text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="196.35" x2="196.35" y1="34" y2="50"/>
+    <rect fill="none" height="16" rx="5" ry="5" style="stroke:#ADD8E6;stroke-width:1.5;" width="33.35" x="173" y="34"/>
+    <rect fill="#F0E68C" height="48" rx="5" ry="5" style="stroke:#F0E68C;stroke-width:1.5;" width="261.5" x="243" y="18"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="45.375" x="248" y="29.333">question</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="196.125" x="303.375" y="29.333">Which one is correct team name in NBA?</text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="298.375" x2="298.375" y1="18" y2="34"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="243" x2="504.5" y1="34" y2="34"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="38.7" x="248" y="45.333">options</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="9.9" x="303.375" y="45.333">   </text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="298.375" x2="298.375" y1="34" y2="50"/>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="243" x2="504.5" y1="50" y2="50"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="38.7" x="248" y="61.333">answer</text>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="75.375" x="303.375" y="61.333">Huston Rocket</text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="298.375" x2="298.375" y1="50" y2="66"/>
+    <rect fill="none" height="48" rx="5" ry="5" style="stroke:#ADD8E6;stroke-width:1.5;" width="261.5" x="243" y="18"/>
+    <rect fill="#F0E68C" height="64" rx="5" ry="5" style="stroke:#F0E68C;stroke-width:1.5;" width="121.975" x="542" y="10"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="74.85" x="547" y="21.333">New York Bulls</text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="542" x2="663.975" y1="26" y2="26"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="92.85" x="547" y="37.333">Los Angeles Kings</text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="542" x2="663.975" y1="42" y2="42"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="111.975" x="547" y="53.333">Golden State Warriros</text>
+    <line style="stroke:#ADD8E6;stroke-width:1;" x1="542" x2="663.975" y1="58" y2="58"/>
+    <text fill="#FF7F50" font-family="Helvetica" font-size="12" font-weight="700" textLength="75.375" x="547" y="69.333">Huston Rocket</text>
+    <rect fill="none" height="64" rx="5" ry="5" style="stroke:#ADD8E6;stroke-width:1.5;" width="121.975" x="542" y="10"/>
+    <path d="M493,42 L506,42 C515.254,42 525.006,42 534.612,42" fill="none" style="stroke:#008000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M534.612,45.064 L536.91,42 L534.612,38.936 L542.272,42 L534.612,45.064" fill="#008000"/>
+    <ellipse cx="493" cy="42" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+    <path d="M194,42 L207,42 C216.238,42 225.763,42 235.362,42" fill="none" style="stroke:#008000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M235.362,45.084 L237.674,42 L235.362,38.916 L243.071,42 L235.362,45.084" fill="#008000"/>
+    <ellipse cx="194" cy="42" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+    <path d="M124,42 L137,42 C146.262,42 156.452,42 165.338,42" fill="none" style="stroke:#008000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M165.338,45.092 L167.658,42 L165.338,38.908 L173.069,42 L165.338,45.092" fill="#008000"/>
+    <ellipse cx="124" cy="42" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+    <path d="M39.5,42 L52.5,42 C62.023,42 72.403,42 81.788,42" fill="none" style="stroke:#008000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M81.788,45.044 L84.071,42 L81.788,38.956 L89.397,42 L81.788,45.044" fill="#008000"/>
+    <ellipse cx="39.5" cy="42" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+  </g>
+</svg>

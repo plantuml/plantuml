@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="79px" preserveAspectRatio="none" style="width:348px;height:79px;background:#FFFFFF;" version="1.1" viewBox="0 0 348 79" width="348px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity guess-->
+    <g class="entity" data-qualified-name="guess" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.363" x="116.5" y="15.5"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="173.863" y="20.5"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="171.863" y="22.5"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="171.863" y="26.5"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="131.5" y="46.389">guess</text>
+    </g>
+    <!--entity goodenough-->
+    <g class="entity" data-qualified-name="goodenough" data-source-line="2" id="ent0002">
+      <path d="M214.5,12 L305.375,12 A3.75,3.75 0 0 1 307.875,14.5 L314.875,32 L329.8,32 A2.5,2.5 0 0 1 332.3,34.5 L332.3,60.5 A2.5,2.5 0 0 1 329.8,63 L214.5,63 A2.5,2.5 0 0 1 212,60.5 L212,14.5 A2.5,2.5 0 0 1 214.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="212" x2="314.875" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.875" x="222" y="25.889">goodenough</text>
+      <text fill="#000" font-size="14" textLength="90.3" x="222" y="49.889">good-enough?</text>
+    </g>
+    <!--entity improve-->
+    <g class="entity" data-qualified-name="improve" data-source-line="5" id="ent0004">
+      <path d="M8.5,12 L71.288,12 A3.75,3.75 0 0 1 73.788,14.5 L80.788,32 L95.288,32 A2.5,2.5 0 0 1 97.788,34.5 L97.788,60.5 A2.5,2.5 0 0 1 95.288,63 L8.5,63 A2.5,2.5 0 0 1 6,60.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="80.788" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49.788" x="16" y="25.889">improve</text>
+      <text fill="#000" font-size="14" textLength="49.788" x="16" y="49.889">improve</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="211.859,37.5,202.859,33.5,206.859,37.5,202.859,41.5,211.859,37.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M193.848,37.5 C199.852,37.5 200.855,37.5 206.859,37.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="116.441,37.5,107.441,33.5,111.441,37.5,107.441,41.5,116.441,37.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M98.27,37.5 C104.327,37.5 105.384,37.5 111.441,37.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

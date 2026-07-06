@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="111px" preserveAspectRatio="none" style="width:253px;height:111px;" version="1.1" viewBox="0 0 253 111" width="253px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="10" y="20.889">Test</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.213" x="37.213" y="20.889">KO</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="108.238" x="57.425" y="20.889">BackgroundColor</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="70.7" x="165.663" y="20.889">transparent</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="18.531" y="34.889">and</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="41.894" y="34.889">SVG</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="156.363" x="71.469" y="34.889">Shadowing for empty stack</text>
+    </g>
+    <!--entity stack2-->
+    <g class="entity" data-qualified-name="stack2" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:none;" width="60.425" x="91.681" y="61"/>
+      <path d="M76.681,61 L89.181,61 A2.5,2.5 0 0 1 91.681,63.5 L91.681,92.5 A2.5,2.5 0 0 0 94.181,95 L149.606,95 A2.5,2.5 0 0 0 152.106,92.5 L152.106,63.5 A2.5,2.5 0 0 1 154.606,61 L167.106,61" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="101.681" y="81.889">stack2</text>
+    </g>
+  </g>
+</svg>

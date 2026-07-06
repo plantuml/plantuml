@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:148px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 148 90" width="148px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class a-->
+    <g class="entity" data-qualified-name="a" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" x="35" y="31.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="44.788" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="12" y="58.889">int i</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="44.788" y1="66" y2="66"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="7" id="ent0003">
+      <path d="M64,31 L64,39 L46.25,43 L64,47 L64,54 A0,0 0 0 0 64,54 L131.963,54 A0,0 0 0 0 131.963,54 L131.963,41 L121.963,31 L64,31 A0,0 0 0 0 64,31" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M121.963,31 L121.963,41 L131.963,41 L121.963,31" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="46.963" x="70" y="46.111">note on a</text>
+    </g>
+  </g>
+</svg>

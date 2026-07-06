@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="200px" preserveAspectRatio="none" style="width:205px;height:200px;background:#FFFFFF;" version="1.1" viewBox="0 0 205 200" width="205px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="178" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="123.862" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" x="15" y="22.889">a</text>
+    <text fill="#000" font-size="14" textLength="36.138" x="87.212" y="22.889">☑ true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="82.212" x2="82.212" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="133.862" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="15" y="40.889">desc</text>
+    <text fill="#000" font-size="14" x="87.212" y="40.889">a</text>
+    <text fill="#000" font-size="14" x="87.212" y="54.889">b</text>
+    <text fill="#000" font-size="14" x="87.212" y="68.889">c</text>
+    <text fill="#000" font-size="14" x="87.212" y="82.889">d</text>
+    <text fill="#000" font-size="14" x="87.212" y="96.889">e</text>
+    <text fill="#000" font-size="14" x="87.212" y="110.889">f</text>
+    <line style="stroke:#000;stroke-width:1;" x1="82.212" x2="82.212" y1="28" y2="116"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="133.862" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="51.363" x="15" y="128.889">required</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="87.212" y="128.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="82.212" x2="82.212" y1="116" y2="134"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="133.862" y1="134" y2="134"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="15" y="146.889">addP</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="87.212" y="146.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="82.212" x2="82.212" y1="134" y2="152"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="133.862" y1="152" y2="152"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="62.212" x="15" y="164.889">properties</text>
+    <text fill="#000" font-size="14" x="87.212" y="164.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="82.212" x2="82.212" y1="152" y2="170"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="133.862" y1="170" y2="170"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="28.787" x="15" y="182.889">allOf</text>
+    <text fill="#000" font-size="14" x="87.212" y="182.889"> </text>
+    <line style="stroke:#000;stroke-width:1;" x1="82.212" x2="82.212" y1="170" y2="188"/>
+    <rect fill="none" height="178" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="123.862" x="10" y="10"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="22.425" x="171" y="98"/>
+    <text fill="#000" font-size="14" textLength="12.425" x="176" y="110.889">r1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="171" x2="193.425" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" textLength="12.425" x="176" y="128.889">r2</text>
+    <line style="stroke:#000;stroke-width:1;" x1="171" x2="193.425" y1="134" y2="134"/>
+    <text fill="#000" font-size="14" textLength="12.425" x="176" y="146.889">r3</text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="22.425" x="171" y="98"/>
+    <path d="M122,125 L135,125 C144.421,125 154.916,125 163.548,125" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M163.548,128.044 L165.831,125 L163.548,121.956 L171.158,125 L163.548,128.044" fill="#000"/>
+    <ellipse cx="122" cy="125" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

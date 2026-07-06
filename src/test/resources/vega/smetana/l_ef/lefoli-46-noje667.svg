@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="178px" preserveAspectRatio="none" style="width:112px;height:178px;background:#FFFFFF;" version="1.1" viewBox="0 0 112 178" width="112px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster output-->
+    <g class="cluster" data-qualified-name="output" data-source-line="2" id="ent0001">
+      <path d="M34.5,81 L74.35,81 A3.75,3.75 0 0 1 76.85,83.5 L83.85,101 L83.5,101 A2.5,2.5 0 0 1 86,103.5 L86,151.5 A2.5,2.5 0 0 1 83.5,154 L34.5,154 A2.5,2.5 0 0 1 32,151.5 L32,83.5 A2.5,2.5 0 0 1 34.5,81" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="32" x2="83.85" y1="101" y2="101"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.85" x="36" y="93.889">output</text>
+    </g>
+    <!--cluster thing-->
+    <g class="cluster" data-qualified-name="thing" data-source-line="7" id="ent0003">
+      <path d="M16.5,4 L47.863,4 A3.75,3.75 0 0 1 50.363,6.5 L57.363,24 L101.5,24 A2.5,2.5 0 0 1 104,26.5 L104,70.5 A2.5,2.5 0 0 1 101.5,73 L16.5,73 A2.5,2.5 0 0 1 14,70.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="57.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="18" y="16.889">thing</text>
+    </g>
+    <g class="entity" data-qualified-name="output.foo" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="40" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="33.425" x="42.5" y="106"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="49.5" y="118.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43.5" x2="74.925" y1="124" y2="124"/>
+      <text fill="#000" font-size="14" textLength="20.213" x="48.5" y="138.889">bar</text>
+    </g>
+    <g class="entity" data-qualified-name="thing.getfoobar" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="73.063" x="22.5" y="29"/>
+      <text fill="#000" font-size="14" textLength="59.063" x="29.5" y="41.889">getfoobar</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="22.5" x2="95.563" y1="47" y2="47"/>
+      <text fill="#000" font-size="14" textLength="41.213" x="38.425" y="59.889">makeit</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="59,105.793,63,96.793,59,100.793,55,96.793,59,105.793" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M59,65.089 C59,77.14 59,88.295 59,100.793" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

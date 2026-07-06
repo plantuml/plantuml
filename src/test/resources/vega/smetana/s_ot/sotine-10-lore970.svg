@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="106px" preserveAspectRatio="none" style="width:366px;height:106px;background:#FFFFFF;" version="1.1" viewBox="0 0 366 106" width="366px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity sources-->
+    <g class="entity" data-qualified-name="sources" data-source-line="9" id="ent0001">
+      <rect fill="#F1F1F1" height="78" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="344.1" x="6" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="101.938" x="127.081" y="32.889">«GeneralUsers»</text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="48.9" x="16" y="48.444">Events</text>
+      <text fill="#000" font-size="14" x="16" y="62.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="324.1" x="16" y="76.889">&lt;size:TECHN_FONT_SIZE&gt;[millions of users]&lt;/size&gt;</text>
+    </g>
+  </g>
+</svg>

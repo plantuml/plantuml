@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="219px" preserveAspectRatio="none" style="width:164px;height:219px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 219" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster azureCloud-->
+    <g class="cluster" data-qualified-name="azureCloud" data-source-line="1666" id="ent0001">
+      <rect fill="none" height="191" style="stroke:#444;stroke-width:1;stroke-dasharray:7,7;" width="142" x="14" y="4"/>
+      <text fill="#444" font-size="16" font-weight="700" textLength="24" x="73" y="38.444">yyy</text>
+      <text fill="#444" font-size="12" font-weight="700" textLength="44.55" x="62.725" y="51.333">[system]</text>
+    </g>
+    <!--entity someContainer-->
+    <g class="entity" data-qualified-name="azureCloud.someContainer" data-source-line="71" id="ent0002">
+      <rect fill="#438DD5" height="48" style="stroke:#3C7FC0;stroke-width:0.5;" width="124.9" x="22.5" y="139"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="62.7" x="53.6" y="158.333">«container»</text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="39.1" x="32.5" y="173.444">some</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="71.6" y="173.444"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="65.8" x="71.6" y="173.444">container</text>
+    </g>
+    <!--entity WebAppContainer-->
+    <g class="entity" data-qualified-name="azureCloud.WebAppContainer" data-source-line="1779" id="ent0003">
+      <ellipse cx="85" cy="72" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="114.45" x="27.775" y="99.889">WebAppContainer</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="none" points="85,138.773,88,130.773,82,130.773,85,138.773" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M85,87.243 C85,100.265 85,114.065 85,130.773" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="39.375" x="87" y="116.333">relation</text>
+    </g>
+  </g>
+</svg>

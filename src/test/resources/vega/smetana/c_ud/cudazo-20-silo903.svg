@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="167px" preserveAspectRatio="none" style="width:212px;height:167px;background:#FFFFFF;" version="1.1" viewBox="0 0 212 167" width="212px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Component-->
+    <g class="entity" data-qualified-name="Component" data-source-line="11" id="ent0001">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.363" x="34.863" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="127.225" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="125.225" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="125.225" y="23"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35.788" x="68.15" y="42.889">«red»</text>
+      <text fill="#000" font-size="14" textLength="72.363" x="49.863" y="56.889">Component</text>
+    </g>
+    <!--entity Participant10-->
+    <g class="entity" data-qualified-name="Participant10" data-source-line="14" id="ent0002">
+      <ellipse cx="40.863" cy="132" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="81.725" x="0" y="159.889">Participant10</text>
+    </g>
+    <!--entity Participant20-->
+    <g class="entity" data-qualified-name="Participant20" data-source-line="25" id="ent0004">
+      <ellipse cx="141.863" cy="132" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="81.725" x="101" y="159.889">Participant20</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#00F" points="38.776,122.884,41.556,113.435,38.117,117.927,33.626,114.489,38.776,122.884" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53.927,70.094 C49.06,75.485 44.761,81.499 41.863,88 C36.919,99.09 36.835,108.271 38.117,117.927" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="74.344" x="43.863" y="100.111">va stereotype</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#00F" points="136.971,122.851,136.927,113.002,134.92,118.291,129.631,116.284,136.971,122.851" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M109.486,70.4 C113.054,76.153 116.669,82.214 119.863,88 C126.279,99.626 130.678,108.86 134.92,118.291" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#FFC0CB" font-size="13" textLength="74.344" x="129.863" y="100.111">va stereotype</text>
+    </g>
+  </g>
+</svg>

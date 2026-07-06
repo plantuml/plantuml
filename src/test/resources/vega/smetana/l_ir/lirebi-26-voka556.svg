@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="302px" preserveAspectRatio="none" style="width:279px;height:302px;background:#FFFFFF;" version="1.1" viewBox="0 0 279 302" width="279px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster checkout-->
+    <g class="cluster" data-qualified-name="checkout" data-source-line="5" id="ent0003">
+      <rect fill="none" height="193" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="98" x="99" y="4"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35" x="130.5" y="16.889">«foo»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="56" x="120" y="30.889">checkout</text>
+    </g>
+    <!--cluster dummy-->
+    <g class="cluster" data-qualified-name="dummy" data-source-line="11" id="ent0010">
+      <rect fill="none" height="73" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="112" x="92" y="205"/>
+      <polygon fill="none" points="187,210,187,224,199,224,199,216,193,210,187,210" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="193" x2="193" y1="210" y2="216"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="199" x2="193" y1="216" y2="216"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35" x="130.5" y="217.889">«foo»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.85" x="125.075" y="231.889">dummy</text>
+    </g>
+    <!--entity customer-->
+    <g class="entity" data-qualified-name="customer" data-source-line="3" id="ent0001">
+      <ellipse cx="34.744" cy="87.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M34.744,95.5 L34.744,122.5 M21.744,103.5 L47.744,103.5 M34.744,122.5 L21.744,137.5 M34.744,122.5 L47.744,137.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="6" y="149.889">customer</text>
+    </g>
+    <!--entity clerk-->
+    <g class="entity" data-qualified-name="clerk" data-source-line="4" id="ent0002">
+      <ellipse cx="247.788" cy="143.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M247.788,151.5 L247.788,178.5 M234.788,159.5 L260.788,159.5 M247.788,178.5 L234.788,193.5 M247.788,178.5 L260.788,193.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="233" y="205.889">clerk</text>
+    </g>
+    <!--entity payment-->
+    <g class="entity" data-qualified-name="checkout.payment" data-source-line="7" id="ent0005">
+      <ellipse cx="147.927" cy="55.899" fill="#F1F1F1" rx="40.927" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="53.637" x="121.109" y="59.399">payment</text>
+    </g>
+    <!--entity help-->
+    <g class="entity" data-qualified-name="checkout.help" data-source-line="8" id="ent0007">
+      <ellipse cx="148.247" cy="175.899" fill="#F1F1F1" rx="21.747" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="26.513" x="134.991" y="179.399">help</text>
+    </g>
+    <!--entity checkout2-->
+    <g class="entity" data-qualified-name="dummy.checkout2" data-source-line="12" id="ent0011">
+      <ellipse cx="148.105" cy="256.899" fill="#F1F1F1" rx="48.105" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="63.787" x="116.211" y="260.399">checkout2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M63.062,116 C69.446,116 76.5,116 83.725,116 C87.338,116 90.994,116 94.63,116 C95.539,116 96.447,116 97.353,116 C97.806,116 98.258,116 98.71,116" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="148,69.377,144,78.377,148,74.377,152,78.377,148,69.377" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M148,103.858 C148,93.859 148,84.699 148,74.377" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="41.275" x="116" y="90.111">include</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="148,128.176,144,137.176,148,133.176,152,137.176,148,128.176" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M148,162.981 C148,152.641 148,143.289 148,133.176" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="45.5" x="114" y="149.111">extends</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="association" id="lnk9">
+      <path d="M197.342,143.624 C197.571,143.755 197.8,143.885 198.028,144.016 C199.858,145.062 201.688,146.108 203.508,147.147 C207.148,149.227 210.746,151.283 214.222,153.269 C221.173,157.242 227.633,160.933 232.949,163.971" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0002" data-link-type="association" id="lnk12">
+      <path d="M164.313,243.719 C183.046,227.47 214.513,200.177 232.75,184.36" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

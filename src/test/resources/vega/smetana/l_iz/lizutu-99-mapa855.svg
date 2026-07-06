@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="242px" preserveAspectRatio="none" style="width:163px;height:242px;background:#FFFFFF;" version="1.1" viewBox="0 0 163 242" width="163px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="2">
+      <text fill="#888" font-size="10" textLength="32.812" x="123.188" y="7.778">Header</text>
+    </g>
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.875" x="39.062" y="31.889">This is the title</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="97.3" x="29.35" y="45.889">On several Lines</text>
+    </g>
+    <!--entity User-->
+    <g class="entity" data-qualified-name="User" data-source-line="4" id="ent0001">
+      <a href="file://c:/toto.txt" target="_top" title="file://c:/toto.txt" xlink:actuate="onRequest" xlink:href="file://c:/toto.txt" xlink:show="new" xlink:title="file://c:/toto.txt" xlink:type="simple">
+        <ellipse cx="76.288" cy="80.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M76.288,88.5 L76.288,115.5 M63.287,96.5 L89.288,96.5 M76.288,115.5 L63.287,130.5 M76.288,115.5 L89.288,130.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="14" textLength="29.575" x="61.5" y="142.889">User</text>
+      </a>
+    </g>
+    <!--entity Start the application-->
+    <g class="entity" data-qualified-name="Start the application" data-source-line="5" id="ent0002">
+      <ellipse cx="76.715" cy="198.543" fill="#F1F1F1" rx="70.715" ry="16.543" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="115.938" x="18.747" y="202.043">Start the application</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="76.5,181.749,80.5,172.749,76.5,176.749,72.5,172.749,76.5,181.749" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M76.5,146.095 C76.5,158.523 76.5,166.802 76.5,176.749" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="footer" data-source-line="3">
+      <text fill="#888" font-size="10" textLength="28.875" x="63.563" y="232.778">Footer</text>
+    </g>
+  </g>
+</svg>

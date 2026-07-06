@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="177px" preserveAspectRatio="none" style="width:84px;height:177px;background:#FFFFFF;" version="1.1" viewBox="0 0 84 177" width="84px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Bob-->
+    <g class="entity" data-qualified-name="Bob" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.938" x="8.5" y="12"/>
+      <ellipse cx="23.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="18.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="37.5" y="31.889">Bob</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="9.5" x2="64.438" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="9.5" x2="64.438" y1="52" y2="52"/>
+    </g>
+    <!--class Alice-->
+    <g class="entity" data-qualified-name="Alice" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.45" x="6" y="113"/>
+      <ellipse cx="21" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="30.45" x="35" y="132.889">Alice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="67.45" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="67.45" y1="153" y2="153"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="37,60.211,33,66.211,37,72.211,41,66.211,37,60.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M37,72.211 C37,88.099 37,97.077 37,112.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.775" x="39" y="90.111">hello2</text>
+    </g>
+  </g>
+</svg>

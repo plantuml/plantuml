@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="139px" preserveAspectRatio="none" style="width:215px;height:139px;background:#FFFFFF;" version="1.1" viewBox="0 0 215 139" width="215px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="A" data-source-line="2" id="ent0001">
+      <path d="M26.5,4 L115.5,4 A12.5,12.5 0 0 1 128,16.5 L128,51 L14,51 L14,16.5 A12.5,12.5 0 0 1 26.5,4" fill="#F1F1F1"/>
+      <rect fill="none" height="111" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="114" x="14" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="128" y1="51" y2="51"/>
+      <text fill="#000" font-size="14" textLength="98.962" x="21.519" y="14.889">A on several lines</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="58.531" y="28.889">with</text>
+      <text fill="#000" font-size="14" textLength="56.7" x="42.65" y="42.889">a lot of text</text>
+    </g>
+    <!--cluster B-->
+    <g class="cluster" data-qualified-name="B" data-source-line="5" id="ent0003">
+      <path d="M148.5,32 L189.5,32 A12.5,12.5 0 0 1 202,44.5 L202,51 L136,51 L136,44.5 A12.5,12.5 0 0 1 148.5,32" fill="#F1F1F1"/>
+      <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="66" x="136" y="32"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="136" x2="202" y1="51" y2="51"/>
+      <text fill="#000" font-size="14" x="164.319" y="42.889">B</text>
+    </g>
+    <g class="entity" data-qualified-name="A.X" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="70" y="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="120" y1="81" y2="81"/>
+      <text fill="#000" font-size="14" x="90.319" y="72.889">X</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="75" y="96.889">aaa</text>
+    </g>
+    <g class="entity" data-qualified-name="B.Z" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="144" y="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="144" x2="194" y1="81" y2="81"/>
+      <text fill="#000" font-size="14" x="164.713" y="72.889">Z</text>
+      <text fill="#000" font-size="14" textLength="21" x="149" y="96.889">ccc</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="143.811,98.839,134.017,97.804,139.054,100.379,136.479,105.416,143.811,98.839" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M120.148,98.826 C128.036,101.387 131.166,102.93 139.054,100.379" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="120.148,65.174,129.944,66.199,124.904,63.63,127.474,58.59,120.148,65.174" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M124.904,63.63 C132.792,61.069 135.923,62.609 143.811,65.161" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="168px" preserveAspectRatio="none" style="width:324px;height:168px;background:#FFFFFF;" version="1.1" viewBox="0 0 324 168" width="324px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity sf-->
+    <g class="entity" data-qualified-name="sf" data-source-line="1" id="ent0001">
+      <path d="M8.5,100 L49.5,100 A3.75,3.75 0 0 1 52,102.5 L59,121 L102.713,121 A2.5,2.5 0 0 1 105.213,123.5 L105.213,149.5 A2.5,2.5 0 0 1 102.713,152 L8.5,152 A2.5,2.5 0 0 1 6,149.5 L6,102.5 A2.5,2.5 0 0 1 8.5,100" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="59" y1="121" y2="121"/>
+      <text fill="#000" font-size="14" textLength="69.213" x="16" y="138.889">somefolder</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="2" id="ent0003">
+      <path d="M26.5,26 L26.5,49 A0,0 0 0 0 26.5,49 L51.5,49 L55.5,99.644 L59.5,49 L84.306,49 A0,0 0 0 0 84.306,49 L84.306,36 L74.306,26 L26.5,26 A0,0 0 0 0 26.5,26" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M74.306,26 L74.306,36 L84.306,36 L74.306,26" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="36.806" x="32.5" y="41.111">foobar</text>
+    </g>
+    <!--entity sf2-->
+    <g class="entity" data-qualified-name="sf2" data-source-line="4" id="ent0005">
+      <path d="M105.5,12 L146.5,12 A3.75,3.75 0 0 1 149,14.5 L156,33 L207.5,33 A2.5,2.5 0 0 1 210,35.5 L210,61.5 A2.5,2.5 0 0 1 207.5,64 L105.5,64 A2.5,2.5 0 0 1 103,61.5 L103,14.5 A2.5,2.5 0 0 1 105.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="103" x2="156" y1="33" y2="33"/>
+      <text fill="#000" font-size="14" textLength="77" x="113" y="50.889">somefolder2</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN6" data-source-line="5" id="ent0007">
+      <path d="M127.5,114 L127.5,137 A0,0 0 0 0 127.5,137 L185.306,137 A0,0 0 0 0 185.306,137 L185.306,124 L175.306,114 L160.5,114 L156.5,64.338 L152.5,114 L127.5,114 A0,0 0 0 0 127.5,114" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M175.306,114 L175.306,124 L185.306,124 L175.306,114" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="36.806" x="133.5" y="129.111">foobar</text>
+    </g>
+    <!--entity sf3verylong-->
+    <g class="entity" data-qualified-name="sf3verylong" data-source-line="7" id="ent0009">
+      <path d="M209,100 L250,100 A3.75,3.75 0 0 1 252.5,102.5 L259.5,121 L305.575,121 A2.5,2.5 0 0 1 308.075,123.5 L308.075,149.5 A2.5,2.5 0 0 1 305.575,152 L209,152 A2.5,2.5 0 0 1 206.5,149.5 L206.5,102.5 A2.5,2.5 0 0 1 209,100" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="206.5" x2="259.5" y1="121" y2="121"/>
+      <text fill="#000" font-size="14" textLength="71.575" x="216.5" y="138.889">sf3verylong</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN10" data-source-line="8" id="ent0011">
+      <path d="M228.5,26 L228.5,49 A0,0 0 0 0 228.5,49 L253.5,49 L257.5,99.644 L261.5,49 L286.306,49 A0,0 0 0 0 286.306,49 L286.306,36 L276.306,26 L228.5,26 A0,0 0 0 0 228.5,26" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M276.306,26 L276.306,36 L286.306,36 L276.306,26" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="36.806" x="234.5" y="41.111">foobar</text>
+    </g>
+  </g>
+</svg>

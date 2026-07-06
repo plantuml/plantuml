@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="153px" preserveAspectRatio="none" style="width:469px;height:153px;background:#FFFFFF;" version="1.1" viewBox="0 0 469 153" width="469px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster MySql-->
+    <g class="cluster" data-qualified-name="MySql" data-source-line="2" id="ent0001">
+      <path d="M14,14 C14,4 125,4 125,4 C125,4 236,4 236,14 L236,119 C236,129 125,129 125,129 C125,129 14,129 14,119 L14,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M14,14 C14,24 125,24 125,24 C125,24 236,24 236,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="105.531" y="36.889">MySql</text>
+    </g>
+    <!--cluster This is my folder-->
+    <g class="cluster" data-qualified-name="MySql.This is my folder" data-source-line="3" id="ent0002">
+      <path d="M124.5,44 L215.8,44 A3.75,3.75 0 0 1 218.3,46.5 L225.3,64 L225.5,64 A2.5,2.5 0 0 1 228,66.5 L228,118.5 A2.5,2.5 0 0 1 225.5,121 L124.5,121 A2.5,2.5 0 0 1 122,118.5 L122,46.5 A2.5,2.5 0 0 1 124.5,44" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="122" x2="225.3" y1="64" y2="64"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="90.3" x="126" y="56.889">This is my folder</text>
+    </g>
+    <!--cluster Foo-->
+    <g class="cluster" data-qualified-name="MySql.Foo" data-source-line="6" id="ent0004">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="92" x="22" y="44"/>
+      <path d="M56.15,44 L56.15,51 L46.15,61 L22,61" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.15" x="25" y="55.889">Foo</text>
+    </g>
+    <!--cluster Oracle-->
+    <g class="cluster" data-qualified-name="Oracle" data-source-line="11" id="ent0006">
+      <path d="M244,39 C244,29 290,29 290,29 C290,29 336,29 336,39 L336,111 C336,121 290,121 290,121 C290,121 244,121 244,111 L244,39" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M244,39 C244,49 290,49 290,49 C290,49 336,49 336,39" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.213" x="269.394" y="61.889">Oracle</text>
+    </g>
+    <!--cluster Node-->
+    <g class="cluster" data-qualified-name="Node" data-source-line="17" id="ent0008">
+      <polygon fill="none" points="344,49,354,39,453,39,453,111,443,121,344,121,344,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="443" x2="453" y1="49" y2="39"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="344" x2="443" y1="49" y2="49"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="443" x2="443" y1="49" y2="121"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="33.512" x="377.744" y="62.889">Node</text>
+    </g>
+    <!--entity Item 1-->
+    <g class="entity" data-qualified-name="MySql.This is my folder.Item 1" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.913" x="137.5" y="69"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="192.413" y="74"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="190.413" y="76"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="190.413" y="80"/>
+      <text fill="#000" font-size="14" textLength="34.913" x="152.5" y="99.889">Item 1</text>
+    </g>
+    <!--entity Item 2-->
+    <g class="entity" data-qualified-name="MySql.Foo.Item 2" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.913" x="30.5" y="69"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="85.413" y="74"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="83.413" y="76"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="83.413" y="80"/>
+      <text fill="#000" font-size="14" textLength="34.913" x="45.5" y="99.889">Item 2</text>
+    </g>
+    <!--entity Item 3-->
+    <g class="entity" data-qualified-name="Oracle.Item 3" data-source-line="12" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.913" x="252.5" y="69"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="307.413" y="74"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="305.413" y="76"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="305.413" y="80"/>
+      <text fill="#000" font-size="14" textLength="34.913" x="267.5" y="99.889">Item 3</text>
+    </g>
+    <!--entity Item 4-->
+    <g class="entity" data-qualified-name="Node.Item 4" data-source-line="18" id="ent0009">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.913" x="360.5" y="69"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="415.413" y="74"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="413.413" y="76"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="413.413" y="80"/>
+      <text fill="#000" font-size="14" textLength="34.913" x="375.5" y="99.889">Item 4</text>
+    </g>
+  </g>
+</svg>

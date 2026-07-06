@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="92px" preserveAspectRatio="none" style="width:227px;height:92px;background:#FFFFFF;" version="1.1" viewBox="0 0 227 92" width="227px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity nodefoo-->
+    <g class="entity" data-qualified-name="nodefoo" data-source-line="14" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,22,20,12,102,12,102,66,92,76,10,76,10,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="92" x2="102" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="92" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="92" x2="92" y1="22" y2="76"/>
+      <text fill="#000" font-size="20" font-style="italic" textLength="50" x="26" y="47.556">«foo»</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="25.713" y="62.889">nodefoo</text>
+    </g>
+    <!--entity nodebar-->
+    <g class="entity" data-qualified-name="nodebar" data-source-line="15" id="ent0002">
+      <polygon fill="#F1F1F1" points="120.5,27,130.5,17,211.863,17,211.863,61,201.863,71,120.5,71,120.5,27" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="201.863" x2="211.863" y1="27" y2="17"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="120.5" x2="201.863" y1="27" y2="27"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="201.863" x2="201.863" y1="27" y2="71"/>
+      <text fill="#000" font-size="10" font-style="italic" textLength="25.563" x="148.4" y="44.778">«bar»</text>
+      <text fill="#000" font-size="14" textLength="51.363" x="135.5" y="57.889">nodebar</text>
+    </g>
+  </g>
+</svg>

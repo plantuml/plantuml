@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="113px" preserveAspectRatio="none" style="width:241px;height:113px;background:#FFFFFF;" version="1.1" viewBox="0 0 241 113" width="241px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity System\nController\nbox-->
+    <g class="entity" data-qualified-name="System.nController.nbox" data-source-line="2" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,28.5,20,18.5,110.725,18.5,110.725,80.5,100.725,90.5,10,90.5,10,28.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="100.725" x2="110.725" y1="28.5" y2="18.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="100.725" y1="28.5" y2="28.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="100.725" x2="100.725" y1="28.5" y2="90.5"/>
+      <text fill="#000" font-size="14" textLength="46.637" x="25" y="49.389">System</text>
+      <text fill="#000" font-size="14" textLength="60.725" x="25" y="63.389">Controller</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="25" y="77.389">box</text>
+    </g>
+    <!--entity DB-->
+    <g class="entity" data-qualified-name="DB" data-source-line="3" id="ent0002">
+      <path d="M129.5,22 C129.5,12 177.606,12 177.606,12 C177.606,12 225.713,12 225.713,22 L225.713,87 C225.713,97 177.606,97 177.606,97 C177.606,97 129.5,97 129.5,87 L129.5,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M129.5,22 C129.5,32 177.606,32 177.606,32 C177.606,32 225.713,32 225.713,22" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="139.5" y="46.889"> </text>
+      <text fill="#000" font-size="14" textLength="76.213" x="139.5" y="60.889">PostgreSQL</text>
+      <text fill="#000" font-size="14" textLength="57.575" x="139.5" y="74.889">database</text>
+      <text fill="#000" font-size="14" x="139.5" y="88.889"> </text>
+    </g>
+  </g>
+</svg>

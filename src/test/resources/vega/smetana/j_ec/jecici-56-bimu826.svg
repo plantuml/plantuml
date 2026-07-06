@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" preserveAspectRatio="none" version="1.1" viewBox="0 0 362 335" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity 1670869349606-->
+    <g class="entity" data-qualified-name="1670869349606" data-source-line="20" id="ent0001">
+      <rect fill="#FFECC3" height="67" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.5;" width="142.613" x="83" y="12"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="141.997" y="32.111">AE 2</text>
+      <text fill="#000" font-size="10" textLength="56.75" x="125.931" y="42.778">Jurisdiction B</text>
+      <text fill="#000" font-size="10" x="154.306" y="52.778"> </text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="100.363" x="93" y="65.889">(Cannot decode)</text>
+      <text fill="#008000" font-size="10" textLength="22.25" x="193.363" y="66.778">$200</text>
+    </g>
+    <!--entity 1670869796774-->
+    <g class="entity" data-qualified-name="1670869796774" data-source-line="21" id="ent0002">
+      <rect fill="#FFECC3" height="53" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.5;" width="76.75" x="6" y="146"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="18.038" x="35.356" y="166.111">Ind</text>
+      <text fill="#000" font-size="10" textLength="56.75" x="16" y="176.778">Jurisdiction B</text>
+      <text fill="#000" font-size="10" x="44.375" y="186.778"> </text>
+    </g>
+    <!--entity 1670869341141-->
+    <g class="entity" data-qualified-name="1670869341141" data-source-line="24" id="ent0003">
+      <rect fill="#E0FFFF" height="67" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.5;" width="142.613" x="178" y="139"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="236.997" y="159.111">AE 1</text>
+      <text fill="#000" font-size="10" textLength="56.75" x="220.931" y="169.778">Jurisdiction A</text>
+      <text fill="#000" font-size="10" x="249.306" y="179.778"> </text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="100.363" x="188" y="192.889">(Cannot decode)</text>
+      <text fill="#008000" font-size="10" textLength="22.25" x="288.363" y="193.778">$110</text>
+    </g>
+    <!--entity 1670869555171-->
+    <g class="entity" data-qualified-name="1670869555171" data-source-line="25" id="ent0004">
+      <rect fill="#E0FFFF" height="53" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.5;" width="76.75" x="211" y="266"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="15.925" x="241.413" y="286.111">AL</text>
+      <text fill="#000" font-size="10" textLength="56.75" x="221" y="296.778">Jurisdiction A</text>
+      <text fill="#000" font-size="10" x="249.375" y="306.778"> </text>
+    </g>
+    <!--entity 1670973383559-->
+    <g class="entity" data-qualified-name="1670973383559" data-source-line="27" id="ent0005">
+      <rect fill="#FFF" height="53" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:1.5;" width="101.738" x="244.5" y="19"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="81.738" x="254.5" y="39.111">New Company</text>
+      <text fill="#000" font-size="10" x="295.369" y="49.778"> </text>
+      <text fill="#000" font-size="10" x="295.369" y="59.778"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#008000" points="226.316,76.07,233.074,83.234,230.928,78,236.162,75.854,226.316,76.07" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M271.89,138.978 C278.419,125.254 281.826,109.577 273.5,97 C272.656,95.725 255.57,88.311 230.928,78" fill="none" style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#008000" font-size="10" textLength="65.063" x="281.969" y="106.778">Purchase Price</text>
+      <text fill="#008000" font-size="10" textLength="70" x="279.5" y="116.778">Payment of $100</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="dependency" id="lnk7">
+      <polygon fill="#008000" points="268.414,206.26,268.098,216.104,270.297,210.892,275.509,213.092,268.414,206.26" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M266.472,265.708 C269.375,260.086 271.951,254.014 273.5,248 C277.059,234.183 275.544,223.799 270.297,210.892" fill="none" style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#008000" font-size="10" textLength="65.063" x="278.969" y="233.778">Purchase Price</text>
+      <text fill="#008000" font-size="10" textLength="70" x="276.5" y="243.778">Payment of $110</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk8">
+      <polygon fill="#008000" points="122.939,79.076,113.861,82.896,119.515,82.72,119.691,88.374,122.939,79.076" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M65.043,145.976 C76.926,131.426 92.296,112.967 106.5,97 C111.726,91.126 113.968,88.622 119.515,82.72" fill="none" style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#008000" font-size="10" textLength="65.063" x="110.969" y="106.778">Purchase Price</text>
+      <text fill="#008000" font-size="10" textLength="70" x="108.5" y="116.778">Payment of $100</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk9">
+      <polygon fill="#00F" points="215.748,138.746,212.554,129.43,212.346,135.083,206.693,134.874,215.748,138.746" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M172.512,79.053 C180.468,92.482 190.319,107.928 200.5,121 C205.154,126.975 207.025,129.355 212.346,135.083" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#00F" font-size="10" textLength="65.063" x="202.5" y="111.778">Sale of Widget 1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk10">
+      <polygon fill="#00F" points="212.952,265.753,209.602,256.491,209.488,262.147,203.832,262.033,212.952,265.753" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M211.215,206.199 C206.861,211.677 203.07,217.66 200.5,224 C196.492,233.885 196.127,238.271 200.5,248 C203.438,254.537 204.434,256.885 209.488,262.147" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#00F" font-size="10" textLength="65.063" x="202.5" y="238.778">Sale of Widget 1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk11">
+      <polygon fill="#00F" points="22.28,145.903,20.51,136.214,19.461,141.773,13.903,140.724,22.28,145.903" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M82.844,55.111 C56.95,62.077 30.242,74.587 14.5,97 C4.082,111.833 9.162,126.683 19.461,141.773" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#00F" font-size="10" textLength="65.063" x="16.5" y="111.778">Sale of Widget 2</text>
+    </g>
+  </g>
+</svg>

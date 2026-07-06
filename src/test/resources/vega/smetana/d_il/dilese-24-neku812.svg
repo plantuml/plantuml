@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="172px" preserveAspectRatio="none" style="width:422px;height:172px;background:#FFFFFF;" version="1.1" viewBox="0 0 422 172" width="422px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster MyApp-->
+    <g class="cluster" data-qualified-name="MyApp" data-source-line="3" id="ent0001">
+      <path d="M14,14 C14,4 74,4 74,4 C74,4 134,4 134,14 L134,138 C134,148 74,148 74,148 C74,148 14,148 14,138 L14,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M14,14 C14,24 74,24 74,24 C74,24 134,24 134,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <image height="48" width="48" x="50" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAC9ElEQVR4XtWYa5HqQBCFsYAFLGABC1jAAhawgAUsYGEtYAELc/e7VWerq8/kMZnkR7bqK9iTDOnp1zQcSimHPWPC3jBhb5iwN0zYGybsDRO25H6/l6z1YsJWfD6fx/l8LlnvxYStuN1u5Xg8lqz3YsIWvF6v3ycdyi4jIOPh+XyWfL0XE9aEopXxp9Op5OtrYMIafL/fC+ki4+Hn90/XiMTlcvmfUtKXYkIvGESxRuPf73ehC2G0NIo6r12CCT1gaDRcno91AGvWgglLwcPZeLSoExn+z2t7MGEppET2fNaJUF7XiwlLocvI0DgyxGLOa9bAhKVEQ2OaRL2349QwYSmxUOMGHo/Hn369Xkte14sJPah95i4T2+radWBCDzoD8tAW2+vaUTChF22C1Im6amHtgc6ENdDsH2tB7XTtLzUmzEUnLJ7GKNKEOSfeE/OdNjs0PlAzXONzWjuVCVPwkFiU5HQ2PMNGc/HqlGYtr7Fb5XvHMGEKPSRCurARvFiDawxy8bBjTd64xm/uzc8dwoQpCHGcKudC1DBa6ZY/F0ilzTcQwYOqA14xQGCkxui8bggixQZaCt2EFhTy3HFqsFk2lA85EafWlkI2oYX8xYUcJ/xjua8UifmPwbpnKL2GMKEFjNDPJTnna6iVkm76DN6zHj0X9RxMWALhVw+v1cJYetXOjxZMaCXOOeow6vG8V5Grcw0dZksxYQwZJc+ixW9cc4kp1IsJNTTbyAC8ibfVUTAIbagW0LlOJMbSpXa4TWFCDfVnmJomNRpoTMjXh1BLHmqzQ5hQI/7CBqTNWGG2QCrKQUSq5QwAE4aIw5agLfJwpZNO31jIgFGqHe7FAfmXuzwUzu1OJoyh0YGH5cOpFdUFm4qG6myZ261MaIGHxd6Pd+VhIY0I4lXur3mWa+poLcVsQgsYM+ewyqgds7E42RLVTYp4CgwiChhEeuHBDMblNqvZiei0Fq8wYS3UTmNhxwLP9y/FhL1hwt4wYW+YsDf+AfuvJUwNBzVwAAAAAElFTkSuQmCC" y="26"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="43.575" x="52.213" y="84.889">MyApp</text>
+    </g>
+    <!--cluster MyApp3-->
+    <g class="cluster" data-qualified-name="MyApp3" data-source-line="7" id="ent0003">
+      <rect fill="none" height="129" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="128" x="142" y="19"/>
+      <image height="48" width="48" x="182" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAC9ElEQVR4XtWYa5HqQBCFsYAFLGABC1jAAhawgAUsYGEtYAELc/e7VWerq8/kMZnkR7bqK9iTDOnp1zQcSimHPWPC3jBhb5iwN0zYGybsDRO25H6/l6z1YsJWfD6fx/l8LlnvxYStuN1u5Xg8lqz3YsIWvF6v3ycdyi4jIOPh+XyWfL0XE9aEopXxp9Op5OtrYMIafL/fC+ki4+Hn90/XiMTlcvmfUtKXYkIvGESxRuPf73ehC2G0NIo6r12CCT1gaDRcno91AGvWgglLwcPZeLSoExn+z2t7MGEppET2fNaJUF7XiwlLocvI0DgyxGLOa9bAhKVEQ2OaRL2349QwYSmxUOMGHo/Hn369Xkte14sJPah95i4T2+radWBCDzoD8tAW2+vaUTChF22C1Im6amHtgc6ENdDsH2tB7XTtLzUmzEUnLJ7GKNKEOSfeE/OdNjs0PlAzXONzWjuVCVPwkFiU5HQ2PMNGc/HqlGYtr7Fb5XvHMGEKPSRCurARvFiDawxy8bBjTd64xm/uzc8dwoQpCHGcKudC1DBa6ZY/F0ilzTcQwYOqA14xQGCkxui8bggixQZaCt2EFhTy3HFqsFk2lA85EafWlkI2oYX8xYUcJ/xjua8UifmPwbpnKL2GMKEFjNDPJTnna6iVkm76DN6zHj0X9RxMWALhVw+v1cJYetXOjxZMaCXOOeow6vG8V5Grcw0dZksxYQwZJc+ixW9cc4kp1IsJNTTbyAC8ibfVUTAIbagW0LlOJMbSpXa4TWFCDfVnmJomNRpoTMjXh1BLHmqzQ5hQI/7CBqTNWGG2QCrKQUSq5QwAE4aIw5agLfJwpZNO31jIgFGqHe7FAfmXuzwUzu1OJoyh0YGH5cOpFdUFm4qG6myZ261MaIGHxd6Pd+VhIY0I4lXur3mWa+poLcVsQgsYM+ewyqgds7E42RLVTYp4CgwiChhEeuHBDMblNqvZiei0Fq8wYS3UTmNhxwLP9y/FhL1hwt4wYW+YsDf+AfuvJUwNBzVwAAAAAElFTkSuQmCC" y="21"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="51.363" x="180.319" y="79.889">MyApp3</text>
+    </g>
+    <!--cluster MyApp2-->
+    <g class="cluster" data-qualified-name="MyApp2" data-source-line="11" id="ent0005">
+      <path d="M278,48 C278,38 342,38 342,38 C342,38 406,38 406,48 L406,138 C406,148 342,148 342,148 C342,148 278,148 278,138 L278,48" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M278,48 C278,58 342,58 342,58 C342,58 406,58 406,48" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35" x="324.5" y="70.889">«foo»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="51.363" x="316.319" y="84.889">MyApp2</text>
+    </g>
+    <!--class ClassName-->
+    <g class="entity" data-qualified-name="MyApp.ClassName" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.45" x="22" y="92"/>
+      <ellipse cx="37" cy="108" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32" y="113">C</text>
+      <text fill="#000" font-size="14" textLength="72.45" x="51" y="111.889">ClassName</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="125.45" y1="124" y2="124"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="125.45" y1="132" y2="132"/>
+    </g>
+    <!--class ClassName3-->
+    <g class="entity" data-qualified-name="MyApp3.ClassName3" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.238" x="150" y="92"/>
+      <ellipse cx="165" cy="108" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="160" y="113">C</text>
+      <text fill="#000" font-size="14" textLength="80.238" x="179" y="111.889">ClassName3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="151" x2="261.238" y1="124" y2="124"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="151" x2="261.238" y1="132" y2="132"/>
+    </g>
+    <!--class ClassName2-->
+    <g class="entity" data-qualified-name="MyApp2.ClassName2" data-source-line="12" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.238" x="286" y="92"/>
+      <ellipse cx="301" cy="108" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="296" y="113">C</text>
+      <text fill="#000" font-size="14" textLength="80.238" x="315" y="111.889">ClassName2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="287" x2="397.238" y1="124" y2="124"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="287" x2="397.238" y1="132" y2="132"/>
+    </g>
+  </g>
+</svg>

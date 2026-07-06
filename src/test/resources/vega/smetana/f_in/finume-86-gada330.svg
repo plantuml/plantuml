@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="177px" preserveAspectRatio="none" style="width:92px;height:177px;background:#FFFFFF;" version="1.1" viewBox="0 0 92 177" width="92px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Task1-->
+    <g class="entity" data-qualified-name="Task1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.15" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="38.15" x="35" y="31.889">Task1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="75.15" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="75.15" y1="52" y2="52"/>
+    </g>
+    <!--class func2-->
+    <g class="entity" data-qualified-name="func2" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.213" x="8" y="113"/>
+      <ellipse cx="23" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="18" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="34.213" x="37" y="132.889">func2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="9" x2="73.213" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="9" x2="73.213" y1="153" y2="153"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <a href="" target="_top" title="V1" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="V1" xlink:type="simple">
+        <polygon fill="#181818" points="41,60.211,37,69.211,41,65.211,45,69.211,41,60.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M41,65.211 C41,81.099 41,97.077 41,112.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </a>
+      <text fill="#000" font-size="13" textLength="15.925" x="43" y="90.111">V2</text>
+    </g>
+  </g>
+</svg>

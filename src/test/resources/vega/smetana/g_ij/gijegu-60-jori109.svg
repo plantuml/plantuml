@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="179px" preserveAspectRatio="none" style="width:396px;height:179px;background:#FFFFFF;" version="1.1" viewBox="0 0 396 179" width="396px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster gPC-->
+    <g class="cluster" data-qualified-name="gPC" data-source-line="9" id="ent0001">
+      <rect fill="none" height="151" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="201" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="115.15" x="56.925" y="16.889">«GreenContainer»</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="73.15" x="77.925" y="30.889">«container»</text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="185" x="22" y="46.444">25green package container</text>
+      <text fill="#000" font-size="12" font-style="italic" font-weight="700" textLength="37.275" x="95.863" y="59.333">[green]</text>
+    </g>
+    <!--cluster rPC-->
+    <g class="cluster" data-qualified-name="rPC" data-source-line="12" id="ent0003">
+      <path d="M241,4 L370,4 L388,22 L388,137 L370,155 L241,155 L223,137 L223,22 L241,4" fill="#FFF" style="stroke:#8B0000;stroke-width:1;"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="102.025" x="254.487" y="16.889">«RedContainer»</text>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="73.15" x="268.925" y="30.889">«container»</text>
+      <text fill="#F00" font-size="16" font-weight="700" textLength="149.4" x="230.8" y="46.444">red package container</text>
+      <text fill="#F00" font-size="12" font-style="italic" font-weight="700" textLength="23.925" x="293.538" y="59.333">[red]</text>
+    </g>
+    <!--entity rC-->
+    <g class="entity" data-qualified-name="gPC.rC" data-source-line="10" id="ent0002">
+      <path d="M70,71 L158.025,71 L176.025,89 L176.025,129 L158.025,147 L70,147 L52,129 L52,89 L70,71" fill="#FFF" style="stroke:#8B0000;stroke-width:0.5;"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="102.025" x="63" y="91.889">«RedContainer»</text>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="73.15" x="77.438" y="105.889">«container»</text>
+      <text fill="#F00" font-size="16" font-weight="700" textLength="88.9" x="69.563" y="121.444">red container</text>
+      <text fill="#F00" font-size="12" font-style="italic" textLength="23.925" x="69.563" y="134.333">[red]</text>
+    </g>
+    <!--entity gC-->
+    <g class="entity" data-qualified-name="rPC.gC" data-source-line="13" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="144.5" x="232.5" y="71"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="115.15" x="247.175" y="91.889">«GreenContainer»</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="73.15" x="268.175" y="105.889">«container»</text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="124.5" x="242.5" y="121.444">25green container</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="37.275" x="242.5" y="134.333">[green]</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="261px" preserveAspectRatio="none" style="width:277px;height:261px;background:#FFFFFF;" version="1.1" viewBox="0 0 277 261" width="277px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Aaa-->
+    <g class="entity" data-qualified-name="Aaa" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="188.4" x="42.5" y="12"/>
+      <ellipse cx="119.981" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="114.981" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="140.481" y="31.889">Aaa</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43.5" x2="229.9" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="50.5" y="53.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="42" x="62.5" y="58.889">bbb : int</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="53.5" cy="70.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="59.063" x="62.5" y="72.889">ccc : string</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="53.5,79.5,57.5,83.5,53.5,87.5,49.5,83.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="45.85" x="62.5" y="86.889">aa : float</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43.5" x2="229.9" y1="94" y2="94"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="53.5" cy="106.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="162.4" x="62.5" y="108.889">void addEntry(mmm : Entry)</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="53.5" cy="120.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="150.763" x="62.5" y="122.889">int setFactory(ddd : string)</text>
+    </g>
+    <!--class Factory-->
+    <g class="entity" data-qualified-name="Factory" data-source-line="8" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.637" x="6" y="183"/>
+      <ellipse cx="21" cy="199" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="204">C</text>
+      <text fill="#000" font-size="14" textLength="46.637" x="35" y="202.889">Factory</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="83.637" y1="215" y2="215"/>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,222.5,21,226.5,17,230.5,13,226.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="49.613" x="26" y="229.889">fff : string</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="83.637" y1="237" y2="237"/>
+    </g>
+    <!--class Entry-->
+    <g class="entity" data-qualified-name="Entry" data-source-line="11" id="ent0003">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.637" x="103.5" y="183"/>
+      <ellipse cx="118.95" cy="199" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="113.95" y="204">C</text>
+      <text fill="#000" font-size="14" textLength="32.637" x="133.05" y="202.889">Entry</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="104.5" x2="168.138" y1="215" y2="215"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="111.5" y="224.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="39.637" x="123.5" y="229.889">yyy : int</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="104.5" x2="168.138" y1="237" y2="237"/>
+    </g>
+    <!--class Parent-->
+    <g class="entity" data-qualified-name="Parent" data-source-line="14" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="73.213" x="188" y="190"/>
+      <ellipse cx="203" cy="206" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="198" y="211">C</text>
+      <text fill="#000" font-size="14" textLength="41.213" x="217" y="209.889">Parent</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="189" x2="260.213" y1="222" y2="222"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="189" x2="260.213" y1="230" y2="230"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="composition" id="lnk5">
+      <polygon fill="#181818" points="136.5,130.164,132.5,136.164,136.5,142.164,140.5,136.164,136.5,130.164" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="136.5,182.733,140.5,173.733,136.5,177.733,132.5,173.733,136.5,182.733" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M136.5,142.164 C136.5,160.219 136.5,162.387 136.5,177.733" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="140.5" y="154"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="39" x="150.5" y="160.111">entries</text>
+      <text fill="#000" font-size="13" textLength="36.075" x="99.5" y="178.844">1..100</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="aggregation" id="lnk6">
+      <polygon fill="none" points="90.444,130.159,83.716,132.753,83.523,139.962,90.251,137.367,90.444,130.159" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="59.343,182.928,66.91,176.625,61.554,178.444,59.735,173.087,59.343,182.928" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M83.523,139.962 C79.339,145.888 82.208,142.097 78.5,148 C71.567,159.039 67.081,167.232 61.554,178.444" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <g data-visibility-modifier="PROTECTED_METHOD">
+        <polygon fill="none" points="85.5,152,89.5,156,85.5,160,81.5,156" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="38.919" x="92.5" y="160.111">factory</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="aggregation" id="lnk7">
+      <polygon fill="none" points="183.995,130.346,184.152,137.555,190.868,140.183,190.711,132.974,183.995,130.346" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="215.728,189.766,216.03,179.922,213.838,185.137,208.623,182.945,215.728,189.766" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M190.868,140.183 C194.946,146.021 191.98,142.126 195.5,148 C203.44,161.249 208.651,172.428 213.838,185.137" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="211.5" cy="157" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="36.806" x="218.5" y="160.111">parent</text>
+    </g>
+  </g>
+</svg>

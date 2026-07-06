@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:174px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 174 160" width="174px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class aaa-->
+    <g class="entity" data-qualified-name="aaa" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.363" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="35" y="31.889">aaa</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="60.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="60.363" y1="52" y2="52"/>
+    </g>
+    <!--class Entity-->
+    <g class="entity" data-qualified-name="Entity" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="79" y="12"/>
+      <ellipse cx="94" cy="28" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="89" y="33">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35" x="108" y="31.889">Entity</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="80" x2="145" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="80" x2="145" y1="52" y2="52"/>
+    </g>
+    <!--class SubEntity-->
+    <g class="entity" data-qualified-name="SubEntity" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.938" x="66.5" y="96"/>
+      <ellipse cx="81.5" cy="112" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="76.5" y="117">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="59.938" x="95.5" y="115.889">SubEntity</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67.5" x2="157.438" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67.5" x2="157.438" y1="136" y2="136"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="aggregation" id="lnk4">
+      <polygon fill="none" points="112.5,60.279,108.5,66.279,112.5,72.279,116.5,66.279,112.5,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M112.5,72.279 C112.5,83.453 112.5,84.802 112.5,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

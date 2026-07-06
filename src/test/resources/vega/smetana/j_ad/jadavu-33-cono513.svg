@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="147px" preserveAspectRatio="none" style="width:324px;height:147px;background:#FFFFFF;" version="1.1" viewBox="0 0 324 147" width="324px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class SomeClass-->
+    <g class="entity" data-qualified-name="SomeClass" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.663" x="105" y="72"/>
+      <ellipse cx="120" cy="88" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="115" y="93">C</text>
+      <text fill="#000" font-size="14" textLength="71.663" x="134" y="91.889">SomeClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="106" x2="207.663" y1="104" y2="104"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="106" x2="207.663" y1="112" y2="112"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="4" id="ent0003">
+      <path d="M6,12 L6,35 A0,0 0 0 0 6,35 L153,35 L157,71.891 L161,35 L308.206,35 A0,0 0 0 0 308.206,35 L308.206,22 L298.206,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M298.206,12 L298.206,22 L308.206,22 L298.206,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="281.206" x="12" y="27.111">Monitors the workspace and collects all changed files</text>
+    </g>
+    <g class="footer" data-source-line="7">
+      <text fill="#888" font-size="10" textLength="137.938" x="89.531" y="137.778">Rendered with PlantUML version</text>
+    </g>
+  </g>
+</svg>

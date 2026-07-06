@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="149px" preserveAspectRatio="none" style="width:451px;height:149px;background:#FFFFFF;" version="1.1" viewBox="0 0 451 149" width="451px" zoomAndPan="magnify">
+  <defs>
+    <filter height="1" id="bmz1zsmol5ic0" width="1" x="0" y="0">
+      <feFlood flood-color="#66FCF1" result="flood"/>
+      <feComposite in="SourceGraphic" in2="flood" operator="over"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster System-->
+    <g class="cluster" data-qualified-name="System" data-source-line="583" id="ent0001">
+      <rect fill="none" height="121" rx="7.5" ry="7.5" style="stroke:#1F2833;stroke-width:2;stroke-dasharray:7,7;" width="429" x="14" y="4"/>
+      <text fill="#0B0C10" font-size="16" font-weight="700" textLength="53.3" x="201.85" y="18.444">System</text>
+    </g>
+    <!--entity Alice-->
+    <g class="entity" data-qualified-name="System.Alice" data-source-line="389" id="ent0002">
+      <rect fill="none" height="85.692" rx="2.5" ry="2.5" style="stroke:none;" width="71.692" x="22" y="31"/>
+      <image height="52" width="52" x="32" xlink:href="data:image/png;base64,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" y="41"/>
+      <text fill="#0B0C10" font-size="14" textLength="30.45" x="42.621" y="103.581">Alice</text>
+    </g>
+    <!--entity weather-->
+    <g class="entity" data-qualified-name="System.weather" data-source-line="472" id="ent0003">
+      <rect fill="none" height="61.354" rx="2.5" ry="2.5" style="stroke:none;" width="69.788" x="230" y="43.5"/>
+      <image height="41" width="41" x="244.217" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACkAAAApCAYAAACoYAD2AAABoUlEQVR4XmP4//8/w2DHGAKDEWMIDEaMIfDz5y/pLdt3Nze29fTTG89fvLz/7dv3JuhuQnegTM+E6QusHL1/ymsY/6c31jNz+B+XknPp69dvBjgduWX7rmYrp4FxIAwrapn+r2vqeIzTkaAgR9agaWTzhV5YRdf8F8xeVT2LH0Q5EqQRWY7WuLVrQveoI6mBRx1JLTzqSGrhUUdSC486klp41JHUwqOOpBYedSS18KgjqYVHhiNfvHxlsXHL9uyFS1fSDEclZu4h25HPnr8wa+7oO6Nv7ggWpwcOCI8j3pFv371Xr2/tvqpjYo9hEK0w0N7/5y9eLiTKkSq6Fv/qmrteq+pZYhhEK+wfFvf/7PlLuf/+/WMnypEwrKRl+j82Jef7nXv3vZHV0hOjcNAdqaJr/j8uNefV5avX49A10hOjcJAdCRqTiUvNfX3x8tUUdE30xigcZEcCo/jnlWs3YtA1DARG4cAcmZCe///e/Qce6IoHCqNwQI5MBDrw4eOnNugKBxKjcPYdPNJ9/8EjV3RFA40xBAYjxhAYjBhDYDBiANraUKlMC/0pAAAAAElFTkSuQmCC" y="46.5"/>
+      <text fill="#0B0C10" font-size="14" textLength="49.787" x="240" y="98.743">weather</text>
+    </g>
+    <!--entity Bob-->
+    <g class="entity" data-qualified-name="System.Bob" data-source-line="389" id="ent0004">
+      <rect fill="none" height="85.692" rx="2.5" ry="2.5" style="stroke:none;" width="71.692" x="363" y="31"/>
+      <image height="52" width="52" x="373" xlink:href="data:image/png;base64,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" y="41"/>
+      <text fill="#0B0C10" font-size="14" textLength="24.938" x="386.377" y="103.581">Bob</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#C5C6C7" points="229.9,74,220.9,70,224.9,74,220.9,78,229.9,74" style="stroke:#C5C6C7;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M94.241,74 C132.247,74 187.343,74 224.9,74" fill="none" style="stroke:#C5C6C7;stroke-width:1;"/>
+      <text fill="#0B0C10" filter="url(#bmz1zsmol5ic0)" font-size="16" textLength="19.5" x="114" y="68.444">(1)</text>
+      <text fill="#0B0C10" font-size="13" textLength="77.269" x="133.5" y="69.111">talks about the</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
+      <polygon fill="#C5C6C7" points="362.916,74,353.916,70,357.916,74,353.916,78,362.916,74" style="stroke:#C5C6C7;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M300.337,74 C319.587,74 338.546,74 357.916,74" fill="none" style="stroke:#C5C6C7;stroke-width:1;"/>
+      <text fill="#0B0C10" font-size="13" textLength="23.156" x="320" y="69.111">with</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:192px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 160" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Room-->
+    <g class="entity" data-qualified-name="Room" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.363" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="37.363" x="35" y="31.889">Room</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="74.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="74.363" y1="52" y2="52"/>
+    </g>
+    <!--class Studient-->
+    <g class="entity" data-qualified-name="Studient" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.363" x="93" y="12"/>
+      <ellipse cx="108" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="103" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="51.363" x="122" y="31.889">Studient</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="94" x2="175.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="94" x2="175.363" y1="52" y2="52"/>
+    </g>
+    <!--class Chair-->
+    <g class="entity" data-qualified-name="Chair" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.512" x="7.5" y="96"/>
+      <ellipse cx="22.5" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="17.5" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="33.512" x="36.5" y="115.889">Chair</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="8.5" x2="72.012" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="8.5" x2="72.012" y1="136" y2="136"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="aggregation" id="lnk3">
+      <polygon fill="none" points="75.016,36,81.016,40,87.016,36,81.016,32,75.016,36" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M87.016,36 C92.902,36 86.789,36 92.675,36" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="composition" id="lnk5">
+      <polygon fill="#181818" points="40.5,60.279,36.5,66.279,40.5,72.279,44.5,66.279,40.5,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M40.5,72.279 C40.5,83.453 40.5,84.802 40.5,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

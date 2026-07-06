@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:130px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 130 72" width="130px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g1fq3zlchq1ess0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity dbmanager-->
+    <g class="entity" data-qualified-name="dbmanager" data-source-line="7" id="ent0001">
+      <ellipse cx="89" cy="31" fill="url(#g1fq3zlchq1ess0)" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="70.788" x="53.606" y="58.889">dbmanager</text>
+    </g>
+    <!--entity db-->
+    <g class="entity" data-qualified-name="db" data-source-line="8" id="ent0002">
+      <rect fill="url(#g1fq3zlchq1ess0)" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.575" x="6" y="12"/>
+      <rect fill="url(#g1fq3zlchq1ess0)" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="41.575" y="17"/>
+      <rect fill="url(#g1fq3zlchq1ess0)" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="39.575" y="19"/>
+      <rect fill="url(#g1fq3zlchq1ess0)" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="39.575" y="23"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="21" y="42.889">db</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk3">
+      <path d="M62.359,34 C68.187,34 74.015,34 79.842,34" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

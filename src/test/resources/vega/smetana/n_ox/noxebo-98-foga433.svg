@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="123px" preserveAspectRatio="none" style="width:104px;height:123px;background:#FFFFFF;" version="1.1" viewBox="0 0 104 123" width="104px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster r1-->
+    <g class="cluster" data-qualified-name="r1" data-source-line="11" id="ent0001">
+      <rect fill="none" height="95" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="82" x="14" y="4"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="42.788" x="33.606" y="16.889">«foo1»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="46.031" y="30.889">R1</text>
+    </g>
+    <!--entity r2-->
+    <g class="entity" data-qualified-name="r1.r2" data-source-line="12" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="64.788" x="22.5" y="43"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="42.788" x="33.5" y="63.889">«foo1»</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="45.925" y="77.889">R2</text>
+    </g>
+  </g>
+</svg>

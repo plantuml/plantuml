@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:274px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 274 90" width="274px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Alice-->
+    <g class="entity" data-qualified-name="Alice" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.913" x="190" y="12"/>
+      <ellipse cx="207.458" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="202.458" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="30.45" x="222.004" y="31.889">Alice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="191" x2="256.913" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="191" x2="256.913" y1="52" y2="52"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="196" y="66.889">method()</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="5" id="ent0003">
+      <path d="M6,31 L6,54 A0,0 0 0 0 6,54 L171.95,54 A0,0 0 0 0 171.95,54 L171.95,49 L189.912,43 L171.95,41 L171.95,41 L161.95,31 L6,31 A0,0 0 0 0 6,31" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M161.95,31 L161.95,41 L171.95,41 L161.95,31" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="144.95" x="12" y="46.111">Note \\ (foo text dummy) this</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="65.6px" preserveAspectRatio="none" style="width:233px;height:65px;background:#FFFFFF;" version="1.1" viewBox="0 0 233 65" width="233.6px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class LCL_ITERATOR-->
+    <g class="entity" data-qualified-name="LCL_ITERATOR" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="43.2" rx="2" ry="2" style="stroke:#181818;stroke-width:0.4;" width="215.72" x="4.8" y="9.6"/>
+      <ellipse cx="16.8" cy="24.8" fill="#ADD1B2" rx="8.8" ry="8.8" style="stroke:#181818;stroke-width:0.8;"/>
+      <text fill="#000" font-family="monospace" font-size="11.2" x="12.8" y="28.8">C</text>
+      <text fill="#000" font-size="11.2" textLength="83.51" x="81.305" y="22.311">LCL_ITERATOR</text>
+      <text fill="#000" font-size="11.2" textLength="190.12" x="28" y="33.511">(YAJ_UML_CLASS_DECOR_PLANT)</text>
+      <line style="stroke:#181818;stroke-width:0.4;" x1="5.6" x2="219.72" y1="40" y2="40"/>
+      <line style="stroke:#181818;stroke-width:0.4;" x1="5.6" x2="219.72" y1="46.4" y2="46.4"/>
+    </g>
+  </g>
+</svg>

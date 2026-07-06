@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="68px" preserveAspectRatio="none" style="width:118px;height:68px;background:#FFFFFF;" version="1.1" viewBox="0 0 118 68" width="118px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity theta-->
+    <g class="entity" data-qualified-name="theta" data-source-line="1" id="ent0001">
+      <ellipse cx="15" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <image height="29" width="111" x="6" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iMTExIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48dGV4dCB4PSI3Mi4yMTEiIHk9IjE5LjA3NSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iMzMuNjA1IiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5oZXRhPC90ZXh0PjwvZz48L3N2Zz4=" y="38"/>
+    </g>
+    <!--entity nu-->
+    <g class="entity" data-qualified-name="nu" data-source-line="2" id="ent0002">
+      <ellipse cx="51" cy="21" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <image height="29" width="36" x="42" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI5IiB3aWR0aD0iMzYiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48P3BsYW50dW1sICR2ZXJzaW9uJD8+PGRlZnMvPjxnIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciPjx0ZXh0IHg9IjUiIHk9IjE5LjA3NSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iMjUuMjA0IiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5cbnU8L3RleHQ+PC9nPjwvc3ZnPg==" y="38"/>
+    </g>
+  </g>
+</svg>

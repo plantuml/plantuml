@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="112px" preserveAspectRatio="none" style="width:412px;height:112px;background:#FFFFFF;" version="1.1" viewBox="0 0 412 112" width="412px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster FrameB-->
+    <g class="cluster" data-qualified-name="FrameB" data-source-line="4" id="ent0002">
+      <rect fill="none" height="81" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="72" x="214" y="7"/>
+      <path d="M273.788,7 L273.788,14 L263.788,24 L214,24" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49.787" x="217" y="18.889">FrameB</text>
+    </g>
+    <!--cluster DatabaseY-->
+    <g class="cluster" data-qualified-name="DatabaseY" data-source-line="12" id="ent0005">
+      <path d="M294,14 C294,4 345,4 345,4 C345,4 396,4 396,14 L396,66 C396,76 345,76 345,76 C345,76 294,76 294,66 L294,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M294,14 C294,24 345,24 345,24 C345,24 396,24 396,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="69.3" x="310.35" y="36.889">DatabaseY</text>
+    </g>
+    <!--entity FrameA-->
+    <g class="entity" data-qualified-name="FrameA" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="89.788" x="6" y="34"/>
+      <path d="M35.929,34 L35.929,39 L28.929,46 L6,46" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="49.787" x="21" y="64.889">FrameA</text>
+    </g>
+    <!--entity DatabaseX-->
+    <g class="entity" data-qualified-name="DatabaseX" data-source-line="9" id="ent0004">
+      <path d="M114.5,44.5 C114.5,34.5 159.15,34.5 159.15,34.5 C159.15,34.5 203.8,34.5 203.8,44.5 L203.8,67.5 C203.8,77.5 159.15,77.5 159.15,77.5 C159.15,77.5 114.5,77.5 114.5,67.5 L114.5,44.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M114.5,44.5 C114.5,54.5 159.15,54.5 159.15,54.5 C159.15,54.5 203.8,54.5 203.8,44.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="69.3" x="124.5" y="69.389">DatabaseX</text>
+    </g>
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="FrameB.Foo" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.15" x="222" y="32"/>
+      <ellipse cx="237" cy="48" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="232" y="53">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="251" y="51.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="223" x2="277.15" y1="64" y2="64"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="223" x2="277.15" y1="72" y2="72"/>
+    </g>
+    <g class="entity" data-qualified-name="DatabaseY.hello" data-source-line="13" id="ent0006">
+      <path d="M302.5,44 L302.5,67 L387.2,67 L387.2,54 L377.2,44 L302.5,44" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M377.2,44 L377.2,54 L387.2,54 L377.2,44" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="63.7" x="308.5" y="59.111">Hello World</text>
+    </g>
+  </g>
+</svg>

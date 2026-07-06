@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="185px" preserveAspectRatio="none" style="width:196px;height:185px;background:#FFFFFF;" version="1.1" viewBox="0 0 196 185" width="196px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster java-->
+    <g class="cluster" data-qualified-name="java" data-source-line="3" id="ent0004">
+      <path d="M91,12 L117.725,12 A3.75,3.75 0 0 1 120.225,14.5 L127.225,32 L178,32 A2.5,2.5 0 0 1 180.5,34.5 L180.5,90.5 A2.5,2.5 0 0 1 178,93 L91,93 A2.5,2.5 0 0 1 88.5,90.5 L88.5,14.5 A2.5,2.5 0 0 1 91,12" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="88.5" x2="127.225" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="92.5" y="24.889">java</text>
+    </g>
+    <path d="M29.5,37 L61.65,37 A3.75,3.75 0 0 1 64.15,39.5 L71.15,57 L75.65,57 A2.5,2.5 0 0 1 78.15,59.5 L78.15,82.5 A2.5,2.5 0 0 1 75.65,85 L29.5,85 A2.5,2.5 0 0 1 27,82.5 L27,39.5 A2.5,2.5 0 0 1 29.5,37" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="71.15" y1="57" y2="57"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.15" x="31" y="49.889">a_$a</text>
+    <!--class dummy$2-->
+    <g class="entity" data-qualified-name="dummy.2" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.425" x="6" y="121"/>
+      <ellipse cx="21" cy="137" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="142">C</text>
+      <text fill="#000" font-size="14" textLength="61.425" x="35" y="140.889">dummy$2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="98.425" y1="153" y2="153"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="98.425" y1="161" y2="161"/>
+    </g>
+    <path d="M99,37 L156.087,37 A3.75,3.75 0 0 1 158.587,39.5 L165.587,57 L170.087,57 A2.5,2.5 0 0 1 172.587,59.5 L172.587,82.5 A2.5,2.5 0 0 1 170.087,85 L99,85 A2.5,2.5 0 0 1 96.5,82.5 L96.5,39.5 A2.5,2.5 0 0 1 99,37" fill="#FFF" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="96.5" x2="165.587" y1="57" y2="57"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.087" x="100.5" y="49.889">java.lang</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="52.5,120.947,56.5,111.947,52.5,115.947,48.5,111.947,52.5,120.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M52.5,85.279 C52.5,96.453 52.5,104.802 52.5,115.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

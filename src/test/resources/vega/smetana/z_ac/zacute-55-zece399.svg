@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="135px" preserveAspectRatio="none" style="width:245px;height:135px;background:#FFFFFF;" version="1.1" viewBox="0 0 245 135" width="245px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster x-->
+    <g class="cluster" data-qualified-name="x" data-source-line="1" id="ent0001">
+      <path d="M16.5,29 L24.5,29 A3.75,3.75 0 0 1 27,31.5 L34,49 L87.5,49 A2.5,2.5 0 0 1 90,51.5 L90,83.5 A2.5,2.5 0 0 1 87.5,86 L16.5,86 A2.5,2.5 0 0 1 14,83.5 L14,31.5 A2.5,2.5 0 0 1 16.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="34" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" x="18" y="41.889">x</text>
+    </g>
+    <!--cluster y-->
+    <g class="cluster" data-qualified-name="y" data-source-line="7" id="ent0003">
+      <path d="M100.5,4 L108.5,4 A3.75,3.75 0 0 1 111,6.5 L118,24 L234.5,24 A2.5,2.5 0 0 1 237,26.5 L237,108.5 A2.5,2.5 0 0 1 234.5,111 L100.5,111 A2.5,2.5 0 0 1 98,108.5 L98,6.5 A2.5,2.5 0 0 1 100.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="98" x2="118" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="102" y="16.889">y</text>
+    </g>
+    <g class="entity" data-qualified-name="x._n1" data-source-line="3" id="ent0002">
+      <path d="M22.5,54 L22.5,77 L81.769,77 L81.769,64 L71.769,54 L22.5,54" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M71.769,54 L71.769,64 L81.769,64 L71.769,54" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="38.269" x="28.5" y="69.111">qwerty</text>
+    </g>
+    <g class="entity" data-qualified-name="y._n2" data-source-line="9" id="ent0004">
+      <path d="M175.5,54 L175.5,77 L228.269,77 L228.269,64 L218.269,54 L175.5,54" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M218.269,54 L218.269,64 L228.269,64 L218.269,54" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="31.769" x="181.5" y="69.111">asdfg</text>
+    </g>
+    <!--entity myActor-->
+    <g class="entity" data-qualified-name="y.myActor" data-source-line="12" id="ent0005">
+      <ellipse cx="132.138" cy="37.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M132.138,45.5 L132.138,72.5 M119.137,53.5 L145.138,53.5 M132.138,72.5 L119.137,87.5 M132.138,72.5 L145.138,87.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="51.275" x="106.5" y="99.889">myActor</text>
+    </g>
+  </g>
+</svg>

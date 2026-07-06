@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="212px" preserveAspectRatio="none" style="width:278px;height:212px;background:#FFFFFF;" version="1.1" viewBox="0 0 278 212" width="278px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity N&R Administrator-->
+    <g class="entity" data-qualified-name="N.R Administrator" data-source-line="2" id="ent0001">
+      <ellipse cx="63.544" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M63.544,28.5 L63.544,55.5 M50.544,36.5 L76.544,36.5 M63.544,55.5 L50.544,70.5 M63.544,55.5 L76.544,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="112.088" x="7.5" y="82.889">N&amp;R Administrator</text>
+    </g>
+    <!--entity Back Office-->
+    <g class="entity" data-qualified-name="Back Office" data-source-line="3" id="ent0002">
+      <ellipse cx="171.319" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M171.319,28.5 L171.319,55.5 M158.319,36.5 L184.319,36.5 M171.319,55.5 L158.319,70.5 M171.319,55.5 L184.319,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="67.638" x="137.5" y="82.889">Back Office</text>
+    </g>
+    <!--entity Technical Manager-->
+    <g class="entity" data-qualified-name="Technical Manager" data-source-line="4" id="ent0003">
+      <ellipse cx="63.619" cy="130.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M63.619,138.5 L63.619,165.5 M50.619,146.5 L76.619,146.5 M63.619,165.5 L50.619,180.5 M63.619,165.5 L76.619,180.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="115.238" x="6" y="192.889">Technical Manager</text>
+    </g>
+    <!--entity MRG Administrateur-->
+    <g class="entity" data-qualified-name="MRG Administrateur" data-source-line="5" id="ent0004">
+      <ellipse cx="200.425" cy="130.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M200.425,138.5 L200.425,165.5 M187.425,146.5 L213.425,146.5 M200.425,165.5 L187.425,180.5 M200.425,165.5 L213.425,180.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="122.85" x="139" y="192.889">MRG Administrateur</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="188px" preserveAspectRatio="none" style="width:319px;height:188px;background:#FFFFFF;" version="1.1" viewBox="0 0 319 188" width="319px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class lib-->
+    <g class="entity" data-qualified-name="lib" data-source-line="9" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="220.513" x="6" y="96"/>
+      <ellipse cx="80.463" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="75.463" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="63.087" x="100.963" y="115.889">BigLibrary</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="225.513" y1="128" y2="128"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="140.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="118.3" x="26" y="142.889">longnamedfunction</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="154.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="194.513" x="26" y="156.889">longnamedfunctionalsodifferent</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="225.513" y1="164" y2="164"/>
+    </g>
+    <!--class handler-->
+    <g class="entity" data-qualified-name="handler" data-source-line="15" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.663" x="57.5" y="12"/>
+      <ellipse cx="72.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="67.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="85.663" x="86.5" y="31.889">SomeHandler</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="58.5" x2="174.163" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="58.5" x2="174.163" y1="52" y2="52"/>
+    </g>
+    <!--class helper-->
+    <g class="entity" data-qualified-name="helper" data-source-line="16" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.875" x="193.5" y="12"/>
+      <ellipse cx="208.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="203.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="77.875" x="222.5" y="31.889">SomeHelper</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="194.5" x2="302.375" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="194.5" x2="302.375" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk4">
+      <path d="M110.622,60.239 C109.797,70.893 109.558,83.789 109.903,95.746" fill="none" style="stroke:#FF0000A0;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="association" id="lnk5">
+      <path d="M122.378,60.239 C123.203,70.893 123.442,83.789 123.097,95.746" fill="none" style="stroke:#FF0000A0;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

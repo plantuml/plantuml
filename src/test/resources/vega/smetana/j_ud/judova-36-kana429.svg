@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="142px" preserveAspectRatio="none" style="width:165px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 165 142" width="165px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="a" data-source-line="10" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="38"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="90" y2="90"/>
+      <text fill="#000" font-size="14" x="19.319" y="53.889">a</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="19.319" y="67.889">a a</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="19.319" y="81.889">a a a</text>
+    </g>
+    <g class="entity" data-qualified-name="b" data-source-line="11" id="ent0002">
+      <path d="M87,12 L137,12 A12.5,12.5 0 0 1 149.5,24.5 L149.5,50 L74.5,50 L74.5,24.5 A12.5,12.5 0 0 1 87,12" fill="#F1F1F1"/>
+      <rect fill="none" height="114" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75" x="74.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="74.5" x2="149.5" y1="50" y2="50"/>
+      <text fill="#000" font-size="14" x="108.106" y="27.889">b</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="104.213" y="41.889">b b</text>
+      <g class="entity" data-qualified-name="b.c" data-source-line="12" id="ent0003">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="80.5" y="61"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="80.5" x2="130.5" y1="85" y2="85"/>
+        <text fill="#000" font-size="14" x="102" y="76.889">c</text>
+      </g>
+    </g>
+  </g>
+</svg>

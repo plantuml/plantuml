@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="76px" preserveAspectRatio="none" style="width:207px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 207 76" width="207px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0001">
+      <ellipse cx="16" cy="42" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="39.95" x="151" y="28"/>
+    <text fill="#000" font-size="12" textLength="19.95" x="161" y="47.333">toto</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="150.866,44,141.866,40,145.866,44,141.866,48,150.866,44" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.17,44 C51.426,44 112.379,44 145.866,44" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M40,0 L40,36 L137,36 L137,10 L127,0 L40,0" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M127,0 L127,10 L137,10 L127,0" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="62.156" x="46" y="15.111">this is a note</text>
+      <text fill="#000" font-size="13" textLength="76.7" x="46" y="28.111">on several line</text>
+    </g>
+  </g>
+</svg>

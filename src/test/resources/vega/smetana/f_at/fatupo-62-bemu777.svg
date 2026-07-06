@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="81px" preserveAspectRatio="none" style="width:254px;height:81px;background:#FFFFFF;" version="1.1" viewBox="0 0 254 81" width="254px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="X" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="13.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="37.5" y2="37.5"/>
+      <text fill="#000" font-size="14" x="26.319" y="29.389">X</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="3" id="ent0003">
+      <path d="M74,12 L74,34.5 L56.391,38.5 L74,42.5 L74,65 A0,0 0 0 0 74,65 L238.081,65 A0,0 0 0 0 238.081,65 L238.081,22 L228.081,12 L74,12 A0,0 0 0 0 74,12" fill="#FFF" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M228.081,12 L228.081,22 L238.081,22 L228.081,12" fill="#FFF" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="47.694" x="80" y="29.111">header 1</text>
+      <text fill="#000" font-size="13" font-weight="700" textLength="47.694" x="127.694" y="29.111">header 2</text>
+      <text fill="#000" font-size="13" font-weight="700" textLength="47.694" x="175.388" y="29.111">header 3</text>
+      <text fill="#000" font-size="13" x="80" y="42.111"> </text>
+      <text fill="#000" font-size="13" font-style="italic" x="80" y="42.111">A</text>
+      <text fill="#000" font-size="13" x="88.694" y="42.111"> </text>
+      <text fill="#000" font-size="13" textLength="20.963" x="127.694" y="42.111">abc</text>
+      <text fill="#000" font-size="13" textLength="18.038" x="175.388" y="42.111">def</text>
+      <text fill="#000" font-size="13" x="80" y="55.111"> </text>
+      <text fill="#000" font-size="13" font-style="italic" x="80" y="55.111">B</text>
+      <text fill="#000" font-size="13" x="88.694" y="55.111"> </text>
+      <text fill="#000" font-size="13" textLength="23.888" x="127.694" y="55.111">qwe</text>
+      <text fill="#000" font-size="13" x="175.388" y="55.111"> </text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="80" x2="223.081" y1="19" y2="19"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="80" x2="223.081" y1="32" y2="32"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="80" x2="223.081" y1="45" y2="45"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="80" x2="223.081" y1="58" y2="58"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="80" x2="80" y1="19" y2="58"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="127.694" x2="127.694" y1="19" y2="58"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="175.388" x2="175.388" y1="19" y2="58"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="223.081" x2="223.081" y1="19" y2="58"/>
+    </g>
+  </g>
+</svg>

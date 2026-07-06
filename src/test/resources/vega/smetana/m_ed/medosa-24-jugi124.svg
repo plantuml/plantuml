@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="76px" preserveAspectRatio="none" style="width:374px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 374 76" width="374px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="132.7" x="10" y="19"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="48.3" x="15" y="31.889">compile</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="137.7" y="31.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="132.7" x2="132.7" y1="19" y2="37"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="142.7" y1="37" y2="37"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="112.7" x="15" y="49.889">test-mario-domain</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="137.7" y="49.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="132.7" x2="132.7" y1="37" y2="55"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="132.7" x="10" y="19"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="182.487" x="180" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49" x="185" y="22.889">extends</text>
+    <text fill="#000" font-size="14" textLength="113.487" x="244" y="22.889">.sbt-compile-cross</text>
+    <line style="stroke:#000;stroke-width:1;" x1="239" x2="239" y1="10" y2="28"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="182.487" x="180" y="10"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="156.675" x="192.5" y="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49" x="197.5" y="58.889">extends</text>
+    <text fill="#000" font-size="14" textLength="87.675" x="256.5" y="58.889">.sbt-test-cross</text>
+    <line style="stroke:#000;stroke-width:1;" x1="251.5" x2="251.5" y1="46" y2="64"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="156.675" x="192.5" y="46"/>
+    <path d="M131,28 L144,28 C153.295,28 162.964,27.755 172.631,27.347" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M172.775,30.445 L174.955,27.238 L172.486,24.248 L180.376,26.985 L172.775,30.445" fill="#000"/>
+    <ellipse cx="131" cy="28" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M131,46 L144,46 C157.376,46 171.527,46.507 185.332,47.28" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M185.15,50.331 L187.62,47.417 L185.514,44.229 L192.959,47.735 L185.15,50.331" fill="#000"/>
+    <ellipse cx="131" cy="46" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

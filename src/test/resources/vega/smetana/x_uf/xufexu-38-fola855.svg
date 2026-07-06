@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="157px" preserveAspectRatio="none" style="width:261px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 261 157" width="261px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="1" id="ent0001">
+      <ellipse cx="125.736" cy="76.399" fill="#F1F1F1" rx="16.736" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="116.023" y="79.899">foo</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="3" id="ent0003">
+      <path d="M6,18.5 L6,134.5 A0,0 0 0 0 6,134.5 L91.431,134.5 A0,0 0 0 0 91.431,134.5 L91.431,80.5 L108.891,76.5 L91.431,72.5 L91.431,28.5 L81.431,18.5 L6,18.5 A0,0 0 0 0 6,18.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M81.431,18.5 L81.431,28.5 L91.431,28.5 L81.431,18.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="18.038" x="12" y="33.611">foo</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="90.431" y1="36.5" y2="36.5"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="12" y="50.611">foo2</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="12" y="80.611">meu</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="37.909" y1="64" y2="64"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="37.909" y1="66" y2="66"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="37.909" y="67.111">toto</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="59.522" x2="90.431" y1="64" y2="64"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="59.522" x2="90.431" y1="66" y2="66"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="90.431" y1="87.5" y2="87.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="90.431" y1="89.5" y2="89.5"/>
+      <text fill="#000" font-size="13" textLength="13.731" x="12" y="101.611">ya</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="90.431" y1="108.5" y2="108.5"/>
+      <a href="http://www.cot" target="_top" title="cloud" xlink:actuate="onRequest" xlink:href="http://www.cot" xlink:show="new" xlink:title="cloud" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="36.888" x="12" y="122.611">my link</text>
+      </a>
+      <text fill="#000" font-size="13" textLength="27.544" x="48.888" y="122.611">hello</text>
+    </g>
+    <g class="entity" data-qualified-name="note2" data-source-line="15" id="ent0005">
+      <path d="M160,12 L160,141 L245.431,141 L245.431,22 L235.431,12 L160,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M235.431,12 L235.431,22 L245.431,22 L235.431,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="18.038" x="166" y="27.111">foo</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="161" x2="244.431" y1="30" y2="30"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="166" y="44.111">foo2</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="166" y="74.111">meu</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="161" x2="191.909" y1="57.5" y2="57.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="161" x2="191.909" y1="59.5" y2="59.5"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="191.909" y="60.611">toto</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="213.522" x2="244.431" y1="57.5" y2="57.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="213.522" x2="244.431" y1="59.5" y2="59.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="161" x2="244.431" y1="81" y2="81"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="161" x2="244.431" y1="83" y2="83"/>
+      <text fill="#000" font-size="13" textLength="13.731" x="166" y="95.111">ya</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="161" x2="244.431" y1="102" y2="102"/>
+      <text fill="#000" font-size="13" textLength="17.306" x="166" y="116.111">cot</text>
+      <a href="http://www.cot" target="_top" title="cloud" xlink:actuate="onRequest" xlink:href="http://www.cot" xlink:show="new" xlink:title="cloud" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="36.888" x="166" y="129.111">my link</text>
+      </a>
+      <text fill="#000" font-size="13" textLength="27.544" x="202.888" y="129.111">hello</text>
+    </g>
+  </g>
+</svg>

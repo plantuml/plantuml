@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="111px" preserveAspectRatio="none" style="width:195px;height:111px;background:#FFFFFF;" version="1.1" viewBox="0 0 195 111" width="195px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="A" data-source-line="1" id="ent0002">
+      <path d="M26.5,4 L169.5,4 A12.5,12.5 0 0 1 182,16.5 L182,23 L14,23 L14,16.5 A12.5,12.5 0 0 1 26.5,4" fill="#F1F1F1"/>
+      <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="168" x="14" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="182" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" x="93.319" y="14.889">A</text>
+    </g>
+    <g class="entity" data-qualified-name="A.X" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="124" y="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="124" x2="174" y1="53" y2="53"/>
+      <text fill="#000" font-size="14" x="144.319" y="44.889">X</text>
+    </g>
+    <g class="entity" data-qualified-name="A.Y" data-source-line="2" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="56" y="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="56" x2="106" y1="53" y2="53"/>
+      <text fill="#000" font-size="14" x="76.319" y="44.889">Y</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="55.687,54,46.687,50,50.687,54,46.687,58,55.687,54" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M38.367,54 C44.14,54 44.914,54 50.687,54" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

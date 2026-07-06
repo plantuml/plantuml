@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="138px" preserveAspectRatio="none" style="width:81px;height:138px;background:#808080;" version="1.1" viewBox="0 0 81 138" width="81px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#808080" height="138" style="stroke:none;" width="81" x="0" y="0"/>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="6" id="ent0001">
+      <ellipse cx="31" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="foo" data-source-line="6" id="ent0002">
+      <rect fill="#808080" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="21.287" y="87.889">foo</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" id="lnk3">
+      <polygon fill="#181818" points="31,66.764,35,57.764,31,61.764,27,57.764,31,66.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="31" cy="71.764" fill="#808080" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M31,36.094 C31,45.61 31,51.662 31,63.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <ellipse cx="56.176" cy="83.553" fill="#808080" rx="7" ry="7" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="61.125" x2="51.226" y1="88.502" y2="78.603"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="61.125" x2="51.226" y1="78.603" y2="88.502"/>
+      <polygon fill="#181818" points="56.176,110.447,64.914,114.991,61.166,110.754,65.404,107.006,56.176,110.447" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M64.161,83.062 C73.894,82.465 74,87.438 74,97 C74,106.563 70.9,111.351 61.166,110.754" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

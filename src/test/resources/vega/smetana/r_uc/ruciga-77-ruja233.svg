@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="112px" preserveAspectRatio="none" style="width:336px;height:112px;background:#0000FF;" version="1.1" viewBox="0 0 336 112" width="336px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="gkydhujkr34be0" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#FF0"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#00F" height="112" style="stroke:none;" width="336" x="0" y="0"/>
+    <!--cluster netw-->
+    <g class="cluster" data-qualified-name="netw" data-source-line="8" id="ent0001">
+      <rect fill="url(#gkydhujkr34be0)" height="84" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="314" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="65.45" x="75.46" y="24.427">Netw via jar</text>
+      <path d="M148.885,12.278 C148.749,12.281 148.663,12.399 148.536,12.43 A1.033,1.033 0 0 0 148.165,12.592 C147.564,12.896 147.084,13.407 147.093,14.117 C147.1,14.711 147.403,15.243 147.858,15.571 L145.225,20.453 C144.992,20.346 144.734,20.286 144.464,20.288 A1.033,1.033 0 0 0 144.455,20.292 A1.033,1.033 0 0 0 144.451,20.288 C144.297,20.29 144.198,20.421 144.055,20.46 A1.033,1.033 0 0 0 143.734,20.599 C143.131,20.903 142.651,21.415 142.659,22.126 C142.671,23.116 143.505,23.93 144.495,23.92 C145.283,23.913 145.961,23.383 146.201,22.669 L152.406,22.669 C152.634,23.422 153.346,23.979 154.166,23.971 C155.156,23.961 155.973,23.129 155.965,22.139 C155.96,21.61 155.721,21.13 155.348,20.799 L158.02,15.873 C158.203,15.933 158.397,15.965 158.598,15.963 C159.588,15.953 160.405,15.119 160.396,14.129 C160.388,13.139 159.557,12.322 158.566,12.328 A1.033,1.033 0 0 0 158.558,12.333 A1.033,1.033 0 0 0 158.554,12.328 C158.4,12.331 158.302,12.462 158.158,12.501 A1.033,1.033 0 0 0 157.837,12.64 C157.359,12.881 156.958,13.253 156.816,13.751 L150.685,13.719 C150.507,12.899 149.762,12.272 148.895,12.278 A1.033,1.033 0 0 0 148.889,12.281 A1.033,1.033 0 0 0 148.885,12.278 M150.704,14.367 L156.779,14.398 C156.847,14.866 157.097,15.28 157.453,15.565 L154.796,20.461 C154.59,20.38 154.367,20.337 154.135,20.338 A1.033,1.033 0 0 0 154.127,20.343 A1.033,1.033 0 0 0 154.122,20.338 C153.959,20.341 153.854,20.476 153.704,20.519 A1.033,1.033 0 0 0 153.405,20.65 C152.847,20.931 152.394,21.39 152.336,22.021 L146.291,22.021 C146.27,21.557 146.069,21.136 145.757,20.825 L148.442,15.85 C148.597,15.892 148.76,15.915 148.927,15.913 C149.82,15.904 150.572,15.226 150.705,14.366" fill="#000"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="87.938" x="162.449" y="24.427">printer via code</text>
+      <image height="16" width="16" x="250.386" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABZ0lEQVR4XqWTSytEYRjHfx9CNr6DjbKzsLYg8gWkZGOQZKOkLCYb9xiysbBgSrnWlElDboWTMRaTxDDjUjMuE2Ex/q+ZqWOMMZPFr/e8T8/5nfd5nveQANJcwXgQ9jMJg9OeZ+fbxggeoeYDitNcgmMbQuewfA2jOQUHsHYH1fZYDOpOwfJDYF3bPfD8KtgF7w3U2mM6RdELlMWhPAQNXh30T8EFNG+AezmFO7n2PkHpD8ExuBScnBBKDBtBFCrUvEZ/iqPkWmUEixAfVq5HWIIZiXagbwE6l+DMCCKqW/1wbqXQB5yb0GQEK/Awp9x9MatnhiR4hhJ7CbkE9hKmzeAyBScwpmY1ZkNl9WQV3EK9JJWH4PNBNBcqN2hyDVNw/yVQI63M25cPLnij/x+CESNokUCNCuj4VqF0wTutEhiJo0DMO20CzT7RKUwpg3kyQFIybwSvGuEqRLq1ac+TDqFbm4jpH/kE85FgblEV9IgAAAAASUVORK5CYII=" y="11.385"/>
+    </g>
+    <!--entity D-->
+    <g class="entity" data-qualified-name="netw.D" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.15" x="22" y="36"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="52.15" y="41"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="50.15" y="43"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="50.15" y="47"/>
+      <text fill="#000" font-size="14" x="37" y="66.889">D</text>
+    </g>
+    <!--entity E-->
+    <g class="entity" data-qualified-name="netw.E" data-source-line="9" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.363" x="270.5" y="36"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="299.863" y="41"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="297.863" y="43"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="297.863" y="47"/>
+      <text fill="#000" font-size="14" x="285.5" y="66.889">E</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="270.158,58,261.158,54,265.158,58,261.158,62,270.158,58" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M72.144,58 C119.8,58 217.737,58 265.158,58" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="60.775" x="82.75" y="50.111">Netw via jar</text>
+      <path d="M150.93,38.83 C150.804,38.832 150.724,38.942 150.606,38.971 A0.959,0.959 0 0 0 150.262,39.121 C149.703,39.404 149.258,39.877 149.266,40.537 C149.273,41.089 149.554,41.583 149.977,41.887 L147.531,46.421 C147.315,46.321 147.076,46.266 146.825,46.267 A0.959,0.959 0 0 0 146.817,46.271 A0.959,0.959 0 0 0 146.813,46.267 C146.67,46.269 146.578,46.391 146.446,46.427 A0.959,0.959 0 0 0 146.147,46.556 C145.588,46.839 145.141,47.314 145.149,47.974 C145.16,48.893 145.934,49.65 146.854,49.64 C147.586,49.633 148.216,49.142 148.438,48.478 L154.2,48.478 C154.411,49.178 155.073,49.695 155.834,49.687 C156.753,49.678 157.512,48.905 157.504,47.986 C157.5,47.495 157.278,47.049 156.931,46.742 L159.413,42.168 C159.583,42.224 159.763,42.253 159.95,42.251 C160.869,42.242 161.627,41.468 161.619,40.549 C161.611,39.629 160.84,38.87 159.92,38.876 A0.959,0.959 0 0 0 159.912,38.88 A0.959,0.959 0 0 0 159.909,38.876 C159.766,38.878 159.674,39 159.541,39.037 A0.959,0.959 0 0 0 159.243,39.166 C158.799,39.39 158.426,39.735 158.295,40.198 L152.602,40.168 C152.436,39.406 151.744,38.824 150.94,38.83 A0.959,0.959 0 0 0 150.934,38.832 A0.959,0.959 0 0 0 150.93,38.83 M152.62,40.769 L158.261,40.798 C158.323,41.233 158.556,41.617 158.887,41.881 L156.419,46.428 C156.228,46.353 156.021,46.313 155.805,46.314 A0.959,0.959 0 0 0 155.797,46.318 A0.959,0.959 0 0 0 155.793,46.314 C155.642,46.316 155.544,46.442 155.405,46.482 A0.959,0.959 0 0 0 155.127,46.603 C154.609,46.865 154.189,47.291 154.135,47.876 L148.522,47.876 C148.502,47.446 148.315,47.055 148.026,46.766 L150.519,42.147 C150.663,42.186 150.814,42.207 150.969,42.205 C151.799,42.197 152.497,41.567 152.62,40.769" fill="#000"/>
+      <text fill="#000" font-size="13" textLength="81.656" x="163.525" y="50.111">printer via code</text>
+      <image height="15" width="15" x="245.181" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAhUlEQVR4XqWS4Q0AEQyFrWcZw1jGEDeCYXp5kkq1pXL344vy3kNKIqLE9N4fD+mRLBPP2Fqj3SbGqA0chKb1MHzSXRFjrXVSSpnrS5iNOWdzLQ10+OBHnVBIkcfoZKy74R1hOMKE9ae44X8YzdDCDciN8FdGk1DIp4mAf7wzd1nveoK7/gJkIJbV6fFX9gAAAABJRU5ErkJggg==" y="38"/>
+    </g>
+  </g>
+</svg>

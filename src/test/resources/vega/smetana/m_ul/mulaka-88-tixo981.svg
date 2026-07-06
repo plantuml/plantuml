@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="224px" preserveAspectRatio="none" style="width:264px;height:224px;background:#FFFFFF;" version="1.1" viewBox="0 0 264 224" width="264px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0001">
+      <ellipse cx="113" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="68" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="156.2" x="35" y="72"/>
+    <text fill="#000" font-size="12" textLength="55.35" x="45" y="91.333">this activity</text>
+    <text fill="#000" font-size="12" textLength="8.7" x="45" y="103.333">is</text>
+    <text fill="#000" font-size="12" font-weight="700" textLength="22.65" x="53.7" y="103.333">very</text>
+    <text fill="#000" font-size="12" textLength="22.725" x="76.35" y="103.333">long</text>
+    <text fill="#000" font-size="12" textLength="136.2" x="45" y="115.333">and defined on several lines</text>
+    <text fill="#000" font-size="12" textLength="93.975" x="45" y="127.333">that contains many</text>
+    <text fill="#000" font-size="12" font-style="italic" textLength="19.275" x="138.975" y="127.333">text</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="98.675" x="149.5" y="176"/>
+    <text fill="#000" font-size="12" textLength="78.675" x="159.5" y="195.333">Another activity</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="62.75" x="68.5" y="176"/>
+    <text fill="#000" font-size="12" textLength="42.75" x="78.5" y="195.333">This one</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="44" x="6" y="176"/>
+    <text fill="#000" font-size="12" textLength="24" x="16" y="195.333">Toto</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="113,71.855,117,62.855,113,66.855,109,62.855,113,71.855" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M113,36.124 C113,45.397 113,54.105 113,66.855" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="183.395,175.758,179.751,166.608,179.818,172.264,174.162,172.331,183.395,175.758" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M146.989,140.199 C159.572,152.489 169.656,162.338 179.818,172.264" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="131.711,192,140.711,196,136.711,192,140.711,188,131.711,192" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M136.711,192 C142.581,192 143.451,192 149.322,192" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="43.424,175.758,52.637,172.277,46.98,172.243,47.014,166.586,43.424,175.758" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M79.406,140.199 C66.969,152.489 57.024,162.317 46.98,172.243" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

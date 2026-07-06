@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="156px" preserveAspectRatio="none" style="width:156px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 156 156" width="156px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="foo1" data-source-line="3" id="ent0001">
+      <rect fill="#F00" height="40" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.85" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="21.319" y="24.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="62.85" y1="30" y2="30"/>
+      <text fill="#000" font-size="14" textLength="45.85" x="12" y="44.889">dummy</text>
+    </g>
+    <g class="entity" data-qualified-name="foo2" data-source-line="6" id="ent0002">
+      <rect fill="#800080" height="40" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.85" x="82" y="12"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="97.319" y="24.889">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="83" x2="138.85" y1="30" y2="30"/>
+      <text fill="#000" font-size="14" textLength="45.85" x="88" y="44.889">dummy</text>
+    </g>
+    <g class="entity" data-qualified-name="foo3" data-source-line="9" id="ent0003">
+      <rect fill="#008000" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.85" x="6" y="88"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="45.975" x="11.938" y="97.333">«azerty»</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="21.319" y="112.889">foo3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="62.85" y1="118" y2="118"/>
+      <text fill="#000" font-size="14" textLength="45.85" x="12" y="132.889">dummy</text>
+    </g>
+  </g>
+</svg>

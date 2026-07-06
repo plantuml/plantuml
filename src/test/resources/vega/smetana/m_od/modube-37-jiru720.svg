@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="139px" preserveAspectRatio="none" style="width:334px;height:139px;background:#FFFFFF;" version="1.1" viewBox="0 0 334 139" width="334px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class FooWithAVeryLongNameForTheTestToWork-->
+    <g class="entity" data-qualified-name="FooWithAVeryLongNameForTheTestToWork" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="312.175" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="280.175" x="35" y="31.889">FooWithAVeryLongNameForTheTestToWork</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="317.175" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="317.175" y1="52" y2="52"/>
+    </g>
+    <g class="legend" data-source-line="1">
+      <rect fill="#DDD" height="38" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="108.175" x="206.825" y="82"/>
+      <text fill="#000" font-size="14" textLength="98.175" x="211.825" y="97.889">This is the legend</text>
+      <text fill="#000" font-size="14" textLength="89.6" x="211.825" y="111.889">on several lines</text>
+    </g>
+  </g>
+</svg>

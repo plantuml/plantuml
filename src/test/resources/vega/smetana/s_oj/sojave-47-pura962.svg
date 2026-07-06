@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="132px" preserveAspectRatio="none" style="width:238px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 238 132" width="238px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Test-->
+    <g class="entity" data-qualified-name="Test" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="216.488" x="6" y="12"/>
+      <ellipse cx="96.388" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="91.388" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="116.888" y="31.889">Test</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="221.488" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="221.488" y1="52" y2="52"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="64.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="128.275" x="26" y="66.889">normalMethod(): void</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="78.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="line-through" textLength="116.638" x="26" y="80.889">deprecatedMethod</text>
+      <text fill="#000" font-size="14" textLength="38.85" x="142.638" y="80.889">(): void</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="92.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="118.125" x="26" y="94.889">staticMethod(): void</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="106.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline line-through" textLength="151.638" x="26" y="108.889">deprecatedStaticMethod</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="38.85" x="177.638" y="108.889">(): void</text>
+    </g>
+  </g>
+</svg>

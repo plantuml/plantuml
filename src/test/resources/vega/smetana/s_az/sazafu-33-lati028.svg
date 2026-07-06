@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:304px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 304 160" width="304px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Key-->
+    <g class="entity" data-qualified-name="Key" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="282.375" x="6" y="12"/>
+      <ellipse cx="130.862" cy="28" fill="#FF8F00" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="125.862" y="33">R</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="151.362" y="31.889">Key</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="287.375" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="53.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="112.788" x="26" y="58.889">namespace : String</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="67.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="62.212" x="26" y="72.889">key : String</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="84.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="256.375" x="26" y="86.889">NAMESPACED_KEY_PATTERN : Pattern</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="287.375" y1="94" y2="94"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="106.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="212.275" x="26" y="108.889">Key(namespace : String, key : String)</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="120.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="67.638" x="26" y="122.889">full() : String</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="134.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="97.913" x="26" y="136.889">toString() : String</text>
+    </g>
+  </g>
+</svg>

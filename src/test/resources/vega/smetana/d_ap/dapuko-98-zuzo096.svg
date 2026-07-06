@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="128px" preserveAspectRatio="none" style="width:145px;height:128px;background:#808080;" version="1.1" viewBox="0 0 145 128" width="145px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#808080" height="128" style="stroke:none;" width="145" x="0" y="0"/>
+    <g class="entity" data-qualified-name="s1" data-source-line="6" id="ent0001">
+      <path d="M18.5,12 L116.5,12 A12.5,12.5 0 0 1 129,24.5 L129,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#808080"/>
+      <path d="M6,36 L129,36 L129,99.5 A12.5,12.5 0 0 1 116.5,112 L18.5,112 A12.5,12.5 0 0 1 6,99.5 L6,36" fill="#808080"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#FFF;stroke-width:0.5;" width="123" x="6" y="12"/>
+      <line style="stroke:#FFF;stroke-width:0.5;" x1="6" x2="129" y1="36" y2="36"/>
+      <text fill="#FFF" font-size="14" textLength="56.875" x="39.063" y="27.889">Any Page</text>
+      <g class="entity" data-qualified-name="s1.s2" data-source-line="7" id="ent0002">
+        <rect fill="#808080" height="50" rx="12.5" ry="12.5" style="stroke:#FFF;stroke-width:0.5;" width="97.788" x="12" y="47"/>
+        <line style="stroke:#FFF;stroke-width:0.5;" x1="12" x2="109.788" y1="85" y2="85"/>
+        <text fill="#FFF" font-size="14" textLength="77.788" x="22" y="62.889">Using the text</text>
+        <text fill="#FFF" font-size="14" textLength="72.363" x="22" y="76.889">search input</text>
+      </g>
+    </g>
+  </g>
+</svg>

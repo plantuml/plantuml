@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="129px" preserveAspectRatio="none" style="width:211px;height:129px;background:#FFFFFF;" version="1.1" viewBox="0 0 211 129" width="211px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <ellipse cx="48.924" cy="22.939" fill="#F1F1F1" rx="12.924" ry="10.939" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="44.242" y="26.439">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="2" id="ent0002">
+      <ellipse cx="92.924" cy="22.939" fill="#F1F1F1" rx="12.924" ry="10.939" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="88.242" y="26.439">B</text>
+    </g>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="C" data-source-line="3" id="ent0003">
+      <ellipse cx="137.115" cy="23.092" fill="#F1F1F1" rx="13.115" ry="11.092" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="132.04" y="26.592">C</text>
+    </g>
+    <!--entity D-->
+    <g class="entity" data-qualified-name="D" data-source-line="4" id="ent0004">
+      <ellipse cx="48.765" cy="92.34" fill="#F1F1F1" rx="42.765" ry="20.34" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="62.212" x="17.659" y="92.038">«stereo3»</text>
+      <text fill="#000" font-size="14" x="43.69" y="106.038">D</text>
+    </g>
+    <!--entity E-->
+    <g class="entity" data-qualified-name="E" data-source-line="5" id="ent0005">
+      <ellipse cx="153.247" cy="92.332" fill="#F1F1F1" rx="42.747" ry="20.332" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="62.212" x="122.14" y="92.043">«stereo3»</text>
+      <text fill="#000" font-size="14" x="148.565" y="106.043">E</text>
+    </g>
+  </g>
+</svg>

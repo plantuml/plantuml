@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="139px" preserveAspectRatio="none" style="width:104px;height:139px;background:#FFFFFF;" version="1.1" viewBox="0 0 104 139" width="104px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="one" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="51" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="82.119" x="6" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="88.119" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="35.378" y="87.889">one</text>
+      <text fill="#000" font-size="11" x="67" y="109.556">1</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0002">
+      <ellipse cx="47" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="47,71.794,51,62.794,47,66.794,43,62.794,47,71.794" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M47,36.172 C47,45.677 47,54.674 47,66.794" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

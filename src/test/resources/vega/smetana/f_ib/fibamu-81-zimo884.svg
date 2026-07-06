@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="248px" preserveAspectRatio="none" style="width:154px;height:248px;background:#FFFFFF;" version="1.1" viewBox="0 0 154 248" width="154px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Station-->
+    <g class="entity" data-qualified-name="Station" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.063" x="22.5" y="12"/>
+      <ellipse cx="48.069" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="43.069" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="43.575" x="64.418" y="31.889">Station</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="120.563" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="33.5" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="73.063" x="42.5" y="58.889">name: string</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="120.563" y1="66" y2="66"/>
+    </g>
+    <!--class StationCrossing-->
+    <g class="entity" data-qualified-name="StationCrossing" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="132.488" x="6" y="170"/>
+      <ellipse cx="21.726" cy="186" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16.726" y="191">C</text>
+      <text fill="#000" font-size="14" textLength="98.875" x="35.887" y="189.889">StationCrossing</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="137.488" y1="202" y2="202"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="214.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="106.488" x="26" y="216.889">cost: TimeInterval</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="137.488" y1="224" y2="224"/>
+    </g>
+    <ellipse cx="66" cy="112" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="association" id="lnk6">
+      <path d="M65.383,74.432 C64.966,86.875 65.527,100.495 67.067,109.773" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="45.383" y="85.544">0..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="association" id="lnk7">
+      <path d="M76.933,109.773 C78.473,100.495 79.034,86.875 78.617,74.432" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="79.617" y="85.544">0..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="association" id="lnk8">
+      <path d="M72,134.032 C72,143.347 72,157.138 72,169.706" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="168px" preserveAspectRatio="none" style="width:146px;height:168px;background:#FFFFFF;" version="1.1" viewBox="0 0 146 168" width="146px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class c-->
+    <g class="entity" data-qualified-name="c" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39" x="20.5" y="14"/>
+      <ellipse cx="35.5" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="30.5" y="35">C</text>
+      <text fill="#000" font-size="14" x="49.5" y="33.889">c</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="21.5" x2="58.5" y1="46" y2="46"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="21.5" x2="58.5" y1="54" y2="54"/>
+    </g>
+    <!--class red-->
+    <g class="entity" data-qualified-name="red" data-source-line="6" id="ent0002">
+      <rect fill="#FFC0CB" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.213" x="78" y="12"/>
+      <ellipse cx="93" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="88" y="35">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="20.025" x="107.094" y="26.333">«a»</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="107" y="39.889">red</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="79" x2="129.213" y1="48" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="79" x2="129.213" y1="56" y2="56"/>
+    </g>
+    <!--class green-->
+    <g class="entity" data-qualified-name="green" data-source-line="11" id="ent0003">
+      <rect fill="#98FB98" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.788" x="6" y="100"/>
+      <ellipse cx="21" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="123">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="20.025" x="42.881" y="114.333">«a»</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="35" y="127.889">green</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="72.788" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="72.788" y1="144" y2="144"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="145px" preserveAspectRatio="none" style="width:95px;height:145px;background:#FFFFFF;" version="1.1" viewBox="0 0 95 145" width="95px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster comp-->
+    <g class="cluster" data-qualified-name="comp" data-source-line="12" id="ent0001">
+      <rect fill="none" height="60" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="70" x="17" y="35"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="67" y="40"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="65" y="42"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="65" y="46"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="34.213" x="34.894" y="58.889">comp</text>
+    </g>
+    <g class="entity" data-qualified-name="comp.p80" data-source-line="13" id="ent0002">
+      <text fill="#000" font-size="14" textLength="31.15" x="19.425" y="13.889">8000</text>
+      <rect fill="#F00" height="12" style="stroke:#ADFF2F;stroke-width:1.5;" width="12" x="29" y="29"/>
+    </g>
+    <g class="entity" data-qualified-name="comp.p81" data-source-line="14" id="ent0003">
+      <text fill="#000" font-size="14" textLength="31.15" x="53.425" y="13.889">8010</text>
+      <rect fill="#F0F" height="12" style="stroke:#F0F;stroke-width:1.5;" width="12" x="63" y="29"/>
+    </g>
+    <g class="entity" data-qualified-name="comp.p82" data-source-line="15" id="ent0004">
+      <text fill="#000" font-size="14" textLength="31.15" x="19.425" y="111.889">8020</text>
+      <rect fill="#FFA500" height="12" style="stroke:#ADFF2F;stroke-width:1.5;" width="12" x="29" y="89"/>
+    </g>
+    <g class="entity" data-qualified-name="comp.p83" data-source-line="16" id="ent0005">
+      <text fill="#000" font-size="14" textLength="31.15" x="53.425" y="111.889">8030</text>
+      <rect fill="#008000" height="12" style="stroke:#00F;stroke-width:1.5;" width="12" x="63" y="89"/>
+    </g>
+  </g>
+</svg>

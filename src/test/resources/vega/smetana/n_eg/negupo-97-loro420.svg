@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="261px" preserveAspectRatio="none" style="width:190px;height:261px;background:#FFFFFF;" version="1.1" viewBox="0 0 190 261" width="190px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="163.45" x="10" y="20.889">Why $a and $b are modified?</text>
+    </g>
+    <g class="entity" data-qualified-name="a" data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.3" x="20.225" y="56"/>
+      <text fill="#000" font-size="14" x="46.981" y="68.889">a</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="63.738" x2="63.738" y1="74" y2="110"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="20.225" x2="81.525" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="25.225" y="86.889">value</text>
+      <text fill="#000" font-size="14" x="68.738" y="86.889">0</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="63.738" x2="81.525" y1="92" y2="92"/>
+      <text fill="#000" font-size="14" x="68.738" y="104.889">1</text>
+    </g>
+    <g class="entity" data-qualified-name="b" data-source-line="11" id="ent0002">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.3" x="99.225" y="47"/>
+      <text fill="#000" font-size="14" x="125.981" y="59.889">b</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="142.738" x2="142.738" y1="65" y2="119"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="99.225" x2="160.525" y1="65" y2="65"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="104.225" y="77.889">value</text>
+      <text fill="#000" font-size="14" x="147.738" y="77.889">0</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="142.738" x2="160.525" y1="83" y2="83"/>
+      <text fill="#000" font-size="14" x="147.738" y="95.889">1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="142.738" x2="160.525" y1="101" y2="101"/>
+      <text fill="#000" font-size="14" x="147.738" y="113.889">5</text>
+    </g>
+    <g class="entity" data-qualified-name="c" data-source-line="14" id="ent0003">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.3" x="20.225" y="164"/>
+      <text fill="#000" font-size="14" x="47.375" y="176.889">c</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="63.738" x2="63.738" y1="182" y2="236"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="20.225" x2="81.525" y1="182" y2="182"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="25.225" y="194.889">value</text>
+      <text fill="#000" font-size="14" x="68.738" y="194.889">0</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="63.738" x2="81.525" y1="200" y2="200"/>
+      <text fill="#000" font-size="14" x="68.738" y="212.889">1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="63.738" x2="81.525" y1="218" y2="218"/>
+      <text fill="#000" font-size="14" x="68.738" y="230.889">6</text>
+    </g>
+    <g class="entity" data-qualified-name="d" data-source-line="17" id="ent0004">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.3" x="99.225" y="155"/>
+      <text fill="#000" font-size="14" x="125.981" y="167.889">d</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="142.738" x2="142.738" y1="173" y2="245"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="99.225" x2="160.525" y1="173" y2="173"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="104.225" y="185.889">value</text>
+      <text fill="#000" font-size="14" x="147.738" y="185.889">0</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="142.738" x2="160.525" y1="191" y2="191"/>
+      <text fill="#000" font-size="14" x="147.738" y="203.889">1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="142.738" x2="160.525" y1="209" y2="209"/>
+      <text fill="#000" font-size="14" x="147.738" y="221.889">5</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="142.738" x2="160.525" y1="227" y2="227"/>
+      <text fill="#000" font-size="14" x="147.738" y="239.889">7</text>
+    </g>
+  </g>
+</svg>

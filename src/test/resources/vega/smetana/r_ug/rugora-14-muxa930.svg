@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="78px" preserveAspectRatio="none" style="width:146px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 146 78" width="146px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity business process-->
+    <g class="entity" data-qualified-name="business process" data-source-line="22" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="124.3" x="6" y="12"/>
+      <image height="16" width="16" x="60.15" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATklEQVR4XqXOsQnAMAwFUe2/rSaICbiJTiI+XLzmkD+OiHguIVgIFoKF0MrM6Rah9Q4MI9+DE9cDZcQPtD/4Mzx2A7VtCBaChWAhWAjKAr7+SDC1cERiAAAAAElFTkSuQmCC" y="22"/>
+      <text fill="#000" font-size="14" textLength="104.3" x="16" y="48.889">business process</text>
+    </g>
+  </g>
+</svg>

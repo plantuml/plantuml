@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="304px" preserveAspectRatio="none" style="width:758px;height:304px;background:#FFFFFF;" version="1.1" viewBox="0 0 758 304" width="758px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class PackSt-->
+    <g class="entity" data-qualified-name="PackSt" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.213" x="416.5" y="12"/>
+      <ellipse cx="431.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="426.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="76.213" x="445.5" y="31.889">Packstaftion</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="417.5" x2="523.713" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="417.5" x2="523.713" y1="52" y2="52"/>
+    </g>
+    <!--class Kd-->
+    <g class="entity" data-qualified-name="Kd" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.025" x="178" y="134"/>
+      <ellipse cx="193" cy="150" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="188" y="155">C</text>
+      <text fill="#000" font-size="14" textLength="95.025" x="207" y="153.889">Aktueller Kunde</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="179" x2="304.025" y1="166" y2="166"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="179" x2="304.025" y1="174" y2="174"/>
+    </g>
+    <!--class UI-->
+    <g class="entity" data-qualified-name="UI" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="173.088" x="384" y="113"/>
+      <ellipse cx="424.729" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="419.729" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="83.913" x="444.446" y="132.889">User Interface</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="385" x2="556.088" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="385" x2="556.088" y1="153" y2="153"/>
+      <text fill="#000" font-size="14" textLength="118.3" x="390" y="167.889">funktionsAuswahl()</text>
+      <text fill="#000" font-size="14" textLength="161.088" x="390" y="181.889">fehlermeldungAusgeben()</text>
+      <text fill="#000" font-size="14" textLength="141.575" x="390" y="195.889">informationAusgeben()</text>
+    </g>
+    <!--class TouchDisp-->
+    <g class="entity" data-qualified-name="TouchDisp" data-source-line="9" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116.963" x="6" y="240"/>
+      <ellipse cx="21" cy="256" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="261">C</text>
+      <text fill="#000" font-size="14" textLength="84.963" x="35" y="259.889">Touch Display</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="121.963" y1="272" y2="272"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="121.963" y1="280" y2="280"/>
+    </g>
+    <!--class SprStrg-->
+    <g class="entity" data-qualified-name="SprStrg" data-source-line="10" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.575" x="141" y="240"/>
+      <ellipse cx="156" cy="256" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="151" y="261">C</text>
+      <text fill="#000" font-size="14" textLength="106.575" x="170" y="259.889">Sprachsteuerung</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="142" x2="278.575" y1="272" y2="272"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="142" x2="278.575" y1="280" y2="280"/>
+    </g>
+    <!--class EingFld-->
+    <g class="entity" data-qualified-name="EingFld" data-source-line="11" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.025" x="298.5" y="240"/>
+      <ellipse cx="313.5" cy="256" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="308.5" y="261">C</text>
+      <text fill="#000" font-size="14" textLength="74.025" x="327.5" y="259.889">Eingabefeld</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="299.5" x2="403.525" y1="272" y2="272"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="299.5" x2="403.525" y1="280" y2="280"/>
+    </g>
+    <!--class BCScan-->
+    <g class="entity" data-qualified-name="BCScan" data-source-line="12" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140.938" x="423" y="240"/>
+      <ellipse cx="438" cy="256" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="433" y="261">C</text>
+      <text fill="#000" font-size="14" textLength="108.938" x="452" y="259.889">Barcode-Scanner</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="424" x2="562.938" y1="272" y2="272"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="424" x2="562.938" y1="280" y2="280"/>
+    </g>
+    <!--class VerEinh-->
+    <g class="entity" data-qualified-name="VerEinh" data-source-line="13" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="160.45" x="582.5" y="240"/>
+      <ellipse cx="597.5" cy="256" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="592.5" y="261">C</text>
+      <text fill="#000" font-size="14" textLength="128.45" x="611.5" y="259.889">Verarbeitungseinheit</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="583.5" x2="741.95" y1="272" y2="272"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="583.5" x2="741.95" y1="280" y2="280"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk9">
+      <path d="M426.346,60.137 C385.796,81.386 326.026,112.707 285.518,133.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="41.844" x="392.5" y="90.111">besetzt</text>
+      <text fill="#000" font-size="13" x="277.518" y="130.045">1</text>
+      <text fill="#000" font-size="13" x="418.346" y="71.248">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="aggregation" id="lnk10">
+      <polygon fill="none" points="470.5,60.137,466.5,66.137,470.5,72.137,474.5,66.137,470.5,60.137" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M470.5,72.137 C470.5,86.984 470.5,94.749 470.5,112.551" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0008" data-link-type="aggregation" id="lnk11">
+      <polygon fill="none" points="505.268,60.193,507.803,66.944,515.009,67.2,512.475,60.449,505.268,60.193" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M515.009,67.2 C534.365,81.124 548.392,92.977 566.5,113 C602.897,153.244 634.508,208.806 650.789,239.77" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="642.789" y="235.881">1</text>
+      <text fill="#000" font-size="13" x="497.268" y="71.304">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="aggregation" id="lnk12">
+      <polygon fill="none" points="383.599,184.569,376.744,182.332,372.042,187.8,378.897,190.037,383.599,184.569" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M372.042,187.8 C349.314,194.153 336.339,197.486 313.5,203 C233.262,222.373 211.149,218.332 131.5,240 C128.771,240.743 125.991,241.537 123.192,242.369" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="124.192" y="238.48">1..2</text>
+      <text fill="#000" font-size="13" x="375.599" y="180.68">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="aggregation" id="lnk13">
+      <polygon fill="none" points="383.924,193.63,376.867,192.145,372.782,198.087,379.838,199.573,383.924,193.63" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M372.782,198.087 C334.67,213.332 302.073,226.371 268.056,239.978" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="260.056" y="236.089">1</text>
+      <text fill="#000" font-size="13" x="375.924" y="204.742">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="aggregation" id="lnk14">
+      <polygon fill="none" points="420.033,203.105,412.883,204.042,410.998,211.002,418.148,210.066,420.033,203.105" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M410.998,211.002 C396.555,223.625 390.42,228.986 378.035,239.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="356.035" y="235.921">1..2</text>
+      <text fill="#000" font-size="13" x="412.033" y="214.216">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="aggregation" id="lnk15">
+      <polygon fill="none" points="480.254,203.105,477.644,209.828,482.845,214.822,485.455,208.1,480.254,203.105" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M482.845,214.822 C485.637,227.445 485.978,228.986 488.371,239.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="480.371" y="235.921">1</text>
+      <text fill="#000" font-size="13" x="472.254" y="214.216">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk16">
+      <path d="M305.289,158 C329.64,158 357.826,158 383.945,158" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="57.769" x="316" y="150.111">interagiert</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0008" data-link-type="association" id="lnk17">
+      <path d="M551.925,203.105 C575.331,215.783 599.919,229.102 619.95,239.952" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="52.081" x="566.95" y="236.063">BackEnd</text>
+      <text fill="#000" font-size="13" textLength="53.463" x="497.925" y="214.216">FrontEnd</text>
+    </g>
+  </g>
+</svg>

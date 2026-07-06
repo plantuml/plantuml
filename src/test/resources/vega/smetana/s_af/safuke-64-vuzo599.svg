@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="199px" preserveAspectRatio="none" style="width:329px;height:199px;" version="1.1" viewBox="0 0 329 199" width="329px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="48.069" y="20.889">Test</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.213" x="75.281" y="20.889">KO</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="108.238" x="95.494" y="20.889">BackgroundColor</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="70.7" x="203.731" y="20.889">transparent</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="217.088" x="52.706" y="34.889">and Shadowing for some empty group</text>
+    </g>
+    <!--entity database1-->
+    <g class="entity" data-qualified-name="database1" data-source-line="3" id="ent0001">
+      <path d="M13.5,71 C13.5,61 56.181,61 56.181,61 C56.181,61 98.863,61 98.863,71 L98.863,94 C98.863,104 56.181,104 56.181,104 C56.181,104 13.5,104 13.5,94 L13.5,71" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M13.5,71 C13.5,81 56.181,81 56.181,81 C56.181,81 98.863,81 98.863,71" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="65.363" x="23.5" y="95.889">database1</text>
+    </g>
+    <!--entity database_ko-->
+    <g class="entity" data-qualified-name="database_ko" data-source-line="4" id="ent0002">
+      <path d="M6,150 C6,140 56.075,140 56.075,140 C56.075,140 106.15,140 106.15,150 L106.15,173 C106.15,183 56.075,183 56.075,183 C56.075,183 6,183 6,173 L6,150" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,150 C6,160 56.075,160 56.075,160 C56.075,160 106.15,160 106.15,150" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="80.15" x="16" y="174.889">database_ko</text>
+    </g>
+    <!--entity queue1-->
+    <g class="entity" data-qualified-name="queue1" data-source-line="6" id="ent0003">
+      <path d="M136.5,70.5 L193.225,70.5 C198.225,70.5 198.225,82.5 198.225,82.5 C198.225,82.5 198.225,94.5 193.225,94.5 L136.5,94.5 C131.5,94.5 131.5,82.5 131.5,82.5 C131.5,82.5 131.5,70.5 136.5,70.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M193.225,70.5 C188.225,70.5 188.225,82.5 188.225,82.5 C188.225,94.5 193.225,94.5 193.225,94.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="136.5" y="86.389">queue1</text>
+    </g>
+    <!--entity queue_ko-->
+    <g class="entity" data-qualified-name="queue_ko" data-source-line="7" id="ent0004">
+      <path d="M129,149.5 L200.513,149.5 C205.513,149.5 205.513,161.5 205.513,161.5 C205.513,161.5 205.513,173.5 200.513,173.5 L129,173.5 C124,173.5 124,161.5 124,161.5 C124,161.5 124,149.5 129,149.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M200.513,149.5 C195.513,149.5 195.513,161.5 195.513,161.5 C195.513,173.5 200.513,173.5 200.513,173.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="61.512" x="129" y="165.389">queue_ko</text>
+    </g>
+    <!--entity storage1-->
+    <g class="entity" data-qualified-name="storage1" data-source-line="9" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="35" ry="35" style="stroke:#181818;stroke-width:0.5;" width="74.425" x="232" y="65.5"/>
+      <text fill="#000" font-size="14" textLength="54.425" x="242" y="86.389">storage1</text>
+    </g>
+    <!--entity storage_ko-->
+    <g class="entity" data-qualified-name="storage_ko" data-source-line="10" id="ent0006">
+      <rect fill="#F1F1F1" height="34" rx="35" ry="35" style="stroke:#181818;stroke-width:0.5;" width="89.212" x="224.5" y="144.5"/>
+      <text fill="#000" font-size="14" textLength="69.212" x="234.5" y="165.389">storage_ko</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk7">
+      <path d="M56,104.135 C56,115.182 56,128.752 56,139.808" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="association" id="lnk8">
+      <path d="M165,94.532 C165,109.17 165,134.861 165,149.488" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="association" id="lnk9">
+      <path d="M269,99.83 C269,112.985 269,131.38 269,144.458" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="307px" preserveAspectRatio="none" style="width:238px;height:307px;background:#FFFFFF;" version="1.1" viewBox="0 0 238 307" width="238px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Logical-->
+    <g class="cluster" data-qualified-name="Logical" data-source-line="4" id="ent0004">
+      <path d="M16.5,4 L61.95,4 A3.75,3.75 0 0 1 64.45,6.5 L71.45,24 L227.5,24 A2.5,2.5 0 0 1 230,26.5 L230,280.5 A2.5,2.5 0 0 1 227.5,283 L16.5,283 A2.5,2.5 0 0 1 14,280.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="71.45" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="44.45" x="18" y="16.889">Logical</text>
+    </g>
+    <!--cluster Path-->
+    <g class="cluster" data-qualified-name="Logical.Path" data-source-line="4" id="ent0005">
+      <path d="M24.5,29 L54.287,29 A3.75,3.75 0 0 1 56.787,31.5 L63.787,49 L219.5,49 A2.5,2.5 0 0 1 222,51.5 L222,272.5 A2.5,2.5 0 0 1 219.5,275 L24.5,275 A2.5,2.5 0 0 1 22,272.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="63.787" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="28.787" x="26" y="41.889">Path</text>
+    </g>
+    <!--cluster In-->
+    <g class="cluster" data-qualified-name="Logical.Path.In" data-source-line="4" id="ent0006">
+      <path d="M32.5,54 L45.138,54 A3.75,3.75 0 0 1 47.638,56.5 L54.638,74 L211.5,74 A2.5,2.5 0 0 1 214,76.5 L214,264.5 A2.5,2.5 0 0 1 211.5,267 L32.5,267 A2.5,2.5 0 0 1 30,264.5 L30,56.5 A2.5,2.5 0 0 1 32.5,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="54.638" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="11.638" x="34" y="66.889">In</text>
+    </g>
+    <!--cluster Architecture-->
+    <g class="cluster" data-qualified-name="Logical.Path.In.Architecture" data-source-line="2" id="ent0001">
+      <rect fill="none" height="180" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="168" x="38" y="79"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="74.638" x="84.681" y="91.889">Architecture</text>
+    </g>
+    <!--cluster my-->
+    <g class="cluster" data-qualified-name="Logical.Path.In.Architecture.my" data-source-line="4" id="ent0007">
+      <path d="M48.5,104 L68.138,104 A3.75,3.75 0 0 1 70.638,106.5 L77.638,124 L195.5,124 A2.5,2.5 0 0 1 198,126.5 L198,248.5 A2.5,2.5 0 0 1 195.5,251 L48.5,251 A2.5,2.5 0 0 1 46,248.5 L46,106.5 A2.5,2.5 0 0 1 48.5,104" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="46" x2="77.638" y1="124" y2="124"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.638" x="50" y="116.889">my</text>
+    </g>
+    <!--cluster implementation-->
+    <g class="cluster" data-qualified-name="Logical.Path.In.Architecture.my.implementation" data-source-line="4" id="ent0008">
+      <path d="M56.5,129 L152.438,129 A3.75,3.75 0 0 1 154.938,131.5 L161.938,149 L187.5,149 A2.5,2.5 0 0 1 190,151.5 L190,240.5 A2.5,2.5 0 0 1 187.5,243 L56.5,243 A2.5,2.5 0 0 1 54,240.5 L54,131.5 A2.5,2.5 0 0 1 56.5,129" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="54" x2="161.938" y1="149" y2="149"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="94.938" x="58" y="141.889">implementation</text>
+    </g>
+    <!--cluster package-->
+    <g class="cluster" data-qualified-name="Logical.Path.In.Architecture.my.implementation.package" data-source-line="3" id="ent0002">
+      <path d="M64.5,154 L118.438,154 A3.75,3.75 0 0 1 120.938,156.5 L127.938,174 L179.5,174 A2.5,2.5 0 0 1 182,176.5 L182,232.5 A2.5,2.5 0 0 1 179.5,235 L64.5,235 A2.5,2.5 0 0 1 62,232.5 L62,156.5 A2.5,2.5 0 0 1 64.5,154" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="62" x2="127.938" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="66" y="166.889">package</text>
+    </g>
+    <!--class SomeClass-->
+    <g class="entity" data-qualified-name="Logical.Path.In.Architecture.my.implementation.package.SomeClass" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.663" x="70" y="179"/>
+      <ellipse cx="85" cy="195" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="80" y="200">C</text>
+      <text fill="#000" font-size="14" textLength="71.663" x="99" y="198.889">SomeClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="71" x2="172.663" y1="211" y2="211"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="71" x2="172.663" y1="219" y2="219"/>
+    </g>
+  </g>
+</svg>

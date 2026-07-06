@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="96px" preserveAspectRatio="none" style="width:259px;height:96px;background:#FFFFFF;" version="1.1" viewBox="0 0 259 96" width="259px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="demo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="68" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.3" x="134.5" y="12"/>
+      <text fill="#000" font-size="14" textLength="35" x="171.65" y="24.889">demo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="135.5" x2="242.8" y1="30" y2="30"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="145.5" cy="42.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="61.6" x="154.5" y="44.889">ABullet list</text>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="145.5" cy="56.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="83.3" x="154.5" y="58.889">ASecond item</text>
+      <text fill="#000" font-size="14" textLength="71.575" x="154.5" y="72.889">** ASub item</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="7" id="ent0003">
+      <path d="M6,21.5 L6,70.5 A0,0 0 0 0 6,70.5 L116.35,70.5 A0,0 0 0 0 116.35,70.5 L116.35,50 L134.342,46 L116.35,42 L116.35,31.5 L106.35,21.5 L6,21.5 A0,0 0 0 0 6,21.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M106.35,21.5 L106.35,31.5 L116.35,31.5 L106.35,21.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <ellipse cx="17.5" cy="32" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="13" textLength="57.2" x="24" y="36.611">BBullet list</text>
+      <ellipse cx="17.5" cy="45" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="13" textLength="77.35" x="24" y="49.611">BSecond item</text>
+      <rect fill="#000" height="3.5" width="3.5" x="21" y="55.5"/>
+      <text fill="#000" font-size="13" textLength="56.387" x="28" y="62.611">BSub item</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="135px" preserveAspectRatio="none" style="width:130px;height:135px;background:#FFFFFF;" version="1.1" viewBox="0 0 130 135" width="130px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="20.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name=".2" id="ent0003">
+      <polygon fill="#F1F1F1" points="60.5,12,72.5,24,60.5,36,48.5,24,60.5,12" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="45.35" x="6" y="87"/>
+    <text fill="#000" font-size="12" textLength="25.35" x="16" y="106.333">cas1</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="45.35" x="69" y="87"/>
+    <text fill="#000" font-size="12" textLength="25.35" x="79" y="106.333">cas2</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="48.439,24,39.439,20,43.439,24,39.439,28,48.439,24" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M30.813,24 C36.688,24 37.564,24 43.439,24" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="47.439" y="20.556"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="30.849,86.833,36.464,78.741,31.785,81.921,28.605,77.243,30.849,86.833" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M51.516,36.005 C47.651,41.201 43.371,47.646 40.5,54 C35.761,64.489 33.631,72.237 31.785,81.921" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="23.237" x="42.5" y="64.556">cas1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="85.357,86.741,85.706,76.899,83.49,82.103,78.285,79.886,85.357,86.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M64.942,36.032 C70.299,49.339 77.467,67.143 83.49,82.103" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="23.237" x="79.5" y="64.556">cas2</text>
+    </g>
+  </g>
+</svg>

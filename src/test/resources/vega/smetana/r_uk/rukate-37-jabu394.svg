@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="142px" preserveAspectRatio="none" style="width:212px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 212 142" width="212px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster org-->
+    <g class="cluster" data-qualified-name="org" id="ent0005">
+      <path d="M16.5,4 L37.713,4 A3.75,3.75 0 0 1 40.213,6.5 L47.213,24 L201.5,24 A2.5,2.5 0 0 1 204,26.5 L204,115.5 A2.5,2.5 0 0 1 201.5,118 L16.5,118 A2.5,2.5 0 0 1 14,115.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="47.213" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.213" x="18" y="16.889">org</text>
+    </g>
+    <!--cluster jgrapes-->
+    <g class="cluster" data-qualified-name="org.jgrapes" data-source-line="1" id="ent0001">
+      <a href="jgrapes" target="_top" title="jgrapes" xlink:actuate="onRequest" xlink:href="jgrapes" xlink:show="new" xlink:title="jgrapes" xlink:type="simple">
+        <path d="M24.5,29 L71.438,29 A3.75,3.75 0 0 1 73.938,31.5 L80.938,49 L193.5,49 A2.5,2.5 0 0 1 196,51.5 L196,107.5 A2.5,2.5 0 0 1 193.5,110 L24.5,110 A2.5,2.5 0 0 1 22,107.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+        <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="80.938" y1="49" y2="49"/>
+        <text fill="#000" font-size="14" font-weight="700" textLength="45.938" x="26" y="41.889">jgrapes</text>
+      </a>
+    </g>
+    <a href="org/jgrapes/core/package-summary.html#package.description" target="_top" title="org/jgrapes/core/package-summary.html#package.description" xlink:actuate="onRequest" xlink:href="org/jgrapes/core/package-summary.html#package.description" xlink:show="new" xlink:title="org/jgrapes/core/package-summary.html#package.description" xlink:type="simple">
+      <path d="M143,54 L171.213,54 A3.75,3.75 0 0 1 173.713,56.5 L180.713,74 L185.213,74 A2.5,2.5 0 0 1 187.713,76.5 L187.713,99.5 A2.5,2.5 0 0 1 185.213,102 L143,102 A2.5,2.5 0 0 1 140.5,99.5 L140.5,56.5 A2.5,2.5 0 0 1 143,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="140.5" x2="180.713" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="144.5" y="66.889">core</text>
+    </a>
+    <path d="M94,54 L105.938,54 A3.75,3.75 0 0 1 108.438,56.5 L115.438,74 L119.938,74 A2.5,2.5 0 0 1 122.438,76.5 L122.438,99.5 A2.5,2.5 0 0 1 119.938,102 L94,102 A2.5,2.5 0 0 1 91.5,99.5 L91.5,56.5 A2.5,2.5 0 0 1 94,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="91.5" x2="115.438" y1="74" y2="74"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="10.938" x="95.5" y="66.889">io</text>
+    <path d="M33,54 L57.275,54 A3.75,3.75 0 0 1 59.775,56.5 L66.775,74 L71.275,74 A2.5,2.5 0 0 1 73.775,76.5 L73.775,99.5 A2.5,2.5 0 0 1 71.275,102 L33,102 A2.5,2.5 0 0 1 30.5,99.5 L30.5,56.5 A2.5,2.5 0 0 1 33,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="30.5" x2="66.775" y1="74" y2="74"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.275" x="34.5" y="66.889">http</text>
+  </g>
+</svg>

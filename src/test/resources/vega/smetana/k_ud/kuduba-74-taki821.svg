@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="416px" preserveAspectRatio="none" style="width:750px;height:416px;background:#FFFFFF;" version="1.1" viewBox="0 0 750 416" width="750px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster sml-->
+    <g class="cluster" data-qualified-name="sml" data-source-line="8" id="ent0002">
+      <path d="M116.5,4 L218.738,4 A3.75,3.75 0 0 1 221.238,6.5 L228.238,24 L731.5,24 A2.5,2.5 0 0 1 734,26.5 L734,389.5 A2.5,2.5 0 0 1 731.5,392 L116.5,392 A2.5,2.5 0 0 1 114,389.5 L114,6.5 A2.5,2.5 0 0 1 116.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="114" x2="228.238" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="101.238" x="118" y="16.889">Single Map Layer</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="45.937" x="405.031" y="36.889">«layer»</text>
+    </g>
+    <g class="entity" data-qualified-name="N1" data-source-line="6" id="ent0001">
+      <path d="M6,43 L6,66 L106.462,66 L106.462,53 L96.462,43 L6,43" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M96.462,43 L96.462,53 L106.462,53 L96.462,43" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="79.462" x="12" y="58.111">Notation: UML</text>
+    </g>
+    <!--entity interface_UD-->
+    <g class="entity" data-qualified-name="sml.interface_UD" data-source-line="9" id="ent0003">
+      <ellipse cx="497" cy="241" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="54.425" x="469.788" y="268.889">user data</text>
+    </g>
+    <!--entity Single Map Strategy Unit-->
+    <g class="entity" data-qualified-name="sml.Single Map Strategy Unit" data-source-line="11" id="ent0004">
+      <rect fill="#ADD8E6" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="183.238" x="542.5" y="104"/>
+      <rect fill="#ADD8E6" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="705.738" y="109"/>
+      <rect fill="#ADD8E6" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="703.738" y="111"/>
+      <rect fill="#ADD8E6" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="703.738" y="115"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="57.575" x="600.331" y="134.889">«control»</text>
+      <text fill="#000" font-size="14" textLength="143.238" x="557.5" y="148.889">Single Map Strategy Unit</text>
+    </g>
+    <!--entity SMARC Map Handler-->
+    <g class="entity" data-qualified-name="sml.SMARC Map Handler" data-source-line="12" id="ent0005">
+      <rect fill="#90EE90" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="166.963" x="122.5" y="104"/>
+      <rect fill="#90EE90" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="269.463" y="109"/>
+      <rect fill="#90EE90" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="267.463" y="111"/>
+      <rect fill="#90EE90" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="267.463" y="115"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="101.063" x="150.45" y="134.889">«measurement»</text>
+      <text fill="#000" font-size="14" textLength="126.963" x="137.5" y="148.889">SMARC Map Handler</text>
+    </g>
+    <!--entity Single Map Manager-->
+    <g class="entity" data-qualified-name="sml.Single Map Manager" data-source-line="13" id="ent0006">
+      <rect fill="#90EE90" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="161.45" x="308.5" y="215"/>
+      <rect fill="#90EE90" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="449.95" y="220"/>
+      <rect fill="#90EE90" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="447.95" y="222"/>
+      <rect fill="#90EE90" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="447.95" y="226"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="101.063" x="333.694" y="245.889">«measurement»</text>
+      <text fill="#000" font-size="14" textLength="121.45" x="323.5" y="259.889">Single Map Manager</text>
+    </g>
+    <!--entity Simultaneous Localization and Mapping-->
+    <g class="entity" data-qualified-name="sml.Simultaneous Localization and Mapping" data-source-line="14" id="ent0007">
+      <rect fill="#90EE90" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="275.988" x="154" y="326"/>
+      <rect fill="#90EE90" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="409.988" y="331"/>
+      <rect fill="#90EE90" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="407.988" y="333"/>
+      <rect fill="#90EE90" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="407.988" y="337"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="101.063" x="236.463" y="356.889">«measurement»</text>
+      <text fill="#000" font-size="14" textLength="235.988" x="169" y="370.889">Simultaneous Localization and Mapping</text>
+    </g>
+    <!--entity execution commands-->
+    <g class="entity" data-qualified-name="sml.execution commands" data-source-line="17" id="ent0009">
+      <ellipse cx="634" cy="52" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="128.363" x="569.819" y="79.889">execution commands</text>
+    </g>
+    <!--entity SMARC map-->
+    <g class="entity" data-qualified-name="sml.SMARC map" data-source-line="20" id="ent0014">
+      <ellipse cx="206" cy="52" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="77.875" x="167.063" y="79.889">SMARC map</text>
+    </g>
+    <g class="entity" data-qualified-name="sml.GMN17" data-source-line="22" id="ent0018">
+      <path d="M308,121 L308,129 L289.672,133 L308,137 L308,144 A0,0 0 0 0 308,144 L524.244,144 A0,0 0 0 0 524.244,144 L524.244,131 L514.244,121 L308,121 A0,0 0 0 0 308,121" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M514.244,121 L514.244,131 L524.244,131 L514.244,121" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="195.244" x="314" y="136.111">Single MAp Robot Control (SMARC)</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="452.305,214.836,462.154,214.832,456.873,212.803,458.902,207.523,452.305,214.836" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M570.906,162.07 C534.469,178.281 493.347,196.576 456.873,212.803" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="35.425" x="528" y="192.111">«use»</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0004" data-link-type="association" id="lnk11">
+      <path d="M634,67.214 C634,76.876 634,91.239 634,103.987" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="341.715,214.836,336.03,206.794,337.419,212.277,331.936,213.667,341.715,214.836" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M253.127,162.07 C280.344,178.281 310.176,196.05 337.419,212.277" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="35.425" x="310" y="192.111">«use»</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="256.325,325.839,252.455,316.782,252.662,322.435,247.009,322.643,256.325,325.839" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M202.675,162.207 C200.45,191.255 200.328,237.207 216,273 C224.894,293.314 237.471,308.319 252.662,322.435" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="80.275" x="218" y="247.611">«THIS_LINK»</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0005" data-link-type="association" id="lnk16">
+      <path d="M206,67.214 C206,76.876 206,91.239 206,103.987" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="317.232,325.646,326.204,321.582,320.556,321.911,320.227,316.264,317.232,325.646" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M364.02,273.07 C349.65,289.218 334.969,305.715 320.556,321.911" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="35.425" x="348" y="303.111">«use»</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0003" data-link-type="association" id="lnk21">
+      <path d="M469.578,244 C475.577,244 481.575,244 487.574,244" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

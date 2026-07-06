@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="214px" preserveAspectRatio="none" style="width:511px;height:214px;background:#ADD8E6;" version="1.1" viewBox="0 0 511 214" width="511px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#ADD8E6" height="214" style="stroke:none;" width="511" x="0" y="0"/>
+    <!--cluster MainState2-->
+    <g class="cluster" data-qualified-name="MainState2" data-source-line="17" id="ent0005">
+      <path d="M422,12 L483,12 A12.5,12.5 0 0 1 495.5,24.5 L495.5,31 L409.5,31 L409.5,24.5 A12.5,12.5 0 0 1 422,12" fill="#FF0"/>
+      <path d="M409.5,31 L495.5,31 L495.5,82.5 A12.5,12.5 0 0 1 483,95 L422,95 A12.5,12.5 0 0 1 409.5,82.5 L409.5,31" fill="#008000"/>
+      <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="86" x="409.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="409.5" x2="495.5" y1="31" y2="31"/>
+      <text fill="#F00" font-size="14" textLength="70.788" x="417.106" y="22.889">MainState2</text>
+    </g>
+    <g class="entity" data-qualified-name="MainState1" data-source-line="9" id="ent0001">
+      <path d="M18.5,12 L388.5,12 A12.5,12.5 0 0 1 401,24.5 L401,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#FF0"/>
+      <path d="M6,36 L401,36 L401,99.5 A12.5,12.5 0 0 1 388.5,112 L18.5,112 A12.5,12.5 0 0 1 6,99.5 L6,36" fill="#008000"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="395" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="401" y1="36" y2="36"/>
+      <text fill="#F00" font-size="14" textLength="70.788" x="168.106" y="27.889">MainState1</text>
+      <g class="entity" data-qualified-name="MainState1.MainState" data-source-line="10" id="ent0002">
+        <path d="M24.5,47 L149.525,47 A12.5,12.5 0 0 1 162.025,59.5 L162.025,71 L12,71 L12,59.5 A12.5,12.5 0 0 1 24.5,47" fill="#FF0"/>
+        <path d="M12,71 L162.025,71 L162.025,84.5 A12.5,12.5 0 0 1 149.525,97 L24.5,97 A12.5,12.5 0 0 1 12,84.5 L12,71" fill="#800080"/>
+        <rect fill="none" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="150.025" x="12" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="162.025" y1="71" y2="71"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="162.025" y1="71" y2="71"/>
+        <text fill="#F00" font-size="14" textLength="63" x="55.513" y="62.889">MainState</text>
+        <text fill="#FF0" font-size="14" textLength="130.025" x="17" y="86.889">this is description main</text>
+      </g>
+      <g class="entity" data-qualified-name="MainState1.SubA" data-source-line="12" id="ent0003">
+        <path d="M193,47 L297.025,47 A12.5,12.5 0 0 1 309.525,59.5 L309.525,71 L180.5,71 L180.5,59.5 A12.5,12.5 0 0 1 193,47" fill="#FF0"/>
+        <path d="M180.5,71 L309.525,71 L309.525,84.5 A12.5,12.5 0 0 1 297.025,97 L193,97 A12.5,12.5 0 0 1 180.5,84.5 L180.5,71" fill="#800080"/>
+        <rect fill="none" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="129.025" x="180.5" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="180.5" x2="309.525" y1="71" y2="71"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="180.5" x2="309.525" y1="71" y2="71"/>
+        <text fill="#F00" font-size="14" textLength="34.3" x="227.863" y="62.889">SubA</text>
+        <text fill="#FF0" font-size="14" textLength="109.025" x="185.5" y="86.889">this is description A</text>
+      </g>
+      <g class="entity" data-qualified-name="MainState1.SubB" data-source-line="14" id="ent0004">
+        <path d="M340.5,47 L369.8,47 A12.5,12.5 0 0 1 382.3,59.5 L382.3,71 L328,71 L328,59.5 A12.5,12.5 0 0 1 340.5,47" fill="#FF0"/>
+        <path d="M328,71 L382.3,71 L382.3,84.5 A12.5,12.5 0 0 1 369.8,97 L340.5,97 A12.5,12.5 0 0 1 328,84.5 L328,71" fill="#800080"/>
+        <rect fill="none" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="54.3" x="328" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="328" x2="382.3" y1="71" y2="71"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="328" x2="382.3" y1="71" y2="71"/>
+        <text fill="#F00" font-size="14" textLength="34.3" x="338" y="62.889">SubB</text>
+      </g>
+    </g>
+    <g class="entity" data-qualified-name="D" data-source-line="22" id="ent0007">
+      <path d="M440,148 L465,148 A12.5,12.5 0 0 1 477.5,160.5 L477.5,172 L427.5,172 L427.5,160.5 A12.5,12.5 0 0 1 440,148" fill="#FF0"/>
+      <path d="M427.5,172 L477.5,172 L477.5,185.5 A12.5,12.5 0 0 1 465,198 L440,198 A12.5,12.5 0 0 1 427.5,185.5 L427.5,172" fill="#800080"/>
+      <rect fill="none" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="427.5" y="148"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="427.5" x2="477.5" y1="172" y2="172"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="427.5" x2="477.5" y1="172" y2="172"/>
+      <text fill="#F00" font-size="14" x="447.425" y="163.889">D</text>
+    </g>
+    <g class="entity" data-qualified-name="MainState2.SubC" data-source-line="19" id="ent0006">
+      <path d="M437.5,37 L467.588,37 A12.5,12.5 0 0 1 480.088,49.5 L480.088,61 L425,61 L425,49.5 A12.5,12.5 0 0 1 437.5,37" fill="#FF0"/>
+      <path d="M425,61 L480.088,61 L480.088,74.5 A12.5,12.5 0 0 1 467.588,87 L437.5,87 A12.5,12.5 0 0 1 425,74.5 L425,61" fill="#800080"/>
+      <rect fill="none" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="55.088" x="425" y="37"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="425" x2="480.088" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="425" x2="480.088" y1="61" y2="61"/>
+      <text fill="#F00" font-size="14" textLength="35.088" x="435" y="52.889">SubC</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="452.5,147.877,456.5,138.877,452.5,142.877,448.5,138.877,452.5,147.877" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M452.5,87.191 C452.5,105.254 452.5,124.83 452.5,142.877" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

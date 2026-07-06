@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:201px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 201 104" width="201px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.763" x="6" y="12"/>
+      <ellipse cx="37.83" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.83" y="33">C</text>
+      <text fill="#000" font-size="14" x="55.57" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="83.763" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="66.763" x="12" y="58.889">attr : integer</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="83.763" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="58.188" x="12" y="80.889">attr2 : float</text>
+    </g>
+    <path d="M103.5,33.5 L103.5,41 L78.763,55 L103.5,49 L103.5,56.5 A0,0 0 0 0 103.5,56.5 L185.844,56.5 A0,0 0 0 0 185.844,56.5 L185.844,43.5 L175.844,33.5 L103.5,33.5 A0,0 0 0 0 103.5,33.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M175.844,33.5 L175.844,43.5 L185.844,43.5 L175.844,33.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="61.344" x="109.5" y="48.611">an attribute</text>
+  </g>
+</svg>

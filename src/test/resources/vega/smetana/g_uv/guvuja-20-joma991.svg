@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="201px" preserveAspectRatio="none" style="width:428px;height:201px;background:#FFFFFF;" version="1.1" viewBox="0 0 428 201" width="428px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity UC1-->
+    <g class="entity" data-qualified-name="UC1" data-source-line="1" id="ent0001">
+      <ellipse cx="49.237" cy="153.829" fill="#F1F1F1" rx="43.237" ry="30.829" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="60.725" x="18.874" y="146.068">Modeliser</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="40.268" y="160.068">les</text>
+      <text fill="#000" font-size="14" textLength="42" x="28.237" y="174.068">projets</text>
+    </g>
+    <!--entity compo-->
+    <g class="entity" data-qualified-name="compo" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.575" x="235.5" y="125"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="322.075" y="130"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="320.075" y="132"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="320.075" y="136"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="64.575" x="251.5" y="155.889">«testable»</text>
+      <text fill="#000" font-size="14" textLength="42" x="262.788" y="169.889">compo</text>
+    </g>
+    <!--entity inter-->
+    <g class="entity" data-qualified-name="inter" data-source-line="3" id="ent0003">
+      <ellipse cx="403" cy="46" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="389.394" y="73.889">inter</text>
+    </g>
+    <!--entity toto-->
+    <g class="entity" data-qualified-name="toto" data-source-line="4" id="ent0004">
+      <ellipse cx="93.075" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M93.075,28.5 L93.075,55.5 M80.075,36.5 L106.075,36.5 M93.075,55.5 L80.075,70.5 M93.075,55.5 L106.075,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="94.15" x="46" y="82.889">Le Fameux Toto</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN5" data-source-line="5" id="ent0006">
+      <path d="M202.5,37 L202.5,60 A0,0 0 0 0 202.5,60 L285,60 L289,124.608 L293,60 L375.194,60 A0,0 0 0 0 375.194,60 L375.194,47 L365.194,37 L202.5,37 A0,0 0 0 0 202.5,37" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M365.194,37 L365.194,47 L375.194,47 L365.194,37" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="151.694" x="208.5" y="52.111">ceci est un grand composant</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN8" data-source-line="6" id="ent0009">
+      <path d="M110,136 L110,172 A0,0 0 0 0 110,172 L199.656,172 A0,0 0 0 0 199.656,172 L199.656,146 L189.656,136 L148.714,136 L114.685,86.024 L140.714,136 L110,136 A0,0 0 0 0 110,136" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M189.656,136 L189.656,146 L199.656,146 L189.656,136" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="56.306" x="116" y="151.111">Cet acteur</text>
+      <text fill="#000" font-size="13" textLength="68.656" x="116" y="164.111">est essentiel</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0001" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="61.83,122.966,69.044,116.261,63.794,118.368,61.687,113.118,61.83,122.966" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M77.611,86.024 C72.456,98.091 68.732,106.809 63.794,118.368" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0002" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="342.632,162.6,351.972,165.725,347.61,162.124,351.211,157.761,342.632,162.6" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M342.632,145.4 C353.08,146.399 360.5,149.266 360.5,154 C360.5,158.734 358.058,161.125 347.61,162.124" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="30.388" x="362.5" y="157.611">essai</text>
+    </g>
+  </g>
+</svg>

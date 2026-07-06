@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="505px" preserveAspectRatio="none" style="width:467px;height:505px;background:#FFFFFF;" version="1.1" viewBox="0 0 467 505" width="467px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Track_FSM" data-source-line="2" id="ent0001">
+      <path d="M18.5,72 L438.544,72 A12.5,12.5 0 0 1 451.044,84.5 L451.044,96 L6,96 L6,84.5 A12.5,12.5 0 0 1 18.5,72" fill="#F1F1F1"/>
+      <rect fill="none" height="357" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="445.044" x="6" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="451.044" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="72.363" x="192.341" y="87.889">Track_FSM</text>
+      <!--cluster Run-->
+      <g class="cluster" data-qualified-name="Track_FSM.Run" data-source-line="8" id="ent0003">
+        <path d="M31.5,207 L404.5,207 A12.5,12.5 0 0 1 417,219.5 L417,226 L19,226 L19,219.5 A12.5,12.5 0 0 1 31.5,207" fill="#F1F1F1"/>
+        <rect fill="#F1F1F1" height="33" style="stroke:#F1F1F1;stroke-width:1;" width="398" x="19" y="226"/>
+        <rect fill="none" height="199" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="398" x="19" y="207"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="19" x2="417" y1="226" y2="226"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="19" x2="417" y1="259" y2="259"/>
+        <text fill="#000" font-size="14" textLength="25.725" x="205.138" y="217.889">Run</text>
+        <text fill="#000" font-size="14" textLength="107.888" x="24" y="239.389">entry / enter_run();</text>
+        <text fill="#000" font-size="14" textLength="88.55" x="24" y="253.389">exit / exit_run();</text>
+      </g>
+      <g class="entity" data-qualified-name="Track_FSM.Stop" data-source-line="3" id="ent0002">
+        <rect fill="#F1F1F1" height="62" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="133.313" x="199.5" y="102"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="199.5" x2="332.813" y1="126" y2="126"/>
+        <text fill="#000" font-size="14" textLength="28.787" x="251.763" y="117.889">Stop</text>
+        <text fill="#000" font-size="14" textLength="113.313" x="204.5" y="141.889">entry/entry_stop();</text>
+        <text fill="#000" font-size="14" textLength="94.763" x="204.5" y="155.889">exit/exit_stop();</text>
+      </g>
+      <g class="entity" data-qualified-name="Track_FSM.Run.Chg_Sector" data-source-line="11" id="ent0004">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="93.938" x="27" y="306.5"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="120.938" y1="330.5" y2="330.5"/>
+        <text fill="#000" font-size="14" textLength="73.938" x="37" y="322.389">Chg_Sector</text>
+      </g>
+      <g class="entity" data-qualified-name="Track_FSM.Run.Do_Sector" data-source-line="13" id="ent0005">
+        <path d="M151.5,265 L362,265 A12.5,12.5 0 0 1 374.5,277.5 L374.5,289 L139,289 L139,277.5 A12.5,12.5 0 0 1 151.5,265" fill="#F1F1F1"/>
+        <rect fill="#F1F1F1" height="33" style="stroke:#F1F1F1;stroke-width:1;" width="235.5" x="139" y="289"/>
+        <rect fill="none" height="133" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="235.5" x="139" y="265"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="139" x2="374.5" y1="289" y2="289"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="139" x2="374.5" y1="322" y2="322"/>
+        <text fill="#000" font-size="14" textLength="66.15" x="223.675" y="280.889">Do_Sector</text>
+        <text fill="#000" font-size="14" textLength="149.1" x="144" y="299.889">entry / enter_do_sector();</text>
+        <text fill="#000" font-size="14" textLength="129.763" x="144" y="313.889">exit / exit_do_sector();</text>
+        <g class="entity" data-qualified-name="Track_FSM.Run.Do_Sector.WriteSector" data-source-line="16" id="ent0006">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="93.063" x="145" y="333"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="145" x2="238.063" y1="357" y2="357"/>
+          <text fill="#000" font-size="14" textLength="73.063" x="155" y="348.889">WriteSector</text>
+          <text fill="#000" font-size="14" textLength="23.363" x="150" y="372.889">aaa</text>
+        </g>
+        <g class="entity" data-qualified-name="Track_FSM.Run.Do_Sector.ReadSector" data-source-line="18" id="ent0007">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="93.938" x="256.5" y="333"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="256.5" x2="350.438" y1="357" y2="357"/>
+          <text fill="#000" font-size="14" textLength="73.938" x="266.5" y="348.889">ReadSector</text>
+        </g>
+      </g>
+      <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk10">
+        <polygon fill="#181818" points="80,306.024,86.309,298.461,81.367,301.214,78.614,296.273,80,306.024" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M199.232,159.118 C175.051,170.781 149.036,186.645 130,207 C103.306,235.543 89.052,274.188 81.367,301.214" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="67.356" x="161" y="194.111">EV_START</text>
+      </g>
+      <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk11">
+        <polygon fill="#181818" points="316.656,164.011,322.318,172.07,320.944,166.582,326.431,165.208,316.656,164.011" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M383.972,206.958 C383.962,206.944 383.952,206.93 383.941,206.915 C383.919,206.886 383.896,206.855 383.871,206.824 C383.82,206.761 383.761,206.694 383.695,206.623 C383.563,206.481 383.401,206.322 383.21,206.147 C382.829,205.798 382.331,205.385 381.726,204.914 C380.516,203.972 378.876,202.796 376.876,201.424 C372.875,198.681 367.431,195.157 361.09,191.161 C348.408,183.17 336.427,175.865 320.944,166.582" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="60.044" x="374" y="194.111">EV_STOP</text>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0008">
+      <ellipse cx="228.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="22" id="ent0012">
+      <ellipse cx="228.5" cy="476" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="228.5" cy="476" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="228.5,71.698,232.5,62.698,228.5,66.698,224.5,62.698,228.5,71.698" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M228.5,36.133 C228.5,44.45 228.5,51.904 228.5,66.698" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="228.5,464.753,232.5,455.753,228.5,459.753,224.5,455.753,228.5,464.753" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M228.5,429.211 C228.5,443.977 228.5,451.419 228.5,459.753" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

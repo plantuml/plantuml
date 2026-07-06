@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="119px" preserveAspectRatio="none" style="width:134px;height:119px;background:#FFFFFF;" version="1.1" viewBox="0 0 134 119" width="134px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster MS1-->
+    <g class="cluster" data-qualified-name="MS1" data-source-line="5" id="ent0001">
+      <rect fill="none" height="91" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="112" x="14" y="4"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="106" y="9"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="104" y="11"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="104" y="15"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="87.675" x="26.162" y="27.889">&lt;&lt; µService &gt;&gt;</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="54.775" x="42.613" y="41.889">µService</text>
+    </g>
+    <!--entity MS2-->
+    <g class="entity" data-qualified-name="MS1.MS2" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.512" x="22.5" y="43"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="97.012" y="48"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="95.012" y="50"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="95.012" y="54"/>
+      <text fill="#000" font-size="14" textLength="54.512" x="37.5" y="73.889">uService</text>
+    </g>
+  </g>
+</svg>

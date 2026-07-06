@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="304px" preserveAspectRatio="none" style="width:453px;height:304px;background:#FFFFFF;" version="1.1" viewBox="0 0 453 304" width="453px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="ma" data-source-line="5" id="ent0001">
+      <path d="M18.5,34.5 L167.581,34.5 A12.5,12.5 0 0 1 180.081,47 L180.081,58.5 L6,58.5 L6,47 A12.5,12.5 0 0 1 18.5,34.5" fill="#F00"/>
+      <path d="M6,58.5 L180.081,58.5 L180.081,253 A12.5,12.5 0 0 1 167.581,265.5 L18.5,265.5 A12.5,12.5 0 0 1 6,253 L6,58.5" fill="#F00"/>
+      <rect fill="none" height="231" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="174.081" x="6" y="34.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="180.081" y1="58.5" y2="58.5"/>
+      <text fill="#000" font-size="14" textLength="70.087" x="57.997" y="50.389">midgeAdult</text>
+      <g class="entity" data-qualified-name="ma.midgeAdult" data-source-line="6" id="ent0002">
+        <rect fill="#008000" height="104" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="142.238" x="12" y="146.5"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="154.238" y1="170.5" y2="170.5"/>
+        <text fill="#000" font-size="14" textLength="70.087" x="48.075" y="162.389">midgeAdult</text>
+        <text fill="#000" font-size="14" textLength="119.088" x="17" y="186.389">releaseMidge$date</text>
+        <text fill="#000" font-size="14" textLength="122.238" x="17" y="200.389">releaseMidge$adult</text>
+        <text fill="#000" font-size="14" text-decoration="line-through" x="17" y="214.389">-</text>
+        <text fill="#000" font-size="14" textLength="102.725" x="17" y="228.389">midge$pEmerge</text>
+        <text fill="#000" font-size="14" textLength="100.45" x="17" y="242.389">midge$sexRatio</text>
+      </g>
+      <g class="start_entity" data-qualified-name="ma..start.ma" data-source-line="7" id="ent0006">
+        <ellipse cx="83" cy="79.5" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="dependency" id="lnk7">
+        <polygon fill="#181818" points="83,146.417,87,137.417,83,141.417,79,137.417,83,146.417" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M83,93.527 C83,105.838 83,121.64 83,141.417" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="78.081" x="85" y="123.611">releaseMidge</text>
+      </g>
+    </g>
+    <g class="entity" data-qualified-name="acaciaMidge" data-source-line="15" id="ent0003">
+      <path d="M211,12 L425.081,12 A12.5,12.5 0 0 1 437.581,24.5 L437.581,36 L198.5,36 L198.5,24.5 A12.5,12.5 0 0 1 211,12" fill="#FFA500"/>
+      <path d="M198.5,36 L437.581,36 L437.581,275.5 A12.5,12.5 0 0 1 425.081,288 L211,288 A12.5,12.5 0 0 1 198.5,275.5 L198.5,36" fill="#FFA500"/>
+      <rect fill="none" height="276" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="239.081" x="198.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="198.5" x2="437.581" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="278.709" y="27.889">acaciaMidge</text>
+      <g class="entity" data-qualified-name="acaciaMidge.parFlower" data-source-line="17" id="ent0004">
+        <rect fill="#F1F1F1" height="62" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="155.45" x="204.5" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="204.5" x2="359.95" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="62.3" x="251.075" y="62.889">parFlower</text>
+        <text fill="#000" font-size="14" textLength="135.45" x="209.5" y="86.889">meanEggsPerFemale</text>
+        <text fill="#000" font-size="14" textLength="122.238" x="209.5" y="100.889">maxEggsPerFlower</text>
+      </g>
+      <g class="entity" data-qualified-name="acaciaMidge.gall" data-source-line="19" id="ent0005">
+        <rect fill="#FFA500" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="257" y="162"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="257" x2="307" y1="186" y2="186"/>
+        <text fill="#000" font-size="14" textLength="21.875" x="271.063" y="177.889">gall</text>
+      </g>
+      <g class="end_entity" data-qualified-name="acaciaMidge..end.acaciaMidge" data-source-line="20" id="ent0009">
+        <ellipse cx="282" cy="260" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+        <ellipse cx="282" cy="260" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk8">
+        <polygon fill="#181818" points="282,161.882,286,152.882,282,156.882,278,152.882,282,161.882" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M282,109.09 C282,125.78 282,141.255 282,156.882" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="136.581" x="284" y="139.111">stateAgingDeterministic</text>
+      </g>
+      <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+        <polygon fill="#181818" points="282,248.947,286,239.947,282,243.947,278,239.947,282,248.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M282,212.376 C282,224.778 282,234.242 282,243.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+  </g>
+</svg>

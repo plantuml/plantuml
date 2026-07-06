@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="109px" preserveAspectRatio="none" style="width:338px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 338 109" width="338px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster PR-->
+    <g class="cluster" data-qualified-name="PR" data-source-line="1" id="ent0001">
+      <rect fill="none" height="81" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="153" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.512" x="80.744" y="16.889">PR</text>
+    </g>
+    <!--cluster PC-->
+    <g class="cluster" data-qualified-name="PC" data-source-line="6" id="ent0004">
+      <path d="M183.366,13.516 C186.504,6.178 191.74,6.617 196.405,11.944 C199.672,6.971 203.492,5.836 207.803,10.741 C211.115,5.472 215.778,6.828 218.186,11.669 C221.909,6.028 225.841,5.904 230.398,10.693 C233.423,4.882 238.049,4.887 242.28,9.29 C245.706,4.483 249.605,4.101 252.985,9.338 C255.812,3.825 261.406,3.198 264.553,9.011 C269.274,5.044 273.44,5.755 276.252,11.347 C279.763,7.54 283.237,6.926 286.08,12.079 C289.439,7.062 295.281,6.3 298.439,12.305 C302.627,6.712 307.201,7.489 310.467,13.28 C313.478,7.347 316.99,7.848 321.127,12.102 C327.517,15.435 328.241,19.492 322.262,24.005 C327.273,25.747 328.637,29.697 324.885,33.788 C331.71,35.852 331.793,41.437 327.135,45.674 C332.187,48.77 332.172,53.71 326.339,55.963 C331.227,60.49 329.665,64.817 323.641,66.568 C328.313,71.214 327.915,75.283 321.216,77.379 C317.707,83.027 313.215,82.805 309.253,77.891 C306.962,84.11 301.997,84.545 298.319,79.202 C296.148,86.189 289.924,86.64 285.89,81.043 C282.576,86.115 276.826,86.213 274.408,80.121 C271.919,84.765 268.735,86.505 264.508,82.001 C260.845,87.768 256.072,87.802 252.9,81.528 C248.767,87.376 243.305,86.978 240.267,80.414 C237.306,84.352 233.212,85.112 230.71,79.932 C227.322,85.051 223.125,86.179 219.056,80.68 C214.891,86.376 211.367,85.215 207.731,80.124 C203.425,86.565 197.53,84.279 195.081,78.241 C191.901,82.901 188.596,83.437 184.978,78.712 C175.523,76.212 172.56,67.865 180.487,60.966 C173.226,56.922 170.579,51.072 178.458,45.094 C171.701,38.547 174.64,33.424 181.845,30.011 C174.342,25.14 174.896,16.914 183.366,13.516" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.512" x="241.744" y="27.889">PC</text>
+    </g>
+    <!--class PR1-->
+    <g class="entity" data-qualified-name="PR.PR1" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.3" x="99.5" y="29"/>
+      <ellipse cx="114.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="109.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="27.3" x="128.5" y="48.889">PR1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="100.5" x2="157.8" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="100.5" x2="157.8" y1="69" y2="69"/>
+    </g>
+    <!--class PR2-->
+    <g class="entity" data-qualified-name="PR.PR2" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.3" x="22.5" y="29"/>
+      <ellipse cx="37.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="27.3" x="51.5" y="48.889">PR2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="80.8" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="80.8" y1="69" y2="69"/>
+    </g>
+    <!--class PC1-->
+    <g class="entity" data-qualified-name="PC.PC1" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.3" x="260.5" y="29"/>
+      <ellipse cx="275.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="270.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="27.3" x="289.5" y="48.889">PC1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="261.5" x2="318.8" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="261.5" x2="318.8" y1="69" y2="69"/>
+    </g>
+    <!--class PC2-->
+    <g class="entity" data-qualified-name="PC.PC2" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.3" x="183.5" y="29"/>
+      <ellipse cx="198.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="193.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="27.3" x="212.5" y="48.889">PC2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="184.5" x2="241.8" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="184.5" x2="241.8" y1="69" y2="69"/>
+    </g>
+  </g>
+</svg>

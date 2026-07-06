@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="240px" preserveAspectRatio="none" style="width:147px;height:240px;background:#FFFFFF;" version="1.1" viewBox="0 0 147 240" width="147px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="212.163" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="124.6" x="6" y="12"/>
+      <ellipse cx="51.975" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="46.975" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="72.475" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="129.6" y1="44" y2="44"/>
+      <path d="M16.701,48 L13,51.701 L14.89,53.591 L19.563,58.343 L14.89,63.015 L13,64.826 L16.701,68.606 L18.591,66.716 L23.343,61.965 L28.015,66.716 L29.826,68.606 L33.606,64.826 L31.716,63.015 L26.965,58.343 L31.716,53.591 L33.606,51.701 L29.826,48 L28.015,49.89 L23.343,54.563 L18.591,49.89 L16.701,48" fill="#F00"/>
+      <text fill="#000" font-size="14" textLength="89.6" x="35" y="73.764">someBadField</text>
+      <image height="26" width="26" x="12" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAACA0lEQVR4Xr2VO0gDQRCGg28QghZK1IgWASGIVpYqFiJHQLC2kZAiCBYqSupobWGn2FoYi0AEBQvBIp12Ir4OJRCRxCK5XGJed+OteMabyd0mSCy+4v6Z+3+Wnd21pdNp239ABB7y5eW0JIpDWOdBBEuSyT61qwsKPt8rqXEgghUFv/8RbDZgSLe3G7huBRGsUO12RQ8qLC6KuG4FEczIb26KesgXHR0g3d/7cZ8ZRKiGFIsNGkK+KS4s3OFeM4hQjdz2dhSHMNTOTpCenz24vxqVj3h8NHN1JchnZ0Lu4GAnv7oKxbk5ULu7SQBGdTigOD8P+UAAsoeH6/LFhZC5uRFo0NubC5qaiMFfKS4tPZIVyaene7jxLyhOJ9AVMVKp5q+wlhbyU72U3W7QBqi/epC+spOTZWhvJz/XSnlsDKSnJzf2JUGM7NHRGjsn2IRHaWKChYxjP9MghhwKbWAjK8ouFxt1shJukPTyMovNrChPTRk2H0MEHW0wdrEZD22gWrEPN+hja6vuIOnhwXBIawoqeL3H2IiHHI3WH1SanCRG2iUKmetrQY5EfMrICKlnw+H6g5SBgUqAx5PSnvAVQ4/22ub293eU4eGfvo9g8OfKwRBBB9raoDQzI8rn5+u4ZuD9vYftp9rbyx5D08kjwm8DovFIJJxE+4YIjYIIjYIIjeITxmbRvRS6otsAAAAASUVORK5CYII=" y="76.875"/>
+      <text fill="#000" font-size="14" textLength="31.85" x="37.846" y="99.61">other</text>
+      <path d="M16.701,102.721 L13,106.422 L14.89,108.312 L19.563,113.064 L14.89,117.736 L13,119.547 L16.701,123.327 L18.591,121.437 L23.343,116.686 L28.015,121.437 L29.826,123.327 L33.606,119.547 L31.716,117.736 L26.965,113.064 L31.716,108.312 L33.606,106.422 L29.826,102.721 L28.015,104.611 L23.343,109.284 L18.591,104.611 L16.701,102.721" fill="#F00"/>
+      <text fill="#000" font-size="14" textLength="89.6" x="35" y="128.485">someBadField</text>
+      <image height="26" width="26" x="12" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAACA0lEQVR4Xr2VO0gDQRCGg28QghZK1IgWASGIVpYqFiJHQLC2kZAiCBYqSupobWGn2FoYi0AEBQvBIp12Ir4OJRCRxCK5XGJed+OteMabyd0mSCy+4v6Z+3+Wnd21pdNp239ABB7y5eW0JIpDWOdBBEuSyT61qwsKPt8rqXEgghUFv/8RbDZgSLe3G7huBRGsUO12RQ8qLC6KuG4FEczIb26KesgXHR0g3d/7cZ8ZRKiGFIsNGkK+KS4s3OFeM4hQjdz2dhSHMNTOTpCenz24vxqVj3h8NHN1JchnZ0Lu4GAnv7oKxbk5ULu7SQBGdTigOD8P+UAAsoeH6/LFhZC5uRFo0NubC5qaiMFfKS4tPZIVyaene7jxLyhOJ9AVMVKp5q+wlhbyU72U3W7QBqi/epC+spOTZWhvJz/XSnlsDKSnJzf2JUGM7NHRGjsn2IRHaWKChYxjP9MghhwKbWAjK8ouFxt1shJukPTyMovNrChPTRk2H0MEHW0wdrEZD22gWrEPN+hja6vuIOnhwXBIawoqeL3H2IiHHI3WH1SanCRG2iUKmetrQY5EfMrICKlnw+H6g5SBgUqAx5PSnvAVQ4/22ub293eU4eGfvo9g8OfKwRBBB9raoDQzI8rn5+u4ZuD9vYftp9rbyx5D08kjwm8DovFIJJxE+4YIjYIIjYIIjeITxmbRvRS6otsAAAAASUVORK5CYII=" y="131.596"/>
+      <text fill="#000" font-size="14" textLength="31.85" x="37.846" y="154.331">other</text>
+      <path d="M16.701,157.442 L13,161.144 L14.89,163.034 L19.563,167.785 L14.89,172.457 L13,174.269 L16.701,178.049 L18.591,176.159 L23.343,171.407 L28.015,176.159 L29.826,178.049 L33.606,174.269 L31.716,172.457 L26.965,167.785 L31.716,163.034 L33.606,161.144 L29.826,157.442 L28.015,159.332 L23.343,164.005 L18.591,159.332 L16.701,157.442" fill="#008000"/>
+      <text fill="#000" font-size="14" textLength="89.6" x="35" y="183.206">someBadField</text>
+      <image height="26" width="26" x="12" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAACBElEQVR4Xr2VPUgDQRCFg/8QCFoo/kS0CAhBtLJUsRA5AoJ1GpEUQbCIolirtYWdYmuhFoKCgoVgkU47EWM8FCEimiJ72cTkktx4W5zGmdytQWLxwfFm7j2Wnd11McZc/wERZFxe8nFV1fqwLoMITry/s67WVgNCofwLrskgghPhcD7ucgEIbm+1ZVx3gghOeDxGyQoKBvMqrjtBBDtWVnKqFSJoaQGIxbQw7rODCJV4ftZ6y0MsZmb0O9xrBxEqsbGRjeIQgdttwOOjFsD9lfj6SCTY4NVVWjk748rubnYzEsnB1JQObW0GCcB0dhowPa3D6moO9vYySxcXXLm5SSsk6PWV+erqqMFfmZ3V42RFp6d8Gzf+Ba+3BGRFglSK1Yuwhgb6U7X4/UUwB6i7YpDFyQmfb26mP/+WoaEiPDxofuxLggT7+5lFcU6wiYyRkYIIGcZ+tkGCgwO+jI2c8PmKYtTJSqRBT0/aJDZzYmys+GPzMUSwMAdjC5vJMAeqEftIg9bXP6oOur/XfhzSXwXNzeUPsZGMaJRXHzQ6WiBG5iUK19dp5fiYhwYGSqR+dJSpPqin59soENBT5hO+UF4Xr+3OTnazv/+7b23t4+vKwRDBoqkJYGKioJ6f8yVcKyeZZO1iPzs6DPEY2k4eEcoNsCbj7Y15sWZBhFpBhFpBhFrxCR650b0ke+xHAAAAAElFTkSuQmCC" y="186.317"/>
+      <text fill="#000" font-size="14" textLength="31.85" x="37.846" y="209.052">other</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="129.6" y1="216.163" y2="216.163"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="213px" preserveAspectRatio="none" style="width:148px;height:213px;background:#FFFFFF;" version="1.1" viewBox="0 0 148 213" width="148px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity api_app-->
+    <g class="entity" data-qualified-name="api_app" data-source-line="71" id="ent0001">
+      <rect fill="#438DD5" height="48" style="stroke:#3C7FC0;stroke-width:0.5;" width="124.2" x="7.181" y="12"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="25.8" x="17.181" y="34.444">API</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="42.981" y="34.444"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="78.4" x="42.981" y="34.444">Application</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="31.95" x="20.644" y="47.333">[Java,</text>
+      <text fill="#FFF" font-size="12" font-style="italic" x="52.594" y="47.333"> </text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="65.325" x="52.594" y="47.333">Spring-boot]</text>
+    </g>
+    <g class="legend" data-source-line="56">
+      <text fill="#000" font-size="14" font-weight="700" textLength="46.725" x="17" y="99.889">Legend</text>
+      <text fill="#FFF" font-size="14" x="63.725" y="99.889"> </text>
+      <rect fill="#08427B" height="14" style="stroke:none;" width="107.363" x="17" y="103"/>
+      <text fill="#FFF" font-size="14" textLength="42.788" x="17" y="113.889">person</text>
+      <rect fill="#1168BD" height="14" style="stroke:none;" width="107.363" x="17" y="117"/>
+      <text fill="#FFF" font-size="14" textLength="44.275" x="17" y="127.889">system</text>
+      <rect fill="#438DD5" height="14" style="stroke:none;" width="107.363" x="17" y="131"/>
+      <text fill="#FFF" font-size="14" textLength="57.575" x="17" y="141.889">container</text>
+      <rect fill="#686868" height="14" style="stroke:none;" width="107.363" x="17" y="145"/>
+      <text fill="#FFF" font-size="14" textLength="92.575" x="17" y="155.889">external person</text>
+      <rect fill="#999" height="14" style="stroke:none;" width="107.363" x="17" y="159"/>
+      <text fill="#FFF" font-size="14" textLength="94.063" x="17" y="169.889">external system</text>
+      <rect fill="#B3B3B3" height="14" style="stroke:none;" width="107.363" x="17" y="173"/>
+      <text fill="#FFF" font-size="14" textLength="107.363" x="17" y="183.889">external container</text>
+      <line style="stroke:#FFF;stroke-width:1;" x1="17" x2="124.363" y1="89" y2="89"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="17" x2="124.363" y1="103" y2="103"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="17" x2="124.363" y1="117" y2="117"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="17" x2="124.363" y1="131" y2="131"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="17" x2="124.363" y1="145" y2="145"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="17" x2="124.363" y1="159" y2="159"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="17" x2="124.363" y1="173" y2="173"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="17" x2="124.363" y1="187" y2="187"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="17" x2="17" y1="89" y2="187"/>
+      <line style="stroke:#FFF;stroke-width:1;" x1="124.363" x2="124.363" y1="89" y2="187"/>
+    </g>
+  </g>
+</svg>

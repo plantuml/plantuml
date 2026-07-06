@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="224px" preserveAspectRatio="none" style="width:74px;height:224px;background:#FFFFFF;" version="1.1" viewBox="0 0 74 224" width="74px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Foo1" data-source-line="6" id="ent0001">
+      <rect fill="#008000" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="51.938" x="6" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="57.938" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="16" y="87.889">Foo1</text>
+    </g>
+    <g class="entity" data-qualified-name="Foo2" data-source-line="7" id="ent0002">
+      <rect fill="#00F" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="51.938" x="6" y="158"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="57.938" y1="182" y2="182"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="16" y="173.889">Foo2</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="5" id="ent0003">
+      <ellipse cx="32" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="32,71.764,36,62.764,32,66.764,28,62.764,32,71.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M32,36.094 C32,45.61 32,54.662 32,66.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="32,157.758,36,148.758,32,152.758,28,148.758,32,157.758" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M32,122.296 C32,133.441 32,141.621 32,152.758" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

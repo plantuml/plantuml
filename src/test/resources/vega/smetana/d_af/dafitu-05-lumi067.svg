@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="210px" preserveAspectRatio="none" style="width:131px;height:210px;background:#FFFFFF;" version="1.1" viewBox="0 0 131 210" width="131px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Vehicles-->
+    <g class="cluster" data-qualified-name="Vehicles" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L70.525,4 A3.75,3.75 0 0 1 73.025,6.5 L80.025,24 L115.5,24 A2.5,2.5 0 0 1 118,26.5 L118,183.5 A2.5,2.5 0 0 1 115.5,186 L16.5,186 A2.5,2.5 0 0 1 14,183.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="80.025" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="53.025" x="18" y="16.889">Vehicles</text>
+    </g>
+    <!--class Toyota-->
+    <g class="entity" data-qualified-name="Vehicles.Toyota" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.788" x="22.5" y="29"/>
+      <ellipse cx="37.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="42.788" x="51.5" y="48.889">Toyota</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="96.288" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="96.288" y1="69" y2="69"/>
+    </g>
+    <!--class Car-->
+    <g class="entity" data-qualified-name="Vehicles.Car" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.575" x="22.5" y="130"/>
+      <ellipse cx="37.5" cy="146" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="151">C</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="51.5" y="149.889">Car</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="76.075" y1="162" y2="162"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="76.075" y1="170" y2="170"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="extension" id="lnk4">
+      <polygon fill="none" points="52.33,129.934,60.108,112.628,48.169,111.422,52.33,129.934" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M57.655,77.211 C56.051,93.099 55.741,96.169 54.139,112.025" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="66.463" x="57" y="107.111">implements</text>
+    </g>
+  </g>
+</svg>

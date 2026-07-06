@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="138px" preserveAspectRatio="none" style="width:203px;height:138px;background:#FFFFFF;" version="1.1" viewBox="0 0 203 138" width="203px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="user" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="110" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="180.875" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="82.831" y="24.889">user</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="185.875" y1="30" y2="30"/>
+      <text fill="#000" font-size="14" textLength="149.45" x="12" y="44.889">This is __underscored__.</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="12" y="58.889">This is</text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="80.15" x="48.663" y="58.889">monospaced</text>
+      <text fill="#000" font-size="14" x="128.813" y="58.889">.</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="12" y="72.889">This is</text>
+      <text fill="#000" font-size="14" text-decoration="line-through" textLength="49" x="48.663" y="72.889">crossed</text>
+      <text fill="#000" font-size="14" x="97.663" y="72.889">.</text>
+      <text fill="#000" font-size="14" textLength="168.875" x="12" y="86.889">This is not __underscored__.</text>
+      <text fill="#000" font-size="14" textLength="160.038" x="12" y="100.889">This is not ""monospaced"".</text>
+      <text fill="#000" font-size="14" textLength="127.488" x="12" y="114.889">This is not --crossed--.</text>
+    </g>
+  </g>
+</svg>

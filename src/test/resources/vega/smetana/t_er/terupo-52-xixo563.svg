@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="166px" preserveAspectRatio="none" style="width:297px;height:166px;background:#FFFFFF;" version="1.1" viewBox="0 0 297 166" width="297px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0001">
+      <ellipse cx="26" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="39.95" x="6" y="118"/>
+    <text fill="#000" font-size="12" textLength="19.95" x="16" y="137.333">toto</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="32" x="249" y="118"/>
+    <text fill="#000" font-size="12" textLength="12" x="259" y="137.333">titi</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="26,117.956,30,108.956,26,112.956,22,108.956,26,117.956" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26,36.151 C26,55.661 26,90.997 26,112.956" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M31,59 L31,95 L128,95 L128,69 L118,59 L31,59" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M118,59 L118,69 L128,69 L118,59" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="62.156" x="37" y="74.111">this is a note</text>
+      <text fill="#000" font-size="13" textLength="76.7" x="37" y="87.111">on several line</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="248.869,134,239.869,130,243.869,134,239.869,138,248.869,134" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M46.377,134 C92.998,134 201.658,134 243.869,134" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M60,103 L60,126 L235,126 L235,113 L225,103 L60,103" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M225,103 L225,113 L235,113 L225,103" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="154.05" x="66" y="118.111">this is a note which is very long</text>
+    </g>
+  </g>
+</svg>

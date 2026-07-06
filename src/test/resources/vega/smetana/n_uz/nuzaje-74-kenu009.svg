@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="170px" preserveAspectRatio="none" style="width:386px;height:170px;background:#FFFFFF;" version="1.1" viewBox="0 0 386 170" width="386px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="108" rx="10" ry="10" style="stroke:#F1F1F1;stroke-width:3;" width="172.475" x="20" y="20"/>
+    <text fill="#000" font-size="28" font-weight="700" textLength="46.55" x="30" y="45.778">fruit</text>
+    <text fill="#000" font-size="28" textLength="71.75" x="110.725" y="45.778">Apple</text>
+    <line style="stroke:#000;stroke-width:2;" x1="100.725" x2="100.725" y1="20" y2="56"/>
+    <line style="stroke:#000;stroke-width:2;" x1="20" x2="192.475" y1="56" y2="56"/>
+    <text fill="#000" font-size="28" font-weight="700" textLength="49.875" x="30" y="81.778">size</text>
+    <text fill="#000" font-size="28" textLength="71.575" x="110.725" y="81.778">Large</text>
+    <line style="stroke:#000;stroke-width:2;" x1="100.725" x2="100.725" y1="56" y2="92"/>
+    <line style="stroke:#000;stroke-width:2;" x1="20" x2="192.475" y1="92" y2="92"/>
+    <text fill="#000" font-size="28" font-weight="700" textLength="60.725" x="30" y="117.778">color</text>
+    <text fill="#000" font-size="28" textLength="23.1" x="110.725" y="117.778">   </text>
+    <line style="stroke:#000;stroke-width:2;" x1="100.725" x2="100.725" y1="92" y2="128"/>
+    <rect fill="none" height="108" rx="10" ry="10" style="stroke:#000;stroke-width:3;" width="172.475" x="20" y="20"/>
+    <rect fill="#F1F1F1" height="72" rx="10" ry="10" style="stroke:#F1F1F1;stroke-width:3;" width="97.7" x="266" y="74"/>
+    <text fill="#000" font-size="28" textLength="51.45" x="276" y="99.778">Red</text>
+    <line style="stroke:#000;stroke-width:2;" x1="266" x2="363.7" y1="110" y2="110"/>
+    <text fill="#000" font-size="28" textLength="77.7" x="276" y="135.778">Green</text>
+    <rect fill="none" height="72" rx="10" ry="10" style="stroke:#000;stroke-width:3;" width="97.7" x="266" y="74"/>
+    <path d="M167,110 L193,110 C212.038,110 232.76,110 251.589,110" fill="none" style="stroke:#000;stroke-width:2;stroke-dasharray:6,6;"/>
+    <path d="M251.589,116.117 L256.176,110 L251.589,103.883 L266.881,110 L251.589,116.117" fill="#000"/>
+    <ellipse cx="167" cy="110" fill="#000" rx="6" ry="6" style="stroke:#000;stroke-width:2;"/>
+  </g>
+</svg>

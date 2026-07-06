@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:382px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 382 160" width="382px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class TDCFTemplate-->
+    <g class="entity" data-qualified-name="TDCFTemplate" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.813" x="34.5" y="12"/>
+      <ellipse cx="49.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="44.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="95.813" x="63.5" y="31.889">TDCFTemplate</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35.5" x2="161.313" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35.5" x2="161.313" y1="52" y2="52"/>
+    </g>
+    <!--class TemplateClimate300001-->
+    <g class="entity" data-qualified-name="TemplateClimate300001" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="184.6" x="6" y="96"/>
+      <ellipse cx="21" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="152.6" x="35" y="115.889">TemplateClimate300001</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="189.6" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="189.6" y1="136" y2="136"/>
+    </g>
+    <!--class TemplateClimate300002-->
+    <g class="entity" data-qualified-name="TemplateClimate300002" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="184.6" x="181" y="12"/>
+      <ellipse cx="196" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="191" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="152.6" x="210" y="31.889">TemplateClimate300002</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="182" x2="364.6" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="182" x2="364.6" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="98.5,60.279,92.5,78.279,104.5,78.279,98.5,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M98.5,78.279 C98.5,89.453 98.5,84.802 98.5,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="162.758,36,180.758,42,180.758,30,162.758,36" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M180.758,36 C186.814,36 174.87,36 180.926,36" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

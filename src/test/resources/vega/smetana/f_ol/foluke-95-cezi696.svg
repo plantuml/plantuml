@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="208px" preserveAspectRatio="none" style="width:328px;height:208px;background:#FFFFFF;" version="1.1" viewBox="0 0 328 208" width="328px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="17" id="ent0001">
+      <ellipse cx="64" cy="88" fill="#222" rx="40" ry="40" style="stroke:#F00;stroke-width:20;"/>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="17" id="ent0002">
+      <ellipse cx="220" cy="92" fill="none" rx="44" ry="44" style="stroke:#00F;stroke-width:20;"/>
+      <ellipse cx="220" cy="92" fill="#222" rx="24" ry="24" style="stroke:#00F;stroke-width:4;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="174.773,96,138.773,80,154.773,96,138.773,112,174.773,96" style="stroke:#181818;stroke-width:4;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M104.219,96 C127.737,96 131.255,96 154.773,96" fill="none" style="stroke:#181818;stroke-width:4;"/>
+    </g>
+  </g>
+</svg>

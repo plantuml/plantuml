@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="120px" preserveAspectRatio="none" style="width:611px;height:120px;background:#FFFFFF;" version="1.1" viewBox="0 0 611 120" width="611px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Ok Database-->
+    <g class="cluster" data-qualified-name="Ok Database" data-source-line="3" id="ent0002">
+      <path d="M332.5,14 C332.5,4 379,4 379,4 C379,4 425.5,4 425.5,14 L425.5,86 C425.5,96 379,96 379,96 C379,96 332.5,96 332.5,86 L332.5,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M332.5,14 C332.5,24 379,24 379,24 C379,24 425.5,24 425.5,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.788" x="340.106" y="36.889">Ok Database</text>
+    </g>
+    <!--cluster Cloud 2-->
+    <g class="cluster" data-qualified-name="Cloud 2" data-source-line="8" id="ent0005">
+      <path d="M441.569,28.899 C444.53,20.666 451.189,20.565 456.111,26.947 C459.657,20.407 465.279,19.03 470.338,25.262 C474.982,20.441 480.603,20.428 482.844,27.74 C487.414,21.606 491.941,22.846 495.509,28.79 C505.095,29.954 505.636,37.861 500.498,43.89 C508.797,44.5 513.045,50.722 507.098,57.998 C513.021,65.743 509.03,72.659 500.389,74.472 C506.121,79.663 504.727,85.53 497.61,88.1 C494.173,94.635 488.026,95.439 483.216,89.711 C479.143,97.319 474.839,98.722 468.637,91.855 C464.207,97.534 457.519,97.456 455.35,89.631 C451.426,94.701 446.959,95.799 443.421,89.234 C435.676,84.893 435.183,78.151 442.455,72.92 C434.483,69.132 433.506,64.35 439.192,57.644 C434.21,52.307 433.62,45.365 442.484,43.181 C436.062,39.247 434.27,33.712 441.569,28.899" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="44.45" x="446.275" y="42.889">Cloud 2</text>
+    </g>
+    <!--cluster My Card-->
+    <g class="cluster" data-qualified-name="My Card" data-source-line="12" id="ent0007">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="84" x="511.5" y="19"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="511.5" x2="595.5" y1="37" y2="37"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49" x="529" y="31.889">My Card</text>
+    </g>
+    <!--entity Empty database-->
+    <g class="entity" data-qualified-name="Empty database" data-source-line="1" id="ent0001">
+      <path d="M6,54.5 C6,44.5 64.606,44.5 64.606,44.5 C64.606,44.5 123.213,44.5 123.213,54.5 L123.213,77.5 C123.213,87.5 64.606,87.5 64.606,87.5 C64.606,87.5 6,87.5 6,77.5 L6,54.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,54.5 C6,64.5 64.606,64.5 64.606,64.5 C64.606,64.5 123.213,64.5 123.213,54.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="97.213" x="16" y="79.389">Empty database</text>
+    </g>
+    <!--entity Cloud 1-->
+    <g class="entity" data-qualified-name="Cloud 1" data-source-line="6" id="ent0004">
+      <path d="M151.297,53.251 C156.118,46.971 161.017,46.761 165.938,53.135 C169.21,44.557 176.002,44.411 180.846,51.653 C186.209,45.389 190.942,45.841 194.555,53.39 C199.5,46.734 204.471,45.881 208.875,53.917 C216.278,55.069 217.961,61.626 213.23,66.861 C217.925,72.509 217.422,78.379 209.676,80.871 C205.6,87.266 199.124,88.346 194.634,81.336 C190.068,89.171 185.242,89.059 179.049,83.187 C174.192,89.46 168.689,90.117 164.98,82.06 C160.451,88.849 155.444,89.322 150.873,82.102 C141.968,81.759 138.846,75.758 143.303,68.16 C137.313,59.814 142.984,53.928 151.297,53.251" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="156.5" y="69.889">Cloud 1</text>
+    </g>
+    <!--entity Empty Card-->
+    <g class="entity" data-qualified-name="Empty Card" data-source-line="16" id="ent0009">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90" x="233.5" y="54"/>
+      <text fill="#000" font-size="14" textLength="70" x="243.5" y="67.889">Empty Card</text>
+    </g>
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="Ok Database.foo" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.425" x="350" y="44"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="389.425" y="49"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="387.425" y="51"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="387.425" y="55"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="365" y="74.889">foo</text>
+    </g>
+    <!--entity fiz-->
+    <g class="entity" data-qualified-name="Cloud 2.fiz" data-source-line="9" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54" x="441.5" y="44"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="475.5" y="49"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="473.5" y="51"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="473.5" y="55"/>
+      <text fill="#000" font-size="14" textLength="14" x="456.5" y="74.889">fiz</text>
+    </g>
+    <!--entity foo2-->
+    <g class="entity" data-qualified-name="My Card.foo2" data-source-line="13" id="ent0008">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.213" x="520" y="44"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="567.213" y="49"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="565.213" y="51"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="565.213" y="55"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="535" y="74.889">foo2</text>
+    </g>
+  </g>
+</svg>

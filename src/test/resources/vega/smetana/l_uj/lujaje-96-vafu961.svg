@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="287px" preserveAspectRatio="none" style="width:344px;height:287px;background:#FFFFFF;" version="1.1" viewBox="0 0 344 287" width="344px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster net-->
+    <g class="cluster" data-qualified-name="net" data-source-line="4" id="ent0004">
+      <path d="M26.502,60 L46.927,60 A3.75,3.75 0 0 1 49.427,62.5 L56.427,80 L335.502,80 A2.5,2.5 0 0 1 338.002,82.5 L338.002,260.5 A2.5,2.5 0 0 1 335.502,263 L26.502,263 A2.5,2.5 0 0 1 24.002,260.5 L24.002,62.5 A2.5,2.5 0 0 1 26.502,60" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="24.002" x2="56.427" y1="80" y2="80"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="28.002" y="72.889">net</text>
+    </g>
+    <!--cluster dummy-->
+    <g class="cluster" data-qualified-name="net.dummy" data-source-line="3" id="ent0002">
+      <path d="M134.502,85 L181.352,85 A3.75,3.75 0 0 1 183.852,87.5 L190.852,105 L227.502,105 A2.5,2.5 0 0 1 230.002,107.5 L230.002,252.5 A2.5,2.5 0 0 1 227.502,255 L134.502,255 A2.5,2.5 0 0 1 132.002,252.5 L132.002,87.5 A2.5,2.5 0 0 1 134.502,85" fill="#DDD" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="132.002" x2="190.852" y1="105" y2="105"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.85" x="136.002" y="97.889">dummy</text>
+    </g>
+    <!--cluster foo-->
+    <g class="cluster" data-qualified-name="net.foo" data-source-line="11" id="ent0009">
+      <path d="M240.502,174 L260.927,174 A3.75,3.75 0 0 1 263.427,176.5 L270.427,194 L327.502,194 A2.5,2.5 0 0 1 330.002,196.5 L330.002,252.5 A2.5,2.5 0 0 1 327.502,255 L240.502,255 A2.5,2.5 0 0 1 238.002,252.5 L238.002,176.5 A2.5,2.5 0 0 1 240.502,174" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="238.002" x2="270.427" y1="194" y2="194"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="242.002" y="186.889">foo</text>
+    </g>
+    <!--cluster unused-->
+    <g class="cluster" data-qualified-name="net.unused" data-source-line="19" id="ent0015">
+      <path d="M34.502,85 L81.439,85 A3.75,3.75 0 0 1 83.939,87.5 L90.939,105 L121.502,105 A2.5,2.5 0 0 1 124.002,107.5 L124.002,163.5 A2.5,2.5 0 0 1 121.502,166 L34.502,166 A2.5,2.5 0 0 1 32.002,163.5 L32.002,87.5 A2.5,2.5 0 0 1 34.502,85" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="32.002" x2="90.939" y1="105" y2="105"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.938" x="36.002" y="97.889">unused</text>
+    </g>
+    <!--class BaseClass-->
+    <g class="entity" data-qualified-name="BaseClass" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.025" x="79.502" y="4"/>
+      <ellipse cx="94.502" cy="20" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="89.502" y="25">C</text>
+      <text fill="#000" font-size="14" textLength="67.025" x="108.502" y="23.889">BaseClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="80.502" x2="177.527" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="80.502" x2="177.527" y1="44" y2="44"/>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="net.dummy.Person" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.363" x="143.002" y="199"/>
+      <ellipse cx="158.002" cy="215" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="153.002" y="220">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="172.002" y="218.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="144.002" x2="218.364" y1="231" y2="231"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="144.002" x2="218.364" y1="239" y2="239"/>
+    </g>
+    <!--class Meeting-->
+    <g class="entity" data-qualified-name="net.dummy.Meeting" data-source-line="5" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.788" x="140.002" y="110"/>
+      <ellipse cx="155.002" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="150.002" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="49.788" x="169.002" y="129.889">Meeting</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141.002" x2="220.789" y1="142" y2="142"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141.002" x2="220.789" y1="150" y2="150"/>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="net.foo.Person" data-source-line="12" id="ent0010">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.363" x="246.002" y="199"/>
+      <ellipse cx="261.002" cy="215" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="256.002" y="220">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="275.002" y="218.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="247.002" x2="321.364" y1="231" y2="231"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="247.002" x2="321.364" y1="239" y2="239"/>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="net.unused.Person" data-source-line="19" id="ent0014">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.363" x="40.002" y="110"/>
+      <ellipse cx="55.002" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="50.002" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="69.002" y="129.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41.002" x2="115.364" y1="142" y2="142"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41.002" x2="115.364" y1="150" y2="150"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="79.359,31.969,60.528,29.644,62.899,41.407,79.359,31.969" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M61.714,35.526 C42.499,39.4 39.94,43.848 28.002,60 C0,97.886 1.015,127.384 28.002,166 C53.765,202.864 106.546,215.539 142.846,219.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0003" data-link-type="aggregation" id="lnk7">
+      <polygon fill="none" points="181.002,158.314,177.002,164.314,181.002,170.314,185.002,164.314,181.002,158.314" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M181.002,170.314 C181.002,182.898 181.002,186.376 181.002,198.923" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="140.542,52.081,143.226,70.864,153.959,65.497,140.542,52.081" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M148.592,68.181 C157.21,85.415 160.884,92.765 169.494,109.984" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0010" data-link-type="extension" id="lnk11">
+      <polygon fill="none" points="219.225,223,237.225,229,237.225,217,219.225,223" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M237.225,223 C246.081,223 236.937,223 245.793,223" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0010" data-link-type="extension" id="lnk12">
+      <polygon fill="none" points="178.526,33.524,194.891,43.125,197.379,31.386,178.526,33.524" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M196.135,37.256 C215.648,41.391 219.263,45.441 234.002,60 C272.218,97.75 281.357,164.007 283.455,198.942" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0010" data-link-type="aggregation" id="lnk13">
+      <polygon fill="none" points="213.75,158.062,216.167,164.856,223.368,165.238,220.951,158.444,213.75,158.062" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M223.368,165.238 C230.189,170.326 227.622,168.629 234.002,174 C243.208,181.749 252.851,190.768 261.185,198.883" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0014" data-link-type="extension" id="lnk16">
+      <polygon fill="none" points="117.683,52.081,104.371,65.601,115.145,70.884,117.683,52.081" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M109.758,68.242 C101.307,85.477 97.733,92.765 89.289,109.984" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

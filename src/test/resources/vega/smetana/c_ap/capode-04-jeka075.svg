@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:78px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 78 76" width="78px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="ghq8rttvns2es0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFBD42"/>
+      <stop offset="100%" stop-color="#FFF"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:url(#ghq8rttvns2es0);stroke-width:0.5;" width="56.15" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="35" y="31.889">Foo</text>
+      <line style="stroke:#FFBD42;stroke-width:0.5;" x1="7" x2="61.15" y1="44" y2="44"/>
+      <line style="stroke:#FFBD42;stroke-width:0.5;" x1="7" x2="61.15" y1="52" y2="52"/>
+    </g>
+  </g>
+</svg>

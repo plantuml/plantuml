@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="138px" preserveAspectRatio="none" style="width:368px;height:138px;background:#FFFFFF;" version="1.1" viewBox="0 0 368 138" width="368px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster test-->
+    <g class="cluster" data-qualified-name="test" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L39.988,4 A3.75,3.75 0 0 1 42.488,6.5 L49.488,24 L179.5,24 A2.5,2.5 0 0 1 182,26.5 L182,111.5 A2.5,2.5 0 0 1 179.5,114 L16.5,114 A2.5,2.5 0 0 1 14,111.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="49.488" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="22.488" x="18" y="16.889">test</text>
+    </g>
+    <!--cluster toto-->
+    <g class="cluster" data-qualified-name="test.toto" data-source-line="2" id="ent0002">
+      <path d="M24.5,29 L48.775,29 A3.75,3.75 0 0 1 51.275,31.5 L58.275,49 L171.5,49 A2.5,2.5 0 0 1 174,51.5 L174,103.5 A2.5,2.5 0 0 1 171.5,106 L24.5,106 A2.5,2.5 0 0 1 22,103.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="58.275" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.275" x="26" y="41.889">toto</text>
+    </g>
+    <!--cluster test2-->
+    <g class="cluster" data-qualified-name="test2" data-source-line="6" id="ent0004">
+      <path d="M192.5,4 L223.775,4 A3.75,3.75 0 0 1 226.275,6.5 L233.275,24 L357.5,24 A2.5,2.5 0 0 1 360,26.5 L360,111.5 A2.5,2.5 0 0 1 357.5,114 L192.5,114 A2.5,2.5 0 0 1 190,111.5 L190,6.5 A2.5,2.5 0 0 1 192.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="190" x2="233.275" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.275" x="194" y="16.889">test2</text>
+    </g>
+    <!--cluster toto2-->
+    <g class="cluster" data-qualified-name="test2.toto2" data-source-line="7" id="ent0005">
+      <path d="M200.5,29 L232.563,29 A3.75,3.75 0 0 1 235.063,31.5 L242.063,49 L349.5,49 A2.5,2.5 0 0 1 352,51.5 L352,103.5 A2.5,2.5 0 0 1 349.5,106 L200.5,106 A2.5,2.5 0 0 1 198,103.5 L198,31.5 A2.5,2.5 0 0 1 200.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="198" x2="242.063" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.063" x="202" y="41.889">toto2</text>
+    </g>
+    <!--entity Component-1.0-->
+    <g class="entity" data-qualified-name="test.toto.Component-1.0" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.425" x="30" y="54"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="146.425" y="59"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="144.425" y="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="144.425" y="65"/>
+      <text fill="#000" font-size="14" textLength="96.425" x="45" y="84.889">Component-1.0</text>
+    </g>
+    <!--entity Component-2-0-->
+    <g class="entity" data-qualified-name="test2.toto2.Component-2-0" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.213" x="206.5" y="54"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="323.713" y="59"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="321.713" y="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="321.713" y="65"/>
+      <text fill="#000" font-size="14" textLength="97.213" x="221.5" y="84.889">Component-2-0</text>
+    </g>
+  </g>
+</svg>

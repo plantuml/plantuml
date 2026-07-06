@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="134px" preserveAspectRatio="none" style="width:192px;height:134px;background:#FFFFFF;" version="1.1" viewBox="0 0 192 134" width="192px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster o1-->
+    <g class="cluster" data-qualified-name="o1" data-source-line="2" id="ent0001">
+      <rect fill="none" height="106" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="88" x="88" y="4"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="48.8" x="107.6" y="18.444">Outer 1</text>
+    </g>
+    <!--cluster o2-->
+    <g class="cluster" data-qualified-name="o1.o2" data-source-line="3" id="ent0002">
+      <rect fill="none" height="71" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="72" x="96" y="31"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="48.8" x="107.6" y="45.444">Outer 2</text>
+    </g>
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27.788" x="6" y="59"/>
+      <text fill="#000" font-size="14" x="16" y="79.889">a</text>
+    </g>
+    <!--entity b-->
+    <g class="entity" data-qualified-name="b" data-source-line="8" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27.788" x="52" y="59"/>
+      <text fill="#000" font-size="14" x="62" y="79.889">b</text>
+    </g>
+    <!--entity inner-->
+    <g class="entity" data-qualified-name="o1.o2.inner" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.4" x="104" y="58"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="36.4" x="114" y="80.444">Inner</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="51.507,76,42.507,72,46.507,76,42.507,80,51.507,76" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M34.016,76 C39.846,76 40.677,76 46.507,76" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

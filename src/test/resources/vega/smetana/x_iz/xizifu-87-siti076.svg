@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="455px" preserveAspectRatio="none" style="width:248px;height:455px;background:#FFFFFF;" version="1.1" viewBox="0 0 248 455" width="248px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster c1-->
+    <g class="cluster" data-qualified-name="c1" data-source-line="1666" id="ent0002">
+      <rect fill="none" height="169" style="stroke:#444;stroke-width:1;stroke-dasharray:7,7;" width="226" x="14" y="166"/>
+      <text fill="#444" font-size="16" font-weight="700" textLength="107.6" x="73.2" y="200.444">Sample System</text>
+      <text fill="#444" font-size="12" font-weight="700" textLength="44.55" x="104.725" y="213.333">[system]</text>
+    </g>
+    <!--entity admin-->
+    <g class="entity" data-qualified-name="admin" data-source-line="178" id="ent0001">
+      <rect fill="#08427B" height="99.692" style="stroke:#073B6F;stroke-width:0.5;" width="114.2" x="70" y="12"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="50.025" x="102.088" y="31.333">«person»</text>
+      <image height="52" width="52" x="101.254" xlink:href="data:image/png;base64,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" y="34"/>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="94.2" x="80" y="98.137">Administrator</text>
+    </g>
+    <!--entity twitter-->
+    <g class="entity" data-qualified-name="twitter" data-source-line="197" id="ent0004">
+      <rect fill="#1168BD" height="48" style="stroke:#3C7FC0;stroke-width:0.5;" width="73.3" x="90.5" y="391"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="51.3" x="101.5" y="410.333">«system»</text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="48" x="103.15" y="425.444">Twitter</text>
+    </g>
+    <!--entity web_app-->
+    <g class="entity" data-qualified-name="c1.web_app" data-source-line="71" id="ent0003">
+      <rect fill="#438DD5" height="102" style="stroke:#3C7FC0;stroke-width:0.5;" width="209.175" x="22.5" y="225"/>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="62.7" x="95.738" y="244.333">«container»</text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="32.9" x="71.438" y="259.444">Web</text>
+      <text fill="#FFF" font-size="16" font-weight="700" x="104.338" y="259.444"> </text>
+      <text fill="#FFF" font-size="16" font-weight="700" textLength="78.4" x="104.338" y="259.444">Application</text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="21.975" x="54.037" y="272.333">[C#,</text>
+      <text fill="#FFF" font-size="12" font-style="italic" x="76.012" y="272.333"> </text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="51.45" x="76.012" y="272.333">ASP.NET</text>
+      <text fill="#FFF" font-size="12" font-style="italic" x="127.462" y="272.333"> </text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="26.025" x="127.462" y="272.333">Core</text>
+      <text fill="#FFF" font-size="12" font-style="italic" x="153.488" y="272.333"> </text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="16.65" x="153.488" y="272.333">2.1</text>
+      <text fill="#FFF" font-size="12" font-style="italic" x="170.138" y="272.333"> </text>
+      <text fill="#FFF" font-size="12" font-style="italic" textLength="30" x="170.138" y="272.333">MVC]</text>
+      <text fill="#FFF" font-size="14" x="127.088" y="285.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="40.6" x="32.5" y="299.889">Allows</text>
+      <text fill="#FFF" font-size="14" x="73.1" y="299.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="34.212" x="73.1" y="299.889">users</text>
+      <text fill="#FFF" font-size="14" x="107.313" y="299.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="11.638" x="107.313" y="299.889">to</text>
+      <text fill="#FFF" font-size="14" x="118.95" y="299.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="54.425" x="118.95" y="299.889">compare</text>
+      <text fill="#FFF" font-size="14" x="173.375" y="299.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="48.3" x="173.375" y="299.889">multiple</text>
+      <text fill="#FFF" font-size="14" textLength="42" x="78.438" y="313.889">Twitter</text>
+      <text fill="#FFF" font-size="14" x="120.438" y="313.889"> </text>
+      <text fill="#FFF" font-size="14" textLength="55.3" x="120.438" y="313.889">timelines</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="none" points="127,224.994,130,216.994,124,216.994,127,224.994" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M127,112.17 C127,146.052 127,182.933 127,216.994" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="27.375" x="138.338" y="141.333">Uses</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="46.05" x="129" y="153.333">[HTTPS]</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
+      <polygon fill="none" points="127,390.975,130,382.975,124,382.975,127,390.975" style="stroke:#666;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M127,327.236 C127,349.077 127,365.59 127,382.975" fill="none" style="stroke:#666;stroke-width:1;"/>
+      <text fill="#666" font-size="12" font-weight="700" textLength="25.275" x="129" y="356.333">Gets</text>
+      <text fill="#666" font-size="12" font-weight="700" x="154.275" y="356.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="34.65" x="154.275" y="356.333">tweets</text>
+      <text fill="#666" font-size="12" font-weight="700" x="188.925" y="356.333"> </text>
+      <text fill="#666" font-size="12" font-weight="700" textLength="23.925" x="188.925" y="356.333">from</text>
+      <text fill="#666" font-size="12" font-style="italic" textLength="46.05" x="147.9" y="368.333">[HTTPS]</text>
+    </g>
+  </g>
+</svg>

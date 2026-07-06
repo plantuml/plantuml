@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="184px" preserveAspectRatio="none" style="width:1417px;height:184px;background:#FFFFFF;" version="1.1" viewBox="0 0 1417 184" width="1417px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="111.175" x="10" y="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.238" x="15" y="58.889">apiVersion</text>
+    <text fill="#000" font-size="14" textLength="14.787" x="91.238" y="58.889">v1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="121.175" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="15" y="76.889">kind</text>
+    <text fill="#000" font-size="14" textLength="24.938" x="91.238" y="76.889">Pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="121.175" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="58.275" x="15" y="94.889">metadata</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="91.238" y="94.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="82" y2="100"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="111.175" x="10" y="46"/>
+    <rect fill="#F1F1F1" height="162" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="559.087" x="158" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="119" x="163" y="22.889">creationTimestamp</text>
+    <text fill="#000" font-size="14" textLength="143.15" x="292" y="22.889">2020-12-25T00:26:06Z</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="92.575" x="163" y="40.889">generateName</text>
+    <text fill="#000" font-size="14" textLength="178.238" x="292" y="40.889">blazorindocker-7966669766-</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="36.663" x="163" y="58.889">labels</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="292" y="58.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="163" y="76.889">name</text>
+    <text fill="#000" font-size="14" textLength="211.75" x="292" y="76.889">blazorindocker-7966669766-9j2bk</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="72.363" x="163" y="94.889">namespace</text>
+    <text fill="#000" font-size="14" textLength="42" x="292" y="94.889">default</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="109.725" x="163" y="112.889">ownerReferences</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="292" y="112.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="101.938" x="163" y="130.889">resourceVersion</text>
+    <text fill="#000" font-size="14" textLength="46.725" x="292" y="130.889">941757</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.512" x="163" y="148.889">selfLink</text>
+    <text fill="#000" font-size="14" textLength="420.087" x="292" y="148.889">/api/v1/namespaces/default/pods/blazorindocker-7966669766-9j2bk</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="136" y2="154"/>
+    <line style="stroke:#000;stroke-width:1;" x1="158" x2="717.087" y1="154" y2="154"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="163" y="166.889">uid</text>
+    <text fill="#000" font-size="14" textLength="258.3" x="292" y="166.889">7cb40e09-eb3f-4a34-b12e-b6ec84441fdb</text>
+    <line style="stroke:#000;stroke-width:1;" x1="287" x2="287" y1="154" y2="172"/>
+    <rect fill="none" height="162" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="559.087" x="158" y="10"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="214.513" x="754" y="37"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="759" y="49.889">app</text>
+    <text fill="#000" font-size="14" textLength="38.15" x="885.638" y="49.889">blazor</text>
+    <line style="stroke:#000;stroke-width:1;" x1="880.638" x2="880.638" y1="37" y2="55"/>
+    <line style="stroke:#000;stroke-width:1;" x1="754" x2="968.513" y1="55" y2="55"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="116.638" x="759" y="67.889">pod-template-hash</text>
+    <text fill="#000" font-size="14" textLength="77.875" x="885.638" y="67.889">7966669766</text>
+    <line style="stroke:#000;stroke-width:1;" x1="880.638" x2="880.638" y1="55" y2="73"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="214.513" x="754" y="37"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="856.5" y="100"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="861.5" y="112.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="856.5" y="100"/>
+    <rect fill="#F1F1F1" height="108" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="399.75" x="1006" y="55"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.238" x="1011" y="67.889">apiVersion</text>
+    <text fill="#000" font-size="14" textLength="49" x="1146.388" y="67.889">apps/v1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1141.388" x2="1141.388" y1="55" y2="73"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1405.75" y1="73" y2="73"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="125.388" x="1011" y="85.889">blockOwnerDeletion</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="1146.388" y="85.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1141.388" x2="1141.388" y1="73" y2="91"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1405.75" y1="91" y2="91"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="1011" y="103.889">controller</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="1146.388" y="103.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1141.388" x2="1141.388" y1="91" y2="109"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1405.75" y1="109" y2="109"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="1011" y="121.889">kind</text>
+    <text fill="#000" font-size="14" textLength="67.813" x="1146.388" y="121.889">ReplicaSet</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1141.388" x2="1141.388" y1="109" y2="127"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1405.75" y1="127" y2="127"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1011" y="139.889">name</text>
+    <text fill="#000" font-size="14" textLength="173.6" x="1146.388" y="139.889">blazorindocker-7966669766</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1141.388" x2="1141.388" y1="127" y2="145"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1006" x2="1405.75" y1="145" y2="145"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="1011" y="157.889">uid</text>
+    <text fill="#000" font-size="14" textLength="254.363" x="1146.388" y="157.889">dfb3148b-cff3-42d5-8ac4-e55e3d5450d7</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1141.388" x2="1141.388" y1="145" y2="163"/>
+    <rect fill="none" height="108" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="399.75" x="1006" y="55"/>
+    <path d="M705,55 L718,55 C727.305,55 736.951,55 746.638,55" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M746.638,58.109 L748.969,55 L746.638,51.891 L754.41,55 L746.638,58.109" fill="#000"/>
+    <ellipse cx="705" cy="55" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M854.122,109 L867.122,109 C883.649,109 938.012,109 998.47,109" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M998.47,112.115 L1000.807,109 L998.47,105.885 L1006.259,109 L998.47,112.115" fill="#000"/>
+    <ellipse cx="854.122" cy="109" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M705,109 L718,109 C766.431,109 824.088,109 848.787,109" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M848.787,112.106 L851.117,109 L848.787,105.894 L856.552,109 L848.787,112.106" fill="#000"/>
+    <ellipse cx="705" cy="109" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M109,91 L122,91 C131.386,91 140.928,91 150.565,91" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M150.565,94.099 L152.889,91 L150.565,87.901 L158.313,91 L150.565,94.099" fill="#000"/>
+    <ellipse cx="109" cy="91" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

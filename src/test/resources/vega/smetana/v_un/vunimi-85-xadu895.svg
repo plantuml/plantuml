@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="100px" preserveAspectRatio="none" style="width:121px;height:100px;background:#FFFFFF;" version="1.1" viewBox="0 0 121 100" width="121px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster b2-->
+    <g class="cluster" data-qualified-name="b2" data-source-line="2" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,105,4,105,66,95,76,14,76,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="95" x2="105" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="95" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="95" x2="95" y1="14" y2="76"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="47.713" y="27.889">b2</text>
+    </g>
+    <!--entity c2-->
+    <g class="entity" data-qualified-name="b2.c2" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="34.787" x="41.5" y="34"/>
+      <text fill="#000" font-size="14" textLength="14.787" x="51.5" y="54.889">c2</text>
+    </g>
+  </g>
+</svg>

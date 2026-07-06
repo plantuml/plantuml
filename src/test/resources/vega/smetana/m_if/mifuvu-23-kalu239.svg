@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="181px" preserveAspectRatio="none" style="width:203px;height:181px;background:#FFFFFF;" version="1.1" viewBox="0 0 203 181" width="203px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity actor-->
+    <g class="entity" data-qualified-name="actor" data-source-line="5" id="ent0001">
+      <ellipse cx="45.031" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M45.031,28.5 L45.031,55.5 M32.031,36.5 L58.031,36.5 M45.031,55.5 L32.031,70.5 M45.031,55.5 L58.031,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="31.062" x="29.5" y="82.889">actor</text>
+    </g>
+    <!--entity component-->
+    <g class="entity" data-qualified-name="component" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.213" x="78.5" y="27"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="167.713" y="32"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="165.713" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="165.713" y="38"/>
+      <text fill="#000" font-size="14" textLength="69.213" x="93.5" y="57.889">component</text>
+    </g>
+    <!--entity rectangle-->
+    <g class="entity" data-qualified-name="rectangle" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.575" x="6" y="126.5"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="16" y="147.389">rectangle</text>
+    </g>
+    <!--entity database-->
+    <g class="entity" data-qualified-name="database" data-source-line="8" id="ent0004">
+      <path d="M102,132 C102,122 140.788,122 140.788,122 C140.788,122 179.575,122 179.575,132 L179.575,155 C179.575,165 140.788,165 140.788,165 C140.788,165 102,165 102,155 L102,132" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M102,132 C102,142 140.788,142 140.788,142 C140.788,142 179.575,142 179.575,132" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="112" y="156.889">database</text>
+    </g>
+  </g>
+</svg>

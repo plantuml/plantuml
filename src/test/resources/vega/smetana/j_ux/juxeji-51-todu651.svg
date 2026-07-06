@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="209px" preserveAspectRatio="none" style="width:334px;height:209px;background:#FFFFFF;" version="1.1" viewBox="0 0 334 209" width="334px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class a-->
+    <g class="entity" data-qualified-name="a" data-source-line="6" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="142" y="12"/>
+      <ellipse cx="157" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="152" y="33">C</text>
+      <text fill="#000" font-size="14" x="171" y="31.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="143" x2="180.788" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="143" x2="180.788" y1="52" y2="52"/>
+    </g>
+    <!--class bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-->
+    <g class="entity" data-qualified-name="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="312.35" x="6" y="96"/>
+      <ellipse cx="21" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="280.35" x="35" y="115.889">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="317.35" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="317.35" y1="136" y2="136"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M162,60.279 C162,71.453 162,84.802 162,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="legend" data-source-line="2">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="76.238" x="125.381" y="166"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="130.381" y="181.889">The legend</text>
+    </g>
+  </g>
+</svg>

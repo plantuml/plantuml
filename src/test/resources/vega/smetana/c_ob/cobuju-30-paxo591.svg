@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="220px" preserveAspectRatio="none" style="width:478px;height:220px;background:#FFFFFF;" version="1.1" viewBox="0 0 478 220" width="478px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity folder_bold-->
+    <g class="entity" data-qualified-name="folder_bold" data-source-line="1" id="ent0001">
+      <path d="M23.5,12 L64.5,12 A3.75,3.75 0 0 1 67,14.5 L74,33 L117.8,33 A2.5,2.5 0 0 1 120.3,35.5 L120.3,61.5 A2.5,2.5 0 0 1 117.8,64 L23.5,64 A2.5,2.5 0 0 1 21,61.5 L21,14.5 A2.5,2.5 0 0 1 23.5,12" fill="#98FB98" style="stroke:#008000;stroke-width:2;"/>
+      <line style="stroke:#008000;stroke-width:2;" x1="21" x2="74" y1="33" y2="33"/>
+      <text fill="#008000" font-size="14" textLength="69.3" x="31" y="50.889">folder_bold</text>
+    </g>
+    <!--entity folder_dashed-->
+    <g class="entity" data-qualified-name="folder_dashed" data-source-line="2" id="ent0002">
+      <path d="M140.5,12 L181.5,12 A3.75,3.75 0 0 1 184,14.5 L191,33 L254.225,33 A2.5,2.5 0 0 1 256.725,35.5 L256.725,61.5 A2.5,2.5 0 0 1 254.225,64 L140.5,64 A2.5,2.5 0 0 1 138,61.5 L138,14.5 A2.5,2.5 0 0 1 140.5,12" fill="#98FB98" style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <line style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;" x1="138" x2="191" y1="33" y2="33"/>
+      <text fill="#008000" font-size="14" textLength="88.725" x="148" y="50.889">folder_dashed</text>
+    </g>
+    <!--entity folder_dotted-->
+    <g class="entity" data-qualified-name="folder_dotted" data-source-line="3" id="ent0003">
+      <path d="M278,12 L319,12 A3.75,3.75 0 0 1 321.5,14.5 L328.5,33 L384.638,33 A2.5,2.5 0 0 1 387.138,35.5 L387.138,61.5 A2.5,2.5 0 0 1 384.638,64 L278,64 A2.5,2.5 0 0 1 275.5,61.5 L275.5,14.5 A2.5,2.5 0 0 1 278,12" fill="#98FB98" style="stroke:#008000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <line style="stroke:#008000;stroke-width:1;stroke-dasharray:1,3;" x1="275.5" x2="328.5" y1="33" y2="33"/>
+      <text fill="#008000" font-size="14" textLength="81.638" x="285.5" y="50.889">folder_dotted</text>
+    </g>
+    <!--entity package_bold-->
+    <g class="entity" data-qualified-name="package_bold" data-source-line="5" id="ent0004">
+      <path d="M8.5,100 L108.738,100 A3.75,3.75 0 0 1 111.238,102.5 L118.238,120 L132.738,120 A2.5,2.5 0 0 1 135.238,122.5 L135.238,134.5 A2.5,2.5 0 0 1 132.738,137 L8.5,137 A2.5,2.5 0 0 1 6,134.5 L6,102.5 A2.5,2.5 0 0 1 8.5,100" fill="#FFC0CB" style="stroke:#008000;stroke-width:2;"/>
+      <line style="stroke:#008000;stroke-width:2;" x1="6" x2="118.238" y1="120" y2="120"/>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="87.238" x="16" y="113.889">package_bold</text>
+    </g>
+    <!--entity package_dashed-->
+    <g class="entity" data-qualified-name="package_dashed" data-source-line="6" id="ent0005">
+      <path d="M155.5,100 L275.163,100 A3.75,3.75 0 0 1 277.663,102.5 L284.663,120 L299.163,120 A2.5,2.5 0 0 1 301.663,122.5 L301.663,134.5 A2.5,2.5 0 0 1 299.163,137 L155.5,137 A2.5,2.5 0 0 1 153,134.5 L153,102.5 A2.5,2.5 0 0 1 155.5,100" fill="#FFC0CB" style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <line style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;" x1="153" x2="284.663" y1="120" y2="120"/>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="106.663" x="163" y="113.889">package_dashed</text>
+    </g>
+    <!--entity package_dotted-->
+    <g class="entity" data-qualified-name="package_dotted" data-source-line="7" id="ent0006">
+      <path d="M323,100 L435.575,100 A3.75,3.75 0 0 1 438.075,102.5 L445.075,120 L459.575,120 A2.5,2.5 0 0 1 462.075,122.5 L462.075,134.5 A2.5,2.5 0 0 1 459.575,137 L323,137 A2.5,2.5 0 0 1 320.5,134.5 L320.5,102.5 A2.5,2.5 0 0 1 323,100" fill="#FFC0CB" style="stroke:#008000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <line style="stroke:#008000;stroke-width:1;stroke-dasharray:1,3;" x1="320.5" x2="445.075" y1="120" y2="120"/>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="99.575" x="330.5" y="113.889">package_dotted</text>
+    </g>
+    <!--entity usecase_bold-->
+    <g class="entity" data-qualified-name="usecase_bold" data-source-line="9" id="ent0007">
+      <ellipse cx="70.618" cy="188.624" fill="#FFC0CB" rx="58.618" ry="14.124" style="stroke:#008000;stroke-width:2;"/>
+      <text fill="#008000" font-size="14" textLength="86.45" x="27.393" y="192.124">usecase_bold</text>
+    </g>
+    <!--entity usecase_dashed-->
+    <g class="entity" data-qualified-name="usecase_dashed" data-source-line="10" id="ent0008">
+      <ellipse cx="213.462" cy="188.692" fill="#FFC0CB" rx="66.462" ry="15.692" style="stroke:#008000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#008000" font-size="14" textLength="105.875" x="160.524" y="192.192">usecase_dashed</text>
+    </g>
+    <!--entity usecase_dotted-->
+    <g class="entity" data-qualified-name="usecase_dotted" data-source-line="11" id="ent0009">
+      <ellipse cx="361.537" cy="188.607" fill="#FFC0CB" rx="63.537" ry="15.107" style="stroke:#008000;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#008000" font-size="14" textLength="98.788" x="312.143" y="192.107">usecase_dotted</text>
+    </g>
+  </g>
+</svg>

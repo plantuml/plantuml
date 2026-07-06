@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="109px" preserveAspectRatio="none" style="width:220px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 220 109" width="220px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Foo-->
+    <g class="cluster" data-qualified-name="Foo" data-source-line="3" id="ent0001">
+      <path d="M16.5,4 L41.65,4 A3.75,3.75 0 0 1 44.15,6.5 L51.15,24 L209.5,24 A2.5,2.5 0 0 1 212,26.5 L212,82.5 A2.5,2.5 0 0 1 209.5,85 L16.5,85 A2.5,2.5 0 0 1 14,82.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="51.15" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.15" x="18" y="16.889">Foo</text>
+    </g>
+    <!--class Visible-->
+    <g class="entity" data-qualified-name="Foo.Visible" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="73.387" x="130.5" y="29"/>
+      <ellipse cx="145.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="140.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="41.387" x="159.5" y="48.889">Visible</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="131.5" x2="202.888" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="131.5" x2="202.888" y1="69" y2="69"/>
+    </g>
+    <!--class Invisible2-->
+    <g class="entity" data-qualified-name="Foo.Invisible2" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.45" x="22" y="29"/>
+      <ellipse cx="37" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="58.45" x="51" y="48.889">Invisible2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="111.45" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="111.45" y1="69" y2="69"/>
+    </g>
+  </g>
+</svg>

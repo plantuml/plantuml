@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="215px" preserveAspectRatio="none" style="width:589px;height:215px;background:#FFFFFF;" version="1.1" viewBox="0 0 589 215" width="589px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster out-->
+    <g class="cluster" data-qualified-name="out" data-source-line="6" id="ent0006">
+      <path d="M329.5,4 L384.925,4 A3.75,3.75 0 0 1 387.425,6.5 L394.425,24 L570.5,24 A2.5,2.5 0 0 1 573,26.5 L573,188.5 A2.5,2.5 0 0 1 570.5,191 L329.5,191 A2.5,2.5 0 0 1 327,188.5 L327,6.5 A2.5,2.5 0 0 1 329.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="327" x2="394.425" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="54.425" x="331" y="16.889">mimo hru</text>
+    </g>
+    <!--entity Lead-->
+    <g class="entity" data-qualified-name="Lead" data-source-line="1" id="ent0001">
+      <ellipse cx="42.831" cy="37.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M42.831,45.5 L42.831,72.5 M29.831,53.5 L55.831,53.5 M42.831,72.5 L29.831,87.5 M42.831,72.5 L55.831,87.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="50.663" x="17.5" y="99.889">Vedouci</text>
+    </g>
+    <!--entity Analyst-->
+    <g class="entity" data-qualified-name="Analyst" data-source-line="2" id="ent0002">
+      <ellipse cx="128.194" cy="37.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M128.194,45.5 L128.194,72.5 M115.194,53.5 L141.194,53.5 M128.194,72.5 L115.194,87.5 M128.194,72.5 L141.194,87.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="83.387" x="86.5" y="99.889">Uzivatel DWH</text>
+    </g>
+    <!--entity AP-->
+    <g class="entity" data-qualified-name="AP" data-source-line="3" id="ent0003">
+      <ellipse cx="240.194" cy="37.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M240.194,45.5 L240.194,72.5 M227.194,53.5 L253.194,53.5 M240.194,72.5 L227.194,87.5 M240.194,72.5 L253.194,87.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="104.388" x="188" y="99.889">Aplikacn podpora</text>
+    </g>
+    <!--entity DWH-->
+    <g class="entity" data-qualified-name="DWH" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="73.512" x="6" y="139"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="59.512" y="144"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="57.512" y="146"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="57.512" y="150"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="21" y="169.889">DWH</text>
+    </g>
+    <!--entity UCM-->
+    <g class="entity" data-qualified-name="UCM" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.938" x="98.5" y="139"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="171.438" y="144"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="169.438" y="146"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="169.438" y="150"/>
+      <text fill="#000" font-size="14" textLength="52.938" x="113.5" y="169.889">UMC NG</text>
+    </g>
+    <!--entity PRVA-->
+    <g class="entity" data-qualified-name="PRVA" data-source-line="12" id="ent0011">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.938" x="209.5" y="139"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="296.438" y="144"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="294.438" y="146"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="294.438" y="150"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="224.5" y="169.889">Rozbit prva</text>
+    </g>
+    <!--entity ET-->
+    <g class="entity" data-qualified-name="out.ET" data-source-line="7" id="ent0007">
+      <ellipse cx="380.194" cy="37.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M380.194,45.5 L380.194,72.5 M367.194,53.5 L393.194,53.5 M380.194,72.5 L367.194,87.5 M380.194,72.5 L393.194,87.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="83.388" x="338.5" y="99.889">ET specialista</text>
+    </g>
+    <!--entity mIDM-->
+    <g class="entity" data-qualified-name="out.mIDM" data-source-line="8" id="ent0008">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.213" x="440" y="44"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="508.213" y="49"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="506.213" y="51"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="506.213" y="55"/>
+      <text fill="#000" font-size="14" textLength="48.213" x="455" y="74.889">Mal IDM</text>
+    </g>
+    <!--entity IDM-->
+    <g class="entity" data-qualified-name="out.IDM" data-source-line="9" id="ent0009">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.488" x="335" y="139"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="405.488" y="144"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="403.488" y="146"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="403.488" y="150"/>
+      <text fill="#000" font-size="14" textLength="50.488" x="350" y="169.889">HIG IDM</text>
+    </g>
+    <!--entity OmniTracker-->
+    <g class="entity" data-qualified-name="out.OmniTracker" data-source-line="10" id="ent0010">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.85" x="443.5" y="139"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="544.35" y="144"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="542.35" y="146"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="542.35" y="150"/>
+      <text fill="#000" font-size="14" textLength="80.85" x="458.5" y="169.889">OmniTracker</text>
+    </g>
+  </g>
+</svg>

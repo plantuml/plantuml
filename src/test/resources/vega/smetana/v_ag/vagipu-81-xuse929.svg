@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:148px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 148 72" width="148px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity B1-->
+    <g class="entity" data-qualified-name="B1" data-source-line="1" id="ent0001">
+      <ellipse cx="15" cy="36.764" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="6.425" y="64.653">B1</text>
+    </g>
+    <!--entity A1-->
+    <g class="entity" data-qualified-name="A1" data-source-line="1" id="ent0002">
+      <ellipse cx="123" cy="36.764" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="114.425" y="64.653">A1</text>
+    </g>
+    <!--entity B2-->
+    <g class="entity" data-qualified-name="B2" data-source-line="2" id="ent0004">
+      <ellipse cx="51" cy="36.764" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="42.425" y="64.653">B2</text>
+    </g>
+    <!--entity A2-->
+    <g class="entity" data-qualified-name="A2" data-source-line="3" id="ent0006">
+      <ellipse cx="87" cy="36.764" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="78.425" y="64.653">A2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M22.355,27.501 C27.057,20.913 33.807,13.413 42,9.764 C63.924,0 74.076,0 96,9.764 C104.193,13.413 110.943,20.913 115.645,27.501" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="association" id="lnk5">
+      <path d="M58.355,27.501 C63.057,20.913 69.807,13.413 78,9.764 C85.308,6.509 88.692,6.509 96,9.764 C104.193,13.413 110.943,20.913 115.645,27.501" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M60.281,39.764 C66.126,39.764 71.971,39.764 77.815,39.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="262px" preserveAspectRatio="none" style="width:154px;height:262px;background:#FFFFFF;" version="1.1" viewBox="0 0 154 262" width="154px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="23.201" y="12"/>
+      <ellipse cx="38.201" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="33.201" y="33">C</text>
+      <text fill="#000" font-size="14" x="52.201" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="24.201" x2="63.563" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="24.201" x2="63.563" y1="52" y2="52"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="21.201" y="198"/>
+      <ellipse cx="36.201" cy="214" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="31.201" y="219">C</text>
+      <text fill="#000" font-size="14" x="50.201" y="217.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22.201" x2="61.563" y1="230" y2="230"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22.201" x2="61.563" y1="238" y2="238"/>
+    </g>
+    <!--class Edu-->
+    <g class="entity" data-qualified-name="Edu" data-source-line="3" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.938" x="57.201" y="113"/>
+      <ellipse cx="72.201" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="67.201" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="86.201" y="132.889">Edu</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="58.201" x2="113.138" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="58.201" x2="113.138" y1="153" y2="153"/>
+    </g>
+    <ellipse cx="134.701" cy="127" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M30.301,60.086 C22.599,74.717 13.684,94.34 9.701,113 C5.246,133.863 4.526,140.304 9.701,161 C12.936,173.942 19.55,187.149 25.93,197.865" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.694" x="11.701" y="140.611">Home</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="association" id="lnk8">
+      <path d="M64.377,54.823 C81.12,69.673 104.925,91.755 123.701,113 C126.989,116.721 130.302,121.044 133.119,124.932" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="39.813" x="106.701" y="90.111">School</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="association" id="lnk9">
+      <path d="M133.377,149.311 C130.584,153.222 127.22,157.497 123.701,161 C104.82,179.789 79.684,197.288 62.24,208.482" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="association" id="lnk10">
+      <path d="M114.49,137 C120.496,137 126.503,137 132.51,137" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

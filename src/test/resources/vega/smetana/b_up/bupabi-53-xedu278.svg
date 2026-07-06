@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="100px" preserveAspectRatio="none" style="width:160px;height:100px;background:#FFFFFF;" version="1.1" viewBox="0 0 160 100" width="160px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity c-->
+    <g class="entity" data-qualified-name="c" data-source-line="10" id="ent0001">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.363" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="56.363" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="54.363" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="54.363" y="23"/>
+      <text fill="#000" font-size="14" x="32.288" y="42.889">a</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="24.894" y="56.889">abc</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="21" y="70.889">a b c d</text>
+    </g>
+    <!--entity d-->
+    <g class="entity" data-qualified-name="d" data-source-line="16" id="ent0002">
+      <path d="M94,22.5 C94,12.5 119.181,12.5 119.181,12.5 C119.181,12.5 144.363,12.5 144.363,22.5 L144.363,73.5 C144.363,83.5 119.181,83.5 119.181,83.5 C119.181,83.5 94,83.5 94,73.5 L94,22.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M94,22.5 C94,32.5 119.181,32.5 119.181,32.5 C119.181,32.5 144.363,32.5 144.363,22.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="126.575" y="47.389">a</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="111.788" y="61.389">abc</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="104" y="75.389">a b c d</text>
+    </g>
+  </g>
+</svg>

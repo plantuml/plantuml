@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:220px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 220 72" width="220px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity n-->
+    <g class="entity" data-qualified-name="n" data-source-line="12" id="ent0001">
+      <polygon fill="#F1F1F1" points="114,22,124,12,161.788,12,161.788,46,151.788,56,114,56,114,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="151.788" x2="161.788" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="114" x2="151.788" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="151.788" x2="151.788" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" x="129" y="42.889">n</text>
+    </g>
+    <!--entity f-->
+    <g class="entity" data-qualified-name="f" data-source-line="13" id="ent0002">
+      <path d="M180,19.5 L180,48.5 A2.5,2.5 0 0 0 182.5,51 L201.35,51 A2.5,2.5 0 0 0 203.85,48.5 L203.85,27 L193.85,17 L182.5,17 A2.5,2.5 0 0 0 180,19.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M193.85,17 L193.85,24.5 A2.5,2.5 0 0 0 196.35,27 L203.85,27" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="190" y="37.889">f</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN3" data-source-line="14" id="ent0004">
+      <path d="M6,22 L6,42 A0,0 0 0 0 6,42 L95.875,42 A0,0 0 0 0 95.875,42 L95.875,40 L113.834,34 L95.875,32 L95.875,32 L85.875,22 L6,22 A0,0 0 0 0 6,22" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M85.875,22 L85.875,32 L95.875,32 L85.875,22" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="10" textLength="68.875" x="12" y="34.778">note that is green</text>
+    </g>
+  </g>
+</svg>

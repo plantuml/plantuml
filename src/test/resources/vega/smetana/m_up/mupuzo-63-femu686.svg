@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="396px" preserveAspectRatio="none" style="width:519px;height:396px;background:#FFFFFF;" version="1.1" viewBox="0 0 519 396" width="519px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Rev-->
+    <g class="cluster" data-qualified-name="Rev" data-source-line="4" id="ent0004">
+      <path d="M116,4 L141.938,4 A3.75,3.75 0 0 1 144.438,6.5 L151.438,24 L501,24 A2.5,2.5 0 0 1 503.5,26.5 L503.5,369.5 A2.5,2.5 0 0 1 501,372 L116,372 A2.5,2.5 0 0 1 113.5,369.5 L113.5,6.5 A2.5,2.5 0 0 1 116,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="113.5" x2="151.438" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="117.5" y="16.889">Rev</text>
+    </g>
+    <!--cluster elate-->
+    <g class="cluster" data-qualified-name="Rev.elate" data-source-line="4" id="ent0005">
+      <path d="M124,29 L155.363,29 A3.75,3.75 0 0 1 157.863,31.5 L164.863,49 L493,49 A2.5,2.5 0 0 1 495.5,51.5 L495.5,361.5 A2.5,2.5 0 0 1 493,364 L124,364 A2.5,2.5 0 0 1 121.5,361.5 L121.5,31.5 A2.5,2.5 0 0 1 124,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="121.5" x2="164.863" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="125.5" y="41.889">elate</text>
+    </g>
+    <!--cluster Leg-->
+    <g class="cluster" data-qualified-name="Rev.elate.Leg" data-source-line="4" id="ent0006">
+      <path d="M132,54 L156.363,54 A3.75,3.75 0 0 1 158.863,56.5 L165.863,74 L485,74 A2.5,2.5 0 0 1 487.5,76.5 L487.5,231.5 A2.5,2.5 0 0 1 485,234 L132,234 A2.5,2.5 0 0 1 129.5,231.5 L129.5,56.5 A2.5,2.5 0 0 1 132,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="129.5" x2="165.863" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="133.5" y="66.889">Leg</text>
+    </g>
+    <!--cluster acy-->
+    <g class="cluster" data-qualified-name="Rev.elate.Leg.acy" data-source-line="4" id="ent0007">
+      <path d="M140,79 L162.788,79 A3.75,3.75 0 0 1 165.288,81.5 L172.288,99 L477,99 A2.5,2.5 0 0 1 479.5,101.5 L479.5,223.5 A2.5,2.5 0 0 1 477,226 L140,226 A2.5,2.5 0 0 1 137.5,223.5 L137.5,81.5 A2.5,2.5 0 0 1 140,79" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="137.5" x2="172.288" y1="99" y2="99"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="141.5" y="91.889">acy</text>
+    </g>
+    <!--cluster Base-->
+    <g class="cluster" data-qualified-name="Rev.elate.Leg.acy.Base" data-source-line="4" id="ent0008">
+      <path d="M148,104 L180.938,104 A3.75,3.75 0 0 1 183.438,106.5 L190.438,124 L469,124 A2.5,2.5 0 0 1 471.5,126.5 L471.5,215.5 A2.5,2.5 0 0 1 469,218 L148,218 A2.5,2.5 0 0 1 145.5,215.5 L145.5,106.5 A2.5,2.5 0 0 1 148,104" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="145.5" x2="190.438" y1="124" y2="124"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.938" x="149.5" y="116.889">Base</text>
+    </g>
+    <!--cluster Biz-->
+    <g class="cluster" data-qualified-name="Rev.elate.Leg.acy.Base.Biz" data-source-line="3" id="ent0002">
+      <path d="M156,129 L176.513,129 A3.75,3.75 0 0 1 179.013,131.5 L186.013,149 L461,149 A2.5,2.5 0 0 1 463.5,151.5 L463.5,207.5 A2.5,2.5 0 0 1 461,210 L156,210 A2.5,2.5 0 0 1 153.5,207.5 L153.5,131.5 A2.5,2.5 0 0 1 156,129" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="153.5" x2="186.013" y1="149" y2="149"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.512" x="157.5" y="141.889">Biz</text>
+    </g>
+    <!--cluster Sungard-->
+    <g class="cluster" data-qualified-name="Rev.elate.Sungard" data-source-line="11" id="ent0013">
+      <path d="M248,242 L301.938,242 A3.75,3.75 0 0 1 304.438,244.5 L311.438,262 L351,262 A2.5,2.5 0 0 1 353.5,264.5 L353.5,353.5 A2.5,2.5 0 0 1 351,356 L248,356 A2.5,2.5 0 0 1 245.5,353.5 L245.5,244.5 A2.5,2.5 0 0 1 248,242" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="245.5" x2="311.438" y1="262" y2="262"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="249.5" y="254.889">Sungard</text>
+    </g>
+    <!--cluster Biz-->
+    <g class="cluster" data-qualified-name="Rev.elate.Sungard.Biz" data-source-line="10" id="ent0011">
+      <path d="M256,267 L276.513,267 A3.75,3.75 0 0 1 279.013,269.5 L286.013,287 L343,287 A2.5,2.5 0 0 1 345.5,289.5 L345.5,345.5 A2.5,2.5 0 0 1 343,348 L256,348 A2.5,2.5 0 0 1 253.5,345.5 L253.5,269.5 A2.5,2.5 0 0 1 256,267" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="253.5" x2="286.013" y1="287" y2="287"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.512" x="257.5" y="279.889">Biz</text>
+    </g>
+    <!--class BaseClass-->
+    <g class="entity" data-qualified-name="BaseClass" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.025" x="6" y="154"/>
+      <ellipse cx="21" cy="170" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="175">C</text>
+      <text fill="#000" font-size="14" textLength="67.025" x="35" y="173.889">BaseClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="104.025" y1="186" y2="186"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="104.025" y1="194" y2="194"/>
+    </g>
+    <!--class BaseClass-->
+    <g class="entity" data-qualified-name="Rev.elate.Leg.acy.Base.Biz.BaseClass" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.025" x="356" y="154"/>
+      <ellipse cx="371" cy="170" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="366" y="175">C</text>
+      <text fill="#000" font-size="14" textLength="67.025" x="385" y="173.889">BaseClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="357" x2="454.025" y1="186" y2="186"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="357" x2="454.025" y1="194" y2="194"/>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="Rev.elate.Leg.acy.Base.Biz.Person" data-source-line="5" id="ent0009">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.363" x="261.5" y="154"/>
+      <ellipse cx="276.5" cy="170" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="271.5" y="175">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="290.5" y="173.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="262.5" x2="336.863" y1="186" y2="186"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="262.5" x2="336.863" y1="194" y2="194"/>
+    </g>
+    <!--class Meeting-->
+    <g class="entity" data-qualified-name="Rev.elate.Leg.acy.Base.Biz.Meeting" data-source-line="6" id="ent0010">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.788" x="161.5" y="154"/>
+      <ellipse cx="176.5" cy="170" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="171.5" y="175">C</text>
+      <text fill="#000" font-size="14" textLength="49.788" x="190.5" y="173.889">Meeting</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="162.5" x2="242.288" y1="186" y2="186"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="162.5" x2="242.288" y1="194" y2="194"/>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="Rev.elate.Sungard.Biz.Person" data-source-line="11" id="ent0012">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.363" x="261.5" y="292"/>
+      <ellipse cx="276.5" cy="308" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="271.5" y="313">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="290.5" y="311.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="262.5" x2="336.863" y1="324" y2="324"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="262.5" x2="336.863" y1="332" y2="332"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0012" data-link-type="extension" id="lnk14">
+      <polygon fill="none" points="299.5,202.071,293.5,220.071,305.5,220.071,299.5,202.071" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M299.5,220.071 C299.5,245.079 299.5,266.763 299.5,291.816" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

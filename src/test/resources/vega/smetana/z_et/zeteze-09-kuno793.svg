@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:210px;height:105px;background:#ADD8E6;" version="1.1" viewBox="0 0 210 105" width="210px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#ADD8E6" height="105" style="stroke:none;" width="210" x="0" y="0"/>
+    <!--cluster 3-->
+    <g class="cluster" data-qualified-name="3" data-source-line="6" id="ent0003">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:1;" width="64" x="130" y="4"/>
+      <rect fill="none" height="10" style="stroke:#F00;stroke-width:1;" width="15" x="174" y="9"/>
+      <rect fill="none" height="2" style="stroke:#F00;stroke-width:1;" width="4" x="172" y="11"/>
+      <rect fill="none" height="2" style="stroke:#F00;stroke-width:1;" width="4" x="172" y="15"/>
+      <text fill="#000" font-size="14" font-weight="700" x="158.106" y="27.889">3</text>
+    </g>
+    <!--entity 1-->
+    <g class="entity" data-qualified-name="1" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:0.5;" width="47.788" x="6" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#F00;stroke-width:0.5;" width="15" x="33.788" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="31.788" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="31.788" y="40"/>
+      <text fill="#000" font-size="14" x="21" y="59.889">1</text>
+    </g>
+    <!--entity Comp2-->
+    <g class="entity" data-qualified-name="Comp2" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:0.5;" width="47.788" x="72" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#F00;stroke-width:0.5;" width="15" x="99.788" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="97.788" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="97.788" y="40"/>
+      <text fill="#000" font-size="14" x="87" y="59.889">2</text>
+    </g>
+    <!--entity Comp4-->
+    <g class="entity" data-qualified-name="3.Comp4" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:0.5;" width="47.788" x="138" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#F00;stroke-width:0.5;" width="15" x="165.788" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="163.788" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#F00;stroke-width:0.5;" width="4" x="163.788" y="40"/>
+      <text fill="#000" font-size="14" x="153" y="59.889">4</text>
+    </g>
+  </g>
+</svg>

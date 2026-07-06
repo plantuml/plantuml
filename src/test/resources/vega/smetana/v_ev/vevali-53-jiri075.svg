@@ -1,0 +1,323 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="411px" preserveAspectRatio="none" style="width:1752px;height:411px;background:#FFFFFF;" version="1.1" viewBox="0 0 1752 411" width="1752px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Application-->
+    <g class="cluster" data-qualified-name="Application" data-source-line="8" id="ent0001">
+      <path d="M809.5,4 L879.1,4 A3.75,3.75 0 0 1 881.6,6.5 L888.6,24 L1046.5,24 A2.5,2.5 0 0 1 1049,26.5 L1049,92.5 A2.5,2.5 0 0 1 1046.5,95 L809.5,95 A2.5,2.5 0 0 1 807,92.5 L807,6.5 A2.5,2.5 0 0 1 809.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="807" x2="888.6" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="68.6" x="811" y="16.889">Application</text>
+    </g>
+    <!--cluster Middleware-->
+    <g class="cluster" data-qualified-name="Middleware" data-source-line="15" id="ent0004">
+      <path d="M565.5,103 L638.163,103 A3.75,3.75 0 0 1 640.663,105.5 L647.663,123 L1412.5,123 A2.5,2.5 0 0 1 1415,125.5 L1415,191.5 A2.5,2.5 0 0 1 1412.5,194 L565.5,194 A2.5,2.5 0 0 1 563,191.5 L563,105.5 A2.5,2.5 0 0 1 565.5,103" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="563" x2="647.663" y1="123" y2="123"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="71.663" x="567" y="115.889">Middleware</text>
+    </g>
+    <!--cluster Drivers-->
+    <g class="cluster" data-qualified-name="Drivers" data-source-line="27" id="ent0012">
+      <path d="M16.5,202 L61.863,202 A3.75,3.75 0 0 1 64.363,204.5 L71.363,222 L1717.5,222 A2.5,2.5 0 0 1 1720,224.5 L1720,384.5 A2.5,2.5 0 0 1 1717.5,387 L16.5,387 A2.5,2.5 0 0 1 14,384.5 L14,204.5 A2.5,2.5 0 0 1 16.5,202" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="71.363" y1="222" y2="222"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="44.363" x="18" y="214.889">Drivers</text>
+    </g>
+    <!--entity APP1-->
+    <g class="entity" data-qualified-name="Application.APP1" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="937" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1020.513" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1018.513" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1018.513" y="40"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="953" y="59.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="35.875" x="965.819" y="73.889">APP1</text>
+    </g>
+    <!--entity MAIN-->
+    <g class="entity" data-qualified-name="Application.MAIN" data-source-line="10" id="ent0003">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="815" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="898.513" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="896.513" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="896.513" y="40"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="831" y="59.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="35" x="844.256" y="73.889">MAIN</text>
+    </g>
+    <!--entity MID1-->
+    <g class="entity" data-qualified-name="Middleware.MID1" data-source-line="16" id="ent0005">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="1181" y="128"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1264.513" y="133"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1262.513" y="135"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1262.513" y="139"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="1197" y="158.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="33.425" x="1211.044" y="172.889">MID1</text>
+    </g>
+    <!--entity MID2-->
+    <g class="entity" data-qualified-name="Middleware.MID2" data-source-line="17" id="ent0006">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="1059" y="128"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1142.513" y="133"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1140.513" y="135"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1140.513" y="139"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="1075" y="158.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="33.425" x="1089.044" y="172.889">MID2</text>
+    </g>
+    <!--entity MID3-->
+    <g class="entity" data-qualified-name="Middleware.MID3" data-source-line="18" id="ent0007">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="937" y="128"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1020.513" y="133"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1018.513" y="135"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1018.513" y="139"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="953" y="158.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="33.425" x="967.044" y="172.889">MID3</text>
+    </g>
+    <!--entity MID4-->
+    <g class="entity" data-qualified-name="Middleware.MID4" data-source-line="19" id="ent0008">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="815" y="128"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="898.513" y="133"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="896.513" y="135"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="896.513" y="139"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="831" y="158.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="33.425" x="845.044" y="172.889">MID4</text>
+    </g>
+    <!--entity MID5-->
+    <g class="entity" data-qualified-name="Middleware.MID5" data-source-line="20" id="ent0009">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="1303" y="128"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1386.513" y="133"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1384.513" y="135"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1384.513" y="139"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="1319" y="158.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="33.425" x="1333.044" y="172.889">MID5</text>
+    </g>
+    <!--entity MID6-->
+    <g class="entity" data-qualified-name="Middleware.MID6" data-source-line="21" id="ent0010">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="571" y="128"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="654.513" y="133"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="652.513" y="135"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="652.513" y="139"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="587" y="158.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="33.425" x="601.044" y="172.889">MID6</text>
+    </g>
+    <!--entity MID7-->
+    <g class="entity" data-qualified-name="Middleware.MID7" data-source-line="22" id="ent0011">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="693" y="128"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="776.513" y="133"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="774.513" y="135"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="774.513" y="139"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="709" y="158.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="33.425" x="723.044" y="172.889">MID7</text>
+    </g>
+    <!--entity EDRV1-->
+    <g class="entity" data-qualified-name="Drivers.EDRV1" data-source-line="28" id="ent0013">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="632" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="715.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="713.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="713.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="648" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="46.812" x="655.35" y="271.889">EDRV1</text>
+    </g>
+    <!--entity EDRV2-->
+    <g class="entity" data-qualified-name="Drivers.EDRV2" data-source-line="29" id="ent0014">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="510" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="593.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="591.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="591.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="526" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="46.812" x="533.35" y="271.889">EDRV2</text>
+    </g>
+    <!--entity EDRV3-->
+    <g class="entity" data-qualified-name="Drivers.EDRV3" data-source-line="30" id="ent0015">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="266" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="349.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="347.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="347.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="282" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="46.812" x="289.35" y="271.889">EDRV3</text>
+    </g>
+    <!--entity EDRV4-->
+    <g class="entity" data-qualified-name="Drivers.EDRV4" data-source-line="31" id="ent0016">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="388" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="471.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="469.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="469.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="404" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="46.812" x="411.35" y="271.889">EDRV4</text>
+    </g>
+    <!--entity DRV1-->
+    <g class="entity" data-qualified-name="Drivers.DRV1" data-source-line="33" id="ent0017">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="998" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1081.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1079.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1079.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="1014" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="1026.031" y="271.889">DRV1</text>
+    </g>
+    <!--entity DRV2-->
+    <g class="entity" data-qualified-name="Drivers.DRV2" data-source-line="34" id="ent0018">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="1364" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1447.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1445.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1445.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="1380" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="1392.031" y="271.889">DRV2</text>
+    </g>
+    <!--entity DRV3-->
+    <g class="entity" data-qualified-name="Drivers.DRV3" data-source-line="35" id="ent0019">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="22" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="105.512" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="103.512" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="103.512" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="38" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="50.031" y="271.889">DRV3</text>
+    </g>
+    <!--entity DRV4-->
+    <g class="entity" data-qualified-name="Drivers.DRV4" data-source-line="36" id="ent0020">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="754" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="837.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="835.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="835.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="770" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="782.031" y="271.889">DRV4</text>
+    </g>
+    <!--entity DRV5-->
+    <g class="entity" data-qualified-name="Drivers.DRV5" data-source-line="37" id="ent0021">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="1120" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1203.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1201.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1201.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="1136" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="1148.031" y="271.889">DRV5</text>
+    </g>
+    <!--entity DRV6-->
+    <g class="entity" data-qualified-name="Drivers.DRV6" data-source-line="38" id="ent0022">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="144" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="227.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="225.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="225.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="160" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="172.031" y="271.889">DRV6</text>
+    </g>
+    <!--entity DRV7-->
+    <g class="entity" data-qualified-name="Drivers.DRV7" data-source-line="39" id="ent0023">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="1242" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1325.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1323.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1323.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="1258" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="1270.031" y="271.889">DRV7</text>
+    </g>
+    <!--entity DRV8-->
+    <g class="entity" data-qualified-name="Drivers.DRV8" data-source-line="40" id="ent0024">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="1608" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1691.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1689.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1689.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="1624" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="1636.031" y="271.889">DRV8</text>
+    </g>
+    <!--entity DRV9-->
+    <g class="entity" data-qualified-name="Drivers.DRV9" data-source-line="41" id="ent0025">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="1486" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1569.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1567.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1567.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="1502" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="1514.031" y="271.889">DRV9</text>
+    </g>
+    <!--entity DRV10-->
+    <g class="entity" data-qualified-name="Drivers.DRV10" data-source-line="42" id="ent0026">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="510" y="321"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="593.513" y="326"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="591.513" y="328"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="591.513" y="332"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="526" y="351.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="45.238" x="534.138" y="365.889">DRV10</text>
+    </g>
+    <!--entity DRV11-->
+    <g class="entity" data-qualified-name="Drivers.DRV11" data-source-line="43" id="ent0027">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="876" y="227"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="959.513" y="232"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="957.513" y="234"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="957.513" y="238"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="892" y="257.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="45.238" x="900.138" y="271.889">DRV11</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="association" id="lnk28">
+      <path d="M919.422,58 C925.22,58 931.018,58 936.816,58" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="association" id="lnk29">
+      <path d="M1041.008,64.765 C1078.957,70.539 1130.75,81.753 1172,103 C1184.347,109.36 1196.267,118.727 1206.244,127.824" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="association" id="lnk30">
+      <path d="M1029.09,87.128 C1036.141,92.297 1043.348,97.729 1050,103 C1059.896,110.842 1070.373,119.721 1079.8,127.938" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="association" id="lnk31">
+      <path d="M989,87.056 C989,99.814 989,114.881 989,127.671" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0008" data-link-type="association" id="lnk32">
+      <path d="M948.91,87.128 C941.859,92.297 934.652,97.729 928,103 C918.104,110.842 907.627,119.721 898.2,127.938" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0009" data-link-type="association" id="lnk33">
+      <path d="M1041.171,62.954 C1116.108,69.234 1250.037,82.875 1294,103 C1306.884,108.898 1319.096,118.392 1329.162,127.726" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0010" data-link-type="association" id="lnk34">
+      <path d="M947.588,87.065 C941.251,90.273 934.612,93.077 928,95 C875.906,110.147 734.5,83.177 684,103 C670.418,108.331 657.805,118.078 647.614,127.773" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0011" data-link-type="association" id="lnk35">
+      <path d="M947.189,87.041 C940.964,90.207 934.463,93.006 928,95 C876.077,111.023 856.25,82.321 806,103 C792.637,108.499 780.153,118.153 770.003,127.728" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0018" data-link-type="association" id="lnk36">
+      <path d="M1275.615,186.005 C1281.613,189.09 1287.838,191.877 1294,194 C1319.852,202.906 1330.065,190.779 1355,202 C1368.049,207.872 1380.384,217.479 1390.502,226.912" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0023" data-link-type="association" id="lnk37">
+      <path d="M1250.644,186.056 C1258.666,198.814 1268.141,213.881 1276.185,226.671" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0024" data-link-type="association" id="lnk38">
+      <path d="M1274.401,186.105 C1280.739,189.307 1287.381,192.099 1294,194 C1326.583,203.358 1567.403,189.716 1599,202 C1612.599,207.287 1625.216,217.025 1635.405,226.726" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0025" data-link-type="association" id="lnk39">
+      <path d="M1274.771,186.171 C1281.002,189.317 1287.516,192.076 1294,194 C1333.024,205.578 1439.191,186.92 1477,202 C1490.552,207.405 1503.161,217.166 1513.355,226.851" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0021" data-link-type="association" id="lnk40">
+      <path d="M1128.644,186.056 C1136.666,198.814 1146.141,213.881 1154.185,226.671" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0013" data-link-type="association" id="lnk41">
+      <path d="M947.229,186.171 C940.998,189.317 934.484,192.076 928,194 C888.976,205.578 782.809,186.92 745,202 C731.448,207.405 718.839,217.166 708.645,226.851" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0014" data-link-type="association" id="lnk42">
+      <path d="M947.599,186.105 C941.261,189.307 934.619,192.099 928,194 C895.417,203.358 654.597,189.716 623,202 C609.401,207.287 596.784,217.025 586.595,226.726" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0016" data-link-type="association" id="lnk43">
+      <path d="M947.612,186.15 C941.272,189.346 934.626,192.124 928,194 C882.342,206.929 545.292,184.972 501,202 C487.25,207.286 474.518,217.152 464.281,226.952" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0017" data-link-type="association" id="lnk44">
+      <path d="M1006.644,186.056 C1014.666,198.814 1024.141,213.881 1032.185,226.671" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0020" data-link-type="association" id="lnk45">
+      <path d="M946.385,186.005 C940.387,189.09 934.162,191.877 928,194 C902.148,202.906 891.935,190.779 867,202 C853.951,207.872 841.616,217.479 831.498,226.912" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0021" data-link-type="association" id="lnk46">
+      <path d="M1031.615,186.005 C1037.613,189.09 1043.838,191.877 1050,194 C1075.852,202.906 1086.065,190.779 1111,202 C1124.049,207.872 1136.384,217.479 1146.502,226.912" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0027" data-link-type="association" id="lnk47">
+      <path d="M971.356,186.056 C963.334,198.814 953.859,213.881 945.815,226.671" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0015" data-link-type="association" id="lnk48">
+      <path d="M825.612,186.15 C819.272,189.346 812.626,192.124 806,194 C760.342,206.929 423.292,184.972 379,202 C365.25,207.286 352.518,217.152 342.281,226.952" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0026" data-link-type="association" id="lnk49">
+      <path d="M1407.238,160.505 C1503.401,165.656 1700.536,178.928 1721,202 C1745.478,229.597 1746.355,258.206 1721,285 C1682.476,325.71 835.403,344.001 614.367,348.09" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0019" data-link-type="association" id="lnk50">
+      <path d="M570.72,158.679 C461.403,160.747 212.383,169.043 135,202 C121.705,207.662 109.234,217.348 99.076,226.902" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0022" data-link-type="association" id="lnk51">
+      <path d="M703.612,186.15 C697.272,189.346 690.626,192.124 684,194 C638.342,206.929 301.292,184.972 257,202 C243.25,207.286 230.518,217.152 220.281,226.952" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0026" data-link-type="association" id="lnk52">
+      <path d="M646.733,285.103 C631.737,296.411 614.474,309.429 599.459,320.752" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0026" data-link-type="association" id="lnk53">
+      <path d="M562,285.103 C562,296.411 562,309.429 562,320.752" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0026" data-link-type="association" id="lnk54">
+      <path d="M477.267,285.103 C492.263,296.411 509.526,309.429 524.541,320.752" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0026" data-link-type="association" id="lnk55">
+      <path d="M370.103,281.306 C373.101,282.583 376.082,283.823 379,285 C422.544,302.563 472.972,319.989 509.851,332.213" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

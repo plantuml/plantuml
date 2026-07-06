@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="231px" preserveAspectRatio="none" style="width:164px;height:231px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 231" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster App-->
+    <g class="cluster" data-qualified-name="App" data-source-line="1" id="ent0002">
+      <path d="M16.5,60 L42.438,60 A3.75,3.75 0 0 1 44.938,62.5 L51.938,80 L153.5,80 A2.5,2.5 0 0 1 156,82.5 L156,204.5 A2.5,2.5 0 0 1 153.5,207 L16.5,207 A2.5,2.5 0 0 1 14,204.5 L14,62.5 A2.5,2.5 0 0 1 16.5,60" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="51.938" y1="80" y2="80"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="18" y="72.889">App</text>
+    </g>
+    <!--cluster Http-->
+    <g class="cluster" data-qualified-name="App.Http" data-source-line="1" id="ent0003">
+      <path d="M24.5,85 L51.137,85 A3.75,3.75 0 0 1 53.637,87.5 L60.637,105 L145.5,105 A2.5,2.5 0 0 1 148,107.5 L148,196.5 A2.5,2.5 0 0 1 145.5,199 L24.5,199 A2.5,2.5 0 0 1 22,196.5 L22,87.5 A2.5,2.5 0 0 1 24.5,85" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="60.637" y1="105" y2="105"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.637" x="26" y="97.889">Http</text>
+    </g>
+    <!--cluster Controllers-->
+    <g class="cluster" data-qualified-name="App.Http.Controllers" data-source-line="1" id="ent0004">
+      <path d="M32.5,110 L101.225,110 A3.75,3.75 0 0 1 103.725,112.5 L110.725,130 L137.5,130 A2.5,2.5 0 0 1 140,132.5 L140,188.5 A2.5,2.5 0 0 1 137.5,191 L32.5,191 A2.5,2.5 0 0 1 30,188.5 L30,112.5 A2.5,2.5 0 0 1 32.5,110" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="110.725" y1="130" y2="130"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="67.725" x="34" y="122.889">Controllers</text>
+    </g>
+    <!--class CustomController-->
+    <g class="entity" data-qualified-name="CustomController" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140.938" x="14.5" y="4"/>
+      <ellipse cx="29.5" cy="20" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="24.5" y="25">C</text>
+      <text fill="#000" font-size="14" textLength="108.938" x="43.5" y="23.889">CustomController</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15.5" x2="154.438" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="15.5" x2="154.438" y1="44" y2="44"/>
+    </g>
+    <!--class Controller-->
+    <g class="entity" data-qualified-name="App.Http.Controllers.Controller" data-source-line="1" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.725" x="38.5" y="135"/>
+      <ellipse cx="53.5" cy="151" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="48.5" y="156">C</text>
+      <text fill="#000" font-size="14" textLength="60.725" x="67.5" y="154.889">Controller</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="130.225" y1="167" y2="167"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="130.225" y1="175" y2="175"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="extension" id="lnk6">
+      <polygon fill="none" points="85,134.702,91,116.702,79,116.702,85,134.702" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M85,52.063 C85,75.398 85,93.283 85,116.702" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

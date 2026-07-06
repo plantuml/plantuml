@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="165px" preserveAspectRatio="none" style="width:202px;height:165px;background:#FFFFFF;" version="1.1" viewBox="0 0 202 165" width="202px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Languages-->
+    <g class="cluster" data-qualified-name="Languages" data-source-line="25" id="ent0001">
+      <rect fill="none" height="137" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="180" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="69.3" x="69.35" y="16.889">Languages</text>
+    </g>
+    <!--entity C++-->
+    <g class="entity" data-qualified-name="Languages.C.." data-source-line="28" id="ent0002">
+      <rect fill="#FFD700" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.6" x="30.5" y="29"/>
+      <text fill="#000" font-size="14" textLength="26.6" x="40.5" y="49.889">C++</text>
+    </g>
+    <!--entity Java-->
+    <g class="entity" data-qualified-name="Languages.Java" data-source-line="30" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.575" x="96" y="29"/>
+      <text fill="#000" font-size="14" textLength="29.575" x="106" y="49.889">Java</text>
+    </g>
+    <!--entity Python-->
+    <g class="entity" data-qualified-name="Languages.Python" data-source-line="28" id="ent0004">
+      <rect fill="#FFD700" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.575" x="22" y="99"/>
+      <text fill="#000" font-size="14" textLength="43.575" x="32" y="119.889">Python</text>
+    </g>
+    <!--entity PlantUML-->
+    <g class="entity" data-qualified-name="Languages.PlantUML" data-source-line="30" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.513" x="104" y="99"/>
+      <text fill="#000" font-size="14" textLength="61.513" x="114" y="119.889">PlantUML</text>
+    </g>
+  </g>
+</svg>

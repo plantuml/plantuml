@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="372px" preserveAspectRatio="none" style="width:130px;height:372px;background:#FFFFFF;" version="1.1" viewBox="0 0 130 372" width="130px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0001">
+      <ellipse cx="36" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="State1" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="6" y="146"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="66.425" y1="170" y2="170"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="16" y="161.889">State1</text>
+    </g>
+    <g class="entity" data-qualified-name="State2" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="6" y="306"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="66.425" y1="330" y2="330"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="16" y="321.889">State2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="36,145.893,40,136.893,36,140.893,32,136.893,36,145.893" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M36,36.378 C36,59.878 36,109.223 36,140.893" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="68.806" y="65.111">hello</text>
+      <path d="M41,74 L41,123 L124,123 L124,84 L114,74 L41,74" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M114,74 L114,84 L124,84 L114,74" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="62.156" x="47" y="89.111">this is a note</text>
+      <text fill="#000" font-size="13" textLength="56.387" x="47" y="102.111">on several</text>
+      <text fill="#000" font-size="13" textLength="26.813" x="47" y="115.111">lines</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="36,305.89,40,296.89,36,300.89,32,296.89,36,305.89" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M36,196.341 C36,226.119 36,271.219 36,300.89" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M41,219 L41,268 L124,268 L124,229 L114,219 L41,219" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M114,219 L114,229 L124,229 L114,219" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="62.156" x="47" y="234.111">this is a note</text>
+      <text fill="#000" font-size="13" textLength="56.387" x="47" y="247.111">on several</text>
+      <text fill="#000" font-size="13" textLength="26.813" x="47" y="260.111">lines</text>
+      <text fill="#000" font-size="13" textLength="34.775" x="65.191" y="284.111">hello2</text>
+    </g>
+  </g>
+</svg>

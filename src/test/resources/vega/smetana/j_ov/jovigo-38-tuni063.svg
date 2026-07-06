@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="81px" preserveAspectRatio="none" style="width:154px;height:81px;background:#FFFFFF;" version="1.1" viewBox="0 0 154 81" width="154px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="6" y="14.5"/>
+      <ellipse cx="21" cy="30.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="35.5">C</text>
+      <text fill="#000" font-size="14" x="35" y="34.389">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="46.5" y2="46.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="54.5" y2="54.5"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="3" id="ent0003">
+      <path d="M65,12 L65,34.5 L47.008,38.5 L65,42.5 L65,65 A0,0 0 0 0 65,65 L138.488,65 A0,0 0 0 0 138.488,65 L138.488,22 L128.488,12 L65,12 A0,0 0 0 0 65,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M128.488,12 L128.488,22 L138.488,22 L128.488,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" x="71" y="29.111">A</text>
+      <text fill="#000" font-size="13" x="110.569" y="29.111">B</text>
+      <text fill="#000" font-size="13" x="71" y="42.111"> </text>
+      <text fill="#000" font-size="13" text-decoration="line-through" x="71" y="42.111">-</text>
+      <text fill="#000" font-size="13" textLength="17.225" x="75.306" y="42.111">----</text>
+      <text fill="#000" font-size="13" textLength="12.919" x="110.569" y="42.111">---</text>
+      <text fill="#000" font-size="13" textLength="39.569" x="71" y="55.111">P(C|D)</text>
+      <text fill="#000" font-size="13" x="110.569" y="55.111">E</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="71" x2="123.488" y1="19" y2="19"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="71" x2="123.488" y1="32" y2="32"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="71" x2="123.488" y1="45" y2="45"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="71" x2="123.488" y1="58" y2="58"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="71" x2="71" y1="19" y2="58"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="110.569" x2="110.569" y1="19" y2="58"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="123.488" x2="123.488" y1="19" y2="58"/>
+    </g>
+  </g>
+</svg>

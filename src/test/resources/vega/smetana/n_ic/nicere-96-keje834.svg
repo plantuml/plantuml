@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="95px" preserveAspectRatio="none" style="width:452px;height:95px;background:#FFFFFF;" version="1.1" viewBox="0 0 452 95" width="452px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster action-->
+    <g class="cluster" data-qualified-name="action" data-source-line="1" id="ent0001">
+      <polygon fill="none" points="14,4,189,4,199,37.5,189,71,14,71" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="87.819" y="16.889">action</text>
+    </g>
+    <!--cluster process-->
+    <g class="cluster" data-qualified-name="process" data-source-line="5" id="ent0004">
+      <polygon fill="none" points="207,4,426,4,436,37.5,426,71,207,71,217,37.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49" x="297" y="16.889">process</text>
+    </g>
+    <!--entity action1-->
+    <g class="entity" data-qualified-name="action.action1" data-source-line="2" id="ent0002">
+      <polygon fill="#F1F1F1" points="115.5,29,180.65,29,190.65,46,180.65,63,115.5,63" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="125.5" y="49.889">action1</text>
+    </g>
+    <!--entity action2-->
+    <g class="entity" data-qualified-name="action.action2" data-source-line="3" id="ent0003">
+      <polygon fill="#F1F1F1" points="22.5,29,87.65,29,97.65,46,87.65,63,22.5,63" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="32.5" y="49.889">action2</text>
+    </g>
+    <!--entity process1-->
+    <g class="entity" data-qualified-name="process.process1" data-source-line="6" id="ent0005">
+      <polygon fill="#F1F1F1" points="330.5,29,417.288,29,427.288,46,417.288,63,330.5,63,340.5,46" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="350.5" y="49.889">process1</text>
+    </g>
+    <!--entity process2-->
+    <g class="entity" data-qualified-name="process.process2" data-source-line="7" id="ent0006">
+      <polygon fill="#F1F1F1" points="215.5,29,302.288,29,312.288,46,302.288,63,215.5,63,225.5,46" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="235.5" y="49.889">process2</text>
+    </g>
+  </g>
+</svg>

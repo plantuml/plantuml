@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="286px" preserveAspectRatio="none" style="width:504px;height:286px;background:#FFFFFF;" version="1.1" viewBox="0 0 504 286" width="504px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity User-->
+    <g class="entity" data-qualified-name="User" data-source-line="7" id="ent0001">
+      <ellipse cx="147.363" cy="34.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#000;stroke-width:0.5;"/>
+      <path d="M147.363,42.5 L147.363,69.5 M134.363,50.5 L160.363,50.5 M147.363,69.5 L134.363,84.5 M147.363,69.5 L160.363,84.5" fill="none" style="stroke:#000;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Courier" font-size="14" textLength="29.575" x="132.575" y="96.889">User</text>
+      <text fill="#000" font-family="Courier" font-size="14" font-style="italic" textLength="60.725" x="117" y="22.889">«Human»</text>
+    </g>
+    <!--entity Database-->
+    <g class="entity" data-qualified-name="Database" data-source-line="8" id="ent0002">
+      <ellipse cx="418.382" cy="211.399" fill="#8FBC8F" rx="45.382" ry="12.899" style="stroke:#2F4F4F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="59.938" x="388.413" y="214.899">Database</text>
+    </g>
+    <!--entity Solr-->
+    <g class="entity" data-qualified-name="Solr" data-source-line="9" id="ent0003">
+      <ellipse cx="467.633" cy="256.899" fill="#8FBC8F" rx="20.633" ry="12.899" style="stroke:#2F4F4F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="455.165" y="260.399">Solr</text>
+    </g>
+    <!--entity Celery-->
+    <g class="entity" data-qualified-name="Celery" data-source-line="10" id="ent0004">
+      <ellipse cx="292.647" cy="256.899" fill="#8FBC8F" rx="31.647" ry="12.899" style="stroke:#2F4F4F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="40.512" x="272.39" y="260.399">Celery</text>
+    </g>
+    <!--entity Redis-->
+    <g class="entity" data-qualified-name="Redis" data-source-line="11" id="ent0005">
+      <ellipse cx="66.367" cy="256.899" fill="#8FBC8F" rx="28.367" ry="12.899" style="stroke:#2F4F4F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="35.875" x="48.43" y="260.399">Redis</text>
+    </g>
+    <!--entity Eventlet-->
+    <g class="entity" data-qualified-name="Eventlet" data-source-line="12" id="ent0006">
+      <ellipse cx="67.661" cy="211.732" fill="#8FBC8F" rx="61.661" ry="14.732" style="stroke:#2F4F4F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="94.15" x="20.586" y="215.232">Python Eventlet</text>
+    </g>
+    <!--entity App-->
+    <g class="entity" data-qualified-name="App" data-source-line="13" id="ent0007">
+      <ellipse cx="249.508" cy="165.899" fill="#8FBC8F" rx="51.508" ry="12.899" style="stroke:#2F4F4F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="68.6" x="215.208" y="169.399">Application</text>
+    </g>
+    <!--entity Hay-->
+    <g class="entity" data-qualified-name="Hay" data-source-line="14" id="ent0008">
+      <ellipse cx="385.712" cy="256.899" fill="#8FBC8F" rx="43.712" ry="12.899" style="stroke:#2F4F4F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="356.924" y="260.399">Haystack</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="association" id="lnk9">
+      <path d="M179.214,90.58 C199.215,111.757 223.856,137.848 238.015,152.839" fill="none" style="stroke:#808000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="34.044" x="221.5" y="130.111">HTTP</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="association" id="lnk10">
+      <path d="M297.893,179.005 C319.518,184.419 345.308,190.946 368.5,197 C370.327,197.477 372.191,197.966 374.073,198.463" fill="none" style="stroke:#808000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="113.506" x="380" y="273.611">Presumably Cached</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk11">
+      <polygon fill="#808000" points="453.924,243.948,449.849,234.981,450.185,240.628,444.538,240.964,453.924,243.948" style="stroke:#808000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M432.149,224.617 C438.945,230.651 443.399,234.604 450.185,240.628" fill="none" style="stroke:#808000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="87.425" x="393" y="273.611">Message Dump</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0003" data-link-type="association" id="lnk12">
+      <path d="M429.063,257 C434.968,257 440.874,257 446.78,257" fill="none" style="stroke:#808000;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="association" id="lnk13">
+      <path d="M272.76,179.079 C281.067,184.005 290.175,190.158 297.5,197 C309.129,207.863 306.151,215.963 318.5,226 C327.599,233.396 338.811,239.35 349.442,243.944" fill="none" style="stroke:#808000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="41.194" x="320.5" y="215.111">Search</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="dependency" id="lnk14">
+      <polygon fill="#808000" points="69.573,196.936,75.063,188.758,70.434,192.01,67.182,187.381,69.573,196.936" style="stroke:#808000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M115.797,88.281 C107.976,97.292 100.214,107.533 94.5,118 C80.312,143.99 73.697,173.335 70.434,192.01" fill="none" style="stroke:#808000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="106.356" x="96.5" y="130.111">jQuery Long Polling</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0005" data-link-type="association" id="lnk15">
+      <path d="M67.184,226.264 C67.053,231.939 66.903,238.456 66.777,243.941" fill="none" style="stroke:#808000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="94.088" x="389.5" y="273.611">PubSubHubHub</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="dependency" id="lnk16">
+      <polygon fill="#808000" points="95.075,244.576,104.92,244.842,99.697,242.669,101.87,237.446,95.075,244.576" style="stroke:#808000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M227.888,179.088 C205.533,191.423 169.478,210.855 137.5,226 C123.713,232.53 112.748,237.286 99.697,242.669" fill="none" style="stroke:#808000;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="88.969" x="195.5" y="215.111">Add Celery Task</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk17">
+      <polygon fill="#808000" points="95.123,257,104.123,261,100.123,257,104.123,253,95.123,257" style="stroke:#808000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M260.843,257 C216.757,257 142.526,257 100.123,257" fill="none" style="stroke:#808000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="144.544" x="106" y="249.111">Update stats/PubSHH info</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0004" data-link-type="dependency" id="lnk18">
+      <polygon fill="#808000" points="260.75,258.36,251.602,254.712,255.754,258.554,251.912,262.706,260.75,258.36" style="stroke:#808000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M95.205,258.281 C111.391,258.94 131.986,259.672 150.333,260 C174.922,260.44 181.078,260.425 205.667,260 C223.916,259.685 239.317,259.191 255.754,258.554" fill="none" style="stroke:#808000;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

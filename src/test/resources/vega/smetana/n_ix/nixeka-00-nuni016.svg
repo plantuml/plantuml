@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="64px" preserveAspectRatio="none" style="width:262px;height:64px;background:#FFFFFF;" version="1.1" viewBox="0 0 262 64" width="262px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity <&person>ca marche-->
+    <g class="entity" data-qualified-name="..person.ca marche" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.758" x="6" y="13"/>
+      <path d="M21.667,24.167 C20.383,24.167 19.333,25.473 19.333,27.083 C19.333,28.693 20.383,30 21.667,30 C22.95,30 24,28.693 24,27.083 C24,25.473 22.95,24.167 21.667,24.167 M19.228,30 C17.992,30.058 17,31.073 17,32.333 L17,33.5 L26.333,33.5 L26.333,32.333 C26.333,31.073 25.353,30.058 24.105,30 C23.475,30.712 22.612,31.167 21.667,31.167 C20.722,31.167 19.858,30.712 19.228,30" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="61.425" x="27.333" y="33.889">ca marche</text>
+    </g>
+    <!--entity ==<&person>ca marche pas-->
+    <g class="entity" data-qualified-name="....person.ca marche pas" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128.667" x="117" y="12"/>
+      <path d="M133.333,23.333 C131.867,23.333 130.667,24.827 130.667,26.667 C130.667,28.507 131.867,30 133.333,30 C134.8,30 136,28.507 136,26.667 C136,24.827 134.8,23.333 133.333,23.333 M130.547,30 C129.133,30.067 128,31.227 128,32.667 L128,34 L138.667,34 L138.667,32.667 C138.667,31.227 137.547,30.067 136.12,30 C135.4,30.813 134.413,31.333 133.333,31.333 C132.253,31.333 131.267,30.813 130.547,30" fill="#000"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="96" x="139.667" y="34.444">ca marche pas</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,275 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="456px" preserveAspectRatio="none" style="width:788px;height:456px;background:#FFFFFF;" version="1.1" viewBox="0 0 788 456" width="788px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="75.425" x="352.788" y="20.889">Observation</text>
+    </g>
+    <!--class Observation-->
+    <g class="entity" data-qualified-name="Observation" data-source-line="10" id="ent0001">
+      <a href="http://www/Observation" target="_top" title="Observation definition" xlink:actuate="onRequest" xlink:href="http://www/Observation" xlink:show="new" xlink:title="Observation definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="272" rx="2.5" ry="2.5" style="stroke:#808080;stroke-width:0.5;" width="509.437" x="67" y="47"/>
+        <ellipse cx="279.756" cy="63" fill="#F70" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="274.756" y="68">R</text>
+        <text fill="#000" font-size="14" textLength="75.425" x="300.256" y="66.889">Observation</text>
+        <line style="stroke:#808080;stroke-width:0.5;" x1="68" x2="575.437" y1="79" y2="79"/>
+      </a>
+      <a href="http://www/Observation/name" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/name" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="86.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/name" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/name" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="91.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/name" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/name" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="174.3" x="87" y="93.889">name : CodeableConcept 1..1</text>
+      </a>
+      <a href="http://www/Observation/value%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/value%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="100.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/value%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/value%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="105.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/value%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/value%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="483.437" x="87" y="107.889">value[x] : Quantity|CodeableConcept|Attachment|Ratio|Choice|Period|string 0..1</text>
+      </a>
+      <a href="http://www/Observation/interpretation" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/interpretation" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="114.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/interpretation" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/interpretation" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="119.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/interpretation" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/interpretation" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="220.938" x="87" y="121.889">interpretation : CodeableConcept 0..1</text>
+      </a>
+      <a href="http://www/Observation/comments" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/comments" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="128.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/comments" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/comments" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="133.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/comments" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/comments" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="125.825" x="87" y="135.889">comments : string 0..1</text>
+      </a>
+      <a href="http://www/Observation/obtained%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/obtained%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="142.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/obtained%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/obtained%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="147.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/obtained%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/obtained%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="198.1" x="87" y="149.889">obtained[x] : Period|dateTime 0..1</text>
+      </a>
+      <a href="http://www/Observation/issued" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/issued" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="156.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/issued" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/issued" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="161.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/issued" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/issued" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="108.85" x="87" y="163.889">issued : instant 0..1</text>
+      </a>
+      <a href="http://www/Observation/status" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/status" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="170.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/status" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/status" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="175.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/status" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/status" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="94.763" x="87" y="177.889">status : code 1..1</text>
+      </a>
+      <a href="http://www/Observation/reliability" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/reliability" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="184.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/reliability" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/reliability" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="189.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/reliability" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/reliability" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="112.088" x="87" y="191.889">reliability : code 1..1</text>
+      </a>
+      <a href="http://www/Observation/bodySite" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/bodySite" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="198.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/bodySite" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/bodySite" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="203.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/bodySite" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/bodySite" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="193.813" x="87" y="205.889">bodySite : CodeableConcept 0..1</text>
+      </a>
+      <a href="http://www/Observation/method" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/method" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="212.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/method" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/method" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="217.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/method" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/method" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="185.938" x="87" y="219.889">method : CodeableConcept 0..1</text>
+      </a>
+      <a href="http://www/Observation/identifier" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/identifier" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="226.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/identifier" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/identifier" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="231.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/identifier" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/identifier" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="133.7" x="87" y="233.889">identifier : Identifier 0..1</text>
+      </a>
+      <a href="http://www/Observation/subject" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/subject" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="240.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www/Observation/subject" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/subject" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="245.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/subject" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/subject" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="319.9" x="87" y="247.889">subject : Resource(Patient|Group|Device|Animal) 0..1</text>
+      </a>
+      <a href="http://www/Observation/performer" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/performer" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="254.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <a href="http://www/Observation/performer" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/performer" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="259.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/performer" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/performer" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="338.625" x="87" y="261.889">performer : Resource(Provider|Device|Organization) 0..1</text>
+      </a>
+      <a href="http://www/Observation/normalValue%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/normalValue%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="268.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/normalValue%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/normalValue%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="273.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/normalValue%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/normalValue%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="199.675" x="87" y="275.889">normalValue[x] : Range|string 0..1</text>
+      </a>
+      <a href="http://www/Observation/extension" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/extension" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="282.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/extension" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/extension" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="287.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/extension" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/extension" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="146.213" x="87" y="289.889">extension : Extension 0..*</text>
+      </a>
+      <a href="http://www/Observation/text" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/text" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="73" y="296.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/Observation/text" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/text" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="78" cy="301.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/Observation/text" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/Observation/text" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="106.4" x="87" y="303.889">text : Narrative 1..1</text>
+      </a>
+      <a href="http://www/Observation" target="_top" title="Observation definition" xlink:actuate="onRequest" xlink:href="http://www/Observation" xlink:show="new" xlink:title="Observation definition" xlink:type="simple">
+        <line style="stroke:#808080;stroke-width:1;" x1="68" x2="575.437" y1="311" y2="311"/>
+      </a>
+    </g>
+    <!--class ReferenceRange-->
+    <g class="entity" data-qualified-name="ReferenceRange" data-source-line="31" id="ent0002">
+      <a href="http://www/ReferenceRange" target="_top" title="ReferenceRange definition" xlink:actuate="onRequest" xlink:href="http://www/ReferenceRange" xlink:show="new" xlink:title="ReferenceRange definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="68" rx="2.5" ry="2.5" style="stroke:#808080;stroke-width:0.5;" width="238.538" x="6" y="372"/>
+        <text fill="#000" font-size="14" textLength="105.875" x="72.331" y="387.889">ReferenceRange</text>
+        <line style="stroke:#808080;stroke-width:0.5;" x1="7" x2="243.538" y1="396" y2="396"/>
+      </a>
+      <a href="http://www/referenceRange/meaning" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/referenceRange/meaning" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="12" y="403.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/referenceRange/meaning" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/referenceRange/meaning" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="17" cy="408.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/referenceRange/meaning" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/referenceRange/meaning" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="193.025" x="26" y="410.889">meaning : CodeableConcept 0..1</text>
+      </a>
+      <a href="http://www/referenceRange/range%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/referenceRange/range%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="12" y="417.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/referenceRange/range%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/referenceRange/range%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="17" cy="422.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/referenceRange/range%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/referenceRange/range%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="212.538" x="26" y="424.889">range[x] : Quantity|Range|string 1..1</text>
+      </a>
+      <a href="http://www/ReferenceRange" target="_top" title="ReferenceRange definition" xlink:actuate="onRequest" xlink:href="http://www/ReferenceRange" xlink:show="new" xlink:title="ReferenceRange definition" xlink:type="simple">
+        <line style="stroke:#808080;stroke-width:1;" x1="7" x2="243.538" y1="432" y2="432"/>
+      </a>
+    </g>
+    <!--class Component-->
+    <g class="entity" data-qualified-name="Component" data-source-line="38" id="ent0003">
+      <a href="http://www/Component" target="_top" title="Component definition" xlink:actuate="onRequest" xlink:href="http://www/Component" xlink:show="new" xlink:title="Component definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="68" rx="2.5" ry="2.5" style="stroke:#808080;stroke-width:0.5;" width="509.437" x="263" y="372"/>
+        <text fill="#000" font-size="14" textLength="72.363" x="481.537" y="387.889">Component</text>
+        <line style="stroke:#808080;stroke-width:0.5;" x1="264" x2="771.437" y1="396" y2="396"/>
+      </a>
+      <a href="http://www/component/name" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/component/name" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="269" y="403.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/component/name" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/component/name" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="274" cy="408.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/component/name" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/component/name" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="174.3" x="283" y="410.889">name : CodeableConcept 1..1</text>
+      </a>
+      <a href="http://www/component/value%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/component/value%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <rect fill="#F0F8FF" height="10" style="stroke:none;" width="20" x="269" y="417.5"/>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <a href="http://www/component/value%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/component/value%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+          <ellipse cx="274" cy="422.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+        </a>
+      </g>
+      <a href="http://www/component/value%5Bx%5D" target="_top" title="Definition" xlink:actuate="onRequest" xlink:href="http://www/component/value%5Bx%5D" xlink:show="new" xlink:title="Definition" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="483.437" x="283" y="424.889">value[x] : Quantity|CodeableConcept|Attachment|Ratio|Choice|Period|string 1..1</text>
+      </a>
+      <a href="http://www/Component" target="_top" title="Component definition" xlink:actuate="onRequest" xlink:href="http://www/Component" xlink:show="new" xlink:title="Component definition" xlink:type="simple">
+        <line style="stroke:#808080;stroke-width:1;" x1="264" x2="771.437" y1="432" y2="432"/>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk4">
+      <polygon fill="#000080" points="201.559,319.239,194.585,321.074,193.597,328.217,200.571,326.382,201.559,319.239" style="stroke:#000080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M193.597,328.217 C176.272,347.752 167.874,357.221 154.798,371.965" fill="none" style="stroke:#000080;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="93.194" x="185.5" y="349.111">referenceRange</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="134.798" y="368.077">0..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="composition" id="lnk5">
+      <polygon fill="#000080" points="441.441,319.239,442.429,326.382,449.403,328.217,448.415,321.074,441.441,319.239" style="stroke:#000080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M449.403,328.217 C466.728,347.752 475.126,357.221 488.202,371.965" fill="none" style="stroke:#000080;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="64.269" x="471.5" y="349.111">component</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="468.202" y="368.077">0..*</text>
+    </g>
+  </g>
+</svg>

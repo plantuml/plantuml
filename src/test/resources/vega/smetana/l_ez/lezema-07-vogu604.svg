@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="118px" preserveAspectRatio="none" style="width:79px;height:118px;background:#FFFFFF;" version="1.1" viewBox="0 0 79 118" width="79px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity test-->
+    <g class="entity" data-qualified-name="test" data-source-line="1" id="ent0001">
+      <path d="M6,14.5 L6,99.5 A2.5,2.5 0 0 0 8.5,102 L60.863,102 A2.5,2.5 0 0 0 63.363,99.5 L63.363,22 L53.363,12 L8.5,12 A2.5,2.5 0 0 0 6,14.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M53.363,12 L53.363,19.5 A2.5,2.5 0 0 0 55.863,22 L63.363,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="18.638" x="16" y="32.889">*a*</text>
+      <text fill="#000" font-size="14" textLength="24.063" x="16" y="46.889">**a*</text>
+      <text fill="#000" font-size="14" textLength="29.488" x="16" y="60.889">***a*</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.938" x="16" y="74.889">*bold</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="16" y="88.889">**bold</text>
+    </g>
+  </g>
+</svg>

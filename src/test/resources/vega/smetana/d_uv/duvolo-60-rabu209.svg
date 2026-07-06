@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="156px" preserveAspectRatio="none" style="width:321px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 321 156" width="321px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity some processing-->
+    <g class="entity" data-qualified-name="some processing" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="141.938" x="6" y="54"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="127.938" y="59"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="125.938" y="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="125.938" y="65"/>
+      <text fill="#000" font-size="14" textLength="101.938" x="21" y="84.889">some processing</text>
+    </g>
+    <!--entity storage writer-->
+    <g class="entity" data-qualified-name="storage writer" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.85" x="184" y="54"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="284.85" y="59"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="282.85" y="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="282.85" y="65"/>
+      <text fill="#000" font-size="14" textLength="80.85" x="199" y="84.889">storage writer</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="6" id="ent0005">
+      <path d="M33.5,12 L33.5,35 A0,0 0 0 0 33.5,35 L73,35 L77,53.656 L81,35 L120.881,35 A0,0 0 0 0 120.881,35 L120.881,22 L110.881,12 L33.5,12 A0,0 0 0 0 33.5,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M110.881,12 L110.881,22 L120.881,22 L110.881,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="66.381" x="39.5" y="27.111">top io.Writer</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN7" data-source-line="7" id="ent0008">
+      <path d="M190,116 L190,139 A0,0 0 0 0 190,139 L298.994,139 A0,0 0 0 0 298.994,139 L298.994,126 L288.994,116 L248.5,116 L244.5,98.083 L240.5,116 L190,116 A0,0 0 0 0 190,116" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M288.994,116 L288.994,126 L298.994,126 L288.994,116" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="87.994" x="196" y="131.111">bottom io.Writer</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="183.917,76,174.917,72,178.917,76,174.917,80,183.917,76" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M148.187,76 C160.08,76 167.328,76 178.917,76" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

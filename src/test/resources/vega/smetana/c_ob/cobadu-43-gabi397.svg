@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:158px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 158 72" width="158px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity card-->
+    <g class="entity" data-qualified-name="card" data-source-line="9" id="ent0001">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.213" x="6" y="22"/>
+    </g>
+    <!--entity node-->
+    <g class="entity" data-qualified-name="node" data-source-line="10" id="ent0002">
+      <polygon fill="#F1F1F1" points="71,22,81,12,142.15,12,142.15,46,132.15,56,71,56,71,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="132.15" x2="142.15" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="71" x2="132.15" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="132.15" x2="132.15" y1="22" y2="56"/>
+    </g>
+  </g>
+</svg>

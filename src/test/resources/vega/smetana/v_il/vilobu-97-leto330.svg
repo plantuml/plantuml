@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="148px" preserveAspectRatio="none" style="width:337px;height:148px;background:#FFFFFF;" version="1.1" viewBox="0 0 337 148" width="337px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Client-->
+    <g class="cluster" data-qualified-name="Client" data-source-line="1" id="ent0001">
+      <path d="M71.5,43.702 L108.375,43.702 A3.75,3.75 0 0 1 110.875,46.202 L117.875,63.702 L186.5,63.702 A2.5,2.5 0 0 1 189,66.202 L189,122.202 A2.5,2.5 0 0 1 186.5,124.702 L71.5,124.702 A2.5,2.5 0 0 1 69,122.202 L69,46.202 A2.5,2.5 0 0 1 71.5,43.702" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="69" x2="117.875" y1="63.702" y2="63.702"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.875" x="73" y="56.591">Client</text>
+    </g>
+    <!--cluster Server-->
+    <g class="cluster" data-qualified-name="Server" data-source-line="5" id="ent0003">
+      <path d="M199.5,43.702 L241.713,43.702 A3.75,3.75 0 0 1 244.213,46.202 L251.213,63.702 L318.5,63.702 A2.5,2.5 0 0 1 321,66.202 L321,122.202 A2.5,2.5 0 0 1 318.5,124.702 L199.5,124.702 A2.5,2.5 0 0 1 197,122.202 L197,46.202 A2.5,2.5 0 0 1 199.5,43.702" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="197" x2="251.213" y1="63.702" y2="63.702"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.213" x="201" y="56.591">Server</text>
+    </g>
+    <g class="entity" data-qualified-name="CliEnginerylol5" data-source-line="9" id="ent0006">
+      <ellipse cx="14" cy="85.702" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="28" x="0" y="101.591">Tros</text>
+    <g class="entity" data-qualified-name="SrvEnginerylol8" data-source-line="10" id="ent0009">
+      <ellipse cx="48" cy="85.702" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="28" x="34" y="101.591">Tros</text>
+    <!--class CliEnginery-->
+    <g class="entity" data-qualified-name="Client.CliEnginery" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.75" x="77" y="68.702"/>
+      <ellipse cx="92" cy="84.702" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="87" y="89.702">C</text>
+      <text fill="#000" font-size="14" textLength="71.75" x="106" y="88.591">CliEnginery</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="78" x2="179.75" y1="100.702" y2="100.702"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="78" x2="179.75" y1="108.702" y2="108.702"/>
+    </g>
+    <!--class SrvEnginery-->
+    <g class="entity" data-qualified-name="Server.SrvEnginery" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.3" x="205" y="68.702"/>
+      <ellipse cx="220" cy="84.702" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="215" y="89.702">C</text>
+      <text fill="#000" font-size="14" textLength="76.3" x="234" y="88.591">SrvEnginery</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="206" x2="312.3" y1="100.702" y2="100.702"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="206" x2="312.3" y1="108.702" y2="108.702"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M115.088,68.468 C98.633,43.064 70.048,8.986 43,25.702 C24.32,37.247 19.036,64.586 17.558,80.545" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0009" data-link-type="association" id="lnk10">
+      <path d="M240.234,68.596 C226.546,53.091 206.511,34.293 184,25.702 C138.324,8.272 115.587,0 74,25.702 C55.588,37.082 51.621,64.483 50.94,80.497" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

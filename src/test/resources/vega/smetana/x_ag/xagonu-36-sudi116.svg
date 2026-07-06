@@ -1,0 +1,310 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="944px" preserveAspectRatio="none" style="width:1396px;height:944px;background:#FFFFFF;" version="1.1" viewBox="0 0 1396 944" width="1396px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster ASPSP Cloud-->
+    <g class="cluster" data-qualified-name="ASPSP Cloud" data-source-line="9" id="ent0001">
+      <path d="M1200.5,211 L1284.975,211 A3.75,3.75 0 0 1 1287.475,213.5 L1294.475,231 L1385.5,231 A2.5,2.5 0 0 1 1388,233.5 L1388,356.5 A2.5,2.5 0 0 1 1385.5,359 L1200.5,359 A2.5,2.5 0 0 1 1198,356.5 L1198,213.5 A2.5,2.5 0 0 1 1200.5,211" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="1198" x2="1294.475" y1="231" y2="231"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="83.475" x="1202" y="223.889">ASPSP Cloud</text>
+    </g>
+    <!--cluster AWS-->
+    <g class="cluster" data-qualified-name="ASPSP Cloud.AWS" data-source-line="10" id="ent0002">
+      <path d="M1221.173,245.918 C1223.641,239.156 1228.848,238.102 1233.497,243.753 C1236.21,237.595 1240.832,236.542 1245.808,241.17 C1248.991,236.418 1254.787,234.937 1257.776,241.378 C1260.465,235.314 1265.942,234.569 1270.224,239.59 C1272.847,233.19 1278.605,231.937 1283.161,237.499 C1285.714,232.13 1290.543,231.207 1294.416,236.043 C1297.858,230.328 1303.199,232.114 1305.646,237.089 C1310.119,231.03 1315.153,231.739 1318.47,238.266 C1323.522,233.479 1327.534,235.575 1329.479,241.468 C1334.554,236.686 1338.706,235.788 1342.169,243.153 C1346.449,238.095 1350.367,238.464 1353.278,244.521 C1362.3,238.555 1369.278,238.761 1372,251 C1372.871,250.451 1373.533,250.783 1373.789,251.734 C1380.992,256.224 1380.633,262.239 1373.413,266.358 C1380.255,268.935 1381.044,275.176 1376.289,280.168 C1382.694,284.051 1382.047,290.165 1376.079,293.859 C1382.812,298.323 1383.149,304.259 1376.53,309.117 C1382.865,314.893 1380.373,320.362 1373.449,323.246 C1379.753,333.141 1376.576,340.753 1365,343 C1366.305,342.655 1366.813,343.569 1366.471,344.672 C1364.008,351.183 1358.311,350.056 1354.908,345.669 C1351.012,352.749 1345.004,352.032 1341.1,345.679 C1337.183,349.914 1333.388,351.12 1330.167,344.947 C1326.301,351.113 1322.667,350.624 1318.352,345.413 C1315.925,351.503 1310.345,353.086 1306.254,347.077 C1302.531,351.889 1298.969,352.038 1294.89,347.509 C1290.842,353.009 1284.744,353.92 1281.64,346.538 C1277.717,351.56 1273.168,351.46 1270.273,345.477 C1267.326,351.198 1261.675,351.173 1258.36,345.874 C1254.3,351.928 1248.531,351.87 1245.063,345.252 C1240.719,350.811 1236.975,349.221 1233.856,343.981 C1223.632,351.105 1217.061,346.694 1214,336 C1214.916,336.235 1215.093,336.861 1214.484,337.567 C1206.758,333.531 1206.33,327.32 1212.962,321.89 C1205.095,318.001 1204.499,313.531 1211.591,308.15 C1204.011,304.359 1204.685,299.065 1210.304,294.067 C1204.486,289.048 1203.949,284.682 1210.991,280.305 C1206.3,275.02 1206.423,270.842 1212.939,267.226 C1205.948,256.283 1207.931,247.982 1221,244 C1221.825,244.48 1221.987,245.29 1221.173,245.918" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.938" x="1277.031" y="259.889">AWS</text>
+    </g>
+    <!--cluster mplatform-->
+    <g class="cluster" data-qualified-name="ASPSP Cloud.AWS.mplatform" data-source-line="11" id="ent0003">
+      <polygon fill="none" points="1214,271,1224,261,1372,261,1372,333,1362,343,1214,343,1214,271" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="1362" x2="1372" y1="271" y2="261"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="1214" x2="1362" y1="271" y2="271"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="1362" x2="1362" y1="271" y2="343"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="62.125" x="1257.938" y="284.889">mplatform</text>
+    </g>
+    <!--cluster ASPSP on prem-->
+    <g class="cluster" data-qualified-name="ASPSP on prem" data-source-line="18" id="ent0005">
+      <path d="M775.5,309 L870.738,309 A3.75,3.75 0 0 1 873.238,311.5 L880.238,329 L968.5,329 A2.5,2.5 0 0 1 971,331.5 L971,791.5 A2.5,2.5 0 0 1 968.5,794 L775.5,794 A2.5,2.5 0 0 1 773,791.5 L773,311.5 A2.5,2.5 0 0 1 775.5,309" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="773" x2="880.238" y1="329" y2="329"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="94.238" x="777" y="321.889">ASPSP on prem</text>
+    </g>
+    <!--cluster webserver-->
+    <g class="cluster" data-qualified-name="ASPSP on prem.webserver" data-source-line="20" id="ent0006">
+      <polygon fill="none" points="783.5,344,793.5,334,960.5,334,960.5,406,950.5,416,783.5,416,783.5,344" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="950.5" x2="960.5" y1="344" y2="334"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="783.5" x2="950.5" y1="344" y2="344"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="950.5" x2="950.5" y1="344" y2="416"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="835.713" y="357.889">webserver</text>
+    </g>
+    <!--cluster Domain Server-->
+    <g class="cluster" data-qualified-name="ASPSP on prem.Domain Server" data-source-line="24" id="ent0008">
+      <polygon fill="none" points="790,630,800,620,955,620,955,686,945,696,790,696,790,630" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="945" x2="955" y1="630" y2="620"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="790" x2="945" y1="630" y2="630"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="945" x2="945" y1="630" y2="696"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="89.513" x="823.744" y="643.889">Domain Server</text>
+    </g>
+    <!--cluster Ping Federate-->
+    <g class="cluster" data-qualified-name="ASPSP on prem.Ping Federate" data-source-line="28" id="ent0010">
+      <polygon fill="none" points="792,434,802,424,952,424,952,602,942,612,792,612,792,434" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="942" x2="952" y1="434" y2="424"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="792" x2="942" y1="434" y2="434"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="942" x2="942" y1="434" y2="612"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="84.088" x="825.956" y="447.889">Ping Federate</text>
+    </g>
+    <!--cluster ob gateway server-->
+    <g class="cluster" data-qualified-name="ASPSP on prem.ob gateway server" data-source-line="35" id="ent0015">
+      <polygon fill="none" points="781,714,791,704,963,704,963,776,953,786,781,786,781,714" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="953" x2="963" y1="714" y2="704"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="781" x2="953" y1="714" y2="714"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="953" x2="953" y1="714" y2="786"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="106.575" x="814.713" y="727.889">ob gateway server</text>
+    </g>
+    <!--cluster mobile_device-->
+    <g class="cluster" data-qualified-name="mobile_device" data-source-line="47" id="ent0017">
+      <polygon fill="none" points="14,106,24,96,936.5,96,936.5,216,926.5,226,14,226,14,106" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="926.5" x2="936.5" y1="106" y2="96"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="926.5" y1="106" y2="106"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="926.5" x2="926.5" y1="106" y2="226"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="89.6" x="426.45" y="119.889">mobile_device</text>
+    </g>
+    <!--cluster mapp-->
+    <g class="cluster" data-qualified-name="mobile_device.mapp" data-source-line="49" id="ent0019">
+      <rect fill="none" height="92" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="549" x="379.5" y="126"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="908.5" y="131"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="906.5" y="133"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="906.5" y="137"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="59.938" x="624.031" y="149.889">MBL_app</text>
+    </g>
+    <!--cluster obie_node-->
+    <g class="cluster" data-qualified-name="obie_node" data-source-line="57" id="ent0022">
+      <polygon fill="none" points="744,812,754,802,1000,802,1000,910,990,920,744,920,744,812" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="990" x2="1000" y1="812" y2="802"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="744" x2="990" y1="812" y2="812"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="990" x2="990" y1="812" y2="920"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="133.788" x="801.106" y="825.889">OBIE Registery Server</text>
+    </g>
+    <!--cluster tpp_node-->
+    <g class="cluster" data-qualified-name="tpp_node" data-source-line="61" id="ent0024">
+      <polygon fill="none" points="323,759,333,749,469,749,469,863,459,873,323,873,323,759" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="459" x2="469" y1="759" y2="749"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="323" x2="459" y1="759" y2="759"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="459" x2="459" y1="759" y2="873"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.3" x="378.35" y="772.889">TPP</text>
+    </g>
+    <!--entity user-->
+    <g class="entity" data-qualified-name="user" data-source-line="54" id="ent0021">
+      <ellipse cx="71.106" cy="12.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M71.106,20.5 L71.106,47.5 M58.106,28.5 L84.106,28.5 M71.106,47.5 L58.106,62.5 M71.106,47.5 L84.106,62.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="57.5" y="74.889">user</text>
+    </g>
+    <!--entity obc-->
+    <g class="entity" data-qualified-name="ASPSP Cloud.AWS.mplatform.obc" data-source-line="12" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="141.938" x="1222" y="291"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1343.938" y="296"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1341.938" y="298"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1341.938" y="302"/>
+      <text fill="#000" font-size="14" textLength="101.938" x="1237" y="321.889">OBSSOConsent</text>
+    </g>
+    <!--entity obp-->
+    <g class="entity" data-qualified-name="ASPSP on prem.webserver.obp" data-source-line="21" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="161.45" x="791.5" y="364"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="932.95" y="369"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="930.95" y="371"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="930.95" y="375"/>
+      <text fill="#000" font-size="14" textLength="121.45" x="806.5" y="394.889">Open Banking Portal</text>
+    </g>
+    <!--entity asf-->
+    <g class="entity" data-qualified-name="ASPSP on prem.Domain Server.asf" data-source-line="25" id="ent0009">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="125.813" x="809" y="650.5"/>
+      <polygon fill="#F1F1F1" points="917.813,655.5,917.813,669.5,929.813,669.5,929.813,661.5,923.813,655.5,917.813,655.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="923.813" x2="923.813" y1="655.5" y2="661.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="929.813" x2="923.813" y1="661.5" y2="661.5"/>
+      <text fill="#000" font-size="14" textLength="95.813" x="819" y="674.389">association_file</text>
+    </g>
+    <!--entity aep-->
+    <g class="entity" data-qualified-name="ASPSP on prem.Ping Federate.aep" data-source-line="29" id="ent0011">
+      <ellipse cx="872" cy="463" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="84" x="830" y="490.889">/authorisation</text>
+    </g>
+    <!--entity cep-->
+    <g class="entity" data-qualified-name="ASPSP on prem.Ping Federate.cep" data-source-line="30" id="ent0012">
+      <ellipse cx="872" cy="505" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="52.85" x="845.575" y="532.889">/consent</text>
+    </g>
+    <!--entity tep-->
+    <g class="entity" data-qualified-name="ASPSP on prem.Ping Federate.tep" data-source-line="31" id="ent0013">
+      <ellipse cx="872" cy="547" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.063" x="852.969" y="574.889">/token</text>
+    </g>
+    <!--entity uep-->
+    <g class="entity" data-qualified-name="ASPSP on prem.Ping Federate.uep" data-source-line="32" id="ent0014">
+      <ellipse cx="872" cy="589" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="53.637" x="845.181" y="616.889">/userinfo</text>
+    </g>
+    <!--entity obps-->
+    <g class="entity" data-qualified-name="ASPSP on prem.ob gateway server.obps" data-source-line="36" id="ent0016">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138" x="803" y="734"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="921" y="739"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="919" y="741"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="919" y="745"/>
+      <text fill="#000" font-size="14" textLength="98" x="818" y="764.889">payment service</text>
+    </g>
+    <!--entity tapp-->
+    <g class="entity" data-qualified-name="mobile_device.tapp" data-source-line="48" id="ent0018">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.45" x="22" y="174"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="100.45" y="179"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="98.45" y="181"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="98.45" y="185"/>
+      <text fill="#000" font-size="14" textLength="58.45" x="37" y="204.889">TPP_app</text>
+    </g>
+    <!--entity mwv-->
+    <g class="entity" data-qualified-name="mobile_device.mapp.mwv" data-source-line="50" id="ent0020">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.875" x="823.5" y="151"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="900.375" y="156"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="898.375" y="158"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="898.375" y="162"/>
+      <text fill="#000" font-size="14" textLength="56.875" x="838.5" y="181.889">Webview</text>
+    </g>
+    <!--entity obie_list-->
+    <g class="entity" data-qualified-name="obie_node.obie_list" data-source-line="58" id="ent0023">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="240.175" x="752" y="832.5"/>
+      <polygon fill="#F1F1F1" points="975.175,837.5,975.175,851.5,987.175,851.5,987.175,843.5,981.175,837.5,975.175,837.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="981.175" x2="981.175" y1="837.5" y2="843.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="987.175" x2="981.175" y1="843.5" y2="843.5"/>
+      <text fill="#000" font-size="14" textLength="210.175" x="762" y="856.389">List of ASPSP Authorisation Servers</text>
+    </g>
+    <!--entity tppbe-->
+    <g class="entity" data-qualified-name="tpp_node.tppbe" data-source-line="62" id="ent0025">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.6" x="331" y="779"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="440.6" y="784"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.6" y="786"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="438.6" y="790"/>
+      <text fill="#000" font-size="14" textLength="89.6" x="346" y="809.889">TPP_Backend</text>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0018" data-link-type="dependency" id="lnk26">
+      <polygon fill="#008000" points="71,173.792,75,164.792,71,168.792,67,164.792,71,173.792" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M71,78.129 C71,107.955 71,143.847 71,168.792" fill="none" style="stroke:#008000;stroke-width:2;"/>
+      <text fill="#000" font-size="13" x="103.344" y="123.111"> </text>
+      <text fill="#000" font-size="13" textLength="100.344" x="3" y="136.111">A.Interact with app</text>
+    </g>
+    <g class="link" data-entity-1="ent0018" data-entity-2="ent0018" data-link-type="dependency" id="lnk27">
+      <polygon fill="#008000" points="98.789,173.788,104.759,165.955,99.943,168.923,96.976,164.107,98.789,173.788" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M43.211,173.788 C40.936,164.205 50.199,156 71,156 C91.801,156 102.219,159.34 99.943,168.923" fill="none" style="stroke:#008000;stroke-width:2;"/>
+      <text fill="#000" font-size="13" x="131.425" y="138.111"> </text>
+      <text fill="#000" font-size="13" textLength="119.925" x="11.5" y="151.111">B. Authorization event</text>
+    </g>
+    <g class="link" data-entity-1="ent0018" data-entity-2="ent0025" data-link-type="dependency" id="lnk28">
+      <polygon fill="#008000" points="330.93,807.822,321.775,804.192,325.934,808.025,322.1,812.185,330.93,807.822" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M73.12,218.311 C78.275,317.006 101.062,711.23 138,751 C186.489,803.206 266.956,810.429 325.934,808.025" fill="none" style="stroke:#008000;stroke-width:2;"/>
+      <text fill="#000" font-size="13" x="305.425" y="733.111"> </text>
+      <text fill="#000" font-size="13" textLength="165.425" x="140" y="746.111">C. get Authorisation Server List</text>
+    </g>
+    <g class="link" data-entity-1="ent0018" data-entity-2="ent0019" data-link-type="dependency" id="lnk29">
+      <polygon fill="#008000" points="379.366,197.903,370.391,193.848,374.366,197.872,370.341,201.847,379.366,197.903" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M120.008,196.297 C159.724,196.543 217.958,196.904 270.623,197.23 C296.956,197.393 321.896,197.547 342.434,197.675 C352.703,197.738 361.871,197.795 369.562,197.842 C371.485,197.854 373.316,197.866 375.048,197.876 C375.914,197.882 376.756,197.887 377.572,197.892 C377.98,197.895 378.382,197.897 378.777,197.9 C378.975,197.901 374.171,197.871 374.366,197.872" fill="none" style="stroke:#008000;stroke-width:2;"/>
+      <text fill="#000" font-size="13" x="254.7" y="178.111"> </text>
+      <text fill="#000" font-size="13" textLength="63.7" x="191" y="191.111">D. Deeplink</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0019" data-link-type="dependency" id="lnk30">
+      <polygon fill="#181818" points="404.433,195.753,414.208,196.956,409.216,194.296,411.876,189.303,404.433,195.753" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M387.567,195.753 C353.213,185.286 356.023,168 396,168 C435.977,168 443.57,183.829 409.216,194.296" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="119.356" x="336.5" y="163.111">1. launch &lt;brand&gt; app</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0021" data-link-type="dependency" id="lnk31">
+      <polygon fill="#181818" points="84.853,53.459,88.403,62.646,88.394,56.989,94.051,56.979,84.853,53.459" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M379.399,187.487 C378.767,187.079 378.12,186.663 377.458,186.24 C376.133,185.394 374.748,184.517 373.308,183.616 C367.549,180.012 360.914,176.014 353.743,171.974 C339.4,163.892 322.912,155.636 307,150 C235.017,124.506 201.788,160.984 138,119 C125.953,111.071 128.974,103.291 120,92 C108.955,78.103 98.437,66.999 88.394,56.989" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="120.656" x="162.5" y="114.111">2. present login screen</text>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0019" data-link-type="dependency" id="lnk32">
+      <polygon fill="#181818" points="379.359,173.053,377.538,163.374,376.519,168.938,370.954,167.919,379.359,173.053" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M84.616,49.045 C97.522,56.896 118.405,68.57 138,75 C210.272,98.715 240.017,65.959 307,102 C325.815,112.124 342.731,127.855 356.585,143.674 C363.513,151.583 369.675,159.515 374.926,166.778 C376.239,168.594 377.495,170.369 378.692,172.09 C378.842,172.305 378.99,172.52 379.138,172.733 C379.212,172.84 376.445,168.832 376.519,168.938" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="38.35" x="203.5" y="70.111">3. login</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0009" data-link-type="dependency" id="lnk33">
+      <polygon fill="#181818" points="808.789,674.693,799.606,671.132,803.795,674.935,799.992,679.123,808.789,674.693" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M398.722,218.008 C398.776,218.593 398.831,219.189 398.887,219.797 C398.999,221.012 399.117,222.271 399.24,223.574 C399.731,228.786 400.305,234.688 400.965,241.182 C402.285,254.168 403.945,269.518 405.965,286.432 C410.006,320.26 415.483,360.342 422.541,400.28 C436.657,480.157 457.094,559.459 485,587 C571.551,672.42 718.654,679.049 803.795,674.935" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="106.356" x="556.5" y="582.111">4. validate Deeplink</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0011" data-link-type="dependency" id="lnk34">
+      <polygon fill="#181818" points="862.773,466.297,853.646,462.595,857.776,466.462,853.909,470.591,862.773,466.297" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M398.039,218.228 C398.275,221.274 398.564,224.611 398.918,228.202 C399.627,235.385 400.596,243.584 401.922,252.505 C404.575,270.346 408.653,291.07 414.925,312.311 C427.469,354.792 448.784,399.336 485,427 C546.957,474.325 807.514,468.115 857.776,466.462" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="177.613" x="521" y="422.111">5. Redirects to authorisation (Idp)</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0019" data-link-type="dependency" id="lnk35">
+      <polygon fill="#181818" points="402.962,218.003,401.989,227.804,404.531,222.751,409.585,225.293,402.962,218.003" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M862.717,464.322 C841.601,459.776 784.565,445.798 744,420 C738.696,416.627 739.477,413.084 734,410 C634.718,354.097 576.275,417.198 485,349 C460.45,330.657 441.574,303.284 427.716,276.861 C420.787,263.65 415.113,250.676 410.611,239.187 C408.36,233.443 406.402,228.07 404.727,223.224 C404.308,222.013 403.907,220.834 403.524,219.691 C403.332,219.12 404.714,223.304 404.531,222.751" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="218.969" x="500.5" y="344.111">6. HTTP(302) resume_path, PF_Cookie</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0004" data-link-type="dependency" id="lnk36">
+      <polygon fill="#181818" points="1248.843,290.97,1242.334,283.579,1244.3,288.883,1238.995,290.849,1248.843,290.97" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M734,218 C738.569,218.81 739.452,220.081 744,221 C939.419,260.478 997.193,218.28 1190,269 C1209.957,274.25 1226.506,280.711 1244.3,288.883" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="123.5" x="810.5" y="216.111">7. getOBSSOConsent</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0011" data-link-type="dependency" id="lnk37">
+      <polygon fill="#181818" points="881.18,464.866,890.658,467.54,886.128,464.152,889.516,459.622,881.18,464.866" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1264.933,335.029 C1245.196,350.133 1217.245,369.607 1190,382 C1073.913,434.804 923.224,458.8 886.128,464.152" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="176.8" x="1012" y="377.111">8. dropoff (identity , tmx_sess_id)</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0004" data-link-type="dependency" id="lnk38">
+      <polygon fill="#181818" points="1221.764,316.992,1212.482,313.697,1216.779,317.377,1213.099,321.674,1221.764,316.992" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M881.072,465.703 C903.737,464.406 968.367,457.436 1000,420 C1016.036,401.023 992.454,382.59 1010,365 C1039.05,335.878 1143.114,323.071 1216.779,317.377" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="117" x="1041.5" y="315.111">9. identity reference id</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0019" data-link-type="dependency" id="lnk39">
+      <polygon fill="#181818" points="406.638,218.085,407.313,227.911,408.977,222.504,414.384,224.168,406.638,218.085" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1221.896,302.098 C1211.235,300.812 1200.343,299.707 1190,299 C1110.186,293.548 1089.997,298.275 1010,299 C1003.176,299.062 501.778,311.877 485,304 C463.999,294.14 446.279,276.533 432.368,258.467 C425.413,249.433 419.41,240.285 414.425,231.932 C411.933,227.755 409.696,223.778 407.721,220.113 C407.474,219.655 407.231,219.202 406.993,218.754 C406.873,218.529 409.094,222.726 408.977,222.504" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="120.656" x="812" y="294.111">10 identity reference id</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0013" data-link-type="dependency" id="lnk40">
+      <polygon fill="#181818" points="862.739,550.325,853.649,546.532,857.74,550.439,853.833,554.53,862.739,550.325" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M396.319,218.357 C396.314,218.799 396.31,219.248 396.306,219.702 C396.276,223.339 396.28,227.37 396.337,231.748 C396.451,240.505 396.778,250.648 397.48,261.791 C398.882,284.078 401.779,310.367 407.45,337.568 C418.793,391.97 441.231,450.02 485,487 C570.23,559.009 633.854,469.805 734,519 C739.641,521.771 738.409,526.127 744,529 C784.749,549.937 836.676,550.923 857.74,550.439" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="239.119" x="490" y="482.111">11. reference_id, resume_Path, PF_Cookie</text>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0019" data-link-type="dependency" id="lnk41">
+      <polygon fill="#181818" points="399.096,218.486,396.096,227.866,399.638,223.456,404.048,226.999,399.096,218.486" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M862.738,551.071 C812.272,557.429 545.703,588.333 485,540 C458.081,518.567 437.849,450.176 423.617,380.128 C416.5,345.104 410.883,309.666 406.68,279.476 C404.578,264.381 402.83,250.598 401.424,238.835 C400.721,232.953 400.104,227.576 399.571,222.793 C399.438,221.598 399.31,220.439 399.187,219.319 C399.156,219.039 399.668,223.731 399.638,223.456" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="245.7" x="487" y="535.111">12. HTPP302(redirectUrl, consent_Sess_id)</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0020" data-link-type="dependency" id="lnk42">
+      <polygon fill="#181818" points="823.456,175.387,814.266,171.845,818.463,175.639,814.669,179.835,823.456,175.387" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M404.301,197.573 C419.378,196.693 455.051,194.627 485,193 C606.949,186.376 745.605,179.314 818.463,175.639" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="115.7" x="552" y="174.111">13. Launch Web View</text>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0007" data-link-type="dependency" id="lnk43">
+      <polygon fill="#181818" points="791.475,374.056,783.306,368.555,786.551,373.188,781.917,376.433,791.475,374.056" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M823.416,163.075 C752.405,151.746 621.602,143.539 556,219.5 C481.829,305.385 670.251,352.695 786.551,373.188" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="189.231" x="515" y="231.611">14. (redirectUrl, consent_Sess_id)</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0020" data-link-type="dependency" id="lnk44">
+      <polygon fill="#181818" points="823.398,168.825,814.559,164.481,818.401,168.633,814.25,172.476,823.398,168.825" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M791.235,374.528 C690.233,356.776 537.27,316.588 596,241.5 C649.457,173.154 754.601,166.173 818.401,168.633" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="109.85" x="555" y="253.611">15. Present OB View</text>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0020" data-link-type="dependency" id="lnk45">
+      <polygon fill="#181818" points="823.447,161.137,815.655,155.114,818.59,159.949,813.755,162.885,823.447,161.137" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M84.797,41.346 C120.255,42.43 222.711,46.407 307,58 C500.296,84.585 721.964,136.326 818.59,159.949" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="138.694" x="327" y="56.111">16. Complete OB Journey</text>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0007" data-link-type="dependency" id="lnk46">
+      <polygon fill="#181818" points="791.475,374.056,783.306,368.555,786.551,373.188,781.917,376.433,791.475,374.056" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M823.416,163.075 C752.405,151.746 621.602,143.539 556,219.5 C481.829,305.385 670.251,352.695 786.551,373.188" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="187.769" x="516" y="231.611">17. Submit (OB Journey Complete)</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0020" data-link-type="dependency" id="lnk47">
+      <polygon fill="#181818" points="823.398,168.825,814.559,164.481,818.401,168.633,814.25,172.476,823.398,168.825" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M791.235,374.528 C690.233,356.776 537.27,316.588 596,241.5 C649.457,173.154 754.601,166.173 818.401,168.633" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="83.119" x="568" y="253.611">18. Auth_Code</text>
+    </g>
+    <g class="link" data-entity-1="ent0018" data-entity-2="ent0016" data-link-type="dependency" id="lnk48">
+      <polygon fill="#008000" points="802.801,755.397,793.985,751.007,797.806,755.178,793.635,758.999,802.801,755.397" style="stroke:#008000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M83.769,218.258 C126.126,295.993 279.258,557.213 485,678 C584.935,736.67 716.757,751.623 797.806,755.178" fill="none" style="stroke:#008000;stroke-width:2;"/>
+      <text fill="#000" font-size="13" x="443.806" y="534.111"> </text>
+      <text fill="#000" font-size="13" textLength="95.306" x="348.5" y="547.111">X. Make Payment</text>
+    </g>
+    <g class="link" data-entity-1="ent0024" data-entity-2="ent0022" data-link-type="dependency" id="lnk49">
+      <polygon fill="#181818" points="470.706,860.308,479.267,865.177,475.681,860.802,480.056,857.216,470.706,860.308" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="742.972,887.305,734.41,882.437,737.996,886.812,733.621,890.398,742.972,887.305" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M475.681,860.802 C476.877,860.92 474.895,860.724 476.111,860.844 C480.978,861.327 486.008,861.826 491.183,862.339 C532.581,866.444 583.25,871.468 633.924,876.492 C659.261,879.005 684.599,881.517 708.78,883.915 C714.825,884.514 720.798,885.107 726.681,885.69 C729.622,885.981 732.541,886.271 735.434,886.558 C736.881,886.701 738.322,886.844 739.756,886.986 C740.473,887.057 741.189,887.128 741.902,887.199 C742.259,887.235 737.64,886.777 737.996,886.812" fill="none" style="stroke:#181818;stroke-width:2;"/>
+      <text fill="#000" font-size="13" textLength="43.387" x="588" y="856.111">MA TLS</text>
+    </g>
+  </g>
+</svg>

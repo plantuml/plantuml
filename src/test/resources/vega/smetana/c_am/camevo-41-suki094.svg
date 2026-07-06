@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="102px" preserveAspectRatio="none" style="width:222px;height:102px;" version="1.1" viewBox="0 0 222 102" width="222px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Only one actor - -><u:red>Transparent: KO-->
+    <g class="entity" data-qualified-name="Only one actor --..u.red.Transparent. KO" data-source-line="2" id="ent0001">
+      <ellipse cx="106.1" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M106.1,28.5 L106.1,55.5 M93.1,36.5 L119.1,36.5 M106.1,55.5 L93.1,70.5 M106.1,55.5 L119.1,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="100.713" x="6" y="82.889">Only one actor --&gt;</text>
+      <text fill="#000" font-size="14" textLength="99.488" x="106.713" y="82.889">Transparent: KO</text>
+      <line style="stroke:#F00;stroke-width:0.5;" x1="106.713" x2="206.2" y1="83.889" y2="83.889"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="174px" preserveAspectRatio="none" style="width:218px;height:174px;background:#FFFFFF;" version="1.1" viewBox="0 0 218 174" width="218px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foobar/fee-bar6-->
+    <g class="entity" data-qualified-name="foobar.fee-bar6" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.55" x="40" y="12"/>
+      <ellipse cx="55" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="50" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="95.55" x="69" y="31.889">foobar/fee-bar6</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41" x2="166.55" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41" x2="166.55" y1="52" y2="52"/>
+    </g>
+    <!--class this is my class-->
+    <g class="entity" data-qualified-name="this is my class" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="196.188" x="6" y="96"/>
+      <ellipse cx="58.588" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="53.588" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="82.513" x="79.088" y="115.889">this is my class</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="201.188" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="201.188" y1="136" y2="136"/>
+      <text fill="#000" font-size="14" textLength="184.188" x="12" y="150.889">dummy() with stange chars$%//</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="104,60.384,100,66.384,104,72.384,108,66.384,104,60.384" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M104,72.384 C104,83.199 104,84.181 104,95.733" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

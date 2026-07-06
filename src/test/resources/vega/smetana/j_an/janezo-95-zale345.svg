@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="299px" preserveAspectRatio="none" style="width:497px;height:299px;background:#55555555;" version="1.1" viewBox="0 0 497 299" width="497px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#555" fill-opacity="0.333" height="299" style="stroke:none;" width="497" x="0" y="0"/>
+    <g class="start_entity" data-qualified-name="start" data-source-line="18" id="ent0001">
+      <ellipse cx="282" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#58D68D" height="32" rx="12.5" ry="12.5" style="stroke:#58D68D;stroke-width:0.5;" width="116.825" x="223.5" y="73"/>
+    <text fill="#000" font-family="Impact" font-size="12" textLength="96.825" x="233.5" y="92.333">Evaluate loss index</text>
+    <g class="entity" data-qualified-name="conif" id="ent0004">
+      <polygon fill="#F00" points="381,163,393,175,381,187,369,175,381,163" style="stroke:#00F;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F4D03F" height="66" rx="12.5" ry="12.5" style="stroke:#F65;stroke-width:0.5;" width="240.275" x="6" y="142"/>
+    <text fill="#000" font-family="Impact" font-size="12" textLength="179.25" x="16" y="161.333">Improve neural network parameters</text>
+    <line style="stroke:#F65;stroke-width:1;" x1="16" x2="236.275" y1="169" y2="169"/>
+    <line style="stroke:#F65;stroke-width:1;" x1="16" x2="236.275" y1="171" y2="171"/>
+    <ellipse cx="21.5" cy="178.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="Impact" font-size="12" textLength="208.275" x="28" y="183.333">Calculate quasi-Newton training direction</text>
+    <ellipse cx="21.5" cy="190.5" fill="#000" rx="2.5" ry="2.5"/>
+    <text fill="#000" font-family="Impact" font-size="12" textLength="110.1" x="28" y="195.333">Calculate training rate</text>
+    <g class="end_entity" data-qualified-name="end" data-source-line="26" id="ent0011">
+      <ellipse cx="381" cy="270" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="381" cy="270" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#000" points="282,72.81,286,63.81,282,67.81,278,63.81,282,72.81" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M282,36.263 C282,46.456 282,56.552 282,67.81" fill="none" style="stroke:#000;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#000" points="368.763,163.617,364.488,154.744,364.95,160.382,359.312,160.844,368.763,163.617" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M299.699,105.018 C319.61,121.912 347.613,145.671 364.95,160.382" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="11" x="367.763" y="160.173"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="dependency" id="lnk8">
+      <polygon fill="#000" points="246.033,175,255.033,179,251.033,175,255.033,171,246.033,175" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M251.033,175 C300.379,175 346.222,175 368.859,175" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="101.819" x="257" y="167.556">Stopping criteria = true</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="dependency" id="lnk10">
+      <polygon fill="#000" points="254.11,105.018,244.29,105.763,249.708,107.388,248.082,112.806,254.11,105.018" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M249.708,107.388 C230.69,117.628 209.183,129.209 185.639,141.886" fill="none" style="stroke:#000;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0011" data-link-type="dependency" id="lnk12">
+      <polygon fill="#000" points="381,258.862,385,249.862,381,253.862,377,249.862,381,258.862" style="stroke:#000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M381,187.152 C381,205.243 381,235.781 381,253.862" fill="none" style="stroke:#000;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="106.15" x="383" y="236.556">Stopping criteria = false</text>
+    </g>
+  </g>
+</svg>

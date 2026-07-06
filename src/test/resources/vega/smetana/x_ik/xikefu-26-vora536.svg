@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="112px" preserveAspectRatio="none" style="width:104px;height:112px;background:#FFFFFF;" version="1.1" viewBox="0 0 104 112" width="104px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster test-->
+    <g class="cluster" data-qualified-name="test" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L39.988,4 A3.75,3.75 0 0 1 42.488,6.5 L49.488,24 L93.5,24 A2.5,2.5 0 0 1 96,26.5 L96,85.5 A2.5,2.5 0 0 1 93.5,88 L16.5,88 A2.5,2.5 0 0 1 14,85.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="49.488" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="22.488" x="18" y="16.889">test</text>
+    </g>
+    <!--entity __init__-->
+    <g class="entity" data-qualified-name="test.__init__" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="51" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.938" x="22" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="67.938" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="65.938" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="65.938" y="40"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="46" y1="56" y2="56"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="46" y="59.389">init</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="63.938" x2="86.938" y1="56" y2="56"/>
+    </g>
+  </g>
+</svg>

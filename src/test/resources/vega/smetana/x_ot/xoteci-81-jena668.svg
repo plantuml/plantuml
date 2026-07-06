@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="136px" preserveAspectRatio="none" style="width:234px;height:136px;background:#FFFFFF;" version="1.1" viewBox="0 0 234 136" width="234px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="node1" data-source-line="5" id="ent0001">
+      <path d="M6,24 L6,47 L118,47 L118,34 L108,24 L6,24" fill="#FEFFDD" style="stroke:#008000;stroke-width:3;"/>
+      <path d="M108,24 L108,34 L118,34 L108,24" fill="#FEFFDD" style="stroke:#008000;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="91" x="12" y="39.111">This is a test note!</text>
+    </g>
+    <g class="entity" data-qualified-name="node2" data-source-line="9" id="ent0002">
+      <path d="M106,96 L106,119 A0,0 0 0 0 106,119 L218,119 A0,0 0 0 0 218,119 L218,106 L208,96 L166,96 L162,60.309 L158,96 L106,96 A0,0 0 0 0 106,96" fill="#FEFFDD" style="stroke:#008000;stroke-width:3;"/>
+      <path d="M208,96 L208,106 L218,106 L208,96" fill="#FEFFDD" style="stroke:#008000;stroke-width:3;"/>
+      <text fill="#000" font-size="13" textLength="91" x="112" y="111.111">This is a test note!</text>
+    </g>
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="12" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.425" x="136.5" y="12"/>
+      <ellipse cx="151.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="146.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="165.5" y="31.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="137.5" x2="186.925" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="137.5" x2="186.925" y1="52" y2="52"/>
+    </g>
+  </g>
+</svg>

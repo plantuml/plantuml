@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="244px" preserveAspectRatio="none" style="width:333px;height:244px;background:#FFFFFF;" version="1.1" viewBox="0 0 333 244" width="333px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class ia42-->
+    <g class="entity" data-qualified-name="ia42" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.512" x="9.5" y="12"/>
+      <ellipse cx="24.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="19.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="26.512" x="38.5" y="31.889">ia42</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10.5" x2="67.012" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10.5" x2="67.012" y1="52" y2="52"/>
+    </g>
+    <!--class ia123-->
+    <g class="entity" data-qualified-name="ia123" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.3" x="6" y="180"/>
+      <ellipse cx="21" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="201">C</text>
+      <text fill="#000" font-size="14" textLength="34.3" x="35" y="199.889">ia123</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="71.3" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="71.3" y1="220" y2="220"/>
+    </g>
+    <!--class ia_1000042_ia125_has_father_123-->
+    <g class="entity" data-qualified-name="ia_1000042_ia125_has_father_123" data-source-line="3" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="252.325" x="65" y="96"/>
+      <ellipse cx="80" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="75" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="220.325" x="94" y="115.889">ia_1000042_ia125_has_father_123</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="66" x2="316.325" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="66" x2="316.325" y1="136" y2="136"/>
+    </g>
+    <ellipse cx="33" cy="110" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="39,60.279,35,69.279,39,65.279,43,69.279,39,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M39,65.279 C39,80.809 39,95.54 39,107.717" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="association" id="lnk9">
+      <path d="M39,132.059 C39,144.212 39,164.082 39,179.706" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="association" id="lnk10">
+      <path d="M47.016,120 C52.921,120 58.827,120 64.732,120" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

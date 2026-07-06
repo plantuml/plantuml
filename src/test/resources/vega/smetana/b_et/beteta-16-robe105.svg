@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="334px" preserveAspectRatio="none" style="width:225px;height:334px;background:#FFFFFF;" version="1.1" viewBox="0 0 225 334" width="225px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="3" id="ent0001">
+      <ellipse cx="129.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <a href="http://google.com" target="_top" title="http://google.com" xlink:actuate="onRequest" xlink:href="http://google.com" xlink:show="new" xlink:title="http://google.com" xlink:type="simple">
+      <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="96.8" x="81" y="73"/>
+      <text fill="#000" font-size="12" textLength="76.8" x="91" y="92.333">on several lines</text>
+    </a>
+    <g class="entity" data-qualified-name=".4" id="ent0005">
+      <polygon fill="#F1F1F1" points="129.5,142,141.5,154,129.5,166,117.5,154,129.5,142" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="89.375" x="34" y="217"/>
+    <text fill="#000" font-size="12" textLength="69.375" x="44" y="236.333">Some Activity</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="144.8" x="6" y="286"/>
+    <text fill="#000" font-size="12" textLength="42" x="16" y="305.333">Another</text>
+    <a href="http://www.yahoo.com" target="_top" title="Some tooltip" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com" xlink:show="new" xlink:title="Some tooltip" xlink:type="simple">
+      <text fill="#F00" font-size="12" text-decoration="underline" textLength="36.675" x="58" y="305.333">activity</text>
+    </a>
+    <text fill="#000" font-size="12" textLength="46.125" x="94.675" y="305.333">with a link</text>
+    <g class="end_entity" data-qualified-name="end" data-source-line="9" id="ent0011">
+      <ellipse cx="152.5" cy="232" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1.5;"/>
+      <ellipse cx="152.5" cy="232" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="129.5,72.81,133.5,63.81,129.5,67.81,125.5,63.81,129.5,72.81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M129.5,36.263 C129.5,46.456 129.5,56.552 129.5,67.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="129.5,141.641,133.5,132.641,129.5,136.641,125.5,132.641,129.5,141.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M129.5,105.251 C129.5,116.467 129.5,126.468 129.5,136.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="50.119" x="78.5" y="138.197">Some Test</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <a href="http://testLink1.com" target="_top" title="http://testLink1.com" xlink:actuate="onRequest" xlink:href="http://testLink1.com" xlink:show="new" xlink:title="http://testLink1.com" xlink:type="simple">
+        <polygon fill="#181818" points="88.606,216.741,96.911,211.447,91.367,212.573,90.241,207.029,88.606,216.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M122.193,166.032 C113.379,179.339 101.276,197.613 91.367,212.573" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </a>
+      <text fill="#000" font-size="11" textLength="18.906" x="112.5" y="194.556">true</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <a href="http://testLink2.com" target="_top" title="http://testLink2.com" xlink:actuate="onRequest" xlink:href="http://testLink2.com" xlink:show="new" xlink:title="http://testLink2.com" xlink:type="simple">
+        <polygon fill="#181818" points="78.5,285.857,82.5,276.857,78.5,280.857,74.5,276.857,78.5,285.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M78.5,249.203 C78.5,260.168 78.5,269.906 78.5,280.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0011" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="149.211,220.988,150.468,211.22,147.78,216.197,142.802,213.51,149.211,220.988" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M132.795,166.032 C137.168,180.67 143.411,201.57 147.78,216.197" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="72.806" x="144.5" y="194.556">Ending process</text>
+    </g>
+  </g>
+</svg>

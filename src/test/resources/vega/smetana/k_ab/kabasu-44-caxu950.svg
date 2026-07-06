@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="281px" preserveAspectRatio="none" style="width:342px;height:281px;background:#FFFFFF;" version="1.1" viewBox="0 0 342 281" width="342px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Dummy12-->
+    <g class="entity" data-qualified-name="Dummy12" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="51" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.788" x="11" y="19.5"/>
+      <polygon fill="#F1F1F1" points="87.788,24.5,87.788,38.5,99.788,38.5,99.788,30.5,93.788,24.5,87.788,24.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="93.788" x2="93.788" y1="24.5" y2="30.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="99.788" x2="93.788" y1="30.5" y2="30.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="59.063" x="23.362" y="43.389">«Artifact»</text>
+      <text fill="#000" font-size="14" textLength="63.787" x="21" y="57.389">Dummy12</text>
+    </g>
+    <!--entity Dummy1-->
+    <g class="entity" data-qualified-name="Dummy1" data-source-line="2" id="ent0002">
+      <path d="M126,12 L167,12 A3.75,3.75 0 0 1 169.5,14.5 L176.5,33 L208.3,33 A2.5,2.5 0 0 1 210.8,35.5 L210.8,75.5 A2.5,2.5 0 0 1 208.3,78 L126,78 A2.5,2.5 0 0 1 123.5,75.5 L123.5,14.5 A2.5,2.5 0 0 1 126,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="123.5" x2="176.5" y1="33" y2="33"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="55.3" x="134.5" y="50.889">«Folder»</text>
+      <text fill="#000" font-size="14" textLength="56" x="134.15" y="64.889">Dummy1</text>
+    </g>
+    <!--entity Dummy2-->
+    <g class="entity" data-qualified-name="Dummy2" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="229" y="21"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="44.363" x="244.819" y="41.889">«Rect»</text>
+      <text fill="#000" font-size="14" textLength="56" x="239" y="55.889">Dummy2</text>
+    </g>
+    <!--entity Dummy3-->
+    <g class="entity" data-qualified-name="Dummy3" data-source-line="4" id="ent0004">
+      <polygon fill="#F1F1F1" points="10,124,20,114,106,114,106,162,96,172,10,172,10,124" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="96" x2="106" y1="124" y2="114"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="96" y1="124" y2="124"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="96" x2="96" y1="124" y2="172"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="49.087" x="28.456" y="144.889">«Node»</text>
+      <text fill="#000" font-size="14" textLength="56" x="25" y="158.889">Dummy3</text>
+    </g>
+    <!--entity Dummy5-->
+    <g class="entity" data-qualified-name="Dummy5" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98" x="124" y="114"/>
+      <path d="M156.667,114 L156.667,119 L149.667,126 L124,126" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="56" x="140" y="144.889">«Frame»</text>
+      <text fill="#000" font-size="14" textLength="56" x="140" y="158.889">Dummy5</text>
+    </g>
+    <!--entity Dummy6-->
+    <g class="entity" data-qualified-name="Dummy6" data-source-line="6" id="ent0006">
+      <path d="M249.995,122.24 C252.57,116.573 256.395,116.295 260.881,120.024 C263.984,114.105 267.979,112.939 273.223,117.503 C274.824,112.095 279.259,110.761 283.578,114.389 C288.726,110.058 293.931,112.776 295.4,118.65 C300.449,113.496 305.165,114.826 307.905,121.162 C311.837,115.753 315.576,116.519 318.534,122.104 C326.132,123.893 327.269,127.615 323.24,134.003 C328.72,134.49 331.081,139.171 328.137,143.848 C332.833,149.591 330.097,154.154 323.353,154.979 C326.187,160.619 325.389,164.692 318.474,166.028 C315.504,171.926 309.981,172.446 306.362,166.703 C305.401,172.553 300.928,174.435 296.288,170.484 C293.601,175.947 287.762,178.04 283.7,171.986 C278.847,175.542 275.067,175.476 272.544,169.312 C268.543,174.726 265.016,173.808 261.761,168.558 C256.989,172.813 250.47,172.156 249.22,164.765 C238.781,158.441 237.164,151.984 246.933,143.488 C238.195,136.326 239.316,126.603 249.995,122.24" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="52.238" x="256.881" y="139.889">«Cloud»</text>
+      <text fill="#000" font-size="14" textLength="56" x="255" y="153.889">Dummy6</text>
+    </g>
+    <!--entity Dummy7-->
+    <g class="entity" data-qualified-name="Dummy7" data-source-line="7" id="ent0007">
+      <path d="M9,218 C9,208 57.756,208 57.756,208 C57.756,208 106.513,208 106.513,218 L106.513,255 C106.513,265 57.756,265 57.756,265 C57.756,265 9,265 9,255 L9,218" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M9,218 C9,228 57.756,228 57.756,228 C57.756,228 106.513,228 106.513,218" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="75.513" x="20" y="242.889">«Database»</text>
+      <text fill="#000" font-size="14" textLength="56" x="29.756" y="256.889">Dummy7</text>
+    </g>
+    <!--entity Dummy8-->
+    <g class="entity" data-qualified-name="Dummy8" data-source-line="8" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="35" ry="35" style="stroke:#181818;stroke-width:0.5;" width="86.575" x="125.5" y="212.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="64.575" x="136.5" y="233.389">«Storage»</text>
+      <text fill="#000" font-size="14" textLength="56" x="140.788" y="247.389">Dummy8</text>
+    </g>
+    <!--entity Dummy9-->
+    <g class="entity" data-qualified-name="Dummy9" data-source-line="9" id="ent0009">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="231" y="212.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="52.15" x="242.925" y="233.389">«Agent»</text>
+      <text fill="#000" font-size="14" textLength="56" x="241" y="247.389">Dummy9</text>
+    </g>
+  </g>
+</svg>

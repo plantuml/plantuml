@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="132px" preserveAspectRatio="none" style="width:347px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 347 132" width="347px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Configuration files-->
+    <g class="cluster" data-qualified-name="Configuration files" data-source-line="9" id="ent0001">
+      <path d="M16.5,5.389 L326.75,5.389 A3.75,3.75 0 0 1 329.25,7.889 L336.25,51.389 L336.5,51.389 A2.5,2.5 0 0 1 339,53.889 L339,105.889 A2.5,2.5 0 0 1 336.5,108.389 L16.5,108.389 A2.5,2.5 0 0 1 14,105.889 L14,7.889 A2.5,2.5 0 0 1 16.5,5.389" fill="#00F" style="stroke:#F00;stroke-width:4;"/>
+      <line style="stroke:#F00;stroke-width:4;" x1="14" x2="336.25" y1="51.389" y2="51.389"/>
+      <text fill="#008000" font-size="40" font-weight="700" textLength="309.25" x="18" y="38.5">Configuration files</text>
+    </g>
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="Configuration files.foo" data-source-line="10" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.425" x="146.5" y="56.389"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="185.925" y="61.389"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="183.925" y="63.389"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="183.925" y="67.389"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="161.5" y="87.278">foo</text>
+    </g>
+  </g>
+</svg>

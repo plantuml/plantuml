@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="140px" preserveAspectRatio="none" style="width:240px;height:140px;background:#FFFFFF;" version="1.1" viewBox="0 0 240 140" width="240px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster big-->
+    <g class="cluster" data-qualified-name="big" data-source-line="7" id="ent0004">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="108" x="116" y="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="160.638" y="61.889">big</text>
+    </g>
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27.788" x="6" y="4"/>
+      <text fill="#000" font-size="14" x="16" y="24.889">a</text>
+    </g>
+    <!--entity b-->
+    <g class="entity" data-qualified-name="b" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27.788" x="6" y="74"/>
+      <text fill="#000" font-size="14" x="16" y="94.889">b</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN6" data-source-line="11" id="ent0007">
+      <path d="M52,79 L52,102 L105.5,102 L105.5,89 L95.5,79 L52,79" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M95.5,79 L95.5,89 L105.5,89 L95.5,79" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="32.5" x="58" y="94.111">note1</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN9" data-source-line="14" id="ent0010">
+      <path d="M105,9 L105,32 L158.5,32 L158.5,19 L148.5,9 L105,9" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M148.5,9 L148.5,19 L158.5,19 L148.5,9" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="32.5" x="111" y="24.111">note2</text>
+    </g>
+    <!--entity inside-->
+    <g class="entity" data-qualified-name="big.inside" data-source-line="8" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.663" x="158.5" y="74"/>
+      <text fill="#000" font-size="14" textLength="36.663" x="168.5" y="94.889">inside</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M20,38.115 C20,48.798 20,62.773 20,73.528" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0004" data-link-type="association" id="lnk8">
+      <path d="M106.328,91 C109.27,91 112.211,91 115.153,91 C115.337,91 115.521,91 115.704,91 C115.796,91 115.888,91 115.98,91" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0004" data-link-type="association" id="lnk11">
+      <path d="M132,33.229 C132,36.398 132,40.055 132,43.954 C132,44.929 132,45.92 132,46.921 C132,47.422 132,47.925 132,48.431 C132,48.558 132,48.684 132,48.811" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

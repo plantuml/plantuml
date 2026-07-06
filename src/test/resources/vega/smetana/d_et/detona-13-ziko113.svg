@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="277px" preserveAspectRatio="none" style="width:797px;height:277px;background:#FFFFFF;" version="1.1" viewBox="0 0 797 277" width="797px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster aCloud-->
+    <g class="cluster" data-qualified-name="aCloud" data-source-line="1" id="ent0001">
+      <path d="M430.648,65.067 C438.55,53.202 448.896,54.87 453.822,67.844 C460.153,54.852 468.707,55.485 478.065,64.512 C486.475,52.277 494.943,52.475 502.096,65.699 C511.069,54.647 518.869,56.383 526.892,66.796 C530.93,55.945 541.364,54.645 548.076,63.991 C558.154,53.79 566.901,52.013 574.279,66.819 C580.436,56.056 588.159,56.414 595.101,66.016 C602.675,54.447 612.914,52.821 620.922,65.554 C627.794,54.842 636.551,55.757 642.089,66.848 C648.185,53.84 660.326,52.99 667.575,65.707 C673.694,52.073 686.492,52.466 693.484,64.837 C702.625,55.154 709.964,57.029 716.353,67.897 C721.121,59.078 731.362,56.222 737.124,66.835 C747.348,51.513 761.197,54.616 767,71 C767.635,71.175 767.676,71.654 767.275,72.09 C783.804,77.089 784.479,91.02 773.411,101.732 C786.054,107.076 788.041,114.591 779.752,125.516 C791.816,135.913 789.997,147.964 774.863,153.631 C787.671,169.83 779.762,184.757 760,186 C762.312,186.904 762.63,188.519 760.617,190.077 C752.981,199.3 745.067,198.954 738.923,188.438 C731.341,200.786 723.416,197.615 716.204,188.053 C707.672,201.402 698.585,202.436 689.302,188.801 C683.98,198.414 675.361,200.676 667.905,191.191 C660.167,203.137 651.593,202.635 643.266,191.829 C636.779,202.728 629.76,203.064 621.398,193.868 C614.307,204.6 607.11,207.05 597.978,196.071 C587.652,207.803 580.449,203.551 573.696,192.297 C567.62,203.289 557.491,206.205 549.43,194.411 C543.106,205.817 532.508,202.97 527.074,193.46 C519.639,205.106 507.872,204.709 502.161,191.718 C495.356,200.631 483.582,199.54 478.523,189.536 C471.829,200.809 460.723,201.2 454.385,189.168 C440.798,201.787 425.909,197.208 422,179 C423.439,176.795 425.258,176.924 426.435,179.256 C413.564,174.749 411.986,163.095 421.65,154.271 C405.471,148.723 405.158,135.093 417.378,125.349 C407.362,115.304 406.679,106.627 421.358,100.545 C408.443,85.755 411.732,72.479 429,64 C429.985,63.59 430.675,63.915 430.648,65.067" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="44.45" x="572.275" y="79.889">aCloud</text>
+    </g>
+    <!--cluster 1-->
+    <g class="cluster" data-qualified-name="aCloud.1" data-source-line="3" id="ent0002">
+      <polygon fill="none" points="568,91,578,81,767,81,767,176,757,186,568,186,568,91" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="757" x2="767" y1="91" y2="81"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="568" x2="757" y1="91" y2="91"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="757" x2="757" y1="91" y2="186"/>
+      <text fill="#000" font-size="14" font-weight="700" x="659.606" y="104.889">1</text>
+    </g>
+    <!--cluster TeamCity-->
+    <g class="cluster" data-qualified-name="aCloud.1.TeamCity" data-source-line="4" id="ent0003">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="102" x="657" y="111"/>
+      <path d="M726.938,111 L726.938,118 L716.938,128 L657,128" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="59.938" x="660" y="122.889">TeamCity</text>
+    </g>
+    <!--cluster 2-->
+    <g class="cluster" data-qualified-name="aCloud.2" data-source-line="10" id="ent0006">
+      <polygon fill="none" points="448,111.5,458,101.5,560,101.5,560,172.5,550,182.5,448,182.5,448,111.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="550" x2="560" y1="111.5" y2="101.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="448" x2="550" y1="111.5" y2="111.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="550" x2="550" y1="111.5" y2="182.5"/>
+      <text fill="#000" font-size="14" font-weight="700" x="496.106" y="125.389">2</text>
+    </g>
+    <!--cluster Main-->
+    <g class="cluster" data-qualified-name="Main" data-source-line="15" id="ent0008">
+      <polygon fill="none" points="14,111,24,101,406,101,406,243,396,253,14,253,14,111" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="396" x2="406" y1="111" y2="101"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="396" y1="111" y2="111"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="396" x2="396" y1="111" y2="253"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="190.819" y="124.889">Main</text>
+    </g>
+    <!--entity dev_machine-->
+    <g class="entity" data-qualified-name="dev_machine" data-source-line="23" id="ent0012">
+      <polygon fill="#F1F1F1" points="168.5,14,178.5,4,291.8,4,291.8,38,281.8,48,168.5,48,168.5,14" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="281.8" x2="291.8" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="168.5" x2="281.8" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="281.8" x2="281.8" y1="14" y2="48"/>
+      <text fill="#000" font-size="14" textLength="83.3" x="183.5" y="34.889">dev_machine</text>
+    </g>
+    <!--entity FileBeat-->
+    <g class="entity" data-qualified-name="aCloud.1.FileBeat" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.45" x="576.5" y="136"/>
+      <text fill="#000" font-size="14" textLength="51.45" x="586.5" y="156.889">FileBeat</text>
+    </g>
+    <!--entity build agent-->
+    <g class="entity" data-qualified-name="aCloud.1.TeamCity.build agent" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.663" x="665.5" y="136"/>
+      <text fill="#000" font-size="14" textLength="64.663" x="675.5" y="156.889">build agent</text>
+    </g>
+    <!--entity PostgreSQL-->
+    <g class="entity" data-qualified-name="aCloud.2.PostgreSQL" data-source-line="11" id="ent0007">
+      <path d="M456,141.5 C456,131.5 504.106,131.5 504.106,131.5 C504.106,131.5 552.213,131.5 552.213,141.5 L552.213,164.5 C552.213,174.5 504.106,174.5 504.106,174.5 C504.106,174.5 456,174.5 456,164.5 L456,141.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M456,141.5 C456,151.5 504.106,151.5 504.106,151.5 C504.106,151.5 552.213,151.5 552.213,141.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="76.213" x="466" y="166.389">PostgreSQL</text>
+    </g>
+    <!--entity  Not Our System That Must Stay  -->
+    <g class="entity" data-qualified-name="Main. Not Our System That Must Stay  " data-source-line="16" id="ent0009">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="217.975" x="56" y="131"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="253.975" y="136"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="251.975" y="138"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="251.975" y="142"/>
+      <text fill="#000" font-size="14" textLength="177.975" x="71" y="161.889">Not Our System That Must Stay</text>
+    </g>
+    <!--entity ElasticSearch-->
+    <g class="entity" data-qualified-name="Main.ElasticSearch" data-source-line="18" id="ent0010">
+      <path d="M292,141.5 C292,131.5 344.831,131.5 344.831,131.5 C344.831,131.5 397.663,131.5 397.663,141.5 L397.663,164.5 C397.663,174.5 344.831,174.5 344.831,174.5 C344.831,174.5 292,174.5 292,164.5 L292,141.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M292,141.5 C292,151.5 344.831,151.5 344.831,151.5 C344.831,151.5 397.663,151.5 397.663,141.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="85.663" x="302" y="166.389">ElasticSearch</text>
+    </g>
+    <!--entity LogStash-->
+    <g class="entity" data-qualified-name="Main.LogStash" data-source-line="20" id="ent0011">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79.15" x="125.5" y="211"/>
+      <text fill="#000" font-size="14" textLength="59.15" x="135.5" y="231.889">LogStash</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0008" id="lnk13">
+      <ellipse cx="168.369" cy="29.254" fill="#FFF" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M160.851,22.66 A10,10 0 0 0 161.775 36.772" fill="#FFF" style="stroke:#181818;stroke-width:1.5;"/>
+      <ellipse cx="27.88" cy="100.957" fill="#FFF" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M35.744,94.781 A10,10 0 0 0 21.703 93.093" fill="#FFF" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M158.39,29.908 C112.12,32.936 63.926,39.378 47,56 C35.467,67.326 30.173,83.561 28.068,99.467 C28.002,99.964 29.133,90.533 29.073,91.029" fill="none" style="stroke:#181818;stroke-width:2;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0001" data-link-type="association" id="lnk14">
+      <path d="M291.887,29.62 C337.096,32.851 393.292,40.038 410,56 C410.735,56.702 411.446,57.423 412.135,58.163 C412.479,58.533 412.818,58.907 413.151,59.286 C413.317,59.475 413.482,59.665 413.646,59.857 C413.728,59.953 413.81,60.049 413.891,60.145" fill="none" style="stroke:#181818;stroke-width:2;"/>
+    </g>
+  </g>
+</svg>

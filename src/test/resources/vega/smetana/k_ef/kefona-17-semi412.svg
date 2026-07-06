@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="387px" preserveAspectRatio="none" style="width:390px;height:387px;background:#FFFFFF;" version="1.1" viewBox="0 0 390 387" width="390px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="26">
+      <text fill="#000" font-size="18" font-weight="700" textLength="136.013" x="123.494" y="24">Pragma Multi Test</text>
+    </g>
+    <g class="legend" data-source-line="29">
+      <rect fill="#DDD" height="38" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="152.4" x="16" y="55"/>
+      <text fill="#000" font-size="11" textLength="117.219" x="24" y="71.556">Note on the folder, m4test.</text>
+      <text fill="#000" font-size="11" textLength="136.4" x="24" y="82.556">This text shall end up in the box.</text>
+    </g>
+    <!--cluster ltr-->
+    <g class="cluster" data-qualified-name="ltr" data-source-line="33" id="ent0001">
+      <path d="M16.5,114 L29.138,114 A3.75,3.75 0 0 1 31.638,116.5 L38.638,134 L379.5,134 A2.5,2.5 0 0 1 382,136.5 L382,360.5 A2.5,2.5 0 0 1 379.5,363 L16.5,363 A2.5,2.5 0 0 1 14,360.5 L14,116.5 A2.5,2.5 0 0 1 16.5,114" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="38.638" y1="134" y2="134"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="11.638" x="18" y="126.889">ltr</text>
+    </g>
+    <!--class Singleton-->
+    <g class="entity" data-qualified-name="ltr.Singleton" data-source-line="34" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.45" x="240.5" y="139"/>
+      <ellipse cx="274.85" cy="155" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="269.85" y="160">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="58.45" x="293.15" y="158.889">Singleton</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="241.5" x2="372.95" y1="171" y2="171"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="241.5" x2="372.95" y1="179" y2="179"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="251.5" cy="191.5" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="107.45" x="260.5" y="193.889">getSingletonData</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="251.5" cy="205.5" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" text-decoration="underline" textLength="52.15" x="260.5" y="207.889">instance</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="251.5" cy="219.5" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="106.663" x="260.5" y="221.889">setSingletonData</text>
+    </g>
+    <!--class SingletonImpl-->
+    <g class="entity" data-qualified-name="ltr.SingletonImpl" data-source-line="40" id="ent0003">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116.875" x="248.5" y="265"/>
+      <ellipse cx="263.5" cy="281" fill="#F70" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="258.5" y="286">S</text>
+      <text fill="#000" font-size="14" textLength="84.875" x="277.5" y="284.889">SingletonImpl</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="249.5" x2="364.375" y1="297" y2="297"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="259.5" cy="309.5" fill="none" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="48.212" x="268.5" y="311.889">myData</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="249.5" x2="364.375" y1="319" y2="319"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="259.5" cy="331.5" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="52.15" x="268.5" y="333.889">instance</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="259.5" cy="345.5" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.063" x="268.5" y="347.889">myOperation</text>
+    </g>
+    <!--class Singleton_pattern_tempate-->
+    <g class="entity" data-qualified-name="ltr.Singleton_pattern_tempate" data-source-line="46" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200" x="22" y="146"/>
+      <ellipse cx="37" cy="162" fill="#F70" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32" y="167">S</text>
+      <text fill="#000" font-size="14" textLength="168" x="51" y="165.889">Singleton_pattern_tempate</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="221" y1="178" y2="178"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="221" y1="186" y2="186"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="33" cy="198.5" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="87.938" x="42" y="200.889">do_something</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="33" cy="212.5" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="52.85" x="42" y="214.889">Instance</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="307,229.067,301,247.067,313,247.067,307,229.067" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M307,247.067 C307,258.622 307,253.087 307,264.657" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="91px" preserveAspectRatio="none" style="width:297px;height:91px;background:#FFFFFF;" version="1.1" viewBox="0 0 297 91" width="297px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="A" data-source-line="22" id="ent0001">
+      <path d="M85.5,12 L110.5,12 A12.5,12.5 0 0 1 123,24.5 L123,37 L73,37 L73,24.5 A12.5,12.5 0 0 1 85.5,12" fill="#F0F8FF"/>
+      <path d="M73,37 L123,37 L123,62.5 A12.5,12.5 0 0 1 110.5,75 L85.5,75 A12.5,12.5 0 0 1 73,62.5 L73,37" fill="#98FB98"/>
+      <rect fill="none" height="63" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="50" x="73" y="12"/>
+      <line style="stroke:#EE82EE;stroke-width:0.5;" x1="73" x2="123" y1="37" y2="37"/>
+      <line style="stroke:#EE82EE;stroke-width:0.5;" x1="73" x2="123" y1="37" y2="37"/>
+      <text fill="#F00" font-family="Sansserif" font-size="15" font-weight="700" x="92.984" y="28.667">A</text>
+      <text fill="#00F" font-family="serif" font-size="14" font-style="italic" textLength="23.363" x="78" y="52.889">a a a</text>
+      <text fill="#00F" font-family="serif" font-size="14" font-style="italic" x="78" y="66.889">a</text>
+    </g>
+    <g class="entity" data-qualified-name="B" data-source-line="23" id="ent0002">
+      <path d="M178.5,12 L203.5,12 A12.5,12.5 0 0 1 216,24.5 L216,37 L166,37 L166,24.5 A12.5,12.5 0 0 1 178.5,12" fill="#F0F8FF"/>
+      <path d="M166,37 L216,37 L216,62.5 A12.5,12.5 0 0 1 203.5,75 L178.5,75 A12.5,12.5 0 0 1 166,62.5 L166,37" fill="#98FB98"/>
+      <rect fill="none" height="63" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="50" x="166" y="12"/>
+      <line style="stroke:#EE82EE;stroke-width:0.5;" x1="166" x2="216" y1="37" y2="37"/>
+      <line style="stroke:#EE82EE;stroke-width:0.5;" x1="166" x2="216" y1="37" y2="37"/>
+      <text fill="#F00" font-family="Sansserif" font-size="15" font-weight="700" x="185.984" y="28.667">B</text>
+      <text fill="#00F" font-family="serif" font-size="14" font-style="italic" textLength="23.363" x="171" y="52.889">b b b</text>
+      <text fill="#00F" font-family="serif" font-size="14" font-style="italic" x="171" y="66.889">b</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="25" id="ent0003">
+      <ellipse cx="16" cy="41.5" fill="#C0C0C0" rx="10" ry="10" style="stroke:#EE82EE;stroke-width:1;"/>
+    </g>
+    <g class="end_entity" data-qualified-name=".end." data-source-line="27" id="ent0006">
+      <ellipse cx="270" cy="42.5" fill="none" rx="11" ry="11" style="stroke:#EE82EE;stroke-width:1;"/>
+      <ellipse cx="270" cy="42.5" fill="#FFD700" rx="6" ry="6" style="stroke:#EE82EE;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#EE82EE" points="72.714,43.5,63.714,39.5,67.714,43.5,63.714,47.5,72.714,43.5" style="stroke:#EE82EE;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.055,43.5 C37.602,43.5 51.978,43.5 67.714,43.5" fill="none" style="stroke:#EE82EE;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.188" x="37" y="35.611">start</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#EE82EE" points="165.94,43.5,156.94,39.5,160.94,43.5,156.94,47.5,165.94,43.5" style="stroke:#EE82EE;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M123.413,43.5 C136.643,43.5 147.762,43.5 160.94,43.5" fill="none" style="stroke:#EE82EE;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.694" x="134" y="35.611">a2b</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#EE82EE" points="258.726,43.5,249.726,39.5,253.726,43.5,249.726,47.5,258.726,43.5" style="stroke:#EE82EE;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M216.431,43.5 C230.684,43.5 242.749,43.5 253.726,43.5" fill="none" style="stroke:#EE82EE;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.694" x="227" y="35.611">end</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="294px" preserveAspectRatio="none" style="width:290px;height:294px;background:#FFFFFF;" version="1.1" viewBox="0 0 290 294" width="290px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster MyFoo-->
+    <g class="cluster" data-qualified-name="MyFoo" data-source-line="2" id="ent0001">
+      <path d="M158.5,121 L202.288,121 A3.75,3.75 0 0 1 204.788,123.5 L211.788,141 L279.5,141 A2.5,2.5 0 0 1 282,143.5 L282,199.5 A2.5,2.5 0 0 1 279.5,202 L158.5,202 A2.5,2.5 0 0 1 156,199.5 L156,123.5 A2.5,2.5 0 0 1 158.5,121" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="156" x2="211.788" y1="141" y2="141"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42.788" x="160" y="133.889">MyFoo</text>
+    </g>
+    <!--cluster My-->
+    <g class="cluster" data-qualified-name="My" data-source-line="10" id="ent0008">
+      <path d="M16.5,12 L36.138,12 A3.75,3.75 0 0 1 38.638,14.5 L45.638,32 L145.5,32 A2.5,2.5 0 0 1 148,34.5 L148,207.5 A2.5,2.5 0 0 1 145.5,210 L16.5,210 A2.5,2.5 0 0 1 14,207.5 L14,14.5 A2.5,2.5 0 0 1 16.5,12" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="45.638" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.638" x="18" y="24.889">My</text>
+    </g>
+    <!--cluster Module-->
+    <g class="cluster" data-qualified-name="My.Module" data-source-line="7" id="ent0005">
+      <path d="M24.5,37 L71.438,37 A3.75,3.75 0 0 1 73.938,39.5 L80.938,57 L137.5,57 A2.5,2.5 0 0 1 140,59.5 L140,199.5 A2.5,2.5 0 0 1 137.5,202 L24.5,202 A2.5,2.5 0 0 1 22,199.5 L22,39.5 A2.5,2.5 0 0 1 24.5,37" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="80.938" y1="57" y2="57"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.938" x="26" y="49.889">Module</text>
+    </g>
+    <!--class Target-->
+    <g class="entity" data-qualified-name="Target" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.425" x="136" y="230"/>
+      <ellipse cx="151" cy="246" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="146" y="251">C</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="165" y="249.889">Target</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="137" x2="207.425" y1="262" y2="262"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="137" x2="207.425" y1="270" y2="270"/>
+    </g>
+    <!--class MyFoo-->
+    <g class="entity" data-qualified-name="MyFoo.MyFoo" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.788" x="198.5" y="146"/>
+      <ellipse cx="213.5" cy="162" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="208.5" y="167">C</text>
+      <text fill="#000" font-size="14" textLength="42.788" x="227.5" y="165.889">MyFoo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="199.5" x2="272.288" y1="178" y2="178"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="199.5" x2="272.288" y1="186" y2="186"/>
+    </g>
+    <path d="M32.5,146 L81.012,146 A3.75,3.75 0 0 1 83.512,148.5 L90.512,166 L95.012,166 A2.5,2.5 0 0 1 97.512,168.5 L97.512,191.5 A2.5,2.5 0 0 1 95.012,194 L32.5,194 A2.5,2.5 0 0 1 30,191.5 L30,148.5 A2.5,2.5 0 0 1 32.5,146" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="30" x2="90.512" y1="166" y2="166"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="47.512" x="34" y="158.889">Defines</text>
+    <!--class Class-->
+    <g class="entity" data-qualified-name="My.Module.Class" data-source-line="10" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.088" x="30.5" y="62"/>
+      <ellipse cx="45.5" cy="78" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="40.5" y="83">C</text>
+      <text fill="#000" font-size="14" textLength="35.088" x="59.5" y="81.889">Class</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="96.588" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="96.588" y1="102" y2="102"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M172,202.024 C172,202.089 172,202.155 172,202.22 C172,202.481 172,202.742 172,203.004 C172,203.528 172,204.053 172,204.581 C172,213.02 172,221.894 172,229.706" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0006" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="64,145.947,68,136.947,64,140.947,60,136.947,64,145.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M64,110.279 C64,121.453 64,129.802 64,140.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="155.961,141.465,154.881,131.676,153.442,137.147,147.971,135.708,155.961,141.465" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M140.048,114.261 C140.066,114.293 140.085,114.324 140.103,114.355 C140.25,114.605 140.396,114.854 140.542,115.104 C141.713,117.099 142.875,119.08 144,121 C147.706,127.327 151.679,134.127 155.435,140.563 C155.552,140.764 155.669,140.965 155.786,141.165 C155.845,141.265 153.383,137.047 153.442,137.147" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

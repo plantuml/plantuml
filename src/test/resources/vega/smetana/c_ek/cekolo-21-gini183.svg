@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="72px" preserveAspectRatio="none" style="width:534px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 534 72" width="534px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start1" data-source-line="1" id="ent0001">
+      <ellipse cx="16" cy="32" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="choice1" id="ent0002">
+      <polygon fill="#F1F1F1" points="56,22,68,34,56,46,44,34,56,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="86" y="22"/>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="184" y="22"/>
+    <g class="end_entity" data-qualified-name="end3" data-source-line="5" id="ent0005">
+      <ellipse cx="293" cy="33" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="293" cy="33" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="115.088" x="322.5" y="12"/>
+    <path d="M360.863,12 L360.863,17 L353.863,24 L322.5,24" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="63.088" x="343.5" y="42.889">sdlreceive</text>
+    <ellipse cx="467" cy="33" fill="#F1F1F1" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" x="461.925" y="36.889">H</text>
+    <ellipse cx="507" cy="33" fill="#F1F1F1" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="14" textLength="15.575" x="499.213" y="36.889">H*</text>
+  </g>
+</svg>

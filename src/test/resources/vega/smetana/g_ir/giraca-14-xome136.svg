@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="123px" preserveAspectRatio="none" style="width:302px;height:123px;background:#FFFFFF;" version="1.1" viewBox="0 0 302 123" width="302px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster p1-->
+    <g class="cluster" data-qualified-name="p1" data-source-line="6" id="ent0003">
+      <path d="M153,18 L169.575,18 A3.75,3.75 0 0 1 172.075,20.5 L179.075,38 L206,38 A2.5,2.5 0 0 1 208.5,40.5 L208.5,96.5 A2.5,2.5 0 0 1 206,99 L153,99 A2.5,2.5 0 0 1 150.5,96.5 L150.5,20.5 A2.5,2.5 0 0 1 153,18" fill="none" style="stroke:#000;stroke-width:0.5;"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="150.5" x2="179.075" y1="38" y2="38"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="154.5" y="30.889">p1</text>
+    </g>
+    <!--cluster p2-->
+    <g class="cluster" data-qualified-name="p2" data-source-line="9" id="ent0005">
+      <path d="M219,4 L235.575,4 A3.75,3.75 0 0 1 238.075,6.5 L245.075,24 L284,24 A2.5,2.5 0 0 1 286.5,26.5 L286.5,96.5 A2.5,2.5 0 0 1 284,99 L219,99 A2.5,2.5 0 0 1 216.5,96.5 L216.5,6.5 A2.5,2.5 0 0 1 219,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="216.5" x2="245.075" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="220.5" y="16.889">p2</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="54.425" x="228.288" y="36.889">«stereo»</text>
+    </g>
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:5;" width="74.65" x="6" y="41"/>
+      <ellipse cx="21" cy="59" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="64">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="46.65" x="33" y="55.333">«stereo»</text>
+      <text fill="#000" font-size="14" x="51.644" y="68.889">A</text>
+      <line style="stroke:#181818;stroke-width:5;" x1="7" x2="79.65" y1="77" y2="77"/>
+      <line style="stroke:#181818;stroke-width:5;" x1="7" x2="79.65" y1="85" y2="85"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="99" y="43"/>
+      <ellipse cx="114" cy="59" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="109" y="64">C</text>
+      <text fill="#000" font-size="14" x="128" y="62.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="100" x2="139.363" y1="75" y2="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="100" x2="139.363" y1="83" y2="83"/>
+    </g>
+    <!--class C-->
+    <g class="entity" data-qualified-name="p1.C" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="158.5" y="43"/>
+      <ellipse cx="173.5" cy="59" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="168.5" y="64">C</text>
+      <text fill="#000" font-size="14" x="187.5" y="62.889">C</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="159.5" x2="199.65" y1="75" y2="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="159.5" x2="199.65" y1="83" y2="83"/>
+    </g>
+    <!--class D-->
+    <g class="entity" data-qualified-name="p2.D" data-source-line="10" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="230.5" y="43"/>
+      <ellipse cx="245.5" cy="59" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="240.5" y="64">C</text>
+      <text fill="#000" font-size="14" x="259.5" y="62.889">D</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="231.5" x2="271.65" y1="75" y2="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="231.5" x2="271.65" y1="83" y2="83"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="94px" preserveAspectRatio="none" style="width:210px;height:94px;background:#FFFFFF;" version="1.1" viewBox="0 0 210 94" width="210px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Frame-->
+    <g class="cluster" data-qualified-name="Frame" data-source-line="4" id="ent0002">
+      <rect fill="none" height="57" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="66" x="128" y="12"/>
+      <path d="M178.425,12 L178.425,19 L168.425,29 L128,29" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="'Hack', 'DejaVu Sans Mono', 'Courier New', 'Nimbus Mono L', 'Monospaced', Courier, monospace" font-size="14" font-weight="700" textLength="40.425" x="131" y="23.889">Frame</text>
+    </g>
+    <!--entity Component\nABC-->
+    <g class="entity" data-qualified-name="Component.nABC" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.363" x="6" y="20"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="98.363" y="25"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="96.363" y="27"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="96.363" y="31"/>
+      <text fill="#000" font-family="'Hack', 'DejaVu Sans Mono', 'Courier New', 'Nimbus Mono L', 'Monospaced', Courier, monospace" font-size="14" textLength="72.363" x="21" y="50.889">Component</text>
+      <text fill="#000" font-family="'Hack', 'DejaVu Sans Mono', 'Courier New', 'Nimbus Mono L', 'Monospaced', Courier, monospace" font-size="14" textLength="28.875" x="21" y="64.889">ABC</text>
+    </g>
+    <!--entity Card-->
+    <g class="entity" data-qualified-name="Frame.Card" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.363" x="136" y="37"/>
+      <text fill="#000" font-family="'Hack', 'DejaVu Sans Mono', 'Courier New', 'Nimbus Mono L', 'Monospaced', Courier, monospace" font-size="14" textLength="30.363" x="146" y="50.889">Card</text>
+    </g>
+  </g>
+</svg>

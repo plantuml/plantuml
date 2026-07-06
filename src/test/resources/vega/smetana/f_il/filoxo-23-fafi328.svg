@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="216px" preserveAspectRatio="none" style="width:200px;height:216px;background:#FFFFFF;" version="1.1" viewBox="0 0 200 216" width="200px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f93o58du5bfsb" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Doer-->
+    <g class="entity" data-qualified-name="Doer" data-source-line="14" id="ent0001">
+      <rect fill="#FEFECE" filter="url(#f93o58du5bfsb)" height="76" style="stroke:#A80036;stroke-width:1;" width="177.813" x="6" y="12"/>
+      <ellipse cx="75.475" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="70.475" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="30.362" x="95.975" y="31.889">Doer</text>
+      <line style="stroke:#A80036;stroke-width:1;" x1="7" x2="182.813" y1="44" y2="44"/>
+      <line style="stroke:#A80036;stroke-width:1;" x1="7" x2="182.813" y1="52" y2="52"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="64.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="49" x="26" y="66.889">execute</text>
+      <g data-visibility-modifier="PROTECTED_METHOD">
+        <polygon fill="#B8860B" points="17,73.5,21,77.5,17,81.5,13,77.5" style="stroke:#B8860B;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="151.813" x="26" y="80.889">execute_for_all_children</text>
+    </g>
+    <!--class MetaDataScanner-->
+    <g class="entity" data-qualified-name="MetaDataScanner" data-source-line="19" id="ent0002">
+      <rect fill="#FEFECE" filter="url(#f93o58du5bfsb)" height="76" style="stroke:#A80036;stroke-width:1;" width="144.788" x="22.5" y="124"/>
+      <ellipse cx="37.5" cy="140" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="145">C</text>
+      <text fill="#000" font-size="14" textLength="112.788" x="51.5" y="143.889">MetaDataScanner</text>
+      <line style="stroke:#A80036;stroke-width:1;" x1="23.5" x2="166.288" y1="156" y2="156"/>
+      <line style="stroke:#A80036;stroke-width:1;" x1="23.5" x2="166.288" y1="164" y2="164"/>
+      <g data-visibility-modifier="PROTECTED_METHOD">
+        <polygon fill="#B8860B" points="33.5,171.5,37.5,175.5,33.5,179.5,29.5,175.5" style="stroke:#B8860B;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="91.875" x="42.5" y="178.889">execute_Class</text>
+      <g data-visibility-modifier="PROTECTED_METHOD">
+        <polygon fill="#B8860B" points="33.5,185.5,37.5,189.5,33.5,193.5,29.5,189.5" style="stroke:#B8860B;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="97.213" x="42.5" y="192.889">execute_Footer</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="95,88.241,89,106.241,101,106.241,95,88.241" style="stroke:#A80036;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M95,106.241 C95,117.709 95,112.332 95,123.797" fill="none" style="stroke:#A80036;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

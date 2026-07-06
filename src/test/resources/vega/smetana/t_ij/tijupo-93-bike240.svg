@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="258px" preserveAspectRatio="none" style="width:513px;height:258px;background:#FFFFFF;" version="1.1" viewBox="0 0 513 258" width="513px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Flight-->
+    <g class="entity" data-qualified-name="Flight" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="253.063" x="6" y="12"/>
+      <ellipse cx="111.131" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="106.131" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="34.3" x="131.631" y="31.889">Flight</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="258.063" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="126.7" x="12" y="58.889">flightNumber : Integer</text>
+      <text fill="#000" font-size="14" textLength="124.425" x="12" y="72.889">departureTime : Date</text>
+      <text fill="#000" font-size="14" textLength="152.163" x="12" y="86.889">flightDuration : Minute = 60</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="258.063" y1="94" y2="94"/>
+      <text fill="#000" font-size="14" textLength="241.063" x="12" y="108.889">delayFlight (numberOfMinutes : Minutes)</text>
+      <text fill="#000" font-size="14" textLength="133" x="12" y="122.889">getArrivalTime() : Date</text>
+    </g>
+    <!--class FrequentFlyer-->
+    <g class="entity" data-qualified-name="FrequentFlyer" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="184.638" x="312" y="26"/>
+      <ellipse cx="356.494" cy="42" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="351.494" y="47">C</text>
+      <text fill="#000" font-size="14" textLength="87.15" x="376.994" y="45.889">FrequentFlyer</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="313" x2="495.638" y1="58" y2="58"/>
+      <text fill="#000" font-size="14" textLength="100.275" x="318" y="72.889">firstName : String</text>
+      <text fill="#000" font-size="14" textLength="99.575" x="318" y="86.889">lastName : String</text>
+      <text fill="#000" font-size="14" textLength="172.638" x="318" y="100.889">frequentFlyerNumber : String</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="313" x2="495.638" y1="108" y2="108"/>
+    </g>
+    <!--class MileageCredit-->
+    <g class="entity" data-qualified-name="MileageCredit" data-source-line="12" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="130.213" x="220.5" y="166"/>
+      <ellipse cx="240.793" cy="182" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="235.793" y="187">C</text>
+      <text fill="#000" font-size="14" textLength="86.45" x="255.969" y="185.889">MileageCredit</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="221.5" x2="349.713" y1="198" y2="198"/>
+      <text fill="#000" font-size="14" textLength="110.425" x="226.5" y="212.889">baseMiles : Integer</text>
+      <text fill="#000" font-size="14" textLength="118.213" x="226.5" y="226.889">bonusMiles : Integer</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="221.5" x2="349.713" y1="234" y2="234"/>
+    </g>
+    <ellipse cx="279.5" cy="61" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M259.203,71 C265.229,71 271.256,71 277.282,71" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="association" id="lnk8">
+      <path d="M293.867,71 C299.773,71 305.68,71 311.586,71" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="association" id="lnk9">
+      <path d="M285.5,83.169 C285.5,101.298 285.5,137.921 285.5,165.934" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

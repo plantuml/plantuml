@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="177px" preserveAspectRatio="none" style="width:83px;height:177px;background:#FFFFFF;" version="1.1" viewBox="0 0 83 177" width="83px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="149" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.213" x="6" y="12"/>
+      <ellipse cx="23.278" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="18.278" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="37.784" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="66.213" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="28.031" y1="59" y2="59"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="28.031" y="62.389">B1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="45.181" x2="66.213" y1="59" y2="59"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="24" y="85.889">B1</text>
+      <text fill="#000" font-size="14" textLength="17.063" x="24" y="99.889">b()</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="32" y="113.889">b1</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="32" y="127.889">b2</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="40" y="141.889">b2.1</text>
+      <text fill="#000" font-size="14" textLength="16.275" x="24" y="155.889">c()</text>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="81"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="82" y2="82"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="75" y2="82"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="95"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="96" y2="96"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="82" y2="96"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="29" y="109"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="30" y1="110" y2="110"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="22" y1="96" y2="110"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="29" y="123"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="30" y1="124" y2="124"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="22" y1="110" y2="124"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="37" y="137"/>
+      <line style="stroke:#000;stroke-width:1;" x1="30" x2="38" y1="138" y2="138"/>
+      <line style="stroke:#000;stroke-width:1;" x1="30" x2="30" y1="124" y2="138"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="151"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="152" y2="152"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="96" y2="152"/>
+    </g>
+  </g>
+</svg>

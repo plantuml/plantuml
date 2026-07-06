@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="123px" preserveAspectRatio="none" style="width:292px;height:123px;background:#FFFFFF;" version="1.1" viewBox="0 0 292 123" width="292px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster p1-->
+    <g class="cluster" data-qualified-name="p1" data-source-line="1" id="ent0001">
+      <path d="M134.5,18 L151.075,18 A3.75,3.75 0 0 1 153.575,20.5 L160.575,38 L197.5,38 A2.5,2.5 0 0 1 200,40.5 L200,96.5 A2.5,2.5 0 0 1 197.5,99 L134.5,99 A2.5,2.5 0 0 1 132,96.5 L132,20.5 A2.5,2.5 0 0 1 134.5,18" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="132" x2="160.575" y1="38" y2="38"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="136" y="30.889">p1</text>
+    </g>
+    <!--cluster p2-->
+    <g class="cluster" data-qualified-name="p2" data-source-line="4" id="ent0003">
+      <path d="M210.5,4 L227.075,4 A3.75,3.75 0 0 1 229.575,6.5 L236.575,24 L273.5,24 A2.5,2.5 0 0 1 276,26.5 L276,96.5 A2.5,2.5 0 0 1 273.5,99 L210.5,99 A2.5,2.5 0 0 1 208,96.5 L208,6.5 A2.5,2.5 0 0 1 210.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="208" x2="236.575" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="212" y="16.889">p2</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="39.725" x="226.138" y="36.889">«Foo»</text>
+    </g>
+    <path d="M8.5,43 L25.075,43 A3.75,3.75 0 0 1 27.575,45.5 L34.575,63 L39.075,63 A2.5,2.5 0 0 1 41.575,65.5 L41.575,88.5 A2.5,2.5 0 0 1 39.075,91 L8.5,91 A2.5,2.5 0 0 1 6,88.5 L6,45.5 A2.5,2.5 0 0 1 8.5,43" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="34.575" y1="63" y2="63"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="10" y="55.889">p3</text>
+    <path d="M62.5,43 L79.075,43 A3.75,3.75 0 0 1 81.575,45.5 L88.575,63 L119.225,63 A2.5,2.5 0 0 1 121.725,65.5 L121.725,88.5 A2.5,2.5 0 0 1 119.225,91 L62.5,91 A2.5,2.5 0 0 1 60,88.5 L60,45.5 A2.5,2.5 0 0 1 62.5,43" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="60" x2="88.575" y1="63" y2="63"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="64" y="55.889">p4</text>
+    <text fill="#000" font-size="14" font-style="italic" textLength="39.725" x="75" y="75.889">«Foo»</text>
+    <!--class in1-->
+    <g class="entity" data-qualified-name="p1.in1" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.725" x="140.5" y="43"/>
+      <ellipse cx="155.5" cy="59" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="150.5" y="64">C</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="169.5" y="62.889">in1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141.5" x2="190.225" y1="75" y2="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="141.5" x2="190.225" y1="83" y2="83"/>
+    </g>
+    <!--class in2-->
+    <g class="entity" data-qualified-name="p2.in2" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.725" x="216.5" y="43"/>
+      <ellipse cx="231.5" cy="59" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="226.5" y="64">C</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="245.5" y="62.889">in2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="217.5" x2="266.225" y1="75" y2="75"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="217.5" x2="266.225" y1="83" y2="83"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:326px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 326 76" width="326px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="gtkolbun1ahr00" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M8.5,12 L128.588,12 A3.75,3.75 0 0 1 131.088,14.5 L138.088,32 L142.588,32 A2.5,2.5 0 0 1 145.088,34.5 L145.088,57.5 A2.5,2.5 0 0 1 142.588,60 L8.5,60 A2.5,2.5 0 0 1 6,57.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="url(#gtkolbun1ahr00)" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="138.088" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="119.088" x="10" y="24.889">DefaultNamespace</text>
+    <path d="M165.5,12 L293.375,12 A3.75,3.75 0 0 1 295.875,14.5 L302.875,32 L307.375,32 A2.5,2.5 0 0 1 309.875,34.5 L309.875,57.5 A2.5,2.5 0 0 1 307.375,60 L165.5,60 A2.5,2.5 0 0 1 163,57.5 L163,14.5 A2.5,2.5 0 0 1 165.5,12" fill="url(#gtkolbun1ahr00)" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="163" x2="302.875" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="126.875" x="167" y="24.889">DefaultNamespace2</text>
+  </g>
+</svg>

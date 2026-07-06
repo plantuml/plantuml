@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="147px" preserveAspectRatio="none" style="width:218px;height:147px;background:#FFFFFF;" version="1.1" viewBox="0 0 218 147" width="218px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="10">
+      <rect fill="#F00" height="60" rx="7.5" ry="7.5" style="stroke:none;" width="201.875" x="5" y="5"/>
+      <text fill="#00F" font-size="50" font-weight="700" textLength="191.875" x="10" y="48.889">TestTitle</text>
+    </g>
+    <!--class dd-->
+    <g class="entity" data-qualified-name="dd" data-source-line="12" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.575" x="80.438" y="83"/>
+      <ellipse cx="95.438" cy="99" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="90.438" y="104">C</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="109.438" y="102.889">dd</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="81.438" x2="127.013" y1="115" y2="115"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="81.438" x2="127.013" y1="123" y2="123"/>
+    </g>
+  </g>
+</svg>

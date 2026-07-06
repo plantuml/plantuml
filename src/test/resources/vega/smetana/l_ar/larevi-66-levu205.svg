@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="62px" preserveAspectRatio="none" style="width:117px;height:62px;background:#FFFFFF;" version="1.1" viewBox="0 0 117 62" width="117px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity file-->
+    <g class="entity" data-qualified-name="file" data-source-line="3" id="ent0001">
+      <path d="M63.5,17 L63.5,41 A5,5 0 0 0 68.5,46 L96.438,46 A5,5 0 0 0 101.438,41 L101.438,22 L91.438,12 L68.5,12 A5,5 0 0 0 63.5,17" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M91.438,12 L91.438,17 A5,5 0 0 0 96.438,22 L101.438,22" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="73.5" y="32.889">file</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="4" id="ent0003">
+      <path d="M6,22 L6,35 A5,5 0 0 0 11,40 L40.038,40 A5,5 0 0 0 45.038,35 L45.038,35 L63.212,29 L45.038,27 L45.038,27 L35.038,17 L11,17 A5,5 0 0 0 6,22" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M35.038,17 L35.038,24.5 A2.5,2.5 0 0 0 37.538,27 L45.038,27 L35.038,17" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="18.038" x="12" y="32.111">foo</text>
+    </g>
+  </g>
+</svg>

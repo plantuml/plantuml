@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="237px" preserveAspectRatio="none" style="width:183px;height:237px;background:#FFFFFF;" version="1.1" viewBox="0 0 183 237" width="183px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="A" data-source-line="3" id="ent0001">
+      <path d="M56.5,39 L157.5,39 A12.5,12.5 0 0 1 170,51.5 L170,58 L44,58 L44,51.5 A12.5,12.5 0 0 1 56.5,39" fill="#F1F1F1"/>
+      <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="126" x="44" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="44" x2="170" y1="58" y2="58"/>
+      <text fill="#000" font-size="14" x="102.319" y="49.889">A</text>
+    </g>
+    <!--cluster B-->
+    <g class="cluster" data-qualified-name="B" data-source-line="8" id="ent0003">
+      <path d="M26.5,130 L127.5,130 A12.5,12.5 0 0 1 140,142.5 L140,149 L14,149 L14,142.5 A12.5,12.5 0 0 1 26.5,130" fill="#F1F1F1"/>
+      <rect fill="none" height="83" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="126" x="14" y="130"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="140" y1="149" y2="149"/>
+      <text fill="#000" font-size="14" x="72.319" y="140.889">B</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0005">
+      <ellipse cx="60" cy="14" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="A.AInternal" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="86" y="64"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="86" x2="162" y1="88" y2="88"/>
+      <text fill="#000" font-size="14" textLength="56" x="96" y="79.889">AInternal</text>
+    </g>
+    <g class="entity" data-qualified-name="B.BInternal" data-source-line="9" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76" x="22" y="155"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22" x2="98" y1="179" y2="179"/>
+      <text fill="#000" font-size="14" textLength="56" x="32" y="170.889">BInternal</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="60,38.836,64,29.836,60,33.836,56,29.836,60,38.836" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M60,28.094 C60,29.751 60,31.546 60,33.445 C60,34.394 60,35.369 60,36.366 C60,36.864 60,37.368 60,37.876 C60,38.131 60,38.386 60,38.643 C60,38.707 60,33.771 60,33.836" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="60,154.756,64,145.756,60,149.756,56,145.756,60,154.756" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M60,122.079 C60,122.37 60,122.662 60,122.954 C60,124.125 60,125.308 60,126.498 C60,136.019 60,141.045 60,149.756" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="124,114.32,120,123.32,124,119.32,128,123.32,124,114.32" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M124,129.784 C124,129.708 124,129.633 124,129.558 C124,129.407 124,129.257 124,129.106 C124,128.805 124,128.504 124,128.204 C124,123.399 124,123.694 124,119.32" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

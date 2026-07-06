@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="310px" preserveAspectRatio="none" style="width:570px;height:310px;background:#FFFFFF;" version="1.1" viewBox="0 0 570 310" width="570px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="144" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="225.188" x="10" y="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="15" y="40.889">doe</text>
+    <text fill="#000" font-size="14" textLength="117.425" x="112.763" y="40.889">a deer, a female deer</text>
+    <line style="stroke:#000;stroke-width:1;" x1="107.763" x2="107.763" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="235.188" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="15" y="58.889">ray</text>
+    <text fill="#000" font-size="14" textLength="112.088" x="112.763" y="58.889">a drop of golden sun</text>
+    <line style="stroke:#000;stroke-width:1;" x1="107.763" x2="107.763" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="235.188" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="10.938" x="15" y="76.889">pi</text>
+    <text fill="#000" font-size="14" textLength="50.575" x="112.763" y="76.889">3.14159</text>
+    <line style="stroke:#000;stroke-width:1;" x1="107.763" x2="107.763" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="235.188" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="33.425" x="15" y="94.889">xmas</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="112.763" y="94.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="107.763" x2="107.763" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="235.188" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="73.85" x="15" y="112.889">french-hens</text>
+    <text fill="#000" font-size="14" x="112.763" y="112.889">3</text>
+    <line style="stroke:#000;stroke-width:1;" x1="107.763" x2="107.763" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="235.188" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="74.813" x="15" y="130.889">calling-birds</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="112.763" y="130.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="107.763" x2="107.763" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="235.188" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="87.763" x="15" y="148.889">xmas-fifth-day</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="112.763" y="148.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="107.763" x2="107.763" y1="136" y2="154"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="235.188" y1="154" y2="154"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="15" y="166.889">foo</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="112.763" y="166.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="107.763" x2="107.763" y1="154" y2="172"/>
+    <rect fill="none" height="144" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="225.188" x="10" y="28"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="50.512" x="307" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.363" x="312" y="22.889">huey</text>
+    <line style="stroke:#000;stroke-width:1;" x1="307" x2="357.513" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" textLength="40.512" x="312" y="40.889">dewey</text>
+    <line style="stroke:#000;stroke-width:1;" x1="307" x2="357.513" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" textLength="29.662" x="312" y="58.889">louie</text>
+    <line style="stroke:#000;stroke-width:1;" x1="307" x2="357.513" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" textLength="24.063" x="312" y="76.889">fred</text>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="50.512" x="307" y="10"/>
+    <rect fill="#F1F1F1" height="90" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="121.15" x="272" y="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="74.813" x="277" y="112.889">calling-birds</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="364.088" y="112.889">four</text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="100" y2="118"/>
+    <rect fill="#CCFF02" height="18" rx="2" ry="2" style="stroke:#CCFF02;stroke-width:1;" width="119.15" x="273.5" y="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="393.15" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="73.85" x="277" y="130.889">french-hens</text>
+    <text fill="#000" font-size="14" x="364.088" y="130.889">3</text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="393.15" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="77.088" x="277" y="148.889">golden-rings</text>
+    <text fill="#000" font-size="14" x="364.088" y="148.889">5</text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="136" y2="154"/>
+    <rect fill="#CCFF02" height="18" rx="2" ry="2" style="stroke:#CCFF02;stroke-width:1;" width="119.15" x="273.5" y="154"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="393.15" y1="154" y2="154"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="62.212" x="277" y="166.889">partridges</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="364.088" y="166.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="154" y2="172"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="393.15" y1="172" y2="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="73.063" x="277" y="184.889">turtle-doves</text>
+    <text fill="#000" font-size="14" textLength="21.787" x="364.088" y="184.889">two</text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="172" y2="190"/>
+    <rect fill="none" height="90" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="121.15" x="272" y="100"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="128.15" x="430" y="145"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="34.212" x="435" y="157.889">count</text>
+    <text fill="#000" font-size="14" x="493.3" y="157.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="488.3" x2="488.3" y1="145" y2="163"/>
+    <rect fill="#CCFF02" height="18" rx="2" ry="2" style="stroke:#CCFF02;stroke-width:1;" width="126.15" x="431.5" y="163"/>
+    <line style="stroke:#000;stroke-width:1;" x1="430" x2="558.15" y1="163" y2="163"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="48.3" x="435" y="175.889">location</text>
+    <text fill="#000" font-size="14" textLength="59.85" x="493.3" y="175.889">a pear tree</text>
+    <line style="stroke:#000;stroke-width:1;" x1="488.3" x2="488.3" y1="163" y2="181"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="128.15" x="430" y="145"/>
+    <rect fill="#F1F1F1" height="90" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="121.15" x="272" y="208"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="74.813" x="277" y="220.889">calling-birds</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="364.088" y="220.889">four</text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="208" y2="226"/>
+    <rect fill="#CCFF02" height="18" rx="2" ry="2" style="stroke:#CCFF02;stroke-width:1;" width="119.15" x="273.5" y="226"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="393.15" y1="226" y2="226"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="73.85" x="277" y="238.889">french-hens</text>
+    <text fill="#000" font-size="14" x="364.088" y="238.889">0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="226" y2="244"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="393.15" y1="244" y2="244"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="77.088" x="277" y="256.889">golden-rings</text>
+    <text fill="#000" font-size="14" x="364.088" y="256.889">0</text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="244" y2="262"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="393.15" y1="262" y2="262"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="62.212" x="277" y="274.889">partridges</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="364.088" y="274.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="262" y2="280"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="393.15" y1="280" y2="280"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="73.063" x="277" y="292.889">turtle-doves</text>
+    <text fill="#000" font-size="14" textLength="21.787" x="364.088" y="292.889">two</text>
+    <line style="stroke:#000;stroke-width:1;" x1="359.088" x2="359.088" y1="280" y2="298"/>
+    <rect fill="none" height="90" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="121.15" x="272" y="208"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="128.15" x="430" y="253"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="34.212" x="435" y="265.889">count</text>
+    <text fill="#000" font-size="14" x="493.3" y="265.889">9</text>
+    <line style="stroke:#000;stroke-width:1;" x1="488.3" x2="488.3" y1="253" y2="271"/>
+    <rect fill="#CCFF02" height="18" rx="2" ry="2" style="stroke:#CCFF02;stroke-width:1;" width="126.15" x="431.5" y="271"/>
+    <line style="stroke:#000;stroke-width:1;" x1="430" x2="558.15" y1="271" y2="271"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="48.3" x="435" y="283.889">location</text>
+    <text fill="#000" font-size="14" textLength="59.85" x="493.3" y="283.889">a pear tree</text>
+    <line style="stroke:#000;stroke-width:1;" x1="488.3" x2="488.3" y1="271" y2="289"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="128.15" x="430" y="253"/>
+    <path d="M223,127 L236,127 C258.627,127 254.906,105.826 272,91 C281.199,83.022 291.683,74.868 301.287,67.731" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M303.1,70.195 L303.136,66.371 L299.475,65.266 L307.448,63.2 L303.1,70.195" fill="#000"/>
+    <ellipse cx="223" cy="127" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M381,163 L394,163 C403.269,163 413.023,163 422.652,163" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M422.652,166.074 L424.958,163 L422.652,159.926 L430.337,163 L422.652,166.074" fill="#000"/>
+    <ellipse cx="381" cy="163" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M223,145 L236,145 C245.271,145 255.047,145 264.669,145" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M264.669,148.069 L266.97,145 L264.669,141.931 L272.34,145 L264.669,148.069" fill="#000"/>
+    <ellipse cx="223" cy="145" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M381,271 L394,271 C403.269,271 413.023,271 422.652,271" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M422.652,274.074 L424.958,271 L422.652,267.926 L430.337,271 L422.652,274.074" fill="#000"/>
+    <ellipse cx="381" cy="271" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M223,163 L236,163 C258.627,163 255.585,183.426 272,199 C273.239,200.176 274.496,201.362 275.767,202.554" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M273.662,204.812 L277.46,204.133 L277.872,200.297 L281.41,207.817 L273.662,204.812" fill="#000"/>
+    <ellipse cx="223" cy="163" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

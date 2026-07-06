@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="226px" preserveAspectRatio="none" style="width:731px;height:226px;background:#FFFFFF;" version="1.1" viewBox="0 0 731 226" width="731px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster replicaset_100-->
+    <g class="cluster" data-qualified-name="replicaset_100" data-source-line="3" id="ent0002">
+      <rect fill="none" height="95" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="615" x="100" y="4"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="83.388" x="365.806" y="16.889">«ReplicaSet»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="91.088" x="361.956" y="30.889">replicaset_100</text>
+    </g>
+    <!--cluster replicaset_101-->
+    <g class="cluster" data-qualified-name="replicaset_101" data-source-line="4" id="ent0004">
+      <rect fill="none" height="95" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="240" x="66" y="107"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="83.388" x="144.306" y="119.889">«ReplicaSet»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="91.088" x="140.456" y="133.889">replicaset_101</text>
+    </g>
+    <!--entity service-->
+    <g class="entity" data-qualified-name="service" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.3" x="6" y="43"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="62.3" x="17" y="63.889">«Service»</text>
+      <text fill="#000" font-size="14" textLength="46.725" x="24.788" y="77.889">Service</text>
+    </g>
+    <!--entity replica_100_01-->
+    <g class="entity" data-qualified-name="replicaset_100.replica_100_01" data-source-line="13" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.113" x="142.5" y="43"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="95.113" x="153.5" y="63.889">«DisabledPod»</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="179.858" y="77.889">1.0.0</text>
+      <path d="M213.566,68.167 L211.921,69.812 L212.761,70.652 L214.838,72.763 L212.761,74.84 L211.921,75.645 L213.566,77.325 L214.406,76.485 L216.518,74.373 L218.594,76.485 L219.399,77.325 L221.079,75.645 L220.239,74.84 L218.128,72.763 L220.239,70.652 L221.079,69.812 L219.399,68.167 L218.594,69.007 L216.518,71.083 L214.406,69.007 L213.566,68.167" fill="#F00"/>
+    </g>
+    <!--entity replica_100_02-->
+    <g class="entity" data-qualified-name="replicaset_100.replica_100_02" data-source-line="14" id="ent0009">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.113" x="277.5" y="43"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="95.113" x="288.5" y="63.889">«DisabledPod»</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="314.858" y="77.889">1.0.0</text>
+      <path d="M348.566,68.167 L346.921,69.812 L347.761,70.652 L349.838,72.763 L347.761,74.84 L346.921,75.645 L348.566,77.325 L349.406,76.485 L351.518,74.373 L353.594,76.485 L354.399,77.325 L356.079,75.645 L355.239,74.84 L353.128,72.763 L355.239,70.652 L356.079,69.812 L354.399,68.167 L353.594,69.007 L351.518,71.083 L349.406,69.007 L348.566,68.167" fill="#F00"/>
+    </g>
+    <!--entity replica_100_03-->
+    <g class="entity" data-qualified-name="replicaset_100.replica_100_03" data-source-line="15" id="ent0010">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.875" x="413" y="43"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="63.875" x="424" y="63.889">«Pod100»</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="434.74" y="77.889">1.0.0</text>
+      <path d="M474.28,69.333 L473.475,70.173 L470.232,73.417 L469.287,72.507 L468.447,71.667 L466.802,73.312 L467.642,74.152 L469.392,75.902 L470.197,76.742 L471.037,75.902 L475.12,71.818 L475.96,70.978 L474.28,69.333" fill="#008000"/>
+    </g>
+    <!--entity replica_100_04-->
+    <g class="entity" data-qualified-name="replicaset_100.replica_100_04" data-source-line="16" id="ent0011">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.875" x="517" y="43"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="63.875" x="528" y="63.889">«Pod100»</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="538.74" y="77.889">1.0.0</text>
+      <path d="M578.28,69.333 L577.475,70.173 L574.232,73.417 L573.287,72.507 L572.447,71.667 L570.802,73.312 L571.642,74.152 L573.392,75.902 L574.197,76.742 L575.037,75.902 L579.12,71.818 L579.96,70.978 L578.28,69.333" fill="#008000"/>
+    </g>
+    <!--entity replica_100_05-->
+    <g class="entity" data-qualified-name="replicaset_100.replica_100_05" data-source-line="17" id="ent0012">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.875" x="621" y="43"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="63.875" x="632" y="63.889">«Pod100»</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="642.74" y="77.889">1.0.0</text>
+      <path d="M682.28,69.333 L681.475,70.173 L678.232,73.417 L677.287,72.507 L676.447,71.667 L674.802,73.312 L675.642,74.152 L677.392,75.902 L678.197,76.742 L679.037,75.902 L683.12,71.818 L683.96,70.978 L682.28,69.333" fill="#008000"/>
+    </g>
+    <!--entity replica_101_01-->
+    <g class="entity" data-qualified-name="replicaset_101.replica_101_01" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.875" x="212" y="146"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="63.875" x="223" y="166.889">«Pod101»</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="233.74" y="180.889">1.0.1</text>
+      <path d="M273.28,172.333 L272.475,173.173 L269.232,176.417 L268.287,175.507 L267.447,174.667 L265.802,176.312 L266.642,177.152 L268.392,178.902 L269.197,179.742 L270.037,178.902 L274.12,174.818 L274.96,173.978 L273.28,172.333" fill="#008000"/>
+    </g>
+    <!--entity replica_101_02-->
+    <g class="entity" data-qualified-name="replicaset_101.replica_101_02" data-source-line="9" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.875" x="108" y="146"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="63.875" x="119" y="166.889">«Pod101»</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="129.74" y="180.889">1.0.1</text>
+      <path d="M169.28,172.333 L168.475,173.173 L165.232,176.417 L164.287,175.507 L163.447,174.667 L161.802,176.312 L162.642,177.152 L164.392,178.902 L165.197,179.742 L166.037,178.902 L170.12,174.818 L170.96,173.978 L169.28,172.333" fill="#008000"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="99.991,67,90.991,63,94.991,67,90.991,71,99.991,67" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M90.234,67 C93.187,67 96.139,67 99.091,67 C99.276,67 99.46,67 99.645,67 C99.737,67 99.829,67 99.922,67 C99.945,67 94.968,67 94.991,67" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="65.998,121.464,66.917,111.658,64.403,116.725,59.335,114.21,65.998,121.464" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M55.8,91.171 C57.555,96.384 59.497,102.152 61.507,108.123 C62.512,111.108 63.534,114.144 64.558,117.186 C64.814,117.947 65.07,118.708 65.326,119.468 C65.454,119.849 65.582,120.229 65.71,120.609 C65.774,120.799 65.838,120.989 65.902,121.179 C65.934,121.274 64.371,116.63 64.403,116.725" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

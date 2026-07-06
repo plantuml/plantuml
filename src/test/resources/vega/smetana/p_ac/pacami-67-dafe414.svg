@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="213px" preserveAspectRatio="none" style="width:350px;height:213px;background:#FFFFFF;" version="1.1" viewBox="0 0 350 213" width="350px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="14">
+      <text fill="#F00" font-size="14" font-weight="700" textLength="190.663" x="76.419" y="20.889">How to change fontcolor by style?</text>
+    </g>
+    <g class="entity" data-qualified-name="A" data-source-line="15" id="ent0001">
+      <path d="M18.5,47 L168.5,47 A12.5,12.5 0 0 1 181,59.5 L181,71 L6,71 L6,59.5 A12.5,12.5 0 0 1 18.5,47" fill="#FF0"/>
+      <path d="M6,71 L181,71 L181,184.5 A12.5,12.5 0 0 1 168.5,197 L18.5,197 A12.5,12.5 0 0 1 6,184.5 L6,71" fill="#FF0"/>
+      <rect fill="none" height="150" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="175" x="6" y="47"/>
+      <line style="stroke:#EE82EE;stroke-width:0.5;" x1="6" x2="181" y1="71" y2="71"/>
+      <text fill="#00F" font-size="14" x="88.819" y="62.889">A</text>
+      <g class="entity" data-qualified-name="A.B" data-source-line="16" id="ent0002">
+        <rect fill="#FF0" height="50" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="50" x="12" y="107"/>
+        <line style="stroke:#EE82EE;stroke-width:0.5;" x1="12" x2="62" y1="131" y2="131"/>
+        <text fill="#00F" font-size="14" x="32.319" y="122.889">B</text>
+      </g>
+      <g class="entity" data-qualified-name="A.C" data-source-line="18" id="ent0003">
+        <path d="M92.5,82 L149.5,82 A12.5,12.5 0 0 1 162,94.5 L162,106 L80,106 L80,94.5 A12.5,12.5 0 0 1 92.5,82" fill="#FF0"/>
+        <path d="M80,106 L162,106 L162,169.5 A12.5,12.5 0 0 1 149.5,182 L92.5,182 A12.5,12.5 0 0 1 80,169.5 L80,106" fill="#FF0"/>
+        <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="82" x="80" y="82"/>
+        <line style="stroke:#EE82EE;stroke-width:0.5;" x1="80" x2="162" y1="106" y2="106"/>
+        <text fill="#00F" font-size="14" x="115.925" y="97.889">C</text>
+        <g class="entity" data-qualified-name="A.C.c" data-source-line="19" id="ent0004">
+          <rect fill="#FF0" height="50" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="57.275" x="86" y="117"/>
+          <line style="stroke:#EE82EE;stroke-width:0.5;" x1="86" x2="143.275" y1="141" y2="141"/>
+          <text fill="#00F" font-size="14" x="111.138" y="132.889">c</text>
+          <text fill="#00F" font-size="14" textLength="37.275" x="91" y="156.889">state c</text>
+        </g>
+      </g>
+    </g>
+    <g class="entity" data-qualified-name="S1" data-source-line="23" id="ent0005">
+      <rect fill="#FF0" height="50" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="67.425" x="199" y="97"/>
+      <line style="stroke:#EE82EE;stroke-width:0.5;" x1="199" x2="266.425" y1="121" y2="121"/>
+      <text fill="#00F" font-size="14" textLength="17.15" x="224.138" y="112.889">S1</text>
+      <text fill="#00F" font-size="14" textLength="47.425" x="204" y="136.889">state S1</text>
+    </g>
+    <g class="entity" data-qualified-name="S2" data-source-line="24" id="ent0006">
+      <rect fill="#FF0" height="50" rx="12.5" ry="12.5" style="stroke:#EE82EE;stroke-width:0.5;" width="50" x="284.5" y="97"/>
+      <line style="stroke:#EE82EE;stroke-width:0.5;" x1="284.5" x2="334.5" y1="121" y2="121"/>
+      <text fill="#00F" font-size="14" textLength="17.15" x="300.925" y="112.889">S2</text>
+    </g>
+  </g>
+</svg>

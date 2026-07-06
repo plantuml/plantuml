@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="435px" preserveAspectRatio="none" style="width:1366px;height:435px;background:#FFFFFF;" version="1.1" viewBox="0 0 1366 435" width="1366px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster client-->
+    <g class="cluster" data-qualified-name="client" data-source-line="1" id="ent0001">
+      <path d="M366.5,4 L417.375,4 A3.75,3.75 0 0 1 419.875,6.5 L426.875,24 L645.5,24 A2.5,2.5 0 0 1 648,26.5 L648,158.5 A2.5,2.5 0 0 1 645.5,161 L366.5,161 A2.5,2.5 0 0 1 364,158.5 L364,6.5 A2.5,2.5 0 0 1 366.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="364" x2="426.875" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49.875" x="368" y="16.889">Client UI</text>
+    </g>
+    <!--cluster API-->
+    <g class="cluster" data-qualified-name="API" data-source-line="7" id="ent0005">
+      <path d="M16.5,84 L92.225,84 A3.75,3.75 0 0 1 94.725,86.5 L101.725,104 L353.5,104 A2.5,2.5 0 0 1 356,106.5 L356,243.5 A2.5,2.5 0 0 1 353.5,246 L16.5,246 A2.5,2.5 0 0 1 14,243.5 L14,86.5 A2.5,2.5 0 0 1 16.5,84" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="101.725" y1="104" y2="104"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="74.725" x="18" y="96.889">Secured API</text>
+    </g>
+    <!--cluster BL-->
+    <g class="cluster" data-qualified-name="BL" data-source-line="13" id="ent0009">
+      <path d="M436.5,169 L527.888,169 A3.75,3.75 0 0 1 530.388,171.5 L537.388,189 L751.5,189 A2.5,2.5 0 0 1 754,191.5 L754,328.5 A2.5,2.5 0 0 1 751.5,331 L436.5,331 A2.5,2.5 0 0 1 434,328.5 L434,171.5 A2.5,2.5 0 0 1 436.5,169" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="434" x2="537.388" y1="189" y2="189"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="90.388" x="438" y="181.889">Business Logic</text>
+    </g>
+    <!--cluster ES-->
+    <g class="cluster" data-qualified-name="ES" data-source-line="19" id="ent0013">
+      <path d="M764.5,254 L899.288,254 A3.75,3.75 0 0 1 901.788,256.5 L908.788,274 L1355.5,274 A2.5,2.5 0 0 1 1358,276.5 L1358,408.5 A2.5,2.5 0 0 1 1355.5,411 L764.5,411 A2.5,2.5 0 0 1 762,408.5 L762,256.5 A2.5,2.5 0 0 1 764.5,254" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="762" x2="908.788" y1="274" y2="274"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="133.788" x="766" y="266.889">Enterprise Data Stores</text>
+    </g>
+    <!--entity Browser / Tablet-->
+    <g class="entity" data-qualified-name="client.Browser . Tablet" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="134.15" x="506" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="620.15" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="618.15" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="618.15" y="40"/>
+      <text fill="#000" font-size="14" textLength="94.15" x="521" y="59.889">Browser / Tablet</text>
+    </g>
+    <!--entity Mobile-->
+    <g class="entity" data-qualified-name="client.Mobile" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.3" x="372.5" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="433.8" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="431.8" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="431.8" y="40"/>
+      <text fill="#000" font-size="14" textLength="41.3" x="387.5" y="59.889">Mobile</text>
+    </g>
+    <!--entity Microsites-->
+    <g class="entity" data-qualified-name="client.Microsites" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103" x="486.5" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="569.5" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="567.5" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="567.5" y="120"/>
+      <text fill="#000" font-size="14" textLength="63" x="501.5" y="139.889">Microsites</text>
+    </g>
+    <!--entity HTML Pages-->
+    <g class="entity" data-qualified-name="API.HTML Pages" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.875" x="22" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="119.875" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="117.875" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="117.875" y="120"/>
+      <text fill="#000" font-size="14" textLength="77.875" x="37" y="139.889">HTML Pages</text>
+    </g>
+    <!--entity RESTful Endpoints-->
+    <g class="entity" data-qualified-name="API.RESTful Endpoints" data-source-line="9" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="154.538" x="158.5" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="293.038" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="291.038" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="291.038" y="120"/>
+      <text fill="#000" font-size="14" textLength="114.538" x="173.5" y="139.889">RESTful Endpoints</text>
+    </g>
+    <!--entity SOAP Endpoints-->
+    <g class="entity" data-qualified-name="API.SOAP Endpoints" data-source-line="10" id="ent0008">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="141.238" x="22.5" y="194"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="143.738" y="199"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="141.738" y="201"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="141.738" y="205"/>
+      <text fill="#000" font-size="14" textLength="101.238" x="37.5" y="224.889">SOAP Endpoints</text>
+    </g>
+    <!--entity Data Shaping-->
+    <g class="entity" data-qualified-name="BL.Data Shaping" data-source-line="14" id="ent0010">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="121.025" x="442.5" y="194"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="543.525" y="199"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="541.525" y="201"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="541.525" y="205"/>
+      <text fill="#000" font-size="14" textLength="81.025" x="457.5" y="224.889">Data Shaping</text>
+    </g>
+    <!--entity Data Cacheing-->
+    <g class="entity" data-qualified-name="BL.Data Cacheing" data-source-line="15" id="ent0011">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128.813" x="616.5" y="194"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="725.313" y="199"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="723.313" y="201"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="723.313" y="205"/>
+      <text fill="#000" font-size="14" textLength="88.813" x="631.5" y="224.889">Data Cacheing</text>
+    </g>
+    <!--entity Data Validation-->
+    <g class="entity" data-qualified-name="BL.Data Validation" data-source-line="16" id="ent0012">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="131.175" x="442.5" y="279"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="553.675" y="284"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="551.675" y="286"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="551.675" y="290"/>
+      <text fill="#000" font-size="14" textLength="91.175" x="457.5" y="309.889">Data Validation</text>
+    </g>
+    <!--entity EDP - Personalization-->
+    <g class="entity" data-qualified-name="ES.EDP - Personalization" data-source-line="20" id="ent0014">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="169.325" x="804.5" y="279"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="953.825" y="284"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="951.825" y="286"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="951.825" y="290"/>
+      <text fill="#000" font-size="14" textLength="129.325" x="819.5" y="309.889">EDP - Personalization</text>
+    </g>
+    <!--entity ATLAS-->
+    <g class="entity" data-qualified-name="ES.ATLAS" data-source-line="21" id="ent0015">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.45" x="992" y="279"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1056.45" y="284"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1054.45" y="286"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1054.45" y="290"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="1007" y="309.889">ATLAS</text>
+    </g>
+    <!--entity Magic - Compensation / Performance-->
+    <g class="entity" data-qualified-name="ES.Magic - Compensation . Performance" data-source-line="22" id="ent0016">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="256.213" x="1094" y="279"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1330.213" y="284"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1328.213" y="286"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1328.213" y="290"/>
+      <text fill="#000" font-size="14" textLength="216.213" x="1109" y="309.889">Magic - Compensation / Performance</text>
+    </g>
+    <!--entity SSR - Sales system-->
+    <g class="entity" data-qualified-name="ES.SSR - Sales system" data-source-line="23" id="ent0017">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="152.875" x="812.5" y="359"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="945.375" y="364"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="943.375" y="366"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="943.375" y="370"/>
+      <text fill="#000" font-size="14" textLength="112.875" x="827.5" y="389.889">SSR - Sales system</text>
+    </g>
+    <!--entity CRM-->
+    <g class="entity" data-qualified-name="ES.CRM" data-source-line="24" id="ent0018">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.938" x="984" y="359"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1035.938" y="364"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1033.938" y="366"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1033.938" y="370"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="999" y="389.889">CRM</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="356.075,87.429,365.223,83.78,359.567,83.85,359.497,78.194,356.075,87.429" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M363.832,81.384 C363.691,81.473 363.551,81.562 363.41,81.652 C362.284,82.375 361.148,83.156 360,84 C358.597,85.032 360.782,82.604 359.567,83.85" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="571.768,168.841,566.445,160.555,567.59,166.095,562.05,167.24,571.768,168.841" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M356.006,158.274 C356.03,158.295 356.055,158.315 356.08,158.335 C356.129,158.375 356.178,158.415 356.228,158.455 C356.624,158.774 357.028,159.082 357.439,159.378 C358.262,159.97 359.116,160.514 360,161 C370.33,166.675 418.526,165.262 466.542,164.136 C490.549,163.574 514.512,163.083 533.674,163.586 C543.255,163.838 551.635,164.338 558.221,165.202 C561.514,165.634 564.358,166.157 566.679,166.785 C567.84,167.099 568.87,167.439 569.76,167.808 C570.205,167.992 570.615,168.184 570.988,168.382 C571.175,168.482 571.353,168.583 571.522,168.686 C571.606,168.737 567.51,166.042 567.59,166.095" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0013" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="761.995,257.331,758.399,248.162,758.436,253.819,752.779,253.856,761.995,257.331" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M754.081,251.787 C754.21,251.847 754.338,251.907 754.466,251.968 C754.721,252.089 754.972,252.214 755.22,252.341 C756.209,252.849 757.137,253.401 758,254 C759.431,254.993 757.201,252.6 758.436,253.819" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

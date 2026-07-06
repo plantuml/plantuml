@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="166px" preserveAspectRatio="none" style="width:477px;height:166px;background:#FFFFFF;" version="1.1" viewBox="0 0 477 166" width="477px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class __Test__-->
+    <g class="entity" data-qualified-name="__Test__" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.363" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="58.363" x="35" y="31.889">__Test__</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="95.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="95.363" y1="52" y2="52"/>
+    </g>
+    <!--class foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.363" x="114" y="12"/>
+      <ellipse cx="129" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="124" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="58.363" x="143" y="31.889">__Test__</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="115" x2="203.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="115" x2="203.363" y1="52" y2="52"/>
+    </g>
+    <!--class foo3-->
+    <g class="entity" data-qualified-name="foo3" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="239.375" x="222.5" y="12"/>
+      <ellipse cx="237.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="232.5" y="33">C</text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="207.375" x="251.5" y="31.889">http://example.com/resource/001/</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="223.5" x2="460.875" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="223.5" x2="460.875" y1="52" y2="52"/>
+    </g>
+    <!--class foo4-->
+    <g class="entity" data-qualified-name="foo4" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.188" x="16.5" y="99"/>
+      <ellipse cx="31.5" cy="115" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="26.5" y="120">C</text>
+      <text fill="#000" font-size="14" textLength="37.188" x="45.5" y="118.889">"Test"</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17.5" x2="84.688" y1="131" y2="131"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17.5" x2="84.688" y1="139" y2="139"/>
+    </g>
+    <!--class foo5-->
+    <g class="entity" data-qualified-name="foo5" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="103.5" y="99"/>
+      <ellipse cx="118.5" cy="115" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="113.5" y="120">C</text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="27.213" x="132.5" y="118.889">Test</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="104.5" x2="161.713" y1="131" y2="131"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="104.5" x2="161.713" y1="139" y2="139"/>
+    </g>
+    <!--class foo6-->
+    <g class="entity" data-qualified-name="foo6" data-source-line="6" id="ent0006">
+      <rect fill="#F1F1F1" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="239.375" x="180.5" y="96"/>
+      <ellipse cx="195.5" cy="115" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="190.5" y="120">C</text>
+      <text fill="#000" font-size="14" textLength="91.875" x="267.25" y="111.889">REST resource</text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="207.375" x="209.5" y="125.889">http://example.com/resource/001/</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="181.5" x2="418.875" y1="134" y2="134"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="181.5" x2="418.875" y1="142" y2="142"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:219px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 219 78" width="219px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="21.287" y="27.889">foo</text>
+    </g>
+    <g class="entity" data-qualified-name="N1" data-source-line="2" id="ent0002">
+      <path d="M74.5,25 L74.5,48 L203.969,48 L203.969,35 L193.969,25 L74.5,25" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M193.969,25 L193.969,35 L203.969,35 L193.969,25" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="108.469" x="80.5" y="40.111">This is a floating note</text>
+    </g>
+  </g>
+</svg>

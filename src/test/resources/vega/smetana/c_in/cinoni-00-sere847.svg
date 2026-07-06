@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="85px" preserveAspectRatio="none" style="width:168px;height:85px;background:#FFFFFF;" version="1.1" viewBox="0 0 168 85" width="168px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster S-->
+    <g class="cluster" data-qualified-name="S" data-source-line="6" id="ent0001">
+      <path d="M29.5,4 L142.5,4 A12.5,12.5 0 0 1 155,16.5 L155,23 L17,23 L17,16.5 A12.5,12.5 0 0 1 29.5,4" fill="#00F"/>
+      <path d="M17,23 L155,23 L155,22.5 A12.5,12.5 0 0 1 142.5,35 L29.5,35 A12.5,12.5 0 0 1 17,22.5 L17,23" fill="#00F"/>
+      <rect fill="none" height="31" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="138" x="17" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="17" x2="155" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" x="81.319" y="19.889">S</text>
+    </g>
+    <text fill="#000" font-size="14" x="132.319" y="51.889">E</text>
+    <ellipse cx="137" cy="35" fill="#00F" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="19.512" x="93.244" y="51.889">EC</text>
+    <ellipse cx="103" cy="35" fill="#00F" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="107.389" x2="99.611" y1="39.389" y2="31.611"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="107.389" x2="99.611" y1="31.611" y2="39.389"/>
+    <text fill="#000" font-size="14" textLength="13.213" x="62.394" y="51.889">IP</text>
+    <rect fill="#00F" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="63" y="29"/>
+    <text fill="#000" font-size="14" textLength="20.213" x="24.894" y="51.889">OP</text>
+    <rect fill="#00F" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="29" y="29"/>
+  </g>
+</svg>

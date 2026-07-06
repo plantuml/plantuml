@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="86px" preserveAspectRatio="none" style="width:248px;height:86px;background:#FFFFFF;" version="1.1" viewBox="0 0 248 86" width="248px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity ABC-->
+    <g class="entity" data-qualified-name="ABC" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="89.512" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="87.512" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="87.512" y="23"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="22" y="42.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="28.875" x="38.319" y="56.889">ABC</text>
+    </g>
+    <!--entity XYZ-->
+    <g class="entity" data-qualified-name="XYZ" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.512" x="128" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="211.513" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="209.513" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="209.513" y="23"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="144" y="42.889">«module»</text>
+      <text fill="#000" font-size="14" textLength="27.3" x="161.106" y="56.889">XYZ</text>
+    </g>
+  </g>
+</svg>

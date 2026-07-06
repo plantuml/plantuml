@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:309px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 309 104" width="309px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class c0-->
+    <g class="entity" data-qualified-name="c0" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="46.787" x="6" y="26"/>
+      <ellipse cx="21" cy="42" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="47">C</text>
+      <text fill="#000" font-size="14" textLength="14.787" x="35" y="45.889">c0</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="51.787" y1="58" y2="58"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="51.787" y1="66" y2="66"/>
+    </g>
+    <!--class c1-->
+    <g class="entity" data-qualified-name="c1" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.413" x="71" y="12"/>
+      <ellipse cx="109.681" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="104.681" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="14.787" x="128.944" y="31.889">c1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="72" x2="169.413" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="74.025" x="77" y="58.889">attr1 = "attr2"</text>
+      <text fill="#000" font-size="14" textLength="87.413" x="77" y="72.889">attr2 = "value2"</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="72" x2="169.413" y1="80" y2="80"/>
+    </g>
+    <path d="M188,33.5 L188,41 L164.413,69 L188,49 L188,56.5 A0,0 0 0 0 188,56.5 L292.688,56.5 A0,0 0 0 0 292.688,56.5 L292.688,43.5 L282.688,33.5 L188,33.5 A0,0 0 0 0 188,33.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M282.688,33.5 L282.688,43.5 L292.688,43.5 L282.688,33.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="83.688" x="194" y="48.611">note about attr2</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="70.9,50,61.9,46,65.9,50,61.9,54,70.9,50" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M53.316,50 C59.177,50 60.039,50 65.9,50" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

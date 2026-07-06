@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="286px" preserveAspectRatio="none" style="width:72px;height:286px;background:#FFFFFF;" version="1.1" viewBox="0 0 72 286" width="72px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class G-->
+    <g class="entity" data-qualified-name="G" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.85" x="9.5" y="96"/>
+      <ellipse cx="24.5" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="19.5" y="117">E</text>
+      <text fill="#000" font-size="14" x="38.5" y="115.889">G</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10.5" x2="51.35" y1="128" y2="128"/>
+      <text fill="#000" font-size="14" textLength="14" x="15.5" y="142.889">ID</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="10.5" x2="51.35" y1="150" y2="150"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="15.5" y="164.889">C0</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="15.5" y="178.889">I1</text>
+    </g>
+    <!--class C0-->
+    <g class="entity" data-qualified-name="C0" data-source-line="10" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="35" y="31.889">C0</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.938" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="54.938" y1="52" y2="52"/>
+    </g>
+    <!--class I1-->
+    <g class="entity" data-qualified-name="I1" data-source-line="12" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.638" x="9" y="222"/>
+      <ellipse cx="24" cy="238" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="19" y="243">C</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="38" y="241.889">I1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="51.638" y1="254" y2="254"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="51.638" y1="262" y2="262"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="31,95.846,35,86.846,31,90.846,27,86.846,31,95.846" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M31,60.115 C31,70.673 31,78.545 31,90.846" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="31,221.756,35,212.756,31,216.756,27,212.756,31,221.756" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M31,186.279 C31,198.493 31,206.259 31,216.756" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

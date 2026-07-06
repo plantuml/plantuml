@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="156px" preserveAspectRatio="none" style="width:130px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 130 156" width="130px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="17" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.425" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="35" y="31.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="56.425" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="56.425" y1="52" y2="52"/>
+    </g>
+    <!--class fj-->
+    <g class="entity" data-qualified-name="fj" data-source-line="18" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39" x="75" y="12"/>
+      <ellipse cx="90" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="85" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="7" x="104" y="31.889">fj</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="76" x2="113" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="76" x2="113" y1="52" y2="52"/>
+    </g>
+    <g class="legend" data-source-line="11">
+      <rect fill="#DDD" height="55" rx="7.5" ry="7.5" style="stroke:#FFA500;stroke-width:1;" width="81.719" x="20.641" y="82"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="71.719" x="25.641" y="98.667">hypothesis</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="40.875" x="25.641" y="113.667">* Hyp 1</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="40.875" x="25.641" y="128.667">* Hyp 2</text>
+    </g>
+  </g>
+</svg>

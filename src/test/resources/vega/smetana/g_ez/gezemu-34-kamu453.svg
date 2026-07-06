@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="138px" preserveAspectRatio="none" style="width:223px;height:138px;background:#FFFFFF;" version="1.1" viewBox="0 0 223 138" width="223px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster l1-->
+    <g class="cluster" data-qualified-name="l1" data-source-line="4" id="ent0002">
+      <rect fill="none" height="110" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="143" x="64.5" y="4"/>
+      <path d="M85.438,4 L85.438,11 L75.438,21 L64.5,21" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="10.938" x="67.5" y="15.889">l1</text>
+    </g>
+    <!--cluster l2-->
+    <g class="cluster" data-qualified-name="l1.l2" data-source-line="6" id="ent0004">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="68" x="131.5" y="29"/>
+      <path d="M152.438,29 L152.438,36 L142.438,46 L131.5,46" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="10.938" x="134.5" y="40.889">l2</text>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.363" x="6" y="54"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="35.363" y="59"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="33.363" y="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="33.363" y="65"/>
+      <text fill="#000" font-size="14" x="21" y="84.889">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="l1.B" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.363" x="73" y="54"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="102.363" y="59"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="100.363" y="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="100.363" y="65"/>
+      <text fill="#000" font-size="14" x="88" y="84.889">B</text>
+    </g>
+    <!--entity l3-->
+    <g class="entity" data-qualified-name="l1.l2.l3" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.938" x="140" y="54"/>
+      <path d="M156.979,54 L156.979,59 L149.979,66 L140,66" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="10.938" x="155" y="84.889">l3</text>
+    </g>
+  </g>
+</svg>

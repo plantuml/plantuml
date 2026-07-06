@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="210px" preserveAspectRatio="none" style="width:92px;height:210px;background:#FFFFFF;" version="1.1" viewBox="0 0 92 210" width="92px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name=".start." data-source-line="1" id="ent0001">
+      <ellipse cx="41" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="state1" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.063" x="12" y="72"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="70.063" y1="96" y2="96"/>
+      <text fill="#000" font-size="14" textLength="38.063" x="22" y="87.889">state1</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="4" id="ent0005">
+      <path d="M6,158 L6,194 A0,0 0 0 0 6,194 L76.156,194 A0,0 0 0 0 76.156,194 L76.156,168 L66.156,158 L45,158 L41,122.363 L37,158 L6,158 A0,0 0 0 0 6,158" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M66.156,158 L66.156,168 L76.156,168 L66.156,158" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="12" y="173.111">coucou1</text>
+      <text fill="#000" font-size="13" textLength="49.156" x="12" y="186.111">coucou2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="41,71.764,45,62.764,41,66.764,37,62.764,41,71.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M41,36.094 C41,45.61 41,54.662 41,66.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

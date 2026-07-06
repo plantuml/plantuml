@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="70px" preserveAspectRatio="none" style="width:76px;height:70px;background:#FFFFFF;" version="1.1" viewBox="0 0 76 70" width="76px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Toto-->
+    <g class="entity" data-qualified-name="Toto" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54" x="6" y="12"/>
+      <ellipse cx="18" cy="25" fill="#ADD1B2" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="13" y="30">C</text>
+      <text fill="#000" font-size="14" textLength="28" x="29" y="28.889">Toto</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="59" y1="38" y2="38"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="59" y1="46" y2="46"/>
+    </g>
+  </g>
+</svg>

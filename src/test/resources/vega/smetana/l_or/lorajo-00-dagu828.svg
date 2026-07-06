@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:172px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 172 104" width="172px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class house-->
+    <g class="entity" data-qualified-name="house" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="149.725" x="6" y="12"/>
+      <ellipse cx="57.538" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="52.538" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="38.15" x="78.038" y="31.889">house</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="154.725" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="71.663" x="12" y="58.889">called_foo1</text>
+      <text fill="#000" font-size="14" textLength="137.725" x="12" y="72.889">called_foo2 my_param</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="154.725" y1="80" y2="80"/>
+    </g>
+  </g>
+</svg>

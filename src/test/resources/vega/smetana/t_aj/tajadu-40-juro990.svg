@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="181px" preserveAspectRatio="none" style="width:217px;height:181px;background:#FFFFFF;" version="1.1" viewBox="0 0 217 181" width="217px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.213" x="6" y="30"/>
+      <polygon fill="#F1F1F1" points="46.213,35,46.213,49,58.213,49,58.213,41,52.213,35,46.213,35" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52.213" x2="52.213" y1="35" y2="41"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="58.213" x2="52.213" y1="41" y2="41"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="16" y="53.889">foo1</text>
+    </g>
+    <!--entity foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="73" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="119.6" x="81.5" y="12"/>
+      <polygon fill="#F1F1F1" points="184.1,17,184.1,31,196.1,31,196.1,23,190.1,17,184.1,17" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="190.1" x2="190.1" y1="17" y2="23"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="196.1" x2="190.1" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" textLength="68.425" x="91.5" y="35.889">This artifact</text>
+      <text fill="#000" font-size="14" textLength="56.087" x="91.5" y="49.889">is defined</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="82.5" x2="200.1" y1="53" y2="53"/>
+      <text fill="#000" font-size="14" textLength="89.6" x="91.5" y="67.889">on several lines</text>
+    </g>
+    <!--entity c1-->
+    <g class="entity" data-qualified-name="c1" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.787" x="7" y="121"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="41.787" y="126"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="39.787" y="128"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="39.787" y="132"/>
+      <text fill="#000" font-size="14" textLength="14.787" x="22" y="151.889">c1</text>
+    </g>
+    <!--entity u2-->
+    <g class="entity" data-qualified-name="u2" data-source-line="7" id="ent0004">
+      <ellipse cx="94.714" cy="142.871" fill="#F1F1F1" rx="14.714" ry="12.371" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="86.926" y="146.371">u2</text>
+    </g>
+  </g>
+</svg>

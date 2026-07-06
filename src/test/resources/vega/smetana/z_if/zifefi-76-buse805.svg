@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="132px" preserveAspectRatio="none" style="width:190px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 190 132" width="190px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="42.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <a href="http://www.google.com/note1" target="_top" title="http://www.google.com/note1" xlink:actuate="onRequest" xlink:href="http://www.google.com/note1" xlink:show="new" xlink:title="http://www.google.com/note1" xlink:type="simple">
+      <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="72.65" x="6" y="72"/>
+      <text fill="#000" font-size="12" textLength="31.425" x="16" y="91.333">This is</text>
+      <text fill="#000" font-size="12" textLength="52.65" x="16" y="103.333">my activity</text>
+    </a>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="6" id="ent0005">
+      <a href="http://www.google.com/note2" target="_top" title="http://www.google.com/note2" xlink:actuate="onRequest" xlink:href="http://www.google.com/note2" xlink:show="new" xlink:title="http://www.google.com/note2" xlink:type="simple">
+        <path d="M97,82 L97,90 L79.191,94 L97,98 L97,105 A0,0 0 0 0 97,105 L174.388,105 A0,0 0 0 0 174.388,105 L174.388,92 L164.388,82 L97,82 A0,0 0 0 0 97,82" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M164.388,82 L164.388,92 L174.388,92 L164.388,82" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="13" textLength="56.387" x="103" y="97.111">example2</text>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="42.5,71.857,46.5,62.857,42.5,66.857,38.5,62.857,42.5,71.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M42.5,36.229 C42.5,45.886 42.5,55.079 42.5,66.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

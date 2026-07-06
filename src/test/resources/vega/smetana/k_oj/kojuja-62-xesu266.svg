@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:488px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 488 160" width="488px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M198.5,12 L257.863,12 A3.75,3.75 0 0 1 260.363,14.5 L267.363,32 L271.863,32 A2.5,2.5 0 0 1 274.363,34.5 L274.363,57.5 A2.5,2.5 0 0 1 271.863,60 L198.5,60 A2.5,2.5 0 0 1 196,57.5 L196,14.5 A2.5,2.5 0 0 1 198.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="196" x2="267.363" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="58.363" x="200" y="24.889">Ge Folder</text>
+    <path d="M8.5,96 L127.975,96 A3.75,3.75 0 0 1 130.475,98.5 L137.475,116 L141.975,116 A2.5,2.5 0 0 1 144.475,118.5 L144.475,141.5 A2.5,2.5 0 0 1 141.975,144 L8.5,144 A2.5,2.5 0 0 1 6,141.5 L6,98.5 A2.5,2.5 0 0 1 8.5,96" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="137.475" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="118.475" x="10" y="108.889">Especialized Folder</text>
+    <path d="M164.5,96 L291.763,96 A3.75,3.75 0 0 1 294.263,98.5 L301.263,116 L305.763,116 A2.5,2.5 0 0 1 308.263,118.5 L308.263,141.5 A2.5,2.5 0 0 1 305.763,144 L164.5,144 A2.5,2.5 0 0 1 162,141.5 L162,98.5 A2.5,2.5 0 0 1 164.5,96" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="162" x2="301.263" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="126.263" x="166" y="108.889">Especialized Folder2</text>
+    <path d="M328.5,96 L455.763,96 A3.75,3.75 0 0 1 458.263,98.5 L465.263,116 L469.763,116 A2.5,2.5 0 0 1 472.263,118.5 L472.263,141.5 A2.5,2.5 0 0 1 469.763,144 L328.5,144 A2.5,2.5 0 0 1 326,141.5 L326,98.5 A2.5,2.5 0 0 1 328.5,96" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="326" x2="465.263" y1="116" y2="116"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="126.263" x="330" y="108.889">Especialized Folder3</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="195.86,57.059,186.026,57.605,191.41,59.34,189.675,64.724,195.86,57.059" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M191.41,59.34 C168.466,71.099 143.843,83.718 119.961,95.957" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="235,60.279,231,69.279,235,65.279,239,69.279,235,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M235,65.279 C235,76.453 235,84.802 235,95.947" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="274.282,56.641,280.543,64.244,278.754,58.877,284.121,57.088,274.282,56.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M278.754,58.877 C302.35,70.675 328.021,83.51 352.762,95.881" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

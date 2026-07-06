@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="177px" preserveAspectRatio="none" style="width:200px;height:177px;background:#FFFFFF;" version="1.1" viewBox="0 0 200 177" width="200px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.15" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="35" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="61.15" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="61.15" y1="52" y2="52"/>
+    </g>
+    <!--class IBar-->
+    <g class="entity" data-qualified-name="IBar" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.638" x="54" y="113"/>
+      <ellipse cx="69" cy="129" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="64" y="134">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="25.638" x="83" y="132.889">IBar</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55" x2="110.638" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55" x2="110.638" y1="153" y2="153"/>
+    </g>
+    <!--class IBarFactory-->
+    <g class="entity" data-qualified-name="IBarFactory" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.275" x="80" y="12"/>
+      <ellipse cx="95" cy="28" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="90" y="33">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="72.275" x="109" y="31.889">IBarFactory</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="81" x2="183.275" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="81" x2="183.275" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="54.904,112.964,51.694,103.653,51.495,109.306,45.842,109.107,54.904,112.964" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M33.814,60.028 C34.545,71.097 36.662,84.259 42,95 C45.226,101.49 46.471,103.915 51.495,109.306" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="64.35" x="44" y="90.111">«delegate»</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="99.62,112.685,107.876,107.315,102.343,108.491,101.166,102.958,99.62,112.685" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M124.558,60.085 C120.735,70.924 115.685,83.876 110,95 C106.975,100.92 106.009,102.845 102.343,108.491" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="50.537" x="119" y="90.111">«create»</text>
+    </g>
+  </g>
+</svg>

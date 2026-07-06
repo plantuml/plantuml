@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="1050px" preserveAspectRatio="none" style="width:771px;height:1050px;background:#FFFFFF;" version="1.1" viewBox="0 0 771 1050" width="771px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster nasreq_auth-->
+    <g class="cluster" data-qualified-name="nasreq_auth" data-source-line="2" id="ent0001">
+      <path d="M33.5,4 L745.5,4 A12.5,12.5 0 0 1 758,16.5 L758,23 L21,23 L21,16.5 A12.5,12.5 0 0 1 33.5,4" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="19" style="stroke:#F1F1F1;stroke-width:1;" width="737" x="21" y="23"/>
+      <rect fill="none" height="1022" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="737" x="21" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="21" x2="758" y1="23" y2="23"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="21" x2="758" y1="42" y2="42"/>
+      <text fill="#000" font-size="14" textLength="133.963" x="322.519" y="14.889">NASREQ auth session</text>
+      <text fill="#000" font-size="14" textLength="114.275" x="26" y="36.389">exit / free_session()</text>
+    </g>
+    <!--cluster AA-->
+    <g class="cluster" data-qualified-name="nasreq_auth.AA" data-source-line="8" id="ent0002">
+      <path d="M214.5,270.5 L320.5,270.5 A12.5,12.5 0 0 1 333,283 L333,289.5 L202,289.5 L202,283 A12.5,12.5 0 0 1 214.5,270.5" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="19" style="stroke:#F1F1F1;stroke-width:1;" width="131" x="202" y="289.5"/>
+      <rect fill="none" height="86" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="131" x="202" y="270.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="202" x2="333" y1="289.5" y2="289.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="202" x2="333" y1="308.5" y2="308.5"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="258.138" y="286.389">AA</text>
+      <text fill="#000" font-size="14" textLength="116.463" x="207" y="302.889">entry / set_timeout()</text>
+    </g>
+    <g class="entity" data-qualified-name="nasreq_auth.Idle" data-source-line="15" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="180.038" x="342" y="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="342" x2="522.038" y1="108" y2="108"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="420.731" y="99.889">Idle</text>
+      <text fill="#000" font-size="14" textLength="160.038" x="347" y="123.889">entry / set_timeout(closest)</text>
+    </g>
+    <g class="entity" data-qualified-name="nasreq_auth.Reanimate" data-source-line="21" id="ent0005">
+      <path d="M489,200 L737,200 A12.5,12.5 0 0 1 749.5,212.5 L749.5,224 L476.5,224 L476.5,212.5 A12.5,12.5 0 0 1 489,200" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="33" style="stroke:#F1F1F1;stroke-width:1;" width="273" x="476.5" y="224"/>
+      <rect fill="none" height="325" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="273" x="476.5" y="200"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="476.5" x2="749.5" y1="224" y2="224"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="476.5" x2="749.5" y1="257" y2="257"/>
+      <text fill="#000" font-size="14" textLength="67.725" x="579.138" y="215.889">Reanimate</text>
+      <text fill="#000" font-size="14" textLength="198.188" x="481.5" y="234.889">entry / set_timeout(grace_period)</text>
+      <text fill="#000" font-size="14" textLength="243.25" x="481.5" y="248.889">entry / set_request_types(by_reanimate)</text>
+      <g class="entity" data-qualified-name="nasreq_auth.Reanimate.wait_raa" data-source-line="26" id="ent0006">
+        <rect fill="#F1F1F1" height="62" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="243.038" x="482.5" y="345"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="482.5" x2="725.538" y1="369" y2="369"/>
+        <text fill="#000" font-size="14" textLength="52.937" x="577.55" y="360.889">wait_raa</text>
+        <text fill="#000" font-size="14" textLength="223.038" x="487.5" y="384.889">entry / set_timeout(wait_raa_timeout)</text>
+        <text fill="#000" font-size="14" textLength="88.638" x="487.5" y="398.889">Rcv-Any / defer</text>
+      </g>
+      <g class="start_entity" data-qualified-name="nasreq_auth.Reanimate..start.Reanimate" data-source-line="25" id="ent0020">
+        <ellipse cx="604" cy="278" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="nasreq_auth.Reanimate.reanimate_idle" data-source-line="30" id="ent0022">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="111.875" x="548" y="460"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="548" x2="659.875" y1="484" y2="484"/>
+        <text fill="#000" font-size="14" textLength="91.875" x="558" y="475.889">reanimate_idle</text>
+      </g>
+      <g class="link" data-entity-1="ent0020" data-entity-2="ent0006" data-link-type="dependency" id="lnk21">
+        <polygon fill="#181818" points="604,344.961,608,335.961,604,339.961,600,335.961,604,344.961" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M604,292.152 C604,305.088 604,321.945 604,339.961" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="56.225" x="606" y="322.111">/ snd_rar()</text>
+      </g>
+      <g class="link" data-entity-1="ent0006" data-entity-2="ent0022" data-link-type="dependency" id="lnk23">
+        <polygon fill="#181818" points="604,459.882,608,450.882,604,454.882,600,450.882,604,459.882" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M604,407.09 C604,423.78 604,439.255 604,454.882" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="104.081" x="606" y="437.111">Rcv-RAA, Timeout</text>
+      </g>
+    </g>
+    <g class="entity" data-qualified-name="nasreq_auth.Closing" data-source-line="34" id="ent0007">
+      <path d="M160,578 L562.066,578 A12.5,12.5 0 0 1 574.566,590.5 L574.566,602 L147.5,602 L147.5,590.5 A12.5,12.5 0 0 1 160,578" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="33" style="stroke:#F1F1F1;stroke-width:1;" width="427.066" x="147.5" y="602"/>
+      <rect fill="none" height="350" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="427.066" x="147.5" y="578"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="147.5" x2="574.566" y1="602" y2="602"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="147.5" x2="574.566" y1="635" y2="635"/>
+      <text fill="#000" font-size="14" textLength="46.813" x="337.627" y="593.889">Closing</text>
+      <text fill="#000" font-size="14" textLength="186.375" x="152.5" y="612.889">entry / reset_next_try_timeout()</text>
+      <text fill="#000" font-size="14" textLength="161.788" x="152.5" y="626.889">Rcv-AAR / snd_error_aaa()</text>
+      <g class="entity" data-qualified-name="nasreq_auth.Closing.wait_asa" data-source-line="39" id="ent0008">
+        <rect fill="#F1F1F1" height="90" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="245.4" x="267.103" y="707"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="267.103" x2="512.503" y1="731" y2="731"/>
+        <text fill="#000" font-size="14" textLength="55.3" x="362.153" y="722.889">wait_asa</text>
+        <text fill="#000" font-size="14" textLength="93.975" x="272.103" y="746.889">entry / snd_asr()</text>
+        <text fill="#000" font-size="14" textLength="225.4" x="272.103" y="760.889">entry / set_timeout(wait_asa_timeout)</text>
+        <text fill="#000" font-size="14" textLength="161.788" x="272.103" y="774.889">Rcv-AAR / snd_error_aaa()</text>
+        <text fill="#000" font-size="14" textLength="88.638" x="272.103" y="788.889">Rcv-Any / defer</text>
+      </g>
+      <g class="entity" data-qualified-name="nasreq_auth.Closing.next_try" data-source-line="47" id="ent0009">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="136.463" x="194.603" y="863"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="194.603" x2="331.066" y1="887" y2="887"/>
+        <text fill="#000" font-size="14" textLength="49.7" x="237.984" y="878.889">next_try</text>
+        <text fill="#000" font-size="14" textLength="116.463" x="199.603" y="902.889">entry / set_timeout()</text>
+      </g>
+      <g class="start_entity" data-qualified-name="nasreq_auth.Closing..start.Closing" data-source-line="38" id="ent0027">
+        <ellipse cx="389.603" cy="656" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="end_entity" data-qualified-name="nasreq_auth.Closing..end.Closing" data-source-line="46" id="ent0030">
+        <ellipse cx="462.603" cy="887" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+        <ellipse cx="462.603" cy="887" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0027" data-entity-2="ent0008" data-link-type="dependency" id="lnk28">
+        <polygon fill="#181818" points="389.603,706.617,393.603,697.617,389.603,701.617,385.603,697.617,389.603,706.617" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M389.603,670.281 C389.603,679.493 389.603,688.148 389.603,701.617" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0008" data-entity-2="ent0009" data-link-type="dependency" id="lnk29">
+        <polygon fill="#181818" points="194.508,871.964,188.001,864.571,189.965,869.876,184.66,871.84,194.508,871.964" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M267.052,772.395 C220.205,782.526 174.621,796.683 160.603,815 C152.5,825.589 153.184,833.921 160.603,845 C168.755,857.173 176.6,863.733 189.965,869.876" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="203.125" x="162.603" y="827.111">Rcv-ASA [UNABLE_TO_COMPLY],</text>
+        <text fill="#000" font-size="13" textLength="46.963" x="240.684" y="840.111">Timeout</text>
+      </g>
+      <g class="link" data-entity-1="ent0008" data-entity-2="ent0030" data-link-type="dependency" id="lnk31">
+        <polygon fill="#181818" points="460.637,875.99,462.8,866.382,459.659,871.087,454.954,867.947,460.637,875.99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M429.38,797.251 C433.513,802.996 437.374,808.982 440.603,815 C451.417,835.155 456.749,856.497 459.659,871.087" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="98.963" x="453.603" y="833.611">Rcv-ASA [default]</text>
+      </g>
+      <g class="link" data-entity-1="ent0009" data-entity-2="ent0008" data-link-type="dependency" id="lnk32">
+        <polygon fill="#181818" points="387.516,797.175,382.074,805.383,386.684,802.105,389.962,806.715,387.516,797.175" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M330.868,870.654 C344.631,864.58 357.848,856.291 367.603,845 C378.983,831.827 383.879,818.72 386.684,802.105" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="46.963" x="385.603" y="833.611">Timeout</text>
+      </g>
+    </g>
+    <g class="end_entity" data-qualified-name="nasreq_auth..end.nasreq_auth" data-source-line="5" id="ent0010">
+      <ellipse cx="247" cy="1005" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="247" cy="1005" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="start_entity" data-qualified-name="nasreq_auth..start.nasreq_auth" data-source-line="7" id="ent0012">
+      <ellipse cx="47" cy="107" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="37.363" x="296.319" y="373.389">ok_ex</text>
+    <ellipse cx="315" cy="356.5" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="319.389" x2="311.611" y1="360.889" y2="353.111"/>
+    <line style="stroke:#181818;stroke-width:1.5;" x1="319.389" x2="311.611" y1="353.111" y2="360.889"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="235.918,1005.37,226.909,1001.391,230.918,1005.382,226.927,1009.391,235.918,1005.37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M118.282,765.214 C110.314,801.071 90.892,914.194 146,976 C169.432,1002.28 209.939,1005.429 230.918,1005.382" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="163.231" x="148" y="958.111">Rcv-STR / remove_session(),</text>
+      <text fill="#000" font-size="13" textLength="54.113" x="202.559" y="971.111">snd_sta()</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0002" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="254.634,357.792,248.121,350.404,250.089,355.707,244.786,357.675,254.634,357.792" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M44.412,121.131 C41.579,135.856 38.592,162.249 48,182 C94.211,279.018 216.321,340.217 250.089,355.707" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="143.569" x="50" y="170.611">/ set_request_types(both)</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="268.863,577.746,270.058,567.97,267.402,572.965,262.408,570.308,268.863,577.746" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M261.278,374.796 C257.014,405.242 247.458,491.347 264,560 C265.422,565.9 265.592,567.043 267.402,572.965" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="88.969" x="266" y="555.111">SubCompletion</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="400.97,134.244,391.731,137.658,397.388,137.733,397.313,143.389,400.97,134.244" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M314.143,350.331 C307.598,321.987 294.598,246.244 329,200 C342.351,182.053 360.535,198.161 376,182 C385.717,171.846 378.341,163.785 386,152 C390.125,145.653 391.851,143.125 397.388,137.733" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="dependency" id="lnk16">
+      <polygon fill="#181818" points="209.588,270.237,209.98,260.396,207.741,265.59,202.546,263.351,209.588,270.237" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M341.861,115.957 C289.401,121.513 230.443,132.087 214,152 C188.79,182.531 192.858,223.697 206.28,261.456 C207.119,263.816 207.994,266.163 208.901,268.493 C209.128,269.075 207.51,265.01 207.741,265.59" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="89.538" x="248.459" y="164.111">Rcv-AAR {stay} /</text>
+      <text fill="#000" font-size="13" textLength="154.456" x="216" y="177.111">set_request_types(by_aar)</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="525.527,199.912,523.679,190.238,522.675,195.805,517.108,194.801,525.527,199.912" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M468.426,134.05 C475.352,139.498 482.229,145.585 488,152 C501.243,166.72 510.966,178.943 522.675,195.805" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="143.65" x="511" y="170.611">Timeout [may_continue()]</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0004" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="358.519,577.931,362.438,568.896,358.474,572.932,354.439,568.968,358.519,577.931" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M358.474,572.932 C357.068,416.577 357.637,214.355 370,200 C401.756,163.127 446.546,219.13 478,182 C486.618,171.826 483.381,164.199 478,152 C475.12,145.47 470.667,139.515 465.644,134.273" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="93.113" x="372" y="366.111">Timeout [default]</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="264.476,270.427,270.111,262.35,265.425,265.518,262.256,260.831,264.476,270.427" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M265.425,265.518 C266.176,261.897 266.626,260.475 267.596,256.886 C269.536,249.709 271.938,242.639 274.893,235.855 C280.803,222.287 288.926,209.861 300,200 C329.214,173.986 348.44,192.614 387.5,190.5 C426.998,188.362 440.882,173.295 476.5,190.5 C482.164,193.236 487.665,196.334 493,199.735" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="85.962" x="389.5" y="170.611">Rcv-AAR {stay}</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="473.962,577.851,482.215,572.477,476.682,573.656,475.503,568.124,473.962,577.851" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M508.136,525.165 C496.852,542.561 488.056,556.122 476.682,573.656" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="46.963" x="497" y="555.111">Timeout</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0010" data-link-type="dependency" id="lnk33">
+      <polygon fill="#181818" points="258.137,1003.649,267.658,1006.169,263.073,1002.855,266.387,998.271,258.137,1003.649" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M344.212,928.025 C337.509,945.377 328.648,961.796 317,976 C302.069,994.207 278.731,1000.337 263.073,1002.855" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="65.813" x="336" y="964.611">Completion</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="185px" preserveAspectRatio="none" style="width:142px;height:185px;background:#FFFFFF;" version="1.1" viewBox="0 0 142 185" width="142px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo2-->
+    <g class="cluster" data-qualified-name="foo2" data-source-line="5" id="ent0002">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="98" x="28.5" y="12"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="63.894" y="24.889">foo2</text>
+    </g>
+    <!--class foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.575" x="6" y="107"/>
+      <ellipse cx="28.813" cy="123" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="23.813" y="128">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="44.549" y="126.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="81.575" y1="139" y2="139"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="151.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="50.575" x="26" y="153.889">int Temp</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="81.575" y1="161" y2="161"/>
+    </g>
+    <!--entity foo3-->
+    <g class="entity" data-qualified-name="foo2.foo3" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.213" x="71" y="37"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="81" y="57.889">foo3</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="44.5,106.734,48.5,97.734,44.5,101.734,40.5,97.734,44.5,106.734" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M44.5,79.119 C44.5,79.33 44.5,79.542 44.5,79.754 C44.5,81.453 44.5,83.196 44.5,84.969 C44.5,92.061 44.5,94.629 44.5,101.734" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

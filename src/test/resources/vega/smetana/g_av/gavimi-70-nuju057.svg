@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="258px" preserveAspectRatio="none" style="width:202px;height:258px;background:#FFFFFF;" version="1.1" viewBox="0 0 202 258" width="202px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Dog-->
+    <g class="entity" data-qualified-name="Dog" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.3" x="6" y="12"/>
+      <ellipse cx="34.759" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="29.759" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="25.725" x="51.816" y="31.889">Dog</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="93.3" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="76.3" x="12" y="58.889">NemesisCat</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="93.3" y1="66" y2="66"/>
+    </g>
+    <!--class Mammal-->
+    <g class="entity" data-qualified-name="Mammal" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.637" x="7" y="194"/>
+      <ellipse cx="22" cy="210" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="17" y="215">C</text>
+      <text fill="#000" font-size="14" textLength="53.637" x="36" y="213.889">Mammal</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="91.637" y1="226" y2="226"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="91.637" y1="234" y2="234"/>
+    </g>
+    <!--class Mamal-->
+    <g class="entity" data-qualified-name="Mamal" data-source-line="4" id="ent0004">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74" x="112" y="19"/>
+        <ellipse cx="127" cy="35" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="122" y="40">C</text>
+        <text fill="#000" font-size="14" textLength="42" x="141" y="38.889">Mamal</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="113" x2="185" y1="51" y2="51"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="113" x2="185" y1="59" y2="59"/>
+      </a>
+    </g>
+    <!--class Cat-->
+    <g class="entity" data-qualified-name="Cat" data-source-line="10" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.787" x="51" y="110"/>
+      <ellipse cx="66" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="61" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="21.787" x="80" y="129.889">Cat</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52" x2="103.788" y1="142" y2="142"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52" x2="103.788" y1="150" y2="150"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="46.121,193.815,49.387,175.125,37.52,176.903,46.121,193.815" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M45.568,74.158 C44.124,85.384 42.71,98.248 42,110 C40.714,131.295 40.564,136.715 42,158 C42.8,169.86 41.828,165.17 43.454,176.014" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="aggregation" id="lnk6">
+      <polygon fill="none" points="59.48,74.131,57.465,81.055,63.081,85.578,65.096,78.654,59.48,74.131" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M63.081,85.578 C66.762,97.278 67.308,99.015 70.744,109.936" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="57.872,193.947,69.366,178.852,58.01,174.974,57.872,193.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M70.051,158.279 C66.236,169.453 67.494,165.768 63.688,176.913" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

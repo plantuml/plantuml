@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="196px" preserveAspectRatio="none" style="width:87px;height:196px;background:#FFFFFF;" version="1.1" viewBox="0 0 87 196" width="87px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="12" id="ent0001">
+      <ellipse cx="38.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F00" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="64.7" x="6" y="72"/>
+    <text fill="#000" font-size="12" textLength="44.7" x="16" y="91.333">Activity 1</text>
+    <rect fill="#FF0" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="53.4" x="12" y="140"/>
+    <text fill="#00F" font-size="8" textLength="33.4" x="22" y="156.222">this is long</text>
+    <text fill="#00F" font-size="8" textLength="29.85" x="22" y="166.222">on 2 lines</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="38.5,71.587,42.5,62.587,38.5,66.587,34.5,62.587,38.5,71.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M38.5,36.084 C38.5,45.976 38.5,55.56 38.5,66.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="38.5,139.835,42.5,130.835,38.5,134.835,34.5,130.835,38.5,139.835" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M38.5,104.189 C38.5,114.644 38.5,123.615 38.5,134.835" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

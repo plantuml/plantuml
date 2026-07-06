@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="136px" preserveAspectRatio="none" style="width:329px;height:136px;background:#FFFFFF;" version="1.1" viewBox="0 0 329 136" width="329px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class NamedStereotype-->
+    <g class="entity" data-qualified-name="NamedStereotype" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="144.788" x="6" y="12"/>
+      <ellipse cx="21" cy="30" fill="#F70" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="35">S</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="71.325" x="55.731" y="26.333">«Stereotype»</text>
+      <text fill="#000" font-size="14" textLength="112.788" x="35" y="39.889">NamedStereotype</text>
+    </g>
+    <!--class ColoredCircle-->
+    <g class="entity" data-qualified-name="ColoredCircle" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116.962" x="169" y="14"/>
+      <ellipse cx="184" cy="30" fill="#F70" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="179" y="35">S</text>
+      <text fill="#000" font-size="14" textLength="84.962" x="198" y="33.889">ColoredCircle</text>
+    </g>
+    <!--class PlainCircle-->
+    <g class="entity" data-qualified-name="PlainCircle" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.113" x="29" y="86"/>
+      <ellipse cx="44" cy="102" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="39" y="107">S</text>
+      <text fill="#000" font-size="14" textLength="67.113" x="58" y="105.889">PlainCircle</text>
+    </g>
+    <!--class PlainCircleStereotype-->
+    <g class="entity" data-qualified-name="PlainCircleStereotype" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="166.75" x="146" y="84"/>
+      <ellipse cx="161" cy="102" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="156" y="107">S</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="71.325" x="206.713" y="98.333">«Stereotype»</text>
+      <text fill="#000" font-size="14" textLength="134.75" x="175" y="111.889">PlainCircleStereotype</text>
+    </g>
+  </g>
+</svg>

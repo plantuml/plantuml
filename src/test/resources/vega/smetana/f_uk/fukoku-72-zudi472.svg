@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="65px" preserveAspectRatio="none" style="width:164px;height:65px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 65" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity CC-->
+    <g class="entity" data-qualified-name="CC" data-source-line="5" id="ent0001">
+      <path d="M8.5,12 L41.8,12 A3.75,3.75 0 0 1 44.3,14.5 L51.3,32 L65.8,32 A2.5,2.5 0 0 1 68.3,34.5 L68.3,46.5 A2.5,2.5 0 0 1 65.8,49 L8.5,49 A2.5,2.5 0 0 1 6,46.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="51.3" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.3" x="16" y="25.889">CC</text>
+    </g>
+    <!--entity DD-->
+    <g class="entity" data-qualified-name="DD" data-source-line="7" id="ent0002">
+      <path d="M88.5,12 L121.8,12 A3.75,3.75 0 0 1 124.3,14.5 L131.3,32 L145.8,32 A2.5,2.5 0 0 1 148.3,34.5 L148.3,46.5 A2.5,2.5 0 0 1 145.8,49 L88.5,49 A2.5,2.5 0 0 1 86,46.5 L86,14.5 A2.5,2.5 0 0 1 88.5,12" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="86" x2="131.3" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.3" x="96" y="25.889">DD</text>
+    </g>
+  </g>
+</svg>

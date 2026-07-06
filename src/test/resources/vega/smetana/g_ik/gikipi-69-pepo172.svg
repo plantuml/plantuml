@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="212px" preserveAspectRatio="none" style="width:107px;height:212px;background:#FFFFFF;" version="1.1" viewBox="0 0 107 212" width="107px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="49.788" x="25.431" y="20.889">General</text>
+    </g>
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="6" y="47"/>
+      <ellipse cx="21" cy="63" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="68">C</text>
+      <text fill="#000" font-size="14" x="35" y="66.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="79" y2="79"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="87" y2="87"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="6" y="148"/>
+      <ellipse cx="21" cy="164" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="169">C</text>
+      <text fill="#000" font-size="14" x="35" y="167.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="180" y2="180"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="188" y2="188"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="26.5,95.211,22.5,101.211,26.5,107.211,30.5,101.211,26.5,95.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.5,107.211 C26.5,123.099 26.5,132.077 26.5,147.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="33.5" cy="122" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="13" textLength="59.15" x="40.5" y="125.111">parameter</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="40px" preserveAspectRatio="none" style="width:46px;height:40px;background:#FFFFFF;" version="1.1" viewBox="0 0 46 40" width="46px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="24" x="10" y="10"/>
+    <text fill="#000" font-size="14" x="15" y="22.889">␀</text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="24" x="10" y="10"/>
+  </g>
+</svg>

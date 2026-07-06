@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="152px" preserveAspectRatio="none" style="width:229px;height:152px;background:#FFFFFF;" version="1.1" viewBox="0 0 229 152" width="229px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Component 1-->
+    <g class="entity" data-qualified-name="Component 1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.15" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="106.15" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="104.15" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="104.15" y="23"/>
+      <text fill="#000" font-size="14" textLength="80.15" x="21" y="42.889">Component 1</text>
+    </g>
+    <!--entity Component 2-->
+    <g class="entity" data-qualified-name="Component 2" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.15" x="93" y="92"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="193.15" y="97"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="191.15" y="99"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="191.15" y="103"/>
+      <text fill="#000" font-size="14" textLength="80.15" x="108" y="122.889">Component 2</text>
+    </g>
+    <!--entity I1-->
+    <g class="entity" data-qualified-name="I1" data-source-line="5" id="ent0003">
+      <ellipse cx="66" cy="111" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="60.181" y="138.889">I1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M66,56.314 C66,70.928 66,89.746 66,101.596" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" id="lnk6">
+      <path d="M78.254,122.457 A9,9 0 0 0 78.254 105.543" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M85.176,114 C91.053,114 86.93,114 92.808,114" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

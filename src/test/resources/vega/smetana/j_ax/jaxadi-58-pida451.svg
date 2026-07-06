@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="231px" preserveAspectRatio="none" style="width:197px;height:231px;background:#FFFFFF;" version="1.1" viewBox="0 0 197 231" width="197px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster pkgsmp1-->
+    <g class="cluster" data-qualified-name="pkgsmp1" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L89.95,4 A3.75,3.75 0 0 1 92.45,6.5 L99.45,24 L186.5,24 A2.5,2.5 0 0 1 189,26.5 L189,204.5 A2.5,2.5 0 0 1 186.5,207 L16.5,207 A2.5,2.5 0 0 1 14,204.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="99.45" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="72.45" x="18" y="16.889">SAMPLE_1</text>
+    </g>
+    <!--cluster pkgsmp2-->
+    <g class="cluster" data-qualified-name="pkgsmp1.pkgsmp2" data-source-line="3" id="ent0002">
+      <path d="M47.5,118 L120.95,118 A3.75,3.75 0 0 1 123.45,120.5 L130.45,138 L154.5,138 A2.5,2.5 0 0 1 157,140.5 L157,196.5 A2.5,2.5 0 0 1 154.5,199 L47.5,199 A2.5,2.5 0 0 1 45,196.5 L45,120.5 A2.5,2.5 0 0 1 47.5,118" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="45" x2="130.45" y1="138" y2="138"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="72.45" x="49" y="130.889">SAMPLE_2</text>
+    </g>
+    <!--cluster DIFFERENT_SAMPLE-->
+    <g class="cluster" data-qualified-name="pkgsmp1.DIFFERENT_SAMPLE" data-source-line="8" id="ent0004">
+      <path d="M24.5,29 L168.912,29 A3.75,3.75 0 0 1 171.412,31.5 L178.412,49 L178.5,49 A2.5,2.5 0 0 1 181,51.5 L181,107.5 A2.5,2.5 0 0 1 178.5,110 L24.5,110 A2.5,2.5 0 0 1 22,107.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="178.412" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="143.412" x="26" y="41.889">DIFFERENT_SAMPLE</text>
+    </g>
+    <!--class lib-->
+    <g class="entity" data-qualified-name="pkgsmp1.pkgsmp2.lib" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.087" x="53.5" y="143"/>
+      <ellipse cx="68.5" cy="159" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="63.5" y="164">C</text>
+      <text fill="#000" font-size="14" textLength="63.087" x="82.5" y="162.889">BigLibrary</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="54.5" x2="147.587" y1="175" y2="175"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="54.5" x2="147.587" y1="183" y2="183"/>
+    </g>
+    <!--class handler-->
+    <g class="entity" data-qualified-name="pkgsmp1.DIFFERENT_SAMPLE.handler" data-source-line="9" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.663" x="42" y="54"/>
+      <ellipse cx="57" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="52" y="75">C</text>
+      <text fill="#000" font-size="14" textLength="85.663" x="71" y="73.889">SomeHandler</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43" x2="158.663" y1="86" y2="86"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43" x2="158.663" y1="94" y2="94"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0003" data-link-type="association" id="lnk6">
+      <path d="M101,102.314 C101,114.898 101,130.376 101,142.923" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

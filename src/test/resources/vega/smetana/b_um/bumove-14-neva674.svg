@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="153px" preserveAspectRatio="none" style="width:154px;height:153px;background:#FFFFFF;" version="1.1" viewBox="0 0 154 153" width="154px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.213" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="53.213" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="51.213" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="51.213" y="23"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="21" y="42.889">foo1</text>
+    </g>
+    <!--entity foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="2" id="ent0002">
+      <ellipse cx="39.5" cy="118" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="25.894" y="145.889">foo2</text>
+    </g>
+    <!--entity foo3-->
+    <g class="entity" data-qualified-name="foo3" data-source-line="3" id="ent0003">
+      <path d="M91,22.5 C91,12.5 114.606,12.5 114.606,12.5 C114.606,12.5 138.213,12.5 138.213,22.5 L138.213,45.5 C138.213,55.5 114.606,55.5 114.606,55.5 C114.606,55.5 91,55.5 91,45.5 L91,22.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M91,22.5 C91,32.5 114.606,32.5 114.606,32.5 C114.606,32.5 138.213,32.5 138.213,22.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="101" y="47.389">foo3</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="39.5,108.847,43.5,99.847,39.5,103.847,35.5,99.847,39.5,108.847" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M39.5,56.011 C39.5,72.726 39.5,90.459 39.5,103.847" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="42.575" x="41.5" y="86.111">dummy</text>
+    </g>
+  </g>
+</svg>

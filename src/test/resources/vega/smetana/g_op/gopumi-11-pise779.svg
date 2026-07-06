@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="214px" preserveAspectRatio="none" style="width:110px;height:214px;background:#FFFFFF;" version="1.1" viewBox="0 0 110 214" width="110px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="S2" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="87.725" x="6" y="148"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="93.725" y1="172" y2="172"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="41.288" y="163.889">S2</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="11" y="187.889">description</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0002">
+      <ellipse cx="50" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="25" y="72"/>
+    <text fill="#000" font-size="14" textLength="17.15" x="41.425" y="95.889">S1</text>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="50,71.978,54,62.978,50,66.978,46,62.978,50,71.978" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M50,36.196 C50,45.979 50,55.389 50,66.978" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="50,147.955,54,138.955,50,142.955,46,138.955,50,147.955" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M50,112.124 C50,122.901 50,131.464 50,142.955" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="142px" preserveAspectRatio="none" style="width:73px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 73 142" width="73px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="A" data-source-line="13" id="ent0001">
+      <rect fill="#ADD8E6" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.725" x="6" y="12"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="40.725" x="11" y="21.333">«Foo1»</text>
+      <text fill="#000" font-size="8" x="28.687" y="32.222">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="55.725" y1="38" y2="38"/>
+    </g>
+    <g class="entity" data-qualified-name="B" data-source-line="14" id="ent0002">
+      <rect fill="#F08080" height="36" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="24.7" x="19" y="90"/>
+      <text fill="#000" font-size="16" x="26" y="104.444">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20" x2="42.7" y1="110" y2="110"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="31.5,54.335,27.5,60.335,31.5,66.335,35.5,60.335,31.5,54.335" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M31.5,66.335 C31.5,77.472 31.5,79.126 31.5,89.74" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

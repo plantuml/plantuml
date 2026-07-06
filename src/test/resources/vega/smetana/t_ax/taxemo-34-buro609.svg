@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:399px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 399 90" width="399px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class class_name-->
+    <g class="entity" data-qualified-name="class_name" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.725" x="131" y="12"/>
+      <ellipse cx="146" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="141" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="74.725" x="160" y="31.889">class_name</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="132" x2="236.725" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="51.275" x="137" y="58.889">member</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="132" x2="236.725" y1="66" y2="66"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="12" id="ent0003">
+      <path d="M6,25 L6,61 A0,0 0 0 0 6,61 L112.963,61 A0,0 0 0 0 112.963,61 L112.963,47 L130.755,43 L112.963,39 L112.963,35 L102.963,25 L6,25 A0,0 0 0 0 6,25" fill="#98FB98" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M102.963,25 L102.963,35 L112.963,35 L102.963,25" fill="#98FB98" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="85.963" x="12" y="40.111">note on class Ok</text>
+      <text fill="#000" font-size="13" textLength="66.462" x="12" y="53.111">(palegreen)</text>
+    </g>
+    <path d="M256,20 L256,34 L188.275,55 L256,42 L256,56 A0,0 0 0 0 256,56 L383.113,56 A0,0 0 0 0 383.113,56 L383.113,30 L373.113,20 L256,20 A0,0 0 0 0 256,20" fill="#98FB98" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M373.113,20 L373.113,30 L383.113,30 L373.113,20" fill="#98FB98" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#F00" font-size="13" textLength="106.113" x="262" y="35.111">note on member KO</text>
+    <text fill="#000" font-size="13" textLength="88.238" x="262" y="48.111">(always yellow!)</text>
+  </g>
+</svg>

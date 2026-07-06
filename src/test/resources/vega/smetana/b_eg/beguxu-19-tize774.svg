@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="487px" preserveAspectRatio="none" style="width:165px;height:487px;background:#FFFFFF;" version="1.1" viewBox="0 0 165 487" width="165px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="c" data-source-line="7" id="ent0001">
+      <rect fill="#008000" height="50" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="50" x="6" y="88.5"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="6" x2="56" y1="112.5" y2="112.5"/>
+      <text fill="#000" font-size="14" x="27.5" y="104.389">c</text>
+    </g>
+    <g class="entity" data-qualified-name="d" data-source-line="8" id="ent0002">
+      <rect fill="#008000" height="50" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="50" x="6" y="344.5"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="6" x2="56" y1="368.5" y2="368.5"/>
+      <text fill="#000" font-size="14" x="27.106" y="360.389">d</text>
+    </g>
+    <g class="entity" data-qualified-name="a" data-source-line="11" id="ent0003">
+      <path d="M87,12 L137,12 A12.5,12.5 0 0 1 149.5,24.5 L149.5,36 L74.5,36 L74.5,24.5 A12.5,12.5 0 0 1 87,12" fill="#00F"/>
+      <path d="M74.5,36 L149.5,36 L149.5,202.5 A12.5,12.5 0 0 1 137,215 L87,215 A12.5,12.5 0 0 1 74.5,202.5 L74.5,36" fill="#00F"/>
+      <rect fill="none" height="203" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="75" x="74.5" y="12"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="74.5" x2="149.5" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="100.319" y="27.889">a_1</text>
+      <g class="entity" data-qualified-name="a.x" data-source-line="12" id="ent0004">
+        <rect fill="#008000" height="50" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="50" x="80.5" y="47"/>
+        <line style="stroke:#000;stroke-width:0.5;" x1="80.5" x2="130.5" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" x="102" y="62.889">x</text>
+      </g>
+      <g class="entity" data-qualified-name="a.y" data-source-line="13" id="ent0005">
+        <rect fill="#008000" height="50" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="50" x="80.5" y="150"/>
+        <line style="stroke:#000;stroke-width:0.5;" x1="80.5" x2="130.5" y1="174" y2="174"/>
+        <text fill="#000" font-size="14" x="102" y="165.889">y</text>
+      </g>
+      <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk10">
+        <polygon fill="#181818" points="105.5,149.655,109.5,140.655,105.5,144.655,101.5,140.655,105.5,149.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M105.5,97.192 C105.5,113.066 105.5,128.751 105.5,144.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="13.731" x="107.5" y="127.111">ev</text>
+      </g>
+    </g>
+    <g class="entity" data-qualified-name="b" data-source-line="17" id="ent0006">
+      <path d="M87,268 L137,268 A12.5,12.5 0 0 1 149.5,280.5 L149.5,292 L74.5,292 L74.5,280.5 A12.5,12.5 0 0 1 87,268" fill="#00F"/>
+      <path d="M74.5,292 L149.5,292 L149.5,458.5 A12.5,12.5 0 0 1 137,471 L87,471 A12.5,12.5 0 0 1 74.5,458.5 L74.5,292" fill="#00F"/>
+      <rect fill="none" height="203" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="75" x="74.5" y="268"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="74.5" x2="149.5" y1="292" y2="292"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="100.319" y="283.889">a_2</text>
+      <g class="entity" data-qualified-name="b.w" data-source-line="18" id="ent0007">
+        <rect fill="#008000" height="50" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="50" x="80.5" y="303"/>
+        <line style="stroke:#000;stroke-width:0.5;" x1="80.5" x2="130.5" y1="327" y2="327"/>
+        <text fill="#000" font-size="14" x="100.425" y="318.889">w</text>
+      </g>
+      <g class="entity" data-qualified-name="b.z" data-source-line="19" id="ent0008">
+        <rect fill="#008000" height="50" rx="12.5" ry="12.5" style="stroke:#000;stroke-width:0.5;" width="50" x="80.5" y="406"/>
+        <line style="stroke:#000;stroke-width:0.5;" x1="80.5" x2="130.5" y1="430" y2="430"/>
+        <text fill="#000" font-size="14" x="102" y="421.889">z</text>
+      </g>
+      <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="dependency" id="lnk11">
+        <polygon fill="#181818" points="105.5,405.655,109.5,396.655,105.5,400.655,101.5,396.655,105.5,405.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M105.5,353.192 C105.5,369.066 105.5,384.751 105.5,400.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="20.963" x="107.5" y="383.111">ev2</text>
+      </g>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="31,344.219,35,335.219,31,339.219,27,335.219,31,344.219" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M31,138.855 C31,187.404 31,290.73 31,339.219" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="31.769" x="33" y="245.111">event</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="112,267.87,116,258.87,112,262.87,108,258.87,112,267.87" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M112,215.252 C112,232.566 112,245.559 112,262.87" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.963" x="114" y="245.111">ev3</text>
+    </g>
+  </g>
+</svg>

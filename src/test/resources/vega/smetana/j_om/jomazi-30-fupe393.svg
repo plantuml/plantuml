@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:403px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 403 78" width="403px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="blah5" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="175.75" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="181.75" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="155.75" x="16" y="27.889">12345678901234567890</text>
+    </g>
+    <g class="entity" data-qualified-name="blah6" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="175.75" x="211" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="211" x2="386.75" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="155.75" x="221" y="27.889">12345678901234567890</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="210.946,37,201.946,33,205.946,37,201.946,41,210.946,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M182.128,37 C191.678,37 196.397,37 205.946,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="193" y="29.111">b</text>
+    </g>
+  </g>
+</svg>

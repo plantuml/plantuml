@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="599px" preserveAspectRatio="none" style="width:357px;height:599px;background:#FFFFFF;" version="1.1" viewBox="0 0 357 599" width="357px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Revelate-->
+    <g class="cluster" data-qualified-name="Revelate" data-source-line="5" id="ent0004">
+      <path d="M16.5,79 L72.8,79 A3.75,3.75 0 0 1 75.3,81.5 L82.3,99 L301.5,99 A2.5,2.5 0 0 1 304,101.5 L304,572.5 A2.5,2.5 0 0 1 301.5,575 L16.5,575 A2.5,2.5 0 0 1 14,572.5 L14,81.5 A2.5,2.5 0 0 1 16.5,79" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="82.3" y1="99" y2="99"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="55.3" x="18" y="91.889">Revelate</text>
+    </g>
+    <!--cluster Legacy-->
+    <g class="cluster" data-qualified-name="Revelate.Legacy" data-source-line="5" id="ent0005">
+      <path d="M24.5,104 L70.65,104 A3.75,3.75 0 0 1 73.15,106.5 L80.15,124 L293.5,124 A2.5,2.5 0 0 1 296,126.5 L296,419.5 A2.5,2.5 0 0 1 293.5,422 L24.5,422 A2.5,2.5 0 0 1 22,419.5 L22,106.5 A2.5,2.5 0 0 1 24.5,104" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="80.15" y1="124" y2="124"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="26" y="116.889">Legacy</text>
+    </g>
+    <!--cluster Base-->
+    <g class="cluster" data-qualified-name="Revelate.Legacy.Base" data-source-line="5" id="ent0006">
+      <path d="M32.5,129 L65.438,129 A3.75,3.75 0 0 1 67.938,131.5 L74.938,149 L285.5,149 A2.5,2.5 0 0 1 288,151.5 L288,411.5 A2.5,2.5 0 0 1 285.5,414 L32.5,414 A2.5,2.5 0 0 1 30,411.5 L30,131.5 A2.5,2.5 0 0 1 32.5,129" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="74.938" y1="149" y2="149"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="31.938" x="34" y="141.889">Base</text>
+    </g>
+    <!--cluster Biz-->
+    <g class="cluster" data-qualified-name="Revelate.Legacy.Base.Biz" data-source-line="4" id="ent0002">
+      <path d="M40.5,154 L61.012,154 A3.75,3.75 0 0 1 63.512,156.5 L70.512,174 L277.5,174 A2.5,2.5 0 0 1 280,176.5 L280,403.5 A2.5,2.5 0 0 1 277.5,406 L40.5,406 A2.5,2.5 0 0 1 38,403.5 L38,156.5 A2.5,2.5 0 0 1 40.5,154" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="38" x2="70.512" y1="174" y2="174"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.512" x="42" y="166.889">Biz</text>
+    </g>
+    <!--cluster Sungard-->
+    <g class="cluster" data-qualified-name="Revelate.Sungard" data-source-line="25" id="ent0014">
+      <path d="M150.5,439 L204.438,439 A3.75,3.75 0 0 1 206.938,441.5 L213.938,459 L289.5,459 A2.5,2.5 0 0 1 292,461.5 L292,564.5 A2.5,2.5 0 0 1 289.5,567 L150.5,567 A2.5,2.5 0 0 1 148,564.5 L148,441.5 A2.5,2.5 0 0 1 150.5,439" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="148" x2="213.938" y1="459" y2="459"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="152" y="451.889">Sungard</text>
+    </g>
+    <!--cluster Biz-->
+    <g class="cluster" data-qualified-name="Revelate.Sungard.Biz" data-source-line="24" id="ent0012">
+      <path d="M158.5,464 L179.013,464 A3.75,3.75 0 0 1 181.513,466.5 L188.513,484 L281.5,484 A2.5,2.5 0 0 1 284,486.5 L284,556.5 A2.5,2.5 0 0 1 281.5,559 L158.5,559 A2.5,2.5 0 0 1 156,556.5 L156,466.5 A2.5,2.5 0 0 1 158.5,464" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="156" x2="188.513" y1="484" y2="484"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.512" x="160" y="476.889">Biz</text>
+    </g>
+    <!--class BaseClass-->
+    <g class="entity" data-qualified-name="BaseClass" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.025" x="250.5" y="4"/>
+      <ellipse cx="265.5" cy="20" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="260.5" y="25">C</text>
+      <text fill="#000" font-size="14" textLength="67.025" x="279.5" y="23.889">BaseClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="251.5" x2="348.525" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="251.5" x2="348.525" y1="44" y2="44"/>
+    </g>
+    <!--class BaseClass-->
+    <g class="entity" data-qualified-name="Revelate.Legacy.Base.Biz.BaseClass" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="125.488" x="146.5" y="179"/>
+      <ellipse cx="173.408" cy="195" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="168.408" y="200">C</text>
+      <text fill="#000" font-size="14" textLength="67.025" x="190.054" y="198.889">BaseClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="147.5" x2="270.988" y1="211" y2="211"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="147.5" x2="270.988" y1="219" y2="219"/>
+      <text fill="#000" font-size="14" textLength="113.488" x="152.5" y="233.889">ACustomMethod()</text>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="Revelate.Legacy.Base.Biz.Person" data-source-line="8" id="ent0007">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.363" x="50.5" y="294"/>
+      <ellipse cx="91.15" cy="310" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="86.15" y="315">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="110.85" y="313.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="51.5" x2="182.863" y1="326" y2="326"/>
+      <text fill="#000" font-size="14" textLength="51.363" x="56.5" y="340.889">guid OID</text>
+      <text fill="#000" font-size="14" textLength="98.788" x="56.5" y="354.889">string FirstName</text>
+      <text fill="#000" font-size="14" textLength="98" x="56.5" y="368.889">string LastName</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="51.5" x2="182.863" y1="376" y2="376"/>
+      <text fill="#000" font-size="14" textLength="121.363" x="56.5" y="390.889">boolean IsBirthday()</text>
+    </g>
+    <!--class Meeting-->
+    <g class="entity" data-qualified-name="Revelate.Legacy.Base.Biz.Meeting" data-source-line="16" id="ent0009">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.788" x="46" y="186"/>
+      <ellipse cx="61" cy="202" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="56" y="207">C</text>
+      <text fill="#000" font-size="14" textLength="49.788" x="75" y="205.889">Meeting</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47" x2="126.788" y1="218" y2="218"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47" x2="126.788" y1="226" y2="226"/>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="Revelate.Sungard.Biz.Person" data-source-line="25" id="ent0013">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.275" x="164" y="489"/>
+      <ellipse cx="195.161" cy="505" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="190.161" y="510">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="212.752" y="508.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="165" x2="275.275" y1="521" y2="521"/>
+      <text fill="#000" font-size="14" textLength="100.275" x="170" y="535.889">CustomAttribute</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="165" x2="275.275" y1="543" y2="543"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="304.269,52.224,301.048,70.922,312.911,69.115,304.269,52.224" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M306.979,70.019 C313.306,111.546 317.97,181.906 280,241 C254.492,280.7 227.657,268.425 188,294 C186.597,294.905 185.183,295.826 183.763,296.761" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0007" data-link-type="aggregation" id="lnk10">
+      <polygon fill="none" points="92.157,234.035,89.565,240.764,94.779,245.746,97.371,239.017,92.157,234.035" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M94.779,245.746 C98.464,262.208 100.948,273.3 105.572,293.955" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="55.006" x="104" y="271.111">Relation1</text>
+      <text fill="#000" font-size="13" x="97.572" y="290.066">n</text>
+      <text fill="#000" font-size="13" x="84.157" y="245.147">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0009" data-link-type="extension" id="lnk11">
+      <polygon fill="none" points="250.479,32.804,231.801,29.463,233.532,41.337,250.479,32.804" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M232.667,35.4 C197.044,40.592 167.845,50.229 137,79 C106.409,107.535 94.33,156.871 89.713,185.864" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0013" data-link-type="extension" id="lnk15">
+      <polygon fill="none" points="147.625,398.14,151.725,416.665,162.02,410.5,147.625,398.14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M156.872,413.583 C174.544,443.092 186.915,463.751 201.899,488.774" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0013" data-link-type="extension" id="lnk16">
+      <polygon fill="none" points="316.455,52.017,318.754,70.851,329.594,65.705,316.455,52.017" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M324.174,68.278 C326.984,74.197 321.23,64.482 321,71 C315.474,227.767 339.295,275.205 284,422 C274.897,446.167 258.897,470.417 245.173,488.625" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0013" data-link-type="aggregation" id="lnk17">
+      <polygon fill="none" points="125.474,234.267,128.52,240.803,135.725,240.505,132.679,233.969,125.474,234.267" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M135.725,240.505 C154.465,251.909 163.138,257.325 165,259 C179.605,272.141 184.523,275.832 192,294 C219.042,359.704 221.87,444.611 221.187,488.977" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="55.006" x="222" y="349.611">Relation2</text>
+      <text fill="#000" font-size="13" x="222.187" y="485.088">n</text>
+      <text fill="#000" font-size="13" x="117.474" y="245.378">1</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:193px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 193 76" width="193px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M8.5,12 L28.925,12 A3.75,3.75 0 0 1 31.425,14.5 L38.425,32 L42.925,32 A2.5,2.5 0 0 1 45.425,34.5 L45.425,57.5 A2.5,2.5 0 0 1 42.925,60 L8.5,60 A2.5,2.5 0 0 1 6,57.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="38.425" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="10" y="24.889">foo</text>
+    <path d="M66,12 L87.213,12 A3.75,3.75 0 0 1 89.713,14.5 L96.713,32 L101.213,32 A2.5,2.5 0 0 1 103.713,34.5 L103.713,57.5 A2.5,2.5 0 0 1 101.213,60 L66,60 A2.5,2.5 0 0 1 63.5,57.5 L63.5,14.5 A2.5,2.5 0 0 1 66,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="63.5" x2="96.713" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="20.213" x="67.5" y="24.889">bar</text>
+    <!--class qux-->
+    <g class="entity" data-qualified-name="qux" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.575" x="122" y="12"/>
+      <ellipse cx="137" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="132" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="151" y="31.889">qux</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="123" x2="175.575" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="123" x2="175.575" y1="52" y2="52"/>
+    </g>
+  </g>
+</svg>

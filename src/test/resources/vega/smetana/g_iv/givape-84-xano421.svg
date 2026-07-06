@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="200.766px" preserveAspectRatio="none" style="width:83px;height:200px;background:#FFFFFF;" version="1.1" viewBox="0 0 83 200" width="83.525px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity EMP-->
+    <g class="entity" data-qualified-name="EMP" data-source-line="2" id="ent0001">
+      <ellipse cx="38.046" cy="15.709" fill="#F1F1F1" rx="6.13" ry="6.13" style="stroke:#181818;stroke-width:0.383;"/>
+      <path d="M38.046,21.839 L38.046,42.529 M28.084,27.969 L48.008,27.969 M38.046,42.529 L28.084,54.023 M38.046,42.529 L48.008,54.023" fill="none" style="stroke:#181818;stroke-width:0.383;"/>
+      <text fill="#000" font-size="10.728" textLength="47.739" x="14.176" y="63.516">Employee</text>
+    </g>
+    <!--entity APP-->
+    <g class="entity" data-qualified-name="APP" data-source-line="3" id="ent0002">
+      <a href="http://tomcat.apache.org/" target="_top" title="http://tomcat.apache.org/" xlink:actuate="onRequest" xlink:href="http://tomcat.apache.org/" xlink:show="new" xlink:title="http://tomcat.apache.org/" xlink:type="simple">
+        <rect fill="#F1F1F1" height="33.716" rx="1.916" ry="1.916" style="stroke:#181818;stroke-width:0.383;" width="66.389" x="4.598" y="93.487"/>
+        <rect fill="#F1F1F1" height="7.663" style="stroke:#181818;stroke-width:0.383;" width="11.494" x="55.661" y="97.318"/>
+        <rect fill="#F1F1F1" height="1.533" style="stroke:#181818;stroke-width:0.383;" width="3.065" x="54.128" y="98.851"/>
+        <rect fill="#F1F1F1" height="1.533" style="stroke:#181818;stroke-width:0.383;" width="3.065" x="54.128" y="101.916"/>
+        <text fill="#000" font-size="10.728" textLength="35.738" x="16.092" y="117.156">Tomcat</text>
+      </a>
+    </g>
+    <!--entity DB-->
+    <g class="entity" data-qualified-name="DB" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="33.716" rx="1.916" ry="1.916" style="stroke:#181818;stroke-width:0.383;" width="62.232" x="6.897" y="154.789"/>
+      <rect fill="#F1F1F1" height="7.663" style="stroke:#181818;stroke-width:0.383;" width="11.494" x="53.803" y="158.621"/>
+      <rect fill="#F1F1F1" height="1.533" style="stroke:#181818;stroke-width:0.383;" width="3.065" x="52.27" y="160.153"/>
+      <rect fill="#F1F1F1" height="1.533" style="stroke:#181818;stroke-width:0.383;" width="3.065" x="52.27" y="163.218"/>
+      <text fill="#000" font-size="10.728" textLength="31.58" x="18.391" y="178.459">Oracle</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk4">
+      <path d="M37.931,66.071 C37.931,75.294 37.931,85.259 37.931,93.321" fill="none" style="stroke:#181818;stroke-width:0.766;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk5">
+      <path d="M37.931,127.444 C37.931,135.946 37.931,146.306 37.931,154.775" fill="none" style="stroke:#181818;stroke-width:0.766;"/>
+    </g>
+  </g>
+</svg>

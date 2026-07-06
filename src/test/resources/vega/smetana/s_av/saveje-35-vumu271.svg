@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="304px" preserveAspectRatio="none" style="width:164px;height:304px;background:#808080;" version="1.1" viewBox="0 0 164 304" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#808080" height="304" style="stroke:none;" width="164" x="0" y="0"/>
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="88" rx="5" ry="5" style="stroke:#181818;stroke-width:1;" width="118.85" x="13" y="24"/>
+      <rect fill="#F1F1F1" height="20" style="stroke:#181818;stroke-width:1;" width="30" x="91.85" y="34"/>
+      <rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1;" width="8" x="87.85" y="38"/>
+      <rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1;" width="8" x="87.85" y="46"/>
+      <text fill="#000" font-size="28" textLength="38.85" x="43" y="85.778">foo</text>
+    </g>
+    <!--entity bar-->
+    <g class="entity" data-qualified-name="bar" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="88" rx="5" ry="5" style="stroke:#181818;stroke-width:1;" width="120.425" x="12" y="184"/>
+      <rect fill="#F1F1F1" height="20" style="stroke:#181818;stroke-width:1;" width="30" x="92.425" y="194"/>
+      <rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1;" width="8" x="88.425" y="198"/>
+      <rect fill="#F1F1F1" height="4" style="stroke:#181818;stroke-width:1;" width="8" x="88.425" y="206"/>
+      <text fill="#000" font-size="28" textLength="40.425" x="42" y="245.778">bar</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M47.637,112.628 C44.09,134.82 44.121,161.859 47.732,183.964" fill="none" style="stroke:#181818;stroke-width:2;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk4">
+      <path d="M72,112.628 C72,134.82 72,161.859 72,183.964" fill="none" style="stroke:#181818;stroke-width:2;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk5">
+      <path d="M96.363,112.628 C99.91,134.82 99.879,161.859 96.268,183.964" fill="none" style="stroke:#181818;stroke-width:2;"/>
+    </g>
+  </g>
+</svg>

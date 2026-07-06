@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="177px" preserveAspectRatio="none" style="width:162px;height:177px;background:#FFFFFF;" version="1.1" viewBox="0 0 162 177" width="162px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Car-->
+    <g class="entity" data-qualified-name="Car" data-source-line="1" id="ent0001">
+      <a href="http://plantuml.com" target="_top" title="http://plantuml.com" xlink:actuate="onRequest" xlink:href="http://plantuml.com" xlink:show="new" xlink:title="http://plantuml.com" xlink:type="simple">
+        <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.575" x="72" y="12"/>
+        <ellipse cx="87" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="82" y="33">C</text>
+        <text fill="#000" font-size="14" textLength="22.575" x="101" y="31.889">Car</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="73" x2="125.575" y1="44" y2="44"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="73" x2="125.575" y1="52" y2="52"/>
+      </a>
+    </g>
+    <!--class Wheel-->
+    <g class="entity" data-qualified-name="Wheel" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.725" x="63.5" y="113"/>
+      <ellipse cx="78.5" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="73.5" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="39.725" x="92.5" y="132.889">Wheel</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="64.5" x2="134.225" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="64.5" x2="134.225" y1="153" y2="153"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN3" data-source-line="4" id="ent0004">
+      <a href="http://plantuml.com" target="_top" title="http://plantuml.com" xlink:actuate="onRequest" xlink:href="http://plantuml.com" xlink:show="new" xlink:title="http://plantuml.com" xlink:type="simple">
+        <path d="M6,125 L6,148 A0,0 0 0 0 6,148 L45.038,148 A0,0 0 0 0 45.038,148 L45.038,143 L63.412,137 L45.038,135 L45.038,135 L35.038,125 L6,125 A0,0 0 0 0 6,125" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M35.038,125 L35.038,135 L45.038,135 L35.038,125" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="13" textLength="18.038" x="12" y="140.111">foo</text>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk6">
+      <a href="http://plantuml.com" target="_top" title="http://plantuml.com" xlink:actuate="onRequest" xlink:href="http://plantuml.com" xlink:show="new" xlink:title="http://plantuml.com" xlink:type="simple">
+        <polygon fill="#181818" points="99.5,60.211,95.5,66.211,99.5,72.211,103.5,66.211,99.5,60.211" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M99.5,72.211 C99.5,88.099 99.5,97.077 99.5,112.934" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </a>
+      <text fill="#000" font-size="13" textLength="52.731" x="101.5" y="90.111">has some</text>
+    </g>
+  </g>
+</svg>

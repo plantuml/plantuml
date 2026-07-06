@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="212px" preserveAspectRatio="none" style="width:202px;height:212px;background:#FFFFFF;" version="1.1" viewBox="0 0 202 212" width="202px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity server-->
+    <g class="entity" data-qualified-name="server" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.85" x="56" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="114.85" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="112.85" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="112.85" y="23"/>
+      <text fill="#000" font-size="14" textLength="38.85" x="71" y="42.889">server</text>
+    </g>
+    <!--entity client1-->
+    <g class="entity" data-qualified-name="client1" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.512" x="6" y="152"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="66.512" y="157"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="64.512" y="159"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="64.512" y="163"/>
+      <text fill="#000" font-size="14" textLength="40.512" x="21" y="182.889">client1</text>
+    </g>
+    <!--entity client2-->
+    <g class="entity" data-qualified-name="client2" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.512" x="105" y="152"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="165.513" y="157"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="163.513" y="159"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="163.513" y="163"/>
+      <text fill="#000" font-size="14" textLength="40.512" x="120" y="182.889">client2</text>
+    </g>
+    <!--entity IF-->
+    <g class="entity" data-qualified-name="IF" data-source-line="5" id="ent0004">
+      <ellipse cx="95.5" cy="101" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="12.425" x="89.288" y="128.889">IF</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M95.5,56.143 C95.5,67.995 95.5,82.292 95.5,91.952" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" id="lnk6">
+      <path d="M78.748,113.782 A9,9 0 0 0 92.471 123.67" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M81.562,124.342 C74.604,133.999 70.223,140.079 61.735,151.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" id="lnk7">
+      <path d="M98.766,123.719 A9,9 0 0 0 112.394 113.699" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M109.68,124.285 C116.781,133.942 121.293,140.079 129.954,151.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

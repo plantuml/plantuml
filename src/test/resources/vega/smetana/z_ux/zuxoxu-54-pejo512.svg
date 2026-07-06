@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="136px" preserveAspectRatio="none" style="width:77px;height:136px;background:#FFFFFF;" version="1.1" viewBox="0 0 77 136" width="77px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Bar-->
+    <g class="entity" data-qualified-name="Bar" data-source-line="3" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.788" x="6.5" y="72"/>
+      <ellipse cx="21.5" cy="88" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16.5" y="93">C</text>
+      <text fill="#000" font-size="14" textLength="21.788" x="35.5" y="91.889">Bar</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7.5" x2="59.288" y1="104" y2="104"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7.5" x2="59.288" y1="112" y2="112"/>
+    </g>
+    <g class="entity" data-qualified-name="N1" data-source-line="4" id="ent0005">
+      <path d="M6,12 L6,35 A0,0 0 0 0 6,35 L29.5,35 L33.5,71.891 L37.5,35 L60.963,35 A0,0 0 0 0 60.963,35 L60.963,22 L50.963,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M50.963,12 L50.963,22 L60.963,22 L50.963,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="33.963" x="12" y="27.111">A note</text>
+    </g>
+  </g>
+</svg>

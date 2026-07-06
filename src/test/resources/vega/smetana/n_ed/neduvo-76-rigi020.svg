@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="95px" preserveAspectRatio="none" style="width:153px;height:95px;background:#FFFFFF;" version="1.1" viewBox="0 0 153 95" width="153px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster rv-->
+    <g class="cluster" data-qualified-name="rv" data-source-line="2" id="ent0001">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="86" x="19" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="11.638" x="56.181" y="16.889">rv</text>
+    </g>
+    <g class="entity" data-qualified-name="rv.hitchReceiver" data-source-line="3" id="ent0002">
+      <text fill="#000" font-size="14" textLength="84.875" x="62.563" y="18.889">hitchReceiver</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="99" y="34"/>
+    </g>
+    <!--entity cabin-->
+    <g class="entity" data-qualified-name="rv.cabin" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.512" x="27" y="29"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="37" y="49.889">cabin</text>
+    </g>
+  </g>
+</svg>

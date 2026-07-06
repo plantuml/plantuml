@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="142px" preserveAspectRatio="none" style="width:98px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 98 142" width="98px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster net-->
+    <g class="cluster" data-qualified-name="net" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L36.925,4 A3.75,3.75 0 0 1 39.425,6.5 L46.425,24 L87.5,24 A2.5,2.5 0 0 1 90,26.5 L90,115.5 A2.5,2.5 0 0 1 87.5,118 L16.5,118 A2.5,2.5 0 0 1 14,115.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="46.425" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="18" y="16.889">net</text>
+    </g>
+    <!--cluster entities-->
+    <g class="cluster" data-qualified-name="net.entities" data-source-line="8" id="ent0003">
+      <path d="M24.5,29 L69.863,29 A3.75,3.75 0 0 1 72.363,31.5 L79.363,49 L79.5,49 A2.5,2.5 0 0 1 82,51.5 L82,107.5 A2.5,2.5 0 0 1 79.5,110 L24.5,110 A2.5,2.5 0 0 1 22,107.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="79.363" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="44.363" x="26" y="41.889">entities</text>
+    </g>
+    <path d="M33,54 L56.575,54 A3.75,3.75 0 0 1 59.075,56.5 L66.075,74 L70.575,74 A2.5,2.5 0 0 1 73.075,76.5 L73.075,99.5 A2.5,2.5 0 0 1 70.575,102 L33,102 A2.5,2.5 0 0 1 30.5,99.5 L30.5,56.5 A2.5,2.5 0 0 1 33,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="30.5" x2="66.075" y1="74" y2="74"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="34.5" y="66.889">sub</text>
+  </g>
+</svg>

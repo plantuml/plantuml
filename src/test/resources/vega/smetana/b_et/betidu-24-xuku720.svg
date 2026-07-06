@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="180px" preserveAspectRatio="none" style="width:380px;height:180px;background:#FFFFFF;" version="1.1" viewBox="0 0 380 180" width="380px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity AA-->
+    <g class="entity" data-qualified-name="AA" data-source-line="1" id="ent0001">
+      <rect fill="#BDB76B" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.3" x="6" y="12"/>
+      <rect fill="#BDB76B" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="90.3" y="17"/>
+      <rect fill="#BDB76B" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="88.3" y="19"/>
+      <rect fill="#BDB76B" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="88.3" y="23"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="62.3" x="22" y="42.889">«static lib»</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="43.788" y="56.889">AA</text>
+    </g>
+    <!--entity BB-->
+    <g class="entity" data-qualified-name="BB" data-source-line="2" id="ent0002">
+      <rect fill="#008000" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.45" x="128" y="12"/>
+      <rect fill="#008000" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="222.45" y="17"/>
+      <rect fill="#008000" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="220.45" y="19"/>
+      <rect fill="#008000" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="220.45" y="23"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="72.45" x="144" y="42.889">«shared lib»</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="170.863" y="56.889">BB</text>
+    </g>
+    <!--entity CC-->
+    <g class="entity" data-qualified-name="CC" data-source-line="3" id="ent0003">
+      <rect fill="#BDB76B" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.3" x="260" y="12"/>
+      <rect fill="#BDB76B" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="344.3" y="17"/>
+      <rect fill="#BDB76B" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="342.3" y="19"/>
+      <rect fill="#BDB76B" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="342.3" y="23"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="62.3" x="276" y="42.889">«static lib»</text>
+      <text fill="#000" font-size="14" textLength="20.3" x="297" y="56.889">CC</text>
+    </g>
+    <!--entity node1-->
+    <g class="entity" data-qualified-name="node1" data-source-line="4" id="ent0004">
+      <polygon fill="#FF0" points="18.5,123,28.5,113,97.438,113,97.438,147,87.438,157,18.5,157,18.5,123" style="stroke:#008000;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="87.438" x2="97.438" y1="123" y2="113"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="18.5" x2="87.438" y1="123" y2="123"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="87.438" x2="87.438" y1="123" y2="157"/>
+      <text fill="#000" font-size="14" textLength="38.938" x="33.5" y="143.889">node1</text>
+    </g>
+    <!--entity node2-->
+    <g class="entity" data-qualified-name="node2" data-source-line="5" id="ent0005">
+      <polygon fill="#F0F" points="116,116,126,106,247.513,106,247.513,154,237.513,164,116,164,116,116" style="stroke:#008000;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="237.513" x2="247.513" y1="116" y2="106"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="116" x2="237.513" y1="116" y2="116"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="237.513" x2="237.513" y1="116" y2="164"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="89.513" x="132" y="136.889">«shared node»</text>
+      <text fill="#000" font-size="14" textLength="38.938" x="157.288" y="150.889">node2</text>
+    </g>
+    <!--entity Production-->
+    <g class="entity" data-qualified-name="Production" data-source-line="6" id="ent0006">
+      <path d="M266.5,123.5 C266.5,113.5 309.969,113.5 309.969,113.5 C309.969,113.5 353.438,113.5 353.438,123.5 L353.438,146.5 C353.438,156.5 309.969,156.5 309.969,156.5 C309.969,156.5 266.5,156.5 266.5,146.5 L266.5,123.5" fill="#0FF" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M266.5,123.5 C266.5,133.5 309.969,133.5 309.969,133.5 C309.969,133.5 353.438,133.5 353.438,123.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="276.5" y="148.389">Production</text>
+    </g>
+  </g>
+</svg>

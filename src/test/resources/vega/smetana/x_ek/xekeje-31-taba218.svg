@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="136px" preserveAspectRatio="none" style="width:345px;height:136px;background:#FFFFFF;" version="1.1" viewBox="0 0 345 136" width="345px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A1-->
+    <g class="entity" data-qualified-name="A1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="104.5" y="12"/>
+      <ellipse cx="119.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="114.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="133.5" y="31.889">A1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="105.5" x2="152.65" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="105.5" x2="152.65" y1="52" y2="52"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="4" id="ent0003">
+      <path d="M6,24 L6,47 A0,0 0 0 0 6,47 L85.5,47 A0,0 0 0 0 85.5,47 L85.5,42 L104.258,36 L85.5,34 L85.5,34 L75.5,24 L6,24 A0,0 0 0 0 6,24" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M75.5,24 L75.5,34 L85.5,34 L75.5,24" fill="#008000" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="58.5" x="12" y="39.111">note green</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN5" data-source-line="7" id="ent0006">
+      <path d="M94.5,96 L94.5,119 A0,0 0 0 0 94.5,119 L163.925,119 A0,0 0 0 0 163.925,119 L163.925,106 L153.925,96 L133,96 L129,60.309 L125,96 L94.5,96 A0,0 0 0 0 94.5,96" fill="#F00" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M153.925,96 L153.925,106 L163.925,106 L153.925,96" fill="#F00" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="48.425" x="100.5" y="111.111">this is red</text>
+    </g>
+    <g class="entity" data-qualified-name="N1" data-source-line="11" id="ent0008">
+      <path d="M171.5,24 L171.5,47 L246.775,47 L246.775,34 L236.775,24 L171.5,24" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M236.775,24 L236.775,34 L246.775,34 L236.775,24" fill="#00F" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="54.275" x="177.5" y="39.111">this is blue</text>
+    </g>
+    <g class="entity" data-qualified-name="N2" data-source-line="14" id="ent0009">
+      <path d="M265,24 L265,47 L329.225,47 L329.225,34 L319.225,24 L265,24" fill="#666" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M319.225,24 L319.225,34 L329.225,34 L319.225,24" fill="#666" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="43.225" x="271" y="39.111">toto toto</text>
+    </g>
+  </g>
+</svg>

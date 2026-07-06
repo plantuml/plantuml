@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="136px" preserveAspectRatio="none" style="width:498px;height:136px;background:#FFFFFF;" version="1.1" viewBox="0 0 498 136" width="498px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity static-->
+    <g class="entity" data-qualified-name="static" data-source-line="7" id="ent0001">
+      <path d="M8.5,12 L49.5,12 A3.75,3.75 0 0 1 52,14.5 L59,33 L232.65,33 A2.5,2.5 0 0 1 235.15,35.5 L235.15,117.5 A2.5,2.5 0 0 1 232.65,120 L8.5,120 A2.5,2.5 0 0 1 6,117.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="59" y1="33" y2="33"/>
+      <text fill="#000" font-size="16" font-weight="700" textLength="40" x="67.575" y="52.444">Static</text>
+      <text fill="#000" font-size="16" font-weight="700" x="107.575" y="52.444"> </text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="56" x="107.575" y="52.444">Content</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="22.725" x="83.587" y="65.333">[File</text>
+      <text fill="#000" font-size="12" font-style="italic" x="106.313" y="65.333"> </text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="41.25" x="106.313" y="65.333">system]</text>
+      <text fill="#000" font-size="14" x="115.575" y="78.889"> </text>
+      <text fill="#000" font-size="14" x="16" y="92.889"> </text>
+      <text fill="#000" font-size="14" textLength="43.575" x="16" y="92.889">Serves</text>
+      <text fill="#000" font-size="14" x="59.575" y="92.889"> </text>
+      <text fill="#000" font-size="14" textLength="32.638" x="59.575" y="92.889">static</text>
+      <text fill="#000" font-size="14" x="92.213" y="92.889"> </text>
+      <text fill="#000" font-size="14" textLength="24.938" x="92.213" y="92.889">files</text>
+      <text fill="#000" font-size="14" x="117.15" y="92.889"> </text>
+      <text fill="#000" font-size="14" textLength="27.913" x="117.15" y="92.889">from</text>
+      <text fill="#000" font-size="14" x="145.063" y="92.889"> </text>
+      <text fill="#000" font-size="14" textLength="22.575" x="145.063" y="92.889">API</text>
+      <text fill="#000" font-size="14" x="167.638" y="92.889"> </text>
+      <text fill="#000" font-size="14" textLength="47.512" x="167.638" y="92.889">website</text>
+      <text fill="#000" font-size="14" textLength="24.063" x="103.544" y="106.889">root</text>
+    </g>
+    <!--entity static2-->
+    <g class="entity" data-qualified-name="static2" data-source-line="8" id="ent0002">
+      <path d="M255.5,12.5 L308.925,12.5 A3.75,3.75 0 0 1 311.425,15 L318.425,32.5 L479.65,32.5 A2.5,2.5 0 0 1 482.15,35 L482.15,117 A2.5,2.5 0 0 1 479.65,119.5 L255.5,119.5 A2.5,2.5 0 0 1 253,117 L253,15 A2.5,2.5 0 0 1 255.5,12.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="253" x2="318.425" y1="32.5" y2="32.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="263" y="26.389">static2</text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="40" x="314.575" y="51.944">Static</text>
+      <text fill="#000" font-size="16" font-weight="700" x="354.575" y="51.944"> </text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="56" x="354.575" y="51.944">Content</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="22.725" x="330.588" y="64.833">[File</text>
+      <text fill="#000" font-size="12" font-style="italic" x="353.313" y="64.833"> </text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="41.25" x="353.313" y="64.833">system]</text>
+      <text fill="#000" font-size="14" x="362.575" y="78.389"> </text>
+      <text fill="#000" font-size="14" x="263" y="92.389"> </text>
+      <text fill="#000" font-size="14" textLength="43.575" x="263" y="92.389">Serves</text>
+      <text fill="#000" font-size="14" x="306.575" y="92.389"> </text>
+      <text fill="#000" font-size="14" textLength="32.638" x="306.575" y="92.389">static</text>
+      <text fill="#000" font-size="14" x="339.213" y="92.389"> </text>
+      <text fill="#000" font-size="14" textLength="24.938" x="339.213" y="92.389">files</text>
+      <text fill="#000" font-size="14" x="364.15" y="92.389"> </text>
+      <text fill="#000" font-size="14" textLength="27.913" x="364.15" y="92.389">from</text>
+      <text fill="#000" font-size="14" x="392.063" y="92.389"> </text>
+      <text fill="#000" font-size="14" textLength="22.575" x="392.063" y="92.389">API</text>
+      <text fill="#000" font-size="14" x="414.638" y="92.389"> </text>
+      <text fill="#000" font-size="14" textLength="47.512" x="414.638" y="92.389">website</text>
+      <text fill="#000" font-size="14" textLength="24.063" x="350.544" y="106.389">root</text>
+    </g>
+  </g>
+</svg>

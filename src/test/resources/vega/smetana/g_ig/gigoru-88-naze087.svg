@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="158px" preserveAspectRatio="none" style="width:623px;height:158px;background:#FFFFFF;" version="1.1" viewBox="0 0 623 158" width="623px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="275.713" y="20.889">skinparam</text>
+    </g>
+    <!--cluster PackageWithThing2-->
+    <g class="cluster" data-qualified-name="PackageWithThing2" data-source-line="12" id="ent0002">
+      <path d="M311.5,39 L437.888,39 A3.75,3.75 0 0 1 440.388,41.5 L447.388,59 L447.5,59 A2.5,2.5 0 0 1 450,61.5 L450,131.5 A2.5,2.5 0 0 1 447.5,134 L311.5,134 A2.5,2.5 0 0 1 309,131.5 L309,41.5 A2.5,2.5 0 0 1 311.5,39" fill="none" style="stroke:#F00;stroke-width:1.5;"/>
+      <line style="stroke:#F00;stroke-width:1.5;" x1="309" x2="447.388" y1="59" y2="59"/>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="125.388" x="313" y="51.889">PackageWithThing2</text>
+      <text fill="#00F" font-size="14" font-style="italic" textLength="87.938" x="339.531" y="71.889">«something2»</text>
+    </g>
+    <!--cluster RectangleWithThing4-->
+    <g class="cluster" data-qualified-name="RectangleWithThing4" data-source-line="18" id="ent0005">
+      <rect fill="none" height="95" rx="2.5" ry="2.5" style="stroke:#F00;stroke-width:1;" width="149" x="458" y="39"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="87.938" x="488.531" y="51.889">«something4»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="133.963" x="465.519" y="65.889">RectangleWithThing4</text>
+    </g>
+    <!--entity EmptyPackage1-->
+    <g class="entity" data-qualified-name="EmptyPackage1" data-source-line="10" id="ent0001">
+      <path d="M8.5,76.5 L123.438,76.5 A3.75,3.75 0 0 1 125.938,79 L132.938,96.5 L147.438,96.5 A2.5,2.5 0 0 1 149.938,99 L149.938,125 A2.5,2.5 0 0 1 147.438,127.5 L8.5,127.5 A2.5,2.5 0 0 1 6,125 L6,79 A2.5,2.5 0 0 1 8.5,76.5" fill="#F1F1F1" style="stroke:#F00;stroke-width:0.5;"/>
+      <line style="stroke:#F00;stroke-width:0.5;" x1="6" x2="132.938" y1="96.5" y2="96.5"/>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="101.938" x="16" y="90.389">EmptyPackage1</text>
+      <text fill="#00F" font-size="14" font-style="italic" textLength="87.938" x="17" y="114.389">«something1»</text>
+    </g>
+    <!--entity EmptyRectangle3-->
+    <g class="entity" data-qualified-name="EmptyRectangle3" data-source-line="16" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="130.513" x="168.5" y="78"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="87.938" x="189.788" y="98.889">«something3»</text>
+      <text fill="#000" font-size="14" textLength="110.513" x="178.5" y="112.889">EmptyRectangle3</text>
+    </g>
+    <!--class a-->
+    <g class="entity" data-qualified-name="PackageWithThing2.a" data-source-line="13" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="360" y="78"/>
+      <ellipse cx="375" cy="94" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="370" y="99">C</text>
+      <text fill="#000" font-size="14" x="389" y="97.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="361" x2="398.788" y1="110" y2="110"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="361" x2="398.788" y1="118" y2="118"/>
+    </g>
+    <!--class b-->
+    <g class="entity" data-qualified-name="RectangleWithThing4.b" data-source-line="19" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="512" y="78"/>
+      <ellipse cx="527" cy="94" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="522" y="99">C</text>
+      <text fill="#000" font-size="14" x="541" y="97.889">b</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="513" x2="550.788" y1="110" y2="110"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="513" x2="550.788" y1="118" y2="118"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="261px" preserveAspectRatio="none" style="width:121px;height:261px;background:#FFFFFF;" version="1.1" viewBox="0 0 121 261" width="121px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="94.938" x="10" y="20.889">Example of Tree</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49.088" x="28.363" y="36.889">First line</text>
+      <text fill="#000" font-size="14" font-weight="700" x="28.363" y="50.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="76.212" x="28.363" y="50.889">Bom(Model)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.788" x="36.363" y="64.889">prop1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.788" x="36.363" y="78.889">prop2</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.788" x="36.363" y="92.889">prop3</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="48.3" x="28.363" y="106.889">Last line</text>
+      <rect fill="none" height="2" style="stroke:#000;stroke-width:1;" width="2" x="25.363" y="32"/>
+      <line style="stroke:#000;stroke-width:1;" x1="18.363" x2="26.363" y1="33" y2="33"/>
+      <line style="stroke:#000;stroke-width:1;" x1="18.363" x2="18.363" y1="26" y2="33"/>
+      <rect fill="none" height="2" style="stroke:#000;stroke-width:1;" width="2" x="25.363" y="46"/>
+      <line style="stroke:#000;stroke-width:1;" x1="18.363" x2="26.363" y1="47" y2="47"/>
+      <line style="stroke:#000;stroke-width:1;" x1="18.363" x2="18.363" y1="33" y2="47"/>
+      <rect fill="none" height="2" style="stroke:#000;stroke-width:1;" width="2" x="33.363" y="60"/>
+      <line style="stroke:#000;stroke-width:1;" x1="26.363" x2="34.363" y1="61" y2="61"/>
+      <line style="stroke:#000;stroke-width:1;" x1="26.363" x2="26.363" y1="47" y2="61"/>
+      <rect fill="none" height="2" style="stroke:#000;stroke-width:1;" width="2" x="33.363" y="74"/>
+      <line style="stroke:#000;stroke-width:1;" x1="26.363" x2="34.363" y1="75" y2="75"/>
+      <line style="stroke:#000;stroke-width:1;" x1="26.363" x2="26.363" y1="61" y2="75"/>
+      <rect fill="none" height="2" style="stroke:#000;stroke-width:1;" width="2" x="33.363" y="88"/>
+      <line style="stroke:#000;stroke-width:1;" x1="26.363" x2="34.363" y1="89" y2="89"/>
+      <line style="stroke:#000;stroke-width:1;" x1="26.363" x2="26.363" y1="75" y2="89"/>
+      <rect fill="none" height="2" style="stroke:#000;stroke-width:1;" width="2" x="25.363" y="102"/>
+      <line style="stroke:#000;stroke-width:1;" x1="18.363" x2="26.363" y1="103" y2="103"/>
+      <line style="stroke:#000;stroke-width:1;" x1="18.363" x2="18.363" y1="47" y2="103"/>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="11" id="ent0001">
+      <ellipse cx="55.969" cy="145" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="State1" data-source-line="11" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="25.969" y="195"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="25.969" x2="86.394" y1="219" y2="219"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="35.969" y="210.889">State1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="55.969,194.764,59.969,185.764,55.969,189.764,51.969,185.764,55.969,194.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M55.969,159.094 C55.969,168.61 55.969,177.662 55.969,189.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

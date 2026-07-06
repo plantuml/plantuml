@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="164px" preserveAspectRatio="none" style="width:305px;height:164px;background:#FFFFFF;" version="1.1" viewBox="0 0 305 164" width="305px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class AliceMyStyle-->
+    <g class="entity" data-qualified-name="AliceMyStyle" data-source-line="12" id="ent0001">
+      <rect fill="#0FF" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.238" x="6" y="14"/>
+      <ellipse cx="21" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="35">C</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="80.238" x="35" y="33.889">AliceMyStyle</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="117.238" y1="46" y2="46"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="117.238" y1="54" y2="54"/>
+    </g>
+    <!--class AliceMyStyleStereo-->
+    <g class="entity" data-qualified-name="AliceMyStyleStereo" data-source-line="13" id="ent0002">
+      <rect fill="#0FF" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="153.45" x="136.5" y="12"/>
+      <ellipse cx="151.5" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="146.5" y="35">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="54" x="199.225" y="26.333">«mystyle»</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="121.45" x="165.5" y="39.889">AliceMyStyleStereo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="137.5" x2="288.95" y1="48" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="137.5" x2="288.95" y1="56" y2="56"/>
+    </g>
+    <!--class Alice-->
+    <g class="entity" data-qualified-name="Alice" data-source-line="14" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="7.5" ry="7.5" style="stroke:#181818;stroke-width:0.5;" width="62.45" x="31" y="100"/>
+      <ellipse cx="46" cy="116" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="41" y="121">C</text>
+      <text fill="#000" font-size="14" textLength="30.45" x="60" y="119.889">Alice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="32" x2="92.45" y1="132" y2="132"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="32" x2="92.45" y1="140" y2="140"/>
+    </g>
+  </g>
+</svg>

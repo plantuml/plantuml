@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="252px" preserveAspectRatio="none" style="width:226px;height:252px;background:#FFFFFF;" version="1.1" viewBox="0 0 226 252" width="226px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster 春春春-->
+    <g class="cluster" data-qualified-name="..." data-source-line="5" id="ent0001">
+      <path d="M16.5,4 L59.5,4 A3.75,3.75 0 0 1 62,6.5 L69,24 L215.5,24 A2.5,2.5 0 0 1 218,26.5 L218,225.5 A2.5,2.5 0 0 1 215.5,228 L16.5,228 A2.5,2.5 0 0 1 14,225.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="69" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42" x="18" y="16.889">春春春</text>
+    </g>
+    <!--class Classe-->
+    <g class="entity" data-qualified-name="....Classe" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.875" x="22.5" y="29"/>
+      <ellipse cx="37.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="42.875" x="51.5" y="48.889">Classe</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="96.375" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="96.375" y1="69" y2="69"/>
+    </g>
+    <!--class 春-->
+    <g class="entity" data-qualified-name="....." data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.45" x="22" y="130"/>
+      <ellipse cx="48.003" cy="146" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="43.003" y="151">C</text>
+      <text fill="#000" font-size="14" x="64.447" y="149.889">春</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="91.45" y1="162" y2="162"/>
+      <text fill="#000" font-size="14" textLength="28" x="28" y="176.889">春燕</text>
+      <text fill="#000" font-size="14" textLength="23.275" x="28" y="190.889">toto</text>
+      <text fill="#000" font-size="14" textLength="58.45" x="28" y="204.889">土 + 也 = 地</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="91.45" y1="212" y2="212"/>
+    </g>
+    <g class="entity" data-qualified-name="....GMN5" data-source-line="11" id="ent0006">
+      <path d="M110.5,144 L110.5,171 L92.004,175 L110.5,179 L110.5,206 A0,0 0 0 0 110.5,206 L209.5,206 A0,0 0 0 0 209.5,206 L209.5,154 L199.5,144 L110.5,144 A0,0 0 0 0 110.5,144" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M199.5,144 L199.5,154 L209.5,154 L199.5,144" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="78" x="116.5" y="159.111">有土可种桑麻</text>
+      <text fill="#000" font-size="13" textLength="78" x="116.5" y="172.111">有水克养鱼虾</text>
+      <text fill="#000" font-size="13" textLength="78" x="116.5" y="185.111">有人非你非我</text>
+      <text fill="#000" font-size="13" textLength="78" x="116.5" y="198.111">有马克走天涯</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="composition" id="lnk4">
+      <polygon fill="#181818" points="59.422,77.137,55.273,83.035,59.122,89.133,63.27,83.235,59.422,77.137" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M59.122,89.133 C58.75,103.981 58.556,111.749 58.111,129.551" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="33.8" x="60" y="107.111">τρέχει</text>
+      <text fill="#000" font-size="13" textLength="8.694" x="49.111" y="125.662">ει</text>
+    </g>
+  </g>
+</svg>

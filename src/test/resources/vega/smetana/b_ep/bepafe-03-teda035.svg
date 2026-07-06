@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="172px" preserveAspectRatio="none" style="width:334px;height:172px;background:#FFFFFF;" version="1.1" viewBox="0 0 334 172" width="334px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="CapitalCity" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151.425" x="6" y="48"/>
+      <text fill="#000" font-size="14" textLength="67.813" x="47.806" y="60.889">CapitalCity</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="157.425" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="19.512" x="29.988" y="78.889">UK</text>
+      <text fill="#000" font-size="14" textLength="46.725" x="78.488" y="78.889">London</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="73.488" x2="73.488" y1="66" y2="84"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="157.425" y1="84" y2="84"/>
+      <text fill="#000" font-size="14" textLength="28.875" x="25.306" y="96.889">USA</text>
+      <text fill="#000" font-size="14" textLength="73.938" x="78.488" y="96.889">Washington</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="73.488" x2="73.488" y1="84" y2="102"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="157.425" y1="102" y2="102"/>
+      <text fill="#000" font-size="14" textLength="57.488" x="11" y="114.889">Germany</text>
+      <text fill="#000" font-size="14" textLength="35.875" x="78.488" y="114.889">Berlin</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="73.488" x2="73.488" y1="102" y2="120"/>
+    </g>
+    <g class="entity" data-qualified-name="A" data-source-line="8" id="ent0002">
+      <rect fill="#F1F1F1" height="144" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="143.025" x="175" y="12"/>
+      <text fill="#000" font-size="14" x="241.831" y="24.889">A</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="224.025" x2="224.025" y1="30" y2="156"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="175" x2="318.025" y1="30" y2="30"/>
+      <text fill="#000" font-size="14" textLength="35" x="180" y="42.889">name</text>
+      <text fill="#000" font-size="14" textLength="84" x="229.025" y="42.889">component c1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="175" x2="318.025" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" textLength="30.362" x="180" y="60.889">color</text>
+      <text fill="#000" font-size="14" textLength="42.788" x="229.025" y="60.889">normal</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="224.025" x2="318.025" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="35.788" x="229.025" y="78.889">green</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="224.025" x2="318.025" y1="84" y2="84"/>
+      <text fill="#000" font-size="14" textLength="20.213" x="229.025" y="96.889">red</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="175" x2="318.025" y1="102" y2="102"/>
+      <text fill="#000" font-size="14" textLength="39.025" x="180" y="114.889">visible</text>
+      <text fill="#000" font-size="14" textLength="24.063" x="229.025" y="114.889">true</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="175" x2="318.025" y1="120" y2="120"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="180" y="132.889">user</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="269.025" x2="269.025" y1="120" y2="156"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="224.025" x2="318.025" y1="120" y2="120"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="229.025" y="132.889">age</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="274.025" y="132.889">23</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="224.025" x2="318.025" y1="138" y2="138"/>
+      <text fill="#000" font-size="14" textLength="35" x="229.025" y="150.889">name</text>
+      <text fill="#000" font-size="14" textLength="30.362" x="274.025" y="150.889">John</text>
+    </g>
+  </g>
+</svg>

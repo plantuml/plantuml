@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="339.583px" preserveAspectRatio="none" style="width:528px;height:339px;" version="1.1" viewBox="0 0 528 339" width="528.125px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="glayii53vek890" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F18E3E"/>
+      <stop offset="100%" stop-color="#EC7211"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class AbstractList-->
+    <g class="entity" data-qualified-name="AbstractList" data-source-line="3" id="ent0001">
+      <rect fill="url(#glayii53vek890)" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="91.048" x="148.958" y="149.479"/>
+      <rect fill="url(#glayii53vek890)" height="31.25" rx="4.167" ry="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="91.048" x="148.958" y="149.479"/>
+      <rect fill="url(#glayii53vek890)" height="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="91.048" x="148.958" y="176.563"/>
+      <rect fill="none" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="91.048" x="148.958" y="149.479"/>
+      <ellipse cx="163.542" cy="165.104" fill="#239B02" rx="10.417" ry="10.417" style="stroke:#176702;stroke-width:1.042;"/>
+      <text fill="#000" font-family="monospace" font-size="14.583" x="158.333" y="170.313">A</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" font-style="italic" textLength="59.798" x="177.083" y="168.287">AbstractList</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="150" x2="238.965" y1="180.729" y2="180.729"/>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="150" x2="238.965" y1="189.063" y2="189.063"/>
+    </g>
+    <!--class AbstractCollection-->
+    <g class="entity" data-qualified-name="AbstractCollection" data-source-line="4" id="ent0002">
+      <rect fill="url(#glayii53vek890)" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="123.633" x="6.25" y="149.479"/>
+      <rect fill="url(#glayii53vek890)" height="31.25" rx="4.167" ry="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="123.633" x="6.25" y="149.479"/>
+      <rect fill="url(#glayii53vek890)" height="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="123.633" x="6.25" y="176.563"/>
+      <rect fill="none" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="123.633" x="6.25" y="149.479"/>
+      <ellipse cx="20.833" cy="165.104" fill="#239B02" rx="10.417" ry="10.417" style="stroke:#176702;stroke-width:1.042;"/>
+      <text fill="#000" font-family="monospace" font-size="14.583" x="15.625" y="170.313">A</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" font-style="italic" textLength="92.383" x="34.375" y="168.287">AbstractCollection</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="7.292" x2="128.841" y1="180.729" y2="180.729"/>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="7.292" x2="128.841" y1="189.063" y2="189.063"/>
+    </g>
+    <!--class List-->
+    <g class="entity" data-qualified-name="List" data-source-line="5" id="ent0003">
+      <rect fill="url(#glayii53vek890)" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="49.082" x="159.375" y="29.688"/>
+      <rect fill="url(#glayii53vek890)" height="31.25" rx="4.167" ry="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="49.082" x="159.375" y="29.688"/>
+      <rect fill="url(#glayii53vek890)" height="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="49.082" x="159.375" y="56.771"/>
+      <rect fill="none" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="49.082" x="159.375" y="29.688"/>
+      <ellipse cx="173.958" cy="45.313" fill="#EC4624" rx="10.417" ry="10.417" style="stroke:#A7280E;stroke-width:1.042;"/>
+      <text fill="#000" font-family="monospace" font-size="14.583" x="168.75" y="50.521">I</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" font-style="italic" textLength="17.832" x="187.5" y="48.495">List</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="160.417" x2="207.415" y1="60.938" y2="60.938"/>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="160.417" x2="207.415" y1="69.271" y2="69.271"/>
+    </g>
+    <!--class Collection-->
+    <g class="entity" data-qualified-name="Collection" data-source-line="6" id="ent0004">
+      <rect fill="url(#glayii53vek890)" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="81.667" x="38.021" y="29.688"/>
+      <rect fill="url(#glayii53vek890)" height="31.25" rx="4.167" ry="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="81.667" x="38.021" y="29.688"/>
+      <rect fill="url(#glayii53vek890)" height="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="81.667" x="38.021" y="56.771"/>
+      <rect fill="none" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="81.667" x="38.021" y="29.688"/>
+      <ellipse cx="52.604" cy="45.313" fill="#EC4624" rx="10.417" ry="10.417" style="stroke:#A7280E;stroke-width:1.042;"/>
+      <text fill="#000" font-family="monospace" font-size="14.583" x="47.396" y="50.521">I</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" font-style="italic" textLength="50.417" x="66.146" y="48.495">Collection</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="39.063" x2="118.646" y1="60.938" y2="60.938"/>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="39.063" x2="118.646" y1="69.271" y2="69.271"/>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="ArrayList" data-source-line="13" id="ent0009">
+      <rect fill="url(#glayii53vek890)" height="70.833" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="116.842" x="135.938" y="252.083"/>
+      <rect fill="url(#glayii53vek890)" height="31.25" rx="4.167" ry="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="116.842" x="135.938" y="252.083"/>
+      <rect fill="url(#glayii53vek890)" height="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="116.842" x="135.938" y="279.167"/>
+      <rect fill="none" height="70.833" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="116.842" x="135.938" y="252.083"/>
+      <ellipse cx="168.702" cy="267.708" fill="#FFF" rx="10.417" ry="10.417" style="stroke:#BEBEBE;stroke-width:1.042;"/>
+      <text fill="#000" font-family="monospace" font-size="14.583" x="163.494" y="272.917">C</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="45.189" x="186.285" y="270.891">ArrayList</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="136.979" x2="251.738" y1="283.333" y2="283.333"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="104.342" x="142.188" y="296.412">Object[] elementData</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="136.979" x2="251.738" y1="303.125" y2="303.125"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="28.001" x="142.188" y="316.204">size()</text>
+    </g>
+    <!--class TimeUnit-->
+    <g class="entity" data-qualified-name="TimeUnit" data-source-line="20" id="ent0011">
+      <rect fill="url(#glayii53vek890)" height="82.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="77.155" x="286.979" y="12.5"/>
+      <rect fill="url(#glayii53vek890)" height="31.25" rx="4.167" ry="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="77.155" x="286.979" y="12.5"/>
+      <rect fill="url(#glayii53vek890)" height="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="77.155" x="286.979" y="39.583"/>
+      <rect fill="none" height="82.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="77.155" x="286.979" y="12.5"/>
+      <ellipse cx="301.563" cy="28.125" fill="#F18E3E" rx="10.417" ry="10.417" style="stroke:#BD5B0E;stroke-width:1.042;"/>
+      <text fill="#000" font-family="monospace" font-size="14.583" x="296.354" y="33.333">E</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="45.905" x="315.104" y="31.308">TimeUnit</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="288.021" x2="363.092" y1="43.75" y2="43.75"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="31.296" x="293.229" y="56.829">DAYS</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="41.465" x="293.229" y="68.287">HOURS</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="51.634" x="293.229" y="79.745">MINUTES</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="288.021" x2="363.092" y1="86.458" y2="86.458"/>
+    </g>
+    <!--class SuppressWarnings-->
+    <g class="entity" data-qualified-name="SuppressWarnings" data-source-line="26" id="ent0012">
+      <rect fill="url(#glayii53vek890)" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="128.073" x="383.333" y="29.688"/>
+      <rect fill="url(#glayii53vek890)" height="31.25" rx="4.167" ry="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="128.073" x="383.333" y="29.688"/>
+      <rect fill="url(#glayii53vek890)" height="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="128.073" x="383.333" y="56.771"/>
+      <rect fill="none" height="47.917" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="128.073" x="383.333" y="29.688"/>
+      <ellipse cx="397.917" cy="45.313" fill="#008AE0" rx="10.417" ry="10.417" style="stroke:#005C96;stroke-width:1.042;"/>
+      <text fill="#000" font-family="monospace" font-size="14.583" x="392.708" y="50.521">@</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="96.823" x="411.458" y="48.495">SuppressWarnings</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="384.375" x2="510.365" y1="60.938" y2="60.938"/>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="384.375" x2="510.365" y1="69.271" y2="69.271"/>
+    </g>
+    <!--class Annotation-->
+    <g class="entity" data-qualified-name="Annotation" data-source-line="28" id="ent0013">
+      <rect fill="url(#glayii53vek890)" height="82.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="134.102" x="258.333" y="132.292"/>
+      <rect fill="url(#glayii53vek890)" height="31.25" rx="4.167" ry="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="134.102" x="258.333" y="132.292"/>
+      <rect fill="url(#glayii53vek890)" height="4.167" style="stroke:url(#glayii53vek890);stroke-width:1.042;" width="134.102" x="258.333" y="159.375"/>
+      <rect fill="none" height="82.292" rx="4.167" ry="4.167" style="stroke:#EC7211;stroke-width:1.042;" width="134.102" x="258.333" y="132.292"/>
+      <ellipse cx="294.547" cy="147.917" fill="#008AE0" rx="10.417" ry="10.417" style="stroke:#005C96;stroke-width:1.042;"/>
+      <text fill="#000" font-family="monospace" font-size="14.583" x="289.338" y="153.125">@</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="54.785" x="312.895" y="151.1">Annotation</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="259.375" x2="391.393" y1="163.542" y2="163.542"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="121.602" x="264.583" y="176.62">annotation with members</text>
+      <line style="stroke:#EC7211;stroke-width:1.042;" x1="259.375" x2="391.393" y1="183.333" y2="183.333"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="53.424" x="264.583" y="196.412">String foo()</text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="11.458" textLength="54.069" x="264.583" y="207.87">String bar()</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="185.887,77.662,181.314,96.89,193.766,95.788,185.887,77.662" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M187.54,96.339 C189.376,117.08 190.409,128.756 192.243,149.479" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="extension" id="lnk6">
+      <polygon fill="none" points="76.613,77.662,68.734,95.788,81.186,96.89,76.613,77.662" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M74.96,96.339 C73.124,117.08 72.091,128.756 70.257,149.479" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="119.332,53.646,138.082,59.896,138.082,47.396,119.332,53.646" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M138.082,53.646 C151.356,53.646 145.88,53.646 159.154,53.646" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="130.265,173.438,149.015,179.688,149.015,167.188,130.265,173.438" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M149.015,173.438 C155.182,173.438 142.6,173.438 148.767,173.438" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0009" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="194.271,197.41,188.021,216.16,200.521,216.16,194.271,197.41" style="stroke:#EC7211;stroke-width:1.042;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M194.271,216.16 C194.271,231.901 194.271,234.322 194.271,252.072" fill="none" style="stroke:#EC7211;stroke-width:3.125;"/>
+    </g>
+  </g>
+</svg>

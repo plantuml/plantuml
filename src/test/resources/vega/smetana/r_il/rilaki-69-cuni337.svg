@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="220px" preserveAspectRatio="none" style="width:141px;height:220px;background:#FFFFFF;" version="1.1" viewBox="0 0 141 220" width="141px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class dummy-->
+    <g class="entity" data-qualified-name="dummy" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.85" x="44.531" y="72"/>
+      <ellipse cx="59.531" cy="88" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="54.531" y="93">C</text>
+      <text fill="#000" font-size="14" textLength="45.85" x="73.531" y="91.889">dummy</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="45.531" x2="121.381" y1="104" y2="104"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="45.531" x2="121.381" y1="112" y2="112"/>
+    </g>
+    <g class="entity" data-qualified-name="dummylol2" data-source-line="2" id="ent0003">
+      <ellipse cx="46.531" cy="17" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="31" y="32.889">toto1</text>
+    <g class="entity" data-qualified-name="dummylol5" data-source-line="3" id="ent0006">
+      <ellipse cx="80.531" cy="17" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="65" y="32.889">toto2</text>
+    <g class="entity" data-qualified-name="dummylol8" data-source-line="4" id="ent0009">
+      <ellipse cx="114.531" cy="17" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="99" y="32.889">toto3</text>
+    <g class="entity" data-qualified-name="dummylol11" data-source-line="6" id="ent0012">
+      <ellipse cx="15.531" cy="89" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="31.063" x="0" y="104.889">tutu1</text>
+    <!--class autre-->
+    <g class="entity" data-qualified-name="autre" data-source-line="8" id="ent0014">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.85" x="51.531" y="156"/>
+      <ellipse cx="66.531" cy="172" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="61.531" y="177">C</text>
+      <text fill="#000" font-size="14" textLength="31.85" x="80.531" y="175.889">autre</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52.531" x2="114.381" y1="188" y2="188"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52.531" x2="114.381" y1="196" y2="196"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="association" id="lnk4">
+      <path d="M54.994,36.247 C59.649,45.831 66.49,59.915 72.307,71.891" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="association" id="lnk7">
+      <path d="M83.531,36.247 C83.531,45.831 83.531,59.915 83.531,71.891" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0001" data-link-type="association" id="lnk10">
+      <path d="M112.069,36.247 C107.413,45.831 100.572,59.915 94.755,71.891" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0001" data-link-type="association" id="lnk13">
+      <path d="M26.656,96 C32.581,96 38.505,96 44.43,96" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0014" data-link-type="extension" id="lnk15">
+      <polygon fill="none" points="83.531,120.279,77.531,138.279,89.531,138.279,83.531,120.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M83.531,138.279 C83.531,149.453 83.531,144.802 83.531,155.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="186px" preserveAspectRatio="none" style="width:195px;height:186px;background:#FFFFFF;" version="1.1" viewBox="0 0 195 186" width="195px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="18">
+      <text fill="#888" font-size="10" textLength="27.75" x="160.25" y="7.778">my hdr</text>
+    </g>
+    <g class="entity" data-qualified-name="A" data-source-line="11" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="58.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="82.5" y2="82.5"/>
+      <text fill="#000" font-size="14" x="26.319" y="74.389">A</text>
+      <text fill="#000" font-size="14" x="11" y="98.389">a</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="11" y="112.389">a a</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="11" y="126.389">a a a</text>
+    </g>
+    <g class="entity" data-qualified-name="B" data-source-line="12" id="ent0002">
+      <path d="M111.5,23 L166.5,23 A12.5,12.5 0 0 1 179,35.5 L179,47 L99,47 L99,35.5 A12.5,12.5 0 0 1 111.5,23" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="47" style="stroke:#F1F1F1;stroke-width:1;" width="80" x="99" y="47"/>
+      <rect fill="none" height="147" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="80" x="99" y="23"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="99" x2="179" y1="47" y2="47"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="99" x2="179" y1="94" y2="94"/>
+      <text fill="#000" font-size="14" x="134.319" y="38.889">B</text>
+      <text fill="#000" font-size="14" x="104" y="57.889">b</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="104" y="71.889">b b</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="104" y="85.889">b b b</text>
+      <g class="entity" data-qualified-name="B.C" data-source-line="13" id="ent0003">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="105" y="105"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="105" x2="155" y1="129" y2="129"/>
+        <text fill="#000" font-size="14" x="124.925" y="120.889">C</text>
+      </g>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="98.862,96.5,89.862,92.5,93.862,96.5,89.862,100.5,98.862,96.5" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56.049,96.5 C68.761,96.5 79.511,96.5 93.862,96.5" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.694" x="67" y="88.611">a2b</text>
+    </g>
+  </g>
+</svg>

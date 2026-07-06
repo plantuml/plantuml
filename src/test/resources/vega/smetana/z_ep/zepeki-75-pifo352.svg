@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="142px" preserveAspectRatio="none" style="width:307px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 307 142" width="307px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class test-->
+    <g class="entity" data-qualified-name="test" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.125" x="224.5" y="31"/>
+      <ellipse cx="245.187" cy="47" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="240.187" y="52">C</text>
+      <text fill="#000" font-size="14" textLength="22.488" x="260.451" y="50.889">test</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="225.5" x2="290.625" y1="63" y2="63"/>
+      <text fill="#000" font-size="14" textLength="55.125" x="230.5" y="77.889">member:</text>
+      <text fill="#000" font-size="14" textLength="34.213" x="230.5" y="91.889">string</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="225.5" x2="290.625" y1="99" y2="99"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="9" id="ent0003">
+      <path d="M6,12 L6,126 A0,0 0 0 0 6,126 L88.425,126 A0,0 0 0 0 88.425,126 L88.425,22 L78.425,12 L86.423,12 L241.157,30.74 L78.423,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M78.425,12 L78.425,22 L88.425,22 L78.425,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="20.231" x="12" y="27.111">this</text>
+      <text fill="#000" font-size="13" x="32.231" y="27.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.619" x="32.231" y="27.111">long</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="12" y="40.111">note</text>
+      <text fill="#000" font-size="13" x="37.269" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="20.881" x="37.269" y="40.111">text</text>
+      <text fill="#000" font-size="13" textLength="9.425" x="12" y="53.111">is</text>
+      <text fill="#000" font-size="13" textLength="56.387" x="12" y="66.111">controlled</text>
+      <text fill="#000" font-size="13" textLength="44.037" x="12" y="79.111">through</text>
+      <text fill="#000" font-size="13" textLength="18.038" x="12" y="92.111">the</text>
+      <text fill="#000" font-size="13" textLength="61.425" x="12" y="105.111">wrapWidth</text>
+      <text fill="#000" font-size="13" textLength="59.15" x="12" y="118.111">paramater</text>
+    </g>
+    <path d="M106,20 L106,108 A0,0 0 0 0 106,108 L205.65,108 A0,0 0 0 0 205.65,108 L205.65,68 L230.5,81 L205.65,60 L205.65,30 L195.65,20 L106,20 A0,0 0 0 0 106,20" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M195.65,20 L195.65,30 L205.65,30 L195.65,20" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="78.65" x="112" y="35.111">unfortunately,</text>
+    <text fill="#000" font-size="13" textLength="21.613" x="112" y="48.111">that</text>
+    <text fill="#000" font-size="13" x="133.613" y="48.111"> </text>
+    <text fill="#000" font-size="13" textLength="9.425" x="133.613" y="48.111">is</text>
+    <text fill="#000" font-size="13" x="143.038" y="48.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="143.038" y="48.111">not</text>
+    <text fill="#000" font-size="13" textLength="18.038" x="112" y="61.111">the</text>
+    <text fill="#000" font-size="13" x="130.038" y="61.111"> </text>
+    <text fill="#000" font-size="13" textLength="27.463" x="130.038" y="61.111">case</text>
+    <text fill="#000" font-size="13" textLength="15.113" x="112" y="74.111">for</text>
+    <text fill="#000" font-size="13" x="127.113" y="74.111"> </text>
+    <text fill="#000" font-size="13" textLength="20.231" x="127.113" y="74.111">this</text>
+    <text fill="#000" font-size="13" textLength="23.888" x="112" y="87.111">kind</text>
+    <text fill="#000" font-size="13" x="135.888" y="87.111"> </text>
+    <text fill="#000" font-size="13" textLength="10.806" x="135.888" y="87.111">of</text>
+    <text fill="#000" font-size="13" textLength="25.269" x="112" y="100.111">note</text>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="119px" preserveAspectRatio="none" style="width:115px;height:119px;background:#FFFFFF;" version="1.1" viewBox="0 0 115 119" width="115px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="6" id="ent0001">
+      <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="40" x="6" y="12"/>
+      <path d="M29.729,25.5 A0.5,0.5 0 0 0 29.401,25.975 L29.426,28.611 L16.869,28.615 A0.5,0.5 0 0 0 16.369,29.115 L16.365,35.164 A0.5,0.5 0 0 0 16.867,35.664 L29.396,35.617 L29.396,37.943 A0.5,0.5 0 0 0 30.279,38.264 L35.273,32.311 A0.5,0.5 0 0 0 35.275,31.67 L30.285,25.65 A0.5,0.5 0 0 0 29.728,25.5 M30.415,27.373 L34.241,31.988 L30.397,36.568 L30.397,35.115 A0.5,0.5 0 0 0 29.895,34.615 L17.366,34.662 L17.37,29.615 L29.931,29.611 A0.5,0.5 0 0 0 30.431,29.107" fill="#000"/>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="35" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="35" x="64.5" y="14.5"/>
+      <image height="16" width="16" x="74.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAL0lEQVR4XmNgoCP4hwWTDSgyAKaRLAOQNZFsALoGdD5eQJJidDCqmUQwcJoHDgAAsf0U1/NfX2QAAAAASUVORK5CYII=" y="24.5"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="64.343,32,55.343,28,59.343,32,55.343,36,64.343,32" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M46.125,32 C52.198,32 53.27,32 59.343,32" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="legend" data-source-line="9">
+      <rect fill="#DDD" height="26.154" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="75.154" x="12" y="74"/>
+      <image height="17" width="17" x="17" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAApklEQVR4XmNgoDOwBOLHWLAmsiJCgBuIdaHYBIi/AfE/KJ9kIALEu4DYFYhfMZBhiDwQLwJifyBmZoB4hyRD1IB4AhBHIomRZIgOELcAcSKaeCYQi6KJYQV6QFwDxGnoEsQCkAGVDBAbyQIgL4BckIEuQSxQZ4CEAdleAEXjRAbMQCQagBLSYgbUaCQJsDNAUiIoIZENTgKxCwMkJZINxBggrhkYAACNTRgmlu8PqgAAAABJRU5ErkJggg==" y="79"/>
+      <text fill="#000" font-size="14" textLength="49" x="33.154" y="92.043">:serving</text>
+    </g>
+  </g>
+</svg>

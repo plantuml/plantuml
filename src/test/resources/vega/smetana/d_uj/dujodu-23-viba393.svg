@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="265px" preserveAspectRatio="none" style="width:838px;height:265px;background:#FFFFFF;" version="1.1" viewBox="0 0 838 265" width="838px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster xxxxxx-->
+    <g class="cluster" data-qualified-name="xxxxxx" data-source-line="2" id="ent0001">
+      <path d="M240.5,4 L283.5,4 A3.75,3.75 0 0 1 286,6.5 L293,24 L819.5,24 A2.5,2.5 0 0 1 822,26.5 L822,238.5 A2.5,2.5 0 0 1 819.5,241 L240.5,241 A2.5,2.5 0 0 1 238,238.5 L238,6.5 A2.5,2.5 0 0 1 240.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="238" x2="293" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42" x="242" y="16.889">xxxxxx</text>
+    </g>
+    <!--entity teleportCS1-->
+    <g class="entity" data-qualified-name="teleportCS1" data-source-line="28" id="ent0017">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138" x="92" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="210" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="208" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="208" y="120"/>
+      <text fill="#000" font-size="14" textLength="98" x="107" y="139.889">xxxxxxxxxxxxxx</text>
+    </g>
+    <!--entity teleportCS2-->
+    <g class="entity" data-qualified-name="teleportCS2" data-source-line="29" id="ent0018">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="222" x="6" y="189"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="208" y="194"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="206" y="196"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="206" y="200"/>
+      <text fill="#000" font-size="14" textLength="182" x="21" y="219.889">xxxxxxxxxxxxxxxxxxxxxxxxxx</text>
+    </g>
+    <!--entity IFE-->
+    <g class="entity" data-qualified-name="xxxxxx.IFE" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="180.437" x="458" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="618.438" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="616.438" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="616.438" y="40"/>
+      <text fill="#000" font-size="14" textLength="140.437" x="473" y="59.889">XXXXXXXXXXXXXXX</text>
+    </g>
+    <!--entity ICS-->
+    <g class="entity" data-qualified-name="xxxxxx.ICS" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="194" x="246" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="420" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="418" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="418" y="40"/>
+      <text fill="#000" font-size="14" textLength="154" x="261" y="59.889">xxxxxxxxxxxxxxxxxxxxxx</text>
+    </g>
+    <!--entity apiCS-->
+    <g class="entity" data-qualified-name="xxxxxx.apiCS" data-source-line="9" id="ent0006">
+      <ellipse cx="302" cy="128" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="154" x="225" y="155.889">xxxxxxxxxxxxxxxxxxxxxx</text>
+    </g>
+    <!--entity adapterCS1-->
+    <g class="entity" data-qualified-name="xxxxxx.adapterCS1" data-source-line="13" id="ent0008">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="180" x="329" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="489" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="487" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="487" y="120"/>
+      <text fill="#000" font-size="14" textLength="140" x="344" y="139.889">xxxxxxxxxxxxxxxxxxxx</text>
+    </g>
+    <!--entity adapterCS2-->
+    <g class="entity" data-qualified-name="xxxxxx.adapterCS2" data-source-line="14" id="ent0009">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="264" x="246" y="189"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="490" y="194"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="488" y="196"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="488" y="200"/>
+      <text fill="#000" font-size="14" textLength="224" x="261" y="219.889">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</text>
+    </g>
+    <!--entity gatewayCS1-->
+    <g class="entity" data-qualified-name="xxxxxx.gatewayCS1" data-source-line="21" id="ent0013">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96" x="527" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="603" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="601" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="601" y="120"/>
+      <text fill="#000" font-size="14" textLength="56" x="542" y="139.889">xxxxxxxx</text>
+    </g>
+    <!--entity gatewayCS2-->
+    <g class="entity" data-qualified-name="xxxxxx.gatewayCS2" data-source-line="22" id="ent0014">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="285" x="528.5" y="189"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="793.5" y="194"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="791.5" y="196"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="791.5" y="200"/>
+      <text fill="#000" font-size="14" textLength="245" x="543.5" y="219.889">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="association" id="lnk5">
+      <path d="M440.295,51 C446.185,51 452.075,51 457.965,51" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M331.797,73.314 C324.115,87.928 314.223,106.746 307.995,118.596" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="association" id="lnk11">
+      <path d="M311.141,131 C317.039,131 322.938,131 328.836,131" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0009" data-link-type="association" id="lnk12">
+      <path d="M311.355,143.272 C314.087,146.466 317.115,149.912 320,153 C331.372,165.174 344.584,178.236 355.522,188.78" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0013" data-link-type="association" id="lnk15">
+      <path d="M509.188,131 C515.1,131 521.013,131 526.926,131" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0014" data-link-type="association" id="lnk16">
+      <path d="M510.193,211 C516.265,211 522.338,211 528.41,211" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0017" data-link-type="association" id="lnk19">
+      <path d="M546.373,108.982 C535.314,101.774 522.162,94.677 509,91 C452.069,75.095 300.596,77.701 243,91 C227.258,94.635 211.042,101.723 197.23,108.936" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0018" data-link-type="association" id="lnk20">
+      <path d="M598.368,188.97 C570.951,181.712 539.303,174.586 510,171 C392.212,156.587 360.268,152.833 243,171 C219.753,174.601 194.922,181.731 173.503,188.987" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

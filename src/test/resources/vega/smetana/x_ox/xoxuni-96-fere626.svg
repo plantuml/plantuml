@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="177px" preserveAspectRatio="none" style="width:293px;height:177px;background:#FFFFFF;" version="1.1" viewBox="0 0 293 177" width="293px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class cl1-->
+    <g class="entity" data-qualified-name="cl1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="98" y="12"/>
+      <ellipse cx="113" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="108" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="127" y="31.889">cl1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="99" x2="146.938" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="99" x2="146.938" y1="52" y2="52"/>
+    </g>
+    <!--class cl2-->
+    <g class="entity" data-qualified-name="cl2" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="98" y="113"/>
+      <ellipse cx="113" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="108" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="127" y="132.889">cl2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="99" x2="146.938" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="99" x2="146.938" y1="153" y2="153"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="5" id="ent0005">
+      <path d="M6,125 L6,148 A0,0 0 0 0 6,148 L79.731,148 A0,0 0 0 0 79.731,148 L79.731,143 L97.915,137 L79.731,135 L79.731,135 L69.731,125 L6,125 A0,0 0 0 0 6,125" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M69.731,125 L69.731,135 L79.731,135 L69.731,125" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="52.731" x="12" y="140.111">some info</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN7" data-source-line="8" id="ent0008">
+      <path d="M166.5,24 L166.5,32 L148.137,36 L166.5,40 L166.5,47 A0,0 0 0 0 166.5,47 L277.038,47 A0,0 0 0 0 277.038,47 L277.038,34 L267.038,24 L166.5,24 A0,0 0 0 0 166.5,24" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M267.038,24 L267.038,34 L277.038,34 L267.038,24" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="89.538" x="172.5" y="39.111">some other info2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#F00" points="123,112.934,127,103.934,123,107.934,119,103.934,123,112.934" style="stroke:#F00;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M123,60.211 C123,76.099 123,92.077 123,107.934" fill="none" style="stroke:#F00;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="125" y="90.111">foo3</text>
+    </g>
+  </g>
+</svg>

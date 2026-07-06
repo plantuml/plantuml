@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="52px" preserveAspectRatio="none" style="width:138px;height:52px;background:#FFFFFF;" version="1.1" viewBox="0 0 138 52" width="138px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="map0" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="18" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="35" x="13" y="24.889">map0</text>
+    </g>
+    <g class="entity" data-qualified-name="map1" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="18" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49" x="73" y="12"/>
+      <text fill="#000" font-size="14" textLength="35" x="80" y="24.889">map1</text>
+    </g>
+  </g>
+</svg>

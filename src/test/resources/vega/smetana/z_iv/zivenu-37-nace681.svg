@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="171px" preserveAspectRatio="none" style="width:190px;height:171px;background:#FFFFFF;" version="1.1" viewBox="0 0 190 171" width="190px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="14">
+      <text fill="#000" font-size="14" font-weight="700" textLength="130.025" x="15.944" y="20.889">test on HyperlinkColor</text>
+      <a href="test" target="_top" title="test" xlink:actuate="onRequest" xlink:href="test" xlink:show="new" xlink:title="test" xlink:type="simple">
+        <text fill="#F00" font-size="14" font-weight="700" text-decoration="underline" textLength="21.088" x="145.969" y="20.889">link</text>
+      </a>
+    </g>
+    <!--class uno-->
+    <g class="entity" data-qualified-name="uno" data-source-line="16" id="ent0001">
+      <rect fill="#F1F1F1" height="94" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.025" x="6" y="54"/>
+      <ellipse cx="21" cy="72" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="77">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="50.025" x="33" y="68.333">«normal»</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="46.331" y="81.889">uno</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="83.025" y1="90" y2="90"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="17" cy="102.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="23.363" x="26" y="104.889">aaa</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="116.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <a href="modelo" target="_top" title="modelo" xlink:actuate="onRequest" xlink:href="modelo" xlink:show="new" xlink:title="modelo" xlink:type="simple">
+        <text fill="#0F0" font-size="14" text-decoration="underline" textLength="42.788" x="26" y="118.889">normal</text>
+      </a>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="127.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="15.575" x="26" y="132.889">bb</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="83.025" y1="140" y2="140"/>
+    </g>
+    <!--class TRES-->
+    <g class="entity" data-qualified-name="TRES" data-source-line="22" id="ent0002">
+      <rect fill="#F1F1F1" height="108" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.938" x="102" y="47"/>
+      <ellipse cx="121.483" cy="65" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="116.483" y="70">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="33.975" x="134.479" y="61.333">«otro»</text>
+      <a href="http://www.plantuml.com" target="_top" title="http://www.plantuml.com" xlink:actuate="onRequest" xlink:href="http://www.plantuml.com" xlink:show="new" xlink:title="http://www.plantuml.com" xlink:type="simple">
+        <text fill="#0FF" font-size="14" text-decoration="underline" textLength="23.275" x="139.829" y="74.889">tres</text>
+      </a>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="103" x2="172.938" y1="83" y2="83"/>
+      <g data-visibility-modifier="IE_MANDATORY">
+        <ellipse cx="113" cy="95.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="23.363" x="122" y="97.889">aaa</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="113" cy="109.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <a href="otro" target="_top" title="otro" xlink:actuate="onRequest" xlink:href="otro" xlink:show="new" xlink:title="otro" xlink:type="simple">
+        <text fill="#0FF" font-size="14" text-decoration="underline" textLength="45.938" x="122" y="111.889">modelo</text>
+      </a>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="113" cy="123.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="15.575" x="122" y="125.889">aa</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="110" y="134.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="15.575" x="122" y="139.889">bb</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="103" x2="172.938" y1="147" y2="147"/>
+    </g>
+  </g>
+</svg>

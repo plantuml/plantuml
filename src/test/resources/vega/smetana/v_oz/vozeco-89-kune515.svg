@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="193px" preserveAspectRatio="none" style="width:126px;height:193px;background:#FFFFFF;" version="1.1" viewBox="0 0 126 193" width="126px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Bus_Tx-->
+    <g class="cluster" data-qualified-name="Bus_Tx" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L65.012,4 A3.75,3.75 0 0 1 67.512,6.5 L74.512,24 L115.5,24 A2.5,2.5 0 0 1 118,26.5 L118,166.5 A2.5,2.5 0 0 1 115.5,169 L16.5,169 A2.5,2.5 0 0 1 14,166.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="74.512" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="47.512" x="18" y="16.889">Bus_Tx</text>
+    </g>
+    <!--class Bus_Tx-->
+    <g class="entity" data-qualified-name="Bus_Tx.Bus_Tx" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79.512" x="26" y="29"/>
+      <ellipse cx="41" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="36" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="47.512" x="55" y="48.889">Bus_Tx</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="104.512" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="27" x2="104.512" y1="69" y2="69"/>
+    </g>
+    <!--class Tx_FIFO-->
+    <g class="entity" data-qualified-name="Bus_Tx.Tx_FIFO" data-source-line="2" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="22.5" y="113"/>
+      <ellipse cx="37.5" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="51.5" y="132.889">Tx_FIFO</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="108.713" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="108.713" y1="153" y2="153"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="composition" id="lnk4">
+      <polygon fill="#181818" points="66,77.279,62,83.279,66,89.279,70,83.279,66,77.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M66,89.279 C66,100.453 66,101.802 66,112.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="58" y="109.058">n</text>
+      <text fill="#000" font-size="13" x="58" y="88.39">1</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="142px" preserveAspectRatio="none" style="width:237px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 237 142" width="237px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Root1-->
+    <g class="cluster" data-qualified-name="Root1" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L54.863,4 A3.75,3.75 0 0 1 57.363,6.5 L64.363,24 L102.5,24 A2.5,2.5 0 0 1 105,26.5 L105,115.5 A2.5,2.5 0 0 1 102.5,118 L16.5,118 A2.5,2.5 0 0 1 14,115.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="64.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="18" y="16.889">Root1</text>
+    </g>
+    <!--cluster Element1-->
+    <g class="cluster" data-qualified-name="Root1.Element1" data-source-line="2" id="ent0002">
+      <path d="M24.5,29 L84.65,29 A3.75,3.75 0 0 1 87.15,31.5 L94.15,49 L94.5,49 A2.5,2.5 0 0 1 97,51.5 L97,107.5 A2.5,2.5 0 0 1 94.5,110 L24.5,110 A2.5,2.5 0 0 1 22,107.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="94.15" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="59.15" x="26" y="41.889">Element1</text>
+    </g>
+    <!--cluster Root2-->
+    <g class="cluster" data-qualified-name="Root2" data-source-line="7" id="ent0004">
+      <path d="M115.5,4 L153.863,4 A3.75,3.75 0 0 1 156.363,6.5 L163.363,24 L226.5,24 A2.5,2.5 0 0 1 229,26.5 L229,115.5 A2.5,2.5 0 0 1 226.5,118 L115.5,118 A2.5,2.5 0 0 1 113,115.5 L113,6.5 A2.5,2.5 0 0 1 115.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="113" x2="163.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="117" y="16.889">Root2</text>
+    </g>
+    <!--cluster Element1-->
+    <g class="cluster" data-qualified-name="Root2.Element1" data-source-line="8" id="ent0005">
+      <path d="M123.5,29 L183.65,29 A3.75,3.75 0 0 1 186.15,31.5 L193.15,49 L218.5,49 A2.5,2.5 0 0 1 221,51.5 L221,107.5 A2.5,2.5 0 0 1 218.5,110 L123.5,110 A2.5,2.5 0 0 1 121,107.5 L121,31.5 A2.5,2.5 0 0 1 123.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="121" x2="193.15" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="59.15" x="125" y="41.889">Element1</text>
+    </g>
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Root1.Element1.Foo" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.15" x="31" y="54"/>
+      <ellipse cx="46" cy="70" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="41" y="75">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="24.15" x="60" y="73.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="32" x2="86.15" y1="86" y2="86"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="32" x2="86.15" y1="94" y2="94"/>
+    </g>
+    <!--class ImplFoo-->
+    <g class="entity" data-qualified-name="Root2.Element1.ImplFoo" data-source-line="9" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.575" x="129.5" y="54"/>
+      <ellipse cx="144.5" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="139.5" y="75">C</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="158.5" y="73.889">ImplFoo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="130.5" x2="211.075" y1="86" y2="86"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="130.5" x2="211.075" y1="94" y2="94"/>
+    </g>
+  </g>
+</svg>

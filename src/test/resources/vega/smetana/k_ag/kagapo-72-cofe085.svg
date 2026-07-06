@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="160px" preserveAspectRatio="none" style="width:145px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 145 160" width="145px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity C1-->
+    <g class="entity" data-qualified-name="C1" data-source-line="15" id="ent0001">
+      <rect fill="#F00" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.938" x="15.5" y="19"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="25.5" y="39.889">C1</text>
+    </g>
+    <!--entity C2-->
+    <g class="entity" data-qualified-name="C2" data-source-line="16" id="ent0002">
+      <rect fill="#00F" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57" x="72" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35" x="83" y="32.889">«foo»</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="91.531" y="46.889">C2</text>
+    </g>
+    <!--entity R1-->
+    <g class="entity" data-qualified-name="R1" data-source-line="17" id="ent0003">
+      <rect fill="#FFA500" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57" x="6" y="96"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35" x="17" y="116.889">«foo»</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="25.531" y="130.889">R1</text>
+    </g>
+  </g>
+</svg>

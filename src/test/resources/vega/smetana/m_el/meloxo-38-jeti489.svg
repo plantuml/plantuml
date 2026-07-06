@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="381px" preserveAspectRatio="none" style="width:158px;height:381px;background:#FFFFFF;" version="1.1" viewBox="0 0 158 381" width="158px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster classic-->
+    <g class="cluster" data-qualified-name="classic" data-source-line="3" id="ent0003">
+      <path d="M24.5,4 L67.588,4 A3.75,3.75 0 0 1 70.088,6.5 L77.088,24 L139.5,24 A2.5,2.5 0 0 1 142,26.5 L142,199.5 A2.5,2.5 0 0 1 139.5,202 L24.5,202 A2.5,2.5 0 0 1 22,199.5 L22,6.5 A2.5,2.5 0 0 1 24.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="77.088" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42.088" x="26" y="16.889">classic</text>
+    </g>
+    <!--cluster collections-->
+    <g class="cluster" data-qualified-name="classic.collections" data-source-line="2" id="ent0001">
+      <path d="M32.5,29 L98.95,29 A3.75,3.75 0 0 1 101.45,31.5 L108.45,49 L131.5,49 A2.5,2.5 0 0 1 134,51.5 L134,191.5 A2.5,2.5 0 0 1 131.5,194 L32.5,194 A2.5,2.5 0 0 1 30,191.5 L30,31.5 A2.5,2.5 0 0 1 32.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="108.45" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="65.45" x="34" y="41.889">collections</text>
+    </g>
+    <!--cluster net-->
+    <g class="cluster" data-qualified-name="net" data-source-line="7" id="ent0008">
+      <path d="M16.5,210 L36.925,210 A3.75,3.75 0 0 1 39.425,212.5 L46.425,230 L147.5,230 A2.5,2.5 0 0 1 150,232.5 L150,354.5 A2.5,2.5 0 0 1 147.5,357 L16.5,357 A2.5,2.5 0 0 1 14,354.5 L14,212.5 A2.5,2.5 0 0 1 16.5,210" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="46.425" y1="230" y2="230"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="18" y="222.889">net</text>
+    </g>
+    <!--cluster sourceforge-->
+    <g class="cluster" data-qualified-name="net.sourceforge" data-source-line="7" id="ent0009">
+      <path d="M24.5,235 L99.35,235 A3.75,3.75 0 0 1 101.85,237.5 L108.85,255 L139.5,255 A2.5,2.5 0 0 1 142,257.5 L142,346.5 A2.5,2.5 0 0 1 139.5,349 L24.5,349 A2.5,2.5 0 0 1 22,346.5 L22,237.5 A2.5,2.5 0 0 1 24.5,235" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="108.85" y1="255" y2="255"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="73.85" x="26" y="247.889">sourceforge</text>
+    </g>
+    <!--cluster plantuml-->
+    <g class="cluster" data-qualified-name="net.sourceforge.plantuml" data-source-line="6" id="ent0006">
+      <path d="M32.5,260 L86.438,260 A3.75,3.75 0 0 1 88.938,262.5 L95.938,280 L131.5,280 A2.5,2.5 0 0 1 134,282.5 L134,338.5 A2.5,2.5 0 0 1 131.5,341 L32.5,341 A2.5,2.5 0 0 1 30,338.5 L30,262.5 A2.5,2.5 0 0 1 32.5,260" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="95.938" y1="280" y2="280"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="34" y="272.889">plantuml</text>
+    </g>
+    <!--class Object-->
+    <g class="entity" data-qualified-name="classic.collections.Object" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.425" x="46" y="54"/>
+      <ellipse cx="61" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="56" y="75">C</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="75" y="73.889">Object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47" x2="117.425" y1="86" y2="86"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47" x2="117.425" y1="94" y2="94"/>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="classic.collections.ArrayList" data-source-line="3" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="38.5" y="138"/>
+      <ellipse cx="53.5" cy="154" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="48.5" y="159">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="67.5" y="157.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="124.713" y1="170" y2="170"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="124.713" y1="178" y2="178"/>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="net.sourceforge.plantuml.ArrayList" data-source-line="7" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="38.5" y="285"/>
+      <ellipse cx="53.5" cy="301" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="48.5" y="306">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="67.5" y="304.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="124.713" y1="317" y2="317"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="124.713" y1="325" y2="325"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="82,102.279,76,120.279,88,120.279,82,102.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M82,120.279 C82,131.453 82,126.802 82,137.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="82,186.297,76,204.297,88,204.297,82,186.297" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M82,204.297 C82,231.355 82,257.727 82,284.761" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

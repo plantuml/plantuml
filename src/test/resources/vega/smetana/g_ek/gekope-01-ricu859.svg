@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="198px" preserveAspectRatio="none" style="width:199px;height:198px;background:#FFFFFF;" version="1.1" viewBox="0 0 199 198" width="199px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class d-->
+    <g class="entity" data-qualified-name="d" data-source-line="10" id="ent0001">
+      <rect fill="#F1F1F1" height="60" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="177.488" x="6" y="122"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="58.363" x="65.563" y="137.889">Some dict</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="182.488" y1="146" y2="146"/>
+      <path d="M18.5,153 C17.12,153 16,154.12 16,155.5 C16,155.66 16,155.82 16.03,155.97 L13,159 L13,161 L16,161 L16,159 L18,159 L18,158 L18.03,157.97 C18.18,158 18.34,158 18.5,158 C19.88,158 21,156.88 21,155.5 C21,154.12 19.88,153 18.5,153 M19,154 C19.55,154 20,154.45 20,155 C20,155.55 19.55,156 19,156 C18.45,156 18,155.55 18,155 C18,154.45 18.45,154 19,154" fill="#000"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14" x="22" y="160.889">ID</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="43.488" x="134" y="160.889">Integer</text>
+      <path d="M15,167 L15,175 L19,171 L15,167" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="22" y="174.889">Name</text>
+      <text fill="#000" font-size="14" textLength="36.575" x="78" y="174.889">String</text>
+    </g>
+    <!--class e-->
+    <g class="entity" data-qualified-name="e" data-source-line="15" id="ent0002">
+      <rect fill="#F1F1F1" height="74" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="177.488" x="6" y="12"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="70" x="59.744" y="27.889">Some entity</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="182.488" y1="36" y2="36"/>
+      <path d="M18.5,43 C17.12,43 16,44.12 16,45.5 C16,45.66 16,45.82 16.03,45.97 L13,49 L13,51 L16,51 L16,49 L18,49 L18,48 L18.03,47.97 C18.18,48 18.34,48 18.5,48 C19.88,48 21,46.88 21,45.5 C21,44.12 19.88,43 18.5,43 M19,44 C19.55,44 20,44.45 20,45 C20,45.55 19.55,46 19,46 C18.45,46 18,45.55 18,45 C18,44.45 18.45,44 19,44" fill="#000"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14" x="22" y="50.889">ID</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="43.488" x="134" y="50.889">Integer</text>
+      <path d="M18.88,57.03 C18.7,57.04 18.52,57.06 18.35,57.12 C18.08,57.22 17.82,57.37 17.6,57.59 A0.5,0.5 0 1 0 18.29,58.28 C18.4,58.17 18.53,58.11 18.67,58.06 C19.02,57.94 19.45,57.99 19.73,58.28 C20.12,58.67 20.12,59.32 19.73,59.72 L18.23,61.22 C17.79,61.66 17.43,61.7 17.17,61.69 C16.91,61.68 16.76,61.56 16.76,61.56 A0.5,0.5 0 1 0 16.26,62.44 C16.6,62.66 16.6,62.66 17.1,62.69 C17.6,62.72 18.3,62.53 18.91,61.91 L20.41,60.41 C21.19,59.63 21.19,58.37 20.41,57.6 C20.13,57.32 19.8,57.15 19.44,57.07 C19.26,57.03 19.06,57.03 18.88,57.04 M16.88,59.34 C16.38,59.32 15.69,59.49 15.1,60.09 L13.6,61.59 C12.82,62.37 12.82,63.63 13.6,64.4 C14.16,64.96 14.96,65.12 15.66,64.87 C15.93,64.77 16.19,64.62 16.41,64.4 A0.5,0.5 0 1 0 15.72,63.71 C15.61,63.82 15.48,63.88 15.34,63.93 C14.99,64.05 14.56,64 14.28,63.71 C13.89,63.32 13.89,62.67 14.28,62.27 L15.78,60.77 C16.18,60.37 16.53,60.32 16.81,60.33 C17.09,60.34 17.28,60.42 17.28,60.42 A0.5,0.5 0 1 0 17.72,59.54 C17.38,59.34 17.38,59.34 16.88,59.32" fill="#000"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="31.15" x="22" y="64.889">Type</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="43.488" x="134" y="64.889">Integer</text>
+      <path d="M15,71 L15,79 L19,75 L15,71" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="62.3" x="22" y="78.889">Some field</text>
+      <text fill="#000" font-size="14" textLength="37.363" x="134" y="78.889">JSON</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="crowfoot" id="lnk3">
+      <line style="stroke:#181818;stroke-width:1;" x1="94.5" x2="86.5" y1="94.178" y2="86.178"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="94.5" x2="102.5" y1="94.178" y2="86.178"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="94.5" x2="94.5" y1="94.178" y2="86.178"/>
+      <path d="M94.5,94.178 C94.5,105.838 94.5,110.609 94.5,121.709" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

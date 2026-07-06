@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="100px" preserveAspectRatio="none" style="width:286px;height:100px;background:#FFFFFF;" version="1.1" viewBox="0 0 286 100" width="286px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity component1-->
+    <g class="entity" data-qualified-name="component1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="132.663" x="137" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="249.663" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="247.663" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="247.663" y="23"/>
+      <text fill="#000" font-size="14" textLength="21.788" x="152" y="42.889">this</text>
+      <text fill="#000" font-size="14" x="173.788" y="42.889"> </text>
+      <text fill="#000" font-size="14" textLength="10.15" x="173.788" y="42.889">is</text>
+      <text fill="#000" font-size="14" x="183.938" y="42.889"> </text>
+      <text fill="#000" font-size="14" x="183.938" y="42.889">a</text>
+      <text fill="#000" font-size="14" x="191.725" y="42.889"> </text>
+      <text fill="#000" font-size="14" textLength="26.425" x="191.725" y="42.889">very</text>
+      <text fill="#000" font-size="14" x="218.15" y="42.889"> </text>
+      <text fill="#000" font-size="14" textLength="26.512" x="218.15" y="42.889">long</text>
+      <text fill="#000" font-size="14" textLength="69.213" x="152" y="56.889">component</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="152" y="70.889">description</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="6" id="ent0003">
+      <path d="M6,23.5 L6,72.5 A0,0 0 0 0 6,72.5 L118.731,72.5 A0,0 0 0 0 118.731,72.5 L118.731,52 L136.677,48 L118.731,44 L118.731,33.5 L108.731,23.5 L6,23.5 A0,0 0 0 0 6,23.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M108.731,23.5 L108.731,33.5 L118.731,33.5 L108.731,23.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="20.231" x="12" y="38.611">this</text>
+      <text fill="#000" font-size="13" x="32.231" y="38.611"> </text>
+      <text fill="#000" font-size="13" textLength="9.425" x="32.231" y="38.611">is</text>
+      <text fill="#000" font-size="13" x="41.656" y="38.611"> </text>
+      <text fill="#000" font-size="13" x="41.656" y="38.611">a</text>
+      <text fill="#000" font-size="13" x="48.888" y="38.611"> </text>
+      <text fill="#000" font-size="13" textLength="24.537" x="48.888" y="38.611">very</text>
+      <text fill="#000" font-size="13" x="73.425" y="38.611"> </text>
+      <text fill="#000" font-size="13" textLength="24.619" x="73.425" y="38.611">long</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="12" y="51.611">note</text>
+      <text fill="#000" font-size="13" x="37.269" y="51.611"> </text>
+      <text fill="#000" font-size="13" textLength="21.613" x="37.269" y="51.611">that</text>
+      <text fill="#000" font-size="13" x="58.881" y="51.611"> </text>
+      <text fill="#000" font-size="13" textLength="30.388" x="58.881" y="51.611">show</text>
+      <text fill="#000" font-size="13" x="89.269" y="51.611"> </text>
+      <text fill="#000" font-size="13" textLength="14.463" x="89.269" y="51.611">be</text>
+      <text fill="#000" font-size="13" textLength="49.887" x="12" y="64.611">wrapped</text>
+    </g>
+  </g>
+</svg>

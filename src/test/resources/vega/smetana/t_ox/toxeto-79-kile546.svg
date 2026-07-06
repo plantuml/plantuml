@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="113px" preserveAspectRatio="none" style="width:239px;height:113px;background:#FFFFFF;" version="1.1" viewBox="0 0 239 113" width="239px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="29">
+      <text fill="#000" font-size="14" font-weight="700" textLength="212.888" x="10" y="20.889">produces a red+smallItalic rectangle</text>
+    </g>
+    <!--entity C1-->
+    <g class="entity" data-qualified-name="C1" data-source-line="30" id="ent0001">
+      <path d="M91.944,47 L137.994,47 L155.994,65 L155.994,79 L137.994,97 L91.944,97 L73.944,79 L73.944,65 L91.944,47" fill="#FFF" style="stroke:#8B0000;stroke-width:0.5;"/>
+      <text fill="#F00" font-size="8" font-style="italic" textLength="60.05" x="84.944" y="63.222">«ItalicContainer»</text>
+      <text fill="#F00" font-size="8" font-style="italic" textLength="58.3" x="85.819" y="73.222">«RedContainer»</text>
+      <text fill="#F00" font-size="8" font-style="italic" textLength="10.25" x="109.844" y="83.222">C1</text>
+    </g>
+  </g>
+</svg>

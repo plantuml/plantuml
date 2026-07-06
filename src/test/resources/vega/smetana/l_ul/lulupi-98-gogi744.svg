@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="198px" preserveAspectRatio="none" style="width:456px;height:198px;background:#FFFFFF;" version="1.1" viewBox="0 0 456 198" width="456px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Something-->
+    <g class="cluster" data-qualified-name="Something" data-source-line="10" id="ent0001">
+      <path d="M16.5,4 L84.438,4 A3.75,3.75 0 0 1 86.938,6.5 L93.938,24 L445.5,24 A2.5,2.5 0 0 1 448,26.5 L448,171.5 A2.5,2.5 0 0 1 445.5,174 L16.5,174 A2.5,2.5 0 0 1 14,171.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="93.938" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="66.938" x="18" y="16.889">Something</text>
+    </g>
+    <!--entity baseComponent1-->
+    <g class="entity" data-qualified-name="Something.baseComponent1" data-source-line="11" id="ent0002">
+      <rect fill="#9F9" height="44" rx="2.5" ry="2.5" style="stroke:#000;stroke-width:0.5;" width="150.513" x="22.5" y="36"/>
+      <rect fill="#9F9" height="10" style="stroke:#000;stroke-width:0.5;" width="15" x="153.013" y="41"/>
+      <rect fill="#9F9" height="2" style="stroke:#000;stroke-width:0.5;" width="4" x="151.013" y="43"/>
+      <rect fill="#9F9" height="2" style="stroke:#000;stroke-width:0.5;" width="4" x="151.013" y="47"/>
+      <text fill="#000" font-size="14" textLength="110.513" x="37.5" y="66.889">baseComponent1</text>
+    </g>
+    <!--entity exampleComponent1-->
+    <g class="entity" data-qualified-name="Something.exampleComponent1" data-source-line="12" id="ent0003">
+      <rect fill="#FF0" height="58" rx="2.5" ry="2.5" style="stroke:#800000;stroke-width:0.5;" width="173.088" x="191.5" y="29"/>
+      <rect fill="#FF0" height="10" style="stroke:#800000;stroke-width:0.5;" width="15" x="344.588" y="34"/>
+      <rect fill="#FF0" height="2" style="stroke:#800000;stroke-width:0.5;" width="4" x="342.588" y="36"/>
+      <rect fill="#FF0" height="2" style="stroke:#800000;stroke-width:0.5;" width="4" x="342.588" y="40"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="68.513" x="238.788" y="59.889">«example»</text>
+      <text fill="#000" font-size="14" textLength="133.088" x="206.5" y="73.889">exampleComponent1</text>
+    </g>
+    <!--entity P5-->
+    <g class="entity" data-qualified-name="Something.P5" data-source-line="13" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.15" x="382.5" y="36"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="419.65" y="41"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="417.65" y="43"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="417.65" y="47"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="397.5" y="66.889">P5</text>
+    </g>
+    <!--entity XxaPtfl-->
+    <g class="entity" data-qualified-name="Something.XxaPtfl" data-source-line="14" id="ent0005">
+      <ellipse cx="97.869" cy="144.399" fill="#F1F1F1" rx="34.369" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="44.363" x="75.688" y="147.899">XxaPtfl</text>
+    </g>
+    <!--entity XxaPtfl2-->
+    <g class="entity" data-qualified-name="Something.XxaPtfl2" data-source-line="15" id="ent0006">
+      <ellipse cx="200.211" cy="144.549" fill="#F1F1F1" rx="49.711" ry="21.549" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="68.513" x="165.955" y="142.439">«example»</text>
+      <text fill="#000" font-size="14" textLength="52.15" x="174.136" y="156.439">XxaPtfl2</text>
+    </g>
+  </g>
+</svg>

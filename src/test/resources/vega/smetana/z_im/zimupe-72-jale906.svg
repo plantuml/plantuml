@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="345px" preserveAspectRatio="none" style="width:220px;height:345px;background:#FFFFFF;" version="1.1" viewBox="0 0 220 345" width="220px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="172.113" x="20.444" y="20.889">Test of Fill and Stroke on Circle</text>
+    </g>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="C" data-source-line="26" id="ent0001">
+      <rect fill="#F1F1F1" height="282.462" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="197.975" x="6" y="47"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.025" x="16" y="62.889">Fill</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="86.7" y="62.889">Stroke</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="36.575" x="157.4" y="62.889">Sprite</text>
+      <text fill="#000" font-size="14" textLength="32.725" x="16" y="76.889">black</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="86.7" y="76.889">none</text>
+      <text fill="#000" font-size="14" x="157.4" y="95.197"> </text>
+      <ellipse cx="173.554" cy="82.154" fill="#000" rx="10.769" ry="10.769" style="stroke:none;"/>
+      <text fill="#000" font-size="14" x="189.708" y="95.197"> </text>
+      <text fill="#000" font-size="14" textLength="31.15" x="16" y="109.197">none</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="86.7" y="109.197">green</text>
+      <text fill="#000" font-size="14" x="157.4" y="127.504"> </text>
+      <ellipse cx="173.554" cy="114.462" fill="none" rx="10.769" ry="10.769" style="stroke:#008000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="189.708" y="127.504"> </text>
+      <text fill="#000" font-size="14" textLength="35.788" x="16" y="141.504">green</text>
+      <text fill="#000" font-size="14" x="86.7" y="141.504">-</text>
+      <text fill="#000" font-size="14" x="157.4" y="159.812"> </text>
+      <ellipse cx="173.554" cy="146.769" fill="#008000" rx="10.769" ry="10.769" style="stroke:#008000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.25" x="189.708" y="159.812">     </text>
+      <text fill="#000" font-size="14" textLength="20.213" x="16" y="173.812">red</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="86.7" y="173.812">green</text>
+      <text fill="#000" font-size="14" x="157.4" y="192.12"> </text>
+      <ellipse cx="173.554" cy="179.077" fill="#F00" rx="10.769" ry="10.769" style="stroke:#008000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="7.7" x="189.708" y="192.12">  </text>
+      <rect fill="#FFC0CB" height="32.308" style="stroke:none;" width="177.975" x="16" y="195.231"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="16" y="206.12">none</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="86.7" y="206.12">none</text>
+      <text fill="#000" font-size="14" x="157.4" y="224.427"> </text>
+      <ellipse cx="173.554" cy="211.385" fill="none" rx="10.769" ry="10.769" style="stroke:none;"/>
+      <text fill="#000" font-size="14" textLength="7.7" x="189.708" y="224.427">  </text>
+      <text fill="#000" font-size="14" x="16" y="238.427">-</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="86.7" y="238.427">green</text>
+      <text fill="#000" font-size="14" x="157.4" y="256.735"> </text>
+      <ellipse cx="173.554" cy="243.692" fill="#000" rx="10.769" ry="10.769" style="stroke:#008000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.25" x="189.708" y="256.735">     </text>
+      <text fill="#000" font-size="14" x="16" y="270.735">-</text>
+      <text fill="#000" font-size="14" x="86.7" y="270.735">-</text>
+      <text fill="#000" font-size="14" x="157.4" y="289.043"> </text>
+      <ellipse cx="173.554" cy="276" fill="#000" rx="10.769" ry="10.769" style="stroke:#000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="189.708" y="289.043"> </text>
+      <rect fill="#98FB98" height="32.308" style="stroke:none;" width="177.975" x="16" y="292.154"/>
+      <text fill="#000" font-size="14" textLength="70.7" x="16" y="303.043">transparent</text>
+      <text fill="#000" font-size="14" textLength="70.7" x="86.7" y="303.043">transparent</text>
+      <text fill="#000" font-size="14" x="157.4" y="321.35"> </text>
+      <ellipse cx="173.554" cy="308.308" fill="none" rx="10.769" ry="10.769" style="stroke:none;"/>
+      <text fill="#000" font-size="14" x="189.708" y="321.35"> </text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="52" y2="52"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="66" y2="66"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="98.308" y2="98.308"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="130.615" y2="130.615"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="162.923" y2="162.923"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="195.231" y2="195.231"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="227.538" y2="227.538"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="259.846" y2="259.846"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="292.154" y2="292.154"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="193.975" y1="324.462" y2="324.462"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="16" y1="52" y2="324.462"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="86.7" x2="86.7" y1="52" y2="324.462"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="157.4" x2="157.4" y1="52" y2="324.462"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="193.975" x2="193.975" y1="52" y2="324.462"/>
+    </g>
+  </g>
+</svg>

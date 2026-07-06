@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="379px" preserveAspectRatio="none" style="width:478px;height:379px;background:#FFFFFF;" version="1.1" viewBox="0 0 478 379" width="478px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class sdfThing-->
+    <g class="entity" data-qualified-name="sdfThing" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.725" x="91.36" y="12"/>
+      <ellipse cx="106.36" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="101.36" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="53.725" x="120.36" y="31.889">sdfThing</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="92.36" x2="176.085" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="92.36" x2="176.085" y1="52" y2="52"/>
+    </g>
+    <!--class sdfObject-->
+    <g class="entity" data-qualified-name="sdfObject" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.063" x="173.86" y="113"/>
+      <ellipse cx="188.86" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="183.86" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="59.063" x="202.86" y="132.889">sdfObject</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="174.86" x2="263.923" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="174.86" x2="263.923" y1="153" y2="153"/>
+    </g>
+    <!--class sdfProperty-->
+    <g class="entity" data-qualified-name="sdfProperty" data-source-line="3" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="103.488" x="21.86" y="214"/>
+      <ellipse cx="36.86" cy="230" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="31.86" y="235">C</text>
+      <text fill="#000" font-size="14" textLength="71.488" x="50.86" y="233.889">sdfProperty</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22.86" x2="124.348" y1="246" y2="246"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22.86" x2="124.348" y1="254" y2="254"/>
+    </g>
+    <!--class sdfAction-->
+    <g class="entity" data-qualified-name="sdfAction" data-source-line="4" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="89.575" x="296.36" y="214"/>
+      <ellipse cx="311.36" cy="230" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="306.36" y="235">C</text>
+      <text fill="#000" font-size="14" textLength="57.575" x="325.36" y="233.889">sdfAction</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="297.36" x2="384.935" y1="246" y2="246"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="297.36" x2="384.935" y1="254" y2="254"/>
+    </g>
+    <!--class sdfEvent-->
+    <g class="entity" data-qualified-name="sdfEvent" data-source-line="5" id="ent0009">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.425" x="143.36" y="214"/>
+      <ellipse cx="158.36" cy="230" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="153.36" y="235">C</text>
+      <text fill="#000" font-size="14" textLength="54.425" x="172.36" y="233.889">sdfEvent</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="144.36" x2="228.785" y1="246" y2="246"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="144.36" x2="228.785" y1="254" y2="254"/>
+    </g>
+    <!--class sdfData-->
+    <g class="entity" data-qualified-name="sdfData" data-source-line="11" id="ent0014">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.212" x="199.36" y="315"/>
+      <ellipse cx="214.36" cy="331" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="209.36" y="336">C</text>
+      <text fill="#000" font-size="14" textLength="48.212" x="228.36" y="334.889">sdfData</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="200.36" x2="278.573" y1="347" y2="347"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="200.36" x2="278.573" y1="355" y2="355"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="199.557,112.934,196.729,103.5,196.299,109.141,190.659,108.712,199.557,112.934" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M154.289,60.211 C167.93,76.099 182.685,93.284 196.299,109.141" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="58.5" x="184.36" y="90.111">hasObject</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="184.557" y="109.045">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="177.397,45.21,186.653,48.574,182.384,44.862,186.096,40.593,177.397,45.21" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M177.397,26.79 C187.715,27.51 195.36,30.58 195.36,36 C195.36,41.42 192.703,44.142 182.384,44.862" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="53.544" x="197.36" y="39.611">hasThing</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="178.397" y="41.321">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="50.042,213.632,47.094,204.235,46.737,209.88,41.092,209.523,50.042,213.632" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M91.177,52.856 C64.993,64.978 33.755,84.51 18.36,113 C0,146.979 24.431,184.561 46.737,209.88" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="70.038" x="20.36" y="140.611">hasProperty</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="35.042" y="209.743">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="352.393,213.781,359.028,206.502,353.97,209.036,351.436,203.979,352.393,213.781" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M177.447,47.815 C199.648,54.519 226.56,64.465 248.36,78 C303.372,112.154 328.001,119.421 353.36,179 C358.032,189.975 357.583,198.168 353.97,209.036" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="57.119" x="346.36" y="140.611">hasAction</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="337.393" y="209.892">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="143.012,216.813,136.694,209.257,138.523,214.61,133.17,216.44,143.012,216.813" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M121.132,60.253 C104.405,93.064 80.799,153.664 107.36,196 C109.721,199.763 121.414,206.217 138.523,214.61" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="54.194" x="103.36" y="140.611">hasEvent</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="128.012" y="212.924">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="89.356,213.833,98.012,209.134,92.403,209.868,91.669,204.259,89.356,213.833" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M173.784,155.189 C153.42,163.327 132.064,172.634 123.36,179 C110.269,188.575 101.347,198.232 92.403,209.868" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="70.038" x="125.36" y="191.111">hasProperty</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="74.356" y="209.944">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="312.936,213.934,308.468,205.157,309.054,210.784,303.427,211.369,312.936,213.934" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M247.964,161.211 C267.543,177.099 289.513,194.927 309.054,210.784" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="57.119" x="290.36" y="191.111">hasAction</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="297.936" y="210.045">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0009" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="195.129,213.655,201.971,206.57,196.842,208.957,194.455,203.829,195.129,213.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M212.441,161.228 C209.198,171.866 205.208,184.613 201.36,196 C199.42,201.745 198.94,203.205 196.842,208.957" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="54.194" x="209.36" y="191.111">hasEvent</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="180.129" y="209.766">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0014" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="262.04,314.948,271.22,311.379,265.563,311.4,265.542,305.743,262.04,314.948" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M316.087,262.265 C309.921,268.019 303.37,274.199 297.36,280 C285.578,291.374 276.2,300.685 265.563,311.4" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="77.269" x="299.36" y="292.111">hasInputData</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="247.04" y="311.059">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0014" data-link-type="dependency" id="lnk16">
+      <polygon fill="#181818" points="279.496,338.28,288.743,341.669,284.485,337.946,288.208,333.687,279.496,338.28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M369.898,262.11 C379.837,272.954 386.657,285.903 378.36,297 C355.762,327.226 316.913,335.773 284.485,337.946" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="87.344" x="383.36" y="292.111">hasOutputData</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="280.496" y="334.391">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0014" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="199.112,315.964,194.793,307.113,195.283,312.748,189.647,313.239,199.112,315.964" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M179.993,262.141 C178.195,273.237 177.978,286.389 183.36,297 C187.067,304.307 188.927,307.41 195.283,312.748" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="87.344" x="185.36" y="292.111">hasOutputData</text>
+      <text fill="#000" font-size="13" textLength="14.869" x="184.112" y="312.075">0+</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0014" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="199.15,335.215,190.755,330.065,194.194,334.556,189.702,337.995,199.15,335.215" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M78.744,262.186 C82.625,274.118 89.047,288.007 99.36,297 C127.134,321.219 163.605,330.494 194.194,334.556" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="72.15" x="101.36" y="292.111">isInstanceOf</text>
+      <text fill="#000" font-size="13" x="191.15" y="331.326">1</text>
+    </g>
+  </g>
+</svg>

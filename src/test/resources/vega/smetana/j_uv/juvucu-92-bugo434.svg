@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="208px" preserveAspectRatio="none" style="width:268px;height:208px;background:#FFFFFF;" version="1.1" viewBox="0 0 268 208" width="268px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity comp1-->
+    <g class="entity" data-qualified-name="comp1" data-source-line="1" id="ent0001">
+      <rect fill="#FFF" height="58" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.3" x="6" y="19"/>
+      <rect fill="#FFF" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="76.3" y="24"/>
+      <rect fill="#FFF" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="74.3" y="26"/>
+      <rect fill="#FFF" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="74.3" y="30"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="22" y="49.889">«white»</text>
+      <text fill="#000" font-size="14" textLength="42" x="25.15" y="63.889">comp1</text>
+    </g>
+    <!--entity comp2-->
+    <g class="entity" data-qualified-name="comp2" data-source-line="2" id="ent0002">
+      <rect fill="#FFF" height="72" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:0.5;" width="90.3" x="114" y="12"/>
+      <rect fill="#FFF" height="10" style="stroke:#00F;stroke-width:0.5;" width="15" x="184.3" y="17"/>
+      <rect fill="#FFF" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="182.3" y="19"/>
+      <rect fill="#FFF" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="182.3" y="23"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="130" y="42.889">«white»</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="42.088" x="133.106" y="56.889">«blue»</text>
+      <text fill="#000" font-size="14" textLength="42" x="133.15" y="70.889">comp2</text>
+    </g>
+    <!--entity comp3-->
+    <g class="entity" data-qualified-name="comp3" data-source-line="3" id="ent0003">
+      <rect fill="#FFF" height="72" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:0.5;" width="90.3" x="6" y="120"/>
+      <rect fill="#FFF" height="10" style="stroke:#00F;stroke-width:0.5;" width="15" x="76.3" y="125"/>
+      <rect fill="#FFF" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="74.3" y="127"/>
+      <rect fill="#FFF" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="74.3" y="131"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="42.088" x="25.106" y="150.889">«blue»</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="22" y="164.889">«white»</text>
+      <text fill="#000" font-size="14" textLength="42" x="25.15" y="178.889">comp3</text>
+    </g>
+    <!--entity comp4-->
+    <g class="entity" data-qualified-name="comp4" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:0.5;" width="137.725" x="114" y="120"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#00F;stroke-width:0.5;" width="15" x="231.725" y="125"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="229.725" y="127"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="229.725" y="131"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="95.725" x="130" y="150.889">«noskinparam»</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="42.088" x="156.819" y="164.889">«blue»</text>
+      <text fill="#000" font-size="14" textLength="42" x="156.863" y="178.889">comp4</text>
+    </g>
+  </g>
+</svg>

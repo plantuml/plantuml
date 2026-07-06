@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="430px" preserveAspectRatio="none" style="width:544px;height:430px;background:#FFFFFF;" version="1.1" viewBox="0 0 544 430" width="544px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class abstract-->
+    <g class="entity" data-qualified-name="abstract" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.7" x="6" y="25"/>
+      <ellipse cx="21" cy="41" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="46">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="49.7" x="35" y="44.889">abstract</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="86.7" y1="57" y2="57"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="86.7" y1="65" y2="65"/>
+    </g>
+    <!--entity actor-->
+    <g class="entity" data-qualified-name="actor" data-source-line="3" id="ent0002">
+      <ellipse cx="122.031" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M122.031,28.5 L122.031,55.5 M109.031,36.5 L135.031,36.5 M122.031,55.5 L109.031,70.5 M122.031,55.5 L135.031,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="31.062" x="106.5" y="82.889">actor</text>
+    </g>
+    <!--entity agent-->
+    <g class="entity" data-qualified-name="agent" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55" x="155.5" y="32"/>
+      <text fill="#000" font-size="14" textLength="35" x="165.5" y="52.889">agent</text>
+    </g>
+    <!--entity artifact-->
+    <g class="entity" data-qualified-name="artifact" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.913" x="229" y="30.5"/>
+      <polygon fill="#F1F1F1" points="283.913,35.5,283.913,49.5,295.913,49.5,295.913,41.5,289.913,35.5,283.913,35.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="289.913" x2="289.913" y1="35.5" y2="41.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="295.913" x2="289.913" y1="41.5" y2="41.5"/>
+      <text fill="#000" font-size="14" textLength="41.913" x="239" y="54.389">artifact</text>
+    </g>
+    <!--entity boundary-->
+    <g class="entity" data-qualified-name="boundary" data-source-line="6" id="ent0005">
+      <path d="M327.681,30 L327.681,54 M327.681,42 L344.681,42" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <ellipse cx="356.681" cy="42" fill="#F1F1F1" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="58.362" x="319" y="68.889">boundary</text>
+    </g>
+    <!--entity card-->
+    <g class="entity" data-qualified-name="card" data-source-line="7" id="ent0006">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.213" x="395.5" y="37"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="405.5" y="50.889">card</text>
+    </g>
+    <!--class class-->
+    <g class="entity" data-qualified-name="class" data-source-line="8" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.938" x="15" y="122"/>
+      <ellipse cx="30" cy="138" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="25" y="143">C</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="44" y="141.889">class</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="16" x2="77.938" y1="154" y2="154"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="16" x2="77.938" y1="162" y2="162"/>
+    </g>
+    <!--entity cloud-->
+    <g class="entity" data-qualified-name="cloud" data-source-line="9" id="ent0008">
+      <path d="M107.094,132.65 C110.811,127.362 113.961,128.502 117.373,132.972 C119.636,125.966 125.616,125.305 129.993,130.844 C134.123,125.623 137.537,125.843 140.741,131.74 C145.5,125.792 149.133,127.716 152.68,133.026 C160.431,135.583 161.212,139.778 156.827,146.166 C164.093,151.08 162.432,158.123 154.532,160.63 C153.597,167.79 147.496,169.32 142.266,165.374 C140.65,173.339 135.509,175.295 129.085,170.243 C123.858,174.202 119.345,172.223 118.85,165.646 C113.588,170.162 107.192,168.958 105.947,161.366 C97.904,160.884 93.685,155.97 97.162,147.946 C93.062,138.21 96.928,133.122 107.094,132.65" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="112" y="149.889">cloud</text>
+    </g>
+    <!--entity component-->
+    <g class="entity" data-qualified-name="component" data-source-line="10" id="ent0009">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.213" x="179.5" y="124"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="268.713" y="129"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="266.713" y="131"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="266.713" y="135"/>
+      <text fill="#000" font-size="14" textLength="69.213" x="194.5" y="154.889">component</text>
+    </g>
+    <!--entity control-->
+    <g class="entity" data-qualified-name="control" data-source-line="11" id="ent0010">
+      <ellipse cx="328" cy="139" fill="#F1F1F1" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+      <polygon fill="#181818" points="324,127,330,122,328,127,330,132,324,127" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="42" x="307" y="165.889">control</text>
+    </g>
+    <!--entity database-->
+    <g class="entity" data-qualified-name="database" data-source-line="12" id="ent0011">
+      <path d="M367,134.5 C367,124.5 405.788,124.5 405.788,124.5 C405.788,124.5 444.575,124.5 444.575,134.5 L444.575,157.5 C444.575,167.5 405.788,167.5 405.788,167.5 C405.788,167.5 367,167.5 367,157.5 L367,134.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M367,134.5 C367,144.5 405.788,144.5 405.788,144.5 C405.788,144.5 444.575,144.5 444.575,134.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="377" y="159.389">database</text>
+    </g>
+    <!--class entity-->
+    <g class="entity" data-qualified-name="entity" data-source-line="13" id="ent0012">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="65.425" x="463.5" y="122"/>
+      <ellipse cx="478.5" cy="138" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="473.5" y="143">E</text>
+      <text fill="#000" font-size="14" textLength="33.425" x="492.5" y="141.889">entity</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="464.5" x2="527.925" y1="154" y2="154"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="464.5" x2="527.925" y1="162" y2="162"/>
+    </g>
+    <!--class enum-->
+    <g class="entity" data-qualified-name="enum" data-source-line="14" id="ent0013">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="13.5" y="208"/>
+      <ellipse cx="28.5" cy="224" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="23.5" y="229">E</text>
+      <text fill="#000" font-size="14" textLength="35" x="42.5" y="227.889">enum</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14.5" x2="79.5" y1="240" y2="240"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14.5" x2="79.5" y1="248" y2="248"/>
+    </g>
+    <!--entity file-->
+    <g class="entity" data-qualified-name="file" data-source-line="15" id="ent0014">
+      <path d="M99,217.5 L99,246.5 A2.5,2.5 0 0 0 101.5,249 L134.438,249 A2.5,2.5 0 0 0 136.938,246.5 L136.938,225 L126.938,215 L101.5,215 A2.5,2.5 0 0 0 99,217.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M126.938,215 L126.938,222.5 A2.5,2.5 0 0 0 129.438,225 L136.938,225" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="109" y="235.889">file</text>
+    </g>
+    <!--entity folder-->
+    <g class="entity" data-qualified-name="folder" data-source-line="16" id="ent0015">
+      <path d="M157.5,206 L198.5,206 A3.75,3.75 0 0 1 201,208.5 L208,227 L222.5,227 A2.5,2.5 0 0 1 225,229.5 L225,255.5 A2.5,2.5 0 0 1 222.5,258 L157.5,258 A2.5,2.5 0 0 1 155,255.5 L155,208.5 A2.5,2.5 0 0 1 157.5,206" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="155" x2="208" y1="227" y2="227"/>
+      <text fill="#000" font-size="14" textLength="35" x="165" y="244.889">folder</text>
+    </g>
+    <!--entity frame-->
+    <g class="entity" data-qualified-name="frame" data-source-line="17" id="ent0016">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.7" x="243" y="210"/>
+      <path d="M268.233,210 L268.233,215 L261.233,222 L243,222" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="35.7" x="258" y="240.889">frame</text>
+    </g>
+    <!--class interface-->
+    <g class="entity" data-qualified-name="interface" data-source-line="18" id="ent0017">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.637" x="337" y="208"/>
+      <ellipse cx="352" cy="224" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="347" y="229">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="53.637" x="366" y="227.889">interface</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="338" x2="421.638" y1="240" y2="240"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="338" x2="421.638" y1="248" y2="248"/>
+    </g>
+    <!--entity node-->
+    <g class="entity" data-qualified-name="node" data-source-line="19" id="ent0018">
+      <polygon fill="#F1F1F1" points="441.5,220,451.5,210,512.65,210,512.65,244,502.65,254,441.5,254,441.5,220" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="502.65" x2="512.65" y1="220" y2="210"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="441.5" x2="502.65" y1="220" y2="220"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="502.65" x2="502.65" y1="220" y2="254"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="456.5" y="240.889">node</text>
+    </g>
+    <g class="entity" data-qualified-name="object" data-source-line="20" id="ent0019">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.363" x="21.5" y="302"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="28.5" y="314.889">object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22.5" x2="71.863" y1="320" y2="320"/>
+    </g>
+    <!--entity package-->
+    <g class="entity" data-qualified-name="package" data-source-line="21" id="ent0020">
+      <path d="M93,300.5 L158.938,300.5 A3.75,3.75 0 0 1 161.438,303 L168.438,320.5 L182.938,320.5 A2.5,2.5 0 0 1 185.438,323 L185.438,335 A2.5,2.5 0 0 1 182.938,337.5 L93,337.5 A2.5,2.5 0 0 1 90.5,335 L90.5,303 A2.5,2.5 0 0 1 93,300.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="90.5" x2="168.438" y1="320.5" y2="320.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="100.5" y="314.389">package</text>
+    </g>
+    <!--entity queue-->
+    <g class="entity" data-qualified-name="queue" data-source-line="23" id="ent0021">
+      <path d="M208.5,307 L257.438,307 C262.438,307 262.438,319 262.438,319 C262.438,319 262.438,331 257.438,331 L208.5,331 C203.5,331 203.5,319 203.5,319 C203.5,319 203.5,307 208.5,307" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M257.438,307 C252.438,307 252.438,319 252.438,319 C252.438,331 257.438,331 257.438,331" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.938" x="208.5" y="322.889">queue</text>
+    </g>
+    <!--entity stack-->
+    <g class="entity" data-qualified-name="stack" data-source-line="24" id="ent0022">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:none;" width="52.637" x="295.5" y="302"/>
+      <path d="M280.5,302 L293,302 A2.5,2.5 0 0 1 295.5,304.5 L295.5,333.5 A2.5,2.5 0 0 0 298,336 L345.638,336 A2.5,2.5 0 0 0 348.138,333.5 L348.138,304.5 A2.5,2.5 0 0 1 350.638,302 L363.138,302" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="32.637" x="305.5" y="322.889">stack</text>
+    </g>
+    <!--entity rectangle-->
+    <g class="entity" data-qualified-name="rectangle" data-source-line="25" id="ent0023">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.575" x="382" y="302"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="392" y="322.889">rectangle</text>
+    </g>
+    <g class="entity" data-qualified-name="state" data-source-line="26" id="ent0024">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50.275" x="478" y="294"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="478" x2="528.275" y1="318" y2="318"/>
+      <text fill="#000" font-size="14" textLength="30.275" x="488" y="309.889">state</text>
+    </g>
+    <!--entity storage-->
+    <g class="entity" data-qualified-name="storage" data-source-line="27" id="ent0025">
+      <rect fill="#F1F1F1" height="34" rx="35" ry="35" style="stroke:#181818;stroke-width:0.5;" width="66.637" x="13.5" y="380"/>
+      <text fill="#000" font-size="14" textLength="46.637" x="23.5" y="400.889">storage</text>
+    </g>
+    <!--entity usecase-->
+    <g class="entity" data-qualified-name="usecase" data-source-line="28" id="ent0026">
+      <ellipse cx="138.876" cy="396.899" fill="#F1F1F1" rx="39.876" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="112.801" y="400.399">usecase</text>
+    </g>
+  </g>
+</svg>

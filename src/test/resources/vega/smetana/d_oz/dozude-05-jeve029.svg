@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="270px" preserveAspectRatio="none" style="width:606px;height:270px;background:#FFFFFF;" version="1.1" viewBox="0 0 606 270" width="606px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class AliceMyStyle-->
+    <g class="entity" data-qualified-name="AliceMyStyle" data-source-line="12" id="ent0001">
+      <rect fill="#0FF" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="112.238" x="54" y="14"/>
+      <ellipse cx="69" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="64" y="35">C</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="80.238" x="83" y="33.889">AliceMyStyle</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55" x2="165.238" y1="46" y2="46"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55" x2="165.238" y1="54" y2="54"/>
+    </g>
+    <!--class AliceMyStyleStereo-->
+    <g class="entity" data-qualified-name="AliceMyStyleStereo" data-source-line="13" id="ent0002">
+      <rect fill="#0FF" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="153.45" x="184.5" y="12"/>
+      <ellipse cx="199.5" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="194.5" y="35">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="54" x="247.225" y="26.333">«mystyle»</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="121.45" x="213.5" y="39.889">AliceMyStyleStereo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="185.5" x2="336.95" y1="48" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="185.5" x2="336.95" y1="56" y2="56"/>
+    </g>
+    <!--class Alice1-->
+    <g class="entity" data-qualified-name="Alice1" data-source-line="14" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="7.5" ry="7.5" style="stroke:#181818;stroke-width:0.5;" width="70.238" x="356" y="14"/>
+      <ellipse cx="371" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="366" y="35">C</text>
+      <text fill="#000" font-size="14" textLength="38.238" x="385" y="33.889">Alice1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="357" x2="425.238" y1="46" y2="46"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="357" x2="425.238" y1="54" y2="54"/>
+    </g>
+    <!--class AliceMyStyleEmpty-->
+    <g class="entity" data-qualified-name="AliceMyStyleEmpty" data-source-line="16" id="ent0004">
+      <rect fill="#0FF" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151.875" x="34" y="102"/>
+      <ellipse cx="49" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="44" y="123">C</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="119.875" x="63" y="121.889">AliceMyStyleEmpty</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35" x2="184.875" y1="134" y2="134"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35" x2="184.875" y1="142" y2="142"/>
+    </g>
+    <!--class AliceMyStyleStereoEmpty-->
+    <g class="entity" data-qualified-name="AliceMyStyleStereoEmpty" data-source-line="17" id="ent0005">
+      <rect fill="#0FF" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="193.088" x="204.5" y="100"/>
+      <ellipse cx="219.5" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="214.5" y="123">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="54" x="287.044" y="114.333">«mystyle»</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="161.088" x="233.5" y="127.889">AliceMyStyleStereoEmpty</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="205.5" x2="396.588" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="205.5" x2="396.588" y1="144" y2="144"/>
+    </g>
+    <!--class AliceMyStyleNewLine2-->
+    <g class="entity" data-qualified-name="AliceMyStyleNewLine2" data-source-line="18" id="ent0006">
+      <rect fill="#0FF" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="174.625" x="415.5" y="102"/>
+      <ellipse cx="430.5" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="425.5" y="123">C</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="142.625" x="444.5" y="121.889">AliceMyStyleNewLine2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="416.5" x2="589.125" y1="134" y2="134"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="416.5" x2="589.125" y1="142" y2="142"/>
+    </g>
+    <!--class AliceMyStyleStereoNewLine-->
+    <g class="entity" data-qualified-name="AliceMyStyleStereoNewLine" data-source-line="20" id="ent0007">
+      <rect fill="#0FF" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="208.05" x="6" y="195"/>
+      <ellipse cx="21" cy="213" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="218">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="54" x="96.025" y="209.333">«mystyle»</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="176.05" x="35" y="222.889">AliceMyStyleStereoNewLine</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="213.05" y1="231" y2="231"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="213.05" y1="239" y2="239"/>
+    </g>
+    <!--class AliceMyStyleProp3-->
+    <g class="entity" data-qualified-name="AliceMyStyleProp3" data-source-line="22" id="ent0008">
+      <rect fill="#0FF" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="149.6" x="232" y="190"/>
+      <ellipse cx="247" cy="206" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="242" y="211">C</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="117.6" x="261" y="209.889">AliceMyStyleProp3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="233" x2="380.6" y1="222" y2="222"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="240" y="231.5"/>
+      </g>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="35.788" x="252" y="236.889">prop1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="233" x2="380.6" y1="244" y2="244"/>
+    </g>
+    <!--class AliceMyStyleStereoProp-->
+    <g class="entity" data-qualified-name="AliceMyStyleStereoProp" data-source-line="25" id="ent0009">
+      <rect fill="#0FF" height="66" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="183.025" x="400.5" y="188"/>
+      <ellipse cx="415.5" cy="206" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="410.5" y="211">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="54" x="478.013" y="202.333">«mystyle»</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="151.025" x="429.5" y="215.889">AliceMyStyleStereoProp</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="401.5" x2="582.525" y1="224" y2="224"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="408.5" y="233.5"/>
+      </g>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="35.788" x="420.5" y="238.889">prop1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="401.5" x2="582.525" y1="246" y2="246"/>
+    </g>
+  </g>
+</svg>

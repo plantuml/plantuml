@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="170px" preserveAspectRatio="none" style="width:180px;height:170px;background:#FFFFFF;" version="1.1" viewBox="0 0 180 170" width="180px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="A" data-source-line="6" id="ent0003">
+      <path d="M92.5,4 L102.863,4 A3.75,3.75 0 0 1 105.363,6.5 L112.363,24 L161.5,24 A2.5,2.5 0 0 1 164,26.5 L164,143.5 A2.5,2.5 0 0 1 161.5,146 L92.5,146 A2.5,2.5 0 0 1 90,143.5 L90,6.5 A2.5,2.5 0 0 1 92.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="90" x2="112.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="94" y="16.889">A</text>
+    </g>
+    <!--cluster B-->
+    <g class="cluster" data-qualified-name="A.B" data-source-line="6" id="ent0004">
+      <path d="M100.5,29 L110.863,29 A3.75,3.75 0 0 1 113.363,31.5 L120.363,49 L153.5,49 A2.5,2.5 0 0 1 156,51.5 L156,135.5 A2.5,2.5 0 0 1 153.5,138 L100.5,138 A2.5,2.5 0 0 1 98,135.5 L98,31.5 A2.5,2.5 0 0 1 100.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="98" x2="120.363" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" x="102" y="41.889">B</text>
+    </g>
+    <!--class A::B::C-->
+    <g class="entity" data-qualified-name="A..B..C" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.275" x="6" y="54"/>
+      <ellipse cx="21" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="75">C</text>
+      <text fill="#000" font-size="14" textLength="44.275" x="35" y="73.889">A::B::C</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="81.275" y1="86" y2="86"/>
+      <text fill="#000" font-size="14" x="12" y="100.889">x</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="81.275" y1="108" y2="108"/>
+      <text fill="#000" font-size="14" textLength="13.125" x="12" y="122.889">f()</text>
+    </g>
+    <!--class C-->
+    <g class="entity" data-qualified-name="A.B.C" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="106" y="54"/>
+      <ellipse cx="121" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="116" y="75">C</text>
+      <text fill="#000" font-size="14" x="135" y="73.889">C</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="107" x2="147.15" y1="86" y2="86"/>
+      <text fill="#000" font-size="14" x="112" y="100.889">x</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="107" x2="147.15" y1="108" y2="108"/>
+      <text fill="#000" font-size="14" textLength="13.125" x="112" y="122.889">f()</text>
+    </g>
+  </g>
+</svg>

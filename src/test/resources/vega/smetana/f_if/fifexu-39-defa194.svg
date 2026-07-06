@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="452px" preserveAspectRatio="none" style="width:370px;height:452px;background:#FFFFFF;" version="1.1" viewBox="0 0 370 452" width="370px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="104.3" x="129.775" y="20.889">Servlet Container</text>
+    </g>
+    <g class="start_entity" data-qualified-name="start" data-source-line="5" id="ent0001">
+      <ellipse cx="119" cy="57" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="175.475" x="31.5" y="108"/>
+    <text fill="#000" font-size="12" textLength="155.475" x="41.5" y="127.333">ClickServlet.handleRequest()</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="70.1" x="84" y="177"/>
+    <text fill="#000" font-size="12" textLength="50.1" x="94" y="196.333">new Page</text>
+    <g class="entity" data-qualified-name=".6" id="ent0007">
+      <polygon fill="#F1F1F1" points="119,250,131,262,119,274,107,262,119,250" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="88.625" x="170.5" y="246"/>
+    <text fill="#000" font-size="12" textLength="68.625" x="180.5" y="265.333">Page.onInit()</text>
+    <g class="entity" data-qualified-name=".11" id="ent0012">
+      <polygon fill="#F1F1F1" points="215,333,227,345,215,357,203,345,215,333" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="105.35" x="260.5" y="329"/>
+    <text fill="#000" font-size="12" textLength="85.35" x="270.5" y="348.333">Process controls</text>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="175" y="412"/>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="79" y="333"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="119,107.81,123,98.81,119,102.81,115,98.81,119,107.81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119,71.263 C119,81.456 119,91.552 119,102.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="119,176.857,123,167.857,119,171.857,115,167.857,119,176.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119,140.203 C119,151.168 119,160.906 119,171.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="119,249.823,123,240.823,119,244.823,115,240.823,119,249.823" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119,209.203 C119,221.558 119,233.703 119,244.823" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="111.925" x="7" y="246.379">Page.onSecurityCheck</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="170.348,262,161.348,258,165.348,262,161.348,266,170.348,262" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M131.158,262 C141.148,262 150.95,262 165.348,262" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="18.906" x="141.75" y="254.556">true</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="215,332.989,219,323.989,215,327.989,211,323.989,215,332.989" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M215,278.235 C215,294.183 215,313.834 215,327.989" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="54.45" x="160" y="329.545">isForward?</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0014" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="260.342,345,251.342,341,255.342,345,251.342,349,260.342,345" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M227.017,345 C235.603,345 242.813,345 255.342,345" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="12.238" x="237.75" y="337.556">no</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0016" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="215,411.988,219,402.988,215,406.988,211,402.988,215,411.988" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M215,357.032 C215,371.67 215,392.361 215,406.988" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="17.119" x="217" y="389.556">yes</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0018" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="119,332.833,123,323.833,119,327.833,115,323.833,119,332.833" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M119,274.263 C119,289.738 119,312.408 119,327.833" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="23.238" x="121" y="306.556">false</text>
+    </g>
+  </g>
+</svg>

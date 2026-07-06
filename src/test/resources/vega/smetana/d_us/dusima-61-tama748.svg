@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="72px" preserveAspectRatio="none" style="width:210px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 210 72" width="210px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity EventGenerator-->
+    <g class="entity" data-qualified-name="EventGenerator" data-source-line="1" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,22,20,12,148.7,12,148.7,46,138.7,56,10,56,10,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="138.7" x2="148.7" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="138.7" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="138.7" x2="138.7" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="98.7" x="25" y="42.889">EventGenerator</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk2">
+      <polygon fill="#181818" points="149.173,41.523,158.551,44.532,154.144,40.985,157.691,36.579,149.173,41.523" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M149.173,26.477 C159.79,27.625 167,30.133 167,34 C167,37.867 164.761,39.837 154.144,40.985" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="33.231" x="169" y="37.611">Event</text>
+    </g>
+  </g>
+</svg>

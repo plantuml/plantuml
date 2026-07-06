@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="489px" preserveAspectRatio="none" style="width:808px;height:489px;background:#FFFFFF;" version="1.1" viewBox="0 0 808 489" width="808px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class MainWindow-->
+    <g class="entity" data-qualified-name="MainWindow" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="155.15" x="193" y="113"/>
+      <ellipse cx="227.311" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="222.311" y="134">C</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="80.238" x="245.602" y="132.889">MainWindow</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="194" x2="347.15" y1="145" y2="145"/>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="114.275" x="199" y="159.889">Gtk::Box   main_box</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="102.55" x="199" y="173.889">Gtk::Box   left_box</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="131.95" x="199" y="187.889">Gtk::Frame left_frame</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="140.525" x="199" y="201.889">Gtk::Frame right_frame</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="194" x2="347.15" y1="209" y2="209"/>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="143.15" x="199" y="223.889">Viewport*  getViewport()</text>
+    </g>
+    <!--class Gtk-->
+    <g class="entity" data-qualified-name="Gtk" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.7" x="454.5" y="397"/>
+      <ellipse cx="469.5" cy="413" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="464.5" y="418">C</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="21.7" x="483.5" y="416.889">Gtk</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="455.5" x2="507.2" y1="429" y2="429"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="455.5" x2="507.2" y1="437" y2="437"/>
+    </g>
+    <!--class Viewport-->
+    <g class="entity" data-qualified-name="Viewport" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.512" x="232" y="284"/>
+      <ellipse cx="247" cy="300" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="242" y="305">C</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="54.512" x="261" y="303.889">Viewport</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="233" x2="317.513" y1="316" y2="316"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="233" x2="317.513" y1="324" y2="324"/>
+    </g>
+    <!--class DrawOptionsBox-->
+    <g class="entity" data-qualified-name="DrawOptionsBox" data-source-line="6" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.088" x="378" y="12"/>
+      <ellipse cx="393" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="388" y="33">C</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="105.088" x="407" y="31.889">DrawOptionsBox</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="379" x2="514.088" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="379" x2="514.088" y1="52" y2="52"/>
+    </g>
+    <!--class AddObjectWindow-->
+    <g class="entity" data-qualified-name="AddObjectWindow" data-source-line="8" id="ent0009">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="254.9" x="366" y="120"/>
+      <ellipse cx="431.581" cy="136" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="426.581" y="141">C</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="115.238" x="452.081" y="139.889">AddObjectWindow</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="367" x2="619.9" y1="152" y2="152"/>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="117.338" x="372" y="166.889">Gtk::Grid              point_grid</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="108.85" x="372" y="180.889">Gtk::Grid              line_grid</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="128.275" x="372" y="194.889">Gtk::Grid              polygn_grid</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="242.9" x="372" y="208.889">std::list&lt;Coordinate*&gt; polygon_cord_list</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="367" x2="619.9" y1="216" y2="216"/>
+    </g>
+    <!--class Viewwindow-->
+    <g class="entity" data-qualified-name="Viewwindow" data-source-line="22" id="ent0014">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="109.263" x="6" y="397"/>
+      <ellipse cx="21" cy="413" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="418">C</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="77.263" x="35" y="416.889">Viewwindow</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="114.263" y1="429" y2="429"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="114.263" y1="437" y2="437"/>
+    </g>
+    <!--class DisplayFile-->
+    <g class="entity" data-qualified-name="DisplayFile" data-source-line="23" id="ent0016">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="296.725" x="133" y="369"/>
+      <ellipse cx="242.769" cy="385" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="237.769" y="390">C</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="68.688" x="263.269" y="388.889">DisplayFile</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="134" x2="428.725" y1="401" y2="401"/>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="284.725" x="139" y="415.889">std::map&lt; string, DrawableObject* &gt; objectsMap</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="134" x2="428.725" y1="423" y2="423"/>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="203.875" x="139" y="437.889">void addObject( DrawableObject* )</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="227.15" x="139" y="451.889">void removeObject( DrawableObject* )</text>
+      <text fill="#000" font-family="Consolas" font-size="14" textLength="210" x="139" y="465.889">void removeObjectByName( string )</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="320.612,231.213,327.794,248.775,336.895,240.953,320.612,231.213" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M332.345,244.864 C365.808,283.798 399.022,322.561 438.5,369 C446.226,378.088 454.696,388.119 462.061,396.863" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="composition" id="lnk5">
+      <polygon fill="#181818" points="272.679,231.385,268.905,237.53,273.126,243.376,276.899,237.231,272.679,231.385" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M273.126,243.376 C273.815,261.854 274.091,269.23 274.632,283.738" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="Consolas" font-size="13" textLength="48.425" x="276.5" y="261.111">viewport</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="515.292,46.352,532.05,55.25,534.037,43.416,515.292,46.352" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M533.044,49.333 C574.09,56.225 603.341,63.874 618.5,78 C630.429,89.116 627.027,96.883 629.5,113 C637.454,164.838 646.602,181.422 629.5,231 C605.514,300.537 544.251,364.029 508.514,396.758" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="Consolas" font-size="13" textLength="176.394" x="624.5" y="261.111">:Frame     ' remove this to fix the error</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="composition" id="lnk8">
+      <polygon fill="#181818" points="377.762,40.191,371.193,37.215,365.92,42.133,372.488,45.109,377.762,40.191" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M365.92,42.133 C336.351,46.982 315.452,55.619 293.5,78 C284.299,87.381 278.587,99.828 275.086,112.556" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="Consolas" font-size="13" textLength="74.506" x="295.5" y="90.111">mainWindow</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0009" data-link-type="composition" id="lnk10">
+      <polygon fill="#181818" points="478.084,60.4,479.349,67.499,486.389,69.062,485.124,61.963,478.084,60.4" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M486.389,69.062 C491.386,74.275 487.563,71.536 490.5,78 C496.314,90.795 498.522,105.635 498.905,119.651" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="Consolas" font-size="13" textLength="114.319" x="498.5" y="90.111">add_object_window</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0002" data-link-type="extension" id="lnk11">
+      <polygon fill="none" points="491.014,224.179,484.147,241.866,496.133,242.449,491.014,224.179" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M490.14,242.157 C487.566,295.146 484.532,357.583 482.626,396.824" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0006" data-link-type="composition" id="lnk12">
+      <polygon fill="#181818" points="396.701,119.884,395.196,112.832,388.107,111.509,389.612,118.561,396.701,119.884" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M388.107,111.509 C380.52,104.116 382.479,104.214 377.5,95 C370.061,81.232 378.962,69.37 392.573,60.026" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="Consolas" font-size="13" textLength="105.544" x="379.5" y="90.111">draw_options_box</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="extension" id="lnk13">
+      <polygon fill="none" points="319.193,323.787,334.272,335.303,338.166,323.952,319.193,323.787" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M336.219,329.628 C380.964,344.977 428.346,361.88 438.5,369 C449.121,376.447 458.679,387.139 466.071,396.812" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0014" data-link-type="composition" id="lnk15">
+      <polygon fill="#181818" points="231.954,322.24,224.997,320.344,220.571,326.038,227.529,327.933,231.954,322.24" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M220.571,326.038 C189.268,336.482 158.05,348.838 123.5,369 C110.131,376.802 96.619,387.315 85.555,396.769" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0016" data-link-type="composition" id="lnk17">
+      <polygon fill="#181818" points="276.758,332.269,273.087,338.476,277.405,344.252,281.076,338.045,276.758,332.269" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M277.405,344.252 C277.983,354.932 278.044,356.066 278.736,368.871" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

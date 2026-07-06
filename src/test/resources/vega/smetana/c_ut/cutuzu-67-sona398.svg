@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="954px" preserveAspectRatio="none" style="width:924px;height:954px;background:#FFFFFF;" version="1.1" viewBox="0 0 924 954" width="924px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Customer-->
+    <g class="cluster" data-qualified-name="Customer" data-source-line="3" id="ent0001">
+      <text fill="#000" font-size="14" font-weight="700" textLength="60.637" x="359.223" y="12.5">Customer</text>
+      <line style="stroke:#000;stroke-width:1;" x1="301.542" x2="301.542" y1="1.611" y2="158.611"/>
+      <line style="stroke:#000;stroke-width:1;" x1="477.542" x2="477.542" y1="1.611" y2="158.611"/>
+    </g>
+    <!--cluster Redmine-->
+    <g class="cluster" data-qualified-name="Redmine" data-source-line="8" id="ent0007">
+      <text fill="#000" font-size="14" font-weight="700" textLength="56.088" x="254.998" y="12.5">Redmine</text>
+      <line style="stroke:#000;stroke-width:1;" x1="119.542" x2="119.542" y1="1.611" y2="170.611"/>
+      <line style="stroke:#000;stroke-width:1;" x1="446.542" x2="446.542" y1="1.611" y2="170.611"/>
+    </g>
+    <!--cluster OPS-Member-->
+    <g class="cluster" data-qualified-name="OPS-Member" data-source-line="19" id="ent0019">
+      <text fill="#000" font-size="14" font-weight="700" textLength="85.488" x="545.798" y="12.5">OPS-Member</text>
+      <line style="stroke:#000;stroke-width:1;" x1="394.542" x2="394.542" y1="1.611" y2="546.611"/>
+      <line style="stroke:#000;stroke-width:1;" x1="782.542" x2="782.542" y1="1.611" y2="546.611"/>
+    </g>
+    <!--cluster OPS-Manager-->
+    <g class="cluster" data-qualified-name="OPS-Manager" data-source-line="48" id="ent0044">
+      <text fill="#000" font-size="14" font-weight="700" textLength="89.425" x="809.829" y="12.5">OPS-Manager</text>
+      <line style="stroke:#000;stroke-width:1;" x1="790.542" x2="790.542" y1="1.611" y2="83.611"/>
+      <line style="stroke:#000;stroke-width:1;" x1="918.542" x2="918.542" y1="1.611" y2="83.611"/>
+    </g>
+    <g class="entity" data-qualified-name=".16" id="ent0017">
+      <polygon fill="#F1F1F1" points="356.542,431.611,368.542,443.611,356.542,455.611,344.542,443.611,356.542,431.611" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <g class="start_entity" data-qualified-name="Customer.start" data-source-line="4" id="ent0002">
+      <ellipse cx="359.542" cy="59.611" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="73.325" x="396.042" y="124.611"/>
+    <text fill="#000" font-size="12" textLength="53.325" x="406.042" y="143.944">prepriority</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="68.075" x="309.542" y="124.611"/>
+    <text fill="#000" font-size="12" textLength="48.075" x="319.542" y="143.944">send Mail</text>
+    <g class="entity" data-qualified-name="Redmine..8" id="ent0009">
+      <polygon fill="#F1F1F1" points="279.542,225.611,291.542,237.611,279.542,249.611,267.542,237.611,279.542,225.611" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="128.675" x="128.042" y="300.611"/>
+    <text fill="#000" font-size="12" textLength="70.65" x="138.042" y="319.944">create ticket in</text>
+    <text fill="#000" font-size="12" textLength="108.675" x="138.042" y="331.944">OPS-Support Projekt</text>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="131.975" x="290.542" y="300.611"/>
+    <text fill="#000" font-size="12" textLength="70.65" x="300.542" y="319.944">create ticket in</text>
+    <text fill="#000" font-size="12" textLength="111.975" x="300.542" y="331.944">customer OPS Projekt</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="68.075" x="402.542" y="427.611"/>
+    <text fill="#000" font-size="12" textLength="48.075" x="412.542" y="446.944">Pull ticket</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="284.75" x="489.042" y="427.611"/>
+    <text fill="#000" font-size="12" textLength="264.75" x="499.042" y="446.944">Verify Problem Qualify ticket with Team and Customer</text>
+    <g class="entity" data-qualified-name="OPS-Member..24" id="ent0025">
+      <polygon fill="#F1F1F1" points="478.542,500.611,490.542,512.611,478.542,524.611,466.542,512.611,478.542,500.611" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="105.275" x="524.042" y="496.611"/>
+    <text fill="#000" font-size="12" textLength="85.275" x="534.042" y="515.944">inform Customer</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="126.65" x="647.042" y="496.611"/>
+    <text fill="#000" font-size="12" textLength="106.65" x="657.042" y="515.944">closed, state rejected</text>
+    <g class="entity" data-qualified-name="OPS-Member..31" id="ent0032">
+      <polygon fill="#F1F1F1" points="478.542,569.611,490.542,581.611,478.542,593.611,466.542,581.611,478.542,569.611" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="104" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="104.15" x="426.542" y="648.611"/>
+    <text fill="#000" font-size="12" textLength="80.625" x="436.542" y="667.944">Work with ticket:</text>
+    <text fill="#000" font-size="12" x="436.542" y="679.944"> </text>
+    <text fill="#000" font-size="12" textLength="67.35" x="436.542" y="691.944">check priority</text>
+    <text fill="#000" font-size="12" x="436.542" y="703.944"> </text>
+    <text fill="#000" font-size="12" textLength="81.975" x="436.542" y="715.944">Talk to customer</text>
+    <text fill="#000" font-size="12" x="436.542" y="727.944"> </text>
+    <text fill="#000" font-size="12" textLength="84.15" x="436.542" y="739.944">Solving Problem</text>
+    <g class="entity" data-qualified-name="OPS-Member..36" id="ent0037">
+      <polygon fill="#F1F1F1" points="478.542,803.611,490.542,815.611,478.542,827.611,466.542,815.611,478.542,803.611" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="44" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="90.05" x="433.542" y="878.611"/>
+    <text fill="#000" font-size="12" textLength="70.05" x="443.542" y="897.944">closed Ticket,</text>
+    <text fill="#000" font-size="12" textLength="60.675" x="443.542" y="909.944">state closed</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="137.375" x="524.042" y="565.611"/>
+    <text fill="#000" font-size="12" textLength="117.375" x="534.042" y="584.944">own softwareproblem?</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="111.35" x="799.042" y="427.611"/>
+    <text fill="#000" font-size="12" textLength="91.35" x="809.042" y="446.944">push to somebody</text>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="418.212,124.496,414.923,115.213,414.772,120.867,409.117,120.717,418.212,124.496" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M369.692,73.318 C382.307,86.624 400.473,105.785 414.772,120.867" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="83.806" x="402.542" y="102.167">Redmine Account</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="346.713,124.352,352.46,116.354,347.73,119.457,344.627,114.727,346.713,124.352" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M357.25,73.643 C354.484,86.95 350.838,104.497 347.73,119.457" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="287,225.541,295.346,220.311,289.794,221.394,288.711,215.842,287,225.541" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M333.259,156.875 C320.327,176.071 301.228,204.421 289.794,221.394" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="279.537" x="7" y="222.096">support@domain.com or customer.support@domain.com ?</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0011" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="168.591,300.466,165.785,291.025,165.343,296.665,159.703,296.222,168.591,300.466" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M267.354,239.741 C239.906,242.564 174.623,250.926 161.542,267.611 C153.605,277.735 156.497,286.314 165.343,296.665" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="107.731" x="163.542" y="278.167">support@domain.com</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0013" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="298.303,300.536,293.179,292.126,294.192,297.691,288.626,298.704,298.303,300.536" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M276.85,249.623 C275.179,259.103 274.376,272.769 280.542,282.611 C285.03,289.775 287.176,292.836 294.192,297.691" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="155.925" x="282.542" y="278.167">customer.support@domain.com</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0013" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="421.809,300.371,431.496,298.589,425.936,297.547,426.978,291.987,421.809,300.371" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M438.52,156.622 C448.389,184.055 464.637,243.093 439.542,282.611 C435.019,289.734 432.937,292.756 425.936,297.547" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0017" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="356.542,431.484,360.542,422.484,356.542,426.484,352.542,422.484,356.542,431.484" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M356.542,344.612 C356.542,369.967 356.542,406.668 356.542,426.484" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="102.163" x="253.542" y="428.04">Ticker older 24 Hours ?</text>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0020" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="402.453,443.611,393.453,439.611,397.453,443.611,393.453,447.611,402.453,443.611" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M368.692,443.611 C377.697,443.611 385.439,443.611 397.453,443.611" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="12.238" x="379.542" y="436.167">no</text>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0022" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="489.026,443.611,480.026,439.611,484.026,443.611,480.026,447.611,489.026,443.611" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M470.819,443.611 C476.888,443.611 477.957,443.611 484.026,443.611" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0022" data-entity-2="ent0025" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="490.74,506.27,500.588,506.324,495.32,504.264,497.379,498.995,490.74,506.27" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M597.206,459.647 C563.374,474.463 518.121,494.279 495.32,504.264" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="56.306" x="433.74" y="502.825">Valid ticket ?</text>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0027" data-link-type="dependency" id="lnk28">
+      <polygon fill="#181818" points="523.884,512.611,514.884,508.611,518.884,512.611,514.884,516.611,523.884,512.611" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M490.559,512.611 C499.145,512.611 506.354,512.611 518.884,512.611" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="12.238" x="501.292" y="505.167">no</text>
+    </g>
+    <g class="link" data-entity-1="ent0027" data-entity-2="ent0029" data-link-type="dependency" id="lnk30">
+      <polygon fill="#181818" points="646.952,512.611,637.952,508.611,641.952,512.611,637.952,516.611,646.952,512.611" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M629.147,512.611 C635.082,512.611 636.017,512.611 641.952,512.611" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0032" data-link-type="dependency" id="lnk33">
+      <polygon fill="#181818" points="478.542,569.307,482.542,560.307,478.542,564.307,474.542,560.307,478.542,569.307" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M478.542,524.675 C478.542,537.014 478.542,551.871 478.542,564.307" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="115.569" x="362.542" y="565.863">can solved by Ops Team ?</text>
+    </g>
+    <g class="link" data-entity-1="ent0032" data-entity-2="ent0034" data-link-type="dependency" id="lnk35">
+      <polygon fill="#181818" points="478.542,648.466,482.542,639.466,478.542,643.466,474.542,639.466,478.542,648.466" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M478.542,593.83 C478.542,606.527 478.542,623.101 478.542,643.466" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="17.119" x="480.542" y="626.167">yes</text>
+    </g>
+    <g class="link" data-entity-1="ent0034" data-entity-2="ent0037" data-link-type="dependency" id="lnk38">
+      <polygon fill="#181818" points="475.188,803.431,476.72,793.702,473.893,798.601,468.993,795.774,475.188,803.431" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M470.99,752.753 C470.307,763.615 470.28,775.003 471.542,785.611 C472.252,791.577 472.46,793.261 473.893,798.601" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="70.331" x="404.188" y="799.986">Problem fixed ?</text>
+    </g>
+    <g class="link" data-entity-1="ent0037" data-entity-2="ent0039" data-link-type="dependency" id="lnk40">
+      <polygon fill="#181818" points="478.542,878.388,482.542,869.388,478.542,873.388,474.542,869.388,478.542,878.388" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M478.542,827.805 C478.542,840.726 478.542,857.264 478.542,873.388" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="17.119" x="480.542" y="856.167">yes</text>
+    </g>
+    <g class="link" data-entity-1="ent0037" data-entity-2="ent0034" data-link-type="dependency" id="lnk41">
+      <polygon fill="#181818" points="478.542,752.821,474.542,761.821,478.542,757.821,482.542,761.821,478.542,752.821" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M478.542,803.389 C478.542,791.459 478.542,776.741 478.542,757.821" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="12.238" x="480.542" y="781.167">no</text>
+    </g>
+    <g class="link" data-entity-1="ent0032" data-entity-2="ent0042" data-link-type="dependency" id="lnk43">
+      <polygon fill="#181818" points="523.971,581.611,514.971,577.611,518.971,581.611,514.971,585.611,523.971,581.611" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M490.742,581.611 C499.186,581.611 506.172,581.611 518.971,581.611" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="12.238" x="501.292" y="574.167">no</text>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0045" data-link-type="dependency" id="lnk46">
+      <polygon fill="#181818" points="841.374,427.429,838.365,418.051,838.044,423.699,832.396,423.378,841.374,427.429" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M359.858,431.316 C364.313,417.481 373.689,395.635 390.542,385.611 C428.358,363.118 745.502,369.746 786.542,385.611 C808.83,394.227 825.581,409.736 838.044,423.699" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="18.975" x="576.542" y="373.167">Yes</text>
+    </g>
+    <g class="link" data-entity-1="ent0045" data-entity-2="ent0022" data-link-type="dependency" id="lnk47">
+      <polygon fill="#181818" points="774.401,443.611,783.401,447.611,779.401,443.611,783.401,439.611,774.401,443.611" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M798.819,443.611 C790.68,443.611 787.541,443.611 779.401,443.611" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

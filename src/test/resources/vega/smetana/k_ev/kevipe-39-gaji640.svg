@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="52px" preserveAspectRatio="none" style="width:47px;height:52px;background:#FFFFFF;" version="1.1" viewBox="0 0 47 52" width="47px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity c-->
+    <g class="entity" data-qualified-name="c" data-source-line="1" id="ent0001">
+      <ellipse cx="18.424" cy="22.539" fill="#F1F1F1" rx="12.424" ry="10.539" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="14" x="14.924" y="26.039">c</text>
+    </g>
+  </g>
+</svg>

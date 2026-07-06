@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:89px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 89 90" width="89px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g83f0s4o88dzd0" x1="0%" x2="100%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#C3D8F4"/>
+      <stop offset="100%" stop-color="#6192D1"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Class-->
+    <g class="entity" data-qualified-name="Class" data-source-line="6" id="ent0001">
+      <rect fill="url(#g83f0s4o88dzd0)" height="62" rx="2.5" ry="2.5" style="stroke:#505050;stroke-width:0.5;" width="67.088" x="6" y="12"/>
+      <rect fill="url(#g83f0s4o88dzd0)" height="32" rx="2.5" ry="2.5" style="stroke:url(#g83f0s4o88dzd0);stroke-width:0.5;" width="67.088" x="6" y="12"/>
+      <rect fill="url(#g83f0s4o88dzd0)" height="2.5" style="stroke:url(#g83f0s4o88dzd0);stroke-width:0.5;" width="67.088" x="6" y="41.5"/>
+      <rect fill="none" height="62" rx="2.5" ry="2.5" style="stroke:#505050;stroke-width:0.5;" width="67.088" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#505050" font-size="14" textLength="35.088" x="35" y="31.889">Class</text>
+      <line style="stroke:#505050;stroke-width:0.5;" x1="7" x2="72.088" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="48.212" x="12" y="58.889">Dummy</text>
+      <line style="stroke:#505050;stroke-width:0.5;" x1="7" x2="72.088" y1="66" y2="66"/>
+    </g>
+  </g>
+</svg>

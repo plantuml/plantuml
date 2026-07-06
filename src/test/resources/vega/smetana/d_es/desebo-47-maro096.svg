@@ -1,0 +1,271 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="1908.855px" preserveAspectRatio="none" style="width:1801px;height:1908px;background:#FFFFFF;" version="1.1" viewBox="0 0 1801 1908" width="1801.296px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster PowerBase-->
+    <g class="cluster" data-qualified-name="PowerBase" data-source-line="5" id="ent0002">
+      <path d="M1348.38,1455.292 L1764.363,1455.292 A16.199,16.199 0 0 1 1780.562,1471.49 L1780.562,1479.914 L1332.181,1479.914 L1332.181,1471.49 A16.199,16.199 0 0 1 1348.38,1455.292" fill="#F1F1F1"/>
+      <rect fill="none" height="150.324" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="448.38" x="1332.181" y="1455.292"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="1332.181" x2="1780.562" y1="1479.914" y2="1479.914"/>
+      <text fill="#000" font-size="18.143" textLength="92.867" x="1509.938" y="1469.402">PowerBase</text>
+    </g>
+    <!--cluster Telemetry_Data_PowerBase-->
+    <g class="cluster" data-qualified-name="PowerBase.Telemetry_Data_PowerBase" data-source-line="6" id="ent0003">
+      <path d="M1358.747,1487.689 L1753.996,1487.689 A16.199,16.199 0 0 1 1770.194,1503.888 L1770.194,1512.311 L1342.549,1512.311 L1342.549,1503.888 A16.199,16.199 0 0 1 1358.747,1487.689" fill="#F1F1F1"/>
+      <rect fill="none" height="107.559" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="427.646" x="1342.549" y="1487.689"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="1342.549" x2="1770.194" y1="1512.311" y2="1512.311"/>
+      <text fill="#000" font-size="18.143" textLength="231.998" x="1440.373" y="1501.8">Telemetry_Data_PowerBase</text>
+    </g>
+    <!--cluster SharedMemory-->
+    <g class="cluster" data-qualified-name="SharedMemory" data-source-line="11" id="ent0006">
+      <path d="M47.3,184.017 L1305.616,184.017 A16.199,16.199 0 0 1 1321.814,200.216 L1321.814,208.639 L31.102,208.639 L31.102,200.216 A16.199,16.199 0 0 1 47.3,184.017" fill="#F1F1F1"/>
+      <rect fill="none" height="1693.737" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="1290.713" x="31.102" y="184.017"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="31.102" x2="1321.814" y1="208.639" y2="208.639"/>
+      <text fill="#000" font-size="18.143" textLength="123.936" x="614.49" y="198.128">SharedMemory</text>
+    </g>
+    <!--cluster Virtual_Config-->
+    <g class="cluster" data-qualified-name="SharedMemory.Virtual_Config" data-source-line="25" id="ent0008">
+      <path d="M564.363,247.516 L806.695,247.516 A16.199,16.199 0 0 1 822.894,263.715 L822.894,272.138 L548.164,272.138 L548.164,263.715 A16.199,16.199 0 0 1 564.363,247.516" fill="#F1F1F1"/>
+      <rect fill="none" height="641.469" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="274.73" x="548.164" y="247.516"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="548.164" x2="822.894" y1="272.138" y2="272.138"/>
+      <text fill="#000" font-size="18.143" textLength="114.071" x="628.494" y="261.627">Virtual_Config</text>
+    </g>
+    <!--cluster Data_Space-->
+    <g class="cluster" data-qualified-name="SharedMemory.Data_Space" data-source-line="50" id="ent0011">
+      <path d="M57.667,934.341 L1295.248,934.341 A16.199,16.199 0 0 1 1311.447,950.54 L1311.447,958.963 L41.469,958.963 L41.469,950.54 A16.199,16.199 0 0 1 57.667,934.341" fill="#F1F1F1"/>
+      <rect fill="none" height="933.045" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="1269.978" x="41.469" y="934.341"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="41.469" x2="1311.447" y1="958.963" y2="958.963"/>
+      <text fill="#000" font-size="18.143" textLength="99.897" x="626.509" y="948.452">Data_Space</text>
+    </g>
+    <!--cluster Data_Discovery_Table_Memory-->
+    <g class="cluster" data-qualified-name="SharedMemory.Data_Space.Data_Discovery_Table_Memory" data-source-line="51" id="ent0012">
+      <path d="M68.035,966.739 L652.484,966.739 A16.199,16.199 0 0 1 668.683,982.937 L668.683,991.361 L51.836,991.361 L51.836,982.937 A16.199,16.199 0 0 1 68.035,966.739" fill="#F1F1F1"/>
+      <rect fill="none" height="213.823" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="616.847" x="51.836" y="966.739"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="51.836" x2="668.683" y1="991.361" y2="991.361"/>
+      <text fill="#000" font-size="18.143" textLength="259.212" x="230.653" y="980.85">Data_Discovery_Table_Memory</text>
+    </g>
+    <!--cluster Data_Discovery_Table_PowerBase-->
+    <g class="cluster" data-qualified-name="SharedMemory.Data_Space.Data_Discovery_Table_PowerBase" data-source-line="67" id="ent0015">
+      <path d="M695.248,966.739 L1284.881,966.739 A16.199,16.199 0 0 1 1301.08,982.937 L1301.08,991.361 L679.05,991.361 L679.05,982.937 A16.199,16.199 0 0 1 695.248,966.739" fill="#F1F1F1"/>
+      <rect fill="none" height="213.823" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="622.03" x="679.05" y="966.739"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="679.05" x2="1301.08" y1="991.361" y2="991.361"/>
+      <text fill="#000" font-size="18.143" textLength="286.652" x="846.739" y="980.85">Data_Discovery_Table_PowerBase</text>
+    </g>
+    <!--cluster LPM_Data_Region-->
+    <g class="cluster" data-qualified-name="SharedMemory.Data_Space.LPM_Data_Region" data-source-line="83" id="ent0018">
+      <path d="M521.598,1479.914 L883.153,1479.914 A16.199,16.199 0 0 1 899.352,1496.112 L899.352,1504.536 L505.4,1504.536 L505.4,1496.112 A16.199,16.199 0 0 1 521.598,1479.914" fill="#F1F1F1"/>
+      <rect fill="none" height="123.11" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="393.952" x="505.4" y="1479.914"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="505.4" x2="899.352" y1="1504.536" y2="1504.536"/>
+      <text fill="#000" font-size="18.143" textLength="153.418" x="625.667" y="1494.024">LPM_Data_Region</text>
+    </g>
+    <!--cluster FW_Version_Region-->
+    <g class="cluster" data-qualified-name="SharedMemory.Data_Space.FW_Version_Region" data-source-line="87" id="ent0020">
+      <path d="M68.035,1225.918 L478.834,1225.918 A16.199,16.199 0 0 1 495.032,1242.117 L495.032,1250.54 L51.836,1250.54 L51.836,1242.117 A16.199,16.199 0 0 1 68.035,1225.918" fill="#F1F1F1"/>
+      <rect fill="none" height="631.102" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="443.197" x="51.836" y="1225.918"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="51.836" x2="495.032" y1="1250.54" y2="1250.54"/>
+      <text fill="#000" font-size="18.143" textLength="167.592" x="189.638" y="1240.029">FW_Version_Region</text>
+    </g>
+    <g class="entity" data-qualified-name="Device_0_Function_2" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="64.795" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="201.56" x="7.775" y="84.233"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="7.775" x2="209.336" y1="115.335" y2="115.335"/>
+      <text fill="#000" font-size="18.143" textLength="175.643" x="20.734" y="104.824">Device_0_Function_2</text>
+      <text fill="#000" font-size="18.143" textLength="143.099" x="14.255" y="135.925">0x10h MemoryBar</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0022">
+      <ellipse cx="108.855" cy="18.143" fill="#222" rx="12.959" ry="12.959" style="stroke:#222;stroke-width:1.296;"/>
+    </g>
+    <g class="entity" data-qualified-name="PowerBase.Telemetry_Data_PowerBase.Status_A" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="64.795" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="191.469" x="1352.916" y="1520.086"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="1352.916" x2="1544.384" y1="1551.188" y2="1551.188"/>
+      <text fill="#000" font-size="18.143" textLength="73.591" x="1411.855" y="1540.677">Status_A</text>
+      <text fill="#000" font-size="18.143" textLength="165.551" x="1359.395" y="1571.778">STATUS_&lt;IP&gt; [31:0]</text>
+    </g>
+    <g class="entity" data-qualified-name="PowerBase.Telemetry_Data_PowerBase.Status_B" data-source-line="8" id="ent0005">
+      <rect fill="#F1F1F1" height="64.795" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="191.469" x="1568.035" y="1520.086"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="1568.035" x2="1759.503" y1="1551.188" y2="1551.188"/>
+      <text fill="#000" font-size="18.143" textLength="73.591" x="1626.974" y="1540.677">Status_B</text>
+      <text fill="#000" font-size="18.143" textLength="165.551" x="1574.514" y="1571.778">STATUS_&lt;IP&gt;[31:0]</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory.HEADER" data-source-line="12" id="ent0007">
+      <rect fill="#F1F1F1" height="279.914" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="348.629" x="171.706" y="216.415"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="171.706" x2="520.335" y1="247.516" y2="247.516"/>
+      <text fill="#000" font-size="18.143" textLength="75.859" x="308.091" y="237.005">HEADER</text>
+      <text fill="#000" font-size="18.143" textLength="189.703" x="178.186" y="268.107">0x00h FW_VERSION_0</text>
+      <text fill="#000" font-size="18.143" textLength="189.703" x="178.186" y="286.249">0x04h FW_VERSION_1</text>
+      <text fill="#000" font-size="18.143" textLength="189.703" x="178.186" y="304.392">0x08h FW_VERSION_2</text>
+      <text fill="#000" font-size="18.143" textLength="192.765" x="178.186" y="322.534">0x0Ch FW_VERSION_3</text>
+      <text fill="#000" font-size="18.143" textLength="49.438" x="178.186" y="340.677">0x10h</text>
+      <text fill="#000" font-size="18.143" textLength="142.306" x="178.186" y="358.819">0x14h PowerBase</text>
+      <text fill="#000" font-size="18.143" textLength="197.754" x="178.186" y="376.962">0x18h PowerBase_HIGH</text>
+      <text fill="#000" font-size="18.143" textLength="234.039" x="178.186" y="395.104">0x1Ch 0x200h (Config Pointer)</text>
+      <text fill="#000" font-size="18.143" textLength="14.968" x="178.186" y="413.247">...</text>
+      <text fill="#000" font-size="18.143" textLength="322.711" x="178.186" y="431.389">0x70h 0xABCDh(System Memory DEVID)</text>
+      <text fill="#000" font-size="18.143" textLength="14.968" x="178.186" y="449.532">...</text>
+      <text fill="#000" font-size="18.143" textLength="122.122" x="178.186" y="467.675">0x200h Config1</text>
+      <text fill="#000" font-size="18.143" textLength="122.122" x="178.186" y="485.817">0x220h Config2</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory.Virtual_Config.Config1" data-source-line="26" id="ent0009">
+      <rect fill="#F1F1F1" height="152.916" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="253.72" x="558.531" y="279.914"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="558.531" x2="812.252" y1="311.015" y2="311.015"/>
+      <text fill="#000" font-size="18.143" textLength="62.592" x="654.096" y="300.504">Config1</text>
+      <text fill="#000" font-size="18.143" textLength="105.567" x="565.011" y="331.605">CAP ID = 0x30</text>
+      <text fill="#000" font-size="18.143" textLength="95.589" x="565.011" y="349.748">CAP VER = 1</text>
+      <text fill="#000" font-size="18.143" textLength="227.802" x="565.011" y="367.891">NEXT CAP OFFSET = 0x220h</text>
+      <text fill="#000" font-size="18.143" textLength="156.933" x="565.011" y="386.033">Vendor_ID = 0x1234</text>
+      <text fill="#000" font-size="18.143" textLength="120.761" x="565.011" y="404.176">Config_VER = 1</text>
+      <text fill="#000" font-size="18.143" textLength="151.944" x="565.011" y="422.318">OFFSET = 0x4000h</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory.Virtual_Config.Config2" data-source-line="31" id="ent0010">
+      <rect fill="#F1F1F1" height="334.341" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="253.72" x="558.531" y="544.276"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="558.531" x2="812.252" y1="575.378" y2="575.378"/>
+      <text fill="#000" font-size="18.143" textLength="62.592" x="654.096" y="564.867">Config2</text>
+      <text fill="#000" font-size="18.143" textLength="147.975" x="565.011" y="595.968">Config_LEN = 0x10</text>
+      <text fill="#000" font-size="18.143" textLength="120.648" x="565.011" y="614.111">Config_ID = 0x2</text>
+      <text fill="#000" font-size="18.143" textLength="134.708" x="565.011" y="632.253">NumEntries = 0x2</text>
+      <text fill="#000" font-size="18.143" textLength="117.586" x="565.011" y="650.396">EntrySize = 0x4</text>
+      <text fill="#000" font-size="18.143" textLength="123.823" x="565.011" y="668.539">BAR_INDEX = 0</text>
+      <text fill="#000" font-size="18.143" textLength="105.567" x="565.011" y="686.681">CAP ID = 0x30</text>
+      <text fill="#000" font-size="18.143" textLength="95.589" x="565.011" y="704.824">CAP VER = 1</text>
+      <text fill="#000" font-size="18.143" textLength="227.802" x="565.011" y="722.966">NEXT CAP OFFSET = 0x000h</text>
+      <text fill="#000" font-size="18.143" textLength="156.933" x="565.011" y="741.109">Vendor_ID = 0x1234</text>
+      <text fill="#000" font-size="18.143" textLength="120.761" x="565.011" y="759.251">Config_VER = 1</text>
+      <text fill="#000" font-size="18.143" textLength="147.975" x="565.011" y="777.394">Config_LEN = 0x10</text>
+      <text fill="#000" font-size="18.143" textLength="120.648" x="565.011" y="795.536">Config_ID = 0x2</text>
+      <text fill="#000" font-size="18.143" textLength="134.708" x="565.011" y="813.679">NumEntries = 0x8</text>
+      <text fill="#000" font-size="18.143" textLength="117.586" x="565.011" y="831.821">EntrySize = 0x4</text>
+      <text fill="#000" font-size="18.143" textLength="56.015" x="565.011" y="849.964">tBIR = 0</text>
+      <text fill="#000" font-size="18.143" textLength="151.944" x="565.011" y="868.107">OFFSET = 0x4100h</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory.Data_Space.Data_Discovery_Table_Memory.Entry0" data-source-line="52" id="ent0013">
+      <rect fill="#F1F1F1" height="171.058" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="264.833" x="106.263" y="999.136"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="106.263" x2="371.096" y1="1030.238" y2="1030.238"/>
+      <text fill="#000" font-size="18.143" textLength="52.387" x="212.487" y="1019.726">Entry0</text>
+      <text fill="#000" font-size="18.143" textLength="172.354" x="112.743" y="1050.828">ACCESS_TYPE = 0x2</text>
+      <text fill="#000" font-size="18.143" textLength="139.811" x="112.743" y="1068.97">Entry_TYPE = 0x0</text>
+      <text fill="#000" font-size="18.143" textLength="188.229" x="112.743" y="1087.113">SIZE (in Dwords) = 0x20h</text>
+      <text fill="#000" font-size="18.143" textLength="219.525" x="112.743" y="1105.256">UNIQUE_ID = 0x11111111h</text>
+      <text fill="#000" font-size="18.143" textLength="123.823" x="112.743" y="1123.398">BAR_INDEX = 0</text>
+      <text fill="#000" font-size="18.143" textLength="190.383" x="112.743" y="1141.541">BASE_OFFSET = 0x00h</text>
+      <text fill="#000" font-size="18.143" textLength="238.915" x="112.743" y="1159.683">Entry_Definition = RESERVED</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory.Data_Space.Data_Discovery_Table_Memory.Entry1" data-source-line="59" id="ent0014">
+      <rect fill="#F1F1F1" height="171.058" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="264.833" x="393.952" y="999.136"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="393.952" x2="658.785" y1="1030.238" y2="1030.238"/>
+      <text fill="#000" font-size="18.143" textLength="52.387" x="500.175" y="1019.726">Entry1</text>
+      <text fill="#000" font-size="18.143" textLength="172.354" x="400.432" y="1050.828">ACCESS_TYPE = 0x2</text>
+      <text fill="#000" font-size="18.143" textLength="139.811" x="400.432" y="1068.97">Entry_TYPE = 0x0</text>
+      <text fill="#000" font-size="18.143" textLength="188.229" x="400.432" y="1087.113">SIZE (in Dwords) = 0x60h</text>
+      <text fill="#000" font-size="18.143" textLength="219.525" x="400.432" y="1105.256">UNIQUE_ID = 0x22222222h</text>
+      <text fill="#000" font-size="18.143" textLength="123.823" x="400.432" y="1123.398">BAR_INDEX = 0</text>
+      <text fill="#000" font-size="18.143" textLength="210.567" x="400.432" y="1141.541">BASE_OFFSET = 0x1000h</text>
+      <text fill="#000" font-size="18.143" textLength="238.915" x="400.432" y="1159.683">Entry_Definition = RESERVED</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory.Data_Space.Data_Discovery_Table_PowerBase.Entry10" data-source-line="68" id="ent0016">
+      <rect fill="#F1F1F1" height="171.058" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="264.833" x="733.477" y="999.136"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="733.477" x2="998.31" y1="1030.238" y2="1030.238"/>
+      <text fill="#000" font-size="18.143" textLength="62.478" x="834.654" y="1019.726">Entry10</text>
+      <text fill="#000" font-size="18.143" textLength="172.354" x="739.957" y="1050.828">ACCESS_TYPE = 0x2</text>
+      <text fill="#000" font-size="18.143" textLength="139.811" x="739.957" y="1068.97">Entry_TYPE = 0x0</text>
+      <text fill="#000" font-size="18.143" textLength="188.229" x="739.957" y="1087.113">SIZE (in Dwords) = 0x30h</text>
+      <text fill="#000" font-size="18.143" textLength="235.853" x="739.957" y="1105.256">UNIQUE_ID = 0xBBBBBBBBh</text>
+      <text fill="#000" font-size="18.143" textLength="123.823" x="739.957" y="1123.398">BAR_INDEX = 1</text>
+      <text fill="#000" font-size="18.143" textLength="210.567" x="739.957" y="1141.541">BASE_OFFSET = 0x4000h</text>
+      <text fill="#000" font-size="18.143" textLength="238.915" x="739.957" y="1159.683">Entry_Definition = RESERVED</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory.Data_Space.Data_Discovery_Table_PowerBase.Entry11" data-source-line="75" id="ent0017">
+      <rect fill="#F1F1F1" height="171.058" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="269.935" x="1021.166" y="999.136"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="1021.166" x2="1291.102" y1="1030.238" y2="1030.238"/>
+      <text fill="#000" font-size="18.143" textLength="62.478" x="1124.895" y="1019.726">Entry11</text>
+      <text fill="#000" font-size="18.143" textLength="172.354" x="1027.646" y="1050.828">ACCESS_TYPE = 0x2</text>
+      <text fill="#000" font-size="18.143" textLength="139.811" x="1027.646" y="1068.97">Entry_TYPE = 0x0</text>
+      <text fill="#000" font-size="18.143" textLength="188.229" x="1027.646" y="1087.113">SIZE (in Dwords) = 0x10h</text>
+      <text fill="#000" font-size="18.143" textLength="244.017" x="1027.646" y="1105.256">UNIQUE_ID = 0xCCCCCCCCh</text>
+      <text fill="#000" font-size="18.143" textLength="123.823" x="1027.646" y="1123.398">BAR_INDEX = 1</text>
+      <text fill="#000" font-size="18.143" textLength="210.567" x="1027.646" y="1141.541">BASE_OFFSET = 0x5000h</text>
+      <text fill="#000" font-size="18.143" textLength="238.915" x="1027.646" y="1159.683">Entry_Definition = RESERVED</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory.Data_Space.LPM_Data_Region.Power_Mgmt_A" data-source-line="84" id="ent0019">
+      <rect fill="#F1F1F1" height="80.346" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="372.1" x="516.415" y="1512.311"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="516.415" x2="888.515" y1="1543.413" y2="1543.413"/>
+      <text fill="#000" font-size="18.143" textLength="129.039" x="637.945" y="1532.901">Power_Mgmt_A</text>
+      <text fill="#000" font-size="18.143" textLength="299.806" x="522.894" y="1564.003">BLK/BRK_TO_BDF MAPPING TABLE</text>
+      <text fill="#000" font-size="18.143" textLength="346.183" x="522.894" y="1582.145">BLK/BRK_POWER_REQ MAPPING TABLE</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory.Data_Space.FW_Version_Region.FW_VERSION" data-source-line="88" id="ent0021">
+      <rect fill="#F1F1F1" height="588.337" rx="16.199" ry="16.199" style="stroke:#181818;stroke-width:0.648;" width="421.766" x="62.851" y="1258.315"/>
+      <line style="stroke:#181818;stroke-width:0.648;" x1="62.851" x2="484.617" y1="1289.417" y2="1289.417"/>
+      <text fill="#000" font-size="18.143" textLength="120.081" x="213.693" y="1278.906">FW_VERSION</text>
+      <text fill="#000" font-size="18.143" textLength="140.265" x="69.33" y="1310.007">FW_VERSION_0</text>
+      <text fill="#000" font-size="18.143" textLength="140.265" x="69.33" y="1328.15">FW_VERSION_1</text>
+      <text fill="#000" font-size="18.143" textLength="140.265" x="69.33" y="1346.292">FW_VERSION_2</text>
+      <text fill="#000" font-size="18.143" textLength="140.265" x="69.33" y="1364.435">FW_VERSION_3</text>
+      <text fill="#000" font-size="18.143" textLength="50.572" x="69.33" y="1382.577">RSVD</text>
+      <text fill="#000" font-size="18.143" textLength="92.867" x="69.33" y="1400.72">PowerBase</text>
+      <text fill="#000" font-size="18.143" textLength="148.315" x="69.33" y="1418.862">PowerBase_HIGH</text>
+      <text fill="#000" font-size="18.143" textLength="167.478" x="69.33" y="1437.005">LPM_Data_OFFSET</text>
+      <text fill="#000" font-size="18.143" textLength="359.336" x="69.33" y="1455.148">OEM_SOC_DATA_PACKAGE_VERSION_0</text>
+      <text fill="#000" font-size="18.143" textLength="359.336" x="69.33" y="1473.29">OEM_SOC_DATA_PACKAGE_VERSION_1</text>
+      <text fill="#000" font-size="18.143" textLength="359.336" x="69.33" y="1491.433">OEM_SOC_DATA_PACKAGE_VERSION_2</text>
+      <text fill="#000" font-size="18.143" textLength="276.447" x="69.33" y="1509.575">OEM_CHIPSETINIT_VERSION_0</text>
+      <text fill="#000" font-size="18.143" textLength="276.447" x="69.33" y="1527.718">OEM_CHIPSETINIT_VERSION_1</text>
+      <text fill="#000" font-size="18.143" textLength="276.447" x="69.33" y="1545.86">OEM_CHIPSETINIT_VERSION_2</text>
+      <text fill="#000" font-size="18.143" textLength="395.848" x="69.33" y="1564.003">VENDOR_SOC_DATA_PACKAGE_VERSION_0</text>
+      <text fill="#000" font-size="18.143" textLength="395.848" x="69.33" y="1582.145">VENDOR_SOC_DATA_PACKAGE_VERSION_1</text>
+      <text fill="#000" font-size="18.143" textLength="395.848" x="69.33" y="1600.288">VENDOR_SOC_DATA_PACKAGE_VERSION_2</text>
+      <text fill="#000" font-size="18.143" textLength="312.959" x="69.33" y="1618.431">VENDOR_CHIPSETINIT_VERSION_0</text>
+      <text fill="#000" font-size="18.143" textLength="312.959" x="69.33" y="1636.573">VENDOR_CHIPSETINIT_VERSION_1</text>
+      <text fill="#000" font-size="18.143" textLength="312.959" x="69.33" y="1654.716">VENDOR_CHIPSETINIT_VERSION_2</text>
+      <text fill="#000" font-size="18.143" textLength="50.572" x="69.33" y="1672.858">RSVD</text>
+      <text fill="#000" font-size="18.143" textLength="50.572" x="69.33" y="1691.001">RSVD</text>
+      <text fill="#000" font-size="18.143" textLength="50.572" x="69.33" y="1709.143">RSVD</text>
+      <text fill="#000" font-size="18.143" textLength="50.572" x="69.33" y="1727.286">RSVD</text>
+      <text fill="#000" font-size="18.143" textLength="232.792" x="69.33" y="1745.428">System_SharedMemory_Bar</text>
+      <text fill="#000" font-size="18.143" textLength="288.24" x="69.33" y="1763.571">System_SharedMemory_Bar_HIGH</text>
+      <text fill="#000" font-size="18.143" textLength="50.572" x="69.33" y="1781.713">RSVD</text>
+      <text fill="#000" font-size="18.143" textLength="50.572" x="69.33" y="1799.856">RSVD</text>
+      <text fill="#000" font-size="18.143" textLength="50.572" x="69.33" y="1817.999">RSVD</text>
+      <text fill="#000" font-size="18.143" textLength="278.261" x="69.33" y="1836.141">System_SharedMemory_DeviceID</text>
+    </g>
+    <g class="link" data-entity-1="ent0022" data-entity-2="ent0001" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="108.855,83.876,114.039,72.213,108.855,77.397,103.672,72.213,108.855,83.876" style="stroke:#181818;stroke-width:1.296;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108.855,36.609 C108.855,49.217 108.855,61.404 108.855,77.397" fill="none" style="stroke:#181818;stroke-width:1.296;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="dependency" id="lnk24">
+      <polygon fill="#181818" points="108.855,183.884,114.039,172.221,108.855,177.405,103.672,172.221,108.855,183.884" style="stroke:#181818;stroke-width:1.296;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M108.855,149.418 C108.855,155.907 108.855,163.171 108.855,170.989 C108.855,174.898 108.855,178.945 108.855,183.103 C108.855,183.363 108.855,177.144 108.855,177.405" fill="none" style="stroke:#181818;stroke-width:1.296;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0010" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="685.529,544.124,690.713,532.461,685.529,537.645,680.346,532.461,685.529,544.124" style="stroke:#181818;stroke-width:1.296;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M685.529,432.852 C685.529,465.505 685.529,498.67 685.529,537.645" fill="none" style="stroke:#181818;stroke-width:1.296;"/>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0021" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="251.386,1258.035,255.681,1246.016,250.9,1251.574,245.343,1246.794,251.386,1258.035" style="stroke:#181818;stroke-width:1.296;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M244.781,1170.21 C246.731,1196.133 248.512,1219.814 250.9,1251.574" fill="none" style="stroke:#181818;stroke-width:1.296;"/>
+      <text fill="#000" font-size="16.847" textLength="120.98" x="251.404" y="1209.215">BASE_OFFSET</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0019" data-link-type="dependency" id="lnk27">
+      <polygon fill="#181818" points="687.633,1512.272,688.349,1499.529,685.338,1506.212,678.654,1503.201,687.633,1512.272" style="stroke:#181818;stroke-width:1.296;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M558.05,1170.21 C596.439,1271.545 656.956,1431.292 685.338,1506.212" fill="none" style="stroke:#181818;stroke-width:1.296;"/>
+      <text fill="#000" font-size="16.847" textLength="120.98" x="575.378" y="1209.215">BASE_OFFSET</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0004" data-link-type="dependency" id="lnk28">
+      <polygon fill="#181818" points="1409.767,1520.038,1403.882,1508.713,1404.702,1515.998,1397.417,1516.817,1409.767,1520.038" style="stroke:#181818;stroke-width:1.296;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M971.263,1170.21 C1102.88,1275.211 1316.198,1445.391 1404.702,1515.998" fill="none" style="stroke:#181818;stroke-width:1.296;"/>
+      <text fill="#000" font-size="16.847" textLength="120.98" x="1023.758" y="1209.215">BASE_OFFSET</text>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0005" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="1662.444,1519.659,1666.759,1507.647,1661.97,1513.197,1656.42,1508.407,1662.444,1519.659" style="stroke:#181818;stroke-width:1.296;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1291.122,1102.312 C1377.528,1119.466 1486.152,1154.502 1556.371,1225.918 C1638.105,1309.043 1657.258,1449.088 1661.97,1513.197" fill="none" style="stroke:#181818;stroke-width:1.296;"/>
+      <text fill="#000" font-size="16.847" textLength="120.98" x="1542.117" y="1209.215">BASE_OFFSET</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0012" data-link-type="dependency" id="lnk30">
+      <polygon fill="#181818" points="73.074,966.475,82.05,957.402,75.368,960.415,72.355,953.733,73.074,966.475" style="stroke:#181818;stroke-width:1.296;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M757.221,432.896 C783.134,464.761 809.585,503.848 824.19,544.276 C881.602,703.2 962.283,803.666 843.629,923.974 C814.405,953.604 125.917,906.933 94.6,934.341 C84.907,942.824 78.129,953.559 73.502,965.365 C73.357,965.734 75.508,960.044 75.368,960.415" fill="none" style="stroke:#181818;stroke-width:1.296;"/>
+      <text fill="#000" font-size="16.847" textLength="141.091" x="907.127" y="716.127">OFFSET = 0x4000h</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0015" data-link-type="dependency" id="lnk31">
+      <polygon fill="#181818" points="695.269,965.986,700.001,954.132,695.02,959.511,689.641,954.531,695.269,965.986" style="stroke:#181818;stroke-width:1.296;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M691.927,879.084 C692.663,898.231 693.41,917.652 694.136,936.516 C694.499,945.948 694.856,955.242 695.204,964.292 C695.226,964.858 694.999,958.948 695.02,959.511" fill="none" style="stroke:#181818;stroke-width:1.296;"/>
+      <text fill="#000" font-size="16.847" textLength="141.091" x="695.896" y="917.639">OFFSET = 0x4100h</text>
+    </g>
+  </g>
+</svg>

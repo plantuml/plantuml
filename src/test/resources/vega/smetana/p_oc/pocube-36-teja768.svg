@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="112px" preserveAspectRatio="none" style="width:152px;height:112px;background:#FFFFFF;" version="1.1" viewBox="0 0 152 112" width="152px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class TopLinkSessionMgr-->
+    <g class="entity" data-qualified-name="TopLinkSessionMgr" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.813" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="123.813" x="9" y="27.889">TopLinkSessionMgr</text>
+    </g>
+    <!--class TopLinkService-->
+    <g class="entity" data-qualified-name="TopLinkService" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102.6" x="19.5" y="72"/>
+      <text fill="#000" font-size="14" textLength="96.6" x="22.5" y="87.889">TopLinkService</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M71,36.183 C71,46.453 71,61.592 71,71.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="65" y="47.294">*</text>
+    </g>
+  </g>
+</svg>

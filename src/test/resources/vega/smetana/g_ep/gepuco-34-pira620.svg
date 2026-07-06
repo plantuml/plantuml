@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="168px" preserveAspectRatio="none" style="width:234px;height:168px;background:#FFFFFF;" version="1.1" viewBox="0 0 234 168" width="234px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="78" id="ent0001">
+      <rect fill="#85BBF0" height="140" style="stroke:#78A8D8;stroke-width:0.5;" width="212" x="6" y="12"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="72.675" x="75.663" y="31.333">«component»</text>
+      <text fill="#000" font-size="16" font-weight="700" x="17.5" y="46.444">这</text>
+      <text fill="#000" font-size="16" font-weight="700" x="33.5" y="46.444">也</text>
+      <text fill="#000" font-size="16" font-weight="700" x="49.5" y="46.444">是</text>
+      <text fill="#000" font-size="16" font-weight="700" x="65.5" y="46.444">一</text>
+      <text fill="#000" font-size="16" font-weight="700" x="81.5" y="46.444">个</text>
+      <text fill="#000" font-size="16" font-weight="700" x="97.5" y="46.444">组</text>
+      <text fill="#000" font-size="16" font-weight="700" x="113.5" y="46.444">件</text>
+      <text fill="#000" font-size="16" font-weight="700" x="129.5" y="46.444">，</text>
+      <text fill="#000" font-size="16" font-weight="700" x="142.5" y="46.444">但</text>
+      <text fill="#000" font-size="16" font-weight="700" x="158.5" y="46.444">是</text>
+      <text fill="#000" font-size="16" font-weight="700" x="174.5" y="46.444">这</text>
+      <text fill="#000" font-size="16" font-weight="700" x="190.5" y="46.444">段</text>
+      <text fill="#000" font-size="16" font-weight="700" x="17.5" y="62.444">文</text>
+      <text fill="#000" font-size="16" font-weight="700" x="33.5" y="62.444">件</text>
+      <text fill="#000" font-size="16" font-weight="700" x="49.5" y="62.444">不</text>
+      <text fill="#000" font-size="16" font-weight="700" x="65.5" y="62.444">会</text>
+      <text fill="#000" font-size="16" font-weight="700" x="81.5" y="62.444">自</text>
+      <text fill="#000" font-size="16" font-weight="700" x="97.5" y="62.444">动</text>
+      <text fill="#000" font-size="16" font-weight="700" x="113.5" y="62.444">换</text>
+      <text fill="#000" font-size="16" font-weight="700" x="129.5" y="62.444">行</text>
+      <text fill="#000" font-size="16" font-weight="700" x="145.5" y="62.444">下</text>
+      <text fill="#000" font-size="16" font-weight="700" x="161.5" y="62.444">去</text>
+      <text fill="#000" font-size="16" font-weight="700" x="177.5" y="62.444">，</text>
+      <text fill="#000" font-size="16" font-weight="700" x="190.5" y="62.444">这</text>
+      <text fill="#000" font-size="16" font-weight="700" x="16" y="78.444">是</text>
+      <text fill="#000" font-size="16" font-weight="700" x="32" y="78.444">为</text>
+      <text fill="#000" font-size="16" font-weight="700" x="48" y="78.444">什</text>
+      <text fill="#000" font-size="16" font-weight="700" x="64" y="78.444">么</text>
+      <text fill="#000" font-size="16" font-weight="700" x="80" y="78.444">呢</text>
+      <text fill="#000" font-size="16" font-weight="700" x="96" y="78.444">。</text>
+      <text fill="#000" font-size="16" font-weight="700" x="112" y="78.444"> </text>
+      <text fill="#000" font-size="16" font-weight="700" x="112" y="78.444">这</text>
+      <text fill="#000" font-size="16" font-weight="700" x="128" y="78.444">是</text>
+      <text fill="#000" font-size="16" font-weight="700" x="144" y="78.444">一</text>
+      <text fill="#000" font-size="16" font-weight="700" x="160" y="78.444">个</text>
+      <text fill="#000" font-size="16" font-weight="700" x="176" y="78.444">非</text>
+      <text fill="#000" font-size="16" font-weight="700" x="192" y="78.444">常</text>
+      <text fill="#000" font-size="16" font-weight="700" x="16" y="94.444">大</text>
+      <text fill="#000" font-size="16" font-weight="700" x="32" y="94.444">大</text>
+      <text fill="#000" font-size="16" font-weight="700" x="48" y="94.444">大</text>
+      <text fill="#000" font-size="16" font-weight="700" x="64" y="94.444">大</text>
+      <text fill="#000" font-size="16" font-weight="700" x="80" y="94.444">大</text>
+      <text fill="#000" font-size="16" font-weight="700" x="96" y="94.444">的</text>
+      <text fill="#000" font-size="16" font-weight="700" x="112" y="94.444">啊</text>
+      <text fill="#000" font-size="16" font-weight="700" x="128" y="94.444">大</text>
+      <text fill="#000" font-size="16" font-weight="700" x="144" y="94.444">大</text>
+      <text fill="#000" font-size="16" font-weight="700" x="160" y="94.444">的</text>
+      <text fill="#000" font-size="16" font-weight="700" x="176" y="94.444">的</text>
+      <text fill="#000" font-size="16" font-weight="700" x="192" y="94.444">的</text>
+      <text fill="#000" font-size="16" font-weight="700" x="17" y="110.444">的</text>
+      <text fill="#000" font-size="16" font-weight="700" x="33" y="110.444">的</text>
+      <text fill="#000" font-size="16" font-weight="700" x="49" y="110.444">的</text>
+      <text fill="#000" font-size="16" font-weight="700" x="65" y="110.444">的</text>
+      <text fill="#000" font-size="16" font-weight="700" x="81" y="110.444">的</text>
+      <text fill="#000" font-size="16" font-weight="700" textLength="78" x="97" y="110.444">！（）；：，</text>
+      <text fill="#000" font-size="16" font-weight="700" x="175" y="110.444">会</text>
+      <text fill="#000" font-size="16" font-weight="700" x="191" y="110.444">换</text>
+      <text fill="#000" font-size="16" font-weight="700" x="104" y="126.444">么</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="64.65" x="79.675" y="139.333">[technology]</text>
+    </g>
+  </g>
+</svg>

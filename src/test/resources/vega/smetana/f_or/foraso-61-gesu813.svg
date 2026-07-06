@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="236px" preserveAspectRatio="none" style="width:277px;height:236px;background:#FFFFFF;" version="1.1" viewBox="0 0 277 236" width="277px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Dummy1-->
+    <g class="entity" data-qualified-name="Dummy1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.85" x="6" y="12"/>
+      <ellipse cx="48.383" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="43.383" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="56" x="68.468" y="31.889">Dummy1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="153.85" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="12" y="58.889">String a1</text>
+      <text fill="#000" font-size="14" textLength="41.212" x="12" y="72.889">Date d;</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="153.85" y1="80" y2="80"/>
+      <text fill="#000" font-size="14" textLength="136.85" x="12" y="94.889">thisIsALongmethod1()</text>
+      <text fill="#000" font-size="14" textLength="111.125" x="12" y="108.889">anotherMetheod()</text>
+    </g>
+    <!--class Dummy2-->
+    <g class="entity" data-qualified-name="Dummy2" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="68" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88" x="173.5" y="30"/>
+      <ellipse cx="188.5" cy="46" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="183.5" y="51">C</text>
+      <text fill="#000" font-size="14" textLength="56" x="202.5" y="49.889">Dummy2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="174.5" x2="260.5" y1="62" y2="62"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="179.5" y="76.889">String a1</text>
+      <text fill="#000" font-size="14" textLength="41.212" x="179.5" y="90.889">Date d;</text>
+    </g>
+    <!--class Dummy3-->
+    <g class="entity" data-qualified-name="Dummy3" data-source-line="17" id="ent0003">
+      <rect fill="#F1F1F1" height="68" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.85" x="6" y="152"/>
+      <ellipse cx="48.383" cy="168" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="43.383" y="173">C</text>
+      <text fill="#000" font-size="14" textLength="56" x="68.468" y="171.889">Dummy3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="153.85" y1="184" y2="184"/>
+      <text fill="#000" font-size="14" textLength="136.85" x="12" y="198.889">thisIsALongmethod1()</text>
+      <text fill="#000" font-size="14" textLength="111.125" x="12" y="212.889">anotherMetheod()</text>
+    </g>
+    <!--class Dummy4-->
+    <g class="entity" data-qualified-name="Dummy4" data-source-line="24" id="ent0004">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88" x="173.5" y="170"/>
+      <ellipse cx="188.5" cy="186" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="183.5" y="191">C</text>
+      <text fill="#000" font-size="14" textLength="56" x="202.5" y="189.889">Dummy4</text>
+    </g>
+  </g>
+</svg>

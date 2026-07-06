@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="412px" preserveAspectRatio="none" style="width:679px;height:412px;background:#FFFFFF;" version="1.1" viewBox="0 0 679 412" width="679px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Chomeur" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="95.513" x="6" y="158"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="101.513" y1="182" y2="182"/>
+      <text fill="#000" font-size="14" textLength="75.513" x="16" y="173.889">Sans activite</text>
+    </g>
+    <g class="entity" data-qualified-name="Active" data-source-line="7" id="ent0002">
+      <path d="M250,73 L519.5,73 A12.5,12.5 0 0 1 532,85.5 L532,97 L237.5,97 L237.5,85.5 A12.5,12.5 0 0 1 250,73" fill="#F1F1F1"/>
+      <rect fill="none" height="220" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="294.5" x="237.5" y="73"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="237.5" x2="532" y1="97" y2="97"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="365.675" y="88.889">Active</text>
+      <g class="start_entity" data-qualified-name="Active..start.Active" data-source-line="8" id="ent0010">
+        <ellipse cx="374.5" cy="118" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <rect fill="#555" height="8" style="stroke:none;" width="80" x="334.5" y="168"/>
+      <g class="entity" data-qualified-name="Active.Salarie" data-source-line="9" id="ent0013">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="63.663" x="243.5" y="228"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="243.5" x2="307.163" y1="252" y2="252"/>
+        <text fill="#000" font-size="14" textLength="43.663" x="253.5" y="243.889">Salarie</text>
+      </g>
+      <g class="entity" data-qualified-name="Active.Independant" data-source-line="10" id="ent0015">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="97.788" x="325.5" y="228"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="325.5" x2="423.288" y1="252" y2="252"/>
+        <text fill="#000" font-size="14" textLength="77.788" x="335.5" y="243.889">Independant</text>
+      </g>
+      <g class="entity" data-qualified-name="Active.Etudiant" data-source-line="11" id="ent0017">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="71.363" x="442" y="228"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="442" x2="513.363" y1="252" y2="252"/>
+        <text fill="#000" font-size="14" textLength="51.363" x="452" y="243.889">Etudiant</text>
+      </g>
+      <g class="link" data-entity-1="ent0010" data-entity-2="ent0011" data-link-type="dependency" id="lnk12">
+        <polygon fill="#181818" points="374.5,167.851,378.5,158.851,374.5,162.851,370.5,158.851,374.5,167.851" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M374.5,132.183 C374.5,142.453 374.5,152.592 374.5,162.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0011" data-entity-2="ent0013" data-link-type="dependency" id="lnk14">
+        <polygon fill="#181818" points="307.642,228.948,317.287,226.954,311.706,226.034,312.625,220.453,307.642,228.948" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M359.031,192.094 C345.327,201.922 328.941,213.674 311.706,226.034" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0011" data-entity-2="ent0015" data-link-type="dependency" id="lnk16">
+        <polygon fill="#181818" points="374.5,227.764,378.5,218.764,374.5,222.764,370.5,218.764,374.5,227.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M374.5,192.094 C374.5,201.61 374.5,210.662 374.5,222.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0011" data-entity-2="ent0017" data-link-type="dependency" id="lnk18">
+        <polygon fill="#181818" points="442.341,227.764,437.201,219.363,438.225,224.927,432.661,225.95,442.341,227.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M390.594,192.094 C404.399,201.61 420.667,212.824 438.225,224.927" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0003">
+      <ellipse cx="385" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Retraite" data-source-line="5" id="ent0007">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="69" x="19.5" y="346"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="19.5" x2="88.5" y1="370" y2="370"/>
+      <text fill="#000" font-size="14" textLength="49" x="29.5" y="361.889">Retraite</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="385,72.811,389,63.811,385,67.811,381,63.811,385,72.811" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M385,36.291 C385,45.009 385,53.051 385,67.811" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="237.479,183,228.479,179,232.479,183,228.479,187,237.479,183" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M102.13,183 C137.901,183 183.742,183 232.479,183" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="114.075" x="112.75" y="175.111">retrouver une activite</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="102.112,201.084,109.896,207.118,106.967,202.278,111.807,199.35,102.112,201.084" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M237.338,206.76 C196.319,209.846 151.889,209.894 111.25,203 C108.24,202.489 110.032,203.032 106.967,202.278" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="113.344" x="113.25" y="198.111">perte de toute activite</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="54,345.973,58,336.973,54,340.973,50,336.973,54,345.973" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M54,208.316 C54,244.061 54,305.393 54,340.973" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="62.075" x="56" y="323.111">age retraite</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0002" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="532.66,200.906,542.484,201.604,537.362,199.204,539.762,194.082,532.66,200.906" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M532.66,165.094 C543.711,169.094 550.5,175.063 550.5,183 C550.5,190.938 548.413,195.205 537.362,199.204" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="119.194" x="552.5" y="186.611">changement d activite</text>
+    </g>
+  </g>
+</svg>

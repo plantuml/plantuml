@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="314px" preserveAspectRatio="none" style="width:243px;height:314px;background:#FFFFFF;" version="1.1" viewBox="0 0 243 314" width="243px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="286" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="144.063" x="6" y="12"/>
+      <ellipse cx="60.175" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="55.175" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="80.675" y="31.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="149.063" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="12" y="58.889">m1</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="12" y="90.889">m2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="10" y1="73" y2="73"/>
+      <text fill="#000" font-size="14" textLength="136.063" x="10" y="76.389">titre that is very very long</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="146.063" x2="149.063" y1="73" y2="73"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="149.063" y1="98" y2="98"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="12" y="112.889">m3</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="12" y="126.889">m31</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="12" y="158.889">m32</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="62.85" y1="141" y2="141"/>
+      <text fill="#000" font-size="14" textLength="30.363" x="62.85" y="144.389">point</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="93.213" x2="149.063" y1="141" y2="141"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="188.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="28.7" x="26" y="190.889">m4()</text>
+      <text fill="#000" font-size="14" textLength="28.7" x="26" y="204.889">m5()</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="62.106" y1="173" y2="173"/>
+      <text fill="#000" font-size="14" textLength="31.85" x="62.106" y="176.389">other</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="93.956" x2="149.063" y1="173" y2="173"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="149.063" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="149.063" y1="214" y2="214"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="224.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="19.425" x="26" y="226.889">m6</text>
+      <text fill="#000" font-size="14" textLength="38.063" x="12" y="258.889">empty</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="60.094" y1="241" y2="241"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="60.094" y1="243" y2="243"/>
+      <text fill="#000" font-size="14" textLength="35.875" x="60.094" y="244.389">TEST</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="95.969" x2="149.063" y1="241" y2="241"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="95.969" x2="149.063" y1="243" y2="243"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="288.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="32.55" x="26" y="290.889">toto()</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="67.094" y1="273" y2="273"/>
+      <text fill="#000" font-size="14" textLength="21.875" x="67.094" y="276.389">line</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88.969" x2="149.063" y1="273" y2="273"/>
+    </g>
+    <!--class foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="21" id="ent0002">
+      <rect fill="#F1F1F1" height="286" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="168.5" y="12"/>
+      <ellipse cx="183.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="178.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="197.5" y="31.889">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="169.5" x2="226.713" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="174.5" y="58.889">m1</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="174.5" y="90.889">m2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="169.5" x2="186.469" y1="73" y2="73"/>
+      <text fill="#000" font-size="14" textLength="23.275" x="186.469" y="76.389">titre</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="209.744" x2="226.713" y1="73" y2="73"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="169.5" x2="226.713" y1="98" y2="98"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="174.5" y="112.889">m3</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="174.5" y="126.889">m31</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="174.5" y="158.889">m32</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="169.5" x2="182.925" y1="141" y2="141"/>
+      <text fill="#000" font-size="14" textLength="30.363" x="182.925" y="144.389">point</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="213.288" x2="226.713" y1="141" y2="141"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="179.5" cy="188.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="28.7" x="188.5" y="190.889">m4()</text>
+      <text fill="#000" font-size="14" textLength="28.7" x="188.5" y="204.889">m5()</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="169.5" x2="182.181" y1="173" y2="173"/>
+      <text fill="#000" font-size="14" textLength="31.85" x="182.181" y="176.389">other</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="214.031" x2="226.713" y1="173" y2="173"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="169.5" x2="226.713" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="169.5" x2="226.713" y1="214" y2="214"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="179.5" cy="224.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="19.425" x="188.5" y="226.889">m6</text>
+      <text fill="#000" font-size="14" textLength="38.063" x="174.5" y="258.889">empty</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="169.5" x2="180.169" y1="241" y2="241"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="169.5" x2="180.169" y1="243" y2="243"/>
+      <text fill="#000" font-size="14" textLength="35.875" x="180.169" y="244.389">TEST</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="216.044" x2="226.712" y1="241" y2="241"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="216.044" x2="226.712" y1="243" y2="243"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="179.5" cy="288.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="32.55" x="188.5" y="290.889">toto()</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="169.5" x2="187.169" y1="273" y2="273"/>
+      <text fill="#000" font-size="14" textLength="21.875" x="187.169" y="276.389">line</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="209.044" x2="226.712" y1="273" y2="273"/>
+    </g>
+  </g>
+</svg>

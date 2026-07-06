@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="182px" preserveAspectRatio="none" style="width:210px;height:182px;background:#FFFFFF;" version="1.1" viewBox="0 0 210 182" width="210px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster pack-->
+    <g class="cluster" data-qualified-name="pack" data-source-line="1" id="ent0002">
+      <path d="M16.5,63 L47.075,63 A3.75,3.75 0 0 1 49.575,65.5 L56.575,83 L199.5,83 A2.5,2.5 0 0 1 202,85.5 L202,155.5 A2.5,2.5 0 0 1 199.5,158 L16.5,158 A2.5,2.5 0 0 1 14,155.5 L14,65.5 A2.5,2.5 0 0 1 16.5,63" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="56.575" y1="83" y2="83"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="18" y="75.889">pack</text>
+    </g>
+    <!--class ClassB-->
+    <g class="entity" data-qualified-name="ClassB" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.45" x="70" y="4"/>
+      <ellipse cx="85" cy="20" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="80" y="25">C</text>
+      <text fill="#000" font-size="14" textLength="44.45" x="99" y="23.889">ClassB</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="71" x2="145.45" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="71" x2="145.45" y1="44" y2="44"/>
+    </g>
+    <!--class ClassA-->
+    <g class="entity" data-qualified-name="pack.ClassA" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.45" x="118" y="88"/>
+      <ellipse cx="133" cy="104" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="128" y="109">C</text>
+      <text fill="#000" font-size="14" textLength="44.45" x="147" y="107.889">ClassA</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="119" x2="193.45" y1="120" y2="120"/>
+      <text fill="#000" font-size="14" x="124" y="134.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="119" x2="193.45" y1="142" y2="142"/>
+    </g>
+    <!--class ClassC-->
+    <g class="entity" data-qualified-name="pack.ClassC" data-source-line="5" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.238" x="22.5" y="95"/>
+      <ellipse cx="37.5" cy="111" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="116">C</text>
+      <text fill="#000" font-size="14" textLength="45.238" x="51.5" y="114.889">ClassC</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="98.738" y1="127" y2="127"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="98.738" y1="135" y2="135"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="120.611,52.384,121.363,62.204,122.985,56.784,128.404,58.406,120.611,52.384" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M122.985,56.784 C128.818,67.6 133.446,76.181 139.676,87.733" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="73.266,94.772,81.006,88.682,75.601,90.351,73.932,84.946,73.266,94.772" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M75.601,90.351 C82.496,77.295 88.743,65.465 95.651,52.384" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

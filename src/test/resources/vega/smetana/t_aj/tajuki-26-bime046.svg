@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="162px" preserveAspectRatio="none" style="width:428px;height:162px;background:#FFFFFF;" version="1.1" viewBox="0 0 428 162" width="428px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster LocalNet-->
+    <g class="cluster" data-qualified-name="LocalNet" data-source-line="2" id="ent0001">
+      <path d="M23.192,67.538 C32.802,52.531 43.656,55.094 52.937,67.89 C63.392,55.08 72.95,55.095 80.48,70.723 C85.741,58.035 95.028,56.179 104.354,66.506 C113.578,51.211 126.78,53.905 135.317,67.249 C140.617,54.339 152.108,54.098 159.922,64.607 C167.804,51.838 182.485,50.06 189.658,65.359 C196.257,55.151 207.712,54.429 214.057,65.649 C222.447,52.42 232.557,53.425 241.826,64.651 C249.244,53.987 260.646,54.353 267.378,65.456 C275.472,51.823 289.073,53.713 296.862,65.806 C308.302,53.336 316.391,56.053 324.513,69.364 C331.594,55.872 340.574,56.263 350.455,66.274 C358.925,56.172 371.485,55.791 376.504,69.975 C384.599,55.765 395.937,57.567 403.282,70.709 C417.387,74.783 422.345,88.16 409.791,98.483 C422.458,109.44 420.593,124.963 403.646,130.18 C397.216,142.083 384.539,144.414 376.836,131.558 C370.067,143.821 359.827,145.074 352.323,132.276 C345.843,145.129 332.699,146.64 325.141,133.399 C317.844,147.445 308.663,148.903 298.123,136.743 C291.564,149.251 281.037,152.409 271.572,139.817 C265.314,151.807 252.057,153.527 244.31,141.507 C234.972,154.238 226.503,156.58 216.407,142.29 C206.245,156.43 193.977,151.186 187.754,138.138 C179.447,149.128 170.367,150.176 162.393,137.778 C153.888,151.451 144.789,150.667 135.71,138.368 C127.705,150.326 113.588,151.534 106.307,137.547 C96.506,149.911 83.924,144.937 80.091,131.486 C72.161,145.978 60.101,146.199 51.508,132.15 C43.372,144.932 33.128,141.984 25.971,131.093 C9.434,126.97 7.204,113.409 17.557,101.611 C4.255,88.004 3.597,75.703 23.192,67.538" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.875" x="173.563" y="82.889">local network</text>
+    </g>
+    <!--entity CloudRouter-->
+    <g class="entity" data-qualified-name="CloudRouter" data-source-line="7" id="ent0004">
+      <polygon fill="#F1F1F1" points="143.5,14,153.5,4,262.163,4,262.163,38,252.163,48,143.5,48,143.5,14" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="252.163" x2="262.163" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="143.5" x2="252.163" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="252.163" x2="252.163" y1="14" y2="48"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="158.5" y="34.889">Cloud Router</text>
+    </g>
+    <!--entity PC1-->
+    <g class="entity" data-qualified-name="LocalNet.PC1" data-source-line="3" id="ent0002">
+      <polygon fill="#F1F1F1" points="335.5,94,345.5,84,402.8,84,402.8,118,392.8,128,335.5,128,335.5,94" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="392.8" x2="402.8" y1="94" y2="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="335.5" x2="392.8" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="392.8" x2="392.8" y1="94" y2="128"/>
+      <text fill="#000" font-size="14" textLength="27.3" x="350.5" y="114.889">PC1</text>
+    </g>
+    <!--entity PC2-->
+    <g class="entity" data-qualified-name="LocalNet.PC2" data-source-line="4" id="ent0003">
+      <polygon fill="#F1F1F1" points="250.5,94,260.5,84,317.8,84,317.8,118,307.8,128,250.5,128,250.5,94" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="307.8" x2="317.8" y1="94" y2="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="250.5" x2="307.8" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="307.8" x2="307.8" y1="94" y2="128"/>
+      <text fill="#000" font-size="14" textLength="27.3" x="265.5" y="114.889">PC2</text>
+    </g>
+    <!--entity N1-->
+    <g class="entity" data-qualified-name="LocalNet.N1" data-source-line="13" id="ent0007">
+      <polygon fill="#F1F1F1" points="174,94,184,84,231.938,84,231.938,118,221.938,128,174,128,174,94" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="221.938" x2="231.938" y1="94" y2="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="174" x2="221.938" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="221.938" x2="221.938" y1="94" y2="128"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="189" y="114.889">N1</text>
+    </g>
+    <!--entity N2-->
+    <g class="entity" data-qualified-name="LocalNet.N2" data-source-line="14" id="ent0008">
+      <polygon fill="#F1F1F1" points="98,94,108,84,155.938,84,155.938,118,145.938,128,98,128,98,94" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="145.938" x2="155.938" y1="94" y2="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="98" x2="145.938" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="145.938" x2="145.938" y1="94" y2="128"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="113" y="114.889">N2</text>
+    </g>
+    <!--entity N3-->
+    <g class="entity" data-qualified-name="LocalNet.N3" data-source-line="15" id="ent0009">
+      <polygon fill="#F1F1F1" points="22,94,32,84,79.938,84,79.938,118,69.938,128,22,128,22,94" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="69.938" x2="79.938" y1="94" y2="84"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22" x2="69.938" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="69.938" x2="69.938" y1="94" y2="128"/>
+      <text fill="#000" font-size="14" textLength="17.938" x="37" y="114.889">N3</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M353.934,83.638 C346.714,74.83 337.378,65.245 327,59 C307.569,47.308 283.937,39.853 262.536,35.114" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="association" id="lnk6">
+      <path d="M265.244,83.886 C257.887,75.888 249.245,66.828 241,59 C237.247,55.437 233.166,51.786 229.117,48.285" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0009" data-link-type="association" id="lnk10">
+      <path d="M143.279,36.561 C124.867,41.344 105.195,48.459 89,59 C79.277,65.329 70.788,74.925 64.314,83.717" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="association" id="lnk11">
+      <path d="M203,48.314 C203,59.41 203,72.929 203,83.982" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0008" data-link-type="association" id="lnk12">
+      <path d="M176.688,48.085 C172.664,51.613 168.642,55.324 165,59 C157.418,66.654 149.725,75.68 143.263,83.702" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

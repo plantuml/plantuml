@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:174px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 174 105" width="174px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Site-->
+    <g class="cluster" data-qualified-name="Site" data-source-line="3" id="ent0002">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="104" x="54.5" y="4"/>
+      <path d="M88.65,4 L88.65,11 L78.65,21 L54.5,21" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.15" x="57.5" y="15.889">Site</text>
+    </g>
+    <!--entity ssd-->
+    <g class="entity" data-qualified-name="ssd" data-source-line="8" id="ent0005">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.425" x="6" y="39"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="16" y="52.889">foo</text>
+    </g>
+    <!--entity AAAAA-->
+    <g class="entity" data-qualified-name="Site.AAAAA" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.813" x="63" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="129.813" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="127.813" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="127.813" y="40"/>
+      <text fill="#000" font-size="14" textLength="46.813" x="78" y="59.889">AAAAA</text>
+    </g>
+  </g>
+</svg>

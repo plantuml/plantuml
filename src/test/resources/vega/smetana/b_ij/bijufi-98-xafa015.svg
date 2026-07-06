@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="223px" preserveAspectRatio="none" style="width:299px;height:223px;background:#FFFFFF;" version="1.1" viewBox="0 0 299 223" width="299px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="legend" data-source-line="1">
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="17.788" x="137.356" y="12"/>
+      <text fill="#000" font-size="14" x="142.356" y="27.889">L</text>
+    </g>
+    <!--cluster Q-->
+    <g class="cluster" data-qualified-name="Q" data-source-line="15" id="ent0003">
+      <path d="M183,55.5 L194.85,55.5 A3.75,3.75 0 0 1 197.35,58 L204.35,75.5 L281,75.5 A2.5,2.5 0 0 1 283.5,78 L283.5,197 A2.5,2.5 0 0 1 281,199.5 L183,199.5 A2.5,2.5 0 0 1 180.5,197 L180.5,58 A2.5,2.5 0 0 1 183,55.5" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="180.5" x2="204.35" y1="75.5" y2="75.5"/>
+      <text fill="#000" font-size="14" font-weight="700" x="184.5" y="68.389">Q</text>
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="62.937" x="204.031" y="89.5"/>
+      <text fill="#000" font-size="14" textLength="52.937" x="209.031" y="105.389">Q legend</text>
+    </g>
+    <!--class E-->
+    <g class="entity" data-qualified-name="E" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="6" y="129.5"/>
+      <ellipse cx="21" cy="145.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="150.5">E</text>
+      <text fill="#000" font-size="14" x="35" y="149.389">E</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="161.5" y2="161.5"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="12" y="176.389">ee</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="183.5" y2="183.5"/>
+    </g>
+    <path d="M68,119 L78.363,119 A3.75,3.75 0 0 1 80.863,121.5 L87.863,139 L169.45,139 A2.5,2.5 0 0 1 171.95,141.5 L171.95,199.5 A2.5,2.5 0 0 1 169.45,202 L68,202 A2.5,2.5 0 0 1 65.5,199.5 L65.5,121.5 A2.5,2.5 0 0 1 68,119" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="65.5" x2="87.863" y1="139" y2="139"/>
+    <text fill="#000" font-size="14" font-weight="700" x="69.5" y="131.889">P</text>
+    <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="61.45" x="91.5" y="153"/>
+    <text fill="#000" font-size="14" textLength="51.45" x="96.5" y="168.889">P legend</text>
+    <!--class Qq-->
+    <g class="entity" data-qualified-name="Q.Qq" data-source-line="19" id="ent0004">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.638" x="207" y="129.5"/>
+      <ellipse cx="222" cy="145.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="217" y="150.5">E</text>
+      <text fill="#000" font-size="14" textLength="18.638" x="236" y="149.389">Qq</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="208" x2="256.638" y1="161.5" y2="161.5"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="213" y="176.389">qq</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="208" x2="256.638" y1="183.5" y2="183.5"/>
+    </g>
+  </g>
+</svg>

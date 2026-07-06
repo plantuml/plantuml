@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="65px" preserveAspectRatio="none" style="width:163px;height:65px;background:#FFFFFF;" version="1.1" viewBox="0 0 163 65" width="163px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity DD-->
+    <g class="entity" data-qualified-name="DD" data-source-line="1" id="ent0001">
+      <path d="M8.5,12 L41.8,12 A3.75,3.75 0 0 1 44.3,14.5 L51.3,32 L65.8,32 A2.5,2.5 0 0 1 68.3,34.5 L68.3,46.5 A2.5,2.5 0 0 1 65.8,49 L8.5,49 A2.5,2.5 0 0 1 6,46.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="51.3" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.3" x="16" y="25.889">DD</text>
+    </g>
+    <!--entity EE-->
+    <g class="entity" data-qualified-name="EE" data-source-line="2" id="ent0002">
+      <path d="M89,12 L120.725,12 A3.75,3.75 0 0 1 123.225,14.5 L130.225,32 L144.725,32 A2.5,2.5 0 0 1 147.225,34.5 L147.225,46.5 A2.5,2.5 0 0 1 144.725,49 L89,49 A2.5,2.5 0 0 1 86.5,46.5 L86.5,14.5 A2.5,2.5 0 0 1 89,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="86.5" x2="130.225" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="96.5" y="25.889">EE</text>
+    </g>
+  </g>
+</svg>

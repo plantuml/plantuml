@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="329.167px" preserveAspectRatio="none" style="width:183px;height:329px;" version="1.1" viewBox="0 0 183 329" width="183.333px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="78" id="ent0001">
+      <rect fill="#E95420" height="35.417" style="stroke:#D24C1D;stroke-width:2.083;" width="30.586" x="121.569" y="22.917"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="14.583" font-weight="700" x="131.986" y="44.676">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="B" data-source-line="78" id="ent0002">
+      <rect fill="#E95420" height="35.417" style="stroke:#D24C1D;stroke-width:2.083;" width="30.586" x="121.569" y="191.987"/>
+      <text fill="#FFF" font-family="'Verdana'" font-size="14.583" font-weight="700" x="131.986" y="213.746">B</text>
+    </g>
+    <line style="stroke:#FFA500;stroke-width:3.125;stroke-dasharray:7.292,7.292;" x1="141.96" x2="141.96" y1="58.333" y2="68.75"/>
+    <line style="stroke:#FFA500;stroke-width:3.125;stroke-dasharray:7.292,7.292;" x1="141.96" x2="143.223" y1="68.75" y2="68.75"/>
+    <line style="stroke:#FFA500;stroke-width:3.125;stroke-dasharray:7.292,7.292;" x1="143.223" x2="143.223" y1="68.75" y2="181.571"/>
+    <line style="stroke:#FFA500;stroke-width:3.125;stroke-dasharray:7.292,7.292;" x1="143.223" x2="141.96" y1="181.571" y2="181.571"/>
+    <line style="stroke:#FFA500;stroke-width:3.125;stroke-dasharray:7.292,7.292;" x1="141.96" x2="141.96" y1="181.571" y2="191.987"/>
+    <polygon fill="#FFA500" points="141.96,191.987,146.126,182.612,141.96,186.779,137.793,182.612,141.96,191.987" style="stroke:#FFA500;stroke-width:3.125;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#00F;stroke-width:7.292;stroke-dasharray:1.042,3.125;" x1="131.764" x2="131.764" y1="58.333" y2="191.987"/>
+    <polygon fill="none" points="131.764,191.987,134.889,183.654,128.639,183.654,131.764,191.987" style="stroke:#00F;stroke-width:7.292;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#008000" font-family="'Verdana'" font-size="12.5" font-weight="700" textLength="14.609" x="44.755" y="124.626">Te</text>
+    <image height="45.833" width="45.833" x="59.364" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAE70lEQVR4Xu2ZbUxTVxjHwRGcVoEVLOqUVkcUNMwsExIDYWrcl2mUSJboEkNj9mExWcxMiE6N0trAClIos2wMFwQpCDItEQIRZXXIhrDspeDWlteAqLBiC5XSV86eQ0bizqG9bbVXl+zDLyn/3vM8f8695zzPuQ1CCAX9l6AEf3G4HG+YrCbB2NMxwcOph3OMT48LQOPDd+Hk9f5CCb4y45iJ6n/Sn3jtz2sVRxqPoNSyVLS5eDOKU8ShneU70dGmo44GfcOFAePAu3BtDDneVyjBW2bRbAjMYOxlzWXZ9vLtKPRcKArKCloQ/N2uil3W6u7qergDb5OxfIESvAHMvjY6NfrO8VvH66JyoyiD7liVvwqJ74jbRiZHtpIxvYUSvGHKNhV58vbJ66ES97PqjpXnVyLxD2I1zHQSGdcbKIEJ56wztPZ+bQk3l0uZ8RZBoQApu5VSp8sZRsZnghKYMFgMWxO+SqBM+Ep6bbpOZ9C9T8ZnghKYuHr/aieZ3B8ivohAEEtIxmeCEpjYX7OfSu4vZ74/M2CcMSaTOTxBCUzwzvOoxP5ysO4ggv35AzKHJyiBieCsYCqxv+xW7kbav7QBNix6gYarwLAhwIY3fLmBSuwvh+sPo+HJ4cAazlBlUIn9YZFoETqrPhv4RafSqppDzoVQBnwFl+l6bb2QjM8EJTABHRcnqTSJMuArsEPooMsLfOHApRk2/BI8Q6QJb4ktikU1PTXslGaM2WaOhK7r+vLs5ZQZJtbI1qC8H/PUE5YJdpofDG4voduKz27Llq3OX02Zcge/gI/kHfK2R+ZH7LaX88AK50HnJttTtQdxsjmUwXkWSxaj9Jr0By39LZ/CGPYb+GexOq1RQ6ahxKa+pvwsdZZp35V9aNvFbQgvzLTqNHS69bRNPaT+eNg0nADP/1JyvK9Qgr/gBWS2m2MM0wbBY/PjOfBnaPb5rlnX6+T1/kIJrzqU4A44qi+12C0czZimqOzXMlyl0LGbx5D8nnyid6I30+qwcuwuOwduOwdmdAmeVfwZa3jvhnNcqqJTMTdGdEeEKrsrEcQqmLROxkBsDuQIJnMuBCWQ2Jy2aPyOQdImGVkvX08tKExYTtjc8T6zJROV/lKKoBr23tDd0Cg1ShfWEr9JpMbMs0mxCcl+kqFB42AK/INLyPwklPAsRqtxXd0fdXfjFfFztZ9M9iLZ8vUW1DrY+hks4jdJH14Zhu0nrrCjsAVv9GTwQBGdF42ququU8IhwST8eDVsclrcu/XbpO1xCyaCBhivl2pv7mj8nPXk03DXa9cmO8h1TZDA2wI9e8rfJT2BvP0T6WtDwtH06XtouVeGFRAZji2XZy5BILeokvS1ouGe85wCU2mkyCJv8M8t9JqsphfRHGW7QNwjXFqylgrANrB9r+0j7RdIfZbji9wphiPj5TxTPC+4CKzWVjaS/f/2BX0oXdxVLyMEvg0hpJIK15NkwlNEoKJ+55OCXAV70p26f+t9wwAjPCce9tGfD8AxHlPxcIgp03+AN+M0+NEWeDWMa9Y1CfiGfCsAm+P3dxgsbn8JJRUb6owzDATEFbkXXitwVVCA2wGZ5eTzXiVsn7i70qxNlGNNv7H9P1iErzVBlDKZdSUN7q/eyBuR8UHSvKAdO5QdIX24NY/CeDIM+1E/oM7UGLWtAzo9IL14ZflX5G9zW22kKkmX6AAAAAElFTkSuQmCC" y="81.25"/>
+    <text fill="#008000" font-family="'Verdana'" font-size="12.5" font-weight="700" textLength="9.688" x="105.518" y="124.626">st</text>
+    <text fill="#008000" font-family="'Verdana'" font-size="12.5" font-weight="700" textLength="47.188" x="32.363" y="139.209">Property</text>
+    <text fill="#008000" font-family="'Verdana'" font-size="12.5" font-weight="700" textLength="32.031" x="79.551" y="139.209">Value</text>
+    <text fill="#008000" font-family="'Verdana'" font-size="12.5" textLength="42.422" x="32.363" y="151.709">PropC1</text>
+    <text fill="#008000" font-family="'Verdana'" font-size="12.5" textLength="48.047" x="79.551" y="151.709">ValueC1</text>
+    <text fill="#008000" font-family="'Verdana'" font-size="12.5" textLength="42.422" x="32.363" y="164.209">PropC2</text>
+    <text fill="#008000" font-family="'Verdana'" font-size="12.5" textLength="48.047" x="79.551" y="164.209">ValueC2</text>
+    <line style="stroke:#008000;stroke-width:1.042;" x1="32.363" x2="127.598" y1="129.487" y2="129.487"/>
+    <line style="stroke:#008000;stroke-width:1.042;" x1="32.363" x2="127.598" y1="141.987" y2="141.987"/>
+    <line style="stroke:#008000;stroke-width:1.042;" x1="32.363" x2="127.598" y1="154.487" y2="154.487"/>
+    <line style="stroke:#008000;stroke-width:1.042;" x1="32.363" x2="127.598" y1="166.987" y2="166.987"/>
+    <line style="stroke:#008000;stroke-width:1.042;" x1="32.363" x2="32.363" y1="129.487" y2="166.987"/>
+    <line style="stroke:#008000;stroke-width:1.042;" x1="79.551" x2="79.551" y1="129.487" y2="166.987"/>
+    <line style="stroke:#008000;stroke-width:1.042;" x1="127.598" x2="127.598" y1="129.487" y2="166.987"/>
+    <g class="legend" data-source-line="1576">
+      <rect fill="#AEA79F" height="60.417" rx="4.167" ry="4.167" style="stroke:#9D968F;stroke-width:1.042;" width="139.948" x="20.833" y="246.154"/>
+      <rect fill="none" height="14.583" style="stroke:none;" width="127.448" x="27.083" y="254.487"/>
+      <text fill="#E9ECEF" font-family="'Verdana'" font-size="14.583" font-weight="700" textLength="48.672" x="27.083" y="265.83">Legend</text>
+      <text fill="#E9ECEF" font-family="'Verdana'" font-size="14.583" x="75.755" y="265.83"> </text>
+      <rect fill="#E95420" height="14.583" style="stroke:none;" width="127.448" x="27.083" y="269.071"/>
+      <text fill="#D24C1D" font-family="'Verdana'" font-size="14.583" x="27.083" y="280.413">▯</text>
+      <text fill="#E9ECEF" font-family="'Verdana'" font-size="14.583" x="41.211" y="280.413"> </text>
+      <text fill="#FFF" font-family="'Verdana'" font-size="14.583" textLength="72.096" x="41.211" y="280.413">component</text>
+      <text fill="#E9ECEF" font-family="'Verdana'" font-size="14.583" x="113.307" y="280.413"> </text>
+      <text fill="#00F" font-family="'Verdana'" font-size="14.583" x="27.083" y="294.996">─</text>
+      <text fill="#E9ECEF" font-family="'Verdana'" font-size="14.583" x="37.383" y="294.996"> </text>
+      <text fill="#008000" font-family="'Verdana'" font-size="14.583" textLength="29.258" x="37.383" y="294.996">DEF</text>
+      <text fill="#008000" font-family="'Verdana'" font-size="10.417" textLength="87.891" x="66.641" y="295.922">(dotted, thickness 7)</text>
+      <text fill="#E9ECEF" font-family="'Verdana'" font-size="14.583" x="154.531" y="294.996"> </text>
+      <line style="stroke:none;" x1="27.083" x2="154.531" y1="254.487" y2="254.487"/>
+      <line style="stroke:none;" x1="27.083" x2="154.531" y1="269.071" y2="269.071"/>
+      <line style="stroke:none;" x1="27.083" x2="154.531" y1="283.654" y2="283.654"/>
+      <line style="stroke:none;" x1="27.083" x2="154.531" y1="298.237" y2="298.237"/>
+      <line style="stroke:none;" x1="27.083" x2="27.083" y1="254.487" y2="298.237"/>
+      <line style="stroke:none;" x1="154.531" x2="154.531" y1="254.487" y2="298.237"/>
+    </g>
+  </g>
+</svg>

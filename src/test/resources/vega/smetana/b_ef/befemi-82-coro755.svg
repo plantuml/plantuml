@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="266px" preserveAspectRatio="none" style="width:238px;height:266px;background:#FFFFFF;" version="1.1" viewBox="0 0 238 266" width="238px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity something-->
+    <g class="entity" data-qualified-name="something" data-source-line="5" id="ent0001">
+      <ellipse cx="109.323" cy="49.799" fill="#F1F1F1" rx="97.323" ry="25.799" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="28" textLength="129.15" x="44.748" y="56.799">something</text>
+    </g>
+    <!--entity anything-->
+    <g class="entity" data-qualified-name="anything" data-source-line="5" id="ent0002">
+      <ellipse cx="108.865" cy="207.799" fill="#F1F1F1" rx="80.865" ry="25.799" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="28" textLength="105.875" x="55.927" y="214.799">anything</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M109,76.063 C109,104.825 109,152.687 109,181.598" fill="none" style="stroke:#00F;stroke-width:2;"/>
+      <text fill="#F00" font-size="26" textLength="86.775" x="113" y="136.222">abpp12</text>
+    </g>
+  </g>
+</svg>

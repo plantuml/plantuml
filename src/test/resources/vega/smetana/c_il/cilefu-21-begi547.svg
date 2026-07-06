@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="62px" preserveAspectRatio="none" style="width:165px;height:62px;background:#FFFFFF;" version="1.1" viewBox="0 0 165 62" width="165px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity rectangle-->
+    <g class="entity" data-qualified-name="rectangle" data-source-line="11" id="ent0001">
+      <rect fill="#000" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.575" x="6" y="12"/>
+      <text fill="#FFF" font-size="14" textLength="57.575" x="16" y="32.889">rectangle</text>
+    </g>
+    <!--entity card-->
+    <g class="entity" data-qualified-name="card" data-source-line="12" id="ent0002">
+      <rect fill="#00F" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.213" x="102.5" y="17"/>
+      <text fill="#F00" font-size="14" textLength="27.213" x="112.5" y="30.889">card</text>
+    </g>
+  </g>
+</svg>

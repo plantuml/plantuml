@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="188px" preserveAspectRatio="none" style="width:297px;height:188px;background:#FFFFFF;" version="1.1" viewBox="0 0 297 188" width="297px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class CopierTXTEnCSV-->
+    <g class="entity" data-qualified-name="CopierTXTEnCSV" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="145.837" x="65.5" y="12"/>
+      <ellipse cx="80.5" cy="28" fill="#FFF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="75.5" y="33">F</text>
+      <text fill="#000" font-size="14" textLength="113.837" x="94.5" y="31.889">CopierTXTEnCSV</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="66.5" x2="210.337" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="66.5" x2="210.337" y1="52" y2="52"/>
+    </g>
+    <!--class log-->
+    <g class="entity" data-qualified-name="log" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.725" x="230" y="12"/>
+      <ellipse cx="245" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="240" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="18.725" x="259" y="31.889">log</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="231" x2="279.725" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="231" x2="279.725" y1="52" y2="52"/>
+    </g>
+    <!--class conf-->
+    <g class="entity" data-qualified-name="conf" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="265.313" x="6" y="96"/>
+      <ellipse cx="121.194" cy="112" fill="#808080" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="116.194" y="117">F</text>
+      <text fill="#000" font-size="14" textLength="26.425" x="141.694" y="115.889">conf</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="270.313" y1="128" y2="128"/>
+      <text fill="#000" font-size="14" textLength="253.313" x="12" y="142.889">FICHIER_CONF = oravoscoms.properties</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="270.313" y1="150" y2="150"/>
+      <text fill="#000" font-size="14" textLength="140" x="12" y="164.889">chargerConfiguration()</text>
+    </g>
+  </g>
+</svg>

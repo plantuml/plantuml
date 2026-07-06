@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:197px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 197 76" width="197px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class toto-->
+    <g class="entity" data-qualified-name="toto" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="89.4" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-family="Braille" font-size="14" textLength="57.4" x="35" y="31.889">toto ()@⡹</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="94.4" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="94.4" y1="52" y2="52"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="3" id="ent0003">
+      <path d="M113.5,24 L113.5,32 L95.211,36 L113.5,40 L113.5,47 A0,0 0 0 0 113.5,47 L181.706,47 A0,0 0 0 0 181.706,47 L181.706,34 L171.706,24 L113.5,24 A0,0 0 0 0 113.5,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M171.706,24 L171.706,34 L181.706,34 L171.706,24" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-family="Braille" font-size="13" textLength="47.206" x="119.5" y="39.111">hel⡹⡹lo</text>
+    </g>
+  </g>
+</svg>

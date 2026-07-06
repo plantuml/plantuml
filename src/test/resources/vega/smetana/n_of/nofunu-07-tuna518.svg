@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="182px" preserveAspectRatio="none" style="width:803px;height:182px;background:#FFFFFF;" version="1.1" viewBox="0 0 803 182" width="803px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity mode1actor-->
+    <g class="entity" data-qualified-name="mode1actor" data-source-line="2" id="ent0001">
+      <ellipse cx="42.925" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M42.925,28.5 L42.925,55.5 M29.925,36.5 L55.925,36.5 M42.925,55.5 L29.925,70.5 M42.925,55.5 L55.925,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="73.85" x="6" y="82.889">mode1actor</text>
+    </g>
+    <!--entity fooa1-->
+    <g class="entity" data-qualified-name="fooa1" data-source-line="2" id="ent0002">
+      <ellipse cx="43" cy="141" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="35" x="25.5" y="168.889">fooa1</text>
+    </g>
+    <!--entity mode2actor-->
+    <g class="entity" data-qualified-name="mode2actor" data-source-line="3" id="ent0004">
+      <ellipse cx="134.925" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M134.925,28.5 L134.925,55.5 M121.925,36.5 L147.925,36.5 M134.925,55.5 L121.925,70.5 M134.925,55.5 L147.925,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="73.85" x="98" y="82.889">mode2actor</text>
+    </g>
+    <!--entity fooa2-->
+    <g class="entity" data-qualified-name="fooa2" data-source-line="3" id="ent0005">
+      <ellipse cx="135" cy="141" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="35" x="117.5" y="168.889">fooa2</text>
+    </g>
+    <!--entity mode3actor-->
+    <g class="entity" data-qualified-name="mode3actor" data-source-line="4" id="ent0007">
+      <ellipse cx="226.925" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M226.925,28.5 L226.925,55.5 M213.925,36.5 L239.925,36.5 M226.925,55.5 L213.925,70.5 M226.925,55.5 L239.925,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="73.85" x="190" y="82.889">mode3actor</text>
+    </g>
+    <!--entity fooa3-->
+    <g class="entity" data-qualified-name="fooa3" data-source-line="4" id="ent0008">
+      <ellipse cx="227" cy="141" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="35" x="209.5" y="168.889">fooa3</text>
+    </g>
+    <!--entity mode1actorl-->
+    <g class="entity" data-qualified-name="mode1actorl" data-source-line="6" id="ent0010">
+      <ellipse cx="357" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M357,28.5 L357,55.5 M344,36.5 L370,36.5 M357,55.5 L344,70.5 M357,55.5 L370,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="77" x="318.5" y="82.889">mode1actorl</text>
+    </g>
+    <!--entity foo1l-->
+    <g class="entity" data-qualified-name="foo1l" data-source-line="6" id="ent0011">
+      <ellipse cx="291" cy="46" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="30.363" x="275.819" y="73.889">foo1l</text>
+    </g>
+    <!--entity mode2actorl-->
+    <g class="entity" data-qualified-name="mode2actorl" data-source-line="7" id="ent0014">
+      <ellipse cx="452" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M452,28.5 L452,55.5 M439,36.5 L465,36.5 M452,55.5 L439,70.5 M452,55.5 L465,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="77" x="413.5" y="82.889">mode2actorl</text>
+    </g>
+    <!--entity foo12-->
+    <g class="entity" data-qualified-name="foo12" data-source-line="7" id="ent0015">
+      <ellipse cx="518" cy="46" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="35" x="500.5" y="73.889">foo12</text>
+    </g>
+    <!--entity component1-->
+    <g class="entity" data-qualified-name="component1" data-source-line="9" id="ent0017">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117" x="545.5" y="27"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="642.5" y="32"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="640.5" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="640.5" y="38"/>
+      <text fill="#000" font-size="14" textLength="77" x="560.5" y="57.889">component1</text>
+    </g>
+    <!--entity componentC-->
+    <g class="entity" data-qualified-name="componentC" data-source-line="9" id="ent0018">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="119.363" x="561.5" y="122"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="660.863" y="127"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="658.863" y="129"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="658.863" y="133"/>
+      <text fill="#000" font-size="14" textLength="79.363" x="576.5" y="152.889">componentC</text>
+    </g>
+    <!--entity component3-->
+    <g class="entity" data-qualified-name="component3" data-source-line="10" id="ent0020">
+      <ellipse cx="690" cy="46" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="77" x="651.5" y="73.889">component3</text>
+    </g>
+    <!--entity aze1-->
+    <g class="entity" data-qualified-name="aze1" data-source-line="12" id="ent0022">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.363" x="717" y="27"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="767.363" y="32"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="765.363" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="765.363" y="38"/>
+      <text fill="#000" font-size="14" textLength="30.362" x="732" y="57.889">aze1</text>
+    </g>
+    <!--entity aze2-->
+    <g class="entity" data-qualified-name="aze2" data-source-line="12" id="ent0023">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.363" x="717" y="122"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="767.363" y="127"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="765.363" y="129"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="765.363" y="133"/>
+      <text fill="#000" font-size="14" textLength="30.362" x="732" y="152.889">aze2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M43,86.223 C43,102.543 43,120.642 43,131.92" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="association" id="lnk6">
+      <path d="M135,86.223 C135,102.543 135,120.642 135,131.92" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="association" id="lnk9">
+      <path d="M227,86.223 C227,102.543 227,120.642 227,131.92" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0010" data-link-type="association" id="lnk13">
+      <path d="M300.023,49 C306.107,49 312.19,49 318.274,49" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0015" data-link-type="association" id="lnk16">
+      <path d="M490.672,49 C496.65,49 502.628,49 508.606,49" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0018" id="lnk19">
+      <ellipse cx="607.858" cy="71.103" fill="#FFF" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M602.173,79.33 A10,10 0 0 0 616.085 76.787" fill="#FFF" style="stroke:#181818;stroke-width:1.5;"/>
+      <ellipse cx="617.158" cy="121.98" fill="#FFF" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M622.842,113.753 A10,10 0 0 0 608.93 116.296" fill="#FFF" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M609.656,80.94 C612.438,96.16 612.581,96.943 615.36,112.143" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0018" id="lnk21">
+      <path d="M676.025,60.215 A9,9 0 0 0 691.277 67.528" fill="none" style="stroke:#181818;stroke-width:1.5;"/>
+      <ellipse cx="641.737" cy="121.789" fill="#FFF" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M651.729,121.386 A10,10 0 0 0 641.334 111.797" fill="#FFF" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M680.658,70.113 C677.148,77.435 676.449,78.083 671,86 C662.342,98.578 658.045,104.11 648.518,114.439" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="18.038" x="622.737" y="117.9">foo</text>
+    </g>
+    <g class="link" data-entity-1="ent0022" data-entity-2="ent0023" id="lnk24">
+      <rect fill="#FFF" height="10" style="stroke:#181818;stroke-width:1.5;" width="10" x="747" y="66.103"/>
+      <path d="M752,76.103 C752,91.323 752,106.78 752,121.98" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

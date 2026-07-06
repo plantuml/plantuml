@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="181px" preserveAspectRatio="none" style="width:467px;height:181px;background:#FFFFFF;" version="1.1" viewBox="0 0 467 181" width="467px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Title" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="100.063" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="106.063" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="26.513" x="42.775" y="27.889">Title</text>
+      <text fill="#000" font-size="14" textLength="80.063" x="11" y="51.889">sg dg sdf dfg df</text>
+    </g>
+    <g class="entity" data-qualified-name="Subtitle" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="90.7" x="124.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="124.5" x2="215.2" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="146.488" y="27.889">Subtitle</text>
+      <text fill="#000" font-size="14" textLength="70.7" x="129.5" y="51.889">sdfsdfsdfsd</text>
+    </g>
+    <g class="entity" data-qualified-name="Alice" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50.45" x="234" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="234" x2="284.45" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="244" y="27.889">Alice</text>
+    </g>
+    <g class="entity" data-qualified-name="Bob" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="233" y="115"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="233" x2="283" y1="139" y2="139"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="245.531" y="130.889">Bob</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="232.862,131.714,225.615,125.045,228.124,130.114,223.055,132.624,232.862,131.714" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M233.782,56.728 C230.879,58.604 227.914,60.402 225,62 C206.473,72.157 192.777,62.458 181,80 C164.948,103.91 199.959,120.603 228.124,130.114" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="130.813" x="183" y="92.111">Authentication Request</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="284.011,49.814,289.872,57.729,288.362,52.277,293.813,50.767,284.011,49.814" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M283.239,127.354 C295.191,120.384 308.292,110.275 315,97 C324.681,77.841 307.475,63.097 288.362,52.277" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="140.969" x="319" y="92.111">Authentication Response</text>
+    </g>
+  </g>
+</svg>

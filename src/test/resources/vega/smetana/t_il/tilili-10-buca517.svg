@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="1279px" preserveAspectRatio="none" style="width:770px;height:1279px;background:#FFFFFF;" version="1.1" viewBox="0 0 770 1279" width="770px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="235.113" x="264.175" y="20.889">Tissue Tracking Lifecycle State Diagram</text>
+    </g>
+    <!--cluster Initial-->
+    <g class="cluster" data-qualified-name="Initial" data-source-line="9" id="ent0002">
+      <path d="M341.5,106 L704.5,106 A12.5,12.5 0 0 1 717,118.5 L717,125 L329,125 L329,118.5 A12.5,12.5 0 0 1 341.5,106" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="19" style="stroke:#F1F1F1;stroke-width:1;" width="388" x="329" y="125"/>
+      <rect fill="none" height="453.5" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="388" x="329" y="106"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="329" x2="717" y1="125" y2="125"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="329" x2="717" y1="144" y2="144"/>
+      <text fill="#000" font-size="14" textLength="81.813" x="482.094" y="116.889">Initial Fixation</text>
+      <text fill="#000" font-size="14" textLength="243.775" x="334" y="138.389">TissueTrackingLifeCycle INCOMPLETE</text>
+    </g>
+    <!--cluster TissueDistribution-->
+    <g class="cluster" data-qualified-name="TissueDistribution" data-source-line="38" id="ent0008">
+      <path d="M207.5,808 L441.5,808 A12.5,12.5 0 0 1 454,820.5 L454,827 L195,827 L195,820.5 A12.5,12.5 0 0 1 207.5,808" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="19" style="stroke:#F1F1F1;stroke-width:1;" width="259" x="195" y="827"/>
+      <rect fill="none" height="447" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="259" x="195" y="808"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="195" x2="454" y1="827" y2="827"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="195" x2="454" y1="846" y2="846"/>
+      <text fill="#000" font-size="14" textLength="204.138" x="222.431" y="818.889">Tissue Distribution or Block Review</text>
+      <text fill="#000" font-size="14" textLength="243.775" x="200" y="840.389">TissueTrackingLifeCycle INCOMPLETE</text>
+    </g>
+    <g class="entity" data-qualified-name="npathdata" data-source-line="6" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="146.175" x="173" y="192"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="173" x2="319.175" y1="216" y2="216"/>
+      <text fill="#000" font-size="14" textLength="126.175" x="183" y="207.889">NPATH Data Entered</text>
+    </g>
+    <g class="entity" data-qualified-name="Complete" data-source-line="57" id="ent0013">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="249.775" x="252" y="702"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="252" x2="501.775" y1="726" y2="726"/>
+      <text fill="#000" font-size="14" textLength="59.938" x="346.919" y="717.889">Complete</text>
+      <text fill="#000" font-size="14" textLength="229.775" x="257" y="741.889">TissueTrackingLifeCycle COMPLETE</text>
+    </g>
+    <g class="entity" data-qualified-name="CombinedHemi" data-source-line="61" id="ent0014">
+      <path d="M18.5,404 L307.5,404 A12.5,12.5 0 0 1 320,416.5 L320,428 L6,428 L6,416.5 A12.5,12.5 0 0 1 18.5,404" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="33" style="stroke:#F1F1F1;stroke-width:1;" width="314" x="6" y="428"/>
+      <rect fill="none" height="245" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="314" x="6" y="404"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="320" y1="428" y2="428"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="320" y1="461" y2="461"/>
+      <text fill="#000" font-size="14" textLength="121.538" x="102.231" y="419.889">Combined with Hemi</text>
+      <text fill="#000" font-size="14" textLength="192.938" x="11" y="438.889">ONLY for Brainstem/Cerebellum</text>
+      <text fill="#000" font-size="14" textLength="183.838" x="11" y="452.889">Available at any point in the cycle</text>
+      <g class="entity" data-qualified-name="CombinedHemi.FindHemi" data-source-line="62" id="ent0015">
+        <rect fill="#F1F1F1" height="76" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="260.888" x="23.5" y="472"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="284.388" y1="496" y2="496"/>
+        <text fill="#000" font-size="14" textLength="88.812" x="109.538" y="487.889">Combine Hemi</text>
+        <text fill="#000" font-size="14" textLength="147" x="28.5" y="511.889">Find open tracking for Left</text>
+        <text fill="#000" font-size="14" textLength="147.175" x="28.5" y="525.889">or Right hemi and indicate</text>
+        <text fill="#000" font-size="14" textLength="240.888" x="28.5" y="539.889">it's combined with Brainstem/Cerebellum</text>
+      </g>
+      <g class="entity" data-qualified-name="CombinedHemi.CompleteBCcycle" data-source-line="65" id="ent0016">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="283.725" x="12" y="584"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="295.725" y1="608" y2="608"/>
+        <text fill="#000" font-size="14" textLength="59.938" x="123.894" y="599.889">Complete</text>
+        <text fill="#000" font-size="14" textLength="263.725" x="17" y="623.889">Complete tracking for Brainstem/Cerebellum</text>
+      </g>
+      <g class="link" data-entity-1="ent0015" data-entity-2="ent0016" data-link-type="dependency" id="lnk30">
+        <polygon fill="#181818" points="154,583.898,158,574.898,154,578.898,150,574.898,154,583.898" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M154,548.225 C154,560.193 154,568.13 154,578.898" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="4" id="ent0017">
+      <ellipse cx="246" cy="49" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Initial.InitialFixative" data-source-line="10" id="ent0003">
+      <rect fill="#F1F1F1" height="62" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="189.663" x="337" y="186"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="337" x2="526.663" y1="210" y2="210"/>
+      <text fill="#000" font-size="14" textLength="81.025" x="391.319" y="201.889">Initial Fixative</text>
+      <text fill="#000" font-size="14" textLength="169.663" x="342" y="225.889">Left/Right Hemi, Spinal Cord,</text>
+      <text fill="#000" font-size="14" textLength="138.513" x="342" y="239.889">Brainstem/Cerebellum</text>
+    </g>
+    <g class="entity" data-qualified-name="Initial.TenTwo" data-source-line="14" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.788" x="338.5" y="301"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="338.5" x2="415.288" y1="325" y2="325"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="348.5" y="316.889">10/2 Cryo</text>
+    </g>
+    <g class="entity" data-qualified-name="Initial.TwentyTwo" data-source-line="16" id="ent0005">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.788" x="338.5" y="501.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="338.5" x2="415.288" y1="525.5" y2="525.5"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="348.5" y="517.389">20/2 Cryo</text>
+    </g>
+    <g class="entity" data-qualified-name="Initial.InitialFixativeNerves" data-source-line="18" id="ent0006">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="128.85" x="579.5" y="192"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="579.5" x2="708.35" y1="216" y2="216"/>
+      <text fill="#000" font-size="14" textLength="81.025" x="603.413" y="207.889">Initial Fixative</text>
+      <text fill="#000" font-size="14" textLength="108.85" x="584.5" y="231.889">Nerves(left&amp;right)</text>
+    </g>
+    <g class="entity" data-qualified-name="Initial.Cacodylate" data-source-line="22" id="ent0007">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="127.363" x="576.5" y="301"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="576.5" x2="703.863" y1="325" y2="325"/>
+      <text fill="#000" font-size="14" textLength="107.363" x="586.5" y="316.889">Cacodylate Buffer</text>
+    </g>
+    <g class="entity" data-qualified-name="TissueDistribution.TenTwoMold" data-source-line="40" id="ent0009">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="107.15" x="223.5" y="888"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="223.5" x2="330.65" y1="912" y2="912"/>
+      <text fill="#000" font-size="14" textLength="87.15" x="233.5" y="903.889">Mold 10/2 Cryo</text>
+    </g>
+    <g class="entity" data-qualified-name="TissueDistribution.MoldFixative" data-source-line="42" id="ent0010">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="98.663" x="227.5" y="991"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="227.5" x2="326.163" y1="1015" y2="1015"/>
+      <text fill="#000" font-size="14" textLength="78.663" x="237.5" y="1006.889">Mold Fixative</text>
+    </g>
+    <g class="entity" data-qualified-name="TissueDistribution.TenTwoNonInitial" data-source-line="44" id="ent0011">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.788" x="238.5" y="1094"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="238.5" x2="315.288" y1="1118" y2="1118"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="248.5" y="1109.889">10/2 Cryo</text>
+    </g>
+    <g class="entity" data-qualified-name="TissueDistribution.TwentyTwoNonInitial" data-source-line="46" id="ent0012">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="76.788" x="238.5" y="1197"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="238.5" x2="315.288" y1="1221" y2="1221"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="248.5" y="1212.889">20/2 Cryo</text>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0001" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="246,191.891,250,182.891,246,186.891,242,182.891,246,191.891" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M246,63.015 C246,89.229 246,150.816 246,186.891" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="389.397,300.882,397.069,294.706,391.683,296.435,389.954,291.049,389.397,300.882" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M416.533,248.09 C407.954,264.78 399.716,280.808 391.683,296.435" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="44.037" x="409" y="278.111">Ev:10/2</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="377,501.272,381,492.272,377,496.272,373,492.272,377,501.272" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M377,351.34 C377,389.541 377,458.14 377,496.272" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="44.037" x="379" y="381.111">Ev:20/2</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0013" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="377,701.772,381,692.772,377,696.772,373,692.772,377,701.772" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M377,551.84 C377,590.041 377,658.64 377,696.772" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="75.238" x="379" y="679.111">Ev:BagClose</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0004" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="415.555,316.707,424.335,321.169,420.548,316.967,424.751,313.18,415.555,316.707" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M420.548,316.967 C430.759,317.498 433.5,320.336 433.5,326 C433.5,331.664 425.766,334.762 415.555,335.293" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="121.55" x="435.5" y="329.611">Ev:AdditionalFixation</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk24">
+      <polygon fill="#181818" points="640.909,300.697,645.242,291.853,641.095,295.701,637.248,291.554,640.909,300.697" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M643.102,242.013 C642.448,259.512 641.752,278.135 641.095,295.701" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="118.463" x="644" y="278.111">Ev:CacodylateBuffer</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0013" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="436.419,701.898,446.198,700.724,440.713,699.337,442.1,693.853,436.419,701.898" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M633.516,351.412 C615.753,414.133 560.789,583.064 460,684 C453.153,690.857 449.251,694.246 440.713,699.337" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0009" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="273.663,887.997,276.79,878.658,273.188,883.02,268.827,879.418,273.663,887.997" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M313.273,752.254 C306.236,757.194 299.869,763.06 295,770 C270.31,805.194 270.295,852.692 273.188,883.02" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="73.694" x="297" y="782.111">Ev:BagOpen</text>
+      <text fill="#000" font-size="13" textLength="36.806" x="315.444" y="795.111">(Mold)</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0010" data-link-type="dependency" id="lnk27">
+      <polygon fill="#181818" points="277,990.655,281,981.655,277,985.655,273,981.655,277,990.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M277,938.192 C277,954.066 277,969.751 277,985.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="91.813" x="279" y="968.111">Ev:Mold Fixative</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0011" data-link-type="dependency" id="lnk28">
+      <polygon fill="#181818" points="277,1093.655,281,1084.655,277,1088.655,273,1084.655,277,1093.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M277,1041.192 C277,1057.066 277,1072.751 277,1088.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="44.037" x="279" y="1071.111">Ev:10/2</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0012" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="277,1196.655,281,1187.655,277,1191.655,273,1187.655,277,1196.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M277,1144.192 C277,1160.066 277,1175.751 277,1191.655" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="44.037" x="279" y="1174.111">Ev:20/2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk31">
+      <polygon fill="#181818" points="519.715,105.945,512.729,99.003,515.042,104.165,509.88,106.479,519.715,105.945" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M257.186,191.845 C269.723,167.127 292.621,130.877 325,115 C346.05,104.678 389.856,97.101 432.871,95.893 C454.379,95.289 475.689,96.277 493.858,99.311 C502.943,100.828 511.242,102.856 518.388,105.452 C518.835,105.614 514.605,103.998 515.042,104.165" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="135.281" x="364.5" y="93.111">Add new TissueTracking</text>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0008" data-link-type="dependency" id="lnk32">
+      <polygon fill="#181818" points="379.489,807.686,381.55,798.055,378.459,802.793,373.721,799.702,379.489,807.686" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M375.417,752.181 C374.972,766.241 375.222,784.241 378,800 C378.422,802.395 378.889,804.808 379.394,807.231 C379.426,807.383 378.428,802.641 378.459,802.793" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="73.694" x="380" y="782.111">Ev:BagOpen</text>
+      <text fill="#000" font-size="13" textLength="53.463" x="390.116" y="795.111">(No Mold)</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0013" data-link-type="dependency" id="lnk33">
+      <polygon fill="#181818" points="438.47,752.144,443.237,760.762,442.458,755.159,448.061,754.38,438.47,752.144" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M454.05,849.583 C454.346,848.843 454.637,848.099 454.924,847.353 C455.498,845.861 456.053,844.357 456.586,842.844 C465.121,818.634 468.152,792.019 455,770 C450.82,763.002 449.016,760.116 442.458,755.159" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="75.238" x="465" y="788.611">Ev:BagClose</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0013" data-link-type="dependency" id="lnk34">
+      <polygon fill="#181818" points="350.806,701.703,346.928,692.65,347.14,698.303,341.488,698.516,350.806,701.703" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M294.262,649.255 C315.718,669.157 332.135,684.385 347.14,698.303" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

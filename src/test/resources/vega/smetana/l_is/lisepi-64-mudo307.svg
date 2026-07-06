@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="98px" preserveAspectRatio="none" style="width:515px;height:98px;background:#FFFFFF;" version="1.1" viewBox="0 0 515 98" width="515px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Object_user" data-source-line="74" id="ent0001">
+      <rect fill="#ADD8E6" height="54" rx="10" ry="10" style="stroke:#00F;stroke-width:2;stroke-dasharray:10,5;" width="110.975" x="6" y="20"/>
+      <path d="M16,20 L106.975,20 A10,10 0 0 1 116.975,30 L116.975,42 L6,42 L6,30 A10,10 0 0 1 16,20" fill="#98FB98" style="stroke:#00F;stroke-width:2;stroke-dasharray:10,5;"/>
+      <text fill="#F00" font-family="Helvetica" font-size="18" font-weight="700" textLength="96.975" x="13" y="36">Object_user</text>
+      <line style="stroke:#00F;stroke-width:2;" x1="7" x2="115.975" y1="42" y2="42"/>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-style="italic" textLength="86.925" x="12" y="55.333">name = "Dummy"</text>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-style="italic" textLength="36.45" x="12" y="67.333">id = 123</text>
+    </g>
+    <g class="entity" data-qualified-name="London" data-source-line="79" id="ent0002">
+      <rect fill="#ADD8E6" height="38" rx="10" ry="10" style="stroke:#00F;stroke-width:2;stroke-dasharray:10,5;" width="74.075" x="299.5" y="28"/>
+      <path d="M309.5,28 L363.575,28 A10,10 0 0 1 373.575,38 L373.575,50 L299.5,50 L299.5,38 A10,10 0 0 1 309.5,28" fill="#98FB98" style="stroke:#00F;stroke-width:2;stroke-dasharray:10,5;"/>
+      <text fill="#F00" font-family="Helvetica" font-size="18" font-weight="700" textLength="60.075" x="306.5" y="44">London</text>
+      <line style="stroke:#00F;stroke-width:2;stroke-dasharray:10,5;" x1="300.5" x2="372.575" y1="50" y2="50"/>
+    </g>
+    <g class="entity" data-qualified-name="Map_CapitalCity" data-source-line="81" id="ent0003">
+      <rect fill="#ADD8E6" height="70" rx="10" ry="10" style="stroke:#00F;stroke-width:2;stroke-dasharray:10,5;" width="146.188" x="135.5" y="12"/>
+      <path d="M145.5,12 L271.688,12 A10,10 0 0 1 281.688,22 L281.688,34 L135.5,34 L135.5,22 A10,10 0 0 1 145.5,12" fill="#98FB98" style="stroke:#00F;stroke-width:2;stroke-dasharray:10,5;"/>
+      <text fill="#F00" font-family="Helvetica" font-size="18" font-weight="700" textLength="132.188" x="142.5" y="28">Map_CapitalCity</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="135.5" x2="281.688" y1="34" y2="34"/>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-weight="700" textLength="16.725" x="200.231" y="45.333">UK</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="135.5" x2="281.688" y1="50" y2="50"/>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-weight="700" textLength="24.75" x="152.763" y="61.333">USA</text>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-weight="700" textLength="63.375" x="199.775" y="61.333">Washington</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="194.775" x2="194.775" y1="50" y2="66"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="135.5" x2="281.688" y1="66" y2="66"/>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-weight="700" textLength="49.275" x="140.5" y="77.333">Germany</text>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-weight="700" textLength="30.75" x="199.775" y="77.333">Berlin</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="194.775" x2="194.775" y1="66" y2="82"/>
+    </g>
+    <g class="entity" data-qualified-name="j" data-source-line="87" id="ent0005">
+      <rect fill="#ADD8E6" height="54" rx="10" ry="10" style="stroke:#00F;stroke-width:2;stroke-dasharray:10,5;" width="107.038" x="392" y="20"/>
+      <path d="M402,20 L489.038,20 A10,10 0 0 1 499.038,30 L499.038,42 L392,42 L392,30 A10,10 0 0 1 402,20" fill="#98FB98" style="stroke:#00F;stroke-width:2;stroke-dasharray:10,5;"/>
+      <text fill="#F00" font-family="Helvetica" font-size="18" font-weight="700" textLength="93.038" x="399" y="36">JSON_data</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="432" x2="432" y1="42" y2="74"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="392" x2="499.038" y1="42" y2="42"/>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-style="italic" textLength="30" x="397" y="53.333">name</text>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-style="italic" textLength="41.325" x="437" y="53.333">Dummy</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="392" x2="499.038" y1="58" y2="58"/>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-style="italic" textLength="9.375" x="397" y="69.333">id</text>
+      <text fill="#00F" font-family="Helvetica" font-size="12" font-style="italic" textLength="20.025" x="437" y="69.333">123</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="299.457,47,290.457,43,294.457,47,290.457,51,299.457,47" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M282,47 C287.819,47 288.638,47 294.457,47" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="208px" preserveAspectRatio="none" style="width:387px;height:208px;background:#FFFFFF;" version="1.1" viewBox="0 0 387 208" width="387px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Dummy-->
+    <g class="entity" data-qualified-name="Dummy" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.212" x="58" y="12"/>
+      <ellipse cx="73" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="68" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="48.212" x="87" y="31.889">Dummy</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="59" x2="137.212" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="59" x2="137.212" y1="52" y2="52"/>
+    </g>
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.15" x="6" y="144"/>
+      <ellipse cx="21" cy="160" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="165">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="35" y="163.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="61.15" y1="176" y2="176"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="61.15" y1="184" y2="184"/>
+    </g>
+    <!--class Foo2-->
+    <g class="entity" data-qualified-name="Foo2" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.938" x="131" y="144"/>
+      <ellipse cx="146" cy="160" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="141" y="165">C</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="160" y="163.889">Foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="132" x2="193.938" y1="176" y2="176"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="132" x2="193.938" y1="184" y2="184"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="28.566,143.928,31.021,134.39,27.738,138.997,23.131,135.714,28.566,143.928" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M57.721,54.861 C48.674,60.861 40.217,68.508 35,78 C23.91,98.177 24.563,120.086 27.738,138.997" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="28.275" x="73.9" y="89.111">A link</text>
+      <path d="M40,98 L40,121 L136,121 L136,108 L126,98 L40,98" fill="#F00" style="stroke:#00F;stroke-width:0.5;"/>
+      <path d="M126,98 L126,108 L136,108 L126,98" fill="#F00" style="stroke:#00F;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="75.075" x="46" y="113.111">note that is red</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#00F" points="160.87,143.724,163.627,134.269,160.199,138.769,155.699,135.341,160.87,143.724" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M126.933,60.139 C132.241,65.523 137.273,71.576 141,78 C152.822,98.375 157.658,119.983 160.199,138.769" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="65.081" x="158" y="105.611">Another link</text>
+      <path d="M229.081,84 L229.081,120 L381.081,120 L381.081,94 L371.081,84 L229.081,84" fill="#00F" style="stroke:#FF0;stroke-width:0.5;"/>
+      <path d="M371.081,84 L371.081,94 L381.081,94 L371.081,84" fill="#00F" style="stroke:#FF0;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="131.544" x="235.081" y="99.111">this is my note on right link</text>
+      <text fill="#000" font-size="13" textLength="56.469" x="235.081" y="112.111">and in blue</text>
+    </g>
+  </g>
+</svg>

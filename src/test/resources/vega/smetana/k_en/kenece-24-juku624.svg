@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="174px" preserveAspectRatio="none" style="width:709px;height:174px;background:#FFFFFF;" version="1.1" viewBox="0 0 709 174" width="709px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="240" x="10" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="230" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="228" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="228" y="23"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="115.288" y="42.889">foo</text>
+    </g>
+    <!--entity barwhichisverylongandoutbreakthelimitgivenbythedefaultvalue-->
+    <g class="entity" data-qualified-name="barwhichisverylongandoutbreakthelimitgivenbythedefaultvalue" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="424.562" x="268.5" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="673.062" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="671.062" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="671.062" y="23"/>
+      <text fill="#000" font-size="14" textLength="384.562" x="283.5" y="42.889">barwhichisverylongandoutbreakthelimitgivenbythedefaultvalue</text>
+    </g>
+    <!--entity node-->
+    <g class="entity" data-qualified-name="node" data-source-line="5" id="ent0003">
+      <polygon fill="#F1F1F1" points="10,102,20,92,250,92,250,148,240,158,10,158,10,102" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="240" x2="250" y1="102" y2="92"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="240" y1="102" y2="102"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="240" x2="240" y1="102" y2="158"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="111.394" y="122.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="10" x2="240" y1="126" y2="126"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="240" x2="250" y1="126" y2="116"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="10" x2="240" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="240" x2="250" y1="128" y2="118"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="111.394" y="140.889">foo2</text>
+    </g>
+    <!--entity artifact-->
+    <g class="entity" data-qualified-name="artifact" data-source-line="10" id="ent0004">
+      <rect fill="#F1F1F1" height="37" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="230" x="268" y="106.5"/>
+      <polygon fill="#F1F1F1" points="481,111.5,481,125.5,493,125.5,493,117.5,487,111.5,481,111.5" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="487" x2="487" y1="111.5" y2="117.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="493" x2="487" y1="117.5" y2="117.5"/>
+      <text fill="#000" font-size="14" textLength="41.913" x="357.044" y="130.389">artifact</text>
+    </g>
+  </g>
+</svg>

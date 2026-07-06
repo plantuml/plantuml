@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="216px" preserveAspectRatio="none" style="width:98px;height:216px;background:#FFFFFF;" version="1.1" viewBox="0 0 98 216" width="98px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.7" x="6" y="12"/>
+      <ellipse cx="31.924" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="26.924" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="48.351" y="31.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="80.7" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="12" y="58.889">field1</text>
+      <text fill="#000" font-size="14" textLength="33.512" x="12" y="72.889">field2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="80.7" y1="80" y2="80"/>
+      <text fill="#000" font-size="14" textLength="63.7" x="12" y="94.889">method1()</text>
+      <text fill="#000" font-size="14" textLength="63.7" x="12" y="108.889">method2()</text>
+    </g>
+    <!--class bar-->
+    <g class="entity" data-qualified-name="bar" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.213" x="18" y="152"/>
+      <ellipse cx="33" cy="168" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="28" y="173">C</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="47" y="171.889">bar</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="19" x2="69.213" y1="184" y2="184"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="19" x2="69.213" y1="192" y2="192"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="44,116.136,38,134.136,50,134.136,44,116.136" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M44,134.136 C44,146.591 44,141.312 44,151.726" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

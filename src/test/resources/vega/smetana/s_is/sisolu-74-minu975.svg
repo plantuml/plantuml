@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="161px" preserveAspectRatio="none" style="width:118px;height:161px;background:#FFFFFF;" version="1.1" viewBox="0 0 118 161" width="118px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class a-->
+    <g class="entity" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="34" y="12"/>
+      <ellipse cx="49" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="44" y="33">C</text>
+      <text fill="#000" font-size="14" x="63" y="31.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35" x2="72.788" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="35" x2="72.788" y1="52" y2="52"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="3" id="ent0003">
+      <path d="M6,96 L6,145 A0,0 0 0 0 6,145 L102.238,145 A0,0 0 0 0 102.238,145 L102.238,106 L92.238,96 L58,96 L54,60.421 L50,96 L6,96 A0,0 0 0 0 6,96" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M92.238,96 L92.238,106 L102.238,106 L92.238,96" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="75.238" x="12" y="111.111">IF cond THEN</text>
+      <text fill="#000" font-size="13" textLength="38.025" x="12" y="124.111">flow=1</text>
+      <text fill="#000" font-size="13" textLength="39.081" x="12" y="137.111">ENDIF</text>
+    </g>
+  </g>
+</svg>

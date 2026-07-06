@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="195px" preserveAspectRatio="none" style="width:240px;height:195px;background:#FFFFFF;" version="1.1" viewBox="0 0 240 195" width="240px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="95.113" x="68.944" y="20.889">Put all elt on plain</text>
+    </g>
+    <!--entity Composite-->
+    <g class="entity" data-qualified-name="Composite" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.513" x="6" y="47"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="82.513" x="17" y="67.889">«Composite»</text>
+      <text fill="#000" font-size="14" textLength="66.938" x="24.788" y="81.889">Composite</text>
+    </g>
+    <!--entity Observer-->
+    <g class="entity" data-qualified-name="Observer" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.063" x="129" y="47"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="73.063" x="140" y="67.889">«Observer»</text>
+      <text fill="#000" font-size="14" textLength="57.488" x="147.788" y="81.889">Observer</text>
+    </g>
+    <!--entity Subject-->
+    <g class="entity" data-qualified-name="Subject" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.3" x="16.5" y="131"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="62.3" x="27.5" y="151.889">«Subject»</text>
+      <text fill="#000" font-size="14" textLength="46.725" x="35.288" y="165.889">Subject</text>
+    </g>
+  </g>
+</svg>

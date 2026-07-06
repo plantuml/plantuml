@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:345px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 345 105" width="345px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster SYSTEM1-->
+    <g class="cluster" data-qualified-name="SYSTEM1" data-source-line="9" id="ent0001">
+      <path d="M16.5,4 L82.95,4 A3.75,3.75 0 0 1 85.45,6.5 L92.45,24 L334.5,24 A2.5,2.5 0 0 1 337,26.5 L337,78.5 A2.5,2.5 0 0 1 334.5,81 L16.5,81 A2.5,2.5 0 0 1 14,78.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="92.45" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="65.45" x="18" y="16.889">SYSTEM1</text>
+    </g>
+    <!--entity ComponentBox-->
+    <g class="entity" data-qualified-name="SYSTEM1.ComponentBox" data-source-line="11" id="ent0002">
+      <rect fill="#FFC0CB" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.513" x="191.5" y="29"/>
+      <rect fill="#FFC0CB" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="308.013" y="34"/>
+      <rect fill="#FFC0CB" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="306.013" y="36"/>
+      <rect fill="#FFC0CB" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="306.013" y="40"/>
+      <text fill="#FFF" font-size="14" textLength="96.513" x="206.5" y="59.889">ComponentBox</text>
+    </g>
+    <!--entity AnotherCompBox-->
+    <g class="entity" data-qualified-name="SYSTEM1.AnotherCompBox" data-source-line="12" id="ent0003">
+      <rect fill="#008000" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="150.513" x="22.5" y="29"/>
+      <rect fill="#008000" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="153.013" y="34"/>
+      <rect fill="#008000" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="151.013" y="36"/>
+      <rect fill="#008000" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="151.013" y="40"/>
+      <text fill="#000" font-size="14" textLength="110.513" x="37.5" y="59.889">AnotherCompBox</text>
+    </g>
+  </g>
+</svg>

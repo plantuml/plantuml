@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="234px" preserveAspectRatio="none" style="width:558px;height:234px;background:#FFFFFF;" version="1.1" viewBox="0 0 558 234" width="558px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Android-->
+    <g class="cluster" data-qualified-name="Android" data-source-line="2" id="ent0001">
+      <path d="M53.075,77 L102.375,77 A3.75,3.75 0 0 1 104.875,79.5 L111.875,97 L383.075,97 A2.5,2.5 0 0 1 385.575,99.5 L385.575,207.5 A2.5,2.5 0 0 1 383.075,210 L53.075,210 A2.5,2.5 0 0 1 50.575,207.5 L50.575,79.5 A2.5,2.5 0 0 1 53.075,77" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="50.575" x2="111.875" y1="97" y2="97"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="48.3" x="54.575" y="89.889">Android</text>
+    </g>
+    <!--cluster Qt-based platform-independent-->
+    <g class="cluster" data-qualified-name="Qt-based platform-independent" data-source-line="8" id="ent0005">
+      <path d="M183.075,4 L373.775,4 A3.75,3.75 0 0 1 376.275,6.5 L383.275,24 L421.075,24 A2.5,2.5 0 0 1 423.575,26.5 L423.575,66.5 A2.5,2.5 0 0 1 421.075,69 L183.075,69 A2.5,2.5 0 0 1 180.575,66.5 L180.575,6.5 A2.5,2.5 0 0 1 183.075,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="180.575" x2="383.275" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="189.7" x="184.575" y="16.889">Qt-based platform-independent</text>
+    </g>
+    <!--cluster Linux/Maemo/MeeGo-->
+    <g class="cluster" data-qualified-name="Linux.Maemo.MeeGo" data-source-line="13" id="ent0008">
+      <path d="M396.075,77 L530.775,77 A3.75,3.75 0 0 1 533.275,79.5 L540.275,97 L540.075,97 A2.5,2.5 0 0 1 542.575,99.5 L542.575,139.5 A2.5,2.5 0 0 1 540.075,142 L396.075,142 A2.5,2.5 0 0 1 393.575,139.5 L393.575,79.5 A2.5,2.5 0 0 1 396.075,77" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="393.575" x2="540.275" y1="97" y2="97"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="133.7" x="397.575" y="89.889">Linux/Maemo/MeeGo</text>
+    </g>
+    <g class="entity" data-qualified-name="BluezBtClientlol16" data-source-line="25" id="ent0017">
+      <ellipse cx="31.575" cy="111" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="59.15" x="2" y="126.889">Bluetooth</text>
+    <g class="entity" data-qualified-name="BluetoothRetransmitterlol19" data-source-line="26" id="ent0020">
+      <ellipse cx="29.575" cy="179" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="59.15" x="0" y="194.889">Bluetooth</text>
+    <!--class AndroidBtClient-->
+    <g class="entity" data-qualified-name="Android.AndroidBtClient" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.388" x="225.075" y="102"/>
+      <ellipse cx="240.075" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="235.075" y="123">C</text>
+      <text fill="#000" font-size="14" textLength="97.388" x="254.075" y="121.889">AndroidBtClient</text>
+    </g>
+    <!--class BluetoothRetransmitter-->
+    <g class="entity" data-qualified-name="Android.BluetoothRetransmitter" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="175.063" x="202.075" y="170"/>
+      <ellipse cx="217.075" cy="186" fill="#DA70D6" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="212.075" y="191">J</text>
+      <text fill="#000" font-size="14" textLength="143.063" x="231.075" y="189.889">BluetoothRetransmitter</text>
+    </g>
+    <!--class SocketListener-->
+    <g class="entity" data-qualified-name="Android.SocketListener" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="124.575" x="59.075" y="170"/>
+      <ellipse cx="74.075" cy="186" fill="#DA70D6" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="69.075" y="191">J</text>
+      <text fill="#000" font-size="14" textLength="92.575" x="88.075" y="189.889">SocketListener</text>
+    </g>
+    <!--class ECGConnector-->
+    <g class="entity" data-qualified-name="Qt-based platform-independent.ECGConnector" data-source-line="9" id="ent0006">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.938" x="189.075" y="29"/>
+      <ellipse cx="204.075" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="199.075" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="94.938" x="218.075" y="48.889">ECGConnector</text>
+    </g>
+    <!--class BtClient-->
+    <g class="entity" data-qualified-name="Qt-based platform-independent.BtClient" data-source-line="10" id="ent0007">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.087" x="334.075" y="29"/>
+      <ellipse cx="349.075" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="344.075" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="49.087" x="363.075" y="48.889">BtClient</text>
+    </g>
+    <!--class BluezBtClient-->
+    <g class="entity" data-qualified-name="Linux.Maemo.MeeGo.BluezBtClient" data-source-line="14" id="ent0009">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116.175" x="401.575" y="102"/>
+      <ellipse cx="416.575" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="411.575" y="123">C</text>
+      <text fill="#000" font-size="14" textLength="84.175" x="430.575" y="121.889">BluezBtClient</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="333.695,45,324.695,41,328.695,45,324.695,49,333.695,45" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M316.434,45 C322.188,45 322.941,45 328.695,45" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="extension" id="lnk11">
+      <polygon fill="none" points="392.601,61.057,402.57,77.201,410.262,67.992,392.601,61.057" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M406.416,72.597 C420.841,84.646 427.157,89.921 441.575,101.964" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="extension" id="lnk12">
+      <polygon fill="none" points="356.549,61.057,338.888,67.992,346.58,77.201,356.549,61.057" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M342.734,72.597 C328.309,84.646 321.993,89.921 307.575,101.964" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="nested" id="lnk13">
+      <ellipse cx="167.384" cy="167.004" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="174.83" x2="159.938" y1="164.078" y2="169.929"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="170.309" x2="164.459" y1="174.45" y2="159.557"/>
+      <path d="M251.032,134.142 C223.714,144.874 202.108,153.362 174.83,164.078" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="64.35" x="94.938" y="166.04">local socket</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="201.939,186,192.939,182,196.939,186,192.939,190,201.939,186" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M184.247,186 C190.144,186 191.041,186 196.939,186" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="nested" id="lnk15">
+      <ellipse cx="289.575" cy="142.308" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="289.575" x2="289.575" y1="150.308" y2="134.308"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="281.575" x2="297.575" y1="142.308" y2="142.308"/>
+      <path d="M289.575,169.775 C289.575,159.131 289.575,160.97 289.575,150.308" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="64.35" x="224.575" y="145.419">local socket</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0017" data-link-type="association" id="lnk18">
+      <path d="M439.573,101.945 C424.409,90.99 402.5,77.653 380.575,73 C362.913,69.252 73.237,69.252 55.575,73 C51.293,73.909 49.457,73.705 46.575,77 C39.544,85.039 36.626,97.007 35.418,105.94" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0020" data-link-type="association" id="lnk21">
+      <path d="M243.467,169.962 C225.077,164.356 203.561,158.774 183.575,156 C127.226,148.18 106.592,130.828 55.575,156 C48.042,159.717 42.292,167.217 38.425,173.788" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

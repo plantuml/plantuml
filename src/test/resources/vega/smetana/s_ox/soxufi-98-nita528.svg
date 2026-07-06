@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="85px" preserveAspectRatio="none" style="width:84px;height:85px;background:#FFFFFF;" version="1.1" viewBox="0 0 84 85" width="84px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="header" data-source-line="21">
+      <rect fill="#D3D3D3" height="10" style="stroke:none;" width="77.813" x="0" y="0"/>
+      <text fill="#F00" font-size="10" textLength="77.813" x="0" y="7.778">some page header</text>
+    </g>
+    <g class="entity" data-qualified-name="Foo" data-source-line="23" id="ent0001">
+      <rect fill="#FF0" height="46" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.85" x="8.406" y="23"/>
+      <path d="M10.906,23 L63.756,23 A2.5,2.5 0 0 1 66.256,25.5 L66.256,47 L8.406,47 L8.406,25.5 A2.5,2.5 0 0 1 10.906,23" fill="#F00" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#008000" font-size="20" textLength="34.5" x="20.081" y="40.556">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="9.406" x2="65.256" y1="47" y2="47"/>
+      <text fill="#00F" font-size="14" textLength="45.85" x="14.406" y="61.889">dummy</text>
+    </g>
+  </g>
+</svg>

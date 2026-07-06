@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="244px" preserveAspectRatio="none" style="width:91px;height:244px;background:#FFFFFF;" version="1.1" viewBox="0 0 91 244" width="91px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class CC-->
+    <g class="entity" data-qualified-name="CC" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.488" x="6" y="12"/>
+      <ellipse cx="28.734" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="23.734" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="20.3" x="44.453" y="31.889">CC</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="74.488" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="19.512" x="12" y="58.889">UK</text>
+      <text fill="#000" font-size="14" textLength="28.875" x="12" y="72.889">USA</text>
+      <text fill="#000" font-size="14" textLength="57.488" x="12" y="86.889">Germany</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="74.488" y1="94" y2="94"/>
+    </g>
+    <!--class users-->
+    <g class="entity" data-qualified-name="users" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.212" x="7.5" y="138"/>
+      <ellipse cx="22.5" cy="154" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="17.5" y="159">C</text>
+      <text fill="#000" font-size="14" textLength="34.212" x="36.5" y="157.889">users</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="8.5" x2="72.712" y1="170" y2="170"/>
+      <text fill="#000" font-size="14" x="13.5" y="184.889">1</text>
+      <text fill="#000" font-size="14" x="13.5" y="198.889">2</text>
+      <text fill="#000" font-size="14" x="13.5" y="212.889">3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="8.5" x2="72.712" y1="220" y2="220"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="40.5,137.657,44.5,128.657,40.5,132.657,36.5,128.657,40.5,137.657" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M40.5,102.067 C40.5,113.622 40.5,121.087 40.5,132.657" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="333px" preserveAspectRatio="none" style="width:315px;height:333px;background:#FFFFFF;" version="1.1" viewBox="0 0 315 333" width="315px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Active" data-source-line="1" id="ent0001">
+      <path d="M18.5,12 L286.95,12 A12.5,12.5 0 0 1 299.45,24.5 L299.45,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="145" style="stroke:#F1F1F1;stroke-width:1;" width="293.45" x="6" y="36"/>
+      <rect fill="none" height="305" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="293.45" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="299.45" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="299.45" y1="181" y2="181"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="133.65" y="27.889">Active</text>
+      <text fill="#000" font-size="14" textLength="146.913" x="11" y="46.889">entry / HAL_CAN_Init(...)</text>
+      <text fill="#000" font-size="14" textLength="122.85" x="67" y="60.889">HAL_CAN_Start(...)</text>
+      <text fill="#000" font-size="14" textLength="212.45" x="67" y="74.889">HAL_CAN_ActivateNotification(...)</text>
+      <text fill="#000" font-size="14" textLength="254.45" x="11" y="88.889">exit / HAL_CAN_DeactivateNotification(...)</text>
+      <text fill="#000" font-size="14" textLength="122.15" x="67" y="102.889">HAL_CAN_Stop(...)</text>
+      <text fill="#000" font-size="14" textLength="129.938" x="67" y="116.889">HAL_CAN_DeInit(...)</text>
+      <text fill="#000" font-size="14" textLength="170.363" x="11" y="130.889">SEND_MSG (msg, mailbox) /</text>
+      <text fill="#000" font-size="14" textLength="194.513" x="67" y="144.889">HAL_CAN_AbortTxRequest(...)</text>
+      <text fill="#000" font-size="14" textLength="190.663" x="67" y="158.889">HAL_CAN_AddTxMessage(...)</text>
+      <text fill="#000" font-size="14" textLength="98.7" x="11" y="172.889">RX_MSG (msg) /</text>
+      <g class="start_entity" data-qualified-name="Active..start.Active" data-source-line="9" id="ent0002">
+        <ellipse cx="56.5" cy="202" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="Active.Processing" data-source-line="9" id="ent0003">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="89.3" x="12" y="252"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="101.3" y1="276" y2="276"/>
+        <text fill="#000" font-size="14" textLength="69.3" x="22" y="267.889">Processing</text>
+      </g>
+      <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+        <polygon fill="#181818" points="56.5,251.764,60.5,242.764,56.5,246.764,52.5,242.764,56.5,251.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M56.5,216.094 C56.5,225.61 56.5,234.662 56.5,246.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+  </g>
+</svg>

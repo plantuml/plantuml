@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:182px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 182 72" width="182px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity cloud-->
+    <g class="entity" data-qualified-name="cloud" data-source-line="14" id="ent0001">
+      <path d="M16.094,20.65 C19.811,15.362 22.961,16.502 26.373,20.972 C28.636,13.966 34.616,13.305 38.993,18.844 C43.123,13.623 46.537,13.843 49.741,19.74 C54.5,13.792 58.133,15.716 61.68,21.026 C69.431,23.583 70.212,27.778 65.827,34.166 C73.093,39.08 71.432,46.123 63.532,48.63 C62.597,55.79 56.496,57.32 51.266,53.374 C49.65,61.339 44.509,63.295 38.085,58.243 C32.858,62.202 28.345,60.223 27.85,53.646 C22.588,58.162 16.192,56.958 14.947,49.366 C6.904,48.884 2.685,43.97 6.162,35.946 C2.062,26.21 5.928,21.122 16.094,20.65" fill="#000" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#FFF" font-size="14" textLength="33.512" x="21" y="37.889">cloud</text>
+    </g>
+    <!--entity database-->
+    <g class="entity" data-qualified-name="database" data-source-line="15" id="ent0002">
+      <path d="M88,22.5 C88,12.5 126.788,12.5 126.788,12.5 C126.788,12.5 165.575,12.5 165.575,22.5 L165.575,45.5 C165.575,55.5 126.788,55.5 126.788,55.5 C126.788,55.5 88,55.5 88,45.5 L88,22.5" fill="#FFF" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M88,22.5 C88,32.5 126.788,32.5 126.788,32.5 C126.788,32.5 165.575,32.5 165.575,22.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="57.575" x="98" y="47.389">database</text>
+    </g>
+  </g>
+</svg>

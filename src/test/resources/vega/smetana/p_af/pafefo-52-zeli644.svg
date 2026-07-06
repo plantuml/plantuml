@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="136px" preserveAspectRatio="none" style="width:424px;height:136px;background:#FFFFFF;" version="1.1" viewBox="0 0 424 136" width="424px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Pack1-->
+    <g class="cluster" data-qualified-name="Pack1" data-source-line="4" id="ent0001">
+      <path d="M103,35.609 L142.938,35.609 A3.75,3.75 0 0 1 145.438,38.109 L152.438,55.609 L406,55.609 A2.5,2.5 0 0 1 408.5,58.109 L408.5,110.109 A2.5,2.5 0 0 1 406,112.609 L103,112.609 A2.5,2.5 0 0 1 100.5,110.109 L100.5,38.109 A2.5,2.5 0 0 1 103,35.609" fill="#FF0" style="stroke:#F00;stroke-width:1.5;"/>
+      <line style="stroke:#F00;stroke-width:1.5;" x1="100.5" x2="152.438" y1="55.609" y2="55.609"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="104.5" y="48.498">Pack1</text>
+    </g>
+    <!--entity Comp2-->
+    <g class="entity" data-qualified-name="Comp2" data-source-line="9" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="6" y="60.609"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="71.15" y="65.609"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="69.15" y="67.609"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="69.15" y="71.609"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="21" y="91.498">Comp2</text>
+    </g>
+    <!--entity Comp1-->
+    <g class="entity" data-qualified-name="Pack1.Comp1" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="315" y="60.609"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="380.15" y="65.609"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="378.15" y="67.609"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="378.15" y="71.609"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="330" y="91.498">Comp1</text>
+    </g>
+    <!--entity Comp3-->
+    <g class="entity" data-qualified-name="Pack1.Comp3" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="212" y="60.609"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="277.15" y="65.609"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="275.15" y="67.609"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="275.15" y="71.609"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="227" y="91.498">Comp3</text>
+    </g>
+    <!--entity Comp4-->
+    <g class="entity" data-qualified-name="Pack1.Comp4" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="109" y="60.609"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="174.15" y="65.609"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="172.15" y="67.609"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="172.15" y="71.609"/>
+      <text fill="#000" font-size="14" textLength="45.15" x="124" y="91.498">Comp4</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="association" id="lnk6">
+      <path d="M344.063,60.301 C333.523,45.131 317.336,26.294 297.5,17.609 C258.415,0.497 144.363,0 105.5,17.609 C86.224,26.344 70.89,45.175 61.003,60.331" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

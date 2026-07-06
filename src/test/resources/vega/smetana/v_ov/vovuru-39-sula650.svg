@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="413px" preserveAspectRatio="none" style="width:394px;height:413px;background:#FFFFFF;" version="1.1" viewBox="0 0 394 413" width="394px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Some Group-->
+    <g class="cluster" data-qualified-name="Some Group" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L92.925,4 A3.75,3.75 0 0 1 95.425,6.5 L102.425,24 L383.5,24 A2.5,2.5 0 0 1 386,26.5 L386,78.5 A2.5,2.5 0 0 1 383.5,81 L16.5,81 A2.5,2.5 0 0 1 14,78.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="102.425" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="75.425" x="18" y="16.889">Some Group</text>
+    </g>
+    <!--cluster Other Groups-->
+    <g class="cluster" data-qualified-name="Other Groups" data-source-line="7" id="ent0006">
+      <polygon fill="none" points="31,99,41,89,243,89,243,161,233,171,31,171,31,99" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="233" x2="243" y1="99" y2="89"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="31" x2="233" y1="99" y2="99"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="233" x2="233" y1="99" y2="171"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="80.763" x="92.619" y="112.889">Other Groups</text>
+    </g>
+    <g class="cluster" data-qualified-name="..11" data-source-line="12" id="ent0012">
+      <path d="M260.976,119.985 C263.962,113.777 267.4,113.459 272.206,118.101 C275.221,111.776 280.662,111.137 284.656,117.11 C288.117,110.882 294.615,110.074 298.727,116.379 C301.722,110.623 306.06,110.01 310.482,114.786 C315.226,108.689 320.44,110.242 323.528,116.53 C328.161,111.966 332.394,112.069 335.617,118.135 C339.914,111.877 346.373,111.515 350.056,118.79 C355.214,113.239 359.118,114.356 362.086,120.957 C368.242,124.273 367.959,127.709 363.252,132.156 C368.21,134.384 367.384,138.489 363.751,141.192 C368.677,144.624 368.539,150 363.387,153.124 C369.178,157.485 369.137,161.373 362.748,165.084 C359.457,172.228 353.648,170.973 349.589,165.911 C346.192,173.233 339.798,172.287 335.929,166.399 C334.159,172.205 328.856,174.029 324.357,169.436 C321.142,175.291 315.415,174.93 312.113,169.53 C307.554,175.377 301.451,175.047 297.8,168.483 C293.797,175.06 287.514,174.219 284.821,167.229 C279.84,172.645 276.079,170.412 273.252,164.941 C270.022,171.042 264.118,171.811 260.741,165.083 C254.357,163.178 253.508,157.182 258.49,153.136 C253.241,150.305 253.757,145.266 258.784,142.725 C253.119,139.615 253.542,135.724 258.278,132.119 C253.845,127.79 254.74,121.942 260.976,119.985" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <!--cluster MySql-->
+    <g class="cluster" data-qualified-name="MySql" data-source-line="17" id="ent0014">
+      <path d="M249,189 C249,179 310,179 310,179 C310,179 371,179 371,189 L371,379 C371,389 310,389 310,389 C310,389 249,389 249,379 L249,189" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M249,189 C249,199 310,199 310,199 C310,199 371,199 371,189" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.938" x="290.531" y="211.889">MySql</text>
+    </g>
+    <!--cluster This is my folder-->
+    <g class="cluster" data-qualified-name="MySql.This is my folder" data-source-line="18" id="ent0015">
+      <path d="M259.5,219 L350.8,219 A3.75,3.75 0 0 1 353.3,221.5 L360.3,239 L360.5,239 A2.5,2.5 0 0 1 363,241.5 L363,293.5 A2.5,2.5 0 0 1 360.5,296 L259.5,296 A2.5,2.5 0 0 1 257,293.5 L257,221.5 A2.5,2.5 0 0 1 259.5,219" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="257" x2="360.3" y1="239" y2="239"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="90.3" x="261" y="231.889">This is my folder</text>
+    </g>
+    <!--cluster Foo-->
+    <g class="cluster" data-qualified-name="MySql.Foo" data-source-line="21" id="ent0017">
+      <rect fill="none" height="77" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="104" x="258" y="304"/>
+      <path d="M292.15,304 L292.15,311 L282.15,321 L258,321" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="24.15" x="261" y="315.889">Foo</text>
+    </g>
+    <!--entity HTTP-->
+    <g class="entity" data-qualified-name="Some Group.HTTP" data-source-line="3" id="ent0002">
+      <ellipse cx="189" cy="48" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="36.663" x="170.669" y="75.889">HTTP</text>
+    </g>
+    <!--entity First Component-->
+    <g class="entity" data-qualified-name="Some Group.First Component" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.575" x="22" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="141.575" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="139.575" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="139.575" y="40"/>
+      <text fill="#000" font-size="14" textLength="99.575" x="37" y="59.889">First Component</text>
+    </g>
+    <!--entity Another Component-->
+    <g class="entity" data-qualified-name="Some Group.Another Component" data-source-line="4" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="161.363" x="216.5" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="357.863" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="355.863" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="355.863" y="40"/>
+      <text fill="#000" font-size="14" textLength="121.363" x="231.5" y="59.889">Another Component</text>
+    </g>
+    <!--entity FTP-->
+    <g class="entity" data-qualified-name="Other Groups.FTP" data-source-line="8" id="ent0007">
+      <ellipse cx="48" cy="138" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="26.513" x="34.744" y="165.889">FTP</text>
+    </g>
+    <!--entity Second Component-->
+    <g class="entity" data-qualified-name="Other Groups.Second Component" data-source-line="8" id="ent0008">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="159.875" x="75" y="119"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="214.875" y="124"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="212.875" y="126"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="212.875" y="130"/>
+      <text fill="#000" font-size="14" textLength="119.875" x="90" y="149.889">Second Component</text>
+    </g>
+    <!--entity Example 1-->
+    <g class="entity" data-qualified-name="..11.Example 1" data-source-line="13" id="ent0013">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102.3" x="259" y="119"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="341.3" y="124"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="339.3" y="126"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="339.3" y="130"/>
+      <text fill="#000" font-size="14" textLength="62.3" x="274" y="149.889">Example 1</text>
+    </g>
+    <!--entity Folder 3-->
+    <g class="entity" data-qualified-name="MySql.This is my folder.Folder 3" data-source-line="19" id="ent0016">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.512" x="266" y="244"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="333.513" y="249"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="331.513" y="251"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="331.513" y="255"/>
+      <text fill="#000" font-size="14" textLength="47.512" x="281" y="274.889">Folder 3</text>
+    </g>
+    <!--entity Frame 4-->
+    <g class="entity" data-qualified-name="MySql.Foo.Frame 4" data-source-line="22" id="ent0018">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.212" x="266" y="329"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="334.213" y="334"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="332.213" y="336"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="332.213" y="340"/>
+      <text fill="#000" font-size="14" textLength="48.212" x="281" y="359.889">Frame 4</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M179.752,51 C173.867,51 167.983,51 162.098,51" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="association" id="lnk9">
+      <path d="M57.195,141 C63.053,141 68.911,141 74.77,141" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0007" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="51.022,128.694,57.358,121.154,52.407,123.889,49.672,118.938,51.022,128.694" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M75.568,73.287 C72.136,78.281 68.734,83.696 66,89 C59.289,102.02 55.458,113.306 52.407,123.889" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0013" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="306.882,118.894,309.524,109.406,306.151,113.948,301.61,110.575,306.882,118.894" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M300.147,73.302 C302.191,87.138 304.113,100.151 306.151,113.948" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0016" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="310,243.72,314,234.72,310,238.72,306,234.72,310,243.72" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M310,163.144 C310,185.674 310,216.139 310,238.72" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0018" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="310,328.985,314,319.985,310,323.985,306,319.985,310,328.985" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M310,288.375 C310,300.863 310,311.559 310,323.985" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

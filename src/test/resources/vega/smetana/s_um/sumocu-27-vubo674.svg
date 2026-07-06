@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="226px" preserveAspectRatio="none" style="width:343px;height:226px;background:#FFFFFF;" version="1.1" viewBox="0 0 343 226" width="343px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class CLASS-->
+    <g class="entity" data-qualified-name="CLASS" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.025" x="127.5" y="162"/>
+      <ellipse cx="142.5" cy="178" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="137.5" y="183">C</text>
+      <text fill="#000" font-size="14" textLength="46.025" x="156.5" y="181.889">CLASS</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="128.5" x2="204.525" y1="194" y2="194"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="128.5" x2="204.525" y1="202" y2="202"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="4" id="ent0003">
+      <path d="M6,12 L6,126 A0,0 0 0 0 6,126 L162.5,126 L166.5,161.931 L170.5,126 L326.706,126 A0,0 0 0 0 326.706,126 L326.706,22 L316.706,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M316.706,12 L316.706,22 L326.706,22 L316.706,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <ellipse cx="17.5" cy="22.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="13" textLength="26" x="24" y="27.111">here</text>
+      <text fill="#000" font-size="13" x="50" y="27.111"> </text>
+      <text fill="#000" font-size="13" textLength="9.425" x="50" y="27.111">is</text>
+      <text fill="#000" font-size="13" x="59.425" y="27.111"> </text>
+      <text fill="#000" font-size="13" x="59.425" y="27.111">a</text>
+      <text fill="#000" font-size="13" x="66.656" y="27.111"> </text>
+      <text fill="#000" font-size="13" textLength="31.119" x="66.656" y="27.111">bullet</text>
+      <text fill="#000" font-size="13" x="97.775" y="27.111"> </text>
+      <text fill="#000" font-size="13" textLength="15.925" x="97.775" y="27.111">list</text>
+      <ellipse cx="17.5" cy="35.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="13" textLength="6.5" x="24" y="40.111">if</text>
+      <text fill="#000" font-size="13" x="30.5" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="18.038" x="30.5" y="40.111">the</text>
+      <text fill="#000" font-size="13" x="48.538" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="52.731" x="48.538" y="40.111">sentence</text>
+      <text fill="#000" font-size="13" x="101.269" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="36.806" x="101.269" y="40.111">before</text>
+      <text fill="#000" font-size="13" x="138.075" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="9.425" x="138.075" y="40.111">is</text>
+      <text fill="#000" font-size="13" x="147.5" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="49.887" x="147.5" y="40.111">wrapped</text>
+      <text fill="#000" font-size="13" x="197.388" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="25.269" x="197.388" y="40.111">then</text>
+      <text fill="#000" font-size="13" x="222.656" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="18.038" x="222.656" y="40.111">the</text>
+      <text fill="#000" font-size="13" x="240.694" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="21.694" x="240.694" y="40.111">one</text>
+      <text fill="#000" font-size="13" x="262.388" y="40.111"> </text>
+      <text fill="#000" font-size="13" textLength="25.919" x="262.388" y="40.111">after</text>
+      <text fill="#000" font-size="13" textLength="28.194" x="24" y="53.111">does</text>
+      <text fill="#000" font-size="13" x="52.194" y="53.111"> </text>
+      <text fill="#000" font-size="13" textLength="18.038" x="52.194" y="53.111">not</text>
+      <text fill="#000" font-size="13" x="70.231" y="53.111"> </text>
+      <text fill="#000" font-size="13" textLength="33.313" x="70.231" y="53.111">follow</text>
+      <text fill="#000" font-size="13" x="103.544" y="53.111"> </text>
+      <text fill="#000" font-size="13" textLength="49.075" x="103.544" y="53.111">correctly</text>
+      <ellipse cx="17.5" cy="61.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="13" textLength="26" x="24" y="66.111">here</text>
+      <text fill="#000" font-size="13" x="50" y="66.111"> </text>
+      <text fill="#000" font-size="13" textLength="9.425" x="50" y="66.111">is</text>
+      <text fill="#000" font-size="13" x="59.425" y="66.111"> </text>
+      <text fill="#000" font-size="13" x="59.425" y="66.111">a</text>
+      <text fill="#000" font-size="13" x="66.656" y="66.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.537" x="66.656" y="66.111">very</text>
+      <text fill="#000" font-size="13" x="91.194" y="66.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.619" x="91.194" y="66.111">long</text>
+      <text fill="#000" font-size="13" x="115.813" y="66.111"> </text>
+      <text fill="#000" font-size="13" textLength="52.731" x="115.813" y="66.111">sentence</text>
+      <text fill="#000" font-size="13" x="168.544" y="66.111"> </text>
+      <text fill="#000" font-size="13" textLength="33.313" x="168.544" y="66.111">which</text>
+      <text fill="#000" font-size="13" x="201.856" y="66.111"> </text>
+      <text fill="#000" font-size="13" textLength="38.35" x="201.856" y="66.111">should</text>
+      <text fill="#000" font-size="13" x="240.206" y="66.111"> </text>
+      <text fill="#000" font-size="13" textLength="14.463" x="240.206" y="66.111">be</text>
+      <text fill="#000" font-size="13" x="254.669" y="66.111"> </text>
+      <text fill="#000" font-size="13" textLength="53.463" x="254.669" y="66.111">wrapped.</text>
+      <text fill="#000" font-size="13" x="308.131" y="66.111"> </text>
+      <text fill="#000" font-size="13" x="308.131" y="66.111">I</text>
+      <text fill="#000" font-size="13" textLength="20.963" x="24" y="79.111">can</text>
+      <text fill="#000" font-size="13" x="44.963" y="79.111"> </text>
+      <text fill="#000" font-size="13" textLength="31.769" x="44.963" y="79.111">make</text>
+      <text fill="#000" font-size="13" x="76.731" y="79.111"> </text>
+      <text fill="#000" font-size="13" textLength="6.5" x="76.731" y="79.111">it</text>
+      <text fill="#000" font-size="13" x="83.231" y="79.111"> </text>
+      <text fill="#000" font-size="13" textLength="28.194" x="83.231" y="79.111">even</text>
+      <text fill="#000" font-size="13" x="111.425" y="79.111"> </text>
+      <text fill="#000" font-size="13" textLength="36.156" x="111.425" y="79.111">longer</text>
+      <text fill="#000" font-size="13" x="147.581" y="79.111"> </text>
+      <text fill="#000" font-size="13" textLength="13.731" x="147.581" y="79.111">by</text>
+      <text fill="#000" font-size="13" x="161.312" y="79.111"> </text>
+      <text fill="#000" font-size="13" textLength="39.081" x="161.312" y="79.111">adding</text>
+      <text fill="#000" font-size="13" x="200.394" y="79.111"> </text>
+      <text fill="#000" font-size="13" textLength="29.575" x="200.394" y="79.111">more</text>
+      <text fill="#000" font-size="13" x="229.969" y="79.111"> </text>
+      <text fill="#000" font-size="13" textLength="34.694" x="229.969" y="79.111">words</text>
+      <text fill="#000" font-size="13" x="12" y="92.111"> </text>
+      <text fill="#000" font-size="13" textLength="10.806" x="12" y="105.111">1.</text>
+      <text fill="#000" font-size="13" textLength="26" x="26.381" y="105.111">here</text>
+      <text fill="#000" font-size="13" x="52.381" y="105.111"> </text>
+      <text fill="#000" font-size="13" textLength="9.425" x="52.381" y="105.111">is</text>
+      <text fill="#000" font-size="13" x="61.806" y="105.111"> </text>
+      <text fill="#000" font-size="13" x="61.806" y="105.111">a</text>
+      <text fill="#000" font-size="13" x="69.038" y="105.111"> </text>
+      <text fill="#000" font-size="13" textLength="58.5" x="69.038" y="105.111">numbered</text>
+      <text fill="#000" font-size="13" x="127.538" y="105.111"> </text>
+      <text fill="#000" font-size="13" textLength="15.925" x="127.538" y="105.111">list</text>
+      <text fill="#000" font-size="13" textLength="10.806" x="12" y="118.111">2.</text>
+      <text fill="#000" font-size="13" textLength="26" x="26.381" y="118.111">here</text>
+      <text fill="#000" font-size="13" x="52.381" y="118.111"> </text>
+      <text fill="#000" font-size="13" textLength="9.425" x="52.381" y="118.111">is</text>
+      <text fill="#000" font-size="13" x="61.806" y="118.111"> </text>
+      <text fill="#000" font-size="13" x="61.806" y="118.111">a</text>
+      <text fill="#000" font-size="13" x="69.038" y="118.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.537" x="69.038" y="118.111">very</text>
+      <text fill="#000" font-size="13" x="93.575" y="118.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.619" x="93.575" y="118.111">long</text>
+      <text fill="#000" font-size="13" x="118.194" y="118.111"> </text>
+      <text fill="#000" font-size="13" textLength="52.731" x="118.194" y="118.111">sentence</text>
+      <text fill="#000" font-size="13" x="170.925" y="118.111"> </text>
+      <text fill="#000" font-size="13" textLength="33.313" x="170.925" y="118.111">which</text>
+      <text fill="#000" font-size="13" x="204.237" y="118.111"> </text>
+      <text fill="#000" font-size="13" textLength="38.35" x="204.237" y="118.111">should</text>
+      <text fill="#000" font-size="13" x="242.587" y="118.111"> </text>
+      <text fill="#000" font-size="13" textLength="14.463" x="242.587" y="118.111">be</text>
+      <text fill="#000" font-size="13" x="257.05" y="118.111"> </text>
+      <text fill="#000" font-size="13" textLength="49.887" x="257.05" y="118.111">wrapped</text>
+    </g>
+  </g>
+</svg>

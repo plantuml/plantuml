@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:159px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 159 76" width="159px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Alice-->
+    <g class="entity" data-qualified-name="Alice" data-source-line="2" id="ent0001">
+      <rect fill="#98FB98" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.45" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#98FB98" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#00F" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#00F" font-size="14" textLength="30.45" x="35" y="31.889">Alice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="67.45" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="67.45" y1="52" y2="52"/>
+    </g>
+    <!--class Bob-->
+    <g class="entity" data-qualified-name="Bob" data-source-line="3" id="ent0002">
+      <rect fill="#98FB98" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.938" x="86.5" y="12"/>
+      <ellipse cx="101.5" cy="28" fill="#98FB98" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#00F" font-family="monospace" font-size="14" x="96.5" y="33">I</text>
+      <text fill="#00F" font-size="14" font-style="italic" textLength="24.938" x="115.5" y="31.889">Bob</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87.5" x2="142.438" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87.5" x2="142.438" y1="52" y2="52"/>
+    </g>
+  </g>
+</svg>

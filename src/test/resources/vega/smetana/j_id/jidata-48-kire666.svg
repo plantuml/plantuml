@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="106px" preserveAspectRatio="none" style="width:155px;height:106px;background:#FFFFFF;" version="1.1" viewBox="0 0 155 106" width="155px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="10" y="25.5"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="15" y="38.389">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="20" y1="43.5" y2="43.5"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="15" y="56.389">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="20" y1="61.5" y2="61.5"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="15" y="74.389">   </text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="10" y="25.5"/>
+    <rect fill="#F1F1F1" height="15" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="30" x="57" y="10"/>
+    <rect fill="none" height="15" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="30" x="57" y="10"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="60" y="43.5"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="65" y="56.389">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="60" y="43.5"/>
+    <rect fill="#F1F1F1" height="15" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="30" x="110" y="45"/>
+    <rect fill="none" height="15" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="30" x="110" y="45"/>
+    <rect fill="#F1F1F1" height="15" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="30" x="57" y="80"/>
+    <rect fill="none" height="15" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="30" x="57" y="80"/>
+    <path d="M8,34.5 L21,34.5 C31.429,34.5 42.36,30.208 50.655,25.938" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M52.172,28.653 L52.691,24.8 L49.138,23.223 L57.442,22.145 L52.172,28.653" fill="#000"/>
+    <ellipse cx="8" cy="34.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M57.676,52.5 L70.676,52.5 C78.054,52.5 91.89,52.5 102.616,52.5" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M102.616,55.601 L104.942,52.5 L102.616,49.399 L110.368,52.5 L102.616,55.601" fill="#000"/>
+    <ellipse cx="57.676" cy="52.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M8,52.5 L21,52.5 C31.762,52.5 44.021,52.5 52.776,52.5" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M52.776,55.558 L55.07,52.5 L52.776,49.442 L60.422,52.5 L52.776,55.558" fill="#000"/>
+    <ellipse cx="8" cy="52.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M8,70.5 L21,70.5 C31.429,70.5 42.36,74.792 50.655,79.062" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M49.138,81.777 L52.691,80.2 L52.172,76.347 L57.442,82.855 L49.138,81.777" fill="#000"/>
+    <ellipse cx="8" cy="70.5" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="216px" preserveAspectRatio="none" style="width:63px;height:216px;background:#FFFFFF;" version="1.1" viewBox="0 0 63 216" width="63px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" x="35" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="52" y2="52"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="6" y="152"/>
+      <ellipse cx="21" cy="168" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="173">C</text>
+      <text fill="#000" font-size="14" x="35" y="171.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="184" y2="184"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="46.363" y1="192" y2="192"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="26.5,151.827,30.5,142.827,26.5,146.827,22.5,142.827,26.5,151.827" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.5,60.098 C26.5,85.572 26.5,121.322 26.5,146.827" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="22.1" x="28.5" y="90.111">ab &gt;</text>
+      <text fill="#000" font-size="13" textLength="21.369" x="28.866" y="103.111">cd &lt;</text>
+      <text fill="#000" font-size="13" textLength="18.444" x="30.328" y="116.111">&lt; ef</text>
+      <text fill="#000" font-size="13" textLength="22.1" x="28.5" y="129.111">&gt; gh</text>
+    </g>
+  </g>
+</svg>

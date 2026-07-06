@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="519px" preserveAspectRatio="none" style="width:601px;height:519px;background:#FFFFFF;" version="1.1" viewBox="0 0 601 519" width="601px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="14" font-weight="700" textLength="97.3" x="248.678" y="20.889">Crashy Diagram</text>
+    </g>
+    <!--cluster Package1-->
+    <g class="cluster" data-qualified-name="Package1" data-source-line="5" id="ent0001">
+      <path d="M311.5,304 L374.8,304 A3.75,3.75 0 0 1 377.3,306.5 L384.3,324 L526.5,324 A2.5,2.5 0 0 1 529,326.5 L529,492.5 A2.5,2.5 0 0 1 526.5,495 L311.5,495 A2.5,2.5 0 0 1 309,492.5 L309,306.5 A2.5,2.5 0 0 1 311.5,304" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="309" x2="384.3" y1="324" y2="324"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="62.3" x="313" y="316.889">Package1</text>
+    </g>
+    <!--cluster Enterprise Package2-->
+    <g class="cluster" data-qualified-name="Enterprise Package2" data-source-line="14" id="ent0010">
+      <path d="M16.5,39 L143.588,39 A3.75,3.75 0 0 1 146.088,41.5 L153.088,59 L298.5,59 A2.5,2.5 0 0 1 301,61.5 L301,488.5 A2.5,2.5 0 0 1 298.5,491 L16.5,491 A2.5,2.5 0 0 1 14,488.5 L14,41.5 A2.5,2.5 0 0 1 16.5,39" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="153.088" y1="59" y2="59"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="126.088" x="18" y="51.889">Enterprise Package2</text>
+    </g>
+    <!--entity iface1-->
+    <g class="entity" data-qualified-name="Package1.iface1" data-source-line="6" id="ent0002">
+      <ellipse cx="326" cy="365" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="314.713" y="392.889">API</text>
+    </g>
+    <!--entity iface2-->
+    <g class="entity" data-qualified-name="Package1.iface2" data-source-line="7" id="ent0003">
+      <ellipse cx="362" cy="365" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="107.275" x="308.363" y="392.889">not fancy ruby crap</text>
+    </g>
+    <!--entity iface3-->
+    <g class="entity" data-qualified-name="Package1.iface3" data-source-line="8" id="ent0004">
+      <ellipse cx="510" cy="462" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="101.85" x="459.075" y="489.889">fancy cluster crap</text>
+    </g>
+    <!--entity Crashy Backref-->
+    <g class="entity" data-qualified-name="Package1.Crashy Backref" data-source-line="9" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="131.788" x="389" y="346"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="500.788" y="351"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="498.788" y="353"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="498.788" y="357"/>
+      <text fill="#000" font-size="14" textLength="91.788" x="404" y="376.889">Crashy Backref</text>
+    </g>
+    <!--entity Internal Component-->
+    <g class="entity" data-qualified-name="Package1.Internal Component" data-source-line="10" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="159" x="321.5" y="443"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="460.5" y="448"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="458.5" y="450"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="458.5" y="454"/>
+      <text fill="#000" font-size="14" textLength="119" x="336.5" y="473.889">Internal Component</text>
+    </g>
+    <!--entity iface4-->
+    <g class="entity" data-qualified-name="Enterprise Package2.iface4" data-source-line="15" id="ent0011">
+      <ellipse cx="284" cy="210" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="265.319" y="237.889">iface4</text>
+    </g>
+    <!--entity iface5-->
+    <g class="entity" data-qualified-name="Enterprise Package2.iface5" data-source-line="16" id="ent0012">
+      <ellipse cx="138" cy="365" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="73.15" x="101.425" y="392.889">noSQL is fun</text>
+    </g>
+    <!--entity JSON-->
+    <g class="entity" data-qualified-name="Enterprise Package2.JSON" data-source-line="17" id="ent0013">
+      <ellipse cx="79" cy="365" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="60.319" y="392.889">JSON</text>
+    </g>
+    <!--entity comp1-->
+    <g class="entity" data-qualified-name="Enterprise Package2.comp1" data-source-line="18" id="ent0014">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.788" x="22.5" y="81"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="141.288" y="86"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="139.288" y="88"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="139.288" y="92"/>
+      <text fill="#000" font-size="14" textLength="98.788" x="37.5" y="111.889">Component One</text>
+    </g>
+    <!--entity comp2-->
+    <g class="entity" data-qualified-name="Enterprise Package2.comp2" data-source-line="19" id="ent0015">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.875" x="22.5" y="191"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="141.375" y="196"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="139.375" y="198"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="139.375" y="202"/>
+      <text fill="#000" font-size="14" textLength="98.875" x="37.5" y="221.889">Component Two</text>
+    </g>
+    <g class="entity" data-qualified-name="Enterprise Package2.GMN19" data-source-line="26" id="ent0020">
+      <path d="M179.5,201 L179.5,209 L161.891,213 L179.5,217 L179.5,224 A0,0 0 0 0 179.5,224 L256.075,224 A0,0 0 0 0 256.075,224 L256.075,211 L246.075,201 L179.5,201 A0,0 0 0 0 179.5,201" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M246.075,201 L246.075,211 L256.075,211 L246.075,201" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="55.575" x="185.5" y="216.111">we do stuff</text>
+    </g>
+    <g class="entity" data-qualified-name="Enterprise Package2.GMN22" data-source-line="29" id="ent0023">
+      <path d="M165,356 L165,379 A0,0 0 0 0 165,379 L292.763,379 A0,0 0 0 0 292.763,379 L292.763,366 L282.763,356 L228.217,356 L275.527,225.16 L220.217,356 L165,356 A0,0 0 0 0 165,356" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M282.763,356 L282.763,366 L292.763,366 L282.763,356" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="106.763" x="171" y="371.111">stuff gets done OOB</text>
+    </g>
+    <g class="entity" data-qualified-name="Enterprise Package2.GMN30" data-source-line="37" id="ent0031">
+      <path d="M22,447 L22,483 A0,0 0 0 0 22,483 L144.4,483 A0,0 0 0 0 144.4,483 L144.4,457 L134.4,447 L86.283,447 L79.475,380.271 L78.283,447 L22,447 A0,0 0 0 0 22,447" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M134.4,447 L134.4,457 L144.4,457 L134.4,447" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="101.4" x="28" y="462.111">initial call will return</text>
+      <text fill="#000" font-size="13" font-weight="700" textLength="81.006" x="28" y="475.111">MORE STUFF</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0004" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="503.49,452.756,502.442,442.963,500.985,448.428,495.519,446.971,503.49,452.756" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M467.206,390.084 C478.409,409.434 492.073,433.035 500.985,448.428" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="41.844" x="488" y="420.111">metrics</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="361.067,442.793,356.234,434.211,357.055,439.808,351.458,440.63,361.067,442.793" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M388.841,389.536 C368.185,396.596 349.964,403.778 347,408 C338.23,420.491 343.713,429.881 357.055,439.808" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="38.35" x="349" y="420.111">place1</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="426.262,390.261,417.003,393.617,422.659,393.727,422.548,399.383,426.262,390.261" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M401.97,442.953 C403.234,431.954 406.008,418.612 412,408 C415.667,401.506 417.204,398.973 422.659,393.727" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="38.35" x="414" y="420.111">place2</text>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0011" data-link-type="dependency" id="lnk16">
+      <polygon fill="#181818" points="277.649,200.731,276.622,190.936,275.153,196.399,269.69,194.93,277.649,200.731" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M125.094,190.985 C145.466,178.78 172.647,164.825 199,158.5 C215.423,154.559 221.646,151.466 237,158.5 C255.856,167.138 267.524,183.157 275.153,196.399" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.775" x="201" y="161.611">oldapi</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0011" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="293.097,213.635,302.172,217.462,298.096,213.539,302.019,209.463,293.097,213.635" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M455.407,345.878 C454.715,320.4 449.59,277.9 425,253 C387.879,215.411 322.997,213.063 298.096,213.539" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="56.875" x="450" y="278.111">pretty stuff</text>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0012" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="138.463,355.803,142.658,346.893,138.572,350.804,134.66,346.718,138.463,355.803" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M112.299,235.337 C116.458,240.743 120.365,246.789 123,253 C137.968,288.284 139.031,329.768 138.572,350.804" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="24.456" x="137" y="265.111">stuff</text>
+      <text fill="#000" font-size="13" textLength="24.456" x="137" y="278.111">stuff</text>
+      <text fill="#000" font-size="13" textLength="24.456" x="137" y="291.111">stuff</text>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0015" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="92,190.973,96,181.973,92,185.973,88,181.973,92,190.973" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M92,125.08 C92,144.11 92,166.96 92,185.973" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="23.156" x="94" y="155.111">ALL</text>
+      <text fill="#000" font-size="13" textLength="18.038" x="117.156" y="155.111">the</text>
+      <text fill="#000" font-size="13" textLength="24.456" x="102.369" y="168.111">stuff</text>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0013" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="77.344,355.873,80.121,346.424,76.684,350.917,72.191,347.48,77.344,355.873" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M82.292,235.045 C80.11,240.75 78.112,247.009 77,253 C70.098,290.173 73.948,330.379 76.684,350.917" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="42.656" x="79" y="278.111">phase 1</text>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0002" data-link-type="dependency" id="lnk27">
+      <polygon fill="#181818" points="323.414,355.685,325.225,346.004,322.258,350.82,317.442,347.854,323.414,355.685" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M161.652,233.146 C164.466,233.795 167.257,234.416 170,235 C220.17,245.683 243.743,221.211 284,253 C300.719,266.202 316.047,324.684 322.258,350.82" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="42.656" x="308" y="278.111">phase 4</text>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0003" data-link-type="dependency" id="lnk28">
+      <polygon fill="#181818" points="365.239,355.727,371.331,347.988,366.47,350.88,363.577,346.019,365.239,355.727" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M161.611,233.352 C164.437,233.943 167.241,234.496 170,235 C210.199,242.337 324.385,223.829 353,253 C380.249,280.779 372.279,328 366.47,350.88" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="42.656" x="373" y="278.111">phase 3</text>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0004" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="519.049,453.569,527.748,448.95,522.132,449.633,521.449,444.017,519.049,453.569" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M161.595,233.445 C164.425,234.011 167.234,234.533 170,235 C280.281,253.623 312.764,224.83 421,253 C472.761,266.471 500.216,259.575 530,304 C559.972,348.706 550.134,373.348 535,425 C531.879,435.651 527.941,442.215 522.132,449.633" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="42.656" x="551" y="371.611">phase 2</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0012" data-link-type="dependency" id="lnk33">
+      <polygon fill="#181818" points="137.936,355.784,142.314,346.962,138.148,350.788,134.321,346.622,137.936,355.784" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M435.237,345.769 C421.255,331.507 401.271,313.873 380,304 C340.168,285.513 326.268,291.567 282.5,288 C226.017,283.396 196.893,264.767 156,304 C141.841,317.584 138.762,336.354 138.148,350.788" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="55.006" x="225.5" y="278.111">lulz ensue</text>
+    </g>
+  </g>
+</svg>

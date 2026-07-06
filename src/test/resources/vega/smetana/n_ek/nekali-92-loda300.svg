@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:186px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 186 90" width="186px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Method-->
+    <g class="entity" data-qualified-name="Method" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.637" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="46.637" x="35" y="31.889">Method</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="83.637" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="83.637" y1="52" y2="52"/>
+      <text fill="#000" font-size="14" textLength="28.7" x="12" y="66.889">foo()</text>
+    </g>
+    <!--class Other-->
+    <g class="entity" data-qualified-name="Other" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="66.913" x="103" y="12"/>
+      <ellipse cx="118" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="113" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="34.913" x="132" y="31.889">Other</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="104" x2="168.913" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="104" x2="168.913" y1="52" y2="52"/>
+      <text fill="#000" font-size="14" textLength="28.7" x="109" y="66.889">foo()</text>
+    </g>
+  </g>
+</svg>

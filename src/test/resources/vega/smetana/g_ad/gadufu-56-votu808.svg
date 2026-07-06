@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="188px" preserveAspectRatio="none" style="width:200px;height:188px;background:#FFFFFF;" version="1.1" viewBox="0 0 200 188" width="200px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class ЕСИА-->
+    <g class="entity" data-qualified-name="...." data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="114" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="177.55" x="6" y="12"/>
+      <ellipse cx="71.056" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="66.056" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="38.938" x="91.556" y="31.889">ЕСИА</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="182.55" y1="44" y2="44"/>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="53.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="151.55" x="26" y="58.889">int field # комментарий с И</text>
+      <image height="107" width="133" x="12" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwNyIgd2lkdGg9IjEzMyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48ZWxsaXBzZSBjeD0iNjQuOTYzIiBjeT0iMjUiIHJ4PSIxMCIgcnk9IjEwIiBmaWxsPSIjMjIyIiBzdHlsZT0ic3Ryb2tlOiMyMjI7c3Ryb2tlLXdpZHRoOjE7Ii8+PHJlY3QgeD0iMTYiIHk9IjU1IiB3aWR0aD0iOTcuOTI1IiBoZWlnaHQ9IjMyIiBmaWxsPSIjRjFGMUYxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHJ4PSIxMi41IiByeT0iMTIuNSIvPjx0ZXh0IHg9IjI2IiB5PSI3NC4zMzMiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTIiIHRleHRMZW5ndGg9Ijc3LjkyNSI+0JjRgdC/0L7Qu9GM0LfQvtCy0LDRgtGMPC90ZXh0PjxsaW5lIHgxPSI2NC45NjMiIHkxPSIzNSIgeDI9IjY0Ljk2MyIgeTI9IjU1IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7Ii8+PHBvbHlnb24gcG9pbnRzPSI2MC45NjMsNDUsNjQuOTYzLDU1LDY4Ljk2Myw0NSw2NC45NjMsNDkiIGZpbGw9IiMxODE4MTgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTtzdHJva2UtbGluZWpvaW46bWl0ZXI7c3Ryb2tlLW1pdGVybGltaXQ6MTA7Ii8+PC9nPjwvc3ZnPg==" y="80"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="61.306" y1="73" y2="73"/>
+      <text fill="#000" font-size="14" textLength="66.938" x="61.306" y="76.389">subsection</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="128.244" x2="182.55" y1="73" y2="73"/>
+    </g>
+  </g>
+</svg>

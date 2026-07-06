@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="222px" preserveAspectRatio="none" style="width:536px;height:222px;background:#FFFFFF;" version="1.1" viewBox="0 0 536 222" width="536px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster org-->
+    <g class="cluster" data-qualified-name="org" data-source-line="4" id="ent0003">
+      <path d="M16.5,4 L37.713,4 A3.75,3.75 0 0 1 40.213,6.5 L47.213,24 L525.5,24 A2.5,2.5 0 0 1 528,26.5 L528,195.5 A2.5,2.5 0 0 1 525.5,198 L16.5,198 A2.5,2.5 0 0 1 14,195.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="47.213" y1="24" y2="24"/>
+      <text fill="#000" font-family="consolas" font-size="14" font-weight="700" textLength="20.213" x="18" y="16.889">org</text>
+    </g>
+    <!--cluster junit-->
+    <g class="cluster" data-qualified-name="org.junit" data-source-line="4" id="ent0004">
+      <path d="M24.5,29 L51.225,29 A3.75,3.75 0 0 1 53.725,31.5 L60.725,49 L517.5,49 A2.5,2.5 0 0 1 520,51.5 L520,187.5 A2.5,2.5 0 0 1 517.5,190 L24.5,190 A2.5,2.5 0 0 1 22,187.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="60.725" y1="49" y2="49"/>
+      <text fill="#000" font-family="consolas" font-size="14" font-weight="700" textLength="25.725" x="26" y="41.889">junit</text>
+    </g>
+    <!--cluster jupiter-->
+    <g class="cluster" data-qualified-name="org.junit.jupiter" data-source-line="4" id="ent0005">
+      <path d="M32.5,54 L71.65,54 A3.75,3.75 0 0 1 74.15,56.5 L81.15,74 L509.5,74 A2.5,2.5 0 0 1 512,76.5 L512,179.5 A2.5,2.5 0 0 1 509.5,182 L32.5,182 A2.5,2.5 0 0 1 30,179.5 L30,56.5 A2.5,2.5 0 0 1 32.5,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="81.15" y1="74" y2="74"/>
+      <text fill="#000" font-family="consolas" font-size="14" font-weight="700" textLength="38.15" x="34" y="66.889">jupiter</text>
+    </g>
+    <!--cluster engine-->
+    <g class="cluster" data-qualified-name="org.junit.jupiter.engine" data-source-line="3" id="ent0001">
+      <path d="M40.5,79 L83.588,79 A3.75,3.75 0 0 1 86.088,81.5 L93.088,99 L501.5,99 A2.5,2.5 0 0 1 504,101.5 L504,171.5 A2.5,2.5 0 0 1 501.5,174 L40.5,174 A2.5,2.5 0 0 1 38,171.5 L38,81.5 A2.5,2.5 0 0 1 40.5,79" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="38" x2="93.088" y1="99" y2="99"/>
+      <text fill="#000" font-family="consolas" font-size="14" font-weight="700" textLength="42.088" x="42" y="91.889">engine</text>
+    </g>
+    <!--class AbstractJupisterTestEngineTests-->
+    <g class="entity" data-qualified-name="org.junit.jupiter.engine.AbstractJupisterTestEngineTests" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="449.237" x="46.5" y="104"/>
+      <ellipse cx="164.187" cy="120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="159.187" y="125">C</text>
+      <text fill="#000" font-family="consolas" font-size="14" textLength="205.363" x="184.687" y="123.889">AbstractJupisterTestEngineTests</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.5" x2="494.737" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47.5" x2="494.737" y1="144" y2="144"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="57.5" cy="156.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-family="consolas" font-size="14" textLength="423.237" x="66.5" y="158.889">executeTests(LauncherDiscoveryRequest) : ExecutionEventRecorder</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="412.5px" preserveAspectRatio="none" style="width:1246px;height:412px;background:#FFFFFF;" version="1.1" viewBox="0 0 1246 412" width="1246.875px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="150" rx="7.813" ry="7.813" style="stroke:#181818;stroke-width:1.563;" width="160.703" x="232.813" y="125"/>
+      <ellipse cx="279.688" cy="175" fill="#ADD1B2" rx="34.375" ry="34.375" style="stroke:#181818;stroke-width:3.125;"/>
+      <text fill="#000" font-family="monospace" font-size="43.75" x="264.063" y="190.625">C</text>
+      <text fill="#000" font-size="43.75" textLength="60.703" x="323.438" y="187.153">foo</text>
+      <line style="stroke:#181818;stroke-width:1.563;" x1="235.938" x2="390.391" y1="225" y2="225"/>
+      <line style="stroke:#181818;stroke-width:1.563;" x1="235.938" x2="390.391" y1="250" y2="250"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="5" id="ent0003">
+      <path d="M18.75,162.5 L18.75,234.375 A0,0 0 0 0 18.75,234.375 L174.512,234.375 A0,0 0 0 0 174.512,234.375 L174.512,218.75 L232.055,200 L174.512,193.75 L174.512,193.75 L143.262,162.5 L18.75,162.5 A0,0 0 0 0 18.75,162.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1.563;"/>
+      <path d="M143.262,162.5 L143.262,193.75 L174.512,193.75 L143.262,162.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1.563;"/>
+      <text fill="#000" font-size="40.625" textLength="90.137" x="37.5" y="209.722">short</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN5" data-source-line="9" id="ent0006">
+      <path d="M448.438,82.813 L448.438,187.5 L393.372,200 L448.438,212.5 L448.438,317.188 A0,0 0 0 0 448.438,317.188 L956.875,317.188 A0,0 0 0 0 956.875,317.188 L956.875,114.063 L925.625,82.813 L448.438,82.813 A0,0 0 0 0 448.438,82.813" fill="#FEFFDD" style="stroke:#181818;stroke-width:1.563;"/>
+      <path d="M925.625,82.813 L925.625,114.063 L956.875,114.063 L925.625,82.813" fill="#FEFFDD" style="stroke:#181818;stroke-width:1.563;"/>
+      <text fill="#000" font-size="40.625" textLength="442.813" x="467.188" y="130.035">But this one is very long and</text>
+      <text fill="#000" font-size="40.625" textLength="291.738" x="467.188" y="170.66">is on several line 1</text>
+      <text fill="#000" font-size="40.625" textLength="291.738" x="467.188" y="211.285">is on several line 2</text>
+      <text fill="#000" font-size="40.625" textLength="291.738" x="467.188" y="251.91">is on several line 3</text>
+      <text fill="#000" font-size="40.625" textLength="291.738" x="467.188" y="292.535">is on several line 4</text>
+    </g>
+    <!--class foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="16" id="ent0008">
+      <rect fill="#F1F1F1" height="325" rx="7.813" ry="7.813" style="stroke:#181818;stroke-width:1.563;" width="185.039" x="1014.063" y="37.5"/>
+      <ellipse cx="1060.938" cy="87.5" fill="#ADD1B2" rx="34.375" ry="34.375" style="stroke:#181818;stroke-width:3.125;"/>
+      <text fill="#000" font-family="monospace" font-size="43.75" x="1045.313" y="103.125">C</text>
+      <text fill="#000" font-size="43.75" textLength="85.039" x="1104.688" y="99.653">foo2</text>
+      <line style="stroke:#181818;stroke-width:1.563;" x1="1017.188" x2="1195.977" y1="137.5" y2="137.5"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="1048.438" cy="176.563" fill="none" rx="9.375" ry="9.375" style="stroke:#038048;stroke-width:3.125;"/>
+      </g>
+      <text fill="#000" font-size="43.75" textLength="94.609" x="1076.563" y="184.028">test1</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="1048.438,204.688,1060.938,217.188,1048.438,229.688,1035.938,217.188" style="stroke:#B38D22;stroke-width:3.125;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="43.75" textLength="94.609" x="1076.563" y="227.778">test2</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="18.75" style="stroke:#C82930;stroke-width:3.125;" width="18.75" x="1039.063" y="254.688"/>
+      </g>
+      <text fill="#000" font-size="43.75" textLength="94.609" x="1076.563" y="271.528">test3</text>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_FIELD">
+        <polygon fill="none" points="1048.438,295.313,1035.938,314.063,1060.938,314.063" style="stroke:#1963A0;stroke-width:3.125;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="43.75" textLength="94.609" x="1076.563" y="315.278">test4</text>
+      <line style="stroke:#181818;stroke-width:1.563;" x1="1017.188" x2="1195.977" y1="337.5" y2="337.5"/>
+    </g>
+  </g>
+</svg>

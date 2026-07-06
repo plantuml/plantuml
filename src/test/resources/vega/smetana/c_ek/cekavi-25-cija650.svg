@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="162px" preserveAspectRatio="none" style="width:83px;height:162px;background:#FFFFFF;" version="1.1" viewBox="0 0 83 162" width="83px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster State1-->
+    <g class="cluster" data-qualified-name="State1" data-source-line="2" id="ent0001">
+      <path d="M26.5,4 L57.5,4 A12.5,12.5 0 0 1 70,16.5 L70,23 L14,23 L14,16.5 A12.5,12.5 0 0 1 26.5,4" fill="#F1F1F1"/>
+      <rect fill="none" height="134" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="56" x="14" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="70" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="21.788" y="14.889">State1</text>
+    </g>
+    <g class="end_entity" data-qualified-name="State1..end.State1" data-source-line="5" id="ent0002">
+      <ellipse cx="45" cy="117" fill="none" rx="11" ry="11" style="stroke:#222;stroke-width:1;"/>
+      <ellipse cx="45" cy="117" fill="#222" rx="6" ry="6" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="45,105.888,49,96.888,45,100.888,41,96.888,45,105.888" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M45,53.067 C45,67.246 45,86.686 45,100.888" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="47" y="83.111">d</text>
+    </g>
+  </g>
+</svg>

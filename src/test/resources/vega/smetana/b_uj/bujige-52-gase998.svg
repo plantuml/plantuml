@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="160px" preserveAspectRatio="none" style="width:183px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 183 160" width="183px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster srv1-->
+    <g class="cluster" data-qualified-name="srv1" data-source-line="3" id="ent0001">
+      <polygon fill="none" points="61,14,71,4,167,4,167,30,157,40,61,40,61,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="157" x2="167" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="61" x2="157" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="157" x2="157" y1="14" y2="40"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="96.788" y="27.889">srv1</text>
+    </g>
+    <!--cluster srv2-->
+    <g class="cluster" data-qualified-name="srv2" data-source-line="7" id="ent0003">
+      <polygon fill="none" points="48.5,84,58.5,74,144.5,74,144.5,100,134.5,110,48.5,110,48.5,84" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="134.5" x2="144.5" y1="84" y2="74"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="48.5" x2="134.5" y1="84" y2="84"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="134.5" x2="134.5" y1="84" y2="110"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="79.288" y="97.889">srv2</text>
+    </g>
+    <g class="entity" data-qualified-name="srv1.br0" data-source-line="4" id="ent0002">
+      <text fill="#000" font-size="14" textLength="20.213" x="68.894" y="56.889">br0</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="73" y="34"/>
+    </g>
+    <g class="entity" data-qualified-name="srv2.br0" data-source-line="8" id="ent0004">
+      <text fill="#000" font-size="14" textLength="20.213" x="68.894" y="126.889">br0</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="73" y="104"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="81,103.98,85,94.98,81,98.98,77,94.98,81,103.98" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M81,58.229 C81,70.904 81,86.392 81,98.98" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

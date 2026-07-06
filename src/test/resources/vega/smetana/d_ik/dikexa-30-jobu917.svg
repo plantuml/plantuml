@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="184px" preserveAspectRatio="none" style="width:290px;height:184px;background:#FFFFFF;" version="1.1" viewBox="0 0 290 184" width="290px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity toto-->
+    <g class="entity" data-qualified-name="toto" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.275" x="35.86" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="79.135" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="77.135" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="77.135" y="23"/>
+      <text fill="#000" font-size="14" textLength="23.275" x="50.86" y="42.889">toto</text>
+    </g>
+    <!--entity titi-->
+    <g class="entity" data-qualified-name="titi" data-source-line="2" id="ent0002">
+      <ellipse cx="18.36" cy="149" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="14" x="11.36" y="176.889">titi</text>
+    </g>
+    <!--entity titi1-->
+    <g class="entity" data-qualified-name="titi1" data-source-line="4" id="ent0004">
+      <ellipse cx="116.36" cy="149" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="21.787" x="105.467" y="176.889">titi1</text>
+    </g>
+    <!--entity foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="9" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.425" x="203.86" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="243.285" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="241.285" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="241.285" y="23"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="218.86" y="42.889">foo</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN7" data-source-line="10" id="ent0008">
+      <path d="M117.36,22 L117.36,45 A0,0 0 0 0 117.36,45 L185.323,45 A0,0 0 0 0 185.323,45 L185.323,40 L203.531,34 L185.323,32 L185.323,32 L175.323,22 L117.36,22 A0,0 0 0 0 117.36,22" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M175.323,22 L175.323,32 L185.323,32 L175.323,22" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="46.963" x="123.36" y="37.111">this is left</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="15.695,139.877,17.843,130.265,14.71,134.975,10,131.842,15.695,139.877" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M35.799,53.991 C29.193,59.56 23.102,66.268 19.36,74 C8.994,95.42 11.574,119.378 14.71,134.975" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="18.038" x="47.86" y="85.111">foo</text>
+      <path d="M24.36,94 L24.36,117 L89.36,117 L89.36,104 L79.36,94 L24.36,94" fill="#F00" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M79.36,94 L79.36,104 L89.36,104 L79.36,94" fill="#F00" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="44.037" x="30.36" y="109.111">note red</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="114.375,139.882,116.573,130.282,113.415,134.975,108.721,131.818,114.375,139.882" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M83.822,56.099 C87.664,61.701 91.472,67.896 94.36,74 C104.885,96.244 110.413,119.631 113.415,134.975" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M115.36,80 L115.36,116 L259.36,116 L259.36,90 L249.36,80 L115.36,80" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M249.36,80 L249.36,90 L259.36,90 L249.36,80" fill="#00F" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="123.581" x="121.36" y="95.111">this is my note on left link</text>
+      <text fill="#000" font-size="13" textLength="24.619" x="121.36" y="108.111">blue</text>
+      <text fill="#000" font-size="13" textLength="18.038" x="265.942" y="101.611">foo</text>
+    </g>
+  </g>
+</svg>

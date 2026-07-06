@@ -1,0 +1,379 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="1005px" preserveAspectRatio="none" style="width:708px;height:1005px;background:#FFFFFF;" version="1.1" viewBox="0 0 708 1005" width="708px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="10">
+      <text fill="#000" font-size="14" font-weight="700" textLength="212.625" x="244.188" y="20.889">EWS Top-level Static Class Diagram</text>
+    </g>
+    <!--cluster app-->
+    <g class="cluster" data-qualified-name="app" data-source-line="11" id="ent0001">
+      <path d="M114.5,39 L138.863,39 A3.75,3.75 0 0 1 141.363,41.5 L148.363,59 L697.5,59 A2.5,2.5 0 0 1 700,61.5 L700,583.5 A2.5,2.5 0 0 1 697.5,586 L114.5,586 A2.5,2.5 0 0 1 112,583.5 L112,41.5 A2.5,2.5 0 0 1 114.5,39" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="112" x2="148.363" y1="59" y2="59"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="23.363" x="116" y="51.889">app</text>
+    </g>
+    <!--cluster drawables-->
+    <g class="cluster" data-qualified-name="app.drawables" data-source-line="12" id="ent0002">
+      <path d="M174.5,257 L239.375,257 A3.75,3.75 0 0 1 241.875,259.5 L248.875,277 L689.5,277 A2.5,2.5 0 0 1 692,279.5 L692,407.5 A2.5,2.5 0 0 1 689.5,410 L174.5,410 A2.5,2.5 0 0 1 172,407.5 L172,259.5 A2.5,2.5 0 0 1 174.5,257" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="172" x2="248.875" y1="277" y2="277"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="63.875" x="176" y="269.889">drawables</text>
+    </g>
+    <!--cluster widget-->
+    <g class="cluster" data-qualified-name="app.widget" data-source-line="30" id="ent0013">
+      <path d="M122.5,64 L164.013,64 A3.75,3.75 0 0 1 166.513,66.5 L173.513,84 L615.5,84 A2.5,2.5 0 0 1 618,86.5 L618,214.5 A2.5,2.5 0 0 1 615.5,217 L122.5,217 A2.5,2.5 0 0 1 120,214.5 L120,66.5 A2.5,2.5 0 0 1 122.5,64" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="120" x2="173.513" y1="84" y2="84"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.512" x="124" y="76.889">widget</text>
+    </g>
+    <!--cluster model-->
+    <g class="cluster" data-qualified-name="app.model" data-source-line="47" id="ent0024">
+      <path d="M154.5,418 L193.65,418 A3.75,3.75 0 0 1 196.15,420.5 L203.15,438 L515.5,438 A2.5,2.5 0 0 1 518,440.5 L518,575.5 A2.5,2.5 0 0 1 515.5,578 L154.5,578 A2.5,2.5 0 0 1 152,575.5 L152,420.5 A2.5,2.5 0 0 1 154.5,418" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="152" x2="203.15" y1="438" y2="438"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="156" y="430.889">model</text>
+    </g>
+    <!--cluster physics-->
+    <g class="cluster" data-qualified-name="physics" data-source-line="62" id="ent0033">
+      <path d="M16.5,594 L64.225,594 A3.75,3.75 0 0 1 66.725,596.5 L73.725,614 L574.5,614 A2.5,2.5 0 0 1 577,616.5 L577,978.5 A2.5,2.5 0 0 1 574.5,981 L16.5,981 A2.5,2.5 0 0 1 14,978.5 L14,596.5 A2.5,2.5 0 0 1 16.5,594" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="73.725" y1="614" y2="614"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="46.725" x="18" y="606.889">physics</text>
+    </g>
+    <g class="entity" data-qualified-name="app.drawables.N3" data-source-line="14" id="ent0003">
+      <path d="M548.5,285 L548.5,321 L683.656,321 L683.656,295 L673.656,285 L548.5,285" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M673.656,285 L673.656,295 L683.656,295 L673.656,285" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="114.156" x="554.5" y="300.111">3-D representation in</text>
+      <text fill="#000" font-size="13" textLength="104.731" x="554.5" y="313.111">OpenSceneGraph</text>
+    </g>
+    <!--class DrawableAdapter-->
+    <g class="entity" data-qualified-name="app.drawables.DrawableAdapter" data-source-line="17" id="ent0004">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="134.238" x="396" y="282"/>
+      <ellipse cx="408" cy="295" fill="#A52A2A" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="403" y="300">M</text>
+      <text fill="#000" font-size="14" textLength="108.238" x="419" y="298.889">DrawableAdapter</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="397" x2="529.238" y1="308" y2="308"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="397" x2="529.238" y1="316" y2="316"/>
+    </g>
+    <!--class WaterSurfaceGeom-->
+    <g class="entity" data-qualified-name="app.drawables.WaterSurfaceGeom" data-source-line="18" id="ent0005">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="149.55" x="399" y="360"/>
+      <ellipse cx="411" cy="373" fill="#ADD8E6" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="406" y="378">O</text>
+      <text fill="#000" font-size="14" textLength="123.55" x="422" y="376.889">WaterSurfaceGeom</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="400" x2="547.55" y1="386" y2="386"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="400" x2="547.55" y1="394" y2="394"/>
+    </g>
+    <!--class BarrierGeom-->
+    <g class="entity" data-qualified-name="app.drawables.BarrierGeom" data-source-line="19" id="ent0006">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.063" x="567" y="360"/>
+      <ellipse cx="579" cy="373" fill="#ADD8E6" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="574" y="378">O</text>
+      <text fill="#000" font-size="14" textLength="80.063" x="590" y="376.889">BarrierGeom</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="568" x2="672.063" y1="386" y2="386"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="568" x2="672.063" y1="394" y2="394"/>
+    </g>
+    <!--class FaucetGeom-->
+    <g class="entity" data-qualified-name="app.drawables.FaucetGeom" data-source-line="20" id="ent0007">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="106.85" x="273.5" y="360"/>
+      <ellipse cx="285.5" cy="373" fill="#ADD8E6" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="280.5" y="378">O</text>
+      <text fill="#000" font-size="14" textLength="80.85" x="296.5" y="376.889">FaucetGeom</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="274.5" x2="379.35" y1="386" y2="386"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="274.5" x2="379.35" y1="394" y2="394"/>
+    </g>
+    <g class="entity" data-qualified-name="app.drawables.N4" data-source-line="25" id="ent0011">
+      <path d="M180.5,285 L180.5,321 A0,0 0 0 0 180.5,321 L377.081,321 A0,0 0 0 0 377.081,321 L377.081,307 L395.794,303 L377.081,299 L377.081,295 L367.081,285 L180.5,285 A0,0 0 0 0 180.5,285" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M367.081,285 L367.081,295 L377.081,295 L367.081,285" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="108.306" x="186.5" y="300.111">Adapter between Qt</text>
+      <text fill="#000" font-size="13" textLength="175.581" x="186.5" y="313.111">and OpenSceneGraph domains</text>
+    </g>
+    <g class="entity" data-qualified-name="app.widget.N2" data-source-line="32" id="ent0014">
+      <path d="M440.5,98 L440.5,121 L609.538,121 L609.538,108 L599.538,98 L440.5,98" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M599.538,98 L599.538,108 L609.538,108 L599.538,98" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="148.038" x="446.5" y="113.111">User interface components</text>
+    </g>
+    <!--class EWSMainWindow-->
+    <g class="entity" data-qualified-name="app.widget.EWSMainWindow" data-source-line="34" id="ent0015">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.175" x="284" y="89"/>
+      <ellipse cx="296" cy="102" fill="#FFA500" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="291" y="107">W</text>
+      <text fill="#000" font-size="14" textLength="112.175" x="307" y="105.889">EWSMainWindow</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="285" x2="421.175" y1="115" y2="115"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="285" x2="421.175" y1="123" y2="123"/>
+    </g>
+    <!--class SimulationEditor-->
+    <g class="entity" data-qualified-name="app.widget.SimulationEditor" data-source-line="35" id="ent0016">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="128.025" x="128" y="167"/>
+      <ellipse cx="140" cy="180" fill="#FFA500" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="135" y="185">W</text>
+      <text fill="#000" font-size="14" textLength="102.025" x="151" y="183.889">SimulationEditor</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="129" x2="255.025" y1="193" y2="193"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="129" x2="255.025" y1="201" y2="201"/>
+    </g>
+    <!--class SimulationControls-->
+    <g class="entity" data-qualified-name="app.widget.SimulationControls" data-source-line="36" id="ent0017">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="143.6" x="274" y="167"/>
+      <ellipse cx="286" cy="180" fill="#FFA500" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="281" y="185">W</text>
+      <text fill="#000" font-size="14" textLength="117.6" x="297" y="183.889">SimulationControls</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="275" x2="416.6" y1="193" y2="193"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="275" x2="416.6" y1="201" y2="201"/>
+    </g>
+    <!--class OSGWidget-->
+    <g class="entity" data-qualified-name="app.widget.OSGWidget" data-source-line="37" id="ent0018">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="100.638" x="436.5" y="167"/>
+      <ellipse cx="448.5" cy="180" fill="#A52A2A" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="443.5" y="185">M</text>
+      <text fill="#000" font-size="14" textLength="74.638" x="459.5" y="183.889">OSGWidget</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="437.5" x2="536.138" y1="193" y2="193"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="437.5" x2="536.138" y1="201" y2="201"/>
+    </g>
+    <g class="entity" data-qualified-name="app.widget.N0" data-source-line="42" id="ent0022">
+      <path d="M128.5,92 L128.5,128 A0,0 0 0 0 128.5,128 L191.865,128 L193.325,166.862 L199.865,128 L265.119,128 A0,0 0 0 0 265.119,128 L265.119,102 L255.119,92 L128.5,92 A0,0 0 0 0 128.5,92" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M255.119,92 L255.119,102 L265.119,102 L255.119,92" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="115.619" x="134.5" y="107.111">Composed of several</text>
+      <text fill="#000" font-size="13" textLength="108.225" x="134.5" y="120.111">form-based editors.</text>
+    </g>
+    <!--class SimulationState-->
+    <g class="entity" data-qualified-name="app.model.SimulationState" data-source-line="48" id="ent0025">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="124.088" x="386" y="446.5"/>
+      <ellipse cx="398" cy="459.5" fill="#DA70D6" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="393" y="464.5">Q</text>
+      <text fill="#000" font-size="14" textLength="98.088" x="409" y="463.389">SimulationState</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="387" x2="509.088" y1="472.5" y2="472.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="387" x2="509.088" y1="480.5" y2="480.5"/>
+    </g>
+    <!--class DripSource-->
+    <g class="entity" data-qualified-name="app.model.DripSource" data-source-line="49" id="ent0026">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.087" x="198" y="528"/>
+      <ellipse cx="210" cy="541" fill="#DA70D6" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="205" y="546">Q</text>
+      <text fill="#000" font-size="14" textLength="70.087" x="221" y="544.889">DripSource</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="199" x2="293.088" y1="554" y2="554"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="199" x2="293.088" y1="562" y2="562"/>
+    </g>
+    <!--class Barrier-->
+    <g class="entity" data-qualified-name="app.model.Barrier" data-source-line="50" id="ent0027">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="68" x="442" y="528"/>
+      <ellipse cx="454" cy="541" fill="#DA70D6" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="449" y="546">Q</text>
+      <text fill="#000" font-size="14" textLength="42" x="465" y="544.889">Barrier</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="443" x2="509" y1="554" y2="554"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="443" x2="509" y1="562" y2="562"/>
+    </g>
+    <!--class WaveMedium-->
+    <g class="entity" data-qualified-name="app.model.WaveMedium" data-source-line="51" id="ent0028">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="111.575" x="312" y="528"/>
+      <ellipse cx="324" cy="541" fill="#DA70D6" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="319" y="546">Q</text>
+      <text fill="#000" font-size="14" textLength="85.575" x="335" y="544.889">WaveMedium</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="313" x2="422.575" y1="554" y2="554"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="313" x2="422.575" y1="562" y2="562"/>
+    </g>
+    <g class="entity" data-qualified-name="app.model.N1" data-source-line="56" id="ent0032">
+      <path d="M160.5,443 L160.5,492 L367.969,492 L367.969,453 L357.969,443 L160.5,443" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M357.969,443 L357.969,453 L367.969,453 L357.969,443" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="186.469" x="166.5" y="458.111">The session package is the primary</text>
+      <text fill="#000" font-size="13" textLength="181.35" x="166.5" y="471.111">separation layer between the user</text>
+      <text fill="#000" font-size="13" textLength="145.844" x="166.5" y="484.111">interface and the simulator.</text>
+    </g>
+    <!--class WaveModel-->
+    <g class="entity" data-qualified-name="physics.WaveModel" data-source-line="63" id="ent0034">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="99.938" x="201" y="697"/>
+      <ellipse cx="213" cy="710" fill="#ADD1B2" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="208" y="715">C</text>
+      <text fill="#000" font-size="14" textLength="73.938" x="224" y="713.889">WaveModel</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="202" x2="299.938" y1="723" y2="723"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="202" x2="299.938" y1="731" y2="731"/>
+    </g>
+    <!--class Lattice-->
+    <g class="entity" data-qualified-name="physics.Lattice" data-source-line="64" id="ent0035">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.213" x="334.5" y="775"/>
+      <ellipse cx="346.5" cy="788" fill="#ADD1B2" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="341.5" y="793">C</text>
+      <text fill="#000" font-size="14" textLength="41.213" x="357.5" y="791.889">Lattice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="335.5" x2="400.713" y1="801" y2="801"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="335.5" x2="400.713" y1="809" y2="809"/>
+    </g>
+    <!--class Oscillator-->
+    <g class="entity" data-qualified-name="physics.Oscillator" data-source-line="65" id="ent0036">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.363" x="207" y="619"/>
+      <ellipse cx="219" cy="632" fill="#ADD1B2" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="214" y="637">C</text>
+      <text fill="#000" font-size="14" textLength="58.363" x="230" y="635.889">Oscillator</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="208" x2="290.363" y1="645" y2="645"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="208" x2="290.363" y1="653" y2="653"/>
+    </g>
+    <!--class WavePropagator-->
+    <g class="entity" data-qualified-name="physics.WavePropagator" data-source-line="66" id="ent0037">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="131" x="185.5" y="775"/>
+      <ellipse cx="197.5" cy="788" fill="#ADD1B2" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="192.5" y="793">C</text>
+      <text fill="#000" font-size="14" textLength="105" x="208.5" y="791.889">WavePropagator</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="186.5" x2="315.5" y1="801" y2="801"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="186.5" x2="315.5" y1="809" y2="809"/>
+    </g>
+    <g class="entity" data-qualified-name="physics.N5" data-source-line="72" id="ent0042">
+      <path d="M28,622 L28,658 L176.156,658 L176.156,632 L166.156,622 L28,622" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M166.156,622 L166.156,632 L176.156,632 L166.156,622" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="123.581" x="34" y="637.111">Wave propagation and</text>
+      <text fill="#000" font-size="13" textLength="127.156" x="34" y="650.111">interference simulation</text>
+    </g>
+    <!--class Potential-->
+    <g class="entity" data-qualified-name="physics.Potential" data-source-line="75" id="ent0043">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.512" x="215.5" y="853"/>
+      <ellipse cx="227.5" cy="866" fill="#A9DCDF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="222.5" y="871">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="54.512" x="238.5" y="869.889">Potential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="216.5" x2="295.013" y1="879" y2="879"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="216.5" x2="295.013" y1="887" y2="887"/>
+    </g>
+    <!--class CompositePotential-->
+    <g class="entity" data-qualified-name="physics.CompositePotential" data-source-line="76" id="ent0044">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="147.45" x="22.5" y="931"/>
+      <ellipse cx="34.5" cy="944" fill="#ADD1B2" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="29.5" y="949">C</text>
+      <text fill="#000" font-size="14" textLength="121.45" x="45.5" y="947.889">CompositePotential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="168.95" y1="957" y2="957"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="168.95" y1="965" y2="965"/>
+    </g>
+    <!--class ConstantPotential-->
+    <g class="entity" data-qualified-name="physics.ConstantPotential" data-source-line="78" id="ent0047">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.513" x="187.5" y="931"/>
+      <ellipse cx="199.5" cy="944" fill="#ADD1B2" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="194.5" y="949">C</text>
+      <text fill="#000" font-size="14" textLength="110.513" x="210.5" y="947.889">ConstantPotential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188.5" x2="323.013" y1="957" y2="957"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188.5" x2="323.013" y1="965" y2="965"/>
+    </g>
+    <!--class SlitPotential-->
+    <g class="entity" data-qualified-name="physics.SlitPotential" data-source-line="79" id="ent0049">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="100.025" x="343" y="931"/>
+      <ellipse cx="355" cy="944" fill="#ADD1B2" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="350" y="949">C</text>
+      <text fill="#000" font-size="14" textLength="74.025" x="366" y="947.889">SlitPotential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="344" x2="442.025" y1="957" y2="957"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="344" x2="442.025" y1="965" y2="965"/>
+    </g>
+    <!--class WallPotential-->
+    <g class="entity" data-qualified-name="physics.WallPotential" data-source-line="80" id="ent0051">
+      <rect fill="#F1F1F1" height="42" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.813" x="461" y="931"/>
+      <ellipse cx="473" cy="944" fill="#ADD1B2" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="468" y="949">C</text>
+      <text fill="#000" font-size="14" textLength="81.813" x="484" y="947.889">WallPotential</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="462" x2="567.813" y1="957" y2="957"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="462" x2="567.813" y1="965" y2="965"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="extension" id="lnk8">
+      <polygon fill="none" points="465.948,324.367,462.588,343.04,474.464,341.322,465.948,324.367" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M468.526,342.181 C470.117,353.173 469.496,348.881 471.082,359.841" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="extension" id="lnk9">
+      <polygon fill="none" points="504.661,324.167,518.248,337.41,523.477,326.609,504.661,324.167" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M520.862,332.01 C543.664,343.048 555.627,348.839 578.417,359.871" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="426.912,324.167,408.272,327.71,414.125,338.186,426.912,324.167" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M411.199,332.948 C391.525,343.942 382.957,348.73 363.257,359.739" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0016" data-link-type="extension" id="lnk19">
+      <polygon fill="none" points="310.278,131.167,291.439,133.425,296.561,144.277,310.278,131.167" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M294,138.851 C270.617,149.889 258.013,155.839 234.642,166.871" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0018" data-link-type="extension" id="lnk20">
+      <polygon fill="none" points="388.558,131.167,401.255,145.266,407.175,134.828,388.558,131.167" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M404.215,140.047 C423.599,151.041 431.866,155.73 451.276,166.739" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0017" data-link-type="extension" id="lnk21">
+      <polygon fill="none" points="351.124,131.367,343.499,148.74,355.448,149.841,351.124,131.367" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M349.473,149.291 C348.461,160.283 348.866,155.881 347.857,166.841" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0026" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="294.175,529.04,304.015,529.466,298.828,527.209,301.085,522.022,294.175,529.04" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M397.027,488.561 C365.47,500.981 329.849,515 298.828,527.209" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0027" data-link-type="dependency" id="lnk30">
+      <polygon fill="#181818" points="468.937,527.945,469.72,518.128,467.276,523.229,462.174,520.785,468.937,527.945" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M455.066,488.561 C459.31,500.613 463.031,511.179 467.276,523.229" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0025" data-entity-2="ent0028" data-link-type="dependency" id="lnk31">
+      <polygon fill="#181818" points="388.181,527.945,397.384,524.439,391.728,524.421,391.745,518.764,388.181,527.945" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M427.813,488.561 C415.685,500.613 403.854,512.37 391.728,524.421" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0036" data-entity-2="ent0034" data-link-type="dependency" id="lnk38">
+      <polygon fill="#181818" points="250.469,696.841,254.231,687.739,250.338,691.842,246.234,687.949,250.469,696.841" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M249.536,661.367 C249.825,672.359 250.05,680.882 250.338,691.842" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0034" data-entity-2="ent0035" data-link-type="dependency" id="lnk39">
+      <polygon fill="#181818" points="336.808,774.739,331.44,766.482,332.615,772.015,327.082,773.19,336.808,774.739" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M282.047,739.167 C298.971,750.161 315.668,761.007 332.615,772.015" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0034" data-entity-2="ent0037" data-link-type="dependency" id="lnk40">
+      <polygon fill="#181818" points="251,774.841,255,765.841,251,769.841,247,765.841,251,774.841" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M251,739.367 C251,750.359 251,758.881 251,769.841" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0037" data-entity-2="ent0035" data-link-type="dependency" id="lnk41">
+      <polygon fill="#181818" points="334.408,796,325.408,792,329.408,796,325.408,800,334.408,796" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M316.813,796 C322.678,796 323.543,796 329.408,796" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0043" data-entity-2="ent0044" data-link-type="extension" id="lnk45">
+      <polygon fill="none" points="215.188,891.679,196.313,893.614,201.249,904.551,215.188,891.679" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M198.781,899.083 C173.123,910.662 156.821,918.742 132.105,930.987" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0044" data-entity-2="ent0043" data-link-type="dependency" id="lnk46">
+      <polygon fill="#181818" points="219.583,895.167,209.743,895.576,215.103,897.386,213.293,902.745,219.583,895.167" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M144.415,930.871 C168.589,919.839 192.812,908.424 215.103,897.386" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0043" data-entity-2="ent0047" data-link-type="extension" id="lnk48">
+      <polygon fill="none" points="256,895.367,250,913.367,262,913.367,256,895.367" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M256,913.367 C256,924.359 256,919.881 256,930.841" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0043" data-entity-2="ent0049" data-link-type="extension" id="lnk50">
+      <polygon fill="none" points="292.354,895.167,305.183,909.146,311.005,898.652,292.354,895.167" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M308.094,903.899 C327.912,914.893 336.632,919.73 356.476,930.739" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0043" data-entity-2="ent0051" data-link-type="extension" id="lnk52">
+      <polygon fill="none" points="296.642,886.24,312.37,896.853,315.592,885.294,296.642,886.24" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M313.981,891.074 C353.691,902.144 398.465,914.858 452,931 C454.857,931.861 457.783,932.754 460.735,933.663" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0037" data-entity-2="ent0043" data-link-type="dependency" id="lnk53">
+      <polygon fill="#181818" points="254.674,852.841,258.074,843.598,254.345,847.851,250.092,844.123,254.674,852.841" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M252.34,817.367 C253.063,828.359 253.624,836.891 254.345,847.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0026" data-entity-2="ent0036" data-link-type="dependency" id="lnk54">
+      <polygon fill="#181818" points="248.322,618.884,252.016,609.755,248.154,613.887,244.021,610.024,248.322,618.884" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M246.681,570.195 C247.172,584.761 247.663,599.34 248.154,613.887" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0027" data-entity-2="ent0043" data-link-type="dependency" id="lnk55">
+      <polygon fill="#181818" points="296.597,868.82,306.128,871.302,301.531,868.006,304.827,863.409,296.597,868.82" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M477.017,570.324 C478.331,619.261 474.798,744.91 410,817 C380.903,849.372 336.511,862.238 301.531,868.006" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0028" data-entity-2="ent0035" data-link-type="dependency" id="lnk56">
+      <polygon fill="#181818" points="368,774.674,372,765.674,368,769.674,364,765.674,368,774.674" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M368,570.049 C368,615.991 368,723.465 368,769.674" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0026" data-link-type="dependency" id="lnk57">
+      <polygon fill="#181818" points="197.898,534.913,190.928,527.955,193.23,533.122,188.063,535.424,197.898,534.913" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M166.63,209.03 C155.766,218.817 143.807,231.408 136,245 C122.953,267.716 121,275.804 121,302 C121,302 121,302 121,382 C121,431.341 107.423,451.777 136,492 C150.77,512.789 170.909,524.56 193.23,533.122" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0027" data-link-type="dependency" id="lnk58">
+      <polygon fill="#181818" points="441.621,530.897,434.619,523.971,436.945,529.128,431.788,531.453,441.621,530.897" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M176.41,209.013 C167.06,222.002 155.716,239.679 149,257 C141.656,275.94 141,281.686 141,302 C141,302 141,302 141,382 C141,431.09 116.924,456.663 151,492 C194.853,537.475 372.305,510.471 433,528 C435.848,528.822 434.068,528.04 436.945,529.128" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0025" data-link-type="dependency" id="lnk59">
+      <polygon fill="#181818" points="425.439,446.492,420.855,437.775,421.515,443.393,415.897,444.053,425.439,446.492" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M288.863,209.072 C238.217,227.133 171.693,251.636 168,257 C148.72,285.005 144.425,385.501 168,410 C184.037,426.665 354.014,410.821 376,418 C394.195,423.941 408.133,432.825 421.515,443.393" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0018" data-entity-2="ent0004" data-link-type="dependency" id="lnk60">
+      <polygon fill="#181818" points="467.254,281.973,473.036,274,468.292,277.082,465.211,272.338,467.254,281.973" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M482.709,209.202 C478.341,229.77 472.647,256.577 468.292,277.082" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0028" data-link-type="dependency" id="lnk61">
+      <polygon fill="#181818" points="424.205,530.515,433.993,531.609,428.972,529.004,431.576,523.983,424.205,530.515" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M517.856,402.067 C523.521,406.507 528.543,411.786 532,418 C547.988,446.741 551.133,465.249 532,492 C528.642,496.695 475.114,514.383 428.972,529.004" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0027" data-link-type="dependency" id="lnk62">
+      <polygon fill="#181818" points="503.199,527.956,512.744,525.528,507.127,524.862,507.793,519.244,503.199,527.956" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M608.097,402.243 C594.072,425.249 569.326,463.322 543,492 C531.005,505.066 519.907,514.792 507.127,524.862" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0026" data-link-type="dependency" id="lnk63">
+      <polygon fill="#181818" points="294.023,530.496,303.789,531.766,298.816,529.072,301.511,524.098,294.023,530.496" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M366.576,402.132 C374.183,405.267 382.211,408.093 390,410 C403.949,413.415 509.165,407.536 519,418 C541.525,441.965 540.259,466.905 519,492 C487.546,529.13 350.134,515.899 303,528 C300.054,528.756 301.837,528.174 298.816,529.072" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

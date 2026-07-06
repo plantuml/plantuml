@@ -1,0 +1,1356 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="2677px" preserveAspectRatio="none" style="width:3057px;height:2677px;background:#FFFFFF;" version="1.1" viewBox="0 0 3057 2677" width="3057px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="160.963" x="10" y="651"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.238" x="15" y="663.889">apiVersion</text>
+    <text fill="#000" font-size="14" textLength="49" x="91.238" y="663.889">apps/v1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="651" y2="669"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="170.963" y1="669" y2="669"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="15" y="681.889">kind</text>
+    <text fill="#000" font-size="14" textLength="74.725" x="91.238" y="681.889">Deployment</text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="669" y2="687"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="170.963" y1="687" y2="687"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="58.275" x="15" y="699.889">metadata</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="91.238" y="699.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="687" y2="705"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="170.963" y1="705" y2="705"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="15" y="717.889">spec</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="91.238" y="717.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="86.238" x2="86.238" y1="705" y2="723"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="160.963" x="10" y="651"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="157.725" x="208" y="642"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="36.663" x="213" y="654.889">labels</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="295.363" y="654.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="290.363" x2="290.363" y1="642" y2="660"/>
+    <line style="stroke:#000;stroke-width:1;" x1="208" x2="365.725" y1="660" y2="660"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="213" y="672.889">name</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="295.363" y="672.889">grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="290.363" x2="290.363" y1="660" y2="678"/>
+    <line style="stroke:#000;stroke-width:1;" x1="208" x2="365.725" y1="678" y2="678"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="72.363" x="213" y="690.889">namespace</text>
+    <text fill="#000" font-size="14" textLength="65.363" x="295.363" y="690.889">monitoring</text>
+    <line style="stroke:#000;stroke-width:1;" x1="290.363" x2="290.363" y1="678" y2="696"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="157.725" x="208" y="642"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="313.125" x="403" y="615"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="184.275" x="408" y="627.889">app.kubernetes.io/component</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="602.275" y="627.889">grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="597.275" x2="597.275" y1="615" y2="633"/>
+    <line style="stroke:#000;stroke-width:1;" x1="403" x2="716.125" y1="633" y2="633"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="150.063" x="408" y="645.889">app.kubernetes.io/name</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="602.275" y="645.889">grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="597.275" x2="597.275" y1="633" y2="651"/>
+    <line style="stroke:#000;stroke-width:1;" x1="403" x2="716.125" y1="651" y2="651"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="155.4" x="408" y="663.889">app.kubernetes.io/part-of</text>
+    <text fill="#000" font-size="14" textLength="108.85" x="602.275" y="663.889">kube-prometheus</text>
+    <line style="stroke:#000;stroke-width:1;" x1="597.275" x2="597.275" y1="651" y2="669"/>
+    <line style="stroke:#000;stroke-width:1;" x1="403" x2="716.125" y1="669" y2="669"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="160.213" x="408" y="681.889">app.kubernetes.io/version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="602.275" y="681.889">7.3.7</text>
+    <line style="stroke:#000;stroke-width:1;" x1="597.275" x2="597.275" y1="669" y2="687"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="313.125" x="403" y="615"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="81.425" x="246.5" y="714"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="48.3" x="251.5" y="726.889">replicas</text>
+    <text fill="#000" font-size="14" x="315.138" y="726.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.138" x2="310.138" y1="714" y2="732"/>
+    <line style="stroke:#000;stroke-width:1;" x1="246.5" x2="327.925" y1="732" y2="732"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49" x="251.5" y="744.889">selector</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="315.138" y="744.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.138" x2="310.138" y1="732" y2="750"/>
+    <line style="stroke:#000;stroke-width:1;" x1="246.5" x2="327.925" y1="750" y2="750"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="251.5" y="762.889">template</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="315.138" y="762.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="310.138" x2="310.138" y1="750" y2="768"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="81.425" x="246.5" y="714"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="99.363" x="510" y="719"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="79.363" x="515" y="731.889">matchLabels</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="604.363" y="731.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="599.363" x2="599.363" y1="719" y2="737"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="99.363" x="510" y="719"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="313.125" x="753" y="687"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="184.275" x="758" y="699.889">app.kubernetes.io/component</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="952.275" y="699.889">grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="947.275" x2="947.275" y1="687" y2="705"/>
+    <line style="stroke:#000;stroke-width:1;" x1="753" x2="1066.125" y1="705" y2="705"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="150.063" x="758" y="717.889">app.kubernetes.io/name</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="952.275" y="717.889">grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="947.275" x2="947.275" y1="705" y2="723"/>
+    <line style="stroke:#000;stroke-width:1;" x1="753" x2="1066.125" y1="723" y2="723"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="155.4" x="758" y="735.889">app.kubernetes.io/part-of</text>
+    <text fill="#000" font-size="14" textLength="108.85" x="952.275" y="735.889">kube-prometheus</text>
+    <line style="stroke:#000;stroke-width:1;" x1="947.275" x2="947.275" y1="723" y2="741"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="313.125" x="753" y="687"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="78.275" x="520.5" y="768"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="58.275" x="525.5" y="780.889">metadata</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="593.775" y="780.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="588.775" x2="588.775" y1="768" y2="786"/>
+    <line style="stroke:#000;stroke-width:1;" x1="520.5" x2="598.775" y1="786" y2="786"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="525.5" y="798.889">spec</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="593.775" y="798.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="588.775" x2="588.775" y1="786" y2="804"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="78.275" x="520.5" y="768"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="92.363" x="863.5" y="759"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="72.363" x="868.5" y="771.889">annotations</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="950.863" y="771.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="945.863" x2="945.863" y1="759" y2="777"/>
+    <line style="stroke:#000;stroke-width:1;" x1="863.5" x2="955.863" y1="777" y2="777"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="36.663" x="868.5" y="789.889">labels</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="950.863" y="789.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="945.863" x2="945.863" y1="777" y2="795"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="92.363" x="863.5" y="759"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="455.663" x="1103" y="714"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="195.125" x="1108" y="726.889">checksum/grafana-datasources</text>
+    <text fill="#000" font-size="14" textLength="240.538" x="1313.125" y="726.889">b559161af8b85c237ef0432d8431a19a</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1308.125" x2="1308.125" y1="714" y2="732"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="455.663" x="1103" y="714"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="313.125" x="1174.5" y="750"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="184.275" x="1179.5" y="762.889">app.kubernetes.io/component</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="1373.775" y="762.889">grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1368.775" x2="1368.775" y1="750" y2="768"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1174.5" x2="1487.625" y1="768" y2="768"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="150.063" x="1179.5" y="780.889">app.kubernetes.io/name</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="1373.775" y="780.889">grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1368.775" x2="1368.775" y1="768" y2="786"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1174.5" x2="1487.625" y1="786" y2="786"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="155.4" x="1179.5" y="798.889">app.kubernetes.io/part-of</text>
+    <text fill="#000" font-size="14" textLength="108.85" x="1373.775" y="798.889">kube-prometheus</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1368.775" x2="1368.775" y1="786" y2="804"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1174.5" x2="1487.625" y1="804" y2="804"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="160.213" x="1179.5" y="816.889">app.kubernetes.io/version</text>
+    <text fill="#000" font-size="14" textLength="31.063" x="1373.775" y="816.889">7.3.7</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1368.775" x2="1368.775" y1="804" y2="822"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="313.125" x="1174.5" y="750"/>
+    <rect fill="#F1F1F1" height="90" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="199.725" x="809.5" y="858"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="814.5" y="870.889">containers</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="956.8" y="870.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="951.8" x2="951.8" y1="858" y2="876"/>
+    <line style="stroke:#000;stroke-width:1;" x1="809.5" x2="1009.225" y1="876" y2="876"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="82.513" x="814.5" y="888.889">nodeSelector</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="956.8" y="888.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="951.8" x2="951.8" y1="876" y2="894"/>
+    <line style="stroke:#000;stroke-width:1;" x1="809.5" x2="1009.225" y1="894" y2="894"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="96.425" x="814.5" y="906.889">securityContext</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="956.8" y="906.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="951.8" x2="951.8" y1="894" y2="912"/>
+    <line style="stroke:#000;stroke-width:1;" x1="809.5" x2="1009.225" y1="912" y2="912"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="132.3" x="814.5" y="924.889">serviceAccountName</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="956.8" y="924.889">grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="951.8" x2="951.8" y1="912" y2="930"/>
+    <line style="stroke:#000;stroke-width:1;" x1="809.5" x2="1009.225" y1="930" y2="930"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.15" x="814.5" y="942.889">volumes</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="956.8" y="942.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="951.8" x2="951.8" y1="930" y2="948"/>
+    <rect fill="none" height="90" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="199.725" x="809.5" y="858"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="1326" y="840"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="852.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="1326" y="840"/>
+    <rect fill="#F1F1F1" height="126" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="251.7" x="1690" y="50"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="1695" y="62.889">env</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1803.088" y="62.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1798.088" x2="1798.088" y1="50" y2="68"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1690" x2="1941.7" y1="68" y2="68"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="1695" y="80.889">image</text>
+    <text fill="#000" font-size="14" textLength="133.613" x="1803.088" y="80.889">grafana/grafana:7.3.7</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1798.088" x2="1798.088" y1="68" y2="86"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1690" x2="1941.7" y1="86" y2="86"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1695" y="98.889">name</text>
+    <text fill="#000" font-size="14" textLength="47.425" x="1803.088" y="98.889">grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1798.088" x2="1798.088" y1="86" y2="104"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1690" x2="1941.7" y1="104" y2="104"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.063" x="1695" y="116.889">ports</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1803.088" y="116.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1798.088" x2="1798.088" y1="104" y2="122"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1690" x2="1941.7" y1="122" y2="122"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="98.088" x="1695" y="134.889">readinessProbe</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1803.088" y="134.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1798.088" x2="1798.088" y1="122" y2="140"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1690" x2="1941.7" y1="140" y2="140"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="61.425" x="1695" y="152.889">resources</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1803.088" y="152.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1798.088" x2="1798.088" y1="140" y2="158"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1690" x2="1941.7" y1="158" y2="158"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="91" x="1695" y="170.889">volumeMounts</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1803.088" y="170.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1798.088" x2="1798.088" y1="158" y2="176"/>
+    <rect fill="none" height="126" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="251.7" x="1690" y="50"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="2273" y="37"/>
+    <text fill="#000" font-size="14" x="2278" y="49.889"> </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="2273" y="37"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="2273" y="73"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="85.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="2273" y="73"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="134.363" x="2715.5" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="83.213" x="2720.5" y="22.889">containerPort</text>
+    <text fill="#000" font-size="14" textLength="31.15" x="2813.713" y="22.889">3000</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2808.713" x2="2808.713" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2715.5" x2="2849.863" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2720.5" y="40.889">name</text>
+    <text fill="#000" font-size="14" textLength="23.275" x="2813.713" y="40.889">http</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2808.713" x2="2808.713" y1="28" y2="46"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="134.363" x="2715.5" y="10"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="65.762" x="2245" y="109"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.762" x="2250" y="121.889">httpGet</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="2305.763" y="121.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2300.763" x2="2300.763" y1="109" y2="127"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="65.762" x="2245" y="109"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="111.788" x="2726.5" y="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="2731.5" y="76.889">path</text>
+    <text fill="#000" font-size="14" textLength="64.575" x="2768.713" y="76.889">/api/health</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2763.713" x2="2763.713" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2726.5" x2="2838.288" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="24.063" x="2731.5" y="94.889">port</text>
+    <text fill="#000" font-size="14" textLength="23.275" x="2768.713" y="94.889">http</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2763.713" x2="2763.713" y1="82" y2="100"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="111.788" x="2726.5" y="64"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="73.637" x="2241" y="145"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.938" x="2246" y="157.889">limits</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="2309.638" y="157.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2304.638" x2="2304.638" y1="145" y2="163"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2241" x2="2314.638" y1="163" y2="163"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="2246" y="175.889">requests</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="2309.638" y="175.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2304.638" x2="2304.638" y1="163" y2="181"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="73.637" x="2241" y="145"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="108.637" x="2728" y="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="2733" y="130.889">cpu</text>
+    <text fill="#000" font-size="14" textLength="35" x="2793.488" y="130.889">200m</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2788.488" x2="2788.488" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2728" x2="2836.638" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="50.488" x="2733" y="148.889">memory</text>
+    <text fill="#000" font-size="14" textLength="38.15" x="2793.488" y="148.889">200Mi</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2788.488" x2="2788.488" y1="136" y2="154"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="108.637" x="2728" y="118"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="108.637" x="2728" y="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="2733" y="184.889">cpu</text>
+    <text fill="#000" font-size="14" textLength="35" x="2793.488" y="184.889">100m</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2788.488" x2="2788.488" y1="172" y2="190"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2728" x2="2836.638" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="50.488" x="2733" y="202.889">memory</text>
+    <text fill="#000" font-size="14" textLength="38.15" x="2793.488" y="202.889">100Mi</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2788.488" x2="2788.488" y1="190" y2="208"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="108.637" x="2728" y="172"/>
+    <rect fill="#F1F1F1" height="468" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="2273" y="865"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="877.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="883" y2="883"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="895.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="901" y2="901"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="913.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="919" y2="919"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="931.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="937" y2="937"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="949.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="955" y2="955"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="967.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="973" y2="973"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="985.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="991" y2="991"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1003.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1009" y2="1009"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1021.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1027" y2="1027"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1039.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1045" y2="1045"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1057.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1063" y2="1063"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1075.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1081" y2="1081"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1093.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1099" y2="1099"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1111.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1117" y2="1117"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1129.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1135" y2="1135"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1147.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1153" y2="1153"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1165.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1171" y2="1171"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1183.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1189" y2="1189"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1201.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1207" y2="1207"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1219.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1225" y2="1225"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1237.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1243" y2="1243"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1255.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1261" y2="1261"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1273.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1279" y2="1279"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1291.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1297" y2="1297"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1309.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="2273" x2="2283" y1="1315" y2="1315"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="2278" y="1327.889">   </text>
+    <rect fill="none" height="468" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="2273" y="865"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="186.338" x="2689.5" y="226"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2694.5" y="238.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="92.488" x="2772.138" y="238.889">/var/lib/grafana</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2767.138" x2="2767.138" y1="226" y2="244"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2689.5" x2="2875.838" y1="244" y2="244"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2694.5" y="256.889">name</text>
+    <text fill="#000" font-size="14" textLength="98.7" x="2772.138" y="256.889">grafana-storage</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2767.138" x2="2767.138" y1="244" y2="262"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2689.5" x2="2875.838" y1="262" y2="262"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2694.5" y="274.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2772.138" y="274.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2767.138" x2="2767.138" y1="262" y2="280"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="186.338" x="2689.5" y="226"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="320.125" x="2622.5" y="298"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2627.5" y="310.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="232.488" x="2705.138" y="310.889">/etc/grafana/provisioning/datasources</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2700.138" x2="2700.138" y1="298" y2="316"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2622.5" x2="2942.625" y1="316" y2="316"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2627.5" y="328.889">name</text>
+    <text fill="#000" font-size="14" textLength="128.275" x="2705.138" y="328.889">grafana-datasources</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2700.138" x2="2700.138" y1="316" y2="334"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2622.5" x2="2942.625" y1="334" y2="334"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2627.5" y="346.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2705.138" y="346.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2700.138" x2="2700.138" y1="334" y2="352"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="320.125" x="2622.5" y="298"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="317.063" x="2624" y="370"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2629" y="382.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="229.425" x="2706.638" y="382.889">/etc/grafana/provisioning/dashboards</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2701.638" x2="2701.638" y1="370" y2="388"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2624" x2="2941.063" y1="388" y2="388"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2629" y="400.889">name</text>
+    <text fill="#000" font-size="14" textLength="125.213" x="2706.638" y="400.889">grafana-dashboards</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2701.638" x2="2701.638" y1="388" y2="406"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2624" x2="2941.063" y1="406" y2="406"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2629" y="418.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2706.638" y="418.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2701.638" x2="2701.638" y1="406" y2="424"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="317.063" x="2624" y="370"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="350.488" x="2607.5" y="442"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2612.5" y="454.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="262.85" x="2690.138" y="454.889">/grafana-dashboard-definitions/0/apiserver</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2685.138" x2="2685.138" y1="442" y2="460"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2607.5" x2="2957.988" y1="460" y2="460"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2612.5" y="472.889">name</text>
+    <text fill="#000" font-size="14" textLength="180.425" x="2690.138" y="472.889">grafana-dashboard-apiserver</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2685.138" x2="2685.138" y1="460" y2="478"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2607.5" x2="2957.988" y1="478" y2="478"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2612.5" y="490.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2690.138" y="490.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2685.138" x2="2685.138" y1="478" y2="496"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="350.488" x="2607.5" y="442"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="365.188" x="2600" y="514"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2605" y="526.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="277.55" x="2682.638" y="526.889">/grafana-dashboard-definitions/0/cluster-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2677.638" x2="2677.638" y1="514" y2="532"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2600" x2="2965.188" y1="532" y2="532"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2605" y="544.889">name</text>
+    <text fill="#000" font-size="14" textLength="195.125" x="2682.638" y="544.889">grafana-dashboard-cluster-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2677.638" x2="2677.638" y1="532" y2="550"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2600" x2="2965.188" y1="550" y2="550"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2605" y="562.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2682.638" y="562.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2677.638" x2="2677.638" y1="550" y2="568"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="365.188" x="2600" y="514"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="410.338" x="2577.5" y="586"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2582.5" y="598.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="322.7" x="2660.138" y="598.889">/grafana-dashboard-definitions/0/controller-manager</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2655.138" x2="2655.138" y1="586" y2="604"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2577.5" x2="2987.838" y1="604" y2="604"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2582.5" y="616.889">name</text>
+    <text fill="#000" font-size="14" textLength="240.275" x="2660.138" y="616.889">grafana-dashboard-controller-manager</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2655.138" x2="2655.138" y1="604" y2="622"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2577.5" x2="2987.838" y1="622" y2="622"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2582.5" y="634.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2660.138" y="634.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2655.138" x2="2655.138" y1="622" y2="640"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="410.338" x="2577.5" y="586"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="426.613" x="2569" y="658"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2574" y="670.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="338.975" x="2651.638" y="670.889">/grafana-dashboard-definitions/0/k8s-resources-cluster</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2646.638" x2="2646.638" y1="658" y2="676"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2569" x2="2995.613" y1="676" y2="676"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2574" y="688.889">name</text>
+    <text fill="#000" font-size="14" textLength="256.55" x="2651.638" y="688.889">grafana-dashboard-k8s-resources-cluster</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2646.638" x2="2646.638" y1="676" y2="694"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2569" x2="2995.613" y1="694" y2="694"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2574" y="706.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2651.638" y="706.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2646.638" x2="2646.638" y1="694" y2="712"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="426.613" x="2569" y="658"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="457.762" x="2553.5" y="730"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2558.5" y="742.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="370.125" x="2636.138" y="742.889">/grafana-dashboard-definitions/0/k8s-resources-namespace</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2631.138" x2="2631.138" y1="730" y2="748"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2553.5" x2="3011.263" y1="748" y2="748"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2558.5" y="760.889">name</text>
+    <text fill="#000" font-size="14" textLength="287.7" x="2636.138" y="760.889">grafana-dashboard-k8s-resources-namespace</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2631.138" x2="2631.138" y1="748" y2="766"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2553.5" x2="3011.263" y1="766" y2="766"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2558.5" y="778.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2636.138" y="778.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2631.138" x2="2631.138" y1="766" y2="784"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="457.762" x="2553.5" y="730"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="416.55" x="2574" y="802"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2579" y="814.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="328.912" x="2656.638" y="814.889">/grafana-dashboard-definitions/0/k8s-resources-node</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2651.638" x2="2651.638" y1="802" y2="820"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2574" x2="2990.55" y1="820" y2="820"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2579" y="832.889">name</text>
+    <text fill="#000" font-size="14" textLength="246.488" x="2656.638" y="832.889">grafana-dashboard-k8s-resources-node</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2651.638" x2="2651.638" y1="820" y2="838"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2574" x2="2990.55" y1="838" y2="838"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2579" y="850.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2656.638" y="850.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2651.638" x2="2651.638" y1="838" y2="856"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="416.55" x="2574" y="802"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="408.763" x="2578" y="874"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2583" y="886.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="321.125" x="2660.638" y="886.889">/grafana-dashboard-definitions/0/k8s-resources-pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2655.638" x2="2655.638" y1="874" y2="892"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2578" x2="2986.763" y1="892" y2="892"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2583" y="904.889">name</text>
+    <text fill="#000" font-size="14" textLength="238.7" x="2660.638" y="904.889">grafana-dashboard-k8s-resources-pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2655.638" x2="2655.638" y1="892" y2="910"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2578" x2="2986.763" y1="910" y2="910"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2583" y="922.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2660.638" y="922.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2655.638" x2="2655.638" y1="910" y2="928"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="408.763" x="2578" y="874"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="441.488" x="2562" y="946"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2567" y="958.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="353.85" x="2644.638" y="958.889">/grafana-dashboard-definitions/0/k8s-resources-workload</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2639.638" x2="2639.638" y1="946" y2="964"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2562" x2="3003.488" y1="964" y2="964"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2567" y="976.889">name</text>
+    <text fill="#000" font-size="14" textLength="271.425" x="2644.638" y="976.889">grafana-dashboard-k8s-resources-workload</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2639.638" x2="2639.638" y1="964" y2="982"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2562" x2="3003.488" y1="982" y2="982"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2567" y="994.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2644.638" y="994.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2639.638" x2="2639.638" y1="982" y2="1000"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="441.488" x="2562" y="946"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="525.488" x="2520" y="1018"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2525" y="1030.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="437.85" x="2602.638" y="1030.889">/grafana-dashboard-definitions/0/k8s-resources-workloads-namespace</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2597.638" x2="2597.638" y1="1018" y2="1036"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2520" x2="3045.488" y1="1036" y2="1036"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2525" y="1048.889">name</text>
+    <text fill="#000" font-size="14" textLength="355.425" x="2602.638" y="1048.889">grafana-dashboard-k8s-resources-workloads-namespace</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2597.638" x2="2597.638" y1="1036" y2="1054"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2520" x2="3045.488" y1="1054" y2="1054"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2525" y="1066.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2602.638" y="1066.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2597.638" x2="2597.638" y1="1054" y2="1072"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="525.488" x="2520" y="1018"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="338.063" x="2613.5" y="1090"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2618.5" y="1102.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="250.425" x="2696.138" y="1102.889">/grafana-dashboard-definitions/0/kubelet</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2691.138" x2="2691.138" y1="1090" y2="1108"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2613.5" x2="2951.563" y1="1108" y2="1108"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2618.5" y="1120.889">name</text>
+    <text fill="#000" font-size="14" textLength="168" x="2696.138" y="1120.889">grafana-dashboard-kubelet</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2691.138" x2="2691.138" y1="1108" y2="1126"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2613.5" x2="2951.563" y1="1126" y2="1126"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2618.5" y="1138.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2696.138" y="1138.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2691.138" x2="2691.138" y1="1126" y2="1144"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="338.063" x="2613.5" y="1090"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="412.7" x="2576" y="1162"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2581" y="1174.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="325.062" x="2658.638" y="1174.889">/grafana-dashboard-definitions/0/namespace-by-pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2653.638" x2="2653.638" y1="1162" y2="1180"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2576" x2="2988.7" y1="1180" y2="1180"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2581" y="1192.889">name</text>
+    <text fill="#000" font-size="14" textLength="242.638" x="2658.638" y="1192.889">grafana-dashboard-namespace-by-pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2653.638" x2="2653.638" y1="1180" y2="1198"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2576" x2="2988.7" y1="1198" y2="1198"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2581" y="1210.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2658.638" y="1210.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2653.638" x2="2653.638" y1="1198" y2="1216"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="412.7" x="2576" y="1162"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="445.425" x="2560" y="1234"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2565" y="1246.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="357.787" x="2642.638" y="1246.889">/grafana-dashboard-definitions/0/namespace-by-workload</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2637.638" x2="2637.638" y1="1234" y2="1252"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2560" x2="3005.425" y1="1252" y2="1252"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2565" y="1264.889">name</text>
+    <text fill="#000" font-size="14" textLength="275.363" x="2642.638" y="1264.889">grafana-dashboard-namespace-by-workload</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2637.638" x2="2637.638" y1="1252" y2="1270"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2560" x2="3005.425" y1="1270" y2="1270"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2565" y="1282.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2642.638" y="1282.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2637.638" x2="2637.638" y1="1270" y2="1288"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="445.425" x="2560" y="1234"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="425.038" x="2570" y="1306"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2575" y="1318.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="337.4" x="2652.638" y="1318.889">/grafana-dashboard-definitions/0/node-cluster-rsrc-use</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2647.638" x2="2647.638" y1="1306" y2="1324"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2570" x2="2995.038" y1="1324" y2="1324"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2575" y="1336.889">name</text>
+    <text fill="#000" font-size="14" textLength="254.975" x="2652.638" y="1336.889">grafana-dashboard-node-cluster-rsrc-use</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2647.638" x2="2647.638" y1="1324" y2="1342"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2570" x2="2995.038" y1="1342" y2="1342"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2575" y="1354.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2652.638" y="1354.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2647.638" x2="2647.638" y1="1342" y2="1360"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="425.038" x="2570" y="1306"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="379.188" x="2593" y="1378"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2598" y="1390.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="291.55" x="2675.638" y="1390.889">/grafana-dashboard-definitions/0/node-rsrc-use</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2670.638" x2="2670.638" y1="1378" y2="1396"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2593" x2="2972.188" y1="1396" y2="1396"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2598" y="1408.889">name</text>
+    <text fill="#000" font-size="14" textLength="209.125" x="2675.638" y="1408.889">grafana-dashboard-node-rsrc-use</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2670.638" x2="2670.638" y1="1396" y2="1414"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2593" x2="2972.188" y1="1414" y2="1414"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2598" y="1426.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2675.638" y="1426.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2670.638" x2="2670.638" y1="1414" y2="1432"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="379.188" x="2593" y="1378"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="331.063" x="2617" y="1450"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2622" y="1462.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="243.425" x="2699.638" y="1462.889">/grafana-dashboard-definitions/0/nodes</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2694.638" x2="2694.638" y1="1450" y2="1468"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2617" x2="2948.063" y1="1468" y2="1468"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2622" y="1480.889">name</text>
+    <text fill="#000" font-size="14" textLength="161" x="2699.638" y="1480.889">grafana-dashboard-nodes</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2694.638" x2="2694.638" y1="1468" y2="1486"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2617" x2="2948.063" y1="1486" y2="1486"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2622" y="1498.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2699.638" y="1498.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2694.638" x2="2694.638" y1="1486" y2="1504"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="331.063" x="2617" y="1450"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="443.85" x="2560.5" y="1522"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2565.5" y="1534.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="356.212" x="2643.138" y="1534.889">/grafana-dashboard-definitions/0/persistentvolumesusage</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2638.138" x2="2638.138" y1="1522" y2="1540"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2560.5" x2="3004.35" y1="1540" y2="1540"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2565.5" y="1552.889">name</text>
+    <text fill="#000" font-size="14" textLength="273.787" x="2643.138" y="1552.889">grafana-dashboard-persistentvolumesusage</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2638.138" x2="2638.138" y1="1540" y2="1558"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2560.5" x2="3004.35" y1="1558" y2="1558"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2565.5" y="1570.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2643.138" y="1570.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2638.138" x2="2638.138" y1="1558" y2="1576"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="443.85" x="2560.5" y="1522"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="347.338" x="2609" y="1594"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2614" y="1606.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="259.7" x="2691.638" y="1606.889">/grafana-dashboard-definitions/0/pod-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2686.638" x2="2686.638" y1="1594" y2="1612"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2609" x2="2956.338" y1="1612" y2="1612"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2614" y="1624.889">name</text>
+    <text fill="#000" font-size="14" textLength="177.275" x="2691.638" y="1624.889">grafana-dashboard-pod-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2686.638" x2="2686.638" y1="1612" y2="1630"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2609" x2="2956.338" y1="1630" y2="1630"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2614" y="1642.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2691.638" y="1642.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2686.638" x2="2686.638" y1="1630" y2="1648"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="347.338" x="2609" y="1594"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="449.1" x="2558" y="1666"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2563" y="1678.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="361.463" x="2640.638" y="1678.889">/grafana-dashboard-definitions/0/prometheus-remote-write</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2635.638" x2="2635.638" y1="1666" y2="1684"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2558" x2="3007.1" y1="1684" y2="1684"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2563" y="1696.889">name</text>
+    <text fill="#000" font-size="14" textLength="279.038" x="2640.638" y="1696.889">grafana-dashboard-prometheus-remote-write</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2635.638" x2="2635.638" y1="1684" y2="1702"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2558" x2="3007.1" y1="1702" y2="1702"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2563" y="1714.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2640.638" y="1714.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2635.638" x2="2635.638" y1="1702" y2="1720"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="449.1" x="2558" y="1666"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="366.763" x="2599" y="1738"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2604" y="1750.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="279.125" x="2681.638" y="1750.889">/grafana-dashboard-definitions/0/prometheus</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2676.638" x2="2676.638" y1="1738" y2="1756"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2599" x2="2965.763" y1="1756" y2="1756"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2604" y="1768.889">name</text>
+    <text fill="#000" font-size="14" textLength="196.7" x="2681.638" y="1768.889">grafana-dashboard-prometheus</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2676.638" x2="2676.638" y1="1756" y2="1774"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2599" x2="2965.763" y1="1774" y2="1774"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2604" y="1786.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2681.638" y="1786.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2676.638" x2="2676.638" y1="1774" y2="1792"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="366.763" x="2599" y="1738"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="327.125" x="2619" y="1810"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2624" y="1822.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="239.488" x="2701.638" y="1822.889">/grafana-dashboard-definitions/0/proxy</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2696.638" x2="2696.638" y1="1810" y2="1828"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2619" x2="2946.125" y1="1828" y2="1828"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2624" y="1840.889">name</text>
+    <text fill="#000" font-size="14" textLength="157.063" x="2701.638" y="1840.889">grafana-dashboard-proxy</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2696.638" x2="2696.638" y1="1828" y2="1846"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2619" x2="2946.125" y1="1846" y2="1846"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2624" y="1858.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2701.638" y="1858.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2696.638" x2="2696.638" y1="1846" y2="1864"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="327.125" x="2619" y="1810"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="353.638" x="2605.5" y="1882"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2610.5" y="1894.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="266" x="2688.138" y="1894.889">/grafana-dashboard-definitions/0/scheduler</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2683.138" x2="2683.138" y1="1882" y2="1900"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2605.5" x2="2959.138" y1="1900" y2="1900"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2610.5" y="1912.889">name</text>
+    <text fill="#000" font-size="14" textLength="183.575" x="2688.138" y="1912.889">grafana-dashboard-scheduler</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2683.138" x2="2683.138" y1="1900" y2="1918"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2605.5" x2="2959.138" y1="1918" y2="1918"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2610.5" y="1930.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2688.138" y="1930.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2683.138" x2="2683.138" y1="1918" y2="1936"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="353.638" x="2605.5" y="1882"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="356.612" x="2604" y="1954"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2609" y="1966.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="268.975" x="2686.638" y="1966.889">/grafana-dashboard-definitions/0/statefulset</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2681.638" x2="2681.638" y1="1954" y2="1972"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2604" x2="2960.613" y1="1972" y2="1972"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2609" y="1984.889">name</text>
+    <text fill="#000" font-size="14" textLength="186.55" x="2686.638" y="1984.889">grafana-dashboard-statefulset</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2681.638" x2="2681.638" y1="1972" y2="1990"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2604" x2="2960.613" y1="1990" y2="1990"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2609" y="2002.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2686.638" y="2002.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2681.638" x2="2681.638" y1="1990" y2="2008"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="356.612" x="2604" y="1954"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="380.063" x="2592.5" y="2026"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="67.638" x="2597.5" y="2038.889">mountPath</text>
+    <text fill="#000" font-size="14" textLength="292.425" x="2675.138" y="2038.889">/grafana-dashboard-definitions/0/workload-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2670.138" x2="2670.138" y1="2026" y2="2044"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2592.5" x2="2972.563" y1="2044" y2="2044"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2597.5" y="2056.889">name</text>
+    <text fill="#000" font-size="14" textLength="210" x="2675.138" y="2056.889">grafana-dashboard-workload-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2670.138" x2="2670.138" y1="2044" y2="2062"/>
+    <line style="stroke:#000;stroke-width:1;" x1="2592.5" x2="2972.563" y1="2062" y2="2062"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.788" x="2597.5" y="2074.889">readOnly</text>
+    <text fill="#000" font-size="14" textLength="29.575" x="2675.138" y="2074.889">false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2670.138" x2="2670.138" y1="2062" y2="2080"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="380.063" x="2592.5" y="2026"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="182.575" x="1239.5" y="876"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="133.7" x="1244.5" y="888.889">beta.kubernetes.io/os</text>
+    <text fill="#000" font-size="14" textLength="28.875" x="1388.2" y="888.889">linux</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1383.2" x2="1383.2" y1="876" y2="894"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="182.575" x="1239.5" y="876"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="150.813" x="1255.5" y="912"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49.7" x="1260.5" y="924.889">fsGroup</text>
+    <text fill="#000" font-size="14" textLength="38.938" x="1362.375" y="924.889">65534</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1357.375" x2="1357.375" y1="912" y2="930"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1255.5" x2="1406.313" y1="930" y2="930"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="91.875" x="1260.5" y="942.889">runAsNonRoot</text>
+    <text fill="#000" font-size="14" textLength="24.063" x="1362.375" y="942.889">true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1357.375" x2="1357.375" y1="930" y2="948"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1255.5" x2="1406.313" y1="948" y2="948"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.15" x="1260.5" y="960.889">runAsUser</text>
+    <text fill="#000" font-size="14" textLength="38.938" x="1362.375" y="960.889">65534</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1357.375" x2="1357.375" y1="948" y2="966"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="150.813" x="1255.5" y="912"/>
+    <rect fill="#F1F1F1" height="468" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="1326" y="1720"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1732.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1738" y2="1738"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1750.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1756" y2="1756"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1768.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1774" y2="1774"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1786.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1792" y2="1792"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1804.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1810" y2="1810"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1822.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1828" y2="1828"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1840.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1846" y2="1846"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1858.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1864" y2="1864"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1876.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1882" y2="1882"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1894.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1900" y2="1900"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1912.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1918" y2="1918"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1930.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1936" y2="1936"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1948.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1954" y2="1954"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1966.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1972" y2="1972"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="1984.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="1990" y2="1990"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2002.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2008" y2="2008"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2020.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2026" y2="2026"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2038.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2044" y2="2044"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2056.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2062" y2="2062"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2074.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2080" y2="2080"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2092.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2098" y2="2098"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2110.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2116" y2="2116"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2128.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2134" y2="2134"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2146.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2152" y2="2152"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2164.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1326" x2="1336" y1="2170" y2="2170"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="1331" y="2182.889">   </text>
+    <rect fill="none" height="468" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="1326" y="1720"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="174.7" x="1728.5" y="1279"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56" x="1733.5" y="1291.889">emptyDir</text>
+    <text fill="#000" font-size="14" textLength="9.275" x="1799.5" y="1291.889">{}</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1794.5" x2="1794.5" y1="1279" y2="1297"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1728.5" x2="1903.2" y1="1297" y2="1297"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1733.5" y="1309.889">name</text>
+    <text fill="#000" font-size="14" textLength="98.7" x="1799.5" y="1309.889">grafana-storage</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1794.5" x2="1794.5" y1="1297" y2="1315"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="174.7" x="1728.5" y="1279"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="186.338" x="1723" y="1333"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1728" y="1345.889">name</text>
+    <text fill="#000" font-size="14" textLength="128.275" x="1776.063" y="1345.889">grafana-datasources</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1771.063" x2="1771.063" y1="1333" y2="1351"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1723" x2="1909.338" y1="1351" y2="1351"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.063" x="1728" y="1363.889">secret</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1776.063" y="1363.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1771.063" x2="1771.063" y1="1351" y2="1369"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="186.338" x="1723" y="1333"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="223.7" x="2166" y="1351"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="75.425" x="2171" y="1363.889">secretName</text>
+    <text fill="#000" font-size="14" textLength="128.275" x="2256.425" y="1363.889">grafana-datasources</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2251.425" x2="2251.425" y1="1351" y2="1369"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="223.7" x="2166" y="1351"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="209.788" x="1711" y="1387"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1716" y="1399.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1790.575" y="1399.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1785.575" x2="1785.575" y1="1387" y2="1405"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1711" x2="1920.788" y1="1405" y2="1405"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1716" y="1417.889">name</text>
+    <text fill="#000" font-size="14" textLength="125.213" x="1790.575" y="1417.889">grafana-dashboards</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1785.575" x2="1785.575" y1="1405" y2="1423"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="209.788" x="1711" y="1387"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="180.213" x="2188" y="1387"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2193" y="1399.889">name</text>
+    <text fill="#000" font-size="14" textLength="125.213" x="2238" y="1399.889">grafana-dashboards</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2233" x2="2233" y1="1387" y2="1405"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="180.213" x="2188" y="1387"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="265" x="1683.5" y="1441"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1688.5" y="1453.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1763.075" y="1453.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1758.075" x2="1758.075" y1="1441" y2="1459"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1683.5" x2="1948.5" y1="1459" y2="1459"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1688.5" y="1471.889">name</text>
+    <text fill="#000" font-size="14" textLength="180.425" x="1763.075" y="1471.889">grafana-dashboard-apiserver</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1758.075" x2="1758.075" y1="1459" y2="1477"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="265" x="1683.5" y="1441"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="235.425" x="2160.5" y="1441"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2165.5" y="1453.889">name</text>
+    <text fill="#000" font-size="14" textLength="180.425" x="2210.5" y="1453.889">grafana-dashboard-apiserver</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2205.5" x2="2205.5" y1="1441" y2="1459"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="235.425" x="2160.5" y="1441"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="279.7" x="1676" y="1495"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1681" y="1507.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1755.575" y="1507.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1750.575" x2="1750.575" y1="1495" y2="1513"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1676" x2="1955.7" y1="1513" y2="1513"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1681" y="1525.889">name</text>
+    <text fill="#000" font-size="14" textLength="195.125" x="1755.575" y="1525.889">grafana-dashboard-cluster-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1750.575" x2="1750.575" y1="1513" y2="1531"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="279.7" x="1676" y="1495"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="250.125" x="2153" y="1495"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2158" y="1507.889">name</text>
+    <text fill="#000" font-size="14" textLength="195.125" x="2203" y="1507.889">grafana-dashboard-cluster-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2198" x2="2198" y1="1495" y2="1513"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="250.125" x="2153" y="1495"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="324.85" x="1653.5" y="1549"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1658.5" y="1561.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1733.075" y="1561.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1728.075" x2="1728.075" y1="1549" y2="1567"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1653.5" x2="1978.35" y1="1567" y2="1567"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1658.5" y="1579.889">name</text>
+    <text fill="#000" font-size="14" textLength="240.275" x="1733.075" y="1579.889">grafana-dashboard-controller-manager</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1728.075" x2="1728.075" y1="1567" y2="1585"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="324.85" x="1653.5" y="1549"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="295.275" x="2130.5" y="1549"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2135.5" y="1561.889">name</text>
+    <text fill="#000" font-size="14" textLength="240.275" x="2180.5" y="1561.889">grafana-dashboard-controller-manager</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2175.5" x2="2175.5" y1="1549" y2="1567"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="295.275" x="2130.5" y="1549"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="341.125" x="1645.5" y="1603"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1650.5" y="1615.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1725.075" y="1615.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1720.075" x2="1720.075" y1="1603" y2="1621"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1645.5" x2="1986.625" y1="1621" y2="1621"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1650.5" y="1633.889">name</text>
+    <text fill="#000" font-size="14" textLength="256.55" x="1725.075" y="1633.889">grafana-dashboard-k8s-resources-cluster</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1720.075" x2="1720.075" y1="1621" y2="1639"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="341.125" x="1645.5" y="1603"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="311.55" x="2122" y="1603"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2127" y="1615.889">name</text>
+    <text fill="#000" font-size="14" textLength="256.55" x="2172" y="1615.889">grafana-dashboard-k8s-resources-cluster</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2167" x2="2167" y1="1603" y2="1621"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="311.55" x="2122" y="1603"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="372.275" x="1630" y="1657"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1635" y="1669.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1709.575" y="1669.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1704.575" x2="1704.575" y1="1657" y2="1675"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1630" x2="2002.275" y1="1675" y2="1675"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1635" y="1687.889">name</text>
+    <text fill="#000" font-size="14" textLength="287.7" x="1709.575" y="1687.889">grafana-dashboard-k8s-resources-namespace</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1704.575" x2="1704.575" y1="1675" y2="1693"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="372.275" x="1630" y="1657"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="342.7" x="2106.5" y="1657"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2111.5" y="1669.889">name</text>
+    <text fill="#000" font-size="14" textLength="287.7" x="2156.5" y="1669.889">grafana-dashboard-k8s-resources-namespace</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2151.5" x2="2151.5" y1="1657" y2="1675"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="342.7" x="2106.5" y="1657"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="331.063" x="1650.5" y="1711"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1655.5" y="1723.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1730.075" y="1723.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1725.075" x2="1725.075" y1="1711" y2="1729"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1650.5" x2="1981.563" y1="1729" y2="1729"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1655.5" y="1741.889">name</text>
+    <text fill="#000" font-size="14" textLength="246.488" x="1730.075" y="1741.889">grafana-dashboard-k8s-resources-node</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1725.075" x2="1725.075" y1="1729" y2="1747"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="331.063" x="1650.5" y="1711"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="301.488" x="2127.5" y="1711"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2132.5" y="1723.889">name</text>
+    <text fill="#000" font-size="14" textLength="246.488" x="2177.5" y="1723.889">grafana-dashboard-k8s-resources-node</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2172.5" x2="2172.5" y1="1711" y2="1729"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="301.488" x="2127.5" y="1711"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="323.275" x="1654.5" y="1765"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1659.5" y="1777.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1734.075" y="1777.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1729.075" x2="1729.075" y1="1765" y2="1783"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1654.5" x2="1977.775" y1="1783" y2="1783"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1659.5" y="1795.889">name</text>
+    <text fill="#000" font-size="14" textLength="238.7" x="1734.075" y="1795.889">grafana-dashboard-k8s-resources-pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1729.075" x2="1729.075" y1="1783" y2="1801"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="323.275" x="1654.5" y="1765"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="293.7" x="2131" y="1765"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2136" y="1777.889">name</text>
+    <text fill="#000" font-size="14" textLength="238.7" x="2181" y="1777.889">grafana-dashboard-k8s-resources-pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2176" x2="2176" y1="1765" y2="1783"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="293.7" x="2131" y="1765"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="356" x="1638" y="1819"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1643" y="1831.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1717.575" y="1831.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1712.575" x2="1712.575" y1="1819" y2="1837"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1638" x2="1994" y1="1837" y2="1837"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1643" y="1849.889">name</text>
+    <text fill="#000" font-size="14" textLength="271.425" x="1717.575" y="1849.889">grafana-dashboard-k8s-resources-workload</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1712.575" x2="1712.575" y1="1837" y2="1855"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="356" x="1638" y="1819"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="326.425" x="2115" y="1819"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2120" y="1831.889">name</text>
+    <text fill="#000" font-size="14" textLength="271.425" x="2165" y="1831.889">grafana-dashboard-k8s-resources-workload</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2160" x2="2160" y1="1819" y2="1837"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="326.425" x="2115" y="1819"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="440" x="1596" y="1873"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1601" y="1885.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1675.575" y="1885.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1670.575" x2="1670.575" y1="1873" y2="1891"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1596" x2="2036" y1="1891" y2="1891"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1601" y="1903.889">name</text>
+    <text fill="#000" font-size="14" textLength="355.425" x="1675.575" y="1903.889">grafana-dashboard-k8s-resources-workloads-namespace</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1670.575" x2="1670.575" y1="1891" y2="1909"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="440" x="1596" y="1873"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="410.425" x="2073" y="1873"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2078" y="1885.889">name</text>
+    <text fill="#000" font-size="14" textLength="355.425" x="2123" y="1885.889">grafana-dashboard-k8s-resources-workloads-namespace</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2118" x2="2118" y1="1873" y2="1891"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="410.425" x="2073" y="1873"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="252.575" x="1689.5" y="1927"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1694.5" y="1939.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1769.075" y="1939.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1764.075" x2="1764.075" y1="1927" y2="1945"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1689.5" x2="1942.075" y1="1945" y2="1945"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1694.5" y="1957.889">name</text>
+    <text fill="#000" font-size="14" textLength="168" x="1769.075" y="1957.889">grafana-dashboard-kubelet</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1764.075" x2="1764.075" y1="1945" y2="1963"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="252.575" x="1689.5" y="1927"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="223" x="2166.5" y="1927"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2171.5" y="1939.889">name</text>
+    <text fill="#000" font-size="14" textLength="168" x="2216.5" y="1939.889">grafana-dashboard-kubelet</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2211.5" x2="2211.5" y1="1927" y2="1945"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="223" x="2166.5" y="1927"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="327.213" x="1652.5" y="1981"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1657.5" y="1993.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1732.075" y="1993.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1727.075" x2="1727.075" y1="1981" y2="1999"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1652.5" x2="1979.713" y1="1999" y2="1999"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1657.5" y="2011.889">name</text>
+    <text fill="#000" font-size="14" textLength="242.638" x="1732.075" y="2011.889">grafana-dashboard-namespace-by-pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1727.075" x2="1727.075" y1="1999" y2="2017"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="327.213" x="1652.5" y="1981"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="297.638" x="2129" y="1981"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2134" y="1993.889">name</text>
+    <text fill="#000" font-size="14" textLength="242.638" x="2179" y="1993.889">grafana-dashboard-namespace-by-pod</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2174" x2="2174" y1="1981" y2="1999"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="297.638" x="2129" y="1981"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="359.938" x="1636" y="2035"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1641" y="2047.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1715.575" y="2047.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1710.575" x2="1710.575" y1="2035" y2="2053"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1636" x2="1995.938" y1="2053" y2="2053"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1641" y="2065.889">name</text>
+    <text fill="#000" font-size="14" textLength="275.363" x="1715.575" y="2065.889">grafana-dashboard-namespace-by-workload</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1710.575" x2="1710.575" y1="2053" y2="2071"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="359.938" x="1636" y="2035"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="330.363" x="2113" y="2035"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2118" y="2047.889">name</text>
+    <text fill="#000" font-size="14" textLength="275.363" x="2163" y="2047.889">grafana-dashboard-namespace-by-workload</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2158" x2="2158" y1="2035" y2="2053"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="330.363" x="2113" y="2035"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="339.55" x="1646" y="2089"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1651" y="2101.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1725.575" y="2101.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1720.575" x2="1720.575" y1="2089" y2="2107"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1646" x2="1985.55" y1="2107" y2="2107"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1651" y="2119.889">name</text>
+    <text fill="#000" font-size="14" textLength="254.975" x="1725.575" y="2119.889">grafana-dashboard-node-cluster-rsrc-use</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1720.575" x2="1720.575" y1="2107" y2="2125"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="339.55" x="1646" y="2089"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="309.975" x="2123" y="2089"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2128" y="2101.889">name</text>
+    <text fill="#000" font-size="14" textLength="254.975" x="2173" y="2101.889">grafana-dashboard-node-cluster-rsrc-use</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2168" x2="2168" y1="2089" y2="2107"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="309.975" x="2123" y="2089"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="293.7" x="1669" y="2143"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1674" y="2155.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1748.575" y="2155.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1743.575" x2="1743.575" y1="2143" y2="2161"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1669" x2="1962.7" y1="2161" y2="2161"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1674" y="2173.889">name</text>
+    <text fill="#000" font-size="14" textLength="209.125" x="1748.575" y="2173.889">grafana-dashboard-node-rsrc-use</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1743.575" x2="1743.575" y1="2161" y2="2179"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="293.7" x="1669" y="2143"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="264.125" x="2146" y="2143"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2151" y="2155.889">name</text>
+    <text fill="#000" font-size="14" textLength="209.125" x="2196" y="2155.889">grafana-dashboard-node-rsrc-use</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2191" x2="2191" y1="2143" y2="2161"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="264.125" x="2146" y="2143"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="245.575" x="1693" y="2197"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1698" y="2209.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1772.575" y="2209.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1767.575" x2="1767.575" y1="2197" y2="2215"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1693" x2="1938.575" y1="2215" y2="2215"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1698" y="2227.889">name</text>
+    <text fill="#000" font-size="14" textLength="161" x="1772.575" y="2227.889">grafana-dashboard-nodes</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1767.575" x2="1767.575" y1="2215" y2="2233"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="245.575" x="1693" y="2197"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="216" x="2170" y="2197"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2175" y="2209.889">name</text>
+    <text fill="#000" font-size="14" textLength="161" x="2220" y="2209.889">grafana-dashboard-nodes</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2215" x2="2215" y1="2197" y2="2215"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="216" x="2170" y="2197"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="358.362" x="1637" y="2251"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1642" y="2263.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1716.575" y="2263.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1711.575" x2="1711.575" y1="2251" y2="2269"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1637" x2="1995.363" y1="2269" y2="2269"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1642" y="2281.889">name</text>
+    <text fill="#000" font-size="14" textLength="273.787" x="1716.575" y="2281.889">grafana-dashboard-persistentvolumesusage</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1711.575" x2="1711.575" y1="2269" y2="2287"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="358.362" x="1637" y="2251"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="328.787" x="2113.5" y="2251"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2118.5" y="2263.889">name</text>
+    <text fill="#000" font-size="14" textLength="273.787" x="2163.5" y="2263.889">grafana-dashboard-persistentvolumesusage</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2158.5" x2="2158.5" y1="2251" y2="2269"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="328.787" x="2113.5" y="2251"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="261.85" x="1685" y="2305"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1690" y="2317.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1764.575" y="2317.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1759.575" x2="1759.575" y1="2305" y2="2323"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1685" x2="1946.85" y1="2323" y2="2323"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1690" y="2335.889">name</text>
+    <text fill="#000" font-size="14" textLength="177.275" x="1764.575" y="2335.889">grafana-dashboard-pod-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1759.575" x2="1759.575" y1="2323" y2="2341"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="261.85" x="1685" y="2305"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="232.275" x="2162" y="2305"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2167" y="2317.889">name</text>
+    <text fill="#000" font-size="14" textLength="177.275" x="2212" y="2317.889">grafana-dashboard-pod-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2207" x2="2207" y1="2305" y2="2323"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="232.275" x="2162" y="2305"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="363.613" x="1634" y="2359"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1639" y="2371.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1713.575" y="2371.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1708.575" x2="1708.575" y1="2359" y2="2377"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1634" x2="1997.613" y1="2377" y2="2377"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1639" y="2389.889">name</text>
+    <text fill="#000" font-size="14" textLength="279.038" x="1713.575" y="2389.889">grafana-dashboard-prometheus-remote-write</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1708.575" x2="1708.575" y1="2377" y2="2395"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="363.613" x="1634" y="2359"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="334.038" x="2111" y="2359"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2116" y="2371.889">name</text>
+    <text fill="#000" font-size="14" textLength="279.038" x="2161" y="2371.889">grafana-dashboard-prometheus-remote-write</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2156" x2="2156" y1="2359" y2="2377"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="334.038" x="2111" y="2359"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="281.275" x="1675.5" y="2413"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1680.5" y="2425.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1755.075" y="2425.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1750.075" x2="1750.075" y1="2413" y2="2431"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1675.5" x2="1956.775" y1="2431" y2="2431"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1680.5" y="2443.889">name</text>
+    <text fill="#000" font-size="14" textLength="196.7" x="1755.075" y="2443.889">grafana-dashboard-prometheus</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1750.075" x2="1750.075" y1="2431" y2="2449"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="281.275" x="1675.5" y="2413"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="251.7" x="2152" y="2413"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2157" y="2425.889">name</text>
+    <text fill="#000" font-size="14" textLength="196.7" x="2202" y="2425.889">grafana-dashboard-prometheus</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2197" x2="2197" y1="2413" y2="2431"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="251.7" x="2152" y="2413"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="241.638" x="1695" y="2467"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1700" y="2479.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1774.575" y="2479.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1769.575" x2="1769.575" y1="2467" y2="2485"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1695" x2="1936.638" y1="2485" y2="2485"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1700" y="2497.889">name</text>
+    <text fill="#000" font-size="14" textLength="157.063" x="1774.575" y="2497.889">grafana-dashboard-proxy</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1769.575" x2="1769.575" y1="2485" y2="2503"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="241.638" x="1695" y="2467"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="212.063" x="2172" y="2467"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2177" y="2479.889">name</text>
+    <text fill="#000" font-size="14" textLength="157.063" x="2222" y="2479.889">grafana-dashboard-proxy</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2217" x2="2217" y1="2467" y2="2485"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="212.063" x="2172" y="2467"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="268.15" x="1682" y="2521"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1687" y="2533.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1761.575" y="2533.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1756.575" x2="1756.575" y1="2521" y2="2539"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1682" x2="1950.15" y1="2539" y2="2539"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1687" y="2551.889">name</text>
+    <text fill="#000" font-size="14" textLength="183.575" x="1761.575" y="2551.889">grafana-dashboard-scheduler</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1756.575" x2="1756.575" y1="2539" y2="2557"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="268.15" x="1682" y="2521"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="238.575" x="2158.5" y="2521"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2163.5" y="2533.889">name</text>
+    <text fill="#000" font-size="14" textLength="183.575" x="2208.5" y="2533.889">grafana-dashboard-scheduler</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2203.5" x2="2203.5" y1="2521" y2="2539"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="238.575" x="2158.5" y="2521"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="271.125" x="1680.5" y="2575"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1685.5" y="2587.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1760.075" y="2587.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1755.075" x2="1755.075" y1="2575" y2="2593"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1680.5" x2="1951.625" y1="2593" y2="2593"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1685.5" y="2605.889">name</text>
+    <text fill="#000" font-size="14" textLength="186.55" x="1760.075" y="2605.889">grafana-dashboard-statefulset</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1755.075" x2="1755.075" y1="2593" y2="2611"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="271.125" x="1680.5" y="2575"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="241.55" x="2157" y="2575"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2162" y="2587.889">name</text>
+    <text fill="#000" font-size="14" textLength="186.55" x="2207" y="2587.889">grafana-dashboard-statefulset</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2202" x2="2202" y1="2575" y2="2593"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="241.55" x="2157" y="2575"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="294.575" x="1668.5" y="2629"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="1673.5" y="2641.889">configMap</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="1748.075" y="2641.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="1743.075" x2="1743.075" y1="2629" y2="2647"/>
+    <line style="stroke:#000;stroke-width:1;" x1="1668.5" x2="1963.075" y1="2647" y2="2647"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="1673.5" y="2659.889">name</text>
+    <text fill="#000" font-size="14" textLength="210" x="1748.075" y="2659.889">grafana-dashboard-workload-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="1743.075" x2="1743.075" y1="2647" y2="2665"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="294.575" x="1668.5" y="2629"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="265" x="2145.5" y="2629"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35" x="2150.5" y="2641.889">name</text>
+    <text fill="#000" font-size="14" textLength="210" x="2195.5" y="2641.889">grafana-dashboard-workload-total</text>
+    <line style="stroke:#000;stroke-width:1;" x1="2190.5" x2="2190.5" y1="2629" y2="2647"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="265" x="2145.5" y="2629"/>
+    <path d="M354,651 L367,651 C376.337,651 385.93,651 395.61,651" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M395.61,654.112 L397.944,651 L395.61,647.888 L403.389,651 L395.61,654.112" fill="#000"/>
+    <ellipse cx="354" cy="651" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M159,696 L172,696 C181.347,696 191.011,695.137 200.581,693.72" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M201.081,696.778 L202.875,693.345 L200.081,690.661 L208.227,692.47 L201.081,696.778" fill="#000"/>
+    <ellipse cx="159" cy="696" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M597,728 L610,728 C654.089,728 701.796,726.462 745.879,724.406" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M746.024,727.451 L748.163,724.298 L745.734,721.361 L753.492,724.044 L746.024,727.451" fill="#000"/>
+    <ellipse cx="597" cy="728" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M315.5,741 L328.5,741 C388.109,741 456.251,736.613 502.894,732.935" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M503.137,735.969 L505.17,732.753 L502.652,729.902 L510.479,732.329 L503.137,735.969" fill="#000"/>
+    <ellipse cx="315.5" cy="741" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M943,768 L956,768 C1005.978,768 1018.047,760.07 1067,750 C1083.154,746.677 1086.723,743.66 1103,741 C1123.199,737.699 1144.511,734.998 1165.662,732.788" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1165.967,735.777 L1167.904,732.56 L1165.358,729.799 L1173.135,732.027 L1165.967,735.777" fill="#000"/>
+    <ellipse cx="943" cy="768" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M943,786 L956,786 C1025.178,786 1101.544,786 1167.173,786" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1167.173,789.016 L1169.435,786 L1167.173,782.984 L1174.712,786 L1167.173,789.016" fill="#000"/>
+    <ellipse cx="943" cy="786" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M586,777 L599,777 C689.321,777 794.445,777 856.147,777" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M856.147,780.07 L858.45,777 L856.147,773.93 L863.821,777 L856.147,780.07" fill="#000"/>
+    <ellipse cx="586" cy="777" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1930.5,59 L1943.5,59 C2069.467,59 2221.955,49.653 2265.418,46.81" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2265.624,49.911 L2267.744,46.656 L2265.212,43.709 L2273.171,46.296 L2265.624,49.911" fill="#000"/>
+    <ellipse cx="1930.5" cy="59" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2270.628,82.267 L2283.621,81.849 C2306.885,81.099 2404.882,77.27 2484,64 C2500.265,61.272 2503.756,57.853 2520,55 C2583.102,43.919 2655.612,36.88 2708.33,32.777" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2708.564,35.83 L2710.619,32.602 L2708.096,29.725 L2715.961,32.193 L2708.564,35.83" fill="#000"/>
+    <ellipse cx="2270.628" cy="82.267" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1930.5,113 L1943.5,113 C2001.345,113 2015.41,105.425 2073,100 C2146.311,93.094 2234.488,85.611 2265.786,82.98" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2266.039,85.995 L2268.047,82.791 L2265.533,79.966 L2273.323,82.349 L2266.039,85.995" fill="#000"/>
+    <ellipse cx="1930.5" cy="113" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2299.5,118 L2312.5,118 C2389.939,118 2609.894,98.284 2719.015,88.033" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2719.304,91.098 L2721.314,87.817 L2718.727,84.969 L2726.677,87.312 L2719.304,91.098" fill="#000"/>
+    <ellipse cx="2299.5" cy="118" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1930.5,131 L1943.5,131 C2049.791,131 2174.966,124.345 2237.588,120.558" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2237.776,123.632 L2239.894,120.417 L2237.4,117.484 L2245.274,120.089 L2237.776,123.632" fill="#000"/>
+    <ellipse cx="1930.5" cy="131" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2303.5,154 L2316.5,154 C2461.491,154 2631.695,145.173 2720.695,139.881" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2720.876,142.91 L2722.966,139.745 L2720.513,136.852 L2728.267,139.428 L2720.876,142.91" fill="#000"/>
+    <ellipse cx="2303.5" cy="154" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2303.5,172 L2316.5,172 C2461.491,172 2631.695,180.827 2720.695,186.119" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2720.513,189.148 L2722.966,186.255 L2720.876,183.09 L2728.267,186.572 L2720.513,189.148" fill="#000"/>
+    <ellipse cx="2303.5" cy="172" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1930.5,149 L1943.5,149 C2047.578,149 2169.739,155.87 2233.576,159.985" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2233.371,163.131 L2235.935,160.139 L2233.78,156.839 L2241.44,160.497 L2233.371,163.131" fill="#000"/>
+    <ellipse cx="1930.5" cy="149" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2278.5,877 L2278.5,864 C2278.5,586.819 2300.159,457.816 2520,289 C2565.468,254.085 2628.909,244.665 2681.975,244.175" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2681.978,247.276 L2684.3,244.172 L2681.971,241.075 L2689.725,244.166 L2681.978,247.276" fill="#000"/>
+    <ellipse cx="2278.5" cy="877" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,892 L2284.5,892 C2542.669,892 2313.69,516.201 2520,361 C2547.374,340.407 2581.045,328.76 2615.019,322.593" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2615.541,325.677 L2617.332,322.201 L2614.496,319.508 L2622.729,321.286 L2615.541,325.677" fill="#000"/>
+    <ellipse cx="2271.5" cy="892" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,910 L2284.5,910 C2520.93,910 2328.177,571.214 2520,433 C2548.052,412.788 2582.271,401.352 2616.602,395.278" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2617.117,398.393 L2618.938,394.891 L2616.087,392.162 L2624.39,393.99 L2617.117,398.393" fill="#000"/>
+    <ellipse cx="2271.5" cy="910" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,928 L2284.5,928 C2499.672,928 2342.371,626.437 2520,505 C2543.746,488.766 2571.562,478.321 2600.033,471.805" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2600.694,474.863 L2602.327,471.309 L2599.371,468.747 L2607.679,470.151 L2600.694,474.863" fill="#000"/>
+    <ellipse cx="2271.5" cy="928" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,946 L2284.5,946 C2479.054,946 2356.169,681.93 2520,577 C2542,562.91 2567.163,553.305 2592.997,546.887" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2593.688,549.808 L2595.188,546.369 L2592.306,543.966 L2600.299,545.16 L2593.688,549.808" fill="#000"/>
+    <ellipse cx="2271.5" cy="946" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,964 L2284.5,964 C2459.3,964 2369.419,737.772 2520,649 C2535.574,639.819 2552.555,632.61 2570.142,626.985" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2571.068,630.014 L2572.413,626.29 L2569.216,623.956 L2577.714,624.67 L2571.068,630.014" fill="#000"/>
+    <ellipse cx="2271.5" cy="964" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,982 L2284.5,982 C2440.741,982 2381.897,794.066 2520,721 C2533.34,713.942 2547.574,708.103 2562.253,703.287" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2563.166,706.182 L2564.425,702.602 L2561.339,700.391 L2569.492,701.003 L2563.166,706.182" fill="#000"/>
+    <ellipse cx="2271.5" cy="982" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1000 L2284.5,1000 C2423.852,1000 2393.265,850.942 2520,793 C2528.567,789.083 2537.443,785.563 2546.524,782.402" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2547.508,785.332 L2548.721,781.664 L2545.54,779.472 L2553.849,779.942 L2547.508,785.332" fill="#000"/>
+    <ellipse cx="2271.5" cy="1000" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1018 L2284.5,1018 C2409.316,1018 2403.025,908.543 2520,865 C2535.019,859.409 2550.813,854.674 2566.892,850.664" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2567.608,853.627 L2569.113,850.127 L2566.175,847.702 L2574.297,848.873 L2567.608,853.627" fill="#000"/>
+    <ellipse cx="2271.5" cy="1018" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1036 L2284.5,1036 C2398.039,1036 2410.492,966.984 2520,937 C2536.371,932.518 2553.478,928.579 2570.766,925.121" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2571.347,928.088 L2572.992,924.685 L2570.185,922.153 L2578.185,923.668 L2571.347,928.088" fill="#000"/>
+    <ellipse cx="2271.5" cy="1036" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1054 L2284.5,1054 C2391.06,1054 2414.847,1026.259 2520,1009 C2536.207,1006.34 2553,1003.72 2569.9,1001.182" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2570.364,1004.29 L2572.231,1000.834 L2569.436,998.074 L2577.67,1000.021 L2570.364,1004.29" fill="#000"/>
+    <ellipse cx="2271.5" cy="1054" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1072 L2284.5,1072 C2358.614,1072 2438.848,1068.975 2512.802,1064.951" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2512.969,1067.99 L2515.081,1064.825 L2512.635,1061.912 L2520.399,1064.533 L2512.969,1067.99" fill="#000"/>
+    <ellipse cx="2271.5" cy="1072" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1090 L2284.5,1090 C2391.351,1090 2510.922,1096.287 2606.058,1102.793" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2605.846,1105.863 L2608.36,1102.952 L2606.27,1099.723 L2613.733,1103.322 L2605.846,1105.863" fill="#000"/>
+    <ellipse cx="2271.5" cy="1090" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1108 L2284.5,1108 C2391.06,1108 2414.847,1135.741 2520,1153 C2536.207,1155.66 2553,1158.28 2569.9,1160.818" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2569.436,1163.926 L2572.231,1161.166 L2570.364,1157.71 L2577.67,1161.979 L2569.436,1163.926" fill="#000"/>
+    <ellipse cx="2271.5" cy="1108" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1126 L2284.5,1126 C2398.039,1126 2410.492,1195.016 2520,1225 C2530.716,1227.934 2541.748,1230.635 2552.939,1233.121" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2552.298,1236.071 L2555.152,1233.602 L2553.58,1230.171 L2560.315,1234.724 L2552.298,1236.071" fill="#000"/>
+    <ellipse cx="2271.5" cy="1126" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1144 L2284.5,1144 C2409.316,1144 2403.025,1253.457 2520,1297 C2533.867,1302.162 2548.394,1306.594 2563.196,1310.4" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2562.469,1313.315 L2565.382,1310.945 L2563.924,1307.485 L2570.483,1312.218 L2562.469,1313.315" fill="#000"/>
+    <ellipse cx="2271.5" cy="1144" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1162 L2284.5,1162 C2319.338,1162 2488.316,1354.515 2520,1369 C2540.629,1378.431 2563.053,1385.563 2585.812,1390.932" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2585.139,1393.892 L2588.032,1391.437 L2586.485,1387.972 L2593.211,1392.614 L2585.139,1393.892" fill="#000"/>
+    <ellipse cx="2271.5" cy="1162" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1180 L2284.5,1180 C2398.718,1180 2417.75,1248.959 2484,1342 C2511.156,1380.138 2483.574,1411.587 2520,1441 C2545.572,1461.649 2577.329,1473.564 2609.813,1480.016" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2609.264,1482.968 L2612.027,1480.428 L2610.361,1477.064 L2617.193,1481.388 L2609.264,1482.968" fill="#000"/>
+    <ellipse cx="2271.5" cy="1180" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1198 L2284.5,1198 C2393.852,1198 2424.389,1250.325 2484,1342 C2526.338,1407.112 2463.169,1460.064 2520,1513 C2530.205,1522.506 2541.677,1530.262 2553.971,1536.551" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2552.633,1539.316 L2556.045,1537.555 L2555.309,1533.786 L2560.883,1539.896 L2552.633,1539.316" fill="#000"/>
+    <ellipse cx="2271.5" cy="1198" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1216 L2284.5,1216 C2389.37,1216 2426.767,1254.124 2484,1342 C2543.584,1433.486 2442.394,1508.206 2520,1585 C2542.283,1607.049 2571.316,1619.898 2601.914,1626.886" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2601.287,1629.84 L2604.13,1627.356 L2602.542,1623.931 L2609.301,1628.455 L2601.287,1629.84" fill="#000"/>
+    <ellipse cx="2271.5" cy="1216" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1234 L2284.5,1234 C2385.325,1234 2427.553,1258.457 2484,1342 C2523.445,1400.379 2470.75,1606.617 2520,1657 C2529.39,1666.606 2540.056,1674.487 2551.583,1680.911" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2550.137,1683.664 L2553.649,1681.996 L2553.03,1678.158 L2558.467,1684.527 L2550.137,1683.664" fill="#000"/>
+    <ellipse cx="2271.5" cy="1234" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1252 L2284.5,1252 C2381.772,1252 2427.491,1262.826 2484,1342 C2534.176,1412.302 2460.278,1666.604 2520,1729 C2539.526,1749.4 2564.792,1762.076 2591.913,1769.561" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2591.16,1772.486 L2594.107,1770.127 L2592.667,1766.636 L2599.226,1771.446 L2591.16,1772.486" fill="#000"/>
+    <ellipse cx="2271.5" cy="1252" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1270 L2284.5,1270 C2378.764,1270 2426.851,1267.035 2484,1342 C2546.029,1423.366 2449.792,1726.577 2520,1801 C2544.119,1826.568 2577.243,1840.063 2611.829,1846.42" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2611.329,1849.38 L2614.048,1846.795 L2612.329,1843.46 L2619.228,1847.67 L2611.329,1849.38" fill="#000"/>
+    <ellipse cx="2271.5" cy="1270" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1288 L2284.5,1288 C2376.357,1288 2425.737,1270.985 2484,1342 C2559.017,1433.436 2439.298,1786.541 2520,1873 C2540.867,1895.355 2568.611,1908.515 2598.241,1915.751" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2597.555,1918.779 L2600.512,1916.265 L2598.927,1912.722 L2605.812,1917.465 L2597.555,1918.779" fill="#000"/>
+    <ellipse cx="2271.5" cy="1288" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2271.5,1306 L2284.5,1306 C2374.599,1306 2424.188,1274.618 2484,1342 C2573.114,1442.393 2428.799,1846.499 2520,1945 C2540.489,1967.129 2567.712,1980.272 2596.864,1987.584" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2596.17,1990.564 L2599.099,1988.105 L2597.558,1984.604 L2604.314,1989.319 L2596.17,1990.564" fill="#000"/>
+    <ellipse cx="2271.5" cy="1306" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2278.5,1321 L2278.5,1334 C2278.5,1345.425 2475.863,1333.979 2484,1342 C2537.489,1394.725 2469.148,1961.727 2520,2017 C2537.754,2036.298 2560.627,2048.777 2585.45,2056.519" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2584.588,2059.481 L2587.672,2057.166 L2586.313,2053.557 L2592.855,2058.675 L2584.588,2059.481" fill="#000"/>
+    <ellipse cx="2278.5" cy="1321" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1930.5,167 L1943.5,167 C2136.691,167 2248.135,885.637 2272.433,1060.832" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2269.358,1061.256 L2272.751,1063.139 L2275.509,1060.409 L2273.492,1068.521 L2269.358,1061.256" fill="#000"/>
+    <ellipse cx="1930.5" cy="167" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1323.946,847.074 L1336.518,850.381 C1362.997,857.348 1487.98,886.179 1560,831 C1767.265,672.201 1806.81,331.56 1814.05,183.798" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1817.148,183.941 L1814.157,181.475 L1810.952,183.655 L1814.408,176.054 L1817.148,183.941" fill="#000"/>
+    <ellipse cx="1323.946" cy="847.074" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M998,867 L1011,867 C1131.345,867 1276.786,854.112 1318.687,850.147" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1318.981,853.217 L1320.989,849.926 L1318.392,847.077 L1326.361,849.41 L1318.981,853.217" fill="#000"/>
+    <ellipse cx="998" cy="867" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M998,885 L1011,885 C1085.223,885 1169.145,885 1232.348,885" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1232.348,888.041 L1234.629,885 L1232.348,881.959 L1239.951,885 L1232.348,888.041" fill="#000"/>
+    <ellipse cx="998" cy="885" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M998,903 L1011,903 C1091.995,903 1183.818,914.566 1248.173,924.586" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1247.688,927.67 L1250.486,924.95 L1248.659,921.502 L1255.883,925.799 L1247.688,927.67" fill="#000"/>
+    <ellipse cx="998" cy="903" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1331.5,1732 L1331.5,1719 C1331.5,1507.72 1416.053,1434.716 1596,1324 C1633.019,1301.223 1680.22,1293.311 1721.359,1291.57" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1721.461,1294.613 L1723.641,1291.494 L1721.257,1288.528 L1728.966,1291.315 L1721.461,1294.613" fill="#000"/>
+    <ellipse cx="1331.5" cy="1732" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1896.5,1360 L1909.5,1360 C1992.718,1360 2086.521,1360 2158.594,1360" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2158.594,1363.116 L2160.931,1360 L2158.594,1356.884 L2166.384,1360 L2158.594,1363.116" fill="#000"/>
+    <ellipse cx="1896.5" cy="1360" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1747 L1337.5,1747 C1537.738,1747 1424.362,1481.13 1596,1378 C1631.405,1356.727 1675.815,1348.565 1715.41,1346.251" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1715.565,1349.391 L1717.765,1346.135 L1715.256,1343.111 L1723.261,1345.864 L1715.565,1349.391" fill="#000"/>
+    <ellipse cx="1324.5" cy="1747" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1909.5,1396 L1922.5,1396 C2009.765,1396 2109.097,1396 2180.452,1396" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2180.452,1399.075 L2182.758,1396 L2180.452,1392.925 L2188.139,1396 L2180.452,1399.075" fill="#000"/>
+    <ellipse cx="1909.5" cy="1396" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1765 L1337.5,1765 C1524.859,1765 1433.085,1524.532 1596,1432 C1628.259,1413.677 1667.438,1405.34 1703.716,1402.06" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1703.966,1405.138 L1706.025,1401.873 L1703.467,1398.982 L1711.41,1401.435 L1703.966,1405.138" fill="#000"/>
+    <ellipse cx="1324.5" cy="1765" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1936.5,1450 L1949.5,1450 C2016.805,1450 2091.879,1450 2153.201,1450" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2153.201,1453.116 L2155.539,1450 L2153.201,1446.884 L2160.993,1450 L2153.201,1453.116" fill="#000"/>
+    <ellipse cx="1936.5" cy="1450" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1783 L1337.5,1783 C1512.496,1783 1441.472,1568.125 1596,1486 C1620.509,1472.974 1648.68,1465.152 1676.489,1460.633" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1676.942,1463.611 L1678.722,1460.293 L1676.035,1457.656 L1683.933,1459.5 L1676.942,1463.611" fill="#000"/>
+    <ellipse cx="1324.5" cy="1783" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1944.5,1504 L1957.5,1504 C2019.308,1504 2087.832,1504 2145.56,1504" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2145.56,1507.084 L2147.873,1504 L2145.56,1500.916 L2153.269,1504 L2145.56,1507.084" fill="#000"/>
+    <ellipse cx="1944.5" cy="1504" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1801 L1337.5,1801 C1500.765,1801 1449.439,1611.94 1596,1540 C1618.508,1528.952 1643.816,1521.783 1669.031,1517.234" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1669.54,1520.219 L1671.27,1516.853 L1668.522,1514.25 L1676.493,1515.962 L1669.54,1520.219" fill="#000"/>
+    <ellipse cx="1324.5" cy="1801" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1966.5,1558 L1979.5,1558 C2026.18,1558 2076.973,1558 2123.181,1558" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2123.181,1561.069 L2125.483,1558 L2123.181,1554.931 L2130.854,1558 L2123.181,1561.069" fill="#000"/>
+    <ellipse cx="1966.5" cy="1558" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1819 L1337.5,1819 C1489.814,1819 1456.881,1656.011 1596,1594 C1611.88,1586.922 1629.009,1581.503 1646.449,1577.378" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1647.125,1580.374 L1648.696,1576.871 L1645.773,1574.381 L1653.94,1575.688 L1647.125,1580.374" fill="#000"/>
+    <ellipse cx="1324.5" cy="1819" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1974.5,1612 L1987.5,1612 C2028.736,1612 2073.269,1612 2114.77,1612" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2114.77,1615.085 L2117.084,1612 L2114.77,1608.915 L2122.482,1612 L2114.77,1615.085" fill="#000"/>
+    <ellipse cx="1974.5" cy="1612" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1837 L1337.5,1837 C1479.822,1837 1463.666,1700.374 1596,1648 C1609.453,1642.676 1623.701,1638.334 1638.218,1634.801" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1638.928,1637.846 L1640.502,1634.268 L1637.508,1631.755 L1645.832,1633.026 L1638.928,1637.846" fill="#000"/>
+    <ellipse cx="1324.5" cy="1837" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1989.5,1666 L2002.5,1666 C2033.771,1666 2067.043,1666 2099.244,1666" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2099.244,1669.089 L2101.56,1666 L2099.244,1662.911 L2106.966,1666 L2099.244,1669.089" fill="#000"/>
+    <ellipse cx="1989.5" cy="1666" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1855 L1337.5,1855 C1471.005,1855 1469.63,1745.06 1596,1702 C1604.746,1699.02 1613.788,1696.361 1622.993,1693.99" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1623.729,1696.956 L1625.217,1693.438 L1622.256,1691.024 L1630.407,1692.15 L1623.729,1696.956" fill="#000"/>
+    <ellipse cx="1324.5" cy="1855" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1969.5,1720 L1982.5,1720 C2027.162,1720 2075.628,1720 2120.124,1720" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2120.124,1723.072 L2122.428,1720 L2120.124,1716.928 L2127.805,1720 L2120.124,1723.072" fill="#000"/>
+    <ellipse cx="1969.5" cy="1720" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1873 L1337.5,1873 C1463.609,1873 1474.585,1790.088 1596,1756 C1611.227,1751.725 1627.236,1748.127 1643.382,1745.098" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1643.923,1748.068 L1645.61,1744.693 L1642.842,1742.128 L1650.808,1743.746 L1643.923,1748.068" fill="#000"/>
+    <ellipse cx="1324.5" cy="1873" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1965.5,1774 L1978.5,1774 C2025.582,1774 2076.835,1774 2123.393,1774" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2123.393,1777.092 L2125.712,1774 L2123.393,1770.908 L2131.124,1774 L2123.393,1777.092" fill="#000"/>
+    <ellipse cx="1965.5" cy="1774" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1891 L1337.5,1891 C1457.897,1891 1478.324,1835.454 1596,1810 C1612.582,1806.413 1629.98,1803.26 1647.417,1800.498" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1647.881,1803.487 L1649.659,1800.15 L1646.953,1797.509 L1654.89,1799.338 L1647.881,1803.487" fill="#000"/>
+    <ellipse cx="1324.5" cy="1891" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1981.5,1828 L1994.5,1828 C2031.081,1828 2070.321,1828 2107.58,1828" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2107.58,1831.168 L2109.956,1828 L2107.58,1824.832 L2115.499,1828 L2107.58,1831.168" fill="#000"/>
+    <ellipse cx="1981.5" cy="1828" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1909 L1337.5,1909 C1454.117,1909 1480.647,1881.124 1596,1864 C1614.524,1861.25 1633.958,1858.568 1653.282,1856.028" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1653.683,1859.102 L1655.588,1855.726 L1652.88,1852.953 L1660.969,1855.023 L1653.683,1859.102" fill="#000"/>
+    <ellipse cx="1324.5" cy="1909" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M2024,1882 L2037,1882 C2046.483,1882 2056.176,1882 2065.967,1882" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2065.967,1885.002 L2068.218,1882 L2065.967,1878.998 L2073.472,1882 L2065.967,1885.002" fill="#000"/>
+    <ellipse cx="2024" cy="1882" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1927 L1337.5,1927 C1441.009,1927 1556.771,1918.502 1648.446,1909.764" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1648.741,1912.833 L1650.749,1909.543 L1648.151,1906.694 L1656.12,1909.026 L1648.741,1912.833" fill="#000"/>
+    <ellipse cx="1324.5" cy="1927" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1930.5,1936 L1943.5,1936 C2015.102,1936 2095.337,1936 2159.219,1936" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2159.219,1939.083 L2161.531,1936 L2159.219,1932.917 L2166.927,1936 L2159.219,1939.083" fill="#000"/>
+    <ellipse cx="1930.5" cy="1936" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1945 L1337.5,1945 C1453.95,1945 1586.358,1945 1682.241,1945" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1682.241,1948.083 L1684.553,1945 L1682.241,1941.917 L1689.949,1945 L1682.241,1948.083" fill="#000"/>
+    <ellipse cx="1324.5" cy="1945" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1967.5,1990 L1980.5,1990 C2026.413,1990 2076.318,1990 2121.884,1990" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2121.884,1993.027 L2124.154,1990 L2121.884,1986.973 L2129.452,1990 L2121.884,1993.027" fill="#000"/>
+    <ellipse cx="1967.5" cy="1990" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1963 L1337.5,1963 C1441.009,1963 1556.771,1971.498 1648.446,1980.236" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1648.151,1983.306 L1650.749,1980.457 L1648.741,1977.167 L1656.12,1980.974 L1648.151,1983.306" fill="#000"/>
+    <ellipse cx="1324.5" cy="1963" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1984.5,2044 L1997.5,2044 C2032.445,2044 2069.843,2044 2105.561,2044" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2105.561,2047.038 L2107.84,2044 L2105.561,2040.962 L2113.156,2044 L2105.561,2047.038" fill="#000"/>
+    <ellipse cx="1984.5" cy="2044" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1981 L1337.5,1981 C1454.117,1981 1480.647,2008.876 1596,2026 C1614.524,2028.75 1633.958,2031.432 1653.282,2033.972" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1652.88,2037.047 L1655.588,2034.274 L1653.683,2030.898 L1660.969,2034.977 L1652.88,2037.047" fill="#000"/>
+    <ellipse cx="1324.5" cy="1981" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1974.5,2098 L1987.5,2098 C2028.973,2098 2073.781,2098 2115.485,2098" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2115.485,2101.1 L2117.81,2098 L2115.485,2094.9 L2123.235,2098 L2115.485,2101.1" fill="#000"/>
+    <ellipse cx="1974.5" cy="2098" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,1999 L1337.5,1999 C1457.897,1999 1478.324,2054.546 1596,2080 C1609.821,2082.99 1624.209,2085.678 1638.714,2088.09" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1638.219,2091.127 L1640.992,2088.46 L1639.208,2085.052 L1646.307,2089.326 L1638.219,2091.127" fill="#000"/>
+    <ellipse cx="1324.5" cy="1999" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1951.5,2152 L1964.5,2152 C2021.459,2152 2084.249,2152 2138.546,2152" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2138.546,2155.041 L2140.827,2152 L2138.546,2148.959 L2146.149,2152 L2138.546,2155.041" fill="#000"/>
+    <ellipse cx="1951.5" cy="2152" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,2017 L1337.5,2017 C1463.609,2017 1474.585,2099.912 1596,2134 C1617.006,2139.898 1639.502,2144.507 1661.791,2148.11" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1661.318,2151.13 L1664.056,2148.465 L1662.265,2145.091 L1669.34,2149.294 L1661.318,2151.13" fill="#000"/>
+    <ellipse cx="1324.5" cy="2017" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1927.5,2206 L1940.5,2206 C2014.431,2206 2097.486,2206 2162.644,2206" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2162.644,2209.142 L2165.001,2206 L2162.644,2202.858 L2170.499,2206 L2162.644,2209.142" fill="#000"/>
+    <ellipse cx="1927.5" cy="2206" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,2035 L1337.5,2035 C1471.005,2035 1469.63,2144.94 1596,2188 C1624.311,2197.647 1655.716,2203.923 1685.711,2207.986" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1685.317,2211.023 L1687.989,2208.282 L1686.106,2204.949 L1693.304,2208.972 L1685.317,2211.023" fill="#000"/>
+    <ellipse cx="1324.5" cy="2035" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1982.5,2260 L1995.5,2260 C2031.266,2260 2069.583,2260 2106.084,2260" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2106.084,2263.104 L2108.411,2260 L2106.084,2256.896 L2113.843,2260 L2106.084,2263.104" fill="#000"/>
+    <ellipse cx="1982.5" cy="2260" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,2053 L1337.5,2053 C1479.822,2053 1463.666,2189.626 1596,2242 C1606.939,2246.329 1618.404,2250.009 1630.112,2253.133" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1629.362,2256.06 L1632.307,2253.695 L1630.861,2250.205 L1637.431,2255.007 L1629.362,2256.06" fill="#000"/>
+    <ellipse cx="1324.5" cy="2053" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1935.5,2314 L1948.5,2314 C2016.558,2314 2092.536,2314 2154.317,2314" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2154.317,2317.139 L2156.671,2314 L2154.317,2310.861 L2162.164,2314 L2154.317,2317.139" fill="#000"/>
+    <ellipse cx="1935.5" cy="2314" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,2071 L1337.5,2071 C1489.814,2071 1456.881,2233.989 1596,2296 C1621.351,2307.3 1649.888,2314.371 1677.789,2318.701" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1677.351,2321.686 L1680.028,2319.03 L1678.228,2315.716 L1685.252,2319.797 L1677.351,2321.686" fill="#000"/>
+    <ellipse cx="1324.5" cy="2071" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1986.5,2368 L1999.5,2368 C2033.153,2368 2069.097,2368 2103.588,2368" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2103.588,2371.12 L2105.928,2368 L2103.588,2364.88 L2111.387,2368 L2103.588,2371.12" fill="#000"/>
+    <ellipse cx="1986.5" cy="2368" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,2089 L1337.5,2089 C1500.765,2089 1449.439,2278.06 1596,2350 C1605.871,2354.845 1616.282,2358.945 1626.986,2362.404" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1626.069,2365.386 L1629.223,2363.092 L1627.904,2359.422 L1634.441,2364.698 L1626.069,2365.386" fill="#000"/>
+    <ellipse cx="1324.5" cy="2089" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1944.5,2422 L1957.5,2422 C2018.91,2422 2086.948,2422 2144.442,2422" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2144.442,2425.071 L2146.745,2422 L2144.442,2418.929 L2152.12,2422 L2144.442,2425.071" fill="#000"/>
+    <ellipse cx="1944.5" cy="2422" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,2107 L1337.5,2107 C1512.496,2107 1441.472,2321.875 1596,2404 C1618.141,2415.767 1643.269,2423.287 1668.42,2427.962" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1667.899,2430.941 L1670.653,2428.353 L1668.941,2424.984 L1675.866,2429.265 L1667.899,2430.941" fill="#000"/>
+    <ellipse cx="1324.5" cy="2107" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1925.5,2476 L1938.5,2476 C2013.871,2476 2098.669,2476 2164.6,2476" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2164.6,2479.015 L2166.861,2476 L2164.6,2472.985 L2172.137,2476 L2164.6,2479.015" fill="#000"/>
+    <ellipse cx="1925.5" cy="2476" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,2125 L1337.5,2125 C1524.859,2125 1433.085,2365.468 1596,2458 C1623.585,2473.668 1656.23,2482.034 1687.794,2486.181" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1687.427,2489.208 L1690.064,2486.456 L1688.161,2483.154 L1695.361,2487.098 L1687.427,2489.208" fill="#000"/>
+    <ellipse cx="1324.5" cy="2125" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1937.5,2530 L1950.5,2530 C2016.647,2530 2090.322,2530 2150.968,2530" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2150.968,2533.083 L2153.281,2530 L2150.968,2526.917 L2158.677,2530 L2150.968,2533.083" fill="#000"/>
+    <ellipse cx="1937.5" cy="2530" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,2143 L1337.5,2143 C1537.738,2143 1424.362,2408.87 1596,2512 C1619.54,2526.144 1647.06,2534.492 1674.499,2539.179" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1674.009,2542.272 L1676.82,2539.547 L1674.99,2536.085 L1682.233,2540.405 L1674.009,2542.272" fill="#000"/>
+    <ellipse cx="1324.5" cy="2143" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1939.5,2584 L1952.5,2584 C2017.567,2584 2089.96,2584 2149.878,2584" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2149.878,2587.047 L2152.163,2584 L2149.878,2580.953 L2157.495,2584 L2149.878,2587.047" fill="#000"/>
+    <ellipse cx="1939.5" cy="2584" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1324.5,2161 L1337.5,2161 C1551.04,2161 1415.367,2452.109 1596,2566 C1619.007,2580.506 1646.089,2589.052 1673.229,2593.825" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1672.73,2596.886 L1675.525,2594.199 L1673.729,2590.763 L1680.882,2595.073 L1672.73,2596.886" fill="#000"/>
+    <ellipse cx="1324.5" cy="2161" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1951.5,2638 L1964.5,2638 C2021.33,2638 2083.963,2638 2138.175,2638" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M2138.175,2641.037 L2140.452,2638 L2138.175,2634.963 L2145.767,2638 L2138.175,2641.037" fill="#000"/>
+    <ellipse cx="1951.5" cy="2638" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M1331.5,2176 L1331.5,2189 C1331.5,2413.751 1406.95,2498.456 1596,2620 C1615.598,2632.6 1638.238,2640.744 1661.378,2645.836" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1660.758,2648.846 L1663.636,2646.3 L1661.997,2642.825 L1668.905,2647.383 L1660.758,2648.846" fill="#000"/>
+    <ellipse cx="1331.5" cy="2176" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M998,939 L1011,939 C1215.281,939 1305.054,1696.503 1325.708,1902.708" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M1322.636,1903.013 L1325.937,1905.012 L1328.779,1902.403 L1326.47,1910.387 L1322.636,1903.013" fill="#000"/>
+    <ellipse cx="998" cy="939" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M586,795 L599,795 C677.063,795 760.336,825.917 820.896,854.668" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M819.571,857.427 L822.966,855.662 L822.221,851.908 L827.796,857.98 L819.571,857.427" fill="#000"/>
+    <ellipse cx="586" cy="795" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M315.5,759 L328.5,759 C393.001,759 466.969,769.558 513.341,777.47" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M512.823,780.463 L515.586,777.858 L513.859,774.477 L520.823,778.764 L512.823,780.463" fill="#000"/>
+    <ellipse cx="315.5" cy="759" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M159,714 L172,714 C194.555,714 218.959,719.025 239.418,724.739" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M238.567,727.678 L241.623,725.378 L240.27,721.8 L246.767,726.867 L238.567,727.678" fill="#000"/>
+    <ellipse cx="159" cy="714" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

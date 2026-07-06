@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="233px" preserveAspectRatio="none" style="width:346px;height:233px;background:#FFFFFF;" version="1.1" viewBox="0 0 346 233" width="346px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Foo3-->
+    <g class="cluster" data-qualified-name="Foo3" data-source-line="21" id="ent0006">
+      <path d="M225.5,112 L317.5,112 A12.5,12.5 0 0 1 330,124.5 L330,131 L213,131 L213,124.5 A12.5,12.5 0 0 1 225.5,112" fill="#F1F1F1"/>
+      <rect fill="none" height="97" rx="12.5" ry="12.5" style="stroke:#008000;stroke-width:2;" width="117" x="213" y="112"/>
+      <line style="stroke:#008000;stroke-width:2;" x1="213" x2="330" y1="131" y2="131"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="255.531" y="122.889">Foo3</text>
+    </g>
+    <g class="entity" data-qualified-name="blue" data-source-line="10" id="ent0001">
+      <rect fill="#00F" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="53" y2="53"/>
+      <text fill="#000" font-size="14" textLength="26.512" x="17.744" y="44.889">blue</text>
+    </g>
+    <g class="entity" data-qualified-name="Foo1" data-source-line="12" id="ent0002">
+      <rect fill="#ADD8E6" height="50" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="51.938" x="74" y="29"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="74" x2="125.938" y1="53" y2="53"/>
+      <text fill="#F00" font-size="14" textLength="31.938" x="84" y="44.889">Foo1</text>
+    </g>
+    <g class="entity" data-qualified-name="Foo2" data-source-line="15" id="ent0003">
+      <path d="M156.5,4 L215.5,4 A12.5,12.5 0 0 1 228,16.5 L228,28 L144,28 L144,16.5 A12.5,12.5 0 0 1 156.5,4" fill="#800080"/>
+      <path d="M144,28 L228,28 L228,91.5 A12.5,12.5 0 0 1 215.5,104 L156.5,104 A12.5,12.5 0 0 1 144,91.5 L144,28" fill="#800080"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#008000;stroke-width:1;stroke-dasharray:1,3;" width="84" x="144" y="4"/>
+      <line style="stroke:#008000;stroke-width:1;stroke-dasharray:1,3;" x1="144" x2="228" y1="28" y2="28"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="170.031" y="19.889">Foo2</text>
+      <g class="entity" data-qualified-name="Foo2.inner1" data-source-line="16" id="ent0004">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#FF0;stroke-width:1;stroke-dasharray:1,3;" width="58.937" x="150" y="39"/>
+        <line style="stroke:#FF0;stroke-width:1;stroke-dasharray:1,3;" x1="150" x2="208.938" y1="63" y2="63"/>
+        <text fill="#000" font-size="14" textLength="38.937" x="160" y="54.889">inner1</text>
+      </g>
+    </g>
+    <g class="entity" data-qualified-name="out" data-source-line="19" id="ent0005">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#FFD700;stroke-width:1;stroke-dasharray:1,3;" width="50" x="246" y="29"/>
+      <line style="stroke:#FFD700;stroke-width:1;stroke-dasharray:1,3;" x1="246" x2="296" y1="53" y2="53"/>
+      <text fill="#008000" font-size="14" textLength="19.425" x="261.288" y="44.889">out</text>
+    </g>
+    <g class="entity" data-qualified-name="Foo3.inner2" data-source-line="22" id="ent0007">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#FF0;stroke-width:1;stroke-dasharray:1,3;" width="58.937" x="241.5" y="151"/>
+      <line style="stroke:#FF0;stroke-width:1;stroke-dasharray:1,3;" x1="241.5" x2="300.438" y1="175" y2="175"/>
+      <text fill="#000" font-size="14" textLength="38.937" x="251.5" y="166.889">inner2</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="271,150.752,275,141.752,271,145.752,267,141.752,271,150.752" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M271,79.284 C271,100.103 271,124.943 271,145.752" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

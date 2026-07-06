@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="234px" preserveAspectRatio="none" style="width:157px;height:234px;background:#FFFFFF;" version="1.1" viewBox="0 0 157 234" width="157px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class a-->
+    <g class="entity" data-qualified-name="a" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" x="35" y="31.889">a</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="44.788" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="44.788" y1="52" y2="52"/>
+    </g>
+    <!--class b-->
+    <g class="entity" data-qualified-name="b" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="6" y="170"/>
+      <ellipse cx="21" cy="186" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="191">C</text>
+      <text fill="#000" font-size="14" x="35" y="189.889">b</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="44.788" y1="202" y2="202"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="44.788" y1="210" y2="210"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="26,169.887,30,160.887,26,164.887,22,160.887,26,169.887" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26,60.018 C26,89.513 26,135.347 26,164.887" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="80.541" y="89.111">toto</text>
+      <path d="M31,98 L31,147 L151,147 L151,108 L141,98 L31,98" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M141,98 L141,108 L151,108 L141,98" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="91.894" x="37" y="113.111">This is not visible,</text>
+      <text fill="#000" font-size="13" textLength="99.694" x="37" y="126.111">neither in smetana</text>
+      <text fill="#000" font-size="13" textLength="46.962" x="37" y="139.111">nor ELK.</text>
+    </g>
+  </g>
+</svg>

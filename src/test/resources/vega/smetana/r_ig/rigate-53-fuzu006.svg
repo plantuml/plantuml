@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="274px" preserveAspectRatio="none" style="width:193px;height:274px;background:#FFFFFF;" version="1.1" viewBox="0 0 193 274" width="193px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity actor1-->
+    <g class="entity" data-qualified-name="actor1" data-source-line="2" id="ent0001">
+      <ellipse cx="28.925" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M28.925,28.5 L28.925,55.5 M15.925,36.5 L41.925,36.5 M28.925,55.5 L15.925,70.5 M28.925,55.5 L41.925,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.85" x="9.5" y="82.889">actor1</text>
+    </g>
+    <!--entity actor2-->
+    <g class="entity" data-qualified-name="actor2" data-source-line="3" id="ent0002">
+      <ellipse cx="85.925" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M85.925,28.5 L85.925,55.5 M72.925,36.5 L98.925,36.5 M85.925,55.5 L72.925,70.5 M85.925,55.5 L98.925,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.85" x="66.5" y="82.889">actor2</text>
+    </g>
+    <!--entity actor3-->
+    <g class="entity" data-qualified-name="actor3" data-source-line="4" id="ent0003">
+      <ellipse cx="142.925" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M142.925,28.5 L142.925,55.5 M129.925,36.5 L155.925,36.5 M142.925,55.5 L129.925,70.5 M142.925,55.5 L155.925,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.85" x="123.5" y="82.889">actor3</text>
+    </g>
+    <!--entity actor4-->
+    <g class="entity" data-qualified-name="actor4" data-source-line="5" id="ent0004">
+      <ellipse cx="28.925" cy="130.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M28.925,138.5 L28.925,165.5 M15.925,146.5 L41.925,146.5 M28.925,165.5 L15.925,180.5 M28.925,165.5 L41.925,180.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="38.85" x="9.5" y="192.889">actor4</text>
+    </g>
+    <!--entity UC1-->
+    <g class="entity" data-qualified-name="UC1" data-source-line="6" id="ent0005">
+      <ellipse cx="89.861" cy="158.899" fill="#F1F1F1" rx="22.861" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="75.817" y="162.399">UC1</text>
+    </g>
+    <!--entity UC2-->
+    <g class="entity" data-qualified-name="UC2" data-source-line="7" id="ent0006">
+      <ellipse cx="153.861" cy="158.899" fill="#F1F1F1" rx="22.861" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="139.817" y="162.399">UC2</text>
+    </g>
+    <!--entity UC3-->
+    <g class="entity" data-qualified-name="UC3" data-source-line="8" id="ent0007">
+      <ellipse cx="28.861" cy="244.899" fill="#F1F1F1" rx="22.861" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="14.817" y="248.399">UC3</text>
+    </g>
+    <!--entity UC4-->
+    <g class="entity" data-qualified-name="UC4" data-source-line="9" id="ent0008">
+      <ellipse cx="92.861" cy="244.899" fill="#F1F1F1" rx="22.861" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.088" x="78.817" y="248.399">UC4</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="108px" preserveAspectRatio="none" style="width:196px;height:108px;background:#FFFFFF;" version="1.1" viewBox="0 0 196 108" width="196px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="X" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="80" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="174.087" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="180.087" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="88.362" y="27.889">X</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="51.363" x="11" y="53.889">header 1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="51.363" x="62.363" y="53.889">header 2</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="51.363" x="113.725" y="53.889">header 3</text>
+      <text fill="#000" font-size="14" x="11" y="67.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" x="11" y="67.889">A</text>
+      <text fill="#000" font-size="14" x="20.362" y="67.889"> </text>
+      <text fill="#000" font-size="14" textLength="22.575" x="62.363" y="67.889">abc</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="113.725" y="67.889">def</text>
+      <text fill="#000" font-size="14" x="11" y="81.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" x="11" y="81.889">B</text>
+      <text fill="#000" font-size="14" x="20.362" y="81.889"> </text>
+      <text fill="#000" font-size="14" textLength="25.725" x="62.363" y="81.889">qwe</text>
+      <text fill="#000" font-size="14" x="113.725" y="81.889"> </text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="11" x2="165.087" y1="43" y2="43"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="11" x2="165.087" y1="57" y2="57"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="11" x2="165.087" y1="71" y2="71"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="11" x2="165.087" y1="85" y2="85"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="11" x2="11" y1="43" y2="85"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="62.363" x2="62.363" y1="43" y2="85"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="113.725" x2="113.725" y1="43" y2="85"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="165.087" x2="165.087" y1="43" y2="85"/>
+    </g>
+  </g>
+</svg>

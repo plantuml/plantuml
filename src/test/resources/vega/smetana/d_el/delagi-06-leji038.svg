@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="97px" preserveAspectRatio="none" style="width:184px;height:97px;background:#FFFFFF;" version="1.1" viewBox="0 0 184 97" width="184px" zoomAndPan="magnify">
+  <defs>
+    <style type="text/css">svg .entity {
+    cursor: pointer;
+}
+svg.mouseover-active &gt; g &gt; * {
+	opacity: 0.2 !important;
+}
+svg.mouseover-active &gt; g &gt; g.mouseover-highlighted {
+	opacity: 1.0 !important;
+}
+svg.click-active &gt; g &gt; * {
+    opacity: 0.3;
+}
+svg.click-active &gt; g &gt; g.click-highlighted {
+    opacity: 1.0;
+}
+</style>
+    <script>(function (){
+    function escapeForCssAttributeSelector(entityName) {
+        return entityName
+            ?.replaceAll('\\', '\\\\')
+            ?.replaceAll('"', '\\"');
+    }
+
+    function getLineEdgesAndNodes(startingNode) {
+        function findNextEdgesAndNodes(startingNode, forwards, elementsEncounteredSoFar = new Set()) {
+            elementsEncounteredSoFar.add(startingNode);
+            const nodeName = startingNode.id;
+            const escapedNodeName = escapeForCssAttributeSelector(nodeName);
+            const thisLinkAttributeIndex = forwards ? 2 : 1;
+            const nextLinkAttributeIndex = forwards ? 1 : 2;
+
+            svg.querySelectorAll(`.link[data-entity-${nextLinkAttributeIndex}="${escapedNodeName}"]`).forEach(link =&gt; {
+                if (! elementsEncounteredSoFar.has(link)) {
+                    elementsEncounteredSoFar.add(link);
+
+                    const linkStartNodeName = link.getAttribute(`data-entity-${thisLinkAttributeIndex}`);
+                    const linkStartNode = svg.querySelector(`[id="${escapeForCssAttributeSelector(linkStartNodeName)}"]`);
+
+                    if (! elementsEncounteredSoFar.has(linkStartNode)) {
+                        elementsEncounteredSoFar.add(linkStartNode);
+                        findNextEdgesAndNodes(linkStartNode, forwards, elementsEncounteredSoFar);
+                    }
+                }
+            });
+
+            return elementsEncounteredSoFar;
+        }
+
+        const ancestors = findNextEdgesAndNodes(startingNode, false);
+        const descendants = findNextEdgesAndNodes(startingNode, true);
+
+        return ancestors.union(descendants);
+    }
+
+	function getEdgesAndDistance1Nodes(startingNode) {
+		const nodeName = startingNode.id;
+		const escapedNodeName = escapeForCssAttributeSelector(nodeName);
+		let results = new Set();
+
+        svg.querySelectorAll(`.link[data-entity-1="${escapedNodeName}"], .link[data-entity-2="${escapedNodeName}"]`).forEach(link =&gt; {
+            const linkStartNodeName = link.getAttribute("data-entity-1");
+            const linkEndNodeName = link.getAttribute("data-entity-2");
+
+            if (linkStartNodeName === nodeName) {
+                results.add(svg.querySelector(`[id="${escapeForCssAttributeSelector(linkEndNodeName)}"]`));
+                results.add(link);
+            } else if (linkEndNodeName === nodeName) {
+                results.add(svg.querySelector(`[id="${escapeForCssAttributeSelector(linkStartNodeName)}"]`));
+                results.add(link);
+			}
+		});
+
+		return results;
+	}
+
+	/**
+	 * @param {SVGElement} elem
+	 * @param tagName in lowercase, e.g. "g" or "svg"
+	 * @return {{SVGElement}} or null if no matching ancestor is found
+	 */
+	function findAncestorWithTagName(elem, tagName) {
+		while (elem &amp;&amp; elem.nodeName.toLowerCase() !== tagName) {
+			elem = elem.parentElement;
+		}
+		return elem;
+	}
+
+    function onClickEntity() {
+        if (svg.classList.contains("click-active") &amp;&amp; this.classList.contains("click-selected")) {
+            handleDeselect("click");
+        } else {
+            handleSelectNeighbors(this, "click");
+        }
+    }
+
+    function onDoubleClickEntity() {
+        if (svg.classList.contains("click-active") &amp;&amp; this.classList.contains("click-selected")) {
+            handleDeselect("click");
+        } else {
+            handleSelectLine(this, "click");
+        }
+    }
+
+	function onMouseOverEntity() {
+	    handleSelectNeighbors(this, "mouseover");
+	}
+
+	function onMouseOutEntity() {
+	    handleDeselect("mouseover");
+	}
+
+    // CSS class descriptions:
+    //   xxx-active: highlight styles will be ignored when this is not added to the the parent &lt;svg&gt;.
+    //   xxx-selected: lets us track which entity `&lt;g&gt;` was clicked/hovered.
+    //   xxx-highlighted: when highlighting is 'active', elements without this class will be dimmed.
+    //
+    // 'xxx' event type will be 'click' or 'mouseover'.
+	function handleSelectNeighbors(selectedEntityElem, eventType) {
+	    svg.querySelectorAll(`.${eventType}-selected, .${eventType}-highlighted`).forEach(elem =&gt; {
+            elem.classList.remove(`${eventType}-selected`, `${eventType}-highlighted`);
+        });
+
+        svg.classList.add(`${eventType}-active`);
+        selectedEntityElem.classList.add(`${eventType}-selected`, `${eventType}-highlighted`);
+
+        getEdgesAndDistance1Nodes(selectedEntityElem).forEach(node =&gt; {
+            node.classList.add(`${eventType}-highlighted`);
+        });
+	}
+	
+    function handleSelectLine(selectedEntityElem, eventType) {
+        svg.querySelectorAll(`.${eventType}-selected, .${eventType}-highlighted`).forEach(elem =&gt; {
+            elem.classList.remove(`${eventType}-selected`, `${eventType}-highlighted`);
+        });
+
+        svg.classList.add(`${eventType}-active`);
+        selectedEntityElem.classList.add(`${eventType}-selected`, `${eventType}-highlighted`);
+
+        getLineEdgesAndNodes(selectedEntityElem).forEach(node =&gt; {
+            node.classList.add(`${eventType}-highlighted`);
+        });
+    }
+
+    function handleDeselect(eventType) {
+		svg.classList.remove(`${eventType}-active`);
+    }
+
+	const svg = findAncestorWithTagName(document.currentScript, "svg");
+
+    document.addEventListener("DOMContentLoaded", () =&gt; {
+        svg.querySelectorAll("g.entity").forEach(entity =&gt; {
+            entity.addEventListener("mouseover", onMouseOverEntity);
+            entity.addEventListener("mouseout", onMouseOutEntity);
+            entity.addEventListener("click", onClickEntity);
+            entity.addEventListener("dblclick", onDoubleClickEntity);
+        });
+
+        svg.addEventListener("keydown", event =&gt; {
+            if (event.code === "Escape") {
+              handleDeselect("click");
+            }
+          });
+    });
+})();
+</script>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="6">
+      <text fill="#000" font-size="14" font-weight="700" textLength="157.938" x="10" y="20.889">Change request producers</text>
+    </g>
+    <!--entity Changerequest-->
+    <g class="entity" data-qualified-name="Changerequest" data-source-line="7" id="ent0001">
+      <path d="M29.469,49.5 L29.469,78.5 A2.5,2.5 0 0 0 31.969,81 L142.694,81 A2.5,2.5 0 0 0 145.194,78.5 L145.194,57 L135.194,47 L31.969,47 A2.5,2.5 0 0 0 29.469,49.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M135.194,47 L135.194,54.5 A2.5,2.5 0 0 0 137.694,57 L145.194,57" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="49.087" x="39.469" y="67.889">Change</text>
+      <text fill="#000" font-size="14" x="88.556" y="67.889"> </text>
+      <text fill="#000" font-size="14" textLength="46.637" x="88.556" y="67.889">request</text>
+    </g>
+  </g>
+</svg>

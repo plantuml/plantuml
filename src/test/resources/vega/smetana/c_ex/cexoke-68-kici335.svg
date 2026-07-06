@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="136px" preserveAspectRatio="none" style="width:517px;height:136px;background:#FFFFFF;" version="1.1" viewBox="0 0 517 136" width="517px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="12">
+      <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="244.356" y="20.889">title</text>
+    </g>
+    <!--cluster packagetest-->
+    <g class="cluster" data-qualified-name="packagetest" data-source-line="13" id="ent0001">
+      <path d="M311,39 L419.75,39 A3.75,3.75 0 0 1 422.25,41.5 L429.25,65 L429,65 A2.5,2.5 0 0 1 431.5,67.5 L431.5,109.5 A2.5,2.5 0 0 1 429,112 L311,112 A2.5,2.5 0 0 1 308.5,109.5 L308.5,41.5 A2.5,2.5 0 0 1 311,39" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="308.5" x2="429.25" y1="65" y2="65"/>
+      <text fill="#008000" font-size="20" textLength="107.75" x="312.5" y="56.556">packagetest</text>
+    </g>
+    <!--cluster f1-->
+    <g class="cluster" data-qualified-name="f1" data-source-line="23" id="ent0006">
+      <rect fill="none" height="67" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="62" x="439.5" y="45"/>
+      <path d="M461.138,45 L461.138,52 L451.138,62 L439.5,62" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="11.638" x="442.5" y="56.889">f1</text>
+    </g>
+    <!--entity packagetest0-->
+    <g class="entity" data-qualified-name="packagetest0" data-source-line="17" id="ent0003">
+      <path d="M8.5,65.5 L140.375,65.5 A3.75,3.75 0 0 1 142.875,68 L149.875,91.5 L164.375,91.5 A2.5,2.5 0 0 1 166.875,94 L166.875,106 A2.5,2.5 0 0 1 164.375,108.5 L8.5,108.5 A2.5,2.5 0 0 1 6,106 L6,68 A2.5,2.5 0 0 1 8.5,65.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="149.875" y1="91.5" y2="91.5"/>
+      <text fill="#008000" font-size="20" textLength="118.875" x="16" y="84.056">packagetest0</text>
+    </g>
+    <!--entity f-->
+    <g class="entity" data-qualified-name="f" data-source-line="20" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="43.85" x="185.5" y="65"/>
+      <path d="M200.117,65 L200.117,70 L193.117,77 L185.5,77" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="200.5" y="95.889">f</text>
+    </g>
+    <!--entity f0-->
+    <g class="entity" data-qualified-name="f0" data-source-line="21" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.638" x="247.5" y="65"/>
+      <path d="M264.713,65 L264.713,70 L257.713,77 L247.5,77" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="262.5" y="95.889">f0</text>
+    </g>
+    <!--entity ftest2-->
+    <g class="entity" data-qualified-name="packagetest.ftest2" data-source-line="14" id="ent0002">
+      <path d="M343.5,72.5 L343.5,101.5 A2.5,2.5 0 0 0 346,104 L395.125,104 A2.5,2.5 0 0 0 397.625,101.5 L397.625,80 L387.625,70 L346,70 A2.5,2.5 0 0 0 343.5,72.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M387.625,70 L387.625,77.5 A2.5,2.5 0 0 0 390.125,80 L397.625,80" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="34.125" x="353.5" y="90.889">ftest2</text>
+    </g>
+    <!--entity filea-->
+    <g class="entity" data-qualified-name="f1.filea" data-source-line="24" id="ent0007">
+      <path d="M447.5,72.5 L447.5,101.5 A2.5,2.5 0 0 0 450,104 L490.725,104 A2.5,2.5 0 0 0 493.225,101.5 L493.225,80 L483.225,70 L450,70 A2.5,2.5 0 0 0 447.5,72.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M483.225,70 L483.225,77.5 A2.5,2.5 0 0 0 485.725,80 L493.225,80" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="25.725" x="457.5" y="90.889">filea</text>
+    </g>
+  </g>
+</svg>

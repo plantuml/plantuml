@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="193px" preserveAspectRatio="none" style="width:245px;height:193px;background:#DDDDDD;" version="1.1" viewBox="0 0 245 193" width="245px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#DDD" height="193" style="stroke:none;" width="245" x="0" y="0"/>
+    <g class="title" data-source-line="21">
+      <rect fill="#DFD" height="14" style="stroke:none;" width="191.45" x="25.944" y="0"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="191.45" x="25.944" y="10.889">padding/margin needs example:</text>
+    </g>
+    <!--cluster package-->
+    <g class="cluster" data-qualified-name="package" data-source-line="23" id="ent0001">
+      <path d="M71.169,17.5 L71.169,83.5 A2.5,2.5 0 0 0 73.669,86 L182.669,86 A2.5,2.5 0 0 0 185.169,83.5 L185.169,25 L175.169,15 L73.669,15 A2.5,2.5 0 0 0 71.169,17.5" fill="#DFD" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M175.169,15 L175.169,22.5 A2.5,2.5 0 0 0 177.669,25 L185.169,25" fill="#DFD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="119.2" y="27.889">file</text>
+      <text fill="#000" font-size="14" font-weight="700" x="128.169" y="41.889"> </text>
+    </g>
+    <!--entity acc1-->
+    <g class="entity" data-qualified-name="package.acc1" data-source-line="24" id="ent0002">
+      <ellipse cx="88.169" cy="63" fill="#DFD" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <!--entity acc2-->
+    <g class="entity" data-qualified-name="package.acc2" data-source-line="25" id="ent0003">
+      <ellipse cx="168.169" cy="63" fill="#DFD" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk4">
+      <path d="M97.346,66 C112.777,66 143.739,66 159.099,66" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-size="13" textLength="40.463" x="108.169" y="58.111">access</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="93.329,78.374,93.694,88.217,95.528,82.865,100.879,84.699,93.329,78.374" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M95.528,82.865 C100.569,93.163 107.123,102.639 119.669,109 C126.408,112.417 129.93,112.417 136.669,109 C149.214,102.639 157.967,88.672 163.008,78.374" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-size="13" x="126.169" y="104.111">r</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="159.939,53.626,156.97,44.235,156.625,49.882,150.979,49.537,159.939,53.626" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M96.398,53.626 C99.113,50.558 102.414,47.672 106.169,46 C124.033,38.044 132.305,38.044 150.169,46 C153.924,47.672 153.911,46.814 156.625,49.882" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-size="13" x="123.669" y="35.111">w</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="97.401,73.852,102.141,82.485,101.38,76.88,106.986,76.119,97.401,73.852" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="158.936,73.852,149.352,76.119,154.957,76.88,154.197,82.485,158.936,73.852" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M101.38,76.88 C107.318,81.399 111.458,83.614 119.669,86 C126.924,88.109 129.413,88.109 136.669,86 C144.88,83.614 149.019,81.399 154.957,76.88" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#000" font-size="13" textLength="13.731" x="121.669" y="81.111">rw</text>
+    </g>
+    <g class="caption" data-source-line="33">
+      <rect fill="#DFD" height="70" style="stroke:none;" width="243.338" x="0" y="121.563"/>
+      <text fill="#000" font-size="14" textLength="157.5" x="42.919" y="132.452">What I'd love to be able to do:</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="33.819" y="146.452">1.</text>
+      <text fill="#000" font-size="14" textLength="142.275" x="49.306" y="146.452">±25px bottom padding to</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="17.938" x="191.581" y="146.452">file</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="11.287" y="160.452">2.</text>
+      <text fill="#000" font-size="14" textLength="205.275" x="26.775" y="160.452">add ±10px top margin to the diagram</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="0" y="174.452">3.</text>
+      <text fill="#000" font-size="14" textLength="227.85" x="15.488" y="174.452">±5px left&amp;right padding to the document</text>
+      <text fill="#000" font-size="14" textLength="11.638" x="10.85" y="188.452">4.</text>
+      <text fill="#000" font-size="14" textLength="118.3" x="26.338" y="188.452">fix the missing space</text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="28" x="144.638" y="188.452">here</text>
+      <text fill="#000" font-size="14" textLength="59.85" x="172.638" y="188.452">(and on 1.)</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:164px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 164 76" width="164px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <path d="M8.5,12 L62.437,12 A3.75,3.75 0 0 1 64.938,14.5 L71.938,32 L76.438,32 A2.5,2.5 0 0 1 78.938,34.5 L78.938,57.5 A2.5,2.5 0 0 1 76.438,60 L8.5,60 A2.5,2.5 0 0 1 6,57.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#98FB98" style="stroke:#F00;stroke-width:2;"/>
+    <line style="stroke:#F00;stroke-width:2;" x1="6" x2="71.938" y1="32" y2="32"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.937" x="10" y="24.889">package</text>
+    <!--class foo-->
+    <g class="entity" data-qualified-name="foo" data-source-line="10" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.425" x="97" y="12"/>
+      <ellipse cx="112" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="107" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="126" y="31.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="98" x2="147.425" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="98" x2="147.425" y1="52" y2="52"/>
+    </g>
+  </g>
+</svg>

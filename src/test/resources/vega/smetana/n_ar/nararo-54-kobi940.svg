@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:126px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 126 105" width="126px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Pa-->
+    <g class="cluster" data-qualified-name="Pa" data-source-line="3" id="ent0001">
+      <path d="M20.5,4 L38.65,4 A3.75,3.75 0 0 1 41.15,6.5 L48.15,24 L97.5,24 A2.5,2.5 0 0 1 100,26.5 L100,78.5 A2.5,2.5 0 0 1 97.5,81 L20.5,81 A2.5,2.5 0 0 1 18,78.5 L18,6.5 A2.5,2.5 0 0 1 20.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="18" x2="48.15" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="22" y="16.889">Pa</text>
+    </g>
+    <g class="entity" data-qualified-name="Pa.Pi" data-source-line="4" id="ent0002">
+      <text fill="#000" font-size="14" textLength="12.513" x="93.744" y="23.889">Pi</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="94" y="39"/>
+    </g>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="Pa.C" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.15" x="26" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="56.15" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="54.15" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="54.15" y="40"/>
+      <text fill="#000" font-size="14" x="41" y="59.889">C</text>
+    </g>
+  </g>
+</svg>

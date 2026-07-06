@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="122px" preserveAspectRatio="none" style="width:146px;height:122px;background:#FFFFFF;" version="1.1" viewBox="0 0 146 122" width="146px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity myalias-->
+    <g class="entity" data-qualified-name="myalias" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="94" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="124.388" x="6" y="12"/>
+      <text fill="#008000" font-size="14" textLength="63.088" x="16" y="32.889">«myalias»</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="129.388" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="129.388" y1="38" y2="38"/>
+      <text fill="#000" font-size="10" font-style="italic" textLength="26.625" x="16" y="47.778">[Java]</text>
+      <text fill="#000" font-size="14" x="16" y="60.889"> </text>
+      <text fill="#000" font-size="14" textLength="104.388" x="16" y="74.889">This description is</text>
+      <text fill="#000" font-size="14" textLength="89.6" x="16" y="88.889">on several lines</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="256px" preserveAspectRatio="none" style="width:452px;height:256px;" version="1.1" viewBox="0 0 452 256" width="452px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class rec-->
+    <g class="entity" data-qualified-name="rec" data-source-line="15" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.425" x="43.5" y="14"/>
+      <ellipse cx="58.5" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="53.5" y="35">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="72.5" y="33.889">rec</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="44.5" x2="93.925" y1="46" y2="46"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="44.5" x2="93.925" y1="54" y2="54"/>
+    </g>
+    <!--class roundCorner 0-->
+    <g class="entity" data-qualified-name="roundCorner 0" data-source-line="16" id="ent0002">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.363" x="113" y="12"/>
+      <ellipse cx="128" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="123" y="35">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="30" x="170.181" y="26.333">«rc0»</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="142" y="39.889">roundCorner 0</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="114" x2="230.363" y1="48" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="114" x2="230.363" y1="56" y2="56"/>
+    </g>
+    <!--class roundCorner 2-->
+    <g class="entity" data-qualified-name="roundCorner 2" data-source-line="17" id="ent0003">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="118.363" x="249" y="12"/>
+      <ellipse cx="264" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="259" y="35">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="30" x="306.181" y="26.333">«rc2»</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="278" y="39.889">roundCorner 2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="250" x2="366.363" y1="48" y2="48"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="250" x2="366.363" y1="56" y2="56"/>
+    </g>
+    <!--class roundCorner 10-->
+    <g class="entity" data-qualified-name="roundCorner 10" data-source-line="18" id="ent0004">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.15" x="6" y="100"/>
+      <ellipse cx="21" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="123">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="36.675" x="63.738" y="114.333">«rc10»</text>
+      <text fill="#000" font-size="14" textLength="94.15" x="35" y="127.889">roundCorner 10</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="131.15" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="131.15" y1="144" y2="144"/>
+    </g>
+    <!--class roundCorner 20-->
+    <g class="entity" data-qualified-name="roundCorner 20" data-source-line="19" id="ent0005">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.15" x="150" y="100"/>
+      <ellipse cx="165" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="160" y="123">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="36.675" x="207.738" y="114.333">«rc20»</text>
+      <text fill="#000" font-size="14" textLength="94.15" x="179" y="127.889">roundCorner 20</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="151" x2="275.15" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="151" x2="275.15" y1="144" y2="144"/>
+    </g>
+    <!--class roundCorner 30-->
+    <g class="entity" data-qualified-name="roundCorner 30" data-source-line="20" id="ent0006">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.15" x="294" y="100"/>
+      <ellipse cx="309" cy="118" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="304" y="123">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="36.675" x="351.738" y="114.333">«rc30»</text>
+      <text fill="#000" font-size="14" textLength="94.15" x="323" y="127.889">roundCorner 30</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="295" x2="419.15" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="295" x2="419.15" y1="144" y2="144"/>
+    </g>
+    <!--class roundCorner 50-->
+    <g class="entity" data-qualified-name="roundCorner 50" data-source-line="21" id="ent0007">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.15" x="6" y="188"/>
+      <ellipse cx="21" cy="206" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="211">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="36.675" x="63.738" y="202.333">«rc50»</text>
+      <text fill="#000" font-size="14" textLength="94.15" x="35" y="215.889">roundCorner 50</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="131.15" y1="224" y2="224"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="131.15" y1="232" y2="232"/>
+    </g>
+    <!--class roundCorner 100-->
+    <g class="entity" data-qualified-name="roundCorner 100" data-source-line="22" id="ent0008">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.938" x="150" y="188"/>
+      <ellipse cx="165" cy="206" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="160" y="211">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="43.35" x="208.294" y="202.333">«rc100»</text>
+      <text fill="#000" font-size="14" textLength="101.938" x="179" y="215.889">roundCorner 100</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="151" x2="282.938" y1="224" y2="224"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="151" x2="282.938" y1="232" y2="232"/>
+    </g>
+    <!--class roundCorner 200-->
+    <g class="entity" data-qualified-name="roundCorner 200" data-source-line="23" id="ent0009">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.938" x="302" y="188"/>
+      <ellipse cx="317" cy="206" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="312" y="211">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="43.35" x="360.294" y="202.333">«rc200»</text>
+      <text fill="#000" font-size="14" textLength="101.938" x="331" y="215.889">roundCorner 200</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="303" x2="434.938" y1="224" y2="224"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="303" x2="434.938" y1="232" y2="232"/>
+    </g>
+  </g>
+</svg>

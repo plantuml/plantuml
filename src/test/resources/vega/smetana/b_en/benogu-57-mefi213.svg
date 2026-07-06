@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="200px" preserveAspectRatio="none" style="width:396px;height:200px;background:#FFFFFF;" version="1.1" viewBox="0 0 396 200" width="396px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="191.275" x="98.862" y="20.889">Interfaces - Component Diagram</text>
+    </g>
+    <!--cluster GUI-->
+    <g class="cluster" data-qualified-name="GUI" data-source-line="6" id="ent0003">
+      <rect fill="#F00" height="45" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;" width="88" x="302.5" y="47"/>
+      <rect fill="#F00" height="10" style="stroke:#00F;stroke-width:1;" width="15" x="370.5" y="52"/>
+      <rect fill="#F00" height="2" style="stroke:#00F;stroke-width:1;" width="4" x="368.5" y="54"/>
+      <rect fill="#F00" height="2" style="stroke:#00F;stroke-width:1;" width="4" x="368.5" y="58"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="78.575" x="307.213" y="70.889">Graphic User</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="54.338" x="319.331" y="84.889">Interface</text>
+    </g>
+    <!--entity Business Logic-->
+    <g class="entity" data-qualified-name="Business Logic" data-source-line="4" id="ent0001">
+      <rect fill="#F00" height="44" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:0.5;" width="130.388" x="13" y="76"/>
+      <rect fill="#F00" height="10" style="stroke:#00F;stroke-width:0.5;" width="15" x="123.388" y="81"/>
+      <rect fill="#F00" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="121.388" y="83"/>
+      <rect fill="#F00" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="121.388" y="87"/>
+      <text fill="#000" font-size="14" textLength="90.388" x="28" y="106.889">Business Logic</text>
+    </g>
+    <!--entity DA-->
+    <g class="entity" data-qualified-name="DA" data-source-line="5" id="ent0002">
+      <rect fill="#F00" height="44" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:0.5;" width="114.725" x="161.5" y="76"/>
+      <rect fill="#F00" height="10" style="stroke:#00F;stroke-width:0.5;" width="15" x="256.225" y="81"/>
+      <rect fill="#F00" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="254.225" y="83"/>
+      <rect fill="#F00" height="2" style="stroke:#00F;stroke-width:0.5;" width="4" x="254.225" y="87"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="176.5" y="106.889">Data Access</text>
+    </g>
+    <!--entity Math-->
+    <g class="entity" data-qualified-name="Math" data-source-line="19" id="ent0005">
+      <ellipse cx="78" cy="165" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="34.913" x="60.544" y="192.889">IMath</text>
+    </g>
+    <!--entity Items-->
+    <g class="entity" data-qualified-name="Items" data-source-line="20" id="ent0006">
+      <ellipse cx="219" cy="165" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.975" x="200.013" y="192.889">IItems</text>
+    </g>
+    <g class="entity" data-qualified-name="GUI.out" data-source-line="7" id="ent0004">
+      <text fill="#000" font-size="14" textLength="22.488" x="319.756" y="108.889">Out</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="325" y="86"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="association" id="lnk7">
+      <path d="M78,120.143 C78,131.995 78,146.292 78,155.952" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0006" data-link-type="association" id="lnk8">
+      <path d="M219,120.143 C219,131.995 219,146.292 219,155.952" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

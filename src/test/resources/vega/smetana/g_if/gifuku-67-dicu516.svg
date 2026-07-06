@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="253px" preserveAspectRatio="none" style="width:200px;height:253px;background:#FFFFFF;" version="1.1" viewBox="0 0 200 253" width="200px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster CardBundle-->
+    <g class="cluster" data-qualified-name="CardBundle" data-source-line="1" id="ent0002">
+      <path d="M63.5,4 L138.525,4 A3.75,3.75 0 0 1 141.025,6.5 L148.025,24 L148.5,24 A2.5,2.5 0 0 1 151,26.5 L151,82.5 A2.5,2.5 0 0 1 148.5,85 L63.5,85 A2.5,2.5 0 0 1 61,82.5 L61,6.5 A2.5,2.5 0 0 1 63.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="61" x2="148.025" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="74.025" x="65" y="16.889">CardBundle</text>
+    </g>
+    <!--cluster TagBundle-->
+    <g class="cluster" data-qualified-name="TagBundle" data-source-line="1" id="ent0003">
+      <path d="M16.5,148 L85.313,148 A3.75,3.75 0 0 1 87.813,150.5 L94.813,168 L189.5,168 A2.5,2.5 0 0 1 192,170.5 L192,226.5 A2.5,2.5 0 0 1 189.5,229 L16.5,229 A2.5,2.5 0 0 1 14,226.5 L14,150.5 A2.5,2.5 0 0 1 16.5,148" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="94.813" y1="168" y2="168"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="67.813" x="18" y="160.889">TagBundle</text>
+    </g>
+    <ellipse cx="100" cy="115" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <!--class Card-->
+    <g class="entity" data-qualified-name="CardBundle.Card" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.363" x="75" y="29"/>
+      <ellipse cx="90" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="85" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="104" y="48.889">Card</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="76" x2="136.363" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="76" x2="136.363" y1="69" y2="69"/>
+    </g>
+    <!--class Tag-->
+    <g class="entity" data-qualified-name="TagBundle.Tag" data-source-line="1" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.15" x="128" y="173"/>
+      <ellipse cx="143" cy="189" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="138" y="194">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="157" y="192.889">Tag</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="129" x2="183.15" y1="205" y2="205"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="129" x2="183.15" y1="213" y2="213"/>
+    </g>
+    <!--class CardTag-->
+    <g class="entity" data-qualified-name="TagBundle.CardTag" data-source-line="2" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.512" x="22.5" y="173"/>
+      <ellipse cx="37.5" cy="189" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="194">C</text>
+      <text fill="#000" font-size="14" textLength="54.512" x="51.5" y="192.889">CardTag</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="108.012" y1="205" y2="205"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="108.012" y1="213" y2="213"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0008" data-link-type="association" id="lnk9">
+      <path d="M106,77.309 C106,89.24 106,103.22 106,112.751" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="98" y="88.42">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0004" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="139.494,172.891,137.518,163.243,136.588,168.823,131.008,167.893,139.494,172.891" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M114.033,137.247 C120.879,146.831 128.033,156.847 136.588,168.823" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="140.494" y="169.003">1..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0006" data-link-type="association" id="lnk11">
+      <path d="M99.573,137.247 C94.096,146.831 86.048,160.915 79.205,172.891" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

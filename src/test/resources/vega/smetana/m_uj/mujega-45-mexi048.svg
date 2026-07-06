@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="177px" preserveAspectRatio="none" style="width:153px;height:177px;background:#FFFFFF;" version="1.1" viewBox="0 0 153 177" width="153px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Bob-->
+    <g class="entity" data-qualified-name="Bob" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.938" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.938" x="35" y="31.889">Bob</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="61.938" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="61.938" y1="52" y2="52"/>
+    </g>
+    <!--class Alice-->
+    <g class="entity" data-qualified-name="Alice" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.45" x="40.5" y="113"/>
+      <ellipse cx="55.5" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="50.5" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="30.45" x="69.5" y="132.889">Alice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41.5" x2="101.95" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="41.5" x2="101.95" y1="153" y2="153"/>
+    </g>
+    <!--class Ted-->
+    <g class="entity" data-qualified-name="Ted" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="56.15" x="81.5" y="12"/>
+      <ellipse cx="96.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="91.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="110.5" y="31.889">Ted</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="82.5" x2="136.65" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="82.5" x2="136.65" y1="52" y2="52"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="crowfoot" id="lnk3">
+      <line style="stroke:#181818;stroke-width:1;" x1="47.026" x2="43.175" y1="70.515" y2="60.211"/>
+      <ellipse cx="47.026" cy="70.515" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="40.828" x2="48.322" y1="65.358" y2="62.558"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="60.079" x2="68.5" y1="105.441" y2="110.834"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="60.079" x2="57.259" y1="105.441" y2="115.035"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="60.079" x2="62.879" y1="105.441" y2="112.934"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="63.126" x2="55.632" y1="102.167" y2="104.967"/>
+      <path d="M48.426,74.262 C54.364,90.15 54.153,89.584 60.079,105.441" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="57.5" y="90.111">hello</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="crowfoot" id="lnk5">
+      <line style="stroke:#181818;stroke-width:1;" x1="96.881" x2="100.772" y1="70.451" y2="60.162"/>
+      <ellipse cx="96.881" cy="70.451" fill="none" rx="4" ry="4" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="95.616" x2="103.098" y1="62.489" y2="65.319"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="83.583" x2="86.266" y1="105.146" y2="114.779"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="83.583" x2="75.087" y1="105.146" y2="110.419"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="83.583" x2="80.677" y1="105.146" y2="112.599"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="88.037" x2="80.583" y1="104.736" y2="101.829"/>
+      <path d="M95.466,74.192 C91.447,84.817 91.909,83.542 87.5,95 C85.305,100.705 85.826,99.395 83.583,105.146" fill="none" style="stroke:#181818;stroke-width:5;"/>
+      <text fill="#000" font-size="13" textLength="27.544" x="96.5" y="90.111">hello</text>
+    </g>
+  </g>
+</svg>

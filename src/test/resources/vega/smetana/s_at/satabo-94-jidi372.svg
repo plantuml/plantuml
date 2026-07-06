@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="183px" preserveAspectRatio="none" style="width:356px;height:183px;background:#FFFFFF;" version="1.1" viewBox="0 0 356 183" width="356px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster CodeVerification-->
+    <g class="cluster" data-qualified-name="CodeVerification" data-source-line="1" id="ent0001">
+      <rect fill="#DAE8FC" height="155" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="334" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="102.813" x="129.594" y="16.889">Code Verification</text>
+    </g>
+    <!--cluster Automatic-->
+    <g class="cluster" data-qualified-name="CodeVerification.Automatic" data-source-line="2" id="ent0002">
+      <rect fill="none" height="57" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="216" x="47" y="29"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="62.212" x="123.894" y="41.889">Automatic</text>
+    </g>
+    <!--cluster Manual-->
+    <g class="cluster" data-qualified-name="CodeVerification.Manual" data-source-line="7" id="ent0005">
+      <rect fill="none" height="57" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="318" x="22" y="94"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.938" x="158.031" y="106.889">Manual</text>
+    </g>
+    <g class="entity" data-qualified-name="CodeVerification.Automatic.b" data-source-line="3" id="ent0003">
+      <path d="M205,54 L205,77 L255.006,77 L255.006,64 L245.006,54 L205,54" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M245.006,54 L245.006,64 L255.006,64 L245.006,54" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="29.006" x="211" y="69.111">Build</text>
+    </g>
+    <g class="entity" data-qualified-name="CodeVerification.Automatic.st" data-source-line="4" id="ent0004">
+      <path d="M55,54 L55,77 L186.581,77 L186.581,64 L176.581,54 L55,54" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M176.581,54 L176.581,64 L186.581,64 L176.581,54" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="110.581" x="61" y="69.111">Static Analysis (Lint)</text>
+    </g>
+    <g class="entity" data-qualified-name="CodeVerification.Manual.cr" data-source-line="8" id="ent0006">
+      <path d="M230.5,119 L230.5,142 L331.125,142 L331.125,129 L321.125,119 L230.5,119" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M321.125,119 L321.125,129 L331.125,129 L321.125,119" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="79.625" x="236.5" y="134.111">Code Reading</text>
+    </g>
+    <g class="entity" data-qualified-name="CodeVerification.Manual.cir" data-source-line="9" id="ent0007">
+      <path d="M30,119 L30,142 L212.281,142 L212.281,129 L202.281,119 L30,119" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M202.281,119 L202.281,129 L212.281,129 L202.281,119" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="161.281" x="36" y="134.111">Code Inspection and Reviews</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="121,118.834,125,109.834,121,113.834,117,109.834,121,118.834" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M121,78.263 C121,89.73 121,102.402 121,113.834" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

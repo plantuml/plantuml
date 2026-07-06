@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="77px" preserveAspectRatio="none" style="width:333px;height:77px;background:#FFFFFF;" version="1.1" viewBox="0 0 333 77" width="333px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="GMN1" data-source-line="12" id="ent0002">
+      <path d="M6,12 L6,61 A0,0 0 0 0 6,61 L278.794,61 A0,0 0 0 0 278.794,61 L278.794,40.5 L297.308,36.5 L278.794,32.5 L278.794,22 L268.794,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M268.794,12 L268.794,22 L278.794,22 L268.794,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="57.038" x="12" y="27.111">response:</text>
+      <text fill="#000" font-size="13" textLength="251.794" x="12" y="40.111">[[get-metadata-response.json{  foo1: dummy1</text>
+      <text fill="#000" font-size="13" textLength="192.725" x="12" y="53.111">foo2: dummy2} example response]]</text>
+    </g>
+    <g class="start_entity" data-qualified-name="start" data-source-line="12" id="ent0003">
+      <ellipse cx="307.5" cy="34.5" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

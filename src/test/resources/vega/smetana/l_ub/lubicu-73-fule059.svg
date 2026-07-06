@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="112px" preserveAspectRatio="none" style="width:199px;height:112px;background:#FFFFFF;" version="1.1" viewBox="0 0 199 112" width="199px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity r-->
+    <g class="entity" data-qualified-name="r" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="84" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.425" x="102.5" y="12"/>
+      <text fill="#000" font-size="14" textLength="61.425" x="112.5" y="32.889">Text as top</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="103.5" x2="182.925" y1="36" y2="36"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="103.5" x2="182.925" y1="38" y2="38"/>
+      <image height="25" width="75" x="112.5" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI1IiB3aWR0aD0iNzUiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGxlbmd0aEFkanVzdD0ic3BhY2luZyI+PHBhdGggZD0iTTE3LDcgTDE3LDkgTDI1LDkgTDI1LDggTDIwLDggTDIwLDcgTDE3LDcgTTE3LDEwIEwxNywxNC41IEMxNywxNC43OCAxNy4yMiwxNSAxNy41LDE1IEwyNC41LDE1IEMyNC43OCwxNSAyNSwxNC43OCAyNSwxNC41IEwyNSwxMCBMMTcsMTAiIGZpbGw9IiMwMDAiLz48dGV4dCB4PSIyNiIgeT0iMTUuMzMzIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEyIiB0ZXh0TGVuZ3RoPSI0MC43MjUiPkZvbGRlcjE8L3RleHQ+PC9nPjwvc3ZnPg==" y="40"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="12" id="ent0003">
+      <path d="M6,17.5 L6,90.5 A0,0 0 0 0 6,90.5 L84.038,90.5 A0,0 0 0 0 84.038,90.5 L84.038,58 L102.47,54 L84.038,50 L84.038,27.5 L74.038,17.5 L6,17.5 A0,0 0 0 0 6,17.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M74.038,17.5 L74.038,27.5 L84.038,27.5 L74.038,17.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="57.038" x="12" y="32.611">Text as top</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="83.038" y1="35.5" y2="35.5"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="83.038" y1="37.5" y2="37.5"/>
+      <image height="25" width="75" x="12" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjI1IiB3aWR0aD0iNzUiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGxlbmd0aEFkanVzdD0ic3BhY2luZyI+PHBhdGggZD0iTTE3LDcgTDE3LDkgTDI1LDkgTDI1LDggTDIwLDggTDIwLDcgTDE3LDcgTTE3LDEwIEwxNywxNC41IEMxNywxNC43OCAxNy4yMiwxNSAxNy41LDE1IEwyNC41LDE1IEMyNC43OCwxNSAyNSwxNC43OCAyNSwxNC41IEwyNSwxMCBMMTcsMTAiIGZpbGw9IiMwMDAiLz48dGV4dCB4PSIyNiIgeT0iMTUuMzMzIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEyIiB0ZXh0TGVuZ3RoPSI0MC43MjUiPkZvbGRlcjE8L3RleHQ+PC9nPjwvc3ZnPg==" y="39.5"/>
+    </g>
+  </g>
+</svg>

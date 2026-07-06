@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="363px" preserveAspectRatio="none" style="width:180px;height:363px;background:#FFFFFF;" version="1.1" viewBox="0 0 180 363" width="180px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="65.275" x="54.037" y="20.889">Some Stuff</text>
+    </g>
+    <!--class Company-->
+    <g class="entity" data-qualified-name="Company" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.938" x="61.35" y="47"/>
+      <ellipse cx="76.35" cy="63" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="71.35" y="68">C</text>
+      <text fill="#000" font-size="14" textLength="59.938" x="90.35" y="66.889">Company</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="62.35" x2="152.288" y1="79" y2="79"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="62.35" x2="152.288" y1="87" y2="87"/>
+    </g>
+    <!--class BusinessUnit-->
+    <g class="entity" data-qualified-name="BusinessUnit" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="113.813" x="50.35" y="131"/>
+      <ellipse cx="65.35" cy="147" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="60.35" y="152">C</text>
+      <text fill="#000" font-size="14" textLength="81.813" x="79.35" y="150.889">BusinessUnit</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="51.35" x2="163.163" y1="163" y2="163"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="51.35" x2="163.163" y1="171" y2="171"/>
+    </g>
+    <!--class Group-->
+    <g class="entity" data-qualified-name="Group" data-source-line="9" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.85" x="71.85" y="215"/>
+      <ellipse cx="86.85" cy="231" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="81.85" y="236">C</text>
+      <text fill="#000" font-size="14" textLength="38.85" x="100.85" y="234.889">Group</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="72.85" x2="141.7" y1="247" y2="247"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="72.85" x2="141.7" y1="255" y2="255"/>
+    </g>
+    <!--class Employee-->
+    <g class="entity" data-qualified-name="Employee" data-source-line="11" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.3" x="60.35" y="299"/>
+      <ellipse cx="75.35" cy="315" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="70.35" y="320">C</text>
+      <text fill="#000" font-size="14" textLength="62.3" x="89.35" y="318.889">Employee</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="61.35" x2="153.65" y1="331" y2="331"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="61.35" x2="153.65" y1="339" y2="339"/>
+    </g>
+    <g class="entity" data-qualified-name="Companylol5" data-source-line="15" id="ent0006">
+      <ellipse cx="32.35" cy="64" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="42.7" x="11" y="79.889">IGroup</text>
+    <g class="entity" data-qualified-name="BusinessUnitlol8" data-source-line="16" id="ent0009">
+      <ellipse cx="21.35" cy="148" fill="#F1F1F1" rx="5" ry="5" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <text fill="#000" font-size="14" textLength="42.7" x="0" y="163.889">IGroup</text>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="association" id="lnk7">
+      <path d="M43.506,71 C49.325,71 55.144,71 60.964,71" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0002" data-link-type="association" id="lnk10">
+      <path d="M32.455,155 C38.404,155 44.353,155 50.301,155" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="107.35,130.947,111.35,121.947,107.35,125.947,103.35,121.947,107.35,130.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.35,95.279 C107.35,106.453 107.35,114.802 107.35,125.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="107.35,214.947,111.35,205.947,107.35,209.947,103.35,205.947,107.35,214.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.35,179.279 C107.35,190.453 107.35,198.802 107.35,209.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="107.35,298.947,111.35,289.947,107.35,293.947,103.35,289.947,107.35,298.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M107.35,263.279 C107.35,274.453 107.35,282.802 107.35,293.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

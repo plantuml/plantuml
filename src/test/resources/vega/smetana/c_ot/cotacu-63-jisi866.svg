@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="370px" preserveAspectRatio="none" style="width:347px;height:370px;background:#FFFFFF;" version="1.1" viewBox="0 0 347 370" width="347px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class MARKETING_INDICATOR-->
+    <g class="entity" data-qualified-name="MARKETING_INDICATOR" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="342" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="324.725" x="6" y="12"/>
+      <ellipse cx="80.025" cy="28" fill="#F00" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="75.025" y="33">?</text>
+      <text fill="#000" font-size="14" textLength="168.175" x="100.525" y="31.889">MARKETING_INDICATOR</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="329.725" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="83.3" x="12" y="58.889">PERIOD                                      Date</text>
+      <text fill="#000" font-size="14" textLength="135.363" x="12" y="72.889">Client number                               String[7]</text>
+      <text fill="#000" font-size="14" textLength="179.725" x="12" y="86.889">Probability to churn                        Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="242.025" x="12" y="100.889">Probability to become inactive              Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="225.663" x="12" y="114.889">Probability to buy Expresso                 Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="218.75" x="12" y="128.889">Probability to buy Housing                  Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="225.488" x="12" y="142.889">Probability to buy Overdraft                Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="250.513" x="12" y="156.889">Probability to buy Credit Partner           Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="217" x="12" y="170.889">Probability to buy Comfort                  Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="312.725" x="12" y="184.889">Probability to buy Spokoistvie on Overdraft Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="274.05" x="12" y="198.889">Probability to buy Spokoistvie on CA        Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="273.262" x="12" y="212.889">Probability to buy Spokoistvie on SA        Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="210" x="12" y="226.889">Probability to buy Garant                   Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="223.3" x="12" y="240.889">Probability to buy Progress                 Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="196.875" x="12" y="254.889">Probability to buy Rent                     Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="212.45" x="12" y="268.889">Probability to buy Taktika                  Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="212.363" x="12" y="282.889">Probability to buy Optima                   Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="223.3" x="12" y="296.889">Probability to buy Maksima                  Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="259.175" x="12" y="310.889">Probability to buy Saving account           Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="250.688" x="12" y="324.889">Probability to buy New Horizonti            Numeric[9]</text>
+      <text fill="#000" font-size="14" textLength="254.538" x="12" y="338.889">Probability to buy Tempo Capital            Numeric[9]</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="329.725" y1="346" y2="346"/>
+    </g>
+  </g>
+</svg>

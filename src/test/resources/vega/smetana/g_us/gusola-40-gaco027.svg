@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="109px" preserveAspectRatio="none" style="width:326px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 326 109" width="326px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster net-->
+    <g class="cluster" data-qualified-name="net" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L36.925,4 A3.75,3.75 0 0 1 39.425,6.5 L46.425,24 L249.5,24 A2.5,2.5 0 0 1 252,26.5 L252,82.5 A2.5,2.5 0 0 1 249.5,85 L16.5,85 A2.5,2.5 0 0 1 14,82.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="46.425" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="18" y="16.889">net</text>
+    </g>
+    <!--cluster fr-->
+    <g class="cluster" data-qualified-name="fr" id="ent0006">
+      <path d="M262.5,4 L271.988,4 A3.75,3.75 0 0 1 274.488,6.5 L281.488,24 L315.5,24 A2.5,2.5 0 0 1 318,26.5 L318,82.5 A2.5,2.5 0 0 1 315.5,85 L262.5,85 A2.5,2.5 0 0 1 260,82.5 L260,6.5 A2.5,2.5 0 0 1 262.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="260" x2="281.488" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="8.487" x="264" y="16.889">fr</text>
+    </g>
+    <path d="M182.5,29 L227.863,29 A3.75,3.75 0 0 1 230.363,31.5 L237.363,49 L241.863,49 A2.5,2.5 0 0 1 244.363,51.5 L244.363,74.5 A2.5,2.5 0 0 1 241.863,77 L182.5,77 A2.5,2.5 0 0 1 180,74.5 L180,31.5 A2.5,2.5 0 0 1 182.5,29" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="180" x2="237.363" y1="49" y2="49"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="44.363" x="184" y="41.889">entities</text>
+    <path d="M79,29 L144.575,29 A3.75,3.75 0 0 1 147.075,31.5 L154.075,49 L158.575,49 A2.5,2.5 0 0 1 161.075,51.5 L161.075,74.5 A2.5,2.5 0 0 1 158.575,77 L79,77 A2.5,2.5 0 0 1 76.5,74.5 L76.5,31.5 A2.5,2.5 0 0 1 79,29" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="76.5" x2="154.075" y1="49" y2="49"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="80.5" y="41.889">controllers</text>
+    <path d="M24.5,29 L41.075,29 A3.75,3.75 0 0 1 43.575,31.5 L50.575,49 L55.075,49 A2.5,2.5 0 0 1 57.575,51.5 L57.575,74.5 A2.5,2.5 0 0 1 55.075,77 L24.5,77 A2.5,2.5 0 0 1 22,74.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="22" x2="50.575" y1="49" y2="49"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="26" y="41.889">db</text>
+    <path d="M270.5,29 L293.288,29 A3.75,3.75 0 0 1 295.788,31.5 L302.788,49 L307.288,49 A2.5,2.5 0 0 1 309.788,51.5 L309.788,74.5 A2.5,2.5 0 0 1 307.288,77 L270.5,77 A2.5,2.5 0 0 1 268,74.5 L268,31.5 A2.5,2.5 0 0 1 270.5,29" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="268" x2="302.788" y1="49" y2="49"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="272" y="41.889">site</text>
+  </g>
+</svg>

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="236px" preserveAspectRatio="none" style="width:506px;height:236px;background:#FFFFFF;" version="1.1" viewBox="0 0 506 236" width="506px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="221.113" x="138.944" y="20.889">Composition of two designed domains</text>
+    </g>
+    <!--cluster M-->
+    <g class="cluster" data-qualified-name="M" data-source-line="4" id="ent0001">
+      <path d="M16.5,47 L64.137,47 A3.75,3.75 0 0 1 66.637,49.5 L73.637,67 L125.5,67 A2.5,2.5 0 0 1 128,69.5 L128,181.5 A2.5,2.5 0 0 1 125.5,184 L16.5,184 A2.5,2.5 0 0 1 14,181.5 L14,49.5 A2.5,2.5 0 0 1 16.5,47" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="73.637" y1="67" y2="67"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="46.637" x="18" y="59.889">Monitor</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="68.513" x="40.744" y="79.889">«Machine»</text>
+    </g>
+    <!--cluster R-->
+    <g class="cluster" data-qualified-name="R" data-source-line="11" id="ent0007">
+      <path d="M275.5,58 L363.65,58 A3.75,3.75 0 0 1 366.15,60.5 L373.15,78 L495.5,78 A2.5,2.5 0 0 1 498,80.5 L498,197.5 A2.5,2.5 0 0 1 495.5,200 L275.5,200 A2.5,2.5 0 0 1 273,197.5 L273,60.5 A2.5,2.5 0 0 1 275.5,58" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="273" x2="373.15" y1="78" y2="78"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="87.15" x="277" y="70.889">Requirements</text>
+    </g>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="50.775" x="178.5" y="52"/>
+    <text fill="#000" font-size="12" textLength="23.325" x="192.225" y="69.333">Map</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="213.275" y="80"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="216.275" y="93">C</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="50.775" x="178.5" y="114"/>
+    <text fill="#000" font-size="12" textLength="24.675" x="191.55" y="131.333">Path</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="213.275" y="142"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="216.275" y="155">X</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="60.15" x="174" y="176"/>
+    <text fill="#000" font-size="12" textLength="32.7" x="187.725" y="193.333">Drone</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="218.15" y="204"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="221.15" y="217">B</text>
+    <rect fill="#FFF" height="44" style="stroke:#000;stroke-width:1.5;" width="66.025" x="38" y="86"/>
+    <text fill="#000" font-size="12" textLength="62.025" x="40" y="103.333">Google Map</text>
+    <rect fill="none" height="16" style="stroke:#000;stroke-width:1;" width="16" x="88.025" y="114"/>
+    <text fill="#000" font-family="monospace" font-size="14" x="91.025" y="127">C</text>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="98.4" x="22" y="148"/>
+    <rect fill="#FFF" height="28" style="stroke:#000;stroke-width:1.5;" width="4" x="22" y="148"/>
+    <text fill="#000" font-size="12" textLength="89.4" x="30.5" y="165.333">Onboard LiveBox</text>
+    <ellipse cx="385.529" cy="105.106" fill="#FFF" rx="96.029" ry="21.606" style="stroke:#000;stroke-width:1.5;stroke-dasharray:7,7;"/>
+    <text fill="#000" font-size="14" textLength="160.388" x="305.335" y="106.995">Display flight paths on a map</text>
+    <ellipse cx="385.313" cy="167.763" fill="#FFF" rx="104.313" ry="23.263" style="stroke:#000;stroke-width:1.5;stroke-dasharray:7,7;"/>
+    <text fill="#000" font-size="14" textLength="178.15" x="296.238" y="169.651">Collect flight paths from a drone</text>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0008" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="229.582,78.245,237.77,83.719,234.509,79.096,239.132,75.835,229.582,78.245" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M234.509,79.096 C250.352,81.832 267.146,84.733 289.31,88.561" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="254.5" y="77.111">c</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0008" data-link-type="association" id="lnk12">
+      <path d="M229.582,131.755 C245.425,129.019 267.146,125.267 289.31,121.439" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="254" y="121.111">d</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="229.773,142.82,237.497,148.93,234.616,144.062,239.484,141.181,229.773,142.82" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M234.616,144.062 C241.756,145.893 244.737,146.528 252,148 C261.348,149.894 271.101,151.694 280.888,153.382" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="254" y="143.111">d</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0009" data-link-type="association" id="lnk15">
+      <path d="M234.293,196.791 C243.509,196.194 253.705,195.308 263,194 C268.874,193.173 274.888,192.224 280.945,191.188" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="254" y="189.111">e</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="association" id="lnk16">
+      <path d="M104.046,99.683 C126.922,93.746 157.239,85.877 178.26,80.421" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="13.731" x="140.5" y="81.111">c1</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="association" id="lnk17">
+      <path d="M104.046,114.85 C126.922,119.739 157.239,126.219 178.26,130.712" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="14.463" x="140" y="117.111">d1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="association" id="lnk18">
+      <path d="M120.339,159.65 C132.108,158.46 144.59,156.676 156,154 C163.316,152.284 171.021,149.69 178.027,147.001" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="14.463" x="140" y="149.111">d2</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="association" id="lnk19">
+      <path d="M120.036,175.201 C137.999,180.137 157.853,185.593 173.634,189.93" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="14.463" x="140" y="176.111">e1</text>
+    </g>
+  </g>
+</svg>

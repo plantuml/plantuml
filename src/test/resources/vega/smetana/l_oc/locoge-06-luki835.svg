@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="109px" preserveAspectRatio="none" style="width:206px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 206 109" width="206px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="7">
+      <rect fill="none" height="27.231" style="stroke:#008000;stroke-width:1;" width="189.893" x="5" y="5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="158.813" x="10" y="24.12">This is a title with SVG sprite:</text>
+      <path d="M186.043,18.615 A8.615,8.615 0 1 1 168.813,18.615 A8.615,8.615 0 0 1 186.043,18.615 M178.81,14.31 L177.397,14.31 L175.352,15.799 L175.352,17.168 L177.327,15.749 L177.397,15.749 L177.397,22.923 L178.81,22.923" fill="#000"/>
+      <text fill="#000" font-size="14" font-weight="700" x="186.043" y="24.12">!</text>
+    </g>
+    <g class="legend">
+      <rect fill="#DDD" height="27.231" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="27.231" x="86.331" y="50.231"/>
+      <path d="M108.562,63.846 A8.615,8.615 0 1 1 91.331,63.846 A8.615,8.615 0 0 1 108.562,63.846 M101.328,59.541 L99.915,59.541 L97.87,61.03 L97.87,62.399 L99.845,60.979 L99.915,60.979 L99.915,68.154 L101.328,68.154" fill="#000"/>
+    </g>
+    <g class="footer" data-source-line="8">
+      <rect fill="none" height="12.308" style="stroke:#008000;stroke-width:1;" width="65.058" x="67.418" y="90.462"/>
+      <text fill="#888" font-size="10" textLength="50" x="67.418" y="100.547">A footer with</text>
+      <path d="M129.725,96.615 A6.154,6.154 0 1 1 117.418,96.615 A6.154,6.154 0 0 1 129.725,96.615 M124.559,93.54 L123.549,93.54 L122.089,94.604 L122.089,95.582 L123.499,94.568 L123.549,94.568 L123.549,99.692 L124.559,99.692" fill="#888"/>
+      <text fill="#888" font-size="10" x="129.725" y="100.547">!</text>
+    </g>
+  </g>
+</svg>

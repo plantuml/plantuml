@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="301px" preserveAspectRatio="none" style="width:590px;height:301px;background:#FFFFFF;" version="1.1" viewBox="0 0 590 301" width="590px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="JSON" data-source-line="28" id="ent0001">
+      <rect fill="#F0F8FF" height="273" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:2;" width="257.75" x="6" y="12"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="40.031" x="114.859" y="25.667">JSON</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="57.813" x2="57.813" y1="31" y2="285"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="6" x2="263.75" y1="31" y2="31"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="24.094" x="11" y="44.667">text</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="42.469" x="62.813" y="44.667">Lorem</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="105.281" y="44.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="40.031" x="105.281" y="44.667">ipsum</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="145.313" y="44.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="33.375" x="145.313" y="44.667">dolor</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="178.688" y="44.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="15" x="178.688" y="44.667">sit</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="193.688" y="44.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="37.406" x="193.688" y="44.667">amet,</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="77.438" x="62.813" y="59.667">consectetur</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="140.25" y="59.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="66.844" x="140.25" y="59.667">adipiscing</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="207.094" y="59.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="23.344" x="207.094" y="59.667">elit,</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="230.438" y="59.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="24.187" x="230.438" y="59.667">sed</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="16.688" x="62.813" y="74.667">do</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="79.5" y="74.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="56.719" x="79.5" y="74.667">eiusmod</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="136.219" y="74.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="46.594" x="136.219" y="74.667">tempor</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="182.813" y="74.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="63.469" x="182.813" y="74.667">incididunt</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="246.281" y="74.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="12.469" x="246.281" y="74.667">ut</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="41.719" x="62.813" y="89.667">labore</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="104.531" y="89.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="12.469" x="104.531" y="89.667">et</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="117" y="89.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="41.719" x="117" y="89.667">dolore</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="158.719" y="89.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="45.844" x="158.719" y="89.667">magna</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="204.563" y="89.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="44.25" x="204.563" y="89.667">aliqua.</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="6" x2="263.75" y1="95" y2="95"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="37.5" x="11" y="108.667">name</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="74.156" x="62.813" y="108.667">component</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="136.969" y="108.667"> </text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="15.844" x="136.969" y="108.667">c1</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="6" x2="263.75" y1="114" y2="114"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="32.531" x="11" y="127.667">color</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="45.844" x="62.813" y="127.667">normal</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="57.813" x2="263.75" y1="133" y2="133"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="38.344" x="62.813" y="146.667">green</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="57.813" x2="263.75" y1="152" y2="152"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="21.656" x="62.813" y="165.667">red</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="6" x2="263.75" y1="171" y2="171"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="41.813" x="11" y="184.667">visible</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="25.781" x="62.813" y="184.667">true</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="6" x2="263.75" y1="190" y2="190"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="29.156" x="11" y="203.667">user</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="105.313" x2="105.313" y1="190" y2="285"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="57.813" x2="263.75" y1="190" y2="190"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="25.031" x="62.813" y="203.667">age</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="16.688" x="110.313" y="203.667">23</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="57.813" x2="263.75" y1="209" y2="209"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="37.5" x="62.813" y="222.667">name</text>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="32.531" x="110.313" y="222.667">John</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="57.813" x2="263.75" y1="228" y2="228"/>
+      <text fill="#00F" font-size="15" font-style="italic" textLength="34.125" x="62.813" y="241.667">array</text>
+      <text fill="#00F" font-size="15" font-style="italic" x="110.313" y="241.667">1</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="105.313" x2="263.75" y1="247" y2="247"/>
+      <text fill="#00F" font-size="15" font-style="italic" x="110.313" y="260.667">2</text>
+      <line style="stroke:#00F;stroke-width:1;" x1="105.313" x2="263.75" y1="266" y2="266"/>
+      <text fill="#00F" font-size="15" font-style="italic" x="110.313" y="279.667">3</text>
+    </g>
+    <g class="entity" data-qualified-name="CapitalCity" data-source-line="36" id="ent0002">
+      <rect fill="#FFC0CB" height="97" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:1;" width="291.631" x="282" y="100"/>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="53.281" x="401.175" y="110.556">CapitalCity</text>
+      <line style="stroke:#008000;stroke-width:1;" x1="282" x2="573.631" y1="115" y2="115"/>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="15.331" x="319.106" y="125.556">UK</text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="36.713" x="376.544" y="125.556">London</text>
+      <line style="stroke:#008000;stroke-width:1;" x1="371.544" x2="371.544" y1="115" y2="130"/>
+      <line style="stroke:#008000;stroke-width:1;" x1="282" x2="573.631" y1="130" y2="130"/>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="22.688" x="315.428" y="140.556">USA</text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="58.094" x="376.544" y="140.556">Washington</text>
+      <line style="stroke:#008000;stroke-width:1;" x1="371.544" x2="371.544" y1="130" y2="145"/>
+      <line style="stroke:#008000;stroke-width:1;" x1="282" x2="573.631" y1="145" y2="145"/>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="45.169" x="304.188" y="155.556">Germany</text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="28.188" x="376.544" y="155.556">Berlin</text>
+      <line style="stroke:#008000;stroke-width:1;" x1="371.544" x2="371.544" y1="145" y2="160"/>
+      <line style="stroke:#008000;stroke-width:1;" x1="282" x2="573.631" y1="160" y2="160"/>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="58.163" x="287" y="170.556">Placeholder</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="345.163" y="170.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="21.381" x="345.163" y="170.556">Text</text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="31.144" x="376.544" y="170.556">Lorem</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="407.688" y="170.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="29.356" x="407.688" y="170.556">ipsum</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="437.044" y="170.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="24.475" x="437.044" y="170.556">dolor</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="461.519" y="170.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="11" x="461.519" y="170.556">sit</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="472.519" y="170.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="27.431" x="472.519" y="170.556">amet,</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="499.95" y="170.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="56.787" x="499.95" y="170.556">consectetur</text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="49.019" x="376.544" y="181.556">adipiscing</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="425.563" y="181.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="17.119" x="425.563" y="181.556">elit,</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="442.681" y="181.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="17.737" x="442.681" y="181.556">sed</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="460.419" y="181.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="12.238" x="460.419" y="181.556">do</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="472.656" y="181.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="41.594" x="472.656" y="181.556">eiusmod</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="514.25" y="181.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="34.169" x="514.25" y="181.556">tempor</text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="46.544" x="376.544" y="192.556">incididunt</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="423.088" y="192.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="9.144" x="423.088" y="192.556">ut</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="432.231" y="192.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="30.594" x="432.231" y="192.556">labore</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="462.825" y="192.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="9.144" x="462.825" y="192.556">et</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="471.969" y="192.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="30.594" x="471.969" y="192.556">dolore</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="502.563" y="192.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="33.619" x="502.563" y="192.556">magna</text>
+      <text fill="#F00" font-size="11" font-weight="700" x="536.181" y="192.556"> </text>
+      <text fill="#F00" font-size="11" font-weight="700" textLength="32.45" x="536.181" y="192.556">aliqua.</text>
+      <line style="stroke:#008000;stroke-width:1;" x1="371.544" x2="371.544" y1="160" y2="197"/>
+    </g>
+  </g>
+</svg>

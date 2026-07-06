@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="440px" preserveAspectRatio="none" style="width:1061px;height:440px;background:#FFFFFF;" version="1.1" viewBox="0 0 1061 440" width="1061px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster PREP-->
+    <g class="cluster" data-qualified-name="PREP" data-source-line="2" id="ent0001">
+      <path d="M285.5,4 L324.738,4 A3.75,3.75 0 0 1 327.238,6.5 L334.238,24 L428.5,24 A2.5,2.5 0 0 1 431,26.5 L431,78.5 A2.5,2.5 0 0 1 428.5,81 L285.5,81 A2.5,2.5 0 0 1 283,78.5 L283,6.5 A2.5,2.5 0 0 1 285.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="283" x2="334.238" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.238" x="287" y="16.889">PREP</text>
+    </g>
+    <!--cluster BUILD-->
+    <g class="cluster" data-qualified-name="BUILD" data-source-line="6" id="ent0003">
+      <path d="M16.5,89 L58.8,89 A3.75,3.75 0 0 1 61.3,91.5 L68.3,109 L612.5,109 A2.5,2.5 0 0 1 615,111.5 L615,243.5 A2.5,2.5 0 0 1 612.5,246 L16.5,246 A2.5,2.5 0 0 1 14,243.5 L14,91.5 A2.5,2.5 0 0 1 16.5,89" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="68.3" y1="109" y2="109"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.3" x="18" y="101.889">BUILD</text>
+    </g>
+    <!--cluster WARMUP-->
+    <g class="cluster" data-qualified-name="WARMUP" data-source-line="15" id="ent0010">
+      <path d="M625.5,169 L690.375,169 A3.75,3.75 0 0 1 692.875,171.5 L699.875,189 L810.5,189 A2.5,2.5 0 0 1 813,191.5 L813,243.5 A2.5,2.5 0 0 1 810.5,246 L625.5,246 A2.5,2.5 0 0 1 623,243.5 L623,171.5 A2.5,2.5 0 0 1 625.5,169" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="623" x2="699.875" y1="189" y2="189"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="63.875" x="627" y="181.889">WARMUP</text>
+    </g>
+    <!--cluster RUN-->
+    <g class="cluster" data-qualified-name="RUN" data-source-line="19" id="ent0012">
+      <path d="M717.5,254 L748.95,254 A3.75,3.75 0 0 1 751.45,256.5 L758.45,274 L958.5,274 A2.5,2.5 0 0 1 961,276.5 L961,328.5 A2.5,2.5 0 0 1 958.5,331 L717.5,331 A2.5,2.5 0 0 1 715,328.5 L715,256.5 A2.5,2.5 0 0 1 717.5,254" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="715" x2="758.45" y1="274" y2="274"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.45" x="719" y="266.889">RUN</text>
+    </g>
+    <!--cluster INPUT-->
+    <g class="cluster" data-qualified-name="INPUT" data-source-line="23" id="ent0014">
+      <path d="M823.5,169 L866.588,169 A3.75,3.75 0 0 1 869.088,171.5 L876.088,189 L1050.5,189 A2.5,2.5 0 0 1 1053,191.5 L1053,243.5 A2.5,2.5 0 0 1 1050.5,246 L823.5,246 A2.5,2.5 0 0 1 821,243.5 L821,171.5 A2.5,2.5 0 0 1 823.5,169" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="821" x2="876.088" y1="189" y2="189"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="42.087" x="825" y="181.889">INPUT</text>
+    </g>
+    <!--cluster MONITOR-->
+    <g class="cluster" data-qualified-name="MONITOR" data-source-line="28" id="ent0016">
+      <path d="M717.5,339 L784.563,339 A3.75,3.75 0 0 1 787.063,341.5 L794.063,359 L898.5,359 A2.5,2.5 0 0 1 901,361.5 L901,413.5 A2.5,2.5 0 0 1 898.5,416 L717.5,416 A2.5,2.5 0 0 1 715,413.5 L715,341.5 A2.5,2.5 0 0 1 717.5,339" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="715" x2="794.063" y1="359" y2="359"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="719" y="351.889">MONITOR</text>
+    </g>
+    <!--entity PREPjob-->
+    <g class="entity" data-qualified-name="PREP.PREPjob" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.963" x="325.5" y="29"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="402.463" y="34"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="400.463" y="36"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="400.463" y="40"/>
+      <text fill="#000" font-size="14" textLength="56.963" x="340.5" y="59.889">PREPjob</text>
+    </g>
+    <!--entity repo aws-templates-->
+    <g class="entity" data-qualified-name="BUILD.repo aws-templates" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="158.213" x="84" y="114"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="222.213" y="119"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="220.213" y="121"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="220.213" y="125"/>
+      <text fill="#000" font-size="14" textLength="118.213" x="99" y="144.889">repo aws-templates</text>
+    </g>
+    <!--entity repo chef-data-->
+    <g class="entity" data-qualified-name="BUILD.repo chef-data" data-source-line="8" id="ent0005">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.275" x="325" y="114"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="431.275" y="119"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="429.275" y="121"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="429.275" y="125"/>
+      <text fill="#000" font-size="14" textLength="86.275" x="340" y="144.889">repo chef-data</text>
+    </g>
+    <!--entity chef 12 server-->
+    <g class="entity" data-qualified-name="BUILD.chef 12 server" data-source-line="9" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.85" x="469.5" y="114"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="570.35" y="119"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="568.35" y="121"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="568.35" y="125"/>
+      <text fill="#000" font-size="14" textLength="80.85" x="484.5" y="144.889">chef 12 server</text>
+    </g>
+    <!--entity S3 bucket for customer configuration-->
+    <g class="entity" data-qualified-name="BUILD.S3 bucket for customer configuration" data-source-line="10" id="ent0007">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="252.275" x="22" y="194"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="254.275" y="199"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="252.275" y="201"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="252.275" y="205"/>
+      <text fill="#000" font-size="14" textLength="212.275" x="37" y="224.889">S3 bucket for customer configuration</text>
+    </g>
+    <!--entity S3 bucket with installers-->
+    <g class="entity" data-qualified-name="BUILD.S3 bucket with installers" data-source-line="11" id="ent0008">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="178.6" x="292.5" y="194"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="451.1" y="199"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="449.1" y="201"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="449.1" y="205"/>
+      <text fill="#000" font-size="14" textLength="138.6" x="307.5" y="224.889">S3 bucket with installers</text>
+    </g>
+    <!--entity repo builders-->
+    <g class="entity" data-qualified-name="BUILD.repo builders" data-source-line="12" id="ent0009">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.088" x="489.5" y="194"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="586.588" y="199"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="584.588" y="201"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="584.588" y="205"/>
+      <text fill="#000" font-size="14" textLength="77.088" x="504.5" y="224.889">repo builders</text>
+    </g>
+    <!--entity warmup builders-->
+    <g class="entity" data-qualified-name="WARMUP.warmup builders" data-source-line="16" id="ent0011">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="138.875" x="665.5" y="194"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="784.375" y="199"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="782.375" y="201"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="782.375" y="205"/>
+      <text fill="#000" font-size="14" textLength="98.875" x="680.5" y="224.889">warmup builders</text>
+    </g>
+    <!--entity checks automated-testing-->
+    <g class="entity" data-qualified-name="RUN.checks automated-testing" data-source-line="20" id="ent0013">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="195.488" x="757.5" y="279"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="932.988" y="284"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="930.988" y="286"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="930.988" y="290"/>
+      <text fill="#000" font-size="14" textLength="155.488" x="772.5" y="309.889">checks automated-testing</text>
+    </g>
+    <!--entity input automated-testing-->
+    <g class="entity" data-qualified-name="INPUT.input automated-testing" data-source-line="24" id="ent0015">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="182.275" x="863" y="194"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="1025.275" y="199"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1023.275" y="201"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="1023.275" y="205"/>
+      <text fill="#000" font-size="14" textLength="142.275" x="878" y="224.889">input automated-testing</text>
+    </g>
+    <!--entity monitor builders-->
+    <g class="entity" data-qualified-name="MONITOR.monitor builders" data-source-line="29" id="ent0017">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="135.725" x="757" y="364"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="872.725" y="369"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="870.725" y="371"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="870.725" y="375"/>
+      <text fill="#000" font-size="14" textLength="95.725" x="772" y="394.889">monitor builders</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="nested" id="lnk18">
+      <ellipse cx="299" cy="89.163" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="299" x2="299" y1="97.163" y2="81.163"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="291" x2="307" y1="89.163" y2="89.163"/>
+      <path d="M299,97.163 C299,97.852 299,86.636 299,87.33 C299,87.678 299,88.026 299,88.374 C299,88.548 299,88.723 299,88.897 C299,88.919 299,88.941 299,88.963 C299,88.974 299,88.985 299,88.995" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0010" data-link-type="nested" id="lnk19">
+      <ellipse cx="622.759" cy="169.984" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="630.241" x2="615.278" y1="172.818" y2="167.151"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="619.925" x2="625.593" y1="177.466" y2="162.503"/>
+      <path d="M630.241,172.818 C631.521,173.331 618.13,168.407 619,169 C619.719,169.491 620.413,170.013 621.082,170.564 C621.417,170.84 621.745,171.122 622.067,171.412 C622.228,171.557 622.388,171.703 622.546,171.851 C622.625,171.925 622.704,172 622.782,172.074 C622.821,172.112 622.86,172.149 622.899,172.187" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0012" data-link-type="nested" id="lnk20">
+      <ellipse cx="662.441" cy="251.865" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="667.882" x2="657" y1="257.729" y2="246"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="656.576" x2="668.306" y1="257.306" y2="246.424"/>
+      <path d="M667.882,257.729 C678.158,268.806 680.116,267.368 692.202,275.933 C698.245,280.215 704.099,284.065 709.35,287.366 C710.663,288.191 711.938,288.982 713.169,289.736 C713.784,290.114 714.388,290.482 714.981,290.841" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0012" data-link-type="nested" id="lnk21">
+      <ellipse cx="814.878" cy="248.356" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="808.823" x2="820.933" y1="253.585" y2="243.127"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="809.649" x2="820.106" y1="242.301" y2="254.411"/>
+      <path d="M808.823,253.585 C808.438,253.909 819.87,244.011 819.472,244.315 C818.675,244.923 817.851,245.487 817,246 C803.966,253.85 792.988,251.201 782.257,248.914 C776.892,247.77 771.589,246.717 766.121,247.112 C763.387,247.31 760.612,247.87 757.768,248.961 C756.346,249.507 754.907,250.185 753.447,251.018 C752.717,251.434 751.981,251.889 751.24,252.385 C750.87,252.634 750.498,252.892 750.125,253.161 C749.938,253.295 749.751,253.432 749.563,253.572 C749.47,253.642 749.376,253.713 749.282,253.784" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0016" data-link-type="nested" id="lnk22">
+      <ellipse cx="731" cy="339.163" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="731" x2="731" y1="347.163" y2="331.163"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="723" x2="739" y1="339.163" y2="339.163"/>
+      <path d="M731,347.163 C731,347.852 731,336.636 731,337.33 C731,337.678 731,338.026 731,338.374 C731,338.548 731,338.723 731,338.897 C731,338.919 731,338.941 731,338.963 C731,338.974 731,338.985 731,338.995" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

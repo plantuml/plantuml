@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="146px" preserveAspectRatio="none" style="width:158px;height:146px;background:#FFFFFF;" version="1.1" viewBox="0 0 158 146" width="158px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity rect1-->
+    <g class="entity" data-qualified-name="rect1" data-source-line="9" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="7.5" ry="7.5" style="stroke:#ABABAB;stroke-width:4;stroke-dasharray:7,7;" width="136.363" x="6" y="12"/>
+      <text fill="#ABABAB" font-size="14" font-style="italic" textLength="114.363" x="17" y="32.889">«System Boundry»</text>
+      <text fill="#ABABAB" font-size="14" textLength="31.063" x="58.65" y="46.889">rect1</text>
+    </g>
+    <!--entity rect2-->
+    <g class="entity" data-qualified-name="rect2" data-source-line="10" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.063" x="48.5" y="96"/>
+      <text fill="#000" font-size="14" textLength="31.063" x="58.5" y="116.889">rect2</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="74,95.827,78,86.827,74,90.827,70,86.827,74,95.827" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M74,60.319 C74,71.844 74,80.463 74,90.827" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

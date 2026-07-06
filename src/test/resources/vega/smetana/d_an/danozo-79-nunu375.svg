@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="111px" preserveAspectRatio="none" style="width:150px;height:111px;background:#FFFFFF;" version="1.1" viewBox="0 0 150 111" width="150px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="72.363" x="35.319" y="20.889">this is my title</text>
+    </g>
+    <!--class Alice-->
+    <g class="entity" data-qualified-name="Alice" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62.45" x="72" y="47"/>
+      <ellipse cx="87" cy="63" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="82" y="68">C</text>
+      <text fill="#000" font-size="14" textLength="30.45" x="101" y="66.889">Alice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="73" x2="133.45" y1="79" y2="79"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="73" x2="133.45" y1="87" y2="87"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="4" id="ent0003">
+      <a href="http://www.google.fr" target="_top" title="http://www.google.fr" xlink:actuate="onRequest" xlink:href="http://www.google.fr" xlink:show="new" xlink:title="http://www.google.fr" xlink:type="simple">
+        <path d="M6,59 L6,82 A0,0 0 0 0 6,82 L54.463,82 A0,0 0 0 0 54.463,82 L54.463,77 L71.762,71 L54.463,69 L54.463,69 L44.463,59 L6,59 A0,0 0 0 0 6,59" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M44.463,59 L44.463,69 L54.463,69 L44.463,59" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="13" textLength="27.463" x="12" y="74.111">Note</text>
+      </a>
+    </g>
+  </g>
+</svg>

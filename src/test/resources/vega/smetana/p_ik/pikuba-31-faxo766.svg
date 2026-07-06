@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="265px" preserveAspectRatio="none" style="width:670px;height:265px;background:#FFFFFF;" version="1.1" viewBox="0 0 670 265" width="670px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="137.025" x="262.987" y="20.889">Example of simple table</text>
+      <text fill="#000" font-size="14" font-weight="700" x="290.638" y="36.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="298.425" y="36.889">table</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="43.575" x="328.787" y="36.889">header</text>
+      <text fill="#000" font-size="14" font-weight="700" x="290.638" y="50.889">a</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="298.425" y="50.889">table</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="328.787" y="50.889">row</text>
+      <text fill="#000" font-size="14" font-weight="700" x="290.638" y="64.889">b</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="298.425" y="64.889">table</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="328.787" y="64.889">row</text>
+      <line style="stroke:#000;stroke-width:1;" x1="290.638" x2="372.362" y1="26" y2="26"/>
+      <line style="stroke:#000;stroke-width:1;" x1="290.638" x2="372.362" y1="40" y2="40"/>
+      <line style="stroke:#000;stroke-width:1;" x1="290.638" x2="372.362" y1="54" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="290.638" x2="372.362" y1="68" y2="68"/>
+      <line style="stroke:#000;stroke-width:1;" x1="290.638" x2="290.638" y1="26" y2="68"/>
+      <line style="stroke:#000;stroke-width:1;" x1="298.425" x2="298.425" y1="26" y2="68"/>
+      <line style="stroke:#000;stroke-width:1;" x1="328.787" x2="328.787" y1="26" y2="68"/>
+      <line style="stroke:#000;stroke-width:1;" x1="372.362" x2="372.362" y1="26" y2="68"/>
+    </g>
+    <!--class table-->
+    <g class="entity" data-qualified-name="table" data-source-line="10" id="ent0001">
+      <rect fill="#F1F1F1" height="156" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="315.138" x="6" y="93"/>
+      <ellipse cx="137.881" cy="109" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="132.881" y="114">E</text>
+      <text fill="#000" font-size="14" textLength="42.875" x="158.381" y="112.889">Table 1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="320.138" y1="125" y2="125"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="16" y="145.889">PK</text>
+      <text fill="#000" font-size="14" textLength="10.938" x="34.725" y="145.889">id</text>
+      <text fill="#000" font-size="14" textLength="218.925" x="92.213" y="145.889">INT UNSIGNED AUTO INCREMENT</text>
+      <text fill="#000" font-size="14" x="16" y="159.889">U</text>
+      <text fill="#000" font-size="14" textLength="35" x="34.725" y="159.889">name</text>
+      <text fill="#000" font-size="14" textLength="158.988" x="92.213" y="159.889">VARCHAR(50) NOT NULL</text>
+      <text fill="#000" font-size="14" textLength="15.4" x="16" y="173.889">    </text>
+      <text fill="#000" font-size="14" textLength="57.488" x="34.725" y="173.889">comment</text>
+      <text fill="#000" font-size="14" textLength="101.325" x="92.213" y="173.889">VARCHAR(256)</text>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="311.138" y1="135" y2="135"/>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="311.138" y1="149" y2="149"/>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="311.138" y1="163" y2="163"/>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="311.138" y1="177" y2="177"/>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="16" y1="135" y2="177"/>
+      <line style="stroke:#000;stroke-width:1;" x1="34.725" x2="34.725" y1="135" y2="177"/>
+      <line style="stroke:#000;stroke-width:1;" x1="92.213" x2="92.213" y1="135" y2="177"/>
+      <line style="stroke:#000;stroke-width:1;" x1="311.138" x2="311.138" y1="135" y2="177"/>
+      <text fill="#000" font-size="14" x="12" y="194.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" x="16" y="210.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="23.788" y="210.889">table</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="43.575" x="54.15" y="210.889">header</text>
+      <text fill="#000" font-size="14" x="16" y="224.889">a</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="23.788" y="224.889">table</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="54.15" y="224.889">row</text>
+      <text fill="#000" font-size="14" x="16" y="238.889">b</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="23.788" y="238.889">table</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="54.15" y="238.889">row</text>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="97.725" y1="200" y2="200"/>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="97.725" y1="214" y2="214"/>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="97.725" y1="228" y2="228"/>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="97.725" y1="242" y2="242"/>
+      <line style="stroke:#000;stroke-width:1;" x1="16" x2="16" y1="200" y2="242"/>
+      <line style="stroke:#000;stroke-width:1;" x1="23.788" x2="23.788" y1="200" y2="242"/>
+      <line style="stroke:#000;stroke-width:1;" x1="54.15" x2="54.15" y1="200" y2="242"/>
+      <line style="stroke:#000;stroke-width:1;" x1="97.725" x2="97.725" y1="200" y2="242"/>
+    </g>
+    <g class="entity" data-qualified-name="o1" data-source-line="20" id="ent0002">
+      <rect fill="#F1F1F1" height="119" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="315.138" x="339" y="111.5"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="488.781" y="124.389">o1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="340" x2="653.138" y1="129.5" y2="129.5"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="349" y="150.389">PK</text>
+      <text fill="#000" font-size="14" textLength="10.938" x="367.725" y="150.389">id</text>
+      <text fill="#000" font-size="14" textLength="218.925" x="425.213" y="150.389">INT UNSIGNED AUTO INCREMENT</text>
+      <text fill="#000" font-size="14" x="349" y="164.389">U</text>
+      <text fill="#000" font-size="14" textLength="35" x="367.725" y="164.389">name</text>
+      <text fill="#000" font-size="14" textLength="158.988" x="425.213" y="164.389">VARCHAR(50) NOT NULL</text>
+      <text fill="#000" font-size="14" textLength="15.4" x="349" y="178.389">    </text>
+      <text fill="#000" font-size="14" textLength="57.488" x="367.725" y="178.389">comment</text>
+      <text fill="#000" font-size="14" textLength="101.325" x="425.213" y="178.389">VARCHAR(256)</text>
+      <text fill="#000" font-size="14" font-weight="700" x="349" y="192.389"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="367.725" y="192.389">table</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="43.575" x="425.213" y="192.389">header</text>
+      <text fill="#000" font-size="14" x="349" y="206.389">a</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="367.725" y="206.389">table</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="425.213" y="206.389">row</text>
+      <text fill="#000" font-size="14" x="349" y="220.389">b</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="367.725" y="220.389">table</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="425.213" y="220.389">row</text>
+      <line style="stroke:#000;stroke-width:1;" x1="349" x2="644.138" y1="139.5" y2="139.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="349" x2="644.138" y1="153.5" y2="153.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="349" x2="644.138" y1="167.5" y2="167.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="349" x2="644.138" y1="181.5" y2="181.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="349" x2="644.138" y1="195.5" y2="195.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="349" x2="644.138" y1="209.5" y2="209.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="349" x2="644.138" y1="223.5" y2="223.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="349" x2="349" y1="139.5" y2="223.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="367.725" x2="367.725" y1="139.5" y2="223.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="425.213" x2="425.213" y1="139.5" y2="223.5"/>
+      <line style="stroke:#000;stroke-width:1;" x1="644.138" x2="644.138" y1="139.5" y2="223.5"/>
+    </g>
+  </g>
+</svg>

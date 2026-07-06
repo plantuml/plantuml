@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="62px" preserveAspectRatio="none" style="width:77px;height:62px;background:#FFFFFF;" version="1.1" viewBox="0 0 77 62" width="77px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity wifi-->
+    <g class="entity" data-qualified-name="wifi" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.696" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="16" y="32.889">Wifi</text>
+      <text fill="#000" font-size="14" x="39.363" y="32.889"> </text>
+      <path d="M44.738,23.167 C43.128,23.167 41.634,23.633 40.363,24.438 L40.981,25.383 C42.066,24.695 43.349,24.322 44.738,24.322 C46.138,24.322 47.444,24.683 48.529,25.383 L49.148,24.438 C47.876,23.622 46.348,23.167 44.738,23.167 M44.738,26.667 C43.816,26.667 42.988,26.935 42.253,27.402 L42.871,28.382 C43.419,28.032 44.038,27.833 44.726,27.833 C45.414,27.833 46.079,28.032 46.628,28.382 L47.246,27.402 C46.523,26.947 45.648,26.667 44.726,26.667 M44.738,30.167 C44.096,30.167 43.571,30.692 43.571,31.333 C43.571,31.975 44.096,32.5 44.738,32.5 C45.379,32.5 45.904,31.975 45.904,31.333 C45.904,30.692 45.379,30.167 44.738,30.167" fill="#000"/>
+    </g>
+  </g>
+</svg>

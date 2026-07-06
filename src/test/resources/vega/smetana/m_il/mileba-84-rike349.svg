@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="109px" preserveAspectRatio="none" style="width:343px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 343 109" width="343px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster NR-->
+    <g class="cluster" data-qualified-name="NR" data-source-line="1" id="ent0001">
+      <rect fill="none" height="81" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="154" x="14" y="4"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.3" x="80.85" y="16.889">NR</text>
+    </g>
+    <!--cluster NC-->
+    <g class="cluster" data-qualified-name="NC" data-source-line="6" id="ent0004">
+      <path d="M184.739,12.571 C188.908,6.801 193.029,6.176 197.009,12.759 C199.704,6.405 204.773,6.578 208.25,12.014 C211.345,5.861 216.03,5.888 219.337,11.819 C223.223,5.257 226.975,5.076 231.722,10.962 C233.778,5.323 238.49,4.363 241.978,9.615 C244.594,3.914 249.555,3.16 253.348,8.391 C257.624,2.718 263.132,4.516 265.71,10.234 C269.15,5.65 274.427,5.358 276.889,11.275 C280.345,6.02 285.314,5.834 288.63,11.429 C291.488,4.964 297.338,4.463 300.972,10.674 C305.247,6.146 309.897,7.565 311.922,13.119 C315.7,8.215 319.626,8.038 323.028,13.521 C328.459,15.971 329.966,19.152 326.126,24.273 C332.858,25.924 333.436,29.366 330.082,34.805 C335.768,36.877 336.397,41.548 332.453,45.713 C337.599,50.29 336.007,55.589 329.49,57.142 C332.609,61.559 332.4,65.101 326.315,66.341 C331.844,71.356 331.216,75.821 324.004,78.392 C320.429,84.68 315.744,84.276 311.978,78.583 C309.545,84.594 303.676,84.751 299.843,80.19 C296.663,85.273 291.756,84.266 289.401,79.33 C287.321,85.217 281.693,85.109 278.187,80.917 C274.677,87.446 270.153,88.114 264.978,82.769 C261.444,88.258 257.333,88.49 253.697,82.873 C249.18,87.097 245.453,87.194 242.628,81.064 C238.281,86.677 233.462,85.682 230.162,79.917 C227.659,85.095 222.808,84.991 220.122,80.099 C215.496,85.361 211.08,86.127 207.405,79.114 C204.067,83.377 200.084,84.075 197.448,78.411 C193.357,84.82 189.199,84.547 185.468,78.075 C179.576,75.298 177.978,71.302 183.397,66.501 C177.504,64.358 176.937,59.461 181.527,55.531 C176.325,53.634 175.389,50.462 179.688,46.607 C174.229,42.303 174.876,37.627 181.297,34.964 C176.074,31.201 177.081,27.729 181.946,24.598 C177.679,19.887 178.692,14.887 184.739,12.571" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.3" x="242.85" y="27.889">NC</text>
+    </g>
+    <!--class NR1-->
+    <g class="entity" data-qualified-name="NR.NR1" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.088" x="100" y="29"/>
+      <ellipse cx="115" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="110" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="28.088" x="129" y="48.889">NR1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="101" x2="159.088" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="101" x2="159.088" y1="69" y2="69"/>
+    </g>
+    <!--class NR2-->
+    <g class="entity" data-qualified-name="NR.NR2" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.088" x="22" y="29"/>
+      <ellipse cx="37" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="28.088" x="51" y="48.889">NR2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="81.088" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="81.088" y1="69" y2="69"/>
+    </g>
+    <!--class NC1-->
+    <g class="entity" data-qualified-name="NC.NC1" data-source-line="7" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.088" x="262" y="29"/>
+      <ellipse cx="277" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="272" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="28.088" x="291" y="48.889">NC1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="263" x2="321.088" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="263" x2="321.088" y1="69" y2="69"/>
+    </g>
+    <!--class NC2-->
+    <g class="entity" data-qualified-name="NC.NC2" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60.088" x="184" y="29"/>
+      <ellipse cx="199" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="194" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="28.088" x="213" y="48.889">NC2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="185" x2="243.088" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="185" x2="243.088" y1="69" y2="69"/>
+    </g>
+  </g>
+</svg>

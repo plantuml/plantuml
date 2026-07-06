@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="124px" preserveAspectRatio="none" style="width:938px;height:124px;background:#FFFFFF;" version="1.1" viewBox="0 0 938 124" width="938px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo1-->
+    <g class="cluster" data-qualified-name="foo1" data-source-line="3" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,139,4,139,90,129,100,14,100,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="129" x2="139" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="129" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="129" x2="129" y1="14" y2="100"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="49.087" x="47.956" y="27.889">«Node»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="58.894" y="41.889">foo1</text>
+    </g>
+    <!--cluster foo2-->
+    <g class="cluster" data-qualified-name="foo2" data-source-line="7" id="ent0003">
+      <polygon fill="none" points="147,14,157,4,267,4,267,90,257,100,147,100,147,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="257" x2="267" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="147" x2="257" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="257" x2="257" y1="14" y2="100"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="44.363" x="180.819" y="27.889">«Rect»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="189.394" y="41.889">foo2</text>
+    </g>
+    <!--cluster foo3-->
+    <g class="cluster" data-qualified-name="foo3" data-source-line="11" id="ent0005">
+      <polygon fill="none" points="275,14,285,4,406,4,406,90,396,100,275,100,275,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="396" x2="406" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="275" x2="396" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="396" x2="396" y1="14" y2="100"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="55.3" x="308.85" y="27.889">«Folder»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="322.894" y="41.889">foo3</text>
+    </g>
+    <!--cluster foo4-->
+    <g class="cluster" data-qualified-name="foo4" data-source-line="15" id="ent0007">
+      <polygon fill="none" points="414,14,424,4,546,4,546,90,536,100,414,100,414,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="536" x2="546" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="414" x2="536" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="536" x2="536" y1="14" y2="100"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="56" x="448" y="27.889">«Frame»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="462.394" y="41.889">foo4</text>
+    </g>
+    <!--cluster foo5-->
+    <g class="cluster" data-qualified-name="foo5" data-source-line="19" id="ent0009">
+      <polygon fill="none" points="554,28,564,18,657,18,657,90,647,100,554,100,554,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="647" x2="657" y1="28" y2="18"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="554" x2="647" y1="28" y2="28"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="647" x2="647" y1="28" y2="100"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="587.894" y="41.889">foo5</text>
+    </g>
+    <!--cluster foo6-->
+    <g class="cluster" data-qualified-name="foo6" data-source-line="23" id="ent0011">
+      <path d="M673.322,17.005 C676.906,9.188 683.512,10.073 687.834,16.238 C691.5,7.826 696.448,8.352 702.42,13.814 C704.188,7.565 708.03,4.6 714.008,9.398 C720.665,3.846 725.441,5.051 728.76,13.036 C734.824,6.639 740.231,8.623 742.95,16.389 C748.404,10.424 753.924,12.199 757.032,18.981 C762.6,22.334 763.112,27.415 758.031,31.61 C764.75,34.674 763.95,39.906 758.597,43.541 C764.936,47.331 763.881,52.239 758.793,56.206 C765.015,59.188 764.162,64.552 758.989,67.728 C765.375,71.315 763.775,77.13 758.152,79.891 C764.947,85.047 764.091,89.834 756.521,93.233 C753.504,100.091 749.289,101.342 743.246,96.737 C739.257,103.364 734.668,104.005 729.516,98.002 C727.579,105.453 721.126,108.429 715.456,101.705 C709.202,107.602 705.187,106.077 702.391,98.381 C696.773,103.89 690.141,102.783 687.179,95.277 C682.646,101.057 677.252,99.899 674.282,93.607 C667.949,90.884 667.182,86.53 671.738,81.516 C665.337,79.152 663.435,73.216 668.229,67.955 C662.527,64.832 661.606,59.825 667.538,56.027 C660.33,51.159 661.604,45.989 668.523,42.123 C663.106,37.017 665.53,32.398 671.704,30.452 C665.489,26.265 665.932,19.554 673.322,17.005" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="52.238" x="687.881" y="32.889">«Cloud»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="700.394" y="46.889">foo6</text>
+    </g>
+    <!--cluster foo7-->
+    <g class="cluster" data-qualified-name="foo7" data-source-line="28" id="ent0013">
+      <polygon fill="none" points="771,14,781,4,922,4,922,90,912,100,771,100,771,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="912" x2="922" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="771" x2="912" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="912" x2="912" y1="14" y2="100"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="75.513" x="804.744" y="27.889">«Database»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="828.894" y="41.889">foo7</text>
+    </g>
+    <!--entity comp1-->
+    <g class="entity" data-qualified-name="foo1.comp1" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="35" y="48"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="97" y="53"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="95" y="55"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="95" y="59"/>
+      <text fill="#000" font-size="14" textLength="42" x="50" y="78.889">comp1</text>
+    </g>
+    <!--entity comp2-->
+    <g class="entity" data-qualified-name="foo2.comp2" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="166" y="48"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="228" y="53"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="226" y="55"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="226" y="59"/>
+      <text fill="#000" font-size="14" textLength="42" x="181" y="78.889">comp2</text>
+    </g>
+    <!--entity comp3-->
+    <g class="entity" data-qualified-name="foo3.comp3" data-source-line="12" id="ent0006">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="299" y="48"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="361" y="53"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="359" y="55"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="359" y="59"/>
+      <text fill="#000" font-size="14" textLength="42" x="314" y="78.889">comp3</text>
+    </g>
+    <!--entity comp4-->
+    <g class="entity" data-qualified-name="foo4.comp4" data-source-line="16" id="ent0008">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="439" y="48"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="501" y="53"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="499" y="55"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="499" y="59"/>
+      <text fill="#000" font-size="14" textLength="42" x="454" y="78.889">comp4</text>
+    </g>
+    <!--entity comp5-->
+    <g class="entity" data-qualified-name="foo5.comp5" data-source-line="20" id="ent0010">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="564" y="48"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="626" y="53"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="624" y="55"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="624" y="59"/>
+      <text fill="#000" font-size="14" textLength="42" x="579" y="78.889">comp5</text>
+    </g>
+    <!--entity comp6-->
+    <g class="entity" data-qualified-name="foo6.comp6" data-source-line="24" id="ent0012">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="673" y="48"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="735" y="53"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="733" y="55"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="733" y="59"/>
+      <text fill="#000" font-size="14" textLength="42" x="688" y="78.889">comp6</text>
+    </g>
+    <!--entity comp7-->
+    <g class="entity" data-qualified-name="foo7.comp7" data-source-line="29" id="ent0014">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82" x="805" y="48"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="867" y="53"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="865" y="55"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="865" y="59"/>
+      <text fill="#000" font-size="14" textLength="42" x="820" y="78.889">comp7</text>
+    </g>
+  </g>
+</svg>

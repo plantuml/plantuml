@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="102px" preserveAspectRatio="none" style="width:151px;height:102px;background:#FFFFFF;" version="1.1" viewBox="0 0 151 102" width="151px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity actor-->
+    <g class="entity" data-qualified-name="actor" data-source-line="2" id="ent0001">
+      <ellipse cx="21.531" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M21.531,28.5 L21.531,55.5 M8.531,36.5 L34.531,36.5 M21.531,55.5 L8.531,70.5 M21.531,55.5 L34.531,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="31.062" x="6" y="82.889">actor</text>
+    </g>
+    <!--entity usecase-->
+    <g class="entity" data-qualified-name="usecase" data-source-line="3" id="ent0002">
+      <ellipse cx="95.376" cy="48.899" fill="#F1F1F1" rx="39.876" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="69.301" y="52.399">usecase</text>
+    </g>
+  </g>
+</svg>

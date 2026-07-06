@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="158px" preserveAspectRatio="none" style="width:134px;height:158px;background:#FFFFFF;" version="1.1" viewBox="0 0 134 158" width="134px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="66.063" x="30.469" y="20.889">must be red</text>
+    </g>
+    <!--cluster r1-->
+    <g class="cluster" data-qualified-name="r1" data-source-line="17" id="ent0001">
+      <rect fill="none" height="95" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="112" x="14" y="39"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="73.938" x="33.031" y="51.889">«boundary»</text>
+      <text fill="#F00" font-size="14" font-weight="700" textLength="17.938" x="61.031" y="65.889">R1</text>
+    </g>
+    <!--entity r2-->
+    <g class="entity" data-qualified-name="r1.r2" data-source-line="18" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.938" x="22" y="78"/>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="73.938" x="33" y="98.889">«boundary»</text>
+      <text fill="#F00" font-size="14" textLength="17.938" x="61" y="112.889">R2</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="114px" preserveAspectRatio="none" style="width:225px;height:114px;background:#FFFFFF;" version="1.1" viewBox="0 0 225 114" width="225px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo1-->
+    <g class="cluster" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,117,4,117,80,107,90,14,90,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="107" x2="117" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="107" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="107" x2="107" y1="14" y2="90"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="47.894" y="27.889">foo1</text>
+    </g>
+    <!--cluster foo2-->
+    <g class="cluster" data-qualified-name="foo2" data-source-line="4" id="ent0003">
+      <rect fill="none" height="81" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="92" x="125" y="9"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="125" x2="217" y1="27" y2="27"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="157.394" y="21.889">foo2</text>
+    </g>
+    <!--class Class1-->
+    <g class="entity" data-qualified-name="foo1.Class1" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.875" x="27.5" y="34"/>
+      <ellipse cx="42.5" cy="50" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="37.5" y="55">C</text>
+      <text fill="#000" font-size="14" textLength="42.875" x="56.5" y="53.889">Class1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28.5" x2="101.375" y1="66" y2="66"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28.5" x2="101.375" y1="74" y2="74"/>
+    </g>
+    <!--class Class2-->
+    <g class="entity" data-qualified-name="foo2.Class2" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.875" x="133.5" y="34"/>
+      <ellipse cx="148.5" cy="50" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="143.5" y="55">C</text>
+      <text fill="#000" font-size="14" textLength="42.875" x="162.5" y="53.889">Class2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="134.5" x2="207.375" y1="66" y2="66"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="134.5" x2="207.375" y1="74" y2="74"/>
+    </g>
+  </g>
+</svg>

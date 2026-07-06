@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="282px" preserveAspectRatio="none" style="width:371px;height:282px;background:#FFFFFF;" version="1.1" viewBox="0 0 371 282" width="371px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Action-->
+    <g class="entity" data-qualified-name="Action" data-source-line="33" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.938" x="118" y="218"/>
+      <ellipse cx="133" cy="234" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="128" y="239">C</text>
+      <text fill="#000" font-size="14" textLength="38.938" x="147" y="237.889">Action</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="119" x2="187.938" y1="250" y2="250"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="119" x2="187.938" y1="258" y2="258"/>
+    </g>
+    <!--class boost::function<ResultE(NodeCore*, const Action*)>-->
+    <g class="entity" data-qualified-name="boost..function.ResultE.NodeCore.. const Action..." data-source-line="20" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="348.662" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="316.662" x="35" y="31.889">boost::function&lt;ResultE(NodeCore*, const Action*)&gt;</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="353.662" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="353.662" y1="52" y2="52"/>
+    </g>
+    <!--class Action::Functor1-->
+    <g class="entity" data-qualified-name="Action..Functor1" data-source-line="21" id="ent0003">
+      <rect fill="#B0E0E6" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.85" x="27.5" y="113"/>
+      <ellipse cx="42.5" cy="131" fill="#AFEEEE" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="37.5" y="136">A</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="38.1" x="88.375" y="127.333">«alias»</text>
+      <text fill="#000" font-size="14" textLength="101.85" x="56.5" y="140.889">Action::Functor1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28.5" x2="160.35" y1="149" y2="149"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28.5" x2="160.35" y1="157" y2="157"/>
+    </g>
+    <!--class Action::Functor2-->
+    <g class="entity" data-qualified-name="Action..Functor2" data-source-line="28" id="ent0007">
+      <rect fill="#B0E0E6" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.85" x="179.5" y="113"/>
+      <ellipse cx="194.5" cy="131" fill="#AFEEEE" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="189.5" y="136">A</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="38.1" x="240.375" y="127.333">«alias»</text>
+      <text fill="#000" font-size="14" textLength="101.85" x="208.5" y="140.889">Action::Functor2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="180.5" x2="312.35" y1="149" y2="149"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="180.5" x2="312.35" y1="157" y2="157"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="aggregation" id="lnk5">
+      <polygon fill="#48D1CC" points="109.236,165.226,110.322,175.015,111.758,169.543,117.229,170.98,109.236,165.226" style="stroke:#48D1CC;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="none" points="139.961,217.823,140.388,210.624,133.908,207.461,133.48,214.659,139.961,217.823" style="stroke:#48D1CC;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M111.758,169.543 C121.178,185.67 124.73,191.75 133.908,207.461" fill="none" style="stroke:#48D1CC;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="57.038" x="131.5" y="195.111">«typedef»</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="extension" id="lnk6">
+      <polygon fill="none" points="160.77,60.171,144.532,69.986,153.669,77.766,160.77,60.171" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M149.1,73.876 C135.711,89.601 129.684,96.68 115.946,112.814" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="41.275" x="147.5" y="90.111">«alias»</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0001" data-link-type="aggregation" id="lnk9">
+      <polygon fill="#48D1CC" points="225.386,165.164,216.496,169.403,222.136,168.964,222.575,174.603,225.386,165.164" style="stroke:#48D1CC;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="none" points="177.209,217.867,184.278,216.442,185.682,209.368,178.613,210.793,177.209,217.867" style="stroke:#48D1CC;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M222.136,168.964 C212.838,179.834 204.927,188.802 194.5,200 C189.012,205.894 191.423,203.61 185.682,209.368" fill="none" style="stroke:#48D1CC;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="57.038" x="210.5" y="195.111">«typedef»</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="195.642,60.171,200.466,78.522,210.511,71.957,195.642,60.171" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M205.488,75.24 C215.764,90.964 219.499,96.68 230.042,112.814" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="41.275" x="218.5" y="90.111">«alias»</text>
+    </g>
+  </g>
+</svg>

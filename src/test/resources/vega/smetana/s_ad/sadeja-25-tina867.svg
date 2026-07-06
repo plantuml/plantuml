@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="102px" preserveAspectRatio="none" style="width:124px;height:102px;background:#FFFFFF;" version="1.1" viewBox="0 0 124 102" width="124px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity Mamal-->
+    <g class="entity" data-qualified-name="Mamal" data-source-line="2" id="ent0001">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <ellipse cx="27" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M27,28.5 L27,55.5 M14,36.5 L40,36.5 M27,55.5 L14,70.5 M27,55.5 L40,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="14" textLength="42" x="6" y="82.889">Mamal</text>
+      </a>
+    </g>
+    <!--entity Dog-->
+    <g class="entity" data-qualified-name="Dog" data-source-line="3" id="ent0002">
+      <a href="http://www.yahoo.com" target="_top" title="This is Dog" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com" xlink:show="new" xlink:title="This is Dog" xlink:type="simple">
+        <ellipse cx="87.19" cy="48.899" fill="#F1F1F1" rx="21.19" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="14" textLength="25.725" x="74.328" y="52.399">Dog</text>
+      </a>
+    </g>
+  </g>
+</svg>

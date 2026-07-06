@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="237px" preserveAspectRatio="none" style="width:308px;height:237px;background:#282828;" version="1.1" viewBox="0 0 308 237" width="308px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#282828" height="237" style="stroke:none;" width="308" x="0" y="0"/>
+    <!--class Map-->
+    <g class="entity" data-qualified-name="Map" data-source-line="3" id="ent0001">
+      <rect fill="#282828" height="44" rx="2.5" ry="2.5" style="stroke:#FFB000;stroke-width:1;" width="78.563" x="58.5" y="97"/>
+      <ellipse cx="71.5" cy="111" fill="#FFB000" rx="9" ry="9" style="stroke:#FFB000;stroke-width:1;"/>
+      <text fill="#FFB000" font-family="monospace" font-size="14" x="66.5" y="116">I</text>
+      <text fill="#FFB000" font-family="Verdana" font-size="14" font-style="italic" textLength="27.213" x="83.5" y="114.889">Map</text>
+      <rect fill="#282828" height="14" style="stroke:#FFB000;stroke-width:1;stroke-dasharray:2,2;" width="21.35" x="118.713" y="94"/>
+      <text fill="#FFB000" font-family="Verdana" font-size="12" font-style="italic" textLength="19.35" x="119.713" y="104.333">K,V</text>
+      <line style="stroke:#FFB000;stroke-width:1;" x1="59.5" x2="136.063" y1="125" y2="125"/>
+      <line style="stroke:#FFB000;stroke-width:1;" x1="59.5" x2="136.063" y1="133" y2="133"/>
+    </g>
+    <!--class HashMap-->
+    <g class="entity" data-qualified-name="HashMap" data-source-line="4" id="ent0002">
+      <rect fill="#282828" height="44" rx="2.5" ry="2.5" style="stroke:#FFB000;stroke-width:1;" width="173.913" x="11" y="177"/>
+      <ellipse cx="24" cy="191" fill="#FFB000" rx="9" ry="9" style="stroke:#FFB000;stroke-width:1;"/>
+      <text fill="#FFB000" font-family="monospace" font-size="14" x="19" y="196">C</text>
+      <text fill="#FFB000" font-family="Verdana" font-size="14" textLength="59.938" x="36" y="194.889">HashMap</text>
+      <rect fill="#282828" height="14" style="stroke:#FFB000;stroke-width:1;stroke-dasharray:2,2;" width="83.975" x="103.938" y="174"/>
+      <text fill="#FFB000" font-family="Verdana" font-size="12" font-style="italic" textLength="81.975" x="104.938" y="184.333">Long,Customer</text>
+      <line style="stroke:#FFB000;stroke-width:1;" x1="12" x2="183.913" y1="205" y2="205"/>
+      <line style="stroke:#FFB000;stroke-width:1;" x1="12" x2="183.913" y1="213" y2="213"/>
+    </g>
+    <!--class Shop-->
+    <g class="entity" data-qualified-name="Shop" data-source-line="7" id="ent0004">
+      <rect fill="#282828" height="44" rx="2.5" ry="2.5" style="stroke:#FFB000;stroke-width:1;" width="60.725" x="217.5" y="17"/>
+      <ellipse cx="230.5" cy="31" fill="#FFB000" rx="9" ry="9" style="stroke:#FFB000;stroke-width:1;"/>
+      <text fill="#FFB000" font-family="monospace" font-size="14" x="225.5" y="36">C</text>
+      <text fill="#FFB000" font-family="Verdana" font-size="14" textLength="32.725" x="242.5" y="34.889">Shop</text>
+      <line style="stroke:#FFB000;stroke-width:1;" x1="218.5" x2="277.225" y1="45" y2="45"/>
+      <line style="stroke:#FFB000;stroke-width:1;" x1="218.5" x2="277.225" y1="53" y2="53"/>
+    </g>
+    <!--class Customer-->
+    <g class="entity" data-qualified-name="Customer" data-source-line="7" id="ent0005">
+      <rect fill="#282828" height="44" rx="2.5" ry="2.5" style="stroke:#FFB000;stroke-width:1;" width="88.637" x="203.5" y="177"/>
+      <ellipse cx="216.5" cy="191" fill="#FFB000" rx="9" ry="9" style="stroke:#FFB000;stroke-width:1;"/>
+      <text fill="#FFB000" font-family="monospace" font-size="14" x="211.5" y="196">C</text>
+      <text fill="#FFB000" font-family="Verdana" font-size="14" textLength="60.637" x="228.5" y="194.889">Customer</text>
+      <line style="stroke:#FFB000;stroke-width:1;" x1="204.5" x2="291.138" y1="205" y2="205"/>
+      <line style="stroke:#FFB000;stroke-width:1;" x1="204.5" x2="291.138" y1="213" y2="213"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="98,141.314,92,159.314,104,159.314,98,141.314" style="stroke:#FFB000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M98,159.314 C98,170.41 98,165.929 98,176.982" fill="none" style="stroke:#FFB000;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#FFB000" points="248,176.777,252,167.777,248,171.777,244,167.777,248,176.777" style="stroke:#FFB000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M248,61.309 C248,91.548 248,141.585 248,171.777" fill="none" style="stroke:#FFB000;stroke-width:1;"/>
+      <text fill="#FFB000" font-family="Verdana" font-size="13" textLength="53.381" x="194" y="159.888">customer</text>
+      <text fill="#FFB000" font-family="Verdana" font-size="13" x="217.075" y="172.888">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk7">
+      <polygon fill="#FFB000" points="203.219,199,194.219,195,198.219,199,194.219,203,203.219,199" style="stroke:#FFB000;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M185.012,199 C191.081,199 192.15,199 198.219,199" fill="none" style="stroke:#FFB000;stroke-width:1;"/>
+      <text fill="#FFB000" font-family="Verdana" font-size="13" textLength="31.119" x="171.219" y="195.111">value</text>
+    </g>
+  </g>
+</svg>

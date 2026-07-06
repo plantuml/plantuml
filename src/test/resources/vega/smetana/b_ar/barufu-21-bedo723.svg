@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="237.624px" preserveAspectRatio="none" style="width:549px;height:237px;background:#FFFFFF;" version="1.1" viewBox="0 0 549 237" width="549.505px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster parameters-->
+    <g class="cluster" data-qualified-name="parameters" data-source-line="3" id="ent0001">
+      <rect fill="none" height="168.317" rx="6.188" ry="6.188" style="stroke:#181818;stroke-width:2.475;" width="448.02" x="34.653" y="9.901"/>
+      <path d="M234.406,9.901 L234.406,27.228 L209.653,51.98 L34.653,51.98" fill="none" style="stroke:#181818;stroke-width:2.475;"/>
+      <text fill="#000" font-size="34.653" font-weight="700" textLength="175" x="42.079" y="39.329">parameters</text>
+    </g>
+    <!--entity beta-->
+    <g class="entity" data-qualified-name="parameters.beta" data-source-line="4" id="ent0002">
+      <ellipse cx="108.382" cy="115.419" fill="#F1F1F1" rx="52.689" ry="43.636" style="stroke:#181818;stroke-width:1.238;"/>
+      <image height="71.782" width="131.188" x="84.867" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjcxIiB3aWR0aD0iMTMxIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyB0cmFuc2Zvcm09InNjYWxlKDIuNDc1LDIuNDc1KSIgIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciPjx0ZXh0IHg9IjUiIHk9IjE5LjA3NSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iNDIuMDA3IiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5cYmV0YTwvdGV4dD48L2c+PC9zdmc+" y="79.527"/>
+    </g>
+    <!--entity alpha-->
+    <g class="entity" data-qualified-name="parameters.alpha" data-source-line="5" id="ent0003">
+      <ellipse cx="421.144" cy="114.638" fill="#F1F1F1" rx="42.431" ry="35.43" style="stroke:#181818;stroke-width:1.238;"/>
+      <image height="71.782" width="150.99" x="396.391" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjcxIiB3aWR0aD0iMTUwIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PD9wbGFudHVtbCAkdmVyc2lvbiQ/PjxkZWZzLz48ZyB0cmFuc2Zvcm09InNjYWxlKDIuNDc1LDIuNDc1KSIgIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciPjx0ZXh0IHg9IjUiIHk9IjE5LjA3NSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iNTAuNDA4IiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5cYWxwaGE8L3RleHQ+PC9nPjwvc3ZnPg==" y="89.885"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="377.894,115.099,355.617,105.198,365.518,115.099,355.617,125,377.894,115.099" style="stroke:#181818;stroke-width:2.475;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M162.525,115.099 C223.482,115.099 309.412,115.099 365.518,115.099" fill="none" style="stroke:#181818;stroke-width:2.475;"/>
+      <text fill="#000" font-size="32.178" textLength="164.712" x="188.738" y="95.572">relationship</text>
+    </g>
+  </g>
+</svg>

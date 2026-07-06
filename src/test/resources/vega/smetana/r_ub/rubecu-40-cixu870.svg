@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="118px" preserveAspectRatio="none" style="width:264px;height:118px;background:#FFFFFF;" version="1.1" viewBox="0 0 264 118" width="264px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.663" x="143" y="12"/>
+      <ellipse cx="178.453" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="173.453" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="196.998" y="31.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="144" x2="246.663" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="21.788" x="149" y="58.889">this</text>
+      <text fill="#000" font-size="14" x="170.788" y="58.889"> </text>
+      <text fill="#000" font-size="14" textLength="10.15" x="170.788" y="58.889">is</text>
+      <text fill="#000" font-size="14" x="180.938" y="58.889"> </text>
+      <text fill="#000" font-size="14" x="180.938" y="58.889">a</text>
+      <text fill="#000" font-size="14" x="188.725" y="58.889"> </text>
+      <text fill="#000" font-size="14" textLength="26.425" x="188.725" y="58.889">very</text>
+      <text fill="#000" font-size="14" x="215.15" y="58.889"> </text>
+      <text fill="#000" font-size="14" textLength="26.512" x="215.15" y="58.889">long</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="149" y="72.889">description</text>
+      <text fill="#000" font-size="14" x="216.725" y="72.889"> </text>
+      <text fill="#000" font-size="14" textLength="16.275" x="216.725" y="72.889">for</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="149" y="86.889">class</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="144" x2="246.663" y1="94" y2="94"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="12" id="ent0003">
+      <path d="M6,26 L6,88 A0,0 0 0 0 6,88 L125.475,88 A0,0 0 0 0 125.475,88 L125.475,61 L142.751,57 L125.475,53 L125.475,36 L115.475,26 L6,26 A0,0 0 0 0 6,26" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M115.475,26 L115.475,36 L125.475,36 L115.475,26" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="20.231" x="12" y="41.111">this</text>
+      <text fill="#000" font-size="13" x="32.231" y="41.111"> </text>
+      <text fill="#000" font-size="13" textLength="9.425" x="32.231" y="41.111">is</text>
+      <text fill="#000" font-size="13" x="41.656" y="41.111"> </text>
+      <text fill="#000" font-size="13" x="41.656" y="41.111">a</text>
+      <text fill="#000" font-size="13" x="48.888" y="41.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.537" x="48.888" y="41.111">very</text>
+      <text fill="#000" font-size="13" x="73.425" y="41.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.619" x="73.425" y="41.111">long</text>
+      <text fill="#000" font-size="13" textLength="24.619" x="12" y="54.111">long</text>
+      <text fill="#000" font-size="13" x="36.619" y="54.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.619" x="36.619" y="54.111">long</text>
+      <text fill="#000" font-size="13" x="61.238" y="54.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.619" x="61.238" y="54.111">long</text>
+      <text fill="#000" font-size="13" x="85.856" y="54.111"> </text>
+      <text fill="#000" font-size="13" textLength="24.619" x="85.856" y="54.111">long</text>
+      <text fill="#000" font-size="13" textLength="62.888" x="12" y="67.111">description</text>
+      <text fill="#000" font-size="13" x="74.888" y="67.111"> </text>
+      <text fill="#000" font-size="13" textLength="15.113" x="74.888" y="67.111">for</text>
+      <text fill="#000" font-size="13" textLength="25.269" x="12" y="80.111">note</text>
+    </g>
+  </g>
+</svg>

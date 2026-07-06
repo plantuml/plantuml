@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="198px" preserveAspectRatio="none" style="width:102px;height:198px;background:#FFFFFF;" version="1.1" viewBox="0 0 102 198" width="102px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity joe-->
+    <g class="entity" data-qualified-name="joe" data-source-line="1" id="ent0001">
+      <ellipse cx="45.787" cy="34.5" fill="#008000" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="43.844" x2="53.548" y1="42.26" y2="32.556"/>
+      <path d="M45.787,42.5 L45.787,69.5 M32.787,50.5 L58.787,50.5 M45.787,69.5 L32.787,84.5 M45.787,69.5 L58.787,84.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="36.425" y="96.889">joe</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="36.575" x="27.5" y="22.889">«xxx»</text>
+    </g>
+    <!--entity action-->
+    <g class="entity" data-qualified-name="action" data-source-line="2" id="ent0002">
+      <ellipse cx="46.176" cy="158.799" fill="#FFA500" rx="40.176" ry="22.799" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="36.575" x="27.889" y="153.688">«yyy»</text>
+      <text fill="#000" font-size="14" textLength="37.363" x="27.495" y="167.688">action</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="83.15" x2="53.263" y1="150.851" y2="180.738"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#00F" points="46,135.893,50,126.893,46,130.893,42,126.893,46,135.893" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M46,100.126 C46,112.458 46,120.389 46,130.893" fill="none" style="stroke:#00F;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

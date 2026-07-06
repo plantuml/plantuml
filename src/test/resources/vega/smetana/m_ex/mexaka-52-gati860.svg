@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="244px" preserveAspectRatio="none" style="width:344px;height:244px;background:#FFFFFF;" version="1.1" viewBox="0 0 344 244" width="344px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g1fj4fgt50vlg50" x1="0%" x2="100%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#90EE90"/>
+      <stop offset="100%" stop-color="#FF0"/>
+    </linearGradient>
+    <linearGradient id="g1fj4fgt50vlg51" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#00F"/>
+      <stop offset="100%" stop-color="#F00"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class bar-->
+    <g class="entity" data-qualified-name="bar" data-source-line="1" id="ent0001">
+      <rect fill="#ADD8E6" height="48" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="52.213" x="32" y="12"/>
+      <ellipse cx="47" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="42" y="33">C</text>
+      <text fill="#FF0" font-size="14" textLength="20.213" x="61" y="31.889">bar</text>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="33" x2="83.213" y1="44" y2="44"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="33" x2="83.213" y1="52" y2="52"/>
+    </g>
+    <!--class bar2-->
+    <g class="entity" data-qualified-name="bar2" data-source-line="2" id="ent0002">
+      <rect fill="#ADD8E6" height="48" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="60" x="102" y="12"/>
+      <ellipse cx="117" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="112" y="33">C</text>
+      <text fill="#F00" font-size="14" textLength="28" x="131" y="31.889">bar2</text>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="103" x2="161" y1="44" y2="44"/>
+      <line style="stroke:#008000;stroke-width:0.5;" x1="103" x2="161" y1="52" y2="52"/>
+    </g>
+    <!--class Foo1-->
+    <g class="entity" data-qualified-name="Foo1" data-source-line="4" id="ent0003">
+      <rect fill="#F00" height="48" rx="2.5" ry="2.5" style="stroke:#0FF;stroke-width:0.5;" width="63.938" x="180" y="12"/>
+      <ellipse cx="195" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="190" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="209" y="31.889">Foo1</text>
+      <line style="stroke:#0FF;stroke-width:0.5;" x1="181" x2="242.938" y1="44" y2="44"/>
+      <line style="stroke:#0FF;stroke-width:0.5;" x1="181" x2="242.938" y1="52" y2="52"/>
+    </g>
+    <!--class FooDashed-->
+    <g class="entity" data-qualified-name="FooDashed" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" width="104.45" x="6" y="96"/>
+      <ellipse cx="21" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="72.45" x="35" y="115.889">FooDashed</text>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="7" x2="109.45" y1="128" y2="128"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="7" x2="109.45" y1="136" y2="136"/>
+    </g>
+    <!--class FooDotted-->
+    <g class="entity" data-qualified-name="FooDotted" data-source-line="6" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="97.363" x="128.5" y="96"/>
+      <ellipse cx="143.5" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="138.5" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="65.363" x="157.5" y="115.889">FooDotted</text>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="129.5" x2="224.863" y1="128" y2="128"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="129.5" x2="224.863" y1="136" y2="136"/>
+    </g>
+    <!--class FooBold-->
+    <g class="entity" data-qualified-name="FooBold" data-source-line="7" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:2;" width="84.238" x="244" y="96"/>
+      <ellipse cx="259" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="254" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="52.238" x="273" y="115.889">FooBold</text>
+      <line style="stroke:#181818;stroke-width:2;" x1="245" x2="327.238" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:2;" x1="245" x2="327.238" y1="136" y2="136"/>
+    </g>
+    <!--class Demo1-->
+    <g class="entity" data-qualified-name="Demo1" data-source-line="9" id="ent0007">
+      <rect fill="url(#g1fj4fgt50vlg50)" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.15" x="19.5" y="180"/>
+      <rect fill="url(#g1fj4fgt50vlg51)" height="32" rx="2.5" ry="2.5" style="stroke:url(#g1fj4fgt50vlg51);stroke-width:0.5;" width="77.15" x="19.5" y="180"/>
+      <rect fill="url(#g1fj4fgt50vlg51)" height="2.5" style="stroke:url(#g1fj4fgt50vlg51);stroke-width:0.5;" width="77.15" x="19.5" y="209.5"/>
+      <rect fill="none" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.15" x="19.5" y="180"/>
+      <ellipse cx="34.5" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="29.5" y="201">C</text>
+      <text fill="#000" font-size="14" textLength="45.15" x="48.5" y="199.889">Demo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20.5" x2="95.65" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20.5" x2="95.65" y1="220" y2="220"/>
+    </g>
+  </g>
+</svg>

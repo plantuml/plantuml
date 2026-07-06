@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="360px" preserveAspectRatio="none" style="width:425px;height:360px;background:#FFFFFF;" version="1.1" viewBox="0 0 425 360" width="425px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster vpnSolution-->
+    <g class="cluster" data-qualified-name="vpnSolution" data-source-line="2" id="ent0002">
+      <rect fill="none" height="267" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="399" x="14" y="69"/>
+      <path d="M103.538,69 L103.538,76 L93.538,86 L14,86" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="79.538" x="17" y="80.889">VPN Solution</text>
+    </g>
+    <!--entity dataTrans-->
+    <g class="entity" data-qualified-name="dataTrans" data-source-line="1" id="ent0001">
+      <rect fill="#CCF" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="146" x="10" y="4"/>
+      <path d="M78.1,20.545 A0.5,0.5 0 0 0 77.653,20.822 L73.688,28.787 A0.5,0.5 0 0 0 74.137,29.51 C78.778,29.496 83.413,29.562 88.067,29.516 A0.5,0.5 0 0 0 88.511,29.238 L92.473,21.268 A0.5,0.5 0 0 0 92.026,20.545 M78.409,21.545 L91.22,21.545 L87.753,28.516 C83.486,28.553 79.22,28.505 74.942,28.51" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="126" x="20" y="44.889">Secure Data Transfer</text>
+    </g>
+    <!--entity vpnServerA-->
+    <g class="entity" data-qualified-name="vpnSolution.vpnServerA" data-source-line="3" id="ent0003">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.088" x="22" y="274"/>
+      <path d="M58.994,287.06 A0.5,0.5 0 0 0 58.494,287.556 L58.4,297.472 A0.5,0.5 0 0 0 58.9,297.976 L61.937,297.976 L59.679,300.107 A0.5,0.5 0 0 0 60.021,300.97 L73.958,301.017 A0.5,0.5 0 0 0 74.337,300.187 L72.4,297.976 L75.083,297.976 A0.5,0.5 0 0 0 75.583,297.474 L75.536,287.558 A0.5,0.5 0 0 0 75.036,287.06 M59.488,288.06 L74.539,288.06 L74.582,296.976 L59.404,296.976 M62.865,298.476 L71.509,298.476 L72.855,300.013 L61.275,299.974" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="70.088" x="32" y="314.889">VPN Server</text>
+    </g>
+    <!--entity vpnServerB-->
+    <g class="entity" data-qualified-name="vpnSolution.vpnServerB" data-source-line="4" id="ent0004">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.088" x="307.5" y="274"/>
+      <path d="M347.994,287.06 A0.5,0.5 0 0 0 347.494,287.556 L347.4,297.472 A0.5,0.5 0 0 0 347.9,297.976 L350.937,297.976 L348.679,300.107 A0.5,0.5 0 0 0 349.021,300.97 L362.958,301.017 A0.5,0.5 0 0 0 363.337,300.187 L361.4,297.976 L364.083,297.976 A0.5,0.5 0 0 0 364.583,297.474 L364.536,287.558 A0.5,0.5 0 0 0 364.036,287.06 M348.488,288.06 L363.539,288.06 L363.582,296.976 L348.404,296.976 M351.865,298.476 L360.509,298.476 L361.855,300.013 L350.275,299.974" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="77.088" x="317.5" y="314.889">Client Server</text>
+    </g>
+    <!--entity softwareA-->
+    <g class="entity" data-qualified-name="vpnSolution.softwareA" data-source-line="5" id="ent0005">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.087" x="30" y="184"/>
+      <path d="M82.034,197.35 C79.508,197.312 77.215,198.809 76.228,201.121 C74.854,202.277 73.987,204.017 74.011,205.948 C74.051,209.367 76.864,212.119 80.284,212.085 C82.816,212.059 84.984,210.511 85.926,208.321 A0.5,0.5 0 0 0 85.938,208.311 C87.92,206.643 88.659,203.915 87.79,201.475 C86.921,199.035 84.624,197.389 82.034,197.35 M82.018,198.35 C84.194,198.383 86.116,199.761 86.846,201.811 C87.377,203.3 87.196,204.912 86.419,206.22 C86.426,206.088 86.429,205.955 86.428,205.821 C86.399,202.401 83.596,199.641 80.176,199.665 A0.5,0.5 0 0 0 80.157,199.673 A0.5,0.5 0 0 0 80.135,199.665 C79.42,199.675 78.735,199.805 78.099,200.037 C79.085,198.962 80.5,198.327 82.018,198.35 M80.167,200.657 A0.5,0.5 0 0 0 80.184,200.665 C83.064,200.645 85.404,202.951 85.428,205.831 C85.453,208.71 83.152,211.055 80.272,211.085 C77.392,211.114 75.045,208.816 75.01,205.936 C74.991,204.348 75.681,202.92 76.786,201.952 A0.5,0.5 0 0 0 77.051,201.734 C77.91,201.077 78.981,200.681 80.149,200.665 A0.5,0.5 0 0 0 80.167,200.657" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="84.087" x="40" y="224.889">VPN Gateway</text>
+    </g>
+    <!--entity softwareB-->
+    <g class="entity" data-qualified-name="vpnSolution.softwareB" data-source-line="6" id="ent0006">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.75" x="295.5" y="184"/>
+      <path d="M337.865,197.35 C335.34,197.312 333.046,198.809 332.059,201.121 C330.685,202.277 329.819,204.017 329.842,205.948 C329.883,209.367 332.695,212.119 336.115,212.085 C338.647,212.059 340.815,210.511 341.757,208.321 A0.5,0.5 0 0 0 341.769,208.311 C343.751,206.643 344.49,203.915 343.621,201.475 C342.752,199.035 340.455,197.389 337.865,197.35 M337.85,198.35 C340.025,198.383 341.948,199.761 342.678,201.811 C343.208,203.3 343.027,204.912 342.25,206.22 C342.257,206.088 342.261,205.955 342.259,205.821 C342.23,202.401 339.427,199.641 336.007,199.665 A0.5,0.5 0 0 0 335.988,199.673 A0.5,0.5 0 0 0 335.966,199.665 C335.252,199.675 334.567,199.805 333.93,200.037 C334.916,198.962 336.331,198.327 337.849,198.35 M335.998,200.657 A0.5,0.5 0 0 0 336.016,200.665 C338.895,200.645 341.235,202.951 341.26,205.831 C341.284,208.71 338.983,211.055 336.103,211.085 C333.224,211.114 330.876,208.816 330.842,205.936 C330.823,204.348 331.512,202.92 332.617,201.952 A0.5,0.5 0 0 0 332.882,201.734 C333.741,201.077 334.813,200.681 335.98,200.665 A0.5,0.5 0 0 0 335.998,200.657" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="64.75" x="305.5" y="224.889">VPN Client</text>
+    </g>
+    <!--entity coms-->
+    <g class="entity" data-qualified-name="vpnSolution.coms" data-source-line="7" id="ent0007">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="100.15" x="160" y="184"/>
+      <path d="M213.882,198.51 A0.5,0.5 0 0 0 213.529,198.656 A0.5,0.5 0 0 0 213.529,199.363 L218.249,204.084 L213.622,208.713 A0.5,0.5 0 0 0 213.622,209.42 A0.5,0.5 0 0 0 214.329,209.42 L219.31,204.438 A0.5,0.5 0 0 0 219.31,203.73 L214.235,198.656 A0.5,0.5 0 0 0 213.882,198.51 M206.001,198.557 A0.5,0.5 0 0 0 205.647,198.703 L200.665,203.684 A0.5,0.5 0 0 0 200.665,204.391 L205.741,209.467 A0.5,0.5 0 0 0 206.448,209.467 A0.5,0.5 0 0 0 206.448,208.76 L201.726,204.037 L206.355,199.41 A0.5,0.5 0 0 0 206.355,198.703 A0.5,0.5 0 0 0 206.001,198.557 M204.036,203.607 A0.5,0.5 0 0 0 203.536,204.108 A0.5,0.5 0 0 0 204.036,204.607 L208.036,204.607 A0.5,0.5 0 0 0 208.536,204.108 A0.5,0.5 0 0 0 208.036,203.607 M212.036,203.607 A0.5,0.5 0 0 0 211.536,204.108 A0.5,0.5 0 0 0 212.036,204.607 L216.036,204.607 A0.5,0.5 0 0 0 216.536,204.108 A0.5,0.5 0 0 0 216.036,203.607" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="80.15" x="170" y="224.889">Network Path</text>
+    </g>
+    <!--entity network-->
+    <g class="entity" data-qualified-name="vpnSolution.network" data-source-line="8" id="ent0008">
+      <rect fill="#C9FFC9" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="158.938" x="130.5" y="277"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="136.938" x="141.5" y="297.889">«technology-network»</text>
+      <text fill="#000" font-size="14" textLength="87.85" x="166.044" y="311.889">Internet / Cloud</text>
+    </g>
+    <!--entity vpnService-->
+    <g class="entity" data-qualified-name="vpnSolution.vpnService" data-source-line="9" id="ent0009">
+      <rect fill="#C9FFC9" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.6" x="162" y="94"/>
+      <path d="M206.3,109.91 C203.624,109.904 201.447,112.114 201.423,114.832 C201.399,117.55 203.537,119.802 206.212,119.846 A0.5,0.5 0 0 0 206.228,119.846 L213.769,119.846 A0.5,0.5 0 0 0 213.775,119.846 C216.462,119.821 218.62,117.567 218.599,114.838 C218.578,112.12 216.402,109.911 213.73,109.911 L213.73,109.909 L213.697,109.909 M206.298,110.91 A0.5,0.5 0 0 0 206.302,110.91 L213.729,110.91 C215.852,110.91 217.581,112.654 217.598,114.846 C217.616,117.046 215.902,118.824 213.769,118.846 C213.768,118.846 213.766,118.846 213.765,118.846 L206.23,118.846 C204.105,118.811 202.403,117.034 202.423,114.842 C202.442,112.65 204.173,110.906 206.298,110.91" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="75.6" x="172" y="134.889">VPN Service</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk11">
+      <polygon fill="none" points="83,58.403,77,76.403,89,76.403,83,58.403" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M83,76.403 C83,77.505 83,67.089 83,68.208 C83,68.348 83,68.488 83,68.629 C83,68.699 83,68.769 83,68.839" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0007" data-link-type="extension" id="lnk12">
+      <polygon fill="none" points="210,148.403,204,166.403,216,166.403,210,148.403" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M210,166.403 C210,177.642 210,172.715 210,183.919" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="association" id="lnk14">
+      <path d="M134.5,211 C142.954,211 151.409,211 159.863,211" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0006" data-link-type="association" id="lnk15">
+      <path d="M260.5,211 C272.105,211 283.71,211 295.314,211" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0003" data-link-type="composition" id="lnk17">
+      <polygon fill="#181818" points="77.5,238.403,72.044,246.603,76.659,243.332,79.93,247.947,77.5,238.403" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="71.446,273.919,76.397,268.676,73.462,262.09,68.511,267.332,71.446,273.919" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M76.659,243.332 C74.744,254.571 75.372,250.886 73.462,262.09" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="composition" id="lnk19">
+      <polygon fill="#181818" points="343.401,238.403,341.285,248.022,344.403,243.301,349.123,246.419,343.401,238.403" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="350.665,273.919,353.382,267.239,348.26,262.162,345.544,268.842,350.665,273.919" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M344.403,243.301 C346.701,254.541 345.969,250.959 348.26,262.162" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0008" data-link-type="association" id="lnk21">
+      <path d="M112.246,301 C118.228,301 124.211,301 130.193,301" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0004" data-link-type="association" id="lnk22">
+      <path d="M289.559,301 C295.528,301 301.497,301 307.467,301" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="extension" id="lnk24">
+      <polygon fill="none" points="210,238.403,204,256.403,216,256.403,210,238.403" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M210,256.403 C210,268.655 210,265.086 210,276.899" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

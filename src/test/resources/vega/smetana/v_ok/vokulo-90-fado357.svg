@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="220px" preserveAspectRatio="none" style="width:253px;height:220px;background:#FFFFFF;" version="1.1" viewBox="0 0 253 220" width="253px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Dummy1-->
+    <g class="entity" data-qualified-name="Dummy1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="96" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.85" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="56" x="52.425" y="27.889">Dummy1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="153.85" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="12" y="50.889">String a1</text>
+      <text fill="#000" font-size="14" textLength="41.212" x="12" y="64.889">Date d;</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="153.85" y1="72" y2="72"/>
+      <text fill="#000" font-size="14" textLength="136.85" x="12" y="86.889">thisIsALongmethod1()</text>
+      <text fill="#000" font-size="14" textLength="111.125" x="12" y="100.889">anotherMetheod()</text>
+    </g>
+    <!--class Dummy2-->
+    <g class="entity" data-qualified-name="Dummy2" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="60" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="64.15" x="173.5" y="30"/>
+      <text fill="#000" font-size="14" textLength="56" x="177.575" y="45.889">Dummy2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="174.5" x2="236.65" y1="54" y2="54"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="179.5" y="68.889">String a1</text>
+      <text fill="#000" font-size="14" textLength="41.212" x="179.5" y="82.889">Date d;</text>
+    </g>
+    <!--class Dummy3-->
+    <g class="entity" data-qualified-name="Dummy3" data-source-line="17" id="ent0003">
+      <rect fill="#F1F1F1" height="60" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="148.85" x="6" y="144"/>
+      <text fill="#000" font-size="14" textLength="56" x="52.425" y="159.889">Dummy3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="153.85" y1="168" y2="168"/>
+      <text fill="#000" font-size="14" textLength="136.85" x="12" y="182.889">thisIsALongmethod1()</text>
+      <text fill="#000" font-size="14" textLength="111.125" x="12" y="196.889">anotherMetheod()</text>
+    </g>
+    <!--class Dummy4-->
+    <g class="entity" data-qualified-name="Dummy4" data-source-line="24" id="ent0004">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62" x="173.5" y="162"/>
+      <text fill="#000" font-size="14" textLength="56" x="176.5" y="177.889">Dummy4</text>
+    </g>
+  </g>
+</svg>

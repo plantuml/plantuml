@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="44.076px" preserveAspectRatio="none" style="width:100px;height:44px;background:#FFFFFF;" version="1.1" viewBox="0 0 100 44" width="100.078px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="28.001" rx="2.593" ry="2.593" style="stroke:#F1F1F1;stroke-width:0.778;" width="44.717" x="5.185" y="5.185"/>
+    <text fill="#000" font-size="7.26" font-weight="700" textLength="12.069" x="7.778" y="11.869">fruit</text>
+    <text fill="#000" font-size="7.26" textLength="18.603" x="28.708" y="11.869">Apple</text>
+    <line style="stroke:#000;stroke-width:0.519;" x1="26.115" x2="26.115" y1="5.185" y2="14.519"/>
+    <line style="stroke:#000;stroke-width:0.519;" x1="5.185" x2="49.903" y1="14.519" y2="14.519"/>
+    <text fill="#000" font-size="7.26" font-weight="700" textLength="12.931" x="7.778" y="21.202">size</text>
+    <text fill="#000" font-size="7.26" textLength="18.557" x="28.708" y="21.202">Large</text>
+    <line style="stroke:#000;stroke-width:0.519;" x1="26.115" x2="26.115" y1="14.519" y2="23.853"/>
+    <line style="stroke:#000;stroke-width:0.519;" x1="5.185" x2="49.903" y1="23.853" y2="23.853"/>
+    <text fill="#000" font-size="7.26" font-weight="700" textLength="15.744" x="7.778" y="30.536">color</text>
+    <text fill="#000" font-size="7.26" textLength="5.989" x="28.708" y="30.536">   </text>
+    <line style="stroke:#000;stroke-width:0.519;" x1="26.115" x2="26.115" y1="23.853" y2="33.186"/>
+    <rect fill="none" height="28.001" rx="2.593" ry="2.593" style="stroke:#000;stroke-width:0.778;" width="44.717" x="5.185" y="5.185"/>
+    <rect fill="#F1F1F1" height="18.667" rx="2.593" ry="2.593" style="stroke:#F1F1F1;stroke-width:0.778;" width="25.331" x="68.966" y="19.186"/>
+    <text fill="#000" font-size="7.26" textLength="13.339" x="71.558" y="25.869">Red</text>
+    <line style="stroke:#000;stroke-width:0.519;" x1="68.966" x2="94.296" y1="28.52" y2="28.52"/>
+    <text fill="#000" font-size="7.26" textLength="20.145" x="71.558" y="35.203">Green</text>
+    <rect fill="none" height="18.667" rx="2.593" ry="2.593" style="stroke:#000;stroke-width:0.778;" width="25.331" x="68.966" y="19.186"/>
+    <path d="M43.298,28.52 L50.039,28.52 C54.975,28.52 60.347,28.52 65.229,28.52" fill="none" style="stroke:#000;stroke-width:0.519;stroke-dasharray:1.556,1.556;"/>
+    <path d="M65.229,30.105 L66.418,28.52 L65.229,26.934 L69.194,28.52 L65.229,30.105" fill="#000"/>
+    <ellipse cx="43.298" cy="28.52" fill="#000" rx="1.556" ry="1.556" style="stroke:#000;stroke-width:0.519;"/>
+  </g>
+</svg>

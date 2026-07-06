@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="100px" preserveAspectRatio="none" style="width:267px;height:100px;background:#FFFFFF;" version="1.1" viewBox="0 0 267 100" width="267px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="a" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="34"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="58" y2="58"/>
+      <text fill="#000" font-size="14" x="27.106" y="49.889">a</text>
+    </g>
+    <g class="entity" data-qualified-name="b" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="201" y="34"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="201" x2="251" y1="58" y2="58"/>
+      <text fill="#000" font-size="14" x="222.106" y="49.889">b</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="200.694,59,191.694,55,195.694,59,191.694,63,200.694,59" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56.094,59 C93.433,59 158.231,59 195.694,59" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="50.619" x="67.325" y="12.111">aaaaaaa</text>
+      <text fill="#000" font-size="13" x="117.944" y="12.111"> </text>
+      <text fill="#000" font-size="13" textLength="72.313" x="117.944" y="12.111">bbbbbbbbbb</text>
+      <text fill="#000" font-size="13" textLength="58.5" x="67" y="25.111">ccccccccc</text>
+      <text fill="#000" font-size="13" x="125.5" y="25.111"> </text>
+      <text fill="#000" font-size="13" textLength="65.081" x="125.5" y="25.111">ddddddddd</text>
+      <text fill="#000" font-size="13" textLength="65.081" x="78.375" y="38.111">eeeeeeeee</text>
+      <text fill="#000" font-size="13" x="143.456" y="38.111"> </text>
+      <text fill="#000" font-size="13" textLength="35.75" x="143.456" y="38.111">ffffffffff</text>
+      <text fill="#000" font-size="13" textLength="65.081" x="67.325" y="51.111">ggggggggg</text>
+      <text fill="#000" font-size="13" x="132.406" y="51.111"> </text>
+      <text fill="#000" font-size="13" textLength="57.85" x="132.406" y="51.111">hhhhhhhh</text>
+    </g>
+  </g>
+</svg>

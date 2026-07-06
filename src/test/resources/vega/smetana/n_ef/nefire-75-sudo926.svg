@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="90px" preserveAspectRatio="none" style="width:233px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 233 90" width="233px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity blabla //blabla// blabla blabla //blabla//, les //blabla// et les //blabla//, les //blabla//, les //blabla// et les //blabla//.-->
+    <g class="entity" data-qualified-name="blabla ..blabla.. blabla blabla ..blabla... les ..blabla.. et les ..blabla... les ..blabla... les ..blabla.. et les ..blabla..." data-source-line="9" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="211.1" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="37.45" x="16" y="32.889">blabla</text>
+      <text fill="#000" font-size="14" x="53.45" y="32.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="37.45" x="53.45" y="32.889">blabla</text>
+      <text fill="#000" font-size="14" x="90.9" y="32.889"> </text>
+      <text fill="#000" font-size="14" textLength="37.45" x="90.9" y="32.889">blabla</text>
+      <text fill="#000" font-size="14" x="128.35" y="32.889"> </text>
+      <text fill="#000" font-size="14" textLength="37.45" x="128.35" y="32.889">blabla</text>
+      <text fill="#000" font-size="14" x="165.8" y="32.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="37.45" x="165.8" y="32.889">blabla</text>
+      <text fill="#000" font-size="14" x="203.25" y="32.889">,</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="16" y="46.889">les</text>
+      <text fill="#000" font-size="14" x="33.938" y="46.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="37.45" x="33.938" y="46.889">blabla</text>
+      <text fill="#000" font-size="14" x="71.387" y="46.889"> </text>
+      <text fill="#000" font-size="14" textLength="11.638" x="71.387" y="46.889">et</text>
+      <text fill="#000" font-size="14" x="83.025" y="46.889"> </text>
+      <text fill="#000" font-size="14" textLength="17.938" x="83.025" y="46.889">les</text>
+      <text fill="#000" font-size="14" x="100.962" y="46.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="37.45" x="100.962" y="46.889">blabla</text>
+      <text fill="#000" font-size="14" x="138.413" y="46.889">,</text>
+      <text fill="#000" font-size="14" x="142.263" y="46.889"> </text>
+      <text fill="#000" font-size="14" textLength="17.938" x="142.263" y="46.889">les</text>
+      <text fill="#000" font-size="14" x="160.2" y="46.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="37.45" x="160.2" y="46.889">blabla</text>
+      <text fill="#000" font-size="14" x="197.65" y="46.889">,</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="16" y="60.889">les</text>
+      <text fill="#000" font-size="14" x="33.938" y="60.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="37.45" x="33.938" y="60.889">blabla</text>
+      <text fill="#000" font-size="14" x="71.387" y="60.889"> </text>
+      <text fill="#000" font-size="14" textLength="11.638" x="71.387" y="60.889">et</text>
+      <text fill="#000" font-size="14" x="83.025" y="60.889"> </text>
+      <text fill="#000" font-size="14" textLength="17.938" x="83.025" y="60.889">les</text>
+      <text fill="#000" font-size="14" x="100.962" y="60.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="37.45" x="100.962" y="60.889">blabla</text>
+      <text fill="#000" font-size="14" x="138.413" y="60.889">.</text>
+    </g>
+  </g>
+</svg>

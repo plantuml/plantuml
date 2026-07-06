@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="365px" preserveAspectRatio="none" style="width:198px;height:365px;background:#FFFFFF;" version="1.1" viewBox="0 0 198 365" width="198px" zoomAndPan="magnify">
+  <defs>
+    <filter height="300%" id="f1w241ddze7vs6" width="300%" x="-1" y="-1">
+      <feGaussianBlur result="blurOut" stdDeviation="2"/>
+      <feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/>
+      <feOffset dx="4" dy="4" in="blurOut2" result="blurOut3"/>
+      <feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/>
+    </filter>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="no" data-source-line="2" id="ent0001">
+      <rect fill="#FEFECE" filter="url(#f1w241ddze7vs6)" height="62" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1;" width="78.188" x="55" y="12"/>
+      <line style="stroke:#A80036;stroke-width:1;" x1="55" x2="133.188" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="21" x="83.594" y="27.889">NO</text>
+      <text fill="#000" font-size="14" textLength="41.913" x="60" y="51.889">do stuff</text>
+      <text fill="#000" font-size="14" textLength="58.188" x="60" y="65.889">more stuff</text>
+    </g>
+    <g class="entity" data-qualified-name="yes" data-source-line="6" id="ent0002">
+      <rect fill="none" filter="url(#f1w241ddze7vs6)" height="222" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1;" width="176.105" x="6" y="127"/>
+      <path d="M18.5,127 L169.605,127 A12.5,12.5 0 0 1 182.105,139.5 L182.105,151 L6,151 L6,139.5 A12.5,12.5 0 0 1 18.5,127" fill="#FEFECE"/>
+      <rect fill="#FEFECE" height="19" style="stroke:#FEFECE;stroke-width:1;" width="176.105" x="6" y="151"/>
+      <path d="M6,170 L182.105,170 L182.105,336.5 A12.5,12.5 0 0 1 169.605,349 L18.5,349 A12.5,12.5 0 0 1 6,336.5 L6,170" fill="#FEFECE"/>
+      <rect fill="none" height="222" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1;" width="176.105" x="6" y="127"/>
+      <line style="stroke:#A80036;stroke-width:1;" x1="6" x2="182.105" y1="151" y2="151"/>
+      <line style="stroke:#A80036;stroke-width:1;" x1="6" x2="182.105" y1="170" y2="170"/>
+      <text fill="#000" font-size="14" textLength="28.087" x="80.009" y="142.889">YES</text>
+      <text fill="#000" font-size="14" textLength="41.913" x="11" y="161.889">do stuff</text>
+      <g class="entity" data-qualified-name="yes.yesno" data-source-line="8" id="ent0003">
+        <rect fill="#FEFECE" filter="url(#f1w241ddze7vs6)" height="50" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1;" width="73.725" x="28.836" y="181"/>
+        <line style="stroke:#A80036;stroke-width:1;" x1="28.836" x2="102.561" y1="205" y2="205"/>
+        <text fill="#000" font-size="14" textLength="53.725" x="38.836" y="196.889">YES-NO</text>
+        <text fill="#000" font-size="14" textLength="26.338" x="33.836" y="220.889">stuff</text>
+      </g>
+      <g class="entity" data-qualified-name="yes.yesyes" data-source-line="10" id="ent0004">
+        <rect fill="#FEFECE" filter="url(#f1w241ddze7vs6)" height="50" rx="12.5" ry="12.5" style="stroke:#A80036;stroke-width:1;" width="80.813" x="25.336" y="284"/>
+        <line style="stroke:#A80036;stroke-width:1;" x1="25.336" x2="106.148" y1="308" y2="308"/>
+        <text fill="#000" font-size="14" textLength="60.813" x="35.336" y="299.889">YES-YES</text>
+        <text fill="#000" font-size="14" textLength="26.338" x="30.336" y="323.889">stuff</text>
+      </g>
+      <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+        <polygon fill="#A80036" points="30.208,283.735,26.632,274.558,26.657,280.215,21,280.24,30.208,283.735" style="stroke:#A80036;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M31.472,231.17 C26.339,236.423 21.786,242.408 18.836,249 C13.219,261.551 16.566,270.212 26.657,280.215" fill="none" style="stroke:#A80036;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="70.038" x="20.836" y="261.111">go to yes-yes</text>
+      </g>
+      <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+        <polygon fill="#A80036" points="84.631,231.168,85.878,240.938,87.224,235.444,92.718,236.79,84.631,231.168" style="stroke:#A80036;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M85.572,283.919 C91.834,273.454 96.328,260.889 92.836,249 C91.028,242.845 90.602,241.015 87.224,235.444" fill="none" style="stroke:#A80036;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="64.269" x="95.836" y="261.111">go to yes-no</text>
+      </g>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#A80036" points="54.519,126.837,58.199,117.702,54.343,121.84,50.204,117.984,54.519,126.837" style="stroke:#A80036;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M67.748,74.176 C64.155,79.778 61.013,85.822 59,92 C55.349,103.203 53.926,110.007 54.343,121.84" fill="none" style="stroke:#A80036;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="45.5" x="61" y="104.111">go to yes</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#A80036" points="104.211,74.185,102.69,83.916,105.512,79.013,110.415,81.834,104.211,74.185" style="stroke:#A80036;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M110.134,126.827 C110.221,115.052 109.609,103.266 108,92 C107.165,86.157 107.087,84.858 105.512,79.013" fill="none" style="stroke:#A80036;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="39.731" x="111" y="104.111">go to no</text>
+    </g>
+  </g>
+</svg>

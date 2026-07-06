@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="389px" preserveAspectRatio="none" style="width:225px;height:389px;background:#FFFFFF;" version="1.1" viewBox="0 0 225 389" width="225px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster boo1-->
+    <g class="cluster" data-qualified-name="boo1" data-source-line="8" id="ent0004">
+      <path d="M16.5,4 L84.25,4 A3.75,3.75 0 0 1 86.75,6.5 L93.75,40 L115.5,40 A2.5,2.5 0 0 1 118,42.5 L118,130.5 A2.5,2.5 0 0 1 115.5,133 L16.5,133 A2.5,2.5 0 0 1 14,130.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#00F;stroke-width:1.5;"/>
+      <line style="stroke:#00F;stroke-width:1.5;" x1="14" x2="93.75" y1="40" y2="40"/>
+      <text fill="#000" font-size="30" font-weight="700" textLength="66.75" x="18" y="29.333">boo1</text>
+    </g>
+    <!--cluster foo1-->
+    <g class="cluster" data-qualified-name="foo1" data-source-line="8" id="ent0005">
+      <path d="M36.5,170 L95.813,170 A3.75,3.75 0 0 1 98.313,172.5 L105.313,206 L214.5,206 A2.5,2.5 0 0 1 217,208.5 L217,362.5 A2.5,2.5 0 0 1 214.5,365 L36.5,365 A2.5,2.5 0 0 1 34,362.5 L34,172.5 A2.5,2.5 0 0 1 36.5,170" fill="none" style="stroke:#00F;stroke-width:1.5;"/>
+      <line style="stroke:#00F;stroke-width:1.5;" x1="34" x2="105.313" y1="206" y2="206"/>
+      <text fill="#000" font-size="30" font-weight="700" textLength="58.313" x="38" y="195.333">foo1</text>
+    </g>
+    <!--cluster foo2-->
+    <g class="cluster" data-qualified-name="foo1.foo2" data-source-line="8" id="ent0006">
+      <path d="M44.5,211 L103.813,211 A3.75,3.75 0 0 1 106.313,213.5 L113.313,247 L206.5,247 A2.5,2.5 0 0 1 209,249.5 L209,354.5 A2.5,2.5 0 0 1 206.5,357 L44.5,357 A2.5,2.5 0 0 1 42,354.5 L42,213.5 A2.5,2.5 0 0 1 44.5,211" fill="none" style="stroke:#00F;stroke-width:1.5;"/>
+      <line style="stroke:#00F;stroke-width:1.5;" x1="42" x2="113.313" y1="247" y2="247"/>
+      <text fill="#000" font-size="30" font-weight="700" textLength="58.313" x="46" y="236.333">foo2</text>
+    </g>
+    <!--cluster foo3-->
+    <g class="cluster" data-qualified-name="foo1.foo2.foo3" data-source-line="7" id="ent0002">
+      <path d="M52.5,252 L111.813,252 A3.75,3.75 0 0 1 114.313,254.5 L121.313,288 L198.5,288 A2.5,2.5 0 0 1 201,290.5 L201,346.5 A2.5,2.5 0 0 1 198.5,349 L52.5,349 A2.5,2.5 0 0 1 50,346.5 L50,254.5 A2.5,2.5 0 0 1 52.5,252" fill="none" style="stroke:#00F;stroke-width:1.5;"/>
+      <line style="stroke:#00F;stroke-width:1.5;" x1="50" x2="121.313" y1="288" y2="288"/>
+      <text fill="#000" font-size="30" font-weight="700" textLength="58.313" x="54" y="277.333">foo3</text>
+    </g>
+    <path d="M25,45 L92.75,45 A3.75,3.75 0 0 1 95.25,47.5 L102.25,81 L106.75,81 A2.5,2.5 0 0 1 109.25,83.5 L109.25,122.5 A2.5,2.5 0 0 1 106.75,125 L25,125 A2.5,2.5 0 0 1 22.5,122.5 L22.5,47.5 A2.5,2.5 0 0 1 25,45" fill="#F1F1F1" style="stroke:#00F;stroke-width:0.5;"/>
+    <line style="stroke:#00F;stroke-width:0.5;" x1="22.5" x2="102.25" y1="81" y2="81"/>
+    <text fill="#000" font-size="30" font-weight="700" textLength="66.75" x="26.5" y="70.333">boo2</text>
+    <!--class A-->
+    <g class="entity" data-qualified-name="foo1.foo2.foo3.A" data-source-line="8" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="151.5" y="293"/>
+      <ellipse cx="166.5" cy="309" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="161.5" y="314">C</text>
+      <text fill="#000" font-size="14" x="180.5" y="312.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="152.5" x2="191.863" y1="325" y2="325"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="152.5" x2="191.863" y1="333" y2="333"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="foo1.foo2.foo3.B" data-source-line="9" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="92.5" y="293"/>
+      <ellipse cx="107.5" cy="309" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="102.5" y="314">C</text>
+      <text fill="#000" font-size="14" x="121.5" y="312.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="93.5" x2="132.863" y1="325" y2="325"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="93.5" x2="132.863" y1="333" y2="333"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="nested" id="lnk8">
+      <ellipse cx="66" cy="133.016" fill="#FFF" rx="8" ry="8" style="stroke:#181818;stroke-width:1;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="66" x2="66" y1="141.016" y2="125.016"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="58" x2="74" y1="133.016" y2="133.016"/>
+      <path d="M66,141.016 C66,167.931 66,188.896 66,223.139 C66,231.7 66,240.091 66,248.112 C66,249.114 66,250.111 66,251.102 C66,251.349 66,251.597 66,251.844" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

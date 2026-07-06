@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="132px" preserveAspectRatio="none" style="width:268px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 268 132" width="268px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class TrackModels-->
+    <g class="entity" data-qualified-name="TrackModels" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="246.238" x="6" y="12"/>
+      <ellipse cx="84.794" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="79.794" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="80.15" x="105.294" y="31.889">TrackModels</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="251.238" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="59.063" x="12" y="58.889">int trackID</text>
+      <text fill="#000" font-size="14" textLength="224.175" x="12" y="72.889">vector&lt;CrossCameraModel&gt; models</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="251.238" y1="80" y2="80"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="12" y="94.889">TrackModels()</text>
+      <text fill="#000" font-size="14" textLength="234.238" x="12" y="108.889">bool addModel(CrossCameraModel x) *</text>
+    </g>
+  </g>
+</svg>

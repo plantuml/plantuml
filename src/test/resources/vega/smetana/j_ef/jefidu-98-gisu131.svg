@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="1465px" preserveAspectRatio="none" style="width:388px;height:1465px;background:#FFFFFF;" version="1.1" viewBox="0 0 388 1465" width="388px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="165.025" x="107.987" y="20.889">Test of Fill and Stroke on Path</text>
+    </g>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="C" data-source-line="34" id="ent0001">
+      <rect fill="#F1F1F1" height="1402.462" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="366.015" x="6" y="47"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.025" x="16" y="62.889">Fill</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="40.425" x="86.7" y="62.889">Stroke</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="36.575" x="157.4" y="62.889">Sprite</text>
+      <text fill="#000" font-size="14" textLength="32.725" x="16" y="76.889">black</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="86.7" y="76.889">none</text>
+      <text fill="#000" font-size="14" x="157.4" y="235.197"> </text>
+      <path d="M168.169,152.154 C213.938,76.769 213.938,76.769 259.708,152.154 C305.477,227.538 305.477,227.538 351.246,152.154" fill="#000" style="stroke:none;"/>
+      <text fill="#000" font-size="14" x="362.015" y="235.197"> </text>
+      <text fill="#000" font-size="14" textLength="31.15" x="16" y="249.197">none</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="86.7" y="249.197">green</text>
+      <text fill="#000" font-size="14" x="157.4" y="407.504"> </text>
+      <path d="M168.169,324.462 C213.938,249.077 213.938,249.077 259.708,324.462 C305.477,399.846 305.477,399.846 351.246,324.462" fill="none" style="stroke:#008000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="362.015" y="407.504"> </text>
+      <text fill="#000" font-size="14" textLength="35.788" x="16" y="421.504">green</text>
+      <text fill="#000" font-size="14" x="86.7" y="421.504">-</text>
+      <text fill="#000" font-size="14" x="157.4" y="579.812"> </text>
+      <path d="M168.169,496.769 C213.938,421.385 213.938,421.385 259.708,496.769 C305.477,572.154 305.477,572.154 351.246,496.769" fill="#008000"/>
+      <text fill="#000" font-size="14" textLength="19.25" x="362.015" y="579.812">     </text>
+      <text fill="#000" font-size="14" textLength="20.213" x="16" y="593.812">red</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="86.7" y="593.812">green</text>
+      <text fill="#000" font-size="14" x="157.4" y="752.12"> </text>
+      <path d="M168.169,669.077 C213.938,593.692 213.938,593.692 259.708,669.077 C305.477,744.462 305.477,744.462 351.246,669.077" fill="#F00" style="stroke:#008000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="7.7" x="362.015" y="752.12">  </text>
+      <rect fill="#FFC0CB" height="172.308" style="stroke:none;" width="346.015" x="16" y="755.231"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="16" y="766.12">none</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="86.7" y="766.12">none</text>
+      <text fill="#000" font-size="14" x="157.4" y="924.427"> </text>
+      <path d="M168.169,841.385 C213.938,766 213.938,766 259.708,841.385 C305.477,916.769 305.477,916.769 351.246,841.385" fill="none"/>
+      <text fill="#000" font-size="14" textLength="7.7" x="362.015" y="924.427">  </text>
+      <text fill="#000" font-size="14" x="16" y="938.427">-</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="86.7" y="938.427">green</text>
+      <text fill="#000" font-size="14" x="157.4" y="1096.735"> </text>
+      <path d="M168.169,1013.692 C213.938,938.308 213.938,938.308 259.708,1013.692 C305.477,1089.077 305.477,1089.077 351.246,1013.692" fill="#000" style="stroke:#008000;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.25" x="362.015" y="1096.735">     </text>
+      <text fill="#000" font-size="14" x="16" y="1110.735">-</text>
+      <text fill="#000" font-size="14" x="86.7" y="1110.735">-</text>
+      <text fill="#000" font-size="14" x="157.4" y="1269.043"> </text>
+      <path d="M168.169,1186 C213.938,1110.615 213.938,1110.615 259.708,1186 C305.477,1261.385 305.477,1261.385 351.246,1186" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="7.7" x="362.015" y="1269.043">  </text>
+      <rect fill="#98FB98" height="172.308" style="stroke:none;" width="346.015" x="16" y="1272.154"/>
+      <text fill="#000" font-size="14" textLength="70.7" x="16" y="1283.043">transparent</text>
+      <text fill="#000" font-size="14" textLength="70.7" x="86.7" y="1283.043">transparent</text>
+      <text fill="#000" font-size="14" x="157.4" y="1441.35"> </text>
+      <path d="M168.169,1358.308 C213.938,1282.923 213.938,1282.923 259.708,1358.308 C305.477,1433.692 305.477,1433.692 351.246,1358.308" fill="none"/>
+      <text fill="#000" font-size="14" x="362.015" y="1441.35"> </text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="52" y2="52"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="66" y2="66"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="238.308" y2="238.308"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="410.615" y2="410.615"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="582.923" y2="582.923"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="755.231" y2="755.231"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="927.538" y2="927.538"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="1099.846" y2="1099.846"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="1272.154" y2="1272.154"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="362.015" y1="1444.462" y2="1444.462"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="16" x2="16" y1="52" y2="1444.462"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="86.7" x2="86.7" y1="52" y2="1444.462"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="157.4" x2="157.4" y1="52" y2="1444.462"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="362.015" x2="362.015" y1="52" y2="1444.462"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="531px" preserveAspectRatio="none" style="width:366px;height:531px;background:#FFFFFF;" version="1.1" viewBox="0 0 366 531" width="366px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Student-->
+    <g class="entity" data-qualified-name="Student" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="80.212" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">E</text>
+      <text fill="#000" font-size="14" textLength="48.212" x="35" y="31.889">Student</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="85.212" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="38.938" x="12" y="58.889">id {PK}</text>
+      <text fill="#000" font-size="14" textLength="35" x="12" y="72.889">name</text>
+      <text fill="#000" font-size="14" textLength="21.787" x="12" y="86.889">sex</text>
+      <text fill="#000" font-size="14" textLength="56.788" x="12" y="100.889">birthDate</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="12" y="114.889">GPA</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="85.212" y1="122" y2="122"/>
+    </g>
+    <!--class Professor-->
+    <g class="entity" data-qualified-name="Professor" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91.85" x="130" y="289"/>
+      <ellipse cx="145" cy="305" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="140" y="310">E</text>
+      <text fill="#000" font-size="14" textLength="59.85" x="159" y="308.889">Professor</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="131" x2="220.85" y1="321" y2="321"/>
+      <text fill="#000" font-size="14" textLength="35" x="136" y="335.889">name</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="131" x2="220.85" y1="343" y2="343"/>
+    </g>
+    <!--class Department-->
+    <g class="entity" data-qualified-name="Department" data-source-line="13" id="ent0003">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.688" x="107.5" y="411"/>
+      <ellipse cx="124.131" cy="427" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="119.131" y="432">E</text>
+      <text fill="#000" font-size="14" textLength="73.063" x="138.494" y="430.889">Department</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108.5" x2="215.188" y1="443" y2="443"/>
+      <text fill="#000" font-size="14" textLength="49" x="113.5" y="457.889">courses</text>
+      <text fill="#000" font-size="14" textLength="65.275" x="113.5" y="471.889">professors</text>
+      <text fill="#000" font-size="14" textLength="35" x="113.5" y="485.889">name</text>
+      <text fill="#000" font-size="14" textLength="96.688" x="113.5" y="499.889">building location</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108.5" x2="215.188" y1="507" y2="507"/>
+    </g>
+    <!--class Course-->
+    <g class="entity" data-qualified-name="Course" data-source-line="20" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.15" x="273.5" y="425"/>
+      <ellipse cx="288.5" cy="441" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="283.5" y="446">E</text>
+      <text fill="#000" font-size="14" textLength="45.15" x="302.5" y="444.889">Course</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="274.5" x2="349.65" y1="457" y2="457"/>
+      <text fill="#000" font-size="14" textLength="63" x="279.5" y="471.889">name {PK}</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="279.5" y="485.889">number</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="274.5" x2="349.65" y1="493" y2="493"/>
+    </g>
+    <!--class Section-->
+    <g class="entity" data-qualified-name="Section" data-source-line="25" id="ent0005">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="78.725" x="6.5" y="282"/>
+      <ellipse cx="21.5" cy="298" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16.5" y="303">E</text>
+      <text fill="#000" font-size="14" textLength="46.725" x="35.5" y="301.889">Section</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7.5" x2="84.225" y1="314" y2="314"/>
+      <text fill="#000" font-size="14" textLength="58.275" x="12.5" y="328.889">professor</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="12.5" y="342.889">number</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7.5" x2="84.225" y1="350" y2="350"/>
+    </g>
+    <!--class EnrollsIn-->
+    <g class="entity" data-qualified-name="EnrollsIn" data-source-line="30" id="ent0006">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.513" x="72.5" y="167"/>
+      <ellipse cx="87.5" cy="183" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="82.5" y="188">E</text>
+      <text fill="#000" font-size="14" textLength="54.513" x="101.5" y="186.889">EnrollsIn</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="73.5" x2="158.013" y1="199" y2="199"/>
+      <text fill="#000" font-size="14" textLength="35.788" x="78.5" y="213.889">grade</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="73.5" x2="158.013" y1="221" y2="221"/>
+    </g>
+    <ellipse cx="40" cy="188" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="entity" data-qualified-name="diamond1" id="ent0017">
+      <polygon fill="#F1F1F1" points="190,186,202,198,190,210,178,198,190,186" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="association" id="lnk7">
+      <path d="M85.711,320 C99.599,320 115.313,320 129.692,320" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="23.156" x="96.25" y="312.111">Has</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk8">
+      <path d="M167.637,351.042 C165.746,359.086 164.002,367.819 163,376 C161.62,387.264 160.972,399.419 160.742,410.944" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="20.881" x="165" y="388.111">IsIn</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="association" id="lnk9">
+      <path d="M216.578,463 C235.342,463 255.951,463 273.201,463" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="35.262" x="227.5" y="455.111">Offers</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="association" id="lnk10">
+      <path d="M273.265,430.273 C249.567,412.196 217.943,390.358 187,376 C159.42,363.203 149.431,368.776 121,358 C109.324,353.575 97.029,347.947 85.848,342.424" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="30.306" x="219" y="388.111">From</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0012" data-link-type="association" id="lnk14">
+      <path d="M46,130.109 C46,151.276 46,173.118 46,185.859" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0005" data-link-type="association" id="lnk15">
+      <path d="M46,210.074 C46,226.262 46,257.152 46,281.915" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0006" data-link-type="association" id="lnk16">
+      <path d="M54.203,198 C60.158,198 66.112,198 72.066,198" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0017" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="177.67,198,168.67,194,172.67,198,168.67,202,177.67,198" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M159.648,198 C165.656,198 166.663,198 172.67,198" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0005" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="85.746,294.178,95.454,292.517,89.908,291.406,91.019,285.859,85.746,294.178" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M182.995,210.18 C178.993,216.113 173.655,223.329 168,229 C143.096,253.974 114.998,274.69 89.908,291.406" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="39.731" x="149" y="259.111">demo 1</text>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0003" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="216.919,427.396,226.31,424.426,220.663,424.082,221.007,418.435,216.919,427.396" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M198.534,210.39 C220.384,241.042 274.539,327.39 244,393 C237.876,406.157 231.615,414.388 220.663,424.082" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="63.619" x="256" y="323.611">another link</text>
+    </g>
+  </g>
+</svg>

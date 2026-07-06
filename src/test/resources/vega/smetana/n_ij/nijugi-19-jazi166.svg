@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="85px" preserveAspectRatio="none" style="width:110px;height:85px;background:#808080;" version="1.1" viewBox="0 0 110 85" width="110px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#808080" height="85" style="stroke:none;" width="110" x="0" y="0"/>
+    <!--cluster state-->
+    <g class="cluster" data-qualified-name="state" data-source-line="9" id="ent0001">
+      <path d="M45.969,4 L84.969,4 A12.5,12.5 0 0 1 97.469,16.5 L97.469,23 L33.469,23 L33.469,16.5 A12.5,12.5 0 0 1 45.969,4" fill="#808080"/>
+      <path d="M33.469,23 L97.469,23 L97.469,22.5 A12.5,12.5 0 0 1 84.969,35 L45.969,35 A12.5,12.5 0 0 1 33.469,22.5 L33.469,23" fill="#808080"/>
+      <rect fill="none" height="31" rx="12.5" ry="12.5" style="stroke:#F00;stroke-width:0.5;" width="64" x="33.469" y="4"/>
+      <line style="stroke:#F00;stroke-width:0.5;" x1="33.469" x2="97.469" y1="23" y2="23"/>
+      <text fill="#008000" font-size="14" textLength="30.275" x="50.331" y="19.889">state</text>
+    </g>
+    <text fill="#008000" font-size="14" textLength="94.938" x="0" y="51.889">expansionInput</text>
+    <rect fill="#808080" height="12" style="stroke:#F00;stroke-width:1.5;" width="48" x="41.469" y="29"/>
+    <line style="stroke:#F00;stroke-width:1.5;" x1="53.469" x2="53.469" y1="29" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1.5;" x1="65.469" x2="65.469" y1="29" y2="41"/>
+    <line style="stroke:#F00;stroke-width:1.5;" x1="77.469" x2="77.469" y1="29" y2="41"/>
+  </g>
+</svg>

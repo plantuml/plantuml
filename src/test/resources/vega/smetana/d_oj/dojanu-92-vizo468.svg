@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="127px" preserveAspectRatio="none" style="width:294px;height:127px;background:#FFFFFF;" version="1.1" viewBox="0 0 294 127" width="294px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster p1-->
+    <g class="cluster" data-qualified-name="p1" data-source-line="14" id="ent0001">
+      <path d="M104.5,4 L121.075,4 A3.75,3.75 0 0 1 123.575,6.5 L130.575,24 L187.5,24 A2.5,2.5 0 0 1 190,26.5 L190,100.5 A2.5,2.5 0 0 1 187.5,103 L104.5,103 A2.5,2.5 0 0 1 102,100.5 L102,6.5 A2.5,2.5 0 0 1 104.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="102" x2="130.575" y1="24" y2="24"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="15.575" x="106" y="16.889">p1</text>
+      <text fill="#F00" font-size="14" font-style="italic" textLength="63.788" x="118.106" y="36.889">«Dummy»</text>
+    </g>
+    <!--cluster p2-->
+    <g class="cluster" data-qualified-name="p2" data-source-line="18" id="ent0003">
+      <path d="M200.5,6 L217.075,6 A3.75,3.75 0 0 1 219.575,8.5 L226.575,26 L275.5,26 A2.5,2.5 0 0 1 278,28.5 L278,98.5 A2.5,2.5 0 0 1 275.5,101 L200.5,101 A2.5,2.5 0 0 1 198,98.5 L198,8.5 A2.5,2.5 0 0 1 200.5,6" fill="none"/>
+      <line style="stroke:none;" x1="198" x2="226.575" y1="26" y2="26"/>
+    </g>
+    <path d="M8.5,45 L25.075,45 A3.75,3.75 0 0 1 27.575,47.5 L34.575,65 L89.288,65 A2.5,2.5 0 0 1 91.788,67.5 L91.788,90.5 A2.5,2.5 0 0 1 89.288,93 L8.5,93 A2.5,2.5 0 0 1 6,90.5 L6,47.5 A2.5,2.5 0 0 1 8.5,45" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+    <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="34.575" y1="65" y2="65"/>
+    <text fill="#00F" font-size="14" font-weight="700" textLength="15.575" x="10" y="57.889">p3</text>
+    <text fill="#F00" font-size="14" font-style="italic" textLength="63.788" x="21" y="77.889">«Dummy»</text>
+    <!--class Foo1-->
+    <g class="entity" data-qualified-name="p1.Foo1" data-source-line="15" id="ent0002">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.275" x="110.5" y="43"/>
+      <ellipse cx="125.5" cy="61" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="120.5" y="66">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="43.275" x="137.5" y="57.333">«Other»</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="143.169" y="70.889">Foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="111.5" x2="180.775" y1="79" y2="79"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="111.5" x2="180.775" y1="87" y2="87"/>
+    </g>
+    <!--class Foo2-->
+    <g class="entity" data-qualified-name="p2.Foo2" data-source-line="19" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.938" x="206" y="45"/>
+      <ellipse cx="221" cy="61" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="216" y="66">C</text>
+      <text fill="#000" font-size="14" textLength="31.938" x="235" y="64.889">Foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="207" x2="268.938" y1="77" y2="77"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="207" x2="268.938" y1="85" y2="85"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="119px" preserveAspectRatio="none" style="width:327px;height:119px;background:#FFFFFF;" version="1.1" viewBox="0 0 327 119" width="327px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster AA-->
+    <g class="cluster" data-qualified-name="AA" data-source-line="5" id="ent0001">
+      <path d="M156,4 L175.725,4 A3.75,3.75 0 0 1 178.225,6.5 L185.225,24 L225,24 A2.5,2.5 0 0 1 227.5,26.5 L227.5,92.5 A2.5,2.5 0 0 1 225,95 L156,95 A2.5,2.5 0 0 1 153.5,92.5 L153.5,6.5 A2.5,2.5 0 0 1 156,4" fill="#ADD8E6" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="153.5" x2="185.225" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="157.5" y="16.889">AA</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="181.288" y="36.889">«st»</text>
+    </g>
+    <!--cluster BB-->
+    <g class="cluster" data-qualified-name="BB" data-source-line="8" id="ent0003">
+      <path d="M238,18 L257.725,18 A3.75,3.75 0 0 1 260.225,20.5 L267.225,38 L309,38 A2.5,2.5 0 0 1 311.5,40.5 L311.5,92.5 A2.5,2.5 0 0 1 309,95 L238,95 A2.5,2.5 0 0 1 235.5,92.5 L235.5,20.5 A2.5,2.5 0 0 1 238,18" fill="#FF0" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="235.5" x2="267.225" y1="38" y2="38"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="239.5" y="30.889">BB</text>
+    </g>
+    <!--entity EE-->
+    <g class="entity" data-qualified-name="EE" data-source-line="11" id="ent0005">
+      <path d="M8.5,39.5 L40.225,39.5 A3.75,3.75 0 0 1 42.725,42 L49.725,59.5 L64.225,59.5 A2.5,2.5 0 0 1 66.725,62 L66.725,88 A2.5,2.5 0 0 1 64.225,90.5 L8.5,90.5 A2.5,2.5 0 0 1 6,88 L6,42 A2.5,2.5 0 0 1 8.5,39.5" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="49.725" y1="59.5" y2="59.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="16" y="53.389">EE</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="17" y="77.389">«st»</text>
+    </g>
+    <!--entity FF-->
+    <g class="entity" data-qualified-name="FF" data-source-line="13" id="ent0006">
+      <path d="M87.5,39.5 L117.65,39.5 A3.75,3.75 0 0 1 120.15,42 L127.15,59.5 L141.65,59.5 A2.5,2.5 0 0 1 144.15,62 L144.15,88 A2.5,2.5 0 0 1 141.65,90.5 L87.5,90.5 A2.5,2.5 0 0 1 85,88 L85,42 A2.5,2.5 0 0 1 87.5,39.5" fill="#ADD8E6" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="85" x2="127.15" y1="59.5" y2="59.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="95" y="53.389">FF</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="96" y="77.389">«st»</text>
+    </g>
+    <!--entity ZZ-->
+    <g class="entity" data-qualified-name="AA.ZZ" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.15" x="162" y="43"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="199.15" y="48"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="197.15" y="50"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="197.15" y="54"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="177" y="73.889">ZZ</text>
+    </g>
+    <!--entity XX-->
+    <g class="entity" data-qualified-name="BB.XX" data-source-line="9" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.725" x="244" y="43"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="282.725" y="48"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="280.725" y="50"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="280.725" y="54"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="259" y="73.889">XX</text>
+    </g>
+  </g>
+</svg>

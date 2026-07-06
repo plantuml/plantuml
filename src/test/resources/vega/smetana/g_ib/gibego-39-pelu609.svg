@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="436px" preserveAspectRatio="none" style="width:854px;height:436px;background:#FFFFFF;" version="1.1" viewBox="0 0 854 436" width="854px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="192.2" x="10" y="298"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="15" y="310.889">Identifier</text>
+    <text fill="#000" font-size="14" textLength="118.563" x="78.637" y="310.889">2AAAA_SSSSSSS</text>
+    <line style="stroke:#000;stroke-width:1;" x1="73.637" x2="73.637" y1="298" y2="316"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="202.2" y1="316" y2="316"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="35.088" x="15" y="328.889">Table</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="78.637" y="328.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="73.637" x2="73.637" y1="316" y2="334"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="192.2" x="10" y="298"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="239" y="298"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="244" y="310.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="239" x2="249" y1="316" y2="316"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="244" y="328.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="239" x2="249" y1="334" y2="334"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="244" y="346.889">   </text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="239" y="298"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="213.813" x="293" y="123"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="298" y="135.889">Identifier</text>
+    <text fill="#000" font-size="14" textLength="121.1" x="361.638" y="135.889">34AAAA_rrrrrrrrrrrrr</text>
+    <line style="stroke:#000;stroke-width:1;" x1="356.638" x2="356.638" y1="123" y2="141"/>
+    <line style="stroke:#000;stroke-width:1;" x1="293" x2="506.813" y1="141" y2="141"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="298" y="153.889">Name</text>
+    <text fill="#000" font-size="14" textLength="120.925" x="361.638" y="153.889">AAAA rrrrrrrrrrrrrrrrrr</text>
+    <line style="stroke:#000;stroke-width:1;" x1="356.638" x2="356.638" y1="141" y2="159"/>
+    <line style="stroke:#000;stroke-width:1;" x1="293" x2="506.813" y1="159" y2="159"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="28.088" x="298" y="171.889">Kind</text>
+    <text fill="#000" font-size="14" textLength="140.175" x="361.638" y="171.889">hhhhhhhhhhhhhhhhhh</text>
+    <line style="stroke:#000;stroke-width:1;" x1="356.638" x2="356.638" y1="159" y2="177"/>
+    <line style="stroke:#000;stroke-width:1;" x1="293" x2="506.813" y1="177" y2="177"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="51.45" x="298" y="189.889">Variable</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="361.638" y="189.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="356.638" x2="356.638" y1="177" y2="195"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="213.813" x="293" y="123"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="551" y="51"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="556" y="63.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="551" x2="561" y1="69" y2="69"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="556" y="81.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="551" x2="561" y1="87" y2="87"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="556" y="99.889">   </text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="551" y="51"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="132.438" x="654.5" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="70.788" x="659.5" y="22.889">IsReserve1</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="740.288" y="22.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="735.288" x2="735.288" y1="10" y2="28"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="132.438" x="654.5" y="10"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="124.65" x="658" y="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="63" x="663" y="58.889">IsReserve</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="736" y="58.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="731" x2="731" y1="46" y2="64"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="124.65" x="658" y="46"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="150.375" x="645.5" y="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="66.238" x="650.5" y="94.889">BitPosition</text>
+    <text fill="#000" font-size="14" x="749.225" y="94.889">1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="744.225" x2="744.225" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="645.5" x2="795.875" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49.788" x="650.5" y="112.889">Isaaaaa</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="749.225" y="112.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="744.225" x2="744.225" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="645.5" x2="795.875" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="88.725" x="650.5" y="130.889">Isaaaaabbbbb</text>
+    <text fill="#000" font-size="14" textLength="36.138" x="749.225" y="130.889">☑ true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="744.225" x2="744.225" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="645.5" x2="795.875" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="63" x="650.5" y="148.889">IsReserve</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="749.225" y="148.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="744.225" x2="744.225" y1="136" y2="154"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="150.375" x="645.5" y="82"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="194.738" x="302.5" y="298"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="307.5" y="310.889">Identifier</text>
+    <text fill="#000" font-size="14" textLength="121.1" x="371.138" y="310.889">32AAAA_rrrrrrrrrrrrr</text>
+    <line style="stroke:#000;stroke-width:1;" x1="366.138" x2="366.138" y1="298" y2="316"/>
+    <line style="stroke:#000;stroke-width:1;" x1="302.5" x2="497.238" y1="316" y2="316"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="307.5" y="328.889">Name</text>
+    <text fill="#000" font-size="14" textLength="120.925" x="371.138" y="328.889">AAAA rrrrrrrrrrrrrrrrrr</text>
+    <line style="stroke:#000;stroke-width:1;" x1="366.138" x2="366.138" y1="316" y2="334"/>
+    <line style="stroke:#000;stroke-width:1;" x1="302.5" x2="497.238" y1="334" y2="334"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="51.45" x="307.5" y="346.889">Variable</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="371.138" y="346.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="366.138" x2="366.138" y1="334" y2="352"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="194.738" x="302.5" y="298"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="551" y="316"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="556" y="328.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="551" x2="561" y1="334" y2="334"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="556" y="346.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="551" x2="561" y1="352" y2="352"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="556" y="364.889">   </text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="551" y="316"/>
+    <rect fill="#F1F1F1" height="144" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="244.525" x="598" y="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="93.625" x="603" y="184.889">BAAAAAAAAA</text>
+    <text fill="#000" font-size="14" x="706.625" y="184.889">-</text>
+    <line style="stroke:#000;stroke-width:1;" x1="701.625" x2="701.625" y1="172" y2="190"/>
+    <line style="stroke:#000;stroke-width:1;" x1="598" x2="842.525" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="603" y="202.889">Identifier</text>
+    <text fill="#000" font-size="14" textLength="130.9" x="706.625" y="202.889">BBBBpppppppppppn</text>
+    <line style="stroke:#000;stroke-width:1;" x1="701.625" x2="701.625" y1="190" y2="208"/>
+    <line style="stroke:#000;stroke-width:1;" x1="598" x2="842.525" y1="208" y2="208"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="603" y="220.889">Name</text>
+    <text fill="#000" font-size="14" textLength="130.9" x="706.625" y="220.889">BBBBpppppppppppp</text>
+    <line style="stroke:#000;stroke-width:1;" x1="701.625" x2="701.625" y1="208" y2="226"/>
+    <line style="stroke:#000;stroke-width:1;" x1="598" x2="842.525" y1="226" y2="226"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.15" x="603" y="238.889">Type</text>
+    <text fill="#000" font-size="14" textLength="51.45" x="706.625" y="238.889">Boolean</text>
+    <line style="stroke:#000;stroke-width:1;" x1="701.625" x2="701.625" y1="226" y2="244"/>
+    <line style="stroke:#000;stroke-width:1;" x1="598" x2="842.525" y1="244" y2="244"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="603" y="256.889">Unit</text>
+    <text fill="#000" font-size="14" textLength="33.512" x="706.625" y="256.889">None</text>
+    <line style="stroke:#000;stroke-width:1;" x1="701.625" x2="701.625" y1="244" y2="262"/>
+    <line style="stroke:#000;stroke-width:1;" x1="598" x2="842.525" y1="262" y2="262"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="49.788" x="603" y="274.889">Isaaaaa</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="706.625" y="274.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="701.625" x2="701.625" y1="262" y2="280"/>
+    <line style="stroke:#000;stroke-width:1;" x1="598" x2="842.525" y1="280" y2="280"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="70.875" x="603" y="292.889">Toaaaaaaa</text>
+    <text fill="#000" font-size="14" textLength="36.138" x="706.625" y="292.889">☑ true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="701.625" x2="701.625" y1="280" y2="298"/>
+    <line style="stroke:#000;stroke-width:1;" x1="598" x2="842.525" y1="298" y2="298"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="63" x="603" y="310.889">IsReserve</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="706.625" y="310.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="701.625" x2="701.625" y1="298" y2="316"/>
+    <rect fill="none" height="144" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="244.525" x="598" y="172"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="154.225" x="643.5" y="334"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="92.575" x="648.5" y="346.889">IsResessrve10</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="751.075" y="346.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="746.075" x2="746.075" y1="334" y2="352"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="154.225" x="643.5" y="334"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="147.225" x="647" y="370"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="85.575" x="652" y="382.889">IsResserve11</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="747.575" y="382.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="742.575" x2="742.575" y1="370" y2="388"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="147.225" x="647" y="370"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="227.9" x="286" y="374"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="53.637" x="291" y="386.889">Identifier</text>
+    <text fill="#000" font-size="14" textLength="154.263" x="354.638" y="386.889">AAAA_oooooooooooooo</text>
+    <line style="stroke:#000;stroke-width:1;" x1="349.638" x2="349.638" y1="374" y2="392"/>
+    <line style="stroke:#000;stroke-width:1;" x1="286" x2="513.9" y1="392" y2="392"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="51.45" x="291" y="404.889">Variable</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="354.638" y="404.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="349.638" x2="349.638" y1="392" y2="410"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="227.9" x="286" y="374"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="10" x="551" y="401"/>
+    <text fill="#000" font-size="14" textLength="11.55" x="556" y="413.889">   </text>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="10" x="551" y="401"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="147.225" x="647" y="406"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="85.575" x="652" y="418.889">IsReservse12</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="747.575" y="418.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="742.575" x2="742.575" y1="406" y2="424"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="147.225" x="647" y="406"/>
+    <path d="M549,60 L562,60 C580.987,60 580.214,43.644 598,37 C613.479,31.218 630.714,27.286 647.239,24.614" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M647.695,27.628 L649.499,24.272 L646.782,21.601 L654.772,23.473 L647.695,27.628" fill="#000"/>
+    <ellipse cx="549" cy="60" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M549,78 L562,78 C563.197,78 609.149,71.297 651.185,65.128" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M651.627,68.136 L653.441,64.797 L650.744,62.12 L658.704,64.024 L651.627,68.136" fill="#000"/>
+    <ellipse cx="549" cy="78" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M549,96 L562,96 C586.973,96 613.957,98.73 638.435,102.266" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M637.987,105.27 L640.689,102.602 L638.884,99.261 L645.947,103.387 L637.987,105.27" fill="#000"/>
+    <ellipse cx="549" cy="96" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M495.5,186 L508.5,186 C540.924,186 551.213,144.567 554.348,113.027" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M557.458,113.288 L554.544,110.695 L551.238,112.766 L555,105.253 L557.458,113.288" fill="#000"/>
+    <ellipse cx="495.5" cy="186" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M244.5,310 L244.5,297 C244.5,254.602 277.251,222.023 312.644,199.195" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M314.304,201.848 L314.633,197.95 L310.984,196.542 L319.276,195.046 L314.304,201.848" fill="#000"/>
+    <ellipse cx="244.5" cy="310" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M549,325 L562,325 C575.785,325 589.575,322.528 602.947,318.449" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M603.918,321.402 L605.163,317.721 L601.977,315.495 L610.331,316.022 L603.918,321.402" fill="#000"/>
+    <ellipse cx="549" cy="325" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M549,343 L562,343 C586.009,343 612.071,343 635.974,343" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M635.974,346.072 L638.278,343 L635.974,339.928 L643.654,343 L635.974,346.072" fill="#000"/>
+    <ellipse cx="549" cy="343" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M549,361 L562,361 C594.313,361 630.105,364.762 659.441,368.847" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M659.001,371.928 L661.752,369.177 L659.881,365.766 L667.144,369.947 L659.001,371.928" fill="#000"/>
+    <ellipse cx="549" cy="361" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M485.5,343 L498.5,343 C514.117,343 532.14,343 543.669,343" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M543.669,346.073 L545.974,343 L543.669,339.927 L551.352,343 L543.669,346.073" fill="#000"/>
+    <ellipse cx="485.5" cy="343" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M237,325 L250,325 C264.587,325 279.976,325 295.11,325" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M295.11,328.154 L297.475,325 L295.11,321.846 L302.995,325 L295.11,328.154" fill="#000"/>
+    <ellipse cx="237" cy="325" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M548.579,409.758 L561.573,410.155 C573.898,410.532 606.815,411.539 639.472,412.537" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M639.376,415.673 L641.823,412.609 L639.568,409.402 L647.31,412.777 L639.376,415.673" fill="#000"/>
+    <ellipse cx="548.579" cy="409.758" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M502,401 L515,401 C524.944,401 535.942,403.618 543.965,406.03" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M543.004,408.968 L546.169,406.75 L544.926,403.091 L551.312,408.432 L543.004,408.968" fill="#000"/>
+    <ellipse cx="502" cy="401" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M237,343 L250,343 C267.889,343 269.291,354.612 286,361 C296.154,364.882 306.992,368.489 317.789,371.769" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M316.902,374.753 L320.027,372.434 L318.676,368.785 L325.249,373.986 L316.902,374.753" fill="#000"/>
+    <ellipse cx="237" cy="343" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M189.5,325 L202.5,325 C212.327,325 223.48,325 231.67,325" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M231.67,328.009 L233.926,325 L231.67,321.991 L239.191,325 L231.67,328.009" fill="#000"/>
+    <ellipse cx="189.5" cy="325" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

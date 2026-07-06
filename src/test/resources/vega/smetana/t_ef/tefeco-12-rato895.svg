@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="156px" preserveAspectRatio="none" style="width:312px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 312 156" width="312px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster artifact-->
+    <g class="cluster" data-qualified-name="artifact" data-source-line="1" id="ent0001">
+      <rect fill="none" height="128" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="94" x="95.5" y="4"/>
+      <polygon fill="none" points="172.5,9,172.5,23,184.5,23,184.5,15,178.5,9,172.5,9" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="178.5" x2="178.5" y1="9" y2="15"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="184.5" x2="178.5" y1="15" y2="15"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="41.913" x="121.544" y="16.889">artifact</text>
+    </g>
+    <!--cluster card-->
+    <g class="cluster" data-qualified-name="artifact.card" data-source-line="2" id="ent0002">
+      <rect fill="none" height="95" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="78" x="103.5" y="29"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="103.5" x2="181.5" y1="47" y2="47"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="128.894" y="41.889">card</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="11" id="ent0005">
+      <path d="M6,73 L6,96 A0,0 0 0 0 6,96 L86.556,96 A0,0 0 0 0 86.556,96 L86.556,91 L111.492,85 L86.556,83 L86.556,83 L76.556,73 L6,73 A0,0 0 0 0 6,73" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M76.556,73 L76.556,83 L86.556,83 L76.556,73" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="59.556" x="12" y="88.111">card's note</text>
+    </g>
+    <!--entity label-->
+    <g class="entity" data-qualified-name="artifact.card.label" data-source-line="3" id="ent0003">
+      <image height="72" width="190" x="121.5" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjcyIiB3aWR0aD0iMTkwIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiA+PGRlZnMvPjxnIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciPjwhLS1lbnRpdHkgY2xvdWQtLT48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJjbG91ZCIgaWQ9ImVudDAwMDEiIGRhdGEtc291cmNlLWxpbmU9IjEiPjxwYXRoIGQ9Ik0xNi4wOTQsMjAuNjUgQzE5LjgxMSwxNS4zNjIgMjIuOTYxLDE2LjUwMiAyNi4zNzMsMjAuOTcyIEMyOC42MzYsMTMuOTY2IDM0LjYxNiwxMy4zMDUgMzguOTkzLDE4Ljg0NCBDNDMuMTIzLDEzLjYyMyA0Ni41MzcsMTMuODQzIDQ5Ljc0MSwxOS43NCBDNTQuNSwxMy43OTIgNTguMTMzLDE1LjcxNiA2MS42OCwyMS4wMjYgQzY5LjQzMSwyMy41ODMgNzAuMjEyLDI3Ljc3OCA2NS44MjcsMzQuMTY2IEM3My4wOTMsMzkuMDggNzEuNDMyLDQ2LjEyMyA2My41MzIsNDguNjMgQzYyLjU5Nyw1NS43OSA1Ni40OTYsNTcuMzIgNTEuMjY2LDUzLjM3NCBDNDkuNjUsNjEuMzM5IDQ0LjUwOSw2My4yOTUgMzguMDg1LDU4LjI0MyBDMzIuODU4LDYyLjIwMiAyOC4zNDUsNjAuMjIzIDI3Ljg1LDUzLjY0NiBDMjIuNTg4LDU4LjE2MiAxNi4xOTIsNTYuOTU4IDE0Ljk0Nyw0OS4zNjYgQzYuOTA0LDQ4Ljg4NCAyLjY4NSw0My45NyA2LjE2MiwzNS45NDYgQzIuMDYyLDI2LjIxIDUuOTI4LDIxLjEyMiAxNi4wOTQsMjAuNjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgZmlsbD0iI0YxRjFGMSIvPjx0ZXh0IHg9IjIxIiB5PSIzNy44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjMzLjUxMiI+Y2xvdWQ8L3RleHQ+PC9nPjxnIGNsYXNzPSJlbnRpdHkiIGRhdGEtcXVhbGlmaWVkLW5hbWU9IkdNTjIiIGlkPSJlbnQwMDAzIiBkYXRhLXNvdXJjZS1saW5lPSIyIj48cGF0aCBkPSJNODgsMjIgTDg4LDMwIEw3MC4zMzIsMzQgTDg4LDM4IEw4OCw0NSBBMCwwIDAgMCAwIDg4LDQ1IEwxNzQuNDA2LDQ1IEEwLDAgMCAwIDAgMTc0LjQwNiw0NSBMMTc0LjQwNiwzMiBMMTY0LjQwNiwyMiBMODgsMjIgQTAsMCAwIDAgMCA4OCwyMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiBmaWxsPSIjRkVGRkREIi8+PHBhdGggZD0iTTE2NC40MDYsMjIgTDE2NC40MDYsMzIgTDE3NC40MDYsMzIgTDE2NC40MDYsMjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgZmlsbD0iI0ZFRkZERCIvPjx0ZXh0IHg9Ijk0IiB5PSIzNy4xMTEiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTMiIHRleHRMZW5ndGg9IjY1LjQwNiI+Y2xvdWQncyBub3RlPC90ZXh0PjwvZz48L2c+PC9zdmc+" y="64"/>
+    </g>
+  </g>
+</svg>

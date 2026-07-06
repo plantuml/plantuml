@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="244px" preserveAspectRatio="none" style="width:286px;height:244px;background:#FFFFFF;" version="1.1" viewBox="0 0 286 244" width="286px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="27" y="12"/>
+      <ellipse cx="42" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="37" y="33">C</text>
+      <text fill="#000" font-size="14" x="56" y="31.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28" x2="67.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28" x2="67.363" y1="52" y2="52"/>
+    </g>
+    <!--class tog1000-->
+    <g class="entity" data-qualified-name="tog1000" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.575" x="86" y="12"/>
+      <ellipse cx="101" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="96" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="115" y="31.889">tog1000</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87" x2="167.575" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="87" x2="167.575" y1="52" y2="52"/>
+    </g>
+    <!--class tog1001-->
+    <g class="entity" data-qualified-name="tog1001" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.575" x="187" y="12"/>
+      <ellipse cx="202" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="197" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="216" y="31.889">tog1001</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188" x2="268.575" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188" x2="268.575" y1="52" y2="52"/>
+    </g>
+    <!--class tog1002-->
+    <g class="entity" data-qualified-name="tog1002" data-source-line="8" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.575" x="6" y="96"/>
+      <ellipse cx="21" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="35" y="115.889">tog1002</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="87.575" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="87.575" y1="136" y2="136"/>
+    </g>
+    <!--class B-->
+    <g class="entity" data-qualified-name="B" data-source-line="11" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.363" x="107" y="96"/>
+      <ellipse cx="122" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="117" y="117">C</text>
+      <text fill="#000" font-size="14" x="136" y="115.889">B</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108" x2="147.363" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108" x2="147.363" y1="136" y2="136"/>
+    </g>
+    <!--class tog2000-->
+    <g class="entity" data-qualified-name="tog2000" data-source-line="14" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.575" x="166" y="96"/>
+      <ellipse cx="181" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="176" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="195" y="115.889">tog2000</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="167" x2="247.575" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="167" x2="247.575" y1="136" y2="136"/>
+    </g>
+    <!--class tog2001-->
+    <g class="entity" data-qualified-name="tog2001" data-source-line="15" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.575" x="6" y="180"/>
+      <ellipse cx="21" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="201">C</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="35" y="199.889">tog2001</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="87.575" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="87.575" y1="220" y2="220"/>
+    </g>
+    <!--class tog2002-->
+    <g class="entity" data-qualified-name="tog2002" data-source-line="16" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="82.575" x="107" y="180"/>
+      <ellipse cx="122" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="117" y="201">C</text>
+      <text fill="#000" font-size="14" textLength="50.575" x="136" y="199.889">tog2002</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108" x2="188.575" y1="212" y2="212"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="108" x2="188.575" y1="220" y2="220"/>
+    </g>
+  </g>
+</svg>

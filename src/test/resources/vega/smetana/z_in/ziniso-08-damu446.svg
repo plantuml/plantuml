@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="105px" preserveAspectRatio="none" style="width:250px;height:105px;background:#FFFFFF;" version="1.1" viewBox="0 0 250 105" width="250px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Netw-->
+    <g class="cluster" data-qualified-name="Netw" data-source-line="1" id="ent0001">
+      <path d="M76.37,13.99 C79.994,5.724 84.627,5.403 90.269,12.117 C92.937,6.745 97.724,6.824 101.003,11.462 C105.688,6.001 111.061,5.484 114.822,12.486 C116.988,6.141 122.909,4.315 127.315,10.197 C130.958,3.801 134.499,3.823 138.809,9.565 C142.251,3.054 149.346,3.305 153.148,9.147 C157.762,4.237 162.012,5.142 165.432,10.567 C168.739,5.744 173.501,5.07 176.457,10.928 C180.509,4.881 186.411,4.463 190.327,11.078 C193.737,6.058 199.751,5.964 202.917,11.373 C207.453,6.413 211.823,7.778 214.566,13.355 C218.419,7.953 224.803,7.379 227.911,14.171 C236.343,16.859 236.881,22.572 231.698,28.789 C240.242,32.002 241.57,36.876 236.014,44.071 C242.595,49.798 240.742,56.554 232.15,58.103 C237.612,65.527 234.979,70.906 226.653,73.364 C223.924,79.618 219.504,80.414 215.347,74.714 C211.141,81.16 205.872,82.054 201.556,74.826 C198.99,80.948 193.514,81.264 190.076,75.682 C186.759,82.463 181.913,83.288 176.62,77.859 C172.951,84.993 168.517,84.919 163.964,78.696 C160.18,83.209 156.383,84.266 152.707,78.577 C148.903,84.244 142.872,84.254 139.442,78.155 C134.567,84.437 129.656,82.699 126.342,76.514 C122.308,82.838 117.016,83.084 113.328,76.173 C109.336,81.156 105.899,80.693 102.467,75.571 C98.525,82.678 91.849,82.698 88.099,75.38 C84.599,81.761 79.43,80.191 76.128,75.172 C68.791,70.3 68.924,63.105 76.152,58.253 C70.062,54.674 67.552,49.937 74.398,44.686 C66.961,39.221 67.579,32.794 75.918,28.844 C69.108,24.027 68.476,18.359 76.37,13.99" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="51.363" x="125.319" y="27.889">Network</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN6" data-source-line="6" id="ent0007">
+      <path d="M6,39 L6,62 L57.388,62 L57.388,49 L47.388,39 L6,39" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M47.388,39 L47.388,49 L57.388,49 L47.388,39" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="30.388" x="12" y="54.111">RJ45</text>
+    </g>
+    <!--entity PC1-->
+    <g class="entity" data-qualified-name="Netw.PC1" data-source-line="2" id="ent0002">
+      <polygon fill="#F1F1F1" points="159,39,169,29,226.3,29,226.3,63,216.3,73,159,73,159,39" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="216.3" x2="226.3" y1="39" y2="29"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="159" x2="216.3" y1="39" y2="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="216.3" x2="216.3" y1="39" y2="73"/>
+      <text fill="#000" font-size="14" textLength="27.3" x="174" y="59.889">PC1</text>
+    </g>
+    <g class="entity" data-qualified-name="Netw.GMN3" data-source-line="3" id="ent0004">
+      <path d="M110,39 L110,62 A0,0 0 0 0 110,62 L141.156,62 A0,0 0 0 0 141.156,62 L141.156,57 L158.836,51 L141.156,49 L141.156,49 L131.156,39 L110,39 A0,0 0 0 0 110,39" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M131.156,39 L131.156,49 L141.156,49 L131.156,39" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="10.156" x="116" y="54.111">i7</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="association" id="lnk8">
+      <path d="M67.447,51 C67.4,51 67.353,51 67.306,51 C66.927,51 66.549,51 66.171,51 C63.145,51 60.119,51 57.094,51" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

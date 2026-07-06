@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:187px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 187 78" width="187px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="single1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="64.45" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="70.45" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="44.45" x="16" y="27.889">single1</text>
+    </g>
+    <g class="entity" data-qualified-name="single2" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="83.175" x="88.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88.5" x2="171.675" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="63.175" x="98.5" y="27.889">This is long</text>
+    </g>
+  </g>
+</svg>

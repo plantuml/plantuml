@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="274px" preserveAspectRatio="none" style="width:860px;height:274px;background:#FFFFFF;" version="1.1" viewBox="0 0 860 274" width="860px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="94.025" x="10" y="77"/>
+    <rect fill="#CCFF02" height="18" rx="2" ry="2" style="stroke:#CCFF02;stroke-width:1;" width="92.025" x="11.5" y="77"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.063" x="15" y="89.889">fruit0</text>
+    <text fill="#000" font-size="14" textLength="35.875" x="63.15" y="89.889">Apple</text>
+    <line style="stroke:#000;stroke-width:1;" x1="58.15" x2="58.15" y1="77" y2="95"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="104.025" y1="95" y2="95"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="15" y="107.889">size0</text>
+    <text fill="#000" font-size="14" textLength="35.788" x="63.15" y="107.889">Large</text>
+    <line style="stroke:#000;stroke-width:1;" x1="58.15" x2="58.15" y1="95" y2="113"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="104.025" y1="113" y2="113"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="15" y="125.889">color0</text>
+    <text fill="#000" font-size="14" textLength="25.725" x="63.15" y="125.889">Red</text>
+    <line style="stroke:#000;stroke-width:1;" x1="58.15" x2="58.15" y1="113" y2="131"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="104.025" y1="131" y2="131"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="15" y="143.889">quiz</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="63.15" y="143.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="58.15" x2="58.15" y1="131" y2="149"/>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="94.025" x="10" y="77"/>
+    <rect fill="#F1F1F1" height="90" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="93.938" x="141" y="95"/>
+    <rect fill="#CCFF02" height="18" rx="2" ry="2" style="stroke:#CCFF02;stroke-width:1;" width="91.938" x="142.5" y="95"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="31.063" x="146" y="107.889">sport</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="194.063" y="107.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="189.063" x2="189.063" y1="95" y2="113"/>
+    <line style="stroke:#000;stroke-width:1;" x1="141" x2="234.938" y1="113" y2="113"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="38.063" x="146" y="125.889">maths</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="194.063" y="125.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="189.063" x2="189.063" y1="113" y2="131"/>
+    <line style="stroke:#000;stroke-width:1;" x1="141" x2="234.938" y1="131" y2="131"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="23.275" x="146" y="143.889">fruit</text>
+    <text fill="#000" font-size="14" textLength="35.875" x="194.063" y="143.889">Apple</text>
+    <line style="stroke:#000;stroke-width:1;" x1="189.063" x2="189.063" y1="131" y2="149"/>
+    <line style="stroke:#000;stroke-width:1;" x1="141" x2="234.938" y1="149" y2="149"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="24.938" x="146" y="161.889">size</text>
+    <text fill="#000" font-size="14" textLength="35.788" x="194.063" y="161.889">Large</text>
+    <line style="stroke:#000;stroke-width:1;" x1="189.063" x2="189.063" y1="149" y2="167"/>
+    <line style="stroke:#000;stroke-width:1;" x1="141" x2="234.938" y1="167" y2="167"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="146" y="179.889">color</text>
+    <text fill="#000" font-size="14" textLength="25.725" x="194.063" y="179.889">Red</text>
+    <line style="stroke:#000;stroke-width:1;" x1="189.063" x2="189.063" y1="167" y2="185"/>
+    <rect fill="none" height="90" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="93.938" x="141" y="95"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="35.575" x="284" y="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="289" y="76.889">q1</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="314.575" y="76.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="309.575" x2="309.575" y1="64" y2="82"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="35.575" x="284" y="64"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="301.75" x="369" y="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.938" x="374" y="40.889">question</text>
+    <text fill="#000" font-size="14" textLength="228.813" x="436.938" y="40.889">Which one is correct team name in NBA?</text>
+    <line style="stroke:#000;stroke-width:1;" x1="431.938" x2="431.938" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="369" x2="670.75" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="374" y="58.889">options</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="436.938" y="58.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="431.938" x2="431.938" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="369" x2="670.75" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="374" y="76.889">answer</text>
+    <text fill="#000" font-size="14" textLength="87.938" x="436.938" y="76.889">Huston Rocket</text>
+    <line style="stroke:#000;stroke-width:1;" x1="431.938" x2="431.938" y1="64" y2="82"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="301.75" x="369" y="28"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="140.638" x="708" y="10"/>
+    <text fill="#000" font-size="14" textLength="87.325" x="713" y="22.889">New York Bulls</text>
+    <line style="stroke:#000;stroke-width:1;" x1="708" x2="848.638" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" textLength="108.325" x="713" y="40.889">Los Angeles Kings</text>
+    <line style="stroke:#000;stroke-width:1;" x1="708" x2="848.638" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" textLength="130.638" x="713" y="58.889">Golden State Warriros</text>
+    <line style="stroke:#000;stroke-width:1;" x1="708" x2="848.638" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" textLength="87.938" x="713" y="76.889">Huston Rocket</text>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="140.638" x="708" y="10"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="59.638" x="272" y="127"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="277" y="139.889">q1</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="306.425" y="139.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="301.425" x2="301.425" y1="127" y2="145"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="331.638" y1="145" y2="145"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="277" y="157.889">q2</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="306.425" y="157.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="301.425" x2="301.425" y1="145" y2="163"/>
+    <line style="stroke:#000;stroke-width:1;" x1="272" x2="331.638" y1="163" y2="163"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="277" y="175.889">foo</text>
+    <text fill="#000" font-size="14" textLength="20.213" x="306.425" y="175.889">bar</text>
+    <line style="stroke:#000;stroke-width:1;" x1="301.425" x2="301.425" y1="163" y2="181"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="59.638" x="272" y="127"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="112.75" x="463.5" y="109"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.938" x="468.5" y="121.889">question</text>
+    <text fill="#000" font-size="14" textLength="39.813" x="531.438" y="121.889">5 + 7 = ?</text>
+    <line style="stroke:#000;stroke-width:1;" x1="526.438" x2="526.438" y1="109" y2="127"/>
+    <rect fill="#CCFF02" height="18" rx="2" ry="2" style="stroke:#CCFF02;stroke-width:1;" width="110.75" x="465" y="127"/>
+    <line style="stroke:#000;stroke-width:1;" x1="463.5" x2="576.25" y1="127" y2="127"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="468.5" y="139.889">options</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="531.438" y="139.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="526.438" x2="526.438" y1="127" y2="145"/>
+    <line style="stroke:#000;stroke-width:1;" x1="463.5" x2="576.25" y1="145" y2="145"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="468.5" y="157.889">answer</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="531.438" y="157.889">12</text>
+    <line style="stroke:#000;stroke-width:1;" x1="526.438" x2="526.438" y1="145" y2="163"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="112.75" x="463.5" y="109"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="33.8" x="761.5" y="100"/>
+    <text fill="#000" font-size="14" textLength="23.8" x="766.5" y="112.889">=10</text>
+    <line style="stroke:#000;stroke-width:1;" x1="761.5" x2="795.3" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" textLength="23.8" x="766.5" y="130.889">=11</text>
+    <line style="stroke:#000;stroke-width:1;" x1="761.5" x2="795.3" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" textLength="23.8" x="766.5" y="148.889">=12</text>
+    <line style="stroke:#000;stroke-width:1;" x1="761.5" x2="795.3" y1="154" y2="154"/>
+    <text fill="#000" font-size="14" textLength="23.8" x="766.5" y="166.889">=13</text>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="33.8" x="761.5" y="100"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="116.95" x="461.5" y="190"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="52.938" x="466.5" y="202.889">question</text>
+    <text fill="#000" font-size="14" textLength="44.012" x="529.438" y="202.889">12 - 8 = ?</text>
+    <line style="stroke:#000;stroke-width:1;" x1="524.438" x2="524.438" y1="190" y2="208"/>
+    <line style="stroke:#000;stroke-width:1;" x1="461.5" x2="578.45" y1="208" y2="208"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="466.5" y="220.889">options</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="529.438" y="220.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="524.438" x2="524.438" y1="208" y2="226"/>
+    <line style="stroke:#000;stroke-width:1;" x1="461.5" x2="578.45" y1="226" y2="226"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="466.5" y="238.889">answer</text>
+    <text fill="#000" font-size="14" x="529.438" y="238.889">4</text>
+    <line style="stroke:#000;stroke-width:1;" x1="524.438" x2="524.438" y1="226" y2="244"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="116.95" x="461.5" y="190"/>
+    <rect fill="#F1F1F1" height="72" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="26.013" x="765.5" y="190"/>
+    <text fill="#000" font-size="14" textLength="16.013" x="770.5" y="202.889">=1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="765.5" x2="791.513" y1="208" y2="208"/>
+    <text fill="#000" font-size="14" textLength="16.013" x="770.5" y="220.889">=2</text>
+    <rect fill="#CCFF02" height="18" rx="2" ry="2" style="stroke:#CCFF02;stroke-width:1;" width="24.013" x="767" y="226"/>
+    <line style="stroke:#000;stroke-width:1;" x1="765.5" x2="791.513" y1="226" y2="226"/>
+    <text fill="#000" font-size="14" textLength="16.013" x="770.5" y="238.889">=3</text>
+    <line style="stroke:#000;stroke-width:1;" x1="765.5" x2="791.513" y1="244" y2="244"/>
+    <text fill="#000" font-size="14" textLength="16.013" x="770.5" y="256.889">=4</text>
+    <rect fill="none" height="72" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="26.013" x="765.5" y="190"/>
+    <path d="M659,55 L672,55 C681.254,55 690.946,54.655 700.55,54.101" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M700.745,57.17 L702.853,53.954 L700.356,51.031 L708.224,53.613 L700.745,57.17" fill="#000"/>
+    <ellipse cx="659" cy="55" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M308.5,73 L321.5,73 C334.606,73 348.179,72.604 361.794,71.93" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M361.955,74.956 L364.063,71.809 L361.633,68.904 L369.359,71.527 L361.955,74.956" fill="#000"/>
+    <ellipse cx="308.5" cy="73" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M223,104 L236,104 C253.409,104 271.135,94.943 283.749,86.62" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M285.543,89.199 L285.683,85.274 L281.954,84.041 L290.196,82.133 L285.543,89.199" fill="#000"/>
+    <ellipse cx="223" cy="104" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M564.5,136 L577.5,136 C641.252,136 716.407,136 754.018,136" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M754.018,139.147 L756.379,136 L754.018,132.853 L761.887,136 L754.018,139.147" fill="#000"/>
+    <ellipse cx="564.5" cy="136" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M320,136 L333,136 C373.959,136 419.979,136 456.056,136" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M456.056,139.017 L458.319,136 L456.056,132.983 L463.598,136 L456.056,139.017" fill="#000"/>
+    <ellipse cx="320" cy="136" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M566.5,217 L579.5,217 C644.971,217 722.463,221.946 758.17,224.505" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M757.944,227.607 L760.497,224.675 L758.397,221.403 L765.925,225.071 L757.944,227.607" fill="#000"/>
+    <ellipse cx="566.5" cy="217" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M320,154 L333,154 C350.889,154 352.368,165.413 369,172 C396.464,182.877 427.63,192.606 454.449,200.211" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M453.614,203.188 L456.682,200.837 L455.284,197.234 L461.892,202.298 L453.614,203.188" fill="#000"/>
+    <ellipse cx="320" cy="154" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M223,122 L236,122 C246.085,122 256.239,125.101 265.44,129.372" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M264.055,132.105 L267.49,130.41 L266.825,126.638 L272.274,132.834 L264.055,132.105" fill="#000"/>
+    <ellipse cx="223" cy="122" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M91.5,140 L104.5,140 C113.937,140 123.978,140 133.696,140" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M133.696,143.083 L136.008,140 L133.696,136.917 L141.403,140 L133.696,143.083" fill="#000"/>
+    <ellipse cx="91.5" cy="140" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

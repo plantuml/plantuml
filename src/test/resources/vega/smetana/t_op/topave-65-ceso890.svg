@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="110px" preserveAspectRatio="none" style="width:202px;height:110px;background:#FFFFFF;" version="1.1" viewBox="0 0 202 110" width="202px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster foo-->
+    <g class="cluster" data-qualified-name="foo" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L47.925,4 A3.75,3.75 0 0 1 50.425,6.5 L57.425,25 L99.5,25 A2.5,2.5 0 0 1 102,27.5 L102,83.5 A2.5,2.5 0 0 1 99.5,86 L16.5,86 A2.5,2.5 0 0 1 14,83.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="57.425" y1="25" y2="25"/>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.5;" width="6" x="20" y="12"/>
+      </g>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="29" y="17.389">foo</text>
+    </g>
+    <!--cluster Dummy-->
+    <g class="cluster" data-qualified-name="Dummy" data-source-line="4" id="ent0003">
+      <path d="M112.5,4 L172.712,4 A3.75,3.75 0 0 1 175.212,6.5 L182.212,25 L191.5,25 A2.5,2.5 0 0 1 194,27.5 L194,83.5 A2.5,2.5 0 0 1 191.5,86 L112.5,86 A2.5,2.5 0 0 1 110,83.5 L110,6.5 A2.5,2.5 0 0 1 112.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="110" x2="182.212" y1="25" y2="25"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="119" cy="15" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.5;"/>
+      </g>
+      <text fill="#000" font-size="14" font-weight="700" textLength="48.212" x="125" y="17.389">Dummy</text>
+    </g>
+    <!--class alice-->
+    <g class="entity" data-qualified-name="foo.alice" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.875" x="22" y="30"/>
+      <ellipse cx="37" cy="46" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32" y="51">C</text>
+      <g data-visibility-modifier="PRIVATE_METHOD">
+        <rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="53" y="44.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="28.875" x="62" y="49.889">alice</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="92.875" y1="62" y2="62"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="92.875" y1="70" y2="70"/>
+    </g>
+    <!--class Bob-->
+    <g class="entity" data-qualified-name="Dummy.Bob" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.938" x="118" y="30"/>
+      <ellipse cx="133" cy="46" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="128" y="51">C</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="152" cy="47.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="24.938" x="158" y="49.889">Bob</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="119" x2="184.938" y1="62" y2="62"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="119" x2="184.938" y1="70" y2="70"/>
+    </g>
+  </g>
+</svg>

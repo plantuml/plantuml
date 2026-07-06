@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="142px" preserveAspectRatio="none" style="width:196px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 196 142" width="196px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity database2-->
+    <g class="entity" data-qualified-name="database2" data-source-line="1" id="ent0001">
+      <path d="M6,22.5 C6,12.5 48.681,12.5 48.681,12.5 C48.681,12.5 91.363,12.5 91.363,22.5 L91.363,45.5 C91.363,55.5 48.681,55.5 48.681,55.5 C48.681,55.5 6,55.5 6,45.5 L6,22.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M6,22.5 C6,32.5 48.681,32.5 48.681,32.5 C48.681,32.5 91.363,32.5 91.363,22.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="65.363" x="16" y="47.389">database2</text>
+    </g>
+    <!--entity cloud3-->
+    <g class="entity" data-qualified-name="cloud3" data-source-line="2" id="ent0002">
+      <path d="M117.678,21.887 C121.417,14.179 127.183,14.826 131.888,20.89 C136.59,14.508 141.422,12.958 146.73,20.233 C151.175,15.053 156.117,15.374 159.99,20.94 C162.994,15.204 168.953,13.909 172.418,20.474 C181.125,23.355 182.785,29.118 176.717,36.071 C182.825,42.646 179.978,46.494 173.106,49.605 C170.52,55.318 164.435,57.11 160.662,50.837 C157.343,60.185 150.635,59.255 144.775,53.511 C140.282,58.573 134.738,58.797 131.793,51.838 C126.689,55.975 120.969,54.325 118.857,48.102 C110.671,46.108 109.888,40.164 114.356,34.102 C108.887,28.779 110.685,23.82 117.678,21.887" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="41.3" x="124" y="37.889">cloud3</text>
+    </g>
+    <!--entity collections-->
+    <g class="entity" data-qualified-name="collections" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="30" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.45" x="10" y="96"/>
+      <rect fill="#F1F1F1" height="30" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.45" x="6" y="92"/>
+      <text fill="#000" font-size="14" textLength="65.45" x="14" y="110.889">collections</text>
+    </g>
+  </g>
+</svg>

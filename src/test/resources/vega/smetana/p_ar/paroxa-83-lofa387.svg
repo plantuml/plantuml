@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="118px" preserveAspectRatio="none" style="width:283px;height:118px;background:#FFFFFF;" version="1.1" viewBox="0 0 283 118" width="283px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class User-->
+    <g class="entity" data-qualified-name="User" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.875" x="6" y="19"/>
+      <ellipse cx="36.885" cy="35" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="31.885" y="40">C</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="54.415" y="38.889">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="101.875" y1="51" y2="51"/>
+      <text fill="#000" font-size="14" textLength="84.875" x="12" y="65.889">id2 : INTEGER</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="101.875" y1="73" y2="73"/>
+      <text fill="#000" font-size="14" textLength="77.088" x="12" y="87.889">id : INTEGER</text>
+    </g>
+    <!--class Email-->
+    <g class="entity" data-qualified-name="Email" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="127.938" x="139" y="12"/>
+      <ellipse cx="181.383" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="176.383" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="35.088" x="201.468" y="31.889">Email</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="140" x2="265.938" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="77.088" x="145" y="58.889">id : INTEGER</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="140" x2="265.938" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="112.087" x="145" y="80.889">user_id : INTEGER</text>
+      <text fill="#000" font-size="14" textLength="115.938" x="145" y="94.889">address : INTEGER</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="103.064,57,109.064,61,115.064,57,109.064,53,103.064,57" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M115.064,57 C126.511,57 126.915,57 138.945,57" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="145px" preserveAspectRatio="none" style="width:160px;height:145px;background:#FFFFFF;" version="1.1" viewBox="0 0 160 145" width="160px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity tyty-->
+    <g class="entity" data-qualified-name="tyty" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.7" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="47.7" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="45.7" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="45.7" y="23"/>
+      <text fill="#000" font-size="14" textLength="21.7" x="21" y="42.889">tyty</text>
+    </g>
+    <!--entity p1-->
+    <g class="entity" data-qualified-name="p1" data-source-line="2" id="ent0002">
+      <path d="M88.5,15.5 L117.075,15.5 A3.75,3.75 0 0 1 119.575,18 L126.575,35.5 L141.075,35.5 A2.5,2.5 0 0 1 143.575,38 L143.575,50 A2.5,2.5 0 0 1 141.075,52.5 L88.5,52.5 A2.5,2.5 0 0 1 86,50 L86,18 A2.5,2.5 0 0 1 88.5,15.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="86" x2="126.575" y1="35.5" y2="35.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="96" y="29.389">p1</text>
+    </g>
+    <!--entity p2-->
+    <g class="entity" data-qualified-name="p2" data-source-line="4" id="ent0003">
+      <path d="M88.5,92 L117.075,92 A3.75,3.75 0 0 1 119.575,94.5 L126.575,112 L141.075,112 A2.5,2.5 0 0 1 143.575,114.5 L143.575,126.5 A2.5,2.5 0 0 1 141.075,129 L88.5,129 A2.5,2.5 0 0 1 86,126.5 L86,94.5 A2.5,2.5 0 0 1 88.5,92" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="86" x2="126.575" y1="112" y2="112"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="15.575" x="96" y="105.889">p2</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="115,91.971,119,82.971,115,86.971,111,82.971,115,91.971" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M115,52.655 C115,64.531 115,75.122 115,86.971" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

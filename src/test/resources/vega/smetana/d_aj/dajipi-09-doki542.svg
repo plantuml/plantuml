@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="163px" preserveAspectRatio="none" style="width:448px;height:163px;background:#FFFFFF;" version="1.1" viewBox="0 0 448 163" width="448px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="210.788" y="20.889">foo</text>
+    </g>
+    <g class="entity" data-qualified-name="NewValuePreview" data-source-line="2" id="ent0001">
+      <a href="http://www.yahoo.com/NewValuePreview" target="_top" title="http://www.yahoo.com/NewValuePreview" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/NewValuePreview" xlink:show="new" xlink:title="http://www.yahoo.com/NewValuePreview" xlink:type="simple">
+        <path d="M113.5,47 L251.5,47 A12.5,12.5 0 0 1 264,59.5 L264,71 L101,71 L101,59.5 A12.5,12.5 0 0 1 113.5,47" fill="#F1F1F1"/>
+        <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="163" x="101" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="101" x2="264" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="113.838" x="125.581" y="62.889">NewValuePreview</text>
+      </a>
+      <g class="entity" data-qualified-name="NewValuePreview.State1" data-source-line="3" id="ent0002">
+        <a href="http://www.yahoo.com/State1" target="_top" title="http://www.yahoo.com/State1" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/State1" xlink:show="new" xlink:title="http://www.yahoo.com/State1" xlink:type="simple">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="107" y="82"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="107" x2="167.425" y1="106" y2="106"/>
+          <text fill="#000" font-size="14" textLength="40.425" x="117" y="97.889">State1</text>
+        </a>
+      </g>
+      <g class="entity" data-qualified-name="NewValuePreview.State2" data-source-line="5" id="ent0004">
+        <a href="http://www.yahoo.com/NewValuePreview" target="_top" title="http://www.yahoo.com/NewValuePreview" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/NewValuePreview" xlink:show="new" xlink:title="http://www.yahoo.com/NewValuePreview" xlink:type="simple">
+          <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="60.425" x="185" y="82"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="185" x2="245.425" y1="106" y2="106"/>
+          <text fill="#000" font-size="14" textLength="40.425" x="195" y="97.889">State2</text>
+        </a>
+      </g>
+      <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+        <a href="http://www.yahoo.com/NewValuePreview" target="_top" title="http://www.yahoo.com/NewValuePreview" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/NewValuePreview" xlink:show="new" xlink:title="http://www.yahoo.com/NewValuePreview" xlink:type="simple">
+          <polygon fill="#181818" points="184.729,107,175.729,103,179.729,107,175.729,111,184.729,107" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+          <path d="M167.164,107 C173.019,107 173.874,107 179.729,107" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        </a>
+      </g>
+    </g>
+    <g class="entity" data-qualified-name="Other" data-source-line="7" id="ent0003">
+      <a href="http://www.yahoo.com/Other" target="_top" title="http://www.yahoo.com/Other" xlink:actuate="onRequest" xlink:href="http://www.yahoo.com/Other" xlink:show="new" xlink:title="http://www.yahoo.com/Other" xlink:type="simple">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="54.913" x="377" y="72"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="377" x2="431.913" y1="96" y2="96"/>
+        <text fill="#000" font-size="14" textLength="34.913" x="387" y="87.889">Other</text>
+      </a>
+    </g>
+    <g class="entity" data-qualified-name="GMN6" data-source-line="14" id="ent0007">
+      <a href="http://www.google.com/note1" target="_top" title="http://www.google.com/note1" xlink:actuate="onRequest" xlink:href="http://www.google.com/note1" xlink:show="new" xlink:title="http://www.google.com/note1" xlink:type="simple">
+        <path d="M6,85 L6,108 A0,0 0 0 0 6,108 L83.387,108 A0,0 0 0 0 83.387,108 L83.387,103 L100.914,97 L83.387,95 L83.387,95 L73.387,85 L6,85 A0,0 0 0 0 6,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M73.387,85 L73.387,95 L83.387,95 L73.387,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="13" textLength="56.387" x="12" y="100.111">example1</text>
+      </a>
+    </g>
+    <g class="entity" data-qualified-name="GMN9" data-source-line="18" id="ent0010">
+      <a href="http://www.google.com/note2" target="_top" title="http://www.google.com/note2" xlink:actuate="onRequest" xlink:href="http://www.google.com/note2" xlink:show="new" xlink:title="http://www.google.com/note2" xlink:type="simple">
+        <path d="M282,85 L282,93 L264.168,97 L282,101 L282,108 A0,0 0 0 0 282,108 L359.388,108 A0,0 0 0 0 359.388,108 L359.388,95 L349.388,85 L282,85 A0,0 0 0 0 282,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <path d="M349.388,85 L349.388,95 L359.388,95 L349.388,85" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+        <text fill="#000" font-size="13" textLength="56.387" x="288" y="100.111">example2</text>
+      </a>
+    </g>
+  </g>
+</svg>

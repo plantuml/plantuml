@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="471px" preserveAspectRatio="none" style="width:907px;height:471px;background:#FFC0CB;" version="1.1" viewBox="0 0 907 471" width="907px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="gulevlcb9ewbx0" x1="0%" x2="100%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC0CB" height="471" style="stroke:none;" width="907" x="0" y="0"/>
+    <!--cluster f1_no_group-->
+    <g class="cluster" data-qualified-name="f1_no_group" data-source-line="11" id="ent0002">
+      <rect fill="#FFF" height="362" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="172" x="503" y="4"/>
+      <path d="M591.575,4 L591.575,11 L581.575,21 L503,21" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="78.575" x="506" y="15.889">f1_no_group</text>
+    </g>
+    <!--cluster f2_group-->
+    <g class="cluster" data-qualified-name="f2_group" data-source-line="56" id="ent0022">
+      <rect fill="#FFF" height="349" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="208" x="683" y="4"/>
+      <path d="M748.213,4 L748.213,11 L738.213,21 L683,21" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="55.212" x="686" y="15.889">f2_group</text>
+    </g>
+    <!--cluster FooDashed24_KO-->
+    <g class="cluster" data-qualified-name="f2_group.FooDashed24_KO" data-source-line="60" id="ent0024">
+      <polygon fill="url(#gulevlcb9ewbx0)" points="691,273,701,263,883,263,883,335,873,345,691,345,691,273" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="873" x2="883" y1="273" y2="263"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="691" x2="873" y1="273" y2="273"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="873" x2="873" y1="273" y2="345"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="116.025" x="724.988" y="286.889">FooDashed24_KO</text>
+    </g>
+    <!--cluster FooDashed23_OK-->
+    <g class="cluster" data-qualified-name="f2_group.FooDashed23_OK" data-source-line="65" id="ent0026">
+      <polygon fill="url(#gulevlcb9ewbx0)" points="691,181,701,171,883,171,883,233,873,243,691,243,691,181" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="873" x2="883" y1="181" y2="171"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="691" x2="873" y1="181" y2="181"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="873" x2="873" y1="181" y2="243"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="116.025" x="724.988" y="194.889">FooDashed23_OK</text>
+    </g>
+    <!--cluster FooDashed22_OK-->
+    <g class="cluster" data-qualified-name="f2_group.FooDashed22_OK" data-source-line="69" id="ent0028">
+      <polygon fill="url(#gulevlcb9ewbx0)" points="691,91,701,81,883,81,883,153,873,163,691,163,691,91" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="873" x2="883" y1="91" y2="81"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="691" x2="873" y1="91" y2="91"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="873" x2="873" y1="91" y2="163"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="116.025" x="724.988" y="104.889">FooDashed22_OK</text>
+    </g>
+    <!--entity FooDashed0_OK-->
+    <g class="entity" data-qualified-name="FooDashed0_OK" data-source-line="9" id="ent0001">
+      <polygon fill="url(#gulevlcb9ewbx0)" points="10,39,20,29,158.238,29,158.238,63,148.238,73,10,73,10,39" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="148.238" x2="158.238" y1="39" y2="29"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="10" x2="148.238" y1="39" y2="39"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="148.238" x2="148.238" y1="39" y2="73"/>
+      <text fill="#000" font-size="14" textLength="108.238" x="25" y="59.889">FooDashed0_OK</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN10" data-source-line="37" id="ent0011">
+      <path d="M176.5,39 L176.5,62 A0,0 0 0 0 176.5,62 L325.469,62 A0,0 0 0 0 325.469,62 L325.469,49 L315.469,39 L266.727,39 L564.81,28.793 L258.727,39 L176.5,39 A0,0 0 0 0 176.5,39" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M315.469,39 L315.469,49 L325.469,49 L315.469,39" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="127.969" x="182.5" y="54.111">KO: not dashed blue line</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN13" data-source-line="41" id="ent0014">
+      <path d="M307,115 L307,151 A0,0 0 0 0 307,151 L493.425,151 A0,0 0 0 0 493.425,151 L493.425,137 L510.644,133 L493.425,129 L493.425,125 L483.425,115 L307,115 A0,0 0 0 0 307,115" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M483.425,115 L483.425,125 L493.425,125 L483.425,115" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="165.425" x="313" y="130.111">KO: not gradient in background</text>
+      <text fill="#000" font-size="13" textLength="133.169" x="313" y="143.111">AND not dashed blue line</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN16" data-source-line="46" id="ent0017">
+      <path d="M309,200 L309,236 A0,0 0 0 0 309,236 L495.425,236 A0,0 0 0 0 495.425,236 L495.425,222 L568.834,218 L495.425,214 L495.425,210 L485.425,200 L309,200 A0,0 0 0 0 309,200" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M485.425,200 L485.425,210 L495.425,210 L485.425,200" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="165.425" x="315" y="215.111">KO: not gradient in background</text>
+      <text fill="#000" font-size="13" textLength="133.169" x="315" y="228.111">AND not dashed blue line</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN19" data-source-line="51" id="ent0020">
+      <path d="M307,297 L307,333 A0,0 0 0 0 307,333 L493.425,333 A0,0 0 0 0 493.425,333 L493.425,319 L510.644,315 L493.425,311 L493.425,307 L483.425,297 L307,297 A0,0 0 0 0 307,297" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M483.425,297 L483.425,307 L493.425,307 L483.425,297" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="165.425" x="313" y="312.111">KO: not gradient in background</text>
+      <text fill="#000" font-size="13" textLength="133.169" x="313" y="325.111">AND not dashed blue line</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN31" data-source-line="77" id="ent0032">
+      <path d="M343.5,39 L343.5,62 A0,0 0 0 0 343.5,62 L492.469,62 A0,0 0 0 0 492.469,62 L492.469,49 L482.469,39 L433.418,39 L744.23,28.786 L425.418,39 L343.5,39 A0,0 0 0 0 343.5,39" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M482.469,39 L482.469,49 L492.469,49 L482.469,39" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="127.969" x="349.5" y="54.111">KO: not dashed blue line</text>
+    </g>
+    <!--entity FooDashed11_KO-->
+    <g class="entity" data-qualified-name="f1_no_group.FooDashed11_KO" data-source-line="12" id="ent0003">
+      <polygon fill="url(#gulevlcb9ewbx0)" points="511,39,521,29,667.025,29,667.025,63,657.025,73,511,73,511,39" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="657.025" x2="667.025" y1="39" y2="29"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="511" x2="657.025" y1="39" y2="39"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="657.025" x2="657.025" y1="39" y2="73"/>
+      <text fill="#000" font-size="14" textLength="116.025" x="526" y="59.889">FooDashed11_KO</text>
+    </g>
+    <!--entity FooDashed12_KO-->
+    <g class="entity" data-qualified-name="f1_no_group.FooDashed12_KO" data-source-line="14" id="ent0004">
+      <polygon fill="url(#gulevlcb9ewbx0)" points="511,121,521,111,667.025,111,667.025,145,657.025,155,511,155,511,121" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="657.025" x2="667.025" y1="121" y2="111"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="511" x2="657.025" y1="121" y2="121"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="657.025" x2="657.025" y1="121" y2="155"/>
+      <text fill="#000" font-size="14" textLength="116.025" x="526" y="141.889">FooDashed12_KO</text>
+    </g>
+    <!--entity FooDashed13_KO-->
+    <g class="entity" data-qualified-name="f1_no_group.FooDashed13_KO" data-source-line="17" id="ent0005">
+      <polygon fill="url(#gulevlcb9ewbx0)" points="569,213,579,203,609,203,609,223,599,233,569,233,569,213" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="599" x2="609" y1="213" y2="203"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="569" x2="599" y1="213" y2="213"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="599" x2="599" y1="213" y2="233"/>
+    </g>
+    <!--entity FooDashed14_KO-->
+    <g class="entity" data-qualified-name="f1_no_group.FooDashed14_KO" data-source-line="20" id="ent0006">
+      <polygon fill="url(#gulevlcb9ewbx0)" points="511,282,521,272,667.025,272,667.025,348,657.025,358,511,358,511,282" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="657.025" x2="667.025" y1="282" y2="272"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="511" x2="657.025" y1="282" y2="282"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="657.025" x2="657.025" y1="282" y2="358"/>
+      <text fill="#000" font-size="14" textLength="116.025" x="526" y="302.889">FooDashed14_KO</text>
+      <image height="164" width="122" x="526" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE2NCIgd2lkdGg9IjEyMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxkZWZzPjxsaW5lYXJHcmFkaWVudCB4MT0iMCUiIHkxPSI1MCUiIHgyPSIxMDAlIiB5Mj0iNTAlIiBpZD0iZ2doNTl4cDd0eno0NDAiPjxzdG9wIHN0b3AtY29sb3I9IiNGMDAiIG9mZnNldD0iMCUiLz48c3RvcCBzdG9wLWNvbG9yPSIjMDA4MDAwIiBvZmZzZXQ9IjEwMCUiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48ZyBjbGFzcz0iZW50aXR5IiBkYXRhLXF1YWxpZmllZC1uYW1lPSJBIiBpZD0iZW50MDAwMSIgZGF0YS1zb3VyY2UtbGluZT0iMSI+PHJlY3QgeD0iMzEiIHk9IjEyIiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNGMUYxRjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgcng9IjEyLjUiIHJ5PSIxMi41Ii8+PGxpbmUgeDE9IjMxIiB5MT0iMzYiIHgyPSI4MSIgeTI9IjM2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCB4PSI1MS4zMTkiIHk9IjI3Ljg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCI+QTwvdGV4dD48L2c+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iRm9vRGFzaGVkMCIgaWQ9ImVudDAwMDIiIGRhdGEtc291cmNlLWxpbmU9IjIiPjxyZWN0IHg9IjYiIHk9Ijk4IiB3aWR0aD0iMTAwLjIzOCIgaGVpZ2h0PSI1MCIgZmlsbD0idXJsKCNnZ2g1OXhwN3R6ejQ0MCkiIHN0eWxlPSJzdHJva2U6IzAwRjtzdHJva2Utd2lkdGg6MTtzdHJva2UtZGFzaGFycmF5OjcsNzsiIHJ4PSIxMi41IiByeT0iMTIuNSIvPjxsaW5lIHgxPSI2IiB5MT0iMTIyIiB4Mj0iMTA2LjIzOCIgeTI9IjEyMiIgc3R5bGU9InN0cm9rZTojMDBGO3N0cm9rZS13aWR0aDoxO3N0cm9rZS1kYXNoYXJyYXk6Nyw3OyIvPjx0ZXh0IHg9IjE2IiB5PSIxMTMuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0IiB0ZXh0TGVuZ3RoPSI4MC4yMzgiPkZvb0Rhc2hlZDA8L3RleHQ+PC9nPjxnIGNsYXNzPSJsaW5rIiBkYXRhLWVudGl0eS0xPSJlbnQwMDAxIiBkYXRhLWVudGl0eS0yPSJlbnQwMDAyIiBpZD0ibG5rMyIgZGF0YS1saW5rLXR5cGU9ImRlcGVuZGVuY3kiPjxwb2x5Z29uIHBvaW50cz0iNTYsOTcuNzU4LDYwLDg4Ljc1OCw1Niw5Mi43NTgsNTIsODguNzU4LDU2LDk3Ljc1OCIgZmlsbD0iIzE4MTgxOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxO3N0cm9rZS1saW5lam9pbjptaXRlcjtzdHJva2UtbWl0ZXJsaW1pdDoxMDsiLz48cGF0aCBkPSJNNTYsNjIuMjk2IEM1Niw3My40NDEgNTYsODEuNjIxIDU2LDkyLjc1OCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIgZmlsbD0ibm9uZSIvPjwvZz48L2c+PC9zdmc+" y="306"/>
+    </g>
+    <!--entity FooDashed21_KO-->
+    <g class="entity" data-qualified-name="f2_group.FooDashed21_KO" data-source-line="57" id="ent0023">
+      <polygon fill="url(#gulevlcb9ewbx0)" points="691,39,701,29,847.025,29,847.025,63,837.025,73,691,73,691,39" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="837.025" x2="847.025" y1="39" y2="29"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="691" x2="837.025" y1="39" y2="39"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="837.025" x2="837.025" y1="39" y2="73"/>
+      <text fill="#000" font-size="14" textLength="116.025" x="706" y="59.889">FooDashed21_KO</text>
+    </g>
+    <!--entity m-->
+    <g class="entity" data-qualified-name="f2_group.FooDashed24_KO.m" data-source-line="61" id="ent0025">
+      <polygon fill="#F1F1F1" points="788,303,798,293,839.638,293,839.638,327,829.638,337,788,337,788,303" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="829.638" x2="839.638" y1="303" y2="293"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="788" x2="829.638" y1="303" y2="303"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="829.638" x2="829.638" y1="303" y2="337"/>
+      <text fill="#000" font-size="14" x="803" y="323.889">m</text>
+    </g>
+    <!--entity f-->
+    <g class="entity" data-qualified-name="f2_group.FooDashed23_OK.f" data-source-line="66" id="ent0027">
+      <path d="M802,203.5 L802,232.5 A2.5,2.5 0 0 0 804.5,235 L823.35,235 A2.5,2.5 0 0 0 825.85,232.5 L825.85,211 L815.85,201 L804.5,201 A2.5,2.5 0 0 0 802,203.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M815.85,201 L815.85,208.5 A2.5,2.5 0 0 0 818.35,211 L825.85,211" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="812" y="221.889">f</text>
+    </g>
+    <!--entity n-->
+    <g class="entity" data-qualified-name="f2_group.FooDashed22_OK.n" data-source-line="70" id="ent0029">
+      <polygon fill="#F1F1F1" points="827,121,837,111,874.788,111,874.788,145,864.788,155,827,155,827,121" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="864.788" x2="874.788" y1="121" y2="111"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="827" x2="864.788" y1="121" y2="121"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="864.788" x2="864.788" y1="121" y2="155"/>
+      <text fill="#000" font-size="14" x="842" y="141.889">n</text>
+    </g>
+    <!--entity nn-->
+    <g class="entity" data-qualified-name="f2_group.FooDashed22_OK.nn" data-source-line="71" id="ent0030">
+      <polygon fill="#F1F1F1" points="753,121,763,111,808.575,111,808.575,145,798.575,155,753,155,753,121" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="798.575" x2="808.575" y1="121" y2="111"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="753" x2="798.575" y1="121" y2="121"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="798.575" x2="798.575" y1="121" y2="155"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="768" y="141.889">nn</text>
+    </g>
+  </g>
+</svg>

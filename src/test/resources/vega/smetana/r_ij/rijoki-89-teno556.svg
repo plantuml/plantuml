@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="421px" preserveAspectRatio="none" style="width:267px;height:421px;background:#FFFFFF;" version="1.1" viewBox="0 0 267 421" width="267px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster NotShooting-->
+    <g class="cluster" data-qualified-name="NotShooting" data-source-line="4" id="ent0001">
+      <path d="M26.5,63 L170.5,63 A12.5,12.5 0 0 1 183,75.5 L183,82 L14,82 L14,75.5 A12.5,12.5 0 0 1 26.5,63" fill="#F1F1F1"/>
+      <rect fill="none" height="247" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="169" x="14" y="63"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="183" y1="82" y2="82"/>
+      <text fill="#000" font-size="14" textLength="77.087" x="59.956" y="73.889">NotShooting</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0003">
+      <ellipse cx="56" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Shooting" data-source-line="11" id="ent0010">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="75.3" x="55.5" y="355"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="55.5" x2="130.8" y1="379" y2="379"/>
+      <text fill="#000" font-size="14" textLength="55.3" x="65.5" y="370.889">Shooting</text>
+    </g>
+    <g class="entity" data-qualified-name="NotShooting.Idle" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="52.575" x="78.5" y="149"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="78.5" x2="131.075" y1="173" y2="173"/>
+      <ellipse cx="112.075" cy="192" fill="#F1F1F1" rx="3" ry="3" style="stroke:#181818;stroke-width:0.5;"/>
+      <ellipse cx="121.075" cy="192" fill="#F1F1F1" rx="3" ry="3" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="115.075" x2="118.075" y1="192" y2="192"/>
+      <text fill="#000" font-size="14" textLength="22.575" x="93.5" y="164.889">Idle</text>
+    </g>
+    <g class="start_entity" data-qualified-name="NotShooting..start.NotShooting" data-source-line="6" id="ent0005">
+      <ellipse cx="105" cy="98" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="NotShooting.Configuring" data-source-line="7" id="ent0007">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="91.663" x="47" y="252"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47" x2="138.663" y1="276" y2="276"/>
+      <text fill="#000" font-size="14" textLength="71.663" x="57" y="267.889">Configuring</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="56,62.807,60,53.807,56,57.807,52,53.807,56,62.807" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56,36.239 C56,43.193 56,52.558 56,61.929 C56,62.222 56,57.515 56,57.807" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="105,148.724,109,139.724,105,143.724,101,139.724,105,148.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M105,112.25 C105,121.979 105,131.384 105,143.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="52.959,251.802,48.889,242.833,49.222,248.48,43.575,248.813,52.959,251.802" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M78.404,185.093 C64.583,191.86 48.955,202.265 41,217 C34.19,229.615 37.976,238.486 49.222,248.48" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="52.813" x="43" y="229.111">EvConfig</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="102.126,199.192,97.092,207.657,101.536,204.157,105.036,208.601,102.126,199.192" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M95.892,251.655 C97.782,235.751 99.65,220.031 101.536,204.157" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="52.813" x="101" y="229.111">EvConfig</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="121.16,354.954,129.994,350.601,124.361,351.113,123.849,345.479,121.16,354.954" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M120.111,302.124 C124.563,307.526 128.526,313.577 131,320 C135.73,332.279 132.907,340.857 124.361,351.113" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="125.288" x="134" y="332.111">@EvShutterReleased</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0007" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="46.855,300.671,37.319,303.134,42.939,303.78,42.293,309.4,46.855,300.671" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M55.135,362.429 C36.947,351.892 20.879,337.043 30,320 C34.032,312.467 36.161,309.16 42.939,303.78" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="93.438" x="32" y="332.111">@EvShutterHalf</text>
+    </g>
+  </g>
+</svg>

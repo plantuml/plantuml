@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="150px" preserveAspectRatio="none" style="width:203px;height:150px;background:#FFFFFF;" version="1.1" viewBox="0 0 203 150" width="203px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g1k3eotq4hq9c0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Afoo1-->
+    <g class="cluster" data-qualified-name="Afoo1" data-source-line="1" id="ent0001">
+      <path d="M16.5,19 L54.075,19 A3.75,3.75 0 0 1 56.575,21.5 L63.575,39 L65.5,39 A2.5,2.5 0 0 1 68,41.5 L68,123.5 A2.5,2.5 0 0 1 65.5,126 L16.5,126 A2.5,2.5 0 0 1 14,123.5 L14,21.5 A2.5,2.5 0 0 1 16.5,19" fill="url(#g1k3eotq4hq9c0)" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="63.575" y1="39" y2="39"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="36.575" x="18" y="31.889">Afoo1</text>
+    </g>
+    <!--cluster Bfoo1-->
+    <g class="cluster" data-qualified-name="Bfoo1" data-source-line="5" id="ent0003">
+      <path d="M76,14 C76,4 103,4 103,4 C103,4 130,4 130,14 L130,116 C130,126 103,126 103,126 C103,126 76,126 76,116 L76,14" fill="url(#g1k3eotq4hq9c0)" style="stroke:#181818;stroke-width:1;"/>
+      <path d="M76,14 C76,24 103,24 103,24 C103,24 130,24 130,14" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="36.575" x="84.713" y="36.889">Bfoo1</text>
+    </g>
+    <!--cluster Cfoo1-->
+    <g class="cluster" data-qualified-name="Cfoo1" data-source-line="9" id="ent0005">
+      <path d="M146.881,28.737 C151.042,18.465 157.864,17.402 165.23,25.543 C172.327,17.198 180.995,16.784 185.272,28.379 C190.175,31.158 191.176,34.161 187.047,38.52 C192.155,41.569 192.331,46.881 187.593,50.383 C192.991,52.841 194.525,56.908 190.1,61.568 C197.299,65.125 196.24,69.887 191.025,74.343 C195.406,77.456 195.938,82.575 190.106,84.79 C194.94,89.231 193.064,93.497 187.616,95.561 C192.342,99.866 192.807,104.067 186.475,107.298 C192.496,111.513 192.512,115.541 186.055,119.32 C182.789,130.927 174.403,131.591 166.572,123.937 C159.193,132.265 150.178,129.018 146.817,119.492 C141.901,116.453 140.172,111.701 146.201,108.072 C139.786,105.796 138.79,100.325 144.337,96.175 C138.112,93.166 136.829,89.287 141.786,83.946 C136.322,81.832 134.212,78.292 138.976,73.443 C133.742,68.451 136.226,63.378 142.353,61.635 C137.512,58.141 137.383,53.389 142.464,49.99 C138.047,45.312 138.502,40.283 145.332,38.384 C140.5,34.621 141.654,30.885 146.881,28.737" fill="url(#g1k3eotq4hq9c0)" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="146.319" y="42.889">Cfoo1</text>
+    </g>
+    <!--entity Afoo2-->
+    <g class="entity" data-qualified-name="Afoo1.Afoo2" data-source-line="2" id="ent0002">
+      <ellipse cx="40.787" cy="52.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M40.787,60.5 L40.787,87.5 M27.787,68.5 L53.787,68.5 M40.787,87.5 L27.787,102.5 M40.787,87.5 L53.787,102.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="36.575" x="22.5" y="114.889">Afoo2</text>
+    </g>
+    <!--entity Bfoo2-->
+    <g class="entity" data-qualified-name="Bfoo1.Bfoo2" data-source-line="6" id="ent0004">
+      <ellipse cx="102.788" cy="52.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M102.788,60.5 L102.788,87.5 M89.788,68.5 L115.788,68.5 M102.788,87.5 L89.788,102.5 M102.788,87.5 L115.788,102.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="36.575" x="84.5" y="114.889">Bfoo2</text>
+    </g>
+    <!--entity Cfoo2-->
+    <g class="entity" data-qualified-name="Cfoo1.Cfoo2" data-source-line="10" id="ent0006">
+      <ellipse cx="165.181" cy="52.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M165.181,60.5 L165.181,87.5 M152.181,68.5 L178.181,68.5 M165.181,87.5 L152.181,102.5 M165.181,87.5 L178.181,102.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="146.5" y="114.889">Cfoo2</text>
+    </g>
+  </g>
+</svg>

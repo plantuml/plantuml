@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="161px" preserveAspectRatio="none" style="width:243px;height:161px;background:#FFFFFF;" version="1.1" viewBox="0 0 243 161" width="243px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Mall-->
+    <g class="cluster" data-qualified-name="Mall" data-source-line="3" id="ent0001">
+      <path d="M124,12 L150.725,12 A3.75,3.75 0 0 1 153.225,14.5 L160.225,32 L225,32 A2.5,2.5 0 0 1 227.5,34.5 L227.5,90.5 A2.5,2.5 0 0 1 225,93 L124,93 A2.5,2.5 0 0 1 121.5,90.5 L121.5,14.5 A2.5,2.5 0 0 1 124,12" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="121.5" x2="160.225" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="125.5" y="24.889">Mall</text>
+    </g>
+    <!--class Item-->
+    <g class="entity" data-qualified-name="Item" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.125" x="6" y="37"/>
+      <ellipse cx="21" cy="53" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="58">C</text>
+      <text fill="#000" font-size="14" textLength="27.125" x="35" y="56.889">Item</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="64.125" y1="69" y2="69"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="64.125" y1="77" y2="77"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="10" id="ent0005">
+      <path d="M21.5,121 L21.5,144 A0,0 0 0 0 21.5,144 L49.731,144 A0,0 0 0 0 49.731,144 L49.731,131 L39.731,121 L39.5,121 L35.5,85.309 L31.5,121 L21.5,121 A0,0 0 0 0 21.5,121" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M39.731,121 L39.731,131 L49.731,131 L39.731,121" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" x="27.5" y="136.111">1</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN7" data-source-line="15" id="ent0008">
+      <path d="M83.5,49 L83.5,72 A0,0 0 0 0 83.5,72 L111.731,72 A0,0 0 0 0 111.731,72 L111.731,67 L129.808,61 L111.731,59 L111.731,59 L101.731,49 L83.5,49 A0,0 0 0 0 83.5,49" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M101.731,49 L101.731,59 L111.731,59 L101.731,49" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" x="89.5" y="64.111">2</text>
+    </g>
+    <!--class Inventory-->
+    <g class="entity" data-qualified-name="Mall.Inventory" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="89.487" x="130" y="37"/>
+      <ellipse cx="145" cy="53" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="140" y="58">C</text>
+      <text fill="#000" font-size="14" textLength="57.487" x="159" y="56.889">Inventory</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="131" x2="218.487" y1="69" y2="69"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="131" x2="218.487" y1="77" y2="77"/>
+    </g>
+  </g>
+</svg>

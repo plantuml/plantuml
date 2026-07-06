@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="52px" preserveAspectRatio="none" style="width:106px;height:52px;background:#FFFFFF;" version="1.1" viewBox="0 0 106 52" width="106px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="GMN1" data-source-line="38" id="ent0002">
+      <path d="M6,12 L6,35 A0,0 0 0 0 6,35 L51.619,35 A0,0 0 0 0 51.619,35 L51.619,30 L69.977,24 L51.619,22 L51.619,22 L41.619,12 L6,12 A0,0 0 0 0 6,12" fill="#00F" style="stroke:#F00;stroke-width:0.5;"/>
+      <path d="M41.619,12 L41.619,22 L51.619,22 L41.619,12" fill="#00F" style="stroke:#F00;stroke-width:0.5;"/>
+      <text fill="#FFF" font-size="13" textLength="24.619" x="12" y="27.111">blah</text>
+    </g>
+    <g class="start_entity" data-qualified-name="start" data-source-line="38" id="ent0003">
+      <ellipse cx="80" cy="22" fill="#FFF" rx="10" ry="10" style="stroke:#000;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

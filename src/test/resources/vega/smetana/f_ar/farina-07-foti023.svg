@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="272px" preserveAspectRatio="none" style="width:98px;height:272px;background:#FFFFFF;" version="1.1" viewBox="0 0 98 272" width="98px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class cl1-->
+    <g class="entity" data-qualified-name="cl1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="75.7" x="6" y="12"/>
+      <ellipse cx="32.593" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="27.593" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="49.169" y="31.889">cl1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="80.7" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="33.512" x="12" y="58.889">field1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="80.7" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="63.7" x="12" y="80.889">method1()</text>
+    </g>
+    <!--class cl2-->
+    <g class="entity" data-qualified-name="cl2" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="19" y="124"/>
+      <ellipse cx="34" cy="140" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="29" y="145">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="48" y="143.889">cl2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20" x2="67.938" y1="156" y2="156"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20" x2="67.938" y1="164" y2="164"/>
+    </g>
+    <!--class cl3-->
+    <g class="entity" data-qualified-name="cl3" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.938" x="19" y="208"/>
+      <ellipse cx="34" cy="224" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="29" y="229">C</text>
+      <text fill="#000" font-size="14" textLength="17.938" x="48" y="227.889">cl3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20" x2="67.938" y1="240" y2="240"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="20" x2="67.938" y1="248" y2="248"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M44,88.116 C44,100.146 44,113.139 44,123.851" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M44,172.279 C44,183.453 44,196.802 44,207.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

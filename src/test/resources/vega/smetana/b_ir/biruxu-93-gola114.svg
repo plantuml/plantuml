@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="141px" preserveAspectRatio="none" style="width:272px;height:141px;background:#FFFFFF;" version="1.1" viewBox="0 0 272 141" width="272px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster End to End\nbusiness process-->
+    <g class="cluster" data-qualified-name="End to End.nbusiness process" data-source-line="20" id="ent0001">
+      <rect fill="none" height="113" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="250" x="14" y="4"/>
+      <image height="16" width="16" x="131" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAS0lEQVR4XqXOQQrAIBQD0X//S9u6bCehHRTeZtDgzMw6hGAhWAgWQnSfdhch2gNl5Hnhj+OB14gfiD/4Uh7HEJXHNRoIFoKFYCEoF+jwTsDKrKxeAAAAAElFTkSuQmCC" y="6"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="61.512" x="108.244" y="32.889">End to End</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="104.3" x="86.85" y="46.889">business process</text>
+    </g>
+    <!--entity src-->
+    <g class="entity" data-qualified-name="End to End.nbusiness process.src" data-source-line="21" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.938" x="22" y="59"/>
+      <image height="16" width="16" x="67.969" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATklEQVR4XqXOsQnAMAwFUe2/rSaICbiJTiI+XLzmkD+OiHguIVgIFoKF0MrM6Rah9Q4MI9+DE9cDZcQPtD/4Mzx2A7VtCBaChWAhWAjKAr7+SDC1cERiAAAAAElFTkSuQmCC" y="69"/>
+      <text fill="#000" font-size="14" textLength="87.938" x="32" y="95.889">inner process 1</text>
+    </g>
+    <!--entity tgt-->
+    <g class="entity" data-qualified-name="End to End.nbusiness process.tgt" data-source-line="22" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.938" x="148" y="59"/>
+      <image height="16" width="16" x="193.969" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATklEQVR4XqXOsQnAMAwFUe2/rSaICbiJTiI+XLzmkD+OiHguIVgIFoKF0MrM6Rah9Q4MI9+DE9cDZcQPtD/4Mzx2A7VtCBaChWAhWAjKAr7+SDC1cERiAAAAAElFTkSuQmCC" y="69"/>
+      <text fill="#000" font-size="14" textLength="87.938" x="158" y="95.889">inner process 2</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="147.825,84,138.825,80,142.825,84,138.825,88,147.825,84" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M130.141,84 C136.035,84 136.93,84 142.825,84" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="103px" preserveAspectRatio="none" style="width:149px;height:103px;background:#FFFFFF;" version="1.1" viewBox="0 0 149 103" width="149px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="122.85" x="10" y="20.889">hide empty members</text>
+    </g>
+    <g class="entity" data-qualified-name="A" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="40" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="31.425" x="33.925" y="47"/>
+      <text fill="#000" font-size="14" x="44.956" y="59.889">A</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="34.925" x2="64.35" y1="65" y2="65"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="39.925" y="79.889">foo</text>
+    </g>
+    <g class="entity" data-qualified-name="B" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="18" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="23.362" x="82.925" y="55"/>
+      <text fill="#000" font-size="14" x="89.925" y="67.889">B</text>
+    </g>
+  </g>
+</svg>

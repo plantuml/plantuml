@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="149px" preserveAspectRatio="none" style="width:175px;height:149px;background:#FFFFFF;" version="1.1" viewBox="0 0 175 149" width="175px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="62" x="6" y="12"/>
+      <image height="126" width="147" x="16" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEyNiIgd2lkdGg9IjE0NyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48IS0tZW50aXR5IEZhaWxDYXNlLS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iRmFpbENhc2UiIGlkPSJlbnQwMDAxIiBkYXRhLXNvdXJjZS1saW5lPSIyIj48cmVjdCB4PSI2IiB5PSIxMiIgd2lkdGg9IjEyNS4xNzUiIGhlaWdodD0iOTgiIGZpbGw9IiNGMUYxRjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgcng9IjIuNSIgcnk9IjIuNSIvPjx0ZXh0IHg9IjE2IiB5PSIzMi44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjU1LjM4OCIgZm9udC13ZWlnaHQ9IjcwMCI+RmFpbCBDYXNlPC90ZXh0PjxsaW5lIHgxPSI3IiB5MT0iMzYiIHgyPSIxMzAuMTc1IiB5Mj0iMzYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48dGV4dCB4PSIxNiIgeT0iNTAuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0IiB0ZXh0TGVuZ3RoPSI1Mi45MzgiPsOlw6TDtsOFw4TDljwvdGV4dD48dGV4dCB4PSIxNiIgeT0iNjQuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0IiB0ZXh0TGVuZ3RoPSIzMC4yNzUiPnRlc3QgMTwvdGV4dD48dGV4dCB4PSIxNiIgeT0iNzguODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0IiB0ZXh0TGVuZ3RoPSIxMDUuMTc1Ij5UaGlzIGlzIGEgbmV3bGluZSA6LSk8L3RleHQ+PHRleHQgeD0iMTYiIHk9IjkyLjg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iMzAuMjc1Ij50ZXN0IDI8L3RleHQ+PC9nPjwvZz48L3N2Zz4=" y="22"/>
+    </g>
+    <!--entity OkCase-->
+    <g class="entity" data-qualified-name="OkCase" data-source-line="13" id="ent0002">
+      <rect fill="#F1F1F1" height="56" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.938" x="86.5" y="15"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.938" x="96.5" y="35.889">OK Case</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="87.5" x2="158.438" y1="39" y2="39"/>
+      <text fill="#000" font-size="14" textLength="52.938" x="96.5" y="53.889">åäöÅÄÖ</text>
+    </g>
+  </g>
+</svg>

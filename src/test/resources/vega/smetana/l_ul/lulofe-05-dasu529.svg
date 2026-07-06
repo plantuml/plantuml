@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="76px" preserveAspectRatio="none" style="width:137px;height:76px;background:#FFFFFF;" version="1.1" viewBox="0 0 137 76" width="137px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="115.988" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="59.85" x="15" y="22.889">firstName</text>
+    <text fill="#000" font-size="14" textLength="30.362" x="84.85" y="22.889">John</text>
+    <line style="stroke:#000;stroke-width:1;" x1="79.85" x2="79.85" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="125.988" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="59.15" x="15" y="40.889">lastName</text>
+    <text fill="#000" font-size="14" textLength="35.788" x="84.85" y="40.889">Smith</text>
+    <line style="stroke:#000;stroke-width:1;" x1="79.85" x2="79.85" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="125.988" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.6" x="15" y="58.889">isAlive</text>
+    <text fill="#000" font-size="14" textLength="36.138" x="84.85" y="58.889">☑ true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="79.85" x2="79.85" y1="46" y2="64"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="115.988" x="10" y="10"/>
+  </g>
+</svg>

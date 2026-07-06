@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="83px" preserveAspectRatio="none" style="width:414px;height:83px;background:#FFFFFF;" version="1.1" viewBox="0 0 414 83" width="414px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <path d="M8.5,14 L48.713,14 A3.75,3.75 0 0 1 51.213,16.5 L58.213,34 L230.288,34 A2.5,2.5 0 0 1 232.788,36.5 L232.788,62.5 A2.5,2.5 0 0 1 230.288,65 L8.5,65 A2.5,2.5 0 0 1 6,62.5 L6,16.5 A2.5,2.5 0 0 1 8.5,14" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="58.213" y1="34" y2="34"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="16" y="27.889">foo1</text>
+      <text fill="#000" font-size="14" textLength="196.788" x="16" y="51.889">text containing \n description of foo</text>
+    </g>
+    <!--entity foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="5" id="ent0002">
+      <path d="M253.5,12 L293.713,12 A3.75,3.75 0 0 1 296.213,14.5 L303.213,32 L395.725,32 A2.5,2.5 0 0 1 398.225,34.5 L398.225,64.5 A2.5,2.5 0 0 1 395.725,67 L253.5,67 A2.5,2.5 0 0 1 251,64.5 L251,14.5 A2.5,2.5 0 0 1 253.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="251" x2="303.213" y1="32" y2="32"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="27.213" x="261" y="25.889">foo2</text>
+      <text fill="#000" font-size="18" font-weight="700" textLength="117.225" x="261" y="53">Creole heading</text>
+    </g>
+  </g>
+</svg>

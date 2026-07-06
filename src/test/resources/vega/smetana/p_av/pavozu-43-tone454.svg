@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="355px" preserveAspectRatio="none" style="width:246px;height:355px;" version="1.1" viewBox="0 0 246 355" width="246px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="legend" data-source-line="4">
+      <rect fill="none" height="324" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="215.888" x="12" y="12"/>
+      <text fill="#000" font-size="14" textLength="160.475" x="17" y="27.889">You can have horizontal line</text>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="227.888" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="79.45" x="17" y="51.889">Or double line</text>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="227.888" y1="60" y2="60"/>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="227.888" y1="62" y2="62"/>
+      <text fill="#000" font-size="14" textLength="76.212" x="17" y="75.889">Or strong line</text>
+      <text fill="#000" font-size="14" textLength="31.15" x="17" y="89.889">____</text>
+      <text fill="#000" font-size="14" textLength="76.212" x="17" y="103.889">Or dotted line</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="12" x2="99.731" y1="114" y2="114"/>
+      <text fill="#000" font-size="14" textLength="40.425" x="99.731" y="117.389">My title</text>
+      <line style="stroke:#000;stroke-width:1;stroke-dasharray:1,2;" x1="140.156" x2="227.888" y1="114" y2="114"/>
+      <text fill="#000" font-size="14" textLength="38.938" x="17" y="131.889">Enjoy!</text>
+      <text fill="#000" font-size="14" x="17" y="145.889"> </text>
+      <text fill="#000" font-size="14" textLength="35.875" x="17" y="159.889">TEST</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="17" y="173.889">This is</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.513" x="53.663" y="173.889">bold</text>
+      <text fill="#000" font-size="14" textLength="30.8" x="80.175" y="173.889">        </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.875" x="80.175" y="173.889">TEST</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="17" y="187.889">This is</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35.088" x="53.663" y="187.889">italics</text>
+      <text fill="#000" font-size="14" textLength="23.1" x="88.75" y="187.889">      </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35.875" x="88.75" y="187.889">TEST</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="17" y="201.889">This is</text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="80.15" x="53.663" y="201.889">monospaced</text>
+      <text fill="#000" font-size="14" textLength="11.55" x="133.813" y="201.889">   </text>
+      <text fill="#000" font-family="monospace" font-size="14" textLength="35.875" x="133.813" y="201.889">TEST</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="17" y="215.889">This is</text>
+      <text fill="#000" font-size="14" text-decoration="line-through" textLength="45.85" x="53.663" y="215.889">stroked</text>
+      <text fill="#000" font-size="14" textLength="23.1" x="99.513" y="215.889">      </text>
+      <text fill="#000" font-size="14" text-decoration="line-through" textLength="35.875" x="99.513" y="215.889">TEST</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="17" y="229.889">This is</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="65.45" x="53.663" y="229.889">underlined</text>
+      <text fill="#000" font-size="14" textLength="11.55" x="119.113" y="229.889">   </text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="18.725" x="119.113" y="229.889">$id</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="17" y="243.889">This is</text>
+      <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="40.512" x="53.663" y="243.889">waved</text>
+      <text fill="#000" font-size="14" textLength="30.8" x="94.175" y="243.889">        </text>
+      <text fill="#000" font-size="14" text-decoration="wavy underline" textLength="35.875" x="94.175" y="243.889">TEST</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="17" y="257.889">__</text>
+      <text fill="#000" font-size="14" textLength="37.45" x="17" y="271.889">bold id</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="35.875" x="54.45" y="271.889">TEST</text>
+      <text fill="#000" font-size="14" textLength="170.013" x="17" y="285.889">long long long long long bold id</text>
+      <text fill="#008000" font-size="14" font-weight="700" textLength="35.875" x="187.013" y="285.889">TEST</text>
+      <line style="stroke:#000;stroke-width:1;" x1="12" x2="90.369" y1="296" y2="296"/>
+      <text fill="#000" font-size="14" textLength="59.15" x="90.369" y="299.389">Next is KO</text>
+      <line style="stroke:#000;stroke-width:1;" x1="149.519" x2="227.888" y1="296" y2="296"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="17" y="313.889">____</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="65.45" x="17" y="327.889">underlined</text>
+      <text fill="#000" font-size="14" x="82.45" y="327.889"> </text>
+      <text fill="#F00" font-size="14" text-decoration="underline" textLength="18.725" x="82.45" y="327.889">$id</text>
+    </g>
+  </g>
+</svg>

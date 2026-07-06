@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="145px" preserveAspectRatio="none" style="width:537px;height:145px;background:#FFFFFF;" version="1.1" viewBox="0 0 537 145" width="537px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class A_Driver-->
+    <g class="entity" data-qualified-name="A_Driver" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.512" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="54.512" x="35" y="31.889">A_Driver</text>
+    </g>
+    <!--class A_Car-->
+    <g class="entity" data-qualified-name="A_Car" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.725" x="182.5" y="12"/>
+      <ellipse cx="197.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="192.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="39.725" x="211.5" y="31.889">A_Car</text>
+    </g>
+    <!--class A_Contract-->
+    <g class="entity" data-qualified-name="A_Contract" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102" x="105.5" y="97"/>
+      <ellipse cx="120.5" cy="113" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="115.5" y="118">C</text>
+      <text fill="#000" font-size="14" textLength="70" x="134.5" y="116.889">A_Contract</text>
+    </g>
+    <ellipse cx="150.5" cy="18" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <!--class B_Driver-->
+    <g class="entity" data-qualified-name="B_Driver" data-source-line="6" id="ent0010">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.512" x="273" y="12"/>
+      <ellipse cx="288" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="283" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="54.512" x="302" y="31.889">B_Driver</text>
+    </g>
+    <!--class B_Car-->
+    <g class="entity" data-qualified-name="B_Car" data-source-line="6" id="ent0011">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.725" x="449.5" y="12"/>
+      <ellipse cx="464.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="459.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="39.725" x="478.5" y="31.889">B_Car</text>
+    </g>
+    <!--class B_Contract-->
+    <g class="entity" data-qualified-name="B_Contract" data-source-line="7" id="ent0013">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="102" x="372.5" y="97"/>
+      <ellipse cx="387.5" cy="113" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="382.5" y="118">C</text>
+      <text fill="#000" font-size="14" textLength="70" x="401.5" y="116.889">B_Contract</text>
+    </g>
+    <ellipse cx="417.5" cy="18" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M93.021,28 C113.619,28 136.262,28 148.148,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.694" x="103.75" y="20.111">drives</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="182.376,28,173.376,24,177.376,28,173.376,32,182.376,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M164.734,28 C170.615,28 171.496,28 177.376,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="156.5,96.766,160.5,87.766,156.5,91.766,152.5,87.766,156.5,96.766" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M156.5,40.194 C156.5,54.796 156.5,75.405 156.5,91.766" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="89.944" x="158.5" y="74.111">under Contract &gt;</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0015" data-link-type="association" id="lnk16">
+      <path d="M360.021,28 C380.619,28 403.262,28 415.148,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.694" x="370.75" y="20.111">drives</text>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0011" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="449.376,28,440.376,24,444.376,28,440.376,32,449.376,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M431.734,28 C437.615,28 438.496,28 444.376,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0013" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="423.5,96.766,427.5,87.766,423.5,91.766,419.5,87.766,423.5,96.766" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M423.5,40.194 C423.5,54.796 423.5,75.405 423.5,91.766" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="89.944" x="425.5" y="74.111">under Contract &gt;</text>
+    </g>
+  </g>
+</svg>

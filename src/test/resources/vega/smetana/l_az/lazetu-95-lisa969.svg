@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="175px" preserveAspectRatio="none" style="width:222px;height:175px;background:#FFFFFF;" version="1.1" viewBox="0 0 222 175" width="222px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster a-->
+    <g class="cluster" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L25.288,4 A3.75,3.75 0 0 1 27.788,6.5 L34.788,24 L211.5,24 A2.5,2.5 0 0 1 214,26.5 L214,148.5 A2.5,2.5 0 0 1 211.5,151 L16.5,151 A2.5,2.5 0 0 1 14,148.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="34.788" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" x="18" y="16.889">a</text>
+    </g>
+    <!--cluster ddf-->
+    <g class="cluster" data-qualified-name="a.ddf" data-source-line="3" id="ent0004">
+      <path d="M24.5,29 L44.925,29 A3.75,3.75 0 0 1 47.425,31.5 L54.425,49 L203.5,49 A2.5,2.5 0 0 1 206,51.5 L206,140.5 A2.5,2.5 0 0 1 203.5,143 L24.5,143 A2.5,2.5 0 0 1 22,140.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="54.425" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="26" y="41.889">ddf</text>
+    </g>
+    <!--cluster content-->
+    <g class="cluster" data-qualified-name="a.ddf.content" data-source-line="2" id="ent0002">
+      <path d="M32.5,54 L79.35,54 A3.75,3.75 0 0 1 81.85,56.5 L88.85,74 L195.5,74 A2.5,2.5 0 0 1 198,76.5 L198,132.5 A2.5,2.5 0 0 1 195.5,135 L32.5,135 A2.5,2.5 0 0 1 30,132.5 L30,56.5 A2.5,2.5 0 0 1 32.5,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="88.85" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.85" x="34" y="66.889">content</text>
+    </g>
+    <!--class ContentFramework-->
+    <g class="entity" data-qualified-name="a.ddf.content.ContentFramework" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151" x="38.5" y="79"/>
+      <ellipse cx="53.5" cy="95" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="48.5" y="100">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="119" x="67.5" y="98.889">ContentFramework</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="188.5" y1="111" y2="111"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="188.5" y1="119" y2="119"/>
+    </g>
+  </g>
+</svg>

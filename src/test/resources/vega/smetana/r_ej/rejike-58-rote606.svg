@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="118px" preserveAspectRatio="none" style="width:256px;height:118px;background:#FFFFFF;" version="1.1" viewBox="0 0 256 118" width="256px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="a" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="32"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="56" y2="56"/>
+      <text fill="#000" font-size="14" x="27.106" y="47.889">a</text>
+    </g>
+    <g class="entity" data-qualified-name="b" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="90" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="165.6" x="74" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="74" x2="239.6" y1="92" y2="92"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="84" y="27.889">In</text>
+      <text fill="#000" font-size="14" x="95.638" y="27.889"> </text>
+      <text fill="#000" font-size="14" textLength="18.638" x="95.638" y="27.889">my</text>
+      <text fill="#000" font-size="14" x="114.275" y="27.889"> </text>
+      <text fill="#000" font-size="14" textLength="45.938" x="114.275" y="27.889">humble</text>
+      <text fill="#000" font-size="14" x="160.213" y="27.889"> </text>
+      <text fill="#000" font-size="14" textLength="45.238" x="160.213" y="27.889">opinion</text>
+      <text fill="#000" font-size="14" x="205.45" y="27.889"> </text>
+      <text fill="#000" font-size="14" textLength="21.788" x="205.45" y="27.889">this</text>
+      <text fill="#000" font-size="14" textLength="10.15" x="84" y="41.889">is</text>
+      <text fill="#000" font-size="14" x="94.15" y="41.889"> </text>
+      <text fill="#000" font-size="14" textLength="65.45" x="94.15" y="41.889">definitively</text>
+      <text fill="#000" font-size="14" x="159.6" y="41.889"> </text>
+      <text fill="#000" font-size="14" textLength="19.425" x="159.6" y="41.889">too</text>
+      <text fill="#000" font-size="14" x="179.025" y="41.889"> </text>
+      <text fill="#000" font-size="14" textLength="26.512" x="179.025" y="41.889">long</text>
+      <text fill="#000" font-size="14" x="205.538" y="41.889"> </text>
+      <text fill="#000" font-size="14" textLength="16.275" x="205.538" y="41.889">for</text>
+      <text fill="#000" font-size="14" x="221.813" y="41.889"> </text>
+      <text fill="#000" font-size="14" x="221.813" y="41.889">a</text>
+      <text fill="#000" font-size="14" textLength="30.275" x="84" y="55.889">state</text>
+      <text fill="#000" font-size="14" x="114.275" y="55.889"> </text>
+      <text fill="#000" font-size="14" textLength="35" x="114.275" y="55.889">name</text>
+      <text fill="#000" font-size="14" x="149.275" y="55.889"> </text>
+      <text fill="#000" font-size="14" textLength="23.363" x="149.275" y="55.889">one</text>
+      <text fill="#000" font-size="14" x="172.638" y="55.889"> </text>
+      <text fill="#000" font-size="14" textLength="26.513" x="172.638" y="55.889">liner</text>
+      <text fill="#000" font-size="14" x="199.15" y="55.889"> </text>
+      <text fill="#000" font-size="14" textLength="23.363" x="199.15" y="55.889">and</text>
+      <text fill="#000" font-size="14" textLength="36.663" x="84" y="69.889">would</text>
+      <text fill="#000" font-size="14" x="120.663" y="69.889"> </text>
+      <text fill="#000" font-size="14" textLength="42" x="120.663" y="69.889">benefit</text>
+      <text fill="#000" font-size="14" x="162.663" y="69.889"> </text>
+      <text fill="#000" font-size="14" textLength="27.913" x="162.663" y="69.889">from</text>
+      <text fill="#000" font-size="14" textLength="56.875" x="84" y="83.889">wrapping</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="73.838,57,64.838,53,68.838,57,64.838,61,73.838,57" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56.102,57 C62.014,57 62.926,57 68.838,57" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

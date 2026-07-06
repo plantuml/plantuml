@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="164px" preserveAspectRatio="none" style="width:421px;height:164px;background:#FFFFFF;" version="1.1" viewBox="0 0 421 164" width="421px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class VGP_Golden_Attribute-->
+    <g class="entity" data-qualified-name="VGP_Golden_Attribute" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="136" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="259.537" x="145.5" y="12"/>
+      <ellipse cx="199.837" cy="30" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="194.837" y="35">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="84.75" x="249.144" y="26.333">«Configuration»</text>
+      <text fill="#000" font-size="14" textLength="142.363" x="220.337" y="39.889">VGP_Golden_Attribute</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="146.5" x2="404.037" y1="48" y2="48"/>
+      <text fill="#000" font-size="14" textLength="247.537" x="151.5" y="62.889">SGA_Extraction_Rule_Type : EntityCode</text>
+      <text fill="#000" font-size="14" textLength="215.513" x="151.5" y="76.889">SGA_Extraction_Rule : MaxVarchar</text>
+      <text fill="#000" font-size="14" textLength="197.663" x="151.5" y="90.889">SGA_Value_Format : EntityCode</text>
+      <text fill="#000" font-size="14" textLength="184.188" x="151.5" y="104.889">SGA_Mandatory : Character[1]</text>
+      <text fill="#000" font-size="14" textLength="136.238" x="151.5" y="118.889">Valid_From : DateTime</text>
+      <text fill="#000" font-size="14" textLength="119.963" x="151.5" y="132.889">Valid_To : DateTime</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="146.5" x2="404.037" y1="140" y2="140"/>
+    </g>
+    <path d="M6,63.5 L6,86.5 A0,0 0 0 0 6,86.5 L126.694,86.5 A0,0 0 0 0 126.694,86.5 L126.694,81.5 L151.5,87 L126.694,73.5 L126.694,73.5 L116.694,63.5 L6,63.5 A0,0 0 0 0 6,63.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M116.694,63.5 L116.694,73.5 L126.694,73.5 L116.694,63.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="99.694" x="12" y="78.611">i.e. DD.MM.YYYY</text>
+  </g>
+</svg>

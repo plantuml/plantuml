@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="353px" preserveAspectRatio="none" style="width:1297px;height:353px;background:#FFFFFF;" version="1.1" viewBox="0 0 1297 353" width="1297px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster tempSensor-->
+    <g class="cluster" data-qualified-name="tempSensor" data-source-line="5" id="ent0001">
+      <rect fill="none" height="96" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="230" x="305.5" y="34.5"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="515.5" y="39.5"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="513.5" y="41.5"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="513.5" y="45.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="396.35" y="58.389">«block»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="124.425" x="358.288" y="72.389">Temperature Sensor</text>
+    </g>
+    <!--cluster tempProcessing-->
+    <g class="cluster" data-qualified-name="tempProcessing" data-source-line="23" id="ent0007">
+      <rect fill="none" height="96" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="230" x="158.5" y="138.5"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="368.5" y="143.5"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="366.5" y="145.5"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="366.5" y="149.5"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="249.35" y="162.389">«block»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="149.363" x="198.819" y="176.389">Temperature Processing</text>
+    </g>
+    <!--cluster displayTemp-->
+    <g class="cluster" data-qualified-name="displayTemp" data-source-line="42" id="ent0014">
+      <rect fill="none" height="288.5" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="326" x="657.5" y="12"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="963.5" y="17"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="961.5" y="19"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="961.5" y="23"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="796.35" y="35.889">«block»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="79.45" x="780.775" y="49.889">displayTemp</text>
+    </g>
+    <!--cluster internals-->
+    <g class="cluster" data-qualified-name="displayTemp.internals" data-source-line="53" id="ent0018">
+      <rect fill="none" height="181" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="124" x="665.5" y="51"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.938" x="701.031" y="63.889">internals</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="17" id="ent0005">
+      <path d="M398,184 L398,220 L649.263,220 L649.263,194 L639.263,184 L398,184" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M639.263,184 L639.263,194 L649.263,194 L639.263,184" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="230.263" x="404" y="199.111">2 Measure the temperature and outputs it as</text>
+      <text fill="#000" font-size="13" textLength="158.356" x="404" y="212.111">raw, unfiltered value in Kelvin.</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN11" data-source-line="36" id="ent0012">
+      <path d="M6,275.5 L6,337.5 L247.35,337.5 L247.35,285.5 L237.35,275.5 L6,275.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M237.35,275.5 L237.35,285.5 L247.35,285.5 L237.35,275.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="220.35" x="12" y="290.611">4 Takes the given raw temperature values</text>
+      <text fill="#000" font-size="13" textLength="193.05" x="12" y="303.611">in Kelvin, puts a moving average with</text>
+      <text fill="#000" font-size="13" textLength="211.088" x="12" y="316.611">configurable window size on it, converts</text>
+      <text fill="#000" font-size="13" textLength="178.344" x="12" y="329.611">it to degree and outputs that value.</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN25" data-source-line="65" id="ent0026">
+      <path d="M1043.5,164.5 L1043.5,239.5 L1281.925,239.5 L1281.925,174.5 L1271.925,164.5 L1043.5,164.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1271.925,164.5 L1271.925,174.5 L1281.925,174.5 L1271.925,164.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="163.881" x="1049.5" y="179.611">6 Gets as input a temperature in</text>
+      <text fill="#000" font-size="13" textLength="200.85" x="1049.5" y="192.611">degree Celsius or Fahrenheit, or both.</text>
+      <text fill="#000" font-size="13" textLength="185.656" x="1049.5" y="205.611">Displays both temperature values.</text>
+      <text fill="#000" font-size="13" textLength="217.425" x="1049.5" y="218.611">Calls the tempConverter for conversion if</text>
+      <text fill="#000" font-size="13" textLength="162.744" x="1049.5" y="231.611">only one value is given as input.</text>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.tempSensor_TVs" data-source-line="7" id="ent0002">
+      <path d="M368,73.5 L368,122.5 L527.044,122.5 L527.044,83.5 L517.044,73.5 L368,73.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M517.044,73.5 L517.044,83.5 L527.044,83.5 L517.044,73.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="138.044" x="374" y="88.611">1 some tagged value table</text>
+      <text fill="#000" font-size="13" textLength="74.506" x="374" y="101.611">would be here</text>
+      <text fill="#000" font-size="13" textLength="44.119" x="374" y="114.611">usually.</text>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.tempSensor_temp_dK_raw" data-source-line="12" id="ent0003">
+      <text fill="#000" font-size="14" textLength="86.363" x="262.319" y="108.889">temp_dK_raw</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="299.5" y="86"/>
+    </g>
+    <g class="entity" data-qualified-name="tempProcessing.tempProcessing_TVs" data-source-line="26" id="ent0008">
+      <path d="M221,177.5 L221,226.5 L380.044,226.5 L380.044,187.5 L370.044,177.5 L221,177.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M370.044,177.5 L370.044,187.5 L380.044,187.5 L370.044,177.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="138.044" x="227" y="192.611">3 some tagged value table</text>
+      <text fill="#000" font-size="13" textLength="74.506" x="227" y="205.611">would be here</text>
+      <text fill="#000" font-size="13" textLength="44.119" x="227" y="218.611">usually.</text>
+    </g>
+    <g class="entity" data-qualified-name="tempProcessing.tempProcessing_temp_dK_raw_in" data-source-line="31" id="ent0009">
+      <text fill="#000" font-size="14" textLength="86.363" x="149.319" y="212.889">temp_dK_raw</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="186.5" y="190"/>
+    </g>
+    <g class="entity" data-qualified-name="tempProcessing.tempProcessing_temp_dC_filtered_out" data-source-line="32" id="ent0010">
+      <text fill="#000" font-size="14" textLength="106.575" x="105.212" y="212.889">temp_dC_filtered</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="152.5" y="190"/>
+    </g>
+    <g class="entity" data-qualified-name="displayTemp.temp_dC_displayTemp" data-source-line="44" id="ent0015">
+      <text fill="#000" font-size="14" textLength="56.787" x="670.106" y="317.389">temp_dC</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="692.5" y="294.5"/>
+    </g>
+    <g class="entity" data-qualified-name="displayTemp.temp_dF_displayTemp" data-source-line="45" id="ent0016">
+      <text fill="#000" font-size="14" textLength="55.212" x="955.894" y="70.889">temp_dF</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="977.5" y="86"/>
+    </g>
+    <g class="entity" data-qualified-name="displayTemp.displayTemp_TVs" data-source-line="48" id="ent0017">
+      <path d="M800,73.5 L800,122.5 L959.044,122.5 L959.044,83.5 L949.044,73.5 L800,73.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M949.044,73.5 L949.044,83.5 L959.044,83.5 L949.044,73.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="138.044" x="806" y="88.611">5 some tagged value table</text>
+      <text fill="#000" font-size="13" textLength="112.125" x="806" y="101.611">would be shown here</text>
+      <text fill="#000" font-size="13" textLength="44.119" x="806" y="114.611">usually.</text>
+    </g>
+    <!--entity display-->
+    <g class="entity" data-qualified-name="displayTemp.internals.display" data-source-line="54" id="ent0019">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.663" x="685.5" y="180"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="749.163" y="185"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="747.163" y="187"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="747.163" y="191"/>
+      <text fill="#000" font-size="14" textLength="43.663" x="700.5" y="210.889">display</text>
+    </g>
+    <!--entity conversion-->
+    <g class="entity" data-qualified-name="displayTemp.internals.conversion" data-source-line="55" id="ent0020">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="107.725" x="673.5" y="76"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="761.225" y="81"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="759.225" y="83"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="759.225" y="87"/>
+      <text fill="#000" font-size="14" textLength="67.725" x="688.5" y="106.889">conversion</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="association" id="lnk6">
+      <path d="M358.5,130.5 C370.825,139.938 377.855,133.35 392.5,138.5 C427.92,150.955 466.487,170.084 492.538,183.899" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0012" data-link-type="association" id="lnk13">
+      <path d="M126.5,214.361 C126.5,228.955 126.5,254.844 126.5,275.31" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0015" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="721.906,224.238,715.745,231.922,720.632,229.073,723.481,233.96,721.906,224.238" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M720.632,229.073 C715.01,250.418 707.836,277.65 703.422,294.406" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0019" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="769.582,198.119,778.955,201.144,774.554,197.59,778.108,193.189,769.582,198.119" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M981.644,110.078 C978.744,116.882 974.122,125.267 967.5,130.5 C909.062,176.673 826.183,192.092 774.554,197.59" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0020" data-entity-2="ent0019" data-link-type="dependency" id="lnk24">
+      <polygon fill="#181818" points="727.5,120.134,723.5,129.134,727.5,125.134,731.5,129.134,727.5,120.134" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <polygon fill="#181818" points="727.5,179.893,731.5,170.893,727.5,174.893,723.5,170.893,727.5,179.893" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M727.5,125.134 C727.5,142.64 727.5,157.394 727.5,174.893" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0026" data-link-type="association" id="lnk27">
+      <path d="M1027.598,104.776 C1043.551,116.155 1080.193,142.292 1111.268,164.457" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0009" data-link-type="dependency" id="lnk28">
+      <polygon fill="#181818" points="194.656,189.913,199.157,181.152,194.938,184.921,191.169,180.702,194.656,189.913" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M299.43,99.925 C280.98,102.478 235.468,111.338 211.5,138.5 C198.703,153.002 195.709,171.239 194.938,184.921" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0015" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="692.273,305.52,683.273,301.52,687.273,305.52,683.273,309.52,692.273,305.52" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M162.652,214.094 C164.885,222.459 169.255,233.485 177.5,239.5 C264.377,302.873 627.468,305.513 687.273,305.519" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

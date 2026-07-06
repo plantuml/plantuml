@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="218px" preserveAspectRatio="none" style="width:328px;height:218px;background:#FFC0CB;" version="1.1" viewBox="0 0 328 218" width="328px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC0CB" height="218" style="stroke:none;" width="328" x="0" y="0"/>
+    <!--entity package_ok-->
+    <g class="entity" data-qualified-name="package_ok" data-source-line="9" id="ent0001">
+      <path d="M8.5,16.5 L97.013,16.5 A3.75,3.75 0 0 1 99.513,19 L106.513,36.5 L121.013,36.5 A2.5,2.5 0 0 1 123.513,39 L123.513,51 A2.5,2.5 0 0 1 121.013,53.5 L8.5,53.5 A2.5,2.5 0 0 1 6,51 L6,19 A2.5,2.5 0 0 1 8.5,16.5" fill="#FFC0CB" style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;"/>
+      <line style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;" x1="6" x2="106.513" y1="36.5" y2="36.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="75.513" x="16" y="30.389">package_ok</text>
+    </g>
+    <!--entity node_ok-->
+    <g class="entity" data-qualified-name="node_ok" data-source-line="10" id="ent0002">
+      <polygon fill="#FFC0CB" points="142,23,152,13,235.725,13,235.725,47,225.725,57,142,57,142,23" style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;" x1="225.725" x2="235.725" y1="23" y2="13"/>
+      <line style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;" x1="142" x2="225.725" y1="23" y2="23"/>
+      <line style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;" x1="225.725" x2="225.725" y1="23" y2="57"/>
+      <text fill="#000" font-size="14" textLength="53.725" x="157" y="43.889">node_ok</text>
+    </g>
+    <!--entity boundary-->
+    <g class="entity" data-qualified-name="boundary" data-source-line="11" id="ent0003">
+      <path d="M262.681,16 L262.681,40 M262.681,28 L279.681,28" fill="none" style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;"/>
+      <ellipse cx="291.681" cy="28" fill="#FFC0CB" rx="12" ry="12" style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;"/>
+      <text fill="#000" font-size="14" textLength="58.362" x="254" y="54.889">boundary</text>
+    </g>
+    <!--entity control-->
+    <g class="entity" data-qualified-name="control" data-source-line="12" id="ent0004">
+      <ellipse cx="65" cy="110" fill="#FFC0CB" rx="12" ry="12" style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;"/>
+      <polygon fill="#FF0" points="61,98,67,93,65,98,67,103,61,98" style="stroke:#FF0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="42" x="44" y="136.889">control</text>
+    </g>
+    <!--entity entity-->
+    <g class="entity" data-qualified-name="entity" data-source-line="13" id="ent0005">
+      <ellipse cx="121.213" cy="110" fill="#FFC0CB" rx="12" ry="12" style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;"/>
+      <line style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;" x1="109.213" x2="133.213" y1="124" y2="124"/>
+      <text fill="#000" font-size="14" textLength="33.425" x="104.5" y="136.889">entity</text>
+    </g>
+    <!--entity interface-->
+    <g class="entity" data-qualified-name="interface" data-source-line="14" id="ent0006">
+      <ellipse cx="165" cy="114" fill="#FFC0CB" rx="8" ry="8" style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;"/>
+      <text fill="#000" font-size="14" textLength="53.637" x="138.181" y="141.889">interface</text>
+    </g>
+    <!--entity usecase-->
+    <g class="entity" data-qualified-name="usecase" data-source-line="15" id="ent0007">
+      <ellipse cx="64.876" cy="188.899" fill="#FFC0CB" rx="39.876" ry="12.899" style="stroke:#FF0;stroke-width:1;stroke-dasharray:2,2;"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="38.801" y="192.399">usecase</text>
+    </g>
+  </g>
+</svg>

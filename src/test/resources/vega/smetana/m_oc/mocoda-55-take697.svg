@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="156px" preserveAspectRatio="none" style="width:124px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 124 156" width="124px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster X1-->
+    <g class="cluster" data-qualified-name="X1" data-source-line="2" id="ent0002">
+      <path d="M16.5,4 L34.65,4 A3.75,3.75 0 0 1 37.15,6.5 L44.15,24 L113.5,24 A2.5,2.5 0 0 1 116,26.5 L116,129.5 A2.5,2.5 0 0 1 113.5,132 L16.5,132 A2.5,2.5 0 0 1 14,129.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="44.15" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="18" y="16.889">X1</text>
+    </g>
+    <!--cluster X2-->
+    <g class="cluster" data-qualified-name="X1..X2" data-source-line="2" id="ent0003">
+      <path d="M24.5,29 L42.65,29 A3.75,3.75 0 0 1 45.15,31.5 L52.15,49 L105.5,49 A2.5,2.5 0 0 1 108,51.5 L108,121.5 A2.5,2.5 0 0 1 105.5,124 L24.5,124 A2.5,2.5 0 0 1 22,121.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="52.15" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.15" x="26" y="41.889">X2</text>
+    </g>
+    <!--class foo-->
+    <g class="entity" data-qualified-name="X1..X2..foo" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="68.788" x="30.5" y="54"/>
+      <ellipse cx="53.313" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="48.313" y="75">C</text>
+      <text fill="#000" font-size="14" textLength="19.425" x="69.049" y="73.889">foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="98.288" y1="86" y2="86"/>
+      <text fill="#000" font-size="14" textLength="56.788" x="36.5" y="100.889">some info</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="98.288" y1="108" y2="108"/>
+    </g>
+  </g>
+</svg>

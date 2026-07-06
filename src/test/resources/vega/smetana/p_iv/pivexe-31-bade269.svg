@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="128px" preserveAspectRatio="none" style="width:116px;height:128px;background:#FFFFFF;" version="1.1" viewBox="0 0 116 128" width="116px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Menu-->
+    <g class="entity" data-qualified-name="Menu" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67" x="19.5" y="12"/>
+      <ellipse cx="34.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="29.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="35" x="48.5" y="31.889">Menu</text>
+    </g>
+    <!--class MenuItem-->
+    <g class="entity" data-qualified-name="MenuItem" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="32" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.125" x="6" y="80"/>
+      <ellipse cx="21" cy="96" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="101">C</text>
+      <text fill="#000" font-size="14" textLength="62.125" x="35" y="99.889">MenuItem</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M53,44.308 C53,54.97 53,69.131 53,79.775" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="47" y="75.887">*</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="144px" preserveAspectRatio="none" style="width:686px;height:144px;background:#FFFFFF;" version="1.1" viewBox="0 0 686 144" width="686px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster F1-->
+    <g class="cluster" data-qualified-name="F1" data-source-line="13" id="ent0005">
+      <rect fill="#C2F0FF" height="107" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="212" x="458" y="12"/>
+      <path d="M572.76,18.639 L557.934,18.686 A0.5,0.5 0 0 0 557.434,19.186 L557.434,20.623 L554.946,20.604 A0.5,0.5 0 0 0 554.442,21.104 L554.442,23.039 A0.5,0.5 0 0 0 554.942,23.539 L557.422,23.539 L557.399,24.582 L554.899,24.563 A0.5,0.5 0 0 0 554.395,25.063 L554.395,26.998 A0.5,0.5 0 0 0 554.895,27.498 L557.387,27.498 L557.387,30.5 A0.5,0.5 0 0 0 557.888,31.001 L572.761,31.047 A0.5,0.5 0 0 0 573.262,30.547 L573.262,19.139 A0.5,0.5 0 0 0 572.761,18.639 M572.262,19.641 L572.262,30.045 L558.387,30.002 L558.387,27.498 L560.881,27.498 A0.5,0.5 0 0 0 561.381,26.998 L561.381,25.11 A0.5,0.5 0 0 0 560.885,24.61 L558.399,24.59 L558.422,23.539 L560.928,23.539 A0.5,0.5 0 0 0 561.428,23.039 L561.428,21.15 A0.5,0.5 0 0 0 560.932,20.651 L558.434,20.631 L558.434,19.684 M555.442,21.608 L560.428,21.647 L560.428,22.54 L555.442,22.54 M555.395,25.567 L560.381,25.606 L560.381,26.498 L555.395,26.498" fill="#000"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49.875" x="539.063" y="44.889">Finance</text>
+    </g>
+    <!--entity F-->
+    <g class="entity" data-qualified-name="F" data-source-line="8" id="ent0001">
+      <rect fill="#C2F0FF" height="54" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.875" x="186" y="57"/>
+      <path d="M229.698,71.639 L214.872,71.686 A0.5,0.5 0 0 0 214.372,72.186 L214.372,73.623 L211.884,73.604 A0.5,0.5 0 0 0 211.379,74.104 L211.379,76.039 A0.5,0.5 0 0 0 211.879,76.539 L214.36,76.539 L214.336,77.582 L211.837,77.563 A0.5,0.5 0 0 0 211.333,78.063 L211.333,79.998 A0.5,0.5 0 0 0 211.832,80.498 L214.325,80.498 L214.325,83.5 A0.5,0.5 0 0 0 214.825,84.001 L229.698,84.047 A0.5,0.5 0 0 0 230.2,83.547 L230.2,72.139 A0.5,0.5 0 0 0 229.698,71.639 M229.199,72.641 L229.199,83.045 L215.324,83.002 L215.324,80.498 L217.819,80.498 A0.5,0.5 0 0 0 218.318,79.998 L218.318,78.11 A0.5,0.5 0 0 0 217.822,77.61 L215.336,77.59 L215.36,76.539 L217.865,76.539 A0.5,0.5 0 0 0 218.365,76.039 L218.365,74.15 A0.5,0.5 0 0 0 217.869,73.651 L215.371,73.631 L215.371,72.684 M212.379,74.608 L217.366,74.647 L217.366,75.54 L212.379,75.54 M212.332,78.567 L217.319,78.606 L217.319,79.498 L212.332,79.498" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="49.875" x="196" y="97.889">Finance</text>
+    </g>
+    <!--entity TP-->
+    <g class="entity" data-qualified-name="TP" data-source-line="9" id="ent0002">
+      <rect fill="#C2F0FF" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="162.45" x="6" y="57"/>
+      <path d="M86.984,71.32 L78.021,75.289 A0.5,0.5 0 0 0 77.724,75.746 L77.724,83.783 A0.5,0.5 0 0 0 78.425,84.24 L87.22,80.361 L96.013,84.24 A0.5,0.5 0 0 0 96.716,83.783 L96.716,75.779 A0.5,0.5 0 0 0 96.418,75.322 L87.39,71.32 A0.5,0.5 0 0 0 86.984,71.32 M87.187,72.324 L95.716,76.103 L95.716,83.017 L87.422,79.357 A0.5,0.5 0 0 0 87.017,79.357 L78.724,83.017 L78.724,76.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="142.45" x="16" y="97.889">Transaction Processing</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN7" data-source-line="17" id="ent0008">
+      <path d="M274.5,40 L274.5,128 L447.925,128 L447.925,50 L437.925,40 L274.5,40" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M437.925,40 L437.925,50 L447.925,50 L437.925,40" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="150.638" x="280.5" y="55.111">&lt;-- this can be understood as</text>
+      <text fill="#000" font-size="13" textLength="100.019" x="280.5" y="68.111">the same as this --&gt;</text>
+      <text fill="#000" font-size="13" textLength="103.838" x="280.5" y="81.111">targets of structural</text>
+      <text fill="#000" font-size="13" textLength="134.469" x="280.5" y="94.111">relationships can appear</text>
+      <text fill="#000" font-size="13" textLength="152.425" x="280.5" y="107.111">nested in the source element</text>
+      <a href="https://pubs.opengroup.org/architecture/archimate3-doc/chap05.html#_Toc10045311" target="_top" title="https://pubs.opengroup.org/architecture/archimate3-doc/chap05.html#_Toc10045311" xlink:actuate="onRequest" xlink:href="https://pubs.opengroup.org/architecture/archimate3-doc/chap05.html#_Toc10045311" xlink:show="new" xlink:title="https://pubs.opengroup.org/architecture/archimate3-doc/chap05.html#_Toc10045311" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="135.119" x="280.5" y="120.111">ArchiMate 3.1 on Nesting</text>
+      </a>
+    </g>
+    <!--entity TP1-->
+    <g class="entity" data-qualified-name="F1.TP1" data-source-line="14" id="ent0006">
+      <rect fill="#C2F0FF" height="54" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="162.45" x="500" y="57"/>
+      <path d="M580.984,71.32 L572.021,75.289 A0.5,0.5 0 0 0 571.724,75.746 L571.724,83.783 A0.5,0.5 0 0 0 572.425,84.24 L581.22,80.361 L590.013,84.24 A0.5,0.5 0 0 0 590.716,83.783 L590.716,75.779 A0.5,0.5 0 0 0 590.418,75.322 L581.39,71.32 A0.5,0.5 0 0 0 580.984,71.32 M581.187,72.324 L589.716,76.103 L589.716,83.017 L581.422,79.357 A0.5,0.5 0 0 0 581.017,79.357 L572.724,83.017 L572.724,76.072" fill="#000"/>
+      <text fill="#000" font-size="14" textLength="142.45" x="510" y="97.889">Transaction Processing</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="168.133,84,177.133,88,173.133,84,177.133,80,168.133,84" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <ellipse cx="179.893" cy="84" fill="#FFF" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+      <path d="M173.133,84 C179.053,84 167.973,84 173.893,84" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0005" data-link-type="association" id="lnk9">
+      <path d="M447.516,84 C450.55,84 453.585,84 456.62,84 C456.999,84 457.378,84 457.758,84 C457.805,84 457.852,84 457.9,84 C457.924,84 457.947,84 457.971,84" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

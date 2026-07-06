@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="220px" preserveAspectRatio="none" style="width:640px;height:220px;background:#FFFFFF;" version="1.1" viewBox="0 0 640 220" width="640px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="180" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="551.037" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" x="15" y="22.889">a</text>
+    <text fill="#000" font-size="14" textLength="36.138" x="514.387" y="22.889">☑ true</text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="561.037" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="15" y="40.889">desc</text>
+    <text fill="#000" font-size="14" x="514.387" y="40.889">a</text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="561.037" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="15" y="58.889">addP</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="514.387" y="58.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="46" y2="64"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="561.037" y1="64" y2="64"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.513" x="15" y="76.889">addP1</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="514.387" y="76.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="64" y2="82"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="561.037" y1="82" y2="82"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.513" x="15" y="94.889">addP2</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="514.387" y="94.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="82" y2="100"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="561.037" y1="100" y2="100"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.513" x="15" y="112.889">addP3</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="514.387" y="112.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="100" y2="118"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="561.037" y1="118" y2="118"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.513" x="15" y="130.889">addP4</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="514.387" y="130.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="118" y2="136"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="561.037" y1="136" y2="136"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.513" x="15" y="148.889">addP5</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="514.387" y="148.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="136" y2="154"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="561.037" y1="154" y2="154"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="40.513" x="15" y="166.889">addP6</text>
+    <text fill="#000" font-size="14" textLength="41.65" x="514.387" y="166.889">☐ false</text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="154" y2="172"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="561.037" y1="172" y2="172"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="489.387" x="15" y="184.889">allOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOf</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="514.387" y="184.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="509.387" x2="509.387" y1="172" y2="190"/>
+    <rect fill="none" height="180" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="551.037" x="10" y="10"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="30.825" x="598" y="154"/>
+    <text fill="#000" font-size="14" textLength="20.825" x="603" y="166.889">{ ... }</text>
+    <line style="stroke:#000;stroke-width:1;" x1="598" x2="628.825" y1="172" y2="172"/>
+    <text fill="#000" font-size="14" textLength="20.825" x="603" y="184.889">{ ... }</text>
+    <line style="stroke:#000;stroke-width:1;" x1="598" x2="628.825" y1="190" y2="190"/>
+    <text fill="#000" font-size="14" textLength="20.825" x="603" y="202.889">{ ... }</text>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="30.825" x="598" y="154"/>
+    <path d="M549,181 L562,181 C571.355,181 581.675,181 590.57,181" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M590.57,184.08 L592.88,181 L590.57,177.92 L598.27,181 L590.57,184.08" fill="#000"/>
+    <ellipse cx="549" cy="181" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

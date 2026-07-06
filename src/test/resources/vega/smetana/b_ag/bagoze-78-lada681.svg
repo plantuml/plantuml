@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="264px" preserveAspectRatio="none" style="width:574px;height:264px;background:#FFFFFF;" version="1.1" viewBox="0 0 574 264" width="574px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.788" x="258.463" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="286.25" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="284.25" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="284.25" y="23"/>
+      <text fill="#000" font-size="14" x="273.463" y="42.889">a</text>
+    </g>
+    <!--entity b-->
+    <g class="entity" data-qualified-name="b" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="47.788" x="258.463" y="109"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="286.25" y="114"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="284.25" y="116"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="284.25" y="120"/>
+      <text fill="#000" font-size="14" x="273.463" y="139.889">b</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#00F" points="282.463,108.975,286.463,99.975,282.463,103.975,278.463,99.975,282.463,108.975" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M282.463,56.084 C282.463,71.827 282.463,88.246 282.463,103.975" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="20.881" x="284.463" y="86.111">test</text>
+    </g>
+    <g class="legend" data-source-line="11">
+      <rect fill="#DDD" height="70" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="543.925" x="12" y="175"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="33.512" x="17" y="192.889">Code</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="70.088" x="249.838" y="192.889">Description</text>
+      <text fill="#000" font-size="14" textLength="151.2" x="17" y="206.889">a -[#blue,dashed]-&gt; b: test</text>
+      <text fill="#000" font-size="14" textLength="114.45" x="249.838" y="206.889">This style works fine</text>
+      <text fill="#000" font-size="14" textLength="232.838" x="17" y="220.889">a -[#blue,dashed;#red,dashed]-&gt; b: test</text>
+      <text fill="#000" font-size="14" textLength="280.262" x="249.838" y="220.889">Multiple arrow style works only in Activity diagram</text>
+      <text fill="#000" font-size="14" textLength="301.088" x="249.838" y="234.889">Can this be supported for Component Diagrams too?</text>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="550.925" y1="182" y2="182"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="550.925" y1="196" y2="196"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="550.925" y1="210" y2="210"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="550.925" y1="238" y2="238"/>
+      <line style="stroke:#000;stroke-width:1;" x1="17" x2="17" y1="182" y2="238"/>
+      <line style="stroke:#000;stroke-width:1;" x1="249.838" x2="249.838" y1="182" y2="238"/>
+      <line style="stroke:#000;stroke-width:1;" x1="550.925" x2="550.925" y1="182" y2="238"/>
+    </g>
+  </g>
+</svg>

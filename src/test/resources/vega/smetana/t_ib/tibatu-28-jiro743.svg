@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="302px" preserveAspectRatio="none" style="width:1233px;height:302px;background:#FFFFFF;" version="1.1" viewBox="0 0 1233 302" width="1233px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster DDF Content API-->
+    <g class="cluster" data-qualified-name="DDF Content API" data-source-line="3" id="ent0001">
+      <path d="M16.5,4 L117.95,4 A3.75,3.75 0 0 1 120.45,6.5 L127.45,24 L849.5,24 A2.5,2.5 0 0 1 852,26.5 L852,275.5 A2.5,2.5 0 0 1 849.5,278 L16.5,278 A2.5,2.5 0 0 1 14,275.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="#DDD" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="127.45" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="100.45" x="18" y="16.889">DDF Content API</text>
+    </g>
+    <!--cluster ddf-->
+    <g class="cluster" data-qualified-name="DDF Content API.ddf" data-source-line="5" id="ent0004">
+      <path d="M24.5,29 L44.925,29 A3.75,3.75 0 0 1 47.425,31.5 L54.425,49 L841.5,49 A2.5,2.5 0 0 1 844,51.5 L844,267.5 A2.5,2.5 0 0 1 841.5,270 L24.5,270 A2.5,2.5 0 0 1 22,267.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="54.425" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="26" y="41.889">ddf</text>
+    </g>
+    <!--cluster content-->
+    <g class="cluster" data-qualified-name="DDF Content API.ddf.content" data-source-line="4" id="ent0002">
+      <polygon fill="none" points="30,64,40,54,836,54,836,252,826,262,30,262,30,64" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="826" x2="836" y1="64" y2="54"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="30" x2="826" y1="64" y2="64"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="826" x2="826" y1="64" y2="262"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.85" x="406.075" y="77.889">content</text>
+    </g>
+    <!--cluster operation-->
+    <g class="cluster" data-qualified-name="DDF Content API.ddf.content.operation" data-source-line="7" id="ent0005">
+      <polygon fill="none" points="502,94,512,84,828,84,828,244,818,254,502,254,502,94" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="818" x2="828" y1="94" y2="84"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="502" x2="818" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="818" x2="818" y1="94" y2="254"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="58.363" x="631.819" y="107.889">operation</text>
+    </g>
+    <!--cluster provider-->
+    <g class="cluster" data-qualified-name="DDF Content API.ddf.content.provider" data-source-line="14" id="ent0011">
+      <polygon fill="none" points="344,94,354,84,494,84,494,160,484,170,344,170,344,94" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="484" x2="494" y1="94" y2="84"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="344" x2="484" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="484" x2="484" y1="94" y2="170"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="50.575" x="389.713" y="107.889">provider</text>
+    </g>
+    <!--cluster plugin-->
+    <g class="cluster" data-qualified-name="DDF Content API.ddf.content.plugin" data-source-line="17" id="ent0013">
+      <polygon fill="none" points="200,94,210,84,336,84,336,160,326,170,200,170,200,94" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="326" x2="336" y1="94" y2="84"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="200" x2="326" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="326" x2="326" y1="94" y2="170"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.45" x="245.275" y="107.889">plugin</text>
+    </g>
+    <!--cluster DDF Mime Types Support-->
+    <g class="cluster" data-qualified-name="DDF Mime Types Support" data-source-line="21" id="ent0015">
+      <path d="M862.5,34 L1013.738,34 A3.75,3.75 0 0 1 1016.238,36.5 L1023.238,54 L1222.5,54 A2.5,2.5 0 0 1 1225,56.5 L1225,183.5 A2.5,2.5 0 0 1 1222.5,186 L862.5,186 A2.5,2.5 0 0 1 860,183.5 L860,36.5 A2.5,2.5 0 0 1 862.5,34" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="860" x2="1023.238" y1="54" y2="54"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="150.238" x="864" y="46.889">DDF Mime Types Support</text>
+    </g>
+    <!--cluster ddf-->
+    <g class="cluster" data-qualified-name="DDF Mime Types Support.ddf" data-source-line="23" id="ent0018">
+      <path d="M870.5,59 L890.925,59 A3.75,3.75 0 0 1 893.425,61.5 L900.425,79 L1214.5,79 A2.5,2.5 0 0 1 1217,81.5 L1217,175.5 A2.5,2.5 0 0 1 1214.5,178 L870.5,178 A2.5,2.5 0 0 1 868,175.5 L868,61.5 A2.5,2.5 0 0 1 870.5,59" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="868" x2="900.425" y1="79" y2="79"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="872" y="71.889">ddf</text>
+    </g>
+    <!--cluster mime-->
+    <g class="cluster" data-qualified-name="DDF Mime Types Support.ddf.mime" data-source-line="22" id="ent0016">
+      <polygon fill="none" points="876,94,886,84,1209,84,1209,160,1199,170,876,170,876,94" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="1199" x2="1209" y1="94" y2="84"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="876" x2="1199" y1="94" y2="94"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="1199" x2="1199" y1="94" y2="170"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="34.213" x="1021.394" y="107.889">mime</text>
+    </g>
+    <!--class ContentFramework-->
+    <g class="entity" data-qualified-name="DDF Content API.ddf.content.ContentFramework" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="151" x="38.5" y="114"/>
+      <ellipse cx="53.5" cy="130" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="48.5" y="135">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="119" x="67.5" y="133.889">ContentFramework</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="188.5" y1="146" y2="146"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39.5" x2="188.5" y1="154" y2="154"/>
+    </g>
+    <!--class Operation-->
+    <g class="entity" data-qualified-name="DDF Content API.ddf.content.operation.Operation" data-source-line="8" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.425" x="510.5" y="114"/>
+      <ellipse cx="525.5" cy="130" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="520.5" y="135">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="61.425" x="539.5" y="133.889">Operation</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="511.5" x2="602.925" y1="146" y2="146"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="511.5" x2="602.925" y1="154" y2="154"/>
+    </g>
+    <!--class Request-->
+    <g class="entity" data-qualified-name="DDF Content API.ddf.content.operation.Request" data-source-line="9" id="ent0007">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.15" x="622" y="114"/>
+      <ellipse cx="637" cy="130" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="632" y="135">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="52.15" x="651" y="133.889">Request</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="623" x2="705.15" y1="146" y2="146"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="623" x2="705.15" y1="154" y2="154"/>
+    </g>
+    <!--class Response-->
+    <g class="entity" data-qualified-name="DDF Content API.ddf.content.operation.Response" data-source-line="10" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95.087" x="724.5" y="114"/>
+      <ellipse cx="739.5" cy="130" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="734.5" y="135">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="63.087" x="753.5" y="133.889">Response</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="725.5" x2="818.588" y1="146" y2="146"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="725.5" x2="818.588" y1="154" y2="154"/>
+    </g>
+    <!--class CreateRequest-->
+    <g class="entity" data-qualified-name="DDF Content API.ddf.content.operation.CreateRequest" data-source-line="11" id="ent0009">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.15" x="510" y="198"/>
+      <ellipse cx="525" cy="214" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="520" y="219">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="94.15" x="539" y="217.889">CreateRequest</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="511" x2="635.15" y1="230" y2="230"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="511" x2="635.15" y1="238" y2="238"/>
+    </g>
+    <!--class CreateResponse-->
+    <g class="entity" data-qualified-name="DDF Content API.ddf.content.operation.CreateResponse" data-source-line="12" id="ent0010">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.088" x="654.5" y="198"/>
+      <ellipse cx="669.5" cy="214" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="664.5" y="219">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="105.088" x="683.5" y="217.889">CreateResponse</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="655.5" x2="790.588" y1="230" y2="230"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="655.5" x2="790.588" y1="238" y2="238"/>
+    </g>
+    <!--class StorageProvider-->
+    <g class="entity" data-qualified-name="DDF Content API.ddf.content.provider.StorageProvider" data-source-line="15" id="ent0012">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.15" x="352.5" y="114"/>
+      <ellipse cx="367.5" cy="130" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="362.5" y="135">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="101.15" x="381.5" y="133.889">StorageProvider</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="353.5" x2="484.65" y1="146" y2="146"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="353.5" x2="484.65" y1="154" y2="154"/>
+    </g>
+    <!--class ContentPlugin-->
+    <g class="entity" data-qualified-name="DDF Content API.ddf.content.plugin.ContentPlugin" data-source-line="18" id="ent0014">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.025" x="208" y="114"/>
+      <ellipse cx="223" cy="130" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="218" y="135">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="88.025" x="237" y="133.889">ContentPlugin</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="209" x2="327.025" y1="146" y2="146"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="209" x2="327.025" y1="154" y2="154"/>
+    </g>
+    <!--class MimeTypeMapper-->
+    <g class="entity" data-qualified-name="DDF Mime Types Support.ddf.mime.MimeTypeMapper" data-source-line="23" id="ent0017">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="144.788" x="1055.5" y="114"/>
+      <ellipse cx="1070.5" cy="130" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1065.5" y="135">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="112.788" x="1084.5" y="133.889">MimeTypeMapper</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1056.5" x2="1199.288" y1="146" y2="146"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1056.5" x2="1199.288" y1="154" y2="154"/>
+    </g>
+    <!--class MimeTypeResolver-->
+    <g class="entity" data-qualified-name="DDF Mime Types Support.ddf.mime.MimeTypeResolver" data-source-line="24" id="ent0019">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="152.663" x="884.5" y="114"/>
+      <ellipse cx="899.5" cy="130" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="894.5" y="135">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="120.663" x="913.5" y="133.889">MimeTypeResolver</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="885.5" x2="1036.163" y1="146" y2="146"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="885.5" x2="1036.163" y1="154" y2="154"/>
+    </g>
+  </g>
+</svg>

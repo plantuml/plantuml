@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="164px" preserveAspectRatio="none" style="width:72px;height:164px;background:#FFFFFF;" version="1.1" viewBox="0 0 72 164" width="72px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Alice" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50.45" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56.45" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="16" y="27.889">Alice</text>
+    </g>
+    <g class="entity" data-qualified-name="Bob" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="98"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="56" y1="122" y2="122"/>
+      <text fill="#000" font-size="14" textLength="24.938" x="18.531" y="113.889">Bob</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="24.818,97.758,28.199,88.508,24.479,92.77,20.218,89.05,24.818,97.758" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M24.814,62.296 C24.061,73.441 23.724,81.632 24.479,92.77" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="37.186,62.296,33.802,71.546,37.523,67.285,41.784,71.006,37.186,62.296" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M37.182,97.758 C37.938,86.621 38.276,78.429 37.523,67.285" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

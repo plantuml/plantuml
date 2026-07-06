@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="357px" preserveAspectRatio="none" style="width:404px;height:357px;background:#FFFFFF;" version="1.1" viewBox="0 0 404 357" width="404px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster My-->
+    <g class="cluster" data-qualified-name="My" data-source-line="1" id="ent0002">
+      <path d="M16.5,8 L36.138,8 A3.75,3.75 0 0 1 38.638,10.5 L45.638,28 L191.5,28 A2.5,2.5 0 0 1 194,30.5 L194,330.5 A2.5,2.5 0 0 1 191.5,333 L16.5,333 A2.5,2.5 0 0 1 14,330.5 L14,10.5 A2.5,2.5 0 0 1 16.5,8" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="45.638" y1="28" y2="28"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.638" x="18" y="20.889">My</text>
+    </g>
+    <!--cluster Namespace-->
+    <g class="cluster" data-qualified-name="My.Namespace" data-source-line="1" id="ent0003">
+      <path d="M24.5,33 L100.225,33 A3.75,3.75 0 0 1 102.725,35.5 L109.725,53 L183.5,53 A2.5,2.5 0 0 1 186,55.5 L186,322.5 A2.5,2.5 0 0 1 183.5,325 L24.5,325 A2.5,2.5 0 0 1 22,322.5 L22,35.5 A2.5,2.5 0 0 1 24.5,33" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="109.725" y1="53" y2="53"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="74.725" x="26" y="45.889">Namespace</text>
+    </g>
+    <!--cluster Customer-->
+    <g class="cluster" data-qualified-name="Customer" data-source-line="3" id="ent0006">
+      <path d="M204.5,4 L266.138,4 A3.75,3.75 0 0 1 268.638,6.5 L275.638,24 L393.5,24 A2.5,2.5 0 0 1 396,26.5 L396,162.5 A2.5,2.5 0 0 1 393.5,165 L204.5,165 A2.5,2.5 0 0 1 202,162.5 L202,6.5 A2.5,2.5 0 0 1 204.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="202" x2="275.638" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="60.637" x="206" y="16.889">Customer</text>
+    </g>
+    <!--cluster Implementation-->
+    <g class="cluster" data-qualified-name="Customer.Implementation" data-source-line="3" id="ent0007">
+      <path d="M212.5,29 L309.138,29 A3.75,3.75 0 0 1 311.638,31.5 L318.638,49 L385.5,49 A2.5,2.5 0 0 1 388,51.5 L388,154.5 A2.5,2.5 0 0 1 385.5,157 L212.5,157 A2.5,2.5 0 0 1 210,154.5 L210,31.5 A2.5,2.5 0 0 1 212.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="210" x2="318.638" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="95.638" x="214" y="41.889">Implementation</text>
+    </g>
+    <!--cluster Namespace-->
+    <g class="cluster" data-qualified-name="Customer.Implementation.Namespace" data-source-line="3" id="ent0008">
+      <path d="M220.5,54 L296.225,54 A3.75,3.75 0 0 1 298.725,56.5 L305.725,74 L377.5,74 A2.5,2.5 0 0 1 380,76.5 L380,146.5 A2.5,2.5 0 0 1 377.5,149 L220.5,149 A2.5,2.5 0 0 1 218,146.5 L218,56.5 A2.5,2.5 0 0 1 220.5,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="218" x2="305.725" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="74.725" x="222" y="66.889">Namespace</text>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="My.Namespace.Person" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.363" x="37.5" y="58"/>
+      <ellipse cx="78.15" cy="74" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="73.15" y="79">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="97.85" y="77.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="38.5" x2="169.863" y1="90" y2="90"/>
+      <text fill="#000" font-size="14" textLength="51.363" x="43.5" y="104.889">guid OID</text>
+      <text fill="#000" font-size="14" textLength="98.788" x="43.5" y="118.889">string FirstName</text>
+      <text fill="#000" font-size="14" textLength="98" x="43.5" y="132.889">string LastName</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="38.5" x2="169.863" y1="140" y2="140"/>
+      <text fill="#000" font-size="14" textLength="121.363" x="43.5" y="154.889">boolean IsBirthday()</text>
+    </g>
+    <!--class Meeting-->
+    <g class="entity" data-qualified-name="My.Namespace.Meeting" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.875" x="30.5" y="241"/>
+      <ellipse cx="52.289" cy="257" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="47.289" y="262">C</text>
+      <text fill="#000" font-size="14" textLength="49.788" x="67.798" y="260.889">Meeting</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="126.375" y1="273" y2="273"/>
+      <text fill="#000" font-size="14" textLength="51.363" x="36.5" y="287.889">guid OID</text>
+      <text fill="#000" font-size="14" textLength="84.875" x="36.5" y="301.889">guid PersonID</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31.5" x2="126.375" y1="309" y2="309"/>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="Customer.Implementation.Namespace.Person" data-source-line="3" id="ent0005">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="146.488" x="226" y="79"/>
+      <ellipse cx="272.813" cy="95" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="267.813" y="100">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="293.313" y="98.889">Person</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="227" x2="371.488" y1="111" y2="111"/>
+      <text fill="#000" font-size="14" textLength="134.488" x="232" y="125.889">string CustomAttribute</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="227" x2="371.488" y1="133" y2="133"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="extension" id="lnk9">
+      <polygon fill="none" points="170.65,110,188.65,116,188.65,104,170.65,110" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M188.65,110 C207.034,110 207.417,110 225.801,110" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="composition" id="lnk10">
+      <polygon fill="#181818" points="96.363,162.013,91.519,167.355,94.587,173.881,99.431,168.539,96.363,162.013" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M94.587,173.881 C90.781,199.3 88.04,217.61 84.567,240.811" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" font-weight="700" textLength="91.731" x="111.184" y="192.111">Person-Meeting</text>
+      <text fill="#000" font-size="13" textLength="97.5" x="108.3" y="205.111">Meetings/Person</text>
+      <text fill="#000" font-size="13" textLength="126.1" x="94" y="218.111">Fk=Meeting.PersonID</text>
+      <text fill="#000" font-size="13" textLength="31.769" x="52.567" y="236.922">many</text>
+      <text fill="#000" font-size="13" x="88.363" y="173.124">1</text>
+    </g>
+  </g>
+</svg>

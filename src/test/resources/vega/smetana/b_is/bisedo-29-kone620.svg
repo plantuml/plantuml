@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="110px" preserveAspectRatio="none" style="width:1087px;height:110px;background:#FFFFFF;" version="1.1" viewBox="0 0 1087 110" width="1087px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster artifact-->
+    <g class="cluster" data-qualified-name="artifact" data-source-line="1" id="ent0001">
+      <rect fill="#F0F8FF" height="67" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="57" x="14" y="19"/>
+      <polygon fill="#F0F8FF" points="54,24,54,38,66,38,66,30,60,24,54,24" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="60" x2="60" y1="24" y2="30"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="66" x2="60" y1="30" y2="30"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="41.913" x="21.544" y="31.889">artifact</text>
+    </g>
+    <!--cluster card-->
+    <g class="cluster" data-qualified-name="card" data-source-line="4" id="ent0003">
+      <rect fill="#F0F8FF" height="67" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="48" x="79" y="19"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="79" x2="127" y1="37" y2="37"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="27.213" x="89.394" y="31.889">card</text>
+    </g>
+    <!--cluster cloud-->
+    <g class="cluster" data-qualified-name="cloud" data-source-line="7" id="ent0005">
+      <path d="M143.789,28.439 C147.416,19.912 153.027,18.564 160.526,23.696 C167.667,16.558 174.5,19.423 177.708,27.997 C183.785,32.059 184.119,36.354 177.576,40.28 C185.647,43.178 185.046,49.666 179.686,54.55 C184.913,59.082 184.76,63.821 177.732,66.317 C184.441,71.375 182.282,75.632 176.473,79.495 C172.42,87.279 165.459,89.734 159.54,81.463 C153.421,88.427 146.679,87.296 143.489,78.482 C136.692,74.904 136.002,70.371 142.317,65.601 C134.84,62.765 135.052,57.256 140.729,52.789 C136.169,48.322 137.189,44.751 142.29,41.635 C135.684,36.812 137.293,31.774 143.789,28.439" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="33.512" x="142.744" y="42.889">cloud</text>
+    </g>
+    <!--cluster component-->
+    <g class="cluster" data-qualified-name="component" data-source-line="10" id="ent0007">
+      <rect fill="#F0F8FF" height="67" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="85" x="192" y="19"/>
+      <rect fill="#F0F8FF" height="10" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="15" x="257" y="24"/>
+      <rect fill="#F0F8FF" height="2" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="4" x="255" y="26"/>
+      <rect fill="#F0F8FF" height="2" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="4" x="255" y="30"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="69.213" x="199.894" y="42.889">component</text>
+    </g>
+    <!--cluster database-->
+    <g class="cluster" data-qualified-name="database" data-source-line="13" id="ent0009">
+      <path d="M285,14 C285,4 321.5,4 321.5,4 C321.5,4 358,4 358,14 L358,76 C358,86 321.5,86 321.5,86 C321.5,86 285,86 285,76 L285,14" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <path d="M285,14 C285,24 321.5,24 321.5,24 C321.5,24 358,24 358,14" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="57.575" x="292.713" y="36.889">database</text>
+    </g>
+    <!--cluster file-->
+    <g class="cluster" data-qualified-name="file" data-source-line="16" id="ent0011">
+      <path d="M366,21.5 L366,83.5 A2.5,2.5 0 0 0 368.5,86 L411.5,86 A2.5,2.5 0 0 0 414,83.5 L414,29 L404,19 L368.5,19 A2.5,2.5 0 0 0 366,21.5" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <path d="M404,19 L404,26.5 A2.5,2.5 0 0 0 406.5,29 L414,29" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="17.938" x="381.031" y="31.889">file</text>
+    </g>
+    <!--cluster folder-->
+    <g class="cluster" data-qualified-name="folder" data-source-line="19" id="ent0013">
+      <path d="M424.5,19 L460.5,19 A3.75,3.75 0 0 1 463,21.5 L470,39 L470.5,39 A2.5,2.5 0 0 1 473,41.5 L473,83.5 A2.5,2.5 0 0 1 470.5,86 L424.5,86 A2.5,2.5 0 0 1 422,83.5 L422,21.5 A2.5,2.5 0 0 1 424.5,19" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="422" x2="470" y1="39" y2="39"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="35" x="426" y="31.889">folder</text>
+    </g>
+    <!--cluster frame-->
+    <g class="cluster" data-qualified-name="frame" data-source-line="22" id="ent0015">
+      <rect fill="#F0F8FF" height="67" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="51" x="481" y="19"/>
+      <path d="M526.7,19 L526.7,26 L516.7,36 L481,36" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="35.7" x="484" y="30.889">frame</text>
+    </g>
+    <!--cluster hexagon-->
+    <g class="cluster" data-qualified-name="hexagon" data-source-line="25" id="ent0017">
+      <path d="M540,52.5 L548.625,19 L600.375,19 L609,52.5 L600.375,86 L548.625,86 L540,52.5" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="53.725" x="547.638" y="31.889">hexagon</text>
+    </g>
+    <!--cluster node-->
+    <g class="cluster" data-qualified-name="node" data-source-line="28" id="ent0019">
+      <polygon fill="#F0F8FF" points="617,24,627,14,724,14,724,76,714,86,617,86,617,24" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="714" x2="724" y1="24" y2="14"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="617" x2="714" y1="24" y2="24"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="714" x2="714" y1="24" y2="86"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="31.15" x="650.925" y="37.889">node</text>
+    </g>
+    <!--cluster package-->
+    <g class="cluster" data-qualified-name="package" data-source-line="31" id="ent0021">
+      <path d="M734.5,19 L788.438,19 A3.75,3.75 0 0 1 790.938,21.5 L797.938,39 L797.5,39 A2.5,2.5 0 0 1 800,41.5 L800,83.5 A2.5,2.5 0 0 1 797.5,86 L734.5,86 A2.5,2.5 0 0 1 732,83.5 L732,21.5 A2.5,2.5 0 0 1 734.5,19" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="732" x2="797.938" y1="39" y2="39"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="52.937" x="736" y="31.889">package</text>
+    </g>
+    <!--cluster queue-->
+    <g class="cluster" data-qualified-name="queue" data-source-line="34" id="ent0023">
+      <path d="M813,19 L859,19 C864,19 864,52.5 864,52.5 C864,52.5 864,86 859,86 L813,86 C808,86 808,52.5 808,52.5 C808,52.5 808,19 813,19" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <path d="M859,19 C854,19 854,52.5 854,52.5 C854,86 859,86 859,86" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="38.938" x="816.531" y="31.889">queue</text>
+    </g>
+    <!--cluster rectangle-->
+    <g class="cluster" data-qualified-name="rectangle" data-source-line="37" id="ent0025">
+      <rect fill="#F0F8FF" height="67" rx="2.5" ry="2.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="73" x="872" y="19"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="57.575" x="879.713" y="31.889">rectangle</text>
+    </g>
+    <!--cluster stack-->
+    <g class="cluster" data-qualified-name="stack" data-source-line="40" id="ent0027">
+      <rect fill="#F0F8FF" height="67" rx="2.5" ry="2.5" style="stroke:none;" width="26" x="968" y="19"/>
+      <path d="M953,19 L965.5,19 A2.5,2.5 0 0 1 968,21.5 L968,83.5 A2.5,2.5 0 0 0 970.5,86 L991.5,86 A2.5,2.5 0 0 0 994,83.5 L994,21.5 A2.5,2.5 0 0 1 996.5,19 L1009,19" fill="none" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="32.637" x="964.681" y="42.889">stack</text>
+    </g>
+    <!--cluster storage-->
+    <g class="cluster" data-qualified-name="storage" data-source-line="43" id="ent0029">
+      <rect fill="#F0F8FF" height="67" rx="35" ry="35" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="62" x="1017" y="19"/>
+      <text fill="#00F" font-size="14" font-weight="700" textLength="46.637" x="1024.681" y="36.889">storage</text>
+    </g>
+    <!--entity f1-->
+    <g class="entity" data-qualified-name="artifact.f1" data-source-line="2" id="ent0002">
+      <path d="M26,46.5 L26,75.5 A2.5,2.5 0 0 0 28.5,78 L55.138,78 A2.5,2.5 0 0 0 57.638,75.5 L57.638,54 L47.638,44 L28.5,44 A2.5,2.5 0 0 0 26,46.5" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <path d="M47.638,44 L47.638,51.5 A2.5,2.5 0 0 0 50.138,54 L57.638,54" fill="#F0F8FF" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;"/>
+      <text fill="#00F" font-size="14" textLength="11.638" x="36" y="64.889">f1</text>
+    </g>
+    <!--entity f2-->
+    <g class="entity" data-qualified-name="card.f2" data-source-line="5" id="ent0004">
+      <path d="M87,46.5 L87,75.5 A2.5,2.5 0 0 0 89.5,78 L116.138,78 A2.5,2.5 0 0 0 118.638,75.5 L118.638,54 L108.638,44 L89.5,44 A2.5,2.5 0 0 0 87,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M108.638,44 L108.638,51.5 A2.5,2.5 0 0 0 111.138,54 L118.638,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="97" y="64.889">f2</text>
+    </g>
+    <!--entity f3-->
+    <g class="entity" data-qualified-name="cloud.f3" data-source-line="8" id="ent0006">
+      <path d="M143,46.5 L143,75.5 A2.5,2.5 0 0 0 145.5,78 L172.138,78 A2.5,2.5 0 0 0 174.638,75.5 L174.638,54 L164.638,44 L145.5,44 A2.5,2.5 0 0 0 143,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M164.638,44 L164.638,51.5 A2.5,2.5 0 0 0 167.138,54 L174.638,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="153" y="64.889">f3</text>
+    </g>
+    <!--entity f4-->
+    <g class="entity" data-qualified-name="component.f4" data-source-line="11" id="ent0008">
+      <path d="M218,46.5 L218,75.5 A2.5,2.5 0 0 0 220.5,78 L247.138,78 A2.5,2.5 0 0 0 249.638,75.5 L249.638,54 L239.638,44 L220.5,44 A2.5,2.5 0 0 0 218,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M239.638,44 L239.638,51.5 A2.5,2.5 0 0 0 242.138,54 L249.638,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="228" y="64.889">f4</text>
+    </g>
+    <!--entity f5-->
+    <g class="entity" data-qualified-name="database.f5" data-source-line="14" id="ent0010">
+      <path d="M305,46.5 L305,75.5 A2.5,2.5 0 0 0 307.5,78 L334.138,78 A2.5,2.5 0 0 0 336.638,75.5 L336.638,54 L326.638,44 L307.5,44 A2.5,2.5 0 0 0 305,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M326.638,44 L326.638,51.5 A2.5,2.5 0 0 0 329.138,54 L336.638,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="315" y="64.889">f5</text>
+    </g>
+    <!--entity f6-->
+    <g class="entity" data-qualified-name="file.f6" data-source-line="17" id="ent0012">
+      <path d="M374,46.5 L374,75.5 A2.5,2.5 0 0 0 376.5,78 L403.138,78 A2.5,2.5 0 0 0 405.638,75.5 L405.638,54 L395.638,44 L376.5,44 A2.5,2.5 0 0 0 374,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M395.638,44 L395.638,51.5 A2.5,2.5 0 0 0 398.138,54 L405.638,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="384" y="64.889">f6</text>
+    </g>
+    <!--entity f7-->
+    <g class="entity" data-qualified-name="folder.f7" data-source-line="20" id="ent0014">
+      <path d="M431,46.5 L431,75.5 A2.5,2.5 0 0 0 433.5,78 L460.138,78 A2.5,2.5 0 0 0 462.638,75.5 L462.638,54 L452.638,44 L433.5,44 A2.5,2.5 0 0 0 431,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M452.638,44 L452.638,51.5 A2.5,2.5 0 0 0 455.138,54 L462.638,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="441" y="64.889">f7</text>
+    </g>
+    <!--entity f8-->
+    <g class="entity" data-qualified-name="frame.f8" data-source-line="23" id="ent0016">
+      <path d="M490,46.5 L490,75.5 A2.5,2.5 0 0 0 492.5,78 L519.138,78 A2.5,2.5 0 0 0 521.638,75.5 L521.638,54 L511.638,44 L492.5,44 A2.5,2.5 0 0 0 490,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M511.638,44 L511.638,51.5 A2.5,2.5 0 0 0 514.138,54 L521.638,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="500" y="64.889">f8</text>
+    </g>
+    <!--entity f9-->
+    <g class="entity" data-qualified-name="hexagon.f9" data-source-line="26" id="ent0018">
+      <path d="M558,46.5 L558,75.5 A2.5,2.5 0 0 0 560.5,78 L587.138,78 A2.5,2.5 0 0 0 589.638,75.5 L589.638,54 L579.638,44 L560.5,44 A2.5,2.5 0 0 0 558,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M579.638,44 L579.638,51.5 A2.5,2.5 0 0 0 582.138,54 L589.638,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="568" y="64.889">f9</text>
+    </g>
+    <!--entity f10-->
+    <g class="entity" data-qualified-name="node.f10" data-source-line="29" id="ent0020">
+      <path d="M650.5,46.5 L650.5,75.5 A2.5,2.5 0 0 0 653,78 L687.425,78 A2.5,2.5 0 0 0 689.925,75.5 L689.925,54 L679.925,44 L653,44 A2.5,2.5 0 0 0 650.5,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M679.925,44 L679.925,51.5 A2.5,2.5 0 0 0 682.425,54 L689.925,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="660.5" y="64.889">f10</text>
+    </g>
+    <!--entity f11-->
+    <g class="entity" data-qualified-name="package.f11" data-source-line="32" id="ent0022">
+      <path d="M746.5,46.5 L746.5,75.5 A2.5,2.5 0 0 0 749,78 L783.425,78 A2.5,2.5 0 0 0 785.925,75.5 L785.925,54 L775.925,44 L749,44 A2.5,2.5 0 0 0 746.5,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M775.925,44 L775.925,51.5 A2.5,2.5 0 0 0 778.425,54 L785.925,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="756.5" y="64.889">f11</text>
+    </g>
+    <!--entity f12-->
+    <g class="entity" data-qualified-name="queue.f12" data-source-line="35" id="ent0024">
+      <path d="M816.5,46.5 L816.5,75.5 A2.5,2.5 0 0 0 819,78 L853.425,78 A2.5,2.5 0 0 0 855.925,75.5 L855.925,54 L845.925,44 L819,44 A2.5,2.5 0 0 0 816.5,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M845.925,44 L845.925,51.5 A2.5,2.5 0 0 0 848.425,54 L855.925,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="826.5" y="64.889">f12</text>
+    </g>
+    <!--entity f13-->
+    <g class="entity" data-qualified-name="rectangle.f13" data-source-line="38" id="ent0026">
+      <path d="M888.5,46.5 L888.5,75.5 A2.5,2.5 0 0 0 891,78 L925.425,78 A2.5,2.5 0 0 0 927.925,75.5 L927.925,54 L917.925,44 L891,44 A2.5,2.5 0 0 0 888.5,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M917.925,44 L917.925,51.5 A2.5,2.5 0 0 0 920.425,54 L927.925,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="898.5" y="64.889">f13</text>
+    </g>
+    <!--entity f14-->
+    <g class="entity" data-qualified-name="stack.f14" data-source-line="41" id="ent0028">
+      <path d="M961.5,46.5 L961.5,75.5 A2.5,2.5 0 0 0 964,78 L998.425,78 A2.5,2.5 0 0 0 1000.925,75.5 L1000.925,54 L990.925,44 L964,44 A2.5,2.5 0 0 0 961.5,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M990.925,44 L990.925,51.5 A2.5,2.5 0 0 0 993.425,54 L1000.925,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="971.5" y="64.889">f14</text>
+    </g>
+    <!--entity f15-->
+    <g class="entity" data-qualified-name="storage.f15" data-source-line="44" id="ent0030">
+      <path d="M1028.5,46.5 L1028.5,75.5 A2.5,2.5 0 0 0 1031,78 L1065.425,78 A2.5,2.5 0 0 0 1067.925,75.5 L1067.925,54 L1057.925,44 L1031,44 A2.5,2.5 0 0 0 1028.5,46.5" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M1057.925,44 L1057.925,51.5 A2.5,2.5 0 0 0 1060.425,54 L1067.925,54" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="19.425" x="1038.5" y="64.889">f15</text>
+    </g>
+  </g>
+</svg>

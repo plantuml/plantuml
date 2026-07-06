@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="184px" preserveAspectRatio="none" style="width:406px;height:184px;background:#FFFFFF;" version="1.1" viewBox="0 0 406 184" width="406px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster tempSensor-->
+    <g class="cluster" data-qualified-name="tempSensor" data-source-line="4" id="ent0001">
+      <rect fill="none" height="130" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="260" x="19" y="4"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="259" y="9"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="257" y="11"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="257" y="15"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="48.3" x="124.85" y="27.889">«block»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="124.425" x="86.788" y="41.889">Temperature Sensor</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN7" data-source-line="20" id="ent0008">
+      <path d="M305.5,128 L305.5,151 L398.65,151 L398.65,138 L388.65,128 L305.5,128" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M388.65,128 L388.65,138 L398.65,138 L388.65,128" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="72.15" x="311.5" y="143.111">2note bottom</text>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.tempSensor_TVs" data-source-line="6" id="ent0002">
+      <path d="M27.5,43 L27.5,92 L186.544,92 L186.544,53 L176.544,43 L27.5,43" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M176.544,43 L176.544,53 L186.544,53 L176.544,43" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="138.044" x="33.5" y="58.111">1some tagged value table</text>
+      <text fill="#000" font-size="13" textLength="74.506" x="33.5" y="71.111">would be here</text>
+      <text fill="#000" font-size="13" textLength="44.119" x="33.5" y="84.111">usually.</text>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.in1withalongname" data-source-line="11" id="ent0003">
+      <text fill="#000" font-size="14" textLength="112.963" x="188.519" y="40.389">in1withalongname</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="239" y="55.5"/>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.in2withalongname" data-source-line="12" id="ent0004">
+      <text fill="#000" font-size="14" textLength="112.963" x="222.519" y="40.389">in2withalongname</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="273" y="55.5"/>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.out1withalongname" data-source-line="14" id="ent0005">
+      <text fill="#000" font-size="14" textLength="121.45" x="44.275" y="150.889">out1withalongname</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="99" y="128"/>
+    </g>
+    <g class="entity" data-qualified-name="tempSensor.out2withalongname" data-source-line="15" id="ent0006">
+      <text fill="#000" font-size="14" textLength="121.45" x="78.275" y="150.889">out2withalongname</text>
+      <rect fill="#F1F1F1" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="133" y="128"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0008" data-link-type="association" id="lnk9">
+      <path d="M279.156,118.791 C279.972,119.115 280.788,119.435 281.603,119.751 C283.232,120.382 284.856,120.995 286.474,121.59 C292.942,123.972 299.292,126.073 305.34,127.915" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

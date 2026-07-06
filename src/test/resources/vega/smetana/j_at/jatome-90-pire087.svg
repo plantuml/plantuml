@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="293px" preserveAspectRatio="none" style="width:121px;height:293px;background:#FFFFFF;" version="1.1" viewBox="0 0 121 293" width="121px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="2">
+      <text fill="#000" font-size="14" font-weight="700" textLength="77.875" x="18.062" y="20.889">This is the title</text>
+    </g>
+    <!--class Dog-->
+    <g class="entity" data-qualified-name="Dog" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.3" x="6" y="47"/>
+      <ellipse cx="34.759" cy="63" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="29.759" y="68">C</text>
+      <text fill="#000" font-size="14" textLength="25.725" x="51.816" y="66.889">Dog</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="93.3" y1="79" y2="79"/>
+      <text fill="#000" font-size="14" textLength="76.3" x="12" y="93.889">NemesisCat</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="93.3" y1="101" y2="101"/>
+    </g>
+    <!--class Mammal-->
+    <g class="entity" data-qualified-name="Mammal" data-source-line="3" id="ent0002">
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.637" x="7" y="229"/>
+        <ellipse cx="22" cy="245" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="17" y="250">C</text>
+        <text fill="#000" font-size="14" textLength="53.637" x="36" y="248.889">Mammal</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="91.637" y1="261" y2="261"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="91.637" y1="269" y2="269"/>
+      </a>
+    </g>
+    <!--class Cat-->
+    <g class="entity" data-qualified-name="Cat" data-source-line="10" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.787" x="51" y="145"/>
+      <ellipse cx="66" cy="161" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="61" y="166">C</text>
+      <text fill="#000" font-size="14" textLength="21.787" x="80" y="164.889">Cat</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52" x2="103.788" y1="177" y2="177"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="52" x2="103.788" y1="185" y2="185"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="46.121,228.815,49.387,210.125,37.52,211.903,46.121,228.815" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M45.568,109.158 C44.124,120.384 42.71,133.248 42,145 C40.714,166.295 40.564,171.715 42,193 C42.8,204.86 41.828,200.17 43.454,211.014" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="aggregation" id="lnk5">
+      <polygon fill="none" points="59.48,109.131,57.465,116.055,63.081,120.578,65.096,113.654,59.48,109.131" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M63.081,120.578 C66.762,132.278 67.308,134.015 70.744,144.936" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="extension" id="lnk6">
+      <polygon fill="none" points="57.872,228.947,69.366,213.852,58.01,209.974,57.872,228.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M70.051,193.279 C66.236,204.453 67.494,200.768 63.688,211.913" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

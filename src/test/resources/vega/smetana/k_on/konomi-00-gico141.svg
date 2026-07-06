@@ -1,0 +1,272 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="1098px" preserveAspectRatio="none" style="width:843px;height:1098px;background:#FFFFFF;" version="1.1" viewBox="0 0 843 1098" width="843px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Subscriber-->
+    <g class="entity" data-qualified-name="Subscriber" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.938" x="241" y="12"/>
+      <ellipse cx="256" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="251" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="66.938" x="270" y="31.889">Subscriber</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="242" x2="338.938" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="76.213" x="247" y="58.889">subscriberId</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="242" x2="338.938" y1="66" y2="66"/>
+    </g>
+    <!--class AccumUsage-->
+    <g class="entity" data-qualified-name="AccumUsage" data-source-line="7" id="ent0002">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="115.3" x="165" y="131"/>
+      <ellipse cx="180" cy="147" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="175" y="152">C</text>
+      <text fill="#000" font-size="14" textLength="83.3" x="194" y="150.889">AccumUsage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="166" x2="279.3" y1="163" y2="163"/>
+      <text fill="#000" font-size="14" textLength="76.213" x="171" y="177.889">subscriberId</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="166" x2="279.3" y1="185" y2="185"/>
+    </g>
+    <!--class IpSession-->
+    <g class="entity" data-qualified-name="IpSession" data-source-line="11" id="ent0003">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="123.213" x="298" y="110"/>
+      <ellipse cx="326.365" cy="126" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="321.365" y="131">C</text>
+      <text fill="#000" font-size="14" textLength="61.512" x="343.335" y="129.889">IpSession</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="299" x2="420.213" y1="142" y2="142"/>
+      <text fill="#000" font-size="14" textLength="62.3" x="304" y="156.889">ipAddress</text>
+      <text fill="#000" font-size="14" textLength="76.3" x="304" y="170.889">specificData</text>
+      <text fill="#000" font-size="14" textLength="111.213" x="304" y="184.889">sapcOriginStateId</text>
+      <text fill="#000" font-size="14" textLength="35" x="304" y="198.889">apnId</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="299" x2="420.213" y1="206" y2="206"/>
+    </g>
+    <!--class GwSession-->
+    <g class="entity" data-qualified-name="GwSession" data-source-line="18" id="ent0004">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="163.025" x="6" y="285"/>
+      <ellipse cx="48.068" cy="301" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="43.068" y="306">C</text>
+      <text fill="#000" font-size="14" textLength="70.875" x="68.083" y="304.889">GwSession</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="168.025" y1="317" y2="317"/>
+      <text fill="#000" font-size="14" textLength="59.15" x="26" y="331.889">sessionId</text>
+      <text fill="#000" font-size="14" textLength="39.637" x="26" y="345.889">peerId</text>
+      <text fill="#000" font-size="14" textLength="137.025" x="26" y="359.889">incomingOriginStateid</text>
+      <text fill="#000" font-size="14" textLength="69.388" x="26" y="373.889">capabilities</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="385.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="135.363" x="26" y="387.889">lastActivityTimestamp</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="168.025" y1="395" y2="395"/>
+    </g>
+    <!--class PepSession-->
+    <g class="entity" data-qualified-name="PepSession" data-source-line="26" id="ent0005">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="163.025" x="187" y="278"/>
+      <ellipse cx="227.296" cy="294" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="222.296" y="299">C</text>
+      <text fill="#000" font-size="14" textLength="74.813" x="246.917" y="297.889">PepSession</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188" x2="349.025" y1="310" y2="310"/>
+      <text fill="#000" font-size="14" textLength="59.15" x="207" y="324.889">sessionId</text>
+      <text fill="#000" font-size="14" textLength="39.637" x="207" y="338.889">peerId</text>
+      <text fill="#000" font-size="14" textLength="137.025" x="207" y="352.889">incomingOriginStateid</text>
+      <text fill="#000" font-size="14" textLength="69.388" x="207" y="366.889">capabilities</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="198" cy="378.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="135.363" x="207" y="380.889">lastActivityTimestamp</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="198" cy="392.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="26.425" x="207" y="394.889">type</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188" x2="349.025" y1="402" y2="402"/>
+    </g>
+    <!--class AfSession-->
+    <g class="entity" data-qualified-name="AfSession" data-source-line="35" id="ent0006">
+      <rect fill="#F1F1F1" height="188" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="163.025" x="368" y="250"/>
+      <ellipse cx="413.719" cy="266" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="408.719" y="271">C</text>
+      <text fill="#000" font-size="14" textLength="63.087" x="434.219" y="269.889">AfSession</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="369" x2="530.025" y1="282" y2="282"/>
+      <text fill="#000" font-size="14" textLength="59.15" x="388" y="296.889">sessionId</text>
+      <text fill="#000" font-size="14" textLength="80.15" x="388" y="310.889">afChargingId</text>
+      <text fill="#000" font-size="14" textLength="129.238" x="388" y="324.889">SIPForkingIndication</text>
+      <text fill="#000" font-size="14" textLength="39.637" x="388" y="338.889">peerId</text>
+      <text fill="#000" font-size="14" textLength="137.025" x="388" y="352.889">incomingOriginStateid</text>
+      <text fill="#000" font-size="14" textLength="56" x="388" y="366.889">serviceId</text>
+      <text fill="#000" font-size="14" textLength="42.788" x="388" y="380.889">nodeId</text>
+      <text fill="#000" font-size="14" textLength="92.663" x="388" y="394.889">specificActions</text>
+      <text fill="#000" font-size="14" textLength="107.275" x="388" y="408.889">serviceInfoStatus</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="379" cy="420.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="78.663" x="388" y="422.889">sessionType</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="369" x2="530.025" y1="430" y2="430"/>
+    </g>
+    <!--class MediaComponent-->
+    <g class="entity" data-qualified-name="MediaComponent" data-source-line="48" id="ent0007">
+      <rect fill="#F1F1F1" height="174" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="161.538" x="379.5" y="474"/>
+      <ellipse cx="403.061" cy="490" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="398.061" y="495">C</text>
+      <text fill="#000" font-size="14" textLength="110.513" x="418.964" y="493.889">MediaComponent</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="380.5" x2="540.038" y1="506" y2="506"/>
+      <text fill="#000" font-size="14" textLength="47.425" x="399.5" y="520.889">number</text>
+      <text fill="#000" font-size="14" textLength="91.875" x="399.5" y="534.889">afApplicationId</text>
+      <text fill="#000" font-size="14" textLength="69.3" x="399.5" y="548.889">mediaType</text>
+      <text fill="#000" font-size="14" textLength="135.538" x="399.5" y="562.889">maxReqBandwidthUL</text>
+      <text fill="#000" font-size="14" textLength="135.538" x="399.5" y="576.889">maxReqBandwidthDL</text>
+      <text fill="#000" font-size="14" textLength="64.575" x="399.5" y="590.889">flowStatus</text>
+      <text fill="#000" font-size="14" textLength="74.725" x="399.5" y="604.889">rrBandwidth</text>
+      <text fill="#000" font-size="14" textLength="77.088" x="399.5" y="618.889">rsBandwidth</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="390.5" cy="630.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="56" x="399.5" y="632.889">serviceId</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="380.5" x2="540.038" y1="640" y2="640"/>
+    </g>
+    <!--class MediaSubComponent-->
+    <g class="entity" data-qualified-name="MediaSubComponent" data-source-line="60" id="ent0008">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="167.45" x="354" y="684"/>
+      <ellipse cx="369" cy="700" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="364" y="705">C</text>
+      <text fill="#000" font-size="14" textLength="135.45" x="383" y="703.889">MediaSubComponent</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="355" x2="520.45" y1="716" y2="716"/>
+      <text fill="#000" font-size="14" textLength="74.725" x="374" y="730.889">flowNumber</text>
+      <text fill="#000" font-size="14" textLength="64.575" x="374" y="744.889">flowStatus</text>
+      <text fill="#000" font-size="14" textLength="65.45" x="374" y="758.889">flowUsage</text>
+      <text fill="#000" font-size="14" textLength="74.813" x="374" y="772.889">uplinkIPflow</text>
+      <text fill="#000" font-size="14" textLength="92.75" x="374" y="786.889">downlinkIPflow</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="365" cy="798.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="90.213" x="374" y="800.889">fsDefaultMode</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="355" x2="520.45" y1="808" y2="808"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN9" data-source-line="69" id="ent0010">
+      <path d="M539.5,738 L539.5,746 L521.102,750 L539.5,754 L539.5,761 A0,0 0 0 0 539.5,761 L827,761 A0,0 0 0 0 827,761 L827,748 L817,738 L539.5,738 A0,0 0 0 0 539.5,738" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M817,738 L817,748 L827,748 L817,738" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="266.5" x="545.5" y="753.111">fsDefaultMode // true if mscFlowStatus is received</text>
+    </g>
+    <!--class DownloadedPolicies-->
+    <g class="entity" data-qualified-name="DownloadedPolicies" data-source-line="72" id="ent0012">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="208.088" x="153.5" y="495"/>
+      <ellipse cx="190.882" cy="511" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="185.882" y="516">C</text>
+      <text fill="#000" font-size="14" textLength="126.35" x="209.856" y="514.889">DownloadedPolicies</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="154.5" x2="360.588" y1="527" y2="527"/>
+      <text fill="#000" font-size="14" textLength="59.15" x="159.5" y="541.889">sessionId</text>
+      <text fill="#000" font-size="14" textLength="80.85" x="159.5" y="555.889">maxAuthQos</text>
+      <text fill="#000" font-size="14" textLength="73.938" x="159.5" y="569.889">qosProfileId</text>
+      <text fill="#000" font-size="14" textLength="107.363" x="159.5" y="583.889">contentFilteringId</text>
+      <text fill="#000" font-size="14" textLength="105.088" x="159.5" y="597.889">chargingProfileId</text>
+      <text fill="#000" font-size="14" textLength="196.088" x="159.5" y="611.889">3GPP-Charging-Characteristics</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="154.5" x2="360.588" y1="619" y2="619"/>
+    </g>
+    <!--class PccRule-->
+    <g class="entity" data-qualified-name="PccRule" data-source-line="81" id="ent0013">
+      <rect fill="#F1F1F1" height="230" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="154.538" x="292" y="852"/>
+      <ellipse cx="338.9" cy="868" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="333.9" y="873">C</text>
+      <text fill="#000" font-size="14" textLength="52.238" x="359.4" y="871.889">PccRule</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="293" x2="445.538" y1="884" y2="884"/>
+      <text fill="#000" font-size="14" textLength="60.725" x="312" y="898.889">ruleName</text>
+      <text fill="#000" font-size="14" textLength="74.813" x="312" y="912.889">uplinkIPflow</text>
+      <text fill="#000" font-size="14" textLength="92.75" x="312" y="926.889">downlinkIPflow</text>
+      <text fill="#000" font-size="14" textLength="73.15" x="312" y="940.889">precedence</text>
+      <text fill="#000" font-size="14" textLength="73.85" x="312" y="954.889">ratingGroup</text>
+      <text fill="#000" font-size="14" textLength="64.575" x="312" y="968.889">flowStatus</text>
+      <text fill="#000" font-size="14" textLength="65.45" x="312" y="982.889">flowUsage</text>
+      <text fill="#000" font-size="14" textLength="88.725" x="312" y="996.889">reportingLevel</text>
+      <text fill="#000" font-size="14" textLength="55.212" x="312" y="1010.889">authQoS</text>
+      <text fill="#000" font-size="14" textLength="81.725" x="312" y="1024.889">AfChargingId</text>
+      <text fill="#000" font-size="14" textLength="128.538" x="312" y="1038.889">allocationNotification</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="303" cy="1050.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="26.425" x="312" y="1052.889">type</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="303" cy="1064.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="101.15" x="312" y="1066.889">resourceProfiles</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="293" x2="445.538" y1="1074" y2="1074"/>
+    </g>
+    <!--class AccumUsagePerSession-->
+    <g class="entity" data-qualified-name="AccumUsagePerSession" data-source-line="101" id="ent0016">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="186.963" x="549" y="320"/>
+      <ellipse cx="564" cy="336" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="559" y="341">C</text>
+      <text fill="#000" font-size="14" textLength="154.963" x="578" y="339.889">AccumUsagePerSession</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="550" x2="734.963" y1="352" y2="352"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="550" x2="734.963" y1="360" y2="360"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="329.21,109.64,328.084,99.855,326.671,105.333,321.193,103.919,329.21,109.64" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M308.269,74.13 C314.658,84.964 319.517,93.203 326.671,105.333" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="309.21" y="105.751">1..*</text>
+      <text fill="#000" font-size="13" x="300.269" y="85.242">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk15">
+      <polygon fill="#181818" points="239.952,130.972,247.933,125.2,242.465,126.649,241.016,121.18,239.952,130.972" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M272.988,74.13 C262.836,91.599 252.607,109.198 242.465,126.649" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="217.952" y="127.083">0..1</text>
+      <text fill="#000" font-size="13" x="264.988" y="85.242">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0016" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="620.748,319.944,617.285,310.724,617.241,316.381,611.584,316.336,620.748,319.944" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M421.019,187.534 C456.938,203.107 502.353,225.003 539.5,250 C570.082,270.579 597.392,296.216 617.241,316.381" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="598.748" y="316.055">0..1</text>
+      <text fill="#000" font-size="13" x="422.019" y="183.645">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="135.479,284.575,144.657,281.002,139,281.025,138.977,275.369,135.479,284.575" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M297.857,208.924 C294.743,210.72 291.615,212.425 288.5,214 C242.22,237.408 221.504,222.552 177.5,250 C162.44,259.394 151.625,268.297 139,281.025" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="127.479" y="280.687">1</text>
+      <text fill="#000" font-size="13" x="289.857" y="205.035">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="301.391,277.94,309.022,271.713,303.647,273.478,301.882,268.104,301.391,277.94" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M333.666,214.099 C323.63,233.951 314.269,252.468 303.647,273.478" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="281.391" y="274.051">0..*</text>
+      <text fill="#000" font-size="13" x="325.666" y="225.21">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0006" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="402.926,249.853,402.479,240.014,400.69,245.381,395.324,243.592,402.926,249.853" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M385.05,214.099 C390.662,225.325 394.539,233.077 400.69,245.381" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="382.926" y="245.964">0..*</text>
+      <text fill="#000" font-size="13" x="377.05" y="225.21">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="456.096,473.924,459.631,464.732,455.841,468.931,451.641,465.14,456.096,473.924" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M454.261,438.052 C454.87,449.968 455.237,457.132 455.841,468.931" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="436.096" y="470.035">0..*</text>
+      <text fill="#000" font-size="13" x="446.261" y="449.163">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="445.525,683.752,450.594,675.307,446.136,678.789,442.654,674.331,445.525,683.752" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M449.909,648.111 C448.435,660.093 447.552,667.275 446.136,678.789" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="425.525" y="679.863">1..*</text>
+      <text fill="#000" font-size="13" x="441.909" y="659.222">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0012" data-link-type="dependency" id="lnk23">
+      <polygon fill="#181818" points="206.066,494.951,203.621,485.41,202.964,491.028,197.346,490.372,206.066,494.951" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M133.504,403.182 C155.924,431.537 179.864,461.813 202.964,491.028" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="184.066" y="491.062">0..1</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="111.504" y="414.293">0..1</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0012" data-link-type="dependency" id="lnk24">
+      <polygon fill="#181818" points="260.838,494.76,265.293,485.976,261.093,489.766,257.303,485.567,260.838,494.76" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M265.17,410.091 C263.798,436.91 262.466,462.931 261.093,489.766" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="238.838" y="490.871">0..1</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="243.17" y="421.202">0..1</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0012" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="315.593,494.948,324.571,490.9,318.923,491.219,318.604,485.571,315.593,494.948" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M367.796,436.491 C350.241,456.149 335.364,472.809 318.923,491.219" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="293.593" y="491.059">0..1</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="345.796" y="432.602">0..1</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0013" data-link-type="dependency" id="lnk26">
+      <polygon fill="#181818" points="337.832,851.771,339.283,842.029,336.497,846.953,331.574,844.167,337.832,851.771" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M275.619,627.359 C292.397,687.879 316.379,774.387 336.497,846.953" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="317.832" y="847.882">0..*</text>
+      <text fill="#000" font-size="13" x="267.619" y="638.47">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0013" data-link-type="dependency" id="lnk27">
+      <polygon fill="#181818" points="405.611,851.826,412.139,844.451,407.119,847.059,404.511,842.039,405.611,851.826" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M416.913,816.091 C413.317,827.461 410.99,834.818 407.119,847.059" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="397.611" y="847.937">1</text>
+      <text fill="#000" font-size="13" textLength="21.613" x="394.913" y="827.202">0..1</text>
+    </g>
+  </g>
+</svg>

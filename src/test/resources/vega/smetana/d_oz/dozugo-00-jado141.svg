@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="230px" preserveAspectRatio="none" style="width:309px;height:230px;background:#FFFFFF;" version="1.1" viewBox="0 0 309 230" width="309px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class User-->
+    <g class="entity" data-qualified-name="User" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="114.638" x="6" y="12"/>
+      <ellipse cx="44.878" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="39.878" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="64.184" y="31.889">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="119.638" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="73.938" x="12" y="58.889">email: String</text>
+      <text fill="#000" font-size="14" textLength="102.638" x="12" y="72.889">username: String</text>
+      <text fill="#000" font-size="14" textLength="100.363" x="12" y="86.889">password: String</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="119.638" y1="94" y2="94"/>
+    </g>
+    <path d="M139.5,40.5 L139.5,48 L114.638,69 L139.5,56 L139.5,63.5 A0,0 0 0 0 139.5,63.5 L293.506,63.5 A0,0 0 0 0 293.506,63.5 L293.506,50.5 L283.506,40.5 L139.5,40.5 A0,0 0 0 0 139.5,40.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M283.506,40.5 L283.506,50.5 L293.506,50.5 L283.506,40.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="133.006" x="145.5" y="55.611">This breaks connections</text>
+    <!--class Role-->
+    <g class="entity" data-qualified-name="Role" data-source-line="11" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.425" x="20" y="138"/>
+      <ellipse cx="46.948" cy="154" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="41.948" y="159">C</text>
+      <text fill="#000" font-size="14" textLength="28.875" x="63.603" y="157.889">Role</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="21" x2="106.425" y1="170" y2="170"/>
+      <text fill="#000" font-size="14" textLength="73.938" x="26" y="184.889">email: String</text>
+      <text fill="#000" font-size="14" textLength="75.425" x="26" y="198.889">name: String</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="21" x2="106.425" y1="206" y2="206"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="association" id="lnk5">
+      <path d="M63.5,102.233 C63.5,114.01 63.5,126.609 63.5,137.958" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0004" data-link-type="association" id="lnk6">
+      <path d="M107.169,154.313 C117.43,156.095 125,163.324 125,176 C125,188.676 117.43,195.905 107.169,197.687" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

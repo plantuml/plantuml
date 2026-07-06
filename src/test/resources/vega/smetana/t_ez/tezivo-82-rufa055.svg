@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:167px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 167 78" width="167px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="6" y="17"/>
+    <text fill="#000" font-size="14" textLength="31.938" x="15.031" y="40.889">Foo1</text>
+    <g class="entity" data-qualified-name="Foo2" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="77.488" x="74.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="74.5" x2="151.988" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="97.275" y="27.889">Foo2</text>
+      <text fill="#000" font-size="14" textLength="57.488" x="79.5" y="51.889">comment</text>
+    </g>
+  </g>
+</svg>

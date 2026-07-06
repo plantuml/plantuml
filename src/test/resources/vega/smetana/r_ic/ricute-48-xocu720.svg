@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="119px" preserveAspectRatio="none" style="width:332px;height:119px;background:#FFFFFF;" version="1.1" viewBox="0 0 332 119" width="332px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster AA-->
+    <g class="cluster" data-qualified-name="AA" data-source-line="5" id="ent0001">
+      <path d="M160.5,4 L180.225,4 A3.75,3.75 0 0 1 182.725,6.5 L189.725,24 L229.5,24 A2.5,2.5 0 0 1 232,26.5 L232,92.5 A2.5,2.5 0 0 1 229.5,95 L160.5,95 A2.5,2.5 0 0 1 158,92.5 L158,6.5 A2.5,2.5 0 0 1 160.5,4" fill="#ADD8E6" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="158" x2="189.725" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="162" y="16.889">AA</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="185.788" y="36.889">«st»</text>
+    </g>
+    <!--cluster BB-->
+    <g class="cluster" data-qualified-name="BB" data-source-line="8" id="ent0003">
+      <path d="M242.5,18 L262.225,18 A3.75,3.75 0 0 1 264.725,20.5 L271.725,38 L313.5,38 A2.5,2.5 0 0 1 316,40.5 L316,92.5 A2.5,2.5 0 0 1 313.5,95 L242.5,95 A2.5,2.5 0 0 1 240,92.5 L240,20.5 A2.5,2.5 0 0 1 242.5,18" fill="#FF0" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="240" x2="271.725" y1="38" y2="38"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="244" y="30.889">BB</text>
+    </g>
+    <!--entity CC-->
+    <g class="entity" data-qualified-name="CC" data-source-line="11" id="ent0005">
+      <path d="M8.5,46.5 L41.8,46.5 A3.75,3.75 0 0 1 44.3,49 L51.3,66.5 L65.8,66.5 A2.5,2.5 0 0 1 68.3,69 L68.3,81 A2.5,2.5 0 0 1 65.8,83.5 L8.5,83.5 A2.5,2.5 0 0 1 6,81 L6,49 A2.5,2.5 0 0 1 8.5,46.5" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="51.3" y1="66.5" y2="66.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.3" x="16" y="60.389">CC</text>
+    </g>
+    <!--entity DD-->
+    <g class="entity" data-qualified-name="DD" data-source-line="13" id="ent0006">
+      <path d="M88.5,46.5 L121.8,46.5 A3.75,3.75 0 0 1 124.3,49 L131.3,66.5 L145.8,66.5 A2.5,2.5 0 0 1 148.3,69 L148.3,81 A2.5,2.5 0 0 1 145.8,83.5 L88.5,83.5 A2.5,2.5 0 0 1 86,81 L86,49 A2.5,2.5 0 0 1 88.5,46.5" fill="#FF0" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="86" x2="131.3" y1="66.5" y2="66.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.3" x="96" y="60.389">DD</text>
+    </g>
+    <!--entity ZZ-->
+    <g class="entity" data-qualified-name="AA.ZZ" data-source-line="6" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.15" x="166.5" y="43"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="203.65" y="48"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="201.65" y="50"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="201.65" y="54"/>
+      <text fill="#000" font-size="14" textLength="17.15" x="181.5" y="73.889">ZZ</text>
+    </g>
+    <!--entity XX-->
+    <g class="entity" data-qualified-name="BB.XX" data-source-line="9" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.725" x="248.5" y="43"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="287.225" y="48"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="285.225" y="50"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="285.225" y="54"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="263.5" y="73.889">XX</text>
+    </g>
+  </g>
+</svg>

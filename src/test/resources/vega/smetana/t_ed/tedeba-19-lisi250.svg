@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="191px" preserveAspectRatio="none" style="width:479px;height:191px;background:#FFFFFF;" version="1.1" viewBox="0 0 479 191" width="479px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Graphic-->
+    <g class="entity" data-qualified-name="Graphic" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81" x="6" y="113"/>
+      <ellipse cx="21" cy="129" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="134">C</text>
+      <text fill="#000" font-size="14" textLength="49" x="35" y="132.889">Graphic</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="86" y1="145" y2="145"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="86" y1="153" y2="153"/>
+      <text fill="#000" font-size="14" textLength="55.212" x="12" y="167.889">Render()</text>
+    </g>
+    <!--class Image-->
+    <g class="entity" data-qualified-name="Image" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.85" x="11" y="12"/>
+      <ellipse cx="26" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="21" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="38.85" x="40" y="31.889">Image</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="80.85" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="80.85" y1="52" y2="52"/>
+    </g>
+    <!--class Watermarked-->
+    <g class="entity" data-qualified-name="Watermarked" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="115.913" x="147.5" y="12"/>
+      <ellipse cx="162.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="157.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="83.913" x="176.5" y="31.889">Watermarked</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="148.5" x2="262.413" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="148.5" x2="262.413" y1="52" y2="52"/>
+    </g>
+    <!--class TransparentBackground-->
+    <g class="entity" data-qualified-name="TransparentBackground" data-source-line="7" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="182.15" x="281.5" y="12"/>
+      <ellipse cx="296.5" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="291.5" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="150.15" x="310.5" y="31.889">TransparentBackground</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="282.5" x2="462.65" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="282.5" x2="462.65" y1="52" y2="52"/>
+    </g>
+    <!--class GraphicDecorator-->
+    <g class="entity" data-qualified-name="GraphicDecorator" data-source-line="8" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.425" x="182.5" y="120"/>
+      <ellipse cx="197.5" cy="136" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="192.5" y="141">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="110.425" x="211.5" y="139.889">GraphicDecorator</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="183.5" x2="323.925" y1="152" y2="152"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="183.5" x2="323.925" y1="160" y2="160"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="87.397,144,96.397,148,92.397,144,96.397,140,87.397,144" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M182.088,144 C150.453,144 119.378,144 92.397,144" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="74.425" x="97.75" y="136.111">«implement»</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="242.939,119.678,242.871,109.83,240.877,115.124,235.583,113.13,242.939,119.678" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M215.915,60 C223.911,77.658 232.845,97.386 240.877,115.124" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="74.425" x="233.5" y="90.111">«implement»</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="283.597,119.905,293.133,117.442,287.513,116.796,288.159,111.176,283.597,119.905" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M350.045,60.144 C339.245,70.996 325.963,83.941 313.5,95 C304.021,103.411 297.231,109.081 287.513,116.796" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="74.425" x="334.5" y="90.111">«implement»</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="46.5,112.795,50.5,103.795,46.5,107.795,42.5,103.795,46.5,112.795" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M46.5,60 C46.5,75.466 46.5,91.014 46.5,107.795" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="74.425" x="48.5" y="90.111">«implement»</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0005" data-link-type="composition" id="lnk10">
+      <polygon fill="#181818" points="182.214,146.731,176.123,142.871,170.217,147.009,176.308,150.869,182.214,146.731" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M87.043,145.978 C97.405,146.402 108.529,146.786 118.833,147 C139.408,147.426 149.754,147.483 170.217,147.009" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

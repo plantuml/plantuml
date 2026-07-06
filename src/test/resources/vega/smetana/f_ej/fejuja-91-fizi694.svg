@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="338px" preserveAspectRatio="none" style="width:221px;height:338px;background:#FFFFFF;" version="1.1" viewBox="0 0 221 338" width="221px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <path d="M18.5,12 L192.5,12 A12.5,12.5 0 0 1 205,24.5 L205,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="none" height="310" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="199" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="205" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="24.15" x="93.425" y="27.889">Foo</text>
+      <!--cluster Bar-->
+      <g class="cluster" data-qualified-name="Foo.Bar" data-source-line="2" id="ent0002">
+        <path d="M42.5,42 L177.5,42 A12.5,12.5 0 0 1 190,54.5 L190,61 L30,61 L30,54.5 A12.5,12.5 0 0 1 42.5,42" fill="#F1F1F1"/>
+        <rect fill="none" height="231" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="160" x="30" y="42"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="30" x2="190" y1="61" y2="61"/>
+        <text fill="#000" font-size="14" textLength="21.788" x="99.106" y="57.889">Bar</text>
+      </g>
+      <text fill="#000" font-size="14" textLength="30.362" x="45.819" y="289.889">xuq3</text>
+      <ellipse cx="61" cy="273" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1.5;" x1="65.389" x2="57.611" y1="277.389" y2="269.611"/>
+      <line style="stroke:#181818;stroke-width:1.5;" x1="65.389" x2="57.611" y1="269.611" y2="277.389"/>
+      <g class="entity" data-qualified-name="Foo.Bar.CONC1.quux2" data-source-line="6" id="ent0007">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.15" x="113.5" y="79"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="113.5" x2="171.65" y1="103" y2="103"/>
+        <text fill="#000" font-size="14" textLength="38.15" x="123.5" y="94.889">quux2</text>
+      </g>
+      <g class="entity" data-qualified-name="Foo.Bar.CONC1.xuuq4" data-source-line="6" id="ent0008">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="58.15" x="113.5" y="165"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="113.5" x2="171.65" y1="189" y2="189"/>
+        <text fill="#000" font-size="14" textLength="38.15" x="123.5" y="180.889">xuuq4</text>
+      </g>
+      <g class="link" data-entity-1="ent0007" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+        <polygon fill="#181818" points="142.5,164.758,146.5,155.758,142.5,159.758,138.5,155.758,142.5,164.758" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M142.5,129.296 C142.5,140.441 142.5,148.621 142.5,159.758" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="Foo.Bar.qux1" data-source-line="4" id="ent0005">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50.363" x="38" y="124"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="38" x2="88.363" y1="148" y2="148"/>
+        <text fill="#000" font-size="14" textLength="30.363" x="48" y="139.889">qux1</text>
+      </g>
+      <g class="link" data-entity-1="ent0005" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+        <polygon fill="#181818" points="63,266.976,67,257.976,63,261.976,59,257.976,63,266.976" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M63,174.076 C63,201.885 63,241.438 63,261.976" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+  </g>
+</svg>

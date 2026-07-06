@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="161px" preserveAspectRatio="none" style="width:236px;height:161px;background:#FFFFFF;" version="1.1" viewBox="0 0 236 161" width="236px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Driver-->
+    <g class="entity" data-qualified-name="Driver" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.363" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="37.363" x="35" y="31.889">Driver</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="74.363" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="74.363" y1="52" y2="52"/>
+    </g>
+    <!--class Car-->
+    <g class="entity" data-qualified-name="Car" data-source-line="1" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="54.575" x="165" y="12"/>
+      <ellipse cx="180" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="175" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="22.575" x="194" y="31.889">Car</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="166" x2="218.575" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="166" x2="218.575" y1="52" y2="52"/>
+    </g>
+    <!--class Contract-->
+    <g class="entity" data-qualified-name="Contract" data-source-line="2" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="84.85" x="96" y="97"/>
+      <ellipse cx="111" cy="113" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="106" y="118">C</text>
+      <text fill="#000" font-size="14" textLength="52.85" x="125" y="116.889">Contract</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="97" x2="179.85" y1="129" y2="129"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="97" x2="179.85" y1="137" y2="137"/>
+    </g>
+    <ellipse cx="132.5" cy="26" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M75.051,36 C94.89,36 118.198,36 130.29,36" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="34.694" x="85.75" y="28.111">drives</text>
+      <text fill="#000" font-size="13" x="76.051" y="32.111">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="association" id="lnk8">
+      <path d="M146.516,36 C152.623,36 158.73,36 164.838,36" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="156.838" y="32.111">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="association" id="lnk9">
+      <path d="M138.5,48.194 C138.5,60.583 138.5,80.897 138.5,96.763" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

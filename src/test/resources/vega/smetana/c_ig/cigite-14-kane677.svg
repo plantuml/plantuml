@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="72px" preserveAspectRatio="none" style="width:147px;height:72px;background:#FFFFFF;" version="1.1" viewBox="0 0 147 72" width="147px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity aaa-->
+    <g class="entity" data-qualified-name="aaa" data-source-line="1" id="ent0001">
+      <polygon fill="#F1F1F1" points="10,22,20,12,73.363,12,73.363,46,63.363,56,10,56,10,22" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="63.363" x2="73.363" y1="22" y2="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="63.363" y1="22" y2="22"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="63.363" x2="63.363" y1="22" y2="56"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="25" y="42.889">aaa</text>
+    </g>
+    <!--entity bbb-->
+    <g class="entity" data-qualified-name="bbb" data-source-line="2" id="ent0002">
+      <ellipse cx="122.5" cy="31" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="23.363" x="110.819" y="58.889">bbb</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M73.049,34 C87.441,34 103.421,34 113.216,34" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="19.5" x="83.75" y="26.111">ccc</text>
+    </g>
+  </g>
+</svg>

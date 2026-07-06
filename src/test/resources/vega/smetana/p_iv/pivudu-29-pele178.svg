@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="145px" preserveAspectRatio="none" style="width:97px;height:145px;background:#FFFFFF;" version="1.1" viewBox="0 0 97 145" width="97px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity fo-->
+    <g class="entity" data-qualified-name="fo" data-source-line="8" id="ent0001">
+      <ellipse cx="68.008" cy="33.406" fill="#F1F1F1" rx="13.508" ry="11.406" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="11.638" x="62.189" y="36.906">fo</text>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="10" id="ent0003">
+      <path d="M6,12 L6,56 A0,0 0 0 0 6,56 L36.425,56 A0,0 0 0 0 36.425,56 L36.425,38 L54.024,34 L36.425,30 L36.425,22 L26.425,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M26.425,12 L26.425,22 L36.425,22 L26.425,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" x="12" y="27.111">C</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="35.425" y1="30" y2="30"/>
+      <text fill="#000" font-size="13" x="12" y="44.111">D</text>
+    </g>
+    <g class="legend" data-source-line="2">
+      <rect fill="#DDD" height="48" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="20" x="35.25" y="78"/>
+      <text fill="#000" font-size="14" x="40.25" y="93.889">A</text>
+      <line style="stroke:#000;stroke-width:1;" x1="35.25" x2="55.25" y1="102" y2="102"/>
+      <text fill="#000" font-size="14" x="40.25" y="117.889">B</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="356px" preserveAspectRatio="none" style="width:618px;height:356px;background:#FFFFFF;" version="1.1" viewBox="0 0 618 356" width="618px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class user_role-->
+    <g class="entity" data-qualified-name="user_role" data-source-line="13" id="ent0001">
+      <rect fill="#F1F1F1" height="96" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="181.75" x="6" y="54"/>
+      <ellipse cx="63.444" cy="70" fill="#FAA" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="58.444" y="75">T</text>
+      <text fill="#000" font-size="14" textLength="58.363" x="83.944" y="73.889">user_role</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="186.75" y1="86" y2="86"/>
+      <text fill="#000" font-size="14" font-weight="700" text-decoration="underline" textLength="10.938" x="12" y="100.889">id</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="22.938" y="100.889">BIGINTEGER</text>
+      <text fill="#F00" font-size="14" text-decoration="underline" textLength="132.213" x="12" y="114.889">user_name,user_role</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="169.75" x="12" y="128.889">user_name VARCHAR[255]</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="58.363" x="12" y="142.889">user_role</text>
+      <text fill="#000" font-size="14" textLength="35" x="70.363" y="142.889">enum</text>
+    </g>
+    <!--class user-->
+    <g class="entity" data-qualified-name="user" data-source-line="20" id="ent0002">
+      <rect fill="#F1F1F1" height="82" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="175.45" x="221.5" y="258"/>
+      <ellipse cx="291.369" cy="274" fill="#FAA" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="286.369" y="279">T</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="311.869" y="277.889">user</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="222.5" x2="395.95" y1="290" y2="290"/>
+      <text fill="#000" font-size="14" font-weight="700" text-decoration="underline" textLength="10.938" x="227.5" y="304.889">id</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="238.438" y="304.889">BIGINTEGER</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="77.088" x="227.5" y="318.889">user_role_id</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="304.588" y="318.889">BIGINTEGER</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="134.75" x="227.5" y="332.889">name VARCHAR[255]</text>
+    </g>
+    <!--class customer-->
+    <g class="entity" data-qualified-name="customer" data-source-line="26" id="ent0003">
+      <rect fill="#F1F1F1" height="180" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="205.9" x="206" y="12"/>
+      <ellipse cx="275.956" cy="28" fill="#FAA" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="270.956" y="33">T</text>
+      <text fill="#000" font-size="14" textLength="57.488" x="296.456" y="31.889">customer</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="207" x2="410.9" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" font-weight="700" text-decoration="underline" textLength="76.213" x="212" y="58.889">customer_id</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="288.213" y="58.889">BIGINTEGER</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="45.938" x="212" y="72.889">user_id</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="257.938" y="72.889">BIGINTEGER</text>
+      <text fill="#000" font-size="14" textLength="133.263" x="212" y="86.889">email VARCHAR[128]</text>
+      <text fill="#000" font-size="14" textLength="165.025" x="212" y="100.889">first_name VARCHAR[255]</text>
+      <text fill="#000" font-size="14" textLength="164.325" x="212" y="114.889">last_name VARCHAR[255]</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="159.688" x="212" y="128.889">password VARCHAR[255]</text>
+      <text fill="#000" font-size="14" textLength="118.475" x="212" y="142.889">pin VARCHAR[255]</text>
+      <text fill="#000" font-size="14" textLength="193.9" x="212" y="156.889">phone_number VARCHAR[255]</text>
+      <text fill="#000" font-size="14" textLength="98.788" x="212" y="170.889">first_login BOOL</text>
+      <text fill="#000" font-size="14" textLength="11.55" x="212" y="184.889">...</text>
+    </g>
+    <!--class external_system_auth-->
+    <g class="entity" data-qualified-name="external_system_auth" data-source-line="39" id="ent0004">
+      <rect fill="#F1F1F1" height="124" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="171.688" x="430" y="40"/>
+      <ellipse cx="446.277" cy="56" fill="#FAA" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="441.277" y="61">T</text>
+      <text fill="#000" font-size="14" textLength="136.85" x="460.561" y="59.889">external_system_auth</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="431" x2="600.688" y1="72" y2="72"/>
+      <text fill="#000" font-size="14" font-weight="700" text-decoration="underline" textLength="35" x="436" y="86.889">name</text>
+      <text fill="#000" font-size="14" textLength="99.75" x="471" y="86.889">VARCHAR[255]</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="45.938" x="436" y="100.889">user_id</text>
+      <text fill="#000" font-size="14" textLength="86.363" x="481.938" y="100.889">BIGINTEGER</text>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="59.938" x="436" y="114.889">password</text>
+      <text fill="#000" font-size="14" textLength="99.75" x="495.938" y="114.889">VARCHAR[255]</text>
+      <text fill="#000" font-size="14" textLength="103.6" x="436" y="128.889">description TEXT</text>
+      <text fill="#000" font-size="14" textLength="53.813" x="436" y="142.889">ips TEXT</text>
+      <text fill="#000" font-size="14" textLength="75.425" x="436" y="156.889">active BOOL</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="221.216,260.707,215.528,252.667,216.92,258.15,211.437,259.542,221.216,260.707" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M121.541,150.063 C138.362,178.844 162.866,214.839 192,240 C200.836,247.632 206.556,251.983 216.92,258.15" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="109.85" x="194" y="222.111">User role can be user</text>
+      <text fill="#000" font-size="13" textLength="77.269" x="210.291" y="235.111">by many users</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="association" id="lnk6">
+      <path d="M309,192.225 C309,215.09 309,238.567 309,257.576" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="85.881" x="321.197" y="222.111">Customer - user</text>
+      <text fill="#000" font-size="13" textLength="106.275" x="311" y="235.111">is one to one relation</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="association" id="lnk7">
+      <path d="M483.752,164.067 C467.972,189.825 447.152,218.709 423,240 C415.004,247.049 405.999,253.493 396.644,259.312" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="118.381" x="452" y="222.111">External system - user</text>
+      <text fill="#000" font-size="13" textLength="106.275" x="458.053" y="235.111">is one to one relation</text>
+    </g>
+  </g>
+</svg>

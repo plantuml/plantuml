@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="110px" preserveAspectRatio="none" style="width:142px;height:110px;background:#FFC0CB;" version="1.1" viewBox="0 0 142 110" width="142px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC0CB" height="110" style="stroke:none;" width="142" x="0" y="0"/>
+    <!--cluster ff-->
+    <g class="cluster" data-qualified-name="ff" data-source-line="7" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,126,4,126,76,116,86,14,86,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="116" x2="126" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="116" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="116" x2="116" y1="14" y2="86"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="7.7" x="62.15" y="27.889">ff</text>
+    </g>
+    <!--entity nn-->
+    <g class="entity" data-qualified-name="ff.nn" data-source-line="8" id="ent0002">
+      <polygon fill="#F1F1F1" points="22.5,44,32.5,34,117.012,34,117.012,68,107.012,78,22.5,78,22.5,44" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="107.012" x2="117.012" y1="44" y2="34"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="22.5" x2="107.012" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="107.012" x2="107.012" y1="44" y2="78"/>
+      <text fill="#000" font-size="14" textLength="54.512" x="37.5" y="64.889">node nn2</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="156px" preserveAspectRatio="none" style="width:83px;height:156px;background:#FFFFFF;" version="1.1" viewBox="0 0 83 156" width="83px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="128" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.213" x="6" y="12"/>
+      <ellipse cx="23.278" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="18.278" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="37.784" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="66.213" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" x="24" y="64.889">a</text>
+      <text fill="#000" font-size="14" textLength="17.063" x="24" y="78.889">b()</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="32" y="92.889">b1</text>
+      <text fill="#000" font-size="14" textLength="15.575" x="32" y="106.889">b2</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="40" y="120.889">b2.1</text>
+      <text fill="#000" font-size="14" textLength="16.275" x="24" y="134.889">c()</text>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="60"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="61" y2="61"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="54" y2="61"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="74"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="75" y2="75"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="61" y2="75"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="29" y="88"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="30" y1="89" y2="89"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="22" y1="75" y2="89"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="29" y="102"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="30" y1="103" y2="103"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="22" y1="89" y2="103"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="37" y="116"/>
+      <line style="stroke:#000;stroke-width:1;" x1="30" x2="38" y1="117" y2="117"/>
+      <line style="stroke:#000;stroke-width:1;" x1="30" x2="30" y1="103" y2="117"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="130"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="131" y2="131"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="75" y2="131"/>
+    </g>
+  </g>
+</svg>

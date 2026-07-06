@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:124px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 124 78" width="124px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="state1" data-source-line="4" id="ent0001">
+      <rect fill="#F00" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="101.563" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="107.563" y1="52" y2="52"/>
+      <text fill="#FF0" font-size="30" textLength="81.563" x="16" y="40.333">state1</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="80px" preserveAspectRatio="none" style="width:92px;height:80px;background:#FFFFFF;" version="1.1" viewBox="0 0 92 80" width="92px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity test2-->
+    <g class="entity" data-qualified-name="test2" data-source-line="1" id="ent0001">
+      <path d="M8.5,12 L49.5,12 A3.75,3.75 0 0 1 52,14.5 L59,33 L73.5,33 A2.5,2.5 0 0 1 76,35.5 L76,61.5 A2.5,2.5 0 0 1 73.5,64 L8.5,64 A2.5,2.5 0 0 1 6,61.5 L6,14.5 A2.5,2.5 0 0 1 8.5,12" fill="#F1F1F1" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="59" y1="33" y2="33"/>
+      <text fill="#000" font-size="14" textLength="35.875" x="16" y="50.889">TEXT</text>
+    </g>
+  </g>
+</svg>

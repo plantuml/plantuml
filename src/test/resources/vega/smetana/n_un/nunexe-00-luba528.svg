@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="334px" preserveAspectRatio="none" style="width:238px;height:334px;background:#FFC0CB;" version="1.1" viewBox="0 0 238 334" width="238px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC0CB" height="334" style="stroke:none;" width="238" x="0" y="0"/>
+    <g class="title" data-source-line="3">
+      <text fill="#000" font-size="28" font-weight="700" textLength="151.025" x="20" y="41.778">Shape Stack</text>
+      <text fill="#000" font-size="28" font-weight="700" textLength="34.3" x="171.025" y="41.778">K0</text>
+    </g>
+    <!--entity stack1-->
+    <g class="entity" data-qualified-name="stack1" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="68" rx="5" ry="5" style="stroke:none;" width="120.85" x="49.663" y="94"/>
+      <path d="M19.663,94 L44.663,94 A5,5 0 0 1 49.663,99 L49.663,157 A5,5 0 0 0 54.663,162 L165.513,162 A5,5 0 0 0 170.513,157 L170.513,99 A5,5 0 0 1 175.513,94 L200.513,94" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="28" textLength="80.85" x="69.663" y="135.778">stack1</text>
+    </g>
+    <!--entity stack-->
+    <g class="entity" data-qualified-name="stack" data-source-line="5" id="ent0002">
+      <rect fill="#F1F1F1" height="68" rx="5" ry="5" style="stroke:none;" width="105.275" x="56.663" y="234"/>
+      <path d="M26.663,234 L51.663,234 A5,5 0 0 1 56.663,239 L56.663,297 A5,5 0 0 0 61.663,302 L156.938,302 A5,5 0 0 0 161.938,297 L161.938,239 A5,5 0 0 1 166.938,234 L191.938,234" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="28" textLength="65.275" x="76.663" y="275.778">stack</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M109.663,162.23 C109.663,183.595 109.663,211.547 109.663,233.057" fill="none" style="stroke:#181818;stroke-width:2;"/>
+    </g>
+  </g>
+</svg>

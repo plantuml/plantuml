@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="90px" preserveAspectRatio="none" style="width:232px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 232 90" width="232px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity aaaa bbbb ccic dddd //eeeee//, les //ffffff// et les //gggggg//, les //hhhhhh//, les //iiiiii// et les //kkkkkk//.-->
+    <g class="entity" data-qualified-name="aaaa bbbb ccic dddd ..eeeee... les ..ffffff.. et les ..gggggg... les ..hhhhhh... les ..iiiiii.. et les ..kkkkkk..." data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="209.7" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="31.15" x="16" y="32.889">aaaa</text>
+      <text fill="#000" font-size="14" x="47.15" y="32.889"> </text>
+      <text fill="#000" font-size="14" textLength="31.15" x="47.15" y="32.889">bbbb</text>
+      <text fill="#000" font-size="14" x="78.3" y="32.889"> </text>
+      <text fill="#000" font-size="14" textLength="24.15" x="78.3" y="32.889">ccic</text>
+      <text fill="#000" font-size="14" x="102.45" y="32.889"> </text>
+      <text fill="#000" font-size="14" textLength="31.15" x="102.45" y="32.889">dddd</text>
+      <text fill="#000" font-size="14" x="133.6" y="32.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="38.938" x="133.6" y="32.889">eeeee</text>
+      <text fill="#000" font-size="14" x="172.538" y="32.889">,</text>
+      <text fill="#000" font-size="14" x="176.388" y="32.889"> </text>
+      <text fill="#000" font-size="14" textLength="17.938" x="176.388" y="32.889">les</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="23.1" x="16" y="46.889">ffffff</text>
+      <text fill="#000" font-size="14" x="39.1" y="46.889"> </text>
+      <text fill="#000" font-size="14" textLength="11.638" x="39.1" y="46.889">et</text>
+      <text fill="#000" font-size="14" x="50.738" y="46.889"> </text>
+      <text fill="#000" font-size="14" textLength="17.938" x="50.738" y="46.889">les</text>
+      <text fill="#000" font-size="14" x="68.675" y="46.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="46.725" x="68.675" y="46.889">gggggg</text>
+      <text fill="#000" font-size="14" x="115.4" y="46.889">,</text>
+      <text fill="#000" font-size="14" x="119.25" y="46.889"> </text>
+      <text fill="#000" font-size="14" textLength="17.938" x="119.25" y="46.889">les</text>
+      <text fill="#000" font-size="14" x="137.188" y="46.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="46.725" x="137.188" y="46.889">hhhhhh</text>
+      <text fill="#000" font-size="14" x="183.913" y="46.889">,</text>
+      <text fill="#000" font-size="14" x="187.763" y="46.889"> </text>
+      <text fill="#000" font-size="14" textLength="17.938" x="187.763" y="46.889">les</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="18.9" x="16" y="60.889">iiiiii</text>
+      <text fill="#000" font-size="14" x="34.9" y="60.889"> </text>
+      <text fill="#000" font-size="14" textLength="11.638" x="34.9" y="60.889">et</text>
+      <text fill="#000" font-size="14" x="46.538" y="60.889"> </text>
+      <text fill="#000" font-size="14" textLength="17.938" x="46.538" y="60.889">les</text>
+      <text fill="#000" font-size="14" x="64.475" y="60.889"> </text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="42" x="64.475" y="60.889">kkkkkk</text>
+      <text fill="#000" font-size="14" x="106.475" y="60.889">.</text>
+    </g>
+  </g>
+</svg>

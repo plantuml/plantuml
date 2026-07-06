@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="220px" preserveAspectRatio="none" style="width:71px;height:220px;background:#FFFFFF;" version="1.1" viewBox="0 0 71 220" width="71px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class func1-->
+    <g class="entity" data-qualified-name="func1" data-source-line="11" id="ent0001">
+      <rect fill="#F1F1F1" height="24" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="40.213" x="10.5" y="12"/>
+      <text fill="#000" font-size="14" textLength="34.213" x="13.5" y="27.889">func1</text>
+    </g>
+    <!--class func2-->
+    <g class="entity" data-qualified-name="func2" data-source-line="12" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="48.65" x="6" y="72"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="46.65" x="7" y="86.333">«Green»</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="37.425" x="11.613" y="98.333">«Blue»</text>
+      <text fill="#00F" font-size="14" textLength="34.213" x="13.219" y="111.889">func2</text>
+    </g>
+    <!--class func3-->
+    <g class="entity" data-qualified-name="func3" data-source-line="13" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#008000;stroke-width:0.5;" width="48.65" x="6" y="156"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="37.425" x="11.613" y="170.333">«Blue»</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="46.65" x="7" y="182.333">«Green»</text>
+      <text fill="#00F" font-size="14" textLength="34.213" x="13.219" y="195.889">func3</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="30.5,71.891,34.5,62.891,30.5,66.891,26.5,62.891,30.5,71.891" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M30.5,36.247 C30.5,45.831 30.5,54.915 30.5,66.891" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="30.5,155.947,34.5,146.947,30.5,150.947,26.5,146.947,30.5,155.947" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M30.5,120.279 C30.5,131.453 30.5,139.802 30.5,150.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

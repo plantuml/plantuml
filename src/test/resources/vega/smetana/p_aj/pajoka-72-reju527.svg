@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="276px" preserveAspectRatio="none" style="width:140px;height:276px;background:#FFFFFF;" version="1.1" viewBox="0 0 140 276" width="140px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.913" x="6" y="12"/>
+      <ellipse cx="26.293" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="21.293" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="41.469" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="72.913" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="72.913" y1="52" y2="52"/>
+      <text fill="#000" font-size="14" textLength="55.912" x="12" y="66.889">method()</text>
+    </g>
+    <!--class Bar-->
+    <g class="entity" data-qualified-name="Bar" data-source-line="4" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.788" x="13" y="212"/>
+      <ellipse cx="28" cy="228" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="23" y="233">C</text>
+      <text fill="#000" font-size="14" textLength="21.788" x="42" y="231.889">Bar</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="65.788" y1="244" y2="244"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="65.788" y1="252" y2="252"/>
+    </g>
+    <!--class Qux-->
+    <g class="entity" data-qualified-name="Qux" data-source-line="5" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.638" x="66" y="127"/>
+      <ellipse cx="81" cy="143" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="76" y="148">C</text>
+      <text fill="#000" font-size="14" textLength="25.638" x="95" y="146.889">Qux</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67" x2="122.638" y1="159" y2="159"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="67" x2="122.638" y1="167" y2="167"/>
+    </g>
+    <ellipse cx="34" cy="141" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0006" data-link-type="association" id="lnk7">
+      <path d="M40,74.092 C40,95.759 40,123.752 40,138.965" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="73.369" x="42" y="104.111">don't drawing</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="40,211.763,44,202.763,40,206.763,36,202.763,40,211.763" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M40,163.194 C40,175.583 40,190.897 40,206.763" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0003" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="65.728,151,56.728,147,60.728,151,56.728,155,65.728,151" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M48.164,151 C54.019,151 54.873,151 60.728,151" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

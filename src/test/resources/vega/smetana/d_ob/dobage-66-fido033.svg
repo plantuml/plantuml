@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="166px" preserveAspectRatio="none" style="width:249px;height:166px;background:#FFFFFF;" version="1.1" viewBox="0 0 249 166" width="249px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster s1-->
+    <g class="cluster" data-qualified-name="s1" data-source-line="24" id="ent0002">
+      <path d="M26.5,52 L223.5,52 A12.5,12.5 0 0 1 236,64.5 L236,69 L14,69 L14,64.5 A12.5,12.5 0 0 1 26.5,52" fill="#F0F8FF"/>
+      <rect fill="#FFC0CB" height="19" style="stroke:#FFC0CB;stroke-width:1;" width="222" x="14" y="69"/>
+      <path d="M14,88 L236,88 L236,129.5 A12.5,12.5 0 0 1 223.5,142 L26.5,142 A12.5,12.5 0 0 1 14,129.5 L14,88" fill="#98FB98"/>
+      <rect fill="none" height="90" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="222" x="14" y="52"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="236" y1="69" y2="69"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="14" x2="236" y1="88" y2="88"/>
+      <text fill="#00F" font-size="12" textLength="94.65" x="77.675" y="61.333">Name (name style)</text>
+      <text fill="#F00" font-size="14" textLength="206.15" x="19" y="82.389">State description (description style)</text>
+    </g>
+    <rect fill="#F0F8FF" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="100" y="4"/>
+    <text fill="#00F" font-size="12" textLength="12.675" x="118.663" y="27.333">s0</text>
+    <rect fill="#F0F8FF" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="100" y="94"/>
+    <text fill="#00F" font-size="12" textLength="12.675" x="118.663" y="117.333">s2</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="125,93.943,129,84.943,125,88.943,121,84.943,125,93.943" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M125,44.095 C125,58.855 125,74.191 125,88.943" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

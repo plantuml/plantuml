@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="353px" preserveAspectRatio="none" style="width:258px;height:353px;background:#FFFFFF;" version="1.1" viewBox="0 0 258 353" width="258px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Active" data-source-line="4" id="ent0001">
+      <path d="M18.5,73 L168.642,73 A12.5,12.5 0 0 1 181.142,85.5 L181.142,97 L6,97 L6,85.5 A12.5,12.5 0 0 1 18.5,73" fill="#F1F1F1"/>
+      <rect fill="none" height="264" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="175.142" x="6" y="73"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="181.142" y1="97" y2="97"/>
+      <text fill="#000" font-size="14" textLength="38.15" x="74.496" y="88.889">Active</text>
+      <g class="start_entity" data-qualified-name="Active..start.Active" data-source-line="5" id="ent0004">
+        <ellipse cx="65.836" cy="118" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <g class="entity" data-qualified-name="Active.Stopped" data-source-line="5" id="ent0005">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="72.15" x="29.836" y="169"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="29.836" x2="101.986" y1="193" y2="193"/>
+        <text fill="#000" font-size="14" textLength="52.15" x="39.836" y="184.889">Stopped</text>
+      </g>
+      <g class="entity" data-qualified-name="Active.Running" data-source-line="6" id="ent0007">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="72.238" x="29.836" y="272"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="29.836" x2="102.073" y1="296" y2="296"/>
+        <text fill="#000" font-size="14" textLength="52.238" x="39.836" y="287.889">Running</text>
+      </g>
+      <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+        <polygon fill="#181818" points="65.836,168.724,69.836,159.724,65.836,163.724,61.836,159.724,65.836,168.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M65.836,132.25 C65.836,141.979 65.836,151.384 65.836,163.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+      <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+        <polygon fill="#181818" points="30.208,271.735,26.632,262.558,26.657,268.215,21,268.24,30.208,271.735" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M31.472,219.17 C26.339,224.423 21.786,230.408 18.836,237 C13.219,249.551 16.566,258.212 26.657,268.215" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="69.306" x="20.836" y="249.111">EvStartStop</text>
+      </g>
+      <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="dependency" id="lnk9">
+        <polygon fill="#181818" points="83.941,219.245,85.029,229.034,86.464,223.562,91.936,224.998,83.941,219.245" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M84.847,271.874 C90.878,261.402 95.205,248.843 91.836,237 C90.099,230.896 89.717,229.129 86.464,223.562" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-size="13" textLength="69.306" x="94.836" y="249.111">EvStartStop</text>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0002">
+      <ellipse cx="93.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="93.5,72.868,97.5,63.868,93.5,67.868,89.5,63.868,93.5,72.868" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M93.5,36.197 C93.5,44.846 93.5,52.851 93.5,67.868" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0001" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="181.218,229.333,191.062,229.657,185.851,227.454,188.054,222.243,181.218,229.333" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M181.218,180.667 C191.959,185.024 199,193.135 199,205 C199,216.865 196.592,223.097 185.851,227.454" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="49.156" x="201" y="208.611">EvReset</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="196px" preserveAspectRatio="none" style="width:342px;height:196px;background:#FFFFFF;" version="1.1" viewBox="0 0 342 196" width="342px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="44.075" x="107.5" y="12"/>
+    <text fill="#000" font-size="12" textLength="24.075" x="117.5" y="31.333">Plan</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="56.75" x="177" y="12"/>
+    <text fill="#000" font-size="12" textLength="36.75" x="187" y="31.333">Collect</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="57.35" x="181" y="80"/>
+    <text fill="#000" font-size="12" textLength="37.35" x="191" y="99.333">Assure</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="67.4" x="259" y="148"/>
+    <text fill="#000" font-size="12" textLength="47.4" x="269" y="167.333">Describe</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="68" x="91.5" y="148"/>
+    <text fill="#000" font-size="12" textLength="48" x="101.5" y="167.333">Preserve</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="66.725" x="6" y="148"/>
+    <text fill="#000" font-size="12" textLength="46.725" x="16" y="167.333">Discover</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="67.25" x="8" y="80"/>
+    <text fill="#000" font-size="12" textLength="47.25" x="18" y="99.333">Integrate</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="62.75" x="12" y="12"/>
+    <text fill="#000" font-size="12" textLength="42.75" x="22" y="31.333">Analyze</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="62.75" x="178" y="148"/>
+    <text fill="#000" font-size="12" textLength="42.75" x="188" y="167.333">Analyse</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="176.954,28,167.954,24,171.954,28,167.954,32,176.954,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M151.766,28 C160.162,28 163.558,28 171.954,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="208.577,79.775,212.026,70.55,208.275,74.785,204.04,71.034,208.577,79.775" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M206.428,44.308 C207.074,54.97 207.63,64.14 208.275,74.785" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0017" data-entity-2="ent0001" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="107.391,28,98.391,24,102.391,28,98.391,32,107.391,28" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M75.078,28 C85.849,28 91.62,28 102.391,28" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0021" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="209.5,147.775,213.5,138.775,209.5,142.775,205.5,138.775,209.5,147.775" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M209.5,112.308 C209.5,122.97 209.5,132.131 209.5,142.775" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="128px" preserveAspectRatio="none" style="width:112px;height:128px;background:#FFFFFF;" version="1.1" viewBox="0 0 112 128" width="112px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="parent" data-source-line="2" id="ent0001">
+      <path d="M18.5,12 L83.838,12 A12.5,12.5 0 0 1 96.338,24.5 L96.338,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#008000"/>
+      <path d="M6,36 L96.338,36 L96.338,99.5 A12.5,12.5 0 0 1 83.838,112 L18.5,112 A12.5,12.5 0 0 1 6,99.5 L6,36" fill="#008000"/>
+      <rect fill="none" height="100" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="90.338" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="96.338" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="39.637" x="31.35" y="27.889">parent</text>
+      <g class="entity" data-qualified-name="parent.child" data-source-line="3" id="ent0002">
+        <rect fill="#008000" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50" x="12" y="47"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="62" y1="71" y2="71"/>
+        <text fill="#000" font-size="14" textLength="28.875" x="22.563" y="62.889">child</text>
+      </g>
+      <g class="link" data-entity-1="ent0002" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+        <polygon fill="#181818" points="62.176,81.338,70.997,85.718,67.171,81.551,71.338,77.725,62.176,81.338" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M62.176,62.662 C71.91,62.247 80,65.359 80,72 C80,78.641 76.905,81.966 67.171,81.551" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      </g>
+    </g>
+  </g>
+</svg>

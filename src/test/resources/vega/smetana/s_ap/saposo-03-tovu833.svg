@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="131px" preserveAspectRatio="none" style="width:845px;height:131px;background:#FFFFFF;" version="1.1" viewBox="0 0 845 131" width="845px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity gw-->
+    <g class="entity" data-qualified-name="gw" data-source-line="8" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="117.788" x="6" y="71.495"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="103.788" y="76.495"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.788" y="78.495"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="101.788" y="82.495"/>
+      <text fill="#000" font-size="14" textLength="77.788" x="21" y="102.384">API Gateway</text>
+    </g>
+    <!--entity auth-->
+    <g class="entity" data-qualified-name="auth" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="115.512" x="713" y="71.495"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="808.513" y="76.495"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="806.513" y="78.495"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="806.513" y="82.495"/>
+      <text fill="#000" font-size="14" textLength="75.512" x="728" y="102.384">Auth Service</text>
+    </g>
+    <!--entity orders-->
+    <g class="entity" data-qualified-name="orders" data-source-line="10" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122.425" x="271" y="71.495"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="373.425" y="76.495"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="371.425" y="78.495"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="371.425" y="82.495"/>
+      <text fill="#000" font-size="14" textLength="82.425" x="286" y="102.384">Order Service</text>
+    </g>
+    <!--entity notify-->
+    <g class="entity" data-qualified-name="notify" data-source-line="11" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="156.025" x="539" y="71.495"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="675.025" y="76.495"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="673.025" y="78.495"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="673.025" y="82.495"/>
+      <text fill="#000" font-size="14" textLength="116.025" x="554" y="102.384">Notification Service</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="712.985,74.122,705.517,67.701,708.197,72.683,703.215,75.363,712.985,74.122" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M124.212,73.343 C180.297,55.389 267.268,30.461 345,20.495 C504.849,0 548.948,27.556 704,71.495 C706.945,72.329 705.165,71.772 708.197,72.683" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="51.35" x="349.153" y="22.606">validates</text>
+      <text fill="#F00" font-size="13" x="400.503" y="22.606"> </text>
+      <text fill="#F00" font-size="13" textLength="26.731" x="400.503" y="22.606">JWT</text>
+      <text fill="#F00" font-size="13" x="427.234" y="22.606"> </text>
+      <text fill="#F00" font-size="13" textLength="38.269" x="427.234" y="22.606">tokens</text>
+      <text fill="#F00" font-size="13" x="465.503" y="22.606"> </text>
+      <text fill="#F00" font-size="13" textLength="21.694" x="465.503" y="22.606">and</text>
+      <text fill="#F00" font-size="13" textLength="40.463" x="347" y="35.606">checks</text>
+      <text fill="#F00" font-size="13" x="387.463" y="35.606"> </text>
+      <text fill="#F00" font-size="13" textLength="61.425" x="387.463" y="35.606">role-based</text>
+      <text fill="#F00" font-size="13" x="448.888" y="35.606"> </text>
+      <text fill="#F00" font-size="13" textLength="40.463" x="448.888" y="35.606">access</text>
+      <text fill="#F00" font-size="13" textLength="39" x="363.981" y="48.606">control</text>
+      <text fill="#F00" font-size="13" x="402.981" y="48.606"> </text>
+      <text fill="#F00" font-size="13" textLength="69.388" x="402.981" y="48.606">permissions</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="270.593,93.495,261.593,89.495,265.593,93.495,261.593,97.495,270.593,93.495" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M124.256,93.495 C167.734,93.495 221.618,93.495 265.593,93.495" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="36.075" x="141.216" y="59.606">routes</text>
+      <text fill="#F00" font-size="13" x="177.291" y="59.606"> </text>
+      <text fill="#F00" font-size="13" textLength="30.306" x="177.291" y="59.606">order</text>
+      <text fill="#F00" font-size="13" x="207.597" y="59.606"> </text>
+      <text fill="#F00" font-size="13" textLength="46.231" x="207.597" y="59.606">creation</text>
+      <text fill="#F00" font-size="13" textLength="49.806" x="135" y="72.606">requests</text>
+      <text fill="#F00" font-size="13" x="184.806" y="72.606"> </text>
+      <text fill="#F00" font-size="13" textLength="23.156" x="184.806" y="72.606">with</text>
+      <text fill="#F00" font-size="13" x="207.963" y="72.606"> </text>
+      <text fill="#F00" font-size="13" textLength="52.081" x="207.963" y="72.606">validated</text>
+      <text fill="#F00" font-size="13" textLength="25.269" x="164.291" y="85.606">user</text>
+      <text fill="#F00" font-size="13" x="189.559" y="85.606"> </text>
+      <text fill="#F00" font-size="13" textLength="41.194" x="189.559" y="85.606">identity</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0004" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="538.863,93.495,529.863,89.495,533.863,93.495,529.863,97.495,538.863,93.495" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M393.14,93.495 C435.747,93.495 487.948,93.495 533.863,93.495" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="43.306" x="404.284" y="59.606">triggers</text>
+      <text fill="#F00" font-size="13" x="447.591" y="59.606"> </text>
+      <text fill="#F00" font-size="13" textLength="31.119" x="447.591" y="59.606">email</text>
+      <text fill="#F00" font-size="13" x="478.709" y="59.606"> </text>
+      <text fill="#F00" font-size="13" textLength="21.694" x="478.709" y="59.606">and</text>
+      <text fill="#F00" font-size="13" x="500.403" y="59.606"> </text>
+      <text fill="#F00" font-size="13" textLength="28.194" x="500.403" y="59.606">push</text>
+      <text fill="#F00" font-size="13" textLength="68.656" x="404" y="72.606">notifications</text>
+      <text fill="#F00" font-size="13" x="472.656" y="72.606"> </text>
+      <text fill="#F00" font-size="13" textLength="25.919" x="472.656" y="72.606">after</text>
+      <text fill="#F00" font-size="13" x="498.575" y="72.606"> </text>
+      <text fill="#F00" font-size="13" textLength="30.306" x="498.575" y="72.606">order</text>
+      <text fill="#F00" font-size="13" textLength="28.113" x="427.806" y="85.606">state</text>
+      <text fill="#F00" font-size="13" x="455.919" y="85.606"> </text>
+      <text fill="#F00" font-size="13" textLength="49.156" x="455.919" y="85.606">changes</text>
+    </g>
+  </g>
+</svg>

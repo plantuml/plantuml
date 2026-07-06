@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="291px" preserveAspectRatio="none" style="width:198px;height:291px;background:#FFFFFF;" version="1.1" viewBox="0 0 198 291" width="198px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Super-->
+    <g class="cluster" data-qualified-name="Super" data-source-line="3" id="ent0001">
+      <path d="M46.5,4 L169.5,4 A12.5,12.5 0 0 1 182,16.5 L182,23 L34,23 L34,16.5 A12.5,12.5 0 0 1 46.5,4" fill="#F1F1F1"/>
+      <rect fill="none" height="263" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="148" x="34" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="34" x2="182" y1="23" y2="23"/>
+      <text fill="#000" font-size="14" textLength="37.363" x="89.319" y="14.889">Super</text>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0002">
+      <ellipse cx="16" cy="39" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="start_entity" data-qualified-name="Super..start.Super" data-source-line="4" id="ent0004">
+      <ellipse cx="148" cy="39" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="Super.Default" data-source-line="4" id="ent0005">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="64.363" x="110" y="106"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="110" x2="174.363" y1="130" y2="130"/>
+      <text fill="#000" font-size="14" textLength="44.363" x="120" y="121.889">Default</text>
+    </g>
+    <g class="entity" data-qualified-name="Super.Running" data-source-line="5" id="ent0007">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="72.238" x="70" y="209"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="70" x2="142.238" y1="233" y2="233"/>
+      <text fill="#000" font-size="14" textLength="52.238" x="80" y="224.889">Running</text>
+    </g>
+    <g class="entity" data-qualified-name="Super.DND" data-source-line="6" id="ent0009">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50.45" x="42" y="106"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="42" x2="92.45" y1="130" y2="130"/>
+      <text fill="#000" font-size="14" textLength="30.45" x="52" y="121.889">DND</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="33.981,41,24.981,37,28.981,41,24.981,45,33.981,41" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.313,41 C28.091,41 29.869,41 31.647,41 C32.092,41 32.536,41 32.981,41 C33.203,41 33.425,41 33.647,41 C33.759,41 28.87,41 28.981,41" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="143.659,105.666,148.262,96.959,143.999,100.678,140.281,96.415,143.659,105.666" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M147.24,53.145 C146.345,66.28 145.17,83.502 143.999,100.678" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="114.677,208.655,121.467,201.521,116.356,203.946,113.931,198.835,114.677,208.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M133.377,156.192 C127.719,172.066 122.025,188.041 116.356,203.946" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="23.888" x="129" y="186.111">Run</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0007" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="96.6,208.655,97.089,198.819,94.799,203.991,89.626,201.7,96.6,208.655" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M76.341,156.192 C82.471,172.066 88.657,188.087 94.799,203.991" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="23.888" x="91" y="186.111">Run</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0009" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="61.836,105.651,64.116,96.07,60.919,100.736,56.252,97.538,61.836,105.651" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56.337,53.004 C56.714,62.345 57.483,76.092 59,88 C59.731,93.743 59.842,94.971 60.919,100.736" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="78.081" x="61" y="83.111">DoNotDisturb</text>
+    </g>
+  </g>
+</svg>

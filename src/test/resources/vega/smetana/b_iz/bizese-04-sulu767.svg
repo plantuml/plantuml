@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="259px" preserveAspectRatio="none" style="width:346px;height:259px;background:#FFFFFF;" version="1.1" viewBox="0 0 346 259" width="346px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="GMN1" data-source-line="2" id="ent0002">
+      <path d="M44,12 L44,123.5 L26.02,127.5 L44,131.5 L44,243 A0,0 0 0 0 44,243 L330.281,243 A0,0 0 0 0 330.281,243 L330.281,22 L320.281,12 L44,12 A0,0 0 0 0 44,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M320.281,12 L320.281,22 L330.281,22 L320.281,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="136.663" x="50" y="27.111">Online Balance - 500 euro</text>
+      <text fill="#000" font-size="13" textLength="161.85" x="50" y="40.111">Temporary Balance - 500 euro</text>
+      <text fill="#000" font-size="13" textLength="153.969" x="50" y="53.111">Reservation Balance - 0 euro</text>
+      <text fill="#000" font-size="13" textLength="216.775" x="50" y="66.111">Temporary Reservation Balance - 0 euro</text>
+      <text fill="#000" font-size="13" textLength="131.625" x="50" y="79.111">Shadow Balance - 0 euro</text>
+      <text fill="#000" font-size="13" textLength="194.431" x="50" y="92.111">Temporary Shadow Balance - 0 euro</text>
+      <text fill="#000" font-size="13" x="50" y="105.111"> </text>
+      <text fill="#000" font-size="13" textLength="265.281" x="50" y="118.111">(*) --&gt; "Reservation of Purchase amount 800 euro"</text>
+      <text fill="#000" font-size="13" x="50" y="131.111"> </text>
+      <text fill="#000" font-size="13" textLength="114.319" x="50" y="144.111">"Some Activity" --&gt; (*)</text>
+      <text fill="#000" font-size="13" x="50" y="157.111"> </text>
+      <text fill="#000" font-size="13" textLength="42.575" x="50" y="170.111">note left</text>
+      <text fill="#000" font-size="13" x="50" y="183.111"> </text>
+      <text fill="#000" font-size="13" textLength="73.775" x="50" y="196.111">This note is on</text>
+      <text fill="#000" font-size="13" x="50" y="209.111"> </text>
+      <text fill="#000" font-size="13" textLength="68.738" x="50" y="222.111">several lines</text>
+      <text fill="#000" font-size="13" x="50" y="235.111"> </text>
+    </g>
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0003">
+      <ellipse cx="16" cy="125.5" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

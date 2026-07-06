@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="243px" preserveAspectRatio="none" style="width:336px;height:243px;background:#FFFFFF;" version="1.1" viewBox="0 0 336 243" width="336px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster issues-->
+    <g class="cluster" data-qualified-name="issues" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L57.225,4 A3.75,3.75 0 0 1 59.725,6.5 L66.725,24 L229.5,24 A2.5,2.5 0 0 1 232,26.5 L232,216.5 A2.5,2.5 0 0 1 229.5,219 L16.5,219 A2.5,2.5 0 0 1 14,216.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="66.725" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="39.725" x="18" y="16.889">issues</text>
+    </g>
+    <!--cluster f1-->
+    <g class="cluster" data-qualified-name="issues.f1" data-source-line="6" id="ent0005">
+      <path d="M24.5,29 L37.138,29 A3.75,3.75 0 0 1 39.638,31.5 L46.638,49 L221.5,49 A2.5,2.5 0 0 1 224,51.5 L224,140.5 A2.5,2.5 0 0 1 221.5,143 L24.5,143 A2.5,2.5 0 0 1 22,140.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="46.638" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="11.638" x="26" y="41.889">f1</text>
+    </g>
+    <!--cluster function-->
+    <g class="cluster" data-qualified-name="issues.f1.function" data-source-line="6" id="ent0006">
+      <path d="M146.5,54 L196.5,54 A3.75,3.75 0 0 1 199,56.5 L206,74 L213.5,74 A2.5,2.5 0 0 1 216,76.5 L216,132.5 A2.5,2.5 0 0 1 213.5,135 L146.5,135 A2.5,2.5 0 0 1 144,132.5 L144,56.5 A2.5,2.5 0 0 1 146.5,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="144" x2="206" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49" x="148" y="66.889">function</text>
+    </g>
+    <!--cluster f1-->
+    <g class="cluster" data-qualified-name="f1" data-source-line="11" id="ent0012">
+      <path d="M242.5,29 L255.138,29 A3.75,3.75 0 0 1 257.638,31.5 L264.638,49 L325.5,49 A2.5,2.5 0 0 1 328,51.5 L328,140.5 A2.5,2.5 0 0 1 325.5,143 L242.5,143 A2.5,2.5 0 0 1 240,140.5 L240,31.5 A2.5,2.5 0 0 1 242.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="240" x2="264.638" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="11.638" x="244" y="41.889">f1</text>
+    </g>
+    <!--cluster function-->
+    <g class="cluster" data-qualified-name="f1.function" data-source-line="10" id="ent0010">
+      <path d="M250.5,54 L300.5,54 A3.75,3.75 0 0 1 303,56.5 L310,74 L317.5,74 A2.5,2.5 0 0 1 320,76.5 L320,132.5 A2.5,2.5 0 0 1 317.5,135 L250.5,135 A2.5,2.5 0 0 1 248,132.5 L248,56.5 A2.5,2.5 0 0 1 250.5,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="248" x2="310" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49" x="252" y="66.889">function</text>
+    </g>
+    <!--class Rabbit-->
+    <g class="entity" data-qualified-name="issues.Rabbit" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.512" x="143.5" y="163"/>
+      <ellipse cx="158.5" cy="179" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="153.5" y="184">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="40.512" x="172.5" y="182.889">Rabbit</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="144.5" x2="215.013" y1="195" y2="195"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="144.5" x2="215.013" y1="203" y2="203"/>
+    </g>
+    <!--class Dog-->
+    <g class="entity" data-qualified-name="issues.Dog" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="57.725" x="53" y="163"/>
+      <ellipse cx="68" cy="179" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="63" y="184">C</text>
+      <text fill="#000" font-size="14" textLength="25.725" x="82" y="182.889">Dog</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="54" x2="109.725" y1="195" y2="195"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="54" x2="109.725" y1="203" y2="203"/>
+    </g>
+    <!--class AbstractSet-->
+    <g class="entity" data-qualified-name="issues.f1.AbstractSet" data-source-line="7" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.275" x="30" y="79"/>
+      <ellipse cx="45" cy="95" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="40" y="100">C</text>
+      <text fill="#000" font-size="14" textLength="72.275" x="59" y="98.889">AbstractSet</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31" x2="133.275" y1="111" y2="111"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="31" x2="133.275" y1="119" y2="119"/>
+    </g>
+    <!--class Fox-->
+    <g class="entity" data-qualified-name="issues.f1.function.Fox" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.363" x="152.5" y="79"/>
+      <ellipse cx="167.5" cy="95" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="162.5" y="100">C</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="181.5" y="98.889">Fox</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="153.5" x2="206.863" y1="111" y2="111"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="153.5" x2="206.863" y1="119" y2="119"/>
+    </g>
+    <!--class Fox-->
+    <g class="entity" data-qualified-name="f1.function.Fox" data-source-line="11" id="ent0011">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.363" x="256.5" y="79"/>
+      <ellipse cx="271.5" cy="95" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="266.5" y="100">C</text>
+      <text fill="#000" font-size="14" textLength="23.363" x="285.5" y="98.889">Fox</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="257.5" x2="310.863" y1="111" y2="111"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="257.5" x2="310.863" y1="119" y2="119"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="180,127.279,174,145.279,186,145.279,180,127.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M180,145.279 C180,156.453 180,151.802 180,162.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0003" data-link-type="extension" id="lnk9">
+      <polygon fill="none" points="82,127.279,76,145.279,88,145.279,82,127.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M82,145.279 C82,156.453 82,151.802 82,162.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

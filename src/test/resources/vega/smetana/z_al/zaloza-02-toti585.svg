@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="109px" preserveAspectRatio="none" style="width:170px;height:109px;background:#FFFFFF;" version="1.1" viewBox="0 0 170 109" width="170px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster pack1-->
+    <g class="cluster" data-qualified-name="pack1" data-source-line="5" id="ent0002">
+      <path d="M90.5,4 L128.863,4 A3.75,3.75 0 0 1 131.363,6.5 L138.363,24 L151.5,24 A2.5,2.5 0 0 1 154,26.5 L154,82.5 A2.5,2.5 0 0 1 151.5,85 L90.5,85 A2.5,2.5 0 0 1 88,82.5 L88,6.5 A2.5,2.5 0 0 1 90.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="88" x2="138.363" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="92" y="16.889">pack1</text>
+    </g>
+    <!--class class1-->
+    <g class="entity" data-qualified-name="class1" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="71.725" x="6" y="29"/>
+      <ellipse cx="21" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="39.725" x="35" y="48.889">class1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="76.725" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="76.725" y1="69" y2="69"/>
+    </g>
+    <!--class A1-->
+    <g class="entity" data-qualified-name="pack1.A1" data-source-line="6" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.15" x="96.5" y="29"/>
+      <ellipse cx="111.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="106.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="17.15" x="125.5" y="48.889">A1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="97.5" x2="144.65" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="97.5" x2="144.65" y1="69" y2="69"/>
+    </g>
+  </g>
+</svg>

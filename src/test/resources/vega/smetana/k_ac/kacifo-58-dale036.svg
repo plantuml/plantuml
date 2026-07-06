@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="104px" preserveAspectRatio="none" style="width:149px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 149 104" width="149px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster comp1-->
+    <g class="cluster" data-qualified-name="comp1" data-source-line="1" id="ent0001">
+      <path d="M40.5,4 L123.5,4 A12.5,12.5 0 0 1 136,16.5 L136,23 L28,23 L28,16.5 A12.5,12.5 0 0 1 40.5,4" fill="#F1F1F1"/>
+      <rect fill="#F1F1F1" height="19" style="stroke:#F1F1F1;stroke-width:1;" width="108" x="28" y="23"/>
+      <rect fill="none" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="108" x="28" y="4"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28" x2="136" y1="23" y2="23"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="28" x2="136" y1="42" y2="42"/>
+      <text fill="#000" font-size="14" textLength="42" x="61" y="19.889">comp1</text>
+      <text fill="#000" font-size="14" textLength="98.613" x="33" y="36.389">entry / do_entry()</text>
+    </g>
+    <text fill="#000" font-size="14" textLength="23.363" x="93.319" y="70.889">en1</text>
+    <ellipse cx="105" cy="54" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="47.319" y="70.889">en2</text>
+    <ellipse cx="59" cy="54" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+  </g>
+</svg>

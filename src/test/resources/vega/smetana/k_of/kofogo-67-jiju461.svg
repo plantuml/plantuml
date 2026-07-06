@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="295px" preserveAspectRatio="none" style="width:227px;height:295px;background:#FFFFFF;" version="1.1" viewBox="0 0 227 295" width="227px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster ns1-->
+    <g class="cluster" data-qualified-name="ns1" data-source-line="2" id="ent0002">
+      <path d="M16.5,4 L40.075,4 A3.75,3.75 0 0 1 42.575,6.5 L49.575,24 L216.5,24 A2.5,2.5 0 0 1 219,26.5 L219,268.5 A2.5,2.5 0 0 1 216.5,271 L16.5,271 A2.5,2.5 0 0 1 14,268.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="49.575" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="22.575" x="18" y="16.889">ns1</text>
+    </g>
+    <!--class classA-->
+    <g class="entity" data-qualified-name="ns1.classA" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="73.3" x="22.5" y="29"/>
+      <ellipse cx="37.5" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="41.3" x="51.5" y="48.889">classA</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="94.8" y1="61" y2="61"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="94.8" y1="69" y2="69"/>
+    </g>
+    <!--class classB-->
+    <g class="entity" data-qualified-name="ns1.classB" data-source-line="2" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="73.3" x="22.5" y="215"/>
+      <ellipse cx="37.5" cy="231" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32.5" y="236">C</text>
+      <text fill="#000" font-size="14" textLength="41.3" x="51.5" y="234.889">classB</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="94.8" y1="247" y2="247"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.5" x2="94.8" y1="255" y2="255"/>
+    </g>
+    <!--class Exception-->
+    <g class="entity" data-qualified-name="ns1.Exception" data-source-line="3" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="93.512" x="117" y="130"/>
+      <ellipse cx="132" cy="146" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="127" y="151">C</text>
+      <text fill="#000" font-size="14" textLength="61.512" x="146" y="149.889">Exception</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="118" x2="209.513" y1="162" y2="162"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="118" x2="209.513" y1="170" y2="170"/>
+    </g>
+    <ellipse cx="24" cy="144" fill="#181818" rx="2" ry="2" style="stroke:#181818;stroke-width:1;"/>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0007" data-link-type="association" id="lnk8">
+      <path d="M52.201,77.211 C46.241,97.557 37.836,126.25 33.267,141.846" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="101.888" x="48" y="107.111">Used in foo method</text>
+      <text fill="#000" font-size="13" x="44.201" y="88.322">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="50.881,214.763,51.688,204.947,49.232,210.042,44.136,207.586,50.881,214.763" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M33.911,166.194 C38.24,178.583 43.688,194.177 49.232,210.042" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="42.881" y="210.874">1</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="association" id="lnk10">
+      <path d="M38.382,154 C53.852,154 87.94,154 116.707,154" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="57.119" x="49" y="146.111">Exception</text>
+    </g>
+  </g>
+</svg>

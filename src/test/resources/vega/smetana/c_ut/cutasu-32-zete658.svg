@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="456px" preserveAspectRatio="none" style="width:923px;height:456px;background:#FFFFFF;" version="1.1" viewBox="0 0 923 456" width="923px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="58.45" x="429.025" y="20.889">CarePlan</text>
+    </g>
+    <!--class CarePlan-->
+    <g class="entity" data-qualified-name="CarePlan" data-source-line="10" id="ent0001">
+      <a href="careplan-definitions.htm#CarePlan" target="_top" title="careplan-definitions.htm#CarePlan" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan" xlink:type="simple">
+        <rect fill="#F0F8FF" height="146" rx="2.5" ry="2.5" style="stroke:#808080;stroke-width:0.5;" width="207.913" x="351" y="47"/>
+        <ellipse cx="421.481" cy="63" fill="#F70" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="416.481" y="68">R</text>
+        <text fill="#000" font-size="14" textLength="58.45" x="441.981" y="66.889">CarePlan</text>
+        <line style="stroke:#808080;stroke-width:0.5;" x1="352" x2="557.913" y1="79" y2="79"/>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.identifier" target="_top" title="careplan-definitions.htm#CarePlan.identifier" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.identifier" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.identifier" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="133.7" x="357" y="93.889">identifier : Identifier 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.patient" target="_top" title="careplan-definitions.htm#CarePlan.patient" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.patient" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.patient" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="181.913" x="357" y="107.889">patient : Resource(Patient) 1..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.status" target="_top" title="careplan-definitions.htm#CarePlan.status" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.status" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.status" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="94.763" x="357" y="121.889">status : code 1..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.period" target="_top" title="careplan-definitions.htm#CarePlan.period" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.period" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.period" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="106.575" x="357" y="135.889">period : Period 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.modified" target="_top" title="careplan-definitions.htm#CarePlan.modified" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.modified" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.modified" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="138.425" x="357" y="149.889">modified : dateTime 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.concern" target="_top" title="careplan-definitions.htm#CarePlan.concern" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.concern" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.concern" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="195.913" x="357" y="163.889">concern : Resource(Problem) 0..*</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.goal" target="_top" title="careplan-definitions.htm#CarePlan.goal" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.goal" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.goal" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="87.85" x="357" y="177.889">goal : string 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan" target="_top" title="careplan-definitions.htm#CarePlan" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan" xlink:type="simple">
+        <line style="stroke:#808080;stroke-width:1;" x1="352" x2="557.913" y1="185" y2="185"/>
+      </a>
+    </g>
+    <!--class Participant-->
+    <g class="entity" data-qualified-name="Participant" data-source-line="10" id="ent0002">
+      <a href="careplan-definitions.htm#CarePlan.participant" target="_top" title="careplan-definitions.htm#CarePlan.participant" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.participant" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.participant" xlink:type="simple">
+        <rect fill="#F0F8FF" height="68" rx="2.5" ry="2.5" style="stroke:#808080;stroke-width:0.5;" width="438.387" x="6" y="309"/>
+        <text fill="#000" font-size="14" textLength="66.15" x="192.119" y="324.889">Participant</text>
+        <line style="stroke:#808080;stroke-width:0.5;" x1="7" x2="443.387" y1="333" y2="333"/>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.participant.role" target="_top" title="careplan-definitions.htm#CarePlan.participant.role" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.participant.role" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.participant.role" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="162.663" x="12" y="347.889">role : CodeableConcept 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.participant.member" target="_top" title="careplan-definitions.htm#CarePlan.participant.member" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.participant.member" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.participant.member" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="426.387" x="12" y="361.889">member : Resource(Provider|RelatedPerson|Patient|Organization) 1..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.participant" target="_top" title="careplan-definitions.htm#CarePlan.participant" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.participant" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.participant" xlink:type="simple">
+        <line style="stroke:#808080;stroke-width:1;" x1="7" x2="443.387" y1="369" y2="369"/>
+      </a>
+    </g>
+    <!--class Activity-->
+    <g class="entity" data-qualified-name="Activity" data-source-line="11" id="ent0004">
+      <a href="careplan-definitions.htm#CarePlan.activity" target="_top" title="careplan-definitions.htm#CarePlan.activity" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity" xlink:type="simple">
+        <rect fill="#F0F8FF" height="194" rx="2.5" ry="2.5" style="stroke:#808080;stroke-width:0.5;" width="445.3" x="462.5" y="246"/>
+        <text fill="#000" font-size="14" textLength="44.363" x="662.969" y="261.889">Activity</text>
+        <line style="stroke:#808080;stroke-width:0.5;" x1="463.5" x2="906.8" y1="270" y2="270"/>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.category" target="_top" title="careplan-definitions.htm#CarePlan.activity.category" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.category" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.category" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="111.125" x="468.5" y="284.889">category : code 1..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.code" target="_top" title="careplan-definitions.htm#CarePlan.activity.code" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.code" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.code" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="169.663" x="468.5" y="298.889">code : CodeableConcept 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.prohibited" target="_top" title="careplan-definitions.htm#CarePlan.activity.prohibited" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.prohibited" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.prohibited" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="138.513" x="468.5" y="312.889">prohibited : boolean 1..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.schedule" target="_top" title="careplan-definitions.htm#CarePlan.activity.schedule" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.schedule" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.schedule" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="141.663" x="468.5" y="326.889">schedule : Schedule 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.location" target="_top" title="careplan-definitions.htm#CarePlan.activity.location" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.location" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.location" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="197.575" x="468.5" y="340.889">location : Resource(Location) 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.performer" target="_top" title="careplan-definitions.htm#CarePlan.activity.performer" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.performer" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.performer" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="433.3" x="468.5" y="354.889">performer : Resource(Provider|Organization|RelatedPerson|Patient) 0..*</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.product" target="_top" title="careplan-definitions.htm#CarePlan.activity.product" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.product" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.product" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="262.588" x="468.5" y="368.889">product : Resource(Medication|Product) 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.dailyAmount" target="_top" title="careplan-definitions.htm#CarePlan.activity.dailyAmount" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.dailyAmount" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.dailyAmount" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="156.275" x="468.5" y="382.889">dailyAmount : Quantity 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.quantity" target="_top" title="careplan-definitions.htm#CarePlan.activity.quantity" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.quantity" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.quantity" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="128.188" x="468.5" y="396.889">quantity : Quantity 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.details" target="_top" title="careplan-definitions.htm#CarePlan.activity.details" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.details" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.details" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="101.85" x="468.5" y="410.889">details : string 0..1</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity.action" target="_top" title="careplan-definitions.htm#CarePlan.activity.action" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity.action" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity.action" xlink:type="simple">
+        <text fill="#000" font-size="14" textLength="155.488" x="468.5" y="424.889">action : Resource(Any) 0..*</text>
+      </a>
+      <a href="careplan-definitions.htm#CarePlan.activity" target="_top" title="careplan-definitions.htm#CarePlan.activity" xlink:actuate="onRequest" xlink:href="careplan-definitions.htm#CarePlan.activity" xlink:show="new" xlink:title="careplan-definitions.htm#CarePlan.activity" xlink:type="simple">
+        <line style="stroke:#808080;stroke-width:1;" x1="463.5" x2="906.8" y1="432" y2="432"/>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#000080" points="380.008,193.058,372.91,194.331,371.355,201.372,378.453,200.099,380.008,193.058" style="stroke:#000080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M371.355,201.372 C330.717,240.42 291.117,278.47 259.368,308.977" fill="none" style="stroke:#000080;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="59.963" x="363" y="223.111">participant</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="239.368" y="305.088">0..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="composition" id="lnk5">
+      <polygon fill="#000080" points="529.992,193.058,531.547,200.099,538.645,201.372,537.09,194.331,529.992,193.058" style="stroke:#000080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M538.645,201.372 C556.211,218.251 566.547,228.183 585.011,245.924" fill="none" style="stroke:#000080;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="39.731" x="566" y="223.111">activity</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="565.011" y="242.035">0..*</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="206px" preserveAspectRatio="none" style="width:116px;height:206px;background:#FFFFFF;" version="1.1" viewBox="0 0 116 206" width="116px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Foo-->
+    <g class="entity" data-qualified-name="Foo" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="178" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="94.212" x="6" y="12"/>
+      <ellipse cx="38.128" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="33.128" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="24.15" x="55.934" y="31.889">Foo</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="99.212" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="69.212" x="12" y="58.889">Bar(Model)</text>
+      <text fill="#000" font-size="14" textLength="28" x="24" y="78.889">prop</text>
+      <text fill="#000" font-size="14" x="24" y="92.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="76.212" x="24" y="92.889">Bom(Model)</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="32" y="106.889">prop2</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="32" y="120.889">prop3</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="40" y="134.889">prop3.1</text>
+      <text fill="#000" font-size="14" textLength="44.275" x="24" y="148.889">prop4 :(</text>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="74"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="75" y2="75"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="68" y2="75"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="88"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="89" y2="89"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="75" y2="89"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="29" y="102"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="30" y1="103" y2="103"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="22" y1="89" y2="103"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="29" y="116"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="30" y1="117" y2="117"/>
+      <line style="stroke:#000;stroke-width:1;" x1="22" x2="22" y1="103" y2="117"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="37" y="130"/>
+      <line style="stroke:#000;stroke-width:1;" x1="30" x2="38" y1="131" y2="131"/>
+      <line style="stroke:#000;stroke-width:1;" x1="30" x2="30" y1="117" y2="131"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#000;stroke-width:1;" width="2" x="21" y="144"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="22" y1="145" y2="145"/>
+      <line style="stroke:#000;stroke-width:1;" x1="14" x2="14" y1="89" y2="145"/>
+      <text fill="#000" font-size="14" textLength="53.025" x="12" y="164.889">glouglou</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="99.212" y1="168" y2="168"/>
+      <text fill="#000" font-size="14" textLength="23.275" x="12" y="182.889">toto</text>
+    </g>
+  </g>
+</svg>

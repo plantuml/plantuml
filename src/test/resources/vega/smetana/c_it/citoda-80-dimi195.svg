@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="HCL" height="58px" preserveAspectRatio="none" style="width:291px;height:58px;background:#FFFFFF;" version="1.1" viewBox="0 0 291 58" width="291px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="269.725" x="10" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="75.425" x="15" y="22.889">stack_name</text>
+    <text fill="#000" font-size="14" textLength="174.3" x="100.425" y="22.889">local.network_project_name</text>
+    <line style="stroke:#000;stroke-width:1;" x1="95.425" x2="95.425" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="10" x2="279.725" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="56.787" x="15" y="40.889">code_efs</text>
+    <text fill="#000" font-size="14" textLength="15.575" x="100.425" y="40.889">13</text>
+    <line style="stroke:#000;stroke-width:1;" x1="95.425" x2="95.425" y1="28" y2="46"/>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="269.725" x="10" y="10"/>
+  </g>
+</svg>

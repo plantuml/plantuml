@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="235px" preserveAspectRatio="none" style="width:437px;height:235px;background:#FFFFFF;" version="1.1" viewBox="0 0 437 235" width="437px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster C1-->
+    <g class="cluster" data-qualified-name="C1" data-source-line="27" id="ent0001">
+      <rect fill="none" height="98" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="80" x="299.5" y="12"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="359.5" y="17"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="357.5" y="19"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="357.5" y="23"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="17.938" x="330.531" y="35.889">C1</text>
+    </g>
+    <g class="entity" data-qualified-name="detailsNote2" data-source-line="33" id="ent0003">
+      <path d="M21,37 L21,102 L84,102 L84,47 L74,37 L21,37" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M74,37 L74,47 L84,47 L74,37" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <image height="104" width="107" x="27" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwNCIgd2lkdGg9IjEwNyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48IS0tY2xhc3MgT2JqZWN0LS0+PGcgY2xhc3M9ImVudGl0eSIgZGF0YS1xdWFsaWZpZWQtbmFtZT0iT2JqZWN0IiBpZD0iZW50MDAwMSIgZGF0YS1zb3VyY2UtbGluZT0iMSI+PHJlY3QgeD0iNiIgeT0iMTIiIHdpZHRoPSI4NS4wNjMiIGhlaWdodD0iNzYiIGZpbGw9IiNGMUYxRjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgcng9IjIuNSIgcnk9IjIuNSIvPjxlbGxpcHNlIGN4PSIyNi42ODciIGN5PSIyOCIgcng9IjExIiByeT0iMTEiIGZpbGw9IiNBREQxQjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48dGV4dCB4PSIyMS42ODciIHk9IjMzIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0IiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj5DPC90ZXh0Pjx0ZXh0IHg9IjQxLjk1MSIgeT0iMzEuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0IiB0ZXh0TGVuZ3RoPSI0MC40MjUiPk9iamVjdDwvdGV4dD48bGluZSB4MT0iNyIgeTE9IjQ0IiB4Mj0iOTAuMDYzIiB5Mj0iNDQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IHg9IjEyIiB5PSI1OC44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjczLjA2MyI+bmFtZSA6IHRva2VuPC90ZXh0Pjx0ZXh0IHg9IjEyIiB5PSI3Mi44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiIHRleHRMZW5ndGg9IjYxLjQyNSI+bmFtZSA6IGZsYWc8L3RleHQ+PGxpbmUgeDE9IjciIHkxPSI4MCIgeDI9IjkwLjA2MyIgeTI9IjgwIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48L2c+PC9nPjwvc3ZnPg==" y="42"/>
+      <text fill="#000" font-size="13" x="27" y="94.111"> </text>
+    </g>
+    <!--class Object-->
+    <g class="entity" data-qualified-name="Object" data-source-line="17" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.063" x="102" y="31.5"/>
+      <ellipse cx="122.687" cy="47.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="117.687" y="52.5">C</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="137.951" y="51.389">Object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="103" x2="186.063" y1="63.5" y2="63.5"/>
+      <text fill="#000" font-size="14" textLength="73.063" x="108" y="78.389">name : token</text>
+      <text fill="#000" font-size="14" textLength="61.425" x="108" y="92.389">name : flag</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="103" x2="186.063" y1="99.5" y2="99.5"/>
+    </g>
+    <g class="entity" data-qualified-name="note1" data-source-line="24" id="ent0005">
+      <path d="M6,150.5 L6,212.5 L98.5,212.5 L98.5,160.5 L88.5,150.5 L6,150.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M88.5,150.5 L88.5,160.5 L98.5,160.5 L88.5,150.5" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="71.5" x="12" y="165.611">class Object {</text>
+      <text fill="#000" font-size="13" textLength="67.844" x="12" y="178.611">name : token</text>
+      <text fill="#000" font-size="13" textLength="57.038" x="12" y="191.611">name : flag</text>
+      <text fill="#000" font-size="13" x="12" y="204.611">}</text>
+    </g>
+    <!--class foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="6" id="ent0006">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="205" y="31.5"/>
+      <ellipse cx="231.672" cy="47.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="226.672" y="52.5">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="248.266" y="51.389">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="206" x2="289.15" y1="63.5" y2="63.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="206" x2="289.15" y1="71.5" y2="71.5"/>
+      <text fill="#000" font-size="14" textLength="57.487" x="211" y="86.389">toString()</text>
+      <text fill="#000" font-size="14" textLength="73.15" x="211" y="100.389">hashCode()</text>
+    </g>
+    <!--class foo2-->
+    <g class="entity" data-qualified-name="foo2" data-source-line="6" id="ent0007">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.15" x="205" y="143.5"/>
+      <ellipse cx="231.672" cy="159.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="226.672" y="164.5">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="248.266" y="163.389">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="206" x2="289.15" y1="175.5" y2="175.5"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="206" x2="289.15" y1="183.5" y2="183.5"/>
+      <text fill="#000" font-size="14" textLength="57.487" x="211" y="198.389">toString()</text>
+      <text fill="#000" font-size="14" textLength="73.15" x="211" y="212.389">hashCode()</text>
+    </g>
+    <g class="entity" data-qualified-name="C1.detailsNote1" data-source-line="28" id="ent0002">
+      <path d="M308,37 L308,102 L371,102 L371,47 L361,37 L308,37" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M361,37 L361,47 L371,47 L361,37" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <image height="124" width="122" x="314" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEyNCIgd2lkdGg9IjEyMiIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgPjxkZWZzLz48ZyBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIj48Zz48cmVjdCBmaWxsPSIjRkZGRkZGIiBzdHlsZT0id2lkdGg6MTIycHg7aGVpZ2h0OjEyNHB4O2JhY2tncm91bmQ6I0ZGRkZGRjsiIHdpZHRoPSIxMjIiIGhlaWdodD0iMTI0Ii8+IDx0aXRsZT5NeUE8L3RpdGxlPjxyZWN0IHg9IjI3LjUiIHk9IjM5IiB3aWR0aD0iOCIgaGVpZ2h0PSI0NSIgZmlsbD0iIzAwMCIgZmlsbC1vcGFjaXR5PSIwIi8+PGxpbmUgeDE9IjMxIiB5MT0iMzkiIHgyPSIzMSIgeTI9Ijg0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTtzdHJva2UtZGFzaGFycmF5OjUsNTsiLz48L2c+PGc+PHRpdGxlPkI8L3RpdGxlPjxyZWN0IHg9Ijk2LjI2OSIgeT0iMzkiIHdpZHRoPSI4IiBoZWlnaHQ9IjQ1IiBmaWxsPSIjMDAwIiBmaWxsLW9wYWNpdHk9IjAiLz48bGluZSB4MT0iOTkuNzY5IiB5MT0iMzkiIHgyPSI5OS43NjkiIHkyPSI4NCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7c3Ryb2tlLWRhc2hhcnJheTo1LDU7Ii8+PC9nPjxyZWN0IHg9IjEwIiB5PSIxMCIgd2lkdGg9IjQyIiBoZWlnaHQ9IjI4IiBmaWxsPSIjRTJFMkYwIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHJ4PSIyLjUiIHJ5PSIyLjUiLz48dGV4dCB4PSIxNyIgeT0iMjcuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0IiB0ZXh0TGVuZ3RoPSIyOCI+TXlBPC90ZXh0PjxyZWN0IHg9Ijg4LjA4OCIgeT0iMTAiIHdpZHRoPSIyMy4zNjIiIGhlaWdodD0iMjgiIGZpbGw9IiNFMkUyRjAiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgcng9IjIuNSIgcnk9IjIuNSIvPjx0ZXh0IHg9Ijk1LjA4OCIgeT0iMjcuODg5IiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjE0Ij5CPC90ZXh0PjxyZWN0IHg9IjEwIiB5PSI4NCIgd2lkdGg9IjQyIiBoZWlnaHQ9IjI4IiBmaWxsPSIjRTJFMkYwIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHJ4PSIyLjUiIHJ5PSIyLjUiLz48dGV4dCB4PSIxNyIgeT0iMTAxLjg4OSIgZmlsbD0iIzAwMCIgZm9udC1zaXplPSIxNCIgdGV4dExlbmd0aD0iMjgiPk15QTwvdGV4dD48cmVjdCB4PSI4OC4wODgiIHk9Ijg0IiB3aWR0aD0iMjMuMzYyIiBoZWlnaHQ9IjI4IiBmaWxsPSIjRTJFMkYwIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHJ4PSIyLjUiIHJ5PSIyLjUiLz48dGV4dCB4PSI5NS4wODgiIHk9IjEwMS44ODkiIGZpbGw9IiMwMDAiIGZvbnQtc2l6ZT0iMTQiPkI8L3RleHQ+PGxpbmUgeDE9Ijk3Ljc2OSIgeTE9IjY2IiB4Mj0iODcuNzY5IiB5Mj0iNjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48bGluZSB4MT0iOTcuNzY5IiB5MT0iNjYiIHgyPSI4Ny43NjkiIHkyPSI3MCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxOyIvPjxsaW5lIHgxPSIzMSIgeTE9IjY2IiB4Mj0iOTguNzY5IiB5Mj0iNjYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MTsiLz48dGV4dCB4PSIzOCIgeT0iNjEuMTExIiBmaWxsPSIjMDAwIiBmb250LXNpemU9IjEzIiB0ZXh0TGVuZ3RoPSI0NC43NjkiPnByZXBhcmU8L3RleHQ+PC9nPjwvc3ZnPg==" y="42"/>
+      <text fill="#000" font-size="13" x="314" y="94.111"> </text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="247.5,143.297,251.5,134.297,247.5,138.297,243.5,134.297,247.5,143.297" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M247.5,107.741 C247.5,119.209 247.5,126.832 247.5,138.297" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

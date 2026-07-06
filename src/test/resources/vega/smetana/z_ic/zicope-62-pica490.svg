@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="184px" preserveAspectRatio="none" style="width:191px;height:184px;background:#FFFFFF;" version="1.1" viewBox="0 0 191 184" width="191px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="arrows" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="156" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.138" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="85.663" x="29.737" y="24.889">Arrows legend</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="139.138" y1="30" y2="30"/>
+      <text fill="#000" font-family="monospaced.bold" font-size="14" textLength="17.5" x="37.819" y="42.889">--&gt;</text>
+      <image height="52" width="98" x="92.138" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUyIiB3aWR0aD0iOTgiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGxlbmd0aEFkanVzdD0ic3BhY2luZyI+PCEtLWVudGl0eSBBLS0+PCEtLWVudGl0eSBCLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImVudDAwMDEiIGRhdGEtZW50aXR5LTI9ImVudDAwMDIiIGlkPSJsbmszIiBkYXRhLWxpbmstdHlwZT0iZGVwZW5kZW5jeSI+PHBvbHlnb24gcG9pbnRzPSI2MS43MDIsMjQsNTIuNzAyLDIwLDU2LjcwMiwyNCw1Mi43MDIsMjgsNjEuNzAyLDI0IiBmaWxsPSIjMTgxODE4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIvPjxwYXRoIGQ9Ik0yNi40MDYsMjQgQzM2LjMxNywyNCA0Ni44MzEsMjQgNTYuNzAyLDI0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7IiBmaWxsPSJub25lIi8+PC9nPjwvZz48L3N2Zz4=" y="32"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="87.138" x2="87.138" y1="30" y2="76"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="139.138" y1="76" y2="76"/>
+      <text fill="#000" font-family="monospaced.bold" font-size="14" textLength="71.138" x="11" y="88.889">-[dashed]-&gt;</text>
+      <image height="52" width="98" x="92.138" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUyIiB3aWR0aD0iOTgiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGxlbmd0aEFkanVzdD0ic3BhY2luZyI+PCEtLWVudGl0eSBBLS0+PCEtLWVudGl0eSBCLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImVudDAwMDEiIGRhdGEtZW50aXR5LTI9ImVudDAwMDIiIGlkPSJsbmszIiBkYXRhLWxpbmstdHlwZT0iZGVwZW5kZW5jeSI+PHBvbHlnb24gcG9pbnRzPSI2MS43MDIsMjQsNTIuNzAyLDIwLDU2LjcwMiwyNCw1Mi43MDIsMjgsNjEuNzAyLDI0IiBmaWxsPSIjMTgxODE4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIvPjxwYXRoIGQ9Ik0yNi40MDYsMjQgQzM2LjMxNywyNCA0Ni44MzEsMjQgNTYuNzAyLDI0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWRhc2hhcnJheTo3LDc7IiBmaWxsPSJub25lIi8+PC9nPjwvZz48L3N2Zz4=" y="78"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="87.138" x2="87.138" y1="76" y2="122"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="6" x2="139.138" y1="122" y2="122"/>
+      <text fill="#000" font-family="monospaced.bold" font-size="14" textLength="64.05" x="14.544" y="134.889">-[dotted]-&gt;</text>
+      <image height="52" width="98" x="92.138" xlink:href="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUyIiB3aWR0aD0iOTgiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciID48ZGVmcy8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGxlbmd0aEFkanVzdD0ic3BhY2luZyI+PCEtLWVudGl0eSBBLS0+PCEtLWVudGl0eSBCLS0+PGcgY2xhc3M9ImxpbmsiIGRhdGEtZW50aXR5LTE9ImVudDAwMDEiIGRhdGEtZW50aXR5LTI9ImVudDAwMDIiIGlkPSJsbmszIiBkYXRhLWxpbmstdHlwZT0iZGVwZW5kZW5jeSI+PHBvbHlnb24gcG9pbnRzPSI2MS43MDIsMjQsNTIuNzAyLDIwLDU2LjcwMiwyNCw1Mi43MDIsMjgsNjEuNzAyLDI0IiBmaWxsPSIjMTgxODE4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjEwOyIvPjxwYXRoIGQ9Ik0yNi40MDYsMjQgQzM2LjMxNywyNCA0Ni44MzEsMjQgNTYuNzAyLDI0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjE7c3Ryb2tlLWRhc2hhcnJheToxLDM7IiBmaWxsPSJub25lIi8+PC9nPjwvZz48L3N2Zz4=" y="124"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="87.138" x2="87.138" y1="122" y2="168"/>
+    </g>
+  </g>
+</svg>

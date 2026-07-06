@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="143px" preserveAspectRatio="none" style="width:432px;height:143px;background:#FFFFFF;" version="1.1" viewBox="0 0 432 143" width="432px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster first-->
+    <g class="cluster" data-qualified-name="first" data-source-line="2" id="ent0001">
+      <path d="M16.5,4 L39.988,4 A3.75,3.75 0 0 1 42.488,6.5 L49.488,24 L299.5,24 A2.5,2.5 0 0 1 302,26.5 L302,116.5 A2.5,2.5 0 0 1 299.5,119 L16.5,119 A2.5,2.5 0 0 1 14,116.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="49.488" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="22.488" x="18" y="16.889">first</text>
+    </g>
+    <!--cluster physical1-->
+    <g class="cluster" data-qualified-name="first.physical1" data-source-line="4" id="ent0003">
+      <polygon fill="none" points="108,39,118,29,294,29,294,101,284,111,108,111,108,39" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="284" x2="294" y1="39" y2="29"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="108" x2="284" y1="39" y2="39"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="284" x2="284" y1="39" y2="111"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="58.45" x="167.775" y="52.889">physical1</text>
+    </g>
+    <!--cluster second-->
+    <g class="cluster" data-qualified-name="second" data-source-line="9" id="ent0006">
+      <path d="M312.5,34 L358.65,34 A3.75,3.75 0 0 1 361.15,36.5 L368.15,54 L421.5,54 A2.5,2.5 0 0 1 424,56.5 L424,108.5 A2.5,2.5 0 0 1 421.5,111 L312.5,111 A2.5,2.5 0 0 1 310,108.5 L310,36.5 A2.5,2.5 0 0 1 312.5,34" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="310" x2="368.15" y1="54" y2="54"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="45.15" x="314" y="46.889">second</text>
+    </g>
+    <!--entity router-->
+    <g class="entity" data-qualified-name="first.router" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.488" x="22" y="59"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="78.488" y="64"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="76.488" y="66"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="76.488" y="70"/>
+      <text fill="#000" font-size="14" textLength="36.488" x="37" y="89.889">router</text>
+    </g>
+    <!--entity Logical_VLAN_10-->
+    <g class="entity" data-qualified-name="first.physical1.Logical_VLAN_10" data-source-line="5" id="ent0004">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="152.263" x="116" y="59"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="248.263" y="64"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="246.263" y="66"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="246.263" y="70"/>
+      <text fill="#000" font-size="14" textLength="112.263" x="131" y="89.889">Logical_VLAN_10</text>
+    </g>
+    <!--entity physical1-->
+    <g class="entity" data-qualified-name="second.physical1" data-source-line="10" id="ent0007">
+      <polygon fill="#F1F1F1" points="318,69,328,59,416.45,59,416.45,93,406.45,103,318,103,318,69" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="406.45" x2="416.45" y1="69" y2="59"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="318" x2="406.45" y1="69" y2="69"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="406.45" x2="406.45" y1="69" y2="103"/>
+      <text fill="#000" font-size="14" textLength="58.45" x="333" y="89.889">physical1</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="association" id="lnk5">
+      <path d="M115.752,97.102 C109.887,96.647 104.021,95.801 98.156,94.563" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="association" id="lnk8">
+      <path d="M115.752,64.898 C109.887,65.353 104.021,66.199 98.156,67.437" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0004" data-link-type="association" id="lnk9">
+      <path d="M268.347,73.638 C278.928,74.851 286,77.305 286,81 C286,84.695 278.928,87.149 268.347,88.362" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

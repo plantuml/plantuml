@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="137px" preserveAspectRatio="none" style="width:534px;height:137px;background:#FFFFFF;" version="1.1" viewBox="0 0 534 137" width="534px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster pragma-->
+    <g class="cluster" data-qualified-name="pragma" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L64.925,4 A3.75,3.75 0 0 1 67.425,6.5 L74.425,24 L421.5,24 A2.5,2.5 0 0 1 424,26.5 L424,110.5 A2.5,2.5 0 0 1 421.5,113 L16.5,113 A2.5,2.5 0 0 1 14,110.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="74.425" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="47.425" x="18" y="16.889">pragma</text>
+    </g>
+    <!--cluster MyPack-->
+    <g class="cluster" data-qualified-name="MyPack" data-source-line="14" id="ent0006">
+      <path d="M434.5,4 L485.288,4 A3.75,3.75 0 0 1 487.788,6.5 L494.788,24 L523.5,24 A2.5,2.5 0 0 1 526,26.5 L526,110.5 A2.5,2.5 0 0 1 523.5,113 L434.5,113 A2.5,2.5 0 0 1 432,110.5 L432,6.5 A2.5,2.5 0 0 1 434.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="432" x2="494.788" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="49.788" x="436" y="16.889">MyPack</text>
+    </g>
+    <!--class PragmaStringMultiTest-->
+    <g class="entity" data-qualified-name="pragma.PragmaStringMultiTest" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="174.363" x="242" y="29"/>
+      <ellipse cx="257" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="252" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="142.363" x="271" y="48.889">PragmaStringMultiTest</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="243" x2="415.363" y1="61" y2="61"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="253" cy="73.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="15.575" x="262" y="75.889">p1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="243" x2="415.363" y1="83" y2="83"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="253" cy="95.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="65.275" x="262" y="97.889">myMethod</text>
+    </g>
+    <g class="entity" data-qualified-name="pragma.GMN3" data-source-line="8" id="ent0004">
+      <path d="M22,36 L22,98 A0,0 0 0 0 22,98 L224.35,98 A0,0 0 0 0 224.35,98 L224.35,71 L241.962,67 L224.35,63 L224.35,46 L214.35,36 L22,36 A0,0 0 0 0 22,36" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M214.35,36 L214.35,46 L224.35,46 L214.35,36" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="134.388" x="28" y="51.111">This note corrupts the link</text>
+      <text fill="#000" font-size="13" textLength="181.35" x="28" y="64.111">between PragmaStringMultiTest</text>
+      <text fill="#000" font-size="13" textLength="159.494" x="28" y="77.111">and MyItem. Remove the note</text>
+      <text fill="#000" font-size="13" textLength="114.319" x="28" y="90.111">and the link will be OK.</text>
+    </g>
+    <!--class MyItem-->
+    <g class="entity" data-qualified-name="MyPack.MyItem" data-source-line="15" id="ent0007">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="77.762" x="440" y="29"/>
+      <ellipse cx="455" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="450" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="45.762" x="469" y="48.889">MyItem</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="441" x2="516.763" y1="61" y2="61"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="451" cy="73.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="48.212" x="460" y="75.889">MyProp</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="441" x2="516.763" y1="83" y2="83"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="451" cy="95.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="45.762" x="460" y="97.889">MyItem</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0007" data-link-type="association" id="lnk9">
+      <path d="M416.012,94.769 C423.885,93.811 431.759,91.91 439.632,89.067" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="431.632" y="41.044">1</text>
+    </g>
+  </g>
+</svg>

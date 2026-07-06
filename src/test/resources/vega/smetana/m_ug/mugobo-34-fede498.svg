@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:176px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 176 160" width="176px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class User-->
+    <g class="entity" data-qualified-name="User" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.575" x="104" y="12"/>
+      <ellipse cx="119" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="114" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="133" y="31.889">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="105" x2="164.575" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="105" x2="164.575" y1="52" y2="52"/>
+    </g>
+    <!--class Item-->
+    <g class="entity" data-qualified-name="Item" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.125" x="105.5" y="96"/>
+      <ellipse cx="120.5" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="115.5" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="27.125" x="134.5" y="115.889">Item</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="106.5" x2="163.625" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="106.5" x2="163.625" y1="136" y2="136"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk3">
+      <path d="M135,60.279 C135,71.453 135,84.802 135,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="21.613" x="113" y="92.058">0..n</text>
+      <text fill="#000" font-size="13" textLength="127.319" x="7" y="71.39">owner which is very long</text>
+      <text fill="#000" font-size="13" x="138" y="71.39">1</text>
+      <text fill="#000" font-size="13" textLength="31.038" x="138" y="92.058">items</text>
+    </g>
+  </g>
+</svg>

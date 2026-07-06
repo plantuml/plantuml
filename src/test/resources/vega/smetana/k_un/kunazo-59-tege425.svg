@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="111px" preserveAspectRatio="none" style="width:353px;height:111px;background:#FFFFFF;" version="1.1" viewBox="0 0 353 111" width="353px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <text fill="#000" font-size="14" font-weight="700" textLength="326.463" x="10" y="20.889">imagemap for Webserver appears top left from actor User</text>
+    </g>
+    <!--class u-->
+    <g class="entity" data-qualified-name="u" data-source-line="2" id="ent0001">
+      <a href="/wiki/index.php/User" target="_top" title="/wiki/index.php/User" xlink:actuate="onRequest" xlink:href="/wiki/index.php/User" xlink:show="new" xlink:title="/wiki/index.php/User" xlink:type="simple">
+        <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="39.788" x="107.231" y="47"/>
+        <ellipse cx="122.231" cy="63" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="117.231" y="68">C</text>
+        <text fill="#000" font-size="14" x="136.231" y="66.889">u</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="108.231" x2="146.019" y1="79" y2="79"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="108.231" x2="146.019" y1="87" y2="87"/>
+      </a>
+    </g>
+    <!--class w-->
+    <g class="entity" data-qualified-name="w" data-source-line="3" id="ent0002">
+      <a href="/wiki/index.php/Webserver" target="_top" title="/wiki/index.php/Webserver" xlink:actuate="onRequest" xlink:href="/wiki/index.php/Webserver" xlink:show="new" xlink:title="/wiki/index.php/Webserver" xlink:type="simple">
+        <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.15" x="194.231" y="47"/>
+        <ellipse cx="209.231" cy="63" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="204.231" y="68">C</text>
+        <text fill="#000" font-size="14" x="223.231" y="66.889">w</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="195.231" x2="235.381" y1="79" y2="79"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="195.231" x2="235.381" y1="87" y2="87"/>
+      </a>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="194.013,71,185.013,67,189.013,71,185.013,75,194.013,71" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M147.641,71 C161.553,71 174.932,71 189.013,71" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="158.231" y="63.111">right</text>
+    </g>
+  </g>
+</svg>

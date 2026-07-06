@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="76px" preserveAspectRatio="none" style="width:127px;height:76px;" version="1.1" viewBox="0 0 127 76" width="127px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Collection-->
+    <g class="entity" data-qualified-name="Collection" data-source-line="3" id="ent0001">
+      <rect fill="#0E0E0E" height="48" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="104.95" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#3D3D3D" rx="11" ry="11" style="stroke:#E7E7E7;stroke-width:1;"/>
+      <text fill="#FFF" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#FFF" font-size="14" textLength="61.6" x="35" y="31.889">Collection</text>
+      <rect fill="#000" height="14" style="stroke:#E7E7E7;stroke-width:1;stroke-dasharray:2,2;" width="9.35" x="104.6" y="9"/>
+      <text fill="#FFF" font-size="12" font-style="italic" x="105.6" y="19.333">T</text>
+      <line style="stroke:#E7E7E7;stroke-width:0.5;" x1="7" x2="109.95" y1="44" y2="44"/>
+      <line style="stroke:#E7E7E7;stroke-width:0.5;" x1="7" x2="109.95" y1="52" y2="52"/>
+    </g>
+  </g>
+</svg>

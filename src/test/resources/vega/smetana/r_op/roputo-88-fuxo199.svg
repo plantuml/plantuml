@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="104px" preserveAspectRatio="none" style="width:236px;height:104px;background:#FFFFFF;" version="1.1" viewBox="0 0 236 104" width="236px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Object-->
+    <g class="entity" data-qualified-name="Object" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="85.063" x="135" y="12"/>
+      <ellipse cx="155.687" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="150.687" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="170.951" y="31.889">Object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="136" x2="219.063" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="73.063" x="141" y="58.889">name : token</text>
+      <text fill="#000" font-size="14" textLength="61.425" x="141" y="72.889">name : flag</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="136" x2="219.063" y1="80" y2="80"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="10" id="ent0003">
+      <path d="M6,19 L6,81 A0,0 0 0 0 6,81 L116.538,81 A0,0 0 0 0 116.538,81 L116.538,54 L134.655,50 L116.538,46 L116.538,29 L106.538,19 L6,19 A0,0 0 0 0 6,19" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M106.538,19 L106.538,29 L116.538,29 L106.538,19" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="89.538" x="12" y="34.111">foo class Object {</text>
+      <text fill="#000" font-size="13" textLength="67.844" x="12" y="47.111">name : token</text>
+      <text fill="#000" font-size="13" textLength="57.038" x="12" y="60.111">name : flag</text>
+      <text fill="#000" font-size="13" textLength="46.881" x="12" y="73.111">} dummy</text>
+    </g>
+  </g>
+</svg>

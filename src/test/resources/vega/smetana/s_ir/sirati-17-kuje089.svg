@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="160px" preserveAspectRatio="none" style="width:166px;height:160px;background:#FFFFFF;" version="1.1" viewBox="0 0 166 160" width="166px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class toto1-->
+    <g class="entity" data-qualified-name="toto1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.063" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="31.063" x="35" y="31.889">toto1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="68.063" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="68.063" y1="52" y2="52"/>
+    </g>
+    <!--class toto2-->
+    <g class="entity" data-qualified-name="toto2" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.063" x="6" y="96"/>
+      <ellipse cx="21" cy="112" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="117">C</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="35" y="115.889">toto2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="68.063" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="68.063" y1="136" y2="136"/>
+    </g>
+    <!--class toto3-->
+    <g class="entity" data-qualified-name="toto3" data-source-line="3" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.063" x="87" y="12"/>
+      <ellipse cx="102" cy="28" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="97" y="33">E</text>
+      <text fill="#000" font-size="14" textLength="31.063" x="116" y="31.889">toto3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88" x2="149.063" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88" x2="149.063" y1="52" y2="52"/>
+    </g>
+    <!--class toto4-->
+    <g class="entity" data-qualified-name="toto4" data-source-line="4" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="63.063" x="87" y="96"/>
+      <ellipse cx="102" cy="112" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="97" y="117">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="31.063" x="116" y="115.889">toto4</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88" x2="149.063" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="88" x2="149.063" y1="136" y2="136"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="composition" id="lnk3">
+      <polygon fill="#181818" points="37.5,60.279,33.5,66.279,37.5,72.279,41.5,66.279,37.5,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M37.5,72.279 C37.5,83.453 37.5,84.802 37.5,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0005" data-link-type="composition" id="lnk6">
+      <polygon fill="#181818" points="118.5,60.279,114.5,66.279,118.5,72.279,122.5,66.279,118.5,60.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M118.5,72.279 C118.5,83.453 118.5,84.802 118.5,95.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

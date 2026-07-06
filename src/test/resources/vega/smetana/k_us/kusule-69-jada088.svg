@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="JSON" height="165px" preserveAspectRatio="none" style="width:430px;height:165px;background:#FFFFFF;" version="1.1" viewBox="0 0 430 165" width="430px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#000" height="110" style="stroke:#000;stroke-width:2;stroke-dasharray:10,5;" width="143.413" x="10" y="10"/>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="76.95" x="15" y="26">firstName</text>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="39.037" x="101.95" y="26">John</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="96.95" x2="96.95" y1="10" y2="32"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="10" x2="153.413" y1="32" y2="32"/>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="76.05" x="15" y="48">lastName</text>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="46.012" x="101.95" y="48">Smith</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="96.95" x2="96.95" y1="32" y2="54"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="10" x2="153.413" y1="54" y2="54"/>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="52.2" x="15" y="70">isAlive</text>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="46.463" x="101.95" y="70">☑ true</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="96.95" x2="96.95" y1="54" y2="76"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="10" x2="153.413" y1="76" y2="76"/>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="30.038" x="15" y="92">age</text>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="20.025" x="101.95" y="92">27</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="96.95" x2="96.95" y1="76" y2="98"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="10" x2="153.413" y1="98" y2="98"/>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="64.013" x="15" y="114">address</text>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="14.85" x="101.95" y="114">   </text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="96.95" x2="96.95" y1="98" y2="120"/>
+    <rect fill="none" height="110" style="stroke:#ADD8E6;stroke-width:2;stroke-dasharray:10,5;" width="143.413" x="10" y="10"/>
+    <rect fill="#000" height="88" style="stroke:#000;stroke-width:2;stroke-dasharray:10,5;" width="228.913" x="190" y="65"/>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="110.925" x="195" y="81">streetAddress</text>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="97.988" x="315.925" y="81">21 2nd Street</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="310.925" x2="310.925" y1="65" y2="87"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="190" x2="418.913" y1="87" y2="87"/>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="27" x="195" y="103">city</text>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="73.125" x="315.925" y="103">New York</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="310.925" x2="310.925" y1="87" y2="109"/>
+    <rect fill="#F00" height="22" rx="2" ry="2" style="stroke:#F00;stroke-width:0.5;stroke-dasharray:1,5;" width="226.913" x="191.5" y="109"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="190" x2="418.913" y1="109" y2="109"/>
+    <text fill="#FFF" font-family="Helvetica" font-size="18" font-style="italic" textLength="38.925" x="195" y="125">state</text>
+    <text fill="#FFF" font-family="Helvetica" font-size="18" font-style="italic" textLength="25.088" x="315.925" y="125">NY</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="310.925" x2="310.925" y1="109" y2="131"/>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="190" x2="418.913" y1="131" y2="131"/>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="91.125" x="195" y="147">postalCode</text>
+    <text fill="#CCFF02" font-family="Helvetica" font-size="18" font-weight="700" textLength="96.075" x="315.925" y="147">10021-3100</text>
+    <line style="stroke:#000;stroke-width:0.5;stroke-dasharray:1,5;" x1="310.925" x2="310.925" y1="131" y2="153"/>
+    <rect fill="none" height="88" style="stroke:#ADD8E6;stroke-width:2;stroke-dasharray:10,5;" width="228.913" x="190" y="65"/>
+    <path d="M141,109 L154,109 C163.247,109 172.814,109 182.436,109" fill="none" style="stroke:#008000;stroke-width:2;stroke-dasharray:2,5;"/>
+    <path d="M182.436,112.089 L184.752,109 L182.436,105.911 L190.158,109 L182.436,112.089" fill="#008000"/>
+    <ellipse cx="141" cy="109" fill="#008000" rx="3" ry="3" style="stroke:#008000;stroke-width:1;"/>
+  </g>
+</svg>

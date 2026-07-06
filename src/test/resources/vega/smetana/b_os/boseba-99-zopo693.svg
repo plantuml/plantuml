@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="308px" preserveAspectRatio="none" style="width:627px;height:308px;background:#FFFFFF;" version="1.1" viewBox="0 0 627 308" width="627px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Structure-->
+    <g class="entity" data-qualified-name="Structure" data-source-line="4" id="ent0001">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88.7" x="303.5" y="55.981"/>
+      <ellipse cx="318.5" cy="71.981" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="313.5" y="76.981">C</text>
+      <text fill="#000" font-size="14" textLength="56.7" x="332.5" y="75.87">Structure</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="304.5" x2="391.2" y1="87.981" y2="87.981"/>
+      <text fill="#000" font-size="14" textLength="70.788" x="309.5" y="102.87">code : String</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="304.5" x2="391.2" y1="109.981" y2="109.981"/>
+    </g>
+    <!--class UserPerso-->
+    <g class="entity" data-qualified-name="UserPerso" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="98.15" x="513" y="209.981"/>
+      <ellipse cx="528" cy="225.981" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="523" y="230.981">C</text>
+      <text fill="#000" font-size="14" textLength="66.15" x="542" y="229.87">UserPerso</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="514" x2="610.15" y1="241.981" y2="241.981"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="514" x2="610.15" y1="249.981" y2="249.981"/>
+    </g>
+    <!--class UserPro-->
+    <g class="entity" data-qualified-name="UserPro" data-source-line="12" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="83.363" x="411.5" y="209.981"/>
+      <ellipse cx="426.5" cy="225.981" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="421.5" y="230.981">C</text>
+      <text fill="#000" font-size="14" textLength="51.363" x="440.5" y="229.87">UserPro</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="412.5" x2="493.863" y1="241.981" y2="241.981"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="412.5" x2="493.863" y1="249.981" y2="249.981"/>
+    </g>
+    <!--class UserSpace-->
+    <g class="entity" data-qualified-name="UserSpace" data-source-line="15" id="ent0004">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="101.3" x="292.5" y="209.981"/>
+      <ellipse cx="307.5" cy="225.981" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="302.5" y="230.981">C</text>
+      <text fill="#000" font-size="14" textLength="69.3" x="321.5" y="229.87">UserSpace</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="293.5" x2="392.8" y1="241.981" y2="241.981"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="293.5" x2="392.8" y1="249.981" y2="249.981"/>
+    </g>
+    <!--class UserRole-->
+    <g class="entity" data-qualified-name="UserRole" data-source-line="19" id="ent0005">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="123.125" x="156.5" y="41.981"/>
+      <ellipse cx="186.204" cy="57.981" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="181.204" y="62.981">C</text>
+      <text fill="#000" font-size="14" textLength="58.45" x="203.471" y="61.87">UserRole</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="157.5" x2="278.625" y1="73.981" y2="73.981"/>
+      <text fill="#000" font-size="14" textLength="79.275" x="162.5" y="88.87">userId : String</text>
+      <text fill="#000" font-size="14" textLength="111.125" x="162.5" y="102.87">dataroomId : String</text>
+      <text fill="#000" font-size="14" textLength="75.425" x="162.5" y="116.87">roleId : String</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="157.5" x2="278.625" y1="123.981" y2="123.981"/>
+    </g>
+    <!--class User-->
+    <g class="entity" data-qualified-name="User" data-source-line="24" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="61.575" x="419" y="62.981"/>
+      <ellipse cx="434" cy="78.981" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="429" y="83.981">C</text>
+      <text fill="#000" font-size="14" textLength="29.575" x="448" y="82.87">User</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="420" x2="479.575" y1="94.981" y2="94.981"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="420" x2="479.575" y1="102.981" y2="102.981"/>
+    </g>
+    <!--class Role-->
+    <g class="entity" data-qualified-name="Role" data-source-line="27" id="ent0007">
+      <rect fill="#F1F1F1" height="104" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="131.875" x="6" y="34.981"/>
+      <ellipse cx="53.25" cy="50.981" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="48.25" y="55.981">E</text>
+      <text fill="#000" font-size="14" textLength="28.875" x="73.75" y="54.87">Role</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="136.875" y1="66.981" y2="66.981"/>
+      <text fill="#000" font-size="14" textLength="119.875" x="12" y="81.87">ADMINISTRATOR,</text>
+      <text fill="#000" font-size="14" textLength="74.725" x="12" y="95.87">MANAGER,</text>
+      <text fill="#000" font-size="14" textLength="106.663" x="12" y="109.87">CONTRIBUTOR,</text>
+      <text fill="#000" font-size="14" textLength="56" x="12" y="123.87">VISITOR</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="136.875" y1="130.981" y2="130.981"/>
+    </g>
+    <!--class Dataroom-->
+    <g class="entity" data-qualified-name="Dataroom" data-source-line="35" id="ent0008">
+      <rect fill="#F1F1F1" height="118" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.15" x="154" y="174.981"/>
+      <ellipse cx="181.026" cy="190.981" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="176.026" y="195.981">C</text>
+      <text fill="#000" font-size="14" textLength="61.425" x="197.699" y="194.87">Dataroom</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="155" x2="273.15" y1="206.981" y2="206.981"/>
+      <text fill="#000" font-size="14" textLength="70.788" x="160" y="221.87">code : String</text>
+      <text fill="#000" font-size="14" textLength="75.425" x="160" y="235.87">name : String</text>
+      <text fill="#000" font-size="14" textLength="81.638" x="160" y="249.87">quota : integer</text>
+      <text fill="#000" font-size="14" textLength="83.213" x="160" y="263.87">creation : Date</text>
+      <text fill="#000" font-size="14" textLength="108.15" x="160" y="277.87">description : String</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="155" x2="273.15" y1="284.981" y2="284.981"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0002" data-link-type="extension" id="lnk9">
+      <polygon fill="none" points="467.995,111.277,474.25,129.19,483.746,121.855,467.995,111.277" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M478.998,125.523 C499.898,152.581 523.169,182.708 544.05,209.742" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0003" data-link-type="extension" id="lnk10">
+      <polygon fill="none" points="450.482,111.277,444.856,129.398,456.853,129.149,450.482,111.277" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M450.854,129.274 C451.414,156.332 451.96,182.708 452.519,209.742" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0004" data-link-type="extension" id="lnk11">
+      <polygon fill="none" points="432.809,111.277,417.293,122.198,426.949,129.323,432.809,111.277" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M422.121,125.761 C402.153,152.819 380.098,182.708 360.149,209.742" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="composition" id="lnk12">
+      <polygon fill="#181818" points="369.756,118.025,370.035,125.23,376.794,127.744,376.515,120.538,369.756,118.025" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M376.794,127.744 C396.497,154.952 418.081,184.759 436.108,209.654" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="composition" id="lnk13">
+      <polygon fill="#181818" points="346.964,118.025,342.76,123.883,346.55,130.018,350.755,124.159,346.964,118.025" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M346.55,130.018 C345.612,157.226 344.663,184.759 343.804,209.654" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0008" data-link-type="association" id="lnk14">
+      <path d="M216.778,132.273 C216.408,145.682 215.996,160.616 215.605,174.79" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="207.605" y="170.901">1</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="196.778" y="143.384">0..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0006" data-link-type="association" id="lnk15">
+      <path d="M262.115,41.617 C274.612,31.573 288.945,22.333 304,16.981 C341.27,3.73 357.275,0 393,16.981 C412.816,26.4 428.006,46.452 437.702,62.69" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" x="429.702" y="58.801">1</text>
+      <text fill="#000" font-size="13" textLength="19.419" x="242.115" y="37.729">0..*</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0005" data-link-type="association" id="lnk16">
+      <path d="M138.156,86.981 C144.186,86.981 150.216,86.981 156.246,86.981" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="19.419" x="136.246" y="98.092">0..*</text>
+      <text fill="#000" font-size="13" x="139.156" y="83.092">1</text>
+    </g>
+  </g>
+</svg>

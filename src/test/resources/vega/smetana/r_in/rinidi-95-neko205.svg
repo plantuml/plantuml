@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="246px" preserveAspectRatio="none" style="width:345px;height:246px;background:#FFFFFF;" version="1.1" viewBox="0 0 345 246" width="345px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Singleton-->
+    <g class="entity" data-qualified-name="Singleton" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.45" x="39.5" y="20"/>
+      <ellipse cx="73.85" cy="36" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="68.85" y="41">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="58.45" x="92.15" y="39.889">Singleton</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="40.5" x2="171.95" y1="52" y2="52"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="40.5" x2="171.95" y1="60" y2="60"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="50.5" cy="72.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="107.45" x="59.5" y="74.889">getSingletonData</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="50.5" cy="86.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" font-style="italic" text-decoration="underline" textLength="52.15" x="59.5" y="88.889">instance</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="50.5" cy="100.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="106.663" x="59.5" y="102.889">setSingletonData</text>
+    </g>
+    <!--class SingletonImpl-->
+    <g class="entity" data-qualified-name="SingletonImpl" data-source-line="8" id="ent0002">
+      <rect fill="#F1F1F1" height="106" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.75" x="191" y="12"/>
+      <ellipse cx="215.394" cy="28" fill="#F70" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="210.394" y="33">S</text>
+      <text fill="#000" font-size="14" textLength="84.875" x="231.481" y="31.889">SingletonImpl</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="192" x2="327.75" y1="44" y2="44"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="202" cy="56.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="48.212" x="211" y="58.889">myData</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="192" x2="327.75" y1="66" y2="66"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="202" cy="86.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="30" text-decoration="underline" textLength="111.75" x="211" y="93.333">instance</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="202" cy="108.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.063" x="211" y="110.889">myOperation</text>
+    </g>
+    <!--class Singleton_pattern_tempate-->
+    <g class="entity" data-qualified-name="Singleton_pattern_tempate" data-source-line="14" id="ent0003">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="200" x="6" y="154"/>
+      <ellipse cx="21" cy="170" fill="#F70" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="175">S</text>
+      <text fill="#000" font-size="14" textLength="168" x="35" y="173.889">Singleton_pattern_tempate</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="205" y1="186" y2="186"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="205" y1="194" y2="194"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="206.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="87.938" x="26" y="208.889">do_something</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="220.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" text-decoration="underline" textLength="52.85" x="26" y="222.889">Instance</text>
+    </g>
+  </g>
+</svg>

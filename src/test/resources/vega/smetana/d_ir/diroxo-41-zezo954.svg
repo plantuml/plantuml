@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="122px" preserveAspectRatio="none" style="width:224px;height:122px;background:#FFFFFF;" version="1.1" viewBox="0 0 224 122" width="224px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster PetitBeurre-->
+    <g class="cluster" data-qualified-name="PetitBeurre" data-source-line="6" id="ent0001">
+      <path d="M126.559,21.389 C129.83,16.275 133.53,15.079 137.748,20.371 C140.507,12.391 144.483,11.637 150.649,17.103 C153.912,9.041 159.434,8.752 164.459,15.455 C169.616,11.061 173.577,12.565 175.734,18.674 C179.821,11.177 186.672,11.652 189.786,19.562 C194.217,14.983 198.327,13.957 201.708,20.671 C209.285,24.256 210.902,31.599 202.89,36.358 C210.96,41.048 211.561,48.613 202.96,53.371 C209.744,59.279 211.268,64.863 202.412,70.264 C210.46,75.4 209.214,82.138 202.261,87.138 C199.192,94.511 192.132,94.599 188.12,88.1 C184.679,93.664 180.538,93.739 176.438,88.835 C172.158,94.246 166.154,95.834 162.567,88.103 C159.752,92.912 155.484,93.839 151.852,89.011 C147.274,94.317 140.992,92.477 138.679,86.392 C135.009,94.036 128.886,92.742 124.511,87.147 C118.723,84.315 116.978,78.227 123.554,74.462 C117.012,73.464 116.5,68.225 120.058,63.888 C113.703,62.598 112.937,59.17 116.044,54.028 C111.368,49.328 113.384,43.891 119.158,41.868 C115.47,37.29 116.739,33.417 122.032,31.276 C118.814,25.748 120.452,22.647 126.559,21.389" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="70" x="127.5" y="35.889">PetitBeurre</text>
+    </g>
+    <!--class someClass-->
+    <g class="entity" data-qualified-name="someClass" data-source-line="22" id="ent0003">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="101.3" x="6" y="16"/>
+      <ellipse cx="21" cy="32" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="37">C</text>
+      <text fill="#000" font-size="14" textLength="69.3" x="35" y="35.889">someClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="106.3" y1="48" y2="48"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="60.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="53.025" x="26" y="62.889">okPublic</text>
+      <g data-visibility-modifier="PRIVATE_FIELD">
+        <rect fill="none" height="6" style="stroke:#C82930;stroke-width:1;" width="6" x="14" y="71.5"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="58.363" x="26" y="76.889">okPrivate</text>
+      <g data-visibility-modifier="PROTECTED_FIELD">
+        <polygon fill="none" points="17,83.5,21,87.5,17,91.5,13,87.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="74.638" x="26" y="90.889">okProtected</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="106.3" y1="98" y2="98"/>
+    </g>
+    <!--class aClass-->
+    <g class="entity" data-qualified-name="PetitBeurre.aClass" data-source-line="12" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="74.875" x="125" y="37"/>
+      <ellipse cx="140" cy="53" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="135" y="58">C</text>
+      <text fill="#000" font-size="14" textLength="42.875" x="154" y="56.889">aClass</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="126" x2="198.875" y1="69" y2="69"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="126" x2="198.875" y1="77" y2="77"/>
+    </g>
+  </g>
+</svg>

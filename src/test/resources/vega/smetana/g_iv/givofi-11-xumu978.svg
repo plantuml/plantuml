@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="90px" preserveAspectRatio="none" style="width:200px;height:90px;background:#FFFFFF;" version="1.1" viewBox="0 0 200 90" width="200px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="gl0fu3um6bzhc0" x1="0%" x2="100%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#C3D8F4"/>
+      <stop offset="100%" stop-color="#6192D1"/>
+    </linearGradient>
+    <linearGradient id="gl0fu3um6bzhc1" x1="0%" x2="100%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFD8F4"/>
+      <stop offset="100%" stop-color="#FF92D1"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class dummy1-->
+    <g class="entity" data-qualified-name="dummy1" data-source-line="12" id="ent0001">
+      <rect fill="url(#gl0fu3um6bzhc0)" height="62" rx="2.5" ry="2.5" style="stroke:#0FF;stroke-width:0.5;" width="85.638" x="6" y="12"/>
+      <rect fill="url(#gl0fu3um6bzhc0)" height="32" rx="2.5" ry="2.5" style="stroke:url(#gl0fu3um6bzhc0);stroke-width:0.5;" width="85.638" x="6" y="12"/>
+      <rect fill="url(#gl0fu3um6bzhc0)" height="2.5" style="stroke:url(#gl0fu3um6bzhc0);stroke-width:0.5;" width="85.638" x="6" y="41.5"/>
+      <rect fill="none" height="62" rx="2.5" ry="2.5" style="stroke:#0FF;stroke-width:0.5;" width="85.638" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#50FFFF" font-size="14" textLength="53.638" x="35" y="31.889">dummy1</text>
+      <line style="stroke:#0FF;stroke-width:0.5;" x1="7" x2="90.638" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="12" y="58.889">foo1</text>
+      <line style="stroke:#0FF;stroke-width:0.5;" x1="7" x2="90.638" y1="66" y2="66"/>
+    </g>
+    <!--entity dummy2-->
+    <g class="entity" data-qualified-name="dummy2" data-source-line="15" id="ent0002">
+      <path d="M110,31.5 C110,21.5 146.819,21.5 146.819,21.5 C146.819,21.5 183.638,21.5 183.638,31.5 L183.638,54.5 C183.638,64.5 146.819,64.5 146.819,64.5 C146.819,64.5 110,64.5 110,54.5 L110,31.5" fill="url(#gl0fu3um6bzhc1)" style="stroke:#50FF50;stroke-width:0.5;"/>
+      <path d="M110,31.5 C110,41.5 146.819,41.5 146.819,41.5 C146.819,41.5 183.638,41.5 183.638,31.5" fill="none" style="stroke:#50FF50;stroke-width:0.5;"/>
+      <text fill="#FF5050" font-size="14" textLength="53.638" x="120" y="56.389">dummy2</text>
+    </g>
+  </g>
+</svg>

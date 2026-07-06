@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="164px" preserveAspectRatio="none" style="width:156px;height:164px;background:#FFFFFF;" version="1.1" viewBox="0 0 156 164" width="156px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="s1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="118.875" x="13.5" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="13.5" x2="132.375" y1="36" y2="36"/>
+      <text fill="#F00" font-size="14" textLength="98.875" x="23.5" y="27.889">this should be red</text>
+    </g>
+    <g class="entity" data-qualified-name="s2" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="134.45" x="6" y="98"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="140.45" y1="122" y2="122"/>
+      <text fill="#008000" font-size="14" textLength="114.45" x="16" y="113.889">this should be green</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="73,97.758,77,88.758,73,92.758,69,88.758,73,97.758" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M73,62.296 C73,73.441 73,81.621 73,92.758" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:1,3;"/>
+    </g>
+  </g>
+</svg>

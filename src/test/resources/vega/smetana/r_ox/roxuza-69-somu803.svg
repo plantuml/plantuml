@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="59px" preserveAspectRatio="none" style="width:363px;height:59px;background:#FFFFFF;" version="1.1" viewBox="0 0 363 59" width="363px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="1">
+      <rect fill="#ADD8E6" height="14" style="stroke:none;" width="336.35" x="10" y="12"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="28.787" x="10" y="22.889">Step</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="38.787" y="22.889">Date</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="142.388" y="22.889">Name</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="39.637" x="228.05" y="22.889">Status</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="25.725" x="286.5" y="22.889">Link</text>
+      <rect fill="#90EE90" height="14" style="stroke:none;" width="336.35" x="10" y="26"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="19.425" x="10" y="36.889">1.1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="7.7" x="38.787" y="36.889">  </text>
+      <a href="multiline.svg" target="_top" title="multi line tooltip test" xlink:actuate="onRequest" xlink:href="multiline.svg" xlink:show="new" xlink:title="multi line tooltip test" xlink:type="simple">
+        <text fill="#00F" font-size="14" font-weight="700" text-decoration="underline" textLength="103.6" x="38.787" y="36.889">multiline label test</text>
+      </a>
+      <text fill="#000" font-size="14" font-weight="700" x="142.388" y="36.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="85.663" x="142.388" y="36.889">plantuml news</text>
+      <rect fill="#000080" height="14" style="stroke:none;" width="58.45" x="228.05" y="26"/>
+      <text fill="#FF4500" font-size="14" font-weight="700" textLength="58.45" x="228.05" y="36.889">Unknown</text>
+      <text fill="#000" font-size="14" font-weight="700" x="286.5" y="36.889"> </text>
+      <a href="https://plantuml.com/news" target="_top" title="single line tooltip test" xlink:actuate="onRequest" xlink:href="https://plantuml.com/news" xlink:show="new" xlink:title="single line tooltip test" xlink:type="simple">
+        <text fill="#00F" font-size="14" font-weight="700" text-decoration="underline" textLength="59.85" x="286.5" y="36.889">tooltip test</text>
+      </a>
+      <text fill="#000" font-size="14" font-weight="700" x="346.35" y="36.889"> </text>
+      <line style="stroke:#F00;stroke-width:1;" x1="10" x2="346.35" y1="12" y2="12"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="10" x2="346.35" y1="26" y2="26"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="10" x2="346.35" y1="40" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="10" x2="10" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="38.787" x2="38.787" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="142.388" x2="142.388" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="228.05" x2="228.05" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="286.5" x2="286.5" y1="12" y2="40"/>
+      <line style="stroke:#F00;stroke-width:1;" x1="346.35" x2="346.35" y1="12" y2="40"/>
+    </g>
+  </g>
+</svg>

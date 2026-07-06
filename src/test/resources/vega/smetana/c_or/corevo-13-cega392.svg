@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="130px" preserveAspectRatio="none" style="width:61px;height:130px;background:#FFFFFF;" version="1.1" viewBox="0 0 61 130" width="61px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity joe-->
+    <g class="entity" data-qualified-name="joe" data-source-line="1" id="ent0001">
+      <ellipse cx="25.287" cy="48.5" fill="#FFA500" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23.344" x2="33.048" y1="56.26" y2="46.556"/>
+      <path d="M25.287,56.5 L25.287,83.5 M12.287,64.5 L38.287,64.5 M25.287,83.5 L12.287,98.5 M25.287,83.5 L38.287,98.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="15.925" y="110.889">joe</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="36.575" x="7" y="22.889">«xxx»</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="36.575" x="7" y="36.889">«yyy»</text>
+    </g>
+  </g>
+</svg>

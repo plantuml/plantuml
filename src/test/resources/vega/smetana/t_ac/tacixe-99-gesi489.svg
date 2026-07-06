@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="145px" preserveAspectRatio="none" style="width:136px;height:145px;background:#FFFFFF;" version="1.1" viewBox="0 0 136 145" width="136px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster S-->
+    <g class="cluster" data-qualified-name="S" data-source-line="1" id="ent0001">
+      <polygon fill="none" points="14,14,24,4,120,4,120,111,110,121,14,121,14,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="110" x2="120" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="14" x2="110" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="110" x2="110" y1="14" y2="121"/>
+      <text fill="#000" font-size="14" font-weight="700" x="58.319" y="27.889">S</text>
+    </g>
+    <!--cluster CC-->
+    <g class="cluster" data-qualified-name="S.CC" data-source-line="3" id="ent0002">
+      <rect fill="none" height="79" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="48" x="64" y="34"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="92" y="39"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="90" y="41"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="90" y="45"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.3" x="77.85" y="57.889">CC</text>
+    </g>
+    <!--cluster UI-->
+    <g class="cluster" data-qualified-name="S.UI" data-source-line="7" id="ent0004">
+      <rect fill="none" height="57" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="34" x="22" y="45"/>
+      <rect fill="none" height="10" style="stroke:#181818;stroke-width:1;" width="15" x="36" y="50"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="34" y="52"/>
+      <rect fill="none" height="2" style="stroke:#181818;stroke-width:1;" width="4" x="34" y="56"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="14" x="32" y="68.889">UI</text>
+    </g>
+    <!--entity CC_at_IR-->
+    <g class="entity" data-qualified-name="S.CC.CC_at_IR" data-source-line="4" id="ent0003">
+      <ellipse cx="88" cy="75" fill="#F1F1F1" rx="12" ry="12" style="stroke:#181818;stroke-width:0.5;"/>
+      <polygon fill="#181818" points="84,63,90,58,88,63,90,68,84,63" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <text fill="#000" font-size="14" textLength="14" x="81" y="101.889">IR</text>
+    </g>
+    <!--entity UI_at_A-->
+    <g class="entity" data-qualified-name="S.UI.UI_at_A" data-source-line="8" id="ent0005">
+      <ellipse cx="39" cy="79" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="34.319" y="106.889">A</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="256px" preserveAspectRatio="none" style="width:291px;height:256px;background:#FFFFFF;" version="1.1" viewBox="0 0 291 256" width="291px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Dummy1-->
+    <g class="entity" data-qualified-name="Dummy1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="96" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="162.85" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="56" x="59.425" y="27.889">Dummy1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="167.85" y1="36" y2="36"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="48.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.15" x="26" y="50.889">String a1</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="62.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="41.212" x="26" y="64.889">Date d;</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="167.85" y1="72" y2="72"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="84.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="136.85" x="26" y="86.889">thisIsALongmethod1()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="98.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="111.125" x="26" y="100.889">anotherMetheod()</text>
+    </g>
+    <!--class Dummy2-->
+    <g class="entity" data-qualified-name="Dummy2" data-source-line="9" id="ent0002">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88" x="187.5" y="24"/>
+      <ellipse cx="202.5" cy="42" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="197.5" y="47">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="39.375" x="224.813" y="38.333">«even»</text>
+      <text fill="#000" font-size="14" textLength="56" x="216.5" y="51.889">Dummy2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188.5" x2="274.5" y1="60" y2="60"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="198.5" cy="72.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.15" x="207.5" y="74.889">String a1</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="198.5" cy="86.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="41.212" x="207.5" y="88.889">Date d;</text>
+    </g>
+    <!--class Dummy3-->
+    <g class="entity" data-qualified-name="Dummy3" data-source-line="17" id="ent0003">
+      <rect fill="#F1F1F1" height="96" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="162.85" x="6" y="144"/>
+      <text fill="#000" font-size="14" textLength="56" x="59.425" y="159.889">Dummy3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="167.85" y1="168" y2="168"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="180.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.15" x="26" y="182.889">String a1</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="17" cy="194.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="41.212" x="26" y="196.889">Date d;</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="167.85" y1="204" y2="204"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="216.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="136.85" x="26" y="218.889">thisIsALongmethod1()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="17" cy="230.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="111.125" x="26" y="232.889">anotherMetheod()</text>
+    </g>
+    <!--class Dummy4-->
+    <g class="entity" data-qualified-name="Dummy4" data-source-line="24" id="ent0004">
+      <rect fill="#F1F1F1" height="72" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88" x="187.5" y="156"/>
+      <ellipse cx="202.5" cy="174" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="197.5" y="179">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="39.375" x="224.813" y="170.333">«even»</text>
+      <text fill="#000" font-size="14" textLength="56" x="216.5" y="183.889">Dummy4</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="188.5" x2="274.5" y1="192" y2="192"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="198.5" cy="204.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="52.15" x="207.5" y="206.889">String a1</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="198.5" cy="218.5" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="41.212" x="207.5" y="220.889">Date d;</text>
+    </g>
+  </g>
+</svg>

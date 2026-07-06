@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="62px" preserveAspectRatio="none" style="width:144px;height:62px;background:#FFFFFF;" version="1.1" viewBox="0 0 144 62" width="144px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a.hello-->
+    <g class="entity" data-qualified-name="a.hello" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="49.663" x="6" y="12"/>
+      <text fill="#000" font-size="14" textLength="29.663" x="16" y="32.889">hello</text>
+    </g>
+    <!--entity a.world-->
+    <g class="entity" data-qualified-name="a.world" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="53.513" x="74" y="12"/>
+      <text fill="#000" font-size="14" textLength="33.513" x="84" y="32.889">world</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="73.673,29,64.673,25,68.673,29,64.673,33,73.673,29" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M56.156,29 C61.995,29 62.834,29 68.673,29" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

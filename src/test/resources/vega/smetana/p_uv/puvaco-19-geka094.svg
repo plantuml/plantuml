@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:194px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 194 78" width="194px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="State_1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;" width="87.725" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;" x1="6" x2="93.725" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="56.087" x="21.819" y="27.889">Dashed 1</text>
+      <text fill="#000" font-size="14" textLength="67.725" x="11" y="51.889">description</text>
+    </g>
+    <rect fill="#F1F1F1" height="40" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;" width="66.087" x="112" y="17"/>
+    <text fill="#000" font-size="14" textLength="56.087" x="117" y="40.889">Dashed 2</text>
+  </g>
+</svg>

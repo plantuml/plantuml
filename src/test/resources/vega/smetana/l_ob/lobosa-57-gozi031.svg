@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="797px" preserveAspectRatio="none" style="width:484px;height:797px;background:#FFFFFF;" version="1.1" viewBox="0 0 484 797" width="484px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="2" id="ent0001">
+      <ellipse cx="199.746" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="194.825" x="102.246" y="73"/>
+    <text fill="#000" font-size="12" textLength="174.825" x="112.246" y="92.333">Entering ValidateConnection state</text>
+    <g class="entity" data-qualified-name=".4" id="ent0005">
+      <polygon fill="#F1F1F1" points="199.746,142,211.746,154,199.746,166,187.746,154,199.746,142" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="144.65" x="207.246" y="217"/>
+    <text fill="#000" font-size="12" textLength="124.65" x="217.246" y="236.333">Wait timeout on SSL error</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="139.475" x="128.246" y="286"/>
+    <text fill="#000" font-size="12" textLength="119.475" x="138.246" y="305.333">Validate Authentication</text>
+    <g class="entity" data-qualified-name=".12" id="ent0013">
+      <polygon fill="#F1F1F1" points="197.746,355,209.746,367,197.746,379,185.746,367,197.746,355" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <g class="entity" data-qualified-name=".15" id="ent0016">
+      <polygon fill="#F1F1F1" points="241.746,430,253.746,442,241.746,454,229.746,442,241.746,430" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <g class="entity" data-qualified-name=".18" id="ent0019">
+      <polygon fill="#F1F1F1" points="342.746,526,354.746,538,342.746,550,330.746,538,342.746,526" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="143.3" x="296.246" y="605"/>
+    <text fill="#000" font-size="12" textLength="123.3" x="306.246" y="624.333">Authenticate on detector</text>
+    <g class="entity" data-qualified-name=".23" id="ent0024">
+      <polygon fill="#F1F1F1" points="367.746,674,379.746,686,367.746,698,355.746,686,367.746,674" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="117.35" x="245.246" y="749"/>
+    <text fill="#000" font-size="12" textLength="97.35" x="255.246" y="768.333">Move to Connected</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="152.825" x="74.246" y="749"/>
+    <text fill="#000" font-size="12" textLength="132.825" x="84.246" y="768.333">Move to ConnectionFailed</text>
+    <g class="entity" data-qualified-name=".30" id="ent0031">
+      <polygon fill="#F1F1F1" points="267.746,674,279.746,686,267.746,698,255.746,686,267.746,674" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="140.6" x="171.246" y="522"/>
+    <text fill="#000" font-size="12" textLength="120.6" x="181.246" y="541.333">Move to connected state</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="185.375" x="33.246" y="472"/>
+    <text fill="#000" font-size="12" textLength="165.375" x="43.246" y="491.333">Check authentication on detector</text>
+    <g class="entity" data-qualified-name=".39" id="ent0040">
+      <polygon fill="#F1F1F1" points="125.746,674,137.746,686,125.746,698,113.746,686,125.746,674" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="199.746,72.81,203.746,63.81,199.746,67.81,195.746,63.81,199.746,72.81" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M199.746,36.263 C199.746,46.456 199.746,56.552 199.746,67.81" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="199.746,141.641,203.746,132.641,199.746,136.641,195.746,132.641,199.746,141.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M199.746,105.251 C199.746,116.467 199.746,126.468 199.746,136.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="11.619" x="187.746" y="138.197">if1</text>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="263.892,216.741,260.182,207.618,260.29,213.274,254.634,213.382,263.892,216.741" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M211.208,166.032 C225.033,179.339 244.747,198.314 260.29,213.274" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="28.187" x="246.746" y="194.556">YES1</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0009" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="216.279,285.857,225.779,283.26,220.151,282.693,220.717,277.065,216.279,285.857" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M261.138,249.203 C247.719,260.168 233.554,271.742 220.151,282.693" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="187.776,285.795,186.616,276.015,185.221,281.497,179.739,280.103,187.776,285.795" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M192.822,166.373 C185.916,178.436 175.773,198.295 171.746,217 C168.752,230.904 168.478,235.158 171.746,249 C174.853,262.163 179.276,271.496 185.221,281.497" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="11" textLength="22.619" x="173.746" y="236.056">NO1</text>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0013" data-link-type="dependency" id="lnk14">
+      <polygon fill="#181818" points="197.746,354.641,201.746,345.641,197.746,349.641,193.746,345.641,197.746,354.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M197.746,318.251 C197.746,329.467 197.746,339.468 197.746,349.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="11.619" x="185.746" y="351.197">if2</text>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0016" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="235,429.809,233.78,420.036,232.419,425.526,226.928,424.165,235,429.809" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M204.428,379.087 C212.698,392.808 224.12,411.758 232.419,425.526" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="28.187" x="225.746" y="407.556">YES2</text>
+      <text fill="#000" font-size="11" textLength="227.7" x="7" y="426.364">Has detector PRODUCT_SECURITY capability?</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0019" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="330.778,525.862,326.915,516.803,327.118,522.456,321.465,522.659,330.778,525.862" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M253.728,454.152 C273.167,472.243 307.69,504.374 327.118,522.456" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="28.187" x="309.746" y="491.056">YES3</text>
+      <text fill="#000" font-size="11" textLength="146.094" x="331.778" y="522.418">Flux Has credentials for detector</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0021" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="363.109,604.978,364.277,595.199,361.635,600.2,356.633,597.558,363.109,604.978" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M346.222,550.263 C350.622,564.521 356.743,584.353 361.635,600.2" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="22.069" x="358.746" y="582.556">YES</text>
+    </g>
+    <g class="link" data-entity-1="ent0021" data-entity-2="ent0024" data-link-type="dependency" id="lnk25">
+      <polygon fill="#181818" points="367.746,673.641,371.746,664.641,367.746,668.641,363.746,664.641,367.746,673.641" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M367.746,637.251 C367.746,648.467 367.746,658.468 367.746,668.641" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="11.619" x="355.746" y="670.197">if3</text>
+    </g>
+    <g class="link" data-entity-1="ent0024" data-entity-2="ent0026" data-link-type="dependency" id="lnk27">
+      <polygon fill="#181818" points="335.672,748.94,345.404,747.43,339.876,746.233,341.073,740.704,335.672,748.94" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M366.952,698.09 C365.783,707.62 362.892,721.316 355.746,731 C350.476,738.141 347.361,741.413 339.876,746.233" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="28.187" x="364.746" y="726.556">YES4</text>
+    </g>
+    <g class="link" data-entity-1="ent0024" data-entity-2="ent0028" data-link-type="dependency" id="lnk29">
+      <polygon fill="#181818" points="227.507,749.373,237.115,751.54,232.411,748.398,235.554,743.694,227.507,749.373" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M355.47,695.173 C347.017,700.874 335.581,708.734 325.746,716 C317.092,722.393 316.487,726.433 306.746,731 C299.069,734.599 267.923,741.334 232.411,748.398" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="11" textLength="22.619" x="327.746" y="726.556">NO2</text>
+    </g>
+    <g class="link" data-entity-1="ent0019" data-entity-2="ent0031" data-link-type="dependency" id="lnk32">
+      <polygon fill="#181818" points="268.737,673.829,273.708,665.327,269.29,668.86,265.757,664.442,268.737,673.829" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M330.557,549.925 C317.725,562.108 297.871,583.01 286.746,605 C275.21,627.8 271.069,652.859 269.29,668.86" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="11.619" x="256.737" y="670.385">if4</text>
+    </g>
+    <g class="link" data-entity-1="ent0031" data-entity-2="ent0028" data-link-type="dependency" id="lnk33">
+      <polygon fill="#181818" points="155.627,748.576,162.603,741.624,157.43,743.913,155.141,738.74,155.627,748.576" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M255.469,688.009 C236.578,690.146 200.12,696.651 176.746,716 C166.525,724.46 161.51,733.359 157.43,743.913" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="28.187" x="178.746" y="726.556">YES5</text>
+    </g>
+    <g class="link" data-entity-1="ent0031" data-entity-2="ent0026" data-link-type="dependency" id="lnk34">
+      <polygon fill="#181818" points="291.664,748.854,289.654,739.213,288.744,744.796,283.161,743.886,291.664,748.854" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M270.008,698.212 C272.092,707.329 275.639,720.375 280.746,731 C283.71,737.168 284.855,739.392 288.744,744.796" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="11" textLength="22.619" x="282.746" y="726.556">NO4</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0035" data-link-type="dependency" id="lnk36">
+      <polygon fill="#181818" points="241.746,521.827,245.746,512.827,241.746,516.827,237.746,512.827,241.746,521.827" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M241.746,454.152 C241.746,470.979 241.746,497.898 241.746,516.827" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="11" textLength="22.619" x="243.746" y="491.056">NO5</text>
+    </g>
+    <g class="link" data-entity-1="ent0013" data-entity-2="ent0037" data-link-type="dependency" id="lnk38">
+      <polygon fill="#181818" points="134.984,471.73,143.066,466.1,137.573,467.452,136.221,461.959,134.984,471.73" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M190.842,379.41 C177.819,400.934 152.211,443.258 137.573,467.452" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="11" textLength="22.619" x="181.746" y="407.556">NO6</text>
+    </g>
+    <g class="link" data-entity-1="ent0037" data-entity-2="ent0040" data-link-type="dependency" id="lnk41">
+      <polygon fill="#181818" points="125.746,673.699,129.746,664.699,125.746,668.699,121.746,664.699,125.746,673.699" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M125.746,504.054 C125.746,541.883 125.746,635.276 125.746,668.699" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="11.619" x="113.746" y="670.255">if5</text>
+    </g>
+    <g class="link" data-entity-1="ent0040" data-entity-2="ent0028" data-link-type="dependency" id="lnk42">
+      <polygon fill="#181818" points="133.337,748.807,130.233,739.459,129.97,745.11,124.319,744.847,133.337,748.807" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M122.072,698.214 C119.704,707.331 117.741,720.377 121.746,731 C124.221,737.566 125.295,739.978 129.97,745.11" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="11" textLength="28.187" x="123.746" y="726.556">YES6</text>
+    </g>
+    <g class="link" data-entity-1="ent0040" data-entity-2="ent0026" data-link-type="dependency" id="lnk43">
+      <polygon fill="#181818" points="276.35,748.948,270.291,741.183,271.938,746.595,266.526,748.242,276.35,748.948" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M137.753,690.647 C154.063,695.724 184.023,705.489 208.746,716 C232.043,725.905 253.201,736.603 271.938,746.595" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="11" textLength="22.619" x="242.746" y="726.556">NO7</text>
+    </g>
+  </g>
+</svg>

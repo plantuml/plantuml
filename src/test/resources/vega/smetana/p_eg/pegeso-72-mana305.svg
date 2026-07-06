@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="260px" preserveAspectRatio="none" style="width:99px;height:260px;background:#FFFFFF;" version="1.1" viewBox="0 0 99 260" width="99px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class table1-->
+    <g class="entity" data-qualified-name="table1" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="98" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72.725" x="8" y="146"/>
+      <ellipse cx="24.159" cy="162" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="19.159" y="167">C</text>
+      <text fill="#000" font-size="14" textLength="38.15" x="38.416" y="165.889">table1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="9" x2="79.725" y1="178" y2="178"/>
+      <text fill="#000" font-size="14" textLength="10.938" x="14" y="192.889">id</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="9" x2="79.725" y1="200" y2="200"/>
+      <text fill="#000" font-size="14" textLength="50.575" x="14" y="214.889">other_id</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="9" x2="79.725" y1="222" y2="222"/>
+      <text fill="#000" font-size="14" textLength="60.725" x="14" y="236.889">honkhonk</text>
+    </g>
+    <!--class table2-->
+    <g class="entity" data-qualified-name="table2" data-source-line="10" id="ent0002">
+      <rect fill="#F1F1F1" height="98" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="76.575" x="6" y="12"/>
+      <ellipse cx="23.891" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="18.891" y="33">C</text>
+      <text fill="#000" font-size="14" textLength="38.15" x="38.534" y="31.889">table2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="81.575" y1="44" y2="44"/>
+      <text fill="#000" font-size="14" textLength="10.938" x="12" y="58.889">id</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="81.575" y1="66" y2="66"/>
+      <text fill="#000" font-size="14" textLength="64.575" x="12" y="80.889">foreignkey</text>
+      <line style="stroke:#181818;stroke-width:1;stroke-dasharray:1,2;" x1="7" x2="81.575" y1="88" y2="88"/>
+      <text fill="#000" font-size="14" textLength="62.3" x="12" y="102.889">beepboop</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="44.5,145.786,48.5,136.786,44.5,140.786,40.5,136.786,44.5,145.786" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M44.5,110.028 C44.5,121.675 44.5,129.131 44.5,140.786" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

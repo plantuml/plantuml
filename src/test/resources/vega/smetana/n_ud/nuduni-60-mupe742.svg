@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="102px" preserveAspectRatio="none" style="width:146px;height:102px;background:#FFFFFF;" version="1.1" viewBox="0 0 146 102" width="146px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="a" data-source-line="1" id="ent0001">
+      <path d="M18.5,12 L117.5,12 A12.5,12.5 0 0 1 130,24.5 L130,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="none" height="74" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="124" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="130" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="64.106" y="27.889">a</text>
+      <g class="start_entity" data-qualified-name="a.start1" data-source-line="2" id="ent0002">
+        <ellipse cx="21" cy="57" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+      </g>
+      <ellipse cx="60" cy="58" fill="#F1F1F1" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" x="54.925" y="61.889">H</text>
+      <ellipse cx="100" cy="58" fill="#F1F1F1" rx="11" ry="11" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="15.575" x="92.213" y="61.889">H*</text>
+    </g>
+  </g>
+</svg>

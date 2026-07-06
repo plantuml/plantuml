@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="281px" preserveAspectRatio="none" style="width:162px;height:281px;background:#FFFFFF;" version="1.1" viewBox="0 0 162 281" width="162px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Conductor-->
+    <g class="cluster" data-qualified-name="Conductor" data-source-line="3" id="ent0001">
+      <polygon fill="none" points="14,4,84.575,4,91.575,24,146,24,146,257,14,257,14,4" style="stroke:#000;stroke-width:1.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="91.575" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="64.575" x="18" y="16.889">Conductor</text>
+    </g>
+    <g class="start_entity" data-qualified-name="Conductor.start" data-source-line="4" id="ent0002">
+      <ellipse cx="80" cy="39" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="114.725" x="22.5" y="89"/>
+    <text fill="#000" font-size="12" textLength="94.725" x="32.5" y="108.333">Climbs on Platform</text>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="40" y="157"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="49.4" x="55.5" y="217"/>
+    <text fill="#000" font-size="12" textLength="29.4" x="65.5" y="236.333">Bows</text>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="80,88.587,84,79.587,80,83.587,76,79.587,80,88.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M80,53.084 C80,62.976 80,72.56 80,83.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0005" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="80,156.822,84,147.822,80,151.822,76,147.822,80,156.822" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M80,121.008 C80,132.047 80,141.81 80,151.822" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0007" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="80,216.587,84,207.587,80,211.587,76,207.587,80,216.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M80,181.084 C80,190.976 80,200.56 80,211.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="249px" preserveAspectRatio="none" style="width:587px;height:249px;background:#FFFFFF;" version="1.1" viewBox="0 0 587 249" width="587px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster pack1-->
+    <g class="cluster" data-qualified-name="pack1" data-source-line="2" id="ent0002">
+      <path d="M76,4 L114.363,4 A3.75,3.75 0 0 1 116.863,6.5 L123.863,24 L316,24 A2.5,2.5 0 0 1 318.5,26.5 L318.5,159.5 A2.5,2.5 0 0 1 316,162 L76,162 A2.5,2.5 0 0 1 73.5,159.5 L73.5,6.5 A2.5,2.5 0 0 1 76,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="73.5" x2="123.863" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="77.5" y="16.889">pack1</text>
+      <rect fill="#DDD" height="38" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="204.6" x="97.2" y="38"/>
+      <text fill="#000" font-size="14" textLength="194.6" x="102.2" y="53.889">This is the legend for the package1</text>
+      <text fill="#000" font-size="14" textLength="89.6" x="102.2" y="67.889">on several lines</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="26.425" x="186.788" y="99.889">«st»</text>
+    </g>
+    <!--cluster pack2-->
+    <g class="cluster" data-qualified-name="pack2" data-source-line="10" id="ent0004">
+      <path d="M329,32 L367.363,32 A3.75,3.75 0 0 1 369.863,34.5 L376.863,52 L569,52 A2.5,2.5 0 0 1 571.5,54.5 L571.5,159.5 A2.5,2.5 0 0 1 569,162 L329,162 A2.5,2.5 0 0 1 326.5,159.5 L326.5,34.5 A2.5,2.5 0 0 1 329,32" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="326.5" x2="376.863" y1="52" y2="52"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="37.363" x="330.5" y="44.889">pack2</text>
+      <rect fill="#DDD" height="24" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="204.6" x="350.2" y="66"/>
+      <text fill="#000" font-size="14" textLength="194.6" x="355.2" y="81.889">This is the legend for the package2</text>
+    </g>
+    <!--class foo1-->
+    <g class="entity" data-qualified-name="foo1" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="6" y="106"/>
+      <ellipse cx="21" cy="122" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="127">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="35" y="125.889">foo1</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="64.213" y1="138" y2="138"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="64.213" y1="146" y2="146"/>
+    </g>
+    <!--class foo2-->
+    <g class="entity" data-qualified-name="pack1.foo2" data-source-line="7" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="167" y="106"/>
+      <ellipse cx="182" cy="122" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="177" y="127">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="196" y="125.889">foo2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="168" x2="225.213" y1="138" y2="138"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="168" x2="225.213" y1="146" y2="146"/>
+    </g>
+    <!--class foo3-->
+    <g class="entity" data-qualified-name="pack2.foo3" data-source-line="14" id="ent0005">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="59.213" x="419" y="106"/>
+      <ellipse cx="434" cy="122" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="429" y="127">C</text>
+      <text fill="#000" font-size="14" textLength="27.213" x="448" y="125.889">foo3</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="420" x2="477.213" y1="138" y2="138"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="420" x2="477.213" y1="146" y2="146"/>
+    </g>
+    <g class="legend" data-source-line="17">
+      <rect fill="#DDD" height="38" rx="7.5" ry="7.5" style="stroke:#000;stroke-width:1;" width="194.45" x="193.025" y="192"/>
+      <text fill="#000" font-size="14" textLength="184.45" x="198.025" y="207.889">This is the legend for the diagram</text>
+      <text fill="#000" font-size="14" textLength="89.6" x="198.025" y="221.889">on several lines</text>
+    </g>
+  </g>
+</svg>

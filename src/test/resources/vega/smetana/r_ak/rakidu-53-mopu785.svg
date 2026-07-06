@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="148px" preserveAspectRatio="none" style="width:263px;height:148px;background:#FFFFFF;" version="1.1" viewBox="0 0 263 148" width="263px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="A_State" data-source-line="1" id="ent0001">
+      <path d="M18.5,12 L234.619,12 A12.5,12.5 0 0 1 247.119,24.5 L247.119,36 L6,36 L6,24.5 A12.5,12.5 0 0 1 18.5,12" fill="#F1F1F1"/>
+      <rect fill="none" height="120" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="241.119" x="6" y="12"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="247.119" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="69.213" x="91.953" y="27.889">Some State</text>
+      <g class="entity" data-qualified-name="A_State.Task1" data-source-line="2" id="ent0002">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50.363" x="18" y="53"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="68.363" y1="77" y2="77"/>
+        <text fill="#000" font-size="14" textLength="30.363" x="28" y="68.889">Task</text>
+      </g>
+      <line style="stroke:#181818;stroke-width:1.5;stroke-dasharray:8,10;" x1="78" x2="78" y1="41" y2="127"/>
+      <g class="entity" data-qualified-name="A_State.CONC1.Task2" data-source-line="4" id="ent0004">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="50.363" x="85" y="53"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="85" x2="135.363" y1="77" y2="77"/>
+        <text fill="#000" font-size="14" textLength="30.363" x="95" y="68.889">Task</text>
+      </g>
+      <text fill="#000" font-size="14" textLength="91.088" x="113.456" y="88.889">ExitSuccessful</text>
+      <ellipse cx="159" cy="72" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1.5;" x1="163.389" x2="155.611" y1="76.389" y2="68.611"/>
+      <line style="stroke:#181818;stroke-width:1.5;" x1="163.389" x2="155.611" y1="68.611" y2="76.389"/>
+      <text fill="#000" font-size="14" textLength="66.238" x="159.881" y="88.889">ExitFailure</text>
+      <ellipse cx="193" cy="72" fill="#F1F1F1" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/>
+      <line style="stroke:#181818;stroke-width:1.5;" x1="197.389" x2="189.611" y1="76.389" y2="68.611"/>
+      <line style="stroke:#181818;stroke-width:1.5;" x1="197.389" x2="189.611" y1="68.611" y2="76.389"/>
+    </g>
+  </g>
+</svg>

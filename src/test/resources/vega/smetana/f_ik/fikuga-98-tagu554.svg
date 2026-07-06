@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:378px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 378 78" width="378px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g9tckl4canyya0" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+    <linearGradient id="g9tckl4canyya1" x1="0%" x2="100%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Foo1" data-source-line="1" id="ent0001">
+      <rect fill="url(#g9tckl4canyya0)" height="50" rx="12.5" ry="12.5" style="stroke:#0FF;stroke-width:0.5;" width="51.938" x="6" y="12"/>
+      <line style="stroke:#0FF;stroke-width:0.5;" x1="6" x2="57.938" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="31.938" x="16" y="27.889">Foo1</text>
+    </g>
+    <g class="entity" data-qualified-name="FooDashed" data-source-line="2" id="ent0002">
+      <rect fill="url(#g9tckl4canyya1)" height="50" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" width="92.45" x="76" y="12"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="76" x2="168.45" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="72.45" x="86" y="27.889">FooDashed</text>
+    </g>
+    <g class="entity" data-qualified-name="FooDotted" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" width="85.363" x="186.5" y="12"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:1,3;" x1="186.5" x2="271.863" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="65.363" x="196.5" y="27.889">FooDotted</text>
+    </g>
+    <g class="entity" data-qualified-name="FooBold" data-source-line="6" id="ent0004">
+      <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:2;" width="72.238" x="290" y="12"/>
+      <line style="stroke:#181818;stroke-width:2;" x1="290" x2="362.238" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" textLength="52.238" x="300" y="27.889">FooBold</text>
+    </g>
+  </g>
+</svg>

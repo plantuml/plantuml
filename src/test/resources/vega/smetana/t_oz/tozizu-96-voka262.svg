@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="80px" preserveAspectRatio="none" style="width:509px;height:80px;background:#010101;" version="1.1" viewBox="0 0 509 80" width="509px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#010101" height="80" style="stroke:none;" width="509" x="0" y="0"/>
+    <!--class A-->
+    <g class="entity" data-qualified-name="A" data-source-line="4" id="ent0001">
+      <rect fill="#111" height="52" rx="2.5" ry="2.5" style="stroke:#E7E7E7;stroke-width:0.5;" width="94.075" x="399.5" y="12"/>
+      <ellipse cx="414.5" cy="30" fill="#010101" rx="11" ry="11" style="stroke:#E7E7E7;stroke-width:1;"/>
+      <text fill="#FEFFFF" font-family="monospace" font-size="14" x="409.5" y="35">E</text>
+      <text fill="#FEFFFF" font-size="12" font-style="italic" textLength="66.075" x="426.5" y="26.333">«Extension»</text>
+      <text fill="#FEFFFF" font-size="14" font-weight="700" textLength="40.512" x="439.281" y="39.889">TYP: B</text>
+      <line style="stroke:#E7E7E7;stroke-width:0.5;" x1="400.5" x2="492.575" y1="48" y2="48"/>
+      <line style="stroke:#E7E7E7;stroke-width:0.5;" x1="400.5" x2="492.575" y1="56" y2="56"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN2" data-source-line="6" id="ent0003">
+      <path d="M6,26 L6,49 A0,0 0 0 0 6,49 L380.763,49 A0,0 0 0 0 380.763,49 L380.763,44 L399.364,38 L380.763,36 L380.763,36 L370.763,26 L6,26 A0,0 0 0 0 6,26" fill="#040401" style="stroke:#E7E7E7;stroke-width:0.5;"/>
+      <path d="M370.763,26 L370.763,36 L380.763,36 L370.763,26" fill="#040401" style="stroke:#E7E7E7;stroke-width:0.5;"/>
+      <text fill="#FEFFFF" font-size="13" textLength="353.763" x="12" y="41.111">${loadExtension(SST310_DEFAULT_ERROR_RESPONSE)}</text>
+    </g>
+  </g>
+</svg>

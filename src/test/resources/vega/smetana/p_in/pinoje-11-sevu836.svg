@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="212px" preserveAspectRatio="none" style="width:131px;height:212px;background:#FFFFFF;" version="1.1" viewBox="0 0 131 212" width="131px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity WIN-->
+    <g class="entity" data-qualified-name="WIN" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="86.725" x="17" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="83.725" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="81.725" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="81.725" y="23"/>
+      <text fill="#000" font-size="14" textLength="46.725" x="32" y="42.889">Windos</text>
+    </g>
+    <!--entity USBI-->
+    <g class="entity" data-qualified-name="USBI" data-source-line="2" id="ent0002">
+      <ellipse cx="60.5" cy="101" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="28.875" x="46.063" y="128.889">USB</text>
+    </g>
+    <!--entity LN-->
+    <g class="entity" data-qualified-name="LN" data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.513" x="6" y="152"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="94.513" y="157"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="92.513" y="159"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="92.513" y="163"/>
+      <text fill="#000" font-size="14" textLength="68.513" x="21" y="182.889">Long Name</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="association" id="lnk4">
+      <path d="M60.5,56.143 C60.5,67.995 60.5,82.292 60.5,91.952" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="association" id="lnk5">
+      <path d="M60.5,116.229 C60.5,125.886 60.5,140.079 60.5,151.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

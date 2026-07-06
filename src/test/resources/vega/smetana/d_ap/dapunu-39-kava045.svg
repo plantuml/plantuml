@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="462px" preserveAspectRatio="none" style="width:209px;height:462px;background:#FFFFFF;" version="1.1" viewBox="0 0 209 462" width="209px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Main_NotConnected" data-source-line="3" id="ent0001">
+      <a href="" target="_top" title="Main_NotConnected" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="Main_NotConnected" xlink:type="simple">
+        <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="109.513" x="44.5" y="73"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="44.5" x2="154.013" y1="97" y2="97"/>
+        <text fill="#000" font-size="14" textLength="89.513" x="54.5" y="88.889">NotConnected</text>
+      </a>
+    </g>
+    <g class="entity" data-qualified-name="Main_Connected" data-source-line="4" id="ent0002">
+      <a href="" target="_top" title="Main_Connected" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="Main_Connected" xlink:type="simple">
+        <path d="M18.5,176 L180.484,176 A12.5,12.5 0 0 1 192.984,188.5 L192.984,200 L6,200 L6,188.5 A12.5,12.5 0 0 1 18.5,176" fill="#F1F1F1"/>
+        <rect fill="none" height="270" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="186.984" x="6" y="176"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="6" x2="192.984" y1="200" y2="200"/>
+        <text fill="#000" font-size="14" textLength="67.725" x="65.63" y="191.889">Connected</text>
+      </a>
+      <g class="entity" data-qualified-name="Main_Connected.Main_Connected_First" data-source-line="6" id="ent0003">
+        <a href="" target="_top" title="Main_Connected_First" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="Main_Connected_First" xlink:type="simple">
+          <path d="M24.5,271 L145.5,271 A12.5,12.5 0 0 1 158,283.5 L158,295 L12,295 L12,283.5 A12.5,12.5 0 0 1 24.5,271" fill="#F1F1F1"/>
+          <rect fill="none" height="160" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="146" x="12" y="271"/>
+          <line style="stroke:#181818;stroke-width:0.5;" x1="12" x2="158" y1="295" y2="295"/>
+          <text fill="#000" font-size="14" textLength="27.213" x="71.394" y="286.889">First</text>
+        </a>
+        <g class="entity" data-qualified-name="Main_Connected.Main_Connected_First.Main_Connected_First_WaitingMeasure" data-source-line="8" id="ent0004">
+          <a href="" target="_top" title="Main_Connected_First_WaitingMeasure" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="Main_Connected_First_WaitingMeasure" xlink:type="simple">
+            <rect fill="#F1F1F1" height="50" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="121.15" x="18" y="366"/>
+            <line style="stroke:#181818;stroke-width:0.5;" x1="18" x2="139.15" y1="390" y2="390"/>
+            <text fill="#000" font-size="14" textLength="101.15" x="28" y="381.889">WaitingMeasure</text>
+          </a>
+        </g>
+        <g class="start_entity" data-qualified-name="Main_Connected.Main_Connected_First..start.Main_Connected_First" data-source-line="7" id="ent0009">
+          <a href="" target="_top" title="Main_Connected_First" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="Main_Connected_First" xlink:type="simple">
+            <ellipse cx="78.5" cy="316" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+          </a>
+        </g>
+        <g class="link" data-entity-1="ent0009" data-entity-2="ent0004" data-link-type="dependency" id="lnk10">
+          <a href="" target="_top" title="Main_Connected_First" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="Main_Connected_First" xlink:type="simple">
+            <polygon fill="#181818" points="78.5,365.764,82.5,356.764,78.5,360.764,74.5,356.764,78.5,365.764" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+            <path d="M78.5,330.094 C78.5,339.61 78.5,348.662 78.5,360.764" fill="none" style="stroke:#181818;stroke-width:1;"/>
+          </a>
+        </g>
+      </g>
+      <g class="start_entity" data-qualified-name="Main_Connected..start.Main_Connected" data-source-line="5" id="ent0007">
+        <a href="" target="_top" title="Main_Connected" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="Main_Connected" xlink:type="simple">
+          <ellipse cx="85" cy="221" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+        </a>
+      </g>
+      <g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="dependency" id="lnk8">
+        <a href="" target="_top" title="Main_Connected" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="Main_Connected" xlink:type="simple">
+          <polygon fill="#181818" points="85,270.761,89,261.761,85,265.761,81,261.761,85,270.761" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+          <path d="M85,235.182 C85,243.855 85,251.731 85,265.761" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        </a>
+      </g>
+      <g class="link" data-entity-1="ent0003" data-entity-2="ent0003" data-link-type="dependency" id="lnk13">
+        <a href="" target="_top" title="Main_Connected" xlink:actuate="onRequest" xlink:href="" xlink:show="new" xlink:title="Main_Connected" xlink:type="simple">
+          <polygon fill="#181818" points="158.19,372.656,167.984,373.696,162.948,371.119,165.525,366.083,158.19,372.656" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+          <path d="M158.19,329.344 C168.831,332.781 176,340 176,351 C176,362 173.589,367.682 162.948,371.119" fill="none" style="stroke:#181818;stroke-width:1;"/>
+        </a>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0005">
+      <ellipse cx="99.5" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0001" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="99.5,72.724,103.5,63.724,99.5,67.724,95.5,63.724,99.5,72.724" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M99.5,36.25 C99.5,45.979 99.5,55.384 99.5,67.724" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="34.138,175.967,35.431,166.203,32.725,171.17,27.757,168.464,34.138,175.967" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M45.243,123.204 C38.96,128.199 33.41,134.094 29.5,141 C25.777,147.575 27.882,150.62 29.5,158 C30.806,163.96 30.956,165.168 32.725,171.17" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="116.269" x="31.5" y="153.111">ConnectionDone()[]:</text>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0001" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="136.516,123.34,140.132,132.501,140.082,126.844,145.739,126.794,136.516,123.34" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M157.26,175.782 C157.003,163.847 154.669,152.094 149.5,141 C146.435,134.423 145.345,132.015 140.082,126.844" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="46.069" x="155.5" y="153.111">Stop()[]:</text>
+    </g>
+  </g>
+</svg>

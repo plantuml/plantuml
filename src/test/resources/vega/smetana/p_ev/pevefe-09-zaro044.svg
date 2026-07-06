@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="189px" preserveAspectRatio="none" style="width:317px;height:189px;background:#FFFFFF;" version="1.1" viewBox="0 0 317 189" width="317px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="title" data-source-line="16">
+      <text fill="#000" font-size="14" font-style="italic" font-weight="700" textLength="200.463" x="10" y="20.889">on title KO (before/after 1.2020.20)</text>
+      <text fill="#000" font-size="14" font-style="italic" font-weight="700" textLength="86.362" x="210.463" y="20.889">'no regression'</text>
+      <text fill="#000" font-size="14" font-style="italic" font-weight="700" x="296.825" y="20.889">:</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.238" x="80.919" y="36.889">Field1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.238" x="119.156" y="36.889">Field 2</text>
+      <text fill="#000" font-size="14" font-weight="700" x="157.394" y="36.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" x="157.394" y="50.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="30.362" x="157.394" y="36.889">row 1</text>
+      <text fill="#000" font-size="14" font-weight="700" x="187.756" y="36.889">2</text>
+      <text fill="#000" font-size="14" font-weight="700" x="195.544" y="36.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" x="195.544" y="50.889"> </text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="26.425" x="195.544" y="36.889">next</text>
+      <rect fill="#FF0" height="28" style="stroke:none;" width="7.787" x="221.969" y="26"/>
+      <text fill="#000" font-size="14" font-weight="700" x="221.969" y="36.889">2</text>
+      <line style="stroke:#000;stroke-width:1;" x1="80.919" x2="229.756" y1="26" y2="26"/>
+      <line style="stroke:#000;stroke-width:1;" x1="80.919" x2="229.756" y1="54" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="80.919" x2="80.919" y1="26" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="119.156" x2="119.156" y1="26" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="157.394" x2="157.394" y1="26" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="157.394" x2="157.394" y1="26" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="187.756" x2="187.756" y1="26" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="195.544" x2="195.544" y1="26" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="195.544" x2="195.544" y1="26" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="221.969" x2="221.969" y1="26" y2="54"/>
+      <line style="stroke:#000;stroke-width:1;" x1="229.756" x2="229.756" y1="26" y2="54"/>
+    </g>
+    <!--entity r-->
+    <g class="entity" data-qualified-name="r" data-source-line="9" id="ent0001">
+      <rect fill="#F1F1F1" height="94" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="222.4" x="42.838" y="79"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="77" x="52.838" y="99.889">on rectangle:</text>
+      <ellipse cx="58.338" cy="109.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" textLength="131.338" x="64.838" y="113.889">OK (before 1.2020.20)</text>
+      <ellipse cx="58.338" cy="123.5" fill="#000" rx="2.5" ry="2.5"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="20.213" x="64.838" y="127.889">KO</text>
+      <text fill="#000" font-size="14" textLength="99.4" x="85.05" y="127.889">(from 1.2020.20)</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="70.788" x="184.45" y="127.889">'regression'</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.238" x="52.838" y="143.889">Field1</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.238" x="91.075" y="143.889">Field 2</text>
+      <text fill="#000" font-size="14" x="129.313" y="143.889"> </text>
+      <text fill="#000" font-size="14" x="129.313" y="157.889"> </text>
+      <text fill="#000" font-size="14" textLength="30.362" x="129.313" y="143.889">row 1</text>
+      <text fill="#000" font-size="14" x="159.675" y="143.889">2</text>
+      <text fill="#000" font-size="14" x="167.463" y="143.889"> </text>
+      <text fill="#000" font-size="14" x="167.463" y="157.889"> </text>
+      <text fill="#000" font-size="14" textLength="26.425" x="167.463" y="143.889">next</text>
+      <rect fill="#FF0" height="28" style="stroke:none;" width="7.787" x="193.888" y="133"/>
+      <text fill="#000" font-size="14" x="193.888" y="143.889">2</text>
+      <line style="stroke:#000;stroke-width:0.5;" x1="52.838" x2="201.675" y1="133" y2="133"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="52.838" x2="201.675" y1="161" y2="161"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="52.838" x2="52.838" y1="133" y2="161"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="91.075" x2="91.075" y1="133" y2="161"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="129.313" x2="129.313" y1="133" y2="161"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="129.313" x2="129.313" y1="133" y2="161"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="159.675" x2="159.675" y1="133" y2="161"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="167.463" x2="167.463" y1="133" y2="161"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="167.463" x2="167.463" y1="133" y2="161"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="193.888" x2="193.888" y1="133" y2="161"/>
+      <line style="stroke:#000;stroke-width:0.5;" x1="201.675" x2="201.675" y1="133" y2="161"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="273px" preserveAspectRatio="none" style="width:449px;height:273px;background:#FFFFFF;" version="1.1" viewBox="0 0 449 273" width="449px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class Object-->
+    <g class="entity" data-qualified-name="Object" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="81.4" x="106" y="84"/>
+      <ellipse cx="121" cy="102" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="116" y="107">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="53.4" x="133" y="98.333">«general»</text>
+      <text fill="#000" font-size="14" textLength="40.425" x="139.488" y="111.889">Object</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="107" x2="186.4" y1="120" y2="120"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="107" x2="186.4" y1="128" y2="128"/>
+    </g>
+    <!--class ArrayList-->
+    <g class="entity" data-qualified-name="ArrayList" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="87.213" x="145" y="209"/>
+      <ellipse cx="160" cy="225" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="155" y="230">C</text>
+      <text fill="#000" font-size="14" textLength="55.213" x="174" y="228.889">ArrayList</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="146" x2="231.213" y1="241" y2="241"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="146" x2="231.213" y1="249" y2="249"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN4" data-source-line="3" id="ent0005">
+      <path d="M6,12 L6,48 A0,0 0 0 0 6,48 L80.255,48 L120.595,83.743 L88.255,48 L126.694,48 A0,0 0 0 0 126.694,48 L126.694,22 L116.694,12 L6,12 A0,0 0 0 0 6,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M116.694,12 L116.694,22 L126.694,22 L116.694,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="99.694" x="12" y="27.111">In java , every class</text>
+      <text fill="#000" font-size="13" textLength="91" x="12" y="40.111">extends this one.</text>
+    </g>
+    <g class="entity" data-qualified-name="N1" data-source-line="4" id="ent0007">
+      <path d="M304,18 L304,41 L433.469,41 L433.469,28 L423.469,18 L304,18" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M423.469,18 L423.469,28 L433.469,28 L423.469,18" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="108.469" x="310" y="33.111">This is a floating note</text>
+    </g>
+    <g class="entity" data-qualified-name="N2" data-source-line="5" id="ent0008">
+      <path d="M145.5,12 L145.5,48 L285.775,48 L285.775,22 L275.775,12 L145.5,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M275.775,12 L275.775,22 L285.775,22 L275.775,12" fill="#FEFFDD" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="119.275" x="151.5" y="27.111">This note is connected</text>
+      <text fill="#000" font-size="13" textLength="97.5" x="151.5" y="40.111">to several objects.</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="155.202,136.071,155.437,155.043,166.773,151.109,155.202,136.071" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M161.105,153.076 C168.505,174.396 173.149,187.775 180.379,208.603" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0001" data-link-type="association" id="lnk9">
+      <path d="M200.187,48.311 C190.976,58.723 179.089,72.16 168.843,83.743" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0002" data-link-type="association" id="lnk10">
+      <path d="M213.198,48.137 C208.352,84.213 197.095,168.018 191.612,208.832" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+  </g>
+</svg>

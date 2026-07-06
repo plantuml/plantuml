@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="180px" preserveAspectRatio="none" style="width:332px;height:180px;background:#FFFFFF;" version="1.1" viewBox="0 0 332 180" width="332px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster N-->
+    <g class="cluster" data-qualified-name="N" data-source-line="2" id="ent0001">
+      <polygon fill="#ADD8E6" points="116,14,126,4,316,4,316,146,306,156,116,156,116,14" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="306" x2="316" y1="14" y2="4"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="116" x2="306" y1="14" y2="14"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="306" x2="306" y1="14" y2="156"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="56.088" x="183.956" y="27.889">«device»</text>
+      <text fill="#000" font-size="14" font-weight="700" x="206.925" y="41.889">N</text>
+    </g>
+    <!--cluster SUSE Linux Ent 10-->
+    <g class="cluster" data-qualified-name="N.SUSE Linux Ent 10" data-source-line="3" id="ent0002">
+      <polygon fill="#FFC0CB" points="124,58,134,48,308,48,308,138,298,148,124,148,124,58" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="298" x2="308" y1="58" y2="48"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="124" x2="298" y1="58" y2="58"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="298" x2="298" y1="58" y2="148"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="35.788" x="194.106" y="71.889">«OS»</text>
+      <text fill="#000" font-size="14" font-weight="700" textLength="108.325" x="157.837" y="85.889">SUSE Linux Ent 10</text>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="A" data-source-line="7" id="ent0004">
+      <polygon fill="#ADD8E6" points="10,97,20,87,108.088,87,108.088,135,98.088,145,10,145,10,97" style="stroke:#181818;stroke-width:0.5;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="98.088" x2="108.088" y1="97" y2="87"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="10" x2="98.088" y1="97" y2="97"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="98.088" x2="98.088" y1="97" y2="145"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="56.088" x="26" y="117.889">«device»</text>
+      <text fill="#000" font-size="14" x="49.363" y="131.889">A</text>
+    </g>
+    <!--entity shopping.war-->
+    <g class="entity" data-qualified-name="N.SUSE Linux Ent 10.shopping.war" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="108.45" x="162" y="92"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="86.45" x="173" y="112.889">«web archive»</text>
+      <text fill="#000" font-size="14" textLength="83.3" x="174.575" y="126.889">shopping.war</text>
+    </g>
+  </g>
+</svg>

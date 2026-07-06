@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="2124px" preserveAspectRatio="none" style="width:1144px;height:2124px;background:#FFFFFF;" version="1.1" viewBox="0 0 1144 2124" width="1144px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="entity" data-qualified-name="Device_0_Function_2" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="200" rx="50" ry="50" style="stroke:#181818;stroke-width:2;" width="622.15" x="240" y="288"/>
+      <line style="stroke:#181818;stroke-width:2;" x1="240" x2="862.15" y1="384" y2="384"/>
+      <text fill="#000" font-size="56" textLength="542.15" x="280" y="351.556">Device_0_Function_2</text>
+      <text fill="#000" font-size="56" textLength="441.7" x="260" y="447.556">0x10h MemoryBar</text>
+    </g>
+    <g class="entity" data-qualified-name="SharedMemory" data-source-line="6" id="ent0002">
+      <path d="M74,632 L1030,632 A50,50 0 0 1 1080,682 L1080,728 L24,728 L24,682 A50,50 0 0 1 74,632" fill="#F1F1F1"/>
+      <rect fill="none" height="1426.444" rx="50" ry="50" style="stroke:#181818;stroke-width:2;" width="1056" x="24" y="632"/>
+      <line style="stroke:#181818;stroke-width:2;" x1="24" x2="1080" y1="728" y2="728"/>
+      <text fill="#000" font-size="56" textLength="382.55" x="360.725" y="695.556">SharedMemory</text>
+      <!--cluster Virtual_Config-->
+      <g class="cluster" data-qualified-name="SharedMemory.Virtual_Config" data-source-line="7" id="ent0003">
+        <path d="M290,754.444 L806,754.444 A50,50 0 0 1 856,804.444 L856,830.444 L240,830.444 L240,804.444 A50,50 0 0 1 290,754.444" fill="#F1F1F1"/>
+        <rect fill="none" height="436" rx="50" ry="50" style="stroke:#181818;stroke-width:2;" width="616" x="240" y="754.444"/>
+        <line style="stroke:#181818;stroke-width:2;" x1="240" x2="856" y1="830.444" y2="830.444"/>
+        <text fill="#000" font-size="56" textLength="352.1" x="371.95" y="798">Virtual_Config</text>
+      </g>
+      <!--cluster Data_Space-->
+      <g class="cluster" data-qualified-name="SharedMemory.Data_Space" data-source-line="13" id="ent0005">
+        <path d="M126,1330.444 L970,1330.444 A50,50 0 0 1 1020,1380.444 L1020,1406.444 L76,1406.444 L76,1380.444 A50,50 0 0 1 126,1330.444" fill="#F1F1F1"/>
+        <rect fill="none" height="636" rx="50" ry="50" style="stroke:#181818;stroke-width:2;" width="944" x="76" y="1330.444"/>
+        <line style="stroke:#181818;stroke-width:2;" x1="76" x2="1020" y1="1406.444" y2="1406.444"/>
+        <text fill="#000" font-size="56" textLength="308.35" x="393.825" y="1374">Data_Space</text>
+      </g>
+      <g class="entity" data-qualified-name="SharedMemory.Virtual_Config.Config1" data-source-line="8" id="ent0004">
+        <rect fill="#F1F1F1" height="304" rx="50" ry="50" style="stroke:#181818;stroke-width:2;" width="549" x="274" y="854.444"/>
+        <line style="stroke:#181818;stroke-width:2;" x1="274" x2="823" y1="950.444" y2="950.444"/>
+        <text fill="#000" font-size="56" textLength="193.2" x="451.9" y="918">Config1</text>
+        <text fill="#000" font-size="56" textLength="325.85" x="294" y="1014">CAP ID = 0x30</text>
+        <text fill="#000" font-size="56" textLength="415.8" x="294" y="1070">NumEntries = 0x1</text>
+        <text fill="#000" font-size="56" textLength="469" x="294" y="1126">OFFSET = 0x4000h</text>
+      </g>
+      <g class="entity" data-qualified-name="SharedMemory.Data_Space.Data_Discovery_Table_Memory" data-source-line="14" id="ent0006">
+        <path d="M158,1430.444 L938.1,1430.444 A50,50 0 0 1 988.1,1480.444 L988.1,1526.444 L108,1526.444 L108,1480.444 A50,50 0 0 1 158,1430.444" fill="#F1F1F1"/>
+        <rect fill="none" height="504" rx="50" ry="50" style="stroke:#181818;stroke-width:2;" width="880.1" x="108" y="1430.444"/>
+        <line style="stroke:#181818;stroke-width:2;" x1="108" x2="988.1" y1="1526.444" y2="1526.444"/>
+        <text fill="#000" font-size="56" textLength="800.1" x="148" y="1494">Data_Discovery_Table_Memory</text>
+        <g class="entity" data-qualified-name="SharedMemory.Data_Space.Data_Discovery_Table_Memory.Entry0" data-source-line="15" id="ent0007">
+          <rect fill="#F1F1F1" height="304" rx="50" ry="50" style="stroke:#181818;stroke-width:2;" width="757.6" x="132" y="1570.444"/>
+          <line style="stroke:#181818;stroke-width:2;" x1="132" x2="889.6" y1="1666.444" y2="1666.444"/>
+          <text fill="#000" font-size="56" textLength="161.7" x="429.95" y="1634">Entry0</text>
+          <text fill="#000" font-size="56" textLength="532" x="152" y="1730">ACCESS_TYPE = 0x2</text>
+          <text fill="#000" font-size="56" textLength="677.6" x="152" y="1786">UNIQUE_ID = 0x11111111h</text>
+          <text fill="#000" font-size="56" textLength="587.65" x="152" y="1842">BASE_OFFSET = 0x00h</text>
+        </g>
+      </g>
+      <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="dependency" id="lnk11">
+        <polygon fill="#181818" points="548,1429.572,564,1393.572,548,1409.572,532,1393.572,548,1429.572" style="stroke:#181818;stroke-width:4;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+        <path d="M548,1158.695 C548,1238.26 548,1318.446 548,1409.572" fill="none" style="stroke:#181818;stroke-width:4;"/>
+        <text fill="#000" font-size="52" textLength="435.5" x="556" y="1278.889">OFFSET = 0x4000h</text>
+      </g>
+    </g>
+    <g class="start_entity" data-qualified-name=".start." data-source-line="2" id="ent0008">
+      <ellipse cx="552" cy="88" fill="#222" rx="40" ry="40" style="stroke:#222;stroke-width:4;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0001" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="552,287.058,568,251.058,552,267.058,536,251.058,552,287.058" style="stroke:#181818;stroke-width:4;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M552,144.375 C552,182.44 552,218.646 552,267.058" fill="none" style="stroke:#181818;stroke-width:4;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk10">
+      <polygon fill="#181818" points="552,630.81,568,594.81,552,610.81,536,594.81,552,630.81" style="stroke:#181818;stroke-width:4;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M552,488.319 C552,527.471 552,556.364 552,610.81" fill="none" style="stroke:#181818;stroke-width:4;"/>
+    </g>
+  </g>
+</svg>

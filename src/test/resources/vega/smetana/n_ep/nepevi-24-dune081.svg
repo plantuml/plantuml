@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="375px" preserveAspectRatio="none" style="width:174px;height:375px;background:#FFFFFF;" version="1.1" viewBox="0 0 174 375" width="174px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster User-->
+    <g class="cluster" data-qualified-name="User" data-source-line="1" id="ent0001">
+      <path d="M16.5,4 L47.075,4 A3.75,3.75 0 0 1 49.575,6.5 L56.575,24 L163.5,24 A2.5,2.5 0 0 1 166,26.5 L166,348.5 A2.5,2.5 0 0 1 163.5,351 L16.5,351 A2.5,2.5 0 0 1 14,348.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="56.575" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="29.575" x="18" y="16.889">User</text>
+    </g>
+    <!--class Person-->
+    <g class="entity" data-qualified-name="User.Person" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="230" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="136.425" x="22" y="29"/>
+      <ellipse cx="40.898" cy="45" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="35.898" y="50">C</text>
+      <text fill="#000" font-size="14" textLength="44.363" x="55.764" y="48.889">Person</text>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;stroke-dasharray:2,2;" width="49.4" x="112.025" y="26"/>
+      <text fill="#000" font-size="12" font-style="italic" textLength="47.4" x="113.025" y="36.333">Eloquent</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="157.425" y1="61" y2="61"/>
+      <text fill="#000" font-size="14" textLength="104.213" x="28" y="75.889">string #username</text>
+      <text fill="#000" font-size="14" textLength="75.513" x="28" y="89.889">string #email</text>
+      <text fill="#000" font-size="14" textLength="99.488" x="28" y="103.889">string #firstname</text>
+      <text fill="#000" font-size="14" textLength="98.788" x="28" y="117.889">string #lastname</text>
+      <text fill="#000" font-size="14" textLength="45.937" x="28" y="131.889">int #age</text>
+      <text fill="#000" font-size="14" textLength="124.425" x="28" y="145.889">Carbon #dateOfBirth</text>
+      <text fill="#000" font-size="14" textLength="108.938" x="28" y="159.889">Address #address</text>
+      <text fill="#000" font-size="14" textLength="107.363" x="28" y="173.889">Account #account</text>
+      <text fill="#000" font-size="14" textLength="85.663" x="28" y="187.889">Profile #profile</text>
+      <text fill="#000" font-size="14" textLength="121.45" x="28" y="201.889">Boolean #fraudulent</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="157.425" y1="209" y2="209"/>
+      <text fill="#000" font-size="14" textLength="52.062" x="28" y="223.889">update()</text>
+      <text fill="#000" font-size="14" textLength="48.125" x="28" y="237.889">create()</text>
+      <text fill="#000" font-size="14" textLength="47.425" x="28" y="251.889">delete()</text>
+    </g>
+    <!--class PersonRich-->
+    <g class="entity" data-qualified-name="User.PersonRich" data-source-line="19" id="ent0003">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.45" x="38" y="295"/>
+      <ellipse cx="53" cy="311" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="48" y="316">C</text>
+      <text fill="#000" font-size="14" textLength="72.45" x="67" y="314.889">PersonRich</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39" x2="141.45" y1="327" y2="327"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="39" x2="141.45" y1="335" y2="335"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0003" data-link-type="extension" id="lnk4">
+      <polygon fill="none" points="90,259.43,84,277.43,96,277.43,90,259.43" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M90,277.43 C90,290.751 90,285.083 90,294.96" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

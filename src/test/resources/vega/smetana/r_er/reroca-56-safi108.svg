@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="70px" preserveAspectRatio="none" style="width:69px;height:70px;" version="1.1" viewBox="0 0 69 70" width="69px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity a-->
+    <g class="entity" data-qualified-name="a" data-source-line="2" id="ent0001">
+      <rect fill="#F4F4F4" height="42" width="46.675" x="6" y="12"/>
+      <rect fill="#F4F4F4" height="10" width="15" x="32.675" y="17"/>
+      <rect fill="#F4F4F4" height="2" width="4" x="30.675" y="19"/>
+      <rect fill="#F4F4F4" height="2" width="4" x="30.675" y="23"/>
+      <text fill="#262626" font-family="'IBM Plex Sans, Noto Sans, Verdana'" font-size="12" x="21" y="41.333">a</text>
+    </g>
+  </g>
+</svg>

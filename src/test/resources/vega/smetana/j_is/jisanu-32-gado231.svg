@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="108px" preserveAspectRatio="none" style="width:155px;height:108px;background:#FFFFFF;" version="1.1" viewBox="0 0 155 108" width="155px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class FontSizeIssue-->
+    <g class="entity" data-qualified-name="FontSizeIssue" data-source-line="7" id="ent0001">
+      <rect fill="#F1F1F1" height="80" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="133.4" x="6" y="12"/>
+      <ellipse cx="21" cy="28" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="33">C</text>
+      <text fill="#000" font-family="Courier" font-size="16" textLength="101.4" x="35" y="32.444">FontSizeIssue</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="138.4" y1="44" y2="44"/>
+      <text fill="#000" font-family="Courier" font-size="16" textLength="83.5" x="12" y="60.444">int     attribute1</text>
+      <text fill="#000" font-family="Courier" font-size="16" textLength="30.2" x="12" y="76.444">float</text>
+      <text fill="#00F" font-family="Courier" font-size="16" textLength="66.6" x="42.2" y="76.444">attribute2</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="138.4" y1="84" y2="84"/>
+    </g>
+  </g>
+</svg>

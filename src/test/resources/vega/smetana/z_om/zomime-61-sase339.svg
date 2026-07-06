@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="YAML" height="99px" preserveAspectRatio="none" style="width:323px;height:99px;background:#FFFFFF;" version="1.1" viewBox="0 0 323 99" width="323px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="50.363" x="10" y="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="30.363" x="15" y="40.889">hash</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="55.363" y="40.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="50.363" x2="50.363" y1="28" y2="46"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="50.363" x="10" y="28"/>
+    <rect fill="#F1F1F1" height="54" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="90" x="97" y="10"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42.788" x="102" y="22.889">name1</text>
+    <text fill="#000" font-size="14" textLength="27.213" x="154.788" y="22.889">Text</text>
+    <line style="stroke:#000;stroke-width:1;" x1="149.788" x2="149.788" y1="10" y2="28"/>
+    <line style="stroke:#000;stroke-width:1;" x1="97" x2="187" y1="28" y2="28"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42.788" x="102" y="40.889">name2</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="154.788" y="40.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="149.788" x2="149.788" y1="28" y2="46"/>
+    <line style="stroke:#000;stroke-width:1;" x1="97" x2="187" y1="46" y2="46"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="42.788" x="102" y="58.889">name3</text>
+    <text fill="#000" font-size="14" textLength="11.55" x="154.788" y="58.889">   </text>
+    <line style="stroke:#000;stroke-width:1;" x1="149.788" x2="149.788" y1="46" y2="64"/>
+    <rect fill="none" height="54" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="90" x="97" y="10"/>
+    <rect fill="#F1F1F1" height="18" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="59.725" x="237.5" y="15"/>
+    <text fill="#000" font-size="14" font-weight="700" textLength="21.787" x="242.5" y="27.889">key</text>
+    <text fill="#000" font-size="14" textLength="17.938" x="274.288" y="27.889">val</text>
+    <line style="stroke:#000;stroke-width:1;" x1="269.288" x2="269.288" y1="15" y2="33"/>
+    <rect fill="none" height="18" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="59.725" x="237.5" y="15"/>
+    <rect fill="#F1F1F1" height="36" rx="5" ry="5" style="stroke:#F1F1F1;stroke-width:1.5;" width="87" x="224" y="51"/>
+    <text fill="#000" font-size="14" textLength="77" x="229" y="63.889">HashOfList1</text>
+    <line style="stroke:#000;stroke-width:1;" x1="224" x2="311" y1="69" y2="69"/>
+    <text fill="#000" font-size="14" textLength="77" x="229" y="81.889">HashOfList2</text>
+    <rect fill="none" height="36" rx="5" ry="5" style="stroke:#000;stroke-width:1.5;" width="87" x="224" y="51"/>
+    <path d="M175,37 L188,37 C201.943,37 217.089,35.004 230.354,32.576" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M230.941,35.604 L232.625,32.136 L229.767,29.548 L237.924,31.109 L230.941,35.604" fill="#000"/>
+    <ellipse cx="175" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M175,55 L188,55 C197.342,55 207.212,55.961 216.691,57.379" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M216.201,60.38 L218.942,57.747 L217.182,54.379 L224.192,58.605 L216.201,60.38" fill="#000"/>
+    <ellipse cx="175" cy="55" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+    <path d="M47.5,37 L60.5,37 C69.932,37 79.981,37 89.677,37" fill="none" style="stroke:#000;stroke-width:1;stroke-dasharray:3,3;"/>
+    <path d="M89.677,40.073 L91.982,37 L89.677,33.927 L97.359,37 L89.677,40.073" fill="#000"/>
+    <ellipse cx="47.5" cy="37" fill="#000" rx="3" ry="3" style="stroke:#000;stroke-width:1;"/>
+  </g>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="187px" preserveAspectRatio="none" style="width:157px;height:187px;background:#808080;" version="1.1" viewBox="0 0 157 187" width="157px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#808080" height="187" style="stroke:none;" width="157" x="0" y="0"/>
+    <!--cluster A-->
+    <g class="cluster" data-qualified-name="A" data-source-line="10" id="ent0001">
+      <polygon fill="#808080" points="52,14,62,4,141,4,141,30,131,40,52,40,52,14" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="131" x2="141" y1="14" y2="4"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="52" x2="131" y1="14" y2="14"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="131" x2="131" y1="14" y2="40"/>
+      <text fill="#F00" font-size="14" font-weight="700" x="87.819" y="27.889">A</text>
+    </g>
+    <!--cluster B-->
+    <g class="cluster" data-qualified-name="B" data-source-line="13" id="ent0003">
+      <polygon fill="#808080" points="44,111,54,101,123,101,123,127,113,137,44,137,44,111" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="113" x2="123" y1="111" y2="101"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="44" x2="113" y1="111" y2="111"/>
+      <line style="stroke:#00F;stroke-width:1;" x1="113" x2="113" y1="111" y2="137"/>
+      <text fill="#F00" font-size="14" font-weight="700" x="74.819" y="124.889">B</text>
+    </g>
+    <g class="entity" data-qualified-name="A.a" data-source-line="11" id="ent0002">
+      <text fill="#F00" font-size="14" textLength="49.7" x="45.15" y="56.889">It is a port</text>
+      <rect fill="#808080" height="12" style="stroke:#00F;stroke-width:1.5;" width="12" x="64" y="34"/>
+    </g>
+    <g class="entity" data-qualified-name="B.b" data-source-line="14" id="ent0004">
+      <text fill="#F00" font-size="14" x="66.106" y="153.889">b</text>
+      <rect fill="#808080" height="12" style="stroke:#00F;stroke-width:1.5;" width="12" x="64" y="131"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#00F" points="72,130.744,76,121.744,72,125.744,68,121.744,72,130.744" style="stroke:#00F;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M72,58.271 C72,76.554 72,107.47 72,125.744" fill="none" style="stroke:#00F;stroke-width:1;"/>
+      <text fill="#F00" font-size="13" textLength="43.306" x="74" y="88.111">that a2b</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="454px" preserveAspectRatio="none" style="width:948px;height:454px;background:#FFFFFF;" version="1.1" viewBox="0 0 948 454" width="948px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--class RowMacroStage-->
+    <g class="entity" data-qualified-name="RowMacroStage" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="135.513" x="189" y="12"/>
+      <ellipse cx="204" cy="28" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="199" y="33">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="103.513" x="218" y="31.889">RowMacroStage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="190" x2="323.513" y1="44" y2="44"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="190" x2="323.513" y1="52" y2="52"/>
+    </g>
+    <!--class RowStage-->
+    <g class="entity" data-qualified-name="RowStage" data-source-line="2" id="ent0002">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="96.663" x="109.5" y="117"/>
+      <ellipse cx="124.5" cy="133" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="119.5" y="138">I</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="64.663" x="138.5" y="136.889">RowStage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="110.5" x2="205.163" y1="149" y2="149"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="110.5" x2="205.163" y1="157" y2="157"/>
+    </g>
+    <!--class AbstractRow-->
+    <g class="entity" data-qualified-name="AbstractRow" data-source-line="4" id="ent0004">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="261.813" x="225" y="96"/>
+      <ellipse cx="311.975" cy="112" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="306.975" y="117">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="79.362" x="332.475" y="115.889">AbstractRow</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="226" x2="485.813" y1="128" y2="128"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="226" x2="485.813" y1="136" y2="136"/>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="236" cy="148.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="128.363" x="245" y="150.889">String getThickness()</text>
+      <g data-visibility-modifier="PUBLIC_METHOD">
+        <ellipse cx="236" cy="162.5" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="101.063" x="245" y="164.889">String getWidth()</text>
+      <g data-visibility-modifier="PROTECTED_METHOD">
+        <polygon fill="#FF4" points="236,171.5,240,175.5,236,179.5,232,175.5" style="stroke:#B38D22;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="235.813" x="245" y="178.889">final Rectangle[] getBoundRectangles()</text>
+    </g>
+    <!--class AbstractRowPart-->
+    <g class="entity" data-qualified-name="AbstractRowPart" data-source-line="11" id="ent0006">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137" x="212.5" y="222"/>
+      <ellipse cx="227.5" cy="238" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="222.5" y="243">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="105" x="241.5" y="241.889">AbstractRowPart</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="213.5" x2="348.5" y1="254" y2="254"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="213.5" x2="348.5" y1="262" y2="262"/>
+    </g>
+    <!--class RowHybridMacroStage-->
+    <g class="entity" data-qualified-name="RowHybridMacroStage" data-source-line="13" id="ent0008">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="176.025" x="6" y="306"/>
+      <ellipse cx="21" cy="322" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="16" y="327">C</text>
+      <text fill="#000" font-size="14" textLength="144.025" x="35" y="325.889">RowHybridMacroStage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="181.025" y1="338" y2="338"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="7" x2="181.025" y1="346" y2="346"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN10" data-source-line="14" id="ent0011">
+      <path d="M606.5,312 L606.5,348 A0,0 0 0 0 606.5,348 L751.731,348 A0,0 0 0 0 751.731,348 L751.731,322 L741.731,312 L652.589,312 L144.005,305.908 L644.589,312 L606.5,312 A0,0 0 0 0 606.5,312" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M741.731,312 L741.731,322 L751.731,322 L741.731,312" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="124.231" x="612.5" y="327.111">Concatenation of a part</text>
+      <text fill="#000" font-size="13" textLength="106.275" x="612.5" y="340.111">and component line</text>
+    </g>
+    <!--class RowHybridStage-->
+    <g class="entity" data-qualified-name="RowHybridStage" data-source-line="17" id="ent0013">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="137.175" x="25.5" y="390"/>
+      <ellipse cx="40.5" cy="406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="35.5" y="411">C</text>
+      <text fill="#000" font-size="14" textLength="105.175" x="54.5" y="409.889">RowHybridStage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="26.5" x2="161.675" y1="422" y2="422"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="26.5" x2="161.675" y1="430" y2="430"/>
+    </g>
+    <!--class RowComponentMacroStage-->
+    <g class="entity" data-qualified-name="RowComponentMacroStage" data-source-line="19" id="ent0015">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="207.875" x="380" y="306"/>
+      <ellipse cx="395" cy="322" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="390" y="327">C</text>
+      <text fill="#000" font-size="14" textLength="175.875" x="409" y="325.889">RowComponentMacroStage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="381" x2="586.875" y1="338" y2="338"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="381" x2="586.875" y1="346" y2="346"/>
+    </g>
+    <g class="entity" data-qualified-name="GMN17" data-source-line="20" id="ent0018">
+      <path d="M769.5,312 L769.5,348 A0,0 0 0 0 769.5,348 L932.119,348 A0,0 0 0 0 932.119,348 L932.119,322 L922.119,312 L821.726,312 L541.796,305.891 L813.726,312 L769.5,312 A0,0 0 0 0 769.5,312" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M922.119,312 L922.119,322 L932.119,322 L922.119,312" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="13" textLength="141.619" x="775.5" y="327.111">One component on the line</text>
+      <text fill="#000" font-size="13" textLength="70.769" x="775.5" y="340.111">without a part</text>
+    </g>
+    <!--class RowComponentStage-->
+    <g class="entity" data-qualified-name="RowComponentStage" data-source-line="22" id="ent0020">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="169.025" x="399.5" y="390"/>
+      <ellipse cx="414.5" cy="406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="409.5" y="411">C</text>
+      <text fill="#000" font-size="14" textLength="137.025" x="428.5" y="409.889">RowComponentStage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="400.5" x2="567.525" y1="422" y2="422"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="400.5" x2="567.525" y1="430" y2="430"/>
+    </g>
+    <!--class RowPartMacroStage-->
+    <g class="entity" data-qualified-name="RowPartMacroStage" data-source-line="24" id="ent0022">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="161.15" x="200.5" y="306"/>
+      <ellipse cx="215.5" cy="322" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="210.5" y="327">C</text>
+      <text fill="#000" font-size="14" textLength="129.15" x="229.5" y="325.889">RowPartMacroStage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="201.5" x2="360.65" y1="338" y2="338"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="201.5" x2="360.65" y1="346" y2="346"/>
+    </g>
+    <!--class RowPartStage-->
+    <g class="entity" data-qualified-name="RowPartStage" data-source-line="25" id="ent0024">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122.3" x="220" y="390"/>
+      <ellipse cx="235" cy="406" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="230" y="411">C</text>
+      <text fill="#000" font-size="14" textLength="90.3" x="249" y="409.889">RowPartStage</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="221" x2="341.3" y1="422" y2="422"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="221" x2="341.3" y1="430" y2="430"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk3">
+      <polygon fill="none" points="234.782,60.115,217.983,68.935,226.635,77.25,234.782,60.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M222.309,73.093 C206.005,90.056 196.43,100.017 180.143,116.962" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk5">
+      <polygon fill="none" points="279.218,60.115,287.365,77.25,296.017,68.935,279.218,60.115" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M291.691,73.093 C301.839,83.65 301.737,83.545 313.561,95.846" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="extension" id="lnk7">
+      <polygon fill="none" points="323.758,186.279,308.312,197.298,318.013,204.362,323.758,186.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M313.162,200.83 C304.269,213.044 305.569,211.259 297.925,221.756" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="extension" id="lnk9">
+      <polygon fill="none" points="228.412,270.06,209.518,271.793,214.337,282.783,228.412,270.06" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M211.928,277.288 C186.325,288.515 172.11,294.749 146.517,305.971" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0013" data-link-type="extension" id="lnk14">
+      <polygon fill="none" points="94,354.279,88,372.279,100,372.279,94,354.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M94,372.279 C94,383.453 94,378.802 94,389.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0015" data-link-type="extension" id="lnk16">
+      <polygon fill="none" points="386.334,186.316,391.55,204.559,401.453,197.781,386.334,186.316" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M396.501,201.17 C422.155,238.648 447.729,276.01 468.101,305.772" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0015" data-entity-2="ent0020" data-link-type="extension" id="lnk21">
+      <polygon fill="none" points="484,354.279,478,372.279,490,372.279,484,354.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M484,372.279 C484,383.453 484,378.802 484,389.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0022" data-link-type="extension" id="lnk23">
+      <polygon fill="none" points="281,270.279,275,288.279,287,288.279,281,270.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M281,288.279 C281,299.453 281,294.802 281,305.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0022" data-entity-2="ent0024" data-link-type="extension" id="lnk25">
+      <polygon fill="none" points="281,354.279,275,372.279,287,372.279,281,354.279" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M281,372.279 C281,383.453 281,378.802 281,389.947" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

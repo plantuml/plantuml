@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="88px" preserveAspectRatio="none" style="width:90px;height:88px;background:#FFFFFF;" version="1.1" viewBox="0 0 90 88" width="90px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="cluster" data-qualified-name="..1" data-source-line="2" id="ent0002">
+      <path d="M23.154,13.02 C26.112,6.417 31.408,6.265 35.562,11.797 C36.951,3.091 43.807,2.099 49.431,7.687 C54.004,3.419 59.676,3.887 61.662,10.575 C66.963,4.6 71.403,6.571 74.807,12.644 C81.169,15.508 81.677,19.083 76.399,23.633 C82.691,25.85 83.819,30.583 78.838,35.18 C83.171,39.79 83.424,43.398 77.101,46.352 C81.989,50.82 81.99,54.641 75.763,57.811 C73.502,65.905 69.297,68.065 62.161,62.761 C60.648,71.016 53.958,73.191 48.061,67.055 C41.926,70.322 36.354,69.489 35.588,61.241 C29.999,65.685 26.359,64.062 23.634,57.986 C17.37,57.025 15.16,51.466 19.376,46.589 C12.849,44.69 11.251,40.015 16.342,35.058 C11.281,30.375 14.233,25.511 19.685,24.007 C16.103,19.669 16.258,14.049 23.154,13.02" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <!--entity ...-->
+    <g class="entity" data-qualified-name="..1...." data-source-line="3" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="51.55" x="22" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="53.55" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="51.55" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="51.55" y="23"/>
+      <text fill="#000" font-size="14" textLength="11.55" x="37" y="42.889">...</text>
+    </g>
+  </g>
+</svg>

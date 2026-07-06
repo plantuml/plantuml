@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="132px" preserveAspectRatio="none" style="width:126px;height:132px;background:#FFFFFF;" version="1.1" viewBox="0 0 126 132" width="126px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity c-->
+    <g class="entity" data-qualified-name="c" data-source-line="5" id="ent0001">
+      <rect fill="#F1F1F1" height="20" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="27" x="20.5" y="17"/>
+      <text fill="#000" font-size="14" x="30.5" y="30.889">c</text>
+    </g>
+    <!--entity red-->
+    <g class="entity" data-qualified-name="red" data-source-line="6" id="ent0002">
+      <rect fill="#FFC0CB" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="45.363" x="65.5" y="12"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="23.363" x="76.5" y="25.889">«a»</text>
+      <text fill="#000" font-size="14" textLength="20.213" x="78.075" y="39.889">red</text>
+    </g>
+    <!--entity green-->
+    <g class="entity" data-qualified-name="green" data-source-line="11" id="ent0003">
+      <rect fill="#98FB98" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="55.788" x="6" y="82"/>
+      <text fill="#000" font-size="14" font-style="italic" textLength="23.363" x="22.213" y="95.889">«a»</text>
+      <text fill="#000" font-size="14" textLength="35.788" x="16" y="109.889">green</text>
+    </g>
+  </g>
+</svg>

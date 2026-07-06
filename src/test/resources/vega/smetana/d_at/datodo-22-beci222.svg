@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="STATE" height="78px" preserveAspectRatio="none" style="width:340px;height:78px;background:#FFFFFF;" version="1.1" viewBox="0 0 340 78" width="340px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="s" data-source-line="10" id="ent0001">
+      <ellipse cx="16" cy="35" fill="#F00" rx="10" ry="10" style="stroke:#00F;stroke-width:1;"/>
+    </g>
+    <g class="end_entity" data-qualified-name="e" data-source-line="11" id="ent0002">
+      <ellipse cx="313" cy="36" fill="none" rx="11" ry="11" style="stroke:#00F;stroke-width:1;"/>
+      <ellipse cx="313" cy="36" fill="#F00" rx="6" ry="6" style="stroke:#00F;stroke-width:1;"/>
+    </g>
+    <g class="entity" data-qualified-name="a" data-source-line="13" id="ent0003">
+      <rect fill="#FFF" height="50" rx="12.5" ry="12.5" style="stroke:#00F;stroke-width:0.5;" width="50" x="139" y="12"/>
+      <line style="stroke:#00F;stroke-width:0.5;" x1="139" x2="189" y1="36" y2="36"/>
+      <text fill="#000" font-size="14" x="160.106" y="27.889">a</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0003" data-link-type="dependency" id="lnk4">
+      <polygon fill="#181818" points="138.768,37,129.768,33,133.768,37,129.768,41,138.768,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M26.173,37 C49.161,37 100.685,37 133.768,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="91.081" x="37" y="29.111">no blue border on</text>
+    </g>
+    <g class="link" data-entity-1="ent0003" data-entity-2="ent0002" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="301.888,37,292.888,33,296.888,37,292.888,41,301.888,37" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M189.276,37 C222.155,37 273.187,37 296.888,37" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="91.081" x="200" y="29.111">no blue border on</text>
+    </g>
+  </g>
+</svg>

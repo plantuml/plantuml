@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="ACTIVITY" height="384px" preserveAspectRatio="none" style="width:416px;height:384px;background:#FFFFFF;" version="1.1" viewBox="0 0 416 384" width="416px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g class="start_entity" data-qualified-name="start" data-source-line="1" id="ent0001">
+      <ellipse cx="203" cy="22" fill="#222" rx="10" ry="10" style="stroke:#222;stroke-width:1;"/>
+    </g>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="121.775" x="142" y="72"/>
+    <text fill="#000" font-size="12" textLength="101.775" x="152" y="91.333">Arret de l'application</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="154.1" x="126" y="140"/>
+    <text fill="#000" font-size="12" textLength="134.1" x="136" y="159.333">Arret de la base de donnees</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="244.925" x="80.5" y="208"/>
+    <text fill="#000" font-size="12" textLength="224.925" x="90.5" y="227.333">FlashCopy des fichiers hors Base de donnees</text>
+    <rect fill="#555" height="8" style="stroke:none;" width="80" x="163" y="276"/>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="187.55" x="6" y="336"/>
+    <text fill="#000" font-size="12" textLength="167.55" x="16" y="355.333">Sauvegarde TSM du disque copie</text>
+    <rect fill="#F1F1F1" height="32" rx="12.5" ry="12.5" style="stroke:#181818;stroke-width:0.5;" width="188.15" x="212" y="336"/>
+    <text fill="#000" font-size="12" textLength="168.15" x="222" y="355.333">Demarrage de la base de donnees</text>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="203,71.587,207,62.587,203,66.587,199,62.587,203,71.587" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M203,36.084 C203,45.976 203,55.56 203,66.587" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0002" data-entity-2="ent0004" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="203,139.775,207,130.775,203,134.775,199,130.775,203,139.775" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M203,104.308 C203,114.97 203,124.131 203,134.775" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0006" data-link-type="dependency" id="lnk7">
+      <polygon fill="#181818" points="203,207.775,207,198.775,203,202.775,199,198.775,203,207.775" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M203,172.308 C203,182.97 203,192.131 203,202.775" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0008" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="203,275.822,207,266.822,203,270.822,199,266.822,203,275.822" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M203,240.008 C203,251.047 203,260.81 203,270.822" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0010" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="125.219,335.819,134.993,334.605,129.503,333.241,130.867,327.751,125.219,335.819" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M184.586,300.084 C168.037,310.046 147.867,322.187 129.503,333.241" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0012" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="280.781,335.819,275.133,327.751,276.497,333.241,271.007,334.605,280.781,335.819" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M221.414,300.084 C237.963,310.046 258.133,322.187 276.497,333.241" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="171px" preserveAspectRatio="none" style="width:165px;height:171px;background:#FFC0CB;" version="1.1" viewBox="0 0 165 171" width="165px" zoomAndPan="magnify">
+  <defs>
+    <linearGradient id="g1nejrz8nqqki60" x1="0%" x2="100%" y1="50%" y2="50%">
+      <stop offset="0%" stop-color="#F00"/>
+      <stop offset="100%" stop-color="#008000"/>
+    </linearGradient>
+  </defs>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFC0CB" height="171" style="stroke:none;" width="165" x="0" y="0"/>
+    <!--cluster f1_no_group-->
+    <g class="cluster" data-qualified-name="f1_no_group" data-source-line="8" id="ent0001">
+      <rect fill="#FFF" height="143" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="143" x="14" y="4"/>
+      <path d="M102.575,4 L102.575,11 L92.575,21 L14,21" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="78.575" x="17" y="15.889">f1_no_group</text>
+    </g>
+    <!--entity A-->
+    <g class="entity" data-qualified-name="f1_no_group.A" data-source-line="9" id="ent0002">
+      <polygon fill="url(#g1nejrz8nqqki60)" points="22.5,39,32.5,29,71.863,29,71.863,63,61.863,73,22.5,73,22.5,39" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="61.863" x2="71.863" y1="39" y2="29"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="22.5" x2="61.863" y1="39" y2="39"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="61.863" x2="61.863" y1="39" y2="73"/>
+      <text fill="#000" font-size="14" x="37.5" y="59.889">A</text>
+    </g>
+    <!--entity B-->
+    <g class="entity" data-qualified-name="f1_no_group.B" data-source-line="11" id="ent0003">
+      <polygon fill="url(#g1nejrz8nqqki60)" points="89.5,39,99.5,29,148.225,29,148.225,63,138.225,73,89.5,73,89.5,39" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="138.225" x2="148.225" y1="39" y2="29"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="89.5" x2="138.225" y1="39" y2="39"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="138.225" x2="138.225" y1="39" y2="73"/>
+      <text fill="#000" font-size="14" textLength="18.725" x="104.5" y="59.889">BB</text>
+    </g>
+    <!--entity C-->
+    <g class="entity" data-qualified-name="f1_no_group.C" data-source-line="15" id="ent0004">
+      <polygon fill="url(#g1nejrz8nqqki60)" points="27,119,37,109,67,109,67,129,57,139,27,139,27,119" style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="57" x2="67" y1="119" y2="109"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="27" x2="57" y1="119" y2="119"/>
+      <line style="stroke:#00F;stroke-width:1;stroke-dasharray:7,7;" x1="57" x2="57" y1="119" y2="139"/>
+    </g>
+  </g>
+</svg>

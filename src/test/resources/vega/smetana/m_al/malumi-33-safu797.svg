@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="102px" preserveAspectRatio="none" style="width:350px;height:102px;background:#FFFFFF;" version="1.1" viewBox="0 0 350 102" width="350px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity PlantUML-->
+    <g class="entity" data-qualified-name="PlantUML" data-source-line="1" id="ent0001">
+      <ellipse cx="36.756" cy="20.5" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <path d="M36.756,28.5 L36.756,55.5 M23.756,36.5 L49.756,36.5 M36.756,55.5 L23.756,70.5 M36.756,55.5 L49.756,70.5" fill="none" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="61.513" x="6" y="82.889">PlantUML</text>
+    </g>
+    <!--entity map-->
+    <g class="entity" data-qualified-name="map" data-source-line="2" id="ent0002">
+      <ellipse cx="312.242" cy="48.899" fill="#F1F1F1" rx="22.242" ry="12.899" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="27.213" x="298.636" y="52.399">map</text>
+    </g>
+    <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk3">
+      <polygon fill="#181818" points="289.782,49,280.782,45,284.782,49,280.782,53,289.782,49" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M68.011,49 C124.058,49 235.926,49 284.782,49" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="135.85" x="79" y="41.111">Thanks Maxime! You can</text>
+      <a href="http://www.google.com" target="_top" title="http://www.google.com" xlink:actuate="onRequest" xlink:href="http://www.google.com" xlink:show="new" xlink:title="http://www.google.com" xlink:type="simple">
+        <text fill="#00F" font-size="13" text-decoration="underline" textLength="38.35" x="214.85" y="41.111">CLICK</text>
+      </a>
+      <text fill="#000" font-size="13" textLength="26" x="253.2" y="41.111">here</text>
+    </g>
+  </g>
+</svg>

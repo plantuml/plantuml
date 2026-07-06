@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="DESCRIPTION" height="367px" preserveAspectRatio="none" style="width:391px;height:367px;background:#FFFFFF;" version="1.1" viewBox="0 0 391 367" width="391px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster Synth PCB-->
+    <g class="cluster" data-qualified-name="Synth PCB" data-source-line="6" id="ent0004">
+      <polygon fill="none" points="157.5,26.186,167.5,16.186,375.5,16.186,375.5,333.186,365.5,343.186,157.5,343.186,157.5,26.186" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="365.5" x2="375.5" y1="26.186" y2="16.186"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="157.5" x2="365.5" y1="26.186" y2="26.186"/>
+      <line style="stroke:#181818;stroke-width:1;" x1="365.5" x2="365.5" y1="26.186" y2="343.186"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="64.663" x="230.169" y="40.075">Synth PCB</text>
+    </g>
+    <!--entity MIDDevIn-->
+    <g class="entity" data-qualified-name="MIDDevIn" data-source-line="2" id="ent0001">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="129.425" x="19" y="220.186"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="128.425" y="225.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="126.425" y="227.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="126.425" y="231.186"/>
+      <text fill="#000" font-size="14" textLength="89.425" x="34" y="251.075">MIDI Keyboard</text>
+    </g>
+    <!--entity MIDDevOut-->
+    <g class="entity" data-qualified-name="MIDDevOut" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="142.638" x="6" y="301.186"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="128.638" y="306.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="126.638" y="308.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="126.638" y="312.186"/>
+      <text fill="#000" font-size="14" textLength="102.638" x="21" y="332.075">MIDI Synthesizer</text>
+    </g>
+    <!--entity Speaker-->
+    <g class="entity" data-qualified-name="Speaker" data-source-line="4" id="ent0003">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="92.15" x="55.5" y="46.186"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="127.65" y="51.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="125.65" y="53.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="125.65" y="57.186"/>
+      <text fill="#000" font-size="14" textLength="52.15" x="70.5" y="77.075">Speaker</text>
+    </g>
+    <!--entity I2C-->
+    <g class="entity" data-qualified-name="Synth PCB.I2C" data-source-line="7" id="ent0005">
+      <ellipse cx="246.5" cy="152.186" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="21.787" x="235.606" y="180.075">I2C</text>
+    </g>
+    <!--entity MidiIn-->
+    <g class="entity" data-qualified-name="Synth PCB.MidiIn" data-source-line="8" id="ent0006">
+      <ellipse cx="352.5" cy="239.186" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="43.488" x="330.756" y="267.075">MIDI IN</text>
+    </g>
+    <!--entity MidiOut-->
+    <g class="entity" data-qualified-name="Synth PCB.MidiOut" data-source-line="9" id="ent0007">
+      <ellipse cx="193.5" cy="320.186" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="59.063" x="163.969" y="348.075">MIDI OUT</text>
+    </g>
+    <!--entity Jack-->
+    <g class="entity" data-qualified-name="Synth PCB.Jack" data-source-line="10" id="ent0008">
+      <ellipse cx="358.5" cy="65.186" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/>
+      <text fill="#000" font-size="14" textLength="48.212" x="334.394" y="93.075">Jack 3.5</text>
+    </g>
+    <!--entity PICMid-->
+    <g class="entity" data-qualified-name="Synth PCB.PICMid" data-source-line="12" id="ent0009">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="159" x="166" y="220.186"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="305" y="225.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="303" y="227.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="303" y="231.186"/>
+      <text fill="#000" font-size="14" textLength="119" x="181" y="251.075">PIC 16F628A (MIDI)</text>
+    </g>
+    <!--entity PICSynth-->
+    <g class="entity" data-qualified-name="Synth PCB.PICSynth" data-source-line="13" id="ent0010">
+      <rect fill="#F1F1F1" height="44" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="165.3" x="166" y="46.186"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="311.3" y="51.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="309.3" y="53.186"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="309.3" y="57.186"/>
+      <text fill="#000" font-size="14" textLength="125.3" x="181" y="77.075">PIC 16F628A (Synth)</text>
+    </g>
+    <g class="link" data-entity-1="ent0006" data-entity-2="ent0001" data-link-type="dependency" id="lnk11">
+      <polygon fill="#181818" points="349.565,230.137,350.768,220.362,348.107,225.354,343.115,222.693,349.565,230.137" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M348.107,225.354 C344.559,213.709 338.793,201.5 325.5,193.686 C263.046,156.975 232.217,173.993 162.5,193.686 C143.915,198.936 125.395,209.921 110.963,220.11" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="dependency" id="lnk12">
+      <polygon fill="#181818" points="149.094,323.186,158.094,327.186,154.094,323.186,158.094,319.186,149.094,323.186" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M184.48,323.186 C172.685,323.186 165.889,323.186 154.094,323.186" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0008" data-entity-2="ent0003" data-link-type="dependency" id="lnk13">
+      <polygon fill="#181818" points="116.5,45.987,125.182,41.336,119.569,42.04,118.865,36.427,116.5,45.987" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M357.725,56.059 C355.966,40.599 350.225,14.942 331.5,7.186 C314.152,0 179.848,0 162.5,7.186 C143.543,15.038 130.475,28.008 119.569,42.04" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0006" data-link-type="association" id="lnk14">
+      <path d="M325.332,242.186 C331.275,242.186 337.218,242.186 343.161,242.186" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0009" data-entity-2="ent0007" data-link-type="association" id="lnk15">
+      <path d="M231.565,264.356 C221.697,279.348 208.851,298.865 200.892,310.956" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0008" data-link-type="association" id="lnk16">
+      <path d="M331.43,68.186 C337.351,68.186 343.273,68.186 349.195,68.186" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0005" data-entity-2="ent0009" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="246.369,167.298,242.264,176.251,246.31,172.298,250.263,176.345,246.369,167.298" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M246.31,172.298 C246.154,185.618 245.947,203.232 245.75,219.942" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="36.887" x="247.5" y="197.297">Sends</text>
+    </g>
+    <g class="link" data-entity-1="ent0010" data-entity-2="ent0005" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="248.006,90.197,243.795,99.101,247.888,95.196,251.793,99.289,248.006,90.197" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M247.888,95.196 C247.495,111.911 247.077,129.645 246.762,143.033" fill="none" style="stroke:#181818;stroke-width:1;stroke-dasharray:7,7;"/>
+      <text fill="#000" font-size="13" textLength="53.544" x="249.5" y="120.297">Receives</text>
+    </g>
+  </g>
+</svg>

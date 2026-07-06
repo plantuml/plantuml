@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="208px" preserveAspectRatio="none" style="width:176px;height:208px;background:#FFFFFF;" version="1.1" viewBox="0 0 176 208" width="176px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster javax-->
+    <g class="cluster" data-qualified-name="javax" data-source-line="1" id="ent0002">
+      <path d="M16.5,4 L50.225,4 A3.75,3.75 0 0 1 52.725,6.5 L59.725,24 L165.5,24 A2.5,2.5 0 0 1 168,26.5 L168,181.5 A2.5,2.5 0 0 1 165.5,184 L16.5,184 A2.5,2.5 0 0 1 14,181.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="59.725" y1="24" y2="24"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="32.725" x="18" y="16.889">javax</text>
+    </g>
+    <!--cluster sound-->
+    <g class="cluster" data-qualified-name="javax.sound" data-source-line="1" id="ent0003">
+      <path d="M24.5,29 L63.65,29 A3.75,3.75 0 0 1 66.15,31.5 L73.15,49 L157.5,49 A2.5,2.5 0 0 1 160,51.5 L160,173.5 A2.5,2.5 0 0 1 157.5,176 L24.5,176 A2.5,2.5 0 0 1 22,173.5 L22,31.5 A2.5,2.5 0 0 1 24.5,29" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="22" x2="73.15" y1="49" y2="49"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="38.15" x="26" y="41.889">sound</text>
+    </g>
+    <!--cluster sampled-->
+    <g class="cluster" data-qualified-name="javax.sound.sampled" data-source-line="1" id="ent0004">
+      <path d="M32.5,54 L86.438,54 A3.75,3.75 0 0 1 88.938,56.5 L95.938,74 L149.5,74 A2.5,2.5 0 0 1 152,76.5 L152,165.5 A2.5,2.5 0 0 1 149.5,168 L32.5,168 A2.5,2.5 0 0 1 30,165.5 L30,56.5 A2.5,2.5 0 0 1 32.5,54" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="30" x2="95.938" y1="74" y2="74"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="52.938" x="34" y="66.889">sampled</text>
+    </g>
+    <!--cluster AudioFormat-->
+    <g class="cluster" data-qualified-name="javax.sound.sampled.AudioFormat" data-source-line="1" id="ent0005">
+      <path d="M40.5,79 L121.65,79 A3.75,3.75 0 0 1 124.15,81.5 L131.15,99 L141.5,99 A2.5,2.5 0 0 1 144,101.5 L144,157.5 A2.5,2.5 0 0 1 141.5,160 L40.5,160 A2.5,2.5 0 0 1 38,157.5 L38,81.5 A2.5,2.5 0 0 1 40.5,79" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="38" x2="131.15" y1="99" y2="99"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="80.15" x="42" y="91.889">AudioFormat</text>
+    </g>
+    <!--class Encoding-->
+    <g class="entity" data-qualified-name="javax.sound.sampled.AudioFormat.Encoding" data-source-line="1" id="ent0001">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="90.45" x="46" y="104"/>
+      <ellipse cx="61" cy="120" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="56" y="125">C</text>
+      <text fill="#000" font-size="14" textLength="58.45" x="75" y="123.889">Encoding</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47" x2="135.45" y1="136" y2="136"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="47" x2="135.45" y1="144" y2="144"/>
+    </g>
+  </g>
+</svg>

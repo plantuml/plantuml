@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="142px" preserveAspectRatio="none" style="width:226px;height:142px;background:#FFFFFF;" version="1.1" viewBox="0 0 226 142" width="226px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster XXY-->
+    <g class="cluster" data-qualified-name="XXY" data-source-line="1" id="ent0001">
+      <a href="/text/web/test/abc/92:2" target="_top" title="/text/web/test/abc/92:2" xlink:actuate="onRequest" xlink:href="/text/web/test/abc/92:2" xlink:show="new" xlink:title="/text/web/test/abc/92:2" xlink:type="simple">
+        <path d="M16.5,4 L36.225,4 A3.75,3.75 0 0 1 38.725,6.5 L45.725,24 L215.5,24 A2.5,2.5 0 0 1 218,26.5 L218,115.5 A2.5,2.5 0 0 1 215.5,118 L16.5,118 A2.5,2.5 0 0 1 14,115.5 L14,6.5 A2.5,2.5 0 0 1 16.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+        <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="45.725" y1="24" y2="24"/>
+        <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="18" y="16.889">XY</text>
+      </a>
+    </g>
+    <!--cluster XYY-->
+    <g class="cluster" data-qualified-name="XXY.XYY" data-source-line="4" id="ent0003">
+      <a href="/text/web/test/ced/221:2" target="_top" title="/text/web/test/ced/221:2" xlink:actuate="onRequest" xlink:href="/text/web/test/ced/221:2" xlink:show="new" xlink:title="/text/web/test/ced/221:2" xlink:type="simple">
+        <rect fill="none" height="81" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="138" x="72" y="29"/>
+        <text fill="#000" font-size="14" font-weight="700" textLength="18.725" x="131.638" y="41.889">YX</text>
+      </a>
+    </g>
+    <!--entity YYY-->
+    <g class="entity" data-qualified-name="XXY.YYY" data-source-line="2" id="ent0002">
+      <a href="/text/web/test/ced/222:0" target="_top" title="/text/web/test/ced/222:0" xlink:actuate="onRequest" xlink:href="/text/web/test/ced/222:0" xlink:show="new" xlink:title="/text/web/test/ced/222:0" xlink:type="simple">
+        <rect fill="#F1F1F1" height="34" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.725" x="22.5" y="61"/>
+        <text fill="#000" font-size="14" textLength="18.725" x="32.5" y="81.889">YY</text>
+      </a>
+    </g>
+    <!--class AAB-->
+    <g class="entity" data-qualified-name="XXY.XYY.AAB" data-source-line="5" id="ent0004">
+      <a href="/text/web/test/ced/222:1" target="_top" title="/text/web/test/ced/222:1" xlink:actuate="onRequest" xlink:href="/text/web/test/ced/222:1" xlink:show="new" xlink:title="/text/web/test/ced/222:1" xlink:type="simple">
+        <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="50.725" x="150.5" y="54"/>
+        <ellipse cx="165.5" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="160.5" y="75">C</text>
+        <text fill="#000" font-size="14" textLength="18.725" x="179.5" y="73.889">AB</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="151.5" x2="200.225" y1="86" y2="86"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="151.5" x2="200.225" y1="94" y2="94"/>
+      </a>
+    </g>
+    <!--class CCD-->
+    <g class="entity" data-qualified-name="XXY.XYY.CCD" data-source-line="6" id="ent0005">
+      <a href="/text/web/test/ced/221:1" target="_top" title="/text/web/test/ced/221:1" xlink:actuate="onRequest" xlink:href="/text/web/test/ced/221:1" xlink:show="new" xlink:title="/text/web/test/ced/221:1" xlink:type="simple">
+        <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="52.3" x="80" y="54"/>
+        <ellipse cx="95" cy="70" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+        <text fill="#000" font-family="monospace" font-size="14" x="90" y="75">C</text>
+        <text fill="#000" font-size="14" textLength="20.3" x="109" y="73.889">CD</text>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="81" x2="131.3" y1="86" y2="86"/>
+        <line style="stroke:#181818;stroke-width:0.5;" x1="81" x2="131.3" y1="94" y2="94"/>
+      </a>
+    </g>
+  </g>
+</svg>

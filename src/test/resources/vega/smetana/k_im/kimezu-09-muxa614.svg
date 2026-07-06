@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="182px" preserveAspectRatio="none" style="width:92px;height:182px;background:#FFFFFF;" version="1.1" viewBox="0 0 92 182" width="92px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--entity test-->
+    <g class="entity" data-qualified-name="test" data-source-line="3" id="ent0001">
+      <rect fill="#F1F1F1" height="154" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="69.663" x="6" y="12"/>
+      <rect fill="#F1F1F1" height="10" style="stroke:#181818;stroke-width:0.5;" width="15" x="55.662" y="17"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="53.662" y="19"/>
+      <rect fill="#F1F1F1" height="2" style="stroke:#181818;stroke-width:0.5;" width="4" x="53.662" y="23"/>
+      <text fill="#000" font-size="14" textLength="29.662" x="21" y="42.889">line 1</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="74.663" y1="46" y2="46"/>
+      <text fill="#000" font-size="14" textLength="29.662" x="21" y="60.889">line 2</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="74.663" y1="68" y2="68"/>
+      <text fill="#000" font-size="14" textLength="29.662" x="21" y="82.889">line 3</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="74.663" y1="90" y2="90"/>
+      <text fill="#000" font-size="14" textLength="29.662" x="21" y="104.889">line 4</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="74.663" y1="112" y2="112"/>
+      <text fill="#000" font-size="14" textLength="29.662" x="21" y="126.889">line 5</text>
+      <line style="stroke:#181818;stroke-width:1;" x1="7" x2="74.663" y1="134" y2="134"/>
+      <text fill="#000" font-size="14" textLength="29.662" x="21" y="148.889">line 6</text>
+    </g>
+  </g>
+</svg>
