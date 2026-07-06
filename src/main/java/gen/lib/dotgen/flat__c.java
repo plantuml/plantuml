@@ -328,6 +328,18 @@ try {
     if (GD_rank(g).get__(r - 1).ht2 < h2)
 	GD_rank(g).get__(r - 1).ht2 = h2;
     ND_alg(vn, e);
+    // [DEBUG-cluster-layout] Links this label virtual node's identity hash (the
+    // "<unnamed:NNN>" seen in position__c.dumpAuxEdges/ns__c traces for rank -1
+    // nodes) back to the original edge e it labels, via e's own identity hash --
+    // cross-reference against the "createEdge: ... edgeIdentityHash=" trace in
+    // CucaDiagramFileMakerSmetana, which has the actual PlantUML entity
+    // names/label/roles for that same edge object. (Can't resolve tail/head
+    // names here directly: agnameof()/safeName() need a Globals zz, which this
+    // faithfully-ported method signature -- matching lib/dotgen/flat.c's
+    // flat_node(edge_t*) -- doesn't receive.) See SMETANA.md, Test_1 cluster
+    // layout investigation ("Root cause CONFIRMED" case study).
+    SmetanaDebug.TRACE("flat_node: labelNodeIdentityHash=" + System.identityHashCode(vn)
+		+ " origEdgeIdentityHash=" + System.identityHashCode(e));
 } finally {
 LEAVING("4cw9yo9ap8ze1r873v6jat4yc","flat_node");
 }

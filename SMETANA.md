@@ -501,6 +501,46 @@ investigated.
 
 ---
 
+## Debugging tools added to trace original PlantUML `Link` identity (July 2026)
+
+To push the `Test_1` cluster-layout investigation further (identifying exactly
+which `.puml`-level edges the two colliding flat-edge labels A/B correspond to
+- see "Root cause CONFIRMED" above), two more `TRACE(...)` calls were added.
+Unlike the earlier ones, these live outside `gen.lib.*` entirely, on the
+PlantUML side, because that's the only place the real entity names/labels are
+still available (by the time an edge reaches `flat_node`/`position__c`, all
+that's left is an opaque `ST_Agedge_s`).
+
+- **`CucaDiagramFileMakerSmetana.createEdge()`**: right before returning the
+  newly-created `ST_Agedge_s e`, logs `link.getEntity1()/getEntity2().getName()`,
+  `link.getLabel()`, `getRole1()/getRole2()`, `getQuantifier1()/getQuantifier2()`,
+  and `System.identityHashCode(e)`.
+- **`flat__c.flat_node(ST_Agedge_s e)`**: right after `ND_alg(vn, e)`, logs
+  `System.identityHashCode(vn)` (the label virtual node - this is the same
+  identity hash `SmetanaDebug.safeName()`'s `<unnamed:NNN>` fallback prints,
+  i.e. what shows up for A/B in `dumpAuxEdges`/`ns__c` traces) alongside
+  `System.identityHashCode(e)`.
+
+**How to use these together:** find the `flat_node: labelNodeIdentityHash=<A's
+number>` line to get `origEdgeIdentityHash=NNN`, then find the `createEdge:
+... edgeIdentityHash=NNN` line (same NNN) to read off the real entity names,
+label, roles and quantifiers of the original `.puml` edge that A represents.
+Repeat for B. This should tell us concretely which two relationships in
+`entities`/`entities.mindmap` are the ones whose independent label ordering
+(`flat_limits`) conflicts with the real nodes' left-right order.
+
+Note: `flat_node(ST_Agedge_s e)`'s signature deliberately matches
+`lib/dotgen/flat.c`'s `flat_node(edge_t *e)` exactly (no `Globals zz`
+parameter), so unlike the `gen.lib` traces this one can't call
+`agnameof()`/`safeName()` to print tail/head node names directly - identity-hash
+cross-referencing against the `createEdge` trace is the way around that.
+
+**Not yet run.** Next step: run `zdev.Test_1` again, and grep the new
+`smetana.txt` for `flat_node:` and `createEdge:` lines, cross-referencing by
+`identityHash` as described above.
+
+---
+
 ## General lessons for future Smetana debugging
 
 1. **Check whether an `UNSUPPORTED(...)` call is really unported, or just a translation
