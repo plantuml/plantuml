@@ -1,0 +1,95 @@
+https://forum.plantuml.net/15037/plantuml-diagrams-broken-using-smetana
+
+@startuml
+!pragma layout smetana
+
+scale 600 width
+
+[*] -> State1
+State1 --> State2 : Succeeded
+State1 --> [*] : Aborted
+State2 --> State3 : Succeeded
+State2 --> [*] : Aborted
+state State3 {
+  state "Accumulate Enough Data\nLong State Name" as long1
+  long1 : Just a test
+  [*] --> long1
+  long1 --> long1 : New Data
+  long1 --> ProcessData : Enough Data
+}
+State3 --> State3 : Failed
+State3 --> [*] : Succeeded / Save Result
+State3 --> [*] : Aborted
+@enduml
+
+
+
+@startuml
+!pragma layout smetana
+
+[*] --> NotShooting
+
+state NotShooting {
+  Idle --> Configuring : EvConfig
+  Configuring --> Idle : EvConfig
+}
+
+  NewValueSelection --> NewValuePreview : EvNewValue
+  NewValuePreview --> NewValueSelection : EvNewValueRejected
+  NewValuePreview --> NewValueSelection : EvNewValueSaved
+
+  state NewValuePreview {
+     State1 -> State2
+  }
+@enduml
+
+
+
+@startuml
+!pragma layout smetana
+
+header 
+  This is the header
+end header
+
+footer This is the footer
+
+title This is the title
+
+legend top
+  The legend
+end legend
+
+caption This is the caption
+
+object Object01 { 
+	id = 12345 
+}
+object Object02
+object Object03
+object Object04
+object Object05
+object Object06
+object Object07
+object Object08
+
+Object01 <|-- Object02
+Object03 *-- Object04
+Object05 o-- "4" Object06
+Object07 .. Object08 : some label
+@enduml
+
+
+
+
+@startuml
+!pragma layout smetana
+
+[*] -> State1
+state A {
+    State1 -> State2 : auto
+    State1 <- State2
+}
+@enduml
+
+
