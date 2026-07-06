@@ -130,6 +130,8 @@ import static smetana.core.Macro.alloc_elist;
 import static smetana.core.Macro.free_list;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.TRACE;
+import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Difficult;
 import gen.annotation.HasND_Rank;
@@ -147,6 +149,7 @@ import h.ST_aspect_t;
 import h.ST_point;
 import h.ST_pointf;
 import h.ST_rank_t;
+import java.util.IdentityHashMap;
 import smetana.core.CArray;
 import smetana.core.CArrayOfStar;
 import smetana.core.CString;
@@ -646,6 +649,7 @@ try {
     if (flat_edges(zz, g))
 	set_ycoords(zz, g);
     create_aux_edges(zz, g);
+    dumpAuxEdges(zz, g, "before rank() [X-position aux graph]");
     if (rank(zz, g, 2, nsiter2(zz, g))!=0) { /* LR balance == 2 */
 	connectGraph (g);
 	//assert(rank(g, 2, nsiter2(g)) == 0);
@@ -1948,6 +1952,56 @@ UNSUPPORTED("6hqli9m8yickz1ox1qfgtdbnd"); // 	    continue;
 } finally {
 LEAVING("daz786541idcxnywckcbncazb","contain_nodes");
 }
+}
+
+
+/*
+ * [DEBUG-cluster-layout] Ad-hoc tracing added to investigate the Smetana
+ * cluster/package layout producing overlapping nodes (see zdev.Test_1,
+ * compared against zdev.Test_2). Dumps, to smetana.txt via SmetanaDebug.TRACE,
+ * every edge of the auxiliary X-positioning graph (tail -> head, minlen,
+ * weight) right before it is handed to the network simplex solver
+ * (gen.lib.common.ns__c.rank). Cluster boundary nodes (GD_ln/GD_rn, for every
+ * cluster, recursively) are resolved to readable labels like "ln(cluster6)"
+ * instead of relying on agnameof/safeName, since these are synthetic nodes
+ * with tag.id == 0 (see the virtual_node() discussion in SMETANA.md) and
+ * safeName() would otherwise just print an identity-hash placeholder for all
+ * of them, making them impossible to tell apart. Safe to leave in place.
+ */
+private static void dumpAuxEdges(Globals zz, ST_Agraph_s g, String phase) {
+    final IdentityHashMap<ST_Agnode_s, String> labels = new IdentityHashMap<ST_Agnode_s, String>();
+    collectClusterBoundaryLabels(zz, g, labels);
+    TRACE("----- rank array contents " + phase + " -----");
+    for (int r = GD_minrank(g); r <= GD_maxrank(g); r++) {
+	TRACE("  rank " + r + " (n=" + GD_rank(g).get__(r).n + "):");
+	for (int i = 0; i < GD_rank(g).get__(r).n; i++) {
+	    final ST_Agnode_s v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(i);
+	    final String label = v == null ? "null" : (labels.containsKey(v) ? labels.get(v) : safeName(zz, v));
+	    TRACE("    v[" + i + "] = " + label + (v == null ? "" : " (ND_order=" + ND_order(v) + ")"));
+	}
+    }
+    TRACE("----- aux edges " + phase + " -----");
+    for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {
+	final String nlabel = labels.containsKey(n) ? labels.get(n) : safeName(zz, n);
+	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {
+	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);
+	    final ST_Agnode_s head = aghead(e);
+	    final String hlabel = labels.containsKey(head) ? labels.get(head) : safeName(zz, head);
+	    TRACE("  " + nlabel + " -> " + hlabel + " minlen=" + ED_minlen(e) + " weight=" + ED_weight(e));
+	}
+    }
+}
+
+private static void collectClusterBoundaryLabels(Globals zz, ST_Agraph_s g, IdentityHashMap<ST_Agnode_s, String> labels) {
+    for (int c = 1; c <= GD_n_cluster(g); c++) {
+	final ST_Agraph_s clust = GD_clust(g).get_(c);
+	final String name = safeName(zz, clust);
+	if (GD_ln(clust) != null)
+	    labels.put(GD_ln(clust), "ln(" + name + ")");
+	if (GD_rn(clust) != null)
+	    labels.put(GD_rn(clust), "rn(" + name + ")");
+	collectClusterBoundaryLabels(zz, clust, labels);
+    }
 }
 
 

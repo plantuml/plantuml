@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.sdot;
 
 import h.ST_Agedge_s;
 import h.ST_Agedgeinfo_t;
+import h.ST_Agnode_s;
 import h.ST_bezier;
 import h.ST_pointf;
 import h.ST_splines;
@@ -75,6 +76,10 @@ import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
+
+import static smetana.core.Macro.AGHEAD;
+import static smetana.core.Macro.AGTAIL;
+import static smetana.core.Macro.ND_coord;
 
 public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
@@ -352,6 +357,16 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data;
 		final ST_splines splines = data.spl;
 
+		if (splines == null)
+			// Smetana's layout/routing gave up on this particular edge
+			// (e.g. Pshortestpath/Proutespline bailed out on a degenerate
+			// polygon and left ED_spl unset - see gen/lib/common/routespl__c.java
+			// and gen/lib/pathplan/shortest__c.java). Rather than crashing with
+			// an NPE, fall back to a straight line between the node centers,
+			// matching the "a straight line is better than failing" fallback
+			// already used inside Pshortestpath itself.
+			return getFallbackStraightDotPath();
+
 		DotPath dotPath = new DotPath();
 		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);
 		final XPoint2D pt1 = getPoint(splines, 0);
@@ -368,6 +383,14 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		}
 
 		return dotPath;
+	}
+
+	private DotPath getFallbackStraightDotPath() {
+		final ST_Agnode_s tail = AGTAIL(edge);
+		final ST_Agnode_s head = AGHEAD(edge);
+		final XPoint2D p1 = new XPoint2D(ND_coord(tail).x, ND_coord(tail).y);
+		final XPoint2D p2 = new XPoint2D(ND_coord(head).x, ND_coord(head).y);
+		return new DotPath().addCurve(p1, p1, p2, p2);
 	}
 
 	private XPoint2D getPoint(ST_splines splines, int i) {

@@ -83,21 +83,35 @@ import static smetana.core.Macro.ED_showboxes;
 import static smetana.core.Macro.ED_weight;
 import static smetana.core.Macro.ED_xpenalty;
 import static smetana.core.Macro.ET_SPLINE;
+import static smetana.core.Macro.GD_bb;
+import static smetana.core.Macro.GD_clust;
 import static smetana.core.Macro.GD_dotroot;
 import static smetana.core.Macro.GD_flags;
 import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_maxrank;
+import static smetana.core.Macro.GD_minrank;
+import static smetana.core.Macro.GD_n_cluster;
+import static smetana.core.Macro.GD_nlist;
+import static smetana.core.Macro.GD_rank;
 import static smetana.core.Macro.ND_UF_size;
+import static smetana.core.Macro.ND_clust;
+import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_flat_in;
 import static smetana.core.Macro.ND_flat_out;
 import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_next;
+import static smetana.core.Macro.ND_order;
 import static smetana.core.Macro.ND_other;
 import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.NEW_RANK;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.agfindgraphattr;
 import static smetana.core.Macro.alloc_elist;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.TRACE;
+import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -109,6 +123,8 @@ import h.ST_Agobj_s;
 import h.ST_Agraph_s;
 import h.ST_aspect_t;
 import h.ST_pack_info;
+import h.ST_rank_t;
+import smetana.core.CArray;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
@@ -354,6 +370,7 @@ try {
     
     do {
         dot_rank(zz, g, asp);
+	dumpLayoutState(zz, g, "after dot_rank");
 	if (maxphase == 1) {
 	    attach_phase_attrs (g, 1);
 	    return;
@@ -364,11 +381,13 @@ UNSUPPORTED("5uwp9z6jkv5uc30iyfszyg6dw"); // 	    asp = NULL;
 UNSUPPORTED("28kbszyxsjoj03gb134ov4hag"); // 	    aspect.nextIter = 0;
 	}
         dot_mincross(zz, g, (asp != null));
+	dumpLayoutState(zz, g, "after dot_mincross");
 	if (maxphase == 2) {
 	    attach_phase_attrs (g, 2);
 	    return;
 	}
         dot_position(zz, g, asp);
+	dumpLayoutState(zz, g, "after dot_position");
 	if (maxphase == 3) {
 	    attach_phase_attrs (g, 2);  /* positions will be attached on output */
 	    return;
@@ -559,6 +578,51 @@ try {
 } finally {
 LEAVING("ca52dadcp7m8x0bqhaw4tvtaw","dot_root");
 }
+}
+
+
+/*
+ * [DEBUG-cluster-layout] Ad-hoc tracing added to investigate the Smetana
+ * cluster/package layout producing overlapping nodes (see zdev.Test_1,
+ * compared against native-dot zdev.Test_2). Dumps, to smetana.txt via
+ * SmetanaDebug.TRACE, every node's rank/order/coord and its enclosing
+ * cluster, plus every cluster's bounding box, after each of the three main
+ * dotLayout phases (dot_rank, dot_mincross, dot_position). Safe to leave in
+ * place: TRACE()/safeName() never throw and are silent unless the trace file
+ * is actually inspected. Not present in upstream Graphviz.
+ */
+private static void dumpLayoutState(Globals zz, ST_Agraph_s g, String phase) {
+    TRACE("===== " + phase + " =====");
+    for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {
+	final ST_Agraph_s clust = ND_clust(n);
+	TRACE("node " + safeName(zz, n)
+		+ " rank=" + ND_rank(n)
+		+ " order=" + ND_order(n)
+		+ " x=" + ND_coord(n).x
+		+ " y=" + ND_coord(n).y
+		+ " clust=" + (clust == null ? "-" : safeName(zz, clust)));
+    }
+    dumpClusters(zz, g, "  ");
+}
+
+private static void dumpClusters(Globals zz, ST_Agraph_s g, String indent) {
+    for (int c = 1; c <= GD_n_cluster(g); c++) {
+	final ST_Agraph_s clust = GD_clust(g).get_(c);
+	TRACE(indent + "cluster " + safeName(zz, clust)
+		+ " minrank=" + GD_minrank(clust)
+		+ " maxrank=" + GD_maxrank(clust)
+		+ " bb=[" + GD_bb(clust).LL.x + "," + GD_bb(clust).LL.y
+		+ " -> " + GD_bb(clust).UR.x + "," + GD_bb(clust).UR.y + "]");
+	for (int r = GD_minrank(clust); r <= GD_maxrank(clust); r++) {
+	    final int n = GD_rank(clust).get__(r).n;
+	    final ST_Agnode_s first = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(0) : null;
+	    final ST_Agnode_s last = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(n - 1) : null;
+	    TRACE(indent + "  local rank " + r + ": n=" + n
+		    + " v[0]=" + (first == null ? "-" : safeName(zz, first))
+		    + " v[n-1]=" + (last == null ? "-" : safeName(zz, last)));
+	}
+	dumpClusters(zz, clust, indent + "  ");
+    }
 }
 
 
