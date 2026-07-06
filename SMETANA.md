@@ -144,6 +144,81 @@ consistent odd anonymous id), matching upstream `agnode(g, NULL, 1)` semantics.
 
 ---
 
+## Case study: `zdev.Test_1` crash — `shortest__c.triangulate()` (July 2026)
+
+### Symptom
+
+`Test_1` (a class diagram, `!pragma layout smetana`) crashed with:
+
+```
+java.lang.IllegalStateException: libpath/%s:%d: %sgraphviz-2.38.0\lib\pathplan\shortest.c26triangulation failed
+	at gen.lib.pathplan.shortest__c.triangulate(shortest__c.java:311)
+	at gen.lib.pathplan.shortest__c.triangulate(shortest__c.java:307)
+	at gen.lib.pathplan.shortest__c.Pshortestpath(shortest__c.java:150)
+	at gen.lib.common.routespl__c._routesplines(routespl__c.java:387)
+	...
+```
+
+### Root cause: a real `longjmp` treated as an ordinary crash
+
+In the original C (`lib/pathplan/shortest.c`), `triangulate()` ends its "no diagonal
+found" branch with:
+
+```c
+fprintf(stderr, "libpath/%s:%d: %s\n", __FILE__, __LINE__, "triangulation failed");
+longjmp(jbuf, 1);
+```
+
+Unlike the `init_rank` case above, this **is** a genuine abort: `jbuf` is set up via
+`setjmp(jbuf)` at the very top of `Pshortestpath()`, and `longjmp` unwinds straight back
+there, making `Pshortestpath` return `-2` (its documented "memory/allocation problem"
+failure code — reused here for "triangulation gave up"). Callers of `Pshortestpath`
+(routespline generation) are written to tolerate a `-2` return.
+
+In the Java port, this had been translated as a direct `throw new
+IllegalStateException(...)`, which is **not** caught anywhere — it propagates all the
+way up and crashes the whole render, instead of being caught at the `Pshortestpath`
+level the way `longjmp` would catch it in C.
+
+**Why this differs from the `init_rank` fix:** that case was a non-fatal C diagnostic
+wrongly translated as fatal. This case is a genuinely fatal-to-the-computation C path
+(real `longjmp`) that was translated as fatal-to-the-JVM (uncaught exception) instead of
+fatal-to-the-*method-call* the way `setjmp`/`longjmp` scopes it in C.
+
+### Fix
+
+`gen/lib/pathplan/shortest__c.java`:
+- Added a private `PathplanAbort extends RuntimeException` nested class right next to
+  the existing `jbuf` field, documented as the Java stand-in for "a `longjmp(jbuf, 1)`
+  back to this file's `setjmp` point".
+- `triangulate()`'s "triangulation failed" branch now logs to `System.err` (matching the
+  style of the neighboring `System.err.println` diagnostics already in this file) and
+  throws `PathplanAbort` instead of `IllegalStateException`.
+- `Pshortestpath()`'s dead `if (setjmp(jbuf)!=0) return -2;` (dead because this port's
+  `setjmp()` always returns `0` — there is no real stack-jump mechanism) was replaced by
+  a `try { ... } catch (PathplanAbort abort) { return -2; }` wrapped around the method
+  body, which is the faithful equivalent: whatever would have `longjmp`'d back to
+  `setjmp` in C now gets caught here and produces the same `-2` return.
+
+**Note:** the other `longjmp(jbuf,1)` call sites in this same file (inside `growpnls`,
+`growtris`, `growdq`, `growops`, guarding malloc/realloc failures) were deliberately
+*left* as `UNSUPPORTED(...)`. They're unreachable in practice — this Java port's
+malloc/realloc equivalents never return `null` — so there was no observed bug there to
+fix, consistent with lesson #1 below (don't touch what isn't actually broken).
+
+### General lesson refinement
+
+This case sharpens lesson #1 below: an `UNSUPPORTED`/uncaught-exception translation of an
+`agerr(...)` block can be wrong in *either direction* — either because the C original
+wasn't actually fatal (the `init_rank` case), or because it *was* fatal but scoped to a
+`setjmp`/`longjmp` pair that the Java translation didn't reconstruct (this case). Before
+"fixing" such a block, find both the `agerr`/`fprintf` call **and** whatever `longjmp`
+follows it, and check whether the enclosing function actually has a matching `setjmp` —
+if so, the fix needs a real (exception-based) jump target in Java, not just removing the
+throw.
+
+---
+
 ## Debugging tools added to `SmetanaDebug.java`
 
 Two small helpers were added for future debugging sessions and are meant to stay:
