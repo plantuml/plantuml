@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+package p1 {
+  class cl1
+}
+class cl2
+p1 --> cl2
+@enduml

@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!procedure test($name)
+class $name << (A, #FF00DD) >>
+!endprocedure
+
+test("test") {
+    id: int4
+    do_something(): void
+}
+
+@enduml

@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+state A as "A on several lines\nwith\na lot of text" {
+  X : aaa
+}
+state B {
+  Z : ccc
+}
+X -> Z
+X <- Z
+@enduml

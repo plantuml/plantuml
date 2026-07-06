@@ -1,0 +1,38 @@
+---
+output: svg
+---
+@startuml
+  actor Customer
+  actor/ Hacker
+  cloud {
+      node Cloudflare
+  }
+  note top of Cloudflare
+    Analyze every request and send to Server if secure
+  end note
+  
+  node Linode {
+      component "Nanode (139.123.123.123)" <<Ubuntu Virtual Machine>> {
+          component nginx <<Web Server>>
+          component "AppServer" <<Application Server>>
+          folder "/root" <<folder>> as root_folder {
+              file ssl_certificate.pem
+              file ssl_certificate.key
+          }
+          note "Cloudflare Origin Certificates" as N1
+          N1 .. root_folder
+      }
+      component "Linode Firewall"
+      note bottom: Allow **ONLY** Cloudflare IPs and port 443
+  }
+  
+  Customer <--> Cloudflare: "https://example.com"
+  note on link: Free SSL Certificate Managed Automatically
+  Cloudflare <--> "Linode Firewall": "https://example.com (139.123.123.123)"
+  note on link: Encrypted connection via Origin Certificates
+  "Linode Firewall" --> nginx
+  nginx --> "AppServer"
+  nginx --> root_folder
+  Hacker --+ "Linode Firewall": "https://139.123.123.123"
+  note on link #gray: Bypass not allowed, all requests must go through Cloudflare security
+@enduml

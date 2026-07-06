@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+set separator none
+
+[*] --> State1
+
+state Playing1 {
+[H] --> Moving
+Moving --> Shooting : shoot
+Shooting --> Moving : move
+}
+
+state State2 {
+[H] --> Initializing
+Initializing --> Playing1 : play_first
+Initializing --> Playing2 : play_second
+}
+
+State1 --> State2 : start
+State2 --> State1 : pause
+State2 --> [*] : quit
+
+@enduml 

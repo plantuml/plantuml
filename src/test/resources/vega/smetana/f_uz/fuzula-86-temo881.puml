@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam arrowThickness 4
+component c1
+component c2
+component c3
+c1 -[dotted]-> c2
+c1 -[dashed,thickness=2]-> c3
+@enduml

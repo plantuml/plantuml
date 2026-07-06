@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+class Station {
++name: string
+}
+
+class StationCrossing {
++cost: TimeInterval
+}
+
+Station "0..*" - "0..*" Station
+StationCrossing . (Station, Station)
+
+@enduml

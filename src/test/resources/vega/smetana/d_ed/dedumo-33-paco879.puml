@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b>x</b>
+!define not_null(x) <u>x</u>
+
+Table(user_role, "user_role") {
+not_null(primary_key(id)) BIGINTEGER
+}
+
+
+@enduml

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+scale 2
+skinparam BackgroundColor pink
+title Shape Stack **K0**
+stack stack1
+stack stack {
+}
+stack1--stack
+@enduml

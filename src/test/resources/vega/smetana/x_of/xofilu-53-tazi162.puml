@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startyaml
+first: x
+second:
+- 1
+third:
+- name: x
+@endyaml

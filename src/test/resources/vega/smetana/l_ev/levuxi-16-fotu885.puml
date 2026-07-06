@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam component {
+    BackgroundColor #FF0000-#FFFFFF
+}
+skinparam interface {
+    BackgroundColor #FF0000-#FFFFFF
+}
+() dbmanager
+[db] - dbmanager
+@enduml

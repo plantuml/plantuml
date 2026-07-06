@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+hide circle
+hide empty members
+
+foo1 --{ bar1
+foo1 --{ bar2
+foo1 --{ bar3
+
+aa --o{ bb
+aa --o{ cc
+aa --o{ dd
+@enduml

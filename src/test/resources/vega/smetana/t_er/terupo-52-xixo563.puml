@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> "toto"
+note on link
+  this is a note
+  on several line
+end note
+-> "titi"
+note on link
+  this is a note which is very long
+end note
+@enduml

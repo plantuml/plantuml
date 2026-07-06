@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+	legend {
+		FontColor blue
+		FontSize 15
+        FontStyle italic
+		LineColor Orange
+	}
+</style>
+
+legend
+hypothesis
+ * Hyp 1
+ * Hyp 2
+end legend
+
+class foo
+
+@enduml

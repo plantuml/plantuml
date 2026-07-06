@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+skinparam packageBorderColor blue
+skinparam packageFontSize 30
+
+package boo1.boo2 {
+}
+
+package foo1.foo2.foo3 {
+class A
+class B
+}
+
+boo1.boo2 +--- foo1.foo2.foo3
+
+@enduml

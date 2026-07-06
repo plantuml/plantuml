@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+() "my interface"
+() "a brain new interface"
+
+[component1] -- () "my other interface"
+
+note left of ()"my interface" #red : this is a note
+note top of () "a brain new interface" #blue
+ this note
+ is long
+end note
+
+@enduml

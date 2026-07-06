@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startuml
+title **KO** on V1.2020.16
+
+object Foo1 #pink  {
+  You can use
+  several lines
+  ..
+  as you want
+  and group
+  ==
+  things together.
+  __
+  You can have as many groups
+  as you want
+  --
+  End of class
+}
+
+object User #pink {
+  .. Simple Getter ..
+  + getName()
+  + getAddress()
+  .. Some setter ..
+  + setName()
+  __ private data __
+  int age
+  -- encrypted --
+  String password
+}
+@enduml

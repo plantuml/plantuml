@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+
+rectangle A
+rectangle B
+rectangle C
+rectangle D
+
+A -right0)- B
+
+C -left0)- D
+
+@enduml

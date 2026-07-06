@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+
+class classe1 {
+  -field1
+  ~field2
+   field3
+  #field4
+  +field5
+  *IE_MANDATORY
+
+  -method1()
+  ~method2()
+   method3()
+  #method4()
+  +method5()
+  *IE_MANDATORY()
+}
+
+@enduml

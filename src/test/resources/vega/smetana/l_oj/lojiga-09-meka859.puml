@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+stack a as a {
+class foo1
+class foo3
+class foo2
+}
+
+component b as b {
+}
+
+a-->b: test
+a<--b: test response
+@enduml

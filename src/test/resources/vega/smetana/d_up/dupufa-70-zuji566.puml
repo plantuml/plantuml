@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangleBorderThickness 0.5
+
+rectangle foo1
+
+@enduml

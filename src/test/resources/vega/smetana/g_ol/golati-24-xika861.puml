@@ -1,0 +1,42 @@
+---
+output: svg
+---
+@startuml
+
+skinparam Component {
+  BorderColor #Green
+  FontColor #Green
+
+  BorderColor<<v1.0>> #Red
+  FontColor<<v1.1>> #Red
+' not required
+'  BorderColor<<v1.0&v1.1>> #Red
+'  FontColor<<v1.0&v1.1>> #Red
+}
+
+skinparam Arrow {
+  Color #Green
+  FontColor #Green
+
+  Color<<v1.0>> #Red
+  Color<<v1.1>> text:Red
+  Color<<v1.0&v1.1>> #Red;text:Red
+}
+
+[Component]
+[Participant]
+[Participant10]<<v1.0>>
+[Participant11]<<v1.1>>
+[Participant1011]<<v1.0>><<v1.1>>
+[Participant1110]<<v1.0>><<v1.1>>
+'<<v1.0&v1.1>> not required
+[Participant1011_WithoutSimulation]<<v1.0>><<v1.1>>   
+
+
+Component -UP-> Participant: no stereotype
+Component -LEFT-> Participant10<<v1.0>> : v1.0 stereotype
+Component -RIGHT-> Participant11<<v1.1>> : v1.1 stereotype
+Component -DOWN-> Participant1011<<v1.0>><<v1.1>> : v1.0 and v1.1 stereotype (should be red/red)
+Component -DOWN-> Participant1110<<v1.1>><<v1.0>> : v1.1 and v1.0 stereotype (should be red/red)
+Component -DOWN-> Participant1011_WithoutSimulation<<v1.0&v1.1>> : simulated v1.0 v1.1 (red/red)
+@enduml

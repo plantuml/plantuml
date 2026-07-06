@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+component A [
+{{
+state a
+}}
+{{ebnf
+rep = {c};
+}}
+]
+@enduml

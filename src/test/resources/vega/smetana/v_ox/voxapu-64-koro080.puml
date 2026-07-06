@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> A
+ --> Y2
+  A --> C
+ --> Y2  
+ --> (*)
+@enduml

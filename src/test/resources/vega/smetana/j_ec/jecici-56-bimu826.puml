@@ -1,0 +1,38 @@
+---
+output: svg
+---
+@startuml
+hide stereotype
+skinparam backgroundColor transparent
+skinparam shadowing false
+skinparam arrowColor black
+skinparam rectangleBackgroundColor #FFFFFF00
+skinparam rectangleBorderColor #FFFFFF00
+skinparam rectangleRoundCorner 5
+skinparam rectangleBorderThickness 1.5
+skinparam rectangleFontSize 10
+skinparam arrowFontSize 10
+skinparam noteFontSize 10
+skinparam defaultTextAlignment center
+skinparam noteTextAlignment left
+skinparam svgDimensionStyle false
+skinparam rectangleRoundCorner<<circle>> 75
+skinparam rectangleBorderThickness<<circle>> 0.5
+skinparam rectangleRoundCorner<<rounded>> 50
+skinparam rectangleDiagonalCorner<<octagon>> 13
+together {
+rectangle "<b><size:13>AE 2\nJurisdiction B\n\n<color:green><img:images/text-icons/cash_12.svg> $200"as 1670869349606#FFECC3;line:black
+rectangle "<b><size:13>Ind\nJurisdiction B\n"as 1670869796774#FFECC3;line:black
+}
+together {
+rectangle "<b><size:13>AE 1\nJurisdiction A\n\n<color:green><img:images/text-icons/cash_12.svg> $110"as 1670869341141#E0FFFF;line:black
+rectangle "<b><size:13>AL\nJurisdiction A\n"as 1670869555171#E0FFFF;line:black
+}
+rectangle "<b><size:13>New Company\n\n"as 1670973383559#FFFFFF;line:black
+1670869341141-[#green,dashed]->1670869349606 : <color:green>Purchase Price\n<color:green>Payment of $100
+1670869555171-[#green,dashed]->1670869341141 : <color:green>Purchase Price\n<color:green>Payment of $110
+1670869796774-[#green,dashed,norank]->1670869349606 : <color:green>Purchase Price\n<color:green>Payment of $100
+1670869349606-[#blue,dashed,norank]->1670869341141 : <color:blue>Sale of Widget 1
+1670869341141-[#blue,dashed,norank]->1670869555171 : <color:blue>Sale of Widget 1
+1670869349606-[#blue,dashed,norank]->1670869796774 : <color:blue>Sale of Widget 2
+@enduml

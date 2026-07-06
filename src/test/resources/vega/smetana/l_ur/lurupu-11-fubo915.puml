@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+usecase "<U+1F601> <U+1F680> Implement the changes" as Implement
+usecase foo as "this is &#8734; long"
+usecase bar as "<b>this is also <U+221E> <font Segoe UI Emoji><U+1F680><U+263A></font> long"
+
+[Company] --> Implement
+@enduml

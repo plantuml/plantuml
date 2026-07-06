@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+
+!procedure $test_proc($param1 = "foo", $param2 = "bar")
+    rectangle $param1{
+        rectangle $param2{
+        }
+    }
+!endprocedure
+
+!function $test_func($param1 = "foo", $param2 = "bar")
+    !return $param1 + $param2
+!endfunction
+
+$test_proc($param2 = "baz")
+
+rectangle func0 [
+    $test_func()
+]
+
+rectangle func1 [
+    !$value = $test_func("baz", "qu" + "x")
+    $value
+]
+
+ rectangle func2 [
+    $test_func($param2 = "qu" + "x")
+ ]
+
+@enduml

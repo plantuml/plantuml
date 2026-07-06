@@ -1,0 +1,47 @@
+---
+output: svg
+---
+@startuml
+skinparam activity {
+   BackgroundColor<<Acacia>> green
+   activityFontColor<<Acacia>> black
+
+   BackgroundColor<<Midge>> red
+   activityFontColor<<Midge>> black
+
+   BackgroundColor<<Weavil>> orange
+   activityFontColor<<Weavil>> black
+
+   BackgroundColor<<AcaciaS>> green
+   activityFontColor<<AcaciaS>> pink
+
+   BackgroundColor<<MidgeS>> red
+   activityFontColor<<MidgeS>> pink
+
+   BackgroundColor<<WeavilS>> orange
+   activityFontColor<<WeavilS>> pink
+ }
+
+   (*) -right-> beginDay
+   beginDay -right-> newFlowers <<AcaciaS>>
+   newFlowers -right-> newGrePods <<AcaciaS>>
+   newGrePods -down-> renewEnergy
+   if "release Date Weavil?" as rw then
+     --> [true] releaseWeavil <<Weavil>>
+     --> if "release date Midge?" as rm then
+       --> [true] releaseMidge <<Midge>>
+       --> ovipositionWeavil <<Weavil>>
+     else
+       --> [false] ovipositionWeavil <<Weavil>>
+     endif
+   else
+     --> [false] rm
+   endif
+   ovipositionWeavil -left-> gallingMidge <<MidgeS>>
+   gallingMidge -left-> emergenceMidge <<Midge>>
+   emergenceMidge -up-> emergenceWeavil <<Weavil>>
+   emergenceWeavil -up-> stateAgingDeterministic
+   stateAgingDeterministic -up-> reduceEnergy
+   reduceEnergy -up-> endDay
+   endDay -up-> (*)
+@enduml

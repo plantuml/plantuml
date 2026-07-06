@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+Title All components
+actor actor [[{actor}]]
+agent agent [[{agent}]]
+artifact artifact [[{artifact}]]
+boundary boundary [[{boundary}]]
+card card [[{card}]]
+cloud cloud [[{cloud}]]
+collections collections [[{collections}]]
+component component [[{component}]]
+control control [[{control}]]
+database database [[{database}]]
+entity entity [[{entity}]]
+file file [[{file}]]
+folder folder [[{folder}]]
+frame frame [[{frame}]]
+interface  interface [[{interface}]]
+label label [[{label}]]
+node node [[{node}]]
+package package [[{package}]]
+queue queue [[{queue}]]
+rectangle rectangle [[{rectangle}]]
+stack stack [[{stack}]]
+storage storage [[{storage}]]
+usecase usecase [[{usecase}]]
+caption ""
+@enduml

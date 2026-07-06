@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+class a {
+    int i
+}
+
+note left of a::i
+    This note on i
+end note
+
+@enduml

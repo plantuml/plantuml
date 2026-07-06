@@ -1,0 +1,45 @@
+---
+output: svg
+---
+@startuml
+class foo1 {
+	m1
+	--titre that is very very long--
+	m2
+	__
+	m3
+	m31
+	..point..
+	m32
+	--other--
+	+m4()
+	m5()
+	==
+	+m6
+	== TEST ==
+	empty
+	__line__
+	+toto()
+}
+
+class foo2 {
+	m1
+	--titre--
+	m2
+	__
+	m3
+	m31
+	..point..
+	m32
+	--other--
+	+m4()
+	m5()
+	==
+	+m6
+	== TEST ==
+	empty
+	__line__
+	+toto()
+}
+
+@enduml

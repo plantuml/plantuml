@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+hide stereotype 
+show <<example>> stereotype 
+skinparam component {
+    BackgroundColor<<base>> #99ff99
+    BorderColor<<base>> Black
+    BackgroundColor<<example>> Yellow
+    BorderColor<<example>> Maroon
+}
+
+package "Something" {
+    [baseComponent1]<<base>>
+    [exampleComponent1]<<example>>
+    [P5] <<P5>>
+    (XxaPtfl) <<P5>>
+    (XxaPtfl2) <<example>>
+}
+@enduml

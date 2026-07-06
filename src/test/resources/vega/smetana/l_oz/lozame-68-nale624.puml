@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+rectangle "==Outer 1" as o1 {
+rectangle "==Outer 2" as o2 {
+rectangle "==Inner" as inner
+}
+}
+rectangle "a" as a
+rectangle "b" as b
+a -> b
+
+
+@enduml

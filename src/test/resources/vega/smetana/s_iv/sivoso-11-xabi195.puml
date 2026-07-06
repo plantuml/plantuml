@@ -1,0 +1,158 @@
+---
+output: svg
+---
+@startuml
+Bob -> Alice : hello
+
+
+<style>
+  root {
+    BackgroundColor #0B58A8
+    FontColor #FFFFFF
+    FontName Verdana
+    HyperLinkColor #FDA325
+    LineColor #FFFFFF
+    LineThickness 1
+    Margin 5
+  }
+  caption {
+    LineThickness 0
+  }
+  footer {
+    LineThickness 0
+  }
+  groupHeader {
+    BackgroundColor #FFFFFF
+    FontColor #0B58A8
+    FontStyle bold
+  }
+  header {
+    LineThickness 0
+  }
+  node {
+    MaximumWidth 300
+  }
+  referenceHeader {
+    BackgroundColor #FFFFFF
+    FontColor #0B58A8
+    FontStyle bold
+  }
+  separator {
+    BackgroundColor #FFFFFF
+    FontColor #0B58A8
+    FontStyle bold
+  }
+  title {
+    FontSize 22
+    LineThickness 0
+  }
+</style>
+
+skinparam ArrowLollipopColor #FFFFFF
+skinparam BackgroundColor #0B58A8
+skinparam DefaultFontName Verdana
+skinparam DefaultMonospacedFontName Courier
+skinparam LifelineStrategy nosolid
+skinparam ParticipantPadding 10
+skinparam SequenceLifeLineBorderColor #FFFFFF
+skinparam Shadowing false
+skinparam UseBetaStyle true
+
+skinparam Activity {
+  BackgroundColor #0B58A8
+  BarColor #FFFFFF
+  BorderColor #FFFFFF
+  FontColor #FFFFFF
+  FontName Verdana
+}
+skinparam Boundary {
+  FontColor #FFFFFF
+}
+skinparam Box {
+  Padding 5
+}
+skinparam CircledCharacter {
+  FontColor #0B58A8
+  FontName Courier
+  Radius 9
+}
+skinparam Class {
+  BackgroundColor #0B58A8
+  BorderColor #FFFFFF
+  FontColor #FFFFFF
+  FontName Verdana
+}
+skinparam ClassAttribute {
+  FontColor #FFFFFF
+  FontName Verdana
+}
+skinparam ClassStereotype {
+  FontColor #FFFFFF
+  FontName Verdana
+}
+skinparam Footer {
+  FontColor #FFFFFF
+  FontName Verdana
+}
+skinparam Header {
+  FontColor #FFFFFF
+  FontName Verdana
+}
+skinparam Hyperlink {
+  Color #FDA325
+}
+skinparam IconPackage {
+  Color #FFFFFF
+  BackgroundColor #0B58A8
+}
+skinparam IconPrivate {
+  Color #FFFFFF
+  BackgroundColor #0B58A8
+}
+skinparam IconProtected {
+  Color #FFFFFF
+  BackgroundColor #0B58A8
+}
+skinparam IconPublic {
+  Color #FFFFFF
+  BackgroundColor #0B58A8
+}
+skinparam Note {
+  FontColor #FFFFFF
+  FontName Verdana
+}
+skinparam Package {
+  BorderColor #FFFFFF
+  FontColor #FFFFFF
+  FontName Verdana
+}
+skinparam State {
+  BackgroundColor #0B58A8
+  BorderColor #FFFFFF
+}
+skinparam StereotypeA {
+  BackgroundColor #FFFFFF
+  BorderColor #FFFFFF
+}
+skinparam StereotypeC {
+  BackgroundColor #FFFFFF
+  BorderColor #FFFFFF
+}
+skinparam StereotypeE {
+  BackgroundColor #FFFFFF
+  BorderColor #FFFFFF
+}
+skinparam StereotypeI {
+  BackgroundColor #FFFFFF
+  BorderColor #FFFFFF
+}
+skinparam StereotypeN {
+  BackgroundColor #FFFFFF
+  BorderColor #FFFFFF
+}
+skinparam UseCaseStereoType {
+  FontColor #FFFFFF
+  FontName Verdana
+}
+Lars - Laura : gogogo
+@enduml

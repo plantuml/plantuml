@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+A0 -- A1
+A0 -- A2
+A0 -- A3
+
+A2 -- A4
+A4 -- A5
+
+A3 -- A5
+
+
+@enduml

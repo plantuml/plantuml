@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+usecase c #palegreen;line:red;line.dashed;text:yellow
+usecase d #aliceblue;line:blue;line.dotted;text:red
+@enduml

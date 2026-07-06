@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+<style>
+file {
+  Linecolor red
+  Shadowing 0
+}
+</style>
+
+file f
+@enduml

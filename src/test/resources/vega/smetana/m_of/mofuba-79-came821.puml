@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+usecase foo #orange;line:blue
+(dummy) #orange;line:yellow
+@enduml

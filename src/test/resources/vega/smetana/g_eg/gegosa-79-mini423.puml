@@ -1,0 +1,49 @@
+---
+output: svg
+---
+@startuml
+entity   Student {
+  {field} id {PK}
+  {field} name
+  {field} sex
+  {field} birthDate
+  {field} GPA
+}
+
+entity   Professor {
+  {field} name
+}
+
+entity   Department {
+  {field} courses
+  {field} professors
+  {field} name
+  {field} building location
+}
+
+entity   Course {
+  {field} name {PK}
+  {field} number
+}
+
+entity   Section {
+  {field} professor
+  {field} number
+}
+
+entity   EnrollsIn {
+  {field} grade
+}
+
+Section - Professor : Has >
+Professor -- Department : IsIn >
+Department - Course : Offers >
+Course -- Section : From >
+(Student, Section) .. EnrollsIn
+
+diamond diamond1
+
+EnrollsIn -> diamond1
+diamond1 --> Section : demo 1
+diamond1 --> Department : another link
+@enduml

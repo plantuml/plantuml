@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class "EventEmitter"
+hide "EventEmitter" circle
+@enduml

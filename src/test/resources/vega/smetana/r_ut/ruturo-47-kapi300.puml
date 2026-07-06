@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+allow_mixing
+abstract abstract
+actor actor
+usecase usecase
+agent agent
+artifact artifact
+boundary boundary
+'card card
+class class
+cloud cloud
+component component
+control control
+database database
+entity entity
+enum enum
+folder folder
+frame frame
+interface  interface
+node node
+object object
+'participant participant
+'rect rect
+rectangle rectangle
+'state state
+storage storage
+@enduml

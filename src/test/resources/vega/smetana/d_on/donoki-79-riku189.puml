@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+object demo {
+  * ABullet list
+  * ASecond item
+  ** ASub item
+}
+note left
+  * BBullet list
+  * BSecond item
+  ** BSub item
+end note
+@enduml

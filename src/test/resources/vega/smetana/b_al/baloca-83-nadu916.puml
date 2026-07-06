@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+allowmixing
+json "some json" {
+"a": 1
+}
+object "some object"
+@enduml

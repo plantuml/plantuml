@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+package "test" {
+    package "toto" {
+        [Component-1.0]
+    }
+}
+package "test2" {
+    package "toto2" {
+        [Component-2-0]
+    }
+}
+@enduml

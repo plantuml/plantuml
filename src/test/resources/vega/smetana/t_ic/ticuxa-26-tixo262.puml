@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+skinparam ComponentArrowColor #FF0000
+skinparam ClassArrowFontColor #FF0000
+skinparam ClassArrowFontName Courier
+skinparam ClassArrowFontStyle Italic
+skinparam ClassArrowFontSize 58
+
+class Foo1
+Foo2 -- Foo1 : toto
+
+@enduml

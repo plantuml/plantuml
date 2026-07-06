@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+skinparam frame {
+        borderColor Yellow
+        borderColor<<bad>> Red
+        BackgroundColor purple
+        BackgroundColor<<bad>> blue
+}
+frame foo1 {
+component f1
+}
+frame foo2 <<bad>>{
+component f2
+}
+@enduml

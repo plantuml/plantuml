@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+title Title Test
+class "Hello" as h
+class "Yop" as y
+class "ZigZag" as z
+y "0,n" - "0,n" h : " Brunette Coleman was a pseudonym \n used by the poet and writer \n Philip Larkin (1922 to 1985)"
+y "0,n" -- "0,n" z
+@enduml

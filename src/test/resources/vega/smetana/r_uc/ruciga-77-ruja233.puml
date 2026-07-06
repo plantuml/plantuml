@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+sprite Netw jar:archimate/network
+
+sprite $printer [15x15/8z] NOtH3W0W208HxFz_kMAhj7lHWpa1XC716sz0Pq4MVPEWfBHIuxP3L6kbTcizR8tAhzaqFvXwvFfPEqm0
+
+skinparam backgroundcolor blue
+skinparam rectanglebackgroundcolor red/yellow
+
+rectangle "Netw via jar <$Netw> printer via code <$printer>" as netw {
+[D] -> [E]: "Netw via jar <$Netw> printer via code <$printer>"
+}
+@enduml

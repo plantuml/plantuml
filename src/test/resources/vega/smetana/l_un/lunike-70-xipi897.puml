@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+!theme aws-orange
+
+object London
+object Washington
+object Berlin
+object NewYork
+
+map CapitalCity {
+ UK *-> London
+ USA *--> Washington
+ Germany *---> Berlin
+}
+
+NewYork --> CapitalCity::USA
+@enduml

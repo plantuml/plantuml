@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+class A {
+  member1
+  memberB()
+  member2
+}
+note right of A::member1
+  This member is annotated
+end note
+note right of A::memberB
+  This method is now explained in a UML note
+end note
+note left of A::member2
+  Yet **another**
+  note on several lines.
+end note
+
+@enduml

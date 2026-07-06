@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startyaml
+# hash is a named-tuple structure
+hash:
+  # value is text
+  name1:
+    Text1
+    Text2
+    Text3
+  # value is hash
+  name2:
+    key: val
+  # value is list
+  name3: list
+@endyaml

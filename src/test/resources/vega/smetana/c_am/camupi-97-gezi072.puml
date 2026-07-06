@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+!pragma layout smetana
+
+class a
+
+a --> b : visible
+@enduml

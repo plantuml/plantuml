@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+class foo
+note right  
+tar -xzf ${path} -C /tmp
+dd if=/tmp/zImage <U+005C>
+  of=/dev/mmc1p1 bs=512 count=2097152 # 1GB
+end note
+
+@enduml

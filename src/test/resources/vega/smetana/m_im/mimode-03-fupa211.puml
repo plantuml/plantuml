@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+class B {
++ B()
++ ~B()
++ B(in a : const B&)
+}
+@enduml

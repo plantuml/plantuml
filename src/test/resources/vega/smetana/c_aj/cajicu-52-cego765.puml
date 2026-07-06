@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+
+B <|-- M
+M <|-- D
+
+class B {
+  # m_b: int
+}
+note left of B::m_b
+  b
+end note
+
+class D {
+  # m_d: int
+}
+
+note left of D::m_d
+  d
+end note
+
+B *-- C1
+C1 *-- C2
+
+@enduml

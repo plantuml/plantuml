@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+abstract   abstract
+annotation annotation #line:red;line.bold;text:red
+note bottom: Why not bold?
+class      class      #line:green;line.dashed;text:green
+note bottom: Why not dashed?
+interface  interface  #line:blue;line.dotted;text:blue
+note bottom: Why not dotted?
+@enduml

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam note {
+    BackgroundColor<<x>> #black
+}
+rectangle "XXX"
+note left <<x>> 
+    bla
+end note
+@enduml

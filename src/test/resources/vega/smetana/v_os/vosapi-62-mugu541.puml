@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+package "Package" {
+node node1  {
+[component1-1]
+[component1-2]
+[component1-3]
+}
+node node2  {
+[component2-1]
+[component2-2]
+[component2-3]
+}
+node node3  {
+[component3-1]
+[component3-2]
+[component3-3]
+}
+node node4  {
+[component4-1]
+[component4-2]
+[component4-3]
+}
+}
+@enduml

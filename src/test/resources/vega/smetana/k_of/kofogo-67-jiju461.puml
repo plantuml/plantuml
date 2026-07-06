@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+
+ns1.classA "1" --> "1" ns1.classB : Used in foo method
+(ns1.classB, ns1.classA) .. ns1.Exception : Exception
+
+@enduml

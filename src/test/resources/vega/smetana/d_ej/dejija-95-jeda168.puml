@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+title Simple <b>Usecase</b>\nwith one actor
+
+"Use the application" as (Use)
+User -> (Use)
+
+@enduml

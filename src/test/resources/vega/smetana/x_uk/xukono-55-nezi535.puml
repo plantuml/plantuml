@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+package common {
+    package "<<profile>> profile" as profiles {
+        class X <<metaclass>>
+        class Y <<stereotype>> extends X
+    }
+    package classes {
+        class myClass <<y>> {
+            + x : str = "value"
+        }
+    }
+    classes ..> profiles : <apply>>
+}
+@enduml

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+(*) --> if "" then
+  -left-> "left"
+ else
+  -> "right"
+ endif
+
+@enduml

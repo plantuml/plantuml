@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+rectangle "A" as A {
+	 !define DEF_1 DEFINITION
+	 circle "1" as DEF_1
+
+	 !define DEF_2 DEFINITION
+	 circle "2" as DEF_2
+}
+@enduml

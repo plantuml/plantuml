@@ -1,0 +1,89 @@
+---
+output: svg
+---
+@startuml
+
+!define module(x) component x <<module>>
+!define layer package
+skinparam nodesep 70
+skinparam ranksep 120
+
+' Modules of the application layer
+layer Application {
+module(APP1)
+module(MAIN)
+}
+
+
+' Modules of the middleware layer
+layer Middleware {
+module(MID1)
+module(MID2)
+module(MID3)
+module(MID4)
+module(MID5)
+module(MID6)
+module(MID7)
+}
+
+
+' Modules of the drivers layer
+layer Drivers {
+module(EDRV1)
+module(EDRV2)
+module(EDRV3)
+module(EDRV4)
+
+module(DRV1)
+module(DRV2)
+module(DRV3)
+module(DRV4)
+module(DRV5)
+module(DRV6)
+module(DRV7)
+module(DRV8)
+module(DRV9)
+module(DRV10)
+module(DRV11)
+}
+
+
+' Dependencies between modules
+MAIN . APP1
+
+APP1 .. MID1
+APP1 .. MID2
+APP1 .. MID3
+APP1 .. MID4
+APP1 .. MID5
+APP1 .. MID6
+APP1 .. MID7
+
+MID1 .. DRV2
+MID1 .. DRV7
+MID1 .. DRV8
+MID1 .. DRV9
+
+MID2 .. DRV5
+
+MID3 .. EDRV1
+MID3 .. EDRV2
+MID3 .. EDRV4
+MID3 .. DRV1
+MID3 .. DRV4
+MID3 .. DRV5
+MID3 .. DRV11
+
+MID4 .. EDRV3
+
+MID5 .. DRV10
+
+MID6 .. DRV3
+
+MID7 .. DRV6
+
+EDRV1 .. DRV10
+EDRV2 .. DRV10
+EDRV4 .. DRV10
+EDRV3 .. DRV10
+@enduml

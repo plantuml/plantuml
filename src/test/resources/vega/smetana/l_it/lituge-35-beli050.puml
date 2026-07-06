@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+  node "Docker Container - Database Server" as 41 <<Docker>> {
+    node "Database Server" <<HSQLDB>> as 42 {
+      artifact "DatabaseA" as 43 <<Container>>
+      artifact "DatabaseB" <<Container>> as 44 
+    }
+  }
+@enduml

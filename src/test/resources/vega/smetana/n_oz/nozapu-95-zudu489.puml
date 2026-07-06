@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+skinparam maxMessageSize 100
+component component1 [
+   this is a very long component description
+]
+@enduml

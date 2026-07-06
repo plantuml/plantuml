@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startyaml
+あruit: Apple
+size: Large
+color: Red
+@endyaml

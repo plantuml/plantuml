@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+namespace User {
+    class Person <Eloquent> {
+        string #username
+        string #email
+        string #firstname
+        string #lastname
+        int #age
+        Carbon #dateOfBirth
+        Address #address
+        Account #account
+        Profile #profile
+        Boolean #fraudulent
+
+        update()
+        create()
+        delete()
+    }
+    
+    class PersonRich extends Person
+}
+@enduml

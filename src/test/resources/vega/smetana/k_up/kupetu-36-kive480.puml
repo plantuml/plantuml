@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+class B extends A
+class C extends A
+B -[norank]- C
+@enduml

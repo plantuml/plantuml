@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+hide stereotype
+<style>
+.left {
+  HorizontalAlignment left
+}
+.green {
+  FontColor green
+}
+.red {
+  FontColor red
+}
+</style>
+
+rectangle "a\na a" as rect1 <<left>> <<green>>
+rectangle "b\nb b" as rect2 <<left>> <<red>>{
+  rectangle rec
+}
+@enduml

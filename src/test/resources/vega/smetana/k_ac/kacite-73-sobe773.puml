@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+actor Lead as "Vedouci"
+actor Analyst as "Uzivatel DWH"
+actor AP as "Aplikacn podpora"
+component DWH
+component UCM as "UMC NG"
+package out as "mimo hru" {
+  actor ET as "ET specialista"
+  component mIDM as "Mal IDM"
+  component IDM as "HIG IDM"
+  component OmniTracker
+}
+component PRVA as "Rozbit prva"
+@enduml */

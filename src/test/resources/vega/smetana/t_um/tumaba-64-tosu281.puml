@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+[*] --> SubState
+ 
+state SubState {
+    [*] --> State1
+    State1 --> State2
+    note right on link
+    hi1
+    end note
+    State2 --> State3
+}
+ 
+OtherState --> OtherState2
+note right on link
+hi2
+end note
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+node "V" {
+	[Win Domain\nMaster Controller] as DC1
+}
+frame "f" as tomcatJIRA {
+		[JIRA Core]
+		[JIRA Software]
+		[JIRA Portfolio]
+}
+tomcatJIRA --> DC1
+tomcatJIRA -u- REST_JIRA
+tomcatJIRA -u- appLinkJIRA
+appLinkTZ --> appLinkJIRA
+@enduml

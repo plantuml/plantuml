@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+state state_1
+state state_6
+state state_7 {
+[*] --> state_2
+}
+
+[*] --> state_1
+state_1 --> state_7 : next
+state_7 --> state_6 : next
+@enduml

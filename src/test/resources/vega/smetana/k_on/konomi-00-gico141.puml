@@ -1,0 +1,126 @@
+---
+output: svg
+---
+@startuml
+@startuml
+class Subscriber {
+  subscriberId
+}
+
+
+class AccumUsage {
+  subscriberId
+}
+
+class IpSession {
+  ipAddress
+  specificData 
+  sapcOriginStateId 
+  apnId
+}
+
+class GwSession {
+  sessionId
+  peerId 
+  incomingOriginStateid
+  capabilities  
+  +lastActivityTimestamp 
+}
+
+class PepSession {
+  sessionId
+  peerId 
+  incomingOriginStateid
+  capabilities 
+  +lastActivityTimestamp 
+  +type
+}
+
+class AfSession {
+  sessionId
+  afChargingId
+  SIPForkingIndication
+  peerId
+  incomingOriginStateid
+  serviceId 
+  nodeId 
+  specificActions
+  serviceInfoStatus
+  +sessionType
+}
+
+class MediaComponent{
+  number
+  afApplicationId
+  mediaType
+  maxReqBandwidthUL
+  maxReqBandwidthDL
+  flowStatus
+  rrBandwidth
+  rsBandwidth
+  +serviceId
+}
+
+class MediaSubComponent{
+  flowNumber
+  flowStatus
+  flowUsage
+  uplinkIPflow
+  downlinkIPflow
+  +fsDefaultMode 
+}
+note right 
+  fsDefaultMode // true if mscFlowStatus is received
+end note
+
+class DownloadedPolicies {
+  sessionId
+  maxAuthQos 
+  qosProfileId
+  contentFilteringId
+  chargingProfileId
+  3GPP-Charging-Characteristics 
+}
+
+class PccRule {
+  ruleName
+  uplinkIPflow
+  downlinkIPflow
+  precedence
+  ratingGroup
+  flowStatus
+  flowUsage
+  reportingLevel
+  authQoS
+  AfChargingId
+  allocationNotification
+  +type
+  +resourceProfiles
+}
+
+Subscriber "1" --> "1..*" IpSession
+
+Subscriber "1" --> "0..1" AccumUsage
+
+IpSession "1" --> "0..1" AccumUsagePerSession
+
+IpSession "1" --> "1" GwSession
+
+IpSession "1" --> "0..*" PepSession
+
+IpSession "1" --> "0..*" AfSession
+
+AfSession "1" --> "0..*" MediaComponent
+
+MediaComponent "1" --> "1..*" MediaSubComponent
+
+GwSession "0..1" --> "0..1" DownloadedPolicies
+
+PepSession   "0..1" --> "0..1" DownloadedPolicies
+
+AfSession  "0..1" --> "0..1" DownloadedPolicies
+
+DownloadedPolicies "1" --> "0..*" PccRule
+
+MediaSubComponent  "0..1" --> "1" PccRule
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+card A <<stereo1>> 
+card B <<stereo2>> 
+card C <<stereo1>> <<stereo2>> 
+card D <<stereo1>> <<stereo2>> <<stereo3>> 
+card E <<stereo1>> <<stereo3>> 
+
+hide <<stereo1>> stereotype
+hide <<stereo2>> stereotype
+@enduml

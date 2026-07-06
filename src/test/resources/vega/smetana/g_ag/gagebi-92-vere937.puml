@@ -1,0 +1,50 @@
+---
+output: svg
+---
+@startjson
+  {
+    "_id": "5fbfe54275b46ee547661b06",
+    "index": 0,
+    "guid": "c3ae6566-a1e5-48fe-b8ad-7d7dc5fdfe06",
+    "isActive": true,
+    "balance": "$2,530.22",
+    "picture": "http://placehold.it/32x32",
+    "age": 28,
+    "eyeColor": "blue",
+    "name": "Nichole Williams",
+    "gender": "female",
+    "company": "LUXURIA",
+    "email": "nicholewilliams@luxuria.com",
+    "phone": "+1 (932) 429-3748",
+    "address": "911 Withers Street, Tyhee, Maryland, 4805",
+    "about": "In dolor cupidatat occaecat occaecat consectetur occaecat aute amet incididunt quis. Cupidatat aliquip dolore deserunt deserunt. Amet fugiat ad cillum quis aliqua incididunt.\r\n",
+    "registered": "2016-02-02T01:01:33 -01:00",
+    "latitude": 87.31196,
+    "longitude": -87.126263,
+    "tags": [
+      "sit",
+      "duis",
+      "amet",
+      "qui",
+      "Lorem",
+      "Lorem",
+      "excepteur"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Edwards Robinson"
+      },
+      {
+        "id": 1,
+        "name": "Horton Patterson"
+      },
+      {
+        "id": 2,
+        "name": "Haynes Kemp"
+      }
+    ],
+    "greeting": "Hello, Nichole Williams! You have 9 unread messages.",
+    "favoriteFruit": "apple"
+  }
+@endjson

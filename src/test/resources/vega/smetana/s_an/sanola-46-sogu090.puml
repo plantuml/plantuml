@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+' Adapted from https://forum.plantuml.net/17434
+title minimal example
+file f [
+[[{a\nb} tooltip test ]]
+
+| [[{a\\nb} tooltip test on table ]] |
+
+[[{a\nb\nprint("abc\n");} tooltip test ]]
+[[{a\nb\n<code>print("abc\n");</code>} tooltip test ]]
+
+[[{a\nb\nprint("abc\\n");} tooltip test ]]
+[[{a\nb\n<code>print("abc\\n");</code>} tooltip test ]]
+
+| [[{a\\nb\\n<code>print("abc\\n");</code>} tooltip test on table ]] |
+]
+@enduml

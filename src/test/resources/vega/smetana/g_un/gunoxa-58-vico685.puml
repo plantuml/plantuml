@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+hide circle
+hide empty members
+
+entity Entity {
+   * identifying_attribute
+   --
+   * mandatory_attribute **in bold**
+   **optional_attribute**
+}
+@enduml

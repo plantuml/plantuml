@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+component toto
+toto --> titi : foo
+note on link #red: note red
+toto --> titi1 : foo
+note left on link #blue
+	this is my note on left link
+	blue
+end note
+component foo
+note left: this is left
+
+@enduml

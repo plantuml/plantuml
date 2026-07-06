@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+!pragma layout elk
+
+package color {
+	class red
+	class green
+	
+}
+package size {
+	class big
+	class small
+}
+
+size -> color : link between packages
+
+@enduml

@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+<style>
+root {
+    BackgroundColor pink
+    LineStyle 2
+    LineThickness 1
+    LineColor yellow
+}
+</style>
+package package_ok
+node node_ok
+boundary boundary
+control control
+entity entity
+interface  interface
+usecase usecase
+@enduml

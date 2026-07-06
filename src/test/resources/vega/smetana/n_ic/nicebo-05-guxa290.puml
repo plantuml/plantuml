@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+state Check {
+    Check: entry / lock()
+    Check: exit / unlock()
+
+    state ex <<exitpoint>>
+
+    [*] --> LookupRecord
+    LookupRecord --> ex: [found_record()]
+    LookupRecord --> [*]: [default] /\nunregister()
+}
+@enduml    

@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+skinparam linetype polyline
+hide circle
+hide stereotype
+!pragma layout smetana
+
+package Package1 {
+  package Package2 {
+    class Class1 {
+    }
+    class Class2 {
+  }
+  }
+  
+  package Package3 {
+    class Class3 {
+    }
+
+    class Class4 {
+    }
+    Class3 -down[hidden]- Class4
+    Class1 -right[hidden]- Class3: "                      "
+    Class1 -down[hidden]- Class2: "                      "
+    Class2 -right[hidden]- Class3: "              "
+  }  
+}
+@enduml

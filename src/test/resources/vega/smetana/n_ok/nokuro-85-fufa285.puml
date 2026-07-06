@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+a --> b
+note on link
+This is not visible,
+neither in smetana
+nor ELK.
+end note
+
+@enduml

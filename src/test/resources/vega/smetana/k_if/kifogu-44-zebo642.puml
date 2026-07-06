@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+folder a {
+	card b
+}
+folder c {
+	node d
+}
+a --> c
+@enduml

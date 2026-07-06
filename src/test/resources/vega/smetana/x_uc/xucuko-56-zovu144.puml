@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+skinparam componentstyle uml2
+
+component SuperC {
+    component SubC1 {
+        component "Comp 1"
+        component "Comp 2"
+    }
+
+    component SubC2 {
+        component "Comp A"
+        component "Comp B"
+    }
+}
+interface foo
+foo <|-- SuperC
+@enduml

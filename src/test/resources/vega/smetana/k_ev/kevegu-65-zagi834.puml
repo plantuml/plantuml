@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+
+Reporter -- Queue
+Reporter -- WorkerPool
+Reporter -- Report
+
+Queue -- QueueEntry
+WorkerPool -- Worker
+Worker -- QueueEntry
+
+Report -- QueueEntry
+
+note left of Queue : left
+note right of Worker : right
+
+
+@enduml

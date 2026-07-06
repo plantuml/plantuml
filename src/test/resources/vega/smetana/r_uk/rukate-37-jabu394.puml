@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+package org.jgrapes [[jgrapes]] {
+    package org.jgrapes.core [[org/jgrapes/core/package-summary.html#package.description]] {
+    }
+
+    package org.jgrapes.io {
+    }
+
+    package org.jgrapes.http {
+    }
+}
+@enduml

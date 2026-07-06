@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+Class1 <|-- ClassBase : sample association name not exported via txmi:star
+
+Class2 *-- Elements : "contains"
+City "*" --o "1" Country 
+@enduml

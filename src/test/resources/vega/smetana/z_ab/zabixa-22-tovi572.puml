@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+component Something {
+  component Provider
+  interface " " as Interface
+  Provider -() Interface
+}
+
+component SomethingElse {
+  component User
+  Interface )-- User
+}
+@enduml

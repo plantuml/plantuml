@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!definelong TABLE(name)
+entity name
+!enddefinelong
+
+TABLE(house) {
+   * mandatory_attribute **in bold**
+   **optional_attribute**
+}
+@enduml

@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+<style>
+.dashed {
+    LineStyle 5
+    FontColor Green
+}
+</style>
+
+rectangle r
+rectangle r_dashed <<dashed>>
+rectangle r_nested_dashed <<dashed>> {
+}
+
+rectangle r_nested_dashed1 <<dashed>> #pink {
+  rectangle r1
+  rectangle r_dashed1 <<dashed>>
+}
+@enduml

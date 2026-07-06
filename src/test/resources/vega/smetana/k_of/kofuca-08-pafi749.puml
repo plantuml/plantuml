@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!include <awslib14/AWSCommon>
+!include <awslib14/BusinessApplications/all>
+!include <awslib14/Storage/SimpleStorageService>
+
+actor "Person" as personAlias
+WorkDocs(desktopAlias, "Label", "Technology", "Optional Description")
+SimpleStorageService(storageAlias, "Label", "Technology", "Optional Description")
+
+personAlias --> desktopAlias
+desktopAlias --> storageAlias
+
+@enduml

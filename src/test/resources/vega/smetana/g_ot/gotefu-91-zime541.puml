@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+set separator none
+
+package Order {
+    Shipment .. ShipmentStatus
+}
+
+class ShipmentStatus <<enum>> {
+    {field} Waiting Allocation
+    {field} Waiting Backorder
+    {field} Fulfilled (?)
+}
+
+@enduml

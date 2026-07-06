@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+TDCFTemplate <|-- TemplateClimate300001
+TDCFTemplate <|- TemplateClimate300002
+
+@enduml

@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+class Dummy {
+  +fooH
+  -dummyH
+  #other
+  ~last
+  +foo2H()
+  -dummy2()
+  #other2H()
+  ~last2()
+}
+
+hide private,public members
+@enduml

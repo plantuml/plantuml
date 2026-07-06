@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+Import o-- Cycle : est compose de plusieurs
+Cycle --> "1" Vehicule
+Cycle --> "1" Pneumatique
+Import --> "1" Vehicule
+Import --> "1" Pneumatique
+Analyse --> Rapport : Peut generer
+Rapport o-- Cycle : Porte sur
+
+@enduml

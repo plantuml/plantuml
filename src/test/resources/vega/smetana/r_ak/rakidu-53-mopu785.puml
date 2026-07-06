@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+state "Some State" as A_State {
+	state "Task" as Task1
+	||
+	state "Task" as Task2
+	state ExitSuccessful <<exitPoint>>
+    state ExitFailure <<exitPoint>>
+
+}
+@enduml

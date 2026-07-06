@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+rectangle r3 as RThree #line.dotted {
+rectangle r1
+rectangle r2
+}
+r1 --r2
+@enduml

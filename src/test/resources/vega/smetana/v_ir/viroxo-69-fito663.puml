@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+set separator none
+state comp1 {
+
+    state ex <<exitpoint>>
+
+    [*] --> chk
+    chk --> ex
+    chk --> [*]
+}
+
+state comp2
+
+comp2 --> comp1
+comp1 --> comp2
+ex --> comp2
+
+@enduml

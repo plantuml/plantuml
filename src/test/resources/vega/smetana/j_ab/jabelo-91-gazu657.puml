@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+Linecolor violet
+  name {
+    BackGroundColor aliceblue
+    Fontcolor red
+    FontSize 15
+    FontStyle bold
+    FontName Sansserif
+  }
+  description {
+    Fontcolor blue
+    FontStyle italic
+    FontName Serif
+    BackGroundColor palegreen
+  }
+  start {BackGroundColor silver}
+  end {BackGroundColor gold}
+}
+</style>
+
+state A : a a a\na
+state B : b b b\nb
+
+[*] -> A  : start
+A -> B : a2b
+B -> [*] : end
+@enduml

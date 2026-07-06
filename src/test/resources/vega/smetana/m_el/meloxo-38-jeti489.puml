@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator .
+namespace classic.collections {
+Object <|-- ArrayList
+}
+
+namespace net.sourceforge.plantuml {
+class ArrayList
+classic.collections.ArrayList <|-- ArrayList
+}
+@enduml

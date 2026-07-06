@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+
+' here it works
+' skinparam DefaultFontColor blue
+
+skinparam rectangle<<RedContainer>> {
+    StereotypeFontColor red
+    FontColor red
+    BackgroundColor lightred
+    BorderColor darkred
+    RoundCorner 0
+    DiagonalCorner 18
+}
+
+' here it fails
+skinparam DefaultFontColor blue
+
+rectangle "==red container" <<RedContainer>> as rC
+rectangle "==default container" <<container>> as r
+@enduml

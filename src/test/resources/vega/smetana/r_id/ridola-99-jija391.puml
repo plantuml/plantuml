@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+(<&arrow-left> test)
+@enduml

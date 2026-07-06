@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam componentShadowing false
+skinparam rectangleShadowing false
+skinparam actorShadowing false
+skinparam databaseShadowing false
+actor actor
+component component
+rectangle rectangle
+database database
+@enduml

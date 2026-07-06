@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+<style>
+classDiagram {
+    RoundCorner 15
+    .mystyle {
+    	RoundCorner 5
+        BackgroundColor cyan
+        FontStyle Bold
+        FontColor red
+    }
+}
+</style>
+class Alice1 <<<mystyle>>> {}
+class Alice2 <<<mystyle>>> {
+}
+@enduml

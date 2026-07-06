@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+artifact foo1
+artifact foo2 as "This artifact
+is defined
+----
+on several lines"
+component c1
+usecase u2
+@enduml

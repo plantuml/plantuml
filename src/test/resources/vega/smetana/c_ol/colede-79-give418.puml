@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+note as deepCSS0
+  |<#white> Husky / Yorkie |
+  |<#gainsboro> SourceTree0 |
+endnote
+
+note as deepCSS1
+  |= <#white> Husky / Yorkie |= Foo |
+  |<#gainsboro><r> SourceTree1 | foo1 |
+endnote
+
+note as deepCSS2
+  |= Husky / Yorkie |
+  |<#gainsboro> SourceTree2 |
+endnote
+
+note as deepCSS3
+  <#white>|= Husky / Yorkie |= Foo |
+  |<#gainsboro> SourceTree1 | foo1 |
+endnote
+
+
+@enduml

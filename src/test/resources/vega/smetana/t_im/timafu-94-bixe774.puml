@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startjson
+scale max 100*100
+{
+   "fruit":"Apple",
+   "size":"Large",
+   "color": ["Red", "Green"]
+}
+@endjson

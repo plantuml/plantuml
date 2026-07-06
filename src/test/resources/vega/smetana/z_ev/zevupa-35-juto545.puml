@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator .
+class My.Namespace.Person
+@enduml

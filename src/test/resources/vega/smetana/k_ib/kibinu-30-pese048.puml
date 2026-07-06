@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator \\
+ 
+CardBundle\\Card "1" --> "1..*" TagBundle\\Tag
+(CardBundle\\Card,TagBundle\\Tag) .. TagBundle\\CardTag
+@enduml

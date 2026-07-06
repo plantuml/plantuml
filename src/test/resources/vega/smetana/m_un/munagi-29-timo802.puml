@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+namespace N2 {
+  class B0 {}
+  package X {
+  ' same behaviour with together (uncomment next, and comment previous line to see):
+  'together {
+    class B1 {}
+    class B2 {}
+  }
+  class B3 {}
+
+'Add the closing `}` of N2 here, and get an error (uncomment next line to see):
+'}
+
+' Or do not add it, and see B3 not being part of N2.
+
+' But if we link to B3 as `N2.B3` it goes back to the N2 namespace (uncomment next line to see):
+'N2.B0 --> N2.B3
+
+'N3 is not part of N2, even thought N2 was never closed:
+namespace N3 {
+  class C1 {}
+}
+@enduml

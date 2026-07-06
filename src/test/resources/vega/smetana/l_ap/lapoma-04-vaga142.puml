@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+class A
+class B
+
+A --> B : ab >\ncd <\n< ef\n> gh
+
+@enduml

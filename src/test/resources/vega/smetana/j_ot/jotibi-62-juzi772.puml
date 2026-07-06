@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+
+skinparam component {
+  BackgroundColor BlanchedAlmond
+  BackgroundColor<<A>> Red
+}
+
+skinparam interface {
+    BackgroundColor LightBlue
+    BackgroundColor<<A>> Blue
+}
+
+
+component comp1 <<A>>
+interface inter1 <<A>>
+
+inter1 --> [comp1]
+inter2 --> [comp2]
+
+@enduml  

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+!procedure $OBJ()
+class Object {
+name : token
+name : flag
+}
+!endprocedure
+
+$OBJ()
+note left : foo %retrieve_procedure("$OBJ") dummy
+@enduml

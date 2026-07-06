@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+folder folder
+file file
+file {
+  artifact artifact1
+  artifact artifact2
+}
+file MyFile {
+  artifact artifact3
+  artifact artifact4
+}
+file MyOtherFile [
+  Simple text
+  ====
+  Other text
+]
+@enduml

@@ -1,0 +1,85 @@
+---
+output: svg
+---
+@startuml
+
+node node2 [
+no1
+----
+no2
+====
+no3
+--title1--
+no4
+==title2==
+no5
+]
+
+database left [
+no1
+----
+no2
+====
+no3
+--title1--
+no4
+==title2==
+no5
+]
+
+artifact artifact [
+Some text
+----
+Other text
+]
+
+actor actor
+folder folder [
+Some text
+----
+Other text
+]
+node node [
+Some text
+----
+Other text
+]
+frame frame [
+Some text
+----
+Other text
+]
+cloud cloud [
+Some text
+----
+Other text
+]
+database database [
+Some text
+----
+Other text
+]
+storage storage [
+Some text
+----
+Other text
+]
+agent agent [
+Some text
+----
+Other text
+]
+usecase usecase [
+Some text
+----
+Other text
+]
+component component [
+Some text
+----
+Other text
+]
+
+
+
+@enduml

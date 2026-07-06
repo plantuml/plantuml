@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startjson
+[1, 2, true, false, 3]
+@endjson

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+package A {
+  [router]
+  node physical1 {
+      [L]
+  }
+}
+
+package B {
+  node physical1 {
+    [L]
+    [L] -- A.physical1.L
+  }
+}
+@enduml

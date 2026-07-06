@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+
+storage storage
+
+cloud cloud
+
+@enduml

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+(*) -left-> "this activity is
+	defined with an image <img:HelloWorld.png> on several lines
+	and no font" as A1
+
+-up-> "Another activity\n on several lines"
+
+A1 --> "Short activity"
+@enduml

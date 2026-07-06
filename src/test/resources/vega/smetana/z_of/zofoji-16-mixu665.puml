@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+title my title
+legend top
+  This is the legend
+  on several lines
+end legend
+
+class foo
+@enduml

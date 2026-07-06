@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+interface MyInterface {
+}
+
+abstract class AbstractList {
++counter : string
+}
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+
+component "Comp A" as a {
+!a_at_AtoB = "a"
+!a_at_BtoA = "a"
+}
+
+component "Comp B" as b {
+!b_at_AtoB = "b"
+!b_at_BtoA = "b"
+}
+
+a_at_AtoB -->> b_at_AtoB: A to B
+a_at_BtoA <<-- b_at_BtoA: B to A
+@enduml

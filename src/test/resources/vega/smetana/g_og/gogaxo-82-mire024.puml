@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!include <aws/common.puml>
+!include <aws/Storage/AmazonS3/AMAzonS3.puml>
+!include <aws/Storage/AmazonS3/bucket/bucket.puml>
+
+AMAZONS3(s3_internal)
+AMAZONS3(s3_partner,"Vendor's S3")
+s3_internal <-- s3_partner
+@enduml

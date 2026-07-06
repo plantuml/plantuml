@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+skinparam component {
+    Style rectangle
+}
+
+<style>
+rectangle {
+    BackgroundColor #orange
+}
+component {
+    BackgroundColor #red
+    .foo { BackgroundColor #blue }
+}
+</style>
+
+component C1
+component C2 <<foo>>
+rectangle R1 <<foo>>
+@enduml

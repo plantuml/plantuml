@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator \\
+class X1\\X2\\foo {
+  some info
+}
+@enduml

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+:User:
+"Main Admin" as Admin [[http://www.admin.fr]]
+'url of Admin is [[http://www.admin.fr]]
+(Start)
+"Use the application" as (Use) [[http://start]]
+'url of Start is [[http://start]]
+
+@enduml

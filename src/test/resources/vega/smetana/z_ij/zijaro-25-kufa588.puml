@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+<style>
+document {
+  BackgroundColor palegreen
+  'Margin 10
+}
+</style>
+rectangle r
+node n
+file f
+[c]
+@enduml

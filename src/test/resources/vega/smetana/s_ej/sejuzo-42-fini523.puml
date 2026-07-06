@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+class Event_or << Entity >> {
+   [[https://www.openresearch.org/wiki/Property:Event_in_series{foreign key(pagename) of the Event series this event belongs to} series]] : TEXT
+  }
+@enduml

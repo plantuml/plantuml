@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+-class fo{
+	# field1 : type
+	- field2 : type
+	- foo1(param : type2) : type3
+	# foo2(param : type2) : type3
+}
+@enduml

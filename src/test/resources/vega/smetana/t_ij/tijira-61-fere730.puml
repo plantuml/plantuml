@@ -1,0 +1,39 @@
+---
+output: svg
+---
+@startuml
+sdfThing --> "0+" sdfObject : hasObject
+sdfThing --> "0+" sdfThing : hasThing
+sdfThing --> "0+" sdfProperty : hasProperty
+sdfThing --> "0+" sdfAction : hasAction
+sdfThing --> "0+" sdfEvent : hasEvent
+
+sdfObject --> "0+" sdfProperty : hasProperty
+sdfObject --> "0+" sdfAction : hasAction
+sdfObject --> "0+" sdfEvent : hasEvent
+
+sdfAction --> "0+" sdfData : hasInputData
+sdfAction --> "0+" sdfData : hasOutputData
+
+sdfEvent --> "0+" sdfData : hasOutputData
+
+sdfProperty --> "1" sdfData : isInstanceOf
+
+class sdfThing {
+}
+
+class sdfObject {
+}
+
+class sdfProperty {
+}
+
+class sdfAction {
+}
+
+class sdfEvent {
+}
+
+class sdfData {
+}
+@enduml

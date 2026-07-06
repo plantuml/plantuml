@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+class foo
+skinparam dpi 300
+
+note left of foo
+short
+end note
+
+note right of foo
+But this one is very long and
+is on several line 1
+is on several line 2
+is on several line 3
+is on several line 4
+end note
+
+class foo2 {
+  + test1
+  # test2
+  - test3
+  ~ test4
+}
+
+@enduml

@@ -1,0 +1,51 @@
+---
+output: svg
+---
+@startuml
+skinparam style strictuml
+interface "AbstractFactory" as AF {
+  {abstract} CreateProductA()
+  {abstract} CreateProductB()
+}
+class "ConcreteFactory1" as CF1
+class CF1 implements AF {
+  CreateProductA()
+  CreateProductB()
+}
+class "ConcreteFactory2" as CF2
+class CF2 implements AF {
+  CreateProductA()
+  CreateProductB()
+}
+
+package A {
+interface "AbstractProductA" as APA
+class "ProductA2" as PA2
+class PA2 implements APA
+class "ProductA1" as PA1
+class PA1 implements APA
+}
+package B {
+interface "AbstractProductB" as APB
+class "ProductB2" as PB2
+class PB2 implements APB
+class "ProductB1" as PB1
+class PB1 implements APB
+}
+Client -left> AF
+Client -> APB
+Client -> APA
+
+CF2 --> PA2
+CF2 --> PB2
+
+CF1 --> PA1
+CF1 --> PB1
+
+' layout tricks
+A -[hidden]- B
+skinparam package {
+ borderColor White
+ fontColor White
+}
+@enduml

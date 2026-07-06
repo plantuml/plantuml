@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+!pragma layout smetana
+
+a --> b
+note on link
+This is not visible,
+neither in smetana
+nor ELK.
+end note
+
+@enduml

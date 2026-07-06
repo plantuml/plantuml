@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+package package_bold   #palegreen;line:green;line.bold;text:red {
+node n1
+}
+package package_dashed #palegreen;line:green;line.dashed;text:red {
+node n2
+}
+package package_dotted #palegreen;line:green;line.dotted;text:red {
+node n3
+}
+
+@enduml

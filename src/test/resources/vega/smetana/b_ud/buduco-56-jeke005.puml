@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+!global $variable = "changed value"
+!$variable ?= "default value"
+[A] -> [B]: $variable
+@enduml

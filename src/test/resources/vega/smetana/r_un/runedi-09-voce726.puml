@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+artifact foo1 <<Foo>>
+actor actor1 <<Foo>>
+usecase usecase1 <<Foo>>
+component component1 <<Foo>>
+node p1 <<node>> {
+  boundary boundary1 <<Foo>>
+  control control1 <<Foo>>
+  entity entity1 <<Foo with a very long name>>
+}
+interface interface1 <<Foo>>
+
+foo1 --> actor1 : test
+component1 *-- control1 : "1" foo "2"
+interface1 --* boundary1
+usecase1 "3" o--> "5" entity1 : example
+
+@enduml

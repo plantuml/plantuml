@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+object S1
+object S2
+object S3
+object S4
+S1 -[#red]-> S2
+S1 -[#blue,bold]le-> S3
+S1 -r[#blue,bold]-> S4
+
+@enduml

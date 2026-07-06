@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+title
+{{mindmap
+<style>
+mindmapDiagram {
+  node {
+    FontColor #2FA4E7
+    LineColor #2FA4E7
+    BackGroundColor transparent
+  }
+  arrow {
+    LineColor #2FA4E7
+  }
+}
+</style>
+
+* a
+** b
+*** c
+}}
+end title
+@enduml

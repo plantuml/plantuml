@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class Foo
+skinparam classBorderColor    #FFBD42-white
+@enduml

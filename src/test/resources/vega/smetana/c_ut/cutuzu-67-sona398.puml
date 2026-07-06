@@ -1,0 +1,57 @@
+---
+output: svg
+---
+@startuml
+
+skinparam swimlane true
+ partition Customer {
+   (*) --> [Redmine Account] "prepriority" as A1
+   (*) --> "send Mail"
+ }
+
+ partition Redmine Red {
+  if "support@domain.com or customer.support@domain.com ?" then
+   --> [support@domain.com] "create ticket in \n OPS-Support Projekt"
+  else
+   --> [customer.support@domain.com] "create ticket in \n customer OPS Projekt" as A2
+  endif
+
+  A1->A2
+ }
+
+ if "Ticker older 24 Hours ?" then
+  partition OPS-Member {
+    -> [no] "Pull ticket"
+    -> "Verify Problem Qualify ticket with Team and Customer"
+
+    if "Valid ticket ?" then
+       -> [no] "inform Customer"
+       -> "closed, state rejected"
+
+
+    else
+       if "can solved by Ops Team ?" then
+
+          --> [yes] "Work with ticket:\n
+                         check priority\n
+                         Talk to customer\n
+                         Solving Problem" as A4
+
+          if "Problem fixed ?" then
+             --> [yes] "closed Ticket,
+                       state closed"
+          else
+             --> [no] A4
+          endif
+       else
+          -> [no] "own softwareproblem?"
+       endif
+    endif
+ }
+ else
+  partition OPS-Manager {
+    -> [Yes] "push to somebody"
+    -> "Verify Problem Qualify ticket with Team and Customer"
+  }
+ endif
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+component comp1 <<white>>
+component comp2 <<white>><<blue>>
+component comp3 <<blue>><<white>>
+component comp4 <<noskinparam>><<blue>>
+skinparam component {
+  backgroundColor<<white>> White
+  borderColor<<blue>> Blue
+}
+@enduml

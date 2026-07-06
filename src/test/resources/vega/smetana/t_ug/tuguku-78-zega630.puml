@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+visibilityIcon {
+  protected {
+    LineColor DarkGoldenRod
+    BackgroundColor DarkGoldenRod
+  }
+}
+</style>
+
+
+class  Doer    {
+--
+{method} + execute
+{method} # execute_for_all_children
+}
+class  MetaDataScanner {
+--
+{method} # execute_Class
+{method} # execute_Footer
+}
+Doer <|-- MetaDataScanner
+@enduml

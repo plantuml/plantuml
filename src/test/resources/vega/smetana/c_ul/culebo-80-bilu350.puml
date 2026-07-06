@@ -1,0 +1,39 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+  element {BackGroundColor orange}
+  name {
+    BackGroundColor aliceblue
+    Fontcolor blue
+    FontSize 12
+  }
+  description {
+    Fontcolor red
+    FontStyle plain
+    BackGroundColor pink
+  }
+  body {
+    BackGroundColor palegreen
+  }
+}
+</style>
+
+hide empty description 
+
+state s0
+
+state "--Title ('element > title' style)-- Name ('name style')" as s1 {
+  s1: State description (--header style!-- description  style)
+  state "s2 (--title style-- element style)" as s2
+  state s3: long descr. %n()(--header style!-- description  style)
+  state "s4 (--title style-- name style)" as s4
+  s4: long descr. %n()(--header style!-- description  style)
+}
+
+s0 --> s2
+s2 -> s3
+s3 -> s4
+@enduml

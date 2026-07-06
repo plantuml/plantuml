@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam monochrome reverse
+<style>
+document {
+  backgroundcolor transparent
+}
+</style>
+node n {
+file f
+cloud c
+}
+footer Observed on V1.2020.19
+@enduml

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam UsecaseBorderThickness 0.5
+usecase foo1
+@enduml

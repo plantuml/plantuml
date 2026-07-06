@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+skinparam componentBackgroundColor #FEFECE-red
+component Red
+component Blue #0000FF
+
+component Test1 #yellow\FFFFFF
+component Test2 #yellow-blue
+component Test3 #yellow/blue
+component Test4 #yellow|blue
+
+@enduml

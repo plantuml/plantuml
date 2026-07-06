@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+package p1 #red;text:blue;line:yellow {
+	class cl1
+}
+@enduml

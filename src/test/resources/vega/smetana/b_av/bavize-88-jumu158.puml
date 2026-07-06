@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startjson
+{
+    "a": true,
+    "allOf": [
+        "{ ... }",
+        "{ ... }",
+        "{ ... }"
+    ]
+}
+@endjson

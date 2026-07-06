@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+package PR <<Rectangle>> {
+    class PR1
+    class PR2
+}
+
+package PC <<Cloud>> {
+    class PC1
+    class PC2
+}
+@enduml

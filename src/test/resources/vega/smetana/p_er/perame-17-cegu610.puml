@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+   .demo1 {
+      BackGroundColor: lightblue;
+      FontColor: red;
+   }
+}
+</style>
+
+state Foo1 <<demo1>>
+state Foo2 <<BackGroundColor: lightblue; FontColor: red;>>
+
+@enduml

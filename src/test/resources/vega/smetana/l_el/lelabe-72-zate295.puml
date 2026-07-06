@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+<style>
+document {
+  BackGroundColor transparent
+}
+root {
+  FontColor #?black:white
+}
+classDiagram {
+  class {
+    BackGroundColor black
+  }
+}
+</style>
+!assume transparent dark
+title
+my title
+endtitle
+class foo1
+@enduml

@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+'FORMAT
+skinparam frameBorderColor Blue
+skinparam frameBackgroundcolor LightBlue
+skinparam frameShadowing false
+skinparam rectangleBorderColor Green
+skinparam rectangleBackgroundcolor LightGreen
+skinparam rectangleShadowing true
+'ELEMENTS
+frame Foo5 {
+  rectangle Foo6
+}
+@enduml

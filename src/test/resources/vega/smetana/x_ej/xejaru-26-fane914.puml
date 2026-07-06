@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+
+
+node DD {
+}
+
+node CC $all {
+}
+
+node BB <<foo1>> $all {
+}
+
+node AA $all <<foo1>> {
+}
+
+
+remove $all
+
+@enduml

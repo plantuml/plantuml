@@ -1,0 +1,41 @@
+---
+output: svg
+---
+@startuml
+(*) -down-> === T2D ===
+note left: T - 2 days
+=== T2D === --> === T1D05H30M ===
+note left: T - 1 day 5 hrs 30 mins
+=== T1D05H30M === --> === T1D02H ===
+note left: T - 1 day 2 hrs
+--> === T1D ===
+note left: T - 1 day
+--> === T1D2H ===
+note left: 
+
+partition SysAdmin {
+=== T2D === -right-> "1. Run prepareForWebsiteUpdate.linq"
+note right
+ Run this LINQPad script with 'saveChanges = false', 
+ check it doesn't complain about tasks already existing, 
+ then run again with 'saveChanges = true'. 
+ The output will contain commands highlighted in yellow 
+ for you to run on some machines in order to set up the required automated tasks.
+end note
+
+--> "Run prepareForWebsiteUpdate.linq again"
+
+=== T1D === -right-> "Run prepareForWebsiteUpdate.linq again"
+note right
+ Run this LINQPad script with 'saveChanges = false', 
+ and it should now show you any tasks which have run.
+end note
+}
+
+partition WarehouseTasks {
+
+=== T1D05H30M === -right-> flickrImport
+
+
+}
+@enduml

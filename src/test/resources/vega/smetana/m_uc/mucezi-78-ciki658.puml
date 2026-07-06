@@ -1,0 +1,40 @@
+---
+output: svg
+---
+@startuml
+Artifact Dummy12 <<Artifact>> {
+  Artifact Dummy12i <<Artifact>>
+}
+
+Folder Dummy1 <<Folder>> {
+  Folder Dummy1i <<Folder>>
+}
+
+Frame Dummy5 <<Frame>> {
+  Frame Dummy5i <<Frame>>
+}
+
+Rectangle Dummy2
+
+Node Dummy3 <<Node>> {
+ Node Dummy3i <<Node>>
+}
+
+Cloud Dummy6 <<Cloud>> {
+ Cloud Dummy6i <<Cloud>>
+}
+
+Cloud Dummy61 {
+ Cloud Dummy61i <<Cloud>>
+}
+
+Database Dummy7 <<Database>> {
+  Database Dummy7i <<Database>>
+}
+
+Storage Dummy8 <<Storage>> {
+  Storage Dummy8i <<Storage>>
+}
+
+Agent Dummy9 <<Agent>>
+@enduml

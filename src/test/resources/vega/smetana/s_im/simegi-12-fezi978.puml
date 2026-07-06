@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+'!pragma layout smetana
+'!pragma layout elk
+
+<style>
+.a {
+  LineThickness 3
+  Linecolor red
+  Linestyle 3-2
+
+  Fontcolor green
+}
+</style>
+
+card a
+card b
+a -> b <<a>> : Should be green
+@enduml

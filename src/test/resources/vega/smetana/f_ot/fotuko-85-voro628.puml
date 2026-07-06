@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+skinparam Shadowing false
+sprite strategy-resource [16x16/16] {
+0000000000000000
+0000000000000000
+0FFFFFFFFFFFF000
+F222222222222F00
+F222222222222F00
+F22F2F2F22222FF0
+F22F2F2F22222F2F
+F22F2F2F22222F2F
+F22F2F2F22222F2F
+F22F2F2F22222F2F
+F22F2F2F22222FF0
+F222222222222F00
+F222222222222F00
+0FFFFFFFFFFFF000
+0000000000000000
+0000000000000000
+}
+!include <archimate/Archimate>
+archimate #LightGreen "                 <$strategy-resource>\n\nSocial Media\n Competency" as SMC <<strategy-resource>>
+@enduml

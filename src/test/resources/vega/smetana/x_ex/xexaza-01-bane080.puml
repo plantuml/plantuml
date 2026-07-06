@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+Class01 <|-- Class02
+Class03 *-- Class04
+Class04b --* Class03b
+Class05 o-- Class06
+Class06b --o Class05b
+Class07 .. Class08
+Class09 -- Class10
+Class11 <|.. Class12
+Class13 --> Class14
+Class15 <.. Class16
+Class17 ..|> Class18
+Class19 <--* Class20
+@enduml

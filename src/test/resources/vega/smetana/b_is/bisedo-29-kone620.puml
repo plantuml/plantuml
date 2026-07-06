@@ -1,0 +1,51 @@
+---
+output: svg
+---
+@startuml
+artifact artifact #aliceblue;line:blue;line.dotted;text:blue {
+	file f1 #aliceblue;line:blue;line.dotted;text:blue
+}
+card card #aliceblue;line:blue;line.dotted;text:blue {
+	file f2
+}
+cloud cloud #aliceblue;line:blue;line.dotted;text:blue {
+	file f3
+}
+component component #aliceblue;line:blue;line.dotted;text:blue {
+	file f4
+}
+database database #aliceblue;line:blue;line.dotted;text:blue {
+	file f5
+}
+file file #aliceblue;line:blue;line.dotted;text:blue {
+	file f6
+}
+folder folder #aliceblue;line:blue;line.dotted;text:blue {
+	file f7
+}
+frame frame #aliceblue;line:blue;line.dotted;text:blue {
+	file f8
+}
+hexagon hexagon #aliceblue;line:blue;line.dotted;text:blue {
+	file f9
+}
+node node #aliceblue;line:blue;line.dotted;text:blue {
+	file f10
+}
+package package #aliceblue;line:blue;line.dotted;text:blue {
+	file f11
+}
+queue queue #aliceblue;line:blue;line.dotted;text:blue {
+	file f12
+}
+rectangle rectangle #aliceblue;line:blue;line.dotted;text:blue {
+	file f13
+}
+stack stack #aliceblue;line:blue;line.dotted;text:blue {
+	file f14
+}
+storage storage #aliceblue;line:blue;line.dotted;text:blue {
+	file f15
+}
+
+@enduml

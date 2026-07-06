@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+skinparam interface {
+backgroundColor RosyBrown
+borderColor orange
+}
+
+() "Data Access" as DA
+
+DA - [First Component] 
+[First Component] ..> () HTTP : use
+@enduml

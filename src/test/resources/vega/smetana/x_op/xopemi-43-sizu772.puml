@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+partition Conductor #red/white {
+'partition Conductor #red {
+  (*) --> "Climbs on Platform"
+  --> === S1 ===
+  --> Bows
+}
+
+partition Audience #LightSkyBlue {
+  === S1 === --> Applauds
+}
+
+partition Conductor {
+  Bows --> === S2 ===
+  --> WavesArmes
+  Applauds --> === S2 ===
+}
+
+partition Orchestra #CCCCEE {
+  WavesArmes --> Introduction
+  --> "Play music"
+}
+@enduml

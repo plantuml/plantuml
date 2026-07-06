@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+state foo #red
+state name as "longer name definition" #blue 
+@enduml

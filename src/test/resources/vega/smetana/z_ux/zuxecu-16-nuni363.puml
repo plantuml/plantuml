@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+skinparam usecaseBackgroundColor<<A>> BlanchedAlmond
+skinparam actorBackgroundColor<<A>> Black
+
+actor ac1 <<A>>
+usecase UC1 <<A>>
+:ac1: --> (UC1)
+:ac2: --> (UC2)
+
+@enduml  

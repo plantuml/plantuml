@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+map commit1 #white {
+  sha256 => 1
+}
+class x #white ##pink {
+}
+map commit2 #white ##pink {
+  sha256 => 1
+}
+map commit3 #line:red {
+  sha256 => 1
+}
+@enduml

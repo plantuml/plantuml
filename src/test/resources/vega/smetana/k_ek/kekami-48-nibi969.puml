@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+package Afoo1 #red-green {
+  actor Afoo2
+}
+
+database Bfoo1 #red-green {
+  actor Bfoo2
+}
+
+cloud Cfoo1 #red-green {
+  actor Cfoo2
+}
+
+
+@enduml

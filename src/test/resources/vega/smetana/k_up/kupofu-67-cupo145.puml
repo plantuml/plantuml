@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+CustomController --|> App.Http.Controllers.Controller
+@enduml

@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+rectangle r [
+text_1
+== <b><color:red> Only one line on source, for several lines on output ==
+{{
+file f1
+}}
+text_2
+{{
+file f2
+}}
+text_3
+{{
+file f3
+}}
+]
+@enduml

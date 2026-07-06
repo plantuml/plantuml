@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+package "Employees" {
+}
+
+package "Programmers" {
+}
+
+package "Programmers1" {
+}
+
+package "Programmers2" {
+}
+
+package "Programmers3" {
+}
+
+package "Programmers4"{ 
+}
+
+"Employees" +-- "Programmers"
+"Employees" +- "Programmers1"
+"Employees" +-right- "Programmers2"
+"Employees" +-up- "Programmers3"
+@enduml

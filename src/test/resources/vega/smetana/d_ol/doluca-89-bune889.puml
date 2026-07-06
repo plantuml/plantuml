@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+skinparam arrow<<dotted>> {
+    Color orange;text:orange;line.dotted
+}
+
+skinparam arrow<<dashed>> {
+    Color orange;text:orange;line.dashed
+}
+
+
+rectangle "<$person>\n==A" <<person>> as a
+rectangle "==S" <<system>> as s
+rectangle "==E" <<external_system>> as e
+
+a -->> s <<dotted>> : **calls via UI**
+s -->> e <<dashed>> : **calls external**
+@enduml

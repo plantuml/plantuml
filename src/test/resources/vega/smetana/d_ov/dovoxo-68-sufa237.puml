@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+!startsub DO_NOT_WANT_TO_INCLUDE_THIS
+    !log B.BRIEF
+!endsub
+!startsub DETAILS
+    !log B.DETAILS
+    !$HAVE_MODULE_A = 1
+    !$HAVE_MODULE_B = 1
+    component [b] as B
+    !if (%not(%variable_exists("$HAVE_MODULE_A")))
+    	!log I should include A
+    !endif
+    component [b1] as B1
+    component [b2] as B2
+
+    B <-- B1
+    B <-- B2
+    B <-- A
+!endsub
+@enduml

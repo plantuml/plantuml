@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+
+skinparam object {
+  BackgroundColor LightCoral 
+  FontSize 16
+  
+  <<Foo1>> {
+  	FontSize 8
+     BackgroundColor LightBlue
+  }
+  
+}
+
+object A <<Foo1>>
+object B
+
+A *-- B
+
+@enduml  

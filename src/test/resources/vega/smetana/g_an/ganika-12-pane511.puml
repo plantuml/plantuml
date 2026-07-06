@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+<style>
+</style>
+skinparam BackgroundColor transparent
+class foo
+@enduml

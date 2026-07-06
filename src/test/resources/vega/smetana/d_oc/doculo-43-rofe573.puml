@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam handwritten true
+skinparam actorBorderColor<<Foo>> black
+skinparam actorBackgroundColor<<Foo>> DarkSeaGreen
+skinparam usecaseBorderColor<<Foo>> DarkSlateGray
+skinparam usecaseBackgroundColor<<Foo>> DarkSeaGreen
+:actor: <<Foo>>
+(use case) <<Foo>>
+@enduml

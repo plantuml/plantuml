@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+state XA6 {
+XA6 --> XA1
+--
+state XA13
+}
+@enduml 

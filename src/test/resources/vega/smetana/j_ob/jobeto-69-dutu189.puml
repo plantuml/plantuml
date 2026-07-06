@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+skinparam defaultFontName Braille
+class "toto ()@⡹" as toto
+note right of toto : hel⡹⡹lo
+@enduml

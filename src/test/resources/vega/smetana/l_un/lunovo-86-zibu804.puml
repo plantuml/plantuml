@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+A *--> B : yes
+C o--> "1" D
+E "2" <--* F
+G <--* "*" H
+@enduml

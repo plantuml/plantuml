@@ -1,0 +1,80 @@
+---
+output: svg
+---
+@startuml
+<style>
+root {
+  BackgroundColor paleGreen
+  Padding 0
+  Margin 0
+}
+
+document {
+  BackgroundColor #DDD
+  Margin 10 20 30 40
+}
+
+title {
+  BackgroundColor paleGreen
+  Padding 5 30 80 5
+  Margin 40 30 20 10
+}
+
+caption {
+  BackgroundColor paleGreen
+  Padding 40 6
+  Margin 0
+}
+
+
+group {
+  BackgroundColor bisque
+  FontColor White
+  FontSize 32
+  LineColor Red
+}
+
+component {
+  BackgroundColor cyan
+  LineColor blue
+  RoundCorner 10
+  FontColor BlueViolet
+  FontStyle italic
+  FontSize 24
+}
+
+interface {
+  BackgroundColor greenYellow
+  LineColor indigo
+}
+
+arrow {
+  LineColor DeepSkyBlue
+  FontColor MidnightBlue
+  FontSize 10
+  FontStyle bold
+}
+
+</style>
+
+title padding/margin needs example:
+ 
+file "file\n" as package {
+() " " as acc1
+() " " as acc2
+}
+Component c2
+
+acc1 ~RIGHT~ acc2 : "access"
+acc1 <~RIGHT~ acc2 : "r"
+acc1 ~RIGHT~> acc2 : "w"
+acc1 <~RIGHT~> acc2 : "rw"
+
+caption
+What I'd love to be able to do:
+# ±25px bottom padding to //file//
+# add ±10px top margin to the diagram
+# ±5px left&right padding to the document
+# fix the missing space ""here"" (and on 1.)
+end caption
+@enduml

@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+
+class a {
+    int i
+}
+
+class z
+
+note left of a::i
+    This note will be purged
+end note
+
+note right of a
+    This note will survive
+end note
+
+a <-- b
+
+remove @unlinked
+
+@enduml

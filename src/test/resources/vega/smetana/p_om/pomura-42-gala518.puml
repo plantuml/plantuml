@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+(*) --> beginDay
+     beginDay --> newFlowers
+ newFlowers --> newGrePods
+ if "release Date Weavil?" as rw then
+   --> [true] releaseWeavil
+   --> if "release date Midge?" as rm then
+     --> [true] releaseMidge
+     --> ovipositionWeavil
+   else
+     --> [false] ovipositionWeavil
+   endif
+ else
+   --> [false] rm
+ endif
+ ovipositionWeavil --> gallingMidge
+ gallingMidge --> emergenceMidge
+ emergenceMidge --> emergenceWeavil
+ emergenceWeavil --> stateAgingDeterministic
+ stateAgingDeterministic --> endDay
+ endDay --> (*)
+@enduml

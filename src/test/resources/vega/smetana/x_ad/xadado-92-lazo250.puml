@@ -1,0 +1,43 @@
+---
+output: svg
+---
+@startuml
+!procedure msg($source, $destination)
+$source --> $destination
+!endprocedure
+
+!procedure init_class($name)
+class $name {
+$addCommonMethod()
+}
+!endprocedure
+
+!procedure $addCommonMethod()
+  toString()
+  hashCode()
+!endprocedure
+
+!procedure $OBJ()
+class Object {
+  name : token
+  name : flag
+}
+!endprocedure
+
+!unquoted procedure addNote($note, $as) 
+    note "$note" as $as
+!endprocedure
+
+component "C1" as C1 {
+        note "{{\nparticipant MyA as A\nA->>B: prepare\n}}\n" as detailsNote1  
+}
+
+   
+
+note "{{\nclass Object {\n name : token\n name : flag\n}\n}}\n" as detailsNote2
+$OBJ() 
+addNote(%retrieve_procedure("$OBJ"), note1)
+init_class("foo1")
+init_class("foo2")
+msg("foo1", "foo2")
+@enduml

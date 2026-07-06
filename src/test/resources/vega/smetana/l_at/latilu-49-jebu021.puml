@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+note as N1
+👑 default
+Keep Calm
+and
+Align Default
+end note
+@enduml

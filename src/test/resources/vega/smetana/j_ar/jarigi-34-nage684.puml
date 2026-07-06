@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class CopierTXTEnCSV <<(F, white)>>
+class log
+
+class conf <<(F, grey)>>
+conf : FICHIER_CONF = oravoscoms.properties
+conf : chargerConfiguration()
+@enduml

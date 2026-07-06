@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+state XA1 {
+	 state XA4 {
+		 state XA5 {
+			 state XA6
+		 }
+		 state XA7 {
+			  XA7 --> XA10 : Z
+			  XA7 --> XA6
+			 state XA8
+		 }
+		 state XA9 {
+			XA9 --> XA6
+			state XA10 {
+				state XA16 {
+					 XA16 --> XA12
+					 XA16 : X
+					 XA16 --> XA8
+				}
+			}
+		}
+	}
+}
+@enduml 

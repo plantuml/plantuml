@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+   .demo1 {
+      BackGroundColor: lightblue;
+      FontColor: red;
+   }
+}
+</style>
+
+state blue <<#blue>>
+
+state Foo1 <<demo1>> <<##[dotted]blue>> {
+}
+
+state Foo2 <<##[dotted]green>> <<#purple>> {
+  state inner1 <<##[dotted]yellow>>
+}
+
+state out <<##[dotted]gold>> <<###green>>
+
+state Foo3 <<##[bold]green>> {
+  state inner2 <<##[dotted]yellow>>
+}
+
+out --> Foo3.inner2
+@enduml

@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+json myJsonObject {
+  "a": 1
+}
+json myJsonArray {
+  [1,2,3]
+}
+json myJsonNumber {
+  123
+}
+json myJsonTrue {
+  true
+}
+json myJsonFalse {
+  false
+}
+json myJsonString {
+  "a b c"
+}
+json myJsonNull {
+  null
+}
+@enduml

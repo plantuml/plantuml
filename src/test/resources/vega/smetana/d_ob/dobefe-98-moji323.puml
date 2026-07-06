@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+title Embedding for interface note fails
+
+        component "B" as B {
+	}
+
+	component "A" as A {		 
+	}
+
+	B <-[dashed]-> A: API\nDetails:\n{{\na->b:req\nb-->>a:resp\n}}\n
+@enduml

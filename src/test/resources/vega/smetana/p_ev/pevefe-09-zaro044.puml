@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+!global $table = "|= Field1 |= Field 2 |"
+!procedure $row($value1, $value2)
+%set_variable_value("$table", %get_variable_value("$table") + %newline() + "| " + $value1 + " | " + $value2 + " |")
+!endfunction
+
+$row("row 1", "2")
+$row("next", "<#yellow> 2")
+
+rectangle r [
+<i>on rectangle:
+* OK (before 1.2020.20)
+* **KO** (from 1.2020.20) **'regression'**
+$table
+]
+
+title
+<i>on title KO (before/after 1.2020.20) **'no regression'**:
+$table
+end title
+
+@enduml

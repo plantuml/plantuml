@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+component "B" as B {
+}
+component "A" as A {
+}
+note right of A: will not fail if commented
+B 0--0 A
+@enduml

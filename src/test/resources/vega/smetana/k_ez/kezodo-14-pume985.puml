@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+skinparam dpi 192
+'scale 1000 width
+skinparam componentStyle uml2
+[<back:gray><latex>P(y|\mathbf{x}) \mbox{ or } f(\mathbf{x})+\epsilon</latex></back>] as fx
+@enduml

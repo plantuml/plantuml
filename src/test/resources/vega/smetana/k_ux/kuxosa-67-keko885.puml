@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+class pack.ClassA {
+    a
+}
+ClassB::b <-- pack.ClassA::a
+pack.ClassC::c <-- ClassB::b
+@enduml

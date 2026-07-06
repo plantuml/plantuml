@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class __Test__
+class "__Test__" as foo2
+class """http://example.com/resource/001/""" as foo3
+class ""Test"" as foo4
+class """Test""" as foo5
+class "REST resource\n""http://example.com/resource/001/""" as foo6
+@enduml

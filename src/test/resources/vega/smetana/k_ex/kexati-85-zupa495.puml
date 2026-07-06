@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+class A {
+ i : integer
+ x : float
+ ...
+ --
+ setI()
+ getI()
+ ...
+}
+
+class B {
+ i : integer
+ x : float
+ ...
+ setI()
+ getI()
+ ...
+}
+
+@enduml

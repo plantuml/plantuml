@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+set separator none
+left to right direction
+state Somp {
+  state entry1 <<expansionInput>>
+  state entry2 <<expansionInput>>
+  state sin
+  entry1 --> sin
+  entry2 -> sin
+  sin -> sin2
+  state exitA <<expansionOutput>>
+  sin2 --> exitA
+}
+
+[*] --> entry1
+exitA --> Foo
+Foo1 -> entry2
+
+@enduml

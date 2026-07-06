@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+scale 3
+skinparam handwritten true
+
+artifact Artifact #palegreen 
+frame KO #pink {
+file File
+stack Stack
+note right: ko
+}
+@enduml

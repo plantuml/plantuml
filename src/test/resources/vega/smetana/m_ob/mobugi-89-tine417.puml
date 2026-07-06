@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam componentStyle rectangle
+component [component1] #GreenYellow 
+()interface
+
+[component1] -> ()interface
+()interface <.. [component2]
+@enduml

@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+!include <awslib/AWSCommon>
+!include <awslib/General/User>
+
+<style>
+
+file {
+   HorizontalAlignment left
+   FontColor blue
+}
+</style>
+
+User(user, "Trusted user", "")
+
+file policy <<policy>> [
+{
+\t"Action": [
+\t\t"sts:AssumeRole"
+\t],
+\t"Effect": "Allow",
+\t"Resource": <b>"arn:aws:iam::1:role/role"</b>
+}
+]
+
+user -- policy
+@enduml

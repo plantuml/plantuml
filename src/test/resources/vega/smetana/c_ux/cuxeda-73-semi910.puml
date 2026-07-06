@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+rectangle "empty rectangle" <<foobar>> {
+}
+rectangle "outer" <<foobar>> {
+  rectangle inner
+component "empty component" <<foobar>> {
+}
+@enduml

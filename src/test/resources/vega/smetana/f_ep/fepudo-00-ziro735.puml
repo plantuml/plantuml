@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+' Adapted from https://forum.plantuml.net/8537/multiline-usecase-actor-name
+file n as "line1
+line2
+line3" 
+@enduml

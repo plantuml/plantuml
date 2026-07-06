@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+class Dummy1 {
+  thisIsALongmethod1()
+  anotherMetheod()
+  
+  String a1
+  Date d;
+}
+
+class Dummy2 {
+}
+
+Dummy1 - Dummy2
+
+@enduml

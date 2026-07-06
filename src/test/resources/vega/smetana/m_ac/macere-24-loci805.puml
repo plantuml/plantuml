@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+
+title Mon Titre
+
+List <|-- AbstractList
+Collection <|-- AbstractCollection
+
+enum TimeUnit
+
+footer this is a footer
+header
+  this is a long
+  <b>header</b>
+end header
+
+@enduml

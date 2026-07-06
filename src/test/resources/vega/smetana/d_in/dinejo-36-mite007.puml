@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+node GroupA
+node "Group B" {
+}
+node GroupC {
+}
+node GroupD as "Group D"
+node GroupE
+
+[Group B] --> GroupA
+GroupC --> GroupA
+GroupD --> GroupA
+[GroupE] --> GroupA
+@enduml

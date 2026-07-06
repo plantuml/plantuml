@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+circle JunctionAnd #black
+circle JunctionOr #whitesmoke
+archimate #APPLICATION "Do Something" as App_Func1 <<application-function>>
+archimate #MOTIVATION  SomeMotivation
+
+App_Func1 --> SomeMotivation
+
+archimate #APPLICATION "Some Function2" <<application-function>>
+archimate #APPLICATION SomeFunction3 as App_Func4 <<application-function>>
+
+App_Func1 --> App_Func4
+
+@enduml

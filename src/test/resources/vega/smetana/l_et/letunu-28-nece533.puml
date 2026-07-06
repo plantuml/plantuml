@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+	(*) --> "Datensendung stornieren"
+	if "aktive Datensendung" then
+	-->[Ja] "AD05 prüfen"
+	if "AD05 empfangen" then
+	-->[Ja] "Stornierung akzeptieren"
+	--> (*)
+	-->[Nein] "Stornierung nicht akzeptieren"
+	endif
+	-->[Nein] "Stornierung nicht akzeptieren"
+	endif
+@enduml

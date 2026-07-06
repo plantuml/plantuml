@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+skinparam shadowing false
+
+package SFML {
+rectangle System
+rectangle Window
+rectangle Graphics
+rectangle Audio
+rectangle Network
+}
+System <.. Window
+Window <.. Graphics
+System <.. Graphics
+System <.. Audio
+System <.. Network
+@enduml

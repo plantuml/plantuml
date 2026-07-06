@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+
+TrackModels : TrackModels() 
+TrackModels : int trackID
+TrackModels : vector<CrossCameraModel> models 
+TrackModels : bool addModel(CrossCameraModel x) * 
+@enduml

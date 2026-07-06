@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+'https://plantuml.com/class-diagram
+
+package Foo {
+    class Visible
+    class Invisible2
+    hide Invisible2
+}
+
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+class Foo {
+-- A1 --
+coco
+|_ A1
+|_ b()
+  |_ b1
+  |_ b2
+    |_ b2.1
+|_ c()
+}
+@enduml

@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+<style>
+note {
+  BackGroundColor palegreen
+}
+</style>
+
+class class_name {
+member
+}
+
+note left of class_name
+  note on class Ok
+  (palegreen)
+end note
+
+note right of class_name::member 
+  <color:#red>note on member KO
+  (always yellow!)
+end note
+
+@enduml

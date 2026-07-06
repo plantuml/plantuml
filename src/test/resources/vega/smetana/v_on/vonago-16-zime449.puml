@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class A
+class B
+class AssociationClass
+A - B
+note on link: note on link with assication class is ignored
+(A, B) .. AssociationClass
+@enduml

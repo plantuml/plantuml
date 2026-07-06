@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+usecase A
+A - B : < a
+B -- C : > c
+@enduml

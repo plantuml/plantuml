@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+(*) --> " Arret de l'application "
+--> " Arret de la base de donnees "
+--> " FlashCopy des fichiers hors Base de donnees "
+--> ===B1===
+--> " Sauvegarde TSM du disque copie "
+B1 --> " Demarrage de la base de donnees "
+@enduml

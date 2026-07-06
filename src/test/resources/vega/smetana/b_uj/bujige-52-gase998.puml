@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+set separator .
+
+node srv1 {
+ portin br0
+}
+
+node srv2 {
+ portin br0
+}
+
+srv1.br0 --> srv2.br0
+@enduml

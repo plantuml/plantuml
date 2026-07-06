@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+package oft_openflow_types { 
+class cl1
+} 
+note top of oft_openflow_types : bar
+@enduml

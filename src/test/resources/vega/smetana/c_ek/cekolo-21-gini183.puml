@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+state start1  <<start>>
+state choice1 <<choice>>
+state fork1   <<fork>>
+state join2   <<join>>
+state end3    <<end>>
+state sdlreceive <<sdlreceive>>
+state history <<history>>
+state history2 <<history*>>
+@enduml

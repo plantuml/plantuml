@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+component C1 {
+  component A
+  interface I
+  A -() I
+}
+
+component C2 {
+  component U
+  I )-- U
+}
+@enduml

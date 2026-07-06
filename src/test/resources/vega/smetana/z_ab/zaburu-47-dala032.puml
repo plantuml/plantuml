@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+    namespace java.util {
+        abstract class AbstractSet<E>
+        
+        namespace function {
+            interface Supplier<T> {
+                {abstract} +get(): T
+            }
+        }
+    }
+@enduml

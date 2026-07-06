@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam card<<srv>> {
+    BorderThickness 0
+    BackgroundColor transparent
+    FontColor #074d92
+    FontStyle bold
+    StereotypeFontSize 0
+}
+
+card foo1
+card foo2 <<srv>>
+
+@enduml

@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+skinparam defaultFontSize 30
+scale max 1000 width
+allow_mixing
+
+'together {
+	package "[[link to confluence page]]" as abc{
+		package "Example1" as def{ } 
+		package "Example2" as ghj { } 
+		component [abc-service]
+	}
+	package "[[link/to/another/page page]]" as page{
+		package "subpack" as sub_package{ } 
+	}
+'}
+
+
+@enduml

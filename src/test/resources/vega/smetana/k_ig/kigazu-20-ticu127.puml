@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+
+A "1" -- "*" B : id1
+(A,B) . R1
+
+A "1" -- "1" B : id2
+(A,B) . R2
+
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+   state Foo {
+      state Bar {
+	     state xuq3 <<exitPoint>>
+         qux1 --> xuq3
+         ||
+         quux2 --> xuuq4
+      }
+   }
+@enduml

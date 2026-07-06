@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> "toto"
+note top : my note
+
+@enduml

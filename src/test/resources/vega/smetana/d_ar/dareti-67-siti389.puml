@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+package P1 {
+class UC1
+}  
+class UC2
+UC2 --> UC5
+@enduml

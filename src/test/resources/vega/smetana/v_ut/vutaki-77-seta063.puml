@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+class cl1 extends cl2 {
+pour cl1
+}
+interface i1 {
+pourr i1
+}
+
+interface i1 extends i2 {
+ pour i1 encore
+}
+
+class cl3 implements i3 {
+ pour cl3
+}
+
+interface i5 implements i2 {
+pour i5
+}
+
+@enduml

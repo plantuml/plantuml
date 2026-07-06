@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+!pragma svginteractive true
+skinparam actorStyle awesome
+skinparam wrapWidth 150
+skinparam nodesep 5
+title Change request producers
+file "Change request" as Changerequest
+@enduml

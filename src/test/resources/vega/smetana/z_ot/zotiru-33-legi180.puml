@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+<style>
+package {
+  FontColor blue
+  MinimumWidth 300
+}
+group {
+  package {
+    FontColor blue
+    MinimumWidth 300
+  }
+}
+</style>
+
+package not_nested
+note top of not_nested: Width OK
+
+package nested {
+  card c
+}
+note top of nested: <color:red>Width KO
+
+@enduml

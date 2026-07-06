@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+!pragma layout smetana
+actor "User" as client
+usecase "12. Authentication" as authen
+package "DataONE" {
+actor "Coordinating Node" as CN
+actor "Member Node" as MN
+usecase "13. Authorization" as author
+ 
+@enduml

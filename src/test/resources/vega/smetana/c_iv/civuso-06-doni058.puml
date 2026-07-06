@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam activityBackgroundColor<<Foo>> red
+skinparam activityBackgroundColor<<Foo2>> #FFFF00
+skinparam activityFontColor<<Foo2>> blue
+skinparam activityFontSize<<Foo2>> 8
+(*) --> "Activity 1" <<Foo>>
+--> "this is long
+on 2 lines" <<Foo2>>
+@enduml

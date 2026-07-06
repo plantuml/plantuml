@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+!$json_object = {
+"name": "Mark McGwire", "hr": 65, "avg":  0.278
+}
+
+
+rectangle %get_json_type($json_object)
+
+!if %get_json_type($myjson)=="ok"
+rectangle working
+!endif
+
+rectangle %get_json_type($json_object.name)
+
+@enduml

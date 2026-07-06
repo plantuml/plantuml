@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+!pragma graphattributes ordering=in;
+cloud "local network" as LocalNet {
+node "PC1" as PC1
+node "PC2" as PC2
+}
+ 
+node "Cloud Router" as CloudRouter
+ 
+PC1 -- CloudRouter
+PC2 -- CloudRouter
+ 
+cloud "local network" as LocalNet {
+node "N1" as N1
+node "N2" as N2
+node "N3" as N3
+}
+CloudRouter -- N3
+CloudRouter -- N1
+CloudRouter -- N2
+'CloudRouter -- N3
+@enduml

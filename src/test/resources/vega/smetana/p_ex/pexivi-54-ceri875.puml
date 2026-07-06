@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+set namespaceseparator none
+class X.Y.Z
+
+X.Y.Z --> A.B.C
+@enduml

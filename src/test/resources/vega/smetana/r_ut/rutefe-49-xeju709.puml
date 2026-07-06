@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!pragma layout elk
+class foo1
+class foo2
+
+foo1 -> foo2
+
+@enduml

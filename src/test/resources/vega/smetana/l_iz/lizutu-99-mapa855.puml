@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+Title This is the title\nOn several Lines
+Header Header
+Footer Footer
+actor User [[file://c:/toto.txt]]
+User --> (Start the application)
+' url of User is [[file://c:/toto.txt]]
+@enduml

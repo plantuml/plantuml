@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+   [*] -> Super
+   state Super {
+      [*] --> Default
+      Default --> Running : Run
+      DND --> Running : Run
+      Super --> DND : DoNotDisturb
+   }
+
+
+@enduml

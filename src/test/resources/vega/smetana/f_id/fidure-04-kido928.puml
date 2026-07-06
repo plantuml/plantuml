@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+title
+  this is my title
+  {{
+     (toto)
+  }}
+  end
+end title
+
+(*) --> ac1
+note left
+  this is a note
+  {{
+    Bob --> Alice : hello
+  }}
+end note
+
+@enduml 

@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+<style>
+root {
+  FontColor Red
+  BackgroundColor palegreen
+}
+classDiagram {
+  class {
+	  FontColor blue
+	  BackgroundColor yellow
+	  
+	  header {
+	  	FontSize 20
+	  	FontColor violet
+	  }
+  }
+}
+</style>
+
+class o1
+class user {
+  name = "Dummy"
+  id = 123
+}
+
+o1  -> user
+
+@enduml

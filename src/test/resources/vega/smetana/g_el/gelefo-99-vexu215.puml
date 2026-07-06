@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!unquoted procedure OBJ($someName) 
+   class Object {
+        name : token
+        name : $someName
+    }
+!endprocedure
+component "C1" as C1 {
+        note "{{%breakline()participant MyA as A%breakline()A->>B: prepare%breakline()}}" as detailsNote1  
+   }
+note "{{%breakline()participant MyA as A%breakline()A->>B: prepare%breakline()}}" as detailsNote2  
+note "%retrieve_procedure('OBJ', 'foo')" as detailsNote4
+@enduml

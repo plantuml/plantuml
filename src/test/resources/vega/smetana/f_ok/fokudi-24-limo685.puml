@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam shadowing false
+skinparam package {
+    BorderStyle dashed
+}
+
+' uncommenting the following line removes BorderStyle for all packages
+'package "package 1" as p1
+
+package "package 2" as p2 {
+}
+@enduml

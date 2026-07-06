@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam packageShadowing false
+skinparam packageShadowing<<Rectangle>> true
+package Package1 {
+class Comp1
+}
+package Package2 <<Rectangle>> {
+class Comp2
+}
+@enduml

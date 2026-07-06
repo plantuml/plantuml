@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+<style>
+</style>
+
+[*] --> state1
+
+state state1 {
+  state foo1
+  state foo2
+  foo1 --> foo2 : description
+}
+@enduml

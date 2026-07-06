@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+
+class cl1 #blue;text:red;line:yellow {
+  toto1
+  toto2
+  toto3()
+}
+
+cl1 --> cl2
+
+class cl2 #text:blue {
+  toto1
+  toto2
+  toto3()
+}
+
+
+@enduml

@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+
+package "Ge Folder" as GeFolder {
+}
+
+package "Especialized Folder" as EspecializedFolder {
+}
+package "Especialized Folder2" as EspecializedFolder2 {
+}
+package "Especialized Folder3" as EspecializedFolder3 {
+}
+
+GeFolder <.. EspecializedFolder
+GeFolder <.. EspecializedFolder2
+GeFolder <.. EspecializedFolder3
+
+@enduml

@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+skin rose
+state "NO" as no
+no : do stuff
+no : more stuff
+
+state "YES" as yes {
+    yes : do stuff
+    state "YES-NO" as yesno
+      yesno : stuff
+    state "YES-YES" as yesyes
+      yesyes : stuff
+}
+
+no --> yes : go to yes
+yes --> no : go to no
+
+yesno --> yesyes : go to yes-yes
+yesyes --> yesno : go to yes-no
+@enduml

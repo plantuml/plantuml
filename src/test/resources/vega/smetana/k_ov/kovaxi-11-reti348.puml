@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+skinparam wrap_width 150
+
+left to right direction
+
+actor User
+
+User --> (1. select template)
+User --> (2. write uml diagram)
+
+note right of User
+{{
+    skinparam wrap_width 150
+    start
+
+    while (count < max?)
+      :count = count + increment;
+    endwhile
+
+    stop
+}}
+end note
+
+@enduml

@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!unquoted procedure OBJ($someName) 
+   class Object {
+        name : token
+        name : $someName
+    }
+!endprocedure
+component "C1" as C1 {
+        note "{{\nparticipant MyA as A\nA->>B: prepare\n}}\n" as detailsNote1  
+   }
+note "{{\nparticipant MyA as A\nA->>B: prepare\n}}\n" as detailsNote2  
+note "%retrieve_procedure('OBJ', 'foo')" as detailsNote4
+@enduml

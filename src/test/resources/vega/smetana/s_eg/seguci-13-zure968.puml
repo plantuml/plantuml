@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+<style>
+root {
+  FontName "Hack", "DejaVu Sans Mono", "Courier New", "Nimbus Mono L", "Monospaced", Courier, monospace
+}
+</style>
+
+[Component\nABC]
+frame "Frame" {
+  card Card
+}
+@enduml

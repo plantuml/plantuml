@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class a
+note bottom of a
+IF cond THEN
+    flow=1
+ENDIF
+end note
+@enduml

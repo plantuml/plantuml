@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+'!pragma svek_trace on
+
+class A
+
+together {
+	class tog1000
+	class tog1001
+	class tog1002
+}
+
+class B
+
+together {
+	class tog2000
+	class tog2001
+	class tog2002
+	package p1 {
+			class pp1
+			class pp2
+			class pp3
+			class pp4
+		}
+	}
+	pp1 --> tog2000
+}
+
+
+@enduml

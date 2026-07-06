@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+component "a" as a {
+}
+component "b" as b {
+}
+
+' this does not work:
+
+a -[#blue,dashed;#red]-> b: test
+' a -[#blue,dashed]-> b: test
+
+legend
+|= Code |= Description |
+| a -[#blue,dashed]-> b: test | This style works fine |
+| a -[#blue,dashed;#red,dashed]-> b: test | Multiple arrow style works only in Activity diagram\n Can this be supported for Component Diagrams too? |
+end legend
+@enduml

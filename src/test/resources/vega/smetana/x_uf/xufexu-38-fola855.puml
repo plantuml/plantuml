@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+usecase foo
+note left
+foo
+--
+foo2
+==toto==
+meu
+==
+ya
+--
+[[http://www.cot{cloud} my link]] hello
+end note
+
+note as note2
+foo
+--
+foo2
+==toto==
+meu
+==
+ya
+--
+cot
+[[http://www.cot{cloud} my link]] hello
+end note
+
+@enduml

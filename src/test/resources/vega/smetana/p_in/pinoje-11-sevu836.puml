@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+[Windos] as WIN
+interface USB as USBI
+[Long Name] as LN
+
+WIN--USBI
+USBI--LN
+@enduml

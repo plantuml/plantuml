@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+<style>
+mainframe {
+  BackGroundColor aliceblue
+  LineColor blue
+  LineThickness 2.0
+  FontColor blue
+  FontSize 15
+  FontStyle italic
+  Margin 50
+  Padding 100
+  RoundCorner 10
+}
+</style>
+mainframe This is a **mainframe**
+frame frame
+frame f1 {
+frame f2
+file file
+}
+
+frame --> file
+
+@enduml

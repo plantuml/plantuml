@@ -1,0 +1,50 @@
+---
+output: svg
+---
+@startuml
+skinparam {
+
+  shadowing false
+  
+  background {
+    color #3C3F41
+  }
+  
+  default {
+    background {
+      color #3C3F41
+    }
+    border {
+      thickness 1
+      color Grey
+    }
+    font {
+      color Grey
+    }
+  } 
+  
+  usecase {
+    background {
+      color #3C3F41
+    }
+    border {
+      thickness 1
+      color Grey
+    }
+    arrow {
+     color Grey
+    }
+  }
+  
+}
+
+usecase uc1
+usecase uc2
+usecase uc3
+uc1 -o uc2
+  uc2 o-- uc3
+  uc2 o-- (uc4)
+    (uc4) o-- (uc5)
+    (uc4) o-- (uc6)
+
+@enduml

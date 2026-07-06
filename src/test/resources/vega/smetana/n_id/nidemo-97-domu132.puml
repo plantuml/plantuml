@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+skinparam BackgroundColor transparent
+
+skinparam componentStyle uml1
+
+component A {
+   component "A.1.KO" {
+}
+   component A.44 {
+      [A4.1]
+}
+   component "A.2"
+   [A.3]
+   component A.5 [
+A.5] 
+   component A.6 [
+]
+}
+
+[a]->[b]
+@enduml

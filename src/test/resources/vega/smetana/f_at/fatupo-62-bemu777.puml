@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+state X
+note right of X #FFF
+|= header 1 |= header 2 |= header 3 |
+| //A// | abc | def |
+| //B// | qwe | |
+end note
+@enduml

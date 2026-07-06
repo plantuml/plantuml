@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+class foo {
+ field1
+ field2
+ method1()
+ method2()
+}
+class bar
+foo <|-- bar
+@enduml

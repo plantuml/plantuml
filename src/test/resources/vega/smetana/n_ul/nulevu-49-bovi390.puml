@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+sprite AA <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90">
+  <g fill="#FF0000" font-size="30pt">
+    <text x="5" y="30" font-family="Consolas" >A</text>
+    <text x="30" style="fill:#00FF00;" y="30">A</text>
+  </g>
+</svg>
+title <$AA>
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!include <tupadr3/common.puml>
+!include <tupadr3/devicons/mysql.puml>
+
+DEV_MYSQL(db1)
+DEV_MYSQL(db2,label of db2)
+DEV_MYSQL(db3,label of db3,database)
+DEV_MYSQL(db4,label of db4,database,red) #DeepSkyBlue
+
+@enduml

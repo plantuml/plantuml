@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+class CC {
+ UK
+ USA
+ Germany
+}
+
+class users {
+ 1
+ 2
+ 3
+}
+
+CC::USA --> users::3
+@enduml

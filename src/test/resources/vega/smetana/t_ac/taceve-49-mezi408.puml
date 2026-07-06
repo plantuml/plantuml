@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam classHeaderBackgroundColor #4444FF
+skinparam classBackgroundColor #FEFECE-FFFFFF
+class Red
+class Blue #0000FF {
+}
+class Test1 #yellow\FFFFFF
+class Test2 #yellow-blue
+class Test3 #yellow/blue
+class Test4 #yellow|blue
+
+@enduml

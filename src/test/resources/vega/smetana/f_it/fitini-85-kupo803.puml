@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+class a1
+class a2
+a1 --> a2 [[http://www.google.com]] : foo
+@enduml

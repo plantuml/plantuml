@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+class A <<stereo1>> {
+}
+class C <<stereo1>> <<stereo2>> {
+}
+
+hide <<stereo1>> stereotype
+hide <<stereo2>> stereotype
+@enduml

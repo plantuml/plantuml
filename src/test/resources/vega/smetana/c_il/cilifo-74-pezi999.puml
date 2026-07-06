@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+namespace A {
+  class Foo {}
+  Foo ..|> A.B.Baz
+  class Bar {}
+  Bar ..|> A.B.Baz
+}
+
+namespace A.B {
+  interface Baz {}
+  class Qux {}
+  Qux --> Baz
+}
+@enduml

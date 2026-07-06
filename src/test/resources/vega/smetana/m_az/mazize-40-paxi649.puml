@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+
+state state_7 {
+[*] --> s
+}
+
+
+@enduml

@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+(*) -->[message] "toto"
+@enduml

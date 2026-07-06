@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+skinparam shadowing false
+note as n
+  <color:#FF000020>12⬤</color>
+  <color:#FF000080>13⬤</color>
+  <color:#FF0000FF>14⬤</color>
+end note
+state "A<color:#FF000020>A" as A
+state B #FF000080
+state C #FF0000FF
+@enduml

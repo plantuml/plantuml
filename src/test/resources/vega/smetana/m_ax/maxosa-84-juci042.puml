@@ -1,0 +1,46 @@
+---
+output: svg
+---
+@startuml
+<style>
+json {
+  MaximumWidth 200
+  MinimumWidth 100
+  BackGroundColor aliceblue
+  LineColor blue
+  LineThickness 2.0
+  FontColor blue
+  FontSize 15
+  FontStyle italic
+  Margin 50
+  Padding 100
+}
+map {
+  MaximumWidth 200
+  MinimumWidth 100
+  BackGroundColor pink
+  LineColor green
+  LineThickness 1.0
+  FontColor red
+  FontSize 11
+  FontStyle bold
+  Margin 50
+  Padding 100
+}
+</style>
+
+json JSON {
+  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "name": "component c1",
+  "color": ["normal", "green", "red"],
+  "visible": true,
+  "user" : { "age": 23, "name": "John", "array": [1, 2, 3]}
+}
+
+map CapitalCity {
+ UK => London
+ USA => Washington
+ Germany => Berlin
+ Placeholder Text => Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+}
+@enduml

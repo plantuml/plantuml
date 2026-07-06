@@ -1,0 +1,41 @@
+---
+output: svg
+---
+@startuml
+
+!pragma svek_trace on
+
+'left to right direction
+
+component "Temperature Sensor" as tempSensor <<block>> {
+    portout "temp_dK_raw     " as tempSensor_temp_dK_raw
+
+}
+
+
+component "Temperature Processing" as tempProcessing <<block>> {
+
+    portin "temp_dK_raw" as tempProcessing_temp_dK_raw_in
+    portout "temp_dC_filtered" as tempProcessing_temp_dC_filtered_out
+}
+
+component "displayTemp" as displayTemp <<block>> {
+
+    portin "temp_dC" as temp_dC_displayTemp
+    portin "temp_dF" as temp_dF_displayTemp
+
+    rectangle "internals" {
+        component display
+        component conversion
+
+        temp_dC_displayTemp -u-> display
+        temp_dF_displayTemp --> display
+        conversion <--> display
+
+    }
+}
+
+tempSensor_temp_dK_raw --> tempProcessing_temp_dK_raw_in
+tempProcessing_temp_dC_filtered_out --> temp_dC_displayTemp
+
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+skinparam node {
+    backgroundColor Yellow
+    backgroundColor<<st>> LightBlue
+}
+node AA <<st>> {
+  [ZZ]
+}
+node BB {
+  [XX]
+}
+node CC {
+}
+node DD
+@enduml

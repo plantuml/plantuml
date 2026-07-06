@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+interface i
+node n {
+  port p
+  port firstportname
+  port "name-with-dash" as nwd
+}
+
+i --> p
+i --> firstportname
+i --> nwd
+nwd --> firstportname
+@enduml

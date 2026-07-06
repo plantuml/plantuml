@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam BackgroundColor transparent
+
+component A #aliceblue {
+   component "A.1.KO" {
+   }
+   
+   component A.4 {
+      [A4.1]
+   }
+}
+[a]
+@enduml

@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+
+!definelong AWSCLOUD(foo)
+rectangle foo
+!enddefinelong
+
+AWSCLOUD(v1) {
+rectangle rect1
+}
+
+
+@enduml

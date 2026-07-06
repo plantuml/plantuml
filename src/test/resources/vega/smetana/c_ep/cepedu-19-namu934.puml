@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+package foo1 [
+  text containing \n description of foo
+]
+
+package foo2 [
+  = Creole heading
+]
+@enduml

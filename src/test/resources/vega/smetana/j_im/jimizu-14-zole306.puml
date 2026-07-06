@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+together  {
+	rectangle "A" as A #White{
+        }
+	rectangle "B" as B #White{
+        }
+}
+@enduml

@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+
+!include <cloudinsight/tomcat.puml>
+!include <cloudinsight/kafka.puml>
+!include <cloudinsight/java.puml>
+!include <cloudinsight/cassandra.puml>
+
+title Cloudinsight sprites example
+
+skinparam monochrome true
+
+rectangle "<$tomcat>\nwebapp" as webapp
+queue "<$kafka>" as kafka
+rectangle "<$java>\ndaemon" as daemon
+database "<$cassandra>" as cassandra
+
+webapp -> kafka
+kafka -> daemon
+daemon --> cassandra 
+
+@enduml

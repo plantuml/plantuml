@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+class foo1
+package pack1 <<st>> {
+legend
+  This is the legend for the package1
+  on several lines
+end legend
+class foo2
+}
+
+package pack2 {
+legend
+This is the legend for the package2
+end legend
+class foo3
+}
+
+legend
+  This is the legend for the diagram
+  on several lines
+end legend
+
+
+@enduml

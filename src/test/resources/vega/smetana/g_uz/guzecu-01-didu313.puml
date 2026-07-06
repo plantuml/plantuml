@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> Hello
+note left #blue : this is a note
+--> (*)
+note right #green
+ this note
+ is long
+end note
+
+@enduml

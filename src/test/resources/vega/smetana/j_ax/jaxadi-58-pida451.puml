@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+
+package "SAMPLE_1" as pkgsmp1 {
+    package "SAMPLE_2" as pkgsmp2 {
+        class "BigLibrary" as lib {
+        }
+    }
+
+    package "DIFFERENT_SAMPLE" {
+        class "SomeHandler" as handler
+    }
+}
+
+handler -- lib::function_a
+
+
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+state B
+A --> B[H*] : ev1
+A --> B[H*] : ev2
+@enduml

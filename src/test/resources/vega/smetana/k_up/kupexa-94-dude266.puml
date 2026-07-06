@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+[*] --> State1 : hello
+note on link
+  this is a note
+  on several
+  lines
+end note
+
+State1 --> State2 : hello2
+note top on link
+  this is a note
+  on several
+  lines
+end note
+
+@enduml

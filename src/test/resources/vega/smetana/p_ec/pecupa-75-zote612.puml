@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+usecase (UC1)
+(UC2)
+usecase "My usecase3" as UC3
+usecase UC4 as "My usecase4"
+usecase UC5 #red as "My usecase5
+is on several lines
+and finished"
+
+@enduml

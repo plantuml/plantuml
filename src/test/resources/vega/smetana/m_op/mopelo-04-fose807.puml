@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+!define FOO(c, i) <color:c>i</color>
+!define BAR(color) FOO(color, sometext)
+class something {
+	BAR(Red)
+}
+@enduml

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+:User:
+package "RBAC Roles" {
+    :Admin: --|> :User:
+}
+
+@enduml

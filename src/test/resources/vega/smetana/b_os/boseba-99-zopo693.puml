@@ -1,0 +1,55 @@
+---
+output: svg
+---
+@startuml
+skinparam nodesep 60
+'skinparam ranksep 40
+
+class Structure {
+ code : String
+}
+
+
+class UserPerso {
+}
+
+class UserPro {
+}
+
+class UserSpace {
+}
+
+together {
+class UserRole {
+userId : String
+dataroomId : String
+roleId : String
+}
+class User {
+}
+
+enum Role {
+ADMINISTRATOR,
+MANAGER,
+CONTRIBUTOR,
+VISITOR
+}
+}
+
+class Dataroom {
+   code : String
+   name : String
+   quota : integer
+   creation : Date
+   description : String
+}
+
+User <|-- UserPerso
+User <|-- UserPro
+User <|-- UserSpace
+Structure *-- UserPro
+Structure *-- UserSpace
+UserRole "0..*" -- "1" Dataroom
+UserRole "0..*" - "1" User
+Role "1" - "0..*" UserRole
+@enduml

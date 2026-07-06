@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam DefaultFontName "NotExistingFont", "jlm_cmmi10"
+Title Test: "NotExistingFont", "jlm_cmmi10"
+@enduml

@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+class Book
+
+Studient -- Book : read >
+Book - Foo : <size:30>to Foo >
+Book -- Foo1 : >
+Book -- Foo1bis : >
+Book - Foo2 : >
+Book -le- Foo3 : >
+Book -up- Foo4 : >
+Book -up- Foo4b : toFoo >
+
+
+Car -le- Road : goes on >
+Car -ri- Wheel : have 4 >
+
+Center -- D1 : <
+Center - D2 : <
+Center -up- D3 : <
+Center -le- D4 : <
+
+Center2 -- D1 : < to center
+Center2 - D2 : < to center
+Center2 -up- D3 : < to center
+Center2 -le- D4 : < to center
+@enduml

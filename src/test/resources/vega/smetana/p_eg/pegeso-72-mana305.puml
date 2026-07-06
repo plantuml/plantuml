@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+
+class table1 {
+    id
+    --
+    other_id
+    ..
+    honkhonk
+}
+
+class table2 {
+    id
+    --
+    foreignkey
+    ..
+    beepboop
+}
+
+table2::foreignkey --> table1::id
+
+@enduml

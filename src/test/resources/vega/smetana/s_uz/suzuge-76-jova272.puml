@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangle {
+    borderColor<<System Boundry>> Red
+    borderStyle<<System Boundry>> dashed
+    borderThickness<<System Boundry>> 1
+    roundCorner<<System Boundry>> 25
+    fontColor<<System Boundry>> #ababab
+    borderStyle dashed
+    roundCorner 25
+}
+
+rectangle blahblah as bb <<System Boundry>> {
+    rectangle "first" as fst <<System Boundry>> {
+        rectangle third
+        (forth)
+        rectangle fifth <<System Boundry>>
+    }
+    rectangle "second" as scnd
+    fst -> scnd
+
+}
+@enduml

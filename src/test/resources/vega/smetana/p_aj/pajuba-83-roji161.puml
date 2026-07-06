@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+class  AvailabilityCheckRequestor << Singleton >>  << Startup >>  << Stateless Session Bean >>
+@enduml 

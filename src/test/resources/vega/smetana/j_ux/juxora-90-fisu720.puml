@@ -1,0 +1,54 @@
+---
+output: svg
+---
+@startuml
+class FlatWorks {
+**Foo (Model)**
+prop
+prop2
+prop3
+prop3.1
+prop4 :(
+}
+
+class FlatBar {
+**Bar (Model)**
+prop
+prop2
+prop3
+prop3.1
+prop4 :(
+--
+}
+
+FlatWorks::prop3 -r-> FlatBar::prop
+
+
+
+' This doesn't work
+
+class Foo {
+**Bar (Model)**
+|_ prop
+|_ **Bom (Model)**
+  |_ prop2
+  |_ prop3
+    |_ prop3.1
+|_ prop4 :(
+--
+}
+
+
+class Bar {
+**Bar (Model)**
+|_ prop
+|_ **Bom (Model)**
+  |_ prop2
+  |_ prop3
+    |_ prop3.1
+|_ prop4 :(
+--
+}
+
+Foo::prop3 --> Bar::prop
+@enduml

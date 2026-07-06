@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator .
+namespace FirstLevel {
+  class A {
+   b: InterfaceB
+   c: InterfaceC
+  }
+
+  ' BUG: Following line does not work and even worse, it removes the InterfaceB from the diagram display.
+  ' Comment next line and the interfaceB is displayed.
+  A::b --> FirstLevel.SecondLevel.InterfaceB
+
+  ' Linking a field to a different namespace interface is working fine.
+  A::c --> Another.InterfaceC
+}
+
+namespace FirstLevel.SecondLevel {
+  interface InterfaceB {}
+  class B {}
+}
+
+namespace Another {
+  interface InterfaceC {}
+  class C {}
+}
+@enduml

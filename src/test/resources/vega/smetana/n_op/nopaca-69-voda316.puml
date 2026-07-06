@@ -1,0 +1,57 @@
+---
+output: svg
+---
+@startuml
+class foo1
+class foo2
+class foo3
+Package Mirrorix{
+
+class CashFlow{
+  method()
+}
+class Logger{
+  method()
+}
+class Mute{
+  method()
+}
+class Program{
+  method()
+}
+class QtomCnx{
+  method()
+}
+class SqlCnx{
+  method()
+}
+class XmlNavigator{
+  method()
+}
+Package Operations{
+class Annonces{
+  method()
+}
+class Annonces{
+  method()
+}
+class MMDeals{
+  method()
+}
+class FxDeals{
+  method()
+}
+class PayInterco{
+  method()
+}
+class FxHedge{
+  method()
+}
+}
+Program *-- QtomCnx
+Program *-- Annonces
+Program *-- PayInterco
+Program *-- SqlCnx
+Program *-- Mute
+}
+@enduml

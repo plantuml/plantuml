@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam arrowColor<<read>> #green
+skinparam arrowColor<<write>> #line.dashed:blue;text:coral
+component node1
+component node2
+component node3
+node1 --> node2 <<read>> : link1
+node1 --> node3 <<write>> : link2
+node2 --> node3 #coral;text:red : link3
+@enduml

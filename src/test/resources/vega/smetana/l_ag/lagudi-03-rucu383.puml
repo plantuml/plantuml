@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+!pragma layout elk
+class foo1
+class foo2 as "This class\nhas a \nvery long name for test" {
+dummy1
+dummy2
+dummy3
+}
+
+class foo3
+
+class foo4 {
+dummy4
+}
+
+foo1 --> foo2
+foo1 --> foo3
+foo1 --> foo4
+
+foo2 --> red
+foo4 --> red
+foo4 --> blue
+
+@enduml

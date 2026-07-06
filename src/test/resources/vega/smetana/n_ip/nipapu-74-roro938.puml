@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+sprite $motivation-value jar:archimate/value
+skinparam usecase {
+	BorderColor Black
+}
+usecase "Motivation value"  as MV <<$archimate/value>> #Motivation
+
+legend left
+<$motivation-value>:motivation-value
+endlegend
+
+@enduml

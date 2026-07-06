@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> "this <u>is underline</u> end"
+--> "this is underline end"
+
+@enduml

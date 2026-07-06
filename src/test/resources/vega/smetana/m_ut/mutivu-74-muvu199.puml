@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+(*) --> "Activity 1" #red
+--> "Other test
+   on several
+   lines" #00FF00
+   
+if "" then
+  --> "Dummy" #orange
+endif
+@enduml

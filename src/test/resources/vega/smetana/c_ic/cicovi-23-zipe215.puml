@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+package pack1 {
+class Foo1
+}
+class Foo2
+class Foo3
+
+hide Foo1
+@enduml

@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+
+[*] --> Main_NotConnected
+state "NotConnected" as Main_NotConnected [[{Main_NotConnected}]] 
+state "Connected" as Main_Connected [[{Main_Connected}]]  {
+   [*] --> Main_Connected_First
+   state "First" as Main_Connected_First [[{Main_Connected_First}]]  {
+      [*] --> Main_Connected_First_WaitingMeasure
+      state "WaitingMeasure" as Main_Connected_First_WaitingMeasure [[{Main_Connected_First_WaitingMeasure}]] 
+   } 
+} 
+
+ 
+Main_NotConnected --> Main_Connected : ConnectionDone()[]: 
+Main_Connected --> Main_NotConnected : Stop()[]: 
+Main_Connected_First --> Main_Connected_First
+
+@enduml

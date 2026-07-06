@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+<style>
+root {
+  HyperlinkColor #FF0000
+}
+.normal {
+  HyperlinkColor #00FF00
+}
+
+.otro {
+  HyperlinkColor #00FFFF
+}
+</style>
+
+title test on HyperlinkColor [[test link]]
+
+ class uno <<normal>> {
+  * aaa
+  + [[modelo normal]]
+  - bb
+ }
+ 
+  class TRES AS "[[http://www.plantuml.com tres]]" <<otro>> {
+  * aaa
+  + [[otro modelo]]
+  + aa 
+  - bb
+ }
+@enduml

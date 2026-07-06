@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+node node1
+  node node2
+
+  node1 -[#transparent]- node2
+@enduml

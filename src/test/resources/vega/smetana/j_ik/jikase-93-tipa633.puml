@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+Class foo1 <<ABC>><<Foo>>
+Class foo2 <<(D,orange)ABC>>
+Class foo3 <<(D,orange)ABC>><<Foo>>
+Class foo4 <<ABC>><<(D,orange)Foo>>
+Class foo5 <<(D,orange)ABC>><<Foo>><<Bar>>
+@enduml

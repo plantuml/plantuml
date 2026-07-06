@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+skinparam groupInheritance 2
+enum T {
+  X
+  Y
+}
+class B {
+  T t
+}
+class X implements B
+class Y implements B
+B::t ..> T
+@enduml

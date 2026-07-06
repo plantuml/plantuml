@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam backgroundcolor transparent
+State s1 #red|yellow
+note right #black-yellow
+  this is a note
+end note
+@enduml

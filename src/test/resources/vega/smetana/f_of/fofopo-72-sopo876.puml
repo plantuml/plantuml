@@ -1,0 +1,42 @@
+---
+output: svg
+---
+@startuml
+!procedure $line($value)
+|<#$value><color:%reverse_hsluv_color($value)>$value | <%reverse_hsluv_color($value)><color:#$value>%reverse_hsluv_color($value) | <%reverse_color($value)><color:#$value>%reverse_color($value) |
+!end procedure
+
+title
+|=original color |=reverse_hsluv_color |=reverse_color |
+$line("blue")
+$line("red")
+$line("green")
+$line("00FF00")
+$line("yellow")
+$line("757500")
+$line("000")
+$line("111")
+$line("222")
+$line("333")
+$line("444")
+$line("555")
+$line("666")
+$line("777")
+$line("888")
+$line("999")
+$line("AAA")
+$line("BBB")
+$line("CCC")
+$line("DDD")
+$line("EEE")
+$line("FFF")
+$line("c35353")
+$line("54695f")
+$line("85aef1")
+$line("38e4a7")
+$line("bcae23")
+$line("9a2ff4")
+$line("012345")
+$line("ab5c12")
+end title
+@enduml

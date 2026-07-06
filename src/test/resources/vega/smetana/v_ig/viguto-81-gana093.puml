@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+[*] --> State1
+state HandleFailure <<O-O>>
+HandleFailure : FailureSubmachine
+State1 -->O HandleFailure : error1/
+HandleFailure ->O test
+HandleFailure X--> Foo
+HandleFailure X-> Foo2
+@enduml

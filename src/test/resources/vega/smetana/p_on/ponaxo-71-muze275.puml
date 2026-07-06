@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+class "A" as a123
+
+class a123 {
+  int a
+}
+@enduml

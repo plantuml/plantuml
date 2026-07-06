@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+rectangle A1 as "component A1"
+rectangle A2 as "component A2"
+
+A1 -\\ A2 : "relationship"
+
+@enduml

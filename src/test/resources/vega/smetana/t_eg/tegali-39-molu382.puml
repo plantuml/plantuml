@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+
+state State1 {
+   [*] -> State1a
+   State1a --> [*] 
+   --
+   [*] -> State1b
+   State1b --> [*] 
+}
+
+state State2 {
+   [*] -> State2a
+   State2a --> [*] 
+   --
+   [*] -> State2b
+   State2b --> [*] 
+}
+
+[*] --> State1
+State1 --> State2
+@enduml

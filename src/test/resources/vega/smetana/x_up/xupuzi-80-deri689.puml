@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+package foo1 <<Node>> {
+  class Class1
+}
+
+package foo2 <<A>><<B>> {
+  class Class2
+}
+
+package foo3 <<Foo>><<Node>><<Bar>> {
+  class Class3
+}
+
+node foo4 <<Node>> {
+  class Class1
+}
+
+node foo5 <<A>><<B>> {
+  class Class2
+}
+
+node foo6 <<Foo>><<Node>><<Bar>> {
+  class Class3
+}
+@enduml

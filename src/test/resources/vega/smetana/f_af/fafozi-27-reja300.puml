@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class "Class1" as node1 <<Bar>> <<Foo>>
+object "Object1" as node2 <<Bar>> <<Foo>>
+@enduml

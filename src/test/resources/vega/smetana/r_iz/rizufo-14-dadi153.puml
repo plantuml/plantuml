@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam backgroundcolor transparent
+A <|-- B
+A <|-- C
+
+B <|-- D
+@enduml

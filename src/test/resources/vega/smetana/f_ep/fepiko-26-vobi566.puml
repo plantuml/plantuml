@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+
+skinparam rectangle<<boundary>> {
+    StereotypeFontColor red
+    FontColor blue
+    BorderColor green
+    BorderStyle dashed
+}
+
+rectangle "R1" as r1 <<boundary>> {
+  rectangle "R2" as r2 <<boundary>> {
+  }
+}
+
+@enduml

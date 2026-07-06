@@ -1,0 +1,47 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+abstract AbstractDecoder
+abstract TDCFTemplate
+AbstractDecoder <|-- TDCFDecoder
+TDCFDecoder ..> TDCFHandler
+TDCFHandler ..> TDCFTemplate
+TDCFHandler ..> TemplateValidator
+TemplateValidator ..> TDCFTemplate
+package ca.gc.ec.dms.decoder.object #DDDDDD {
+
+Sequence "1" *-- "*" Descriptor
+
+Descriptor "1" o-- "1" Replication
+
+Descriptor "1" *-- "0..1" InElement
+
+Replication "1" *-- "*" InElement
+
+}
+
+TemplateValidator ..> Sequence
+
+TDCFTemplate <|-- TemplateClimate300001
+TDCFTemplate <|-- TemplateNCAWOS348001
+TDCFTemplate <|-- TemplateNCAWOS348003
+TDCFTemplate <|-- TemplateNCHWOS348004
+TDCFTemplate <|-- TemplateSynoptic300001
+TDCFTemplate <|-- TemplateUpperAir300001
+
+TemplateValidator : isValid()
+
+TemplateValidator : validate()
+
+Replication : Multimap<Integer, InElement> replication
+Replication : getReplication()
+Replication : setReplication()
+InElement : getElement()
+Descriptor : getReplication()
+Descriptor : getElement()
+Sequence : addToSequence(String name)
+Sequence : Collection<Descriptor> getSequence(String name)
+
+@enduml

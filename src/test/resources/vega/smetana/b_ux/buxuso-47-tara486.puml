@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+class Bar1
+class Bar2
+together {
+  class Together1
+  class Together2
+  class Together3
+}
+Together1 - Together2
+Together2 - Together3
+
+together {
+  class Bar1
+  class Bar2
+}
+@enduml

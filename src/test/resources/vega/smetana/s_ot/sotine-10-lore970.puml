@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+!define GeneralUsers(e_alias, e_label, e_techn) AWSEntity(e_alias, e_label, e_techn, #232F3E, GeneralUsers, GeneralUsers)
+
+
+!definelong AWSEntity(e_alias, e_label, e_techn, e_color, e_sprite, e_stereo)
+rectangle "==e_label%n()<color:e_color><$e_sprite></color>%n()//<size:TECHN_FONT_SIZE>[e_techn]</size>//" <<e_stereo>> as e_alias
+!enddefinelong
+
+GeneralUsers(sources, "Events", "millions of users")
+
+
+@enduml

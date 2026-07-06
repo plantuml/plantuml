@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+!include <tupadr3/common>
+
+!include <office/servers/database_server>
+!include <office/servers/application_server>
+!include <office/Concepts/firewall_orange>
+!include <office/Clouds/cloud_disaster_red>
+
+' Used to center the label under the images
+skinparam defaultTextAlignment center
+
+title Extended Office Icons Example
+
+package "Use sprite directly" {
+    [Some <$cloud_disaster_red> object]
+}
+
+package "Different makro usages" {
+    OFF_CLOUD_DISASTER_RED(cloud1)
+    OFF_CLOUD_DISASTER_RED(cloud2,Default with text)
+    OFF_CLOUD_DISASTER_RED(cloud3,Other shape,Folder)
+    OFF_CLOUD_DISASTER_RED(cloud4,Even another shape,Database)
+    OFF_CLOUD_DISASTER_RED(cloud5,Colored,Rectangle, red)
+    OFF_CLOUD_DISASTER_RED(cloud6,Colored background) #red
+}
+@enduml

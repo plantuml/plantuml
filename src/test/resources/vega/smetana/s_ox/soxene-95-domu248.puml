@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+    RoundCorner 2
+    Shadowing 0
+}
+</style>
+state A {
+	state B {
+	}
+	state C {
+		state c : state c
+	}
+}
+
+state E {
+  state F
+}
+
+state S1 : state S1
+state S2
+
+F --> S1
+
+@enduml

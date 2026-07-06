@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+[*]-->Track_FSM
+state Track_FSM {
+ state Stop
+ Stop : entry/entry_stop();
+ Stop : exit/exit_stop();
+ Stop --> Chg_Sector : EV_START
+ Run --> Stop : EV_STOP
+ state Run{
+  Run : entry / enter_run();
+  Run : exit / exit_run();
+  state Chg_Sector {
+ }
+  state Do_Sector {
+    Do_Sector : entry / enter_do_sector();
+    Do_Sector : exit / exit_do_sector();
+    state WriteSector
+    WriteSector : aaa
+    state ReadSector
+  }
+ }
+}
+Track_FSM -->[*]
+@enduml

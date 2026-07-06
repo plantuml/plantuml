@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+skin rose
+skinparam {
+IconProtectedColor DarkGoldenRod
+IconProtectedBackgroundColor DarkGoldenRod
+}
+class  Doer    {
+--
+{method} + execute
+{method} # execute_for_all_children
+}
+class  MetaDataScanner {
+--
+{method} # execute_Class
+{method} # execute_Footer
+}
+Doer <|-- MetaDataScanner
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+[*] --> State1
+State1 --> [*]
+State1 : this is a string
+State1 : adding **some code**:\n\
+main() {\n\
+  printf("Hello world");\n\
+}
+
+State1 -> State2
+State2 --> [*]
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam UsecaseBackgroundColor white
+!include <bootstrap/bootstrap>
+
+usecase a as "<$bi-globe>\nbi-globe"
+usecase b as "<$bi-globe,scale=2.5>"
+usecase c as "<$bi-globe{scale=2.5,color=green}>" #line:red
+
+usecase d as "<$bi-bootstrap-fill>"
+usecase e as "<$bi-bootstrap-fill{scale=2.5,color=blue}>"
+usecase f as "<$bi-bootstrap-fill,scale=2.5,color=#00f>"
+@enduml

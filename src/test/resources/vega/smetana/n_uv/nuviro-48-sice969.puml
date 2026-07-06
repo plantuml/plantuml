@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startjson
+{
+    "a": true,
+    "desc": "a",
+    "addP": false,
+    "addP1": false,
+    "addP2": false,
+    "addP3": false,
+    "addP4": false,
+    "addP5": false,
+    "addP6": false,
+    "allOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOfallOf": [
+        "{ ... }",
+        "{ ... }",
+        "{ ... }"
+    ]
+}
+@endjson

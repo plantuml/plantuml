@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+foo1 -down-|> DOWN1
+foo2 --|> DOWN2
+
+dummy3 <|-- DOWN3
+dummy4 <|-do- DOWN4
+@enduml

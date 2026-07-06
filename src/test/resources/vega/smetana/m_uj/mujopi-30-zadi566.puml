@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+package p1{
+}
+
+package p2 <<Rectangle>>{
+class c1
+}
+
+package p3{
+}
+
+p1 -> p2 : works
+p1 -|> p2 : don't work
+
+p1 -|> p3 : works
+@enduml

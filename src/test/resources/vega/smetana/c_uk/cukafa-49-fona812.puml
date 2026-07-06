@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+
+skinparam componentFontSize 18
+skinparam interfaceFontSize 18
+skinparam interfaceBackgroundColor gold
+skinparam componentBackgroundColor gold
+skinparam interfaceBorderColor orange
+skinparam componentBorderColor orange
+skinparam componentColor #FF6655
+skinparam interfaceColor #FF6655
+skinparam componentFontColor #777777
+skinparam interfaceFontColor #777777
+skinparam noteBackgroundColor BlanchedAlmond
+
+[component1]
+()interface
+
+[component1] -> ()interface
+() interface <.. [component2]
+
+@enduml

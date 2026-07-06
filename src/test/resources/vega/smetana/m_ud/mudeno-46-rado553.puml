@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startyaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2020-12-25T00:26:06Z"
+  generateName: blazorindocker-7966669766-
+  labels:
+    app: blazor
+    pod-template-hash: "7966669766"
+  name: blazorindocker-7966669766-9j2bk
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: blazorindocker-7966669766
+    uid: dfb3148b-cff3-42d5-8ac4-e55e3d5450d7
+  resourceVersion: "941757"
+  selfLink: /api/v1/namespaces/default/pods/blazorindocker-7966669766-9j2bk
+  uid: 7cb40e09-eb3f-4a34-b12e-b6ec84441fdb
+@endyaml

@@ -1,0 +1,43 @@
+---
+output: svg
+---
+@startuml
+
+package "PREP" {
+  [PREPjob]
+}
+
+package "BUILD" {
+  [repo aws-templates]
+  [repo chef-data]
+  [chef 12 server]
+  [S3 bucket for customer configuration]
+  [S3 bucket with installers]   
+  [repo builders]
+}
+
+package "WARMUP" {
+  [warmup builders]
+}
+
+package "RUN" {
+  [checks automated-testing]
+}
+
+package "INPUT" {
+  [input automated-testing]
+}
+
+
+package "MONITOR" {
+  [monitor builders]
+}
+
+
+PREP +-- BUILD
+BUILD +-- WARMUP
+WARMUP +-- RUN
+INPUT +-- RUN
+RUN +-- MONITOR
+
+@enduml

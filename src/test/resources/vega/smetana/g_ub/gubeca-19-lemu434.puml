@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+file n [
+Example of YAML file:
+{{yaml
+fruit: Apple
+size: Large
+color:
+ - Red
+ - Green
+}}
+]
+@enduml

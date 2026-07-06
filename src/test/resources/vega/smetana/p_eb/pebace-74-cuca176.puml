@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+!define ICON1 <img:http://www.eclipse.org/tptp/images/ico_home.gif>
+!define ICON2 <img src="http://www.eclipse.org/tptp/images/ico_play.gif">
+component [Application1 ICON1] as A1
+component [Application2 ICON2] as A2
+@enduml

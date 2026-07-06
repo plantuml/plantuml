@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+
+abstract class AbstractEventItem {
+  name:String
+  description:String
+  iconUrl:String
+  iconClassName:String
+  startTime:long
+  sortOrder:int
+  status:EventStatus
+  resultString:String
+  link:String
+}
+
+
+class RacingEventItem extends AbstractEventItem {
+    raceNumber:int
+    flags:RaceFlag[]
+    meetingId:int
+}
+
+class SportEventItem extends AbstractEventItem {
+    marketCount:int
+}
+@enduml

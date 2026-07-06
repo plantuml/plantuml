@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+
+!include <tupadr3/common.puml>
+!include <tupadr3/devicons2/docker.puml>
+
+skinparam componentStyle rectangle
+skinparam ArrowColor #546E7A
+
+!define _dockerbackgroundcolor #7B1FA2
+!define _dockercolor #CE93D8
+!define _dockercoloralternate #F48FB1
+!define _dockertextcolor #FFFFFF
+
+DEV2_DOCKER(app1,<color:_dockertextcolor>FileMonitor,component,_dockercolor) _dockerbackgroundcolor
+DEV2_DOCKER(app2,<color:_dockertextcolor>DataAPI,component,_dockercoloralternate) _dockerbackgroundcolor
+
+app1 -down-> app2
+
+legend right
+|<#blue><color:_dockercolor><$docker>    | App1 |
+|<_dockerbackgroundcolor><color:_dockercoloralternate><$docker> | App2 |
+endlegend
+
+@enduml

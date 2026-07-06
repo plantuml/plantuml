@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+<style>
+port {
+  LineColor #greenyellow
+  BackgroundColor #red
+  .magenta {
+	  LineColor #magenta
+	  BackgroundColor #magenta
+  }
+}
+</style>
+
+component comp {
+  port "8000" as p80
+  port "8010" as p81 <<magenta>>
+  port "8020" as p82 #orange
+  port "8030" as p83 #green;line:blue
+}
+@enduml

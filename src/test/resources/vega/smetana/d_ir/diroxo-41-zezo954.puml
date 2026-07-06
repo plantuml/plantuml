@@ -1,0 +1,36 @@
+---
+output: svg
+---
+@startuml
+/'
+----
+---- @ succeed comment
+---
+'/
+package PetitBeurre <<cloud>> {
+    /'
+    ----
+    ---- @ success comment
+    ---
+    '/
+  class aClass {
+    /'
+    ----
+    ---- @ failure1
+    ---
+    '/
+
+    }
+}
+
+Class someClass {
++ okPublic
+- okPrivate
+# okProtected
+    /'
+         @ failure2
+    '/
+
+}
+
+@enduml

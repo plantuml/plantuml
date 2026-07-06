@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+
+class Graphic{
+	Render()
+}
+class Image
+class Watermarked
+class TransparentBackground
+abstract class GraphicDecorator
+
+GraphicDecorator ..> Graphic : <<implement>>
+Watermarked ..> GraphicDecorator : <<implement>>
+TransparentBackground ..> GraphicDecorator : <<implement>>
+Image ..> Graphic : <<implement>>
+Graphic -* GraphicDecorator
+@enduml

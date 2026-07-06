@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+  arrow {
+    LineColor blue
+    HeadColor red
+  }
+}
+</style>
+
+state a
+state b
+
+a-->b
+
+@enduml

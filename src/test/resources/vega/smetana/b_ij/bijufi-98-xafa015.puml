@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+legend top
+L
+end legend
+
+entity E {
+   ee
+}
+
+package P {
+    legend
+    P legend
+    end legend
+}
+
+package Q {
+    legend
+    Q legend
+    end legend
+    entity Qq {
+      qq
+    }
+}
+@enduml

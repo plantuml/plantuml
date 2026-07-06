@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+A0 - A0
+B1 - A0
+C2 - A0
+A0 - B1 : c 
+@enduml

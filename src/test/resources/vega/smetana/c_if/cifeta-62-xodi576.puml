@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+skinparam Legend {
+  BorderColor blue
+  BorderThickness 5.0
+  FontStyle italic
+}
+skinparam NoteBorderThickness 2.0
+class foo
+legend right
+  This is the Legend!
+end legend
+'note as node7
+'  This is a test note!
+'end note
+@enduml

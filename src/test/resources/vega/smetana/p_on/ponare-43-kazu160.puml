@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+[AA] <<static lib>>
+[BB] <<shared lib>>
+[CC] <<static lib>>
+[Leave me alone] << other lib >>
+
+skinparam component {
+    backgroundColor<<static lib>> Red
+    backgroundColor<<shared lib>> Green
+}
+
+skinparam node {
+	borderColor Green
+	backgroundColor Yellow
+	backgroundColor<<shared node>> Magenta
+}
+
+node node1
+node node2 <<shared node>>
+
+@enduml

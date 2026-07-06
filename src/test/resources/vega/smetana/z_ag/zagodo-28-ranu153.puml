@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+object Obj {
+  Id = "1"
+  Name = "test"
+}
+
+note right of Obj::Name
+  Name of object
+end note
+@enduml

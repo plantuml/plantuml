@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+<style>
+root {
+  FontColor Red
+  BackgroundColor palegreen
+}
+</style>
+
+object London
+
+map CapitalCity {
+ UK *-> London
+ USA => Washington
+ Germany => Berlin
+}
+@enduml

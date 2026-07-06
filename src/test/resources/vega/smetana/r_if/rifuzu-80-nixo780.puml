@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+interface Map<K,V>
+    class HashMap<Long,Customer>
+
+    Map <|.. HashMap
+    Shop [customerId: long] ---> "customer\n1" Customer
+    HashMap [id: Long] -r-> "value" Customer
+@enduml

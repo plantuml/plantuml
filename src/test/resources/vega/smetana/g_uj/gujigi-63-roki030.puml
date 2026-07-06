@@ -1,0 +1,39 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+allowmixing
+
+class arkiv
+class arkivdel
+class klassifikasjonssystem
+class klasse
+class mappe
+class registrering
+class dokumentbeskrivelse
+class dokumentobjekt
+package "Elektronisk dokument"
+
+arkiv "1" o-- "1..*" arkivdel
+arkiv "0..*" o- "1.*" arkiv : underarkiv
+constraint on links: enten/eller
+
+klassifikasjonssystem "0..*" -o "1..*" arkivdel
+klassifikasjonssystem "1" o-- "1..*" klasse
+constraint on links: enten\n/eller
+
+
+klasse "0..1" o-- "0..*" mappe
+klasse "0..1" o- "0..*" klasse : underklasse
+mappe "1" o-- "0..*" registrering
+mappe "0..1" o- "0..*" mappe : undermappe
+mappe .> "0..*" arkivdel
+klasse "1" o- "0..*" registrering
+arkivdel "1" o-- "0..*" registrering
+registrering "1..*" o-- "0..*" dokumentbeskrivelse
+registrering .> "0..*" arkivdel
+dokumentbeskrivelse "1" o-- "0..*" dokumentobjekt
+dokumentbeskrivelse .> "0..*" arkivdel
+dokumentobjekt . "1" "Elektronisk dokument"
+@enduml

@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+node {
+  stereotype {
+    FontSize 20
+  }
+}
+</style>
+
+node node1 <<foo>>
+
+
+@enduml

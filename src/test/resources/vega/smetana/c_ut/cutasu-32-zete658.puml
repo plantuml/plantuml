@@ -1,0 +1,55 @@
+---
+output: svg
+---
+@startuml
+title CarePlan
+skinparam nodesep 10
+skinparam ranksep 10
+skinparam classBackgroundColor Aliceblue
+
+skinparam classBorderColor Gray
+
+skinparam classArrowColor Navy
+
+CarePlan *-- "0..*" Participant : participant
+CarePlan *-- "0..*" Activity : activity
+
+class CarePlan << (R, #FF7700) >> {
+identifier : Identifier 0..1 [[[careplan-definitions.htm#CarePlan.identifier]]]
+patient : Resource(Patient) 1..1 [[[careplan-definitions.htm#CarePlan.patient]]]
+status : code 1..1 [[[careplan-definitions.htm#CarePlan.status]]]
+period : Period 0..1 [[[careplan-definitions.htm#CarePlan.period]]]
+modified : dateTime 0..1 [[[careplan-definitions.htm#CarePlan.modified]]]
+concern : Resource(Problem) 0..* [[[careplan-definitions.htm#CarePlan.concern]]]
+goal : string 0..1 [[[careplan-definitions.htm#CarePlan.goal]]]
+--
+}
+url of CarePlan is [[careplan-definitions.htm#CarePlan]]
+
+class Participant << (E, Aliceblue ) >> {
+role : CodeableConcept 0..1 [[[careplan-definitions.htm#CarePlan.participant.role]]]
+member : Resource(Provider|RelatedPerson|Patient|Organization) 1..1 [[[careplan-definitions.htm#CarePlan.participant.member]]]
+--
+}
+url of Participant is [[careplan-definitions.htm#CarePlan.participant]]
+
+class Activity << (E, Aliceblue ) >> {
+category : code 1..1 [[[careplan-definitions.htm#CarePlan.activity.category]]]
+code : CodeableConcept 0..1 [[[careplan-definitions.htm#CarePlan.activity.code]]]
+prohibited : boolean 1..1 [[[careplan-definitions.htm#CarePlan.activity.prohibited]]]
+schedule : Schedule 0..1 [[[careplan-definitions.htm#CarePlan.activity.schedule]]]
+location : Resource(Location) 0..1 [[[careplan-definitions.htm#CarePlan.activity.location]]]
+performer : Resource(Provider|Organization|RelatedPerson|Patient) 0..* [[[careplan-definitions.htm#CarePlan.activity.performer]]]
+product : Resource(Medication|Product) 0..1 [[[careplan-definitions.htm#CarePlan.activity.product]]]
+dailyAmount : Quantity 0..1 [[[careplan-definitions.htm#CarePlan.activity.dailyAmount]]]
+quantity : Quantity 0..1 [[[careplan-definitions.htm#CarePlan.activity.quantity]]]
+details : string 0..1 [[[careplan-definitions.htm#CarePlan.activity.details]]]
+action : Resource(Any) 0..* [[[careplan-definitions.htm#CarePlan.activity.action]]]
+--
+}
+url of Activity is [[careplan-definitions.htm#CarePlan.activity]]
+
+hide methods
+hide Participant circle
+hide Activity circle
+@enduml

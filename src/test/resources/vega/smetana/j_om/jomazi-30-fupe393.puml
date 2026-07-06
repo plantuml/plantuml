@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+
+
+state "12345678901234567890" as blah5
+
+blah5 -right-> blah6 : b
+
+state "12345678901234567890" as blah6
+@enduml

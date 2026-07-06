@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startuml
+' 2022-06-29 19:54:38, m2uml 2.1, PlantUML 1.2022.7beta1, graphviz 2.44.1, Matlab R2018b, PCWIN64
+    title
+        <font size=18>Pragma Multi Test</font>
+    end title
+    legend top left
+        Note on the folder, m4test.
+        This text shall end up in the box.
+    end legend
+    namespace ltr  {
+        abstract class Singleton {
+            __
+            {method} + getSingletonData
+            {method}{abstract}{static} + instance
+            {method} + setSingletonData
+        }
+        class SingletonImpl <<(S,#FF7700)>> {
+            {field} + myData
+            __
+            {method}{static} + instance
+            {method} + myOperation
+        }
+        class Singleton_pattern_tempate <<(S,#FF7700)>> {
+            __
+            {method}{static} + do_something
+            {method}{static} + Instance
+        }
+    }
+    ltr.Singleton <|-- ltr.SingletonImpl
+@enduml

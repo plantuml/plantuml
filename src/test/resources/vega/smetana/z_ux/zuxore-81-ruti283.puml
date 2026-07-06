@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class "long1" as ID1
+class ID2 as "long2"
+@enduml

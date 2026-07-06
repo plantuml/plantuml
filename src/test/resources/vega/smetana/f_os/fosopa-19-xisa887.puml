@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+
+entity G {
+    ID
+    --
+    C0
+    I
+}
+
+
+C0 --> G::C0
+
+G::I --> I
+
+
+@enduml

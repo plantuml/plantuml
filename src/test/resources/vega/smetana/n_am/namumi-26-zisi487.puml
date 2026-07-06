@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+    namespace pragma {
+        class PragmaStringMultiTest {
+            {field} + p1 
+            __
+            {method} + myMethod
+        }
+    }
+    namespace MyPack {
+        class MyItem {
+            {field} + MyProp 
+            __
+            {method} + MyItem 
+        }
+    }
+    MyPack.MyItem "1" -left- pragma.PragmaStringMultiTest
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+(*)--> "test1 <img:HelloWorld.png>"
+-->[ok] "test2 <b>toto</b>"
+--> (*)
+@enduml

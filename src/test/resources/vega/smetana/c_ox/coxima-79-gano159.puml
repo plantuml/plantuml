@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startyaml
+app.kubernetes.io/component: grafana
+@endyaml 

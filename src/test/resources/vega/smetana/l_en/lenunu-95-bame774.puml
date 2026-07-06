@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+class Example {
+}
+note left
+this is a note
+end note
+'note hidden
+'this is a note
+'end note
+
+Example *-- Data
+note right {
+this is a right note
+}
+@enduml

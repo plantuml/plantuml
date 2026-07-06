@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+state state1 #red
+@enduml

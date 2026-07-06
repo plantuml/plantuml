@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+
+namespace net.sourceforge {
+  c1 <|-- d1
+  c1 --> d2
+}
+@enduml

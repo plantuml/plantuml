@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> "toto"
+note left
+  this is
+  a long
+  <b>note</b>
+ end note
+
+@enduml

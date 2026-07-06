@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+
+package a {
+component foo1
+component foo2
+component foo3
+}
+component unlinked
+component dummy
+
+foo1 -- foo2
+unlinked -- dummy
+
+'Here we remove all components that are unlinked
+remove @unlinked
+
+'Here we remove the component which name is "unlinked"
+remove unlinked
+
+@enduml

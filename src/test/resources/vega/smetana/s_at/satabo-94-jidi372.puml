@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+rectangle "Code Verification" as CodeVerification #dae8fc{
+    rectangle "Automatic" {
+    note "Build" as b
+    note "Static Analysis (Lint)" as st
+    }
+
+    rectangle "Manual" {
+    note "Code Reading" as cr
+    note "Code Inspection and Reviews" as cir
+    }
+    st --> cir
+}
+@enduml

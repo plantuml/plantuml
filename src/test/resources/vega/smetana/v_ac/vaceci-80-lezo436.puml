@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startyaml
+top:
+- a: 1
+  b: 2
+  rest:
+    - c
+    - d: 4
+@endyaml

@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+skinparam StereotypeAlignment right
+skinparam rectangle {
+    Shadowing False
+}
+
+skinparam node {
+    Shadowing False
+    StereotypeAlignment right
+}
+
+skinparam rectangle<<behavioural>> {
+    RoundCorner 10
+
+}
+
+node "Technology Device" as TDevice <<$archimate/technology-device>> #TECHNOLOGY {
+
+rectangle "Technology Function" as TFunction <<$archimate/technology-function>> <<behavioural>> #TECHNOLOGY {
+rectangle "Technology Interface" as TInterface <<$archimate/interface>> #TECHNOLOGY
+}
+}
+@enduml

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+
+        class A
+        note left of A: note
+
+        class B
+
+    B "1" -left- A
+@enduml

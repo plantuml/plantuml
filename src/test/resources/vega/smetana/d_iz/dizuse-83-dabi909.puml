@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam class {
+  BackgroundColor #c3d8f4\#6192d1
+  BorderColor #505050
+  FontColor #505050
+}
+class Class {
+  Dummy
+}
+@enduml

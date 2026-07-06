@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+title this is a title
+footer footer
+header header
+class Bob
+class Alice
+note left of Alice
+  hello <u:#FF0000>toto</u> and <w:green>green</w> and <s:#00FFFF>strike</s> <back:red>ok</back>.
+end note
+@enduml

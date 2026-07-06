@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+
+rectangle X
+rectangle Y
+X -right(0 Y
+
+@enduml

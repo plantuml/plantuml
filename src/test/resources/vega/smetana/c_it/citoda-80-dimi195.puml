@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@starthcl
+locals {
+    "stack_name" : local.network_project_name
+    "code_efs" : "13"
+}
+@endhcl

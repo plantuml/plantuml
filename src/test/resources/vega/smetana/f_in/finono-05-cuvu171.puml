@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam shadowing false
+skinparam monochrome true
+package foo {
+class dummy2
+}
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+namespace N2 {
+  class B0
+  together {
+    class B1
+    class B2
+  }
+  class B3
+}
+@enduml

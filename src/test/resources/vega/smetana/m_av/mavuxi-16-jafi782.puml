@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+component a {
+    component a_sub
+}
+
+component b {
+    component b_sub
+}
+
+hide a
+hide b_sub
+
+@enduml

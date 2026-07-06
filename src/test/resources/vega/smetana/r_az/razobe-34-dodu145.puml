@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+<style>
+arrow {
+  fontcolor red
+  MaximumWidth 150
+}
+</style>
+
+class OrderService
+class PaymentGateway
+class InventoryManager
+
+OrderService -> PaymentGateway : processes payment through external gateway service with validation
+PaymentGateway -> InventoryManager : updates stock levels after successful payment confirmation
+InventoryManager -> OrderService : returns availability status and reservation confirmation
+@enduml

@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+title toto
+Object <|-- Foo
+class Foo [[http://www.google.com]] {
+  + methods1() [[[http://www.yahoo.com/A1{Some explainations about this method}]]]
+  + methods2() [[[http://www.yahoo.com/A2]]]
+ }
+ 
+ class Foo2 {
+  + methods1() [[[http://www.yahoo.com/B1]]]
+  + methods2() [[[http://www.yahoo.com/B2]]]
+ }
+ 
+ class Object [[http://www.fr]] {
+ }
+ 
+Object <|--- Foo2
+@enduml

@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+	set namespaceSeparator .
+	package first {
+      [router]
+	  node physical1 {
+	      [Logical_VLAN_10] - router
+	  }
+	}
+
+	package second {
+	  node physical1 {
+	    [Logical_VLAN_10] - [router]
+	    [Logical_VLAN_10] - first.physical1.Logical_VLAN_10
+	  }
+	}
+@enduml

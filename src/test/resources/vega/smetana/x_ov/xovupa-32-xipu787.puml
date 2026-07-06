@@ -1,0 +1,51 @@
+---
+output: svg
+---
+@startuml
+!definelong SALT(x)
+"{{salt
+%invoke_procedure("_"+x)
+}}
+" as x
+!enddefinelong
+
+!definelong _choose
+{+
+<b>an example
+choose one option
+()one
+()two
+[ok]
+}
+!enddefinelong
+
+!definelong _wait
+{+
+<b>please wait
+operation in progress
+<&clock>
+[cancel]
+}
+!enddefinelong
+
+!definelong _success
+{+
+<b>success
+congratulations!
+[ok]
+}
+!enddefinelong
+ 
+!definelong _error
+{+
+<b>error
+failed, sorry
+[ok]
+}
+!enddefinelong
+
+(*) --> SALT(choose)
+-right-> SALT(wait)
+wait -right-> SALT(success)
+wait -down-> SALT(error)
+@enduml

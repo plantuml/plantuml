@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+set separator none
+state OuterState {
+}
+
+state AbstractState {
+ state InnerState1
+ InnerState2 --> OuterState
+ InnerState2 --> InnerState1
+}
+
+AbstractState --> InnerState1
+
+@enduml

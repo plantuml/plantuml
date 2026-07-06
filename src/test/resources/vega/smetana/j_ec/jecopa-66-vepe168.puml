@@ -1,0 +1,44 @@
+---
+output: svg
+---
+@startuml
+class Dummy1 {
+  +thisIsALongmethod1()
+  +anotherMetheod()
+  
+  +String a1
+  +Date d;
+}
+
+class Dummy2 <<even>> {
+  +thisIsALongmethod1()
+  +anotherMetheod()
+  
+  +String a1
+  +Date d;
+}
+enum Foo1
+
+package example {
+  enum Foo2
+  
+  class Dummy3 {
+    +thisIsALongmethod1()
+    +anotherMetheod()
+    +String a1
+    +Date d;
+  }
+
+  class Dummy4 <<even>> {
+    +thisIsALongmethod1()
+    +anotherMetheod()
+    +String a1
+    +Date d;
+  }
+  
+  hide methods
+  hide enum fields
+
+}
+
+@enduml

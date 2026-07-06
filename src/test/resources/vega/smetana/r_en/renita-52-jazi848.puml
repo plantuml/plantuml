@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+frame f1 {
+   component A
+   component C
+}
+component B
+
+'works
+'remove B
+
+remove A
+@enduml

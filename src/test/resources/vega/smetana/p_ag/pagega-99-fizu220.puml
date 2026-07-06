@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+sprite $serving jar:archimate/serving
+skinparam rectangle {
+roundCorner 25
+}
+sprite $process jar:archimate/process
+rectangle " "  as A <<$process>>
+rectangle " "  as B <<$serving>>
+A -> B
+legend left
+<$serving> :serving
+endlegend
+@enduml

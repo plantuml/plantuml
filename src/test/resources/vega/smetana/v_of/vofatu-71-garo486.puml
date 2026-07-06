@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+title Some Stuff
+
+' Classes
+
+class Company
+
+class BusinessUnit
+
+class Group
+
+class Employee
+
+' Interface Implementations
+
+IGroup ()- Company
+IGroup ()- BusinessUnit
+
+' Relationships
+
+Company --> BusinessUnit
+BusinessUnit --> Group
+Group --> Employee
+@enduml

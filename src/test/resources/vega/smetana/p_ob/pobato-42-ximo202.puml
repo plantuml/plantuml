@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+entity User << aggregate >> implements spring.security.UserDetails, Session
+User "0..*" o--> "1..*" Role : > authorized
+@enduml

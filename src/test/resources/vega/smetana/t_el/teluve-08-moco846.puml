@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam ClassStereotypeFontSize 30
+skinparam ClassStereotypeFontName Times
+
+class Demo << Stereo >>
+
+
+@enduml

@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+skinparam svek true
+[*] --> State1
+State1 --> State2 : start
+State2 --> State1 : pause
+State1 --> State2[H] : resume
+'State1 --> State2[H] : start_over
+State2 --> [*] : quit
+
+state State2 {
+[H] --> Initializing
+Initializing --> Playing1 : play_first
+Initializing --> Playing2 : play_second
+}
+
+state Playing1 {
+[H] --> Moving
+Moving --> Shooting : shoot
+Shooting --> Moving : move
+}
+
+
+@enduml 

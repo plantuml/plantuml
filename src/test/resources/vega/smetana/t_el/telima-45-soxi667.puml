@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator .
+namespace A_NS {
+  A --> B_NS.B
+  class C
+}
+
+namespace B_NS {
+  class B
+  note top : TEST NOTE
+}
+@enduml

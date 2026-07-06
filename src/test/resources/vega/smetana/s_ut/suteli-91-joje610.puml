@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+component [Component 1]
+component [Component 2]
+
+interface "I1" as I1
+
+[Component 1] -- I1
+[Component 2] -l-( I1
+
+
+@enduml

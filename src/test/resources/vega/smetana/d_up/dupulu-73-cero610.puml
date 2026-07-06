@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+skinparam iconPrivateColor #D8424F
+skinparam iconPrivateBackgroundColor #FF86A0
+skinparam iconProtectedColor #B38D22
+skinparam iconProtectedBackgroundColor #FFFF44
+skinparam iconPackageColor #105C9C
+skinparam iconPackageBackgroundColor #1FBBFF
+skinparam iconPublicColor #10864D
+skinparam iconPublicBackgroundColor #1FFF9D
+
+class classe1 {
+  -field1
+  ~field2
+   field3
+  #field4
+  +field5
+
+  -method1()
+  ~method2()
+   method3()
+  #method4()
+  +method5()
+}
+
+@enduml

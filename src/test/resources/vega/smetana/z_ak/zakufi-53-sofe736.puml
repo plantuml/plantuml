@@ -1,0 +1,43 @@
+---
+output: svg
+---
+@startuml
+skinparam classAttributeIconSize 0
+class classe1
+classe1 : -field1
+classe1 : ~field2
+classe1 : field3
+classe1 : #field4
+classe1 : +field5
+
+classe1 : -method1()
+classe1 : ~method2()
+classe1 : method3()
+classe1 : #method4()
+classe1 : +method5()
+
+class classe2
+classe2 : -field1 that is very long long
+classe2 : ~field2
+classe2 : field3
+classe2 : #field4
+classe2 : +field5
+
+classe2 : -method1()
+classe2 : ~method2()
+classe2 : method3()
+classe2 : #method4()
+classe2 : +method5()
+
+class classe3whichisverylong
+classe3whichisverylong : -field1
+classe3whichisverylong : ~field2
+classe3whichisverylong : field3
+classe3whichisverylong : #field4
+classe3whichisverylong : +field5
+classe3whichisverylong : -method1()
+classe3whichisverylong : ~method2()
+classe3whichisverylong : method3()
+classe3whichisverylong : #method4()
+classe3whichisverylong : +method5()
+@enduml

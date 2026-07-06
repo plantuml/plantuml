@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+hide footbox
+(*) --> activity
+@enduml

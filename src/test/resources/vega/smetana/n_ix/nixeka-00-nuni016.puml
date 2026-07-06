@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+rectangle "<&person>ca marche"
+rectangle "==<&person>ca marche pas"
+@enduml

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+state comp1 {
+    state en1 <<entrypoint>>
+    state en2 <<entrypoint>>
+}
+@enduml

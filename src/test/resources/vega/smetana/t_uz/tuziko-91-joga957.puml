@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml 
+a -> b
+note on link #red
+Should be red
+end note
+a --> c
+note on link #blue: Should be blue
+@enduml

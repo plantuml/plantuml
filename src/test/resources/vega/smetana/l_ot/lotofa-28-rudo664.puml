@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+<style>
+document {
+    BackgroundColor transparent
+}
+group {
+    BackgroundColor green
+    LineStyle 5
+    LineThickness 3
+}
+package {
+    BackgroundColor palegreen
+    LineStyle 2
+    LineThickness 2
+}
+</style>
+
+package package1 {
+node n
+package p
+}
+@enduml

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startyaml
+!theme amiga
+fruit: Apple
+size: Large
+color:
+ - Red
+ - Green
+@endyaml

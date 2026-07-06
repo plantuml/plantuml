@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+!$var=" aaa \n bbb \n <u:blue>ccc \n <color:green>ddd <U+000A> eee"
+
+node "$var" as a
+
+node b [
+$var
+on multi-line context
+]
+
+node c [
+<code>
+$var
+</code>
+]
+@enduml

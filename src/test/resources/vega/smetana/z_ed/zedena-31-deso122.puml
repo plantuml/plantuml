@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+package  "A" as RootA {
+    package  B {
+        package  C
+    }
+' display bug
+    package  "A1" as AA1 
+    package  "A" as AAA {
+    File z
+    }
+}
+@enduml

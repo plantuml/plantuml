@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+' Adapted from https://forum.plantuml.net/16928/unicode-inside-sub-diagram-is-not-shown-ok
+rectangle A [
+test 1\ntest 11
+test 2%chr(10)test 22
+test 3 %chr(10)test 33
+test 4 %newline()test44
+]
+@enduml

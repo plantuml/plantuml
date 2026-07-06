@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!include <C4/C4_Container>
+
+
+AddElementTag("3rdParty", $bgColor="#034173", $fontColor="#ffffbf", $borderColor="#034173")
+AddElementTag("no-change", $bgColor="#1275c4", $fontColor="#ffffbf", $borderColor="#1275c4")
+AddElementTag("changes", $bgColor="#145716", $fontColor="#ffffbf", $borderColor="#145716")
+AddElementTag("new", $bgColor="#876a2a", $fontColor="#ffffbf", $borderColor="#876a2a")
+
+@enduml

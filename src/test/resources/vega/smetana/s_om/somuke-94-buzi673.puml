@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml Test
+!theme plain
+
+<style>
+  fork, join {
+    BackgroundColor $FGCOLOR
+  }
+</style>
+
+state ForkTest <<fork>>
+state JoinTest <<join>>
+[*] --> ForkTest
+ForkTest --> State1
+ForkTest --> State2
+State1 --> JoinTest
+State2 --> JoinTest
+JoinTest --> [*]
+@enduml

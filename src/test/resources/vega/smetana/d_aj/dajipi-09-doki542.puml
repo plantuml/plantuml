@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+title foo
+state NewValuePreview [[http://www.yahoo.com/NewValuePreview]] {
+state State1 [[http://www.yahoo.com/State1]]
+
+State1 -> State2
+}
+state Other [[http://www.yahoo.com/Other]]
+
+'url of State1 is [[http://www.yahoo.com/State1]]
+'url of NewValuePreview is [[http://www.yahoo.com/NewValuePreview]]
+'url of Other is [[http://www.yahoo.com/Other]]
+
+note left of NewValuePreview [[http://www.google.com/note1]]
+example1
+end note
+
+note right of NewValuePreview [[http://www.google.com/note2]]
+example2
+end note
+@enduml

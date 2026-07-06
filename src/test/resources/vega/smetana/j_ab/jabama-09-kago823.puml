@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+set separator none
+namespace "MyNamespaceName <img:HelloWorld.png{scale=1.5}>" as net.f-oo {
+class class1
+class class2
+}
+
+@enduml

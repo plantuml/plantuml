@@ -1,0 +1,51 @@
+---
+output: svg
+---
+@startyaml
+# here is a full test for the library!
+# let's start form empty string value :)
+test:
+
+# key contains space is ok
+the key: the value
+
+# we have 10 types natively supported
+# string/multiline/text are take as string
+types:
+  # bool
+  bool: true
+  # byte
+  byte: -1
+  # short
+  short: 3200
+  # int
+  int: -2100000000
+  # long
+  long: 1234321425321
+  # float
+  float: 3.1415926
+  # double
+  double: 123413.4567654567654
+  # char
+  char: c
+  # string
+  string: this is a string
+  # multiline string is one string joined by space (" ")
+  multiline:
+    # value is also commentable 1
+    line 1
+    line 2
+    # value is also commentable 2 (will move up)
+    line 3
+    # value is also commentable 3 (will move up)
+  # text string is one kept literal originally (but cannot comment the value)
+  text: |
+    def func(x) do
+      # do something
+      print x = x * 2
+    end
+  # datetime
+  datetime: 1997-01-06 23:12:10
+
+# finally, this is an orphan comment (will be removed)
+@endyaml

@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+namespace common {
+'    header is broken
+    namespace "<<profile>> profile" as profiles {
+        class X <<metaclass>>
+        class Y <<stereotype>> extends X
+    }
+    namespace classes {
+        class myClass <<y>> {
+            + x : str = "value"
+        }
+    }
+'    relative resolution is broken
+'    classes ..> profiles : <<apply>>
+
+'    resolution works fin with absolute addresses (you'll have to comment line above first)
+    common.classes ..> common.profiles : <<apply>>
+}
+@enduml

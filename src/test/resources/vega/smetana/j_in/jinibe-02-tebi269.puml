@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam backgroundcolor transparent
+skinparam packagebackgroundcolor transparent
+skinparam style strictuml
+package a {
+class B
+}
+@enduml

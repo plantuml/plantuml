@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+set separator none
+skinparam backgroundcolor transparent
+Actor A
+rectangle R1 {
+  A - (UC 1.a)
+}
+rectangle R2 {
+  A - (UC 2)
+}
+@enduml

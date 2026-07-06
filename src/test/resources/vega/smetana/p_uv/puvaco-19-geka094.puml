@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+hide empty description
+state "Dashed 1" as State_1 ##[dashed]
+State_1 : description
+state "Dashed 2" as State_2 ##[dashed]
+@enduml

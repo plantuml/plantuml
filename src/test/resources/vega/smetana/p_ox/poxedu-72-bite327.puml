@@ -1,0 +1,35 @@
+---
+output: svg
+---
+@startyaml
+#highlight xmas-fifth-day/partridges
+#highlight * /french-hens
+#highlight ** /location
+
+doe: "a deer, a female deer"
+ray: "a drop of golden sun"
+pi: 3.14159
+xmas: true
+french-hens: 3
+calling-birds: 
+	- huey
+	- dewey
+	- louie
+	- fred
+xmas-fifth-day: 
+	calling-birds: four
+	french-hens: 3
+	golden-rings: 5
+	partridges: 
+		count: 1
+		location: "a pear tree"
+	turtle-doves: two
+foo: 
+	calling-birds: four
+	french-hens: 0
+	golden-rings: 0
+	partridges: 
+		count: 9
+		location: "a pear tree"
+	turtle-doves: two
+@endyaml

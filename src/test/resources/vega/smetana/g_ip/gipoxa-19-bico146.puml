@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startyaml
+<style>
+yamlDiagram {
+    element {
+      backgroundColor yellow
+    }
+    document {
+      backgroundColor Silver
+    }
+}
+</style>
+fruit: Apple
+size: Small
+color: Red
+@endyaml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+component bidon
+component bidon2
+note "This is a note" as N1
+bidon . N1
+bidon2 .. N1
+@enduml

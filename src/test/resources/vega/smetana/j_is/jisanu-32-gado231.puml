@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+ 
+skinparam class {
+    AttributeFontSize 16
+    AttributeFontName Courier
+}
+ 
+class FontSizeIssue {
+    int     attribute1
+    float   <color:blue>attribute2</color>
+}
+@enduml

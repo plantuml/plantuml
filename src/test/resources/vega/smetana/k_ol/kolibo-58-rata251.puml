@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+rectangle "<b>Test\n<size:12>Test 2\n<size:10>/'''CN1391-TAXCLASS-START'''/U.S. Partnership/'''CN1391-TAXCLASS-END'''/" as CN1391 [[https://www.google.com/1391 {Text}]]  #White /'ICONFORCN1391'/
+@enduml

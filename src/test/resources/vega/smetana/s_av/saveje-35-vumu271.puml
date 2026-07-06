@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+scale 2
+skinparam ArrowLollipopColor yellow
+skinparam BackgroundColor grey
+
+[foo]
+[bar]
+foo -(0)- bar
+foo -0)- bar
+foo -(0- bar
+@enduml

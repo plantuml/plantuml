@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startyaml
+level1:
+    level1.1: "data: value"
+    level1.2: "data:value"
+@endyaml

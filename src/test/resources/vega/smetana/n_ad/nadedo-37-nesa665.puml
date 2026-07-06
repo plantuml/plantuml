@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+<style>
+json {
+  MaximumWidth 200
+  MinimumWidth 200
+}
+</style>
+json JSON {
+  "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+}
+json JSON1 {
+  "text": "a min. test"
+}
+@enduml

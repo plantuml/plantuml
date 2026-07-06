@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+skinparam {
+  ' Pink background just to have easy detection if transparency works.
+  StateBackgroundColor blue
+}    
+hide empty description
+state S {
+    state E <<entryPoint>>
+    state EC <<exitPoint>>
+    
+    state IP <<inputPin>>
+    state OP <<outputPin>>
+}
+@enduml

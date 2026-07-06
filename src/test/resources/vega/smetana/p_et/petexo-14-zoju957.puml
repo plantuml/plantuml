@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+package foo1 <<Node>> {
+ class Class1
+}
+package foo2 <<Card>> {
+ class Class2
+}
+@enduml

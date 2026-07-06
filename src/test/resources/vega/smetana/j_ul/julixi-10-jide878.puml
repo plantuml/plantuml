@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+'skinparam svek true
+hide empty members
+class "CuttingStockPrb\n<two_dims_td>" as csprob2dtd
+abstract class "CuttingStockPrb\n::OrderAbstr<two_dims_td>" as orderabstr2dtd
+class "CuttingStockPrb\n::OrderByHeight<two_dims_td>" as orderbyheight2dtd {
+#LazyCopyPtr\n<MapOrderContent\n<two_dims_td> > map
+}
+class "CuttingStockPrb\n::OrderByWidth<two_dims_td>" as orderbywidth2dtd {
+#LazyCopyPtr\nMapOrderContent\n<two_dims_td,\nLessY<Element<two_dims_td> > >
+}
+class "MapOrderContent\n<two_dims_td>" as contentx
+class "MapOrderContent\n<two_dims_td,\nLessY<Element<two_dims_td>>>" as contenty
+orderabstr2dtd <|-- orderbyheight2dtd
+orderabstr2dtd <|-- orderbywidth2dtd
+orderbyheight2dtd "1..*" --o "1" contentx
+orderbywidth2dtd "1..*" --o "1" contenty
+contentx "*" --o "1" csprob2dtd
+contenty "1..*" --o "1" csprob2dtd
+@enduml

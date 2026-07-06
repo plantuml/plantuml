@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!define my_test(a,b="def b") note right: a, b 
+my_test(123)
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+<style>
+.mystyle {
+  linecolor: blue
+  linethickness: 3
+}
+</style>
+
+card n0
+card n1
+n0 -> n1 <<mystyle>> : label
+@enduml

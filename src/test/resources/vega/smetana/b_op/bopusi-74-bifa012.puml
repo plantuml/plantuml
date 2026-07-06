@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class Alice {
+  method()
+}
+note left of Alice
+  Note \\ (foo text dummy) this
+end note
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+
+          legend
+          <size:8> Rendered with Plantuml Version </size>
+          end legend
+
+@enduml

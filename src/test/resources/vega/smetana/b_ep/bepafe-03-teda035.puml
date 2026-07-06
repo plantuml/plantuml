@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+
+map CapitalCity {
+ UK => London
+ USA => Washington
+ Germany => Berlin
+}
+
+json A {
+"name": "component c1",
+"color": ["normal", "green", "red"],
+"visible": true,
+"user" : { "age": 23, "name": "John"}
+}
+
+
+
+
+@enduml

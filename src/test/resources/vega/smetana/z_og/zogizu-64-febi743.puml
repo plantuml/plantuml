@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+document {
+  backgroundColor red
+}
+element {
+  backgroundColor green
+}
+group {
+  backgroundColor blue
+}
+</style>
+
+database "Group mode database (#yellow)" as d {
+  database simpledatabase
+  database multilinedatabase[
+    = Multi-line database
+    More detail goes here
+  ]
+}
+
+
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+class javax.sound.sampled.AudioFormat.Encoding
+net.sourceforge.mazix.components.sound.AudioManager ..> javax.sound.sampled.AudioFormat.Encoding
+net.sourceforge.mazix.components.sound.AudioTest ..> javax.sound.sampled.AudioFormat
+@enduml

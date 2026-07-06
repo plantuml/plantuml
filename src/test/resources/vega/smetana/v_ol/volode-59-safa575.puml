@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+Car -- Wheel : [[http://google.com test]]
+@enduml

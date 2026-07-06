@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+[*] -> State1
+state A {
+    State1 -> State2 : auto
+    State1 <- State2
+}
+@enduml

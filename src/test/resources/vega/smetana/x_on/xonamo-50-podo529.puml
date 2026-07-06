@@ -1,0 +1,170 @@
+---
+output: svg
+---
+@startuml
+
+title Domain Decomposition Assignment
+skinparam componentStyle uml2
+'!theme crt-amber
+!pragma layout smetana
+
+
+
+'CLASSES
+'Base Stucture
+class Credits
+note right
+    <b>THE LEGENDARY NOTE</b>
+    * Domain Decomposition Assignment
+    * Sjors Kaagman
+    * Wessel Roelofse
+end note
+
+Enum CoinType {
+  Normal,
+  Invisible,
+  Region,
+  CollectedRegion
+}
+
+class Cappy {
+  .. Fields ..
+- FlightSpeed: float
+- HasBounce: bool
+~ Direction: Vector3
+~ Force: Vector3
+  .. Methods ..
+-Throw(): public void { Vector3 direction, Vector3 force }
+~Awake(): void {}
+~Update(): void {}
+}
+
+class Mario {
+  .. Fields ..
+- JumpForce: float
+- WalkSpeed: float
+  .. Methods ..
+-Jump(): public void { }
+~Awake(): void {}
+~Update(): void { }
+}
+
+abstract class InteractionInitiator {
+  .. Methods ..
+~OnCollisionEnter(): void { Collider other }
+}
+
+abstract class Capturable {
+  .. Fields ..
+- InCapture: bool { get; private set; }
+  .. Methods ..
+#OnCaptureStart(): virtual void {}
++CaptureUpdate(): abstract void {}
+#OnCaptureEnd(): virtual void {}
+}
+
+class Interactable {
+  .. Fields ..
+- HasCooldown: bool
+- OnCooldown: bool { get; private set; }
+- CooldownTime: float { get; private set; }
+  .. Methods ..
+-OnInteract(): public void { InterationInitiator intiator }
+#CapInteract(): virtual void { Cappy intiator }
+#MarioInteract(): virtual void { Mario intiator }
+
+}
+
+note right
+    <b>The Interactable class splits the interaction back up.</b>
+    This way the collision code has to be written only once and
+    after adding a new Initiatior the Interactable can use a .GetType() 
+    to call a virtual function without having to modify any of the other 
+    classes.
+end note
+
+'Example Implementations
+class Frog {
+  .. Fields ..
+- JumpForce: float
+  .. Methods ..
+~Awake(): void {}
+~Update(): void {}
+}
+
+class Button {
+  .. Fields ..
+- OnClick: event
+  .. Methods ..
+-OnActivate(): public void {}
+-OnDeActivate(): public void {}
+}
+
+class Pipe {
+  .. Fields ..
+- Target: Pipe
+  .. Methods ..
+-OnEnter(): public void {}
+-OnExit(): public void {}
+}
+
+class Chest {
+  .. Fields ..
+- Contains: GameObject
+- IsOpened: bool { get; private set; }
+  .. Methods ..
+-OnOpened(): public void {}
+-Reset(): public void {}
+}
+
+class Coin {
+  .. Fields ..
+- Type: CoinType
+  .. Methods ..
+-OnPickup(): public void {}
+}
+
+class TRex {
+  .. Fields ..
+- AttackCooldown: float { get; private set; }
+- DashPower: float
+- DashDuration: float
+  .. Methods ..
+-Dash(): public void {}
+-Attack(): public void {}
+~Awake(): void {}
+~Update(): void {}
+}
+
+class Glydon {
+  .. Fields ..
+- GlideGravity: float
+- IsGliding { get; private set; }
+  .. Methods ..
+-StartGlide(): public void {}
+-EndGlide(): public void {}
+~Awake(): void {}
+~Update(): void {}
+}
+
+'RELATIONS
+'Base Structure
+InteractionInitiator <|-up- Cappy: Extends
+InteractionInitiator <|-up- Mario: Extends
+Cappy <-left- Mario: Calls Throw function on user request
+Interactable <-left- InteractionInitiator: OnCollision With Calls OnInteract(this);
+Interactable <|-up- Capturable: Extends
+
+'Example implementations
+Capturable <|-up- Frog: Extends
+Capturable <|-up- TRex: Extends
+Capturable <|-up- Glydon: Extends
+Interactable <|-up- Button: Extends
+Interactable <|-up- Pipe: Extends
+Interactable <|-right- Chest: Extends
+Interactable <|-up- Coin: Extends
+
+'For formatting (This line prevents an error in the compiler)
+Mario <-up- Credits: Start Here
+
+@enduml

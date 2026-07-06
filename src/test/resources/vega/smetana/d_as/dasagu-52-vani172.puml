@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam pathHoverColor green
+class Foo2 [[http://www.yahoo.com/Foo2]] {
+  +double[] x [[[http://www.yahoo.com/B1]]]
+  +double y [[[http://www.yahoo.com/B2]]]
+}
+Foo2 --> Foo3
+@enduml

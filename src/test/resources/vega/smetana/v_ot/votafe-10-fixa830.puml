@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+package AAAA {
+   component C1
+   component S1
+   component S2
+   C1 -left- S1
+   C1 -[hidden]- S2
+'Remove next line comment
+S1 -[hidden]left- S2
+}
+@enduml

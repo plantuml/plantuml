@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+partition P1
+(*) --> A1
+end partition
+
+partition P2
+A1 --> A2
+end partition
+@enduml

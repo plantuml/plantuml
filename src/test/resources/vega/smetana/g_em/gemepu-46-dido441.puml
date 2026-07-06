@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator \\
+CustomController --|> App\\Http\\Controllers\\Controller
+@enduml

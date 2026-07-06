@@ -1,0 +1,35 @@
+---
+output: svg
+---
+@startuml
+
+title
+  Example of simple table
+  |= |= table |= header |
+  | a | table | row |
+  | b | table | row |
+end title
+
+
+entity "Table 1" as table {
+  | PK | id | INT UNSIGNED AUTO INCREMENT |
+  | U  | name | VARCHAR(50) NOT NULL |
+  |    | comment | VARCHAR(256) |
+
+  |= |= table |= header |
+  | a | table | row |
+  | b | table | row |
+}
+
+Object o1 {
+  | PK | id | INT UNSIGNED AUTO INCREMENT |
+  | U  | name | VARCHAR(50) NOT NULL |
+  |    | comment | VARCHAR(256) |
+
+  |= |= table |= header |
+  | a | table | row |
+  | b | table | row |
+}
+
+
+@enduml

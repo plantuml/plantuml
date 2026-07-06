@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+scale 10
+<style>
+root {
+LineThickness .5
+}
+</style>
+node n
+@enduml

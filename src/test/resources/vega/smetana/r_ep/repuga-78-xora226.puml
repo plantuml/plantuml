@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+skinParam CaptionFontSize 10
+skinParam CaptionFontColor blue
+class AA
+caption This is caption
+@enduml 

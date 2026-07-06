@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+legend
+!$labelWithDetails = "Customer\nPeople that need products"
+!$brPos = %strpos($labelWithDetails, "\n")
+!$line = %substr($labelWithDetails, 0, $brPos) + " <color:gray>A" + %substr($labelWithDetails, $brPos + 2) + "B</color>"
+$line
+endlegend
+@enduml

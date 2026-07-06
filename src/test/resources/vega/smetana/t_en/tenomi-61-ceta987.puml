@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class jenkins
+jenkins <-[#green]-> redmine : "" "dokumentacija"
+@enduml

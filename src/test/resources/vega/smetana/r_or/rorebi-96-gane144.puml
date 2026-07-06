@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+  end, start, state {
+    BackgroundColor #red
+  }
+}
+</style>
+
+state s <<start>>
+state e <<end>>
+
+state a as "a" #white {
+}
+
+s -> a: no blue border on
+a -> e: no blue border on
+@enduml

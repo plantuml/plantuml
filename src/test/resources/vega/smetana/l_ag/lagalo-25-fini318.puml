@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+storage this_a_very_long_storage
+@enduml

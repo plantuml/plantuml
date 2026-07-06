@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+usecase foo #blue
+artifact foo2 #red
+(foo3) #green
+:foo4: #magenta
+actor foo5 #yellow
+component foo6 #red
+
+@enduml

@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+!include <cloudinsight/java>
+
+database MyApp <<$java>> {
+  class ClassName
+}
+
+rectangle MyApp3 <<$java>> {
+  class ClassName3
+}
+
+database MyApp2 <<foo>> {
+  class ClassName2
+}
+
+@enduml

@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startjson
+{
+   "fruit":"Apple",
+   "size":"Large",
+   "color":"Red",
+   "options":[
+      "New York Bulls",
+      "Los Angeles Kings",
+      "Golden State Warriros",
+      "Huston Rocket"
+   ]
+}
+@endjson

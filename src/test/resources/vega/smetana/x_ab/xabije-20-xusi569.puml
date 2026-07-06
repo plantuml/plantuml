@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+title Class title should be size 14 and bold, attributes and methods should be size 18 and italic.
+skinparam {
+    ClassAttributeFontStyle italic
+    ClassAttributeFontSize 18
+    ClassFontStyle bold
+    ClassFontSize 14
+}
+class Class {
+    -attr1
+    --
+    +method1()
+}
+@enduml

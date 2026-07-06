@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+' contents database overlaps with label
+database "MySql" {
+  folder "This is my folder" {
+    [Item 1]
+  }
+  frame "Foo" {
+    [Item 2]
+  }
+}
+ 
+database "Oracle" {
+  [Item 3]
+}
+ 
+ 
+' even for 'nodes' the contents are very close the title
+node "Node" {
+  [Item 4]
+}
+@enduml

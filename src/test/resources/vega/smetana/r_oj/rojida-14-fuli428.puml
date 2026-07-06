@@ -1,0 +1,35 @@
+---
+output: svg
+---
+@startuml
+package Application [
+{{
+  class class
+}}
+]
+
+package ClientInterface [
+{{
+  class class1
+}}
+]
+
+package LibraryInterface [
+{{
+  interface interface1
+  interface interface2
+}}
+]
+
+package LibraryImplementation [
+{{
+  class class2
+  class class3
+}}
+]
+
+Application ..> ClientInterface
+ClientInterface .down.> LibraryInterface
+ClientInterface .down.> LibraryImplementation
+LibraryImplementation .right.> LibraryInterface
+@enduml

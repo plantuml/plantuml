@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+package x {
+  note as _n1
+    qwerty
+  end note
+}
+
+package y {
+  note as _n2
+    asdfg
+  end note
+  
+  :myActor:
+}
+@enduml

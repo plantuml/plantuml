@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+skinparam maxMessageSize 150
+state "a" as a
+State "b" as b
+a -right-> b : aaaaaaa bbbbbbbbbb ccccccccc ddddddddd eeeeeeeee ffffffffff ggggggggg hhhhhhhh
+@enduml

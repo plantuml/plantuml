@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+allow_mixing
+class foo1
+usecase foo2
+actor foo3
+foo1 -- foo2
+component comp3
+@enduml

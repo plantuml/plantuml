@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+rectangle SCRUMPILLARS <<$archimate/motivation-principle>> <<motivation-principle>> #Motivation [
+"Scrum Pillars"
+{{
+  skinparam backgroundColor #Motivation
+  archimate #MOTIVATION "[[https://scrumguides.org/scrum-guide.html#transparency {Transparency} Transparency]]" <<motivation-principle>> as TRANSPARENCY
+  archimate #MOTIVATION "[[https://scrumguides.org/scrum-guide.html#inspection {Inspection} Inspection]]" <<motivation-principle>> as INSPECTION
+  archimate #MOTIVATION "[[https://scrumguides.org/scrum-guide.html#adaptation {Adaptation} Adaptation]]" <<motivation-principle>> as ADAPTATION
+
+  TRANSPARENCY -[hidden]right- INSPECTION
+  INSPECTION -[hidden]right- ADAPTATION
+ }}
+]
+@enduml

@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+
+
+component "Temperature Sensor" as tempSensor <<block>> {
+    note as tempSensor_TVs
+        1some tagged value table
+        would be here
+        usually.
+    end note
+
+    portin in1withalongname
+    portin in2withalongname
+    
+    portout out1withalongname
+    portout out2withalongname
+
+}
+
+note bottom of tempSensor
+2note bottom
+end note
+
+
+@enduml

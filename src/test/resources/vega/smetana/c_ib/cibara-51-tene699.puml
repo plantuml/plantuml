@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+(*) --> if "Do redirect?" then
+ ->[yes] "redirect request"
+ --> ==BEFORE_DESTROY===
+else
+ if "Do Forward?" then
+  -left->[yes] "Forward request"
+  --> ==BEFORE_DESTROY===
+ else
+  -right->[no] "Render page template"
+  --> ==BEFORE_DESTROY===
+ endif
+endif
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+
+[*] --> NotShooting
+
+state "Not Shooting State" as NotShooting {
+  state "Idle mode" as Idle
+  state "Configuring mode" as Configuring
+  [*] --> Idle
+  Idle --> Configuring : EvConfig
+  Configuring --> Idle : EvConfig
+}
+
+NotShooting -> NotShooting : auto link
+
+@enduml

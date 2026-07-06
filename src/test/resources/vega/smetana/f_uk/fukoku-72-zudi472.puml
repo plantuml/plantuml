@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam package {
+    backgroundColor Yellow
+    backgroundColor<<st>> LightBlue
+}
+package CC {
+}
+package DD
+@enduml

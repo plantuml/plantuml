@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+    namespace p1 {
+        class A
+    }
+    namespace p2 {
+        class B
+    }
+    p2.B "1" -left- p1.A
+@enduml

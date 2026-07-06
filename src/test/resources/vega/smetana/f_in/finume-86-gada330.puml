@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+Task1 <-down- func2[[{V1}]]: V2
+@enduml

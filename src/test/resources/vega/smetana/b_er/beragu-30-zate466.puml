@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+title no style
+node node #aliceblue;line:blue;line.dotted;text:blue {
+}
+package package #aliceblue;line:blue;line.dotted;text:blue {
+}
+queue queue #aliceblue;line:blue;line.dotted;text:blue {
+}
+rectangle rectangle #aliceblue;line:blue;line.dotted;text:blue {
+}
+@enduml

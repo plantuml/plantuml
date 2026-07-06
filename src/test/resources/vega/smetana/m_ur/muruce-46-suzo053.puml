@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam packageBorderColor red
+skinparam packageBackgroundColor yellow
+partition Conductor {
+  (*) --> "Climbs on Platform"
+  --> === S1 ===
+  --> Bows
+}
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+node "S" as S {
+
+		component "CC" as CC {
+			 control "IR" as CC_at_IR
+		}
+
+		component "UI" as UI  {
+			 circle "A" as UI_at_A
+			 !define UI_at_B UI_at_A
+			 circle "A" as UI_at_B
+		}
+
+	}
+@enduml

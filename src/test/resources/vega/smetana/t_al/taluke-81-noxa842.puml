@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+<style>
+start {
+    LineColor #red
+    LineThickness 5
+}
+state {
+    LineColor #green
+    LineThickness 5
+}
+end {
+    LineColor #blue
+    LineThickness 5
+}
+</style>
+
+[*] -> State
+State -> [*]
+@enduml

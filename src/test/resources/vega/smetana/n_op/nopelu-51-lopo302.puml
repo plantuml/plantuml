@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangle {
+    BorderColor Blue
+    BorderColor<<Software System>> Green
+    RoundCorner<<Software System>> 25
+    BorderStyle<<Software System>> dashed
+    BorderStyle dotted
+}
+rectangle rect1<<Software System>>
+rectangle rect2
+
+rect1 -[dashed]-> rect2
+@enduml

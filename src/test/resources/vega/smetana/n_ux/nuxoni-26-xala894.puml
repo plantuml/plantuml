@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+note as Note1
+This is a note.
+end note
+
+note as Note2
+This is a second note.
+end note
+
+class MyClass {
+}
+@enduml

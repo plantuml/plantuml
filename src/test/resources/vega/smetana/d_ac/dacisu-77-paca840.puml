@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startuml
+skinparam svek true
+package "Android" {
+class AndroidBtClient
+class BluetoothRetransmitter << (J,orchid) >>
+class SocketListener << (J,orchid) >>
+}
+
+package "Qt-based platform-independent" {
+class ECGConnector
+class BtClient
+}
+
+package "Linux/Maemo/MeeGo" {
+class BluezBtClient
+}
+
+ECGConnector -right-> BtClient
+BtClient <|.. BluezBtClient
+BtClient <|.. AndroidBtClient
+
+AndroidBtClient --+ "local socket" SocketListener
+SocketListener -right-> BluetoothRetransmitter
+BluetoothRetransmitter --+ "local socket" AndroidBtClient
+
+BluezBtClient -() Bluetooth
+BluetoothRetransmitter -() Bluetooth
+
+hide members
+@enduml

@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+
+object cl1 {
+  toto1
+  toto2
+  toto3()
+}
+
+object cl2
+
+cl1 --> cl2
+
+object cl2 {
+  tutu1
+  tutu2
+  tutu3()
+}
+
+
+@enduml

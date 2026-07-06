@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+database data
+collections FooBar
+FooBar *-- data
+@enduml

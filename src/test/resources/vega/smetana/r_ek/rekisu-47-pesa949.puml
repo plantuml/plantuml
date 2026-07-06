@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+component bar #text:yellow;line:green;back:lightblue
+actor bar2 #77F;text:red;line:777
+
+bar --> bar2 #red;text:blue : example
+
+
+@enduml

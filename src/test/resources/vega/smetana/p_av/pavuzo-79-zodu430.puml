@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+skinparam linetype ortho
+[*] --> NotShooting
+
+state NotShooting begin
+  [*] --> Idle
+  Idle --> Configuring : EvConfig
+  Configuring --> Idle : EvConfig
+end state
+
+NotShooting --> Shooting : EvShutterReleased
+Shooting --> NotShooting : EvShutterHalf
+
+@enduml

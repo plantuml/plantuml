@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangle {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam rectangle<<GreenContainer>> {
+    RoundCorner 25
+}
+
+
+rectangle "25" <<GreenContainer>> as gC
+
+@enduml

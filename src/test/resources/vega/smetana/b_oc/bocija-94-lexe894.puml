@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam package {
+  FontColor green
+  FontSize 60
+  BorderStyle dashed
+}
+
+package pack1
+package pack3
+
+pack1 --> pack3
+@enduml

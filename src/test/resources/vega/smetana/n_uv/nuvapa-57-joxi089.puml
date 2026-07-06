@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam Shadowing false
+
+!include <archimate/Archimate>
+
+archimate #LightGreen "Social Media\n Competency" as SMC <<strategy-resource>>
+@enduml

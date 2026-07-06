@@ -1,0 +1,34 @@
+---
+output: svg
+---
+@startuml
+<style> 
+      actor {
+        BackgroundColor  #ffff00
+        FontColor        #00ff00
+        LineColor        #000000
+      }  
+     .myStyle {
+        BackgroundColor #ff0000
+        FontColor       #00ffff
+     }
+
+     usecase {
+         BackgroundColor #00ff00
+         FontColor       #ffffff
+         LineColor       #0000ff         
+     }
+
+     arrow {
+         LineColor       #0000FF
+         FontColor       #00FF00
+     }
+</style>
+' Bob is yellow (ok) with black line color (ok) but shoud have green font color(error?)
+actor Bob
+' Sally should be red (error?) and green font color (error?)
+actor Sally <<myStyle>>
+' uc1 and uc2 are green (ok), blue line color (ok) but should have white font color (error?)
+Bob   --> (uc1) : desc_1
+Sally --> (uc2) : desc_2
+@enduml

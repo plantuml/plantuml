@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+allow_mixing
+class foo1{
++ int Temp
+}
+rectangle "foo2" {
+rectangle "foo3"
+}
+foo2 --> foo1::Temp
+@enduml

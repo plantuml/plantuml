@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+class aaa
+hide aaa
+interface Entity
+interface SubEntity
+Entity o-- SubEntity
+@enduml

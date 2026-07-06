@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+database "Empty database" {
+}
+database "Ok Database" {
+   component foo
+}
+cloud "Cloud 1" {
+}
+cloud "Cloud 2" {
+component fiz
+}
+
+card "My Card" {
+  component foo2
+}
+
+card "Empty Card" {
+}
+
+@enduml

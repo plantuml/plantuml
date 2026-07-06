@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+Footer Footer
+User --> (Start the application)
+@enduml

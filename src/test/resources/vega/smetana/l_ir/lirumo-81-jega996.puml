@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+legend
+!$labelWithDetails = "12345"
+!$line = %substr($labelWithDetails, 3+1) + "B"
+$line
+endlegend
+@enduml

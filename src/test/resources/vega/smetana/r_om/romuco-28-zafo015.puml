@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+
+skinparam component {
+  BackgroundColor<<Apache>> Red
+  BackgroundColor Green
+}
+
+() "Data Access" as DA
+
+component "Web Server" << Apache >>
+
+DA - [First Component]
+[First Component] ..> () HTTP : use
+HTTP - [Web Server] 
+@enduml

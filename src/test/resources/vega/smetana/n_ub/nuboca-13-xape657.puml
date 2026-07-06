@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+skinparam backgroundColor LightYellow
+skinparam state {
+  StartColor MediumBlue
+  EndColor Red
+  BackgroundColor Peru
+  BackgroundColor<<Warning>> Olive
+  BorderColor Grey
+  FontName Impact
+}
+
+[*] --> NotShooting
+
+state "Not Shooting State" as NotShooting {
+  state "Idle mode" as Idle <<Warning>>
+  state "Configuring mode" as Configuring
+  [*] --> Idle
+  Idle --> Configuring : EvConfig
+  Configuring --> Idle : EvConfig
+}
+
+NotShooting --> [*]
+
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+skinparam componentRoundCorner 10
+skinparam componentBorderThickness 0.5
+component foo1
+@enduml

@@ -1,0 +1,35 @@
+---
+output: svg
+---
+@startuml
+    skinparam rectangle<<RedContainer>> {
+        StereotypeFontColor red
+        FontColor red
+        BackgroundColor lightred
+        BorderColor darkred
+        RoundCorner 0
+        DiagonalCorner 18
+    }
+
+    skinparam rectangle {
+        StereotypeFontColor blue
+        FontColor blue
+    }
+    
+    skinparam rectangle<<ItalicContainer>> {
+        FontStyle italic
+        FontSize 8
+    }
+    
+    skinparam rectangle<<GreenContainer>> {
+        StereotypeFontColor green
+        FontColor green
+        BackgroundColor lightgreen
+        BorderColor darkgreen
+        RoundCorner 15
+        DiagonalCorner 0
+    }
+
+	title produces a smallItalic+blue rectangle
+    rectangle  "C1"  <<ItalicContainer>>  as C1
+@enduml

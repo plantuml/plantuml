@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+frame FooBar  [
+{{
+    !include <cloudinsight/tomcat>
+    queue "<$tomcat>" as cmds
+
+}}
+]
+@enduml

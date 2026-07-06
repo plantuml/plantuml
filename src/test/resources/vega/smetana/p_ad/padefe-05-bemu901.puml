@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+!define ARROR_USE_COLOR             #Indigo
+!define genArrowUse(x,y,arr='..>')            "x" arr "y"       ARROR_USE_COLOR           : <<use>>
+
+genArrowUse(A,B)
+
+@enduml

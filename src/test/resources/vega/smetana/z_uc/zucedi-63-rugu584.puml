@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+
+A0 -- A1
+A0 -- A3
+A1 -- A5
+
+class A4
+note left of A4 : left
+
+@enduml

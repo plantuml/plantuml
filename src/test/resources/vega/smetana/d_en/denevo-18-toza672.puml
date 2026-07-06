@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+archimate #Motivation "Secure Data Transfer" as dataTrans <<requirement-filled>>
+frame "VPN Solution" as vpnSolution {
+	archimate #Technology "VPN Server" as vpnServerA <<technology-device>>
+	archimate #Technology "Client Server" as vpnServerB <<technology-device>>
+	archimate #Technology "VPN Gateway" as softwareA <<technology-system-software>>
+	archimate #Technology "VPN Client" as softwareB <<technology-system-software>>
+	archimate #Technology "Network Path" as coms <<technology-communication-path>>
+	archimate #Technology "Internet / Cloud" as network <<technology-network>>
+	archimate #Technology "VPN Service" as vpnService <<service>>
+}
+vpnSolution .up.|> dataTrans
+vpnService <|.down. coms
+coms -left- softwareA
+coms -right- softwareB
+vpnServerA *-up-> softwareA
+vpnServerB *-up-> softwareB
+network -left- vpnServerA
+network -right- vpnServerB
+network .up.|> coms
+@enduml

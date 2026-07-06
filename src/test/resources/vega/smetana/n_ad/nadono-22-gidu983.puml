@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+namespace Observation {
+
+   together {
+       abstract class BadPix {
+       }
+
+       class Role::BadPix <<role>> {
+       }
+
+    }
+
+   class Base {
+
+   }
+
+   BadPix *-- Role::BadPix
+   Base <|-- Role::BadPix
+
+}
+@enduml

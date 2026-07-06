@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam noteTextAlignment right
+note as N1
+👑 right
+Keep Calm
+and
+Align Right
+end note
+@enduml

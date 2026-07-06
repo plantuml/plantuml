@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+
+skinparam Arrow {
+  Color #Green
+  FontColor #Green
+
+  Color<<v1.0>> #Red
+  Color<<v1.1>> text:Red
+}
+
+[Component]
+
+Component -RIGHT-> Participant11<<v1.1>> : text color red
+Component -DOWN-> Participant1011<<v1.0>><<v1.1>> : text and line red
+Component -DOWN-> Participant1110<<v1.1>><<v1.0>> : text and line red
+Component -DOWN-> Participant1011_WithoutSimulation: green
+
+@enduml

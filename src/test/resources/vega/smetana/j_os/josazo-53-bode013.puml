@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+'skinparam stereotypeABackgroundColor red
+'skinparam stereotypeNBackgroundColor blue
+
+class foo1
+enum foo2
+annotation foo3
+abstract foo4
+@enduml

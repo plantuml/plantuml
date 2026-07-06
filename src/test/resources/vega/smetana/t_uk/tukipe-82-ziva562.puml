@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+node Foo {
+ [component1]
+ [component2]
+}
+url for Foo is [[http://www.google.com]]
+@enduml

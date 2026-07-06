@@ -1,0 +1,44 @@
+---
+output: svg
+---
+@startuml
+!$myjson = {
+"root" : [{
+    "fruits": [
+        {
+            "name": "apple",
+            "colorId": "1"
+        },
+        {
+            "name": "pear",
+            "colorId": "2"
+        },
+        {
+            "name": "pineapple",
+            "colorId": "3"
+        }
+    ]
+},
+{
+    "colors": [
+        {
+            "id": "1",
+            "name": "red"
+        },
+        {
+            "id": "2",
+            "name": "green"
+        },
+        {
+            "id": "3",
+            "name": "yellow"
+        }
+    ]
+}]
+}
+
+!foreach $key in %get_json_keys($myjson)
+     rectangle $key
+!endfor
+
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+class class1
+class class2
+
+class1 [Qualifier] *-- class2
+@enduml

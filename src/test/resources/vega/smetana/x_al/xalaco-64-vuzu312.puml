@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+<style>
+document {
+  BackGroundColor Navy
+}
+root {
+  FontColor #?black:white
+}
+</style>
+title
+my title
+endtitle
+class foo1
+foo2 <|-- foo1
+@enduml

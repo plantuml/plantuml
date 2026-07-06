@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+usecase UC_THIS_IS_MY_DISPLAY_TO_SHOW as UC
+actor AC_THIS_IS_MY_DISPLAY_TO_SHOW as CO
+boundary boundary1
+control control1
+entity "This is my Entity" as entity1
+
+entity1 --> control1 : test
+entity1 --> boundary1 : test2
+@enduml

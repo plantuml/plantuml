@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+state comp3 <<O-O>>
+state "State with long name" as comp1 <<O-O>> {
+    state en1 <<exitpoint>>
+    state en2 <<entrypoint>>
+}
+state "State with long name2" as comp2 <<O-O>> {
+    state en3 <<entrypoint>>
+    state en4 <<entrypoint>>
+    state foo
+}
+en1 --> en3
+@enduml

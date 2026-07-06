@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+:class1: ^- :class2:
+(class1) ^.. (class3)
+
+(ab1) --^ (ab2)
+@enduml 

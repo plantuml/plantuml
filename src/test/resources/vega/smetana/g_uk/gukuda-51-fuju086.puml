@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+class Observation {
+ name[[[http://field]]]
+}
+url of Observation is [[http://class]]
+
+@enduml

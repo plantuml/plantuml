@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+state "bbbb_label0" as BB0
+state BB1 as "bbbb_label1"
+state BB2 as "bbbb_label2" : blah
+state AA0 : blah
+state "AA1" as AA1 : blah
+state "aaaa bis" : blahbis
+AA0: coucou
+"aaaa bis" : coucou
+@enduml

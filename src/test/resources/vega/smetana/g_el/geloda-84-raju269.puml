@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+ skinparam activity {
+BackgroundColor<< BLUE_DARK >> #7C9CCD
+}
+ 
+(*) -down-> "Start" as Start
+Start --> if "Branch" as Branch<<BLUE_DARK>> then
+  --> Choice1
+else
+--> "Choice2" as Choice2
+endif 
+'"Choice2" as Choice2 --> "Branch"  as Branch<< BLUE_DARK >>
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+(*) --> "
+{{salt
+skinparam BackgroundColor blue
+{+
+<b>an example
+choose one option
+()one
+()two
+[ok]
+}
+}}
+"
+--> (*)
+@enduml

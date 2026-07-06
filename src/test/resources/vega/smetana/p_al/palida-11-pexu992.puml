@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+rectangle {
+  LineColor red
+  LineStyle 7-7
+}
+</style>
+
+rectangle "R1" as r1  {
+  rectangle "R2" as r2 {
+  }
+}
+
+@enduml

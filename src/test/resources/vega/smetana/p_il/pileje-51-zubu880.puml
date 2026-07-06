@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+partition "Iteration (Over each day of the week)"
+(*) --> "Lookup last time temporal processing ran" as A1
+end partition
+
+partition cspTemporalProcessor_GetScheduledPaymentsToProcess #LightSkyBlue
+A1 --> "Lookup scheduled payments to process" as A2
+note right: Parameters and result set
+end partition
+@enduml

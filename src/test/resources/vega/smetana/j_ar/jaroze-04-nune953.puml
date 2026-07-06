@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+<style>
+json {
+  BackGroundColor aliceblue
+  LineColor blue
+  LineThickness 2.0
+  LineStyle 3
+  FontColor blue
+  FontSize 15
+  FontStyle italic
+  Margin 50
+  Padding 100
+}
+</style>
+
+json JSON {
+  "text": "Lorem ipsum dolor sit amet, ...",
+  "name": "component c1",
+  "color": ["normal", "green", "red"],
+  "visible": true,
+  "user" : { "age": 23, "name": "John", "array": [1, 2, 3]},
+  "version": "<b>version"
+}
+@enduml

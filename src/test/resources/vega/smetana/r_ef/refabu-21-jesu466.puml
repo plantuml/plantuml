@@ -1,0 +1,69 @@
+---
+output: svg
+---
+@startuml
+' DGW setup
+
+!definelong mytbl(vpc1) 
+|= one |= two |= three |
+| four | five | vpc1 |
+<#yellow>| Seven | eight | nine |
+!enddefinelong
+
+!include <aws/common>
+!include <aws/general/awscloud/awscloud>
+!include <aws/general/officebuilding/officebuilding>
+!include <aws/compute/amazonvpc/amazonvpc>
+!include <aws/compute/amazonvpc/router/router>
+!include <aws/networkingcontentdelivery/awsdirectconnect/awsdirectconnect>
+
+title 
+routing example
+mytbl(balsh)
+end title
+
+skinparam rectangle {
+ roundCorner<<AmazonVPC>> 25
+ borderStyle<<AmazonVPC>> dashed
+ borderColor<<AmazonVPC>> orange
+ roundCorner 25
+ borderColor black
+ borderstyle dotted
+}
+
+
+AWSCLOUD(aws,aws){
+rectangle "aws-region-1" {
+  AMAZONVPC(dub,vpc-123, rectangle)
+  ROUTER(vgwD,VGW)
+}
+ROUTER(dgw,DGW)
+
+rectangle "aws-region-2" {
+ AMAZONVPC(fra,vpc-456,rectangle)
+ note left 
+mytbl(blah)
+ end note
+ ROUTER(vgwF,VGW)
+}
+
+ AWSDIRECTCONNECT(dc1,Lon)
+ AWSDIRECTCONNECT(dc2,Fra)
+
+}
+
+rectangle tpn {
+ OFFICEBUILDING(lon,Lon)
+ OFFICEBUILDING(pr,Pr)
+ pr <-> lon
+}
+
+dub -- vgwD
+vgwD -- dgw
+fra -- vgwF
+vgwF -- dgw
+dgw -- dc1
+dgw -- dc2
+dc1 -- lon
+dc2 -- pr
+@enduml

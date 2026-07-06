@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+Title this is my title
+class Alice
+note left of Alice [[http://www.google.fr]]
+  Note
+end note
+@enduml

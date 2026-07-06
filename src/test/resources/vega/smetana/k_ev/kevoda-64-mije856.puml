@@ -1,0 +1,407 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+    skinparam class {
+        BackgroundColor WhiteSmoke
+        ArrowColor Black
+        BorderColor Black
+    }
+INTERFACE Work {
+.. attributes ..
+-ns: string 
+-version: long 
+-id: string 
+.. relationships ..
+#attributes: WorkAttributes 
+#counterClaims: CounterClaim 
+#activityTriggers: ActivityTrigger 
+#admin: Admin 
+#partyNames: WorkPartyName 
+#gemaShareArrangements: GemaShareArrangement 
+#permissions: Permissions 
+#otherRelations: WorkRelation 
+#claims: WorkClaim 
+#societies: WorkSociety 
+#relations: WorkRelation 
+#repertoires: WorkRepertoire 
+#recordings: WorkRecording 
+#contributions: WorkContribution 
+#conflicts: ConflictWork 
+}
+CLASS WorkScore {
+.. attributes ..
+-score: number 
+-ns: string 
+-scoreType: string 
+-id: string 
+.. relationships ..
+}
+
+CLASS WorkRecording {
+.. attributes ..
+-ns: string 
+-version: long 
+-tags: {map:{array:string}} 
+-recordingId: string 
+-workId: string 
+.. relationships ..
+#recording: Recording 
+}
+
+CLASS WorkClaim {
+.. attributes ..
+-claimantPartyNameId: string 
+-ns: string 
+-version: long 
+-tags: {map:{array:string}} 
+-claimShares: {array:WorkShare} 
+-workId: string 
+-parentId: string 
+-claimId: string 
+-role: WorkClaimRole 
+-claimantId: string 
+-claimantPartyId: string 
+-type: WorkClaimType 
+-ownershipShares: {array:WorkShare} 
+-agreementId: string 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#WorkShare: WorkShare 
+#claimant: PartyNameParty 
+#agreement: Agreement 
+}
+
+CLASS WorkRelation {
+.. attributes ..
+-otherId: string 
+-ns: string 
+-partWeighing: number 
+-version: long 
+-tags: {map:{array:string}} 
+-relation: WorkRelationType 
+-workId: string 
+-partDuration: long 
+-partTitle: string 
+-sequenceNumber: long 
+.. relationships ..
+#owner: Work 
+#other: Work 
+}
+
+CLASS Instrumentation {
+.. attributes ..
+-numberOfInstruments: long 
+-instrumentCode: string 
+-numberOfPlayers: long 
+-numberOfParts: long 
+.. relationships ..
+}
+
+CLASS WorkAttributes {
+.. attributes ..
+-ns: string 
+-purpose: string 
+-origin: string 
+-prohibited: boolean 
+-isRef: boolean 
+-musicVersion: string 
+-shareDivisionOwner: string 
+-language: string 
+-lyricAdaption: string 
+-source: string 
+-textMusicRelationship: string 
+-societyMarkers: {array:string} 
+-musicArrangement: string 
+-publicationDate: string 
+-musicExcerpt: string 
+-genre: string 
+-duration: long 
+-id: string 
+-musicCopyrightNumber: string 
+-musicRecordedIndicator: string 
+-standardInstrumentation: {array:Instrumentation} 
+-titles: {map:{array:WorkTitle}} 
+-version: long 
+-tags: {map:{array:string}} 
+-owner: string 
+-musicCopyrightDate: string 
+-copyrightOverrides: {array:CopyrightOverride} 
+-firstReferral: boolean 
+-musicComposite: string 
+-instruments: {array:Instrument} 
+-category: string 
+-status: string 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#Instrument: Instrument 
+#CopyrightOverride: CopyrightOverride 
+#Instrumentation: Instrumentation 
+#mapWorkTitle: mapWorkTitle 
+}
+
+CLASS WorkAgreement {
+.. attributes ..
+-ns: string 
+-contributorId: string 
+-include: boolean 
+-version: long 
+-tags: {map:{array:string}} 
+-role: string 
+-workId: string 
+-agreementId: string 
+-shares: {array:AgreementShare} 
+.. relationships ..
+#AgreementShare: AgreementShare 
+#agreement: Agreement 
+}
+
+CLASS WorkContribution {
+.. attributes ..
+-contributorPartyId: string 
+-role: WorkContributionRole 
+-ns: string 
+-contributorId: string 
+-contributorPartyNameId: string 
+-version: long 
+-tags: {map:{array:string}} 
+-manuscriptShares: {array:WorkShare} 
+-copyrightOverrides: {array:CopyrightOverride} 
+-workId: string 
+-territories: {array:string} 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#CopyrightOverride: CopyrightOverride 
+#WorkShare: WorkShare 
+#agreements: WorkAgreement 
+#countries: Integer 
+#contributor: PartyNameParty 
+}
+
+CLASS WorkSociety {
+.. attributes ..
+-ns: string 
+-version: long 
+-tags: {map:{array:string}} 
+-attributes: {map:{array:string}} 
+-grading: {array:Grading} 
+-workId: string 
+-societyId: string 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#Grading: Grading 
+#society: Society 
+}
+
+CLASS WorkShare {
+.. attributes ..
+-endDate: string 
+-rightTypes: {array:string} 
+-share: long 
+-unauthorized: boolean 
+-startDate: string 
+-territories: {array:string} 
+-priorRoyaltiesDate: string 
+-postTermCollectionDate: string 
+.. relationships ..
+#countries: Integer 
+#permissions: Permissions 
+}
+
+CLASS WorkPartyName {
+.. attributes ..
+-ns: string 
+-partyNameId: string 
+-version: long 
+-tags: {map:{array:string}} 
+-workId: string 
+-role: WorkPartyNameRole 
+-extensions: {map:{array:string}} 
+.. relationships ..
+#partyName: PartyName 
+}
+
+CLASS WorkTitle {
+.. attributes ..
+-titleValue: string 
+-duration: long 
+-sequenceNumber: long 
+.. relationships ..
+}
+
+CLASS WorkRepertoire {
+.. attributes ..
+-repertoireId: string 
+-version: long 
+-relation: WorkRepertoireRelationType 
+-workId: string 
+.. relationships ..
+#owner: Repertoire 
+#work: Work 
+}
+
+CLASS WorkMatch {
+.. attributes ..
+-stage: string 
+-targetWorkIdVersion: string 
+-tags: {map:{array:string}} 
+-result: string 
+-refs: {map:{array:string}} 
+-kmodId: string 
+-kmodIdTargetWorkIdVersion: string 
+-sourceWorkIdVersion: string 
+-sourceWorkIdVersionStage: string 
+.. relationships ..
+}
+
+CLASS Instrument {
+.. attributes ..
+-numberOfInstruments: long 
+-instrumentCode: string 
+-numberOfPlayers: long 
+.. relationships ..
+}
+
+CLASS CopyrightOverride {
+.. attributes ..
+-countries: {array:string} 
+-protectionDate: string 
+-societyIds: {array:string} 
+.. relationships ..
+}
+
+CLASS Grading {
+.. attributes ..
+-gradingStatus: string 
+-gradingDecider: string 
+-gradingDate: string 
+-gradingValue: string 
+.. relationships ..
+}
+ENUM WorkClaimRole {
+E
+SE
+ES
+AM
+AQ
+C
+CA
+AR
+A
+SA
+TR
+AD
+SR
+UNKNOWN
+}
+
+ENUM WorkContributionRole {
+C
+CA
+AR
+A
+SA
+TR
+AD
+SR
+UNKNOWN
+}
+
+ENUM WorkClaimType {
+CREATOR
+ORIGINAL_PUBLISHER
+SUB_PUBLISHER
+}
+
+ENUM WorkRelationType {
+REVI
+MERG
+MOD
+NOMT
+SMPL
+EXCP
+DISP
+XREF
+MTCH
+POSS
+COMP
+ARRG
+MCFL
+}
+
+ENUM WorkTitleType {
+OT
+OV
+AT
+TE
+FT
+IT
+TT
+PT
+RT
+ET
+OL
+AL
+DT
+LT
+NT
+}
+
+ENUM WorkRepertoireRelationType {
+INCLUDE
+}
+
+ENUM WorkPartyNameRole {
+PA
+PG
+PU
+PX
+RS
+}
+ WorkRecording --> "*" Recording
+ WorkPartyName --> "*" WorkPartyNameRole
+ WorkPartyName --> "*" PartyName
+ WorkRepertoire --> "*" WorkRepertoireRelationType
+ WorkRepertoire --> "*" Repertoire
+ WorkRepertoire --> "*" Work
+ Work --> "*" WorkAttributes
+ Work --> "*" CounterClaim
+ Work --> "*" ActivityTrigger
+ Work --> "*" Admin
+ Work --> "*" WorkPartyName
+ Work --> "*" GemaShareArrangement
+ Work --> "*" Permissions
+ Work --> "*" WorkRelation
+ Work --> "*" WorkClaim
+ Work --> "*" WorkSociety
+ Work --> "*" WorkRelation
+ Work --> "*" WorkRepertoire
+ Work --> "*" WorkRecording
+ Work --> "*" WorkContribution
+ Work --> "*" ConflictWork
+ WorkRelation --> "*" WorkRelationType
+ WorkRelation --> "*" Work
+ WorkRelation --> "*" Work
+ WorkClaim --> "*" WorkClaimRole
+ WorkClaim --> "*" WorkShare
+ WorkClaim --> "*" WorkClaimType
+ WorkClaim --> "*" PartyNameParty
+ WorkClaim --> "*" Agreement
+ WorkAttributes --> "*" Instrument
+ WorkAttributes --> "*" CopyrightOverride
+ WorkAttributes --> "*" Instrumentation
+ WorkAttributes --> "*" mapWorkTitle
+ WorkContribution --> "*" CopyrightOverride
+ WorkContribution --> "*" WorkContributionRole
+ WorkContribution --> "*" WorkShare
+ WorkContribution --> "*" WorkAgreement
+ WorkContribution --> "*" Integer
+ WorkContribution --> "*" PartyNameParty
+ WorkAgreement --> "*" AgreementShare
+ WorkAgreement --> "*" Agreement
+ WorkSociety --> "*" Grading
+ WorkSociety --> "*" Society
+ WorkShare --> "*" Integer
+ WorkShare --> "*" Permissions
+@enduml

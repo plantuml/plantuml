@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+
+title Interfaces - Component Diagram
+
+[Business Logic]
+[Data Access] as DA  
+component "Graphic User\nInterface" as GUI {
+  portout "Out" as out
+}
+skinparam component {
+  color green
+  BackgroundColor red
+  BorderColor blue
+}
+skinparam portout {
+  color green
+  BackgroundColor red
+  BorderColor blue
+}
+interface IMath as Math
+interface "IItems" as Items
+
+[Business Logic] -- Math
+DA .. Items
+
+@enduml

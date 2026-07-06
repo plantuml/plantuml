@@ -1,0 +1,39 @@
+---
+output: svg
+---
+@startuml
+
+!pragma useNewPackage
+
+class BaseClass
+
+namespace Revelate.Legacy.Base.Biz {
+
+  class Person
+  Person : guid OID
+  Person : string FirstName
+  Person : string LastName
+  Person : boolean IsBirthday()
+
+  .BaseClass <|-- Revelate.Legacy.Base.Biz.BaseClass
+  Revelate.Legacy.Base.Biz.BaseClass <|-- Person
+
+  .BaseClass <|-- Person
+
+  class Meeting
+
+  Meeting  o--  Person : Relation1
+
+  .BaseClass <|- Meeting
+
+}
+
+namespace Revelate.Sungard.Biz {
+  class Person
+  Revelate.Legacy.Base.Biz.Person  <|- Person
+  Person : CustomAttribute
+
+  Revelate.Legacy.Base.Biz.Meeting  o-- Person : Relation2
+}
+
+@enduml

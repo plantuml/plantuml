@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+
+
+component A
+frame l1 {
+   component B
+   frame l2 {
+      component C
+      frame l3 {
+         component D
+      }
+   }
+}
+
+' DOES NOT WORK 
+remove C
+remove D
+
+@enduml

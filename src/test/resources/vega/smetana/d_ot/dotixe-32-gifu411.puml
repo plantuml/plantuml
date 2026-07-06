@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+title <font size=20>Simple <u>title</u></font>
+
+(*) -> "First Activity"
+
+@enduml

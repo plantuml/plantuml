@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+namespace Foo {
+    namespace Bar1 {
+        class Quz3
+    }
+
+    class Quz4
+}
+
+namespace Bar2 {}
+
+remove Bar2
+@enduml

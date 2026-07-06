@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+A -- B : Home
+A -- B : School
+Edu . (A,B) 
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+(*) -->"GoogleNode [[http://google.com]]"
+if Some Test [[http://url-for-Some-Test]] then
+--> ok2
+endif
+
+@enduml

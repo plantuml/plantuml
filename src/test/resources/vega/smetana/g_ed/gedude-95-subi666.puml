@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+[*] --> state1
+
+note bottom of state1
+  coucou1
+  coucou2
+end note
+
+@enduml

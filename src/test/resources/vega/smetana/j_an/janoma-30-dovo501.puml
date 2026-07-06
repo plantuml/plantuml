@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+title hide empty members
+hide empty members
+object A {
+  foo
+}
+object B
+
+@enduml

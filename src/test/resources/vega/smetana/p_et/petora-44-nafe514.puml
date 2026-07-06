@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+/'
+Plantuml 2.13.10 >OK
+Plantuml 2.13.12 > Error
+'/
+
+
+partition "X"{
+  (*) --> "Initialization"
+  partition "Y"{
+    if "Some Test" then
+    -->[true] "Some Activity"
+    --> "Another activity"
+    -right-> (*)
+  else
+    ->[false] "Something else"
+    -->[Ending process] (*)
+  endif
+  }
+}
+@enduml

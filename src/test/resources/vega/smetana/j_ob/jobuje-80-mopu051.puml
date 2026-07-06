@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+!$FGCOLOR = "black"
+!$BGCOLOR = "white"
+!$DARK_BG = "#565656"
+
+<style>
+  root {
+    BackgroundColor $BGCOLOR
+    FontColor #?black:white
+    HyperLinkColor #?blue:cyan
+    LineColor black
+  }
+  note {
+    BackgroundColor $DARK_BG
+    LineColor #444
+  }
+</style>
+
+
+rectangle "Link to [[google.com Google]]" as foo
+note bottom
+And here's a long description about something
+that may or may not include a [[google.com cool link somewhere]]
+endnote
+@enduml

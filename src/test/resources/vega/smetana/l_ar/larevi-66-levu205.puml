@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+skinparam roundCorner 10
+'scale 4
+file file
+note left : foo
+@enduml

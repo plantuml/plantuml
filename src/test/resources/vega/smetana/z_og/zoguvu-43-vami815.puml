@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+set separator none
+
+skinparam {
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+rectangle "aaaa bbbb ccic dddd //eeeee//, les //ffffff// et les //gggggg//, les //hhhhhh//, les //iiiiii// et les //kkkkkk//."
+@enduml

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+artifact artifact #aliceblue;line:blue;line.dotted;text:blue
+
+@enduml

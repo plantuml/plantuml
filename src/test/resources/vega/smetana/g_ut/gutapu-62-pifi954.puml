@@ -1,0 +1,46 @@
+---
+output: svg
+---
+@startuml
+(*) --> "
+{{salt
+{+
+<b>an example
+choose one option
+()one
+()two
+[ok]
+}
+}}
+" as choose
+
+choose -right-> "
+{{salt
+{+
+<b>please wait
+operation in progress
+<&clock>
+[cancel]
+}
+}}
+" as wait
+wait -right-> "
+{{salt
+{+
+<b>success
+congratulations!
+[ok]
+}
+}}
+" as success
+
+wait -down-> "
+{{salt
+{+
+<b>error
+failed, sorry
+[ok]
+}
+}}
+"
+@enduml

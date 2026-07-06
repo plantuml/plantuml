@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+set separator none
+state comp1 {
+    state en2 <<entrypoint>>
+}
+action2 --> en2: info2
+@enduml

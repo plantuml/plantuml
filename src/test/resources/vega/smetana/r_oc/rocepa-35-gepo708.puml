@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+map CC {
+ UK => London
+ USA => Washington
+ Germany => Berlin
+}
+
+map users {
+ 1 => Alice
+ 2 => Bob
+ 3 => Charlie
+}
+
+CC::USA --> users::1
+@enduml

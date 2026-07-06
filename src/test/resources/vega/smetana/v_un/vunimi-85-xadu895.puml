@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!procedure $BIN2($sn)
+node $sn
+!endprocedure
+
+$BIN2("b2") {
+  rectangle c2
+}
+
+@enduml

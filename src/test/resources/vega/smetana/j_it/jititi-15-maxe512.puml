@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+package P {
+    class A $shared
+    class B
+}
+remove *
+restore P.A
+@enduml

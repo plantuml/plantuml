@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam dpi 600
+Alice -o Bob : hello
+@enduml

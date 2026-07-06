@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+legend
+!$labelWithDetails = "12345"
+!$brPos = %strpos($labelWithDetails, "3")
+!$line = %substr($labelWithDetails, $brPos) + "B"
+$line
+endlegend
+@enduml

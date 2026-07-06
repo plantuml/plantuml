@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+[comp1] -l-> [comp left]
+[comp1] -r-> [comp right]
+[comp1] -u-> [comp up]
+[comp1] -d-> [comp down]
+@enduml

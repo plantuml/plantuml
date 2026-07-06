@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+
+
+package User {
+    class User {
+    }
+}
+
+package Purchase {
+    class Purchase {
+    }
+
+    Purchase --> User
+}
+
+@enduml

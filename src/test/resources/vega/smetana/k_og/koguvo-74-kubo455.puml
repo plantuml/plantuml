@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+<style>
+state {
+  BackGroundColor: blue;
+}
+activityBar {
+  .fork {
+    BackGroundColor: green;
+  }
+  .join {
+    BackGroundColor: orange;
+  }
+}
+</style>
+state f <<fork>>
+state a <<MyState>>
+state b <<MyState>>
+state j <<join>>
+f --> a
+f --> b
+a --> j
+b --> j
+@enduml

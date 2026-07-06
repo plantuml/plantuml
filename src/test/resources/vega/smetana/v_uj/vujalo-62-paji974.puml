@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+<style>
+frame {
+  FontColor red
+  title {
+    FontColor green
+  }
+}
+file {
+  FontColor blue
+}
+</style>
+frame sw_package as SW {
+  file defect as df
+}
+frame sw_package2 as SW2
+@enduml

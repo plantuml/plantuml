@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+skinparam wrapWidth 200
+!include <C4/C4_Component.puml>
+Component(a, "这也是一个组件，但是这段文件不会自动换行下去，这是为什么呢。 这是一个非常大大大大大的啊大大的的的的的的的的！（）；：，会换么", "technology")
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+component A
+interface B
+A - B
+cloud {
+}
+@enduml

@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+scale 1800 width
+[*] --> Device_0_Function_2
+Device_0_Function_2: 0x10h MemoryBar
+Device_0_Function_2 --> SharedMemory
+
+state SharedMemory {
+  state Virtual_Config {
+    Config1: CAP ID = 0x30
+    Config1: NumEntries = 0x1
+    Config1: OFFSET = 0x4000h
+  }
+
+  state Data_Space {
+    state Data_Discovery_Table_Memory{
+      Entry0: ACCESS_TYPE = 0x2
+      Entry0: UNIQUE_ID = 0x11111111h
+      Entry0: BASE_OFFSET = 0x00h
+    }
+  }
+}
+
+Config1 --> Data_Discovery_Table_Memory: OFFSET = 0x4000h
+
+@enduml

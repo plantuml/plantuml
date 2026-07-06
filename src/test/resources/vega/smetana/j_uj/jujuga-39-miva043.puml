@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+
+rectangle "Vehicle" as Eid1{
+port "hitchReceiver: Port" as Eid5
+}
+rectangle "RV" as Eid8 {
+rectangle "cabin: Cabin" as Eid10
+}
+
+rectangle "rv: RV" as Eid14 {
+rectangle "cabin: Cabin" as Eid17 {
+port "mount: Port" as Eid18
+}
+}
+
+Eid17--|>Eid10
+Eid5 -- Eid18
+
+@enduml

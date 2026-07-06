@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+!pragma ratio 0.66
+ [component1]
+ [component2]
+@enduml

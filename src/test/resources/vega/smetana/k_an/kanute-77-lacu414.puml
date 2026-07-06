@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+[<<component>>\nFoo] as toto
+
+package "p1 p1" as p1 {
+}
+
+package p2 {
+}
+p1 ..> p2 : use
+
+package p11 {
+}
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+class C1
+class C2
+hide C2 circle
+C1 "1" -- "1" C2 
+
+class D1 {
+  + try
+}
+class D2
+D1 "1" -- "1" D2 
+@enduml

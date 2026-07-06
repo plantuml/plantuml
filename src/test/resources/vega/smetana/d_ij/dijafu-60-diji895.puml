@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!define SHOW_TYPE(x) my-x
+class ArrayList
+!ifdef SHOW_TYPE
+ArrayList : SHOW_TYPE(my_type) size()
+!else
+ArrayList : SHOW_TYPE not set size()
+!endif
+@enduml

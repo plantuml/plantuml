@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+[comp1] <-l- () right
+[comp1] <-r- ()left
+[comp1] <-u- () down
+[comp1] <-d- () up
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+hexagon r1 {
+ hexagon #pink "VeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg\nVeryLOOOOOOOOOOOOOOOOOOOg"
+}
+@enduml

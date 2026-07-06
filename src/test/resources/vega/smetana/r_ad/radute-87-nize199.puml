@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+Plan -right-> Collect
+-down-> Assure
+-down[hidden]-> Describe
+-left[hidden]-> Preserve
+-left[hidden]-> Discover
+-up[hidden]-> Integrate
+-up[hidden]-> Analyze
+
+Analyze -right-> Plan
+
+Assure --> Analyse
+
+hide Integrate
+@enduml

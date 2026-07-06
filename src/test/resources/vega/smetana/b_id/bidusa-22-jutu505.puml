@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+sprite Netw jar:archimate/network
+!include <tupadr3/font-awesome/star>
+class Foo {
+ <color:#FF0000><&x></color> someBadField
+ <color:red><$star*0.25></color> something else
+ <color:#AAAA00><$Netw></color> Not working with archimate and sprite from zip file
+ <$Netw,color=blue> Not working with archimate and sprite from zip file
+}
+@enduml

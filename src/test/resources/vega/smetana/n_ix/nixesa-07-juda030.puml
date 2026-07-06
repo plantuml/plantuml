@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+<style>
+arrow {
+  fontcolor red
+  MaximumWidth 150
+}
+</style>
+
+[*] -> Pending : user submits order through checkout flow with payment details
+Pending -> Processing : payment gateway confirms successful charge authorization
+Processing -> Shipped : warehouse marks package as dispatched with tracking number
+Shipped -> Delivered : carrier confirms delivery at destination address
+Delivered -> [*]
+@enduml

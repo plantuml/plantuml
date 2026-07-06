@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+folder folder_bold     #palegreen;line:green;line.bold;text:green
+folder folder_dashed   #palegreen;line:green;line.dashed;text:green
+folder folder_dotted   #palegreen;line:green;line.dotted;text:green
+
+package package_bold   #pink;line:green;line.bold;text:green
+package package_dashed #pink;line:green;line.dashed;text:green
+package package_dotted #pink;line:green;line.dotted;text:green
+
+usecase usecase_bold   #pink;line:green;line.bold;text:green
+usecase usecase_dashed #pink;line:green;line.dashed;text:green
+usecase usecase_dotted #pink;line:green;line.dotted;text:green
+@enduml

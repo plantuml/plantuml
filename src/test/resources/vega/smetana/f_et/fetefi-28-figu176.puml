@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+set separator none
+package "PKG" {
+component CMP3 as C3 {
+rectangle "info"
+}
+}
+ 
+component "CMP 5" as POS {
+}
+ 
+POS ~up~# "foo" C3 : call
+ 
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+mainframe This is a **mainframe**
+
+legend
+The legend
+end legend
+
+a -- bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb 
+
+@enduml

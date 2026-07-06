@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+object "Kannada : bambu" as 概要
+object bamboo
+bamboo <-- 概要
+@enduml

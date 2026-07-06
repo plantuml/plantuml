@@ -1,0 +1,49 @@
+---
+output: svg
+---
+@startjson
+<style>
+jsonDiagram {
+  node {
+    BackGroundColor black
+    LineColor lightblue
+    FontName Helvetica
+    FontColor #CCFF02
+    FontSize 18
+    FontStyle bold
+    RoundCorner 0
+    LineThickness 2
+    LineStyle 10-5
+    separator {
+      LineThickness 0.5
+      LineColor black
+      LineStyle 1-5
+    }
+    highlight {
+	  BackGroundColor red
+	  FontColor white
+      FontStyle italic
+    }
+  }
+  arrow {
+    BackGroundColor lightblue
+    LineColor green
+    LineThickness 2
+    LineStyle 2-5
+  }
+}
+</style>
+#highlight "address" / "state"
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "isAlive": true,
+  "age": 27,
+  "address": {
+    "streetAddress": "21 2nd Street",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10021-3100"
+  }
+}
+@endjson

@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+	skinparam class{
+	AttributeFontColor gold
+	BackgroundColor LightBlue
+	FontColor Yellow
+	BorderColor Green
+	ArrowColor Purple
+	ArrowFontColor Orange
+}
+class "ClassTitle1" as C1{
+	-atribute1
+	+atribute2
+	~atribute3
+	-method1()
+	+method2()
+	~method3()
+}
+class "ClassTitle2" as C2{
+	-atribute1
+	+atribute2
+	~atribute3
+	-method1()
+	+method2()
+	~method3()
+}
+C1 -> C2 : Relation
+@enduml

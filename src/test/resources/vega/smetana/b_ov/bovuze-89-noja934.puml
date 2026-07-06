@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+<style>
+</style>
+skinparam BackgroundColor red
+class foo
+@enduml

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+package package2{
+class Class2
+}
+package package1{
+Class1 "Document" -- Class2 
+}
+@enduml

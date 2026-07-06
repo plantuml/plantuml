@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+mainframe This is a **mainframe**
+header some header
+
+footer some footer
+
+title My title
+
+caption This is caption
+
+legend
+The legend
+end legend
+
+a -- b 
+
+@enduml

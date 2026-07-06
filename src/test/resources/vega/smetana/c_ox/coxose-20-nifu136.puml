@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+class HashMap<K,V>
+    HashMap [a1] <|-u-> [e] V1
+    HashMap [b2] *.r.> [f] V2
+    HashMap [c3] o.d.> [g] V3
+    HashMap [d4] +-l-> [h] V4
+
+@enduml

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+
+sprite $bProcess jar:archimate/business-process
+rectangle "business process" <<$bProcess>>
+
+@enduml

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class Bar<T>
+class "Foo<T>" as Foo_t
+class "Foo<int>" as Foo_int
+class "Foo<double>" as Foo_double
+Foo_t <|-- Foo_int
+Foo_t <|-- Foo_double
+@enduml

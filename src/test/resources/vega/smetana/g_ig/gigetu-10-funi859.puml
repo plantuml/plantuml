@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+folder "somefolder" as sf
+note top : foobar
+
+folder "somefolder2" as sf2
+note bottom : foobar
+
+folder sf3verylong
+note top : foobar
+
+@enduml

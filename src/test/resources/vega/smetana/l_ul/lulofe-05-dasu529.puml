@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startjson
+{
+  "firstName": "John",
+  "lastName": "Smith", // Comment
+  "isAlive": true // True when alive
+}
+@endjson

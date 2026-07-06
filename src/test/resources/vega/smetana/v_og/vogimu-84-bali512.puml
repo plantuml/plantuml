@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+ [*] --> ma
+
+  state "midgeAdult" as ma <<Midge>> #green {
+  	state Foo1 <<Weavil>>
+    [*] --> Foo1
+  } 
+  
+  [*] --> ma::Foo1
+  
+@enduml

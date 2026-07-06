@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+usecase usecase [
+This is a <b>usecase
+----
+You can use separator
+====
+of different kind
+....
+and style
+]
+@enduml

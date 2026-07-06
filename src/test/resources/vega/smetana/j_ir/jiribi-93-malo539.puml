@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+(*) -> "
+[[http://www.google.com]]
+Example state" as example
+@enduml

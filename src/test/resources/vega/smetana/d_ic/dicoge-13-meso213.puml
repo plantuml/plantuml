@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+folder hhname1 as "desc1" {
+  file test1a
+}
+
+folder "name2" as hhdesc2 {
+  file test2b
+}
+
+
+@enduml

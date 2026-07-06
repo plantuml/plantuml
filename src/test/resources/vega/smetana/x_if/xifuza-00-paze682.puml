@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+skinparam groupInheritance 3
+
+Group <|-- PLACEHOLDER
+Group <|-- Events
+Group <|-- Travels
+
+hide PLACEHOLDER
+
+@enduml

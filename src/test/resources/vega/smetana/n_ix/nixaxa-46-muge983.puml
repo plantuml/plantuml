@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startjson
+{
+{
+[
+      "SOMETHING",
+      "SOMETHINGelse"
+]
+}
+}
+@endjson

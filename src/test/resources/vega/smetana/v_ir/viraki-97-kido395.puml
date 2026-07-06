@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+rectangle "business process" <<$archimate/business-process>>
+rectangle "business process2" <<$archimate/role>>
+rectangle "business process3" <<$archimate/business-processsd>>
+@enduml

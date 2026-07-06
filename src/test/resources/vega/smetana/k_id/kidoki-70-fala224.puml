@@ -1,0 +1,123 @@
+---
+output: svg
+---
+@startjson
+{
+   "GenerationDateTime":"mercredi 27 novembre 2019 10:06",
+   "Generator":"Conf 19.11.04.0748",
+   "FileVersion":"1.0",
+   "Device":[
+      {
+         "Identifier":"AAAA",
+         "Name":"AAAA",
+         "Kind":"AAAA",
+         "sssssssssssss":[
+            {
+               "Identifier":"AAAA_SSSSSSS",
+               "Name":"AAAA SSSSS",
+               "IpPort":0,
+               "Protocol":"uuuuuuu",
+               "WordOrder":"aaaa",
+               "Table":[
+                  {
+                     "Identifier":"AAAA_rrrrrrrrrrrrr",
+                     "Name":"AAAA rrrrrrrrrrrrrrrrrr",
+                     "Kind":"hhhhhhhhhhhhhhhhhh",
+                     "Variable":[
+                        {
+                           "AAAAAAAAAA":"-",
+                           "Identifier":"BBBBpppppppppppn",
+                           "Name":"BBBBpppppppppppp",
+                           "Type":"Boolean",
+                           "Unit":"None",
+                           "Index":10,
+                           "BitPosition":0,
+                           "Isaaaaa":false,
+                           "Toaaaaaaa":true,
+                           "IsReserve":false
+                        },
+                        {
+                           "AAAAAAAAAA":"-",
+                           "Identifier":"outON",
+                           "Name":"aaaaaaaa",
+                           "Type":"Boolean",
+                           "Unit":"None",
+                           "Index":10,
+                           "BitPosition":1,
+                           "Isaaaaa":false,
+                           "Isaaaaabbbbb":true,
+                           "IsReserve":false
+                        },
+                        {
+                           "AAAAAAAAAA":"-",
+                           "Identifier":"reAAAA",
+                           "Name":"reAAAA",
+                           "Type":"Float32",
+                           "CellCount":2,
+                           "Unit":"MMMMMM",
+                           "Index":18,
+                           "BitPosition":0,
+                           "Isaaaaa":false,
+                           "Isaaaaabbbbb":true,
+                           "IsReserve":false
+                        }
+                     ]
+                  },
+                  {
+                     "Identifier":"AAAA_oooooooooooooo",
+                     "Name":"AAAA oooooooooooooo",
+                     "Kind":"KKKKKK",
+                     "Variable":[
+                        {
+                           "AAAAAAAAAA":"-",
+                           "Identifier":"inAAAADbbbbbbe",
+                           "Name":"inAAAADbbbbbbbbb",
+                           "Type":"Boolean",
+                           "Unit":"None",
+                           "Index":0,
+                           "BitPosition":0,
+                           "Isaaaaa":false,
+                           "Isaaaaabbbbb":true,
+                           "IsReserve":false
+                        },
+                        {
+                           "AAAAAAAAAA":"-",
+                           "Identifier":"inAAAADCCCCCCCCCCC",
+                           "Name":"inAAAADCCCCCCCCCCCCC",
+                           "Type":"Boolean",
+                           "Unit":"None",
+                           "Index":0,
+                           "BitPosition":0,
+                           "Isaaaaa":false,
+                           "Isaaaaabbbbb":true,
+                           "IsReserve":false
+                        },
+                        {
+                           "AAAAAAAAAA":"-",
+                           "Identifier":"AAAAWWWWWWWWW",
+                           "Name":"AAAAWWWWWWWW",
+                           "Type":"UInt16",
+                           "CellCount":1,
+                           "Unit":"None",
+                           "Index":1,
+                           "BitPosition":0,
+                           "Isaaaaa":true,
+                           "Isaaaaabbbbb":true,
+                           "IsReserve":false
+                        }
+                     ]
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "Identifier":"ZZZZZ",
+         "Name":"ZZZZZZ",
+         "Server":[
+            
+         ]
+      }
+   ]
+}
+@endjson

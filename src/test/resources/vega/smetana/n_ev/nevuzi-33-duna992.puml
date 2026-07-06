@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+component fooA2
+component fooA1
+fooA1 -- fooA2: [[http://www.google.com]]
+@enduml

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+ hide empty methods
+ 
+ class agent as "ulan:{m}-agent" {
+   a schema:Person    | Organization
+   --from preferred Biography--
+   schema:description
+ }
+@enduml

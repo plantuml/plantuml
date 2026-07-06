@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam defaultTextAlignment center
+[component title\n more component info] <<myStereotype>>
+@enduml

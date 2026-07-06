@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+package "Classic Collections" #DDDDDD {}
+package "Classic Collections2" #DDDDDD {
+  Object <|-- ArrayList
+}
+@enduml

@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+title This is the title
+Dog --|> Mammal
+
+url of Mammal is [[http://www.google.com]]
+
+class Dog {
+NemesisCat
+}
+Dog o-- Cat
+
+Cat --|> Mammal
+@enduml

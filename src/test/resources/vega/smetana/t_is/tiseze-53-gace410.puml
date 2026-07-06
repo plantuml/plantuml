@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+     note right: %filename%
+     note left: %filenameNoExtension%
+@enduml

@@ -1,0 +1,58 @@
+---
+output: svg
+---
+@startuml
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b>x</b>
+!define unique(x) <color:green>x</color>
+!define unique(x,y) <u><color:red>x,y</color></u>
+!define not_null(x) <u>x</u>
+
+hide methods
+hide stereotypes
+
+' entities
+
+Table(user_role, "user_role") {
+not_null(primary_key(id)) BIGINTEGER
+unique(user_name, user_role)
+not_null(user_name VARCHAR[255])
+not_null(user_role) enum
+}
+
+Table(user, "user") {
+not_null(primary_key(id)) BIGINTEGER
+not_null(user_role_id) BIGINTEGER
+not_null(name VARCHAR[255])
+}
+
+Table(customer, "customer") {
+	not_null(primary_key(customer_id)) BIGINTEGER
+    not_null(user_id) BIGINTEGER
+	email VARCHAR[128]
+	first_name VARCHAR[255]
+	last_name VARCHAR[255]
+	not_null(password VARCHAR[255])
+	pin VARCHAR[255]
+	phone_number VARCHAR[255]
+	first_login BOOL
+    ...
+}
+
+Table(external_system_auth, "external_system_auth") {
+	not_null(primary_key(name)) VARCHAR[255]
+    not_null(user_id) BIGINTEGER
+    not_null(password) VARCHAR[255]
+	description TEXT
+	ips TEXT
+	active BOOL
+}
+
+' relationships
+user_role --> user : "User role can be user\n by many users"
+customer -- user : "Customer - user \nis one to one relation"
+external_system_auth -- user : "External system - user \nis one to one relation"
+
+
+@enduml

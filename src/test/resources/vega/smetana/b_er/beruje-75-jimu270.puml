@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class Temp {
+    int toto
+   <back:#FFF000>string nouvelAttributi</back>
+   <s>strike</s>
+   <w>This is wave</w>
+}
+@enduml

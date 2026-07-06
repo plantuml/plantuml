@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+A0 -- A1
+A0 -- A3
+
+A1 -- A5
+A2 -- A4
+
+note right of A1 : right
+note left of A4 : left
+
+@enduml

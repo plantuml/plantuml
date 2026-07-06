@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+skinparam style strictuml
+object firstObject
+object "instance name : type" as o2
+@enduml

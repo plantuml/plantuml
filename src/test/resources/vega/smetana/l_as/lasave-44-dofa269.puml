@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+class C {
+-- foo1 --
+- field1
+-- foo1 --
+- field2
+-- foo1 --
+- field3
+-- foo1 --
+- field4
+}
+@enduml

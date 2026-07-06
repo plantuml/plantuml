@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+(*) --> "init"
+ --> "look for data"
+ -->[data found] "examine data"
+ -down->[data allow to wait] "wait for next data"
+ -left-> "examine data"
+ -->[data require activation] "trigger activation"
+ --> "activate"
+ "look for data" -->[no data] "trigger activation"
+ "activate" --> (*)
+@enduml

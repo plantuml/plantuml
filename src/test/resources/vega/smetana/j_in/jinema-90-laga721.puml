@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+package P1 {
+  class "ArrayList0" as A0
+  Object <|-- A0
+}
+
+package P2 {
+  class "ArrayList1" as B1
+  A0 <|-- B1 
+}
+
+@enduml

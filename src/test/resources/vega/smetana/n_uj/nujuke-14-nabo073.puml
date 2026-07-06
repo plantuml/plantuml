@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startjson
+[
+"\\\\",
+"\\n",
+"\\r",
+"\\t"
+]
+@endjson

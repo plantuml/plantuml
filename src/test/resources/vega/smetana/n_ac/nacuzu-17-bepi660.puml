@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+
+class String{
+}
+
+class TestAttrributeNote {
+ String attribute1
+# attribute2 : String
+}
+
+note right of TestAttrributeNote::attribute1
+This is a note that breaks.
+end note
+
+
+@enduml

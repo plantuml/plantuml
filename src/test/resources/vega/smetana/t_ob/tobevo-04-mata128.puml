@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+
+title must be red
+
+skinparam rectangle<<boundary>> {
+    FontColor blue
+}
+
+skinparam rectangle<<boundary>> {
+    FontColor red
+}
+
+rectangle "R1" as r1 <<boundary>> {
+  rectangle "R2" as r2 <<boundary>> {
+  }
+}
+
+@enduml

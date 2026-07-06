@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+namespace Namespace {
+    protocol Foo {}
+    class Bar {}
+}
+Namespace.Foo *-- Namespace.Bar
+@enduml

@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+
+title you should not see comp5 but 1-4 and 6
+
+component comp1 $tag1 $tag2 $tag3
+component comp2 $tag1
+component comp3 $tag2 $tag3
+component comp4 $tag2
+component comp5 $tag3
+component comp6 $tag2 $tag3
+
+comp1 -- comp2
+comp1 -- comp3
+comp1 -- comp4
+
+comp3 -- comp5
+comp4 -- comp6
+
+hide *
+show $tag2
+show $tag1
+
+@enduml

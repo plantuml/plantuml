@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+state SM {
+  state V {
+    config: foo
+  }
+
+  state data
+}
+
+config --> data
+
+@enduml

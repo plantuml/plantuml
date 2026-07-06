@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+namespace classic.collections {
+  java.lang.Object <|-- ArrayList
+}
+
+namespace net.sourceforge.plantuml {
+  class ArrayList
+  classic.collections.ArrayList <|-- ArrayList
+}
+@enduml

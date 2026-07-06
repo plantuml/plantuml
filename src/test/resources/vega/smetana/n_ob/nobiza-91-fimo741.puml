@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+rectangle "First" <<$Net>>
+note left
+ You can use images
+<img:https://chart.googleapis.com/chart?cht=p3&chd=t:60,40&chs=250x100&chl=Hello%7CWorld>
+end note
+@enduml

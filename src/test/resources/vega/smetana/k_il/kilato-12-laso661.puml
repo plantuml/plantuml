@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+state choice1 <<choice>>
+state foo1 <<fork>>
+state foo2 <<join>>
+state foo3 <<end>>
+[*] --> choice1
+choice1 --> foo1
+choice1 --> foo2
+choice1 --> foo3
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+   state Running {
+      [*] --> A1
+      state A1 {
+         [*] -> innerA1
+      }
+      A1 --> A2
+      --
+      state B1 {
+         [*] --> innerB1
+      }
+'     [*] --> A2
+   } 
+
+@enduml

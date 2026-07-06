@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+!pragma layout elk
+
+!include <osa2/Common>
+!include <osa2/Hardware/all>
+!include <osa2/Misc/all>
+!include <osa2/Server/all>
+
+osa_cloud(cloud, "cloud", "cloud") {
+    osa_server(server, "Server VM", "Debian", "HestiaCP")
+    osa_vpn(vpn, "Gateway VM", "Debian", "HestiaCP")
+    osa_vpn(vpn2, "Gateway VM", "Debian", "HestiaCP")
+}
+
+@enduml

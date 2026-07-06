@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+- package foo {
+- class alice
+}
++ package Dummy {
++ class Bob
+}
+@enduml

@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+skinparam packageStyle rect
+package decoder_core {
+    package input_source {}
+    package output_generator {
+        package spooler {}
+    }
+    package format_decoder {
+        package reader {}
+        package source_fildset {}
+        package output_fields_producer {}
+    }
+} 
+'note right of "decoder_core": Монолитная архитектура
+note "Монолитная архитектура" as monolit
+decoder_core .. monolit
+@enduml

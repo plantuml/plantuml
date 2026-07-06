@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+component foo1 $tag1 $corecomponent
+component foo2
+component foo3 $tag1
+remove $tag1
+restore $corecomponent
+@enduml

@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startuml
+<style>
+document {
+  BackgroundColor lightBlue
+}
+arrow {
+  FontColor Blue
+  FontSize 14
+  FontStyle bold
+  cardinality {
+  	FontColor red
+	FontSize 10
+	FontStyle italic
+  }
+}
+class {
+  BackgroundColor yellow
+  generic {
+  	BackgroundColor purple
+  }
+  qualified {
+  	BackgroundColor green
+  	FontColor ivory
+  }
+}
+</style>
+
+    interface Map<K,V>
+    class HashMap<Long,Customer>
+
+    Map <|.. HashMap
+    Shop [customerId: long] ---> "customer\n1" Customer : foo1
+    HashMap [id] -r-> "value" Customer : foo2
+@enduml

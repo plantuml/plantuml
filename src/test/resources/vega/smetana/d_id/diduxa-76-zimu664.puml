@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+skinparam interfaceBackgroundColor gold
+skinparam componentBackgroundColor gold
+skinparam borderColor orange
+skinparam componentArrowColor #FF6655
+skinparam componentFontColor #777777
+skinparam noteBackgroundColor BlanchedAlmond
+
+"This is my interface" as () interface
+[component1] -> () interface
+() interface <.. [component2]
+
+@enduml

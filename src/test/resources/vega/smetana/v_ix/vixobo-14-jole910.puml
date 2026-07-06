@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+state Active {
+Active: entry / HAL_CAN_Init(...) \n\t HAL_CAN_Start(...) \n\t HAL_CAN_ActivateNotification(...)
+Active: exit / HAL_CAN_DeactivateNotification(...) \n\t HAL_CAN_Stop(...) \n\t HAL_CAN_DeInit(...)
+Active: SEND_MSG (msg, mailbox) / \
+\n\t HAL_CAN_AbortTxRequest(...) \
+\n\t HAL_CAN_AddTxMessage(...)
+Active: RX_MSG (msg) / \
+}
+@enduml

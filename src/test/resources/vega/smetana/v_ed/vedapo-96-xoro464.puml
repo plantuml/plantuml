@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+
+state Foo1 ##[dotted]blue {
+}
+state Foo2 ##[dotted]green {
+state inner1 ##[dotted]yellow
+}
+
+state out ##[dotted]gold
+
+state Foo3 ##[bold]green {
+state inner2 ##[dotted]yellow
+}
+
+out --> Foo3.inner2
+@enduml

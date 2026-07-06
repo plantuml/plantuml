@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+file test_bullet_list_creole [
+* a
+* b
+** b0
+** b1
+*** b10
+*** b11
+*** b12
+*** b13
+** b2
+]
+@enduml

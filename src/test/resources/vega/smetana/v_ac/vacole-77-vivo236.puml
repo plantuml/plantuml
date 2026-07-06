@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+namespace Dummy [[http://www.google.com {this is a tooltip on Dummy}]] #DDDDDD {
+class foo
+}
+@enduml

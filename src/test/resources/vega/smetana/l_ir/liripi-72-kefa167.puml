@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+'allowmixing
+
+Package "Attribute Mapper" as attribute_mapper #ff9999 {
+    portin "Maps Callbacks" as maps_callbacks
+    portout "Maps Eval" as maps_evaluations
+    component "Mapper engine" as mapper_engine {
+    map "Mappings" as maps #acffa0 {
+      Rule 1 => r'1 =  2 * r'2
+      Rule 2 => d'2 =  d'1 / 2
+      Rule 3 => r'3 =  r'4 + r'2
+    }
+
+  }
+}
+@enduml

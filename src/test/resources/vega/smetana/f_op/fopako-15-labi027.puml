@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+
+!pragma svek_trace on
+
+
+component "displayTemp" as displayTemp <<block>> {
+
+    portin "temp_dC" as temp_dC_displayTemp
+    portin "temp_dF" as temp_dF_displayTemp
+
+
+    rectangle "internals" {
+        component display
+        component conversion
+
+        temp_dC_displayTemp -u-> display
+        temp_dF_displayTemp --> display
+        conversion <--> display
+
+    }
+}
+
+
+@enduml

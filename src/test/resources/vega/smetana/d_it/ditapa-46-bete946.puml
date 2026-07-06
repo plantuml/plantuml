@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+skinparam style strictuml
+
+class foo1.foo2
+@enduml

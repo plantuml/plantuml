@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+skinparam useBetaStyle true
+<style>
+note {
+  FontSize 10
+  BackGroundColor #fff
+  .green {
+        BackgroundColor green
+   }
+}
+</style>
+
+class Foo
+note left <<green>>: On last defined class
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+package p1 {
+class bidon
+}
+
+package p2 {
+class A
+class B
+}
+
+p1 +--- p2
+
+p1 +-- foo2
+
+@enduml

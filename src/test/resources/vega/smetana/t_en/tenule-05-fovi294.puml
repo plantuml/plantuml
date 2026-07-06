@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+'skinparam classFontName MS Mincho
+'skinparam classAttributeFontName MS Mincho
+'skinparam packageFontName MS Mincho
+
+package 春春春 {
+Classe *-- "ει" 春 : τρέχει
+春 : 春燕
+春 : toto
+春 : 土 + 也 = 地
+note right of 春
+有土可种桑麻
+有水克养鱼虾
+有人非你非我
+有马克走天涯
+end note
+@enduml

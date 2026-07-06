@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+class X {
+  + End() : int
+  - Count : int
+  __ Messages __
+  AnnounceEnd() : int
+ Message : String
+}
+class Y {
+  + End() : int
+  - Count : int
+  '__ Messages __
+  AnnounceEnd() : int
+ Message : String
+}
+hide X members
+hide Y members
+@enduml

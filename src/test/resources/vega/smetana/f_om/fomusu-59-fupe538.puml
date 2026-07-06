@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+
+[*] --> State1
+State1 --> State2 : Succeeded
+State1 --> [*] : Aborted
+State2 --> State3 : Succeeded
+State2 --> [*] : Aborted
+state State3 {
+[*] --> AccumulateEnoughDataLongStateName
+AccumulateEnoughDataLongStateName --> AccumulateEnoughDataLongStateName : New Data
+AccumulateEnoughDataLongStateName --> ProcessData : Enough Data
+}
+State3 --> State3 : Failed
+State3 --> [*] : Succeeded / Save Result
+State3 --> [*] : Aborted
+
+@enduml

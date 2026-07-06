@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+set separator none
+[*] --> ma
+state "midgeAdult" as ma <<Midge>> {
+  	state Foo1 <<Weavil>>
+    [*] --> Foo1
+} 
+[*] --> Foo1  
+@enduml

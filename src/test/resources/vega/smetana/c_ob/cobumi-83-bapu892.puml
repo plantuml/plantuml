@@ -1,0 +1,67 @@
+---
+output: svg
+---
+@startuml
+package "entities" #DDDDDD {
+
+class FcUser {
++ String login
++ String name
++ String email
+~ String passwordHash = md5 of "login:password"
+boolean checkPassowd(String pw)
+void setPassword(String pw)
+}
+
+class Card {
++ String frontHtml
++ String backHtml
+}
+
+class Answer {
++ int rating [0..3]
++ Date timestamp
+}
+
+Answer -> Card : card
+Answer -> FcUser : user
+
+class Category {
++ String name
+}
+
+Category -> FcUser : owner
+
+Category <- Card : category
+
+package entities.mindmap {
+class MindMap {
++ String name
+}
+
+abstract class MindMapNode {
++ double x
++ double y
++ boolean collapsed
+}
+
+MindMap -|> MindMapNode
+MindMapCard -|> MindMapNode
+
+class MindMapLink {
++ String text
++ boolean leftArrow
++ boolean rightArrow
+}
+
+MindMapCard -> Card : card
+MindMapNode -> MindMapNode : parent
+MindMapNode <- MindMap : children
+MindMapLink -> MindMapNode : leftNode
+MindMapLink -> MindMapNode : rightNode
+
+
+MindMap -> FcUser : owner
+
+
+@enduml

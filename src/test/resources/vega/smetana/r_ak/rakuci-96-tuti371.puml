@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+package " XY " as XXY [[/text/web/test/abc/92:2]] {
+rectangle " YY " as YYY [[/text/web/test/ced/222:0]] {
+}
+rectangle " YX " as XYY [[/text/web/test/ced/221:2]] {
+class " AB " as AAB [[/text/web/test/ced/222:1]]
+class " CD " as CCD [[/text/web/test/ced/221:1]]
+}
+}
+@enduml

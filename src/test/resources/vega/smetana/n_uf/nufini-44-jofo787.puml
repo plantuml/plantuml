@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+<style>
+note {
+  MaximumWidth 100
+  Fontcolor red
+}
+class {
+  MaximumWidth 150
+  Fontcolor green
+}
+</style>
+
+Class "Long Long Long Long Long Long Long Long Long Long **class**" as C1
+Class C2 {
+Long Long Long Long Long Long Long Long Long **Method()**
+}
+note top of C1: Long Long Long Long Long Long Long Long Long Long **note**
+note "This is a Long Long Long Long Long Long Long Long Long **floating note**" as N1
+
+C1 --> N1
+@enduml

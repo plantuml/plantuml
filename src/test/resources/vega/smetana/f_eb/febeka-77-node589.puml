@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+hexagon rect1
+rectangle rect2
+hexagon rect3
+hexagon rect4
+hexagon hexa1
+
+rect1 --> hexa1
+rect2 --> hexa1
+rect3 --> hexa1
+rect4 --> hexa1
+
+@enduml

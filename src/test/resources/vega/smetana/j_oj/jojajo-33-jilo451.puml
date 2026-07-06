@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+
+    state A {
+        state AA1 {
+            state B1
+            -- 
+            state B2
+        }
+        --
+        state AA2
+    }
+
+@enduml

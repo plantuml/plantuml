@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+<style>
+</style>
+title style
+node node {
+}
+package package {
+}
+queue queue {
+}
+rectangle rectangle {
+}
+@enduml

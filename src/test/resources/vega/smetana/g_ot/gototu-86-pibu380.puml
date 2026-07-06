@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+    component a as a {
+    }
+    component b as b {
+    }
+
+    a->b: test1
+    a<-b: test2
+@enduml

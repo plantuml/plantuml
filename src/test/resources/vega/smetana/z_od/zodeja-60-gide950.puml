@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+
+
+"foobar/fee-bar6" *-- "this is my class"
+"this is my class" : dummy() with stange chars$%//
+
+@enduml

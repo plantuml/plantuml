@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+component a $a {
+}
+
+component b {
+}
+
+note right of a: test_a
+
+remove $a
+@enduml

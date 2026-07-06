@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class foo1 $tag1
+package p1 $txn {
+class inside1
+}
+class foo3
+hide $txn
+@enduml

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class __Test1__
+class "__Test2__" as foo2
+@enduml

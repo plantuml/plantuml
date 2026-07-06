@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam componentstyle uml2
+component "Component 1" as C1 <<My stereoptype>>
+@enduml

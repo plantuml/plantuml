@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+artifact foo1
+artifact foo2 as "
+this isa
+----
+a line
+-- title --
+"
+database foo3 as "
+this isd
+----
+a line
+"
+@enduml

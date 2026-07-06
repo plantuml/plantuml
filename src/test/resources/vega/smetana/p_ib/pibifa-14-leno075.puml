@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+class A0
+class B1
+class C2
+
+
+A0 *--  B1
+A0 *--  C2
+
+(A0, B1) . (A0, C2)
+@enduml

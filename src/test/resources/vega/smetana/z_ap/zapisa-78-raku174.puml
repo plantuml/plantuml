@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+
+a --> b : toto
+note on link
+This is not visible,
+neither in smetana
+nor ELK.
+end note
+
+@enduml

@@ -1,0 +1,38 @@
+---
+output: svg
+---
+@startuml
+!$data = {
+    "highlight_color": "Gold",
+    "items": [
+        {
+            "name": "C++",
+            "is_highlighted": false
+        },
+        {
+            "name": "Java",
+            "is_highlighted": 1
+        },
+        {
+            "name": "Python",
+            "is_highlighted": 0
+        },
+        {
+            "name": "PlantUML",
+            "is_highlighted": true
+        }
+    ]
+}
+
+!$highlight_color = $data.highlight_color
+
+rectangle Languages {
+    !foreach $item in $data.items
+        !if %boolval($item.is_highlighted) == %true()
+            rectangle "$item.name" #$highlight_color
+        !else
+            rectangle "$item.name"
+        !endif
+    !endfor
+}
+@enduml

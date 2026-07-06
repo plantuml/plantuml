@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+hide circle
+hide empty members
+
+class "TestOne" {
+attr1
+attr2
+}
+class "Test Two" extends "TestOne" {
+symmetric
+}
+
+@enduml

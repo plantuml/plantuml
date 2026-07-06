@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+allow_mixing
+!define MyBlue #6192d1
+skinparam class {
+  BackgroundColor white\MyBlue
+}
+skinparam database {
+  BackgroundColor white\MyBlue
+}
+class dummy1 {
+  foo1
+}
+database dummy2
+@enduml

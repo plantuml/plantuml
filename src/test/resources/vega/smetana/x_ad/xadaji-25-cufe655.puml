@@ -1,0 +1,36 @@
+---
+output: svg
+---
+@startuml
+package outputs {
+component out1
+component out2
+component out3
+}
+package processors {
+component proc1 $proc1
+component proc2 $proc2
+component proc3 $proc3
+}
+
+package inputs {
+component in1
+component in2
+component in3
+}
+
+in1 --> proc1
+in2 --> proc1
+proc1 --> out2
+in2 --> proc3
+proc3 --> out2
+proc3 --> out3
+proc3 --> out1
+in3 --> proc2
+proc2 --> out1
+
+remove $proc2
+remove $proc3
+
+remove @unlinked
+@enduml

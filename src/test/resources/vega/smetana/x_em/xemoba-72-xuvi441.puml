@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+rectangle "business strategy-capability" <<$archimate/strategy-capability>>
+rectangle "business strategy-course-of-action" <<$archimate/strategy-course-of-action>>
+rectangle "business physical-equipment" <<$archimate/physical-equipment>>
+rectangle "business physical-facility" <<$archimate/physical-facility>>
+rectangle "business physical-distribution-network" <<$archimate/physical-distribution-network>>
+rectangle "business physical-material" <<$archimate/physical-material>>
+rectangle "business strategy-resource" <<$archimate/strategy-resource>>
+rectangle "business motivation-outcome" <<$archimate/motivation-outcome>> #MOTIVATION
+@enduml

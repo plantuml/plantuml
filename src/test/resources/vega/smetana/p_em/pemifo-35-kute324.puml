@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+arrow {
+  LineColor #Green
+  FontColor #Green
+  LineStyle 10-5
+  
+  .va {
+  	LineColor #Red
+  	FontColor #Red
+  }
+  .vb {
+  	LineColor #Blue
+  }
+
+}
+</style>
+
+
+[Component]
+
+
+Component --> Participant10<<va>> : va stereotype
+Component --> Participant20<<vb>> : vb stereotype
+
+@enduml

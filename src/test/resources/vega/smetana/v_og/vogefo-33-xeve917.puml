@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+database Aria
+node "Telemetry API"
+cloud {
+
+}
+@enduml

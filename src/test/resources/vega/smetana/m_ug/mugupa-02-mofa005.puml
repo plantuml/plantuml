@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+
+!procedure $json()
+  foo1: dummy1
+  foo2: dummy2
+!endprocedure
+
+!function $get_response()
+!return %retrieve_procedure("$json")
+!endfunction
+
+note left
+response:
+[[get-metadata-response.json{$get_response()} example response]]
+endnote
+
+@enduml

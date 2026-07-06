@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+skinparam CircledCharacterFontStyle Italic
+skinparam CircledCharacterFontSize 20
+skinparam CircledCharacterRadius 13
+
+skinparam ClassStereotypeFontSize 30
+skinparam ClassStereotypeFontStyle Bold
+skinparam ClassStereotypeFontName Times
+
+class Demo << Stereo >>
+@enduml

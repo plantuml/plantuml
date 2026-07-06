@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+class A {
+{static} int counter
++void {abstract} start(int timeoutms)
++void {abstract} start(Duration timeout)
+}
+note left of A::counter
+  This member is annotated
+end note
+note right of A::"start(int timeoutms)"
+  This method with int
+end note
+note right of A::"start(Duration timeout)"
+  This method with Duration
+end note
+@enduml

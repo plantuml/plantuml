@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+!define FILE_FORMAT_SVG 1
+
+!ifdef FILE_FORMAT_SVG
+title Test SVG
+!else
+!ifdef FILE_FORMAT_PNG 
+title Test PNG
+!else 
+title Test with unknown type
+!endif
+Bob -> Alice : hello
+@enduml

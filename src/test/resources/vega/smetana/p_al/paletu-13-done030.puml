@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+<style>
+</style>
+
+class classA {
+testMethodCode()        
+}
+
+class classB #f00 {
+testMethodCode()       
+}
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@starthcl
+locals {
+  dummy_org_id         = "640841790890"
+  "creation_date" : formatdate("YYYY-MM-DD", timestamp)
+}
+
+@endhcl

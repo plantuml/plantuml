@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startyaml
+
+
+compile:
+  extends: .sbt-compile-cross
+
+test mario-domain:
+  extends: .sbt-test-cross
+
+@endyaml

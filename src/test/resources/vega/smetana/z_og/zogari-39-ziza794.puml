@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator .
+namespace net {
+a1 <|-- b1
+}
+
+namespace net.sourceforge {
+c1 <|-- d1
+c1 --> net.a1
+}
+
+@enduml

@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam svgDimensionStyle false
+
+component a {
+}
+component b {
+}
+a -(0- b
+@enduml

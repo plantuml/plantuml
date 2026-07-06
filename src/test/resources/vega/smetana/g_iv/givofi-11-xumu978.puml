@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+allow_mixing
+skinparam class {
+  BackgroundColor #c3d8f4\#6192d1
+  BorderColor #00FFFF
+  FontColor #50FFFF
+}
+skinparam database {
+  BackgroundColor #FFd8f4\#FF92d1
+  BorderColor #50FF50
+  FontColor #FF5050
+}
+class dummy1 {
+  foo1
+}
+database dummy2
+@enduml

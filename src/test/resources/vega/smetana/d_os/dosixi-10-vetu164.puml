@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+<style>
+.LAN-A {
+  LineColor Red
+}
+</style>
+
+rectangle A
+rectangle LA <<LAN-A>>
+@enduml

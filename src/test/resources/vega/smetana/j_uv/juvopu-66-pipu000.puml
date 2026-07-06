@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+
+skinparam linetype ortho
+Entity01 "1" }|--|| "2" Entity02
+@enduml

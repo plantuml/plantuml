@@ -1,0 +1,34 @@
+---
+output: svg
+---
+@startuml
+package "Client UI" as client {
+  [Browser / Tablet]
+  [Mobile]
+  [Microsites]
+}
+
+package "Secured API" as API {
+  [HTML Pages]
+  [RESTful Endpoints]
+  [SOAP Endpoints]
+}
+
+package "Business Logic" as BL {
+  [Data Shaping]
+  [Data Cacheing]
+  [Data Validation]
+}
+
+package "Enterprise Data Stores" as ES {
+  [EDP - Personalization]
+  [ATLAS]
+  [Magic - Compensation / Performance]
+  [SSR - Sales system]
+  [CRM]
+}
+
+client --> API
+API --> BL
+BL --> ES
+@enduml

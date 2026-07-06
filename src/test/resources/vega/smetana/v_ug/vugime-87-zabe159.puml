@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+file f [
+<back:Blue> aaa
+You can change <back:cadetblue>background color</back>
+This is <color:blue>Blue</color>
+This is <back:orange>Orange background</back>
+]
+@enduml

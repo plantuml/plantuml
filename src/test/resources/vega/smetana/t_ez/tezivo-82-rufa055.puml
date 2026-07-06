@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+hide empty description
+state Foo1
+state Foo2 
+Foo2 : comment
+@enduml

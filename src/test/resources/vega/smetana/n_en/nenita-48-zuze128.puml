@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+[*] --> Foo
+Foo --> Bar : Ev1
+Foo --> a[H] : Ev2
+Bar --> a[H] : Ev3
+@enduml

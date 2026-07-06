@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+skinparam StateBackgroundColor green
+state parent {
+    parent --> child
+}
+@enduml

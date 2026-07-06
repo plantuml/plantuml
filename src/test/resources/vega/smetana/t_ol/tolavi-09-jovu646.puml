@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+    root {
+       FontColor Blue
+       BackGroundColor Green
+    }
+    document {
+       BackGroundColor yellow
+    }
+    classDiagram {
+       LineColor yellow
+    }
+    class {
+       LineColor lightblue
+    }
+</style>
+
+' printed in blue
+class Bob {
+hello
+}
+
+' also printed in blue
+class Sally
+
+
+Sally --> Bob
+@enduml

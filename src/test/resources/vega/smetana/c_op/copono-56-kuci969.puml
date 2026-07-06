@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+!global $table = "|= Field1 |= Field 2 |"
+!procedure $row($value1, $value2)
+%set_variable_value("$table", %get_variable_value("$table") + %newline() + "| " + $value1 + " | " + $value2 + " |")
+!endfunction
+
+$row("1", "2")
+$row("3", "4")
+
+rectangle r [
+<i>on rectangle:
+$table
+]
+
+
+@enduml

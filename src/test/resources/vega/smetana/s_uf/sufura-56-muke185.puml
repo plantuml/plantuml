@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+
+!$class1_detail=%false()
+!$class2_detail=%false()
+
+!ifdef SUBMODULE
+    !log SUBMODULE defined
+    !$class1_detail=%true()
+!else
+    !log SUBMODULE _not_ defined
+!endif
+
+hide circle
+
+@enduml

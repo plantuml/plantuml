@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+cloud failure {
+  rectangle "initial: test~*" as a
+  rectangle "backslash: test\~*" as b
+  rectangle "double-tilde: test~~*" as c
+}
+
+cloud workarounds {
+  rectangle "whitespace-after: test~ *" as w_1
+  rectangle "tilde character as unicode: test<U+007E>*" as w_2
+}
+
+@enduml

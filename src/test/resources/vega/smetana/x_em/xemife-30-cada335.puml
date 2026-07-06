@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class BaseChat<A> extends BaseEntity {
+}
+
+class CoupleChat extends BaseChat<A> {
+}
+
+@enduml

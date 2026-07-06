@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+map "AAA A" as AAAA {
+  ffff1 => ffff2
+}
+
+map "CCC C" as CCCC {
+  ssss => tttt
+}
+
+AAAA::ffff1 => CCCC::ssss
+
+@enduml

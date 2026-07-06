@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+'skinparam useBetaStyle true
+<style>
+note {
+  FontSize 10
+  BackGroundColor #fff
+  .green {
+        BackgroundColor green
+   }
+}
+</style>
+
+node n
+file f
+note left of n <<green>>: note that is green
+@enduml

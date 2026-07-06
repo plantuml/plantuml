@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+[component] --> :actor:
+@enduml

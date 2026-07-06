@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+[*] --> test
+test -> a : +OK
+test -left-> b : +marche pas
+a -up-> c : -marche pas
+a --> d : -ok
+@enduml

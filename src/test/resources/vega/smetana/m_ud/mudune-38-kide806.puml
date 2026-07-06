@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam CircledCharacterFontSize 15
+class Toto
+@enduml

@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+card c
+
+node node {
+  port p1longreallyreally
+  port p2longreally
+  port p3long
+  file f1
+}
+
+c --> p1longreallyreally
+c --> p2longreally
+c --> p3long
+p1longreallyreally --> f1
+p2longreally --> f1
+@enduml

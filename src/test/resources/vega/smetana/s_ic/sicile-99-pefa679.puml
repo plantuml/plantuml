@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+class cl1
+class cl2
+class cl3
+class cl4
+cl1 -- cl2 : this is\non several\nlines
+cl2 -- cl3 : this is\lon several\llines
+cl3 -- cl4 : this is\ron several\rlines
+@enduml

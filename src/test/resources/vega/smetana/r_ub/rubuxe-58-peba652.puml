@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class A {
++attribute
+}
+note right of A::attribute
+  This member is annotated
+end note
+@enduml

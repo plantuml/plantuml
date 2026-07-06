@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+circle A [
+a
+b
+c
+]
+@enduml

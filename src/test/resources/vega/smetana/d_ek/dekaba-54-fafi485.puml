@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class A {
+ PK ID Integer
+ FK OSM_ID BigInteger
+ PP OtherID Integer
+}
+A::ID -- B
+@enduml

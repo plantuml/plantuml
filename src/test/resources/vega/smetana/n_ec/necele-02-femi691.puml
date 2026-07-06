@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+'FORMAT
+<style>
+  frame {
+    LineColor Blue
+    BackgroundColor LightBlue
+    Shadowing 0
+  }
+  rectangle {
+    LineColor Green
+    Backgroundcolor LightGreen
+    Shadowing 0
+  }
+</style>
+'ELEMENTS
+frame Foo5 {
+  rectangle Foo6
+}
+@enduml

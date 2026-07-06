@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+
+skinparam cloud {
+	BackgroundColor black
+	FontColor #?black:white
+}
+
+skinparam database {
+	BackgroundColor white
+	FontColor #?black:white
+}
+
+cloud cloud
+database database
+@enduml

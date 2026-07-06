@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+state "Sans activite" as Chomeur
+[*] --> Active
+Chomeur -> Active : retrouver une activite
+Active -> Chomeur : perte de toute activite
+Chomeur --> Retraite : age retraite
+Active -> Active : changement d activite
+state Active {
+[*] --> ===B1===
+===B1=== --> Salarie
+===B1=== --> Independant
+===B1=== --> Etudiant
+}
+@enduml

@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+class Dummy1 {
+  +thisIsALongmethod1()
+  +anotherMetheod()
+  
+  +String a1
+  +Date d;
+}
+
+class Dummy2 <<even>> {
+  +String a1
+  +Date d;
+}
+
+class Dummy3 {
+  +thisIsALongmethod1()
+  +anotherMetheod()
+}
+
+class Dummy4 <<even>>
+
+hide empty methods
+@enduml

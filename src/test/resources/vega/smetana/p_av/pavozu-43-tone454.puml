@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startuml
+skinparam BackgroundColor transparent
+!$id="TEST"
+
+legend 
+You can have horizontal line
+----
+Or double line
+====
+Or strong line
+____
+Or dotted line
+..My title..
+Enjoy!
+
+$id
+  This is **bold**        **$id**
+  This is //italics//      //$id//
+  This is ""monospaced""   ""$id""
+  This is --stroked--      --$id--
+  This is __underlined__   __$id__
+  This is ~~waved~~        ~~$id~~
+__
+bold id **$id**
+long long long long long bold id <color:green>**$id**
+-- Next is KO --
+____
+__underlined__ <color:red>__$id__
+end legend
+@enduml

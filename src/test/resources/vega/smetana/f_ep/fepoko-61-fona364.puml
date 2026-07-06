@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+    class Operation << (H,#E6FFE6)  >> {
+    __todo/fixme__
+     -is_abstract   [[ blaha(xyz,12) { tooltip } ]]
+    }
+@enduml

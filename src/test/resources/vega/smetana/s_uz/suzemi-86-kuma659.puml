@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+[XX]
+skinparam actor {
+    backgroundColor Yellow
+    backgroundColor<<st>> LightBlue
+}
+actor AA <<st>>
+actor BB
+@enduml

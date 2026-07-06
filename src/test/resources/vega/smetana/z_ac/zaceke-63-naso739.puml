@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+
+rectangle "foo" {
+rectangle "Handle claim"  as HC
+rectangle "Capture Information"  as CI
+rectangle "Notify\nAdditional Stakeholders" as NAS
+rectangle "Validate" as V
+rectangle "Investigate" as I
+rectangle "Pay" as P
+CI -right->> NAS
+NAS -right->> V
+V -right->> I
+I -right->> P
+}
+
+HC *-down- CI
+HC *-down- NAS
+HC *-down- V
+HC *-down- I
+HC *-down- P
+
+
+claimsAdministration -up-> NAS
+claimsAdministration -up-> V
+claimsAdministration -up-> I
+Printing -up-> V
+Printing -up-> P
+
+@enduml

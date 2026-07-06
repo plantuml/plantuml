@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+!pragma horizontalLineBetweenDifferentPackageAllowed
+package AA_ok {
+}
+component up_ok
+component down_ok
+component right_ok
+component left_ok
+AA_ok -u-> up_ok
+AA_ok -d-> down_ok
+AA_ok -r-> right_ok
+AA_ok -l-> left_ok
+
+package AA {
+  component BB1
+  component BB2
+  component BB_next_line
+}
+component up
+component down
+component right
+component left
+AA -u-> up
+AA -d-> down
+AA -r-> right
+AA -l-> left
+@enduml

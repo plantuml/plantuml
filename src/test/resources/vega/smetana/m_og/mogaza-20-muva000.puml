@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+component comp1 [
+This component
+has a long comment
+on several lines
+]
+@enduml

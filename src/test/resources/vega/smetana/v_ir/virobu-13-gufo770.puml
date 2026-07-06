@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+(First Business usecase)/
+(Another Business usecase)/ as (BUC2)
+usecase/ BUC3
+usecase/ (Last\nBusiness usecase) as BUC4
+:First Actor:/
+:Another\nactor:/ as Man2
+actor/ Woman3
+actor/ :Last actor: as Person1
+@enduml

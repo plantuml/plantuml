@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+together {
+node "A" as a {
+}
+node "b" as b {
+}
+node "c" as c {
+}
+node "d" as d {
+}
+}
+@enduml

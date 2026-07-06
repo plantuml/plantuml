@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+(*) --> "toto"
+    if "Other test" then
+      -left-> "activity 5"
+    else
+      --> "activity 6"
+    endif
+    -left-> "activity 7"
+@enduml

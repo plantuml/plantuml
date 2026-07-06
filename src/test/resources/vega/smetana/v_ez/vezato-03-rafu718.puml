@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+class dummy2
+class dummy8
+class dummy10
+class toto5
+
+
+toto ()- dummy2
+toto3 -- dummy4
+toto5 -() dummy
+
+toto ()- dummy8
+
+toto ()- dummy10
+
+dummy4 *-- dummy8
+
+@enduml

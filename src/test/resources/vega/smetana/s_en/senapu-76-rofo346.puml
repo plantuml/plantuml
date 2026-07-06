@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+center1 -up- up1
+center2 -up-> up2
+center3 <-up- up3
+center4 o-up- up4
+center5 -up-o up5
+center6 <-up-o up6
+center7 o-up-> up7
+@enduml

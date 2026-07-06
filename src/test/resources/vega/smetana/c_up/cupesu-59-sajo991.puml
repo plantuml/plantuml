@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+state Running {
+   state A1 {
+   	A1 --> A2
+   }
+}
+@enduml

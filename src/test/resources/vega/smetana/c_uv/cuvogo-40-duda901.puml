@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+!define Junction_Or circle #black
+!define Junction_And circle #whitesmoke
+
+Junction_And JunctionAnd
+Junction_Or JunctionOr
+
+archimate #Technology "VPN Server" as vpnServerA <<technology-device>>
+
+rectangle #lightgreen GO
+rectangle #red STOP
+rectangle WAIT #orange
+GO -up-> JunctionOr
+STOP -up-> JunctionOr
+STOP -down-> JunctionAnd
+WAIT -down-> JunctionAnd
+@enduml

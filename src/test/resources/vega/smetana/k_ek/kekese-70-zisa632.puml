@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+together {
+  node "A" as a {
+    card c
+  }
+  node "b" as b
+}
+@enduml

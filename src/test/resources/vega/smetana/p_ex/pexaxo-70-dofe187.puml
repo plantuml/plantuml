@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+cloud, database {
+	FontColor #?black:white
+}
+
+cloud {
+	BackgroundColor black
+}
+
+database {
+	BackgroundColor white
+}
+</style>
+
+cloud cloud
+database database
+@enduml

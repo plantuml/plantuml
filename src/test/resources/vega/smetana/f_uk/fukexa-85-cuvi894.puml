@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+set separator none
+state A {
+        state Aentry1 <<entrypoint>>
+        state Aexit1 <<exitpoint>>
+        state foo
+        Aentry1 --> Aexit1
+}
+state B {
+        state Bentry1 <<entrypoint>>
+        state Bexit1 <<exitpoint>>
+        Bentry1 --> Bexit1
+}
+[*] --> Aentry1
+Aexit1 --> Bentry1
+Bexit1 --> [*]
+@enduml

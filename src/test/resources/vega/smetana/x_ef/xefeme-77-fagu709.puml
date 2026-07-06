@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+class Foo {
++ field1
++ field2
+}
+
+class Bar {
++ field3
++ !!field4 with some
+}
+
+Foo::field1 --> Bar::field3 : foo
+Foo::field2 --> Bar::field4 : bar
+@enduml

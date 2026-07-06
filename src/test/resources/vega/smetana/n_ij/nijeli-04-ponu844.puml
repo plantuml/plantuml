@@ -1,0 +1,69 @@
+---
+output: svg
+---
+@startuml
+skinparam svek true
+skinparam packageStyle rect
+skinparam classBackgroundColor #ffffff
+skinparam classBorderColor #666666
+skinparam classArrowColor #666666
+skinparam classFontColor #333333
+skinparam classFontSize 11
+skinparam classFontName Arial
+skinparam circledCharacterFontColor #ffffff
+skinparam packageFontName "Arial Black"
+skinparam packageFontColor red
+skinparam packageBorderColor #666666
+skinparam packageFontStyle normal
+skinparam packageBackgroundColor #bdd0e5
+hide empty members
+hide circle
+
+package "Data Centre" {
+class "UPS"
+class "Data Backup"
+class "File and Print Server"
+class "Web Server"
+class "Email Server"
+class "App Server"
+class "Shared Data"
+}
+
+package "Service Centre" {
+class "LAN Management"
+class "Computer Management"
+class "Security Management"
+class "Service Reporting"
+}
+
+package "Data Network" {
+class "Primary Distribution Hub/Switch"
+class "Secondary Distribution Hub/Switch"
+class "Access Router"
+}
+
+package "Workstations and Peripherals" {
+class "Workstations"
+class "Print Monitor"
+class "Print Server"
+class "Printers"
+}
+
+package "DCN WAN" {
+}
+
+"File and Print Server" -- "Primary Distribution Hub/Switch"
+"Web Server" -- "Primary Distribution Hub/Switch"
+"Email Server" -- "Primary Distribution Hub/Switch"
+"App Server" -- "Primary Distribution Hub/Switch"
+"App Server" -- "Shared Data"
+"LAN Management" -- "Primary Distribution Hub/Switch"
+"Computer Management" -- "Primary Distribution Hub/Switch"
+"Security Management" -- "Primary Distribution Hub/Switch"
+"Service Reporting" -- "Primary Distribution Hub/Switch"
+"Data Network" -- "DCN WAN"
+"Secondary Distribution Hub/Switch" -- "Workstations"
+"Print Monitor" -- "Primary Distribution Hub/Switch"
+"Print Server" -- "Primary Distribution Hub/Switch"
+"Print Server" -- "Printers"
+@enduml

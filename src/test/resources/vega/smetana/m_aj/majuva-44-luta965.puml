@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+class Mammal
+
+@3 Dog --|> Mammal
+class Dog {
+    NemesisCat
+}
+Dog o-- Cat
+
+@3 Cat --|> Mammal
+class Cat {
+} 
+@enduml

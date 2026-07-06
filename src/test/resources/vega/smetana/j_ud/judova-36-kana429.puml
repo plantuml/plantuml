@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+  title {
+    Fontcolor red
+    BackgroundColor #pink
+    HorizontalAlignment left
+  }
+}
+</style>
+state "a\na a\na a a" as a
+state "b\nb b" as b {
+state c
+}
+@enduml

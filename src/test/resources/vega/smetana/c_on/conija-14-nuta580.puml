@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+allow_mixing
+() "Does work now"
+class foo
+interface dummy
+foo -- "Does work now"
+@enduml

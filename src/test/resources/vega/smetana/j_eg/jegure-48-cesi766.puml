@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+skinparam shadowing<<legendnote>> false
+skinparam note<<legendnote>> {
+    backgroundcolor green
+    bordercolor green
+}
+
+[Component 1] as C1
+
+note bottom of C1 <<legendnote>>
+Legend
+text
+end note
+
+note as N1 <<legendnote>>
+Legend
+stereotype not working
+end note
+
+N1 -L-> C1
+N2 -R-> C1
+@enduml

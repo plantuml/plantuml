@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+'skinparam RoundCorner 35
+skinparam Backgroundcolor transparent
+
+skinparam class {
+    roundCorner<<rc0>>     0
+    roundCorner<<rc2>>     2
+    roundCorner<<rc10>>   10
+    roundCorner<<rc20>>   20
+    roundCorner<<rc30>>   30
+    roundCorner<<rc50>>   50
+    roundCorner<<rc100>> 100
+    roundCorner<<rc200>> 200
+  }
+
+class "rec"
+class "roundCorner 0"   <<rc0>>
+class "roundCorner 2"   <<rc2>>
+class "roundCorner 10"  <<rc10>>
+class "roundCorner 20"  <<rc20>>
+class "roundCorner 30"  <<rc30>>
+class "roundCorner 50"  <<rc50>>
+class "roundCorner 100" <<rc100>>
+class "roundCorner 200" <<rc200>>
+
+
+@enduml

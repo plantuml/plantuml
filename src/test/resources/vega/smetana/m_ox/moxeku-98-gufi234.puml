@@ -1,0 +1,40 @@
+---
+output: svg
+---
+@startuml
+title Allow LineThickness on awesome Actor
+label a [{{
+<style>
+actor {
+  BackGroundColor aliceblue
+  LineColor blue
+  LineThickness 4
+  FontColor blue
+  FontSize 15
+  FontStyle italic
+}
+</style>
+
+actor a
+component b
+a-->b: hello
+}}]
+
+label b [{{
+skinparam actorStyle awesome
+<style>
+actor {
+  BackGroundColor aliceblue
+  LineColor red
+  LineThickness 4
+  FontColor blue
+  FontSize 15
+  FontStyle italic
+}
+</style>
+
+actor a
+component b
+a-->b: hello
+}}]
+@enduml

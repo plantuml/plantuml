@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+[*] --> Active
+state Active begin
+  Stopped -> Running : ev1
+  Running -> Stopped : ev2
+end state
+
+@enduml

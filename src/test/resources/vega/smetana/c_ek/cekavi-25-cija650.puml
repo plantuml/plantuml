@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+'[*] --> State1 : a
+state State1 {
+        '[*] --> State2 : b
+        'State2 --> [*] : c
+        State1 --> [*] : d
+}
+'State1 --> [*] : e
+@enduml

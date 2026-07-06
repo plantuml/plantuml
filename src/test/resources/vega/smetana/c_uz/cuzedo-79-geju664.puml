@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+package foo1 {
+  class cl1
+}
+
+package foo2 {
+}
+
+
+@enduml

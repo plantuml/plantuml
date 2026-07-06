@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+
+state single1
+state "This is long" as single2
+
+@enduml

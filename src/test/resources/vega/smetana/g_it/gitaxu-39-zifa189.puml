@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam archimate {
+    shadowing false
+}
+skinparam archimate<<strategy-capability>> {
+    roundcorner 25
+}
+
+
+archimate #STRATEGY "Resource" as SResource <<strategy-resource>>
+archimate #STRATEGY "Capability" as SCapability <<strategy-capability>>
+archimate #STRATEGY "Course Of Action" as SCourseAction <<strategy-course-of-action>>
+@enduml

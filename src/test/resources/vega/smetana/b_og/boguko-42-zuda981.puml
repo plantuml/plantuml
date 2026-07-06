@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!procedure $element($alias, $description="", $label="", $technology="", $size=12, $colour="green")
+rectangle $alias as "
+<color:$colour><<$alias>></color>
+==$label==
+//<size:$size>[$technology]</size>//
+
+  $description"
+!endprocedure
+
+$element("myalias", "This description is" + %newline() + " on several lines", $size=10, $technology="Java")
+@enduml

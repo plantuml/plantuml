@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+class A extends B1, B2 implements C,D,E {
+}
+
+interface ZA extends ZB1, ZB2 {
+}
+
+class QA extends QB1, QB2 implements QC,QD,QE
+
+interface RZA extends RZB1, RZB2
+
+
+@enduml

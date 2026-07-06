@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+scale 0.5
+
+sprite $Kubernetes [48x48/16z] {
+bPE7WkqW24G7r9ZO-F-lVGKrOTdSLyxMQsLc4E_4WFyW3v6HyM_GEKGP9_tBQZ7yRGTVuhWO7-4YBnJ6Ay6k7iFk22-hgrY8n5BTZjZaAu0RQ14FLJpCugdO
+dFAD4EGR9nPTF0COukcOa3SmaGudRoz1IVF8UCs023UqXkAyBDdo6t29ZA3cnjsXSMZTpGfeeXH2hWJW75A0CZkKwm6keZGeiadxHBdqCkbwno4Rw0BhYlgo
+rczBv4Opox8fgh5efQggk3JpruyCn7b_rcCIT23OY4qm3JZaq5V0yzSQQBPWjhSra_gokjcAsQeFeALrevh957G0nSGTjwtS6k_W8yWwqcKp5xHJFL1jkStj
+fkL8pFguMWtdra6fH9i09TaCmiDnu866RD8fofNNoU2K2GgTHy2w9QzrPxk3YmGSVRbmzqtF04VQfhQbuoYQHjZl8WGiQK4JBKSNPSX3ckuMNKhtXoGF8xi7
+saMY1dNfRPrqw2QRlDH3QXtWbNtlfDxQlEnsLHfMvbN_HN85W8VR0Eex3rSykmTsTninq-euGyGalmr-FofZOpKJzvfZ236N7iXftJHpI9MRQgvkCF0m3MiW
+TAFL4Fs9zZOloshk8fRXjJhD7g_LQ_PuhUuLlJC8RmJvGC0xILv9-0J55mYMdm
+}
+
+node Kubernetes <<$Kubernetes>> [
+  = Kubernetes
+  Description of k8s
+]
+
+@enduml

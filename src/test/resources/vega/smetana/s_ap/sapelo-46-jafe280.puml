@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+skinparam svek true
+[*] --> s0_start
+
+state s7_2 {
+[*] --> toutou9
+ 
+state toutou9 {
+[*] --> leo
+}
+
+--
+[*] --> chat
+} 
+
+
+@enduml

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+(*) [[http://www.yahoo.com]]--> "activity1"
+ [[http://www.google.com]]--> "
+activity2"
+
+@enduml

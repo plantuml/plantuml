@@ -1,0 +1,39 @@
+---
+output: svg
+---
+@startuml
+'skinparam Backgroundcolor palegreen
+'skinparam Backgroundcolor transparent
+
+'skinparam nodeBackgroundColor #FEFECE
+'skinparam cloudBackgroundColor transparent
+'skinparam fileBackgroundColor #FEFECE
+
+
+<style>
+document {
+  backgroundColor transparent
+}
+element {
+  backgroundColor green
+}
+group {
+  backgroundColor blue
+}
+</style>
+
+node n0
+
+node n_level_1 {
+node nn
+cloud nc
+node n_level_2 {
+}
+}
+
+file f_level_1 {
+file f1
+file f2 {
+}
+}
+@enduml

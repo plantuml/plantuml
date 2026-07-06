@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+class Foo
+
+legend
+|= col1 |= col2 |
+| a | b |
+**Bar(Model)**
+|_ prop
+|_ **Bom(Model)**
+  |_ prop2
+  |_ prop3
+|_ prop4 :(
+
+end legend
+@enduml

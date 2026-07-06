@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+skinparam componentstyle uml2
+skinparam component {
+  BackgroundColor<<control>> lightblue
+  BackgroundColor<<measurement>> lightgreen
+}
+note "Notation: UML" as N1
+
+package "Single Map Layer" as sml <<layer>> {
+  interface "user data" as interface_UD
+
+  [Single Map Strategy Unit] <<control>>
+  [SMARC Map Handler] <<measurement>>
+  [Single Map Manager] <<measurement>>
+  [Simultaneous Localization and Mapping] <<measurement>>
+
+  [Single Map Strategy Unit] ..> [Single Map Manager] : <<use>>
+  [Single Map Strategy Unit] -up- () "execution commands"
+  [SMARC Map Handler] .down.> [Single Map Manager] : <<use>>
+  [SMARC Map Handler] ..> [Simultaneous Localization and Mapping] : <<THIS_LINK>>
+  [SMARC Map Handler] -up- () "SMARC map"
+  note right of [SMARC Map Handler]
+    Single MAp Robot Control (SMARC)
+  end note
+  [Single Map Manager] ..> [Simultaneous Localization and Mapping] : <<use>>
+  [Single Map Manager] -right- interface_UD
+}
+@enduml

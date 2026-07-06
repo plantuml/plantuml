@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+skinparam enum {
+  BackgroundColor blue
+}
+skinparam class {
+  BackgroundColor LightBlue
+}
+
+class Collection1
+enum Collection2
+
+
+@enduml

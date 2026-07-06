@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+!define table(x) class x << (T,#FFAAAA) >>
+
+
+table(Settings) {
+  Table for all settings.
+  ==
+  <u>userId</u> int(11)
+   int(10) -- A comment
+  field1 int(10)
+  field2 varchar(128)
+}
+
+table(Mitarbeiter) {
+Table Mitarbeiter
+==
++ field3
++ field4
+}
+
+Settings::field1 -> Mitarbeiter::field3 : test
+@enduml

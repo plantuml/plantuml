@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+!unquoted function $vlookup( $id, $range, $offset)
+       !log vlookup on $id
+       '!log vlookup on %get_variable_value("$id")
+       !$row1 = "cm|customer master|manages customers"
+       !$row2 = "tm|transaction manager|manages transactions"
+       !$row3 = "am|account manager|manages accounts"
+        '%set_variable_value("$row1", "cm|customer master|manages customers" )
+        '%set_variable_value("$row2", "tm|transaction manager|manages ransactions" )
+        '%set_variable_value("$row3", "am|account master|manages accounts" )
+        !if ($id == "cm")
+          '!return %get_variable_value("$row1")
+ 
+         !return $row1
+        !endif
+     !endfunction
+    !$note = $vlookup("cm", "system.iuml", 1)
+    component comp1 [
+    $note
+    ]
+@enduml

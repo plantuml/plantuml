@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@starthcl
+module "organization-iam-bindings" {
+  source        = "terraform-google-modules/iam/google/modules/organizations_iam"
+  organizations = ["my-organization_one", "my-organization_two"]
+  mode          = "authoritative"
+
+  bindings = {
+    "roles/resourcemanager.organizationViewer" = [
+      "serviceAccount:my-sa@my-project.iam.gserviceaccount.com",
+      "group:my-group@my-org.com",
+      "user:my-user@my-org.com",
+    ]
+    "roles/resourcemanager.projectDeleter" = [
+      "serviceAccount:my-sa@my-project.iam.gserviceaccount.com",
+      "group:my-group@my-org.com",
+      "user:my-user@my-org.com",
+    ]
+  }
+}
+@endhcl

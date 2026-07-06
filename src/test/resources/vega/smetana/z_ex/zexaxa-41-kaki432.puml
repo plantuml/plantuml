@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+package wfp2_real_helpers {
+     class emconf_wfp2_real_helpers {
+        StoryPoints : 10
+    }
+
+}
+
+wfp2_real_lottery --|> "V 1.1.0-0.0.0" wfp2_real_helpers
+
+
+@enduml

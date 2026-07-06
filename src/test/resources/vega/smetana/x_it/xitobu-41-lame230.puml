@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+<style>
+package {
+  BackGroundColor palegreen
+  LineThickness 2
+  LineColor red
+}
+</style>
+package package {
+}
+class foo
+@enduml

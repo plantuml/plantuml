@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+together {
+rectangle 1670869349606
+rectangle 1670869796774
+}
+together {
+rectangle 1670869341141
+rectangle 1670869555171
+}
+@enduml

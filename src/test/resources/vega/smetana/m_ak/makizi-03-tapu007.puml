@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+
+[*] --> Active
+Active --> Other
+Other --> [*]
+@enduml

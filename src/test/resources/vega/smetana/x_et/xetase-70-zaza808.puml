@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+[*] --> LexTop
+LexTop --> LexTop: {{
+@enduml

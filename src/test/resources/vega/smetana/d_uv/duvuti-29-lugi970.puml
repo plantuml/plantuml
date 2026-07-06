@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator .
+class BaseClass
+
+namespace Revelate.Legacy.Base.Biz {
+    class BaseClass
+    BaseClass : ACustomMethod()
+
+    class Person
+    .BaseClass <|-- Person
+
+    Person : guid OID
+    Person : string FirstName
+    Person : string LastName
+    Person : boolean IsBirthday()
+
+    class Meeting
+
+    Meeting "1" o-- "n" Person : Relation1
+
+    .BaseClass <|-- Meeting
+
+}
+
+namespace Revelate.Sungard.Biz {
+  class Person
+  Revelate.Legacy.Base.Biz.Person  <|-- Person
+  .BaseClass <|-- Person
+  Person : CustomAttribute
+
+  Revelate.Legacy.Base.Biz.Meeting "1" o-- "n" Person : Relation2
+
+}
+@enduml

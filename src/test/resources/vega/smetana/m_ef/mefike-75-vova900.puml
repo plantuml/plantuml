@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+skinparam groupInheritance 3
+
+
+A3 <|-- B3
+A3 <|-- C3
+A3 <|-- D3
+
+A3 o-- x1
+
+@enduml

@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+!include <awslib10/AWSCommon>
+!include <awslib10/General/User>
+
+<style>
+
+file {
+   HorizontalAlignment left
+   FontColor blue
+}
+</style>
+
+User(user, "Trusted user", "")
+
+file policy <<policy>>
+
+user -- policy
+@enduml

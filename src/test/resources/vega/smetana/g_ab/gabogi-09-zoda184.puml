@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+component comp
+comp -up-( inter
+@enduml

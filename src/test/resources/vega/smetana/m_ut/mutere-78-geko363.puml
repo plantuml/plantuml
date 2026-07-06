@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+skinparam actorStyle awesome
+
+usecase usecase
+person p1
+person "==P2" as p2
+person "==P3 with a long name" as p3
+person "==P4\na\nb\nc\nd\e" as p4
+
+p1 --> usecase
+p2 --> usecase
+p3 --> usecase
+
+usecase --> p4
+
+actor foo
+
+@enduml

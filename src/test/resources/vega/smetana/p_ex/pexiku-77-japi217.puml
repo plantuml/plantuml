@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+state A begin
+  state B begin
+    state C begin
+      [*] --> D
+      D --> G
+    end state
+  end state
+end state
+
+@enduml

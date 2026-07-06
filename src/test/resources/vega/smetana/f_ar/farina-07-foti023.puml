@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class cl1 {
+	 field1
+  method1()
+}
+cl1 -- cl2
+cl2 -- cl3
+@enduml

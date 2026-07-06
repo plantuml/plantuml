@@ -1,0 +1,358 @@
+---
+output: svg
+---
+@startuml
+
+package bk2k_opengraph {
+
+}
+
+package cacheinfo {
+
+}
+
+package econda {
+
+}
+
+package fed {
+
+}
+
+fed --|>  flux
+package flux {
+
+}
+
+package gridelements {
+
+}
+
+package health_calculator {
+
+}
+
+health_calculator --|> "V 1.2.0" wfp2_real_helpers
+package moc_varnish {
+
+}
+
+moc_varnish --|>  realurl
+package pagepath {
+
+}
+
+package pageteaser {
+
+}
+
+package payback_api {
+
+}
+
+package phpunit {
+
+}
+
+package pt_extbase {
+
+}
+
+package purge {
+
+}
+
+package realmc_teaser {
+
+}
+
+package realurl {
+
+}
+
+package scriptmerger {
+
+}
+
+package sw_bgimages {
+
+}
+
+package tq_seo {
+
+}
+
+package universal_soldier {
+
+}
+
+package wfp2_crypt {
+
+}
+
+package wfp2_faq {
+
+}
+
+package wfp2_headerfooter {
+
+}
+
+package wfp2_real_administration {
+
+}
+
+package wfp2_real_advance_order {
+
+}
+
+package wfp2_real_articles {
+
+}
+
+wfp2_real_articles --|> "V 1.1.1" wfp2_real_helpers
+wfp2_real_articles --|> "V 0.1" wfp2_real_products
+package wfp2_real_babycontest {
+
+}
+
+wfp2_real_babycontest --|>  pt_extbase
+wfp2_real_babycontest --|>  wfp2_real_forms
+wfp2_real_babycontest --|>  wfp2_real_helpers
+package wfp2_real_bk {
+
+}
+
+package wfp2_real_brands_tester {
+
+}
+
+wfp2_real_brands_tester --|>  wfp2_real_forms
+package wfp2_real_caching {
+
+}
+
+package wfp2_real_captcha {
+
+}
+
+wfp2_real_captcha --|>  formhandler
+package wfp2_real_childrens_song {
+
+}
+
+package wfp2_real_customeradvice {
+
+}
+
+package wfp2_real_digitale_treue {
+
+}
+
+wfp2_real_digitale_treue --|> "V 1.1.1" wfp2_real_helpers
+wfp2_real_digitale_treue --|> "V 0.0.1" wfp2_real_webservice_framework
+package wfp2_real_donate {
+
+}
+
+package wfp2_real_elaine {
+
+}
+
+package wfp2_real_factfinder {
+
+}
+
+wfp2_real_factfinder --|> "V 4.7.1" scheduler
+wfp2_real_factfinder --|> "V 1.1.0" wfp2_real_helpers
+wfp2_real_factfinder --|>  wfp2_real_products
+package wfp2_real_foreign_customer {
+
+}
+
+package wfp2_real_forms {
+
+}
+
+wfp2_real_forms --|>  wfp2_real_storesearch
+wfp2_real_forms --|>  wfp2_real_stores
+package wfp2_real_giftcard {
+
+}
+
+wfp2_real_giftcard --|>  wfp2_real_helpers
+package wfp2_real_helpers {
+
+}
+
+package wfp2_real_hooverbagfinder {
+
+}
+
+package wfp2_real_jobs {
+
+}
+
+package wfp2_real_juniorcup {
+
+}
+
+package wfp2_real_lego {
+
+}
+
+package wfp2_real_lottery {
+
+}
+
+wfp2_real_lottery --|> "V 1.1.0-0.0.0" wfp2_real_helpers
+wfp2_real_lottery --|>  wfp2_real_forms
+wfp2_real_lottery --|>  wfp2_real_sso
+wfp2_real_lottery --|>  wfp2_real_captcha
+package wfp2_real_minis {
+
+}
+
+package wfp2_real_name_search {
+
+}
+
+wfp2_real_name_search --|> "V 0.1.4" pt_extbase
+package wfp2_real_newsletter {
+
+}
+
+wfp2_real_newsletter --|>  wfp2_real_forms
+wfp2_real_newsletter --|>  wfp2_real_storesearch
+wfp2_real_newsletter --|>  wfp2_real_stores
+package wfp2_real_newsletter_composer {
+
+}
+
+wfp2_real_newsletter_composer --|> "V 1.1.0-0.0.0" wfp2_real_helpers
+wfp2_real_newsletter_composer --|>  wfp2_real_products
+wfp2_real_newsletter_composer --|>  wfp2_real_regionalization
+wfp2_real_newsletter_composer --|>  fed
+package wfp2_real_offers_os {
+
+}
+
+package wfp2_real_payback {
+
+}
+
+package wfp2_real_payback_keycard {
+
+}
+
+wfp2_real_payback_keycard --|>  payback_api
+wfp2_real_payback_keycard --|>  wfp2_real_payback_validator
+wfp2_real_payback_keycard --|>  wfp2_real_forms
+package wfp2_real_payback_themecard {
+
+}
+
+wfp2_real_payback_themecard --|>  payback_api
+wfp2_real_payback_themecard --|>  wfp2_real_payback_validator
+package wfp2_real_payback_validator {
+
+}
+
+package wfp2_real_products {
+
+}
+
+wfp2_real_products --|> "V 4.7" fed
+package wfp2_real_quiz {
+
+}
+
+package wfp2_real_quiz_poll {
+
+}
+
+wfp2_real_quiz_poll --|> "V 1.1.1" wfp2_real_helpers
+package wfp2_real_recipes {
+
+}
+
+wfp2_real_recipes --|> "V 1.1.1" wfp2_real_helpers
+wfp2_real_recipes --|> "V 0.0.1" wfp2_tags
+package wfp2_real_recommendations {
+
+}
+
+wfp2_real_recommendations --|>  wfp2_real_tracking
+package wfp2_real_regionalization {
+
+}
+
+package wfp2_real_reservation_service {
+
+}
+
+package wfp2_real_seo {
+
+}
+
+package wfp2_real_service_forms {
+
+}
+
+package wfp2_real_shopping_list {
+
+}
+
+package wfp2_real_socialwidget {
+
+}
+
+wfp2_real_socialwidget --|>  bk2k_opengraph
+wfp2_real_socialwidget --|>  pt_extbase
+package wfp2_real_sso {
+
+}
+
+wfp2_real_sso --|>  wfp2_realfm_coupons
+wfp2_real_sso --|>  wfp2_real_helpers
+wfp2_real_sso --|>  wfp2_real_shoppinglist
+wfp2_real_sso --|>  wfp2_real_payback
+package wfp2_real_store_suppliers {
+
+}
+
+package wfp2_real_stores {
+
+}
+
+wfp2_real_stores --|>  wfp2_real_regionalization
+package wfp2_real_storesearch {
+
+}
+
+package wfp2_real_tracking {
+
+}
+
+wfp2_real_tracking --|> "V 0.0.17" econda
+package wfp2_real_webservice {
+
+}
+
+package wfp2_real_webservice_framework {
+
+}
+
+package wfp2_realfm_coupons {
+
+}
+
+package wfp2_responsive {
+
+}
+
+package wfp2_tags {
+
+}
+
+@enduml

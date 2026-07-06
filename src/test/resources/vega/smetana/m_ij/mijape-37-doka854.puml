@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam svek true
+skinparam packageStyle rect
+package foo {
+  class dummy
+}
+@enduml

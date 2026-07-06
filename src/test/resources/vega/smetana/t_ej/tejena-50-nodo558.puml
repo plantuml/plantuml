@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+class "ProductA1" as PA1
+class PA1 implements APA
+
+@enduml

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+component foo1 as "My comp" [[My_component_1]]
+component foo2 as "My comp2" [[My_component_2]]
+
+foo1 -> foo2
+@enduml

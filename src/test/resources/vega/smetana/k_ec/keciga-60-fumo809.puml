@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+together {
+
+     rectangle Rec1 {
+         rectangle One
+         rectangle Two
+
+         One -> Two
+     }
+
+     rectangle Rec2 {
+         rectangle Three
+         rectangle Four
+
+         Three -> Four
+     }
+}
+
+@enduml

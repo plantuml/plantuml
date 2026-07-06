@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+state "Dashed 1" as State_1 ##[dashed]
+State_1 : description
+state "Dashed 2" as State_2 ##[dashed]
+
+state "Dashed 3" as State_3 #line.dashed
+State_3 : description
+state "Dashed 4" as State_4 #line.dashed
+@enduml

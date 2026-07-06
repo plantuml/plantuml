@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+!define module(x,y) component "Module: x" as y <<module>>
+module(the first letters,ABC)
+module(the last letters,XYZ)
+@enduml

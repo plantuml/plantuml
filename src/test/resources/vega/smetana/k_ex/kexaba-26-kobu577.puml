@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+sprite $pk [17x12/16z] bSY53GC13CNGS7waxhzkZvcVqAOp4R5j8evrSoS6RISRZ2VP3VoWQf6eVa0SBY9cAG5gGRe425sEnq1hLKKVD
+
+!define table(x) class x << (T,olive) >>
+
+hide stereotypes
+
+table(person) {
+id:int(11)<$pk>
+name:char(32)
+}
+
+table(car) {
+id:int(11)<$pk>
+person_id:int(11)
+name:char(32)
+}
+person "0..1" --{ "n" car : <$pk>
+@enduml

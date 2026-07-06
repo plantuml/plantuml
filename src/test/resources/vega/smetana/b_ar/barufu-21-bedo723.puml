@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+scale 500 width
+frame parameters{
+  (beta) as "<latex>\beta</latex>"
+  (alpha) as "<latex>\alpha</latex>"
+}
+beta -> alpha : relationship
+
+@enduml

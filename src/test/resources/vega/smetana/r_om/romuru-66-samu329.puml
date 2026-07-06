@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+skinparam monochrome true
+
+component a as "a" {
+}
+
+note right of a
+{{
+start
+:do 1;
+end
+}}
+end note
+@enduml

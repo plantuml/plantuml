@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+skinparam minClassWidth 200
+component foo
+component barwhichisverylongandoutbreakthelimitgivenbythedefaultvalue
+node node [
+foo1
+====
+foo2
+]
+artifact artifact
+@enduml

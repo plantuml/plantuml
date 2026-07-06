@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+(*) --> VerifyReservation
+--> ===Y1===
+
+--> ===Y2===
+
+--> GiveTravelDocumentation
+--> (*)
+@enduml

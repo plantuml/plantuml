@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!pragma useNewPackage
+namespace f1 {
+  namespace f2 {
+    class f3
+  }
+}
+@enduml

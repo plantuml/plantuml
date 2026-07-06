@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+
+skinparam Arrow {
+  Color #Green
+  FontColor #Green
+
+  Color<<v1.0>> #Red
+  Color<<v1.1>> text:Red
+}
+
+[Component]
+[Participant]
+
+
+Component -RIGHT-> Participant11<<v1.1>> : v1.1 stereotype
+Component -DOWN-> Participant1011<<v1.0>><<v1.1>> : v1.0 and v1.1 stereotype (should be red/red)1
+Component -DOWN-> Participant1110<<v1.1>><<v1.0>> : v1.1 and v1.0 stereotype (should be red/red)2
+Component -DOWN-> Participant1011_WithoutSimulation<<v1.0&v1.1>> : simulated v1.0 v1.1 (red/red)
+@enduml

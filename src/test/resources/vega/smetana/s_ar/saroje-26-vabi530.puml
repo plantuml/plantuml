@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+node foo
+title Bracketed line style without label
+foo --> bar
+foo -left[bold]-> bar1
+foo -[dashed]-> bar2
+foo -[dotted]-> bar3
+foo -[hidden]-> bar4
+foo -[plain]-> bar5
+@enduml

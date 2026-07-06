@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+'!preprocessorV2
+component "My Component" as MyComponent {
+!$MyComponent_at_ITEM = "MyComponent" 
+!$MyComponent_at_ITEM_MR = $MyComponent_at_ITEM
+}
+
+
+component "UI" as UI{
+}
+
+$MyComponent_at_ITEM_MR -- UI: Item
+@enduml

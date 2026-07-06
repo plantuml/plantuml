@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+
+rectangle a
+rectangle b
+a -- b
+
+rectangle big {
+  rectangle inside
+}
+note left of big
+note1
+end note
+note top of big
+note2
+end note
+
+@enduml

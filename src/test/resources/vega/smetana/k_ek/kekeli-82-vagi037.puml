@@ -1,0 +1,42 @@
+---
+output: svg
+---
+@startuml
+skinparam shadowing false
+skinparam defaultFontSize 16
+skinparam card {
+FontColor #DarkSlateGray
+BorderColor #LightGray
+BackGroundColor #LightGray
+FontName "Inconsolata"
+}
+
+skinparam rectangle {
+FontColor #DarkSlateGray
+BorderColor #LightGray
+BackGroundColor #white
+FontName "Roboto"
+}
+
+skinparam agent {
+RoundCorner 50
+BorderColor #e9f4f7
+BackGroundColor #e9f4f7
+FontColor #383f42
+FontName "Inconsolata"
+}
+
+skinparam ArrowColor #383f42
+skinparam ArrowFontColor #383f42
+skinparam ArrowFontSize 14
+skinparam LineColor #383f42
+skinparam LineFontColor #383f42
+skinparam LineFontSize 14
+
+rectangle Outer {
+card MyCard
+agent "MyAgent" as c10
+c10 -ri-> MyCard
+}
+
+@enduml

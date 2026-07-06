@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+() theta as "<latex>\theta</latex>"
+() nu as "<latex>\nu</latex>"
+@enduml

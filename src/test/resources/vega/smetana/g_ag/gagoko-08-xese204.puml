@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class X
+Foo-bar-->X
+@enduml

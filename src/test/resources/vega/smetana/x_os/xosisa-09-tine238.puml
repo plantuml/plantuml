@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+rotate
+A <|-- B
+@enduml

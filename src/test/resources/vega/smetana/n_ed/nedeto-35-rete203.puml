@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+<style>
+rectangle {
+	.backend container {
+    	BackgroundColor #335DA5
+    }
+}
+
+rectangle {
+	.backend_container {
+    	BackgroundColor #335DA5
+    }
+}
+
+</style>
+
+rectangle "Backend with space in stereotype name" <<backend container>> as c1
+
+rectangle "Backend_with_underscore_in_stereotype_name" <<backend_container>> as c2
+
+@enduml

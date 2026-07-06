@@ -1,0 +1,57 @@
+---
+output: svg
+---
+@startuml
+'all sprites in a category would be included in an all.puml file for that category
+'==================================================================================================
+
+'create equivalent of icons shown here https://github.com/awslabs/aws-icons-for-plantuml
+sprite $Batch [64x64/16z] {
+xLQ7bjim30CdzFzVtEV1iErPkJpT7iYm5aWDKERujFZ5Bp8YkSvM011VfMzSDy2Mw1JidbCGAtmllmbPuIkoImjyGUsyBV4LV95_Xny50bpW4uTRAjOKu81b
+Xa0vbX3OKFG5C0IMNLyxXA_3PvW5hqHSOFBP_Ovk4036hYi0pJdTCgqD6A0g4FQ0hOwygxSikGOanw11AuvtomxXjNiRDECmn21xxTkJP0N4tdy1Gmu5T2GW
+6ygFL_sqbx3NvA_FVtt_ri_F1CZNra-10TpNhvVr2KGcyVCOdoBySlpv-jC1ZSVveO36_Fwb0UASqGqG0QpfJgP2Eo60u59-fLVozhhdNk2WTeDpq2O6AAL_
+uV7KGPNO2lya17gz1pMiD1VmFNH9IBLNe3xA3q07eNsMy_WdXESwU4jRmddEk-FUuPFjjthiqAEGVUz8rlqmsK1nhtYlklvp7vWRfka0jUNITUdTzgxFyzLx
+-Ikh_YdmYr_y0G
+}
+
+
+' We define 1 or more sprite decorators in stdlib
+'---------------------------------------------------
+!unquoted procedure $SpriteDecorator($MySprite, $alias, $description="", $label="", $technology="", $scale=1, $colour="red")
+
+rectangle $alias as "
+<<$alias>>
+$label
+<color:$colour><$MySprite*$scale></color>
+//<size:12>[$technology]</size>//
+
+  $description"
+!endprocedure
+
+'stdlib macros pass the sprite to the decorator - and the other parameters
+'all this would happen in an all.puml file per sprite category
+'==================================================================================================
+!unquoted procedure $BATCH($alias, $description="", $label="", $technology="", $scale=1, $colour="red")
+$SpriteDecorator($Batch, $alias, $description, $label, $technology, $scale, $colour)
+!endprocedure
+
+
+' First call: we call directly "$SpriteDecorator"
+$SpriteDecorator("$Batch", "somealias1")
+
+' Second call: we dynamically call "$SpriteDecorator"
+'I dynamically create the name of the procedure to be called:
+
+!$dyn = "$Sprite"+ "Decorator"
+
+' The first argument of %invoke_procedure if the name of the real procedure to be called.
+' Other arguments are passed to the called procedure - $SpriteDecorator in that case.
+%invoke_procedure($dyn, "$Batch", "somealias2")
+
+' Right now it does NOT work with "named arguments" with last official release.
+' But I just fixed this in last beta http://beta.plantuml.net/plantuml.jar
+%invoke_procedure($dyn, "$Batch", "somealias3", $scale=3)
+
+
+'if this works, then can add named arguments
+@enduml

@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+
+skinparam monochrome true
+skinparam minClassWidth 400
+
+object Verbund
+object Wert
+object Attribut
+object Produkt
+object Werteliste
+object Einheiten
+object Werte
+
+Verbund "1" -- "*" Wert
+Produkt "1" -- "*" Wert
+Attribut "1" -- "*" Wert
+Verbund "*" -- "*" Attribut
+Attribut "*" -- "*" Werteliste
+Einheiten --|> Werteliste
+Werte --|> Werteliste
+Produkt "*" -- "*" Attribut
+Produkt "*" -- "*" Verbund
+
+@enduml

@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+namespace NR <<Rectangle>> {
+    class NR1
+    class NR2
+}
+
+namespace NC <<Cloud>> {
+    class NC1
+    class NC2
+}
+@enduml

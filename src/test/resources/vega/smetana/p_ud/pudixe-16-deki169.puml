@@ -1,0 +1,133 @@
+---
+output: svg
+---
+@startuml
+   skinparam activityStartColor Red
+   skinparam activityEndColor  Green
+
+   (*) -r-> "DEV check-in code"  #aliceblue
+
+   ' partition build {
+      -r-> "compile DEV branch" #aliceblue
+
+      -r-> if "" then
+             -d->[fail] "feedback" #wheat
+           else
+             -r->[pass] "unit testing" #aliceblue
+           endif
+
+      -r-> if "" then
+              -d-> [fail] "feedback"
+           else
+             -r-> [pass] "store in artefact repository" #aliceblue
+           endif
+   ' }
+
+      -r-> if "" then
+             -d-> [fail] "feedback"
+           else
+             -r-> [pass] "deploy D1" #aliceblue
+           endif
+
+      -r-> if "" then
+             -d->[fail] "feedback"
+           else
+             -r->[pass] "regression testing" #aliceblue
+           endif
+
+      -r-> if "" then
+             -d-> [fail] "feedback"
+           else
+            -r-> [pass] "code analysis" #aliceblue
+           endif
+
+
+   ' "feedback" --> "DEV check-in code"
+
+   "code analysis" -d-> "merge code from DEV to INT" #lavenderblush
+   "merge code from DEV to INT" -d-> "compile INT branch" #lavenderblush
+
+   -down-> if "" then
+             -l-> [fail] "feedback"
+           else
+             -down-> [pass] "unit testing" #lavenderblush
+           endif
+
+   -down-> if "" then
+             -l-> [fail] "feedback"
+           else
+             -down-> [pass] "integration repository" #lavenderblush
+           endif
+
+   -down-> if "" then
+             -l-> [fail] "feedback"
+           else
+             -down-> [pass] "deploy to F1" #lavenderblush
+           endif
+
+   -down-> if "" then
+             -l-> [fail] "feedback"
+           else
+             -down-> [pass] "deploy validation test" #lavenderblush
+           endif
+
+   -down-> if "" then
+             -l-> [fail] "feedback"
+           else
+             -d-> [pass] "acceptance test" #lavenderblush
+           endif
+
+   -down-> if "" then
+             -l-> [fail] "feedback"
+           else
+             -d-> [pass] "deploy to L1" #lavenderblush
+           endif
+
+   -down-> if "" then
+             -l-> [fail] "feedback"
+           else
+             -down-> [pass] "deploy validation test" #lavenderblush
+           endif
+
+   -down-> if "" then
+             -l-> [fail] "feedback"
+           else
+             -d-> [pass] "move artefact to integration_tested repo" #lavenderblush
+           endif
+
+
+   ' "feedback" --> "INT merge code from DEV"
+
+
+   ' "move artefact to integration_tested repo"  -d-> "merge into release" #lightsalmon
+   -l-> "build REL branch" #lightsalmon
+
+   -l-> if "" then
+      -u-> [fail] "feedback"
+   else
+      -l-> [pass] "user acceptance testing" #lightsalmon
+
+      -l-> if "" then
+        -u-> [fail] "feedback"
+      else
+        -l-> [pass] "performance tests" #lightsalmon
+
+        -l-> if "" then
+          -u-> [fail] "feedback"
+        else
+          -l-> [pass] "F2 deploy validation test" #lightsalmon
+
+          -l-> if "" then
+            -u-> [fail] "feedback"
+          else
+            -l-> [pass] "deploy F2/Stage" #lightsalmon
+          endif
+        endif
+      endif
+   endif
+
+   "deploy F2/Stage" -l-> (*)
+
+
+
+@enduml

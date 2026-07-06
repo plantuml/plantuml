@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class class1 {
+    + public_member
+    --
+    - private_member
+}
+hide private members
+@enduml

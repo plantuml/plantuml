@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+object user {
+        This is __underscored__.
+        This is ""monospaced"".
+        This is --crossed--.
+        This is not ~__underscored__.
+        This is not ~""monospaced"".
+        This is not ~--crossed--.
+}
+@enduml

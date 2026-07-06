@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+hide members
+class Foo {
+	bar
+}
+note left of Foo::bar
+This is some bar.
+endnote
+@enduml

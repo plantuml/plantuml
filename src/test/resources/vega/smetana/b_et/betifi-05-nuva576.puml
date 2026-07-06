@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam handwritten true
+User << Human >>
+"Main Database" as Base << Application >>
+(Start) << One Shot >>
+"Use the application" as (Use)
+
+User -> (Start)
+User --> (Use)
+
+Base --> (Use)
+
+@enduml

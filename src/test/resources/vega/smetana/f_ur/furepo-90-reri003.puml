@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+rectangle "Parent Node" as ParentNode {
+    rectangle "Inner App" as InnerApp
+}
+
+rectangle "Another Node" as AnotherNode{
+    rectangle "Another App" as AnotherApp
+}
+
+AnotherNode -> ParentNode : "=Format NOT working"
+
+AnotherApp -> InnerApp : "=Format working"
+AnotherApp -> ParentNode : "=Format working"
+AnotherNode -> InnerApp : "=Format working"
+@enduml

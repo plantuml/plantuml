@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class dummy
+   note top of dummy
+     In java, <size:18>every</size> <u>class</u>
+     <b>extends</b>
+     <i>this</i> one.
+   end note
+@enduml 

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+hide private members
+hide protected members
+hide package members
+class Foo {
+  - private
+  # protected
+  ~ package
+}
+@enduml

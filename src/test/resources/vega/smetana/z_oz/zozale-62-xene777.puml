@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+namespace net {
+}
+
+namespace net.entities {
+}
+
+namespace fr.site {
+}
+
+@enduml

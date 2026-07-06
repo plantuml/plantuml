@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+state CompositeState {
+        state entry1 <<entrypoint>>
+
+        state SubComposite {
+                [*] --> A
+                A -left-> B
+                B --> [*]
+        }
+        [*] -up-> SubComposite
+        entry1 --> B
+}
+@enduml

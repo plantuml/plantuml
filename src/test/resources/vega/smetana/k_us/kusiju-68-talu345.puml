@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+:ac1: -left-> (uc1 left) 
+:ac1: -right-> (uc2 right) 
+:ac1: -up-> (uc3 up) 
+:ac1: -down-> (uc4 down) 
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam tabSize 2
+state s1
+s1 : line1
+s1 : \tline2
+s1 : \t\tline3
+@enduml

@@ -1,0 +1,42 @@
+---
+output: svg
+---
+@startuml
+class Dummy1 {
+  thisIsALongmethod1()
+  anotherMetheod()
+  
+  String a1
+  Date d;
+}
+
+class Dummy2 {
+  thisIsALongmethod1()
+  anotherMetheod()
+  
+  String a1
+  Date d;
+}
+
+class Dummy3 {
+  thisIsALongmethod1()
+  anotherMetheod()
+  String a1
+  Date d;
+}
+
+class Dummy4 {
+  thisIsALongmethod1()
+  anotherMetheod()
+  String a1
+  Date d;
+}
+
+hide class circled
+hide Dummy2 methods
+hide Dummy3 attributes
+hide Dummy4 methods
+hide Dummy4 attributes
+
+
+@enduml

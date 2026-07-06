@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+skinparam title{
+  BorderRoundCorner 15
+  BorderThickness 2
+  BackgroundColor red
+  Fontsize 50
+  FontColor Blue
+}
+
+title TestTitle
+
+class dd
+@enduml

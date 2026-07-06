@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+<style>
+.tech {
+  BackgroundColor #00FF00
+}
+</style>
+
+:actor 1: as act1
+:actor 2 -tech: << tech >> as act2
+actor "actor 3 -tech" << tech >> as act3
+
+(use case 1) as uc1
+(use case 2 -tech) << tech >> as uc2
+usecase "use case 3 -tech" << tech >> as uc3
+@enduml

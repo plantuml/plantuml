@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+<style>
+card {
+    FontColor transparent
+}
+node {
+    FontColor #00000000
+}
+</style>
+card card
+node node
+@enduml

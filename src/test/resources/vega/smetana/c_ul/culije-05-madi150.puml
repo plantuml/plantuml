@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+Header Header
+User --> (Start the application)
+@enduml

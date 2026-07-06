@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+'!define Node Rect
+
+component Foo1 <<Node>>
+component Foo2 <<Node>>
+component Foo3 <<Node>>
+component Foo4 <<Node>>
+component Foo5 <<Node>>
+Foo1 --> Foo2
+Foo1 --> Foo3
+Foo1 -> Foo4
+
+package p1 <<Database>> {
+component Dummy12 <<Artifact>>
+component Dummy10 <<Component1>>
+component Dummy11 <<Component2>>
+}
+
+component Dummy1 <<Folder>>
+component Dummy2 <<Rect>>
+component Dummy3 <<Node>>
+component Dummy5 <<Frame>>
+component Dummy6 <<Cloud>>
+component Dummy7 <<Database>>
+component Dummy8 <<Storage>>
+component Dummy9 <<Agent>>
+
+@enduml

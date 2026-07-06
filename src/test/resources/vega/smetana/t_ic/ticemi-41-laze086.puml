@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+package a {
+note "my note" as M
+}
+
+package b {
+note "my other note" as M
+}
+@enduml

@@ -1,0 +1,40 @@
+---
+output: svg
+---
+@startuml
+
+class Reporter
+class Worker
+class WorkerPool
+class Queue
+class QueueEntry
+class Report
+
+Reporter   "1" -- "1"    Queue
+Reporter   "1" -- "1"    WorkerPool
+Reporter   "1" -- "*"    Report
+
+Queue      "1" -- "*"    QueueEntry
+WorkerPool "1" -- "*"    Worker
+Worker     "1" -- "0..1" QueueEntry
+
+Report     "1" -- "*"    QueueEntry
+
+note right of Worker
+  Initialisiert die pView und
+  ?berwacht die Ausf?hrung
+end note
+
+note left of Queue
+  Enth?lt die erledigten und die
+  n?chsten unerledigten Jobs
+end note
+
+
+
+note top of Reporter
+  Initialisierung freier Worker
+  l?schen veralteter Entries
+end note
+
+@enduml

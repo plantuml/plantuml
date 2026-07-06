@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+ title imagemap for Webserver appears top left from actor User
+ class u [[/wiki/index.php/User]]
+ class w [[/wiki/index.php/Webserver]]
+ 'url of u is [[/wiki/index.php/User]]
+ 'url of w is [[/wiki/index.php/Webserver]]
+
+
+ u -> w: right
+@enduml

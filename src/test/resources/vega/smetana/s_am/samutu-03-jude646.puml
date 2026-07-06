@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+A -- B : "a" is "b"
+Class01 *-- Class02 : "sourcerolename" contains
+Class03 *-- Class04 : contains "foo"
+Class05 *-- Class06 : "some label"
+@enduml

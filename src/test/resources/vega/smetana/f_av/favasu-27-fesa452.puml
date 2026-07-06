@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+!include <C4/C4_Container>
+
+System_Boundary(azureCloud, "yyy") {
+  Container(someContainer, "some container")
+Rel(WebAppContainer, someContainer, "relation")
+}
+
+@enduml

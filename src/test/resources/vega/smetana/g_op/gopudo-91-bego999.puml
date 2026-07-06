@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+state A {
+  A : * a list
+  state B
+  B --> A
+}
+
+state C {
+  C : * a list
+  state D
+  D --> A
+}
+
+@enduml

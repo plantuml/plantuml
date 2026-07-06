@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+skinparam dpi 300
+
+!include <office/Clouds/cloud_disaster_red>
+
+
+package "Use sprite directly" {
+    [Some <$cloud_disaster_red> object]
+}
+
+@enduml

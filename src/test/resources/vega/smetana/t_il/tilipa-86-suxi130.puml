@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+Moveable <|-- Car
+Car <|-- ElectricCar
+FleetVehicle *- Car : "1" contains "0..*"
+Car o- Wheel : "1" has "4"
+Car --> Driver  : "1" is drived by "0..1"
+
+A "1" -- "1" B : contains
+@enduml

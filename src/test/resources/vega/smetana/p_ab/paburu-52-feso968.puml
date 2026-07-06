@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+class foo {
+  toto2
+  'rtrt
+}
+@enduml

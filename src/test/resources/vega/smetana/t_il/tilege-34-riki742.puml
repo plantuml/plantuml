@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+<style>
+</style>
+title Put all elt on plain
+rectangle "Composite" as Composite <<Composite>>
+rectangle "Observer" as Observer <<Observer>>
+rectangle "Subject" as Subject <<Subject>>
+@enduml

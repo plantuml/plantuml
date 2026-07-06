@@ -1,0 +1,43 @@
+---
+output: svg
+---
+@startuml
+  skinparam defaultFontName Consolas
+
+  MainWindow      <|-- Gtk::Window
+  MainWindow      *--  Viewport : viewport
+
+  DrawOptionsBox  <|-- Gtk::Frame     ' remove this to fix the error
+  DrawOptionsBox  *-- MainWindow      : mainWindow
+  DrawOptionsBox  *-- AddObjectWindow : add_object_window
+
+  class MainWindow {
+    Gtk::Box   main_box
+    Gtk::Box   left_box
+    Gtk::Frame left_frame
+    Gtk::Frame right_frame
+    Viewport*  getViewport()
+  }
+
+  AddObjectWindow <|-- Gtk::Window
+  AddObjectWindow *-- DrawOptionsBox  : draw_options_box
+
+  Viewport <|-- Gtk::DrawingArea
+  Viewport *-- Viewwindow
+  Viewport *-- DisplayFile
+
+  class AddObjectWindow {
+    Gtk::Grid              point_grid
+    Gtk::Grid              line_grid
+    Gtk::Grid              polygn_grid
+    std::list<Coordinate*> polygon_cord_list
+  }
+
+  class DisplayFile {
+    std::map< string, DrawableObject* > objectsMap
+    void addObject( DrawableObject* )
+    void removeObject( DrawableObject* )
+    void removeObjectByName( string )
+  }
+
+@enduml

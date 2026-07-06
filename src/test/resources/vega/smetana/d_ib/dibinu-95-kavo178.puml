@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startuml
+
+class foobar_bee_bar1 as "foobar/fee-bar1"
+class "foobar/fee-bar2" as foobar_bee_bar2
+class "foobar/fee-bar3"
+
+class foobar_bee_bar4 as "foobar/fee-bar4" {
+  foo1
+}
+
+class "foobar/fee-bar5" as foobar_bee_bar5 {
+  foo2
+}
+
+class "foobar/fee-bar6" {
+  foo3
+}
+
+"foobar/fee-bar6" *-- "this is my class"
+"foobar/fee-bar6" "A" *-- "B" foobar_bee_bar4
+
+note left of "this is my class" : hello
+
+note right of "this is my class"
+  hello2
+end note
+
+"this is my class" : dummy() with stange chars$%//
+
+@enduml

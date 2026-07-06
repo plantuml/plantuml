@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class c1
+c1 -[thickness=5]-> c4
+@enduml

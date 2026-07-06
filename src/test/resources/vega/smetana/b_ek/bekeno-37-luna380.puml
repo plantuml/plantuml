@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+[COMP1]
+() INT
+@enduml

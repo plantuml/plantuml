@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+card c
+
+node node {
+  port p1
+  port p2
+  port p3
+  file f1
+}
+
+c --> p1
+c --> p2
+c --> p3
+p1 --> f1
+p2 --> f1
+@enduml

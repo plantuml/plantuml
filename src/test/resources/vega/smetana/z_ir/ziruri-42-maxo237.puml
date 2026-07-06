@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+package p1 {
+  class in1
+}
+package p2 <<Foo>> {
+  class in2
+}
+package p3 {
+}
+package p4 <<Foo>> {
+}
+@enduml

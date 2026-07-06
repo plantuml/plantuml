@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+
+state A
+A -> B : xxx
+B -> A : xxx
+
+@enduml

@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+
+package Catalog {
+    class Item {
+    }
+}
+
+package User {
+    class User {
+        String name
+    }
+}
+
+package Purchase as Pu {
+    class Purchase {
+    }
+
+    class LineItem {
+        int quantity
+    }
+
+    LineItem --> Item
+    Purchase --> User
+    LineItem *-- Purchase
+}
+
+@enduml

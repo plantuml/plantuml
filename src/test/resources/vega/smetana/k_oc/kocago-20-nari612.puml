@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+
+skinparam backgroundcolor AntiqueWhite/Gold
+hide <<hidden>>
+
+    state "Manager" as manager
+    manager : - minimising IAP
+    manager : - needs funding
+    manager : - ...
+
+    state "Spread Model" as model <<hidden>>
+    model : + state
+    model : + funding
+    model : + managment strategy
+    model :
+    model : - expected spread of IAP
+
+    manager -down-> model : actual funding level
+    model --> manager : optimised strategy
+    
+    state Foo1
+    state Foo2
+    Foo1 -[hidden]-> Foo2
+
+@enduml

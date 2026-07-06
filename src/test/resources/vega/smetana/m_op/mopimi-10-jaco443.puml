@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+usecase A <<stereo1>> 
+usecase B <<stereo2>> 
+usecase C <<stereo1>> <<stereo2>> 
+usecase D <<stereo1>> <<stereo2>> <<stereo3>> 
+usecase E <<stereo1>> <<stereo3>> 
+
+hide <<stereo1>> stereotype
+hide <<stereo2>> stereotype
+@enduml

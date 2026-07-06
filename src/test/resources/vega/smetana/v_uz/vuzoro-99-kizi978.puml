@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+class foo
+class class1
+class class2
+class class3
+
+class1 [Qualifier2] -- class2
+class1 [Qualifier3] -- class3
+@enduml

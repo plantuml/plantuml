@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+state ERROR {
+  ERROR : details
+}
+state REBOOTING {
+}
+@enduml

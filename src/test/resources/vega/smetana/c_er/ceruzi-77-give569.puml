@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+state start1 <<start>> #Red
+state end2 <<end>> #Green
+state dummy #Blue
+
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+package "Classic Collections" {
+  class "ArrayList" as ArrayListClassic
+  Object <|-- ArrayListClassic
+}
+
+package net.sourceforge.plantuml {
+  class "ArrayList" as MyArrayList
+  ArrayListClassic <|-- MyArrayList 
+}
+
+@enduml

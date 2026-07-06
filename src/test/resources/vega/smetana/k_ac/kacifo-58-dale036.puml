@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+state comp1 {
+    comp1: entry / do_entry()
+    state en1 <<entrypoint>>
+    state en2 <<entrypoint>>
+}
+@enduml

@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+class Subscriber {
+  subscriberId
+}
+
+
+class AccumUsage {
+  subscriberId
+}
+
+class IpSession {
+  ipAddress
+  specificData 
+  sapcOriginStateId 
+  apnId
+}
+
+Subscriber "1" -[#blue]-> "1..*" IpSession
+Subscriber "1" --> "0..1" AccumUsage
+
+@enduml

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!pragma svgSize <U+1F610> XXXXX
+
+test: text <U+1F610>
+test_size25: text <size:25><U+1F610>
+test_size75: text <size:75><U+1F610>
+test_size100: text <size:100><U+1F610>
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+ skinparam stateBackgroundColor<<Acacia>> green
+  skinparam stateBackgroundColor<<Midge>> red
+  skinparam stateBackgroundColor<<Weavil>> orange
+
+ [*] --> ma
+
+  state "midgeAdult" as ma <<Midge>> #green {
+  	state Foo1 <<Weavil>>
+    [*] --> Foo1
+  } 
+  
+  [*] --> Foo1
+  
+@enduml

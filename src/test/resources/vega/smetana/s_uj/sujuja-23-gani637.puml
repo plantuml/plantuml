@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+rectangle blahblah as bb  #line.dotted {
+    rectangle "first3" as fst #77F;line.dashed {
+        rectangle third #red;line.dashed
+        (forth)
+        rectangle fifth #line.bold
+    }
+    rectangle "second" as scnd
+    fst -> scnd
+
+}
+@enduml

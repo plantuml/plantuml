@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+<style>
+document {
+  header {
+    FontColor red
+    BackgroundColor lightGray
+  }
+}
+  
+object {
+  FontColor blue
+  BackgroundColor yellow
+	  
+  header {
+    FontSize 20
+    FontColor green
+    BackgroundColor red
+  }
+}
+</style>
+
+header some page header
+
+Object Foo {
+  dummy
+}
+@enduml

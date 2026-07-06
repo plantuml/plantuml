@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+[*] --> A
+
+state A {
+  state AInternal {
+  }
+}
+
+state B {
+  state BInternal {
+  }
+}
+A --> BInternal
+B --> AInternal
+@enduml

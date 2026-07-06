@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+Item001 "1" ..> "1" Type001 : has a
+Item002 "1" ..> "1" Type002 : "has a"
+Item003 "1\nlong text to test alignement" ..> "1\nlong text to test alignement" Type003 : has a\nlong text to test alignement
+@enduml

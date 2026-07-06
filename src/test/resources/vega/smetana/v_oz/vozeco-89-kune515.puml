@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml	 
+package Bus_Tx {
+	Bus_Tx "1" *--  "n" Tx_FIFO 
+	class Tx_FIFO
+	class Bus_Tx
+}
+@enduml

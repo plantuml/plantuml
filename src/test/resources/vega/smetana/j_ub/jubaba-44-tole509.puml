@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangle<<boundary>> {
+  shadowing false
+  borderStyle dashed
+  backgroundColor whitesmoke
+}
+
+skinparam rectangle<<package>> {
+  shadowing true
+  borderStyle solid
+  backgroundColor azure
+}
+
+hide <<package>> stereotype
+hide <<boundary>> stereotype
+
+rectangle "Packages Boundary" <<boundary>> {
+  rectangle "Package A" <<package>>
+  rectangle "Package B" <<package>>
+}
+@enduml

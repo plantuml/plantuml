@@ -1,0 +1,38 @@
+---
+output: svg
+---
+@startuml
+skinparam fixCircleLabelOverlapping true
+package "xxxxxx" {
+    [XXXXXXXXXXXXXXX] as IFE
+
+    [xxxxxxxxxxxxxxxxxxxxxx] as ICS
+
+    IFE -left-ICS
+
+    () "xxxxxxxxxxxxxxxxxxxxxx" as apiCS
+
+    ICS -down- apiCS
+
+    [xxxxxxxxxxxxxxxxxxxx] as adapterCS1
+    [xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] as adapterCS2
+
+    adapterCS1 -[hidden]down- adapterCS2
+
+    apiCS - adapterCS1
+    apiCS - adapterCS2
+
+    [xxxxxxxx] as gatewayCS1
+    [xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx] as gatewayCS2
+
+    adapterCS1 - gatewayCS1
+    adapterCS2 - gatewayCS2
+}
+
+[xxxxxxxxxxxxxx] as teleportCS1
+[xxxxxxxxxxxxxxxxxxxxxxxxxx] as teleportCS2
+
+gatewayCS1 - teleportCS1
+gatewayCS2 - teleportCS2
+
+@enduml

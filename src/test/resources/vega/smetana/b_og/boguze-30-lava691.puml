@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!unquoted procedure Node($alias, $arg2 = "", $arg3 = "")
+rectangle "$alias" <<node>> as $alias
+!endprocedure
+
+Node(Arg2WithCommaOK, $arg2 = "a,b", $arg3="tagA1 tagA2"){
+  rectangle r1
+}
+
+Node(Arg3WithcommaNOK, $arg2 = "a,b", $arg3="tagA1,tagA2"){
+  rectangle r2
+}
+@enduml

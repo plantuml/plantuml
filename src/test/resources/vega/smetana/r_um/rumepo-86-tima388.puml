@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+archimate #APPLICATION DoSomething <<application-function>>
+archimate #MOTIVATION  SomeMotivation
+@enduml

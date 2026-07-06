@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+rectangle "**h-entry**\n\nPost Entry\n""<div class="h-entry">..</div>""" as he #white {
+  rectangle "**p-name**\n\nTitle of the post\n""<h1 class="p-name">..</h1>""" as pn #orchid
+}
+@enduml

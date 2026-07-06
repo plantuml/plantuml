@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+!theme C4_united from <C4/themes>
+!include <C4/C4>
+C4Version()
+%version()
+@enduml

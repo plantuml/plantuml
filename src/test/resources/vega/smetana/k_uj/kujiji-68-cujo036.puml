@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+scale 900 width
+
+CatalogController<|-- CatalogLocalController
+CatalogController<|-- CatalogExternalController
+
+DBAbstractModel<|-- CatalogLocalModel
+DBAbstractModel<|-- CatalogExternalModel
+DBAbstractModel<|-- CatalogParametersModel
+DBAbstractModel<|-- CatalogProfileHistoryModel
+
+
+class MessageHandlerSingleton {
+  int status
+  String[] messageStack()
+}
+@enduml

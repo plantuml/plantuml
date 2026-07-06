@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+package "entities" {
+
+A1 -> A4
+
+A2 -> A3
+A2 -> A4 : L1
+
+A8 -> A6
+A5 -> A6
+
+A5 -> A4 : L2
+
+A6 -> A8 : L3
+A7 -> A6 : L4
+A7 -> A6
+
+A8 -> A3 : L5
+
+@enduml

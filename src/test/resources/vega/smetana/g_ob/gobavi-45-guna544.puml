@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startyaml
+- DATA
+- 
+  data: value
+@endyaml

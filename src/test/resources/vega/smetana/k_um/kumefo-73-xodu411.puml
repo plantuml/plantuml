@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+component "CMP1" as C1 <<stereotype>> {
+database "DB"
+}
+
+component "CMP2" as C2 <<stereotype>> {
+'database "DB"
+}
+
+
+@enduml

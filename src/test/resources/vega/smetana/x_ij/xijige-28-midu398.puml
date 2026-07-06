@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+(*) -left->[text] "activity1"
+-up-> "activity2"
+-up> "activity3"
+
+@enduml

@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+<style>
+classDiagram {
+    RoundCorner 15
+    .mystyle {
+    	RoundCorner 5
+        BackgroundColor cyan
+        FontStyle Bold
+        FontColor red
+    }
+}
+</style>
+class AliceMyStyle <<<mystyle>>>
+class AliceMyStyleStereo <<mystyle>>
+class Alice1
+
+class AliceMyStyleEmpty <<<mystyle>>> {}
+class AliceMyStyleStereoEmpty <<mystyle>> {}
+class AliceMyStyleNewLine2 <<<mystyle>>> {
+}
+class AliceMyStyleStereoNewLine <<mystyle>> {
+}
+class AliceMyStyleProp3 <<<mystyle>>> {
+  - prop1
+}
+class AliceMyStyleStereoProp <<mystyle>> {
+  - prop1
+}
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> "this activity" as A1
+
+--> "Another activity" as A2
+
+A1 --> "Toto"
+A2 -left-> "This one"
+
+@enduml

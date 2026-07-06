@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+hide empty fields
+hide empty methods
+
+class A {
+	a1
+	__
+	a2
+	__
+	a3
+	__
+	a4
+}
+class C {
+  - {method} foo
+  foo2
+}
+class D {
+  + {field} bar()
+  bar2()
+}
+@enduml

@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+'https://plantuml.com/class-diagram
+
+package Foo {
+    class Visible
+    class Visible1
+    class Invisible2
+    
+}
+
+' normal, does not work
+hide Visible1
+hide Foo.Invisible2
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+component X
+interface A
+interface B
+interface C
+interface D
+X -left-( A: xxx
+X -up-( B: xxx
+X -right-( C: xxx
+X -down-( D: xxx
+@enduml

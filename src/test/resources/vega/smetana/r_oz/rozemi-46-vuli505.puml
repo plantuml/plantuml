@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+skinparam linetype polyline
+skinparam linetype ortho
+skinparam backgroundColor #00000000
+
+skinparam activity {
+BackgroundColor<<iftrue>> #f4d03f
+BorderColor<<iftrue>> #FF6655
+BackgroundColor<<cond>> #58d68d
+BorderColor<<cond>> #58d68d
+BackgroundColor<<step1>> #58d68d
+BorderColor<<step1>> #58d68d
+ArrowColor #Black
+BackgroundColor blue
+BorderColor red
+FontName Impact
+}
+
+(*) -down[#black]-> "Evaluate loss index"  as step1 <<step1>>
+step1 -down-> if "" as conif then
+-left[#black]-> [Stopping criteria = true] "Improve neural network parameters
+    ====
+    * Calculate quasi-Newton training direction
+    * Calculate training rate" as iftrue <<iftrue>>
+iftrue -up[#black]-> step1
+else
+    -down[#black]-> [Stopping criteria = false] (*)
+endif
+@enduml

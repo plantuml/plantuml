@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam classAttributeIconSize 0
+class ClassA
+class ClassB
+class ClassC
+class ClassD
+class ClassE
+ClassA --> ClassB : -var1
+ClassA --> ClassC : +var2
+ClassA --> ClassD : #var3
+ClassA --> ClassE : ~var4
+@enduml

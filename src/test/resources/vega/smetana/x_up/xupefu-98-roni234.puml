@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+title Test State Machine
+state "State 1" as state1
+[*] --> state1
+compound --> state1 : label1
+note bottom on link
+ this works fine
+end note
+state "Compound State" as compound {
+    state "Sub State" as state2
+    [*] --> state2
+}
+compound --> state1
+note top on link
+ Any text here generates eclipse popup:
+ "Error during image generation
+  null"
+ when using PlantUML plugin
+end note
+@enduml

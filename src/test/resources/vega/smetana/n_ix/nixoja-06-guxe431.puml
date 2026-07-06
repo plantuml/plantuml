@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+<style>
+element {
+  hyperlinkUnderlineThickness 2
+  hyperlinkUnderlineStyle 5-1
+  hyperlinkColor Red
+}
+</style>
+state "[[S1]]" as S1
+@enduml

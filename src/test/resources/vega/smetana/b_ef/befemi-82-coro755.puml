@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+scale 2
+skinparam arrowColor  #blue
+skinparam arrowFontColor #red
+skinparam arrowLollipopColor #green
+(something) -(0- (anything) : abpp12
+@enduml

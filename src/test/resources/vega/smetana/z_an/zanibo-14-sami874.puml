@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+hide empty attributes
+actor "Employee" as EMP
+[Tomcat] as APP
+[Oracle] as DB
+EMP -- APP
+APP -- DB
+@enduml

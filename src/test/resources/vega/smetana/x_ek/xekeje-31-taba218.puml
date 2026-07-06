@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+
+class A1
+
+note left of A1 #green: note green
+
+note bottom of A1 #red
+	this is red
+end note
+
+note as N1 #blue
+	this is blue
+endnote
+
+note "toto toto" as N2 #666666
+
+@enduml

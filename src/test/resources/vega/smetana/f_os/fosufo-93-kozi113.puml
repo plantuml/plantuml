@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+usecase foo as "this
+is &#8734; long"
+usecase foo2 as "this
+is <U+221E> long"
+@enduml

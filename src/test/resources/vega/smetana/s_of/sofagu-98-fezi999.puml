@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+Allowmixing
+Actor "fg" as fr
+class foo
+@enduml

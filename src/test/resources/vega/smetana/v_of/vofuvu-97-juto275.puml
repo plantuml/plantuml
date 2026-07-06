@@ -1,0 +1,51 @@
+---
+output: svg
+---
+@startuml
+skinparam layout circo
+
+Package Mirrorix{
+
+class CashFlow{
+  method()
+}
+class Logger{
+  method()
+}
+class Mute{
+  method()
+}
+class Program{
+  method()
+}
+class QtomCnx{
+  method()
+}
+class SqlCnx{
+  method()
+}
+class XmlNavigator{
+  method()
+}
+Package Operations{
+class Annonces{
+  method()
+}
+class Annonces{
+  method()
+}
+class MMDeals{
+  method()
+}
+class FxDeals{
+  method()
+}
+class PayInterco{
+  method()
+}
+class FxHedge{
+  method()
+}
+}
+}
+@enduml

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+class MyTestClass [[{Tooltip of class, MyTestClass}]] {
+  + Property1  [[{Tooltip of property, Property1}]]
+  + Methods2() [[{Tooltip of method, Methods2}]]
+}
+@enduml

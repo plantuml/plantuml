@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+class Dummy
+Dummy --> Foo : A link
+note on link #red;line.dotted:blue;text:white : note that is red
+
+Dummy --> Foo2 #blue;text:red : Another link
+note right on link #blue;line:yellow;text:purple
+	this is my note on right link
+	and in blue
+end note
+
+
+@enduml

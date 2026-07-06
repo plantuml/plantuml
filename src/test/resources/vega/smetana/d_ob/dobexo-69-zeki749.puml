@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+state comp1 {
+    comp1: entry / do_entry()
+    state entrystate1 <<entrypoint>>
+    state entrystate2 <<entrypoint>>
+    state entrystate3 <<entrypoint>>
+    state entrystate4 <<entrypoint>>
+    state entrystate5 <<entrypoint>>
+    state entrystate6 <<entrypoint>>
+}
+@enduml

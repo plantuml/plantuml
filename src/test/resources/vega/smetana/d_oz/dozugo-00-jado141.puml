@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+class User {
+  email: String
+  username: String
+  password: String
+}
+
+note right of User::username {
+  This breaks connections
+}
+
+class Role {
+  email: String
+  name: String
+}
+
+User -- Role
+Role -- Role
+
+@enduml

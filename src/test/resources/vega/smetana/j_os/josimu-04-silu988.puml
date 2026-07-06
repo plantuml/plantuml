@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+!include <c4/C4_Container>
+
+LAYOUT_WITH_LEGEND()
+
+Container(api_app, "API Application", "Java, Spring-boot")
+@enduml

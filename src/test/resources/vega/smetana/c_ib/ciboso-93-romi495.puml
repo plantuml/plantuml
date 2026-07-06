@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+[Component #1] as comp1
+[Component #2] as comp2
+
+comp1 -- comp2
+
+hide comp2
+@enduml

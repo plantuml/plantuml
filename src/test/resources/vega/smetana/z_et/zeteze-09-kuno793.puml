@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+skinparam backgroundColor lightBlue
+skinparam componentBorderColor red
+component 1 {
+}
+[2] as Comp2
+component 3 {
+[4] as Comp4
+}
+
+@enduml

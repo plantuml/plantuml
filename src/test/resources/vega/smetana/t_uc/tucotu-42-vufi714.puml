@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+frame state_machine {
+    state foo
+    state bar
+    [*] --> foo
+    foo --> bar
+}
+@enduml

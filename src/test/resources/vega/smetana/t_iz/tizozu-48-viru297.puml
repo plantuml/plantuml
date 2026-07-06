@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+rectangle "hello" as a.hello
+
+rectangle "world" as a.world
+
+a.hello -> a.world
+@enduml

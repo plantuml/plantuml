@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+"Main Admin" as Admin
+"Use the application" as (Use)
+
+User -> (Start)
+User --> (Use) : A small label
+
+Admin ---> (Use) : This is\nyet another\nlabel
+
+@enduml

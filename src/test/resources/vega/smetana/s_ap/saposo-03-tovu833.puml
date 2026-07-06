@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+<style>
+arrow {
+  fontcolor red
+  MaximumWidth 150
+}
+</style>
+
+component "API Gateway" as gw
+component "Auth Service" as auth
+component "Order Service" as orders
+component "Notification Service" as notify
+
+gw -> auth : validates JWT tokens and checks role-based access control permissions
+gw -> orders : routes order creation requests with validated user identity
+orders -> notify : triggers email and push notifications after order state changes
+@enduml

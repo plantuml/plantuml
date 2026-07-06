@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+<style>
+archimate {
+  .motivation-driver {
+    DiagonalCorner 12
+  }
+}
+</style>
+archimate #MOTIVATION "ArchiMate" as A <<motivation-driver>>
+@enduml

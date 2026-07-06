@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+title Class title should be size 14 and bold, attributes and methods should be size 18 and italic.
+<style>
+class {
+  FontStyle italic
+  FontSize 18
+  header {
+    FontStyle bold
+    FontSize 14
+  }
+}
+</style>
+
+class Class {
+    -attr1
+    --
+    +method1()
+}
+@enduml

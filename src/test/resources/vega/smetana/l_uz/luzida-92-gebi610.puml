@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+hide stereotype
+<style>
+document {
+    BackgroundColor LightGreen
+}
+
+interface {
+  BackGroundColor #ff3311
+  Shadowing 0
+}
+</style>
+circle test
+package {
+    circle ME100 <<failedval>>
+    circle ART213
+    ME100 -d-> ART213
+}
+@enduml

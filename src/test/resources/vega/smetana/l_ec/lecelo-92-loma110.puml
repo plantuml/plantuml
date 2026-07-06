@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+hide empty members
+hide empty attributes
+hide circle
+
+class "<U+1F3F7> U+1F3F7\n<U+1F527> U+1F527\n<U+1F6E0> U+1F6E0"
+class "&#127991; 127991\n&#128295; 128295\n&#128736; 128736"
+class "<:label:> label\n<:wrench:> wrench\n<:hammer_and_wrench:> hammer_and_wrench"
+@enduml

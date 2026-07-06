@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> "Verify the reservation"
+
+if "" then
+  ->[incorrect] "Send To Airport"
+  --> (*)
+else
+  --> [correct] "get Preference"
+  --> ===Y1===
+endif
+
+if "" then
+ -->[nobagage] ===Y2===
+else
+ -->[bagage] "Receive the Baggages"
+ --> ===Y2===
+endif
+
+===Y1=== --> "Print the Boadingboard"
+--> ===Y2===
+
+--> GiveTravelDocumentation
+--> (*)
+
+@enduml

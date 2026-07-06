@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> "this is
+a long"
+
+@enduml

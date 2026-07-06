@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+class foo {
+[[http://plantuml.com]] for information
+[[http://plantuml.com our web site]] for information
+[[http://plantuml.com{This is a tip} our web site]] for information
+}
+@enduml

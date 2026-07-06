@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+
+
+!define my_red FF0000A0
+!define my_blue 0000FFA0
+!define my_green 00AA00A0
+
+
+
+class "BigLibrary" as lib {
+    + long_named_function
+    + long_named_function_also_different
+}
+
+
+class "SomeHandler" as handler
+class "SomeHelper" as helper
+
+
+
+handler -[#my_red]- lib::long_named_function
+handler -[#my_red]- lib::long_named_function_also_different
+
+
+
+
+@enduml

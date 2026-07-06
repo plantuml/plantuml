@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+!procedure Group($name)
+    map "<size:15><b>$name</b></size>" as $name
+!endprocedure
+
+!procedure Key($name, $type)
+    '<color:#b8861b><&key></color> <b>$name</b> => $type
+    $name => $type
+!endprocedure
+
+!procedure Field($name, $type)
+    '<color:#efefef><&media-record></color> $name => $type
+    $name => $type
+!endprocedure
+
+Group( these ) {
+  Key( id, int )
+  Field( name, string )
+  Field( those, int )
+}
+
+Group( those ) {
+  Key( id, int )
+  Field( name, string )
+}
+
+these::those -> those::id
+@enduml

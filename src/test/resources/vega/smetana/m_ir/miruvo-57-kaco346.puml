@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+(*) -right-> if "" then
+  -->[cas1] cas1
+else
+  -->[cas2] cas2
+endif
+@enduml

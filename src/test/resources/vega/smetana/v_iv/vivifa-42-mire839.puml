@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+class foo
+note top of foo
+  some
+  
+  notes
+endnote
+
+@enduml

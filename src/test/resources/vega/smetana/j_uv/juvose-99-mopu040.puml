@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startuml
+skinparam packagestyle node
+
+package foo1 <<Node>> {
+  component comp1
+}
+
+package foo2 <<Rect>> {
+  component comp2
+}
+
+package foo3 <<Folder>> {
+  component comp3
+}
+
+package foo4 <<Frame>> {
+  component comp4
+}
+
+package foo5 {
+  component comp5
+}
+
+cloud foo6 <<Cloud>> {
+  component comp6
+}
+
+
+package foo7 <<Database>> {
+  component comp7
+}
+
+
+@enduml

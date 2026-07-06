@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+!include <aws/common>
+!include <aws/Storage/AmazonS3/AmazonS3>
+!include <aws/Storage/AmazonS3/AmazonS3_LARGE>
+skinparam nodeBackgroundColor White
+skinparam storage<<**AmazonS3**>> {
+	backgroundColor #F9DFDC
+}
+AMAZONS3(s3_internal,"Default S3")
+AMAZONS3(s3_internal2,"S3 as node",node)
+AMAZONS3_LARGE(s3_partner,"Large S3")
+s3_internal2 <-r- s3_partner
+s3_internal <-l- s3_partner
+@enduml

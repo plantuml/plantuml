@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam dpi 300
+(*) --> test1
+@enduml

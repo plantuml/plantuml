@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangle {
+    roundCorner<<Concept>> 25
+    roundCorner<<Foo>> 45
+    backgroundColor<<Concept>> White
+}
+
+rectangle "Concept Model" <<Foo>> {
+	rectangle "e" <<Concept>> as e
+	rectangle "F"
+}
+@enduml

@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startuml
+
+title style
+
+allowmixing
+
+<style>
+package, rectangle {
+  FontColor green
+  LineColor red
+  stereotype {
+    FontColor blue
+  }
+}
+</style>
+
+
+package EmptyPackage1 <<something1>>
+
+package PackageWithThing2 <<something2>> {
+    class a
+}
+
+rectangle EmptyRectangle3 <<something3>>
+
+rectangle RectangleWithThing4 <<something4>> {
+    class b
+}
+
+@enduml

@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+skinparam component {
+    Style rectangle
+}
+
+skinparam rectangle {
+    BackgroundColor<<external>> #orange
+}
+
+actor User
+component C1 <<external>>
+component "External Service" <<external>> as C2
+
+User .> C1
+C1 --> C2
+@enduml

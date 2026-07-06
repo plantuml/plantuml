@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+class Foo1 #red ##00FFFF {
+}
+
+class FooDashed ##[dashed]blue {
+}
+
+class FooDotted ##[dotted]blue {
+}
+
+class FooBold ##[bold] {
+}
+
+@enduml

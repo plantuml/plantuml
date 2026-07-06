@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam tabSize 20
+object foo {
+\tfield1
+\tfield2
+\tfield3
+\tfield5\tfield6
+}
+@enduml

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+title diagram 2
+class B
+@enduml

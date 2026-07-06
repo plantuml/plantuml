@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+package MyPackage {
+
+component MyComponent [[http://www.google.com]] [
+This one has
+a very long
+description
+] 
+
+}
+@enduml

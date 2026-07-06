@@ -1,0 +1,36 @@
+---
+output: svg
+---
+@startuml
+skinparam BackgroundColor transparent
+skinparam shadowing false
+title Test BackgroundColor for empty group
+artifact artifact {
+}
+card card {
+}
+cloud cloud {
+}
+component component {
+}
+database database {
+}
+file file {
+}
+folder folder {
+}
+frame frame {
+}
+node node {
+}
+package package {
+}
+queue queue {
+}
+stack stack {
+}
+rectangle rectangle {
+}
+storage storage {
+}
+@enduml

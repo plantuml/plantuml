@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+skinparam svek true
+
+RowMacroStage <|.. AbstractRow
+Abstract AbstractRowPart
+AbstractRow <|-- AbstractRowPart
+AbstractRowPart <|-- RowHybridMacroStage
+Note left of RowHybridMacroStage : LEFT
+Class RowHybridMacroStage
+
+RowHybridMacroStage <|-- RowHybridStage
+
+AbstractRow <|--- RowComponentMacroStage
+Note right of RowComponentMacroStage : RIGHT
+Class RowComponentMacroStage
+RowComponentMacroStage <|-- RowComponentStage
+
+AbstractRowPart <|-- RowPartMacroStage 
+RowPartMacroStage <|-- RowPartStage
+Class RowPartMacroStage
+@enduml

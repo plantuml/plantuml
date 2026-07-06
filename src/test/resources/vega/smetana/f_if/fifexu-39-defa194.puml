@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+
+'http://click.sourceforge.net/images/activity-diagram-small.png
+title Servlet Container
+
+(*) --> "ClickServlet.handleRequest()"
+--> "new Page"
+
+if "Page.onSecurityCheck" then
+  ->[true] "Page.onInit()"
+  
+  if "isForward?" then
+   ->[no] "Process controls"
+  else
+   -->[yes] ===Y1===
+  endif
+  
+else
+  -->[false] ===Y2===
+endif
+
+
+@enduml

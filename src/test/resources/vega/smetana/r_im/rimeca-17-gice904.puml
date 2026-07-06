@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+Class03 o-- Class04 : <U>agregation</U>
+@enduml

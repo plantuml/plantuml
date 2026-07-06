@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+package a {
+    package My.Module {
+    }
+    class zz {
+    }
+    zz --> My.Module
+}
+
+@enduml

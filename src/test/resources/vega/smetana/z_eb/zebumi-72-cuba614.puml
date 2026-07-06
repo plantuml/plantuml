@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+class block3
+@enduml

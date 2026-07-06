@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+CENTER )-left- A
+CENTER )-right- B
+CENTER )-- C
+CENTER )-- C1
+CENTER )-up- D
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam WrapWidth 300
+class CLASS
+note top of CLASS
+* here is a bullet list
+* if the sentence before is wrapped then the one after does not follow correctly
+* here is a very long sentence which should be wrapped. I can make it even longer by adding more words
+
+# here is a numbered list
+# here is a very long sentence which should be wrapped
+end note
+@enduml

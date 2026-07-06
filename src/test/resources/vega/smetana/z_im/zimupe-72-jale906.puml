@@ -1,0 +1,41 @@
+---
+output: svg
+---
+@startuml
+title "Test of Fill and Stroke on Circle"
+sprite none-green <svg viewBox="0 0 30 30">
+<circle cx="15" cy="15" r="10" fill="none" stroke="green" />
+</svg>
+sprite none-none <svg viewBox="0 0 30 30">
+<circle cx="15" cy="15" r="10" fill="none" stroke="none" />
+</svg>
+sprite black-none <svg viewBox="0 0 30 30">
+<circle cx="15" cy="15" r="10" fill="black" stroke="none" />
+</svg>
+sprite red-green <svg viewBox="0 0 30 30">
+<circle cx="15" cy="15" r="10" fill="red" stroke="green" />
+</svg>
+sprite green- <svg viewBox="0 0 30 30">
+<circle cx="15" cy="15" r="10" fill="green" />
+</svg>
+sprite -green <svg viewBox="0 0 30 30">
+<circle cx="15" cy="15" r="10" stroke="green" />
+</svg>
+sprite - <svg viewBox="0 0 30 30">
+<circle cx="15" cy="15" r="10" />
+</svg>
+sprite transparent-transparent <svg viewBox="0 0 30 30">
+<circle cx="15" cy="15" r="10" fill="transparent" stroke="transparent"/>
+</svg>
+card C [
+|= Fill |= Stroke |= Sprite |
+| black | none  | <$black-none> |
+| none  | green | <$none-green> |
+| green | -     | <$green->     |
+| red   | green | <$red-green>  |
+<#pink>| none  | none  | <$none-none>  |
+| -     | green | <$-green>     |
+| -     | -     | <$-> |
+<#palegreen>| transparent | transparent | <$transparent-transparent> |
+]
+@enduml

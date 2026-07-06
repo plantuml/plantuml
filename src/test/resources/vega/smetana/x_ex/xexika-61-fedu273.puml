@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+skinparam BackgroundColor grey
+skinparam Shadowing false
+skinparam StateBackgroundColor grey
+
+[*] -->o foo
+foo x--> foo
+
+@enduml

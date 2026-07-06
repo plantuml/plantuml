@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam package{
+    BackgroundColor red-green
+    packageStyle Rectangle    
+}
+namespace DefaultNamespace {
+}
+namespace DefaultNamespace2 {
+}
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+<style>
+legend {
+  MaximumWidth 100
+  Fontcolor red
+}
+</style>
+
+legend
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ornare condimentum turpis aliquam ornare. Curabitur lacinia eget magna et sollicitudin. Phasellus malesuada bibendum sollicitudin. Quisque cursus lacus ac dui facilisis congue. Cras rutrum, mauris id accumsan aliquam, justo leo tempus urna, eu fermentum magna risus sit amet lorem. Nunc volutpat nisl eget urna lacinia auctor. Nullam vel elit vitae dolor tempus sollicitudin. Sed ac pharetra lorem, sit amet eleifend risus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Phasellus vel tristique risus. Nunc in dolor ultrices, scelerisque dolor nec, vehicula mi. Nulla facilisi.
+end legend
+@enduml

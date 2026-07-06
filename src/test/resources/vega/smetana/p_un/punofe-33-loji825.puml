@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b>x</b>
+!define unique(x) <color:green>x</color>
+!define unique(x,y) <u><color:red>x,y</color></u>
+!define not_null(x) <u>x</u>
+
+
+Table(customer, "customer") {
+	not_null(primary_key(customer_id)) BIGINTEGER
+    not_null(user_id) BIGINTEGER
+	email VARCHAR[128]
+	first_name VARCHAR[255]
+	last_name VARCHAR[255]
+	not_null(password VARCHAR[255])
+	pin VARCHAR[255]
+	phone_number VARCHAR[255]
+	first_login BOOL
+}
+
+
+
+@enduml

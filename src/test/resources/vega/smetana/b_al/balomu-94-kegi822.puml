@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+document {
+  Backgroundcolor pink
+}
+</style>
+
+frame "f1_no_group" #fff {
+node A #red|green;line.dashed;line:blue
+
+node B #red|green;line.dashed;line:blue [
+BB 
+]
+
+node C #red|green;line.dashed;line:blue [
+]
+
+}
+
+@enduml

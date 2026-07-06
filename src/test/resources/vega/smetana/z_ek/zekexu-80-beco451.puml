@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+'this a comment
+class foo {
+'this a comment
+}
+@enduml

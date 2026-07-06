@@ -1,0 +1,48 @@
+---
+output: svg
+---
+@startuml
+
+skinparam class {
+	BackgroundColor AliceBlue 
+	ArrowColor SeaGreen
+	BorderColor SpringGreen
+	BackgroundColor<<Foo>> Wheat
+	BorderColor<<Foo>> Tomato
+}
+
+sprite $bug16 [15x15/16z] PKzR2i0m2BFMi15p__FEjQEqB1z27aeqCqixa8S4OT7C53cKpsHpaYPDJY_12MHM-BLRyywPhrrlw3qumqNThmXgd1TOterAZmOW8sgiJafogofWRwtV3nCF
+sprite $bug8 [15x15/8z] POzH3i0W348B6zp_oCFg5iqQVtX5nAegrJ4w4CrFIhBKP2rL22nx6H00aM4v7FU6daiBHO0hBHAuudK3Cvetu-u6oM07lPtojBQg9lVM_lrXpWC0
+sprite $bug4 [15x15/4z] POz94W0X20Ep_F_FHf0fhK4Fq1A8020yeGVH_4f9begSHnM4FT8Ias6vR9swFzeeC1Ix1DDR2RmvbNE6P5CD6azPhSkgoTkrVt_eM000
+sprite $printer8 [15x15/8z] NOtH3W0W208HxFz_kMAhj7lHWpa1XC716sz0Pq4MVPEWfBHIuxP3L6kbTcizR8tAhzaqFvXwvFfPEqm0
+sprite $printer4 [15x15/4z] ROvR4W0m10CJzpzqbP5YkZ_iP3o0BzmTEGCf7GlrgjHu1rgQgjdGuct7FAPjGsqHnmf_WJt30G00
+
+sprite $point {
+  FF
+  FF
+}
+
+title I am <$bug16> and <$printer8> and <$printer4>
+
+class Toto {
+<$bug16>
+--
+<$bug16> and you
+--
+I am <$bug8>
+--
+I am <$bug4>
+--
+A point <$point> and all
+--
+<$point>
+--
+<color:magenta><$bug16></color>
+}
+
+note left : <$printer4>
+
+class "<$bug16>" as foo1
+class zz <<($bug16,red)>>
+
+@enduml

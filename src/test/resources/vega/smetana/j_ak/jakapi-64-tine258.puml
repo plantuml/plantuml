@@ -1,0 +1,35 @@
+---
+output: svg
+---
+@startuml
+
+skinparam groupInheritance 3
+skinparam linetype ortho
+
+abstract class Group
+'abstract AbstractCollection
+'interface List
+'interface Collection
+
+User     "*" o-- "1" Group    : < has
+Group    "1" o-- "*" Activity :   has >
+Activity "1" --o "*" Item     :   has >
+
+
+/'
+********************************************************************************
+
+   Inheritances
+
+********************************************************************************
+'/
+Group <|-- PLACEHOLDER
+together {
+    PLACEHOLDER <|-- Apartment
+    Group <|-- Events
+    Group <|-- Travels
+}
+
+hide PLACEHOLDER
+
+@enduml

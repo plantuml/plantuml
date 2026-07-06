@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+state Comp {
+   state entry1 <<entrypoint>>
+   state entry2 <<entrypoint>>
+   state exitA <<exitpoint>>
+   state sin
+   entry1 --> sin
+   entry2 -> sin
+   sin -> sin2
+   sin2 --> exitA
+   sin --> exitA
+}
+
+exitA --> entry1
+[*] --> entry1
+exitA --> Foo
+Foo1 -> entry2
+@enduml

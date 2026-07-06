@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!global = "changed value"
+[A] -> [B]: global
+@enduml

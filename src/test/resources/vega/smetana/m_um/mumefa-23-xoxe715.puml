@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+title title
+legend legend
+footer footer
+header header
+<style>
+    document {
+       BackGroundColor yellow
+    }
+</style>
+
+class Bob {
+hello
+}
+
+' also printed in blue
+class Sally
+
+
+Sally --> Bob
+@enduml

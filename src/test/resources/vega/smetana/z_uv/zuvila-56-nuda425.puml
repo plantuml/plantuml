@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+legend
+{{
+
+!procedure $arrow($text)
+\n<font:monospaced.bold>$text</font> => \n{{\nleft to right direction\nlabel " " as A\nlabel " " as B\nA $text B\n}}\n
+!endprocedure
+
+map "Arrows legend " as arrows {
+$arrow("-->")
+$arrow("-[dashed]->")
+$arrow("-[dotted]->")
+}
+
+}}
+endlegend
+@enduml

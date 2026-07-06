@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam PackageBorderColor red
+skinparam FrameBorderColor blue
+frame "First frame" {
+    [test]
+}
+frame "Second frame"
+@enduml

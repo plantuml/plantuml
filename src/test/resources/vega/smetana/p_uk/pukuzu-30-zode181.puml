@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+    namespace issues {
+        f1.function.Fox <|-- Rabbit
+        f1.AbstractSet <|-- Dog
+    }
+
+@enduml

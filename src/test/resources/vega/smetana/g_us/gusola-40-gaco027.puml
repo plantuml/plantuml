@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator .
+namespace net {
+}
+
+namespace net.entities {
+}
+
+namespace net.controllers {
+}
+
+namespace fr.site {
+}
+
+namespace net.db {
+}
+
+@enduml

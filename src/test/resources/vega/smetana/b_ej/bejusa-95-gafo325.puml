@@ -1,0 +1,45 @@
+---
+output: svg
+---
+@startuml
+ title  class diagram
+ 
+VCAN_DRV *-- PCAN_DRV : 1 .. 1
+ 
+class VCAN_DRV {
+ 
+}
+ 
+ 
+package PCAN_DRV {
+PCAN_DRV "1" *-left- "1" Bus_Control : contains
+PCAN_DRV *-- Bus_Tx : 1..1
+PCAN_DRV *-- Bus_Rx : 1..1
+ 
+class PCAN_DRV {
+}
+ 
+class Bus_Control {
+}
+ 
+package Bus_Tx {
+Bus_Tx "1" *--  "n" Tx_FIFO 
+class Bus_Tx { 
+}
+ 
+class Tx_FIFO {
+ 
+}
+}
+ 
+package Bus_Rx {
+Bus_Rx "1" *-- "n" Rx_FIFO
+class Bus_Rx {
+}
+ 
+class Rx_FIFO {
+} 
+ 
+} 
+}
+@enduml

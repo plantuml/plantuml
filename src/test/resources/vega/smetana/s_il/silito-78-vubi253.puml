@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!definelong connect(CALLER)
+        component "CALLEE" as callee
+        CALLER -[single]-> callee
+!enddefinelong 
+
+component test1
+connect(test1)
+component test2
+connect(test2)
+connect(test2)
+connect(test2)
+@enduml

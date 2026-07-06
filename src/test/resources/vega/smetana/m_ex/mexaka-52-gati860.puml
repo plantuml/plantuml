@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+class bar #text:yellow;line:green;back:lightblue
+class bar2 #lightblue;text:red;line:green
+
+class Foo1 #back:red;line:00FFFF
+class FooDashed #line.dashed:blue
+class FooDotted #line.dotted:blue
+class FooBold #line.bold
+
+class Demo1 #back:lightgreen|yellow;header:blue/red
+
+
+@enduml

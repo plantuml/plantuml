@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+(*) --> "Something" as A1
+-right-> (*1)
+A1 --> "Other thing" as A2
+--> (*2)
+@enduml

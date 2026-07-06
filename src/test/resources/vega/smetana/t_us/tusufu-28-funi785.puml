@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+(*) -left-> toLeft
+-up-> toUp
+-right-> toRight
+
+@enduml

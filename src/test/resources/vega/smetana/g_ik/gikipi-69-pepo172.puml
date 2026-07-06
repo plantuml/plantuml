@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+allow_mixing
+title General
+
+class A
+class B
+A *-- B: +parameter
+
+@enduml

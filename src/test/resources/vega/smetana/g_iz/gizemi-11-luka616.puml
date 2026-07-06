@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+file f [
+test 1: with unicode   : 100<U+02103> = 212<U+02109> [[{BULLE test 1:\n100<U+02103> = 212<U+02109>}(view tooltip unicode)]] eol1
+]
+@enduml

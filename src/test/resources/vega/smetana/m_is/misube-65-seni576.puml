@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+title modifier of B ("*") is not seen 
+component A
+component B {
+}
+component C {
+}
+B "*" -- C
+@enduml

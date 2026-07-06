@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+
+class c
+class a {
+    int i
+}
+
+class z
+
+note left of a::i
+    This note will be purged
+end note
+
+note right of a
+    This note will survive
+end note
+
+a <-- b
+c <-- b
+
+b --> d
+b --> e
+
+remove @unlinked
+
+@enduml

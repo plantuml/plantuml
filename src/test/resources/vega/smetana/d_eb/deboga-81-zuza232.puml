@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+class foo1
+class foo2
+class foo3
+layout_new_line
+class bar1
+@enduml

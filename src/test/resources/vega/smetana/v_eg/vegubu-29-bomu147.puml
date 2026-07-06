@@ -1,0 +1,99 @@
+---
+output: svg
+---
+@startuml
+title Conformance
+skinparam nodesep 10
+skinparam ranksep 10
+
+Conformance *-up- "1..1" Publisher : publisher
+Conformance *-up- "0..1" Implementation : implementation
+Conformance *-up- "0..1" Software : software
+Conformance *-up- "0..1" Proposal : proposal
+Conformance *-down- "0..*" Rest : rest
+Conformance *-left- "0..*" Messaging : messaging
+Conformance *-right- "0..*" Document : document
+Rest *-- "1..*" Resource : resource
+Messaging *-- "1..*" Event : event
+Resource *-left- "1..*" Operation : operation
+Resource *-right- "0..1" Search : search
+Search *-up- "1..*" Param : param
+
+class Conformance << (R, #FF7700) Resource >> {
+date : dateTime 1..1
+version : id 1..1
+acceptUnknown : boolean 1..1
+extension : Extension 0..*
+text : Narrative 1..1
+}
+
+class Publisher << (E, orchid) >> {
+name : string 1..1
+address : Address 0..1
+contact : Contact 0..*
+}
+
+class Implementation << (E, orchid) >> {
+description : string 1..1
+url : uri 0..1
+}
+
+class Software << (E, orchid) >> {
+name : string 1..1
+version : string 0..1
+releaseDate : dateTime 0..1
+}
+
+class Proposal << (E, orchid) >> {
+description : string 1..1
+}
+
+class Rest << (E, orchid) >> {
+mode : code 1..1
+documentation : string 0..1
+}
+
+class Messaging << (E, orchid) >> {
+endpoint : uri 0..1
+documentation : string 0..1
+}
+
+class Document << (E, orchid) >> {
+mode : code 1..1
+documentation : string 0..1
+profile : uri 1..1
+}
+
+class Resource << (E, orchid) >> {
+type : code 1..1
+profile : uri 0..1
+}
+
+class Event << (E, orchid) >> {
+code : code 1..1
+mode : code 1..1
+protocol : Coding 0..*
+focus : code 1..1
+request : uri 0..1
+response : uri 0..1
+documentation : string 0..1
+}
+
+class Operation << (E, orchid) >> {
+code : code 1..1
+documentation : string 0..1
+}
+
+class Search << (E, orchid) >> {
+documentation : string 0..1
+}
+
+class Param << (E, orchid) >> {
+name : string 1..1
+type : code 1..1
+repeats : code 1..1
+documentation : string 0..1
+}
+
+hide methods
+@enduml

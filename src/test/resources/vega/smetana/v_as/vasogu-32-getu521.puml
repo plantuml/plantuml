@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam FrameBorderColor blue
+skinparam FrameFontColor green
+skinparam FrameFontSize 30
+frame "First frame" {
+    [test]
+}
+frame "Second frame"
+@enduml

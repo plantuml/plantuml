@@ -1,0 +1,48 @@
+---
+output: svg
+---
+@startuml
+<style>
+component {
+  FontName SansSerif
+  HyperLinkColor red
+  FontColor green
+  FontSize 19
+  FontStyle plain
+  HorizontalAlignment right
+  RoundCorner 15
+  DiagonalCorner 0
+  LineColor #3600A8
+  LineThickness 1.0
+  BackGroundColor #AAA
+  Shadowing 0.0
+}
+label {
+  FontName SansSerif
+  HyperLinkColor red
+  FontColor green
+  FontSize 19
+  FontStyle plain
+  HorizontalAlignment right
+  RoundCorner 15
+  DiagonalCorner 0
+  LineColor #3600A8
+  LineThickness 1.0
+  BackGroundColor #AAA
+  Shadowing 0.0
+}
+</style>
+component c0
+component c [
+a
+abc
+a b c d
+]
+
+label lab0
+label lab [
+a
+abc
+a b c d
+]
+@enduml

@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+title toto
+'url of toto is [[http://toto]]
+'url of UseCase is [[http://UseCase]]
+actor toto [[http://toto]]
+usecase UseCase [[http://UseCase]]
+
+:toto: --> (UseCase)
+
+note left of toto [[http://note]] {
+this is my a link to here
+}
+
+note right of toto {
+this is my a link to [[http://www.google.com]] here
+And here is [[http://www.yahoo.fr yahoo]].
+And here is [[http://www.yahoo.fr{This is a toolip} yahoo]].
+}
+
+
+@enduml

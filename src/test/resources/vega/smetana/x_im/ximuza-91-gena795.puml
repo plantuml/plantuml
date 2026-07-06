@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+class Camera1
+class Camera2
+
+Camera ()- Camera1
+Camera ()- Camera2
+@enduml

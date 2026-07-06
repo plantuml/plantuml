@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+skinparam node {
+    StereotypeFontSize 20
+}
+skinparam node {
+    StereotypeFontSize<<bar>> 10
+}
+
+
+node nodefoo <<foo>>
+node nodebar <<bar>>
+
+@enduml

@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+spotClass {
+  BackgroundColor blue;
+  FontColor red;
+}
+
+</style>
+
+class ArrayList {
+  Object[] elementData
+  size()
+}
+
+
+@enduml

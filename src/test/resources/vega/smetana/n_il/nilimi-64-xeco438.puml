@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!unquoted procedure $f($x)
+title $x
+!endfunction
+
+$f(xxxx\
+ddada\
+ok\
+)
+@enduml

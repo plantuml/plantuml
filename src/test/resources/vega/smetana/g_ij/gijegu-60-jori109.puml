@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangle<<RedContainer>> {
+    StereotypeFontColor red
+    FontColor red
+    BackgroundColor lightred
+    BorderColor darkred
+    RoundCorner 0
+    DiagonalCorner 18
+}
+rectangle "==25green package container\n//<size:12>[green]</size>//" <<GreenContainer>><<container>> as gPC  {
+  rectangle "==red container\n//<size:12>[red]</size>//" <<RedContainer>><<container>> as rC
+}
+rectangle "==red package container\n//<size:12>[red]</size>//" <<RedContainer>><<container>> as rPC  {
+  rectangle "==25green container\n//<size:12>[green]</size>//" <<GreenContainer>><<container>> as gC
+}
+@enduml

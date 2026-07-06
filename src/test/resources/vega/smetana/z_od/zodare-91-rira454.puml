@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+node ServA
+node ServB
+node ServC <<TypeA>>
+
+ServA --> ServB <<TypeA>> : TypeA
+ServA --> ServB <<TypeB>> : TypeB
+
+remove <<TypeA>>
+@enduml

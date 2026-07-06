@@ -1,0 +1,50 @@
+---
+output: svg
+---
+@startuml
+[*] --> Timer
+
+state Timer {
+  [*] --> TReset
+
+  state TReset {
+    TReset: **entry** / timer=memTimer
+    TReset: **entry** / display(memTimer)
+  }
+  TReset --> TSet: right
+  TReset --> TActive: [memTimer>0] up
+
+  state TSet {
+  }
+  TSet --> TReset: right
+  TSet --> TSet: left/memTimer=0
+
+  state TActive {
+  }
+  TActive --> TReset: right
+}
+Timer --> Stopwatch[H] : left
+
+state Stopwatch {
+
+  state SActive {
+    [*] --> Running
+    state LapTime {
+    }
+    LapTime --> Running: up
+
+    state Running {
+    }
+    Running --> LapTime: up
+    Running --> SReset: right
+  }
+
+  state SReset {
+  }
+  [*] --> SReset
+  SReset --> SActive: up
+
+}
+Stopwatch --> Timer[H]: left
+
+@enduml

@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+<style>
+element {
+  MaximumWidth 100
+}
+</style>
+
+class foo1 {
+this is a very long description for class
+}
+
+note left
+this is a very long long long long long description for note
+end note
+
+@enduml

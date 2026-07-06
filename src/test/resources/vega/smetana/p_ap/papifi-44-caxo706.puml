@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+state "<color:red>this should be red</color>" as s1
+state "<color:green>this should be green</color>" as s2
+
+s1 -[dotted]-> s2
+@enduml

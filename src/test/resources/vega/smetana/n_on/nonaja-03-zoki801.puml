@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+
+        class PragmaStringMultiTest {
+            {field} + p1 
+            __
+            {method} + myMethod
+        }
+        note left of PragmaStringMultiTest
+            This note corrupts the link
+            between PragmaStringMultiTest
+            and MyItem. Remove the note
+            and the link will be OK.
+        end note
+
+        class MyItem {
+            {field} + MyProp 
+            __
+            {method} + MyItem 
+        }
+
+    MyItem "1" -left- PragmaStringMultiTest
+@enduml

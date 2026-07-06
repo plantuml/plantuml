@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+!include <classy-c4/container>
+!include <classy-c4/person>
+!include <classy-c4/system>
+
+!$system = $new(System)
+$call($system, 'setName', 'Label', $void=%true())
+$call($system, 'setDescription', 'Optional Description', $void=%true())
+
+!$person = $new(Person)
+$call($person, 'setName', 'Label', $void=%true())
+$call($person, 'setDescription', 'Optional Description', $void=%true())
+
+!$container = $new(Container)
+$call($container, 'setName', 'Label', $void=%true())
+$call($container, 'setDescription', 'Optional Description', $void=%true())
+$call($container, 'setTechnology', 'Technology', $void=%true())
+
+!$personAlias = $call($person, 'render')
+!$containerAlias = $call($container, 'render')
+$call($system, 'render', $void=%true())
+
+Rel($personAlias, $containerAlias, "Label", "Optional Technology")
+@enduml

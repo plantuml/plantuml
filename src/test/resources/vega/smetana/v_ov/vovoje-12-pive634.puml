@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+(*top) --> "01onCreate()"
+"01onCreate()" --> "02onStart()"
+"02onStart()" --> "05onResume()"
+"05onResume()" -->  "06onPause()"
+"06onPause()" --> "07onStop()"
+"07onStop()" -*->  "01onCreate()"
+"07onStop()" -*-> "03onRestart()"
+"03onRestart()" -right-> "02onStart()"
+"07onStop()" --> "08onDestroy"
+"08onDestroy" --> (*)
+@enduml

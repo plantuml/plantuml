@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator \\
+class CustomController extends App\\Http\\Controllers\\Controller {
+  some info
+}
+@enduml

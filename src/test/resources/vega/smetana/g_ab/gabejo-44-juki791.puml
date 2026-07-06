@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+hide circle
+hide fields
+hide methods
+skinparam class {
+FontColor<<Blue>> Blue
+FontStyle<<Blue>> Bold, Italic
+BorderColor<<Green>> Green
+}
+
+
+class func1
+class func2<<Green>><<Blue>>
+class func3<<Blue>><<Green>>
+
+func1 --> func2
+func2 --> func3
+@enduml

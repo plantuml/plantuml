@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+(*) --> "Activity 0"
+
+if "" then
+  if "" then
+    -> "Activity 1A"
+  else
+    --> "Activity 1B"
+  endif
+else
+  --> "Activity 2"
+endif
+@enduml

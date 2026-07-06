@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+set separator none
+
+package Mall {
+  class Inventory
+}
+
+class Item {
+}
+
+note bottom: 1
+
+class Inventory {
+}
+
+note right: 2 
+
+@enduml

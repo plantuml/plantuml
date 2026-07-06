@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+namespace common {
+
+    namespace profiles {
+        class X
+    }
+    namespace classes {
+        class Z
+    }
+
+    classes ..> profiles
+
+}
+@enduml

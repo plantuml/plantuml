@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class user
+class user
+@enduml

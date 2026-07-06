@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+package "P1" as p1 {
+}
+
+package p1 {
+  package "P2" as p2 {
+  }
+}
+
+package p2 {
+  [Comp1]
+}
+
+package "P3" as p3 {
+}
+
+package "P3" as p3 {
+  [Comp2]
+}
+@enduml

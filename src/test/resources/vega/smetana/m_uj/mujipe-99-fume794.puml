@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam HyperlinkUnderline false
+state "[[S1]]" as S1
+@enduml

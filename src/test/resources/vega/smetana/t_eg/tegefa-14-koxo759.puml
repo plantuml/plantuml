@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+!pragma layout elk
+
+package image {
+	package color {
+		class red
+		class green
+		
+		red->green : red to green
+	}
+	package size {
+		class big
+		class small
+	}
+	class image1
+	class image2
+	
+	size -> color : yes
+}
+
+class foo
+class bar
+
+foo -> bar : foo to bar
+image1 "1" -> "*" bar 
+
+@enduml

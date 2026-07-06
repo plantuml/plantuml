@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+package foo <<Node>>
+{
+class A
+class B
+}
+
+
+package foo1 <<Node>> {
+class A1
+class B1
+}
+
+@enduml

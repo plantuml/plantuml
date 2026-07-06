@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+map CapitalCityWithAVeryLongName {
+ UK => London
+ USA => Washington
+ Germany => Berlin
+}
+@enduml

@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+[AA] <<static lib >>
+[BB] <<shared lib >>
+[CC] <<static lib >>
+node node1
+node node2 <<shared node >>
+database Production
+skinparam component {
+backgroundColor<<static lib >> DarkKhaki
+backgroundColor<<shared lib >> Green
+}
+skinparam node {
+borderColor Green
+backgroundColor Yellow
+backgroundColor<<shared node >> Magenta
+}
+skinparam databaseBackgroundColor Aqua
+@enduml

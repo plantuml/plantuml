@@ -1,0 +1,58 @@
+---
+output: svg
+---
+@startuml
+skinparam componentStyle uml2
+skinparam fixCircleLabelOverlapping true
+
+interface "Raw" as RawImage #Black
+interface "Previous Tracks " as PreviousTracks #Black
+
+interface "Corrected Image" as CorrectedImage
+interface "ROI" as RoiSilhouette
+interface "Corrected ROI Mask" as CorrectedImageRoiMask
+interface "Current Image\nKeypoints" as CurrentKeypoints
+interface "Current Image\n Descriptors" as CurrentDescriptors
+interface "Track Matches " as Frame2FrameTrackMatches
+
+interface "Current Tracks" as CurrentTracks #Black
+interface "Active Tracks" as ActiveTracks
+    
+component "Track Prediction Gating" as TrackPredictionGating
+PreviousTracks )-- TrackPredictionGating
+TrackPredictionGating -- PredictedTrackGates
+
+component "Silhouette Generator" as SilhouetteGenerator
+PredictedTrackGates )-right- SilhouetteGenerator
+SilhouetteGenerator -- RoiSilhouette
+
+component "Image Remap" as ImageRemap
+RoiSilhouette )-right- ImageRemap
+RawImage )-- ImageRemap
+ImageRemap -- CorrectedImage
+ImageRemap -right- CorrectedImageRoiMask
+
+component "Keypoint Detector" as KeypointDetector
+CorrectedImageRoiMask )-- KeypointDetector
+CorrectedImage )-right- KeypointDetector
+KeypointDetector -- CurrentKeypoints
+
+component "ORB Extractor" as OrbExtractor
+CorrectedImage )-- OrbExtractor
+CurrentKeypoints )-left- OrbExtractor
+OrbExtractor -left- CurrentDescriptors
+
+component "Frame-To-Frame\n Matcher" as Frame2FrameMatcher
+PredictedTrackGates )-- Frame2FrameMatcher
+PreviousTracks )-- Frame2FrameMatcher
+CurrentDescriptors )-- Frame2FrameMatcher
+CurrentKeypoints )-- Frame2FrameMatcher
+Frame2FrameMatcher -- Frame2FrameTrackMatches
+
+component "Track Builder" as TrackBuilder
+PreviousTracks )----- TrackBuilder
+CurrentDescriptors )-- TrackBuilder
+CurrentKeypoints )-right- TrackBuilder
+Frame2FrameTrackMatches )-left- TrackBuilder
+TrackBuilder --- CurrentTracks
+@enduml

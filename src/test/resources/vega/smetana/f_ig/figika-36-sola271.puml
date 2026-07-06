@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+skinparam ComponentArrowColor #FF0000
+skinparam ComponentArrowFontColor #FF0000
+skinparam ComponentArrowFontName Courier
+skinparam ComponentArrowFontStyle Italic
+skinparam ComponentArrowFontSize 58
+
+DataAccess - [First Component]
+[First Component] ..> HTTP : use
+
+@enduml

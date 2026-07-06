@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+    database "DB" as DB {
+
+         !define DB_at_NSM_CQL DB_at_CQL
+         circle "CQL" as DB_at_NSM_CQL
+
+         !define DB_at_MID_CQL DB_at_CQL
+         circle "CQL" as DB_at_MID_CQL
+
+         !define DB_at_REPL_CQL DB_at_CQL
+         circle "CQL" as DB_at_REPL_CQL
+    }
+@enduml

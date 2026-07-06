@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator ::
+class Name1::ClassA {
+  +void foo();
+  +Name2::ClassB m_Member;
+}
+class Name2::ClassB {
+  +void bar();
+}
+Name1::ClassA *- Name2::ClassB
+@enduml

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+https://forum.plantuml.net/17007/how-we-can-disable-textlength-at-svg-generation
+
+@enduml

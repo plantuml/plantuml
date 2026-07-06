@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+hide empty methods
+hide circle
+
+'skinparam linetype ortho
+
+!define PK <size:12><&key></size><b>
+!define FK <size:12><&link-intact></size><i>
+!define PP <size:12><&caret-right></size>
+
+class "<b> Some dict </b>" as d {
+    PK ID      \t\t Integer
+    PP Name    \t String
+}
+
+class "<b> Some entity </b>" as e {
+    PK ID       \t\t Integer
+    FK Type     \t\t Integer
+    PP Some field \t JSON
+}
+
+e::Type }-- d::ID
+
+@enduml

@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam defaultTextAlignment center
+rectangle "Line 1 Has Left-Align Line Break\lBUG? This Is Centered?"as 1670973383559#FFFFFF;line:black
+@enduml

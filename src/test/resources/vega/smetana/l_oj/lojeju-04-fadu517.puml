@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startuml
+<style>
+root {
+  FontColor purple
+}
+state {
+  FontColor red
+  BackGroundColor yellow
+  LineColor violet
+  title {
+  	FontColor Green
+  }
+  composite {
+	  title {
+	  	FontColor black
+	  	FontStyle bold
+	  }
+  }
+}
+</style>
+title How to change fontcolor by style?
+state A {
+  state B {
+  }
+  state C {
+    state c : state c
+  }
+  c --> b
+}
+ 
+state S1 : state S1
+state S2
+
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+hide empty members
+class NamedStereotype       <<(S,#FF7700)Stereotype>>
+class ColoredCircle         <<(S,#FF7700)>>
+class PlainCircle           <<(S)>>
+class PlainCircleStereotype <<(S) Stereotype>>
+@enduml

@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+I2 )-- c2
+@enduml

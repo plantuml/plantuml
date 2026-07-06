@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+
+set separator none
+
+[*] --> NotShooting
+
+state "This is not Shooting " as NotShooting begin
+  [*] --> Idle
+  Idle --> Configuring : EvConfig
+  Configuring --> Idle : EvConfig
+end state
+
+state Configuring {
+  [*] --> NewValueSelection
+  NewValueSelection --> NewValuePreview : EvNewValue
+  NewValuePreview --> NewValueSelection : EvNewValueRejected
+  NewValuePreview --> NewValueSelection : EvNewValueSaved
+}
+
+@enduml

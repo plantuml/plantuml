@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+frame X {
+	frame a {
+		[b]
+		[c]
+		[d]
+	}
+}
+frame Y {
+	database e
+}
+X --> Y
+@enduml

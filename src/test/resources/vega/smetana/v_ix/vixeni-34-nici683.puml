@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+[Component A] as A
+rectangle "Box B" {
+    component B [
+    Level 1
+    |_ Level 2a
+      |_ Level 3a 
+      |_ Level 3b
+      |_ Level 3c
+        |_ Level 4a
+      |_ Level 3d
+    |_ Level 2b
+      |_ Level 3e
+    ]
+}
+A -> B
+@enduml

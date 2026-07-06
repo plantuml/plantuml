@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+usecase "Modeliser\nles\nprojets" as UC1
+component compo <<testable>>
+interface inter
+actor "Le Fameux Toto" as toto
+note top of compo: ceci est un grand composant
+note bottom of toto: Cet acteur\nest essentiel
+toto --> UC1
+compo-->compo : essai
+@enduml

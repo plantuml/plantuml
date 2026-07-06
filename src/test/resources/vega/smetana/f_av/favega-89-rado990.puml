@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+hide stereotype
+skinparam component {
+    backgroundColor<<1>> Pink
+    backgroundColor<<2>> Green
+    FontColor<<1>> White
+    FontColor<<2>> Black
+}
+ 
+package "SYSTEM1" {
+ 
+[ComponentBox] <<1>>
+[AnotherCompBox] <<2>>
+@enduml

@@ -1,0 +1,46 @@
+---
+output: svg
+---
+@startuml
+' interface's title is marked italic - that's fine
+interface MyInterface {
+    + x : int = 1
+    - z() : void
+}
+
+
+' abstract class's title is marked italic - that's fine too
+abstract MyAbstractClass {
+    + qaz : float = 134
+}
+
+
+' class's title is not marked - that's fine as well
+class MyClass {
+    ' some properties and operations may be merked as abstract
+    + pA {abstract}
+    - p : int = 76876876
+    - pFA() {abstract}
+    - pF() : int
+}
+
+
+/'
+metaclass is not formatted despite it is most abstract thing
+in UML
+'/
+class MyMetaClass <<metaclass>>
+
+
+/'
+when class is marked as some stereotype - whole object gets formatted italic
+however, not all stereotype's features should be abstract features, imo,
+since stereotype may inject some real functionality into an entity it's applied
+onto
+'/
+class MyStereotype <<stereotype>> {
+    + x : int = 8879797
+    - qwert() : int
+}
+
+@enduml

@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+class VGP_Golden_Attribute << Configuration >> {
+  SGA_Extraction_Rule_Type : EntityCode
+  SGA_Extraction_Rule : MaxVarchar
+  SGA_Value_Format : EntityCode
+  SGA_Mandatory : Character[1]
+  Valid_From : DateTime
+  Valid_To : DateTime
+}
+note left of VGP_Golden_Attribute::SGA_Value_Format
+  i.e. DD.MM.YYYY
+end note
+@enduml

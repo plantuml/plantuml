@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+title With package
+skinparam backgroundColor red
+
+package #green {
+() item10
+() item11
+() item12
+() lev1
+}
+
+lev0 ---> item10
+
+lev1 --> item12
+
+item10 -> item11
+item10 <- item11
+item11 -> item12
+item11 <- item12
+
+package o {
+() oo1
+}
+
+package {
+() oo2
+}
+
+@enduml

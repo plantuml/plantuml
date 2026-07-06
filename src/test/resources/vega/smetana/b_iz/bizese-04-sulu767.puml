@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+note right
+ Online Balance - 500 euro
+ Temporary Balance - 500 euro
+ Reservation Balance - 0 euro
+ Temporary Reservation Balance - 0 euro
+ Shadow Balance - 0 euro
+ Temporary Shadow Balance - 0 euro
+
+(*) --> "Reservation of Purchase amount 800 euro"
+
+"Some Activity" --> (*)
+
+note left
+
+ This note is on
+
+ several lines
+
+end note
+@enduml

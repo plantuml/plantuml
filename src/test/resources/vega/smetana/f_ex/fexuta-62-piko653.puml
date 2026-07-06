@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+<style>
+.a {BackGroundColor pink}
+</style>
+
+class c
+class red <<a>>
+
+<style>
+.a {BackGroundColor palegreen}
+</style>
+class green <<a>>
+@enduml

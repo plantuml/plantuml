@@ -1,0 +1,46 @@
+---
+output: svg
+---
+@startuml
+hide circle
+
+class research as "Research on learning"{
+-- Examples --
+Learning theories
+Domain modeling
+Progression /trajectories
+}
+
+class student as "'Research' on a students"{
+-- Examples --
+National tests
+Learning analytics
+}
+
+class experiments as "Experiments" <<methods>>{
+}
+
+class correlations as "Correlations"<<methods>>{
+-- Examples --
+Assessments
+Learning analytics
+'-- Scale --
+'Policy
+'Organisation
+'Group
+'Student
+}
+
+
+research "method" *--  experiments
+research "method" *--  correlations
+student "method" *--  experiments
+student "method" *--  correlations
+
+
+
+research .. correlations #Green : "Baird\lTools vs Goals"
+experiments . correlations #Green : Cronbach
+research . student #Green : Briggs:\lLearned vs learning
+(research, experiments) . (research, correlations)
+@enduml

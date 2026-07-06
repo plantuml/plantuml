@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startjson
+!theme amiga
+{
+    "fruit": "Apple",
+    "size": "Large",
+    "color": "Red"
+}
+@endjson

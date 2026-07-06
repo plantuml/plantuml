@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+hide <<tag>> 
+class bob <<tag>>{
+}
+class joe{
+}
+@enduml

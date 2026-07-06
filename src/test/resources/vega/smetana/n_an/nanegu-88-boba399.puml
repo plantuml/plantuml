@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startjson
+{
+"k": ["v1a", "v2b", "v3c"]
+}
+@endjson

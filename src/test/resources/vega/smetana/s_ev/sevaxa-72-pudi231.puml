@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+class Foo $a
+Foo -- Goo
+class Bar $z
+note "A note" as N1 $z
+N1 .. Bar
+@enduml

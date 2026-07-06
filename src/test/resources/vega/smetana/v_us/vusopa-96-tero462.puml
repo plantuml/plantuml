@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+scale 3
+(something) -(0- (anything) : a description
+@enduml

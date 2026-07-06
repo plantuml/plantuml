@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+namespace A {
+  class Source {
+    att : String
+  }
+}
+
+namespace B {
+  class Target {
+    att : String
+  }
+  Target "0..*" --> "0..1" A.Source
+}
+
+@enduml

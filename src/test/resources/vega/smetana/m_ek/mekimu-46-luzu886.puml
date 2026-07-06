@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+ 
+skinparam fixCircleLabelOverlapping true
+ 
+() "Product Dubbo" as product_dubbo
+() "Member Dubbo" as member_dubbo
+() "Guide Dubbo" as guide_dubbo
+() "Search Dubbo" as search_dubbo
+ 
+[ME]
+[P] - product_dubbo
+member_dubbo - [M]
+[G] - guide_dubbo
+search_dubbo - [S]
+ 
+guide_dubbo <. [ME]
+[ME] ..> member_dubbo
+[ME] ..> product_dubbo
+[ME] .> search_dubbo
+
+
+@enduml

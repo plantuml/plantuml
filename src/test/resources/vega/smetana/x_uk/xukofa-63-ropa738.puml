@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator \\
+namespace Foo\\Bar {
+  class MyClass
+}
+@enduml

@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+<style>
+classDiagram
+{
+ arrow {
+     LineColor blue
+ }
+ class {
+     BackgroundColor #00ff00  
+ }
+ .x {
+     BackgroundColor #00ffff  
+ }
+ .y {
+     BackgroundColor #ff0000  
+ }
+}
+</style>
+class a <<x>>
+class b <<y>>
+class c
+a --> b
+@enduml

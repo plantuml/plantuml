@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+!pragma layout smetana
+state Alice
+Alice -> Bob
+Bob --> Alice
+
+@enduml

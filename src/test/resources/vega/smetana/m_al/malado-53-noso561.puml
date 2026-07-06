@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam actor {
+  bordercolor blue
+  shadowing false
+}
+
+skinparam databaseShadowing true
+
+actor actor1
+component compo1
+database data1
+@enduml

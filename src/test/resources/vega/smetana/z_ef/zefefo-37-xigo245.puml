@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+    component a as a {
+    }
+    component b as b {
+    }
+
+    a 0-[dashed]--0 b: test1
+@enduml

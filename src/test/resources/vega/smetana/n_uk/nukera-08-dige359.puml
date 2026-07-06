@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+object "~#1: Person" as p1
+'skinparam classBackgroundColor #DFDCD3
+p1 : -String toto = "hello"
+p1 : #String toto = "hello"
+p1 : ~String toto = "hello"
+p1 : +String toto = "hello"
+
+object "~#1: Person" as p2
+
+p1 --> p2 : test
+
+@enduml

@@ -1,0 +1,41 @@
+---
+output: svg
+---
+@startuml
+
+hide <<hidden>>
+state "IAP Status" as status
+status : - IAP distribution
+status : - IAP Densities
+status : - ...
+
+state "Funder" as funder
+funder: - limited funds
+funder: - competing proposals
+funder: - competing objectives
+
+state "Manager" as manager
+manager : - minimising IAP
+manager : - needs funding
+manager : - ...
+
+manager -down[hidden]-> funder : motivates\nfor\nfunding '###
+funder -up[hidden]-> manager : provides\nfunding '###
+manager -down[hidden]-> status : spends funding\nto control IAP '###
+status -up[hidden]-> manager : monitors success\nof IAP control '###
+
+state "Spread Model" as model <<hidden>>
+model : + state
+model : + funding
+model : + managment strategy
+model :
+model : - expected spread of IAP
+
+manager -down[hidden]-> model : actual funding level
+model -[hidden]-> status : optimised strategy
+status -[hidden]-> model : improve parameter
+
+manager -down[hidden]-> model : different funding levels
+model -[hidden]-> funder : different spread scenarios
+
+@enduml

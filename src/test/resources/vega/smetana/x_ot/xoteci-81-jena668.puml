@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+skinparam NoteBorderThickness 3
+skinparam NoteBorderColor green
+
+note as node1
+  This is a test note!
+end note
+
+note as node2
+  This is a test note!
+end note
+
+class foo
+foo -- node2
+
+@enduml

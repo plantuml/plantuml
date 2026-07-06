@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+frame "Plant [[www.plantuml.com Uml]]" as test {
+ frame "Plant [[www.plantuml.com Uml]]" as test2
+}
+
+component "Plant [[www.plantuml.com Uml]]" as test3 {
+ component "Plant [[www.plantuml.com Uml]]" as test4
+}
+
+interface "Plant [[www.plantuml.com Uml]]" as test5
+@enduml

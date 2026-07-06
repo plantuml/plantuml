@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+component "Component" {
+    [API Server]
+    portout httpout as "HTTP"
+}
+
+[API Server] -> httpout: <color:red>label not shown
+
+httpout -> [API Server]: <color:red>label not shown
+@enduml

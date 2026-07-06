@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam classFontColor automatic
+skinparam classHeaderBackgroundColor #444
+
+class classA {
+testMethodCode()        
+}
+
+class classB #fff {
+testMethodCode()       
+}
+@enduml

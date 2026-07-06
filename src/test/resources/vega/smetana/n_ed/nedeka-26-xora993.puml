@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!define SHOW_FIELDS
+!undef SHOW_METHODS
+class foo {
+!ifdef SHOW_FIELDS || SHOW_METHODS
+This is shown
+!endif
+!ifdef SHOW_FIELDS && SHOW_METHODS
+This is NOT shown
+!endif
+}
+@enduml

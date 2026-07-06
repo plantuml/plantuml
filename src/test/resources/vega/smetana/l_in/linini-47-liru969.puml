@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+<style>
+document {
+  BackgroundColor pink
+}
+</style>
+
+node ff {
+node nn [
+node nn2
+]
+}
+@enduml

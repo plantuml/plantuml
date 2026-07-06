@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+(*)  --> "check input"
+If "input is verbose" then
+--> [Yes] "turn on verbosity"
+Endif
+--> "run command"
+@enduml

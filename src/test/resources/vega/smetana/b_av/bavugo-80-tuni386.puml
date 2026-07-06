@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+package a_$a #yellow {
+  package java.lang #white {
+    class foo$1
+  }
+}
+a_$a --> dummy$2
+@enduml

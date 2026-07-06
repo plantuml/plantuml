@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+
+skinparam arrow<<orangeText>> {
+    Color ;text:orange;line.dotted
+}
+
+
+rectangle "==A" <<person>> as a
+rectangle "==S" <<system>> as s
+rectangle "==E" <<external_system>> as e
+
+a -->> s <<orangeText>> : **orange text**
+s -->> e <<orangeLine>> : **orange line**
+a -->> e <<origGreen>> : **origGreen**
+@enduml

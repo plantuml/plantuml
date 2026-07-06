@@ -1,0 +1,44 @@
+---
+output: svg
+---
+@startuml
+skinparam useBetaStyle true
+<style>
+root {
+  BackgroundColor #DFD
+  Padding 0
+  Margin 0
+}
+
+document {
+  BackgroundColor #DDD
+}
+
+title {
+  BackgroundColor #DFD
+}
+caption {
+  BackgroundColor #DFD
+}
+</style>
+
+title padding/margin needs example:
+ 
+file "file\n" as package {
+() " " as acc1
+() " " as acc2
+}
+
+acc1 ~RIGHT~ acc2 : "access"
+acc1 <~RIGHT~ acc2 : "r"
+acc1 ~RIGHT~> acc2 : "w"
+acc1 <~RIGHT~> acc2 : "rw"
+
+caption
+What I'd love to be able to do:
+# ±25px bottom padding to //file//
+# add ±10px top margin to the diagram
+# ±5px left&right padding to the document
+# fix the missing space ""here"" (and on 1.)
+end caption
+@enduml

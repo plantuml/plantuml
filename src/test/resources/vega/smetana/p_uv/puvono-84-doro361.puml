@@ -1,0 +1,69 @@
+---
+output: svg
+---
+@startuml
+
+skinparam ClassStereotypeFontSize 7
+skinparam ClassStereotypeFontStyle Plain
+skinparam ClassStereotypeFontName Helvetica
+skinparam CircledCharacterFontStyle Bold
+skinparam CircledCharacterFontSize 12
+skinparam CircledCharacterRadius 8
+
+!define QO (Q,orchid) QObject
+
+
+class Oscillator << QO >> 
+note right of Oscillator 
+  <b>Oscillator</b> is the 
+  base class for any
+  type that injects 
+  energy into the medium.
+end note
+
+Oscillator : +location : Pnt3
+Oscillator : +amplitude : float
+
+Oscillator <|-- PeriodicOscillator
+PeriodicOscillator : +frequency : long
+
+Oscillator <|-- SingleFireOscillator
+
+class SimulationState << QO >>
+
+note right of SimulationState
+    The root object of all simulation state
+end note
+
+SimulationState "1" --> "1" Lattice
+
+SimulationState "1" ----> "1.." Oscillator : has
+
+class Potential << QO >>
+Potential : +computePotential(i : int, j : int, time : int) : float
+
+SimulationState "1" o-- "1.." Potential : has
+
+Potential <|--- VerticalBarrier
+VerticalBarrier : +slitSeparation : int
+VerticalBarrier : +slitSize : int
+VerticalBarrier : +thickness : int
+
+
+VerticalBarrier <|-- VerticalSingleSlit
+VerticalBarrier <|-- VerticalDoubleSlit
+
+Potential <|- CompositePotential
+CompositePotential -> "0..*" Potential
+
+Potential <|-- PrecomputedPotential
+Potential <|-- WallPotential
+Potential <|-- BarrierPotential
+Potential <|-- SlitPotential
+
+
+class WaveModel
+
+class A
+
+@enduml

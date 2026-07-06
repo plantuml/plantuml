@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+[comp1] ^- [comp2]
+[comp1] ^.. [comp3]
+
+() ab1 --^ () ab2
+@enduml 

@@ -1,0 +1,181 @@
+---
+output: svg
+---
+@startuml
+left to right direction
+hide empty members
+entity A {
+    ID
+    --
+    Ns
+    Es
+    Fs
+}
+
+entity B {
+    ID
+    --
+    I
+}
+
+entity C {
+    ID
+    --
+    Gs
+}
+
+entity D {
+    ID
+    --
+    Ps
+    Qs
+    Es
+}
+
+entity E {
+    ID
+    --
+    A
+    D
+}
+
+entity F {
+    ID
+    --
+    As
+    Is
+    Es
+}
+
+entity G {
+    ID
+    --
+    C
+    I
+    Hs
+    L
+    Ps
+}
+
+entity H {
+    ID
+    --
+    K
+    G
+}
+
+entity I {
+    ID
+    --
+    S
+    F
+    Gs
+    Bs
+    Rs
+}
+
+entity J {
+    ID
+    --
+    Ks
+}
+
+entity K {
+    ID
+    --
+    Hs
+    J
+}
+
+entity L {
+    ID
+    --
+    G
+}
+
+entity M {
+    ID
+    --
+    Ss
+}
+
+entity N {
+    ID
+    --
+    A
+}
+
+entity O {
+    ID
+    --
+    R
+}
+
+entity P {
+    ID
+    --
+    G
+    D
+}
+
+entity Q {
+    ID
+    --
+    F
+    D
+}
+
+entity R {
+    ID
+    --
+    I
+    Os
+}
+
+entity S {
+    ID
+    --
+    Is
+    M
+}
+
+A::Ns ||--|{ N::A
+
+A::Es ||--|{ E::A
+
+A::Fs }|--|{ F::As
+
+B::I }|--|| I::Bs
+
+C::Gs ||--|{ G::C
+
+D::Ps ||--|{ P::D
+
+D::Qs ||--|{ Q::D
+
+D::Es ||--|{ E::D
+
+F::Is ||--|{ I::F
+
+F::Es ||--|{ Q::F
+
+G::I }|--|| I::Gs
+
+G::Hs ||--|{ H::G
+
+G::L ||--|{ L::G
+
+G::Ps --> P::G
+
+H::K }|--|| K::Hs
+
+I::S }|--|| S::Is
+
+I::Rs ||--|{ R::I
+
+J::Ks ||--|{ K::J
+
+M::Ss ||--|{ S::M
+
+O::R }|--|| R::Os
+@enduml

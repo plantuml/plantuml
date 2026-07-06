@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+frame f1 {
+   component A
+}
+component B
+
+' DOES NOT WORK
+remove A
+
+'works
+remove B
+
+'works
+' remove f1  
+
+
+@enduml

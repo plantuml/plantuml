@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+skinparam useBetaStyle true
+<style>
+.Foo {
+  BackgroundColor red
+}
+.Foo2 {
+  BackgroundColor #FFFF00
+  FontColor blue
+  FontSize 8
+}
+</style>
+(*) --> "Activity 1" <<Foo>>
+--> "this is long
+on 2 lines" <<Foo2>>
+@enduml

@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+package A {
+class AA
+}
+
+package B {
+  class BB
+}
+
+package C {
+  class CC
+}
+
+
+package D {
+  class DD
+}
+
+A o-- B
+A +-- C
+A +-- D
+@enduml 

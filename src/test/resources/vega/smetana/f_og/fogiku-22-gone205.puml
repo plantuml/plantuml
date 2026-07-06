@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+usecase uU1 as " "
+usecase uU2 as " "
+
+uU1 .> uU2
+note bottom of link
+    Link note
+end note
+@enduml

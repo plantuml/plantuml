@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam mode dark
+class foo
+@enduml

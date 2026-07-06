@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+
+hide circle
+hide empty members
+
+entity Entity {
+   * identifying_attribute
+   --
+   * mandatory_attribute
+   optional_attribute
+}
+
+' zero or one
+A |o--o| B
+
+' exactly one
+C ||--|| D
+
+' zero or many
+E }o--o{ F
+
+' one or many
+G }|--|{ H
+
+class foo1
+foo1 }-- foo2
+
+@enduml

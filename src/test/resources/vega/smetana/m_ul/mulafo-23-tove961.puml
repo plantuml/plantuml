@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+class c0
+class c1 {
+    attr1 = "attr2"
+    attr2 = "value2"
+}
+
+c0 -> c1::attr2
+@enduml

@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+
+!unquoted procedure SALT($x)
+{{salt
+%invoke_procedure("_"+$x)
+}}
+!endprocedure
+
+!procedure _choose()
+{+
+<b>an example
+choose one option
+()one
+()two
+[ok]
+}
+!endprocedure
+
+
+
+class foo
+
+legend
+SALT(choose)
+endlegend
+
+@enduml

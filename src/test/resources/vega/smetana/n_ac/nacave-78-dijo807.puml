@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+component a {
+}
+
+note top of a: \n==theme fail==\n{{\n!theme crt-amber\nUser->System: test\n}}\n
+
+@enduml

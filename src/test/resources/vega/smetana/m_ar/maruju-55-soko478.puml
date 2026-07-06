@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+state "A" as stateA
+state "C" as stateC {
+ state B
+}
+json foo1 {
+  "foo2": "foo3"
+}
+@enduml

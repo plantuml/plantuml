@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startjson
+!theme aws-orange
+{
+    "fruit": "Apple",
+    "size": "Large",
+    "color": "Red"
+}
+@endjson

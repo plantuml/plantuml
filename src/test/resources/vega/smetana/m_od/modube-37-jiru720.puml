@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+legend right
+  This is the legend
+  on several lines
+end legend
+class FooWithAVeryLongNameForTheTestToWork
+@enduml

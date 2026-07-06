@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+component C1 {
+}
+component C2 {
+}
+component C3 {
+}
+
+C1 -- C2
+
+hide @unlinked
+@enduml

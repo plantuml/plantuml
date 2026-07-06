@@ -1,0 +1,48 @@
+---
+output: svg
+---
+@startuml
+' https://plantuml.com/preprocessing#ajlk3nchu0zkka0ybjng
+
+skinparam useBetaStyle true 
+
+<style>
+    ' scope to sequenceDiagram elements
+
+     ' scope to actor element types
+     rectangle {
+       FontColor Blue
+        BackGroundColor Blue
+     }
+
+}
+</style>
+
+
+'both of these have the same outcome. "global" is optional but emphasises the var mycolor is global
+!global $DefaultColor = "red"
+'!$mycolor = "red" 
+
+!global $DefaultBackgroundColor = "red"
+
+'https://plantuml.com/deployment-diagram 
+'!global $DefaultDeploymentShape = "rectangle"
+!global $DefaultDeploymentShape = "agent"
+
+'https://forum.plantuml.net/4267/scaling-of-the-sprites-or-images
+!global $DefaultScale = "3"
+
+'add background color
+' add label
+' add tech
+
+sprite $Batch [64x64/16z] {
+xLQ7bjim30CdzFzVtEV1iErPkJpT7iYm5aWDKERujFZ5Bp8YkSvM011VfMzSDy2Mw1JidbCGAtmllmbPuIkoImjyGUsyBV4LV95_Xny50bpW4uTRAjOKu81b
+Xa0vbX3OKFG5C0IMNLyxXA_3PvW5hqHSOFBP_Ovk4036hYi0pJdTCgqD6A0g4FQ0hOwygxSikGOanw11AuvtomxXjNiRDECmn21xxTkJP0N4tdy1Gmu5T2GW
+6ygFL_sqbx3NvA_FVtt_ri_F1CZNra-10TpNhvVr2KGcyVCOdoBySlpv-jC1ZSVveO36_Fwb0UASqGqG0QpfJgP2Eo60u59-fLVozhhdNk2WTeDpq2O6AAL_
+uV7KGPNO2lya17gz1pMiD1VmFNH9IBLNe3xA3q07eNsMy_WdXESwU4jRmddEk-FUuPFjjthiqAEGVUz8rlqmsK1nhtYlklvp7vWRfka0jUNITUdTzgxFyzLx
+-Ikh_YdmYr_y0G
+}
+
+rectangle "<color:red><$Batch></color>"  as rectangle1
+@enduml

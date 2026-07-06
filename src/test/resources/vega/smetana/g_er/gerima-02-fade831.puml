@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+
+class a {
+    int i
+}
+
+note left of a::i
+    This note on i
+end note
+
+@enduml

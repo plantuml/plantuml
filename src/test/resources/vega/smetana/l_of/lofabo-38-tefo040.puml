@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml(id=diagram1)
+state X {
+}
+X: |= header 1 |= header 2 |= header 3 |
+X: | //A// | abc | def |
+X: | //B// | qwe | |
+@enduml

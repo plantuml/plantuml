@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam reversecolor dark
+!define Extension(id, name, type = "Extension")  class   "<b>TYP: name</b>" as id << (E,White) type >>
+
+Extension(A, B)
+note left
+${loadExtension(SST310_DEFAULT_ERROR_RESPONSE)}
+end note
+@enduml

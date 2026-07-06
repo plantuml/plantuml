@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+state State
+State : <math>S<=1/(F+(1-F)/N)</math>
+@enduml

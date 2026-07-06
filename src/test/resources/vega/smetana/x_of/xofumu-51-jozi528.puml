@@ -1,0 +1,41 @@
+---
+output: svg
+---
+@startuml
+class Dummy1 {
+  +thisIsALongmethod1()
+  +anotherMetheod()
+  
+  +String a1
+  +Date d;
+}
+
+class Dummy2 <<even>> {
+  +thisIsALongmethod1()
+  +anotherMetheod()
+  
+  +String a1
+  +Date d;
+}
+
+class Dummy3 {
+  +thisIsALongmethod1()
+  +anotherMetheod()
+  +String a1
+  +Date d;
+}
+
+class Dummy4 <<even>> {
+  +thisIsALongmethod1()
+  +anotherMetheod()
+  +String a1
+  +Date d;
+}
+
+hide class circled
+show <<even>> circled
+hide <<even>> methods
+hide Dummy2 stereotype
+
+
+@enduml

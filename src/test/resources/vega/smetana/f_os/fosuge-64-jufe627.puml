@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+skinparam  partition {
+   BackgroundColor<<bluepartition>> blue
+}
+skinparam  activity {
+   BackgroundColor<<redactivity>> red
+}
+
+partition "My Partition" <<bluepartition>> {
+(*) --> Activity 1 <<redactivity>>
+--> Activity 2
+--> (*)
+}
+@enduml

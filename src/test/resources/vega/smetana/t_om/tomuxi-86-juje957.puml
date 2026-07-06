@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+
+class A
+
+B -> A : owner
+B <- C
+
+
+@enduml

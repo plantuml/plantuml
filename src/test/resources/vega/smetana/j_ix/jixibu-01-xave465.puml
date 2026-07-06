@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+file n [
+Example of file:
+{{json
+{
+   "fruit":"Apple",
+   "size":"Large",
+   "color": ["Red", "Green"]
+}
+}}
+]
+@enduml

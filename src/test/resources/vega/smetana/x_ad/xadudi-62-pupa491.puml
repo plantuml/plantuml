@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+set separator .
+!pragma useIntermediatePackages false
+
+package foo1 {
+  package foo2 {
+    class foo3
+  }
+}
+
+@enduml

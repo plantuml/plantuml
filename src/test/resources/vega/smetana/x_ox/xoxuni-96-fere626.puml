@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+class cl1
+class cl2
+cl1 --> cl2 #red;text:blue : foo3
+
+note left of cl2 #blue;line.bold:purple;text:777 : some info
+
+note right of cl1 #blue;line.bold:purple;text:FF0
+  some other info2
+end note
+
+@enduml

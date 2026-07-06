@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+[MIDI Keyboard] as MIDDevIn
+[MIDI Synthesizer] as MIDDevOut
+[Speaker] as Speaker
+
+node "Synth PCB" {
+    interface I2C
+    interface "MIDI IN" as MidiIn
+    interface "MIDI OUT" as MidiOut
+    interface "Jack 3.5" as Jack
+
+    [PIC 16F628A (MIDI)] as PICMid
+    [PIC 16F628A (Synth)] as PICSynth
+
+    MidiIn <- MIDDevIn 
+    MidiOut -> MIDDevOut 
+    Jack -> Speaker
+
+    PICMid -right- MidiIn
+    PICMid -down- MidiOut
+    PICSynth - Jack
+
+    I2C <.. PICMid : Sends
+    PICSynth <.. I2C : Receives
+}
+@enduml

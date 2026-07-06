@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+package FrameA <<Frame>> {   
+}
+
+package FrameB <<Frame>> {
+    class Foo{
+    }
+}
+
+package DatabaseX <<Database>> {   
+}
+
+package DatabaseY <<Database>> {
+    note "Hello World" as hello
+}
+@enduml

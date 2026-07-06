@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+allowmixing
+actor/ "actor/"
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+hide empty members
+
+class X {
+    a : int
+}
+note left of X::a
+    no "--" may be used here
+    --
+    to draw horizontal line
+end note
+@enduml

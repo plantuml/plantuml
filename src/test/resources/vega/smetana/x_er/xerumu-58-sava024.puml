@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+<style>
+rectangle {
+    shadowing 4
+}
+</style>
+
+rectangle "Web Application" as web_app
+@enduml

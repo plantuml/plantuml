@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+record Key {
+  - namespace : String
+  - key : String
+  + {static} NAMESPACED_KEY_PATTERN : Pattern
+  + Key(namespace : String, key : String)
+  + full() : String
+  + toString() : String
+}
+
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+rectangle a
+rectangle b
+b <- a
+@enduml

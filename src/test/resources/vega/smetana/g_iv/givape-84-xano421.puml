@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+scale 200 height
+actor "Employee" as EMP
+[Tomcat] as APP
+[Oracle] as DB
+EMP -- APP
+APP -- DB
+url of APP is [[http://tomcat.apache.org/]]
+@enduml

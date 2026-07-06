@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class A {
+{{regex
+title someRegex
+^\s*(\d{4,5}-?\d{3,4}-?\d{1,2})
+}}
+}
+@enduml

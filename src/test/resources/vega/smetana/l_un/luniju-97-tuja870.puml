@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+[A1] --> [A2] : X
+[A3] -right- B
+@enduml

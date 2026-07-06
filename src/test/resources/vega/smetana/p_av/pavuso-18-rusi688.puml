@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+package Some {
+}
+Some --|> Some
+@enduml

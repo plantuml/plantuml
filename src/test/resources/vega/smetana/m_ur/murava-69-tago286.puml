@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+usecase "<:rocket:> Implement the changes" as Implement
+[Company] --> Implement
+@enduml

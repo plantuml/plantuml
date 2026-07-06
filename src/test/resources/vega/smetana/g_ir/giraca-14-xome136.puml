@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+skinparam classBorderThickness<<stereo>> 5
+skinparam packageBorderThickness<<stereo>> 1.5
+skinparam packageBorderThickness 0.5
+class A <<stereo>>
+class B
+package p1 {
+class C
+}
+package p2 <<stereo>> {
+class D
+}
+
+
+@enduml

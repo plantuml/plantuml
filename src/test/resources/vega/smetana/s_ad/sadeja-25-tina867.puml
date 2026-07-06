@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+
+actor Mamal [[http://www.google.com]]
+usecase Dog [[http://www.yahoo.com{This is Dog}]]
+
+'url of Mamal is [[http://www.google.com]]
+'url of Dog is [[http://www.yahoo.com{This is Dog}]]
+
+@enduml

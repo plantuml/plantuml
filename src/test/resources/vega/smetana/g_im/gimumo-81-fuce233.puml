@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startuml
+title **KO** on V1.2020.16
+node n #pink [
+**test list 1**
+* Bullet list
+* Second item
+** Sub item
+*** Sub sub item
+* Third item
+----
+**test list 2**
+# Numbered list
+# Second item
+## Sub item
+## Another sub item
+# Third item
+]
+
+file f #pink as "
+**test list 1**
+* Bullet list
+* Second item
+** Sub item
+*** Sub sub item
+* Third item
+----
+**test list 2**
+# Numbered list
+# Second item
+## Sub item
+## Another sub item
+# Third item
+"
+@enduml

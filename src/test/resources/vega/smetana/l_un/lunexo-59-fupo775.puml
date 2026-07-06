@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+<style>
+Stereotype {
+  FontColor Green
+}
+</style>
+usecase "Usecase"<<styleStereoType>> as usecase1
+process "Process"<<styleStereoType>> as process1
+rectangle "Rectangle"<<styleStereoType>> as rectangle1
+@enduml

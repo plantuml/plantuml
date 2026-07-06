@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+hide empty members
+
+A_Driver -> A_Car : drives >
+(A_Driver, A_Car) -> A_Contract : under Contract >
+
+B_Driver -> B_Car : drives >
+(B_Car, B_Driver) -> B_Contract : under Contract >
+
+@enduml

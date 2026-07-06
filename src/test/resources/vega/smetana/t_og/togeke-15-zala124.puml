@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+rectangle "<img:https://upload.wikimedia.org/wikipedia/commons/8/8c/SVG_logo_h.svg>" as foo
+@enduml

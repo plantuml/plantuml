@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+note as n
+    my note
+end note
+
+note as X.n
+    my enother note
+end note
+@enduml

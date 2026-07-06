@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+page 2x2
+skinparam pageMargin 5
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+
+
+User o-- Group : appartient
+'User o- Group : appartient
+User o-- Right : possede
+Group o-- Right : contient
+
+User : boolean hasRight(Right rightToTest)
+User : void addRight(Right rightToAdd)
+User : void removeRight(Right rightToRemove)
+User : Vector getAllRights()
+User : Vector getRights(Group groupToGet)
+User : Vector getAllGroups()
+
+Group : Vector getAllRights()
+Group : void addRight(Right rightToAdd)
+Group : void removeRight(Right rightToRemove)
+Group : Vector getAllRights()
+
+Right : void addUser(User userToAdd)
+Right : void removeUser(User userToRemove)
+@enduml

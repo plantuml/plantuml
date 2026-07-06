@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+database db1  as "My Database1" {
+  [test1]
+}
+database "My Database2" as db2 {
+  [test2]
+}
+@enduml

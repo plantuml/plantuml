@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+!include <tupadr3/common>
+!include <tupadr3/font-awesome/star>
+class Foo {
+ <color:#FE0000><&x{scale=2.25}></color> someBadField
+ <color:#FE0000><$star{scale=0.50}></color> other
+}
+@enduml

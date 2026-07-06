@@ -1,0 +1,33 @@
+---
+output: svg
+---
+@startuml
+skinparam backgroundColor red
+'skinparam nodeBackgroundColor
+skinparam cloudBackgroundColor transparent
+skinparam databaseBackgroundColor transparent
+
+node "Group mode node" {
+  node simplenode
+  node multilinenode[
+    = Multi-line node
+    More detail goesherea
+  ]
+}
+
+cloud "Group mode cloud" {
+  cloud simplecloud
+  cloud multilinecloud[
+    = Multi-line cloud
+    More detail goes here
+  ]
+}
+
+database "Group mode database" {
+  database simpledatabase
+  database multilinedatabase[
+    = Multi-line database
+    More detail goes here
+  ]
+}
+@enduml

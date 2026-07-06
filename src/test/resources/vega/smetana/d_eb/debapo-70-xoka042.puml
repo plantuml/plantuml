@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+set separator !
+
+package a!d {
+    class DDD
+}
+
+class a!b!C {}
+
+a!b!C --|> a!d!DDD
+@enduml

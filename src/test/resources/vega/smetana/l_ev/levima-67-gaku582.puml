@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+(*)--> "test1 <img:notfoundfile.png>"
+-->[ok] "test2 <b>toto</b>"
+--> (*)
+@enduml

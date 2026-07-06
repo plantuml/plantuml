@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+class "rsnqicm483xnkznu4gwwsmpgehjyg5f3uggesj5lyg2mmuakqhxz5kss35qewqwx91wbzrvx5wwv" as tr
+@enduml

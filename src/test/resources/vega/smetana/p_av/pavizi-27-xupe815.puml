@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+object user {
+        This is __underscored__.
+        This is ""monospaced"".
+        This is --crossed--.
+        This is not ~__underscored__.
+        This is not ~""monospaced"".
+        This is not ~--crossed--.
+}
+
+class Testclass {
+    attribute1 : String
+    attribute2 : String
+    method1(parameter1 : String)
+    method2(parameter2 : String) : String
+}
+@enduml

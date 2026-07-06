@@ -1,0 +1,38 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+component comp01
+component comp02
+component comp03
+component comp04
+component comp05
+component comp06
+component comp07
+component comp08
+component comp09
+component comp10
+component comp11
+component comp12
+component comp13
+component comp14
+component comp15
+component comp16
+component comp17
+component comp18
+component comp19
+comp01 -- comp02
+comp04 -- comp05
+comp05 -- comp09
+comp06 -- comp07
+comp08 -- comp09
+comp11 -- comp12
+comp11 -- comp13
+comp12 -- comp14
+comp12 -- comp15
+comp12 -- comp16
+comp13 -- comp15
+comp13 -- comp16
+comp13 -- comp18
+@enduml

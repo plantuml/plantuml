@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+package DD
+package EE
+@enduml

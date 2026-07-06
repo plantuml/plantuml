@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+<style>
+rectangle {
+  FontColor green
+  HorizontalAlignment right
+}
+usecase {
+  FontColor green
+  HorizontalAlignment right
+}
+</style>
+
+rectangle rectangle [
+a
+abc
+a b c d
+]
+
+usecase usecase [
+a
+abc
+a b c d
+]
+@enduml

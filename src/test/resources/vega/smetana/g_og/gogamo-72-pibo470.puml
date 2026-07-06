@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+skinparam usecaseBackgroundColor DarkSeaGreen
+skinparam usecaseArrowColor Olive
+skinparam actorBorderColor black
+skinparam usecaseBorderColor DarkSlateGray
+skinparam actorFontName Courier
+
+User << Human >>
+(Database)
+(Solr)
+(Celery)
+(Redis)
+(Python Eventlet) as (Eventlet)
+(Application) as (App)
+(Haystack) as (Hay)
+
+
+User .. (App) : HTTP
+(App) - Database : Presumably Cached
+(Database) -> (Solr) : Message Dump
+(Hay) - (Solr)
+(App) .. (Hay) : Search
+User ..> (Eventlet) : jQuery Long Polling
+(Eventlet) - (Redis) : PubSubHubHub
+(App) ..> (Redis) : Add Celery Task
+(Celery) -> (Redis) : Update stats/PubSHH info
+(Redis) -> (Celery)
+@enduml

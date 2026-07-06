@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+DataAccess - [First Component] 
+[First Component] ..> HTTP : use
+@enduml

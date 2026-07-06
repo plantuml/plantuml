@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+skinparam stateMessageAlignment left
+[*] --> State : This is a label\nover multiple lines
+
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam wrapWidth 150
+state "a" as a
+State "b" as b
+b: aaaaaaa bbbbbbbbbb ccccccccc ddddddddd eeeeeeeee ffffffffff ggggggggg hhhhhhhh
+a -right-> b
+@enduml

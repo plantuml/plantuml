@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+Driver "1" - "1" Car : drives >
+(Driver, Car) .. Contract
+@enduml

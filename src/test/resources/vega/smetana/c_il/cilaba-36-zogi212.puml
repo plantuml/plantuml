@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+    classDiagram {
+       BackGroundColor Green
+       document {
+         BackGroundColor Yellow
+       }
+    }
+</style>
+
+' printed in blue
+class Bob {
+hello
+}
+
+' also printed in blue
+class Sally
+
+
+Sally --> Bob
+@enduml

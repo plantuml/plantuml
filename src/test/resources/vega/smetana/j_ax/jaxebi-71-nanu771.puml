@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+Dog --|> Mammal
+
+class Dog
+
+Dog o-- Cat
+
+Cat --|> Mammal
+@enduml

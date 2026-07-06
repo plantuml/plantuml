@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+package Client {
+class CliEnginery
+}
+
+package Server {
+class SrvEnginery
+}
+
+CliEnginery -() Tros
+SrvEnginery -() Tros
+@enduml

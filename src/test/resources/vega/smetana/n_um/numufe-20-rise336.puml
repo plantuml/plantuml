@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+
+Title : Single Item Booking with no payment
+User -> BB : Confirms checkout
+BB : Make Booking
+@enduml

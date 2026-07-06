@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+class MARKETING_INDICATOR <<(?, red)>>  {
+  PERIOD                                      Date
+  Client number                               String[7]
+  Probability to churn                        Numeric[9]
+  Probability to become inactive              Numeric[9]
+  Probability to buy Expresso                 Numeric[9]
+  Probability to buy Housing                  Numeric[9]
+  Probability to buy Overdraft                Numeric[9]
+  Probability to buy Credit Partner           Numeric[9]
+  Probability to buy Comfort                  Numeric[9]
+  Probability to buy Spokoistvie on Overdraft Numeric[9]
+  Probability to buy Spokoistvie on CA        Numeric[9]
+  Probability to buy Spokoistvie on SA        Numeric[9]
+  Probability to buy Garant                   Numeric[9]
+  Probability to buy Progress                 Numeric[9]
+  Probability to buy Rent                     Numeric[9]
+  Probability to buy Taktika                  Numeric[9]
+  Probability to buy Optima                   Numeric[9]
+  Probability to buy Maksima                  Numeric[9]
+  Probability to buy Saving account           Numeric[9]
+  Probability to buy New Horizonti            Numeric[9]
+  Probability to buy Tempo Capital            Numeric[9]
+}
+
+@enduml

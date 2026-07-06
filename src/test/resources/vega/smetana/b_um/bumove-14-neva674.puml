@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+component foo1
+interface foo2
+database foo3
+foo1 --> foo2 : dummy
+@enduml

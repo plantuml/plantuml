@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+
+static class dummy
+static class foo {
+}
+
+@enduml

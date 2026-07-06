@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+(ac1) <|-left- (ac1 left) 
+(ac1) <|-right- (ac1 right) 
+(ac1) <|-up- (ac1 up) 
+(ac1) <|-down- (ac1 down)
+ 
+(ac2 left) -left-|> (ac2) 
+(ac2 right) -right-|> (ac2) 
+(ac2 up) -up-|> (ac2) 
+(ac2 down) -down-|> (ac2) 
+@enduml

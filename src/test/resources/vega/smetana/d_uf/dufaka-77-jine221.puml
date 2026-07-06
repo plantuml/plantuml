@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+json myJsonObject {"a \" b": 1}
+@enduml

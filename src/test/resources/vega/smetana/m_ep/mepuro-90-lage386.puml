@@ -1,0 +1,35 @@
+---
+output: svg
+---
+@startuml
+title Test of filling with "fill" & outline with "stroke"
+sprite TEST_1 <svg width="190" height="160" >
+  <path
+    d="M 10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80"
+    stroke="blue"
+    fill="palegreen" />
+</svg>
+
+sprite TEST_2 <svg width="190" height="160" >
+  <path
+    d="M 10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80"
+    stroke="blue"
+    fill="palegreen" />
+</svg>
+
+sprite TEST_3 <svg width="190" height="160" >
+  <path d="M 10 80 Q 95 10 180 80" stroke="black" fill="palegreen" />
+</svg>
+
+sprite TEST_4 <svg width="190" height="160" >
+  <path
+    d="M 10 80 Q 52.5 10, 95 80 T 180 80"
+    stroke="black"
+    fill="palegreen" />
+</svg>
+
+card "<$TEST_1>"
+card "<$TEST_2>"
+card "<$TEST_3>"
+card "<$TEST_4>"
+@enduml

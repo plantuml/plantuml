@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+object "~#1: Person" as p1
+
+object "~#1: Person" as p2 [[http://www.google.fr]]
+p2 : tutu
+'url of p2 is [[http://www.google.fr]]
+
+@enduml

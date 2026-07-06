@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+'!preprocessorV2
+
+skinparam guillemet false
+!procedure COMP_TEXTGENCOMP(name)
+[name] << Comp >>
+interface Ifc << IfcTyoe >> AS name##Ifc
+name##Ifc - [name]
+!endprocedure
+
+COMP_TEXTGENCOMP("dummy")
+ 
+@enduml

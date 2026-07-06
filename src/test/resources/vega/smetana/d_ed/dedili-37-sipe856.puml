@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+<style>
+arrow {
+  fontcolor red
+  MaximumWidth 150
+}
+</style>
+
+node "Web Server" as web
+node "App Server" as app
+database "PostgreSQL" as db
+
+web -> app : forwards authenticated requests with session tokens and user context
+app -> db : executes parameterized queries against the primary read-write replica
+db -> app : returns result sets with pagination metadata and cache headers
+@enduml

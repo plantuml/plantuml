@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+
+
+    interface "MIDI IN" as MidiIn
+    interface "MIDI OUT" as MidiOut
+
+    [PIC 16F628A (MIDI)] as PICMid
+
+    PICMid -right- MidiIn
+    PICMid -down- MidiOut
+
+@enduml

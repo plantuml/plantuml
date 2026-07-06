@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+
+title must be red
+
+<style>
+rectangle {
+ .boundary {
+  FontColor blue
+ }
+}
+rectangle {
+ .boundary {
+  FontColor red
+ }
+}
+</style>
+
+rectangle "R1" as r1 <<boundary>> {
+  rectangle "R2" as r2 <<boundary>> {
+  }
+}
+
+@enduml

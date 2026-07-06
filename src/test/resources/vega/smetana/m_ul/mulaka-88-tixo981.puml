@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> "this activity
+	is <b>very</b> long
+ and defined on several lines
+that contains many <i>text</i>" as A1
+
+--> "Another activity" as A2
+
+-left-> "This one"
+A1 --> "Toto"
+
+@enduml

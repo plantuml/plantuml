@@ -1,0 +1,49 @@
+---
+output: svg
+---
+@startuml
+title "Test of Fill and Stroke on Path"
+sprite none-green <svg width="190" height="160" >
+  <path d="M 10 80 Q 52.5 10, 95 80 T 180 80"
+    fill="none" stroke="green" />
+</svg>
+sprite none-none <svg width="190" height="160" >
+  <path d="M 10 80 Q 52.5 10, 95 80 T 180 80"
+    fill="none" stroke="none" />
+</svg>
+sprite black-none <svg width="190" height="160" >
+  <path d="M 10 80 Q 52.5 10, 95 80 T 180 80"
+    fill="black" stroke="none" />
+</svg>
+sprite red-green <svg width="190" height="160" >
+  <path d="M 10 80 Q 52.5 10, 95 80 T 180 80"
+    fill="red" stroke="green" />
+</svg>
+sprite green- <svg width="190" height="160" >
+  <path d="M 10 80 Q 52.5 10, 95 80 T 180 80"
+    fill="green" />
+</svg>
+sprite -green <svg width="190" height="160" >
+  <path d="M 10 80 Q 52.5 10, 95 80 T 180 80"
+          stroke="green" />
+</svg>
+sprite - <svg width="190" height="160" >
+  <path d="M 10 80 Q 52.5 10, 95 80 T 180 80" />
+</svg>
+sprite transparent-transparent <svg width="190" height="160" >
+  <path d="M 10 80 Q 52.5 10, 95 80 T 180 80"
+   fill="transparent" stroke="transparent" />
+</svg>
+
+card C [
+|= Fill |= Stroke |= Sprite |
+| black | none  | <$black-none> |
+| none  | green | <$none-green> |
+| green | -     | <$green->     |
+| red   | green | <$red-green>  |
+<#pink>| none  | none  | <$none-none>  |
+| -     | green | <$-green>     |
+| -     | -     | <$->  |
+<#palegreen>| transparent | transparent | <$transparent-transparent> |
+]
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+scale 100 x 100
+[*] -l-> left
+[*] -r-> right
+[*] -u-> up
+[*] -d-> down
+@enduml

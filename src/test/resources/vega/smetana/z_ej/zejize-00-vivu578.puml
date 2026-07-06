@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+enum MonEnum
+MonEnum <<Test>>
+@enduml

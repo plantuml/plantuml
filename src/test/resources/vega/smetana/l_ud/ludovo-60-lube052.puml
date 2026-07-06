@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+
+(*) --> if "" then
+ ->[cas1] cas1
+else
+ -->[cas2] cas2
+endif
+
+-left->[cas3] azerty
+
+@enduml

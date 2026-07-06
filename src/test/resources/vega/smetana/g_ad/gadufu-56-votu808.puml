@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+class ЕСИА {
+- int field # комментарий с И
+-- subsection --
+  {{
+  start
+  :Использовать;
+  }}
+}
+@enduml

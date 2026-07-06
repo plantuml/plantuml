@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam svek_trace true
+left to right direction
+
+    [some processing] --> [storage writer]
+
+note top of [some processing] : top io.Writer
+note bottom of [storage writer] : bottom io.Writer
+@enduml

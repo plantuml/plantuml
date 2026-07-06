@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+namespace a {
+}
+namespace a.b {
+}
+namespace a.c {
+}
+namespace d {
+    namespace e {
+    }
+    namespace f {
+    }
+}
+@enduml

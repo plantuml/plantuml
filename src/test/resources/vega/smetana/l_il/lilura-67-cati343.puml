@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+<style>
+document {
+  BackGroundColor transparent
+}
+</style>
+class CLASS {
+foo
+}
+CLASS *-- f1
+CLASS --> f2
+CLASS o--> f3
+CLASS <|-- f4
+
+enum ENUM
+interface INTERFACE
+annotation ANNOTATION
+abstract class ABSTRACT_CLASS
+entity ENTITY
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+skinparam dpi 200
+class Foo<List <? extends GENERIC>> <<Dummy>>
+Dummy --* Foo
+
+class OtherAlone<this>
+
+class Other<this> {
+  int size
+}
+
+@enduml

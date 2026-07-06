@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+
+component f0
+
+package p1 {
+    component a1
+}
+package p2
+p1 --> p2
+@enduml

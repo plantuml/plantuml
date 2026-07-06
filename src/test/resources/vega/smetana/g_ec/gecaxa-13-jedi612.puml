@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+card c1 [
+swan:
+<#0:swan:> <#1:swan:> <#7:swan:> <#A:swan:> <#F:swan:> <:swan:>
+--
+<#green:swan:> <#blue:swan:> <#red:swan:>
+]
+card c2 [
+grapes:
+<#0:grapes:> <#1:grapes:> <#7:grapes:> <#A:grapes:> <#F:grapes:> <:grapes:>
+--
+<#green:grapes:> <#blue:grapes:> <#red:grapes:>
+]
+
+card c [
+Some tests:
+ <#0:star2:> <#1:star2:> <#7:star2:> <#A:star2:> <#F:star2:> <:star2:>
+--
+<#green:star2:>: Green is well <color:green>green!
+<#blue:star2:>: Why <color:blue>blue</color> is violet?
+<#red:star2:>: <color:red>Red</color> is <color:pink>pink</color> why not...
+]
+
+@enduml

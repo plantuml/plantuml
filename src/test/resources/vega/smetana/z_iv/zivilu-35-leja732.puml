@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+skinparam rectangle {
+    BorderStyle dashed
+}
+
+rectangle "R1" as r1  {
+  rectangle "R2" as r2 {
+  }
+}
+
+@enduml

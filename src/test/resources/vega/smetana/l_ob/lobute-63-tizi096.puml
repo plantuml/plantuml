@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+[XX]
+skinparam agent {
+    backgroundColor Yellow
+    backgroundColor<<st>> LightBlue
+}
+  @pause
+this is ignored
+  		  	@unpause
+agent AA <<st>>
+agent BB
+@enduml

@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+arrow {
+	LineColor green
+	FontColor green
+	
+	.v1.0 {
+		LineColor red
+	}
+	.v1.1 {
+		FontColor red
+	}
+}
+</style>
+
+[Component]
+
+Component -RIGHT-> Participant11<<v1.1>> : text color red
+Component -DOWN-> Participant1011<<v1.0>><<v1.1>> : text and line red
+Component -DOWN-> Participant1110<<v1.1>><<v1.0>> : text and line red
+Component -DOWN-> Participant1011_WithoutSimulation: green
+@enduml

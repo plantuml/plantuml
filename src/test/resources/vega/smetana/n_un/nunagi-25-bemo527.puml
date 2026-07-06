@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+<style>element {BackgroundColor palegreen;  FontColor blue}</style>
+class Alice
+interface Bob
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+note as some_note_with_state_diagram_inside
+{{
+ [*] --> someState : aa
+}}
+end note
+@enduml

@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+partition Conductor
+(*) --> ClimbsOnPlatform
+--> === S1 ===
+--> Bows
+endpartition
+
+partition Audience gray
+=== S1 === --> Applauds
+endpartition
+
+partition Conductor
+Bows --> === S2 ===
+--> WavesArmes
+Applauds --> === S2 ===
+endpartition
+
+partition Orchestra
+WavesArmes --> Introduction
+endpartition
+
+@enduml

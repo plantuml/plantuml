@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class C {
+- field
+{{
+node n
+}}
+}
+@enduml

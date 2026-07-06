@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+database DB1 as "
+You can have horizontal line
+----
+Or double line
+====
+Or strong line
+____
+Or dotted line
+..My title..
+Enjoy!
+"
+note right
+  This is working also in notes
+  You can also add title in all these lines
+  ==Title==
+  --Another title--
+end note
+
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!global $table = "|= Field1 |= Field 2 |"
+!procedure $row($value1, $value2)
+%set_variable_value("$table", %get_variable_value("$table") + " \n | " + $value1 + " | " + $value2 + " |")
+!endprocedure
+
+$row("row 1", "2")
+
+title
+$table
+end title
+@enduml

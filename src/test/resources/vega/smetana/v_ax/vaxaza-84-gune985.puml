@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+class cl1 extends cl2
+interface i1
+interface i1 extends i2
+
+class cl3 implements i3
+
+interface i5 implements i2
+
+@enduml

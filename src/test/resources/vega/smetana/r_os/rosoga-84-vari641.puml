@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+!include <C4/themes/puml-theme-C4_united.puml>
+!include <C4/C4.puml>
+C4Version()
+@enduml

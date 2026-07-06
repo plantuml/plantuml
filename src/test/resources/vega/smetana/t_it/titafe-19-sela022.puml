@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+archimate #APPLICATION A
+archimate #MOTIVATION  B
+
+A -\\ B
+
+@enduml

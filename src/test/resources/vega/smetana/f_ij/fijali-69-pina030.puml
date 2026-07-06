@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startuml
+
+    abstract class GenericServlet extends Servlet {
+        .. interface Servlet ..
+        +void destroy()
+        +ServletConfig getServletConfig()
+        +String getServletInfo()
+        +void init(ServletConfig)
+        .. interface ServletConfig ..
+        +String getInitParameter(String)
+        +Enumeration<String> getInitParameterNames()
+        +ServletContext getServletContext()
+        +String getServletName()
+        .. methodes utilitaires ..
+        +void init()
+        +void log(String)
+        +void log(String,Throwable)
+    }
+    
+    Object <|-- Foo
+	class Foo [[http://www.google.com]] {
+	  + methods1() [[[http://www.yahoo.com/A1{Some explainations about this method}]]]
+	  + methods2() [[[http://www.yahoo.com/A2]]]
+	}
+	  
+	class Foo2 {
+	  + methods1() [[[http://www.yahoo.com/B1]]]
+	  + methods2() [[[http://www.yahoo.com/B2]]]
+	}
+	  
+	class Object [[http://www.yahoo.com]] {
+	}
+
+@enduml

@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+
+Person "1" *-- "*" Person : "parent" contains "children"
+
+Group "1" --> "*" Item : "" "members"
+Group "1" --> "1" Item1 : "" is a "leader"
+
+A *- "*" B : contains "Bees"
+A o-- "1" C : "a"
+
+@enduml

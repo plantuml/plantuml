@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+actor 有土可种桑麻
+actor 有水克养鱼虾
+actor 有人非你非我
+usecase 有马克走天涯
+@enduml

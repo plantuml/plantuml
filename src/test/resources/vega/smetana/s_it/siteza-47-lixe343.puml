@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+!pragma layout vizjs
+class Foo
+class Bar
+Foo --> Bar : demo
+@enduml

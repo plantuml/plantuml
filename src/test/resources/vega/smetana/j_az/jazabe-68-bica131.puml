@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+[Component1] << Stereotype >> [[http://Component1]]
+() Interface << Other Stereotype >> [[http://Interface]]
+'url of Component1 [[http://Component1]]
+'url of Interface [[http://Interface]]
+@enduml

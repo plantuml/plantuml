@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+class WInstallationRecord {
+    +reportedVersion: String
+    +reported: RFC3339
+}
+
+note left of WInstallationRecord::reportedVersion
+A
+end note
+
+note left of WInstallationRecord::reported
+B
+end note
+
+
+@enduml

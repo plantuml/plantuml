@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+skinparam state {
+    backgroundColor White
+ backgroundColor<<softwaremodule>> #CCDBC8
+ backgroundColor<<signal>> #DE8C73
+ backgroundColor<<statechart>> LightYellow
+ backgroundColor<<statemachine>> LightYellow
+ backgroundColor<<state>> LightYellow
+ backgroundColor<<initialstate>> LightYellow
+    BorderColor<<initialstate>> Black
+}
+skinparam shadowing false
+skinparam defaultTextAlignment left
+state "**&#171;statechart&#187; Master Switchgear Model - Logic**" as 8E437FA1B6DC905 <<statechart>> {
+  8E437FA1B6DC905 : **Rule:**\n    if ('openStatus') then\n        'switchgearStatus' := $OPEN$
+  state "**&#171;statemachine&#187; smSwOp**" as 6D4FA3B201978C <<statemachine>> {
+    [*] -[#blue,bold]-> 368F54ED2A907
+    state "**&#171;initialstate&#187; stInit**" as 368F54ED2A907 <<initialstate>> {
+      368F54ED2A907 : **OnEntry:**\n    'operatingMode' := $Switchgear Model Initialisation$\n    'setOperatingModeInfo' := $Set 1 for Auto Mode, Set 2 for RTDS Mode, Set 3 for Manual Mode$\n
+    }
+  }
+}
+@enduml

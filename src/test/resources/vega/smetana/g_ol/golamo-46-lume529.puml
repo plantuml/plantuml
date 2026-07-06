@@ -1,0 +1,45 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangle {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+' the package workaround which was required in old version too
+skinparam package {
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    FontStyle plain
+    BackgroundColor transparent
+    BorderColor #444444
+}
+
+' this defintion cannot be overwritten anymore. It has to be removed that it is working like in the old version
+skinparam rectangle<<boundary>> {
+    Shadowing false
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    FontColor #444444
+    BorderColor #444444
+    BackgroundColor transparent
+    BorderStyle dashed
+}
+
+' rectangle ignores part of the definition if the same stereotype was defined
+' - package border color is working
+' - all other font colors and the border of the normal rectangle is not working
+skinparam rectangle<<boundary>> {
+    StereotypeFontColor green
+    FontColor green
+    BorderColor green
+    BackgroundColor transparent
+    BorderStyle dashed
+}
+
+rectangle "Sample" <<boundary>> as c1  {
+    rectangle "sub system" <<boundary>> as sub_sys
+    rectangle "component" <<component>> as web_app
+}
+@enduml

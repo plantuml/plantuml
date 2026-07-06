@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+skinparam wrapWidth 200
+
+rectangle PlanProduct {
+    rectangle planProduct_qpt
+    note left of planProduct_qpt
+    |_ abc
+    end note
+}
+
+@enduml

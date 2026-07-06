@@ -1,0 +1,42 @@
+---
+output: svg
+---
+@startuml
+title Engine Test
+card G [{{
+title With GraphViz
+component c1 {
+    component comp12 {
+        component comp123 {
+            component comp1234 {
+	        }
+        }
+    }
+}
+}}]
+card S [{{
+!pragma layout smetana
+title With Smetana
+component c1 {
+    component comp12 {
+        component comp123 {
+            component comp1234 {
+	        }
+        }
+    }
+}
+}}]
+card E [{{
+!pragma layout elk
+title With ELK
+component c1 {
+    component comp12 {
+        component comp123 {
+            component comp1234 {
+	        }
+        }
+    }
+}
+}}]
+
+@enduml

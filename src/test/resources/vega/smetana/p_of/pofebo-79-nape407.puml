@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+title Bracketed line thickness
+class foo
+class bar
+bar1 : [thickness=1]
+bar2 : [thickness=2]
+bar3 : [thickness=4]
+bar4 : [thickness=8]
+bar5 : [thickness=16]
+
+foo --> bar                 : ∅
+foo -[thickness=1]-> bar1   : [1]
+foo -[thickness=2]-> bar2   : [2]
+foo -[thickness=4]-> bar3   : [4]
+foo -[thickness=8]-> bar4   : [8]
+foo -[thickness=16]-> bar5  : [16]
+
+@enduml

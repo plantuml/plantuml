@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+left to right direction
+
+node "storage" as storage {
+    [some processing] --> [storage writer]
+}
+
+note top of [some processing] : top io.Writer
+note bottom of [storage writer] : bottom io.Writer
+@enduml

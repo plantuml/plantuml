@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+set separator none
+'skinparam svek true
+state Foo1
+state Inner1 #red {
+	state Dummy1
+	state Dummy2
+	Dummy1 -[#blue]-> Dummy2
+	Dummy1 --> Foo1
+}
+
+@enduml

@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam shadowing false
+skinparam defaultTextAlignment left
+state 8E437FA1B6DC905 {
+  8E437FA1B6DC905 : **Rule:**\n    if ('openStatus') then\n        'switchgearStatus' := $OPEN$
+  state 6D4FA3B201978C 
+}
+@enduml

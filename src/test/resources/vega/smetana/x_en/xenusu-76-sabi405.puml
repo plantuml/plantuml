@@ -1,0 +1,37 @@
+---
+output: svg
+---
+@startuml
+
+skinparam arrow {
+    Color #666666
+    FontColor #666666
+    FontSize 12
+}
+
+skinparam arrow {
+    Color green
+    FontColor green
+}
+
+skinparam arrow<<bluebold>> {
+    Color blue;line.Bold()
+}
+
+skinparam arrow<<bold>> {
+    Color ;line.Bold()
+}
+
+[a]
+[b]
+
+' not working anymore
+a -->> b <<bold>> : "stereotype bold"
+
+' not working anymore
+a -->> b <<bluebold>> : "stereotype bluebold"
+
+' working in old and new version
+a -[#blue,bold]-> b : "line bluebold"
+
+@enduml

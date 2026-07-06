@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+
+namespace N3 {
+  class ClassInN3_1 {
+    - prop1
+  }
+  class ClassInN3_2 {
+    - prop2
+  }
+  together {
+    class ClassInN3Together_1 {
+      - prop3
+    }
+    class ClassInN3Together_2 {
+      - prop4
+    }
+    ClassInN3Together_1 - N3.ClassInN3_1
+  }
+  ClassInN3_2 - .ClassInN3Together_2
+}
+
+' Revealing the true namespace of the elements:
+N3.ClassInN3_2 -[dashed,#red] ClassInN3Together_1
+N3.ClassInN3_1 -[#blue] ClassInN3Together_2
+
+@enduml

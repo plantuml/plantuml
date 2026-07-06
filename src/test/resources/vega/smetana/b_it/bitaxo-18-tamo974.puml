@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+hide empty description
+
+state A
+
+state B {
+}
+
+state C {
+  state d <<entrypoint>>
+}
+@enduml

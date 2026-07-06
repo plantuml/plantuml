@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+class Observation  {
+name 0
+name 1 [[[https://example.com/link1]]]
+name 2
+name 3 [[[https://example.com/link3]]]
+}
+url of Observation is [[https://example.com/link2]]
+@enduml

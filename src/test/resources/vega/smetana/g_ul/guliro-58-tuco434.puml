@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+
+(*) --> ACT1
+
+ACT1 -> ACT2
+ACT2 --> ACT3
+ACT3 -left-> ACT4
+ACT3 -> ACT5
+
+@enduml

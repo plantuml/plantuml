@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+cloud aCloud {
+
+ node 1 {
+  frame TeamCity { 
+    agent "build agent"
+  }
+  agent FileBeat
+ }
+
+ node 2 {
+	database PostgreSQL
+ }
+}
+
+node Main {
+  component [ Not Our System That Must Stay  ]
+
+  database ElasticSearch
+
+  agent LogStash
+} 
+
+node dev_machine
+
+dev_machine 0)==(0 Main 
+dev_machine == aCloud
+@enduml

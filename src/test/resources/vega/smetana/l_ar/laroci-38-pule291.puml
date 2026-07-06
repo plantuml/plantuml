@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+!$remote_json={"participants" :[ 
+{"id": "cm" ,"label": "customer master","desc": "manages customers"},
+{"id": "tm" ,"label": "transaction manager","desc": "manages transactions"},
+{"id": "am" ,"label": "account master","desc": "manages accounts"}
+]
+}
+
+json foo {
+   "fruit":"Apple",
+   "size":"Large",
+   "color": ["Red", "Green"]
+}
+
+
+label label [
+=Title:
+{{json
+$remote_json
+}}
+]
+
+
+json TITLE $remote_json
+
+@enduml

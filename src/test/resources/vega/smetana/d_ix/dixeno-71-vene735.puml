@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!unquoted function $vlookup($id, $range, $offset)
+!log vlookup on %get_variable_value("$id")
+%set_variable_value("$row1","cm|customer master|manages customers")
+!if ($id == "cm")
+    !return %get_variable_value("$row1")
+!endif
+!endfunction
+!$note = $vlookup("cm","system.iuml", 1)
+component comp1 [
+$note
+]
+@enduml

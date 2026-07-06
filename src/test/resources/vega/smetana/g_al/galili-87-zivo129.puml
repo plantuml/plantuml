@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma teoz true
+header some header
+footer <back:red>some footer
+caption caption
+title My title
+caption This is caption
+legend
+<back:red>The legend
+end legend
+class foo
+@enduml

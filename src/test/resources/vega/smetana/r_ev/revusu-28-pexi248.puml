@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+
+skinparam actorStyle awesome
+<style>
+actor {
+  BackGroundColor aliceblue
+  LineColor red
+  LineThickness 4
+  FontColor blue
+  FontSize 15
+  FontStyle italic
+}
+</style>
+
+actor a
+component b
+a-->b: hello
+
+@enduml

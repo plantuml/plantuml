@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+skinparam defaultTextAlignment center
+skinparam wrapWidth 200
+skinparam maxMessageSize 150
+
+hide stereotype
+
+folder "==Static Content\n//<size:12>[File system]</size>//\n\n Serves static files from API website root" <<component>> as static
+package "==Static Content\n//<size:12>[File system]</size>//\n\n Serves static files from API website root" <<component>> as static2
+@enduml

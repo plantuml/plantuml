@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+state foo1
+state foo2
+foo1 --> foo2 : description
+@enduml

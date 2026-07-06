@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!define some_macro(x, y = "some default" , z = 'another default' ) x and y and z
+
+class foo {
+  some_macro(Z1, Z2, Z3)
+  some_macro(Z1, Z2)
+  some_macro(A)
+}
+
+@enduml

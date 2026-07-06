@@ -1,0 +1,24 @@
+---
+output: svg
+---
+@startuml
+    namespace f1 {
+    }
+    
+    namespace f1.function {
+
+    }
+    
+    namespace f1.function {
+        class Fox
+    }
+    
+    namespace issues {
+        f1.function.Fox <|-- Rabbit
+        f1.AbstractSet <|-- Dog
+    }
+
+    
+
+
+@enduml

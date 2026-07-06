@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+class "A::B::C" {
+    f()
+    x
+}
+
+class "A.B.C" {
+    f()
+    x
+}
+
+@enduml

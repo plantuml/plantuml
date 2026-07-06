@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+package "entities" {
+
+A1 -> A2
+A3 -> A2 : b2
+A3 -> A2
+
+
+@enduml

@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+skinparam stateBackgroundColor<<Acacia>> green
+skinparam stateBackgroundColor<<Midge>> red
+skinparam stateBackgroundColor<<Weavil>> orange
+
+  state "midgeAdult" as ma <<Midge>> {
+    state midgeAdult <<Acacia>>
+    [*] --> midgeAdult : releaseMidge
+      midgeAdult : releaseMidge$date
+      midgeAdult : releaseMidge$adult
+      midgeAdult : -----
+      midgeAdult : midge$pEmerge
+      midgeAdult : midge$sexRatio
+  }
+
+  state acaciaMidge <<Weavil>> {
+    parFlower --> gall : stateAgingDeterministic
+      parFlower : meanEggsPerFemale
+      parFlower : maxEggsPerFlower
+    state gall <<Weavil>>
+    gall --> [*]
+  }
+
+@enduml

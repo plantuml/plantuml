@@ -1,0 +1,38 @@
+---
+output: svg
+---
+@startuml
+[*] --> comp1
+comp1 -right-> comp2
+comp2 --> [*]
+State comp1 {
+    [*] --> A
+    A --> common_comp1
+    common_comp1 --> [*]
+    state "common_comp" as common_comp1 {
+        common_comp1: entry / init()
+        state "c1" as c11
+        state "c2" as c12
+        state "c3" as c13
+        [*] --> c11
+        c11 --> c12
+        c12 --> c13
+        c13 --> [*]
+    }
+}
+state comp2 {
+    [*] --> B
+    B --> common_comp2
+    common_comp2 --> [*]
+    state "common_comp" as common_comp2 {
+        common_comp2: entry / init()
+        state "c1" as c21
+        state "c2" as c22
+        state "c3" as c23
+        [*] --> c21
+        c21 --> c22
+        c22 --> c23
+        c23 --> [*]
+    }
+}
+@enduml

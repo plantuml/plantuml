@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+cl2 *-left- cl2Left 
+cl2 *-right- cl2Right 
+cl2 *-up- cl2Up 
+cl2 *-down- cl2Down
+ 
+cl3 -left-* cl3Left 
+cl3 -right-* cl3Right 
+cl3 -down-* cl3Down 
+cl3 -up-* cl3Up 
+ 
+@enduml

@@ -1,0 +1,27 @@
+---
+output: svg
+---
+@startuml
+<style>
+Package {
+  FontColor red
+  FontSize 20
+  Fontstyle plain
+}
+</style>
+
+title title 
+package packagetest {
+    file ftest2
+}
+
+package packagetest0 {
+}
+
+frame f
+frame f0 {
+}
+frame f1 {
+file filea
+}
+@enduml

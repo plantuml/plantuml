@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+stateDiagram {
+	start {
+	    BackgroundColor #palegreen
+	    LineColor #pink
+	    LineThickness 2.5
+	}
+	end {
+	    BackgroundColor #palegreen
+	    LineColor #green
+	    LineThickness 2.5
+	}
+}
+</style>
+
+[*] --> State1
+State1 --> [*]
+@enduml

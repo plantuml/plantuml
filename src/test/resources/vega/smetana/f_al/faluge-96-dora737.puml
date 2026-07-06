@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam LegendBackgroundColor #lightyellow  
+skinparam LegendBorderThickness 4
+
+legend bottom
+<b>REQUIRED ITEMS</b>
+
+<#blue,#red>|=  Step  |=  Date  |=  Name  |=  Status  |=  Link  |
+<#green>|  1.1  |  TBD  |  [[https://www.asdasd.com/apps/documents/items/1965 ABC]]  |<color:black>  <b>Unknown  |   |
+endlegend
+
+center footer \nLast Updated:  February 15, 2018  -  12:40 pm  (EST)
+@enduml

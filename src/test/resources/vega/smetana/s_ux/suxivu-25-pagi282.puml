@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+entity DEPT {
+D1
+}
+
+entity EMP {
+D2
+}
+
+EMP::D2 ||--o{ DEPT::D1
+@enduml

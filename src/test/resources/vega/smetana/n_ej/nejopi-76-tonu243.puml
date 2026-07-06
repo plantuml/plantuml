@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+Title This is the title\nOn several Lines
+User --> (Start the application)
+@enduml

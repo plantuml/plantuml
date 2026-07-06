@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+class foo
+{
+var1
+var1
+}
+
+@enduml

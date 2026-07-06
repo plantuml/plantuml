@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+scale 1.4
+
+[*] --> Active
+Active --> Other
+Active -le-> Big1
+
+state Big1 {
+  b1 --> b2
+}
+
+state Big2 {
+  c1 --> c2
+  state AbstractState {
+   InnerState2 --> InnerState1
+  }
+  AbstractState --> InnerState1 : all
+}
+
+Other -> Big2
+
+@enduml

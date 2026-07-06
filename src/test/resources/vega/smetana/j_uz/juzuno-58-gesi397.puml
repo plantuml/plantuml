@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+card card2 [
+This is a <b>card
+]
+
+card card [
+This is a <b>card
+----
+You can use separator
+====
+of different kind
+....
+and style
+]
+
+rectangle rectangle [
+This is a <b>rectangle 
+----
+You can use separator
+====
+of different kind
+....
+and style
+]
+@enduml

@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+
+rectangle blahblah as bb <<System Boundry>> {
+    rectangle "first" as fst <<System Boundry>> {
+        rectangle third #line.dashed
+        (forth)
+        rectangle fifth <<System Boundry>>
+    }
+    rectangle "second" as scnd
+    fst -> scnd
+
+}
+@enduml

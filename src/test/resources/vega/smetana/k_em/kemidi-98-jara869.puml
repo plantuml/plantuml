@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+rectangle "Service" as service <<Service>>
+
+service -right-> replicaset_100
+service -right-> replicaset_101
+
+'together {
+  rectangle "Replicaset" as replicaset_101 <<ReplicaSet>> {
+    rectangle "1.0.1 <color:green><&check></color>" as replica_101_01 <<Pod101>>
+    rectangle "1.0.1 <color:green><&check></color>" as replica_101_02 <<Pod101>>
+  }
+
+  rectangle "Replicaset" as replicaset_100 <<ReplicaSet>> {
+    rectangle "1.0.0 <color:red><&x></color>" as replica_100_01 <<DisabledPod>>
+    rectangle "1.0.0 <color:red><&x></color>" as replica_100_02 <<DisabledPod>>
+    rectangle "1.0.0 <color:green><&check></color>" as replica_100_03 <<Pod100>>
+    rectangle "1.0.0 <color:green><&check></color>" as replica_100_04 <<Pod100>>
+    rectangle "1.0.0 <color:green><&check></color>" as replica_100_05 <<Pod100>>
+
+    replica_100_01 -[hidden]right- replica_100_02
+    replica_100_02 -[hidden]right- replica_100_03
+    replica_100_03 -[hidden]right- replica_100_04
+    replica_100_04 -[hidden]right- replica_100_05
+  }
+'}
+
+replicaset_101 -[hidden]up- replicaset_100
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+hide empty methods
+hide empty attributes
+hide circle
+skinparam classAttributeIconSize 0
+x -up-o up_o
+x -down-o down_o
+x -left-o left_o
+x -right-o right_o
+x --o long_o
+x -o short_o
+@enduml

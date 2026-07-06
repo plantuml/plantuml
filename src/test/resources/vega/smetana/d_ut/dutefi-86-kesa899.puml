@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+state s1
+s1 : line1
+s1 : \nline2
+s1 : \n\nline3
+@enduml

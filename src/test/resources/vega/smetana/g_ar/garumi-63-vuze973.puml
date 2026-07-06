@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+package test1 {
+A <|-- B
+}
+package "Voici mon package" #DDDDDD {
+C <|-- D
+}
+
+package test3 {
+E <|-- F
+}
+
+package "Voici mon package" #DDDDDD {
+G <|-- H
+}
+
+@enduml

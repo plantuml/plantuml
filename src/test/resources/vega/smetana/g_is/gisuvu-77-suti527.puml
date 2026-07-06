@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+class1 "1" *- "this is a very very long string for the tests" class2
+class1 "1" *-- "this is a very very long string for the tests" class3
+@enduml

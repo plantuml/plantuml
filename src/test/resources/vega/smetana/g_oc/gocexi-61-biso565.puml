@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+skinparam boundary {
+  BorderColor #greenyellow
+  BackgroundColor #red
+  BorderColor<<magenta>> #magenta
+}
+
+component comp {
+  port "8000" as p80
+  port "8010" as p81 <<magenta>>
+  port "8020" as p82 #orange
+  port "8030" as p83 #line:blue
+}
+@enduml

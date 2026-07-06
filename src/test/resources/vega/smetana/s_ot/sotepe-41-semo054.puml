@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+interface A1
+interface A2
+class B1 extends P implements A1 {
+}
+class B2 extends P implements A1,A2 {
+}
+class C1 {
++test : void()
+}
+class C2 {
++test : void()
+}
+class P {
+}
+B1 -() A1
+B2 -() A1
+B2 -() A2
+A1 )-- C1
+A2 )-- A2
+A2 )--( A1
+@enduml

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startyaml
+- hosts: webservers
+  vars:
+    http_port: 80
+    max_clients: 200
+@endyaml

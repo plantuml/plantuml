@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+class BaseClass
+
+namespace Rev.elate.Leg.acy.Base.Biz {
+    class BaseClass
+    class Person
+    class Meeting
+
+}
+
+namespace Rev.elate.Sungard.Biz {
+  class Person
+  Rev.elate.Leg.acy.Base.Biz.Person  <|-- Person
+
+
+}
+@enduml

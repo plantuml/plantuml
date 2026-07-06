@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startyaml
+- A
+- B
+- C
+@endyaml

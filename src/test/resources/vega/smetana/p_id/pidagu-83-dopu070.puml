@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+skinparam defaultFontName consolas
+skinparam classAttributeFontSize 14
+package org.junit.jupiter.engine {
+class AbstractJupisterTestEngineTests {
++ executeTests(LauncherDiscoveryRequest) : ExecutionEventRecorder
+}
+}
+@enduml

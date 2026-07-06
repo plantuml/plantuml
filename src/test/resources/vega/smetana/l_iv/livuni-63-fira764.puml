@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+state "Req(Id)" as ReqId <<sdlreceive>>
+state "Minor(Id)" as MinorId <<sdlsend>>
+state "MinorReq := Id;" as MinorReq <<rect>>
+state "Major(Id)" as MajorId <<sdlsend>>
+state "MajorReq := Id;" as MajorReq <<rect>>
+ 
+state j <<junction>>
+state c <<choice>>
+ 
+Idle --> ReqId
+ReqId --> c
+c --> MinorId : [Id <= 10]
+MinorId --> MinorReq
+c --> MajorId : [Id > 10]
+MajorId --> MajorReq
+MinorReq --> j
+MajorReq --> j
+j --> Busy
+@enduml

@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+package "test" {
+    [__init__]
+}
+@enduml

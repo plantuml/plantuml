@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+database database2
+cloud cloud3
+collections collections
+@enduml

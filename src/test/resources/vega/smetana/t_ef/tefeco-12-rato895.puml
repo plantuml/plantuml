@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+artifact artifact {
+  card card {
+    label label [
+      {{
+        cloud cloud 
+        note right: cloud's note
+      }}
+    ]
+  }
+}
+note right: card's note
+@enduml

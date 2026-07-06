@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+Dog --|> Mammal
+
+class Mamal [[http://www.google.com]]
+'url of Mamal is [[http://www.google.com]]
+
+class Dog {
+NemesisCat
+}
+Dog o-- Cat
+
+Cat --|> Mammal
+@enduml

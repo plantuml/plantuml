@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml 
+namespace Root1 {
+  namespace Element1 {
+     interface Foo
+  }
+}
+
+namespace Root2 {
+  namespace Element1 {
+     class ImplFoo
+  }
+}
+
+@enduml 

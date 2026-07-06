@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+(*) --> "Activity 0"
+
+if "some test" then
+  if "test3" then
+    -left->[true] "Activity 1A"
+  else
+    -->[false] "Activity 1B"
+  endif
+else
+  -left->[Other true] "Activity 2"
+endif
+
+@enduml

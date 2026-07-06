@@ -1,0 +1,20 @@
+---
+output: svg
+---
+@startuml
+class A {
+    one
+    ..
+    some
+    ..
+    space
+    ..
+    add
+    ..
+    two
+} 
+class B
+class C
+A::one --> B
+A::two --> C
+@enduml

@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+sprite $businessProcess [16x16/16] {
+    FFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFF
+    FFFFFFFFFF0FFFFF
+    FFFFFFFFFF00FFFF
+    FF00000000000FFF
+    FF000000000000FF
+    FF00000000000FFF
+    FFFFFFFFFF00FFFF
+    FFFFFFFFFF0FFFFF
+    FFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFF
+    FFFFFFFFFFFFFFFF
+}
+
+rectangle "End to End\nbusiness process" <<$businessProcess >> {
+    rectangle "inner process 1" <<$businessProcess >> as src
+    rectangle "inner process 2" <<$businessProcess >> as tgt
+	src -> tgt
+}
+@enduml

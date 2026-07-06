@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+class Foo{
+**Bar(Model)**
+|_ prop
+|_ **Bom(Model)**
+  |_ prop2
+  |_ prop3
+    |_ prop3.1
+|_ prop4 :(
+glouglou
+--
+toto
+}
+@enduml

@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+action action {
+action action1
+action action2
+}
+process process {
+process process1
+process process2
+}
+@enduml

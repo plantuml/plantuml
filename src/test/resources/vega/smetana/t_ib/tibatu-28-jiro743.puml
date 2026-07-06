@@ -1,0 +1,32 @@
+---
+output: svg
+---
+@startuml
+!pragma backToLegacyPackage
+
+package "DDF Content API" <<Folder>> #DDDDDD {
+package ddf.content <<Node>> {
+interface ContentFramework
+}
+package ddf.content.operation <<Node>> {
+interface Operation
+interface Request
+interface Response
+interface CreateRequest
+interface CreateResponse
+}
+package ddf.content.provider <<Node>> {
+interface StorageProvider
+}
+package ddf.content.plugin <<Node>> {
+interface ContentPlugin
+}
+}
+package "DDF Mime Types Support" <<Folder>> {
+package ddf.mime <<Node>> {
+interface MimeTypeMapper
+interface MimeTypeResolver
+}
+}
+'"DDF Content API" --- "DDF Mime Types Support"
+@enduml

@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+component "compA" as compA {
+}
+
+note right of compA: [[http://google.fr{a nice toolip} <img:HelloWorld.png{scale=2}>]]
+@enduml

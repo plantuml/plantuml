@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+archimate #Technology VPN <<technology-device>> [
+long description
+on several lines
+]
+@enduml

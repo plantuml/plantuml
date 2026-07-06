@@ -1,0 +1,8 @@
+---
+output: svg
+---
+@startuml
+toto1 *-- toto2
+interface toto1 {
+}
+@enduml

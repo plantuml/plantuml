@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+skinparam style strictuml
+skinparam genericDisplay old
+hide empty members
+class "coursGroupe:\nArrayList<CoursGroupe>" as g 
+@enduml

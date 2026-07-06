@@ -1,0 +1,26 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+!pragma kermor on
+
+
+component "Temperature Sensor" as tempSensor <<block>> {
+    note as tempSensor_TVs
+        1some tagged value table
+        would be here
+        usually.
+    end note
+
+    portout "temp_dK_raw" as tempSensor_temp_dK_raw
+
+}
+
+note bottom of tempSensor
+    2Measure the temperature and outputs it as
+    raw, unfiltered value in Kelvin.
+end note
+
+
+@enduml

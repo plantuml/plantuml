@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+set separator none
+skinparam packageBackgroundColor #FFFF00
+skinparam packageBorderColor #FF0000
+package Pack1 {
+[Comp1]
+[Comp3]
+[Comp4]
+}
+[Comp1] - [Comp2]
+@enduml

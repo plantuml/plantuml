@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+[*] --> Main_Libre : print ("aaaaaa")
+@enduml

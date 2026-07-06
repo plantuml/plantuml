@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+state A.X 
+state A.Y
+
+
+A -> Y
+@enduml

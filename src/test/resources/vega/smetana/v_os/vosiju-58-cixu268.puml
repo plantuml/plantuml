@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+[A]
+!if -1 == -1
+[Bob] -> [Alice]
+!endif
+@enduml

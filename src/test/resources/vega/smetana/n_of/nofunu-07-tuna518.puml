@@ -1,0 +1,17 @@
+---
+output: svg
+---
+@startuml
+
+:mode1actor: -0)- () fooa1
+:mode2actor: -(0- () fooa2
+:mode3actor: -(0)- () fooa3
+
+:mode1actorl: -le0)- () foo1l
+:mode2actorl: -ri(0- () foo12
+
+[component1] 0)-(0-(0 [componentC]
+() component3 )-0-(0 "foo" [componentC]
+
+[aze1] #-- [aze2]
+@enduml

@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+!TRICKPLAY_ON_AD = "<color:red>TRICKPLAY_ON_AD</color>"
+
+frame "Flow Details\nTRICKPLAY_ON_AD" as FlowDetails_TP_ON_AD #white {
+
+}
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+set separator none
+[*] --> NotShooting
+
+state NotShooting {
+  state Idle <<O-O>>
+  [*] --> Idle
+  Idle --> Configuring : EvConfig
+  Configuring --> Idle : EvConfig
+}
+
+Configuring --> Shooting : @EvShutterReleased
+Shooting --> Configuring : @EvShutterHalf
+
+@enduml

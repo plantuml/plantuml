@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+!pragma layout smetana
+package app {
+package drawables {
+class DrawableAdapter
+}
+package model {
+class DripSource
+}
+}
+
+@enduml

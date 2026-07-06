@@ -1,0 +1,45 @@
+---
+output: svg
+---
+@startuml
+
+
+
+
+sprite $demo [13x26/color] {
+zwzwzwzwzwzwzwzwmdhacpc%c%c%cYhKquzwzwzwzwzwzwzwzwzw
+zwzwzwzwzwzwmNcYcZdbeNf<f<f<eddrcpcYqdzwzwzwzwzwzwzw
+zwzwzwzwvgdKcYeMf<f<f<f<f<f<f<f<f<eNcYhKzgzwzwzwzwzw
+zwzwzwvgd*cpeuf<f<f<f<f<f<f<f<f<f<f<f<d*h+zgzwzwzwzw
+zwzwzwdKcpf<f<f<f<f<f<f<f<f<f<f<f<f<f<f<d*lKzwzwzwzw
+zwzwmNcYeuf<f<f<f<f<f<f<f<f<f<f<f<f<f<f<f<cZqdzwzwzw
+zwzwcYeMf<f<f<f<f<f<f<f<f<f<f<f<f<f<f<f<f<eNgYzwzwzw
+zwmdcZf<f<f<f<f<f<f<JZ&V!!:WS-?%:mf<f<f<f<f<gpquzwzw
+zwhadbf<f<f<f<f<f<:m!!!!!!!!!!!!!!f<f<f<f<f<hrlbzwzw
+zwcpeNf<f<f<f<f<JZ!!&~SMf<f<JZ!!!!f<f<f<f<f<edgZzwzw
+zwc%f<f<f<f<f<f<&V!!SMf<f<f<f<:W:mf<f<f<f<f<f<c%zwzw
+zwc%f<f<f<f<f<f<!!!!f<f<f<f<f<f<f<f<f<f<f<f<f<c%zwzw
+zwc%f<f<f<f<f<f<!!!!f<f<f<f<f<f<f<f<f<f<f<f<j<c%zwzw
+zwcpeNf<f<f<f<f<&~!!Wdf<f<f<f<f<f<f<f<f<f<f<idgZzwzw
+zwhbdbf<f<f<f<f<JZ!!&~SLf<f<at?%:Wf<f<f<f<f<i:lbzwzw
+zwqucZf<f<f<f<f<f<:m!!!!!!!!!!!!?%f<f<f<f<f=gpquzwzw
+zwzwcYeMf<f<f<f<f<f<Nq:W!!!!:WJqf<f<f<f<f<mdgYzwzwzw
+zwzwqdcYeuf<f<f<f<f<f<f<f<f<f<f<f<f<f<f<j<gpqdzwzwzw
+zwzwzwhKcpf<f<f<f<f<f<f<f<f<f<f<f<f<f<j=h+lKzwzwzwzw
+zwzwzwzgh+cpf<f<f<f<f<f<f<f<f<f<f<f<j<h+h+zgzwzwzwzw
+zwzwzwzwzglKcYeMf<f<f<f<f<f<f<f<f=mdgplKzgzwzwzwzwzw
+zwzwzwzwzwzwqdgYcphredf<f<j<idi:gpgYqdzwzwzwzwzwzwzw
+zwzwzwzwzwzwzwzwuulbgpc%c%c%gYlbquzwzwzwzwzwzwzwzwzw
+zwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzwzw
+}
+
+
+title Test on <$bug16> <$demo>
+
+class Foo {
+Test <$bug16>
+Test <$demo>
+}
+
+
+@enduml

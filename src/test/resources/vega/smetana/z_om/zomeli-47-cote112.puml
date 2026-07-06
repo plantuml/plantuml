@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+
+!definelong ADD_ARRAY(name, type, length)
+    +type name[length]
+!enddefinelong
+
+!unquoted procedure ADD_ARRAY2(name, type, length)
+    +type name[length]
+!endprocedure
+
+class foo {
+ADD_ARRAY(veryVeryLongName, int, 8)
+ADD_ARRAY(shortName1       , int, 8)
+ADD_ARRAY2(shortName2       , int, 8)
+}
+
+
+@enduml

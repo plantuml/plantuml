@@ -1,0 +1,9 @@
+---
+output: svg
+---
+@startuml
+state s1 : s1 description
+state s2 #pink;line:red;line.bold;text:red : s2 description
+state s3 #palegreen;line:green;line.dashed;text:green : s3 description
+state s4 #aliceblue;line:blue;line.dotted;text:blue   : s4 description
+@enduml

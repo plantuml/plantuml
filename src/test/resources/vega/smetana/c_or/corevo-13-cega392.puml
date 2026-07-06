@@ -1,0 +1,6 @@
+---
+output: svg
+---
+@startuml
+:joe:/ <<xxx>> #green -[#blue]-> (action)/ <<yyy>> #orange
+@enduml

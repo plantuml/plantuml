@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+scale 5
+<style>
+start {
+    LineColor #red
+    LineThickness 5
+}
+stop {
+    LineColor #green
+    LineThickness 5
+}
+end {
+    LineColor #blue
+    LineThickness 5
+}
+</style>
+
+[*] -> [*]
+'(*)->(*)
+@enduml

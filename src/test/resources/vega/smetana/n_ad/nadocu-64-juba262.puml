@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+[Component 1] <-> bar_interface
+@enduml

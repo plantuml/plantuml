@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startuml
+skinparam guillemet [ ]
+class foo <<stereotype>>
+@enduml

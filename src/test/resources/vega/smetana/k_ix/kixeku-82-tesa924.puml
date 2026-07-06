@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!define foo() called_foo1
+
+!define foo(param) called_foo2 param
+
+class house {
+foo
+foo(my_param)
+}
+
+@enduml

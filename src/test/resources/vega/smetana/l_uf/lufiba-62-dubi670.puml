@@ -1,0 +1,34 @@
+---
+output: svg
+---
+@startuml
+hide stereotype
+show <<shared lib>> stereotype
+
+[AA] <<static lib>>
+[BB] <<shared lib>>
+[CC] <<static lib>>
+
+node node1
+node node2 <<shared node>>
+
+node node3 <<shared node>> {
+  component foo1
+}
+
+database Production
+database Production2 << indus >>
+
+skinparam component {
+    backgroundColor<<static lib>> DarkKhaki
+    backgroundColor<<shared lib>> Green
+}
+
+skinparam node {
+	borderColor Green
+	backgroundColor Yellow
+	backgroundColor<<shared node>> Magenta
+}
+skinparam databaseBackgroundColor Aqua
+
+@enduml

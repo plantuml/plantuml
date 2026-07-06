@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+cloud "Network" as Netw {
+node "PC1"
+note left: i7
+}
+ 
+note right of Netw: RJ45
+
+@enduml

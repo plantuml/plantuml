@@ -1,0 +1,7 @@
+---
+output: svg
+---
+@startyaml
+FOO1: bar1
+FOO2: bar2
+@endyaml

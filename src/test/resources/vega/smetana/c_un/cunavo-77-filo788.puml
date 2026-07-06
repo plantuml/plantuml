@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam classHeaderBackgroundColor #4FF
+skinparam classBackgroundColor #77F
+skinparam classBorderColor #F0F
+skinparam stereotypeCBackgroundColor #FFF
+skinparam stereotypeCBorderColor #FF0
+class foo1 << stereo1 >>
+@enduml

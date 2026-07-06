@@ -1,0 +1,30 @@
+---
+output: svg
+---
+@startuml
+skinparam shadowing false
+'skinparam backgroundColor red
+skinparam package {
+  fontColor blue
+  stereotypeFontColor red
+}
+skinparam package<<Layout>> {
+  borderColor Transparent
+  backgroundColor Transparent
+  fontColor Transparent
+  stereotypeFontColor Transparent
+}
+
+package p1 <<Dummy>> {
+class Foo1 <<Other>>
+}
+
+package p2 <<Layout>> {
+class Foo2
+}
+
+package p3 <<Dummy>> {
+}
+
+
+@enduml

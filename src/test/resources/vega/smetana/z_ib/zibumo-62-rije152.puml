@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+!pragma horizontalLineBetweenDifferentPackageAllowed
+
+package A {
+component Component1
+}
+package B {
+component Component2
+}
+
+Component1 -right-> Component2
+
+@enduml

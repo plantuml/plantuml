@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+!$myjson = {
+"name": "Mark McGwire", "hr": 65, "avg":  0.278
+}
+
+!foo = $myjson.root
+!foreach $key in %get_json_keys($myjson)
+     rectangle $key
+!endfor
+
+@enduml

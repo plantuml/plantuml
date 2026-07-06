@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+<style>
+.s {
+  HorizontalAlignment right
+  title {HorizontalAlignment right; fontcolor red;}
+  stereotype {HorizontalAlignment left; fontcolor green;}
+}
+</style>
+
+rectangle r <<s>> [
+a
+abc
+a b c d
+]
+
+rectangle rect1 <<s>> {
+  rectangle rect2 <<s>>
+}
+@enduml

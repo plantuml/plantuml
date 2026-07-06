@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+class "SomeClass A"
+{
+    - _someVar1
+--
+    + SomeClass1()
+    + SomeMethod1()
+        |_ Tree item 11
+        |_ Tree item 12
+        |_ Tree item 13
+    + SomeOtherMethod1()
+}
+
+class "SomeClass B"
+{
+    - _someVar2
+--
+    + SomeClass2()
+    + SomeMethod2()
+    |_ Tree item 21
+    |_ Tree item 22
+    |_ Tree item 23
+    + SomeOtherMethod2()
+}
+@enduml

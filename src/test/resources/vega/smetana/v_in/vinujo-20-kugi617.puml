@@ -1,0 +1,22 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+set separator none
+state Somp {
+  state entry1 <<inputPin>>
+  state entry2 <<inputPin>>
+  state sin
+  entry1 --> sin
+  entry2 -> sin
+  sin -> sin2
+  state exitA <<outputPin>>
+  sin2 --> exitA
+}
+
+[*] --> entry1
+exitA --> Foo
+Foo1 -> entry2
+
+@enduml

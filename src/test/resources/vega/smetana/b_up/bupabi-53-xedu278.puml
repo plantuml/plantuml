@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+<style>
+component {
+  HorizontalAlignment center
+}
+database {
+  HorizontalAlignment right
+}
+</style>
+
+component c [
+a
+abc
+a b c d
+]
+
+database d [
+a
+abc
+a b c d
+]
+@enduml

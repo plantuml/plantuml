@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+interface toto1
+toto1 *-- toto2
+enum toto3
+abstract class toto4
+toto3 *-- toto4
+@enduml

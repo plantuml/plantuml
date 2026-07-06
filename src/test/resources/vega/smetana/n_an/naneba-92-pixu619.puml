@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+set separator none
+state foo1 {
+  state foo2
+}
+state foo3
+foo2 --> foo3
+
+state foo4
+foo1 --> foo4
+@enduml

@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+component "A" as A {
+
+		component "E" as E {
+			 !define F H
+			 circle "TBD" as F
+			 !define G H
+			 circle "TBD" as G
+		}
+	}
+
+	component "B" as B {
+        	control "C" as C
+	}
+@enduml

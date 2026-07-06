@@ -1,0 +1,16 @@
+---
+output: svg
+---
+@startuml
+skinparam hyperlinkColor red
+
+(*) --> "[[http://google.com]]
+on several lines"
+if Some Test then
+[[http://testLink1.com]]-->[true] Some Activity
+[[http://testLink2.com]]--> Another [[http://www.yahoo.com{Some tooltip} activity]] with a link
+else
+-->[Ending process] (*)
+endif
+
+@enduml

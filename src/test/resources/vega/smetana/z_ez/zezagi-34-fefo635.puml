@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+
+:N&R Administrator:
+:Back Office:
+:Technical Manager:
+:MRG Administrateur:
+
+@enduml

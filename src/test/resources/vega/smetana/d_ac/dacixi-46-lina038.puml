@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+set namespaceSeparator ::
+
+namespace A::B::C #yellow\gold {
+ class foo2
+}
+
+class X::Y::class1
+
+@enduml

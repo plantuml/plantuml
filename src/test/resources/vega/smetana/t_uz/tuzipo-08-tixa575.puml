@@ -1,0 +1,18 @@
+---
+output: svg
+---
+@startuml
+skinparam shadowing false
+scale 1.0
+ 
+skinparam class {
+  AttributeFontName  consolas
+  AttributeFontSize  12
+  AttributeFontStyle italic
+}
+ 
+enum MyEnum {
+    MyEnumValue1 = 0x00000001
+}
+ 
+@enduml

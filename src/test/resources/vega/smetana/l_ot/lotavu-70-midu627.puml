@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+(*)-->"lol"
+-->"debut boucle ligne"
+-right->if"reste lignes" then
+  -->[Liste nonvide]"debut boucle ligne"
+else
+  -->[Liste vide]"continuer"
+  -->(*)
+endif
+@enduml

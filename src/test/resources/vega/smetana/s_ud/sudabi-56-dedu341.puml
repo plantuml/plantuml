@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startyaml
+fruit: Apple
+size: Large
+color:
+ - Red
+ - Green
+@endyaml

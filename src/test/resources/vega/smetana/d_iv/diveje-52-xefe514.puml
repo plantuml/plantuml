@@ -1,0 +1,13 @@
+---
+output: svg
+---
+@startuml
+!pragma svek_trace on
+object London
+
+map CapitalCity {
+ UK *-> London
+ USA => Washington
+ Germany => Berlin
+}
+@enduml

@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+  header {
+    Fontcolor red
+    BackgroundColor #pink
+    HorizontalAlignment center
+  }
+}
+</style>
+
+state A : a\na a\na a a
+state B {
+state C
+}
+
+state B : b\nb b\nb b b
+A -> B : a2b
+header my hdr
+@enduml

@@ -1,0 +1,21 @@
+---
+output: svg
+---
+@startuml
+sprite SVG_NO_BEZIER <svg viewBox="0 0 1200 600">
+  <path d="M200,300 L400,50 L600,300
+           L800,550 L1000,300"
+        fill="none" stroke="#888888" stroke-width="2" />
+</svg>
+
+sprite SVG_WITH_BEZIER <svg viewBox="0 0 1200 600">
+  <path d="M200,300 Q400,50 600,300 T1000,300"
+        fill="none" stroke="red" stroke-width="5"  />
+</svg>
+
+' Simple path
+card "<$SVG_NO_BEZIER>"
+
+' Quadratic Bézier curve commands in path
+card "<$SVG_WITH_BEZIER>"
+@enduml

@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+"Website/Webview" as Website
+SDK -> Website: /loginstart?clientid=?&client_secret=?
+Website -> SDK: /selectprovider?uihint=selectprovider
+SDK -> Vertical: notify('selectprovider')
+User -> Website: (Facebook)
+Website -> SDK: /login?uihint=login&provider=Facebook
+SDK -> Vertical: notify('login', {'provider': 'Facebook'})
+Vertical -> SDK: cancel
+SDK -> Website: cancel
+Vertical -> "Facebook App" : switch()
+@enduml

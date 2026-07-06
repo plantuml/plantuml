@@ -1,0 +1,34 @@
+---
+output: svg
+---
+@startuml
+<style>
+stateDiagram {
+  element {BackGroundColor orange}
+  name {
+    BackGroundColor aliceblue
+    Fontcolor blue
+    FontSize 12
+  }
+  description {
+    Fontcolor red
+    FontStyle plain
+    BackGroundColor pink
+  }
+  body {
+    BackGroundColor palegreen
+  }
+}
+</style>
+
+hide empty description 
+
+state s0
+
+state "Name (name style)" as s1 {
+  s1: State description (description style)
+  state "s2" as s2
+}
+
+s0 --> s2
+@enduml

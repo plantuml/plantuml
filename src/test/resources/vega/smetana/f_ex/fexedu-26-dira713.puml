@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+
+class simple {
+}
+
+package a {
+    class SomeClass {
+    }
+}
+
+package a.b {
+    interface I1 {
+        + Get(bits uint) uint
+    }
+    class c1 implements I1 {
+        + Get(bits uint) uint
+    }
+    interface I2 extends I1 {
+        + Put(data uint)
+    }
+    class c2 extends c1 implements I2 {
+        + Put(data uint)
+    }
+}
+@enduml

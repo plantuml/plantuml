@@ -1,0 +1,49 @@
+---
+output: svg
+---
+@startuml
+
+left to right direction
+skinparam nodesep 80
+skinparam ranksep 200
+skinparam ClassAttributeFontSize 16
+skinparam arrowThickness 3
+hide empty member
+
+!define my_red FF0000A0
+!define my_blue 0000FFA0
+!define my_green 00AA00A0
+
+package "SAMPLE_1" as pkgsmp1 {
+    package "SAMPLE_2" as pkgsmp2 {
+        class "BigLibrary" as lib {
+            + function_a()
+            + function_b()
+            + long_named_function()
+            + long_named_function_but_different()
+            + long_named_function_also_different()
+            + more_functions()
+        }
+    }
+
+    package "DIFFERENT_SAMPLE" {
+        class "SomeHandler" as handler
+        class "SomeHelper" as helper
+        class "SomeParser" as parser
+    }
+}
+
+handler -[#my_red]- lib::function_a
+handler -[#my_red]- lib::long_named_function
+handler -[#my_red]- lib::long_named_function_also_different
+
+helper -[#my_blue]- lib::long_named_function_also_different
+helper -[#my_blue]- lib::long_named_function_but_different
+
+parser -[#my_green]- lib::function_b
+parser -[#my_green]- lib::more_functions
+parser -[#my_green]- lib::long_named_function_also_different
+parser -[#my_green]- lib::long_named_function
+
+
+@enduml

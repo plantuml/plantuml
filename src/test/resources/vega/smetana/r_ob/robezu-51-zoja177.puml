@@ -1,0 +1,12 @@
+---
+output: svg
+---
+@startuml
+
+(*) -> "toto"
+note on link
+  this is a note
+  on several line
+end note
+
+@enduml

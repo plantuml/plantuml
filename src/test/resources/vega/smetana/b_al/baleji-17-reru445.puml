@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+actor {
+  BackGroundColor blue;
+  business {
+    BackGroundColor red;
+  }
+}
+usecase {
+  BackGroundColor lightBlue;
+  business {
+    BackGroundColor orange;
+  }
+}
+</style>
+
+
+:joe:
+:joe2:/
+
+(walk)
+(run)/
+
+@enduml

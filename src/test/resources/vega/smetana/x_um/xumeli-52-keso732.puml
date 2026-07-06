@@ -1,0 +1,23 @@
+---
+output: svg
+---
+@startuml
+
+<style>
+    note {
+        .faint {
+            BackgroundColor red
+        }
+    }
+</style>
+
+class A
+{
+   B()
+}
+
+note left of A::"B()"
+ test not red
+end note
+
+@enduml

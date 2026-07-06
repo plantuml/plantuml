@@ -1,0 +1,28 @@
+---
+output: svg
+---
+@startuml
+file test_bullet_list_creole [
+*bullet list
+*no space
+* space
+* space with **bold**
+* **bold**
+==
+***bold no space**
+* space with end asterik *
+*no space with end asterik*
+* space with middle * asterik
+*no space with end * asterik
+* space with middle * **asterik**
+*no space with end * **asterik**
+==
+* **bold no space**
+* space with end asterik *
+* no space with end asterik*
+* space with middle * asterik
+* no space with end * asterik
+* space with middle * **asterik**
+* no space with end * **asterik**
+]
+@enduml

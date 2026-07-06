@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+skinparam tikzFont 2.3;4.5
+class Wwwwwwwwwwwwwwww
+class Uuuuuuuuuuuuuuuuuuuuuuuu
+class iiiiii
+class Licensing
+@enduml

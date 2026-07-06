@@ -1,0 +1,11 @@
+---
+output: svg
+---
+@startuml
+skinparam DefaultFontName "Hack", "DejaVu Sans Mono", "Courier New", "Nimbus Mono L", "Monospaced", Courier, monospace
+
+[Component\nABC]
+frame "Frame" {
+  card Card
+}
+@enduml

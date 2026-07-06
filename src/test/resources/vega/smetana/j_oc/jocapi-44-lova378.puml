@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+abstract Link
+interface List
+interface Collection
+List <|-- ArrayList
+Collection <|-- List
+Collection o-- Object : contient
+ClassDiagram *-- Class
+ClassDiagram *-- Link
+Link --> Class
+Class -- Object
+@enduml

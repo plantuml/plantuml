@@ -1,0 +1,15 @@
+---
+output: svg
+---
+@startuml
+
+state OddlyLarge1 {
+Inner1 --> Inner2
+}
+OddlyLarge1 --> Inner1
+
+state OddlyLarge2 {
+}
+
+OddlyLarge2 --> OddlyLarge2
+@enduml

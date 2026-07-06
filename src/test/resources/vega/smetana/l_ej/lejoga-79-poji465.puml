@@ -1,0 +1,31 @@
+---
+output: svg
+---
+@startuml
+Interface RowMacroStage
+Interface RowStage extends RowMacroStage
+
+Abstract AbstractRow {
++String getThickness()
++String getWidth()
+#final Rectangle[] getBoundRectangles()
+}
+
+RowMacroStage <|.. AbstractRow
+Abstract AbstractRowPart
+AbstractRow <|-- AbstractRowPart
+AbstractRowPart <|-- RowHybridMacroStage
+Note left of RowHybridMacroStage : Concatenation of a part\nand component line
+Class RowHybridMacroStage
+
+RowHybridMacroStage <|-- RowHybridStage
+
+AbstractRow <|--- RowComponentMacroStage
+Note right of RowComponentMacroStage : One component on the line\nwithout a part
+Class RowComponentMacroStage
+RowComponentMacroStage <|-- RowComponentStage
+
+AbstractRowPart <|-- RowPartMacroStage 
+RowPartMacroStage <|-- RowPartStage
+Class RowPartMacroStage
+@enduml

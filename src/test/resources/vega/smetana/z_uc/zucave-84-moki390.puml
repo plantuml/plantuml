@@ -1,0 +1,25 @@
+---
+output: svg
+---
+@startuml
+skinparam rectangle<<backend container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #335DA5
+    RoundCorner 0
+    DiagonalCorner 18
+}
+
+skinparam rectangle<<backend_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #335DA5
+    RoundCorner 0
+    DiagonalCorner 18
+}
+
+rectangle "Backend with space in stereotype name" <<backend container>> as c1
+
+rectangle "Backend_with_underscore_in_stereotype_name" <<backend_container>> as c2
+
+@enduml

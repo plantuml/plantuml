@@ -1,0 +1,10 @@
+---
+output: svg
+---
+@startuml
+ skinparam activityShape<< stereo >>  octagon
+ skinparam activityShape roundBox
+ skinparam activityBackgroundColor<< stereo >> Red
+ (*)-->A<< stereo >>
+ A-->B
+@enduml

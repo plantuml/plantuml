@@ -1,0 +1,29 @@
+---
+output: svg
+---
+@startuml
+
+skinparam classFontName Impact 
+skinparam classFontColor red 
+
+abstract class AbstractList
+abstract AbstractCollection
+interface List
+interface Collection
+
+List <|-- AbstractList
+Collection <|-- AbstractCollection
+
+Collection <|- List
+AbstractCollection <|- AbstractList
+AbstractList <|-- ArrayList
+
+ArrayList : Object[] elementData
+ArrayList : size()
+
+enum TimeUnit
+TimeUnit : DAYS
+TimeUnit : HOURS
+TimeUnit : MINUTES
+
+@enduml

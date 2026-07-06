@@ -1,0 +1,14 @@
+---
+output: svg
+---
+@startuml
+<style>
+state {
+  BackgroundColor green
+}
+</style>
+
+state parent {
+    child --> child
+}
+@enduml

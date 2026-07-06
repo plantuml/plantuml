@@ -1,0 +1,19 @@
+---
+output: svg
+---
+@startuml
+skinparam wrapWidth 50
+
+class test{
+member: string
+}
+
+
+note left
+   this long note text is controlled through the wrapWidth paramater
+end note
+
+note left of test::member 
+   unfortunately, that is not the case for this kind of note
+end note
+@enduml
