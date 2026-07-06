@@ -131,6 +131,12 @@ ordering in §7.
   (it already lives in `zz.all`) with a proper API and error message.
 - **A3. `UNSUPPORTED(...)` audit.** Systematic pass over all `UNSUPPORTED` calls,
   classifying each against the upstream C (the `@Original` annotation gives the file):
+  **Prerequisite: A6 (or at least its id fix) must land first or together with A3.**
+  Many of the C diagnostic paths that A3 re-enables (`agerr` → `LOG`) call
+  `agnameof()` — e.g. the `init_rank` loop printing nodes with non-zero priority.
+  Without the `virtual_node()` id fix, every `UNSUPPORTED` converted into a log line
+  becomes a potential crash on virtual nodes: A3 done alone *arms* the mine instead of
+  defusing it.
   - (a) *non-fatal C diagnostics* (`agerr` **not** followed by `longjmp`) → replace by
     `SmetanaDebug.LOG(...)`, like the `init_rank` fix;
   - (b) *genuine `longjmp` abort paths* → convert to a dedicated unchecked exception
@@ -148,11 +154,30 @@ ordering in §7.
   behavior (those error paths currently crash instead of recovering like C does).
 - **A5. `nodequeue` → `ArrayDeque<ST_Agnode_s>`.** `new_queue`/`enqueue`/`dequeue`/
   `free_queue` in `utils__c` map 1:1; encapsulate then swap.
-- **A6. Known-bug fixes folded in (behavior-*improving*, isolated commits, flagged as
-  such):** the `fastgr__c.virtual_node()` id bug from `SMETANA.md` — route virtual-node
-  creation through the normal odd-anonymous-id assignment (`agnode(g, NULL, 1)`
-  semantics) so `agnameof()` works on virtual nodes. Do it *after* S2 exists to prove
-  layout output is unchanged.
+- **A6. `virtual_node()` id fix — DECIDED: phase 1, coupled with A3.**
+  The `fastgr__c.virtual_node()` id bug from `SMETANA.md`: virtual nodes are built with
+  `new ST_Agnode_s()` directly, bypassing `agnode()`/`idmap()`, so `tag.id` stays `0`
+  (even → `agnameof()` takes the "named object" branch → `Memory.fromIdentityHashCode`
+  throws).
+  - **Fix = the minimal one**: assign an odd anonymous id inside `virtual_node()`,
+    i.e. exactly the `str == null` branch of `id__c.idmap()`:
+    `n.tag.id = zz.ctr; zz.ctr += 2;`. **Scope warning: do NOT route through the real
+    `agnode(g, NULL, 1)`** — `agnode` also does dictionary insertion, callbacks and
+    `mainsub` setup, whereas today's (golden-encoded) behavior keeps virtual nodes out
+    of the cgraph dictionaries (they only live in `GD_nlist`/`GD_rank` via
+    `fast_node`). Full alignment with C would first require checking what upstream
+    `fastgr.c` 2.38.0 actually does.
+  - **Signature consequence**: `virtual_node(ST_Agraph_s g)` does not receive `zz`
+    today; `Globals` must be threaded in from the callers (class2, mincross, cluster,
+    flat… — inventory them; most already have `zz` in scope).
+  - **Plan = two isolated commits**: (1) thread `zz` into `virtual_node` and callers,
+    behavior strictly unchanged; (2) assign the odd id, with S2 fingerprints required
+    identical before/after. Risk is very low but non-zero (`tag.id` of virtual nodes is
+    consumed by no production path: not in cgraph dictionaries, and mincross ordering
+    uses `tag.seq`/`ND_order`, not `id`) — which is precisely the kind of claim S2
+    exists to verify. Therefore: after phase 0, never before.
+  - Immediate payoff: `agnameof()` works on virtual nodes → debug traces usable without
+    `safeName()` everywhere, and A3 becomes safe (see A3 prerequisite note).
 
 ### Track B — Containers: replace C emulation with `java.util`
 
@@ -184,6 +209,35 @@ but trivially safe; step 2 is tiny and the only risky commit.
   Do this file by file, not globally; pathplan (`route__c`, `shortest__c`) is
   self-contained and a good pilot.
 - **B3. cdt → `java.util` maps (the big one).**
+  **DECIDED ordering (see §7 and the decision record in §7bis): the `TreeMap` swap
+  happens in phase 4, *after* C2 has been done on `dotgen`/`common`, and is preceded by
+  a mandatory audit** (see "B3.0" below). Rationale: C2 and B3 are almost orthogonal
+  file-wise (cdt call sites are concentrated in `gen.lib.cgraph`; C2 targets
+  `dotgen`/`common`), C2's huge mechanical diff is better landed *before* opening a
+  long-lived risky branch, and C2 pays off immediately on the code that day-to-day
+  debugging actually reads. The only hard dependency is the reverse one: C2's *endgame*
+  (private, typed struct fields) is blocked until B3 removes the
+  `FieldOffset`/`getTheField` pokes into `id_link`/`seq_link`.
+
+  **B3.0 — Mandatory audit before any cdt code is written.** Three traps must be
+  inventoried first (deliverable: a short section in this file or a companion
+  `CDT-AUDIT.md`, listing every usage site and its resolution):
+  - **`dtview__c` / `Ag_dictop_G`**: in cgraph, subgraph dictionaries can be *stacked
+    views* onto the parent's dictionary. `TreeMap` has no view mechanism — check
+    whether the port actually exercises `dtview`, and if so model the parent-lookup
+    explicitly.
+  - **`DT_OBAG` (`Dtobag`)**: an ordered *multiset*; `TreeMap` rejects duplicate keys →
+    `TreeMap<K, List<V>>` or a sorted list. Inventory who really uses it.
+  - **`dtflatten` / `dtrestore` / `UNFLATTEN`**: the temporary "flattened" splay-tree
+    mode used during iteration. With `TreeMap` iteration is already safe, so these are
+    probably removable — but each call site must be audited, plus the exact
+    equal-key insertion semantics (`DT_INSERT` returns the existing element in a
+    `DT_OSET`).
+  Note the failure mode if B3 goes wrong: a changed iteration order in the cgraph
+  dictionaries alters node/edge order at graph *construction* time, so the whole layout
+  diverges downstream — S2 will catch it, but the diagnosis points far from the cause.
+  Hence the isolated, unit-testable swap.
+
   Graphviz's cdt library (`gen.lib.cdt.*`, `dtdisc` disciplines, `FieldOffset` intrusive
   links) implements ordered sets/multisets over splay trees. Every use maps cleanly:
   - `DT_OSET` ordered by `comparf` → `TreeMap<K, V>` / `TreeSet` with the same
@@ -235,8 +289,13 @@ but trivially safe; step 2 is tiny and the only risky commit.
   mechanical and IDE-scriptable: first *move* each static method into the struct class
   (keeping a one-line delegating static in `Macro` so nothing else changes), then
   inline the delegates package by package (`dotgen`, then `common`, …). Do it by
-  accessor family, dozens per commit. Endgame: `Macro` shrinks to geometry helpers and
-  constants; struct fields can then become private and properly typed.
+  accessor family, dozens per commit.
+  **DECIDED scope for phase 3: `dotgen`/`common` only — do not touch `gen.lib.cgraph`
+  until B3 is done.** cgraph is where the cdt call sites live; leaving it alone keeps
+  the two workstreams file-disjoint and rebases painless. Endgame: `Macro` shrinks to
+  geometry helpers and constants; struct fields can then become private and properly
+  typed — but note this endgame is *blocked* until B3 removes the
+  `FieldOffset`/`getTheField` intrusive-link access (`id_link`/`seq_link`).
 - **C3. Type the untyped.** Replace `__ptr__`-typed fields with real types:
   `ND_alg` (per-pass scratch `void*`) → dedicated typed fields per consumer or a small
   typed holder; `GD_minset/maxset`, `ND_inleaf/outleaf` likewise. Each removal shrinks
@@ -339,13 +398,30 @@ proper class, extracted one pass at a time:
 | Phase | Content | Tracks |
 |---|---|---|
 | 0 | Safety net: smetana Vega corpus + layout fingerprints + metrics script | S1–S4 |
-| 1 | Core quick wins: qsort, Memory, nodequeue, UNSUPPORTED audit, setjmp→exceptions | A1–A5 |
-| 2 | Encapsulate containers (elist API, slice audit); pilot on pathplan | B1, B2 (start) |
-| 3 | Collapse Agrec + move Macro accessors onto structs | C1, C2 |
-| 4 | cdt → TreeMap; CFunction → typed interfaces; shapes vtable → interface | B3, D1–D3 |
+| 1 | Core quick wins: qsort, Memory, nodequeue, setjmp→exceptions; **virtual_node id fix (A6) coupled with the UNSUPPORTED audit (A3) — A6 first or together, never A3 alone** | A1–A6 |
+| 2 | Encapsulate containers (elist API, slice audit); pilot on pathplan; optionally start the `Dict` adapter (B3 encapsulation step, zero-risk) | B1, B2 (start), B3 (adapter) |
+| 3 | Collapse Agrec + move Macro accessors onto structs — **scope: `dotgen`/`common` only, `cgraph` untouched until B3** | C1, C2 |
+| 4 | **cdt audit first (B3.0: dtview, DT_OBAG, flatten/restore)**, then cdt → TreeMap; CFunction → typed interfaces; shapes vtable → interface | B3, D1–D3 |
 | 5 | Algorithm classes, Globals dismantling | E1–E3 |
-| 6 | CString → String (parsers last); virtual_node id fix if not done in phase 1 | B4, A6 |
-| 7 | Typed constants/enums, edge-pair cleanup, renames, package moves | C3–C6, E4 |
+| 6 | CString → String (parsers last) | B4 |
+| 7 | Typed constants/enums, edge-pair cleanup, C2 endgame on cgraph + private fields, renames, package moves | C3–C6, E4 |
+
+### §7bis — Decision record
+
+- **2026-07: ordering C2 vs B3 (cdt).** Decided: hybrid sequencing. (1) C2 mechanical
+  pass on `dotgen`/`common` in phase 3 (immediate readability payoff on the code
+  actually debugged daily, near-zero risk, huge diff landed before any long-lived
+  branch); (2) the B3 *encapsulation* step (`Dict` adapter over existing dt code) may
+  start as early as phase 2 since it is risk-free; (3) the `TreeMap` swap stays in
+  phase 4, gated by the B3.0 audit (dtview / DT_OBAG / dtflatten-dtrestore /
+  equal-key insertion semantics). Hard dependency to remember: C2 endgame (private
+  typed fields) needs B3 done first.
+- **2026-07: `virtual_node()` id fix (A6) moved to phase 1**, coupled with A3, because
+  A3's `agerr`→`LOG` conversions re-enable diagnostic paths that call `agnameof()` on
+  virtual nodes — A3 without A6 arms the mine. Fix is the *minimal* one (odd anonymous
+  id from `zz.ctr`, NOT a full `agnode()` call), in two commits (thread `zz` into
+  `virtual_node()` + callers, then assign the id), validated by identical S2
+  fingerprints. See A6 for full details.
 
 Phases 1–3 are safe, mostly mechanical, and already remove most day-to-day friction
 (readable accessors, no landmines, debuggable errors). Phases 4–5 are where the code
