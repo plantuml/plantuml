@@ -641,16 +641,25 @@ ENTERING("33snzyd9z0loienur06dnily9","dot_position");
 try {
     if (GD_nlist(g) == null)
 	return;			/* ignore empty graph */
+    TRACE("dot_position: root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g) + " at entry");
     mark_lowclusters(zz, g);	/* we could remove from splines.c now */
+    TRACE("dot_position: root minrank=" + GD_minrank(g) + " after mark_lowclusters");
     set_ycoords(zz, g);
+    TRACE("dot_position: root minrank=" + GD_minrank(g) + " after set_ycoords (1st call)");
     if (zz.Concentrate)
 	dot_concentrate(g);
+    TRACE("dot_position: root minrank=" + GD_minrank(g) + " after dot_concentrate");
     expand_leaves(g);
+    TRACE("dot_position: root minrank=" + GD_minrank(g) + " after expand_leaves");
     if (flat_edges(zz, g))
 	set_ycoords(zz, g);
+    TRACE("dot_position: root minrank=" + GD_minrank(g) + " after flat_edges/2nd set_ycoords");
     create_aux_edges(zz, g);
+    TRACE("dot_position: root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g) + " right after create_aux_edges");
     dumpAuxEdges(zz, g, "before rank() [X-position aux graph]");
-    if (rank(zz, g, 2, nsiter2(zz, g))!=0) { /* LR balance == 2 */
+    int rankResult = rank(zz, g, 2, nsiter2(zz, g));
+    TRACE("dot_position: rank(g,2,...) returned " + rankResult + " (0=ok, 1=disconnected->connectGraph with NO re-rank, 2=setjmp/longjmp abort)");
+    if (rankResult!=0) { /* LR balance == 2 */
 	connectGraph (g);
 	//assert(rank(g, 2, nsiter2(g)) == 0);
     }
@@ -1173,10 +1182,15 @@ public static void create_aux_edges(Globals zz, ST_Agraph_s g) {
 ENTERING("b7y0htx4svbhaqb1a12dihlue","create_aux_edges");
 try {
     allocate_aux_edges(g);
+    TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after allocate_aux_edges");
     make_LR_constraints(g);
+    TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after make_LR_constraints");
     make_edge_pairs(g);
+    TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after make_edge_pairs");
     pos_clusters(zz, g);
+    TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after pos_clusters");
     compress_graph(g);
+    TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after compress_graph");
 } finally {
 LEAVING("b7y0htx4svbhaqb1a12dihlue","create_aux_edges");
 }

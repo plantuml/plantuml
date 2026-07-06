@@ -593,6 +593,7 @@ LEAVING("ca52dadcp7m8x0bqhaw4tvtaw","dot_root");
  */
 private static void dumpLayoutState(Globals zz, ST_Agraph_s g, String phase) {
     TRACE("===== " + phase + " =====");
+    TRACE("root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g));
     for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {
 	final ST_Agraph_s clust = ND_clust(n);
 	TRACE("node " + safeName(zz, n)
@@ -613,13 +614,17 @@ private static void dumpClusters(Globals zz, ST_Agraph_s g, String indent) {
 		+ " maxrank=" + GD_maxrank(clust)
 		+ " bb=[" + GD_bb(clust).LL.x + "," + GD_bb(clust).LL.y
 		+ " -> " + GD_bb(clust).UR.x + "," + GD_bb(clust).UR.y + "]");
-	for (int r = GD_minrank(clust); r <= GD_maxrank(clust); r++) {
-	    final int n = GD_rank(clust).get__(r).n;
-	    final ST_Agnode_s first = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(0) : null;
-	    final ST_Agnode_s last = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(n - 1) : null;
-	    TRACE(indent + "  local rank " + r + ": n=" + n
-		    + " v[0]=" + (first == null ? "-" : safeName(zz, first))
-		    + " v[n-1]=" + (last == null ? "-" : safeName(zz, last)));
+	if (GD_rank(clust) == null) {
+	    TRACE(indent + "  (GD_rank not allocated yet at this phase)");
+	} else {
+	    for (int r = GD_minrank(clust); r <= GD_maxrank(clust); r++) {
+		final int n = GD_rank(clust).get__(r).n;
+		final ST_Agnode_s first = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(0) : null;
+		final ST_Agnode_s last = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(n - 1) : null;
+		TRACE(indent + "  local rank " + r + ": n=" + n
+			+ " v[0]=" + (first == null ? "-" : safeName(zz, first))
+			+ " v[n-1]=" + (last == null ? "-" : safeName(zz, last)));
+	    }
 	}
 	dumpClusters(zz, clust, indent + "  ");
     }

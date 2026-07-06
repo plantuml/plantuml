@@ -81,6 +81,8 @@ import static smetana.core.Macro.free_list;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
 import static smetana.core.debug.SmetanaDebug.LOG;
+import static smetana.core.debug.SmetanaDebug.TRACE;
+import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Difficult;
 import gen.annotation.HasND_Rank;
@@ -215,7 +217,10 @@ try {
     ST_Agedge_s e;
     Q = new_queue(zz.N_nodes);
     ctr = 0;
+    TRACE("ns.init_rank: called, N_nodes=" + zz.N_nodes);
     for (v = GD_nlist(zz.G_ns); v!=null; v = ND_next(v)) {
+	TRACE("ns.init_rank: node " + safeName(zz, v) + " priority=" + ND_priority(v)
+		+ " ND_in.size=" + ND_in(v).size + " in-tails=[" + dumpInTails(zz, v) + "]");
 	if (ND_priority(v) == 0)
 	    enqueue(Q, v);
     }
@@ -230,12 +235,16 @@ try {
 		enqueue(Q, aghead(e));
 	}
     }
+    TRACE("ns.init_rank: done, ctr=" + ctr + " N_nodes=" + zz.N_nodes + (ctr != zz.N_nodes ? "  <<<< MISMATCH: some nodes never ranked, keep stale ND_rank!" : " (all nodes ranked OK)"));
     if (ctr != zz.N_nodes) {
 	// NOTE: in the original C, this branch is only a diagnostic print (agerr),
 	// NOT followed by longjmp(jbuf,1) -- unlike other agerr+longjmp pairs in this file.
 	// So it must NOT abort here; the C code just logs a warning and lets the
 	// algorithm continue with whatever ranks were computed so far.
 	LOG("trouble in init_rank");
+	for (v = GD_nlist(zz.G_ns); v!=null; v = ND_next(v))
+	    if (ND_priority(v)!=0)
+		TRACE("ns.init_rank: unranked node " + safeName(zz, v) + " priority=" + ND_priority(v) + " stale rank=" + ND_rank(v));
     }
     free_queue(Q);
 } finally {
@@ -877,6 +886,7 @@ try {
 	start_timer();
     }*/
     feasible = init_graph(zz, g);
+    TRACE("ns.rank2: init_graph returned feasible=" + feasible + " (0 means init_rank() will run next)");
     if (feasible == 0)
 	init_rank(zz);
     if (maxiter <= 0) {
@@ -900,9 +910,24 @@ try {
 	freeTreeList (zz, g);
 	return 1;
     }
+    TRACE("ns.rank2: feasible tree found, N_nodes=" + zz.N_nodes + " N_edges=" + zz.N_edges + " balance=" + balance + " maxiter=" + maxiter);
+    dumpNegativeSlackEdges(zz, "right after feasible_tree()");
     while ((e = leave_edge(zz))!=null) {
 	f = enter_edge(zz, e);
+	TRACE("ns.rank2 iter " + iter
+		+ ": leave " + safeName(zz, agtail(e)) + "(rank=" + ND_rank(agtail(e)) + ")"
+		+ " -> " + safeName(zz, aghead(e)) + "(rank=" + ND_rank(aghead(e)) + ")"
+		+ " cutvalue=" + ED_cutvalue(e)
+		+ " | enter " + (f == null ? "NULL (!)" :
+			safeName(zz, agtail(f)) + "(rank=" + ND_rank(agtail(f)) + ")"
+				+ " -> " + safeName(zz, aghead(f)) + "(rank=" + ND_rank(aghead(f)) + ")"
+				+ " slack=" + SLACK(f) + " minlen=" + ED_minlen(f)));
 	update(zz, e, f);
+	TRACE("ns.rank2 iter " + iter + ": after update, "
+		+ safeName(zz, agtail(e)) + "(rank=" + ND_rank(agtail(e)) + ")"
+		+ " " + safeName(zz, aghead(e)) + "(rank=" + ND_rank(aghead(e)) + ")"
+		+ " " + (f == null ? "" : safeName(zz, agtail(f)) + "(rank=" + ND_rank(agtail(f)) + ")"
+			+ " " + safeName(zz, aghead(f)) + "(rank=" + ND_rank(aghead(f)) + ")"));
 	iter++;
 	/*if (Verbose && (iter % 100 == 0)) {
 	    if (iter % 1000 == 100)
@@ -919,6 +944,7 @@ try {
 	TB_balance(zz);
 	break;
     case 2:
+	TRACE("ns.rank2: main loop done after " + iter + " iterations, calling LR_balance");
 	LR_balance(zz);
 	break;
     default:
@@ -1089,6 +1115,49 @@ try {
 } finally {
 LEAVING("cgqr48qol9p8bsqjnryo5z5x9","dfs_range");
 }
+}
+
+
+/*
+ * [DEBUG-network-simplex] Ad-hoc diagnostic added to investigate a network
+ * simplex correctness bug found while debugging zdev.Test_1's cluster layout
+ * (see SMETANA.md): feasible_tree() reports success (return 0) yet some
+ * non-tree edge ends up with a negative slack, meaning the "feasible" tree it
+ * built does not actually satisfy every ED_minlen constraint. This walks every
+ * edge in the current ns graph (zz.G_ns) right after feasible_tree() returns
+ * and logs any edge whose SLACK is negative, to pin down whether the
+ * violation already exists at that point (bug in feasible_tree/tight_tree) or
+ * only appears later (bug in the leave/enter/update loop). Not present in
+ * upstream Graphviz; safe to leave in place.
+ */
+private static void dumpNegativeSlackEdges(Globals zz, String phase) {
+    int total = 0, bad = 0;
+    for (ST_Agnode_s n = GD_nlist(zz.G_ns); n != null; n = ND_next(n)) {
+	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {
+	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);
+	    total++;
+	    final int slack = SLACK(e);
+	    if (slack < 0) {
+		bad++;
+		TRACE("ns NEGATIVE SLACK " + phase + ": "
+			+ safeName(zz, agtail(e)) + "(rank=" + ND_rank(agtail(e)) + ")"
+			+ " -> " + safeName(zz, aghead(e)) + "(rank=" + ND_rank(aghead(e)) + ")"
+			+ " minlen=" + ED_minlen(e) + " slack=" + slack
+			+ " tree_edge=" + TREE_EDGE(e));
+	    }
+	}
+    }
+    TRACE("ns dumpNegativeSlackEdges " + phase + ": " + bad + "/" + total + " edges have negative slack");
+}
+
+private static String dumpInTails(Globals zz, ST_Agnode_s v) {
+    final StringBuilder sb = new StringBuilder();
+    for (int i = 0; ND_in(v).list.get_(i) != null; i++) {
+	final ST_Agedge_s e = (ST_Agedge_s) ND_in(v).list.get_(i);
+	if (i > 0) sb.append(", ");
+	sb.append(safeName(zz, agtail(e))).append("(minlen=").append(ED_minlen(e)).append(")");
+    }
+    return sb.toString();
 }
 
 
