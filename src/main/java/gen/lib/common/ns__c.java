@@ -1150,6 +1150,30 @@ private static void dumpNegativeSlackEdges(Globals zz, String phase) {
     TRACE("ns dumpNegativeSlackEdges " + phase + ": " + bad + "/" + total + " edges have negative slack");
 }
 
+/*
+ * [FIX-cluster-layout] Not present in upstream Graphviz. Detects the exact
+ * failure mode investigated for zdev.Test_1 (see SMETANA.md, "Root cause
+ * CONFIRMED" and the flat_limits() follow-up): a genuine cycle among the
+ * ED_minlen constraints of the current ns graph (zz.G_ns), which forces at
+ * least one edge to end up with negative slack no matter what the network
+ * simplex does. Neither rank2()'s return code nor init_rank()'s MISMATCH
+ * warning (above) surface this to the caller -- upstream Graphviz silently
+ * tolerates it and produces a distorted/overlapping layout. This is a
+ * read-only scan (same logic as dumpNegativeSlackEdges above, without the
+ * tracing), meant to be called by position__c.dot_position() right after
+ * rank() returns, so it can detect and react to this specific situation.
+ */
+public static boolean hasNegativeSlackEdges(Globals zz) {
+    for (ST_Agnode_s n = GD_nlist(zz.G_ns); n != null; n = ND_next(n)) {
+	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {
+	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);
+	    if (SLACK(e) < 0)
+		return true;
+	}
+    }
+    return false;
+}
+
 private static String dumpInTails(Globals zz, ST_Agnode_s v) {
     final StringBuilder sb = new StringBuilder();
     for (int i = 0; ND_in(v).list.get_(i) != null; i++) {

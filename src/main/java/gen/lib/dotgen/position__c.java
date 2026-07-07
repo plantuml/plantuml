@@ -50,6 +50,7 @@ import static gen.lib.cgraph.edge__c.agtail;
 import static gen.lib.cgraph.graph__c.agnnodes;
 import static gen.lib.cgraph.obj__c.agcontains;
 import static gen.lib.cgraph.obj__c.agroot;
+import static gen.lib.common.ns__c.hasNegativeSlackEdges;
 import static gen.lib.common.ns__c.rank;
 import static gen.lib.common.splines__c.selfRightSpace;
 import static gen.lib.common.utils__c.late_int;
@@ -149,7 +150,10 @@ import h.ST_aspect_t;
 import h.ST_point;
 import h.ST_pointf;
 import h.ST_rank_t;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.IdentityHashMap;
+import java.util.List;
 import smetana.core.CArray;
 import smetana.core.CArrayOfStar;
 import smetana.core.CString;
@@ -166,7 +170,6 @@ import smetana.core.ZType;
  * created and correctly separated.
  */
 public class position__c {
-
 
 	//3 ciez0pfggxdljedzsbklq49f0
 	// static inline point pointof(int x, int y) 
@@ -663,6 +666,19 @@ try {
 	connectGraph (g);
 	//assert(rank(g, 2, nsiter2(g)) == 0);
     }
+    // [FIX-cluster-layout] Diagnostic only (not present in upstream Graphviz).
+    // A genuine constraint cycle in the X-position aux graph is now prevented at
+    // the source, in make_LR_constraints() (deferred label-position pass with
+    // cycle guards evaluated once the full adjacency graph exists -- see there).
+    // If this warning ever fires, a NEW class of infeasibility exists that that
+    // pass does not cover; investigate it, do NOT try to "fix up" here: a
+    // previous attempt to remove_aux_edges()+create_aux_edges()+rank() again at
+    // this point hung the network simplex, because create_aux_edges() is not
+    // re-entrant (GD_ln/GD_rn keep pointing at cluster boundary nodes that
+    // remove_aux_edges() already unlinked from GD_nlist, so the rebuilt graph
+    // references ghost nodes the simplex never ranks). See SMETANA.md.
+    if (hasNegativeSlackEdges(zz))
+	TRACE("dot_position: WARNING negative-slack edges remain after rank() -- X-position aux graph is infeasible, layout may show overlapping nodes. See SMETANA.md.");
     set_xcoords(g);
     set_aspect(g, asp);
     remove_aux_edges(g);	/* must come after set_aspect since we now
@@ -797,7 +813,7 @@ LEAVING("53fvij7oun7aezlb7x66vzuyb","allocate_aux_edges");
 @Unused
 @HasND_Rank
 @Original(version="2.38.0", path="lib/dotgen/position.c", name="make_LR_constraints", key="ah28nr6mxpjeosr85bhmzd3si", definition="static void  make_LR_constraints(graph_t * g)")
-public static void make_LR_constraints(ST_Agraph_s g) {
+public static void make_LR_constraints(Globals zz, ST_Agraph_s g) {
 ENTERING("ah28nr6mxpjeosr85bhmzd3si","make_LR_constraints");
 try {
     int i, j, k;
@@ -809,6 +825,9 @@ try {
     ST_Agedge_s e, e0, e1, ff;
     ST_Agnode_s u, v, t0, h0;
     CArray<ST_rank_t> rank = GD_rank(g);
+    // [FIX-cluster-layout] Not present in upstream Graphviz: label nodes whose
+    // position constraints are deferred to after the main loop -- see below.
+    final List<ST_Agnode_s> deferredLabelNodes = new ArrayList<ST_Agnode_s>();
     /* Use smaller separation on odd ranks if g has edge labels */
     if ((GD_has_labels(g) & (1 << 0))!=0) {
 	sep[0] = GD_nodesep(g);
@@ -851,26 +870,17 @@ try {
 		last = (int)(last + width);
 	    }
 	    /* constraints from labels of flat edges on previous rank */
-	    if ((e = (ST_Agedge_s) ND_alg(u))!=null) {
-		e0 = (ST_Agedge_s) ND_save_out(u).list.get_(0);
-		e1 = (ST_Agedge_s) ND_save_out(u).list.get_(1);
-		if (ND_order(aghead(e0)) > ND_order(aghead(e1))) {
-		    ff = e0;
-		    e0 = e1;
-		    e1 = ff;
-		}
-		m0 = (ED_minlen(e) * GD_nodesep(g)) / 2;
-		m1 = m0 + ((int)(ND_rw(aghead(e0)) + ND_lw(agtail(e0))));
-		/* these guards are needed because the flat edges
-		 * work very poorly with cluster layout */
-		if (canreach(agtail(e0), aghead(e0)) == false)
-		    make_aux_edge(aghead(e0), agtail(e0), m1,
-			ED_weight(e));
-		m1 = m0 + ((int)(ND_rw(agtail(e1)) + ND_lw(aghead(e1))));
-		if (canreach(aghead(e1), agtail(e1)) == false)
-		    make_aux_edge(agtail(e1), aghead(e1), m1,
-			ED_weight(e));
-	    }
+	    // [FIX-cluster-layout] Changed from upstream Graphviz: instead of creating
+	    // the label-position aux edges right here, only collect the label node.
+	    // Upstream evaluates its canreach() cycle guards at this point, which is
+	    // too early: ranks are processed minrank->maxrank, so when a label on
+	    // rank r-1 is handled here, the plain left-right adjacency edges of rank
+	    // r do not exist yet and the guards cannot see the cycles they are meant
+	    // to prevent (proven on zdev.Test_1, see SMETANA.md "Root cause
+	    // CONFIRMED"). The actual edge creation happens after the main loop,
+	    // once every adjacency edge of every rank exists.
+	    if (ND_alg(u)!=null)
+		deferredLabelNodes.add(u);
 	    /* position flat edge endpoints */
 	    for (k = 0; k < ND_flat_out(u).size; k++) {
 		e = (ST_Agedge_s) ND_flat_out(u).list.get_(k);
@@ -906,9 +916,88 @@ try {
 	    }
 	}
     }
+    /*
+     * [FIX-cluster-layout] Deferred creation of the label-position constraints:
+     * this is upstream's "constraints from labels of flat edges on previous
+     * rank" block, moved verbatim out of the loop above, with the same guard
+     * logic. Running it here means the guards finally see the complete
+     * left-right adjacency graph of every rank (plus the constraints created
+     * by earlier iterations of this very loop), so a label constraint that
+     * would close a genuine cycle -- two crossing labeled flat/same-rank edges,
+     * as in zdev.Test_1 -- is skipped (with a TRACE) instead of making the
+     * whole X-position problem mathematically infeasible and the final render
+     * overlap nodes. On any graph whose full constraint set is acyclic (i.e.
+     * every diagram that already laid out correctly), no path exists that the
+     * guards could find, nothing is ever skipped, and the resulting aux graph
+     * is identical to upstream's. The guards use canReachInAuxGraph() instead
+     * of upstream's canreach()/go(): same question, but iterative and with a
+     * visited set (go() is an unmarked recursive DFS -- potentially exponential
+     * on the denser graph seen at this point).
+     */
+    for (ST_Agnode_s lu : deferredLabelNodes) {
+	e = (ST_Agedge_s) ND_alg(lu);
+	e0 = (ST_Agedge_s) ND_save_out(lu).list.get_(0);
+	e1 = (ST_Agedge_s) ND_save_out(lu).list.get_(1);
+	if (ND_order(aghead(e0)) > ND_order(aghead(e1))) {
+	    ff = e0;
+	    e0 = e1;
+	    e1 = ff;
+	}
+	m0 = (ED_minlen(e) * GD_nodesep(g)) / 2;
+	m1 = m0 + ((int)(ND_rw(aghead(e0)) + ND_lw(agtail(e0))));
+	/* these guards are needed because the flat edges
+	 * work very poorly with cluster layout */
+	if (canReachInAuxGraph(agtail(e0), aghead(e0)) == false)
+	    make_aux_edge(aghead(e0), agtail(e0), m1,
+		ED_weight(e));
+	else
+	    TRACE("make_LR_constraints: SKIPPED label-position aux edge " + safeName(zz, aghead(e0))
+		    + " -> " + safeName(zz, agtail(e0)) + " (would close a cycle in the X aux graph)");
+	m1 = m0 + ((int)(ND_rw(agtail(e1)) + ND_lw(aghead(e1))));
+	if (canReachInAuxGraph(aghead(e1), agtail(e1)) == false)
+	    make_aux_edge(agtail(e1), aghead(e1), m1,
+		ED_weight(e));
+	else
+	    TRACE("make_LR_constraints: SKIPPED label-position aux edge " + safeName(zz, agtail(e1))
+		    + " -> " + safeName(zz, aghead(e1)) + " (would close a cycle in the X aux graph)");
+    }
 } finally {
 LEAVING("ah28nr6mxpjeosr85bhmzd3si","make_LR_constraints");
 }
+}
+
+
+
+
+/*
+ * [FIX-cluster-layout] Not present in upstream Graphviz. Reachability test
+ * over the aux graph's ND_out lists, used by make_LR_constraints()'s deferred
+ * label-position pass above. Same question as upstream's canreach()/go()
+ * pair, but iterative and with a visited set: go() is an unmarked recursive
+ * DFS, which is potentially exponential on the denser DAG this pass sees
+ * (upstream only ever ran it on the sparse, partially-built graph) and would
+ * not terminate at all if a cycle ever slipped in.
+ */
+private static boolean canReachInAuxGraph(ST_Agnode_s from, ST_Agnode_s to) {
+    if (from == to)
+	return true;
+    final IdentityHashMap<ST_Agnode_s, Boolean> visited = new IdentityHashMap<ST_Agnode_s, Boolean>();
+    final ArrayDeque<ST_Agnode_s> stack = new ArrayDeque<ST_Agnode_s>();
+    visited.put(from, Boolean.TRUE);
+    stack.push(from);
+    while (stack.isEmpty() == false) {
+	final ST_Agnode_s cur = stack.pop();
+	for (int i = 0; ND_out(cur).list.get_(i) != null; i++) {
+	    final ST_Agnode_s head = aghead((ST_Agedge_s) ND_out(cur).list.get_(i));
+	    if (head == to)
+		return true;
+	    if (visited.containsKey(head) == false) {
+		visited.put(head, Boolean.TRUE);
+		stack.push(head);
+	    }
+	}
+    }
+    return false;
 }
 
 
@@ -1183,7 +1272,7 @@ ENTERING("b7y0htx4svbhaqb1a12dihlue","create_aux_edges");
 try {
     allocate_aux_edges(g);
     TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after allocate_aux_edges");
-    make_LR_constraints(g);
+    make_LR_constraints(zz, g);
     TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after make_LR_constraints");
     make_edge_pairs(g);
     TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after make_edge_pairs");

@@ -191,6 +191,17 @@ try {
 	    else if ((l[0] < lpos[0]) && (r[0] > rpos[0]));	/* ignore */
 	    /* must have intersecting ranges */
 	    else {
+		// [DEBUG-cluster-layout] This is the "genuine crossing" branch: the
+		// already-placed label v's own range [l,r] neither contains nor is
+		// contained by nor disjoint from the new edge's range [lpos,rpos] --
+		// they truly interleave. Note only SLB/SRB (soft bounds) get set here,
+		// never HLB/HRB (hard bounds): flat_limits() has no way to place the
+		// new label consistently with v in this case, it just picks a
+		// best-effort side. This is the exact mechanism behind the Test_1
+		// infeasible X-position cycle -- see SMETANA.md "Root cause CONFIRMED".
+		SmetanaDebug.TRACE("setbounds: CROSSING existingLabelNodeIdentityHash=" + System.identityHashCode(v)
+				+ " existingLabelOrder=" + ord + " existingRange=[" + l[0] + "," + r[0] + "]"
+				+ " newEdgeRange=[" + lpos[0] + "," + rpos[0] + "] -> soft bound(s) only");
 		if ((l[0] < lpos[0]) || ((l[0] == lpos[0]) && (r[0] < rpos[0])))
 		    bounds[2] = ord;
 		if ((r[0] > rpos[0]) || ((r[0] == rpos[0]) && (l[0] > lpos[0])))
@@ -260,6 +271,18 @@ try {
 	pos = (bounds[HLB] + bounds[HRB] + 1) / 2;
     else
 	pos = (bounds[SLB] + bounds[SRB] + 1) / 2;
+    // [DEBUG-cluster-layout] Records, for this labeled flat edge, the computed
+    // insertion position in the label rank (rank r-1), together with lpos/rpos
+    // (this edge's own real-endpoint range) and the final hard/soft bounds.
+    // "usedSoftBounds=true" means bounds[HLB] > bounds[HRB], i.e. the hard
+    // bounds from setbounds() were mutually inconsistent and flat_limits() had
+    // to fall back to the soft bounds -- a direct symptom of the "genuine
+    // crossing" case logged in setbounds() above. See SMETANA.md "Root cause
+    // CONFIRMED" (Test_1 investigation).
+    SmetanaDebug.TRACE("flat_limits: edgeIdentityHash=" + System.identityHashCode(e)
+		+ " lpos=" + lpos[0] + " rpos=" + rpos[0]
+		+ " bounds(HLB,HRB,SLB,SRB)=[" + bounds[HLB] + "," + bounds[HRB] + "," + bounds[SLB] + "," + bounds[SRB] + "]"
+		+ " usedSoftBounds=" + (bounds[HLB] > bounds[HRB]) + " -> pos=" + pos);
     return pos;
 } finally {
 LEAVING("3bc4otcsxj1dujj49ydbb19oa","flat_limits");

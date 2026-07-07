@@ -535,9 +535,228 @@ parameter), so unlike the `gen.lib` traces this one can't call
 `agnameof()`/`safeName()` to print tail/head node names directly - identity-hash
 cross-referencing against the `createEdge` trace is the way around that.
 
-**Not yet run.** Next step: run `zdev.Test_1` again, and grep the new
-`smetana.txt` for `flat_node:` and `createEdge:` lines, cross-referencing by
-`identityHash` as described above.
+**Result (Test_1, run of July 2026):** cross-referencing worked as designed. The
+two colliding flat-edge labels are:
+
+- **A** = the edge `MindMapLink --[rightNode]--> MindMapNode`
+- **B** = the edge `Category --[category]--> Card`
+
+`flat_limits()` placed label A to the left of label B on rank -1, but B's real
+right endpoint (`sh0011`, one of `Category`/`Card`) sits, via the ordinary
+rank-0 adjacency chain (`sh0011 -> sh0010 -> sh0021`), to the *left* of A's
+real left endpoint (`sh0021`, one of `MindMapLink`/`MindMapNode`) -- a genuine
+crossing between these two independent flat/same-rank relationships.
+
+---
+
+## Point 1 follow-up: is there a hard guard against this in `flat_limits`/`setbounds`? (July 2026)
+
+Re-read `lib/dotgen/flat.c` (`setbounds`, `findlr`, `flat_limits`) line by line
+against `flat__c.java` (`setbounds`, `findlr`, `flat_limits`): **the Java is a
+faithful, byte-for-byte translation.** No mistranslation found.
+
+More importantly, the C algorithm itself has **no hard guard against genuinely
+crossing flat-edge labels.** `setbounds()` compares an already-placed label's
+own range `[l,r]` (from its own two real endpoints) against the new edge's
+range `[lpos,rpos]`, and has exactly three cases:
+1. disjoint (`r<=lpos` or `l>=rpos`) -> hard bound (`HLB`/`HRB`) set: safe, no
+   ambiguity about which side to place the new label.
+2. one range spans the other (`l<lpos && r>rpos`) -> ignored entirely (no
+   constraint from this label at all).
+3. **genuinely intersecting ranges** (neither disjoint nor nested) -> only the
+   **soft** bounds (`SLB`/`SRB`) get set, never the hard ones.
+
+Then `flat_limits()` uses the hard bounds if they're consistent
+(`bounds[HLB] <= bounds[HRB]`), and only falls back to the soft bounds
+otherwise. Soft bounds are a best-effort tiebreak, not a correctness
+guarantee: nothing anywhere validates that the resulting label order is
+actually realizable as a valid left-right ordering. In other words, **this is
+an acknowledged, inherent heuristic limitation of upstream Graphviz's
+`flat_limits`, not a Smetana translation bug** -- when two flat/same-rank
+labeled edges genuinely cross (as `MindMapLink->MindMapNode` and
+`Category->Card` do here), there is no code path in the real C that detects or
+prevents the resulting infeasible ordering; it silently produces a label
+position that can later blow up as a cycle in the X-position aux graph.
+
+This makes it very likely (though, per the earlier discussion, not directly
+verifiable here without running native `dot`) that real Graphviz would exhibit
+an analogous problem on this same diagram -- consistent with the `Test_0`
+precedent already on file.
+
+**New traces added** (both additive, no logic change) to make this visible
+directly in `smetana.txt` without needing native `dot`:
+
+- **`flat__c.setbounds()`**, in the "must have intersecting ranges" branch:
+  logs `existingLabelNodeIdentityHash`, the existing label's own `[l,r]`
+  range, and the new edge's `[lpos,rpos]` range whenever this branch fires.
+  Any appearance of this line is, by construction, a genuine crossing between
+  two flat edge labels.
+- **`flat__c.flat_limits()`**, after computing `pos`: logs the edge's
+  `edgeIdentityHash` (cross-referenceable against `createEdge:`/`flat_node:`
+  traces as before), `lpos`/`rpos`, the four bounds, and
+  `usedSoftBounds=true/false`. `usedSoftBounds=true` is the direct symptom of
+  hitting the inconsistent-hard-bounds case.
+
+**Not yet run with these new traces.** Next step: run `zdev.Test_1` again and
+check that a `setbounds: CROSSING ...` line appears for the A/B pair (i.e.
+B's `setbounds()` call, triggered while placing B, reports A as the
+intersecting existing label, or vice-versa depending on processing order),
+and that the corresponding `flat_limits: edgeIdentityHash=... usedSoftBounds=true`
+line appears for at least one of A/B -- which would be the final, direct
+confirmation (from the trace itself, not just hand-reasoning) that this
+specific pair hit the heuristic's known blind spot.
+
+**Result (run of July 2026): sharper than expected.** A (`1007660652`,
+`MindMapLink->MindMapNode[rightNode]`) and B (`1196963249`,
+`Category->Card[category]`) **never appear together in any `setbounds:
+CROSSING` line.** Walking every `CROSSING`/`flat_limits` line in processing
+order: A is checked against two *other* labels placed after it
+(`1276544608`, `265348534`), and B is checked against two different *other*
+labels placed just before it (`1336775847` = `Category->FcUser[owner]`,
+`917568725` = `Answer->FcUser[user]`) -- but A and B are never compared to
+each other, and B's own `flat_limits` call finishes with untouched default
+bounds (`[-1,3,-1,3]`, `usedSoftBounds=false`), i.e. genuinely unconstrained
+by anything.
+
+The reason is `flat_limits`'s own early-exit optimization:
+```c
+while (lnode <= rnode) {
+    setbounds(rank[lnode], bounds, lpos, rpos);
+    if (lnode != rnode) setbounds(rank[rnode], bounds, lpos, rpos);
+    lnode++; rnode--;
+    if (bounds[HRB] - bounds[HLB] <= 1) break;   // <-- stops scanning early
+}
+```
+It scans the rank -1 array inward from both ends, and stops as soon as the
+hard-bound window has narrowed to size <=1. By the time B is placed, A
+already sits at one end of the array, and the window closed before the scan
+ever reached it. So this isn't just "the heuristic's soft-bounds fallback is
+imprecise" (the code-level finding from point 1 above) -- **for this specific
+pair, `flat_limits` never even performs the comparison that could have
+flagged a conflict.** The two labels are independently, non-interactingly
+positioned; the actual infeasibility only materializes afterwards, when
+`make_LR_constraints` wires each label to its real endpoints and the rank-0
+adjacency chain (`sh0011->sh0010->sh0021`) closes the loop between them. This
+is now confirmed by runtime trace, not just by reading the C.
+
+---
+
+## Where this leaves the fix options
+
+Given `flat_limits`/`setbounds` structurally cannot see this class of
+conflict (not a translation bug, and not fixable by tweaking soft-bounds
+logic -- the comparison plain doesn't happen), a targeted mitigation would
+have to live downstream, where the conflict *does* become visible: in
+`create_aux_edges`/`make_LR_constraints`/`rank()` in `position__c.java`,
+which is the only place that has both the label positions *and* the real
+node order at once. Two concrete shapes this could take, to weigh before
+coding:
+
+1. **Detect + report**, not fix: after `rank()` returns an infeasible/aborted
+   result for this graph, catch it and fall back to a degraded-but-safe
+   layout (e.g. skip flat labels entirely for that rank, or fall back to a
+   non-smetana layout for this diagram) rather than silently emitting
+   overlapping nodes.
+2. **Weaken the specific constraint**: since the two problematic aux edges
+   are exactly the weight-1 "label position" edges from the `ND_alg(u)`
+   block in `make_LR_constraints` (as opposed to weight-0 pure ordering
+   edges), one option is to detect remaining negative-slack cycles after
+   `feasible_tree()` that involve only weight-1 label edges, and drop/relax
+   just those rather than letting the whole rank() call produce a distorted
+   result.
+
+Neither has been started. Let me know which direction (if either) you'd like
+to pursue, or whether you'd rather keep investigating first.
+
+---
+
+## Fix implemented: deferred label-position constraints (July 2026)
+
+### First attempt (ABANDONED): detect-and-retry in dot_position
+
+The detect-and-retry approach (option 1 above) was implemented and **failed**:
+the retry's rank() call did not converge (observed spinning in rank2()'s
+leave/enter/update loop; even a RETRY_MAX_ITER=10000 cap only bounded the
+damage without converging). Root cause, read directly from the retry's trace:
+**`create_aux_edges` is not re-entrant.**
+
+- `remove_aux_edges()` unlinks every SLACKNODE (ND_node_type==2) from
+  GD_nlist -- including every cluster's ln/rn boundary nodes -- but
+  `GD_ln(clust)`/`GD_rn(clust)` keep pointing at them.
+- On the rebuild, `make_lrvn()` sees `GD_ln(g) != null` and returns without
+  recreating anything, so `pos_clusters()` wires brand-new aux edges to
+  **ghost nodes** that are no longer in GD_nlist.
+- `init_graph`/`init_rank` never see those ghosts (N_nodes dropped 35 -> 29
+  in the trace), their ND_rank stays stale, and `feasible_tree()` even
+  adopted tree edges with hugely negative slack toward them (e.g.
+  `sh0018(rank=1152) -> <ghost>(rank=107) slack=-1104 tree_edge=true`),
+  after which the simplex invariants are broken and the main loop spins.
+- (A second, smaller re-entrance issue: ND_rw self-edge increments in
+  make_LR_constraints would be applied twice.)
+
+**Lesson: never re-run remove_aux_edges()+create_aux_edges() within one
+dot_position pass.** The retry, its create_aux_edges/make_LR_constraints
+boolean overloads, and RETRY_MAX_ITER were all removed.
+
+### Final fix: prevent the cycle at the source (make_LR_constraints)
+
+Key insight from re-reading the C: upstream **already guards** the
+label-position edges against cycles -- the `canreach()` calls in the
+ND_alg(u) block, with the comment "these guards are needed because the flat
+edges work very poorly with cluster layout". But it evaluates them **too
+early**: ranks are processed minrank -> maxrank, so when a rank -1 label is
+handled, rank 0's plain left-right adjacency edges do not exist yet, and the
+guards cannot see the very cycles they were written to prevent. On Test_1:
+when B's `B->sh0011` edge is created, the chain `sh0011->sh0010->sh0021` is
+not there yet, so `canreach(sh0011, B)` is trivially false; the adjacency
+edges are then added later with no check at all, closing the cycle.
+
+**The change (deliberate departure from the C, in `position__c.java`):**
+
+- `make_LR_constraints(Globals zz, ST_Agraph_s g)` (signature gained `zz`
+  for tracing): the main loop no longer creates the ND_alg(u)
+  label-position edges; it only collects the label nodes into
+  `deferredLabelNodes`.
+- After the main loop -- i.e. once every adjacency edge of every rank
+  exists -- the exact same block runs for each collected label, with the
+  same guard logic, each skipped edge logged as
+  `make_LR_constraints: SKIPPED label-position aux edge ...`.
+- Guards use a new `canReachInAuxGraph()` (iterative DFS with an identity
+  visited set) instead of upstream's `canreach()`/`go()`: go() is an
+  unmarked recursive DFS, potentially exponential on the denser graph seen
+  at this point and non-terminating if a cycle ever slipped in. go() and
+  canreach() remain in the file (now unused) for translation fidelity.
+- `dot_position()` keeps `ns__c.hasNegativeSlackEdges()` as a pure
+  diagnostic TRACE (WARNING). If it ever fires, that is a NEW class of
+  infeasibility -- investigate, do not resurrect the retry.
+
+**Why this is safe:** on any graph whose full constraint set is acyclic
+(i.e. every diagram that already laid out correctly), no blocking path
+exists for any guard to find -- if a guard found one, that path plus the
+guarded edge would be a cycle inside a subgraph of the full (acyclic) set,
+contradiction. So nothing is ever skipped and the aux graph is **identical
+to upstream's**. On pathological graphs (genuinely crossing labeled
+flat/same-rank edges, as Test_1's `MindMapLink->MindMapNode[rightNode]` vs
+`Category->Card[category]`), exactly the constraints that would close a
+cycle are dropped, each with a TRACE, and the simplex gets a feasible
+problem: coherent image, at the cost of the affected labels being anchored
+to their real endpoints on one side only (they keep their rank -1 position
+and label-to-label ordering). Termination: the graph is acyclic before the
+deferred pass (adjacencies are per-rank chains; flat-endpoint edges follow
+ND_order) and each guarded addition preserves acyclicity by construction.
+
+**Expected on Test_1 (hand-traced):** processing labels in rank order, at
+least `B(category)->sh0011` and `owner(1336...)->sh0010` get skipped (the
+graph contained at least two overlapping label cycles -- consistent with the
+9 negative-slack edges seen previously); the simplex converges with 0
+negative-slack edges, and the rendered diagram no longer overlaps.
+
+**Not yet run.** Next step: rebuild, run `zdev.Test_1`, check smetana.txt
+for `SKIPPED label-position aux edge` lines, `dumpNegativeSlackEdges ...
+0/NN edges`, absence of the WARNING, and visually check the PNG/SVG. Then
+run the full Vega regression suite to confirm no diagram that previously
+laid out correctly changed (the nothing-skipped-on-acyclic-graphs argument
+predicts zero diffs; verify it).
 
 ---
 
