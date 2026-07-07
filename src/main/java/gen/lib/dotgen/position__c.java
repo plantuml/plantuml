@@ -644,6 +644,8 @@ ENTERING("33snzyd9z0loienur06dnily9","dot_position");
 try {
     if (GD_nlist(g) == null)
 	return;			/* ignore empty graph */
+    // [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md): phase ordering check
+    smetana.core.debug.SmetanaDebug.SMETANA_TRACE("dot_position: ENTER");
     // SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g) + " at entry");
     mark_lowclusters(zz, g);	/* we could remove from splines.c now */
     // SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after mark_lowclusters");
@@ -677,8 +679,9 @@ try {
     // re-entrant (GD_ln/GD_rn keep pointing at cluster boundary nodes that
     // remove_aux_edges() already unlinked from GD_nlist, so the rebuilt graph
     // references ghost nodes the simplex never ranks). See SMETANA.md.
-    if (hasNegativeSlackEdges(zz))
+    if (hasNegativeSlackEdges(zz)) {
 	// SMETANA_TRACE("dot_position: WARNING negative-slack edges remain after rank() -- X-position aux graph is infeasible, layout may show overlapping nodes. See SMETANA.md.");
+    }
     set_xcoords(g);
     set_aspect(g, asp);
     remove_aux_edges(g);	/* must come after set_aspect since we now
@@ -1342,9 +1345,15 @@ try {
     int i, j;
     ST_Agnode_s v;
     CArray<ST_rank_t> rank = GD_rank(g);
+    // [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md): ND_rank of normal
+    // nodes found holding X coordinates at spline time -- verify the restore here.
+    smetana.core.debug.SmetanaDebug.SMETANA_TRACE("set_xcoords: ENTER minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g));
     for (i = GD_minrank(g); i <= GD_maxrank(g); i++) {
+	smetana.core.debug.SmetanaDebug.SMETANA_TRACE("set_xcoords: rank " + i + " n=" + rank.get__(i).n);
 	for (j = 0; j < rank.get__(i).n; j++) {
 	    v = (ST_Agnode_s) rank.get__(i).v.get_(j);
+	    smetana.core.debug.SmetanaDebug.SMETANA_TRACE("set_xcoords: node=" + System.identityHashCode(v)
+		    + " x(from ND_rank)=" + ND_rank(v) + " -> restored ND_rank=" + i);
 	    ND_coord(v).x = ND_rank(v);
 	    ND_rank(v, i);
 	}

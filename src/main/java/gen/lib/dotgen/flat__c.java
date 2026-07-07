@@ -381,6 +381,10 @@ try {
     int r;
     CArray<ST_rank_t> rptr;
     
+    // [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md). Note: the assert
+    // below is a no-op unless -ea; if minrank is already -1 here, this is being
+    // run twice and will corrupt the rank array.
+    SmetanaDebug.SMETANA_TRACE("abomination: ENTER minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g));
     assert(GD_minrank(g) == 0);
     /* 3 = one for new rank, one for sentinel, one for off-by-one */
     r = GD_maxrank(g) + 3;
@@ -480,6 +484,8 @@ try {
     ST_Agnode_s n;
     ST_Agedge_s e;
     boolean found = false;
+    // [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md): phase ordering check
+    SmetanaDebug.SMETANA_TRACE("flat_edges: ENTER minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g));
     
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
 	if (ND_flat_out(n).list!=null) {
