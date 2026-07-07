@@ -592,16 +592,16 @@ LEAVING("ca52dadcp7m8x0bqhaw4tvtaw","dot_root");
  * is actually inspected. Not present in upstream Graphviz.
  */
 private static void dumpLayoutState(Globals zz, ST_Agraph_s g, String phase) {
-    SMETANA_TRACE("===== " + phase + " =====");
-    SMETANA_TRACE("root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g));
+    // SMETANA_TRACE("===== " + phase + " =====");
+    // SMETANA_TRACE("root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g));
     for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {
 	final ST_Agraph_s clust = ND_clust(n);
-	SMETANA_TRACE("node " + safeName(zz, n)
-		+ " rank=" + ND_rank(n)
-		+ " order=" + ND_order(n)
-		+ " x=" + ND_coord(n).x
-		+ " y=" + ND_coord(n).y
-		+ " clust=" + (clust == null ? "-" : safeName(zz, clust)));
+	// SMETANA_TRACE("node " + safeName(zz, n)
+//		+ " rank=" + ND_rank(n)
+//		+ " order=" + ND_order(n)
+//		+ " x=" + ND_coord(n).x
+//		+ " y=" + ND_coord(n).y
+//		+ " clust=" + (clust == null ? "-" : safeName(zz, clust)));
     }
     dumpClusters(zz, g, "  ");
 }

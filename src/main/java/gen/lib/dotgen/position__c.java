@@ -644,24 +644,24 @@ ENTERING("33snzyd9z0loienur06dnily9","dot_position");
 try {
     if (GD_nlist(g) == null)
 	return;			/* ignore empty graph */
-    SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g) + " at entry");
+    // SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g) + " at entry");
     mark_lowclusters(zz, g);	/* we could remove from splines.c now */
-    SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after mark_lowclusters");
+    // SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after mark_lowclusters");
     set_ycoords(zz, g);
-    SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after set_ycoords (1st call)");
+    // SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after set_ycoords (1st call)");
     if (zz.Concentrate)
 	dot_concentrate(g);
-    SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after dot_concentrate");
+    // SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after dot_concentrate");
     expand_leaves(g);
-    SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after expand_leaves");
+    // SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after expand_leaves");
     if (flat_edges(zz, g))
 	set_ycoords(zz, g);
-    SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after flat_edges/2nd set_ycoords");
+    // SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " after flat_edges/2nd set_ycoords");
     create_aux_edges(zz, g);
-    SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g) + " right after create_aux_edges");
+    // SMETANA_TRACE("dot_position: root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g) + " right after create_aux_edges");
     dumpAuxEdges(zz, g, "before rank() [X-position aux graph]");
     int rankResult = rank(zz, g, 2, nsiter2(zz, g));
-    SMETANA_TRACE("dot_position: rank(g,2,...) returned " + rankResult + " (0=ok, 1=disconnected->connectGraph with NO re-rank, 2=setjmp/longjmp abort)");
+    // SMETANA_TRACE("dot_position: rank(g,2,...) returned " + rankResult + " (0=ok, 1=disconnected->connectGraph with NO re-rank, 2=setjmp/longjmp abort)");
     if (rankResult!=0) { /* LR balance == 2 */
 	connectGraph (g);
 	//assert(rank(g, 2, nsiter2(g)) == 0);
@@ -678,7 +678,7 @@ try {
     // remove_aux_edges() already unlinked from GD_nlist, so the rebuilt graph
     // references ghost nodes the simplex never ranks). See SMETANA.md.
     if (hasNegativeSlackEdges(zz))
-	SMETANA_TRACE("dot_position: WARNING negative-slack edges remain after rank() -- X-position aux graph is infeasible, layout may show overlapping nodes. See SMETANA.md.");
+	// SMETANA_TRACE("dot_position: WARNING negative-slack edges remain after rank() -- X-position aux graph is infeasible, layout may show overlapping nodes. See SMETANA.md.");
     set_xcoords(g);
     set_aspect(g, asp);
     remove_aux_edges(g);	/* must come after set_aspect since we now
@@ -950,16 +950,16 @@ try {
 	if (canReachInAuxGraph(agtail(e0), aghead(e0)) == false)
 	    make_aux_edge(aghead(e0), agtail(e0), m1,
 		ED_weight(e));
-	else
-	    SMETANA_TRACE("make_LR_constraints: SKIPPED label-position aux edge " + safeName(zz, aghead(e0))
-		    + " -> " + safeName(zz, agtail(e0)) + " (would close a cycle in the X aux graph)");
+	// else
+	    // SMETANA_TRACE("make_LR_constraints: SKIPPED label-position aux edge " + safeName(zz, aghead(e0))
+		//    + " -> " + safeName(zz, agtail(e0)) + " (would close a cycle in the X aux graph)");
 	m1 = m0 + ((int)(ND_rw(agtail(e1)) + ND_lw(aghead(e1))));
 	if (canReachInAuxGraph(aghead(e1), agtail(e1)) == false)
 	    make_aux_edge(agtail(e1), aghead(e1), m1,
 		ED_weight(e));
-	else
-	    SMETANA_TRACE("make_LR_constraints: SKIPPED label-position aux edge " + safeName(zz, agtail(e1))
-		    + " -> " + safeName(zz, aghead(e1)) + " (would close a cycle in the X aux graph)");
+	// else
+	    // SMETANA_TRACE("make_LR_constraints: SKIPPED label-position aux edge " + safeName(zz, agtail(e1))
+		//    + " -> " + safeName(zz, aghead(e1)) + " (would close a cycle in the X aux graph)");
     }
 } finally {
 LEAVING("ah28nr6mxpjeosr85bhmzd3si","make_LR_constraints");
@@ -1271,15 +1271,15 @@ public static void create_aux_edges(Globals zz, ST_Agraph_s g) {
 ENTERING("b7y0htx4svbhaqb1a12dihlue","create_aux_edges");
 try {
     allocate_aux_edges(g);
-    SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after allocate_aux_edges");
+    // SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after allocate_aux_edges");
     make_LR_constraints(zz, g);
-    SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after make_LR_constraints");
+    // SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after make_LR_constraints");
     make_edge_pairs(g);
-    SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after make_edge_pairs");
+    // SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after make_edge_pairs");
     pos_clusters(zz, g);
-    SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after pos_clusters");
+    // SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after pos_clusters");
     compress_graph(g);
-    SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after compress_graph");
+    // SMETANA_TRACE("create_aux_edges: minrank=" + GD_minrank(g) + " after compress_graph");
 } finally {
 LEAVING("b7y0htx4svbhaqb1a12dihlue","create_aux_edges");
 }
@@ -2074,23 +2074,23 @@ LEAVING("daz786541idcxnywckcbncazb","contain_nodes");
 private static void dumpAuxEdges(Globals zz, ST_Agraph_s g, String phase) {
     final IdentityHashMap<ST_Agnode_s, String> labels = new IdentityHashMap<ST_Agnode_s, String>();
     collectClusterBoundaryLabels(zz, g, labels);
-    SMETANA_TRACE("----- rank array contents " + phase + " -----");
+    // SMETANA_TRACE("----- rank array contents " + phase + " -----");
     for (int r = GD_minrank(g); r <= GD_maxrank(g); r++) {
-	SMETANA_TRACE("  rank " + r + " (n=" + GD_rank(g).get__(r).n + "):");
+	// SMETANA_TRACE("  rank " + r + " (n=" + GD_rank(g).get__(r).n + "):");
 	for (int i = 0; i < GD_rank(g).get__(r).n; i++) {
 	    final ST_Agnode_s v = (ST_Agnode_s) GD_rank(g).get__(r).v.get_(i);
 	    final String label = v == null ? "null" : (labels.containsKey(v) ? labels.get(v) : safeName(zz, v));
-	    SMETANA_TRACE("    v[" + i + "] = " + label + (v == null ? "" : " (ND_order=" + ND_order(v) + ")"));
+	    // SMETANA_TRACE("    v[" + i + "] = " + label + (v == null ? "" : " (ND_order=" + ND_order(v) + ")"));
 	}
     }
-    SMETANA_TRACE("----- aux edges " + phase + " -----");
+    // SMETANA_TRACE("----- aux edges " + phase + " -----");
     for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {
 	final String nlabel = labels.containsKey(n) ? labels.get(n) : safeName(zz, n);
 	for (int i = 0; ND_out(n).list.get_(i) != null; i++) {
 	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(n).list.get_(i);
 	    final ST_Agnode_s head = aghead(e);
 	    final String hlabel = labels.containsKey(head) ? labels.get(head) : safeName(zz, head);
-	    SMETANA_TRACE("  " + nlabel + " -> " + hlabel + " minlen=" + ED_minlen(e) + " weight=" + ED_weight(e));
+	    // SMETANA_TRACE("  " + nlabel + " -> " + hlabel + " minlen=" + ED_minlen(e) + " weight=" + ED_weight(e));
 	}
     }
 }

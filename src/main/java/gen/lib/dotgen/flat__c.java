@@ -199,9 +199,9 @@ try {
 		// new label consistently with v in this case, it just picks a
 		// best-effort side. This is the exact mechanism behind the Test_1
 		// infeasible X-position cycle -- see SMETANA.md "Root cause CONFIRMED".
-		SmetanaDebug.SMETANA_TRACE("setbounds: CROSSING existingLabelNodeIdentityHash=" + System.identityHashCode(v)
-				+ " existingLabelOrder=" + ord + " existingRange=[" + l[0] + "," + r[0] + "]"
-				+ " newEdgeRange=[" + lpos[0] + "," + rpos[0] + "] -> soft bound(s) only");
+		// SmetanaDebug.// SMETANA_TRACE("setbounds: CROSSING existingLabelNodeIdentityHash=" + System.identityHashCode(v)
+		//		+ " existingLabelOrder=" + ord + " existingRange=[" + l[0] + "," + r[0] + "]"
+		//		+ " newEdgeRange=[" + lpos[0] + "," + rpos[0] + "] -> soft bound(s) only");
 		if ((l[0] < lpos[0]) || ((l[0] == lpos[0]) && (r[0] < rpos[0])))
 		    bounds[2] = ord;
 		if ((r[0] > rpos[0]) || ((r[0] == rpos[0]) && (l[0] > lpos[0])))
@@ -279,10 +279,10 @@ try {
     // to fall back to the soft bounds -- a direct symptom of the "genuine
     // crossing" case logged in setbounds() above. See SMETANA.md "Root cause
     // CONFIRMED" (Test_1 investigation).
-    SmetanaDebug.SMETANA_TRACE("flat_limits: edgeIdentityHash=" + System.identityHashCode(e)
-		+ " lpos=" + lpos[0] + " rpos=" + rpos[0]
-		+ " bounds(HLB,HRB,SLB,SRB)=[" + bounds[HLB] + "," + bounds[HRB] + "," + bounds[SLB] + "," + bounds[SRB] + "]"
-		+ " usedSoftBounds=" + (bounds[HLB] > bounds[HRB]) + " -> pos=" + pos);
+//    // SmetanaDebug.// SMETANA_TRACE("flat_limits: edgeIdentityHash=" + System.identityHashCode(e)
+//		+ " lpos=" + lpos[0] + " rpos=" + rpos[0]
+//		+ " bounds(HLB,HRB,SLB,SRB)=[" + bounds[HLB] + "," + bounds[HRB] + "," + bounds[SLB] + "," + bounds[SRB] + "]"
+//		+ " usedSoftBounds=" + (bounds[HLB] > bounds[HRB]) + " -> pos=" + pos);
     return pos;
 } finally {
 LEAVING("3bc4otcsxj1dujj49ydbb19oa","flat_limits");
@@ -361,8 +361,8 @@ try {
     // faithfully-ported method signature -- matching lib/dotgen/flat.c's
     // flat_node(edge_t*) -- doesn't receive.) See SMETANA.md, Test_1 cluster
     // layout investigation ("Root cause CONFIRMED" case study).
-    SmetanaDebug.SMETANA_TRACE("flat_node: labelNodeIdentityHash=" + System.identityHashCode(vn)
-		+ " origEdgeIdentityHash=" + System.identityHashCode(e));
+    // SmetanaDebug.// SMETANA_TRACE("flat_node: labelNodeIdentityHash=" + System.identityHashCode(vn)
+	//	+ " origEdgeIdentityHash=" + System.identityHashCode(e));
 } finally {
 LEAVING("4cw9yo9ap8ze1r873v6jat4yc","flat_node");
 }

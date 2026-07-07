@@ -217,10 +217,10 @@ try {
     ST_Agedge_s e;
     Q = new_queue(zz.N_nodes);
     ctr = 0;
-    SMETANA_TRACE("ns.init_rank: called, N_nodes=" + zz.N_nodes);
+    // SMETANA_TRACE("ns.init_rank: called, N_nodes=" + zz.N_nodes);
     for (v = GD_nlist(zz.G_ns); v!=null; v = ND_next(v)) {
-	SMETANA_TRACE("ns.init_rank: node " + safeName(zz, v) + " priority=" + ND_priority(v)
-		+ " ND_in.size=" + ND_in(v).size + " in-tails=[" + dumpInTails(zz, v) + "]");
+	// SMETANA_TRACE("ns.init_rank: node " + safeName(zz, v) + " priority=" + ND_priority(v)
+		//+ " ND_in.size=" + ND_in(v).size + " in-tails=[" + dumpInTails(zz, v) + "]");
 	if (ND_priority(v) == 0)
 	    enqueue(Q, v);
     }
@@ -235,7 +235,7 @@ try {
 		enqueue(Q, aghead(e));
 	}
     }
-    SMETANA_TRACE("ns.init_rank: done, ctr=" + ctr + " N_nodes=" + zz.N_nodes + (ctr != zz.N_nodes ? "  <<<< MISMATCH: some nodes never ranked, keep stale ND_rank!" : " (all nodes ranked OK)"));
+    // SMETANA_TRACE("ns.init_rank: done, ctr=" + ctr + " N_nodes=" + zz.N_nodes + (ctr != zz.N_nodes ? "  <<<< MISMATCH: some nodes never ranked, keep stale ND_rank!" : " (all nodes ranked OK)"));
     if (ctr != zz.N_nodes) {
 	// NOTE: in the original C, this branch is only a diagnostic print (agerr),
 	// NOT followed by longjmp(jbuf,1) -- unlike other agerr+longjmp pairs in this file.
@@ -243,7 +243,7 @@ try {
 	// algorithm continue with whatever ranks were computed so far.
 	LOG("trouble in init_rank");
 	for (v = GD_nlist(zz.G_ns); v!=null; v = ND_next(v))
-	    if (ND_priority(v)!=0)
+	    if (ND_priority(v)!=0) 
 		SMETANA_TRACE("ns.init_rank: unranked node " + safeName(zz, v) + " priority=" + ND_priority(v) + " stale rank=" + ND_rank(v));
     }
     free_queue(Q);
@@ -886,7 +886,7 @@ try {
 	start_timer();
     }*/
     feasible = init_graph(zz, g);
-    SMETANA_TRACE("ns.rank2: init_graph returned feasible=" + feasible + " (0 means init_rank() will run next)");
+    // SMETANA_TRACE("ns.rank2: init_graph returned feasible=" + feasible + " (0 means init_rank() will run next)");
     if (feasible == 0)
 	init_rank(zz);
     if (maxiter <= 0) {
@@ -910,24 +910,24 @@ try {
 	freeTreeList (zz, g);
 	return 1;
     }
-    SMETANA_TRACE("ns.rank2: feasible tree found, N_nodes=" + zz.N_nodes + " N_edges=" + zz.N_edges + " balance=" + balance + " maxiter=" + maxiter);
+    // SMETANA_TRACE("ns.rank2: feasible tree found, N_nodes=" + zz.N_nodes + " N_edges=" + zz.N_edges + " balance=" + balance + " maxiter=" + maxiter);
     dumpNegativeSlackEdges(zz, "right after feasible_tree()");
     while ((e = leave_edge(zz))!=null) {
 	f = enter_edge(zz, e);
-	SMETANA_TRACE("ns.rank2 iter " + iter
-		+ ": leave " + safeName(zz, agtail(e)) + "(rank=" + ND_rank(agtail(e)) + ")"
-		+ " -> " + safeName(zz, aghead(e)) + "(rank=" + ND_rank(aghead(e)) + ")"
-		+ " cutvalue=" + ED_cutvalue(e)
-		+ " | enter " + (f == null ? "NULL (!)" :
-			safeName(zz, agtail(f)) + "(rank=" + ND_rank(agtail(f)) + ")"
-				+ " -> " + safeName(zz, aghead(f)) + "(rank=" + ND_rank(aghead(f)) + ")"
-				+ " slack=" + SLACK(f) + " minlen=" + ED_minlen(f)));
+	// SMETANA_TRACE("ns.rank2 iter " + iter
+//		+ ": leave " + safeName(zz, agtail(e)) + "(rank=" + ND_rank(agtail(e)) + ")"
+//		+ " -> " + safeName(zz, aghead(e)) + "(rank=" + ND_rank(aghead(e)) + ")"
+//		+ " cutvalue=" + ED_cutvalue(e)
+//		+ " | enter " + (f == null ? "NULL (!)" :
+//			safeName(zz, agtail(f)) + "(rank=" + ND_rank(agtail(f)) + ")"
+//				+ " -> " + safeName(zz, aghead(f)) + "(rank=" + ND_rank(aghead(f)) + ")"
+//				+ " slack=" + SLACK(f) + " minlen=" + ED_minlen(f)));
 	update(zz, e, f);
-	SMETANA_TRACE("ns.rank2 iter " + iter + ": after update, "
-		+ safeName(zz, agtail(e)) + "(rank=" + ND_rank(agtail(e)) + ")"
-		+ " " + safeName(zz, aghead(e)) + "(rank=" + ND_rank(aghead(e)) + ")"
-		+ " " + (f == null ? "" : safeName(zz, agtail(f)) + "(rank=" + ND_rank(agtail(f)) + ")"
-			+ " " + safeName(zz, aghead(f)) + "(rank=" + ND_rank(aghead(f)) + ")"));
+	// SMETANA_TRACE("ns.rank2 iter " + iter + ": after update, "
+//		+ safeName(zz, agtail(e)) + "(rank=" + ND_rank(agtail(e)) + ")"
+//		+ " " + safeName(zz, aghead(e)) + "(rank=" + ND_rank(aghead(e)) + ")"
+//		+ " " + (f == null ? "" : safeName(zz, agtail(f)) + "(rank=" + ND_rank(agtail(f)) + ")"
+//			+ " " + safeName(zz, aghead(f)) + "(rank=" + ND_rank(aghead(f)) + ")"));
 	iter++;
 	/*if (Verbose && (iter % 100 == 0)) {
 	    if (iter % 1000 == 100)
@@ -944,7 +944,7 @@ try {
 	TB_balance(zz);
 	break;
     case 2:
-	SMETANA_TRACE("ns.rank2: main loop done after " + iter + " iterations, calling LR_balance");
+	// SMETANA_TRACE("ns.rank2: main loop done after " + iter + " iterations, calling LR_balance");
 	LR_balance(zz);
 	break;
     default:
@@ -1139,15 +1139,15 @@ private static void dumpNegativeSlackEdges(Globals zz, String phase) {
 	    final int slack = SLACK(e);
 	    if (slack < 0) {
 		bad++;
-		SMETANA_TRACE("ns NEGATIVE SLACK " + phase + ": "
-			+ safeName(zz, agtail(e)) + "(rank=" + ND_rank(agtail(e)) + ")"
-			+ " -> " + safeName(zz, aghead(e)) + "(rank=" + ND_rank(aghead(e)) + ")"
-			+ " minlen=" + ED_minlen(e) + " slack=" + slack
-			+ " tree_edge=" + TREE_EDGE(e));
+		// SMETANA_TRACE("ns NEGATIVE SLACK " + phase + ": "
+//			+ safeName(zz, agtail(e)) + "(rank=" + ND_rank(agtail(e)) + ")"
+//			+ " -> " + safeName(zz, aghead(e)) + "(rank=" + ND_rank(aghead(e)) + ")"
+//			+ " minlen=" + ED_minlen(e) + " slack=" + slack
+//			+ " tree_edge=" + TREE_EDGE(e));
 	    }
 	}
     }
-    SMETANA_TRACE("ns dumpNegativeSlackEdges " + phase + ": " + bad + "/" + total + " edges have negative slack");
+    // SMETANA_TRACE("ns dumpNegativeSlackEdges " + phase + ": " + bad + "/" + total + " edges have negative slack");
 }
 
 /*
