@@ -55,15 +55,15 @@ public final class SmetanaDebug {
 	// per JVM run (first call), then appended to and flushed after every line so
 	// content survives even if the test crashes.
 	static public synchronized void TRACE(String s) {
-		try {
-			if (traceWriter == null) {
-				traceWriter = new java.io.PrintWriter(new java.io.FileWriter("smetana.txt", false));
-			}
-			traceWriter.println(s);
-			traceWriter.flush();
-		} catch (java.io.IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if (traceWriter == null) {
+//				traceWriter = new java.io.PrintWriter(new java.io.FileWriter("smetana.txt", false));
+//			}
+//			traceWriter.println(s);
+//			traceWriter.flush();
+//		} catch (java.io.IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	// [DEBUG-2735] Safe replacement for agnameof() in debug traces.
