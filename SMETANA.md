@@ -1135,8 +1135,25 @@ reasonable path is: ship Option A now to unblock Test_5, and leave a note
 (as this section does) for a future session to still chase the Option B
 root cause if the same `ED_to_virt`-chain fragility resurfaces elsewhere.
 
-**Not yet implemented -- awaiting a decision before editing
-`dotsplines__c.java`.**
+**Implemented (July 2026): Option A.** `dotsplines__c.java` gained a new
+private helper `findLabelVnodeByAlg(g, e)`: scans
+`GD_rank(g)[ND_rank(agtail(e)) - 1].v[]` for the node `vn` with
+`ND_alg(vn) == e`, returning `null` if none is found (out-of-range rank, or
+no such node). `make_flat_labeled_edge` now calls this first to resolve
+`ln`, and only falls back to the original `ED_to_virt` chain-walk when it
+returns `null` -- so behavior for every edge not affected by this bug is
+byte-for-byte unchanged. Purely additive, local to `dotsplines__c.java`, no
+other file touched.
+
+**Not yet run.** Next step: rebuild, rerun `zdev.Test_5`, check
+`smetana.txt`'s `make_flat_labeled_edge:` trace line for this edge -- `ln`
+should now resolve to identity hash `767511741` (the rank -1 label vnode,
+coord `(57,122)`) instead of `1441328175` (node A3) -- and visually confirm
+the "b" label now renders above the cluster, matching native Graphviz's
+Test_5 output. Also worth a full Vega regression run afterward: since the
+new lookup only changes `ln` when it finds a node satisfying the
+`ND_alg(vn) == e` invariant that the old chain-walk missed, no diagram
+whose `ED_to_virt` chain was already correct should see any diff.
 
 ---
 
