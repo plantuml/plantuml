@@ -758,6 +758,57 @@ run the full Vega regression suite to confirm no diagram that previously
 laid out correctly changed (the nothing-skipped-on-acyclic-graphs argument
 predicts zero diffs; verify it).
 
+**Result (July 2026): Test_1 CONFIRMED fixed** -- deferred pass skipped the
+conflicting constraints, simplex converged, no more overlapping classes.
+
+---
+
+## Follow-up: Test_3 -- unported checkpath() repair branch (July 2026)
+
+`zdev.Test_3` (8 classes A1..A8 in one package, all on one rank, 5 labeled
+flat edges L1..L5 -- a minimal distillation) crashed with
+`UnsupportedOperationException: 5kcd52bwvbxxs0md0enfs100u` in
+`routespl__c.checkpath()`, reached via `dot_splines -> make_flat_edge ->
+make_flat_labeled_edge -> routesplines`.
+
+**Chain of causation:** the deferred pass skipped the label-position
+constraint `L4(1274247563) -> sh0015` (it would have closed a cycle through
+`sh0015 -> sh0014 -> L5 -> L4`, exactly the Test_1 pattern). With that
+constraint gone, nothing pins L4's x-position near its endpoints: the final
+layout put the L4 label node at x=-30 while its real endpoints sit at
+x=-171 (sh0015) and x=-305 (sh0017) -- **entirely outside their x-span**.
+That's geometrically legal for the simplex, but `make_flat_labeled_edge`
+then builds a box path (endpoint -> label -> endpoint) in which two
+consecutive boxes don't touch vertically (box bi entirely ABOVE box bi+1).
+
+Upstream C handles exactly this in `checkpath()`'s box-repair code ("if
+you've given up on fixing all the bugs, at least try to engineer around
+them!" -- the four disjointness cases l/r/d/u each get a coordinate-swap
+repair). **In the Java port, only l/r/d were ported; the u branch was an
+UNSUPPORTED stub** -- it had simply never been reached before, because
+upstream-built layouts always kept flat-edge labels within their endpoints'
+span, so ba-above-bb never occurred. Our skip made it reachable.
+
+**Fix (faithful port, `routespl__c.java` checkpath()):**
+- the `u == 1` swap branch (mirror of the already-ported `d == 1`);
+- the whole `for (i = 0; i < errs - 1; i++)` midpoint-repair loop (used
+  only when boxes are disjoint on BOTH axes, errs == 2 -- also now
+  reachable for a label pushed both beside and above the next box).
+Both verified line-by-line against `lib/common/routespl.c`. No behavior
+change for paths that never enter these branches.
+
+Expected consequence for Test_3's render: the L4 edge will take a long
+detour to reach its label (the label genuinely sits away from its
+endpoints) -- ugly but coherent, no crash, no overlap. Note this is the
+accepted cost of the deferred-skip strategy; if the detours prove too ugly
+in practice, a future refinement could post-process skipped labels'
+X-coordinates (e.g. clamp the label between its endpoints after rank(),
+since nothing else constrains it), but that's cosmetic and untouched for
+now.
+
+**Not yet run** with the ported branches. Next: rebuild, rerun Test_3,
+confirm the PNG generates, and eyeball the L4 edge.
+
 ---
 
 ## General lessons for future Smetana debugging
