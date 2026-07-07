@@ -900,6 +900,244 @@ The `[DEBUG-flat-label]` traces sprinkled through `dotsplines__c`,
 `position__c` (`set_xcoords`), `flat__c` and `SmetanaEdge` are temporary
 and can be removed once the label is confirmed.
 
+**Result of the re-run: partially fixed, new symptom.** `set_xcoords` now
+runs unconditionally as expected, and the layout/spline dispatch is correct
+(all three edges reach `make_flat_edge`, the labeled one reaches
+`make_flat_labeled_edge`). But the "b" label still does not render. This
+time `SmetanaEdge.drawU`'s trace shows the true state precisely:
+
+```
+_dot_splines: label vnode rank=-1 order=0 coord=(57.0,122.0) feIdentityHash=316335490 ED_label(fe)=present -> copying pos
+make_flat_labeled_edge: e identityHash=316335490 label vnode ln identityHash=1441328175 ln coord=(-10.0,32.0) -> setting ED_label(e).pos
+SmetanaEdge.drawU: link=A3->A2 edgeIdentityHash=316335490 data.label.pos=(41.0,40.0) dimen=(11.0,20.0) set=1
+```
+
+So the label *is* drawn (`set=1`, non-null translate, `drawU` is called on
+it) -- it just gets drawn at the wrong place. `_dot_splines`'s collection
+loop (see `ND_alg(n)!=null` block) correctly copies the real label vnode's
+position (rank -1, coord `(57,122)`) into `ED_label(316335490).pos` first.
+But `make_flat_labeled_edge`, which runs afterward for the same edge,
+**overwrites** that with `ND_coord(ln)` where `ln identityHash=1441328175`
+-- and `1441328175` is not the label vnode at all, it is node **A3** itself
+(rank 0, x=-10 -- the leftmost class in the row). The label ends up placed
+on top of / behind A3's box, hence invisible.
+
+### Root cause: `ln = agtail(f)` resolves to the wrong node for an
+### equivalent-duplicate labeled flat edge
+
+`make_flat_labeled_edge(zz, g, sp, P, e, et)` (`dotsplines__c.java`)
+resolves the label node by walking `ED_to_virt`:
+
+```java
+for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));
+ln = agtail(f);
+ED_label(e).pos.___(ND_coord(ln));
+```
+
+This assumes the `ED_to_virt` chain starting at `e` always terminates at an
+edge whose tail is `e`'s own label vnode. That invariant holds when
+`flat_node(e)` is the thing that populated `ED_to_virt(e)` -- which is what
+happens for an *ordinary* labeled flat edge. But `e` here (`316335490`,
+`A3->A2 : b`) is an **equivalent duplicate** of the earlier, unlabeled
+parallel edge `A3->A2` (`34073107`, the representative in `ND_flat_out`);
+`e` itself only lives in `ND_other`. Tracing `new_virtual_edge()`
+(`fastgr__c.java`):
+
+```java
+if (ED_to_virt(orig) == null)
+    ED_to_virt(orig, e);
+```
+
+`ED_to_virt(orig)` is only ever set the *first* time an original edge gets a
+virtual edge attached to it. By the time `flat_node(316335490)` runs (in
+`flat_edges()`'s second loop, over `ND_other`) and calls
+`virtual_edge(vn, agtail(e), e)` / `virtual_edge(vn, aghead(e), e)` with
+`orig = e = 316335490`, nothing has touched `ED_to_virt(316335490)` before,
+so on the face of it this *should* work and set
+`ED_to_virt(316335490) = ve` with `agtail(ve) = vn` (the real label vnode,
+`767511741` in the `_dot_splines` trace above).
+
+The actual failure mode was **not fully re-derived from the trace this
+session** -- what the trace conclusively shows is the *symptom*
+(`ln identityHash=1441328175` resolves to A3, not to any rank -1 node) and
+the *mechanism* used to reach `ln` (the `ED_to_virt` walk). What is not yet
+proven line-by-line is exactly *which* earlier step caused
+`ED_to_virt(316335490)` to end up pointing into a chain that terminates at
+A3 instead of at `767511741`. Plausible candidates, not yet individually
+eliminated:
+- something in the equivalence-class handling for parallel flat edges
+  (`edgecmp`/the dispatch loop in `_dot_splines`, or an earlier
+  `ED_to_virt`/`ED_to_orig` wiring step for `ND_other` duplicates) sets
+  `ED_to_virt(316335490)` to point at the *representative* edge's own
+  virtual/flat-order machinery before `flat_node` runs, so
+  `new_virtual_edge`'s `if (ED_to_virt(orig) == null)` guard is already
+  false and the label vnode's edge never gets linked in;
+- a variant of the same idea: `316335490` could be sharing `ED_to_virt`
+  with the representative `34073107` via some other merge path (e.g.
+  `merge_oneway`/`basic_merge` in `fastgr__c.java`), whose chain
+  legitimately terminates at a real node (A3) because *that* edge has no
+  label of its own.
+- alternatively, the label vnode's own two `FLATORDER` virtual edges
+  (`virtual_edge(vn, agtail(e), e)` / `virtual_edge(vn, aghead(e), e)`,
+  both created inside `flat_node(316335490)`) could be getting attached
+  correctly, but the **first** one found by the `for (f = ED_to_virt(e);
+  ED_to_virt(f)!=null; f = ED_to_virt(f))` walk is not the one whose
+  `agtail` is `vn` -- e.g. if the walk takes more than one hop and a
+  *second*-hop edge's tail happens to be A3.
+
+Either way, the practical, trace-confirmed fact to design a fix around is:
+**the position `_dot_splines` already computed via `ND_alg(n)` (rank -1,
+`(57,122)`) is correct, and `make_flat_labeled_edge`'s independent
+`ED_to_virt`-chain-based recomputation of the same position is the one that
+is wrong for this specific edge.** The two code paths are computing the
+same quantity (the label vnode's coordinate) via two different routes, and
+only one of the routes is reliable here.
+
+---
+
+## Two candidate fixes for the Test_5 label-placement bug (not yet chosen)
+
+Both target `make_flat_labeled_edge` in `dotsplines__c.java`. Written up
+before implementing either, per request, so the trade-offs are on record
+before any code changes.
+
+### Option A -- make `make_flat_labeled_edge` trust `_dot_splines`'s already-correct position, resolve `ln` by invariant instead of by chain-walk
+
+**What it does.** `flat_node(e)` documents its own vnode with: *"This node
+is characterized by being virtual and having a non-NULL `ND_alg` pointing to
+e"* (see the docstring on `flat_node` in `flat__c.java`). That is a
+structural invariant, independent of `ED_to_virt`. So instead of trusting
+the `ED_to_virt` walk to find `ln`, search for the node `vn` in the
+`ND_rank(agtail(e)) - 1` rank array such that `ND_alg(vn) == e`, and use
+*that* as `ln`. Concretely:
+
+```java
+ST_Agnode_s ln = findLabelVnodeByAlg(g, e); // new helper: scan GD_rank(g)[ND_rank(agtail(e))-1].v[] for ND_alg(v)==e
+if (ln == null) {
+    // fall back to the existing ED_to_virt walk, unchanged, so any case
+    // this invariant doesn't cover keeps today's behavior
+    for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));
+    ln = agtail(f);
+}
+```
+
+`ln` is then used, as today, both for `ED_label(e).pos` and for the box
+geometry (`lb.LL.x = ND_coord(ln).x - ND_lw(ln)`, etc.) that routes the
+spline around the label.
+
+**Advantages**
+- Directly matches the one authoritative invariant Graphviz itself
+  documents for this node (`ND_alg(vn) == e`), rather than relying on a
+  side effect of `ED_to_virt` wiring that turns out to be fragile for
+  parallel/equivalent-duplicate edges.
+- Fully local to `make_flat_labeled_edge`: no change to `flat_node`,
+  `new_virtual_edge`, edge-equivalence handling, or anything else that
+  other diagrams' layouts currently depend on. Minimal blast radius.
+- Self-healing for the *actual* root cause regardless of which of the
+  candidate mechanisms above turns out to be the real one -- all the
+  failure modes considered produce a wrong `ln` via the chain walk, and
+  all of them leave `ND_alg` correctly pointing at `e` (that part of
+  `flat_node` is not in question; it's exactly what the
+  already-successful `_dot_splines` copy relies on).
+- Falls back to today's exact behavior when the invariant search finds
+  nothing, so it cannot make any currently-working diagram worse -- purely
+  additive.
+- Cheap: one bounded scan over a single rank's node array (typically
+  tiny), no new state, no risk to other edges' `ED_to_virt` chains.
+
+**Disadvantages**
+- Doesn't explain *why* the `ED_to_virt` chain is wrong here -- ships a
+  targeted workaround without having root-caused the wiring bug itself.
+  Per lesson 8 in this file ("read hypotheses critically"), that leaves an
+  open question for a future session: if the same wiring bug affects
+  something *other* than `ln` resolution (anything else that also walks
+  `ED_to_virt(e)` for a labeled `ND_other` duplicate), this fix won't
+  catch it, because it only patches this one call site.
+- Introduces a second, parallel way of finding "the" label vnode
+  (invariant-search vs. chain-walk) in the same function, rather than
+  unifying on one mechanism -- a maintainability/readability cost: a
+  future reader has to understand why there are two paths and when each
+  is taken.
+- The new helper must scan `GD_rank(g)[r].v[]` for `r = ND_rank(agtail(e))
+  - 1`; this assumes the label vnode always lives in exactly that rank
+  (true per `flat_node`'s own `r - 1` placement, but worth stating
+  explicitly since the helper hard-codes it).
+
+### Option B -- fix the root wiring so `ED_to_virt(e)` always points at `e`'s own label vnode edge
+
+**What it does.** Go back to wherever `ED_to_virt(316335490)` is set (or
+pre-empted) before `flat_node(316335490)` runs, and ensure that for a
+labeled flat edge that is about to get its *own* label vnode via
+`flat_node`, its `ED_to_virt` ends up pointing at that vnode's edge --
+matching the intent of `new_virtual_edge`'s `if (ED_to_virt(orig) == null)`
+guard, which implicitly assumes no earlier step has already claimed this
+edge's `ED_to_virt` slot for an unrelated purpose. Concretely this would
+mean either:
+- finding and fixing whatever upstream step (equivalence-class handling,
+  `merge_oneway`, or similar) writes to `ED_to_virt(316335490)` before
+  `flat_node` runs, so that it doesn't, for a labeled duplicate that is
+  about to get its own vnode; or
+- relaxing/overriding the guard in `flat_node`'s call so that its own
+  `virtual_edge(vn, ..., e)` call always (re)wins the `ED_to_virt(e)` slot
+  for a labeled edge, even if something else set it first.
+
+**Advantages**
+- Fixes the problem at its actual source rather than compensating for it
+  downstream -- if the same broken `ED_to_virt` chain is read anywhere
+  else in the codebase (now or in a future change), that call site is
+  fixed too, for free.
+- Keeps `make_flat_labeled_edge` itself untouched and faithful to upstream
+  C, preserving the "matches Graphviz line-for-line" property that has
+  been valuable throughout this debugging file for reasoning about
+  Smetana vs. native `dot` behavior.
+- Conceptually more satisfying: restores the invariant `new_virtual_edge`'s
+  own guard comment assumes, rather than adding a second lookup path that
+  routes around a known-broken one.
+
+**Disadvantages**
+- Root cause not yet fully identified (see the open candidates above) --
+  implementing this option means first finishing that investigation, which
+  costs more session time than Option A before any code is written.
+- Higher blast radius: `ED_to_virt` is read all over `dotsplines__c.java`
+  (`make_flat_edge`'s adjacency/equivalence-class dispatch, `edgecmp`,
+  `checkFlatAdjacent`, `make_regular_edge`'s multi-rank walk, etc.) and by
+  `position__c.java`'s constraint-building code. Changing *when* or *how*
+  it gets set for equivalent-duplicate labeled flat edges risks perturbing
+  the equivalence-class grouping itself (i.e. which edges get batched
+  together for shared routing) for diagrams that currently render
+  correctly -- exactly the kind of regression the Vega regression suite
+  exists to catch, but only after the fact.
+- If the real cause is a merge (`merge_oneway`/`basic_merge`) sharing
+  `ED_to_virt` between the representative edge and its duplicate for
+  reasons that matter elsewhere (e.g. weight/count aggregation for the
+  *unlabeled* parallel-edge case), "fixing" it to special-case labeled
+  duplicates could itself be a deviation from upstream C's actual intended
+  behavior rather than a bug fix -- same risk this file has already hit
+  once before (see the `virtual_node()` id=0 correction note near the top:
+  an initially-plausible "fix" turned out to be a deviation from
+  intentional upstream behavior once the real C was read closely enough).
+- More invasive to test in isolation: a fix at the wiring level needs its
+  own re-verification against the *representative* edge's rendering too
+  (does `34073107`, the unlabeled `A3->A2`, still route correctly?), not
+  just the labeled duplicate's label placement.
+
+### Recommendation (not yet acted on)
+
+Option A is the safer next step given where the investigation currently
+stands: it is local, additive, falls back to today's behavior everywhere
+it doesn't apply, and fixes the symptom via an invariant Graphviz itself
+already documents as authoritative for this exact node (`flat_node`'s
+`ND_alg(vn) == e` docstring). Option B is the more "complete" fix in
+spirit but requires finishing the root-cause trace first (which of the
+candidate mechanisms above is the actual culprit) before it can be
+implemented safely, and touches code with a much wider blast radius. A
+reasonable path is: ship Option A now to unblock Test_5, and leave a note
+(as this section does) for a future session to still chase the Option B
+root cause if the same `ED_to_virt`-chain fragility resurfaces elsewhere.
+
+**Not yet implemented -- awaiting a decision before editing
+`dotsplines__c.java`.**
+
 ---
 
 ## General lessons for future Smetana debugging
