@@ -1300,6 +1300,37 @@ LEAVING("fybar4mljnmkh3kure5k1eod","makeFlatEnd");
 
 
 
+/* findLabelVnodeByAlg:
+ * [FIX-flat-label] Not part of upstream Graphviz -- Option A mitigation for
+ * the Test_5 label-placement bug documented in SMETANA.md. flat_node()
+ * (flat__c.java) documents its own label vnode as "characterized by being
+ * virtual and having a non-NULL ND_alg pointing to e" -- a structural
+ * invariant independent of ED_to_virt wiring. This scans the rank directly
+ * above e's real endpoints (the rank flat_node() always places a flat-edge
+ * label vnode into: r = ND_rank(agtail(e)) - 1) for the node satisfying
+ * that invariant, instead of trusting the ED_to_virt chain from e (which
+ * can be wrong for an "equivalent duplicate" labeled flat edge living in
+ * ND_other -- see SMETANA.md for the confirmed trace). Returns null if no
+ * such node is found (e.g. r is out of range, or this invariant genuinely
+ * doesn't apply), so callers fall back to the original chain-walk.
+ */
+private static ST_Agnode_s findLabelVnodeByAlg(ST_Agraph_s g, ST_Agedge_s e) {
+    final int r = ND_rank(agtail(e)) - 1;
+    if (r < GD_minrank(g))
+	return null;
+    final CArrayOfStar<ST_Agnode_s> v = GD_rank(g).get__(r).v;
+    final int n = GD_rank(g).get__(r).n;
+    for (int i = 0; i < n; i++) {
+	final ST_Agnode_s cand = v.get_(i);
+	if (cand != null && ND_alg(cand) == e)
+	    return cand;
+    }
+    return null;
+}
+
+
+
+
 //3 w8ptjibydq995d2lexg85mku
 // static void make_flat_labeled_edge(graph_t* g, spline_info_t* sp, path* P, edge_t* e, int et) 
 @Unused
@@ -1317,8 +1348,23 @@ try {
     final CArray<ST_pointf> points = CArray.<ST_pointf>ALLOC__(7, ZType.ST_pointf);
     tn = agtail(e);
     hn = aghead(e);
-    for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));
-    ln = agtail(f);
+    // [FIX-flat-label] Option A (see SMETANA.md, Test_5 label-placement bug):
+    // resolve the label vnode ln via the structural invariant flat_node()
+    // documents for it ("characterized by being virtual and having a
+    // non-NULL ND_alg pointing to e") instead of trusting the ED_to_virt
+    // chain-walk below. For an "equivalent duplicate" labeled flat edge (one
+    // that lives in ND_other because an earlier, unlabeled parallel edge is
+    // the ND_flat_out representative), that chain can terminate at a real
+    // endpoint node instead of at this edge's own label vnode -- confirmed
+    // by the Test_5 trace in SMETANA.md (ln resolved to node A3 instead of
+    // the rank -1 label vnode). Falls back to the original chain-walk when
+    // the invariant search finds nothing, so this is purely additive and
+    // cannot change behavior for any edge not affected by that bug.
+    ln = findLabelVnodeByAlg(g, e);
+    if (ln == null) {
+	for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));
+	ln = agtail(f);
+    }
     // [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
     smetana.core.debug.SmetanaDebug.SMETANA_TRACE("make_flat_labeled_edge: e identityHash=" + System.identityHashCode(e)
 	    + " label vnode ln identityHash=" + System.identityHashCode(ln)
