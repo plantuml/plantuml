@@ -12,14 +12,14 @@
 
 - `smetana/b_ig/bigemi-38-mopi802.puml`
 - `smetana/f_ep/fepuvo-06-rugi981.puml`
+- `smetana/g_ep/gepuko-44-gizi401.puml`
 - `smetana/k_ip/kipive-74-lele070.puml`
 - `smetana/k_ok/kokebo-27-vafi688.puml`
-- `smetana/k_ov/kovaxi-11-reti348.puml`
 - `smetana/s_od/sodoza-93-nanu557.puml`
 - `smetana/s_uz/suzifi-02-jeca455.puml`
-- `smetana/v_ud/vudaco-87-nufo941.puml`
-- `smetana/x_ed/xedufu-71-zare275.puml`
-- `smetana/z_id/zidebi-71-nocu387.puml`
+- `smetana/x_ag/xagonu-36-sudi116.puml`
+- `smetana/z_uz/zuzura-28-telu962.puml`
+- `svg/interactive/SVG0004_Svek.puml`
 
 </details>
 <details>

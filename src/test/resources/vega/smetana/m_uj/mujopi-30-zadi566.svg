@@ -27,9 +27,9 @@
       <text fill="#000" font-size="13" textLength="33.963" x="113.5" y="22.264">works</text>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="extension" id="lnk6">
-      <polygon fill="none" points="153.867,35.043,148.223,16.928,138.483,23.938,153.867,35.043" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M42.053,77.337 C67.559,46.507 114.787,0 148.5,29.153 C149.557,30.067 150.542,31.036 151.46,32.055 C151.919,32.564 152.361,33.086 152.787,33.618 C152.999,33.885 153.208,34.154 153.413,34.426 C153.515,34.562 153.617,34.699 153.717,34.836 C153.767,34.905 143.303,20.364 143.353,20.433" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-size="13" textLength="55.25" x="102.5" y="22.264">don't work</text>
+      <polygon fill="none" points="142.87,35.965,134.074,19.154,125.746,27.794,142.87,35.965" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M23.514,76.987 C24.619,60.671 29.101,40.171 43.5,29.153 C78.331,2.5 109.456,5.751 142,35.153 C142.236,35.366 142.469,35.582 142.699,35.801 C142.756,35.855 129.853,23.419 129.91,23.474" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="55.25" x="45.5" y="22.264">don't work</text>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0004" data-link-type="extension" id="lnk7">
       <polygon fill="none" points="96.923,101.153,78.923,95.153,78.923,107.153,96.923,101.153" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

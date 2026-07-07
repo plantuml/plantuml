@@ -202,7 +202,7 @@
     <g class="link" data-entity-1="ent0016" data-entity-2="ent0012" data-link-type="dependency" id="lnk21">
       <polygon fill="#181818" points="1325.052,99.779,1324.385,89.953,1322.716,95.358,1317.311,93.69,1325.052,99.779" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
       <path d="M908.277,110.195 C965.967,83.662 1050.633,49.326 1129,35.009 C1189.335,23.986 1212.599,6.684 1267,35.009 C1293.259,48.681 1310.079,71.439 1322.716,95.358" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-size="13" textLength="56.388" x="1213" y="20.12">rightNode</text>
+      <text fill="#000" font-size="13" textLength="56.388" x="910" y="20.12">rightNode</text>
     </g>
     <g class="link" data-entity-1="ent0011" data-entity-2="ent0002" data-link-type="dependency" id="lnk22">
       <polygon fill="#181818" points="672.862,78.748,682.51,76.771,676.93,75.842,677.86,70.262,672.862,78.748" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>

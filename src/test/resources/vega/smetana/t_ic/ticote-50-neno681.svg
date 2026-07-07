@@ -34,9 +34,9 @@
       <text fill="#000" font-size="13" textLength="21.694" x="111" y="12.111">bbb</text>
     </g>
     <g class="link" data-entity-1="ent0001" data-entity-2="ent0002" data-link-type="dependency" id="lnk4">
-      <polygon fill="#181818" points="156.327,34.955,156.117,25.109,154.199,30.43,148.877,28.513,156.327,34.955" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
-      <path d="M55.047,37.361 C69.62,26.055 89.095,13.461 109,8 C119.715,5.06 124.335,2.519 134,8 C144.32,13.853 149.395,20.214 154.199,30.43" fill="none" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-size="13" textLength="28.925" x="107.5" y="12.111">bbb1</text>
+      <polygon fill="#181818" points="139.985,35.753,135.58,26.944,136.125,32.575,130.495,33.12,139.985,35.753" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M38.445,34.966 C43.15,24.752 50.245,13.865 60.5,8 C72.846,0.939 78.925,3.759 92.5,8 C110.046,13.481 123.103,21.851 136.125,32.575" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="28.925" x="62.5" y="12.111">bbb1</text>
     </g>
     <g class="link" data-entity-1="ent0005" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
       <polygon fill="#181818" points="139.988,59,130.988,55,134.988,59,130.988,63,139.988,59" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
