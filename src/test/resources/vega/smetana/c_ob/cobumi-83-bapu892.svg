@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="243px" preserveAspectRatio="none" style="width:1658px;height:243px;background:#FFFFFF;" version="1.1" viewBox="0 0 1658 243" width="1658px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <!--cluster entities-->
+    <g class="cluster" data-qualified-name="entities" data-source-line="1" id="ent0001">
+      <path d="M16.5,33.009 L61.863,33.009 A3.75,3.75 0 0 1 64.363,35.509 L71.363,53.009 L1647.5,53.009 A2.5,2.5 0 0 1 1650,55.509 L1650,216.509 A2.5,2.5 0 0 1 1647.5,219.009 L16.5,219.009 A2.5,2.5 0 0 1 14,216.509 L14,35.509 A2.5,2.5 0 0 1 16.5,33.009" fill="#DDD" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="14" x2="71.363" y1="53.009" y2="53.009"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="44.363" x="18" y="45.898">entities</text>
+    </g>
+    <!--cluster mindmap-->
+    <g class="cluster" data-qualified-name="entities.mindmap" data-source-line="33" id="ent0010">
+      <path d="M762.5,58.009 L821.075,58.009 A3.75,3.75 0 0 1 823.575,60.509 L830.575,78.009 L1639.5,78.009 A2.5,2.5 0 0 1 1642,80.509 L1642,195.509 A2.5,2.5 0 0 1 1639.5,198.009 L762.5,198.009 A2.5,2.5 0 0 1 760,195.509 L760,60.509 A2.5,2.5 0 0 1 762.5,58.009" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <line style="stroke:#000;stroke-width:1.5;" x1="760" x2="830.575" y1="78.009" y2="78.009"/>
+      <text fill="#000" font-size="14" font-weight="700" textLength="57.575" x="764" y="70.898">mindmap</text>
+    </g>
+    <!--class FcUser-->
+    <g class="entity" data-qualified-name="entities.FcUser" data-source-line="3" id="ent0002">
+      <rect fill="#F1F1F1" height="132" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="305.738" x="444" y="79.009"/>
+      <ellipse cx="570.044" cy="95.009" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="565.044" y="100.009">C</text>
+      <text fill="#000" font-size="14" textLength="45.15" x="590.544" y="98.898">FcUser</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="445" x2="748.738" y1="111.009" y2="111.009"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="455" cy="123.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="66.238" x="464" y="125.898">String login</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="455" cy="137.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="71.575" x="464" y="139.898">String name</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="455" cy="151.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="70.087" x="464" y="153.898">String email</text>
+      <g data-visibility-modifier="PACKAGE_PRIVATE_FIELD">
+        <polygon fill="none" points="455,161.509,451,167.509,459,167.509" style="stroke:#1963A0;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="279.738" x="464" y="167.898">String passwordHash = md5 of "login:password"</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="445" x2="748.738" y1="175.009" y2="175.009"/>
+      <text fill="#000" font-size="14" textLength="207.113" x="450" y="189.898">boolean checkPassowd(String pw)</text>
+      <text fill="#000" font-size="14" textLength="169.663" x="450" y="203.898">void setPassword(String pw)</text>
+    </g>
+    <!--class Card-->
+    <g class="entity" data-qualified-name="entities.Card" data-source-line="12" id="ent0003">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.937" x="304.5" y="107.009"/>
+      <ellipse cx="345.859" cy="123.009" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="340.859" y="128.009">C</text>
+      <text fill="#000" font-size="14" textLength="30.363" x="365.716" y="126.898">Card</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="305.5" x2="424.438" y1="139.009" y2="139.009"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="315.5" cy="151.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="93.275" x="324.5" y="153.898">String frontHtml</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="315.5" cy="165.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="94.937" x="324.5" y="167.898">String backHtml</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="305.5" x2="424.438" y1="175.009" y2="175.009"/>
+    </g>
+    <!--class Answer-->
+    <g class="entity" data-qualified-name="entities.Answer" data-source-line="17" id="ent0004">
+      <rect fill="#F1F1F1" height="76" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="120.063" x="138" y="107.009"/>
+      <ellipse cx="171.602" cy="123.009" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="166.602" y="128.009">C</text>
+      <text fill="#000" font-size="14" textLength="46.725" x="189.736" y="126.898">Answer</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139" x2="257.063" y1="139.009" y2="139.009"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="149" cy="151.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="80.763" x="158" y="153.898">int rating [0..3]</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="149" cy="165.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="94.063" x="158" y="167.898">Date timestamp</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="139" x2="257.063" y1="175.009" y2="175.009"/>
+    </g>
+    <!--class Category-->
+    <g class="entity" data-qualified-name="entities.Category" data-source-line="25" id="ent0007">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.575" x="22" y="114.009"/>
+      <ellipse cx="40.954" cy="130.009" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="35.954" y="135.009">C</text>
+      <text fill="#000" font-size="14" textLength="56.787" x="55.833" y="133.898">Category</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="118.575" y1="146.009" y2="146.009"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="33" cy="158.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="71.575" x="42" y="160.898">String name</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="118.575" y1="168.009" y2="168.009"/>
+    </g>
+    <!--class MindMap-->
+    <g class="entity" data-qualified-name="entities.mindmap.MindMap" data-source-line="34" id="ent0011">
+      <rect fill="#F1F1F1" height="62" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.575" x="1536" y="114.009"/>
+      <ellipse cx="1554.6" cy="130.009" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1549.6" y="135.009">C</text>
+      <text fill="#000" font-size="14" textLength="57.575" x="1569.4" y="133.898">MindMap</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1537" x2="1632.575" y1="146.009" y2="146.009"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="1547" cy="158.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="71.575" x="1556" y="160.898">String name</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1537" x2="1632.575" y1="168.009" y2="168.009"/>
+    </g>
+    <!--class MindMapNode-->
+    <g class="entity" data-qualified-name="entities.mindmap.MindMapNode" data-source-line="38" id="ent0012">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="135.113" x="1276.5" y="100.009"/>
+      <ellipse cx="1296.911" cy="116.009" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1291.911" y="121.009">A</text>
+      <text fill="#000" font-size="14" font-style="italic" textLength="91.088" x="1312.114" y="119.898">MindMapNode</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1277.5" x2="1410.613" y1="132.009" y2="132.009"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="1287.5" cy="144.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="49.088" x="1296.5" y="146.898">double x</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="1287.5" cy="158.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="49.088" x="1296.5" y="160.898">double y</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="1287.5" cy="172.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="109.113" x="1296.5" y="174.898">boolean collapsed</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1277.5" x2="1410.613" y1="182.009" y2="182.009"/>
+    </g>
+    <!--class MindMapCard-->
+    <g class="entity" data-qualified-name="entities.mindmap.MindMapCard" data-source-line="45" id="ent0014">
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="119.938" x="1138" y="121.009"/>
+      <ellipse cx="1153" cy="137.009" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="1148" y="142.009">C</text>
+      <text fill="#000" font-size="14" textLength="87.938" x="1167" y="140.898">MindMapCard</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1139" x2="1256.938" y1="153.009" y2="153.009"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="1139" x2="1256.938" y1="161.009" y2="161.009"/>
+    </g>
+    <!--class MindMapLink-->
+    <g class="entity" data-qualified-name="entities.mindmap.MindMapLink" data-source-line="47" id="ent0016">
+      <rect fill="#F1F1F1" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="139.663" x="768" y="100.009"/>
+      <ellipse cx="793.963" cy="116.009" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="788.963" y="121.009">C</text>
+      <text fill="#000" font-size="14" textLength="83.3" x="810.399" y="119.898">MindMapLink</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="769" x2="906.663" y1="132.009" y2="132.009"/>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="779" cy="144.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="59.063" x="788" y="146.898">String text</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="779" cy="158.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="105.088" x="788" y="160.898">boolean leftArrow</text>
+      <g data-visibility-modifier="PUBLIC_FIELD">
+        <ellipse cx="779" cy="172.509" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1;"/>
+      </g>
+      <text fill="#000" font-size="14" textLength="113.663" x="788" y="174.898">boolean rightArrow</text>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="769" x2="906.663" y1="182.009" y2="182.009"/>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0003" data-link-type="dependency" id="lnk5">
+      <polygon fill="#181818" points="304.237,145.009,295.237,141.009,299.237,145.009,295.237,149.009,304.237,145.009" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M258.291,145.009 C273.239,145.009 284.266,145.009 299.237,145.009" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="268.75" y="137.12">card</text>
+    </g>
+    <g class="link" data-entity-1="ent0004" data-entity-2="ent0002" data-link-type="dependency" id="lnk6">
+      <polygon fill="#181818" points="519.003,78.728,513.905,70.301,514.9,75.87,509.332,76.865,519.003,78.728" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M219.687,106.755 C236.547,81.199 262.511,49.676 295,35.009 C351.306,9.589 374.924,16.94 434,35.009 C464.035,44.195 489.431,58.127 514.9,75.87" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="1077.5" y="20.12">user</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0002" data-link-type="dependency" id="lnk8">
+      <polygon fill="#181818" points="519.003,78.728,513.905,70.301,514.9,75.87,509.332,76.865,519.003,78.728" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M77.951,113.946 C85.622,87.794 100.808,52.015 129,35.009 C187.036,0 369.186,15.185 434,35.009 C464.035,44.195 489.431,58.127 514.9,75.87" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="35.425" x="1033.5" y="20.12">owner</text>
+    </g>
+    <g class="link" data-entity-1="ent0007" data-entity-2="ent0003" data-link-type="dependency" id="lnk9">
+      <polygon fill="#181818" points="77.951,113.946,84.323,106.436,79.359,109.148,76.646,104.184,77.951,113.946" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M79.359,109.148 C87.03,82.997 100.808,52.015 129,35.009 C181.518,3.329 211.035,9.915 267,35.009 C299.673,49.659 325.919,81.184 342.996,106.745" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="49.806" x="975.5" y="20.12">category</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0012" data-link-type="extension" id="lnk13">
+      <polygon fill="none" points="1411.8,147.411,1429.646,153.855,1429.943,141.859,1411.8,147.411" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1535.69,146.94 C1522.326,147.382 1507.861,147.787 1494.5,148.009 C1467.455,148.457 1455.673,148.498 1429.794,147.857" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0012" data-link-type="extension" id="lnk15">
+      <polygon fill="none" points="1276.273,145.009,1258.273,139.009,1258.273,151.009,1276.273,145.009" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1258.168,145.009 C1264.203,145.009 1252.238,145.009 1258.273,145.009" fill="none" style="stroke:#181818;stroke-width:1;"/>
+    </g>
+    <g class="link" data-entity-1="ent0014" data-entity-2="ent0003" data-link-type="dependency" id="lnk17">
+      <polygon fill="#181818" points="378.098,106.842,385.334,100.16,380.077,102.25,377.987,96.993,378.098,106.842" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1152.359,120.98 C1098.036,93.857 1003.744,51.382 917,35.009 C864.374,25.075 481.947,9.237 435,35.009 C407.319,50.204 390.999,76.911 380.077,102.25" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="25.269" x="1111.5" y="20.12">card</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0012" data-link-type="dependency" id="lnk18">
+      <polygon fill="#181818" points="1411.733,160.474,1421.38,162.457,1416.618,159.405,1419.67,154.642,1411.733,160.474" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1411.733,129.544 C1422.298,131.856 1429.5,137.011 1429.5,145.009 C1429.5,153.007 1427.182,157.093 1416.618,159.405" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="36.806" x="1431.5" y="148.62">parent</text>
+    </g>
+    <g class="link" data-entity-1="ent0012" data-entity-2="ent0011" data-link-type="dependency" id="lnk19">
+      <polygon fill="#181818" points="1411.773,145.009,1420.773,149.009,1416.773,145.009,1420.773,141.009,1411.773,145.009" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1416.773,145.009 C1456.173,145.009 1499.941,145.009 1535.684,145.009" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="45.581" x="1451.25" y="137.12">children</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0012" data-link-type="dependency" id="lnk20">
+      <polygon fill="#181818" points="1325.052,99.779,1324.385,89.953,1322.716,95.358,1317.311,93.69,1325.052,99.779" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M908.277,110.195 C965.967,83.662 1050.633,49.326 1129,35.009 C1189.335,23.986 1212.599,6.684 1267,35.009 C1293.259,48.681 1310.079,71.439 1322.716,95.358" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="48.425" x="1217" y="20.12">leftNode</text>
+    </g>
+    <g class="link" data-entity-1="ent0016" data-entity-2="ent0012" data-link-type="dependency" id="lnk21">
+      <polygon fill="#181818" points="1325.052,99.779,1324.385,89.953,1322.716,95.358,1317.311,93.69,1325.052,99.779" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M908.277,110.195 C965.967,83.662 1050.633,49.326 1129,35.009 C1189.335,23.986 1212.599,6.684 1267,35.009 C1293.259,48.681 1310.079,71.439 1322.716,95.358" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="56.388" x="1213" y="20.12">rightNode</text>
+    </g>
+    <g class="link" data-entity-1="ent0011" data-entity-2="ent0002" data-link-type="dependency" id="lnk22">
+      <polygon fill="#181818" points="672.862,78.748,682.51,76.771,676.93,75.842,677.86,70.262,672.862,78.748" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+      <path d="M1565.647,113.887 C1547.112,87.311 1516.465,50.935 1479,35.009 C1405.069,3.581 832.683,11.068 756,35.009 C726.522,44.212 701.765,58.1 676.93,75.842" fill="none" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-size="13" textLength="35.425" x="1163.5" y="20.12">owner</text>
+    </g>
+  </g>
+</svg>
