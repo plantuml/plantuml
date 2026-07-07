@@ -809,6 +809,97 @@ now.
 **Not yet run** with the ported branches. Next: rebuild, rerun Test_3,
 confirm the PNG generates, and eyeball the L4 edge.
 
+**Result (July 2026): Test_3 CONFIRMED fixed** -- PNG generates, no crash.
+
+---
+
+## Follow-up: Test_5 -- abomination() trigger missing ND_other scan (July 2026)
+
+`zdev.Test_5` (`A1->A2`, `A3->A2`, `A3->A2 : b` -- two *parallel* flat edges
+between A3 and A2, the second one labeled) crashed with
+`ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 2` in
+`flat__c.flat_limits()` (`GD_rank(g).get__(r).v` with `r=-1`), via
+`flat_node <- flat_edges`.
+
+**Root cause (verified against `lib/dotgen/flat.c` line by line -- this gap
+exists upstream too, not a translation bug):** for two parallel flat edges
+between the same node pair, Graphviz picks one as the "representative"
+(goes into `ND_flat_out`/`ND_flat_in`) and leaves the other as an
+"equivalent duplicate" in `ND_other`. Here the *unlabeled* `A3->A2` becomes
+the representative (created first in the `.puml`) and the *labeled*
+`A3->A2 : b` ends up in `ND_other`.
+
+`flat_edges()`'s guard that decides whether to allocate the special "rank
+-1" (via `abomination()`) only scans `ND_flat_in(n)` for a labeled,
+non-adjacent edge -- it never sees the labeled duplicate sitting in
+`ND_other`. So `abomination()` never runs and `GD_minrank(g)` stays 0. But
+the second loop, later in the same function, which actually calls
+`flat_node()`, scans **both** `ND_flat_out(n)` and `ND_other(n)` -- finds
+the labeled duplicate, calls `flat_node()` on it, which computes
+`r = ND_rank(agtail(e)) - 1 = -1` and indexes `GD_rank(g).get__(-1))` on a
+rank array that was never extended to include index -1. Crash.
+
+**Fix (`flat__c.java`, deliberate departure from upstream, since upstream
+has the identical gap and we can't verify whether native `dot` also
+mishandles this exact input):** added a second scan of `ND_other(n)`,
+mirroring the one in the later loop, to the `abomination()`-trigger block,
+so both loops agree on what counts as "a labeled flat edge needing rank
+-1". `ED_adjacent(e)` is already valid at that point (computed for every
+`ND_other` edge by the `checkFlatAdjacent()` loop just above). This can
+only cause `abomination()` to run in *more* cases than before (never
+fewer), so it cannot affect any diagram that previously worked.
+
+**Not yet run.** Next: rebuild, rerun Test_5, confirm the PNG generates.
+
+---
+
+## Test_5 (bis): flat-edge label not rendered -- investigation log (July 2026)
+
+After the abomination() fix, Test_5 rendered a coherent layout but the "b"
+label of the flat edge `A3->A2 : b` was missing (native GraphViz Test_5a
+displays it, at the top, above the cluster -- same topology as Smetana's).
+
+Investigation (traces via the renamed `SmetanaDebug.SMETANA_TRACE`):
+
+1. Verified the whole label pipeline is faithfully ported: `_dot_splines`'s
+   collection loop copies the label vnode's coord into `ED_label(fe).pos`;
+   `make_flat_labeled_edge` does the same from `ln`; `place_vnlabel` correctly
+   skips flat-label vnodes (`ND_in(n).size == 0` guard present);
+   `SmetanaEdge.drawU`/`BoxInfo.fromTextlabel` draw `data.label` at
+   `label.pos`. Also noted in passing: `edgecmp`'s label-pointer comparison
+   (`et0 == FLATEDGE` after `et0` was reassigned to `& GRAPHTYPEMASK`) is
+   dead code in upstream C too -- the Java `UNSUPPORTED` there is unreachable.
+2. Runtime traces then showed the REAL blocker: at spline time,
+   `ND_rank` of the three normal nodes still held their X coordinates
+   (-10/57/124) while the label vnode was correctly restored to rank -1. So
+   the dispatch saw |deltaRank|=67, sent a *flat* edge into
+   `make_regular_edge`'s multi-rank (hackflag) branch: first the
+   `8f17srpa5iisomehrb4b01h51` UNSUPPORTED (since ported, faithfully, by
+   Arnaud -- the port is fine and stays), then an
+   `ArrayIndexOutOfBoundsException` in `maximal_bbox` (`GD_rank[57]` on a
+   3-slot array).
+3. Root cause of the unrestored `ND_rank`: **`set_xcoords(g)` was silently
+   captured as the body of an `if`**. The infeasibility diagnostic in
+   `dot_position()` had been written braceless:
+   `if (hasNegativeSlackEdges(zz)) SMETANA_TRACE(...); set_xcoords(g);`
+   -- when the trace line was commented out during the TRACE ->
+   SMETANA_TRACE cleanup, `set_xcoords(g);` became the `if` body and only
+   ran on infeasible graphs. Since `set_xcoords` is the step that converts
+   ND_rank's temporary X values back into real ranks, every diagram was
+   affected. Fixed by adding braces. All other commented-trace sites were
+   audited for the same if/else-capture pattern: `make_LR_constraints`'s
+   deferred pass is safe (the `else` keywords were commented together with
+   their traces), `ns__c`/`flat__c` sites are inside braced blocks.
+
+**Status: not yet re-run.** Expected on the next Test_5 run: `set_xcoords`
+traces present, collect traces show tailRank=headRank=0, all three classes
+dispatch to `make_flat_edge`, the labeled one reaches
+`make_flat_labeled_edge`, and `SmetanaEdge.drawU` reports a non-null
+`data.label` with pos near (0,122) -- i.e. the "b" label finally renders.
+The `[DEBUG-flat-label]` traces sprinkled through `dotsplines__c`,
+`position__c` (`set_xcoords`), `flat__c` and `SmetanaEdge` are temporary
+and can be removed once the label is confirmed.
+
 ---
 
 ## General lessons for future Smetana debugging
@@ -870,3 +961,11 @@ confirm the PNG generates, and eyeball the L4 edge.
    "wrong" follow-up note, and should keep applying the same discipline (verify against
    the real C source and against directly-dumped runtime state, not against what "should"
    be true) rather than trusting an earlier session's conclusion at face value.
+
+9. **Always put braces around one-line `if`/`else` bodies, especially trace calls.**
+   A braceless `if (cond) TRACE(...);` becomes a logic bomb the day someone comments the
+   trace line out: the `if` silently captures the next real statement as its body
+   (`set_xcoords(g)` was disabled for every feasible graph this way — see the Test_5
+   (bis) case study). When commenting out a braceless `if`/`else` body, comment the
+   `if`/`else` keyword line too, or add braces first. The `dot` C style is full of
+   braceless conditionals, so ported code inherits this hazard everywhere.
