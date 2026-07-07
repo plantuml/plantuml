@@ -505,6 +505,30 @@ try {
 	    }
 	    if (found)
 		break;
+	    // [FIX-cluster-layout] Not present in upstream Graphviz (which has the
+	    // same gap -- verified against lib/dotgen/flat.c line by line). A labeled
+	    // flat edge that is an "equivalent" duplicate of an earlier, unlabeled
+	    // parallel edge (e.g. "A3->A2" then "A3->A2 : b") lives only in
+	    // ND_other(n), never in ND_flat_in(n) -- so the trigger loop above never
+	    // sees it and never calls abomination(). The second loop further down,
+	    // which actually calls flat_node() for such an edge, DOES scan ND_other,
+	    // so it proceeds to reference rank -1 before abomination() ever created
+	    // it, crashing with an ArrayIndexOutOfBoundsException in flat_limits().
+	    // Mirroring that second loop's ND_other scan here keeps both loops
+	    // consistent about what counts as "a labeled flat edge needing rank -1".
+	    // ED_adjacent(e) is already valid here: checkFlatAdjacent() was run for
+	    // every ND_other edge in the loop above this one. See SMETANA.md,
+	    // zdev.Test_5 investigation.
+	    for (j = 0; j < ND_other(n).size; j++) {
+		e = ND_other(n).list.get_(j);
+		if (ND_rank(agtail(e)) == ND_rank(aghead(e)) && (ED_label(e)!=null) && ED_adjacent(e) == 0) {
+		    abomination(g);
+		    found = true;
+		    break;
+		}
+	    }
+	    if (found)
+		break;
 	}
     }
     
