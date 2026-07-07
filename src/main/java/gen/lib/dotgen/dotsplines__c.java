@@ -483,6 +483,11 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    if (ND_alg(n)!=null) {
 		ST_Agedge_s fe = (ST_Agedge_s) ND_alg(n);
 		assert (ED_label(fe)!=null);
+		// [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+		smetana.core.debug.SmetanaDebug.SMETANA_TRACE("_dot_splines: label vnode rank=" + i + " order=" + j
+			+ " coord=(" + ND_coord(n).x + "," + ND_coord(n).y + ")"
+			+ " feIdentityHash=" + System.identityHashCode(fe)
+			+ " ED_label(fe)=" + (ED_label(fe) == null ? "NULL!" : "present -> copying pos"));
 		ED_label(fe).pos.___(ND_coord(n));
 		ED_label(fe).set= false ? 0 : 1;
 	    }
@@ -494,6 +499,10 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		    || (ED_edge_type(e) == IGNORED))
 		    continue;
 		setflags(e, REGULAREDGE, FWDEDGE, MAINGRAPH);
+		// [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md)
+		smetana.core.debug.SmetanaDebug.SMETANA_TRACE("_dot_splines collect[ND_out]: e=" + System.identityHashCode(e)
+			+ " edge_type=" + ED_edge_type(e) + " tailRank=" + ND_rank(agtail(e)) + " headRank=" + ND_rank(aghead(e))
+			+ " tail=" + System.identityHashCode(agtail(e)) + " head=" + System.identityHashCode(aghead(e)));
 		edges.set_(n_edges++, e);
 		if (n_edges % CHUNK == 0)
 		    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);
@@ -501,6 +510,10 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 	    if (ND_flat_out(n).list!=null)
 		for (k = 0; (e = ND_flat_out(n).list.get_(k))!=null; k++) {
 		    setflags(e, FLATEDGE, 0, AUXGRAPH);
+		    // [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md)
+		    smetana.core.debug.SmetanaDebug.SMETANA_TRACE("_dot_splines collect[flat_out]: e=" + System.identityHashCode(e)
+			    + " edge_type=" + ED_edge_type(e) + " tailRank=" + ND_rank(agtail(e)) + " headRank=" + ND_rank(aghead(e))
+			    + " tail=" + System.identityHashCode(agtail(e)) + " head=" + System.identityHashCode(aghead(e)));
 			edges.set_(n_edges++, e);
 		    if (n_edges % CHUNK == 0)
 			    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);
@@ -518,6 +531,10 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		}
 		for (k = 0; (e = ND_other(n).list.get_(k))!=null; k++) {
 		    setflags(e, 0, 0, AUXGRAPH);
+		    // [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md)
+		    smetana.core.debug.SmetanaDebug.SMETANA_TRACE("_dot_splines collect[other]: e=" + System.identityHashCode(e)
+			    + " edge_type=" + ED_edge_type(e) + " tailRank=" + ND_rank(agtail(e)) + " headRank=" + ND_rank(aghead(e))
+			    + " tail=" + System.identityHashCode(agtail(e)) + " head=" + System.identityHashCode(aghead(e)));
 			edges.set_(n_edges++, e);
 		    if (n_edges % CHUNK == 0)
 			    edges = CArrayOfStar.<ST_Agedge_s>REALLOC(n_edges + CHUNK, edges, ZType.ST_Agedge_s);
@@ -593,6 +610,12 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		break;
 	}
 	
+	// [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md): dispatch decision
+	smetana.core.debug.SmetanaDebug.SMETANA_TRACE("_dot_splines dispatch: ind=" + ind + " cnt=" + cnt
+		+ " e0=" + System.identityHashCode(e0) + " le0=" + System.identityHashCode(le0)
+		+ " tailRank=" + ND_rank(agtail(e0)) + " headRank=" + ND_rank(aghead(e0))
+		+ " -> " + (agtail(e0) == aghead(e0) ? "SELF"
+			: (ND_rank(agtail(e0)) == ND_rank(aghead(e0)) ? "make_flat_edge" : "make_regular_edge")));
 	if (agtail(e0) == aghead(e0)) {
 	    int b, sizey, r;
 	    n = agtail(e0);
@@ -1126,6 +1149,9 @@ try {
 	if (ED_label(e)!=null) labels++;
 	if (ED_tail_port(e).defined || ED_head_port(e).defined) ports = 1;
     }
+    // [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+    smetana.core.debug.SmetanaDebug.SMETANA_TRACE("make_flat_adj_edges: ind=" + ind + " cnt=" + cnt
+	    + " labels=" + labels + " ports=" + ports);
     if (ports == 0) {
 	/* flat edges without ports and labels can go straight left to right */
 	if (labels == 0) {
@@ -1291,6 +1317,10 @@ try {
     hn = aghead(e);
     for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));
     ln = agtail(f);
+    // [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+    smetana.core.debug.SmetanaDebug.SMETANA_TRACE("make_flat_labeled_edge: e identityHash=" + System.identityHashCode(e)
+	    + " label vnode ln identityHash=" + System.identityHashCode(ln)
+	    + " ln coord=(" + ND_coord(ln).x + "," + ND_coord(ln).y + ") -> setting ED_label(e).pos");
     ED_label(e).pos.___(ND_coord(ln));
     ED_label(e).set= false ? 0 : 1;
     if (et == (1 << 1)) {
@@ -1460,6 +1490,14 @@ try {
 	    break;
 	}
     }
+    // [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+    for (i = 0; i < cnt; i++)
+	smetana.core.debug.SmetanaDebug.SMETANA_TRACE("make_flat_edge: class ind=" + ind + " cnt=" + cnt
+		+ " isAdjacent=" + isAdjacent + " member[" + i + "] identityHash="
+		+ System.identityHashCode(edges.get_(ind + i)) + " ED_label="
+		+ (ED_label(edges.get_(ind + i)) == null ? "null" : "PRESENT")
+		+ " | sample e identityHash=" + System.identityHashCode(e)
+		+ " ED_label(e)=" + (ED_label(e) == null ? "null" : "PRESENT"));
     /* The lead edge edges[ind] might not have been marked earlier as adjacent,
      * so check them all.
      */

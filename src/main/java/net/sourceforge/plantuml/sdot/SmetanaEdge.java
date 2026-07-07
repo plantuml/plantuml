@@ -113,6 +113,22 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (link.isHidden())
 			return;
 
+		// [DEBUG-flat-label] Temporary trace for the Test_5 missing flat-edge label
+		// investigation (see SMETANA.md): dumps, for each edge PlantUML draws, the
+		// state of the smetana-side textlabel this drawing code relies on.
+		// getLabelRectangleTranslate("label") returns null (-> label not drawn) iff
+		// data.label is null; otherwise the label is drawn at data.label.pos.
+		{
+			final ST_Agedgeinfo_t dataDebug = (ST_Agedgeinfo_t) edge.data;
+			final ST_textlabel_t lblDebug = dataDebug.label;
+			smetana.core.debug.SmetanaDebug.SMETANA_TRACE("SmetanaEdge.drawU: link="
+					+ link.getEntity1().getName() + "->" + link.getEntity2().getName()
+					+ " edgeIdentityHash=" + System.identityHashCode(edge)
+					+ (lblDebug == null ? " data.label=NULL"
+							: " data.label.pos=(" + lblDebug.pos.x + "," + lblDebug.pos.y + ") dimen=("
+									+ lblDebug.dimen.x + "," + lblDebug.dimen.y + ") set=" + lblDebug.set));
+		}
+
 		final UGroup group = new UGroup();
 		group.put(UGroupType.CLASS, "link");
 		group.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
