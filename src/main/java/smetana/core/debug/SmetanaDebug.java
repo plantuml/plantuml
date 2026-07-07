@@ -54,7 +54,7 @@ public final class SmetanaDebug {
 	// (probably swallowed/redirected by the JUnit runner). File is truncated once
 	// per JVM run (first call), then appended to and flushed after every line so
 	// content survives even if the test crashes.
-	static public synchronized void TRACE(String s) {
+	static public synchronized void SMETANA_TRACE(String s) {
 //		try {
 //			if (traceWriter == null) {
 //				traceWriter = new java.io.PrintWriter(new java.io.FileWriter("smetana.txt", false));

@@ -110,7 +110,7 @@ import static smetana.core.Macro.agfindgraphattr;
 import static smetana.core.Macro.alloc_elist;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
-import static smetana.core.debug.SmetanaDebug.TRACE;
+import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Original;
@@ -592,11 +592,11 @@ LEAVING("ca52dadcp7m8x0bqhaw4tvtaw","dot_root");
  * is actually inspected. Not present in upstream Graphviz.
  */
 private static void dumpLayoutState(Globals zz, ST_Agraph_s g, String phase) {
-    TRACE("===== " + phase + " =====");
-    TRACE("root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g));
+    SMETANA_TRACE("===== " + phase + " =====");
+    SMETANA_TRACE("root minrank=" + GD_minrank(g) + " maxrank=" + GD_maxrank(g));
     for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {
 	final ST_Agraph_s clust = ND_clust(n);
-	TRACE("node " + safeName(zz, n)
+	SMETANA_TRACE("node " + safeName(zz, n)
 		+ " rank=" + ND_rank(n)
 		+ " order=" + ND_order(n)
 		+ " x=" + ND_coord(n).x
@@ -609,19 +609,19 @@ private static void dumpLayoutState(Globals zz, ST_Agraph_s g, String phase) {
 private static void dumpClusters(Globals zz, ST_Agraph_s g, String indent) {
     for (int c = 1; c <= GD_n_cluster(g); c++) {
 	final ST_Agraph_s clust = GD_clust(g).get_(c);
-	TRACE(indent + "cluster " + safeName(zz, clust)
+	SMETANA_TRACE(indent + "cluster " + safeName(zz, clust)
 		+ " minrank=" + GD_minrank(clust)
 		+ " maxrank=" + GD_maxrank(clust)
 		+ " bb=[" + GD_bb(clust).LL.x + "," + GD_bb(clust).LL.y
 		+ " -> " + GD_bb(clust).UR.x + "," + GD_bb(clust).UR.y + "]");
 	if (GD_rank(clust) == null) {
-	    TRACE(indent + "  (GD_rank not allocated yet at this phase)");
+	    SMETANA_TRACE(indent + "  (GD_rank not allocated yet at this phase)");
 	} else {
 	    for (int r = GD_minrank(clust); r <= GD_maxrank(clust); r++) {
 		final int n = GD_rank(clust).get__(r).n;
 		final ST_Agnode_s first = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(0) : null;
 		final ST_Agnode_s last = n > 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(n - 1) : null;
-		TRACE(indent + "  local rank " + r + ": n=" + n
+		SMETANA_TRACE(indent + "  local rank " + r + ": n=" + n
 			+ " v[0]=" + (first == null ? "-" : safeName(zz, first))
 			+ " v[n-1]=" + (last == null ? "-" : safeName(zz, last)));
 	    }

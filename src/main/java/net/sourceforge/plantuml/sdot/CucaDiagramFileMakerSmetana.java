@@ -848,7 +848,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		// "<unnamed:NNN>", or by flat__c.flat_node()'s own trace below) back to the
 		// original PlantUML-level Link it came from. See SMETANA.md, Test_1 cluster
 		// layout investigation.
-		SmetanaDebug.TRACE("createEdge: entity1=" + link.getEntity1().getName() + " entity2="
+		SmetanaDebug.SMETANA_TRACE("createEdge: entity1=" + link.getEntity1().getName() + " entity2="
 				+ link.getEntity2().getName() + " label=" + link.getLabel() + " role1=" + link.getRole1()
 				+ " role2=" + link.getRole2() + " quantifier1=" + link.getQuantifier1() + " quantifier2="
 				+ link.getQuantifier2() + " edgeIdentityHash=" + System.identityHashCode(e));
