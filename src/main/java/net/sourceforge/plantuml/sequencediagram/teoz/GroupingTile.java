@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
 import net.sourceforge.plantuml.sequencediagram.Note;
+import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
@@ -313,41 +314,56 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	public Real getMinX() {
-		return min.addFixed(-EXTERNAL_MARGINX1);
+		return min.addFixed(-EXTERNAL_MARGINX1 - getNotesWidth(getStringBounder(), NotePosition.LEFT));
 	}
 
 	public Real getMaxX() {
-		return max.addFixed(EXTERNAL_MARGINX2 + getNotesWidth(getStringBounder()));
+		return max.addFixed(EXTERNAL_MARGINX2 + getNotesWidth(getStringBounder(), NotePosition.RIGHT));
 	}
 
-	// Notes attached to the group ("note right" just after the end keyword) are
-	// drawn like in Puma: at the top right corner of the group frame
-	// (see GroupingGraphicalElementHeader)
+	// Notes attached to the group ("note left"/"note right" just after the end
+	// keyword) are drawn like in Puma: at the top corner of the group frame, on
+	// the requested side (see GroupingGraphicalElementHeader)
 	private void drawNotes(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		double x = max.getCurrentValue();
-		for (Component note : getNoteComponents()) {
+
+		double xRight = max.getCurrentValue();
+		for (Component note : getNoteComponents(NotePosition.RIGHT)) {
 			final XDimension2D dimNote = note.getPreferredDimension(stringBounder);
-			note.drawU(ug.apply(UTranslate.dx(x)), Area.create(dimNote.getWidth(), dimNote.getHeight()),
+			note.drawU(ug.apply(UTranslate.dx(xRight)), Area.create(dimNote.getWidth(), dimNote.getHeight()),
 					(Context2D) ug);
-			x += dimNote.getWidth();
+			xRight += dimNote.getWidth();
+		}
+
+		double xLeft = min.getCurrentValue();
+		for (Component note : getNoteComponents(NotePosition.LEFT)) {
+			final XDimension2D dimNote = note.getPreferredDimension(stringBounder);
+			note.drawU(ug.apply(UTranslate.dx(xLeft - dimNote.getWidth())),
+					Area.create(dimNote.getWidth(), dimNote.getHeight()), (Context2D) ug);
+			xLeft -= dimNote.getWidth();
 		}
 	}
 
-	private double getNotesWidth(StringBounder stringBounder) {
+	private double getNotesWidth(StringBounder stringBounder, NotePosition position) {
 		double result = 0;
-		for (Component note : getNoteComponents())
+		for (Component note : getNoteComponents(position))
 			result += note.getPreferredDimension(stringBounder).getWidth();
 
 		return result;
 	}
 
-	private List<Component> getNoteComponents() {
+	private List<Component> getNoteComponents(NotePosition position) {
 		if (end == null)
 			return Collections.emptyList();
 
 		final List<Component> result = new ArrayList<>();
 		for (Note noteOnMessage : end.getNoteOnMessages()) {
+			// A "note left" is drawn on the left side of the frame, everything
+			// else (right, or a position that defaulted to right) on the right
+			final boolean isLeft = noteOnMessage.getPosition() == NotePosition.LEFT;
+			if (isLeft != (position == NotePosition.LEFT))
+				continue;
+
 			final ISkinParam sk = noteOnMessage.getSkinParamBackcolored(skinParam);
 			result.add(skin.createComponentNote(noteOnMessage.getUsedStyles(),
 					noteOnMessage.getNoteStyle().getNoteComponentType(), sk, noteOnMessage.getDisplay(),
