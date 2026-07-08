@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Participant;
@@ -288,17 +289,20 @@ public class CommunicationTile extends AbstractCommunicationTile {
 	}
 
 	public Real getMinX() {
-		if (isReverse(getStringBounder()))
-			return getPoint2(getStringBounder());
+		final StringBounder stringBounder = getStringBounder();
+		if (isReverse(stringBounder))
+			return getPoint2(stringBounder);
 
-		return getPoint1(getStringBounder());
+		return getPoint1(stringBounder);
 	}
 
 	public Real getMaxX() {
-		if (isReverse(getStringBounder()))
-			return getPoint1(getStringBounder());
+		final StringBounder stringBounder = getStringBounder();
+		final double width = getComponent(stringBounder).getPreferredDimension(stringBounder).getWidth();
+		final Real leftPoint = isReverse(stringBounder) ? getPoint2(stringBounder) : getPoint1(stringBounder);
+		final Real rightPoint = isReverse(stringBounder) ? getPoint1(stringBounder) : getPoint2(stringBounder);
 
-		return getPoint2(getStringBounder());
+		return RealUtils.max(rightPoint, leftPoint.addFixed(width));
 	}
 
 }
