@@ -357,6 +357,13 @@ public class SequenceDiagram extends TitledDiagram {
 
 			return null;
 		}
+		// When the last message does not deal with this participant (for example
+		// "X -> X" followed by "destroy Y"), the life event must not be attached to
+		// that message: it stays a standalone event so that both Puma and Teoz can
+		// render it as a destroy cross without any associated message.
+		if (lastEventWithDeactivate.dealWith(p) == false)
+			return null;
+
 		if (lifeEventType == LifeEventType.ACTIVATE && lastEventWithDeactivate instanceof AbstractMessage)
 			activationState.push((AbstractMessage) lastEventWithDeactivate);
 		else if (lifeEventType == LifeEventType.DEACTIVATE && activationState.empty() == false)
