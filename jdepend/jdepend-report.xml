@@ -618,14 +618,14 @@
 
         <Package name="gen.lib.dotgen">
             <Stats>
-                <TotalClasses>22</TotalClasses>
-                <ConcreteClasses>22</ConcreteClasses>
+                <TotalClasses>20</TotalClasses>
+                <ConcreteClasses>20</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>2</Ca>
-                <Ce>7</Ce>
+                <Ce>8</Ce>
                 <A>0</A>
-                <I>0.78</I>
-                <D>0.22</D>
+                <I>0.8</I>
+                <D>0.2</D>
                 <V>1</V>
             </Stats>
 
@@ -682,16 +682,10 @@
                     gen.lib.dotgen.fastgr__c
                 </Class>
                 <Class sourceFile="mincross__c.java">
-                    gen.lib.dotgen.mincross__c
-                </Class>
-                <Class sourceFile="mincross__c.java">
                     gen.lib.dotgen.mincross__c$1
                 </Class>
                 <Class sourceFile="mincross__c.java">
                     gen.lib.dotgen.mincross__c$2
-                </Class>
-                <Class sourceFile="position__c.java">
-                    gen.lib.dotgen.position__c
                 </Class>
                 <Class sourceFile="rank__c.java">
                     gen.lib.dotgen.rank__c
@@ -707,6 +701,7 @@
                 <Package>gen.lib.pack</Package>
                 <Package>h</Package>
                 <Package>java.lang</Package>
+                <Package>java.util</Package>
                 <Package>smetana.core</Package>
                 <Package>smetana.core.debug</Package>
             </DependsUpon>
@@ -852,8 +847,8 @@
 
         <Package name="gen.lib.pathplan">
             <Stats>
-                <TotalClasses>3</TotalClasses>
-                <ConcreteClasses>3</ConcreteClasses>
+                <TotalClasses>4</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>4</Ce>
@@ -869,6 +864,9 @@
             <ConcreteClasses>
                 <Class sourceFile="route__c.java">
                     gen.lib.pathplan.route__c
+                </Class>
+                <Class sourceFile="shortest__c.java">
+                    gen.lib.pathplan.shortest__c$PathplanAbort
                 </Class>
                 <Class sourceFile="solvers__c.java">
                     gen.lib.pathplan.solvers__c

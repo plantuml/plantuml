@@ -58,14 +58,15 @@ Total Classes: 32
 "gen.lib.common" --> "smetana.core"
 "gen.lib.common" --> "smetana.core.debug"
 
-class "gen.lib.dotgen" %lighten("red", 78) {
-Total Classes: 22
+class "gen.lib.dotgen" %lighten("red", 80) {
+Total Classes: 20
 }
 "gen.lib.dotgen" --> "gen.lib.cgraph"
 "gen.lib.dotgen" --> "gen.lib.common"
 "gen.lib.dotgen" --> "gen.lib.pack"
 "gen.lib.dotgen" --> "h"
 "gen.lib.dotgen" --> "java.lang"
+"gen.lib.dotgen" --> "java.util"
 "gen.lib.dotgen" --> "smetana.core"
 "gen.lib.dotgen" --> "smetana.core.debug"
 
@@ -99,7 +100,7 @@ Total Classes: 1
 "gen.lib.pack" --> "smetana.core.debug"
 
 class "gen.lib.pathplan" %lighten("red", 80) {
-Total Classes: 3
+Total Classes: 4
 }
 "gen.lib.pathplan" --> "h"
 "gen.lib.pathplan" --> "java.lang"

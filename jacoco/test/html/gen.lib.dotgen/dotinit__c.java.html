@@ -83,21 +83,35 @@ import static smetana.core.Macro.ED_showboxes;
 import static smetana.core.Macro.ED_weight;
 import static smetana.core.Macro.ED_xpenalty;
 import static smetana.core.Macro.ET_SPLINE;
+import static smetana.core.Macro.GD_bb;
+import static smetana.core.Macro.GD_clust;
 import static smetana.core.Macro.GD_dotroot;
 import static smetana.core.Macro.GD_flags;
 import static smetana.core.Macro.GD_flip;
+import static smetana.core.Macro.GD_maxrank;
+import static smetana.core.Macro.GD_minrank;
+import static smetana.core.Macro.GD_n_cluster;
+import static smetana.core.Macro.GD_nlist;
+import static smetana.core.Macro.GD_rank;
 import static smetana.core.Macro.ND_UF_size;
+import static smetana.core.Macro.ND_clust;
+import static smetana.core.Macro.ND_coord;
 import static smetana.core.Macro.ND_flat_in;
 import static smetana.core.Macro.ND_flat_out;
 import static smetana.core.Macro.ND_in;
+import static smetana.core.Macro.ND_next;
+import static smetana.core.Macro.ND_order;
 import static smetana.core.Macro.ND_other;
 import static smetana.core.Macro.ND_out;
+import static smetana.core.Macro.ND_rank;
 import static smetana.core.Macro.NEW_RANK;
 import static smetana.core.Macro.UNSUPPORTED;
 import static smetana.core.Macro.agfindgraphattr;
 import static smetana.core.Macro.alloc_elist;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
+import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
+import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Original;
 import gen.annotation.Reviewed;
@@ -109,6 +123,8 @@ import h.ST_Agobj_s;
 import h.ST_Agraph_s;
 import h.ST_aspect_t;
 import h.ST_pack_info;
+import h.ST_rank_t;
+import smetana.core.CArray;
 import smetana.core.CFunction;
 import smetana.core.CFunctionAbstract;
 import smetana.core.CString;
@@ -116,29 +132,29 @@ import smetana.core.Globals;
 import smetana.core.ZType;
 import smetana.core.size_t;
 
-<span class="nc" id="L119">public class dotinit__c {</span>
+<span class="nc" id="L135">public class dotinit__c {</span>
 
 
 
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_init_subg&quot;, key=&quot;cmr94z4p2bdeiply1d4wrqwes&quot;, definition=&quot;static void dot_init_subg(graph_t * g, graph_t* droot)&quot;)
 public static void dot_init_subg(Globals zz, ST_Agraph_s g, ST_Agraph_s droot) {
-<span class="fc" id="L126">ENTERING(&quot;cmr94z4p2bdeiply1d4wrqwes&quot;,&quot;dot_init_subg&quot;);</span>
+<span class="fc" id="L142">ENTERING(&quot;cmr94z4p2bdeiply1d4wrqwes&quot;,&quot;dot_init_subg&quot;);</span>
 try {
     ST_Agraph_s subg;
     
-<span class="fc bfc" id="L130" title="All 2 branches covered.">    if ((g != agroot(g)))</span>
-<span class="fc" id="L131">	agbindrec(zz, g, new CString(&quot;Agraphinfo_t&quot;), new size_t(ZType.ST_Agraphinfo_t), true);</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">    if (g == droot)</span>
-<span class="fc" id="L133">	GD_dotroot(agroot(g), droot);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">    if ((g != agroot(g)))</span>
+<span class="fc" id="L147">	agbindrec(zz, g, new CString(&quot;Agraphinfo_t&quot;), new size_t(ZType.ST_Agraphinfo_t), true);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">    if (g == droot)</span>
+<span class="fc" id="L149">	GD_dotroot(agroot(g), droot);</span>
     
-<span class="fc bfc" id="L135" title="All 2 branches covered.">    for (subg = agfstsubg(zz, g); subg!=null; subg = agnxtsubg(zz, subg)) {</span>
-<span class="fc" id="L136">	dot_init_subg(zz, subg, droot);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">    for (subg = agfstsubg(zz, g); subg!=null; subg = agnxtsubg(zz, subg)) {</span>
+<span class="fc" id="L152">	dot_init_subg(zz, subg, droot);</span>
     }
 } finally {
-<span class="fc" id="L139">LEAVING(&quot;cmr94z4p2bdeiply1d4wrqwes&quot;,&quot;dot_init_subg&quot;);</span>
+<span class="fc" id="L155">LEAVING(&quot;cmr94z4p2bdeiply1d4wrqwes&quot;,&quot;dot_init_subg&quot;);</span>
 }
-<span class="fc" id="L141">}</span>
+<span class="fc" id="L157">}</span>
 
 
 
@@ -146,55 +162,55 @@ try {
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_init_node&quot;, key=&quot;3hk92jbrfjmn6no3svn9jvje9&quot;, definition=&quot;static void  dot_init_node(node_t * n)&quot;)
 public static void dot_init_node(Globals zz, ST_Agnode_s n) {
-<span class="fc" id="L149">ENTERING(&quot;3hk92jbrfjmn6no3svn9jvje9&quot;,&quot;dot_init_node&quot;);</span>
+<span class="fc" id="L165">ENTERING(&quot;3hk92jbrfjmn6no3svn9jvje9&quot;,&quot;dot_init_node&quot;);</span>
 try {
-<span class="fc" id="L151">    agbindrec(zz, n, new CString(&quot;Agnodeinfo_t&quot;), new size_t(ZType.ST_Agnodeinfo_t), true);	//graph custom data</span>
-<span class="fc" id="L152">    common_init_node(zz, n);</span>
-<span class="fc" id="L153">    gv_nodesize(n, GD_flip(agraphof(n)));</span>
-<span class="fc" id="L154">    alloc_elist(4, ND_in(n));</span>
-<span class="fc" id="L155">    alloc_elist(4, ND_out(n));</span>
-<span class="fc" id="L156">    alloc_elist(2, ND_flat_in(n));</span>
-<span class="fc" id="L157">    alloc_elist(2, ND_flat_out(n));</span>
-<span class="fc" id="L158">    alloc_elist(2, ND_other(n));</span>
-<span class="fc" id="L159">    ND_UF_size(n, 1);</span>
+<span class="fc" id="L167">    agbindrec(zz, n, new CString(&quot;Agnodeinfo_t&quot;), new size_t(ZType.ST_Agnodeinfo_t), true);	//graph custom data</span>
+<span class="fc" id="L168">    common_init_node(zz, n);</span>
+<span class="fc" id="L169">    gv_nodesize(n, GD_flip(agraphof(n)));</span>
+<span class="fc" id="L170">    alloc_elist(4, ND_in(n));</span>
+<span class="fc" id="L171">    alloc_elist(4, ND_out(n));</span>
+<span class="fc" id="L172">    alloc_elist(2, ND_flat_in(n));</span>
+<span class="fc" id="L173">    alloc_elist(2, ND_flat_out(n));</span>
+<span class="fc" id="L174">    alloc_elist(2, ND_other(n));</span>
+<span class="fc" id="L175">    ND_UF_size(n, 1);</span>
 } finally {
-<span class="fc" id="L161">LEAVING(&quot;3hk92jbrfjmn6no3svn9jvje9&quot;,&quot;dot_init_node&quot;);</span>
+<span class="fc" id="L177">LEAVING(&quot;3hk92jbrfjmn6no3svn9jvje9&quot;,&quot;dot_init_node&quot;);</span>
 }
-<span class="fc" id="L163">}</span>
+<span class="fc" id="L179">}</span>
 
 
 
 @Reviewed(when = &quot;13/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_init_edge&quot;, key=&quot;zbvhnhd78bppq8wb872847bj&quot;, definition=&quot;static void  dot_init_edge(edge_t * e)&quot;)
 public static void dot_init_edge(Globals zz, ST_Agedge_s e) {
-<span class="fc" id="L170">ENTERING(&quot;zbvhnhd78bppq8wb872847bj&quot;,&quot;dot_init_edge&quot;);</span>
+<span class="fc" id="L186">ENTERING(&quot;zbvhnhd78bppq8wb872847bj&quot;,&quot;dot_init_edge&quot;);</span>
 try {
     CString tailgroup, headgroup;
-<span class="fc" id="L173">    agbindrec(zz, e, new CString(&quot;Agedgeinfo_t&quot;), new size_t(ZType.ST_Agedgeinfo_t), true);	//graph custom data</span>
-<span class="fc" id="L174">    common_init_edge(zz, e);</span>
+<span class="fc" id="L189">    agbindrec(zz, e, new CString(&quot;Agedgeinfo_t&quot;), new size_t(ZType.ST_Agedgeinfo_t), true);	//graph custom data</span>
+<span class="fc" id="L190">    common_init_edge(zz, e);</span>
     
     
-<span class="fc" id="L177">    ED_weight(e, late_int(e, zz.E_weight, 1, 0));</span>
-<span class="fc" id="L178">    tailgroup = late_string(agtail(e), zz.N_group, new CString(&quot;&quot;));</span>
-<span class="fc" id="L179">    headgroup = late_string(aghead(e), zz.N_group, new CString(&quot;&quot;));</span>
-<span class="fc" id="L180">    ED_count(e, 1);</span>
-<span class="fc" id="L181">    ED_xpenalty(e, 1);</span>
-<span class="pc bpc" id="L182" title="3 of 4 branches missed.">    if (tailgroup.charAt(0)!='\0' &amp;&amp; (tailgroup.isSame(headgroup))) {</span>
-<span class="nc" id="L183">	UNSUPPORTED(&quot;atjraranegsdjegclykesn5gx&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;xpenalty) = 1000;</span>
-<span class="nc" id="L184">	UNSUPPORTED(&quot;5y0yunmvmngg67c9exlbn6jbk&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;weight) *= 100;</span>
+<span class="fc" id="L193">    ED_weight(e, late_int(e, zz.E_weight, 1, 0));</span>
+<span class="fc" id="L194">    tailgroup = late_string(agtail(e), zz.N_group, new CString(&quot;&quot;));</span>
+<span class="fc" id="L195">    headgroup = late_string(aghead(e), zz.N_group, new CString(&quot;&quot;));</span>
+<span class="fc" id="L196">    ED_count(e, 1);</span>
+<span class="fc" id="L197">    ED_xpenalty(e, 1);</span>
+<span class="pc bpc" id="L198" title="3 of 4 branches missed.">    if (tailgroup.charAt(0)!='\0' &amp;&amp; (tailgroup.isSame(headgroup))) {</span>
+<span class="nc" id="L199">	UNSUPPORTED(&quot;atjraranegsdjegclykesn5gx&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;xpenalty) = 1000;</span>
+<span class="nc" id="L200">	UNSUPPORTED(&quot;5y0yunmvmngg67c9exlbn6jbk&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;weight) *= 100;</span>
     }
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">    if (nonconstraint_edge(zz, e)) {</span>
-<span class="nc" id="L187">	UNSUPPORTED(&quot;54niz21n2omf1i9v67brdid9w&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;xpenalty) = 0;</span>
-<span class="nc" id="L188">	UNSUPPORTED(&quot;2v5u5jdguhhn7vjihniotrml0&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;weight) = 0;</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">    if (nonconstraint_edge(zz, e)) {</span>
+<span class="nc" id="L203">	UNSUPPORTED(&quot;54niz21n2omf1i9v67brdid9w&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;xpenalty) = 0;</span>
+<span class="nc" id="L204">	UNSUPPORTED(&quot;2v5u5jdguhhn7vjihniotrml0&quot;); // 	(((Agedgeinfo_t*)(((Agobj_t*)(e))-&gt;data))-&gt;weight) = 0;</span>
     }
     
     
-<span class="fc" id="L192">    ED_showboxes(e, late_int(e, zz.E_showboxes, 0, 0));</span>
-<span class="fc" id="L193">    ED_minlen(e, late_int(e, zz.E_minlen, 1, 0));</span>
+<span class="fc" id="L208">    ED_showboxes(e, late_int(e, zz.E_showboxes, 0, 0));</span>
+<span class="fc" id="L209">    ED_minlen(e, late_int(e, zz.E_minlen, 1, 0));</span>
 } finally {
-<span class="fc" id="L195">LEAVING(&quot;zbvhnhd78bppq8wb872847bj&quot;,&quot;dot_init_edge&quot;);</span>
+<span class="fc" id="L211">LEAVING(&quot;zbvhnhd78bppq8wb872847bj&quot;,&quot;dot_init_edge&quot;);</span>
 }
-<span class="fc" id="L197">}</span>
+<span class="fc" id="L213">}</span>
 
 
 
@@ -202,49 +218,49 @@ try {
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_init_node_edge&quot;, key=&quot;2ylyhz7macit0ts1hap2tg3wy&quot;, definition=&quot;void  dot_init_node_edge(graph_t * g)&quot;)
 public static void dot_init_node_edge(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L205">ENTERING(&quot;2ylyhz7macit0ts1hap2tg3wy&quot;,&quot;dot_init_node_edge&quot;);</span>
+<span class="fc" id="L221">ENTERING(&quot;2ylyhz7macit0ts1hap2tg3wy&quot;,&quot;dot_init_node_edge&quot;);</span>
 try {
 	ST_Agnode_s n;
 	ST_Agedge_s e;
-<span class="fc bfc" id="L209" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n))</span>
-<span class="fc" id="L210">	dot_init_node(zz, n);</span>
-<span class="fc bfc" id="L211" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e))</span>
-<span class="fc" id="L213">	    dot_init_edge(zz, e);</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n))</span>
+<span class="fc" id="L226">	dot_init_node(zz, n);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">    for (n = agfstnode(zz, g); n!=null; n = agnxtnode(zz, g, n)) {</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">	for (e = agfstout(zz, g, n); e!=null; e = agnxtout(zz, g, e))</span>
+<span class="fc" id="L229">	    dot_init_edge(zz, e);</span>
     }
 } finally {
-<span class="fc" id="L216">LEAVING(&quot;2ylyhz7macit0ts1hap2tg3wy&quot;,&quot;dot_init_node_edge&quot;);</span>
+<span class="fc" id="L232">LEAVING(&quot;2ylyhz7macit0ts1hap2tg3wy&quot;,&quot;dot_init_node_edge&quot;);</span>
 }
-<span class="fc" id="L218">}</span>
+<span class="fc" id="L234">}</span>
 
 
 
 
 
 
-<span class="fc" id="L225">public static CFunction dot_cleanup = new CFunctionAbstract(&quot;dot_cleanup&quot;) {</span>
+<span class="fc" id="L241">public static CFunction dot_cleanup = new CFunctionAbstract(&quot;dot_cleanup&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="nc" id="L228">		return dot_cleanup(args);</span>
+<span class="nc" id="L244">		return dot_cleanup(args);</span>
 	}};
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_cleanup&quot;, key=&quot;2uv40x0vx6nmbvld01reukyly&quot;, definition=&quot;void dot_cleanup(graph_t * g)&quot;)
 public static Object dot_cleanup(Object... arg_) {
-<span class="nc" id="L233">UNSUPPORTED(&quot;a2tqiktifcbodk46i6x0ux9j1&quot;); // void dot_cleanup(graph_t * g)</span>
-<span class="nc" id="L234">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L235">UNSUPPORTED(&quot;cjx5v6hayed3q8eeub1cggqca&quot;); //     node_t *n;</span>
-<span class="nc" id="L236">UNSUPPORTED(&quot;5gypxs09iuryx5a2eho9lgdcp&quot;); //     edge_t *e;</span>
-<span class="nc" id="L237">UNSUPPORTED(&quot;v8twirr9ihzxnb06d6x6nxrd&quot;); //     free_virtual_node_list(GD_nlist(g));</span>
-<span class="nc" id="L238">UNSUPPORTED(&quot;44thr6ep72jsj3fksjiwdx3yr&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g, n)) {</span>
-<span class="nc" id="L239">UNSUPPORTED(&quot;e20lm4qtccvgsfq5fzjv6sjyl&quot;); // 	for (e = agfstout(g, n); e; e = agnxtout(g, e)) {</span>
-<span class="nc" id="L240">UNSUPPORTED(&quot;5otoqd7o1zz8ni50urywr7yjy&quot;); // 	    gv_cleanup_edge(e);</span>
-<span class="nc" id="L241">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L242">UNSUPPORTED(&quot;yis08tp9td0x00hxoxqopt6b&quot;); // 	dot_cleanup_node(n);</span>
-<span class="nc" id="L243">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L244">UNSUPPORTED(&quot;2w88m44roqcqg67kuhg5k4agu&quot;); //     dot_cleanup_graph(g);</span>
-<span class="nc" id="L245">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L249">UNSUPPORTED(&quot;a2tqiktifcbodk46i6x0ux9j1&quot;); // void dot_cleanup(graph_t * g)</span>
+<span class="nc" id="L250">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L251">UNSUPPORTED(&quot;cjx5v6hayed3q8eeub1cggqca&quot;); //     node_t *n;</span>
+<span class="nc" id="L252">UNSUPPORTED(&quot;5gypxs09iuryx5a2eho9lgdcp&quot;); //     edge_t *e;</span>
+<span class="nc" id="L253">UNSUPPORTED(&quot;v8twirr9ihzxnb06d6x6nxrd&quot;); //     free_virtual_node_list(GD_nlist(g));</span>
+<span class="nc" id="L254">UNSUPPORTED(&quot;44thr6ep72jsj3fksjiwdx3yr&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g, n)) {</span>
+<span class="nc" id="L255">UNSUPPORTED(&quot;e20lm4qtccvgsfq5fzjv6sjyl&quot;); // 	for (e = agfstout(g, n); e; e = agnxtout(g, e)) {</span>
+<span class="nc" id="L256">UNSUPPORTED(&quot;5otoqd7o1zz8ni50urywr7yjy&quot;); // 	    gv_cleanup_edge(e);</span>
+<span class="nc" id="L257">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L258">UNSUPPORTED(&quot;yis08tp9td0x00hxoxqopt6b&quot;); // 	dot_cleanup_node(n);</span>
+<span class="nc" id="L259">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L260">UNSUPPORTED(&quot;2w88m44roqcqg67kuhg5k4agu&quot;); //     dot_cleanup_graph(g);</span>
+<span class="nc" id="L261">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L247">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L263">throw new UnsupportedOperationException();</span>
 }
 
 
@@ -255,25 +271,25 @@ public static Object dot_cleanup(Object... arg_) {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;remove_from_rank&quot;, key=&quot;4jt1p8taqjuk4atqpwbxkru3g&quot;, definition=&quot;static void remove_from_rank (Agraph_t * g, Agnode_t* n)&quot;)
 public static Object remove_from_rank(Object... arg) {
-<span class="nc" id="L258">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
-<span class="nc" id="L259">UNSUPPORTED(&quot;9axg5z61bd5rkf0cbubkto6eb&quot;); // remove_from_rank (Agraph_t * g, Agnode_t* n)</span>
-<span class="nc" id="L260">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L261">UNSUPPORTED(&quot;5v9scbkty9fkcyo8yw7jmkokj&quot;); //     Agnode_t* v = NULL;</span>
-<span class="nc" id="L262">UNSUPPORTED(&quot;86gmm9qxyhkzst815hr54r1sp&quot;); //     int j, rk = ND_rank(n);</span>
-<span class="nc" id="L263">UNSUPPORTED(&quot;7bstlpzg93apc08cfgp386p7m&quot;); //     for (j = 0; j &lt; GD_rank(g)[rk].n; j++) {</span>
-<span class="nc" id="L264">UNSUPPORTED(&quot;5oq2646mpw8p4gen80z8g8baz&quot;); // 	v = GD_rank(g)[rk].v[j];</span>
-<span class="nc" id="L265">UNSUPPORTED(&quot;aby82dr89m0xbcj8mya7f9fvx&quot;); // 	if (v == n) {</span>
-<span class="nc" id="L266">UNSUPPORTED(&quot;5494ozi7uqin7n7xlbkqrsahd&quot;); // 	    for (j++; j &lt; GD_rank(g)[rk].n; j++) {</span>
-<span class="nc" id="L267">UNSUPPORTED(&quot;a4l7560unq1yw14pck0v0yo6x&quot;); // 		GD_rank(g)[rk].v[j-1] = GD_rank(g)[rk].v[j];</span>
-<span class="nc" id="L268">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
-<span class="nc" id="L269">UNSUPPORTED(&quot;8pdkxsqmvoce243jar5hwxl3u&quot;); // 	    GD_rank(g)[rk].n--;</span>
-<span class="nc" id="L270">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
-<span class="nc" id="L271">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L272">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L273">UNSUPPORTED(&quot;cytanc5i1hmu0ag0vz4awfpi&quot;); //     assert (v == n);  /* if found */</span>
-<span class="nc" id="L274">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L274">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L275">UNSUPPORTED(&quot;9axg5z61bd5rkf0cbubkto6eb&quot;); // remove_from_rank (Agraph_t * g, Agnode_t* n)</span>
+<span class="nc" id="L276">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L277">UNSUPPORTED(&quot;5v9scbkty9fkcyo8yw7jmkokj&quot;); //     Agnode_t* v = NULL;</span>
+<span class="nc" id="L278">UNSUPPORTED(&quot;86gmm9qxyhkzst815hr54r1sp&quot;); //     int j, rk = ND_rank(n);</span>
+<span class="nc" id="L279">UNSUPPORTED(&quot;7bstlpzg93apc08cfgp386p7m&quot;); //     for (j = 0; j &lt; GD_rank(g)[rk].n; j++) {</span>
+<span class="nc" id="L280">UNSUPPORTED(&quot;5oq2646mpw8p4gen80z8g8baz&quot;); // 	v = GD_rank(g)[rk].v[j];</span>
+<span class="nc" id="L281">UNSUPPORTED(&quot;aby82dr89m0xbcj8mya7f9fvx&quot;); // 	if (v == n) {</span>
+<span class="nc" id="L282">UNSUPPORTED(&quot;5494ozi7uqin7n7xlbkqrsahd&quot;); // 	    for (j++; j &lt; GD_rank(g)[rk].n; j++) {</span>
+<span class="nc" id="L283">UNSUPPORTED(&quot;a4l7560unq1yw14pck0v0yo6x&quot;); // 		GD_rank(g)[rk].v[j-1] = GD_rank(g)[rk].v[j];</span>
+<span class="nc" id="L284">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L285">UNSUPPORTED(&quot;8pdkxsqmvoce243jar5hwxl3u&quot;); // 	    GD_rank(g)[rk].n--;</span>
+<span class="nc" id="L286">UNSUPPORTED(&quot;ai3czg6gaaxspsmndknpyvuiu&quot;); // 	    break;</span>
+<span class="nc" id="L287">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L288">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L289">UNSUPPORTED(&quot;cytanc5i1hmu0ag0vz4awfpi&quot;); //     assert (v == n);  /* if found */</span>
+<span class="nc" id="L290">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L276">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L292">throw new UnsupportedOperationException();</span>
 }
 
 
@@ -284,24 +300,24 @@ public static Object remove_from_rank(Object... arg) {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;removeFill&quot;, key=&quot;xgvyh3kinj6cbnknb5oo9qfr&quot;, definition=&quot;static void removeFill (Agraph_t * g)&quot;)
 public static Object removeFill(Object... arg) {
-<span class="nc" id="L287">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
-<span class="nc" id="L288">UNSUPPORTED(&quot;8asq16rjvm285smlce6dul5nq&quot;); // removeFill (Agraph_t * g)</span>
-<span class="nc" id="L289">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L290">UNSUPPORTED(&quot;ci2zh69w6nhi0q816i1ixuy9k&quot;); //     Agnode_t* n;</span>
-<span class="nc" id="L291">UNSUPPORTED(&quot;167at4ws3rrdv3znbvpsnb83o&quot;); //     Agnode_t* nxt;</span>
-<span class="nc" id="L292">UNSUPPORTED(&quot;22j86kdb5hbziiedfsspj3ipn&quot;); //     Agraph_t* sg = agsubg (g, &quot;_new_rank&quot;, 0);</span>
-<span class="nc" id="L293">UNSUPPORTED(&quot;1pjx7ke9o4h5tgq0cs9jfui7j&quot;); //     if (!sg) return;</span>
-<span class="nc" id="L294">UNSUPPORTED(&quot;5sms8ok354044bziyaq1kfv93&quot;); //     for (n = agfstnode(sg); n; n = nxt) {</span>
-<span class="nc" id="L295">UNSUPPORTED(&quot;18crodqmo1f1apt7bwq0mv72m&quot;); // 	nxt = agnxtnode(sg, n);</span>
-<span class="nc" id="L296">UNSUPPORTED(&quot;227ays2g6u04e210i8wp3jntu&quot;); // 	delete_fast_node (g, n);</span>
-<span class="nc" id="L297">UNSUPPORTED(&quot;2tp9t78wzq032fbm3msk2gpfx&quot;); // 	remove_from_rank (g, n);</span>
-<span class="nc" id="L298">UNSUPPORTED(&quot;cyyixtb6lqfain86edffcd92b&quot;); // 	dot_cleanup_node (n);</span>
-<span class="nc" id="L299">UNSUPPORTED(&quot;3xjgsp211uvaug1aa3mvpdlnc&quot;); // 	agdelnode(g, n);</span>
-<span class="nc" id="L300">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L301">UNSUPPORTED(&quot;9ar3yxaq5s0lagg5bw59suv8u&quot;); //     agdelsubg (g, sg);</span>
-<span class="nc" id="L302">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L303">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L304">UNSUPPORTED(&quot;8asq16rjvm285smlce6dul5nq&quot;); // removeFill (Agraph_t * g)</span>
+<span class="nc" id="L305">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L306">UNSUPPORTED(&quot;ci2zh69w6nhi0q816i1ixuy9k&quot;); //     Agnode_t* n;</span>
+<span class="nc" id="L307">UNSUPPORTED(&quot;167at4ws3rrdv3znbvpsnb83o&quot;); //     Agnode_t* nxt;</span>
+<span class="nc" id="L308">UNSUPPORTED(&quot;22j86kdb5hbziiedfsspj3ipn&quot;); //     Agraph_t* sg = agsubg (g, &quot;_new_rank&quot;, 0);</span>
+<span class="nc" id="L309">UNSUPPORTED(&quot;1pjx7ke9o4h5tgq0cs9jfui7j&quot;); //     if (!sg) return;</span>
+<span class="nc" id="L310">UNSUPPORTED(&quot;5sms8ok354044bziyaq1kfv93&quot;); //     for (n = agfstnode(sg); n; n = nxt) {</span>
+<span class="nc" id="L311">UNSUPPORTED(&quot;18crodqmo1f1apt7bwq0mv72m&quot;); // 	nxt = agnxtnode(sg, n);</span>
+<span class="nc" id="L312">UNSUPPORTED(&quot;227ays2g6u04e210i8wp3jntu&quot;); // 	delete_fast_node (g, n);</span>
+<span class="nc" id="L313">UNSUPPORTED(&quot;2tp9t78wzq032fbm3msk2gpfx&quot;); // 	remove_from_rank (g, n);</span>
+<span class="nc" id="L314">UNSUPPORTED(&quot;cyyixtb6lqfain86edffcd92b&quot;); // 	dot_cleanup_node (n);</span>
+<span class="nc" id="L315">UNSUPPORTED(&quot;3xjgsp211uvaug1aa3mvpdlnc&quot;); // 	agdelnode(g, n);</span>
+<span class="nc" id="L316">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L317">UNSUPPORTED(&quot;9ar3yxaq5s0lagg5bw59suv8u&quot;); //     agdelsubg (g, sg);</span>
+<span class="nc" id="L318">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L304">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L320">throw new UnsupportedOperationException();</span>
 }
 
 
@@ -312,26 +328,26 @@ public static Object removeFill(Object... arg) {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;attach_phase_attrs&quot;, key=&quot;63o8ieaetc5apjocrd74fobt0&quot;, definition=&quot;static void attach_phase_attrs (Agraph_t * g, int maxphase)&quot;)
 public static Object attach_phase_attrs(Object... arg) {
-<span class="nc" id="L315">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
-<span class="nc" id="L316">UNSUPPORTED(&quot;adogsvx2s8kkwixbfl53zj175&quot;); // attach_phase_attrs (Agraph_t * g, int maxphase)</span>
-<span class="nc" id="L317">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L318">UNSUPPORTED(&quot;28snkvv05tay2b94o220j0rkx&quot;); //     Agsym_t* rk = agattr(g,AGNODE,&quot;rank&quot;,&quot;&quot;);</span>
-<span class="nc" id="L319">UNSUPPORTED(&quot;2mf6hpet62ccb0nfggxptz459&quot;); //     Agsym_t* order = agattr(g,AGNODE,&quot;order&quot;,&quot;&quot;);</span>
-<span class="nc" id="L320">UNSUPPORTED(&quot;ci2zh69w6nhi0q816i1ixuy9k&quot;); //     Agnode_t* n;</span>
-<span class="nc" id="L321">UNSUPPORTED(&quot;cf8w5z35zxww7q6yjin9lc9op&quot;); //     char buf[BUFSIZ];</span>
-<span class="nc" id="L322">UNSUPPORTED(&quot;7wq24g054kmx3aw25vk5ksj4&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g,n)) {</span>
-<span class="nc" id="L323">UNSUPPORTED(&quot;16p5t5iyomfedg6du3xoszhzq&quot;); // 	if (maxphase &gt;= 1) {</span>
-<span class="nc" id="L324">UNSUPPORTED(&quot;bwgz5xhm64nl5wtnj9vfs1rx7&quot;); // 	    sprintf(buf, &quot;%d&quot;, ND_rank(n));</span>
-<span class="nc" id="L325">UNSUPPORTED(&quot;42xwkqdgcponmubqyxg876oo6&quot;); // 	    agxset(n,rk,buf);</span>
-<span class="nc" id="L326">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L327">UNSUPPORTED(&quot;93x84236b3xx5glpnx5xseeg0&quot;); // 	if (maxphase &gt;= 2) {</span>
-<span class="nc" id="L328">UNSUPPORTED(&quot;dt1ra0nrgwwdbm8fmxvgcz16x&quot;); // 	    sprintf(buf, &quot;%d&quot;, ND_order(n));</span>
-<span class="nc" id="L329">UNSUPPORTED(&quot;5e6vrutroh3qimffd0rioyhnz&quot;); // 	    agxset(n,order,buf);</span>
-<span class="nc" id="L330">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L331">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L332">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L331">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L332">UNSUPPORTED(&quot;adogsvx2s8kkwixbfl53zj175&quot;); // attach_phase_attrs (Agraph_t * g, int maxphase)</span>
+<span class="nc" id="L333">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L334">UNSUPPORTED(&quot;28snkvv05tay2b94o220j0rkx&quot;); //     Agsym_t* rk = agattr(g,AGNODE,&quot;rank&quot;,&quot;&quot;);</span>
+<span class="nc" id="L335">UNSUPPORTED(&quot;2mf6hpet62ccb0nfggxptz459&quot;); //     Agsym_t* order = agattr(g,AGNODE,&quot;order&quot;,&quot;&quot;);</span>
+<span class="nc" id="L336">UNSUPPORTED(&quot;ci2zh69w6nhi0q816i1ixuy9k&quot;); //     Agnode_t* n;</span>
+<span class="nc" id="L337">UNSUPPORTED(&quot;cf8w5z35zxww7q6yjin9lc9op&quot;); //     char buf[BUFSIZ];</span>
+<span class="nc" id="L338">UNSUPPORTED(&quot;7wq24g054kmx3aw25vk5ksj4&quot;); //     for (n = agfstnode(g); n; n = agnxtnode(g,n)) {</span>
+<span class="nc" id="L339">UNSUPPORTED(&quot;16p5t5iyomfedg6du3xoszhzq&quot;); // 	if (maxphase &gt;= 1) {</span>
+<span class="nc" id="L340">UNSUPPORTED(&quot;bwgz5xhm64nl5wtnj9vfs1rx7&quot;); // 	    sprintf(buf, &quot;%d&quot;, ND_rank(n));</span>
+<span class="nc" id="L341">UNSUPPORTED(&quot;42xwkqdgcponmubqyxg876oo6&quot;); // 	    agxset(n,rk,buf);</span>
+<span class="nc" id="L342">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L343">UNSUPPORTED(&quot;93x84236b3xx5glpnx5xseeg0&quot;); // 	if (maxphase &gt;= 2) {</span>
+<span class="nc" id="L344">UNSUPPORTED(&quot;dt1ra0nrgwwdbm8fmxvgcz16x&quot;); // 	    sprintf(buf, &quot;%d&quot;, ND_order(n));</span>
+<span class="nc" id="L345">UNSUPPORTED(&quot;5e6vrutroh3qimffd0rioyhnz&quot;); // 	    agxset(n,order,buf);</span>
+<span class="nc" id="L346">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L347">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L348">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L334">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L350">throw new UnsupportedOperationException();</span>
 }
 
 
@@ -340,51 +356,54 @@ public static Object attach_phase_attrs(Object... arg) {
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dotLayout&quot;, key=&quot;7t18nggek2s9vvb5opwqa8rwr&quot;, definition=&quot;static void dotLayout(Agraph_t * g)&quot;)
 public static void dotLayout(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L343">ENTERING(&quot;7t18nggek2s9vvb5opwqa8rwr&quot;,&quot;dotLayout&quot;);</span>
+<span class="fc" id="L359">ENTERING(&quot;7t18nggek2s9vvb5opwqa8rwr&quot;,&quot;dotLayout&quot;);</span>
 try {
-<span class="fc" id="L345">	ST_aspect_t aspect = new ST_aspect_t();</span>
+<span class="fc" id="L361">	ST_aspect_t aspect = new ST_aspect_t();</span>
 	ST_aspect_t asp;
-<span class="fc" id="L347">    int maxphase = late_int(g, agfindgraphattr(zz, g,&quot;phase&quot;), -1, 1);</span>
+<span class="fc" id="L363">    int maxphase = late_int(g, agfindgraphattr(zz, g,&quot;phase&quot;), -1, 1);</span>
     
-<span class="fc" id="L349">    setEdgeType (zz, g, ET_SPLINE);</span>
-<span class="fc" id="L350">    asp = setAspect (zz, g, aspect);</span>
+<span class="fc" id="L365">    setEdgeType (zz, g, ET_SPLINE);</span>
+<span class="fc" id="L366">    asp = setAspect (zz, g, aspect);</span>
     
-<span class="fc" id="L352">    dot_init_subg(zz, g,g);</span>
-<span class="fc" id="L353">    dot_init_node_edge(zz, g);</span>
+<span class="fc" id="L368">    dot_init_subg(zz, g,g);</span>
+<span class="fc" id="L369">    dot_init_node_edge(zz, g);</span>
     
     do {
-<span class="fc" id="L356">        dot_rank(zz, g, asp);</span>
-<span class="pc bpc" id="L357" title="1 of 2 branches missed.">	if (maxphase == 1) {</span>
-<span class="nc" id="L358">	    attach_phase_attrs (g, 1);</span>
-<span class="nc" id="L359">	    return;</span>
+<span class="fc" id="L372">        dot_rank(zz, g, asp);</span>
+	// dumpLayoutState(zz, g, &quot;after dot_rank&quot;);
+<span class="pc bpc" id="L374" title="1 of 2 branches missed.">	if (maxphase == 1) {</span>
+<span class="nc" id="L375">	    attach_phase_attrs (g, 1);</span>
+<span class="nc" id="L376">	    return;</span>
 	}
-<span class="pc bpc" id="L361" title="1 of 2 branches missed.">	if (aspect.badGraph!=0) {</span>
-<span class="nc" id="L362">UNSUPPORTED(&quot;1yu5j8tk43i6jlmu8wk9jks15&quot;); // 	    agerr(AGWARN, &quot;dot does not support the aspect attribute for disconnected graphs or graphs with clusters\n&quot;);</span>
-<span class="nc" id="L363">UNSUPPORTED(&quot;5uwp9z6jkv5uc30iyfszyg6dw&quot;); // 	    asp = NULL;</span>
-<span class="nc" id="L364">UNSUPPORTED(&quot;28kbszyxsjoj03gb134ov4hag&quot;); // 	    aspect.nextIter = 0;</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">	if (aspect.badGraph!=0) {</span>
+<span class="nc" id="L379">UNSUPPORTED(&quot;1yu5j8tk43i6jlmu8wk9jks15&quot;); // 	    agerr(AGWARN, &quot;dot does not support the aspect attribute for disconnected graphs or graphs with clusters\n&quot;);</span>
+<span class="nc" id="L380">UNSUPPORTED(&quot;5uwp9z6jkv5uc30iyfszyg6dw&quot;); // 	    asp = NULL;</span>
+<span class="nc" id="L381">UNSUPPORTED(&quot;28kbszyxsjoj03gb134ov4hag&quot;); // 	    aspect.nextIter = 0;</span>
 	}
-<span class="pc bpc" id="L366" title="1 of 2 branches missed.">        dot_mincross(zz, g, (asp != null));</span>
-<span class="pc bpc" id="L367" title="1 of 2 branches missed.">	if (maxphase == 2) {</span>
-<span class="nc" id="L368">	    attach_phase_attrs (g, 2);</span>
-<span class="nc" id="L369">	    return;</span>
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">        dot_mincross(zz, g, (asp != null));</span>
+	// dumpLayoutState(zz, g, &quot;after dot_mincross&quot;);
+<span class="pc bpc" id="L385" title="1 of 2 branches missed.">	if (maxphase == 2) {</span>
+<span class="nc" id="L386">	    attach_phase_attrs (g, 2);</span>
+<span class="nc" id="L387">	    return;</span>
 	}
-<span class="fc" id="L371">        dot_position(zz, g, asp);</span>
-<span class="pc bpc" id="L372" title="1 of 2 branches missed.">	if (maxphase == 3) {</span>
-<span class="nc" id="L373">	    attach_phase_attrs (g, 2);  /* positions will be attached on output */</span>
-<span class="nc" id="L374">	    return;</span>
+<span class="fc" id="L389">        dot_position(zz, g, asp);</span>
+	// dumpLayoutState(zz, g, &quot;after dot_position&quot;);
+<span class="pc bpc" id="L391" title="1 of 2 branches missed.">	if (maxphase == 3) {</span>
+<span class="nc" id="L392">	    attach_phase_attrs (g, 2);  /* positions will be attached on output */</span>
+<span class="nc" id="L393">	    return;</span>
 	}
-<span class="fc" id="L376">	aspect.nPasses--;</span>
-<span class="pc bpc" id="L377" title="3 of 4 branches missed.">    } while (aspect.nextIter!=0 &amp;&amp; aspect.nPasses!=0);</span>
-<span class="pc bpc" id="L378" title="1 of 2 branches missed.">    if ((GD_flags(g) &amp; NEW_RANK)!=0)</span>
-<span class="nc" id="L379">	removeFill (g);</span>
-<span class="fc" id="L380">    dot_sameports(zz, g);</span>
-<span class="fc" id="L381">    dot_splines(zz, g);</span>
-<span class="pc bpc" id="L382" title="1 of 2 branches missed.">    if (mapbool(agget(zz, g, new CString(&quot;compound&quot;))))</span>
-<span class="nc" id="L383">	dot_compoundEdges(g);</span>
+<span class="fc" id="L395">	aspect.nPasses--;</span>
+<span class="pc bpc" id="L396" title="3 of 4 branches missed.">    } while (aspect.nextIter!=0 &amp;&amp; aspect.nPasses!=0);</span>
+<span class="pc bpc" id="L397" title="1 of 2 branches missed.">    if ((GD_flags(g) &amp; NEW_RANK)!=0)</span>
+<span class="nc" id="L398">	removeFill (g);</span>
+<span class="fc" id="L399">    dot_sameports(zz, g);</span>
+<span class="fc" id="L400">    dot_splines(zz, g);</span>
+<span class="pc bpc" id="L401" title="1 of 2 branches missed.">    if (mapbool(agget(zz, g, new CString(&quot;compound&quot;))))</span>
+<span class="nc" id="L402">	dot_compoundEdges(g);</span>
 } finally {
-<span class="fc" id="L385">LEAVING(&quot;7t18nggek2s9vvb5opwqa8rwr&quot;,&quot;dotLayout&quot;);</span>
+<span class="fc" id="L404">LEAVING(&quot;7t18nggek2s9vvb5opwqa8rwr&quot;,&quot;dotLayout&quot;);</span>
 }
-<span class="fc" id="L387">}</span>
+<span class="fc" id="L406">}</span>
 
 
 
@@ -394,22 +413,22 @@ try {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;initSubg&quot;, key=&quot;j18uqz16uc5895o8w92sc8us&quot;, definition=&quot;static void initSubg (Agraph_t* sg, Agraph_t* g)&quot;)
 public static Object initSubg(Object... arg) {
-<span class="nc" id="L397">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
-<span class="nc" id="L398">UNSUPPORTED(&quot;dxv1kymai2xe3m4wblwapgffu&quot;); // initSubg (Agraph_t* sg, Agraph_t* g)</span>
-<span class="nc" id="L399">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L400">UNSUPPORTED(&quot;3oolj8gqkndhoy95ebyjmjt0w&quot;); //     agbindrec(sg, &quot;Agraphinfo_t&quot;, sizeof(Agraphinfo_t), NOT(0));</span>
-<span class="nc" id="L401">UNSUPPORTED(&quot;2um641xaifqq107czm0htblc3&quot;); //     GD_drawing(sg) = (layout_t*)zmalloc(sizeof(layout_t));</span>
-<span class="nc" id="L402">UNSUPPORTED(&quot;bfocldqmll6ddnmq3h3ci6njt&quot;); //     GD_drawing(sg)-&gt;quantum = GD_drawing(g)-&gt;quantum; </span>
-<span class="nc" id="L403">UNSUPPORTED(&quot;7cnwfvm4lswn7kvucss74krd3&quot;); //     GD_drawing(sg)-&gt;dpi = GD_drawing(g)-&gt;dpi;</span>
-<span class="nc" id="L404">UNSUPPORTED(&quot;7kbbs52ycpyuytqi61m5vme4c&quot;); //     GD_gvc(sg) = GD_gvc (g);</span>
-<span class="nc" id="L405">UNSUPPORTED(&quot;8flpf5avt4eg89sc16bgp9v13&quot;); //     GD_charset(sg) = GD_charset (g);</span>
-<span class="nc" id="L406">UNSUPPORTED(&quot;d9o7bxs9hl0r5ma0lt9oejmqv&quot;); //     GD_rankdir2(sg) = GD_rankdir2 (g);</span>
-<span class="nc" id="L407">UNSUPPORTED(&quot;74762qecxnstp743fwt31hk0p&quot;); //     GD_nodesep(sg) = GD_nodesep(g);</span>
-<span class="nc" id="L408">UNSUPPORTED(&quot;b29jhl6zjh8f8jqfb6okoixby&quot;); //     GD_ranksep(sg) = GD_ranksep(g);</span>
-<span class="nc" id="L409">UNSUPPORTED(&quot;bctcse1zj9vx2p0in9p4jhso3&quot;); //     GD_fontnames(sg) = GD_fontnames(g);</span>
-<span class="nc" id="L410">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L416">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L417">UNSUPPORTED(&quot;dxv1kymai2xe3m4wblwapgffu&quot;); // initSubg (Agraph_t* sg, Agraph_t* g)</span>
+<span class="nc" id="L418">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L419">UNSUPPORTED(&quot;3oolj8gqkndhoy95ebyjmjt0w&quot;); //     agbindrec(sg, &quot;Agraphinfo_t&quot;, sizeof(Agraphinfo_t), NOT(0));</span>
+<span class="nc" id="L420">UNSUPPORTED(&quot;2um641xaifqq107czm0htblc3&quot;); //     GD_drawing(sg) = (layout_t*)zmalloc(sizeof(layout_t));</span>
+<span class="nc" id="L421">UNSUPPORTED(&quot;bfocldqmll6ddnmq3h3ci6njt&quot;); //     GD_drawing(sg)-&gt;quantum = GD_drawing(g)-&gt;quantum; </span>
+<span class="nc" id="L422">UNSUPPORTED(&quot;7cnwfvm4lswn7kvucss74krd3&quot;); //     GD_drawing(sg)-&gt;dpi = GD_drawing(g)-&gt;dpi;</span>
+<span class="nc" id="L423">UNSUPPORTED(&quot;7kbbs52ycpyuytqi61m5vme4c&quot;); //     GD_gvc(sg) = GD_gvc (g);</span>
+<span class="nc" id="L424">UNSUPPORTED(&quot;8flpf5avt4eg89sc16bgp9v13&quot;); //     GD_charset(sg) = GD_charset (g);</span>
+<span class="nc" id="L425">UNSUPPORTED(&quot;d9o7bxs9hl0r5ma0lt9oejmqv&quot;); //     GD_rankdir2(sg) = GD_rankdir2 (g);</span>
+<span class="nc" id="L426">UNSUPPORTED(&quot;74762qecxnstp743fwt31hk0p&quot;); //     GD_nodesep(sg) = GD_nodesep(g);</span>
+<span class="nc" id="L427">UNSUPPORTED(&quot;b29jhl6zjh8f8jqfb6okoixby&quot;); //     GD_ranksep(sg) = GD_ranksep(g);</span>
+<span class="nc" id="L428">UNSUPPORTED(&quot;bctcse1zj9vx2p0in9p4jhso3&quot;); //     GD_fontnames(sg) = GD_fontnames(g);</span>
+<span class="nc" id="L429">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L412">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L431">throw new UnsupportedOperationException();</span>
 }
 
 
@@ -420,20 +439,20 @@ public static Object initSubg(Object... arg) {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;attachPos&quot;, key=&quot;9pe0e6i01ks2zju1xjzgg39v1&quot;, definition=&quot;static void attachPos (Agraph_t* g)&quot;)
 public static Object attachPos(Object... arg) {
-<span class="nc" id="L423">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
-<span class="nc" id="L424">UNSUPPORTED(&quot;d606brtp0hf4k8bamafqhu08b&quot;); // attachPos (Agraph_t* g)</span>
-<span class="nc" id="L425">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L426">UNSUPPORTED(&quot;8fmu9hadea4uw8fwzoexoxab&quot;); //     node_t* np;</span>
-<span class="nc" id="L427">UNSUPPORTED(&quot;5cl2cj5wj7w1zr7qjww0s4cdf&quot;); //     double* ps = (double*)zmalloc((2*agnnodes(g))*sizeof(double));</span>
-<span class="nc" id="L428">UNSUPPORTED(&quot;73rfwkv8ws65l7qgnz7jw27gf&quot;); //     for (np = agfstnode(g); np; np = agnxtnode(g, np)) {</span>
-<span class="nc" id="L429">UNSUPPORTED(&quot;7tbl6es7oks3vntqoetg24xa4&quot;); // 	ND_pos(np) = ps;</span>
-<span class="nc" id="L430">UNSUPPORTED(&quot;9qwq8ll4gb28hun94xos9i4ud&quot;); // 	ps[0] = ((ND_coord(np).x)/(double)72);</span>
-<span class="nc" id="L431">UNSUPPORTED(&quot;5z9ztec30pze3mzecneza61qq&quot;); // 	ps[1] = ((ND_coord(np).y)/(double)72);</span>
-<span class="nc" id="L432">UNSUPPORTED(&quot;aeuy5zibx9et1ncwcqwlr3s3m&quot;); // 	ps += 2;</span>
-<span class="nc" id="L433">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L434">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L442">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L443">UNSUPPORTED(&quot;d606brtp0hf4k8bamafqhu08b&quot;); // attachPos (Agraph_t* g)</span>
+<span class="nc" id="L444">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L445">UNSUPPORTED(&quot;8fmu9hadea4uw8fwzoexoxab&quot;); //     node_t* np;</span>
+<span class="nc" id="L446">UNSUPPORTED(&quot;5cl2cj5wj7w1zr7qjww0s4cdf&quot;); //     double* ps = (double*)zmalloc((2*agnnodes(g))*sizeof(double));</span>
+<span class="nc" id="L447">UNSUPPORTED(&quot;73rfwkv8ws65l7qgnz7jw27gf&quot;); //     for (np = agfstnode(g); np; np = agnxtnode(g, np)) {</span>
+<span class="nc" id="L448">UNSUPPORTED(&quot;7tbl6es7oks3vntqoetg24xa4&quot;); // 	ND_pos(np) = ps;</span>
+<span class="nc" id="L449">UNSUPPORTED(&quot;9qwq8ll4gb28hun94xos9i4ud&quot;); // 	ps[0] = ((ND_coord(np).x)/(double)72);</span>
+<span class="nc" id="L450">UNSUPPORTED(&quot;5z9ztec30pze3mzecneza61qq&quot;); // 	ps[1] = ((ND_coord(np).y)/(double)72);</span>
+<span class="nc" id="L451">UNSUPPORTED(&quot;aeuy5zibx9et1ncwcqwlr3s3m&quot;); // 	ps += 2;</span>
+<span class="nc" id="L452">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L453">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L436">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L455">throw new UnsupportedOperationException();</span>
 }
 
 
@@ -444,22 +463,22 @@ public static Object attachPos(Object... arg) {
 @Unused
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;resetCoord&quot;, key=&quot;eufhyu2dccn1mleg8a43s9k2h&quot;, definition=&quot;static void resetCoord (Agraph_t* g)&quot;)
 public static Object resetCoord(Object... arg) {
-<span class="nc" id="L447">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
-<span class="nc" id="L448">UNSUPPORTED(&quot;caofcucw710wwaiwfz4650zsz&quot;); // resetCoord (Agraph_t* g)</span>
-<span class="nc" id="L449">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
-<span class="nc" id="L450">UNSUPPORTED(&quot;7ds7ppzwt5kjihc3hp8q0ncyl&quot;); //     node_t* np = agfstnode(g);</span>
-<span class="nc" id="L451">UNSUPPORTED(&quot;5s8nx20pwknmsow15z16muyab&quot;); //     double* sp = ND_pos(np);</span>
-<span class="nc" id="L452">UNSUPPORTED(&quot;5u1fte9td0znzxeayi62ozq8a&quot;); //     double* ps = sp;</span>
-<span class="nc" id="L453">UNSUPPORTED(&quot;73rfwkv8ws65l7qgnz7jw27gf&quot;); //     for (np = agfstnode(g); np; np = agnxtnode(g, np)) {</span>
-<span class="nc" id="L454">UNSUPPORTED(&quot;8p3hwwbq7seyn0wpf7llgw1xd&quot;); // 	ND_pos(np) = 0;</span>
-<span class="nc" id="L455">UNSUPPORTED(&quot;a33fx4q39yal0dnv915x71zia&quot;); // 	ND_coord(np).x = ((ps[0])*(double)72);</span>
-<span class="nc" id="L456">UNSUPPORTED(&quot;avms8890ml5c9jclp66fpto3x&quot;); // 	ND_coord(np).y = ((ps[1])*(double)72);</span>
-<span class="nc" id="L457">UNSUPPORTED(&quot;aeuy5zibx9et1ncwcqwlr3s3m&quot;); // 	ps += 2;</span>
-<span class="nc" id="L458">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
-<span class="nc" id="L459">UNSUPPORTED(&quot;btsriptlygrzlk6ojhvss234j&quot;); //     free (sp);</span>
-<span class="nc" id="L460">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L466">UNSUPPORTED(&quot;e2z2o5ybnr5tgpkt8ty7hwan1&quot;); // static void</span>
+<span class="nc" id="L467">UNSUPPORTED(&quot;caofcucw710wwaiwfz4650zsz&quot;); // resetCoord (Agraph_t* g)</span>
+<span class="nc" id="L468">UNSUPPORTED(&quot;erg9i1970wdri39osu8hx2a6e&quot;); // {</span>
+<span class="nc" id="L469">UNSUPPORTED(&quot;7ds7ppzwt5kjihc3hp8q0ncyl&quot;); //     node_t* np = agfstnode(g);</span>
+<span class="nc" id="L470">UNSUPPORTED(&quot;5s8nx20pwknmsow15z16muyab&quot;); //     double* sp = ND_pos(np);</span>
+<span class="nc" id="L471">UNSUPPORTED(&quot;5u1fte9td0znzxeayi62ozq8a&quot;); //     double* ps = sp;</span>
+<span class="nc" id="L472">UNSUPPORTED(&quot;73rfwkv8ws65l7qgnz7jw27gf&quot;); //     for (np = agfstnode(g); np; np = agnxtnode(g, np)) {</span>
+<span class="nc" id="L473">UNSUPPORTED(&quot;8p3hwwbq7seyn0wpf7llgw1xd&quot;); // 	ND_pos(np) = 0;</span>
+<span class="nc" id="L474">UNSUPPORTED(&quot;a33fx4q39yal0dnv915x71zia&quot;); // 	ND_coord(np).x = ((ps[0])*(double)72);</span>
+<span class="nc" id="L475">UNSUPPORTED(&quot;avms8890ml5c9jclp66fpto3x&quot;); // 	ND_coord(np).y = ((ps[1])*(double)72);</span>
+<span class="nc" id="L476">UNSUPPORTED(&quot;aeuy5zibx9et1ncwcqwlr3s3m&quot;); // 	ps += 2;</span>
+<span class="nc" id="L477">UNSUPPORTED(&quot;dvgyxsnyeqqnyzq696k3vskib&quot;); //     }</span>
+<span class="nc" id="L478">UNSUPPORTED(&quot;btsriptlygrzlk6ojhvss234j&quot;); //     free (sp);</span>
+<span class="nc" id="L479">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L462">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L481">throw new UnsupportedOperationException();</span>
 }
 
 
@@ -471,81 +490,81 @@ public static Object resetCoord(Object... arg) {
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;doDot&quot;, key=&quot;nedairhdof6qkmjjoh4h68zy&quot;, definition=&quot;static void doDot (Agraph_t* g)&quot;)
 public static void doDot(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L474">ENTERING(&quot;nedairhdof6qkmjjoh4h68zy&quot;,&quot;doDot&quot;);</span>
+<span class="fc" id="L493">ENTERING(&quot;nedairhdof6qkmjjoh4h68zy&quot;,&quot;doDot&quot;);</span>
 try {
     ST_Agraph_s ccs[];
     ST_Agraph_s sg;
     int ncc;
     int i;
-<span class="fc" id="L480">    final ST_pack_info pinfo = new ST_pack_info();</span>
-<span class="fc" id="L481">    int Pack = getPack(zz, g, -1, CL_OFFSET);</span>
-<span class="fc" id="L482">    EN_pack_mode mode = getPackModeInfo (zz, g, EN_pack_mode.l_undef, pinfo);</span>
-<span class="fc" id="L483">    getPackInfo(zz, g, EN_pack_mode.l_node, 8, pinfo);</span>
-<span class="pc bpc" id="L484" title="2 of 4 branches missed.">    if ((mode == EN_pack_mode.l_undef) &amp;&amp; (Pack &lt; 0)) {</span>
+<span class="fc" id="L499">    final ST_pack_info pinfo = new ST_pack_info();</span>
+<span class="fc" id="L500">    int Pack = getPack(zz, g, -1, CL_OFFSET);</span>
+<span class="fc" id="L501">    EN_pack_mode mode = getPackModeInfo (zz, g, EN_pack_mode.l_undef, pinfo);</span>
+<span class="fc" id="L502">    getPackInfo(zz, g, EN_pack_mode.l_node, 8, pinfo);</span>
+<span class="pc bpc" id="L503" title="2 of 4 branches missed.">    if ((mode == EN_pack_mode.l_undef) &amp;&amp; (Pack &lt; 0)) {</span>
 	/* No pack information; use old dot with components
          * handled during layout
          */
-<span class="fc" id="L488">	dotLayout(zz, g);</span>
+<span class="fc" id="L507">	dotLayout(zz, g);</span>
     } else {
-<span class="nc" id="L490">UNSUPPORTED(&quot;952usp51fee2pbidl2frwpq2x&quot;); // 	/* fill in default values */</span>
-<span class="nc" id="L491">UNSUPPORTED(&quot;7d8flcn5zht92nop46f168hf9&quot;); // 	if (mode == l_undef) </span>
-<span class="nc" id="L492">UNSUPPORTED(&quot;bf04f2a6do2dovxgq57ta3qz5&quot;); // 	    pinfo.mode = l_node;</span>
-<span class="nc" id="L493">UNSUPPORTED(&quot;7l7lph3yd7o3jelejupsiytnc&quot;); // 	else if (Pack &lt; 0)</span>
-<span class="nc" id="L494">UNSUPPORTED(&quot;7odp6lwv29g4nwpfvqt8hkmve&quot;); // 	    Pack = 8;</span>
-<span class="nc" id="L495">UNSUPPORTED(&quot;au4kpvl0egq3dt8hlmqnad61o&quot;); // 	pinfo.margin = Pack;</span>
-<span class="nc" id="L496">UNSUPPORTED(&quot;6o6lvrnsp1zkqdkduwrfetrrm&quot;); // 	pinfo.fixed = 0;</span>
-<span class="nc" id="L497">UNSUPPORTED(&quot;7ijhbsssflu2oty986iwhi5u7&quot;); //           /* components using clusters */</span>
-<span class="nc" id="L498">UNSUPPORTED(&quot;axesx20t6oyprzdzjz5cwneq4&quot;); // 	ccs = cccomps(g, &amp;ncc, 0);</span>
-<span class="nc" id="L499">UNSUPPORTED(&quot;edukq9g8egufczs6ja3h99k6a&quot;); // 	if (ncc == 1) {</span>
-<span class="nc" id="L500">UNSUPPORTED(&quot;aj3wrqm1ouyaocsn56geghko0&quot;); // 	    dotLayout(g);</span>
-<span class="nc" id="L501">UNSUPPORTED(&quot;2pkescmk4qojc8cqt3wzo8jkp&quot;); // 	} else if ((((Agraphinfo_t*)(((Agobj_t*)(g))-&gt;data))-&gt;drawing)-&gt;ratio_kind == R_NONE) {</span>
-<span class="nc" id="L502">UNSUPPORTED(&quot;295yqzsqueggcx71mcuv1zy7t&quot;); // 	    pinfo.doSplines = 1;</span>
-<span class="nc" id="L503">UNSUPPORTED(&quot;3rfcnwowz3h58n92j7igzwap0&quot;); // 	    for (i = 0; i &lt; ncc; i++) {</span>
-<span class="nc" id="L504">UNSUPPORTED(&quot;6n1wgj9rnpi5u0c1f6mo7hvdr&quot;); // 		sg = ccs[i];</span>
-<span class="nc" id="L505">UNSUPPORTED(&quot;9f5l1z5fur3bn6wlzykztsrr5&quot;); // 		initSubg (sg, g);</span>
-<span class="nc" id="L506">UNSUPPORTED(&quot;boery4d5nv4jssiy0y3mf2yf7&quot;); // 		dotLayout (sg);</span>
-<span class="nc" id="L507">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
-<span class="nc" id="L508">UNSUPPORTED(&quot;ahr97rgrh96az7iroebb6p14f&quot;); // 	    attachPos (g);</span>
-<span class="nc" id="L509">UNSUPPORTED(&quot;1eeqkm1855z53jwep9ukxptxa&quot;); // 	    packSubgraphs(ncc, ccs, g, &amp;pinfo);</span>
-<span class="nc" id="L510">UNSUPPORTED(&quot;5jevnxwr3ejh3o6i1n3b15oyz&quot;); // 	    resetCoord (g);</span>
-<span class="nc" id="L511">UNSUPPORTED(&quot;7yhr8hn3r6wohafwxrt85b2j2&quot;); // 	} else {</span>
-<span class="nc" id="L512">UNSUPPORTED(&quot;3dnz4esjw60s265perisqld8n&quot;); // 	    /* Not sure what semantics should be for non-trivial ratio</span>
-<span class="nc" id="L513">UNSUPPORTED(&quot;9752lfn24j9vhkz6y8fvyvpop&quot;); //              * attribute with multiple components.</span>
-<span class="nc" id="L514">UNSUPPORTED(&quot;cxv608avcmjij1ltc81ac9zp0&quot;); //              * One possibility is to layout nodes, pack, then apply the ratio</span>
-<span class="nc" id="L515">UNSUPPORTED(&quot;71ykqx29qwldoh9wf4e85xh7u&quot;); //              * adjustment. We would then have to re-adjust all positions.</span>
-<span class="nc" id="L516">UNSUPPORTED(&quot;29edlge3wqyp1gs0vymtr5700&quot;); //              */</span>
-<span class="nc" id="L517">UNSUPPORTED(&quot;aj3wrqm1ouyaocsn56geghko0&quot;); // 	    dotLayout(g);</span>
-<span class="nc" id="L518">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L519">UNSUPPORTED(&quot;cjjlbx1oxw3twss3vlotij507&quot;); // 	for (i = 0; i &lt; ncc; i++) {</span>
-<span class="nc" id="L520">UNSUPPORTED(&quot;dc0uduk2687c8n6qn7y3y0aph&quot;); // 	    free ((((Agraphinfo_t*)(((Agobj_t*)(ccs[i]))-&gt;data))-&gt;drawing));</span>
-<span class="nc" id="L521">UNSUPPORTED(&quot;6lefivq8plsiwa47ucvy1ze1a&quot;); // 	    agdelete(g, ccs[i]);</span>
-<span class="nc" id="L522">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L523">UNSUPPORTED(&quot;5eru5cerydhchm7ojmgdlkv9y&quot;); // 	free(ccs);</span>
+<span class="nc" id="L509">UNSUPPORTED(&quot;952usp51fee2pbidl2frwpq2x&quot;); // 	/* fill in default values */</span>
+<span class="nc" id="L510">UNSUPPORTED(&quot;7d8flcn5zht92nop46f168hf9&quot;); // 	if (mode == l_undef) </span>
+<span class="nc" id="L511">UNSUPPORTED(&quot;bf04f2a6do2dovxgq57ta3qz5&quot;); // 	    pinfo.mode = l_node;</span>
+<span class="nc" id="L512">UNSUPPORTED(&quot;7l7lph3yd7o3jelejupsiytnc&quot;); // 	else if (Pack &lt; 0)</span>
+<span class="nc" id="L513">UNSUPPORTED(&quot;7odp6lwv29g4nwpfvqt8hkmve&quot;); // 	    Pack = 8;</span>
+<span class="nc" id="L514">UNSUPPORTED(&quot;au4kpvl0egq3dt8hlmqnad61o&quot;); // 	pinfo.margin = Pack;</span>
+<span class="nc" id="L515">UNSUPPORTED(&quot;6o6lvrnsp1zkqdkduwrfetrrm&quot;); // 	pinfo.fixed = 0;</span>
+<span class="nc" id="L516">UNSUPPORTED(&quot;7ijhbsssflu2oty986iwhi5u7&quot;); //           /* components using clusters */</span>
+<span class="nc" id="L517">UNSUPPORTED(&quot;axesx20t6oyprzdzjz5cwneq4&quot;); // 	ccs = cccomps(g, &amp;ncc, 0);</span>
+<span class="nc" id="L518">UNSUPPORTED(&quot;edukq9g8egufczs6ja3h99k6a&quot;); // 	if (ncc == 1) {</span>
+<span class="nc" id="L519">UNSUPPORTED(&quot;aj3wrqm1ouyaocsn56geghko0&quot;); // 	    dotLayout(g);</span>
+<span class="nc" id="L520">UNSUPPORTED(&quot;2pkescmk4qojc8cqt3wzo8jkp&quot;); // 	} else if ((((Agraphinfo_t*)(((Agobj_t*)(g))-&gt;data))-&gt;drawing)-&gt;ratio_kind == R_NONE) {</span>
+<span class="nc" id="L521">UNSUPPORTED(&quot;295yqzsqueggcx71mcuv1zy7t&quot;); // 	    pinfo.doSplines = 1;</span>
+<span class="nc" id="L522">UNSUPPORTED(&quot;3rfcnwowz3h58n92j7igzwap0&quot;); // 	    for (i = 0; i &lt; ncc; i++) {</span>
+<span class="nc" id="L523">UNSUPPORTED(&quot;6n1wgj9rnpi5u0c1f6mo7hvdr&quot;); // 		sg = ccs[i];</span>
+<span class="nc" id="L524">UNSUPPORTED(&quot;9f5l1z5fur3bn6wlzykztsrr5&quot;); // 		initSubg (sg, g);</span>
+<span class="nc" id="L525">UNSUPPORTED(&quot;boery4d5nv4jssiy0y3mf2yf7&quot;); // 		dotLayout (sg);</span>
+<span class="nc" id="L526">UNSUPPORTED(&quot;6t98dcecgbvbvtpycwiq2ynnj&quot;); // 	    }</span>
+<span class="nc" id="L527">UNSUPPORTED(&quot;ahr97rgrh96az7iroebb6p14f&quot;); // 	    attachPos (g);</span>
+<span class="nc" id="L528">UNSUPPORTED(&quot;1eeqkm1855z53jwep9ukxptxa&quot;); // 	    packSubgraphs(ncc, ccs, g, &amp;pinfo);</span>
+<span class="nc" id="L529">UNSUPPORTED(&quot;5jevnxwr3ejh3o6i1n3b15oyz&quot;); // 	    resetCoord (g);</span>
+<span class="nc" id="L530">UNSUPPORTED(&quot;7yhr8hn3r6wohafwxrt85b2j2&quot;); // 	} else {</span>
+<span class="nc" id="L531">UNSUPPORTED(&quot;3dnz4esjw60s265perisqld8n&quot;); // 	    /* Not sure what semantics should be for non-trivial ratio</span>
+<span class="nc" id="L532">UNSUPPORTED(&quot;9752lfn24j9vhkz6y8fvyvpop&quot;); //              * attribute with multiple components.</span>
+<span class="nc" id="L533">UNSUPPORTED(&quot;cxv608avcmjij1ltc81ac9zp0&quot;); //              * One possibility is to layout nodes, pack, then apply the ratio</span>
+<span class="nc" id="L534">UNSUPPORTED(&quot;71ykqx29qwldoh9wf4e85xh7u&quot;); //              * adjustment. We would then have to re-adjust all positions.</span>
+<span class="nc" id="L535">UNSUPPORTED(&quot;29edlge3wqyp1gs0vymtr5700&quot;); //              */</span>
+<span class="nc" id="L536">UNSUPPORTED(&quot;aj3wrqm1ouyaocsn56geghko0&quot;); // 	    dotLayout(g);</span>
+<span class="nc" id="L537">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L538">UNSUPPORTED(&quot;cjjlbx1oxw3twss3vlotij507&quot;); // 	for (i = 0; i &lt; ncc; i++) {</span>
+<span class="nc" id="L539">UNSUPPORTED(&quot;dc0uduk2687c8n6qn7y3y0aph&quot;); // 	    free ((((Agraphinfo_t*)(((Agobj_t*)(ccs[i]))-&gt;data))-&gt;drawing));</span>
+<span class="nc" id="L540">UNSUPPORTED(&quot;6lefivq8plsiwa47ucvy1ze1a&quot;); // 	    agdelete(g, ccs[i]);</span>
+<span class="nc" id="L541">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L542">UNSUPPORTED(&quot;5eru5cerydhchm7ojmgdlkv9y&quot;); // 	free(ccs);</span>
     }
 } finally {
-<span class="fc" id="L526">LEAVING(&quot;nedairhdof6qkmjjoh4h68zy&quot;,&quot;doDot&quot;);</span>
+<span class="fc" id="L545">LEAVING(&quot;nedairhdof6qkmjjoh4h68zy&quot;,&quot;doDot&quot;);</span>
 }
-<span class="fc" id="L528">}</span>
+<span class="fc" id="L547">}</span>
 
 
 
-<span class="fc" id="L532">public static CFunction dot_layout = new CFunctionAbstract(&quot;dot_layout&quot;) {</span>
+<span class="fc" id="L551">public static CFunction dot_layout = new CFunctionAbstract(&quot;dot_layout&quot;) {</span>
 	
 	public Object exe(Globals zz, Object... args) {
-<span class="fc" id="L535">		dot_layout(zz, (ST_Agraph_s)args[0]);</span>
-<span class="fc" id="L536">		return null;</span>
+<span class="fc" id="L554">		dot_layout(zz, (ST_Agraph_s)args[0]);</span>
+<span class="fc" id="L555">		return null;</span>
 	}};
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_layout&quot;, key=&quot;euvc3uoksq3e24augkwebfkcv&quot;, definition=&quot;void dot_layout(Agraph_t * g)&quot;)
 public static void dot_layout(Globals zz, ST_Agraph_s g) {
-<span class="fc" id="L541">ENTERING(&quot;euvc3uoksq3e24augkwebfkcv&quot;,&quot;dot_layout&quot;);</span>
+<span class="fc" id="L560">ENTERING(&quot;euvc3uoksq3e24augkwebfkcv&quot;,&quot;dot_layout&quot;);</span>
 try {
-<span class="pc bpc" id="L543" title="1 of 2 branches missed.">    if (agnnodes(g)!=0) doDot (zz, g);</span>
-<span class="fc" id="L544">    dotneato_postprocess(zz, g);</span>
+<span class="pc bpc" id="L562" title="1 of 2 branches missed.">    if (agnnodes(g)!=0) doDot (zz, g);</span>
+<span class="fc" id="L563">    dotneato_postprocess(zz, g);</span>
 } finally {
-<span class="fc" id="L546">LEAVING(&quot;euvc3uoksq3e24augkwebfkcv&quot;,&quot;dot_layout&quot;);</span>
+<span class="fc" id="L565">LEAVING(&quot;euvc3uoksq3e24augkwebfkcv&quot;,&quot;dot_layout&quot;);</span>
 }
-<span class="fc" id="L548">}</span>
+<span class="fc" id="L567">}</span>
 
 
 
@@ -553,13 +572,221 @@ try {
 @Reviewed(when = &quot;13/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/dotgen/dotinit.c&quot;, name=&quot;dot_root&quot;, key=&quot;ca52dadcp7m8x0bqhaw4tvtaw&quot;, definition=&quot;Agraph_t * dot_root (void* p)&quot;)
 public static ST_Agraph_s dot_root(ST_Agobj_s p) {
-<span class="fc" id="L556">ENTERING(&quot;ca52dadcp7m8x0bqhaw4tvtaw&quot;,&quot;dot_root&quot;);</span>
+<span class="fc" id="L575">ENTERING(&quot;ca52dadcp7m8x0bqhaw4tvtaw&quot;,&quot;dot_root&quot;);</span>
 try {
-<span class="fc" id="L558">    return GD_dotroot(agroot(p));</span>
+<span class="fc" id="L577">    return GD_dotroot(agroot(p));</span>
 } finally {
-<span class="fc" id="L560">LEAVING(&quot;ca52dadcp7m8x0bqhaw4tvtaw&quot;,&quot;dot_root&quot;);</span>
+<span class="fc" id="L579">LEAVING(&quot;ca52dadcp7m8x0bqhaw4tvtaw&quot;,&quot;dot_root&quot;);</span>
 }
 }
+
+
+/*
+ * [DEBUG-cluster-layout] Ad-hoc tracing added to investigate the Smetana
+ * cluster/package layout producing overlapping nodes (see zdev.Test_1,
+ * compared against native-dot zdev.Test_2). Dumps, to smetana.txt via
+ * SmetanaDebug.TRACE, every node's rank/order/coord and its enclosing
+ * cluster, plus every cluster's bounding box, after each of the three main
+ * dotLayout phases (dot_rank, dot_mincross, dot_position). Safe to leave in
+ * place: TRACE()/safeName() never throw and are silent unless the trace file
+ * is actually inspected. Not present in upstream Graphviz.
+ */
+private static void dumpLayoutState(Globals zz, ST_Agraph_s g, String phase) {
+	if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;===== &quot; + phase + &quot; =====&quot;);
+	if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;root minrank=&quot; + GD_minrank(g) + &quot; maxrank=&quot; + GD_maxrank(g));
+<span class="nc bnc" id="L597" title="All 2 branches missed.">    for (ST_Agnode_s n = GD_nlist(g); n != null; n = ND_next(n)) {</span>
+<span class="nc" id="L598">	final ST_Agraph_s clust = ND_clust(n);</span>
+	if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;node &quot; + safeName(zz, n)
+		+ &quot; rank=&quot; + ND_rank(n)
+		+ &quot; order=&quot; + ND_order(n)
+		+ &quot; x=&quot; + ND_coord(n).x
+		+ &quot; y=&quot; + ND_coord(n).y
+		+ &quot; clust=&quot; + (clust == null ? &quot;-&quot; : safeName(zz, clust)));
+    }
+<span class="nc" id="L606">    dumpClusters(zz, g, &quot;  &quot;);</span>
+<span class="nc" id="L607">}</span>
+
+private static void dumpClusters(Globals zz, ST_Agraph_s g, String indent) {
+<span class="nc bnc" id="L610" title="All 2 branches missed.">    for (int c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="nc" id="L611">	final ST_Agraph_s clust = GD_clust(g).get_(c);</span>
+	if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, indent + &quot;cluster &quot; + safeName(zz, clust)
+		+ &quot; minrank=&quot; + GD_minrank(clust)
+		+ &quot; maxrank=&quot; + GD_maxrank(clust)
+		+ &quot; bb=[&quot; + GD_bb(clust).LL.x + &quot;,&quot; + GD_bb(clust).LL.y
+		+ &quot; -&gt; &quot; + GD_bb(clust).UR.x + &quot;,&quot; + GD_bb(clust).UR.y + &quot;]&quot;);
+<span class="nc bnc" id="L617" title="All 2 branches missed.">	if (GD_rank(clust) == null) {</span>
+	    if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, indent + &quot;  (GD_rank not allocated yet at this phase)&quot;);
+	} else {
+<span class="nc bnc" id="L620" title="All 2 branches missed.">	    for (int r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++) {</span>
+<span class="nc" id="L621">		final int n = GD_rank(clust).get__(r).n;</span>
+<span class="nc bnc" id="L622" title="All 2 branches missed.">		final ST_Agnode_s first = n &gt; 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(0) : null;</span>
+<span class="nc bnc" id="L623" title="All 2 branches missed.">		final ST_Agnode_s last = n &gt; 0 ? (ST_Agnode_s) GD_rank(clust).get__(r).v.get_(n - 1) : null;</span>
+		if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, indent + &quot;  local rank &quot; + r + &quot;: n=&quot; + n
+			+ &quot; v[0]=&quot; + (first == null ? &quot;-&quot; : safeName(zz, first))
+			+ &quot; v[n-1]=&quot; + (last == null ? &quot;-&quot; : safeName(zz, last)));
+	    }
+	}
+	// dumpClusters(zz, clust, indent + &quot;  &quot;);
+    }
+<span class="nc" id="L631">}</span>
+
+/*
+ * [DEBUG-cluster-layout] Ad-hoc check added to investigate zdev.Test_7 (see
+ * SMETANA.md): verifies the invariant that dot_mincross's cluster machinery
+ * (install_cluster / expand_cluster / merge_ranks) is supposed to guarantee --
+ * on every rank of the root graph, the members of each cluster (including
+ * members of its nested sub-clusters) form ONE contiguous block in the global
+ * left-right order. If a cluster appears as two or more separate segments on
+ * the same rank, the X-position constraints built later by create_aux_edges()
+ * (adjacency chains + ln/rn containment + keepout) become jointly infeasible
+ * and close a cycle in the X aux graph, which is exactly the init_rank
+ * ctr != N_nodes stall observed on Test_7. Must be called AFTER
+ * mark_lowclusters() (which sets ND_clust on virtual nodes too); calling it
+ * right after dot_mincross would report false violations for virtual chain
+ * nodes whose ND_clust is not yet assigned. Not present in upstream Graphviz;
+ * pure TRACE, no side effect, safe to leave in place.
+ */
+public static void checkClusterContiguity(Globals zz, ST_Agraph_s g, String phase) {
+<span class="pc bpc" id="L650" title="1 of 2 branches missed.">    if (GD_rank(g) == null) {</span>
+	if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;checkClusterContiguity &quot; + phase + &quot;: GD_rank(root) not allocated, skipping&quot;);
+<span class="nc" id="L652">	return;</span>
+    }
+<span class="fc" id="L654">    final java.util.List&lt;ST_Agraph_s&gt; clusters = new java.util.ArrayList&lt;ST_Agraph_s&gt;();</span>
+<span class="fc" id="L655">    collectClustersRec(g, clusters);</span>
+<span class="fc" id="L656">    final java.util.Set&lt;Integer&gt; dumpedRanks = new java.util.HashSet&lt;Integer&gt;();</span>
+<span class="fc" id="L657">    int violations = 0;</span>
+<span class="fc bfc" id="L658" title="All 2 branches covered.">    for (ST_Agraph_s clust : clusters) {</span>
+	// Membership set: the cluster itself plus all its nested sub-clusters,
+	// so a node of a sub-cluster also counts as &quot;inside&quot; the enclosing one.
+<span class="fc" id="L661">	final java.util.Set&lt;ST_Agraph_s&gt; members = java.util.Collections</span>
+<span class="fc" id="L662">		.newSetFromMap(new java.util.IdentityHashMap&lt;ST_Agraph_s, Boolean&gt;());</span>
+<span class="fc" id="L663">	collectSelfAndDescendants(clust, members);</span>
+<span class="fc bfc" id="L664" title="All 2 branches covered.">	for (int r = GD_minrank(clust); r &lt;= GD_maxrank(clust); r++) {</span>
+<span class="pc bpc" id="L665" title="2 of 4 branches missed.">	    if (r &lt; GD_minrank(g) || r &gt; GD_maxrank(g)) {</span>
+<span class="nc" id="L666">		continue;</span>
+	    }
+<span class="fc" id="L668">	    final ST_rank_t rr = GD_rank(g).get__(r);</span>
+<span class="fc" id="L669">	    int segments = 0;</span>
+<span class="fc" id="L670">	    boolean inSegment = false;</span>
+<span class="fc" id="L671">	    final StringBuilder pattern = new StringBuilder();</span>
+<span class="fc bfc" id="L672" title="All 2 branches covered.">	    for (int i = 0; i &lt; rr.n; i++) {</span>
+<span class="fc" id="L673">		final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(i);</span>
+<span class="pc bpc" id="L674" title="1 of 2 branches missed.">		final ST_Agraph_s nc = v == null ? null : ND_clust(v);</span>
+<span class="pc bpc" id="L675" title="1 of 4 branches missed.">		final boolean member = nc != null &amp;&amp; members.contains(nc);</span>
+<span class="fc bfc" id="L676" title="All 2 branches covered.">		pattern.append(member ? 'X' : '.');</span>
+<span class="fc bfc" id="L677" title="All 4 branches covered.">		if (member &amp;&amp; inSegment == false) {</span>
+<span class="fc" id="L678">		    segments++;</span>
+<span class="fc" id="L679">		    inSegment = true;</span>
+<span class="fc bfc" id="L680" title="All 2 branches covered.">		} else if (member == false) {</span>
+<span class="fc" id="L681">		    inSegment = false;</span>
+		}
+	    }
+<span class="pc bpc" id="L684" title="1 of 2 branches missed.">	    if (segments &gt; 1) {</span>
+<span class="nc" id="L685">		violations++;</span>
+		if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;checkClusterContiguity &quot; + phase + &quot;: VIOLATION cluster &quot; + safeName(zz, clust)
+			+ &quot; rank &quot; + r + &quot; split into &quot; + segments + &quot; segments, pattern=&quot; + pattern
+			+ &quot; (X=member incl. sub-clusters, .=non-member)&quot;);
+<span class="nc bnc" id="L689" title="All 2 branches missed.">		if (dumpedRanks.contains(r) == false) {</span>
+<span class="nc" id="L690">		    dumpedRanks.add(r);</span>
+<span class="nc bnc" id="L691" title="All 2 branches missed.">		    for (int i = 0; i &lt; rr.n; i++) {</span>
+<span class="nc" id="L692">			final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(i);</span>
+<span class="nc bnc" id="L693" title="All 2 branches missed.">			final ST_Agraph_s nc = v == null ? null : ND_clust(v);</span>
+			if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;    rank &quot; + r + &quot; v[&quot; + i + &quot;]=&quot; + safeName(zz, v)
+				+ &quot; clust=&quot; + (nc == null ? &quot;-&quot; : safeName(zz, nc)));
+		    }
+		}
+	    }
+	}
+<span class="fc" id="L700">    }</span>
+    if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;checkClusterContiguity &quot; + phase + &quot;: &quot; + violations
+	    + &quot; violation(s) over &quot; + clusters.size() + &quot; cluster(s)&quot;
+	    + (violations &gt; 0 ? &quot;  &lt;&lt;&lt;&lt; cluster order is NOT contiguous, X constraints will be cyclic&quot; : &quot;&quot;));
+<span class="fc" id="L704">    checkSiblingClusterOrder(zz, g, g, phase);</span>
+<span class="fc" id="L705">}</span>
+
+/*
+ * [DEBUG-cluster-layout] Second invariant check, added after the first Test_7
+ * traced run (see SMETANA.md): per-rank contiguity alone is NOT enough. For
+ * every pair of SIBLING clusters whose rank ranges overlap, the relative
+ * left-right order must be the SAME on every shared rank -- otherwise
+ * separate_subclust() (which picks ONE side for the pair) and
+ * keepout_othernodes()/contain_nodes() (which encode the actual per-rank
+ * order) produce contradictory aux edges, closing a cycle. This is exactly
+ * what the first Test_7 run showed: bbb4 left of bbb1 on rank 14, but bbb1
+ * left of bbb4 on ranks 16 and 18. Recursive over nesting levels.
+ */
+private static void checkSiblingClusterOrder(Globals zz, ST_Agraph_s root, ST_Agraph_s g, String phase) {
+<span class="fc bfc" id="L719" title="All 2 branches covered.">    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {</span>
+<span class="fc" id="L720">	checkSiblingClusterOrder(zz, root, GD_clust(g).get_(i), phase);</span>
+    }
+<span class="fc bfc" id="L722" title="All 2 branches covered.">    for (int i = 1; i &lt;= GD_n_cluster(g); i++) {</span>
+<span class="fc bfc" id="L723" title="All 2 branches covered.">	for (int j = i + 1; j &lt;= GD_n_cluster(g); j++) {</span>
+<span class="fc" id="L724">	    final ST_Agraph_s c1 = GD_clust(g).get_(i);</span>
+<span class="fc" id="L725">	    final ST_Agraph_s c2 = GD_clust(g).get_(j);</span>
+<span class="pc bpc" id="L726" title="1 of 4 branches missed.">	    if (GD_minrank(c1) &gt; GD_maxrank(c2) || GD_minrank(c2) &gt; GD_maxrank(c1)) {</span>
+<span class="fc" id="L727">		continue;</span>
+	    }
+<span class="fc" id="L729">	    final java.util.Set&lt;ST_Agraph_s&gt; m1 = java.util.Collections</span>
+<span class="fc" id="L730">		    .newSetFromMap(new java.util.IdentityHashMap&lt;ST_Agraph_s, Boolean&gt;());</span>
+<span class="fc" id="L731">	    collectSelfAndDescendants(c1, m1);</span>
+<span class="fc" id="L732">	    final java.util.Set&lt;ST_Agraph_s&gt; m2 = java.util.Collections</span>
+<span class="fc" id="L733">		    .newSetFromMap(new java.util.IdentityHashMap&lt;ST_Agraph_s, Boolean&gt;());</span>
+<span class="fc" id="L734">	    collectSelfAndDescendants(c2, m2);</span>
+<span class="fc" id="L735">	    final int lo = Math.max(Math.max(GD_minrank(c1), GD_minrank(c2)), GD_minrank(root));</span>
+<span class="fc" id="L736">	    final int hi = Math.min(Math.min(GD_maxrank(c1), GD_maxrank(c2)), GD_maxrank(root));</span>
+<span class="fc" id="L737">	    int firstSide = 0; // +1 = c1 left of c2, -1 = c2 left of c1</span>
+<span class="fc" id="L738">	    int firstSideRank = 0;</span>
+<span class="fc bfc" id="L739" title="All 2 branches covered.">	    for (int r = lo; r &lt;= hi; r++) {</span>
+<span class="fc" id="L740">		final ST_rank_t rr = GD_rank(root).get__(r);</span>
+<span class="fc" id="L741">		int min1 = -1;</span>
+<span class="fc" id="L742">		int min2 = -1;</span>
+<span class="fc bfc" id="L743" title="All 2 branches covered.">		for (int k = 0; k &lt; rr.n; k++) {</span>
+<span class="fc" id="L744">		    final ST_Agnode_s v = (ST_Agnode_s) rr.v.get_(k);</span>
+<span class="pc bpc" id="L745" title="1 of 2 branches missed.">		    final ST_Agraph_s nc = v == null ? null : ND_clust(v);</span>
+<span class="pc bpc" id="L746" title="1 of 2 branches missed.">		    if (nc == null) {</span>
+<span class="nc" id="L747">			continue;</span>
+		    }
+<span class="fc bfc" id="L749" title="All 4 branches covered.">		    if (min1 &lt; 0 &amp;&amp; m1.contains(nc)) {</span>
+<span class="fc" id="L750">			min1 = k;</span>
+		    }
+<span class="fc bfc" id="L752" title="All 4 branches covered.">		    if (min2 &lt; 0 &amp;&amp; m2.contains(nc)) {</span>
+<span class="fc" id="L753">			min2 = k;</span>
+		    }
+		}
+<span class="pc bpc" id="L756" title="2 of 4 branches missed.">		if (min1 &lt; 0 || min2 &lt; 0) {</span>
+<span class="nc" id="L757">		    continue; // one of the two has no member on this rank</span>
+		}
+<span class="pc bpc" id="L759" title="1 of 2 branches missed.">		final int side = min1 &lt; min2 ? 1 : -1;</span>
+<span class="pc bpc" id="L760" title="1 of 2 branches missed.">		if (firstSide == 0) {</span>
+<span class="fc" id="L761">		    firstSide = side;</span>
+<span class="fc" id="L762">		    firstSideRank = r;</span>
+<span class="nc bnc" id="L763" title="All 2 branches missed.">		} else if (side != firstSide) {</span>
+		    if (false) SMETANA_TRACE(&quot;dotinit__c&quot;, &quot;checkSiblingClusterOrder &quot; + phase + &quot;: SIDE-SWAP between &quot;
+			    + safeName(zz, c1) + &quot; and &quot; + safeName(zz, c2)
+			    + &quot; -- rank &quot; + firstSideRank + &quot; has &quot; + (firstSide &gt; 0 ? &quot;c1&quot; : &quot;c2&quot;)
+			    + &quot; on the left, but rank &quot; + r + &quot; has &quot; + (side &gt; 0 ? &quot;c1&quot; : &quot;c2&quot;)
+			    + &quot; on the left (c1 pos=&quot; + min1 + &quot;, c2 pos=&quot; + min2 + &quot;)&quot;
+			    + &quot;  &lt;&lt;&lt;&lt; separate_subclust vs keepout will be contradictory -&gt; X cycle&quot;);
+		}
+	    }
+	}
+    }
+<span class="fc" id="L774">}</span>
+
+private static void collectClustersRec(ST_Agraph_s g, java.util.List&lt;ST_Agraph_s&gt; out) {
+<span class="fc bfc" id="L777" title="All 2 branches covered.">    for (int c = 1; c &lt;= GD_n_cluster(g); c++) {</span>
+<span class="fc" id="L778">	final ST_Agraph_s clust = GD_clust(g).get_(c);</span>
+<span class="fc" id="L779">	out.add(clust);</span>
+<span class="fc" id="L780">	collectClustersRec(clust, out);</span>
+    }
+<span class="fc" id="L782">}</span>
+
+private static void collectSelfAndDescendants(ST_Agraph_s clust, java.util.Set&lt;ST_Agraph_s&gt; out) {
+<span class="fc" id="L785">    out.add(clust);</span>
+<span class="fc bfc" id="L786" title="All 2 branches covered.">    for (int c = 1; c &lt;= GD_n_cluster(clust); c++) {</span>
+<span class="fc" id="L787">	collectSelfAndDescendants(GD_clust(clust).get_(c), out);</span>
+    }
+<span class="fc" id="L789">}</span>
 
 
 }

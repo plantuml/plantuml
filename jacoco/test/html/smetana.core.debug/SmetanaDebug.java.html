@@ -36,38 +36,80 @@
 
 package smetana.core.debug;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-<span class="nc" id="L42">public final class SmetanaDebug {</span>
+import gen.lib.cgraph.id__c;
+import h.ST_Agobj_s;
+import smetana.core.Globals;
+
+<span class="nc" id="L47">public final class SmetanaDebug {</span>
 	// ::remove folder when __HAXE__
-<span class="fc" id="L44">	static private final Map&lt;String, String&gt; methods = new LinkedHashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L49">	static private final Map&lt;String, String&gt; methods = new LinkedHashMap&lt;String, String&gt;();</span>
+
+	static private java.io.PrintWriter traceWriter;
+
+	// [DEBUG-2735] Writes debug traces to smetana.txt instead of System.out/err,
+	// because System.out/err don't seem to show up reliably from this test run
+	// (probably swallowed/redirected by the JUnit runner). File is truncated once
+	// per JVM run (first call), then appended to and flushed after every line so
+	// content survives even if the test crashes.
+	static public synchronized void SMETANA_TRACE(String fileName, String s) {
+		try {
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (traceWriter == null) {</span>
+<span class="nc" id="L61">				traceWriter = new java.io.PrintWriter(new java.io.FileWriter(&quot;smetana.txt&quot;, false));</span>
+			}
+<span class="nc" id="L63">			traceWriter.println(&quot;[&quot; + fileName + &quot;]&quot; + s.replace(&quot;\0&quot;, &quot;&quot;));</span>
+<span class="nc" id="L64">			traceWriter.flush();</span>
+<span class="nc" id="L65">		} catch (IOException e) {</span>
+<span class="nc" id="L66">			e.printStackTrace();</span>
+<span class="nc" id="L67">		}</span>
+<span class="nc" id="L68">	}</span>
+
+	// [DEBUG-2735] Safe replacement for agnameof() in debug traces.
+	// Some nodes (e.g. fastgr__c.virtual_node()) are built with `new ST_Agnode_s()`
+	// directly, bypassing agnode()/idmap(), so their tag.id is never set (stays 0).
+	// agnameof() on such a node calls idprint -&gt; Memory.fromIdentityHashCode(zz,
+	// 0),
+	// which finds nothing in zz.all and throws UnsupportedOperationException.
+	// This is a real (separate, pre-existing) translation gap, but it's not what
+	// we're hunting right now -- so debug traces fall back to a readable
+	// placeholder instead of crashing the whole test.
+	static public String safeName(Globals zz, Object obj) {
+		try {
+<span class="fc" id="L81">			Object name = id__c.agnameof(zz, (ST_Agobj_s) obj);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">			return name == null ? (&quot;&lt;anon:&quot; + System.identityHashCode(obj) + &quot;&gt;&quot;) : name.toString();</span>
+<span class="fc" id="L83">		} catch (Throwable t) {</span>
+<span class="fc" id="L84">			return &quot;&lt;unnamed:&quot; + System.identityHashCode(obj) + &quot; (&quot; + t.getClass().getSimpleName() + &quot;)&gt;&quot;;</span>
+		}
+	}
 
 	static public void LOG(String s) {
 
-<span class="fc" id="L48">	}</span>
+<span class="fc" id="L90">	}</span>
 
 	static public void ENTERING(String signature, String methodName) {
 //		if (methods.containsKey(methodName) == false)
 //			methods.put(methodName, methodName);
-<span class="fc" id="L53">	}</span>
+<span class="fc" id="L95">	}</span>
 
 	static public void LIST_METHODS() {
-<span class="nc" id="L56">		int i = 0;</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (String s : methods.keySet()) {</span>
-<span class="nc" id="L58">			System.err.println(&quot;i=&quot; + i + &quot; &quot; + s);</span>
-<span class="nc" id="L59">			i++;</span>
-<span class="nc" id="L60">		}</span>
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L98">		int i = 0;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (String s : methods.keySet()) {</span>
+<span class="nc" id="L100">			System.err.println(&quot;i=&quot; + i + &quot; &quot; + s);</span>
+<span class="nc" id="L101">			i++;</span>
+<span class="nc" id="L102">		}</span>
+<span class="nc" id="L103">	}</span>
 
 	static public void LEAVING(String signature, String methodName) {
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L106">	}</span>
 
 	public static void reset() {
-<span class="fc" id="L67">	}</span>
+<span class="fc" id="L109">	}</span>
 
 	public static void printMe() {
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L112">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
