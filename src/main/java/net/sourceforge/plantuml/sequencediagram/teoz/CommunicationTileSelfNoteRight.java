@@ -35,11 +35,16 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.ANote;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Message;
 import net.sourceforge.plantuml.sequencediagram.Note;
@@ -76,7 +81,11 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.noteOnMessage = noteOnMessage;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+		// See CommunicationTileNoteRight for why contact/origin are propagated
+		// and max is built with addAtLeast rather than YGauge.create()
+		final YGauge innerGauge = tile.getYGauge();
+		this.yGauge = new YGauge(innerGauge.getMin(), innerGauge.getMin().addAtLeast(getPreferredHeight()),
+				innerGauge.getContact(), innerGauge.getOrigin());
 	}
 
 	@Override
@@ -106,11 +115,13 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = Area.create(dim.getWidth(), dim.getHeight());
+		// The wrapped tile self-translates to its own gauge; the note's prologue is
+		// applied AFTERWARDS, to the note only (the wrapper's min is identical to the
+		// inner tile's, so both land on the same row -- the note never moves the arrow)
 		tile.drawU(ug);
 		final Real p = getNotePosition(stringBounder);
 
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
 		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);
 	}
@@ -133,6 +144,57 @@ public class CommunicationTileSelfNoteRight extends AbstractTile {
 		final Component comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());
+	}
+
+	// ASCII counterpart: delegate to the inner tile, same shape as
+	// CommunicationTileSelfNoteLeft's override.
+	@Override
+	public void asciiAddConstraints() {
+		tile.asciiAddConstraints();
+	}
+
+	@Override
+	public Real getAsciiMinX() {
+		return tile.getAsciiMinX();
+	}
+
+	// Mirrors CommunicationTileSelfNoteLeft.getAsciiMinX(): tile.getAsciiMaxX()
+	// is already the right anchor (the pixel getNotePosition() above likewise
+	// uses tile.getMaxX() directly, no separate LivingSpace lookup needed).
+	// Note box width still not reserved on the ASCII column solver, same
+	// known gap as every other note decorator.
+	@Override
+	public Real getAsciiMaxX() {
+		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();
+		final Real tileMax = tile.getAsciiMaxX();
+		final Real noteMax = tileMax.addFixed(boxWidth + 1);
+		return RealUtils.max(java.util.Arrays.asList(tileMax, noteMax));
+	}
+
+	// Same reasoning as CommunicationTileSelfNoteLeft.asciiDimension().
+	@Override
+	public ADimension2D asciiDimension() {
+		final ADimension2D tileDim = tile.asciiDimension();
+		final int noteHeight = new ANote(asciiNoteText()).asciiDimension().getHeight();
+		return new ADimension2D(tileDim.getWidth(), Math.max(tileDim.getHeight(), noteHeight));
+	}
+
+	// ASCII counterpart of drawU(): draw the self-message loop first, then the
+	// note box just after the anchor column -- mirrors
+	// CommunicationTileSelfNoteLeft.asciiDraw(), on the other side.
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		tile.asciiDraw(plan);
+
+		final AsciiBlock noteText = asciiNoteText();
+		final AsciiBlock noteBox = plan.createNoteBox(noteText).marginLR(2, 2);
+		final int anchorColumn = (int) tile.getAsciiMaxX().getCurrentValue();
+		final int left = anchorColumn + 2;
+		noteBox.asciiDraw(plan.move(left, 0));
+	}
+
+	private AsciiBlock asciiNoteText() {
+		return noteOnMessage.getDisplay().marginLR(1, 3);
 	}
 
 }

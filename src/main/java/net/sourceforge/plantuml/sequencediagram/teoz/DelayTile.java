@@ -102,11 +102,9 @@ public class DelayTile extends AbstractTile implements Tile {
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = Area.create(getPreferredWidth(stringBounder), dim.getHeight());
-		final double ypos;
-		if (YGauge.USE_ME)
-			ypos = getYGauge().getMin().getCurrentValue();
-		else
-			ypos = getTimeHook().getValue();
+		// Self-translate prologue: absolute gauge position
+		final double ypos = getYGauge().getMin().getCurrentValue();
+		ug = ug.apply(UTranslate.dy(ypos));
 		tileArguments.getLivingSpaces().delayOn(ypos, dim.getHeight());
 
 		ug = ug.apply(UTranslate.dx(getMinX().getCurrentValue()));

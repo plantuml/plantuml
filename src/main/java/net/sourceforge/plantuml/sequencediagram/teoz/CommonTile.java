@@ -47,18 +47,24 @@ public abstract class CommonTile implements Tile, UDrawable {
 		this.stringBounder = stringBounder;
 	}
 
+	// The TimeHook accumulated by the caller (GroupingTile.fillPositionelTiles)
+	// is IGNORED: each tile substitutes the min of its own YGauge, already solved
+	// by the Real engine. The traversal itself is kept, so the ordering and all
+	// the side effects of callbackY_internal (livebox steps, goCreate/goDestroy,
+	// ...) are reused unchanged; only the source of the y value differs. This also
+	// makes the note wrappers work for free: their callbackY_internal forwards to
+	// the inner tile, which substitutes its own gauge.
+	//
+	// The `y` parameter is therefore unused. It is kept so that the traversal in
+	// fillPositionelTiles stays a single, uniform walk; TimeHook itself is the
+	// last remnant of the pre-YGauge two-pass positioning and disappears once its
+	// remaining consumers (Blotter offsets, yNewPages) read gauges directly.
 	final public void callbackY(TimeHook y) {
-		if (YGauge.USE_ME) {
-		} else {
-			this.y = y;
-			callbackY_internal(y);
-		}
+		this.y = new TimeHook(getYGauge().getMin().getCurrentValue());
+		callbackY_internal(this.y);
 	}
 
 	protected void callbackY_internal(TimeHook y) {
-		if (YGauge.USE_ME) {
-			System.err.println("callbackY_internal::y=" + y + " gauge=" + getYGauge() + " " + getClass());
-		}
 	}
 
 	protected final StringBounder getStringBounder() {
@@ -71,10 +77,11 @@ public abstract class CommonTile implements Tile, UDrawable {
 		return (min + max) / 2;
 	}
 
+	// Returns the gauge min captured by callbackY. The remaining consumers
+	// (yNewPages / the page-clip boundary in PlayingSpaceWithParticipants) keep
+	// working with gauge-consistent values until they read the gauge directly,
+	// after which TimeHook can be deleted entirely.
 	public final TimeHook getTimeHook() {
-		if (YGauge.USE_ME) {
-			throw new IllegalStateException();
-		}
 		return y;
 	}
 

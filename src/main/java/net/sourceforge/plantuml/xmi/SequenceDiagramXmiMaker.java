@@ -20,6 +20,7 @@ import org.w3c.dom.Document;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
@@ -85,6 +86,11 @@ public final class SequenceDiagramXmiMaker implements FileMaker {
 	
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public AsciiBlock getAsciiBlock(int num, FileFormatOption fileFormat) {
 		throw new UnsupportedOperationException();
 	}
 

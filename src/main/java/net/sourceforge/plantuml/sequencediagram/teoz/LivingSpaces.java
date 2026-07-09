@@ -70,6 +70,24 @@ public class LivingSpaces {
 		}
 	}
 
+	// ASCII counterpart of addConstraints(): keeps neighbouring participants at
+	// least ASCII_GAP cells apart, using the dedicated ASCII Real positions
+	// (getAsciiPosE()/getAsciiPosA()) instead of the pixel ones. The gap is a
+	// dedicated ASCII constant (1 cell), not the pixel 10 divided by anything.
+	private static final int ASCII_GAP = 1;
+
+	public void asciiAddConstraints() {
+		LivingSpace previous = null;
+		for (LivingSpace current : all.values()) {
+			if (previous != null) {
+				final Real point1 = previous.getAsciiPosE();
+				final Real point2 = current.getAsciiPosA();
+				point2.ensureBiggerThan(point1.addFixed(ASCII_GAP));
+			}
+			previous = current;
+		}
+	}
+
 	public LivingSpace previous(LivingSpace element) {
 		LivingSpace previous = null;
 		for (LivingSpace current : all.values()) {

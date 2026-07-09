@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="847px" preserveAspectRatio="none" style="width:225px;height:847px;background:#FFFFFF;" version="1.1" viewBox="0 0 225 847" width="225px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="144.3" x="37.65" y="51"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="144.3" x="37.65" y="51"/>
+    <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="144.3" x="42.65" y="122"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="144.3" x="42.65" y="122"/>
+    <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="149.3" x="37.65" y="193"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="193"/>
+    <rect fill="#FFA" height="137" style="stroke:#FFA;stroke-width:1;" width="164.3" x="37.65" y="264"/>
+    <rect fill="none" height="137" style="stroke:#000;stroke-width:1.5;" width="164.3" x="37.65" y="264"/>
+    <rect fill="#FFA" height="67" style="stroke:#FFA;stroke-width:1;" width="149.3" x="37.65" y="419"/>
+    <rect fill="none" height="67" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="419"/>
+    <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="149.3" x="37.65" y="504"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="504"/>
+    <rect fill="#FFA" height="137" style="stroke:#FFA;stroke-width:1;" width="149.3" x="37.65" y="575"/>
+    <rect fill="none" height="137" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="575"/>
+    <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="139.3" x="42.65" y="730"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="139.3" x="42.65" y="730"/>
+    <g>
+      <title>Participant_A</title>
+      <rect fill="#000" fill-opacity="0" height="518" width="8" x="55.15" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="58.65" x2="58.65" y1="39" y2="557"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="53.65" y="82"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="53.65" y="224"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="98" style="stroke:#181818;stroke-width:1;" width="10" x="53.65" y="295"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="28" style="stroke:#181818;stroke-width:1;" width="10" x="53.65" y="450"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="53.65" y="535"/>
+    </g>
+    <line style="stroke:#A80036;stroke-width:2;" x1="49.65" x2="67.65" y1="540" y2="558"/>
+    <line style="stroke:#A80036;stroke-width:2;" x1="49.65" x2="67.65" y1="558" y2="540"/>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="98" style="stroke:#181818;stroke-width:1;" width="10" x="53.65" y="606"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="70" style="stroke:#181818;stroke-width:1;" width="10" x="58.65" y="620"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="42" style="stroke:#181818;stroke-width:1;" width="10" x="63.65" y="634"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="68.65" y="648"/>
+    </g>
+    <g>
+      <title>Participant_B</title>
+      <rect fill="#000" fill-opacity="0" height="447" width="8" x="162.45" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="165.95" x2="165.95" y1="39" y2="486"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="160.95" y="153"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="160.95" y="224"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="98" style="stroke:#181818;stroke-width:1;" width="10" x="160.95" y="295"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="28" style="stroke:#181818;stroke-width:1;" width="10" x="160.95" y="450"/>
+    </g>
+    <line style="stroke:#A80036;stroke-width:2;" x1="156.95" x2="174.95" y1="469" y2="487"/>
+    <line style="stroke:#A80036;stroke-width:2;" x1="156.95" x2="174.95" y1="487" y2="469"/>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="160.95" y="535"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="98" style="stroke:#181818;stroke-width:1;" width="10" x="160.95" y="606"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="70" style="stroke:#181818;stroke-width:1;" width="10" x="165.95" y="309"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="42" style="stroke:#181818;stroke-width:1;" width="10" x="170.95" y="323"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="175.95" y="337"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.3" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="83.3" x="17" y="27.889">Participant_A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.3" x="117.3" y="10"/>
+    <text fill="#000" font-size="14" textLength="83.3" x="124.3" y="27.889">Participant_B</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.3" x="10" y="807"/>
+    <text fill="#000" font-size="14" textLength="83.3" x="17" y="824.889">Participant_A</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.3" x="117.3" y="807"/>
+    <text fill="#000" font-size="14" textLength="83.3" x="124.3" y="824.889">Participant_B</text>
+    <path d="M37.65,51 L125.956,51 L125.956,56 L115.956,66 L37.65,66 L37.65,51" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="144.3" x="37.65" y="51"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="43.306" x="52.65" y="62.111">Group 1</text>
+    <polygon fill="#181818" points="153.95,78,163.95,82,153.95,86,157.95,82" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="159.95" y1="82" y2="82"/>
+    <polygon fill="#181818" points="74.65,92,64.65,96,74.65,100,70.65,96" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="164.95" y1="96" y2="96"/>
+    <path d="M42.65,122 L130.956,122 L130.956,127 L120.956,137 L42.65,137 L42.65,122" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="144.3" x="42.65" y="122"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="43.306" x="57.65" y="133.111">Group 2</text>
+    <polygon fill="#181818" points="148.95,149,158.95,153,148.95,157,152.95,153" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="58.65" x2="154.95" y1="153" y2="153"/>
+    <polygon fill="#181818" points="69.65,163,59.65,167,69.65,171,65.65,167" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="159.95" y1="167" y2="167"/>
+    <path d="M37.65,193 L125.956,193 L125.956,198 L115.956,208 L37.65,208 L37.65,193" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="193"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="43.306" x="52.65" y="204.111">Group 3</text>
+    <polygon fill="#181818" points="148.95,220,158.95,224,148.95,228,152.95,224" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="154.95" y1="224" y2="224"/>
+    <polygon fill="#181818" points="74.65,234,64.65,238,74.65,242,70.65,238" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="159.95" y1="238" y2="238"/>
+    <path d="M37.65,264 L133.188,264 L133.188,269 L123.188,279 L37.65,279 L37.65,264" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="137" style="stroke:#000;stroke-width:1.5;" width="164.3" x="37.65" y="264"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="50.537" x="52.65" y="275.111">Group 3b</text>
+    <polygon fill="#181818" points="148.95,291,158.95,295,148.95,299,152.95,295" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="154.95" y1="295" y2="295"/>
+    <polygon fill="#181818" points="153.95,305,163.95,309,153.95,313,157.95,309" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="159.95" y1="309" y2="309"/>
+    <polygon fill="#181818" points="158.95,319,168.95,323,158.95,327,162.95,323" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="164.95" y1="323" y2="323"/>
+    <polygon fill="#181818" points="163.95,333,173.95,337,163.95,341,167.95,337" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="169.95" y1="337" y2="337"/>
+    <polygon fill="#181818" points="74.65,347,64.65,351,74.65,355,70.65,351" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="174.95" y1="351" y2="351"/>
+    <polygon fill="#181818" points="74.65,361,64.65,365,74.65,369,70.65,365" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="169.95" y1="365" y2="365"/>
+    <polygon fill="#181818" points="74.65,375,64.65,379,74.65,383,70.65,379" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="164.95" y1="379" y2="379"/>
+    <polygon fill="#181818" points="74.65,389,64.65,393,74.65,397,70.65,393" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="159.95" y1="393" y2="393"/>
+    <path d="M37.65,419 L140.419,419 L140.419,424 L130.419,434 L37.65,434 L37.65,419" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="67" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="419"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="57.769" x="52.65" y="430.111">Group 3b2</text>
+    <polygon fill="#181818" points="148.95,446,158.95,450,148.95,454,152.95,450" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="154.95" y1="450" y2="450"/>
+    <polygon fill="#181818" points="74.65,460,64.65,464,74.65,468,70.65,464" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="159.95" y1="464" y2="464"/>
+    <polygon fill="#181818" points="148.95,474,158.95,478,148.95,482,152.95,478" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="154.95" y1="478" y2="478"/>
+    <path d="M37.65,504 L140.419,504 L140.419,509 L130.419,519 L37.65,519 L37.65,504" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="504"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="57.769" x="52.65" y="515.111">Group 3b3</text>
+    <polygon fill="#181818" points="148.95,531,158.95,535,148.95,539,152.95,535" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="154.95" y1="535" y2="535"/>
+    <polygon fill="#181818" points="74.65,545,64.65,549,74.65,553,70.65,549" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="159.95" y1="549" y2="549"/>
+    <path d="M37.65,575 L132.456,575 L132.456,580 L122.456,590 L37.65,590 L37.65,575" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="137" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="575"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="49.806" x="52.65" y="586.111">Group 3c</text>
+    <polygon fill="#181818" points="148.95,602,158.95,606,148.95,610,152.95,606" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="154.95" y1="606" y2="606"/>
+    <polygon fill="#181818" points="79.65,616,69.65,620,79.65,624,75.65,620" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="73.65" x2="159.95" y1="620" y2="620"/>
+    <polygon fill="#181818" points="84.65,630,74.65,634,84.65,638,80.65,634" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="78.65" x2="159.95" y1="634" y2="634"/>
+    <polygon fill="#181818" points="89.65,644,79.65,648,89.65,652,85.65,648" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="83.65" x2="159.95" y1="648" y2="648"/>
+    <polygon fill="#181818" points="148.95,658,158.95,662,148.95,666,152.95,662" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="78.65" x2="154.95" y1="662" y2="662"/>
+    <polygon fill="#181818" points="148.95,672,158.95,676,148.95,680,152.95,676" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="73.65" x2="154.95" y1="676" y2="676"/>
+    <polygon fill="#181818" points="148.95,686,158.95,690,148.95,694,152.95,690" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="154.95" y1="690" y2="690"/>
+    <polygon fill="#181818" points="74.65,700,64.65,704,74.65,708,70.65,704" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="68.65" x2="159.95" y1="704" y2="704"/>
+    <path d="M42.65,730 L130.956,730 L130.956,735 L120.956,745 L42.65,745 L42.65,730" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="139.3" x="42.65" y="730"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="43.306" x="57.65" y="741.111">Group 4</text>
+    <polygon fill="#181818" points="153.95,757,163.95,761,153.95,765,157.95,761" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="58.65" x2="159.95" y1="761" y2="761"/>
+    <polygon fill="#181818" points="69.65,771,59.65,775,69.65,779,65.65,775" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.65" x2="164.95" y1="775" y2="775"/>
+  </g>
+</svg>

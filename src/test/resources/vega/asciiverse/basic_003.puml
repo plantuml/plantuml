@@ -1,0 +1,34 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (2 participants)
+---
+@startuml
+title title
+legend legend
+footer footer
+header header
+caption caption
+<style>
+    document {
+       BackGroundColor orange
+    }
+    title {
+       BackGroundColor yellow
+    }
+    legend {
+       BackGroundColor green
+    }
+    footer {
+       BackGroundColor blue
+       FontColor red
+       FontSize 15
+    }
+    header {
+       BackGroundColor red
+    }
+    caption {
+       BackGroundColor purple
+    }
+</style>
+Sally --> Bob
+@enduml

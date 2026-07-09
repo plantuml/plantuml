@@ -79,7 +79,18 @@ class PositiveForce {
 		}
 		final double distance = movingPointValue - fixedPointValue;
 		final double diff = distance - minimunDistance;
-		if (diff >= 0) {
+		// Tolerance against floating-point absorption in the fixed-point
+		// iteration: a chained addition can be off
+		// by a few ULPs of the CURRENT magnitude, at which point 'move()' is a
+		// silent no-op and this force fires forever. The tolerance must scale
+		// with magnitude — a fixed 1e-6 is fine for typical diagrams but is not
+		// guaranteed to dominate the accumulated error on very large ones (many
+		// chained forces). Using a few ULPs of the larger operand times a
+		// safety factor keeps the slack always above the absorption threshold
+		// while staying many orders of magnitude below a pixel.
+		final double epsilon = Math.max(0.000001,
+				1000 * Math.ulp(Math.max(Math.abs(movingPointValue), Math.abs(fixedPointValue))));
+		if (diff >= -epsilon) {
 			if (trace) {
 				System.err.println("Not using ");
 			}

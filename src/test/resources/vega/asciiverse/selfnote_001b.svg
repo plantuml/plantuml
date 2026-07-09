@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="232px" preserveAspectRatio="none" style="width:445px;height:232px;background:#FFFFFF;" version="1.1" viewBox="0 0 445 232" width="445px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="117" style="stroke:#000;stroke-width:1.5;" width="412.075" x="13" y="51"/>
+    <g>
+      <title>Test</title>
+      <rect fill="#000" fill-opacity="0" height="153" width="8" x="235.15" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="238.65" x2="238.65" y1="39" y2="192"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.213" x="218.044" y="10"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="225.044" y="27.889">Test</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="41.213" x="218.044" y="192"/>
+    <text fill="#000" font-size="14" textLength="27.213" x="225.044" y="209.889">Test</text>
+    <path d="M13,51 L170.694,51 L170.694,56 L160.694,66 L13,66 L13,51" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="117" style="stroke:#000;stroke-width:1.5;" width="412.075" x="13" y="51"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="112.694" x="28" y="62.111">Grouping messages</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="196.65" x2="237.65" y1="147" y2="147"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="196.65" x2="196.65" y1="147" y2="160"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="196.65" x2="236.65" y1="160" y2="160"/>
+    <polygon fill="#181818" points="226.65,156,236.65,160,226.65,164,230.65,160" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="22.425" x="36" y="90.111">The</text>
+    <text fill="#000" font-size="13" x="58.425" y="90.111"> </text>
+    <text fill="#000" font-size="13" textLength="33.231" x="58.425" y="90.111">group</text>
+    <text fill="#000" font-size="13" x="91.656" y="90.111"> </text>
+    <text fill="#000" font-size="13" textLength="33.15" x="91.656" y="90.111">frame</text>
+    <text fill="#000" font-size="13" x="124.806" y="90.111"> </text>
+    <text fill="#000" font-size="13" textLength="31.038" x="124.806" y="90.111">[now]</text>
+    <text fill="#000" font-size="13" x="155.844" y="90.111"> </text>
+    <text fill="#000" font-size="13" textLength="28.194" x="155.844" y="90.111">does</text>
+    <text fill="#000" font-size="13" x="184.038" y="90.111"> </text>
+    <text fill="#000" font-size="13" textLength="28.194" x="184.038" y="90.111">draw</text>
+    <text fill="#000" font-size="13" x="212.231" y="90.111"> </text>
+    <text fill="#000" font-size="13" x="212.231" y="90.111">a</text>
+    <text fill="#000" font-size="13" textLength="37.537" x="36" y="103.111">border</text>
+    <text fill="#000" font-size="13" x="73.538" y="103.111"> </text>
+    <text fill="#000" font-size="13" textLength="40.463" x="73.538" y="103.111">around</text>
+    <text fill="#000" font-size="13" x="114" y="103.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="114" y="103.111">the</text>
+    <text fill="#000" font-size="13" x="132.038" y="103.111"> </text>
+    <text fill="#000" font-size="13" textLength="20.881" x="132.038" y="103.111">text</text>
+    <text fill="#000" font-size="13" x="152.919" y="103.111"> </text>
+    <text fill="#000" font-size="13" textLength="46.231" x="152.919" y="103.111">(located</text>
+    <text fill="#000" font-size="13" x="199.15" y="103.111"> </text>
+    <text fill="#000" font-size="13" textLength="14.463" x="199.15" y="103.111">on</text>
+    <text fill="#000" font-size="13" x="213.612" y="103.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="213.612" y="103.111">the</text>
+    <text fill="#000" font-size="13" textLength="17.306" x="36" y="116.111">left</text>
+    <text fill="#000" font-size="13" x="53.306" y="116.111"> </text>
+    <text fill="#000" font-size="13" textLength="31.769" x="53.306" y="116.111">side),</text>
+    <text fill="#000" font-size="13" x="85.075" y="116.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="85.075" y="116.111">[no</text>
+    <text fill="#000" font-size="13" x="103.113" y="116.111"> </text>
+    <text fill="#000" font-size="13" textLength="39.731" x="103.113" y="116.111">longer]</text>
+    <text fill="#000" font-size="13" x="142.844" y="116.111"> </text>
+    <text fill="#000" font-size="13" textLength="42.656" x="142.844" y="116.111">ignores</text>
+    <text fill="#000" font-size="13" x="185.5" y="116.111"> </text>
+    <text fill="#000" font-size="13" textLength="13" x="185.5" y="116.111">its</text>
+    <text fill="#000" font-size="13" textLength="57.038" x="36" y="129.111">presence,</text>
+    <text fill="#000" font-size="13" x="93.038" y="129.111"> </text>
+    <text fill="#000" font-size="13" textLength="21.694" x="93.038" y="129.111">and</text>
+    <text fill="#000" font-size="13" x="114.731" y="129.111"> </text>
+    <text fill="#000" font-size="13" textLength="23.888" x="114.731" y="129.111">also</text>
+    <text fill="#000" font-size="13" x="138.619" y="129.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="138.619" y="129.111">[no</text>
+    <text fill="#000" font-size="13" x="156.656" y="129.111"> </text>
+    <text fill="#000" font-size="13" textLength="39.731" x="156.656" y="129.111">longer]</text>
+    <text fill="#000" font-size="13" textLength="42.656" x="36" y="142.111">ignores</text>
+    <text fill="#000" font-size="13" x="78.656" y="142.111"> </text>
+    <text fill="#000" font-size="13" textLength="18.038" x="78.656" y="142.111">the</text>
+    <text fill="#000" font-size="13" x="96.694" y="142.111"> </text>
+    <text fill="#000" font-size="13" textLength="53.463" x="96.694" y="142.111">presence</text>
+    <text fill="#000" font-size="13" x="150.156" y="142.111"> </text>
+    <text fill="#000" font-size="13" textLength="10.806" x="150.156" y="142.111">of</text>
+    <text fill="#000" font-size="13" x="160.963" y="142.111"> </text>
+    <text fill="#000" font-size="13" x="160.963" y="142.111">a</text>
+    <text fill="#000" font-size="13" x="168.194" y="142.111"> </text>
+    <text fill="#000" font-size="13" textLength="23.888" x="168.194" y="142.111">line.</text>
+    <path d="M243.65,81 L243.65,104 L403.65,104 L403.65,91 L393.65,81 L243.65,81" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M393.65,81 L393.65,91 L403.65,91 L393.65,81" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="139.425" x="249.65" y="96.111">A note on the self message</text>
+  </g>
+</svg>

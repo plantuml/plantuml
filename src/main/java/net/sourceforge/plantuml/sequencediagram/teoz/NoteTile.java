@@ -78,7 +78,20 @@ public class NoteTile extends AbstractTile implements Tile {
 		this.note = note;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+
+		// Same chaining as CommunicationTile: a standalone note published via
+		// "& note ..." must share the previous tile's contact line (top-aligned
+		// via createParallel) instead of stacking sequentially below it. The
+		// note's own "contact point" is its vertical center (see
+		// getContactPointRelative below), mirroring how the legacy TileParallel
+		// aligned notes against message arrows by their respective
+		// contact points.
+		final double contactRelative = getContactPointRelative();
+		final double height = getPreferredHeight();
+		if (note.isParallel())
+			this.yGauge = YGauge.createParallel(currentY, contactRelative, height);
+		else
+			this.yGauge = YGauge.createWithContact(currentY, contactRelative, height);
 	}
 
 	@Override
@@ -103,8 +116,8 @@ public class NoteTile extends AbstractTile implements Tile {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+		// Self-translate prologue: absolute gauge position
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);

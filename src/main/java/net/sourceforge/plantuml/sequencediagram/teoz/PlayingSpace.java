@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -59,9 +58,11 @@ public class PlayingSpace implements Bordered {
 	private final LivingSpaces livingSpaces;
 	private final List<LinkAnchor> linkAnchors;
 	private final ISkinParam skinParam;
+	private final SequenceDiagram diagram;
 
 	public PlayingSpace(SequenceDiagram diagram, Dolls dolls, TileArguments tileArguments) {
 
+		this.diagram = diagram;
 		this.livingSpaces = tileArguments.getLivingSpaces();
 		this.linkAnchors = diagram.getLinkAnchors();
 		this.skinParam = diagram.getSkinParam();
@@ -77,7 +78,10 @@ public class PlayingSpace implements Bordered {
 			max2.add(dolls.getMaxX(tileArguments.getStringBounder()));
 		}
 
-		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addAtLeast(0), 0);
+		// The gauge chain starts at startingY so that gauge coordinates and
+		// legacy TimeHook coordinates (fillPositionelTiles starts its
+		// accumulation at startingY too) live in the same drawing space
+		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addFixed(startingY), 0);
 
 		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null, ycurrent));
 
@@ -112,14 +116,11 @@ public class PlayingSpace implements Bordered {
 		final List<CommonTile> local = new ArrayList<>();
 		final List<CommonTile> full = new ArrayList<>();
 		final TimeHook y = GroupingTile.fillPositionelTiles(stringBounder, new TimeHook(startingY), tiles, local, full);
-		for (CommonTile tile : local) {
-			if (YGauge.USE_ME) {
-				((CommonTile) tile).drawU(ug);
-			} else {
-				final double posy = ((CommonTile) tile).getTimeHook().getValue();
-				((CommonTile) tile).drawU(ug.apply(UTranslate.dy(posy)));
-			}
-		}
+		// Each tile draws itself in ABSOLUTE coordinates, translating itself by its
+		// own gauge min (the "self-translate prologue" every drawU() starts with),
+		// so no external dy() translation is applied here
+		for (CommonTile tile : local)
+			tile.drawU(ug);
 		for (LinkAnchor linkAnchor : linkAnchors) {
 			final CommonTile ytile1 = getFromAnchor(full, linkAnchor.getAnchor1());
 			final CommonTile ytile2 = getFromAnchor(full, linkAnchor.getAnchor2());
@@ -168,6 +169,14 @@ public class PlayingSpace implements Bordered {
 
 	public LivingSpaces getLivingSpaces() {
 		return livingSpaces;
+	}
+
+	public List<Tile> getTiles() {
+		return tiles;
+	}
+
+	public SequenceDiagram getDiagram() {
+		return diagram;
 	}
 
 	public double getBorder1() {

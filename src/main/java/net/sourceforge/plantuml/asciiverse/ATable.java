@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class ATable implements AsciiBlock {
 
@@ -157,7 +156,7 @@ public class ATable implements AsciiBlock {
 		final int right = borders[borders.length - 1];
 
 		for (int x = 0; x <= right; x++)
-			plan.drawChar('-', startX + x, currentY);
+			plan.move(startX + x, currentY).drawChar('-');
 
 		for (int b = 0; b < borders.length; b++) {
 			final boolean isLeft = b == 0;
@@ -169,7 +168,7 @@ public class ATable implements AsciiBlock {
 				junction = isLeft ? '`' : isRight ? '\'' : '+';
 			else
 				junction = '+';
-			plan.drawChar(junction, startX + borders[b], currentY);
+			plan.move(startX + borders[b], currentY).drawChar(junction);
 		}
 	}
 
@@ -191,11 +190,11 @@ public class ATable implements AsciiBlock {
 	}
 
 	@Override
-	public XDimension2D asciiDimension() {
+	public ADimension2D asciiDimension() {
 		final int width = getTotalWidth();
 		final int height = getTotalHeight() + 2 + rowMinHeights.size() - 1;
 
-		return new XDimension2D(width, height);
+		return new ADimension2D(width, height);
 	}
 
 	@Override
@@ -221,11 +220,11 @@ public class ATable implements AsciiBlock {
 
 					cellWidth += span.colSpan - 1;
 
-					plan.drawChar('|', currentX, currentY);
+					plan.move(currentX, currentY).drawChar('|');
 					currentX++;
 					for (int i = 0; i < cellWidth; i++) {
 						final char c = charAt(content, i - leftPadding);
-						plan.drawChar(c, currentX + i, currentY);
+						plan.move(currentX + i, currentY).drawChar(c);
 					}
 					currentX += cellWidth;
 
@@ -234,17 +233,17 @@ public class ATable implements AsciiBlock {
 					final Display content = cells.get(row, col);
 					int cellWidth = columnRenderWidth(col);
 
-					plan.drawChar('|', currentX, currentY);
+					plan.move(currentX, currentY).drawChar('|');
 					currentX++;
 					for (int i = 0; i < cellWidth; i++) {
 						final char c = charAt(content, i - leftPadding);
-						plan.drawChar(c, currentX + i, currentY);
+						plan.move(currentX + i, currentY).drawChar(c);
 					}
 					currentX += cellWidth;
 				}
 			}
 
-			plan.drawChar('|', currentX, currentY);
+			plan.move(currentX, currentY).drawChar('|');
 
 			for (int h = 1; h < rowHeight; h++) {
 				currentY++;
@@ -258,25 +257,25 @@ public class ATable implements AsciiBlock {
 
 						cellWidth += span.colSpan - 1;
 
-						plan.drawChar('|', currentX, currentY);
+						plan.move(currentX, currentY).drawChar('|');
 						currentX++;
 						for (int i = 0; i < cellWidth; i++)
-							plan.drawChar(' ', currentX + i, currentY);
+							plan.move(currentX + i, currentY).drawChar(' ');
 
 						currentX += cellWidth;
 						col += span.colSpan - 1;
 					} else if (span == null) {
 
 						final int cellWidth = columnRenderWidth(col);
-						plan.drawChar('|', currentX, currentY);
+						plan.move(currentX, currentY).drawChar('|');
 						currentX++;
 						for (int i = 0; i < cellWidth; i++) {
-							plan.drawChar(' ', currentX + i, currentY);
+							plan.move(currentX + i, currentY).drawChar(' ');
 						}
 						currentX += cellWidth;
 					}
 				}
-				plan.drawChar('|', currentX, currentY);
+				plan.move(currentX, currentY).drawChar('|');
 			}
 			currentY++;
 

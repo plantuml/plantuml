@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.teoz.CommonTile;
-import net.sourceforge.plantuml.sequencediagram.teoz.YGauge;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -82,17 +81,14 @@ public class LinkAnchor {
 
 	public void drawAnchor(UGraphic ug, CommonTile tile1, CommonTile tile2, ISkinParam skinParam) {
 
-		final double y1;
-		final double y2;
-		if (YGauge.USE_ME) {
-			y1 = (tile1.getYGauge().getMin().getCurrentValue() + tile1.getYGauge().getMax().getCurrentValue()) / 2
-					+ tile1.getContactPointRelative();
-			y2 = (tile2.getYGauge().getMin().getCurrentValue() + tile2.getYGauge().getMax().getCurrentValue()) / 2
-					+ tile2.getContactPointRelative();
-		} else {
-			y1 = tile1.getTimeHook().getValue() + tile1.getContactPointRelative();
-			y2 = tile2.getTimeHook().getValue() + tile2.getContactPointRelative();
-		}
+		// The anchor sits on the tile's CONTACT LINE: its gauge min plus the contact
+		// offset -- NOT the midpoint of [min, max]. The midpoint only happens to sit
+		// near the real arrow line for a plain, note-less message (where
+		// contactPointRelative is roughly half the tile's height by coincidence); a
+		// note wrapper grows max without moving the arrow, which exposes the
+		// difference.
+		final double y1 = tile1.getYGauge().getMin().getCurrentValue() + tile1.getContactPointRelative();
+		final double y2 = tile2.getYGauge().getMin().getCurrentValue() + tile2.getContactPointRelative();
 		final double xx1 = tile1.getMiddleX();
 		final double xx2 = tile2.getMiddleX();
 		final double x = (xx1 + xx2) / 2;

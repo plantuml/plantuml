@@ -115,7 +115,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
 		if (teoz)
-			return getTextHeight(stringBounder) + 16;
+			return getTextHeight(stringBounder) + 4;
 		else
 			return getTextHeight(stringBounder);
 	}

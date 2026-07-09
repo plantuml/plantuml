@@ -54,7 +54,12 @@ public class HSpaceTile extends AbstractTile implements Tile {
 		super(tileArguments.getStringBounder(), currentY);
 		this.hspace = hspace;
 		this.xorigin = tileArguments.getXOrigin();
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+		// A `|||` is a pure vertical spacer: it draws nothing and has no arrow, so
+		// it owns no contact line of its own and createWithContact/createParallel
+		// would be meaningless here. But it must still PROPAGATE the contact line
+		// (like LifeEventTile does), so that an hspace sitting between two parallel
+		// (&) messages does not break their contact sharing.
+		this.yGauge = YGauge.createPropagating(currentY, getPreferredHeight());
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class Test_0 {
 	@Test
 	public void testExecute() throws IOException, InterruptedException {
 		final File file = getJavaFile();
-		final FileFormatOption options = new FileFormatOption(FileFormat.PNG);
+		final FileFormatOption options = new FileFormatOption(FileFormat.ATXT);
 
 		final File outputDirectory = new File("outputdev").getAbsoluteFile();
 		outputDirectory.mkdirs();

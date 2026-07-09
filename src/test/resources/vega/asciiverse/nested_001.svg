@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="449px" preserveAspectRatio="none" style="width:336px;height:449px;background:#FFFFFF;" version="1.1" viewBox="0 0 336 449" width="336px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="307" style="stroke:#000;stroke-width:1.5;" width="303.731" x="13" y="78"/>
+    <rect fill="none" height="149" style="stroke:#000;stroke-width:1.5;" width="259.731" x="32" y="178"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="192.581" x="51" y="234"/>
+    <g>
+      <title>Alice</title>
+      <rect fill="#000" fill-opacity="0" height="370" width="8" x="63.5" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="67" x2="67" y1="39" y2="409"/>
+    </g>
+    <g>
+      <title>Bob</title>
+      <rect fill="#000" fill-opacity="0" height="370" width="8" x="224.081" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="227.581" x2="227.581" y1="39" y2="409"/>
+    </g>
+    <g>
+      <title>Log</title>
+      <rect fill="#000" fill-opacity="0" height="370" width="8" x="272.231" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="275.731" x2="275.731" y1="39" y2="409"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="44.775" y="10"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="51.775" y="27.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="208.113" y="10"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="215.113" y="27.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.363" x="257.05" y="10"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="264.05" y="27.889">Log</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="44.775" y="409"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="51.775" y="426.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="208.113" y="409"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="215.113" y="426.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.363" x="257.05" y="409"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="264.05" y="426.889">Log</text>
+    <polygon fill="#181818" points="215.581,62,225.581,66,215.581,70,219.581,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="67" x2="221.581" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="130.813" x="74" y="61.111">Authentication Request</text>
+    <path d="M13,78 L71.731,78 L71.731,83 L61.731,93 L13,93 L13,78" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="307" style="stroke:#000;stroke-width:1.5;" width="303.731" x="13" y="78"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="13.731" x="28" y="89.111">alt</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="80.644" x="86.731" y="88.556">[successful case]</text>
+    <polygon fill="#181818" points="78,118,68,122,78,126,74,122" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="72" x2="226.581" y1="122" y2="122"/>
+    <text fill="#000" font-size="13" textLength="136.581" x="84" y="117.111">Authentication Accepted</text>
+    <line style="stroke:#000;stroke-width:1;stroke-dasharray:2,2;" x1="13" x2="316.731" y1="131" y2="131"/>
+    <text fill="#000" font-size="11" font-weight="700" textLength="92.263" x="18" y="141.556">[some kind of failure]</text>
+    <polygon fill="#181818" points="78,162,68,166,78,170,74,166" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="72" x2="226.581" y1="166" y2="166"/>
+    <text fill="#000" font-size="13" textLength="122.2" x="84" y="161.111">Authentication Failure</text>
+    <path d="M32,178 L145.738,178 L145.738,183 L135.738,193 L32,193 L32,178" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="149" style="stroke:#000;stroke-width:1.5;" width="259.731" x="32" y="178"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="68.738" x="47" y="189.111">My own label</text>
+    <polygon fill="#181818" points="263.731,218,273.731,222,263.731,226,267.731,222" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="67" x2="269.731" y1="222" y2="222"/>
+    <text fill="#000" font-size="13" textLength="81.494" x="74" y="217.111">Log attack start</text>
+    <path d="M51,234 L120.619,234 L120.619,239 L110.619,249 L51,249 L51,234" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="192.581" x="51" y="234"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="66" y="245.111">loop</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="56.788" x="135.619" y="244.556">[1000 times]</text>
+    <polygon fill="#181818" points="215.581,274,225.581,278,215.581,282,219.581,278" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="67" x2="221.581" y1="278" y2="278"/>
+    <text fill="#000" font-size="13" textLength="63.619" x="74" y="273.111">DNS Attack</text>
+    <polygon fill="#181818" points="263.731,315,273.731,319,263.731,323,267.731,319" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="67" x2="269.731" y1="319" y2="319"/>
+    <text fill="#000" font-size="13" textLength="78" x="74" y="314.111">Log attack end</text>
+    <line style="stroke:#000;stroke-width:1;stroke-dasharray:2,2;" x1="13" x2="316.731" y1="342" y2="342"/>
+    <text fill="#000" font-size="11" font-weight="700" textLength="104.431" x="18" y="352.556">[Another type of failure]</text>
+    <polygon fill="#181818" points="78,373,68,377,78,381,74,377" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="72" x2="226.581" y1="377" y2="377"/>
+    <text fill="#000" font-size="13" textLength="76.619" x="84" y="372.111">Please repeat</text>
+  </g>
+</svg>

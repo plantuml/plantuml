@@ -84,6 +84,8 @@ public class DividerTile extends AbstractTile implements Tile {
 	}
 
 	public void drawU(UGraphic ug) {
+		// Self-translate prologue: absolute gauge position
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);

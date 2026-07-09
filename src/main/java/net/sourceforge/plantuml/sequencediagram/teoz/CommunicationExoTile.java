@@ -35,11 +35,15 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
@@ -74,7 +78,10 @@ public class CommunicationExoTile extends AbstractTile {
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+		if (message.isParallel())
+			this.yGauge = YGauge.createParallel(currentY, getContactPointRelative(), getPreferredHeight());
+		else
+			this.yGauge = YGauge.createWithContact(currentY, getContactPointRelative(), getPreferredHeight());
 	}
 
 	@Override
@@ -98,8 +105,8 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+		// Self-translate prologue: absolute gauge position
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
@@ -246,5 +253,184 @@ public class CommunicationExoTile extends AbstractTile {
 
 	public boolean isFromLeftBorderMessage() {
 		return message.getType().isLeftBorder() && !isShortArrow();
+	}
+
+	// ---------------------------------------------------------------------
+	// ASCII rendering.
+	//
+	// An exo message draws an arrow between the participant's own lifeline
+	// and either the diagram's outer edge (the common case: "A->?"/"?->E",
+	// spanning past every OTHER participant to reach the border, exactly like
+	// the pixel drawU() above uses tileArguments.getBorder1()/getBorder2())
+	// or, for a short arrow (message.isShortArrow(), the compact "->o"/"o<-"
+	// syntax), a small local stub next to the participant instead -- mirroring
+	// the pixel isFromLeftBorderMessage()/isFromRightBorderMessage() split
+	// above, which is exactly "not a short arrow".
+	//
+	// Idea reused from CommunicationTile.asciiDraw() (never its code, since
+	// there is no shared superclass method to call into): the participant's
+	// own lifeline column is left untouched by the tile -- filled in
+	// afterwards by PlayingSpaceWithParticipants' lifeline-fill pass -- and
+	// the arrowhead lands one column short of it, on whichever end is the
+	// message's target. The diagram edge is not a lifeline column (nothing
+	// else ever draws or fills it), so it needs no such reservation: the
+	// arrow may be drawn flush onto it, including the arrowhead when the edge
+	// is the target.
+	// ---------------------------------------------------------------------
+
+	// How far outside the outermost participant's own box the diagram edge
+	// sits, for a non-short exo message -- the ASCII analogue of
+	// GroupingTile.ASCII_FRAME_MARGIN, a fixed breathing-room constant rather
+	// than anything derived from the label (the border position does not
+	// depend on THIS message's label width; only a short arrow's local stub
+	// does, see asciiShortWidth() below).
+	private static final int ASCII_EXO_MARGIN = 2;
+
+	// The message's label, padded with a 1-column margin on each side, exactly
+	// like CommunicationTile.asciiLabel() -- same reason:
+	// centering it flush against a lifeline/edge column would let a
+	// lifeline-fill pass or the arrow's own dashes swallow the margin.
+	private AsciiBlock asciiLabel() {
+		return message.getLabel().marginLR(1, 1);
+	}
+
+	private int asciiLabelRows() {
+		return Math.max(1, asciiLabel().asciiDimension().getHeight());
+	}
+
+	// A short arrow's local stub width: just enough to fit the padded label,
+	// or a small fixed minimum if there is none -- there is no lifeline on the
+	// far end to leave room for, unlike CommunicationTileSelf's loop, so no
+	// extra "runway" column is needed here.
+	private static final int ASCII_EXO_SHORT_MIN_WIDTH = 3;
+
+	private int asciiShortWidth() {
+		return Math.max(ASCII_EXO_SHORT_MIN_WIDTH, asciiLabel().asciiDimension().getWidth());
+	}
+
+	// The column the arrow reaches away from the participant: either the
+	// diagram's outer edge (one fixed margin outside the first/last
+	// participant's own box -- tileArguments.getFirstLivingSpace()/
+	// getLastLivingSpace(), the same "outermost participant" accessors
+	// PartitionTile's full-width frame already relies on) or, for a short
+	// arrow, a small local offset from the message's own participant.
+	// Composable Real, not yet a resolved column -- read back as an int only
+	// at draw time / by getAsciiMinX()/getAsciiMaxX() callers, exactly like
+	// every other ASCII position in this codebase.
+	private Real asciiEdge() {
+		final boolean leftBorder = message.getType().isLeftBorder();
+		if (isShortArrow()) {
+			final int width = asciiShortWidth();
+			return leftBorder ? livingSpace.getAsciiPosC().addFixed(-width)
+					: livingSpace.getAsciiPosC().addFixed(width);
+		}
+
+		if (leftBorder)
+			return tileArguments.getFirstLivingSpace().getAsciiPosB().addFixed(-ASCII_EXO_MARGIN);
+
+		return tileArguments.getLastLivingSpace().getAsciiPosD().addFixed(ASCII_EXO_MARGIN - 1);
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		final int p = (int) livingSpace.getAsciiLifeColumn().getCurrentValue();
+		final int edge = (int) asciiEdge().getCurrentValue();
+		final boolean dotted = message.getArrowConfiguration().isDotted();
+		final boolean targetIsParticipant = message.getType() == MessageExoType.FROM_LEFT
+				|| message.getType() == MessageExoType.FROM_RIGHT;
+		final int rows = asciiLabelRows();
+		final int arrowRow = rows;
+
+		int dashFrom;
+		int dashTo;
+		final int arrowCol;
+		final char arrowChar;
+		if (edge < p) {
+			if (targetIsParticipant) {
+				dashFrom = edge;
+				dashTo = p - 2;
+				arrowCol = p - 1;
+				arrowChar = '>';
+			} else {
+				dashFrom = edge + 1;
+				dashTo = p - 1;
+				arrowCol = edge;
+				arrowChar = '<';
+			}
+		} else {
+			if (targetIsParticipant) {
+				dashFrom = p + 2;
+				dashTo = edge;
+				arrowCol = p + 1;
+				arrowChar = '<';
+			} else {
+				dashFrom = p + 1;
+				dashTo = edge - 1;
+				arrowCol = edge;
+				arrowChar = '>';
+			}
+		}
+		if (dashFrom <= dashTo)
+			plan.drawHLine(dashFrom, dashTo, arrowRow, dotted);
+		plan.move(arrowCol, arrowRow).drawChar(arrowChar);
+
+		final AsciiBlock label = asciiLabel();
+		final int labelWidth = label.asciiDimension().getWidth();
+		if (labelWidth > 0) {
+			final int a = Math.min(edge, p);
+			final int b = Math.max(edge, p);
+			final int mid = (a + b) / 2;
+			label.asciiDraw(plan.move(mid - labelWidth / 2, 0));
+		}
+	}
+
+	// Same formula as CommunicationTile.asciiDimension(): label rows, plus the
+	// arrow row, plus one trailing blank row.
+	@Override
+	public ADimension2D asciiDimension() {
+		final int p = (int) livingSpace.getAsciiLifeColumn().getCurrentValue();
+		final int edge = (int) asciiEdge().getCurrentValue();
+		return new ADimension2D(Math.abs(edge - p), asciiLabelRows() + 2);
+	}
+
+	// ASCII counterpart of addConstraints() above -- but only for a short
+	// arrow: a non-short exo message reaches all the way to the diagram's
+	// outer edge, past every other participant, so it can never collide with
+	// just a neighbour (the same reasoning that lets the pixel addConstraints()
+	// above skip the right-border case entirely). A short arrow, by contrast,
+	// is a small LOCAL stub, so it needs the same neighbour-reservation
+	// CommunicationTileSelf.asciiAddConstraints() already does for its loop --
+	// reused here via LivingSpaces.previous()/next() rather than duplicating
+	// private helpers, since those are already public on LivingSpaces.
+	@Override
+	public void asciiAddConstraints() {
+		if (!isShortArrow())
+			return;
+
+		final int width = asciiShortWidth();
+		if (message.getType().isLeftBorder()) {
+			final LivingSpace previous = tileArguments.getLivingSpaces().previous(livingSpace);
+			if (previous != null)
+				livingSpace.getAsciiPosC().ensureBiggerThan(previous.getAsciiPosC().addFixed(width));
+		} else {
+			final LivingSpace next = tileArguments.getLivingSpaces().next(livingSpace);
+			if (next != null)
+				next.getAsciiPosC().ensureBiggerThan(livingSpace.getAsciiPosC().addFixed(width));
+		}
+	}
+
+	// ASCII counterpart of getMinX()/getMaxX(): composable Real spanning
+	// whichever of {participant lifeline, edge} is smaller/bigger, so an
+	// enclosing GroupingTile can fold this tile's range into its own frame
+	// span before the ASCII RealLine compiles -- same contract as every other
+	// migrated tile's getAsciiMinX()/getAsciiMaxX().
+	@Override
+	public Real getAsciiMinX() {
+		return RealUtils.min(asciiEdge(), livingSpace.getAsciiLifeColumn());
+	}
+
+	@Override
+	public Real getAsciiMaxX() {
+		return RealUtils.max(asciiEdge(), livingSpace.getAsciiLifeColumn());
 	}
 }

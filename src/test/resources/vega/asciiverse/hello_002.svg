@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="130px" preserveAspectRatio="none" style="width:239px;height:130px;background:#FFFFFF;" version="1.1" viewBox="0 0 239 130" width="239px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <g>
+      <title>alice</title>
+      <rect fill="#000" fill-opacity="0" height="51" width="8" x="27.938" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="31.438" x2="31.438" y1="39" y2="90"/>
+    </g>
+    <g>
+      <title>bob</title>
+      <rect fill="#000" fill-opacity="0" height="51" width="8" x="109.706" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="113.206" x2="113.206" y1="39" y2="90"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.875" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="28.875" x="17" y="27.889">alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.363" x="94.525" y="10"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="101.525" y="27.889">bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42.875" x="10" y="90"/>
+    <text fill="#000" font-size="14" textLength="28.875" x="17" y="107.889">alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="37.363" x="94.525" y="90"/>
+    <text fill="#000" font-size="14" textLength="23.363" x="101.525" y="107.889">bob</text>
+    <polygon fill="#181818" points="101.206,62,111.206,66,101.206,70,105.206,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="31.438" x2="107.206" y1="66" y2="66"/>
+    <text fill="#000" font-size="13" textLength="57.769" x="38.438" y="61.111">this is a test</text>
+    <path d="M118.206,52 L118.206,75 L223.206,75 L223.206,62 L213.206,52 L118.206,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <path d="M213.206,52 L213.206,62 L223.206,62 L213.206,52" fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/>
+    <text fill="#000" font-size="13" textLength="84.5" x="124.206" y="67.111">Some right note</text>
+  </g>
+</svg>

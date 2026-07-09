@@ -35,12 +35,18 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.ANote;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.AsciiBlockMarginLR;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Note;
@@ -82,7 +88,14 @@ public class CommunicationTileNoteRight extends AbstractTile {
 		this.skinParam = skinParam;
 		this.noteOnMessage = noteOnMessage;
 		this.livingSpace = livingSpace;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+		// Propagate contact/origin from the wrapped tile so a following &
+		// message can still find and align with the SAME contact line through
+		// the note wrapper (min unchanged: the note doesn't move the arrow;
+		// max anchored via addAtLeast per the CHAIN ANCHORING invariant in
+		// YGauge, so this wrapper is itself safe to chain onto)
+		final YGauge innerGauge = tile.getYGauge();
+		this.yGauge = new YGauge(innerGauge.getMin(), innerGauge.getMin().addAtLeast(getPreferredHeight()),
+				innerGauge.getContact(), innerGauge.getOrigin());
 	}
 
 	@Override
@@ -97,7 +110,8 @@ public class CommunicationTileNoteRight extends AbstractTile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), NoteTile.getNoteComponentType(noteOnMessage.getNoteStyle()),
+		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(),
+				NoteTile.getNoteComponentType(noteOnMessage.getNoteStyle()),
 				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),
 				noteOnMessage.getColors());
 		return comp;
@@ -118,10 +132,12 @@ public class CommunicationTileNoteRight extends AbstractTile {
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = Area.create(dim.getWidth(), dim.getHeight());
+		// The wrapped tile self-translates to its own gauge; the note's prologue is
+		// applied AFTERWARDS, to the note only (the wrapper's min is identical to the
+		// inner tile's, so both land on the same row -- the note never moves the arrow)
 		((UDrawable) tile).drawU(ug);
 		final Real p = getNotePosition(stringBounder);
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
 		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);
 	}
@@ -134,6 +150,94 @@ public class CommunicationTileNoteRight extends AbstractTile {
 
 	public void addConstraints() {
 		tile.addConstraints();
+	}
+
+	// ASCII counterpart: delegate the message's own constraint to the inner
+	// tile, exactly like addConstraints() above delegates to tile.addConstraints().
+	// The note's own width is not yet reserved on the ASCII column graph
+	// -- it can overlap a participant further right.
+	@Override
+	public void asciiAddConstraints() {
+		tile.asciiAddConstraints();
+	}
+
+	// Delegate the range to the wrapped message, exactly like
+	// asciiAddConstraints() delegates its constraint. The note box's own extra
+	// width past the target column is not reflected here -- same known gap as
+	// everywhere else in this family: the note is not yet
+	// reserved on the ASCII column solver.
+	@Override
+	public Real getAsciiMinX() {
+		return tile.getAsciiMinX();
+	}
+
+	// Unlike getAsciiMinX() above, this one no longer just forwards to the
+	// wrapped message: a partition's frame needs to widen to fit an attached
+	// right note ("notes fall inside the frame",
+	// not past it, matching the pixel rendering), and the frame only ever asks
+	// its children's own getAsciiMinX()/getAsciiMaxX() to know how far they
+	// reach (GroupingTile.asciiChildrenMax()). The note box's own width still
+	// isn't reserved on the ASCII column solver itself — it can still
+	// overlap a participant further right — only this tile's own reported
+	// extent grows, the same column arithmetic asciiDraw() below already uses
+	// to place the box (targetColumn + 2, then the box's own width).
+	@Override
+	public Real getAsciiMaxX() {
+		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();
+		final Real noteMax = livingSpace.getAsciiLifeColumn().addFixed(boxWidth + 1);
+		final Real tileMax = tile.getAsciiMaxX();
+		if (tileMax == null)
+			return noteMax;
+
+		return RealUtils.max(java.util.Arrays.asList(tileMax, noteMax));
+	}
+
+	// ASCII counterpart of getPreferredHeight()/asciiDraw(): the Y footprint
+	// this decorator needs is whichever is taller, the inner message (label
+	// rows + arrow + blank, see CommunicationTile.asciiDimension())
+	// or the note box itself (a throwaway `new
+	// ANote(text).asciiDimension()`: ANote computes its own size from
+	// the text alone, no plan needed just to ask) — mirroring how
+	// getPreferredHeight() above takes Math.max(tile's height, the pixel
+	// note's height). No try/catch around tile.asciiDimension(): an inner
+	// tile with no ASCII support crashes here rather than silently reporting
+	// a made-up height (the same "crash, don't mask it"
+	// policy the orchestrator's asciiDraw() loop follows). Width is inherited
+	// straight from the inner tile: unlike height, the note box's own width
+	// still isn't reserved anywhere on the ASCII column solver, so
+	// reporting it here wouldn't yet be acted upon — same known gap as
+	// before, not fixed by this change.
+	@Override
+	public ADimension2D asciiDimension() {
+		final ADimension2D tileDim = tile.asciiDimension();
+		final int tileWidth = tileDim.getWidth();
+		final int tileHeight = tileDim.getHeight();
+
+		final int noteHeight = new ANote(asciiNoteText()).asciiDimension().getHeight();
+		return new ADimension2D(tileWidth, Math.max(tileHeight, noteHeight));
+	}
+
+	// ASCII counterpart of drawU(): draw the inner message first (exactly
+	// like drawU()'s ((UDrawable) tile).drawU(ug)), then the note itself as a
+	// proper folded-corner box (InfinitePlan.createNoteBox()),
+	// placed right after the target's lifeline column. Real
+	// multi-line notes now draw correctly top-to-bottom, and the row
+	// this decorator needs is correctly reported by asciiDimension() above
+	// -- but see that method's note: only the note box's height feeds
+	// back into the Y-axis, not its width.
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		tile.asciiDraw(plan);
+
+		final AsciiBlock noteText = asciiNoteText();
+		final AsciiBlock noteBox = plan.createNoteBox(noteText).marginLR(2, 2);
+		final int targetColumn = (int) livingSpace.getAsciiLifeColumn().getCurrentValue();
+		final int left = targetColumn + 2;
+		noteBox.asciiDraw(plan.move(left, 0));
+	}
+
+	private AsciiBlock asciiNoteText() {
+		return noteOnMessage.getDisplay().marginLR(1, 3);
 	}
 
 	public Real getMinX() {

@@ -617,7 +617,7 @@ public class GanttDiagram extends TitledDiagram implements GanttStyle {
 			row++;
 		}
 
-		final InfinitePlan plan = new InfinitePlan();
+		final InfinitePlan plan = new InfinitePlan(FileFormat.ATXT);
 		table.asciiDraw(plan);
 
 		plan.exportTxt(os);

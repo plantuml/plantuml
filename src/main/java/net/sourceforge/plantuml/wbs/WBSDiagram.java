@@ -109,7 +109,7 @@ public class WBSDiagram extends TitledDiagram implements TextBlock {
 	@Override
 	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
 
-		final InfinitePlan plan = new InfinitePlan();
+		final InfinitePlan plan = new InfinitePlan(FileFormat.ATXT);
 		final Fork fork = getDrawingElement();
 
 		fork.asciiDraw(plan);
