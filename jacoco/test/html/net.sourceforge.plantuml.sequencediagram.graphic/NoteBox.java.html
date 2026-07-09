@@ -120,8 +120,8 @@ import net.sourceforge.plantuml.url.Url;
 	public double getStartingX(StringBounder stringBounder) {
 <span class="fc" id="L121">		final SegmentColored segment = getSegment(stringBounder);</span>
 		final int xStart;
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (position == NotePosition.LEFT) {</span>
-<span class="nc" id="L124">			xStart = (int) (segment.getSegment().getPos1() - getPreferredWidth(stringBounder));</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		if (position == NotePosition.LEFT) {</span>
+<span class="fc" id="L124">			xStart = (int) (segment.getSegment().getPos1() - getPreferredWidth(stringBounder));</span>
 <span class="pc bpc" id="L125" title="1 of 2 branches missed.">		} else if (position == NotePosition.RIGHT) {</span>
 <span class="fc" id="L126">			xStart = (int) (segment.getSegment().getPos2());</span>
 <span class="nc bnc" id="L127" title="All 2 branches missed.">		} else if (position == NotePosition.OVER) {</span>

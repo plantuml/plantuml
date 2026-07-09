@@ -137,17 +137,17 @@ public class TextSkin extends Rose {
 <span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_CLOSE)</span>
 <span class="nc" id="L138">			return new ComponentTextActiveLine(fileFormat);</span>
 
-<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_OPEN)</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		if (type == ComponentType.ACTIVATION_BOX_OPEN_OPEN)</span>
 <span class="fc" id="L141">			return new ComponentTextActiveLine(fileFormat);</span>
 
-<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (type == ComponentType.DIVIDER)</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">		if (type == ComponentType.DIVIDER)</span>
 <span class="nc" id="L144">			return new ComponentTextDivider(type, stringsToDisplay, fileFormat);</span>
 
-<span class="nc bnc" id="L146" title="All 4 branches missed.">		if (type == ComponentType.GROUPING_HEADER_LEGACY || type == ComponentType.GROUPING_HEADER_TEOZ)</span>
-<span class="nc" id="L147">			return new ComponentTextGroupingHeader(type, stringsToDisplay, fileFormat);</span>
+<span class="pc bpc" id="L146" title="1 of 4 branches missed.">		if (type == ComponentType.GROUPING_HEADER_LEGACY || type == ComponentType.GROUPING_HEADER_TEOZ)</span>
+<span class="fc" id="L147">			return new ComponentTextGroupingHeader(type, stringsToDisplay, fileFormat);</span>
 
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (type == ComponentType.GROUPING_SPACE)</span>
-<span class="nc" id="L150">			return new ComponentRoseGroupingSpace(1);</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (type == ComponentType.GROUPING_SPACE)</span>
+<span class="fc" id="L150">			return new ComponentRoseGroupingSpace(1);</span>
 
 <span class="nc bnc" id="L152" title="All 4 branches missed.">		if (type == ComponentType.GROUPING_ELSE_LEGACY || type == ComponentType.GROUPING_ELSE_TEOZ)</span>
 <span class="nc" id="L153">			return new ComponentTextGroupingElse(type, stringsToDisplay, fileFormat);</span>

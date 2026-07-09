@@ -52,57 +52,57 @@ public class ComponentTextGroupingHeader extends AbstractComponentText {
 	private final Display stringsToDisplay;
 	private final FileFormat fileFormat;
 
-<span class="nc" id="L55">	public ComponentTextGroupingHeader(ComponentType type, Display stringsToDisplay, FileFormat fileFormat) {</span>
-<span class="nc" id="L56">		this.type = type;</span>
-<span class="nc" id="L57">		this.stringsToDisplay = stringsToDisplay;</span>
-<span class="nc" id="L58">		this.fileFormat = fileFormat;</span>
-<span class="nc" id="L59">	}</span>
+<span class="fc" id="L55">	public ComponentTextGroupingHeader(ComponentType type, Display stringsToDisplay, FileFormat fileFormat) {</span>
+<span class="fc" id="L56">		this.type = type;</span>
+<span class="fc" id="L57">		this.stringsToDisplay = stringsToDisplay;</span>
+<span class="fc" id="L58">		this.fileFormat = fileFormat;</span>
+<span class="fc" id="L59">	}</span>
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {
-<span class="nc" id="L62">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="nc" id="L63">		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();</span>
-<span class="nc" id="L64">		final int width = (int) dimensionToUse.getWidth();</span>
-<span class="nc" id="L65">		final int height = (int) dimensionToUse.getHeight();</span>
+<span class="fc" id="L62">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="fc" id="L63">		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();</span>
+<span class="fc" id="L64">		final int width = (int) dimensionToUse.getWidth();</span>
+<span class="fc" id="L65">		final int height = (int) dimensionToUse.getHeight();</span>
 
 		// charArea.fillRect('G', 0, 0, width, height);
-<span class="nc" id="L68">		final String text = stringsToDisplay.get(0).toString();</span>
+<span class="fc" id="L68">		final String text = stringsToDisplay.get(0).toString();</span>
 
-<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
-<span class="nc" id="L71">			charArea.drawHLine('\u2550', 0, 1, width - 1, '\u2502', '\u256a');</span>
-<span class="nc" id="L72">			charArea.drawStringLR(StringUtils.goUpperCase(text) + &quot;  /&quot;, 2, 1);</span>
-<span class="nc" id="L73">			charArea.drawHLine('\u2500', 2, 1, text.length() + 4);</span>
-<span class="nc" id="L74">			charArea.drawVLine('\u2551', 0, 1, height - 1);</span>
-<span class="nc" id="L75">			charArea.drawVLine('\u2551', width - 1, 1, height - 1);</span>
-<span class="nc" id="L76">			charArea.drawChar('\u255f', 0, 2);</span>
-<span class="nc" id="L77">			charArea.drawStringTB(&quot;\u2564\u2502\u2518&quot;, text.length() + 4, 0);</span>
-<span class="nc" id="L78">			charArea.drawChar('\u2554', 0, 0);</span>
-<span class="nc" id="L79">			charArea.drawChar('\u2557', width - 1, 0);</span>
-<span class="nc" id="L80">			charArea.drawHLine('\u2550', height - 1, 1, width - 1, '\u2502', '\u256a');</span>
-<span class="nc" id="L81">			charArea.drawChar('\u255a', 0, height - 1);</span>
-<span class="nc" id="L82">			charArea.drawChar('\u255d', width - 1, height - 1);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (fileFormat == FileFormat.UTXT) {</span>
+<span class="fc" id="L71">			charArea.drawHLine('\u2550', 0, 1, width - 1, '\u2502', '\u256a');</span>
+<span class="fc" id="L72">			charArea.drawStringLR(StringUtils.goUpperCase(text) + &quot;  /&quot;, 2, 1);</span>
+<span class="fc" id="L73">			charArea.drawHLine('\u2500', 2, 1, text.length() + 4);</span>
+<span class="fc" id="L74">			charArea.drawVLine('\u2551', 0, 1, height - 1);</span>
+<span class="fc" id="L75">			charArea.drawVLine('\u2551', width - 1, 1, height - 1);</span>
+<span class="fc" id="L76">			charArea.drawChar('\u255f', 0, 2);</span>
+<span class="fc" id="L77">			charArea.drawStringTB(&quot;\u2564\u2502\u2518&quot;, text.length() + 4, 0);</span>
+<span class="fc" id="L78">			charArea.drawChar('\u2554', 0, 0);</span>
+<span class="fc" id="L79">			charArea.drawChar('\u2557', width - 1, 0);</span>
+<span class="fc" id="L80">			charArea.drawHLine('\u2550', height - 1, 1, width - 1, '\u2502', '\u256a');</span>
+<span class="fc" id="L81">			charArea.drawChar('\u255a', 0, height - 1);</span>
+<span class="fc" id="L82">			charArea.drawChar('\u255d', width - 1, height - 1);</span>
 		} else {
-<span class="nc" id="L84">			charArea.drawHLine('_', 0, 0, width - 1);</span>
-<span class="nc" id="L85">			charArea.drawStringLR(StringUtils.goUpperCase(text) + &quot;  /&quot;, 2, 1);</span>
-<span class="nc" id="L86">			charArea.drawHLine('_', 2, 1, text.length() + 3);</span>
-<span class="nc" id="L87">			charArea.drawChar('/', text.length() + 3, 2);</span>
-<span class="nc" id="L88">			charArea.drawVLine('!', 0, 1, height);</span>
-<span class="nc" id="L89">			charArea.drawVLine('!', width - 1, 1, height);</span>
-<span class="nc" id="L90">			charArea.drawHLine('~', height - 1, 1, width - 1);</span>
+<span class="fc" id="L84">			charArea.drawHLine('_', 0, 0, width - 1);</span>
+<span class="fc" id="L85">			charArea.drawStringLR(StringUtils.goUpperCase(text) + &quot;  /&quot;, 2, 1);</span>
+<span class="fc" id="L86">			charArea.drawHLine('_', 2, 1, text.length() + 3);</span>
+<span class="fc" id="L87">			charArea.drawChar('/', text.length() + 3, 2);</span>
+<span class="fc" id="L88">			charArea.drawVLine('!', 0, 1, height);</span>
+<span class="fc" id="L89">			charArea.drawVLine('!', width - 1, 1, height);</span>
+<span class="fc" id="L90">			charArea.drawHLine('~', height - 1, 1, width - 1);</span>
 		}
 
-<span class="nc bnc" id="L93" title="All 4 branches missed.">		if (stringsToDisplay.size() &gt; 1 &amp;&amp; stringsToDisplay.get(1) != null) {</span>
-<span class="nc" id="L94">			final String comment = stringsToDisplay.get(1).toString();</span>
-<span class="nc" id="L95">			charArea.drawStringLR(comment, text.length() + 7, 1);</span>
+<span class="pc bpc" id="L93" title="2 of 4 branches missed.">		if (stringsToDisplay.size() &gt; 1 &amp;&amp; stringsToDisplay.get(1) != null) {</span>
+<span class="fc" id="L94">			final String comment = stringsToDisplay.get(1).toString();</span>
+<span class="fc" id="L95">			charArea.drawStringLR(comment, text.length() + 7, 1);</span>
 
 		}
-<span class="nc" id="L98">	}</span>
+<span class="fc" id="L98">	}</span>
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L101">		return StringUtils.getHeight(stringsToDisplay) + 1;</span>
+<span class="fc" id="L101">		return StringUtils.getHeight(stringsToDisplay) + 1;</span>
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L105">		return StringUtils.getWcWidth(stringsToDisplay) + 2;</span>
+<span class="fc" id="L105">		return StringUtils.getWcWidth(stringsToDisplay) + 2;</span>
 	}
 
 }

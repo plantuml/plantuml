@@ -111,7 +111,7 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 <span class="fc" id="L111">		double result = w;</span>
 <span class="fc bfc" id="L112" title="All 2 branches covered.">		for (NoteBox noteBox : noteBoxes) {</span>
 <span class="fc" id="L113">			result += noteBox.getPreferredWidth(stringBounder);</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">			if (noteBox.getNotePosition() == NotePosition.RIGHT) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">			if (noteBox.getNotePosition() == NotePosition.RIGHT) {</span>
 <span class="fc" id="L115">				result += noteBox.getRightShift(arrow.getStartingY());</span>
 			}
 <span class="fc" id="L117">		}</span>
@@ -148,11 +148,11 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	}
 
 	public double getMaxX(StringBounder stringBounder) {
-<span class="nc" id="L151">		return getStartingX(stringBounder) + getPreferredWidth(stringBounder);</span>
+<span class="fc" id="L151">		return getStartingX(stringBounder) + getPreferredWidth(stringBounder);</span>
 	}
 
 	public double getMinX(StringBounder stringBounder) {
-<span class="nc" id="L155">		return getStartingX(stringBounder);</span>
+<span class="fc" id="L155">		return getStartingX(stringBounder);</span>
 	}
 
 	public String toString(StringBounder stringBounder) {

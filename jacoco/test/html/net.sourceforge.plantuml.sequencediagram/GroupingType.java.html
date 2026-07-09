@@ -41,7 +41,7 @@ import java.util.Locale;
 <span class="fc" id="L41">	START, START_PARTITION, ELSE, END;</span>
 
 	public static GroupingType getType(String s) {
-<span class="pc bpc" id="L44" title="2 of 5 branches missed.">		switch (s.toLowerCase(Locale.US)) {</span>
+<span class="pc bpc" id="L44" title="1 of 5 branches missed.">		switch (s.toLowerCase(Locale.US)) {</span>
 		case &quot;opt&quot;:
 		case &quot;alt&quot;:
 		case &quot;loop&quot;:
@@ -53,7 +53,7 @@ import java.util.Locale;
 <span class="fc" id="L53">			return GroupingType.START;</span>
 
 		case &quot;partition&quot;:
-<span class="nc" id="L56">			return GroupingType.START_PARTITION;</span>
+<span class="fc" id="L56">			return GroupingType.START_PARTITION;</span>
 
 		case &quot;also&quot;:
 		case &quot;else&quot;:
@@ -68,7 +68,7 @@ import java.util.Locale;
 	}
 
 	public boolean isStart() {
-<span class="pc bpc" id="L71" title="1 of 4 branches missed.">		return this == START || this == START_PARTITION;</span>
+<span class="fc bfc" id="L71" title="All 4 branches covered.">		return this == START || this == START_PARTITION;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

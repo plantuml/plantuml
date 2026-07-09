@@ -133,10 +133,10 @@ public class BasicCharAreaImpl implements BasicCharArea {
 <span class="fc" id="L133">	}</span>
 
 	public void drawStringTB(String string, int x, int y) {
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (int i = 0; i &lt; string.length(); i++) {</span>
-<span class="nc" id="L137">			drawChar(string.charAt(i), x, y + i);</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (int i = 0; i &lt; string.length(); i++) {</span>
+<span class="fc" id="L137">			drawChar(string.charAt(i), x, y + i);</span>
 		}
-<span class="nc" id="L139">	}</span>
+<span class="fc" id="L139">	}</span>
 
 	public String getLine(int line) {
 <span class="fc" id="L142">		final StringBuilder sb = new StringBuilder(charSize1);</span>
@@ -172,8 +172,8 @@ public class BasicCharAreaImpl implements BasicCharArea {
 	public void drawHLine(char c, int line, int col1, int col2, char ifFound, char thenUse) {
 <span class="fc bfc" id="L173" title="All 2 branches covered.">		for (int x = col1; x &lt; col2; x++) {</span>
 <span class="fc" id="L174">			ensurePossible(x, line);</span>
-<span class="pc bpc" id="L175" title="1 of 2 branches missed.">			if (this.chars[x][line] == ifFound) {</span>
-<span class="nc" id="L176">				this.drawChar(thenUse, x, line);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (this.chars[x][line] == ifFound) {</span>
+<span class="fc" id="L176">				this.drawChar(thenUse, x, line);</span>
 			} else {
 <span class="fc" id="L178">				this.drawChar(c, x, line);</span>
 			}
