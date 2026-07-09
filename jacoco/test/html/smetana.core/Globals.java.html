@@ -322,213 +322,224 @@ final public class Globals {
 	public int isz;
 	public CArray&lt;ST_pointf&gt; ispline;
 
+	// [FIX-Test_15] Not part of upstream Graphviz. Populated by
+	// position__c.make_LR_constraints()'s deferred label-position pass when its
+	// cycle guard (canReachInAuxGraph) skips one of a flat-edge label vnode's
+	// two real-endpoint anchor constraints (see SMETANA.md, zdev.Test_15
+	// investigation). Consumed by position__c.dot_position() right after
+	// set_xcoords() to clamp such a label's final X coordinate back within its
+	// own edge's endpoint span -- an unclamped label can otherwise end up
+	// entirely outside that span, which makes make_flat_labeled_edge()'s box
+	// path degenerate and leaves the edge unrouted (ED_spl stays null).
+<span class="fc" id="L334">	public final java.util.Map&lt;ST_Agnode_s, Boolean&gt; skippedConstraintLabelVnodes = new java.util.IdentityHashMap&lt;ST_Agnode_s, Boolean&gt;();</span>
+
 	private ST_shape_desc __Shapes__(String s, ST_shape_functions shape_functions, ST_polygon_t polygon) {
-<span class="fc" id="L326">		ST_shape_desc result = new ST_shape_desc();</span>
-<span class="fc bfc" id="L327" title="All 2 branches covered.">		result.name = s == null ? null : new CString(s);</span>
-<span class="fc" id="L328">		result.fns = shape_functions;</span>
-<span class="fc" id="L329">		result.polygon = polygon;</span>
-<span class="fc" id="L330">		return result;</span>
+<span class="fc" id="L337">		ST_shape_desc result = new ST_shape_desc();</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">		result.name = s == null ? null : new CString(s);</span>
+<span class="fc" id="L339">		result.fns = shape_functions;</span>
+<span class="fc" id="L340">		result.polygon = polygon;</span>
+<span class="fc" id="L341">		return result;</span>
 	}
 
 	private final static ST_arrowtype_t createArrowtypes(int type, double lenfact, CFunction function) {
-<span class="fc" id="L334">		final ST_arrowtype_t result = new ST_arrowtype_t();</span>
-<span class="fc" id="L335">		result.type = type;</span>
-<span class="fc" id="L336">		result.lenfact = lenfact;</span>
-<span class="fc" id="L337">		result.gen = function;</span>
-<span class="fc" id="L338">		return result;</span>
+<span class="fc" id="L345">		final ST_arrowtype_t result = new ST_arrowtype_t();</span>
+<span class="fc" id="L346">		result.type = type;</span>
+<span class="fc" id="L347">		result.lenfact = lenfact;</span>
+<span class="fc" id="L348">		result.gen = function;</span>
+<span class="fc" id="L349">		return result;</span>
 	}
 
 	private final static ST_arrowname_t create_arrowname_t(String name, int type) {
-<span class="fc" id="L342">		final ST_arrowname_t result = new ST_arrowname_t();</span>
-<span class="fc bfc" id="L343" title="All 2 branches covered.">		result.name = name == null ? null : new CString(name);</span>
-<span class="fc" id="L344">		result.type = type;</span>
-<span class="fc" id="L345">		return result;</span>
+<span class="fc" id="L353">		final ST_arrowname_t result = new ST_arrowname_t();</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">		result.name = name == null ? null : new CString(name);</span>
+<span class="fc" id="L355">		result.type = type;</span>
+<span class="fc" id="L356">		return result;</span>
 	}
 
-<span class="fc" id="L348">	private Globals() {</span>
+<span class="fc" id="L359">	private Globals() {</span>
 
-<span class="fc" id="L350">		_Dttree.searchf = dttree__c.dttree;</span>
-<span class="fc" id="L351">		_Dttree.type = Macro.DT_OSET;</span>
+<span class="fc" id="L361">		_Dttree.searchf = dttree__c.dttree;</span>
+<span class="fc" id="L362">		_Dttree.type = Macro.DT_OSET;</span>
 
-<span class="fc" id="L353">		_Dtobag.searchf = dttree__c.dttree;</span>
-<span class="fc" id="L354">		_Dtobag.type = Macro.DT_OBAG;</span>
+<span class="fc" id="L364">		_Dtobag.searchf = dttree__c.dttree;</span>
+<span class="fc" id="L365">		_Dtobag.type = Macro.DT_OBAG;</span>
 
-<span class="fc" id="L356">		AgDataDictDisc.key = FieldOffset.name;</span>
-<span class="fc" id="L357">		AgDataDictDisc.size = -1;</span>
-<span class="fc" id="L358">		AgDataDictDisc.link = FieldOffset.link;</span>
-<span class="fc" id="L359">		AgDataDictDisc.makef = null;</span>
-<span class="fc" id="L360">		AgDataDictDisc.freef = attr__c.freesym;</span>
-<span class="fc" id="L361">		AgDataDictDisc.comparf = null;</span>
-<span class="fc" id="L362">		AgDataDictDisc.hashf = null;</span>
+<span class="fc" id="L367">		AgDataDictDisc.key = FieldOffset.name;</span>
+<span class="fc" id="L368">		AgDataDictDisc.size = -1;</span>
+<span class="fc" id="L369">		AgDataDictDisc.link = FieldOffset.link;</span>
+<span class="fc" id="L370">		AgDataDictDisc.makef = null;</span>
+<span class="fc" id="L371">		AgDataDictDisc.freef = attr__c.freesym;</span>
+<span class="fc" id="L372">		AgDataDictDisc.comparf = null;</span>
+<span class="fc" id="L373">		AgDataDictDisc.hashf = null;</span>
 
-<span class="fc" id="L364">		ProtoDesc.directed = 1;</span>
-<span class="fc" id="L365">		ProtoDesc.strict = 0;</span>
-<span class="fc" id="L366">		ProtoDesc.no_loop = 1;</span>
-<span class="fc" id="L367">		ProtoDesc.maingraph = 0;</span>
-<span class="fc" id="L368">		ProtoDesc.flatlock = 1;</span>
-<span class="fc" id="L369">		ProtoDesc.no_write = 1;</span>
+<span class="fc" id="L375">		ProtoDesc.directed = 1;</span>
+<span class="fc" id="L376">		ProtoDesc.strict = 0;</span>
+<span class="fc" id="L377">		ProtoDesc.no_loop = 1;</span>
+<span class="fc" id="L378">		ProtoDesc.maingraph = 0;</span>
+<span class="fc" id="L379">		ProtoDesc.flatlock = 1;</span>
+<span class="fc" id="L380">		ProtoDesc.no_write = 1;</span>
 
-<span class="fc" id="L371">		Ag_mainedge_seq_disc.key = FieldOffset.zero;</span>
-<span class="fc" id="L372">		Ag_mainedge_seq_disc.size = 0;</span>
-<span class="fc" id="L373">		Ag_mainedge_seq_disc.link = FieldOffset.seq_link; // seq_link is the third</span>
+<span class="fc" id="L382">		Ag_mainedge_seq_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L383">		Ag_mainedge_seq_disc.size = 0;</span>
+<span class="fc" id="L384">		Ag_mainedge_seq_disc.link = FieldOffset.seq_link; // seq_link is the third</span>
 															// field in Agedge_t
-<span class="fc" id="L375">		Ag_mainedge_seq_disc.makef = null;</span>
-<span class="fc" id="L376">		Ag_mainedge_seq_disc.freef = null;</span>
-<span class="fc" id="L377">		Ag_mainedge_seq_disc.comparf = edge__c.agedgeseqcmpf;</span>
-<span class="fc" id="L378">		Ag_mainedge_seq_disc.hashf = null;</span>
-<span class="fc" id="L379">		Ag_mainedge_seq_disc.memoryf = utils__c.agdictobjmem;</span>
-<span class="fc" id="L380">		Ag_mainedge_seq_disc.eventf = null;</span>
+<span class="fc" id="L386">		Ag_mainedge_seq_disc.makef = null;</span>
+<span class="fc" id="L387">		Ag_mainedge_seq_disc.freef = null;</span>
+<span class="fc" id="L388">		Ag_mainedge_seq_disc.comparf = edge__c.agedgeseqcmpf;</span>
+<span class="fc" id="L389">		Ag_mainedge_seq_disc.hashf = null;</span>
+<span class="fc" id="L390">		Ag_mainedge_seq_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L391">		Ag_mainedge_seq_disc.eventf = null;</span>
 
-<span class="fc" id="L382">		Ag_subedge_seq_disc.key = FieldOffset.zero;</span>
-<span class="fc" id="L383">		Ag_subedge_seq_disc.size = 0;</span>
-<span class="fc" id="L384">		Ag_subedge_seq_disc.link = FieldOffset.externalHolder;</span>
-<span class="fc" id="L385">		Ag_subedge_seq_disc.makef = null;</span>
-<span class="fc" id="L386">		Ag_subedge_seq_disc.freef = null;</span>
-<span class="fc" id="L387">		Ag_subedge_seq_disc.comparf = edge__c.agedgeseqcmpf;</span>
-<span class="fc" id="L388">		Ag_subedge_seq_disc.hashf = null;</span>
-<span class="fc" id="L389">		Ag_subedge_seq_disc.memoryf = utils__c.agdictobjmem;</span>
-<span class="fc" id="L390">		Ag_subedge_seq_disc.eventf = null;</span>
+<span class="fc" id="L393">		Ag_subedge_seq_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L394">		Ag_subedge_seq_disc.size = 0;</span>
+<span class="fc" id="L395">		Ag_subedge_seq_disc.link = FieldOffset.externalHolder;</span>
+<span class="fc" id="L396">		Ag_subedge_seq_disc.makef = null;</span>
+<span class="fc" id="L397">		Ag_subedge_seq_disc.freef = null;</span>
+<span class="fc" id="L398">		Ag_subedge_seq_disc.comparf = edge__c.agedgeseqcmpf;</span>
+<span class="fc" id="L399">		Ag_subedge_seq_disc.hashf = null;</span>
+<span class="fc" id="L400">		Ag_subedge_seq_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L401">		Ag_subedge_seq_disc.eventf = null;</span>
 
-<span class="fc" id="L392">		Ag_subedge_id_disc.key = FieldOffset.zero;</span>
-<span class="fc" id="L393">		Ag_subedge_id_disc.size = 0;</span>
-<span class="fc" id="L394">		Ag_subedge_id_disc.link = FieldOffset.externalHolder;</span>
-<span class="fc" id="L395">		Ag_subedge_id_disc.makef = null;</span>
-<span class="fc" id="L396">		Ag_subedge_id_disc.freef = null;</span>
-<span class="fc" id="L397">		Ag_subedge_id_disc.comparf = edge__c.agedgeidcmpf;</span>
-<span class="fc" id="L398">		Ag_subedge_id_disc.hashf = null;</span>
-<span class="fc" id="L399">		Ag_subedge_id_disc.memoryf = utils__c.agdictobjmem;</span>
-<span class="fc" id="L400">		Ag_subedge_id_disc.eventf = null;</span>
+<span class="fc" id="L403">		Ag_subedge_id_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L404">		Ag_subedge_id_disc.size = 0;</span>
+<span class="fc" id="L405">		Ag_subedge_id_disc.link = FieldOffset.externalHolder;</span>
+<span class="fc" id="L406">		Ag_subedge_id_disc.makef = null;</span>
+<span class="fc" id="L407">		Ag_subedge_id_disc.freef = null;</span>
+<span class="fc" id="L408">		Ag_subedge_id_disc.comparf = edge__c.agedgeidcmpf;</span>
+<span class="fc" id="L409">		Ag_subedge_id_disc.hashf = null;</span>
+<span class="fc" id="L410">		Ag_subedge_id_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L411">		Ag_subedge_id_disc.eventf = null;</span>
 
-<span class="fc" id="L402">		Ag_subgraph_id_disc.key = FieldOffset.zero;</span>
-<span class="fc" id="L403">		Ag_subgraph_id_disc.size = 0;</span>
-<span class="fc" id="L404">		Ag_subgraph_id_disc.link = FieldOffset.link; // link is the third field in</span>
+<span class="fc" id="L413">		Ag_subgraph_id_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L414">		Ag_subgraph_id_disc.size = 0;</span>
+<span class="fc" id="L415">		Ag_subgraph_id_disc.link = FieldOffset.link; // link is the third field in</span>
 														// Agraph_t
-<span class="fc" id="L406">		Ag_subgraph_id_disc.makef = null;</span>
-<span class="fc" id="L407">		Ag_subgraph_id_disc.freef = null;</span>
-<span class="fc" id="L408">		Ag_subgraph_id_disc.comparf = graph__c.agraphidcmpf;</span>
-<span class="fc" id="L409">		Ag_subgraph_id_disc.hashf = null;</span>
-<span class="fc" id="L410">		Ag_subgraph_id_disc.memoryf = utils__c.agdictobjmem;</span>
-<span class="fc" id="L411">		Ag_subgraph_id_disc.eventf = null;</span>
+<span class="fc" id="L417">		Ag_subgraph_id_disc.makef = null;</span>
+<span class="fc" id="L418">		Ag_subgraph_id_disc.freef = null;</span>
+<span class="fc" id="L419">		Ag_subgraph_id_disc.comparf = graph__c.agraphidcmpf;</span>
+<span class="fc" id="L420">		Ag_subgraph_id_disc.hashf = null;</span>
+<span class="fc" id="L421">		Ag_subgraph_id_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L422">		Ag_subgraph_id_disc.eventf = null;</span>
 
-<span class="fc" id="L413">		AgIdDisc.open = id__c.idopen;</span>
-<span class="fc" id="L414">		AgIdDisc.map = id__c.idmap;</span>
-<span class="fc" id="L415">		AgIdDisc.alloc = id__c.idalloc;</span>
-<span class="fc" id="L416">		AgIdDisc.free = id__c.idfree;</span>
-<span class="fc" id="L417">		AgIdDisc.print = id__c.idprint;</span>
-<span class="fc" id="L418">		AgIdDisc.close = id__c.idclose;</span>
-<span class="fc" id="L419">		AgIdDisc.idregister = id__c.idregister;</span>
+<span class="fc" id="L424">		AgIdDisc.open = id__c.idopen;</span>
+<span class="fc" id="L425">		AgIdDisc.map = id__c.idmap;</span>
+<span class="fc" id="L426">		AgIdDisc.alloc = id__c.idalloc;</span>
+<span class="fc" id="L427">		AgIdDisc.free = id__c.idfree;</span>
+<span class="fc" id="L428">		AgIdDisc.print = id__c.idprint;</span>
+<span class="fc" id="L429">		AgIdDisc.close = id__c.idclose;</span>
+<span class="fc" id="L430">		AgIdDisc.idregister = id__c.idregister;</span>
 
-<span class="fc" id="L421">		AgMemDisc.open = mem__c.memopen;</span>
-<span class="fc" id="L422">		AgMemDisc.alloc = mem__c.memalloc;</span>
-<span class="fc" id="L423">		AgMemDisc.resize = mem__c.memresize;</span>
-<span class="fc" id="L424">		AgMemDisc.free = mem__c.memfree;</span>
-<span class="fc" id="L425">		AgMemDisc.close = null;</span>
+<span class="fc" id="L432">		AgMemDisc.open = mem__c.memopen;</span>
+<span class="fc" id="L433">		AgMemDisc.alloc = mem__c.memalloc;</span>
+<span class="fc" id="L434">		AgMemDisc.resize = mem__c.memresize;</span>
+<span class="fc" id="L435">		AgMemDisc.free = mem__c.memfree;</span>
+<span class="fc" id="L436">		AgMemDisc.close = null;</span>
 
-<span class="fc" id="L427">		Ag_subnode_id_disc.key = FieldOffset.zero;</span>
-<span class="fc" id="L428">		Ag_subnode_id_disc.size = 0;</span>
-<span class="fc" id="L429">		Ag_subnode_id_disc.link = FieldOffset.id_link; // id_link is the second</span>
+<span class="fc" id="L438">		Ag_subnode_id_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L439">		Ag_subnode_id_disc.size = 0;</span>
+<span class="fc" id="L440">		Ag_subnode_id_disc.link = FieldOffset.id_link; // id_link is the second</span>
 															// field in Agsubnode_t
-<span class="fc" id="L431">		Ag_subnode_id_disc.makef = null;</span>
-<span class="fc" id="L432">		Ag_subnode_id_disc.freef = null;</span>
-<span class="fc" id="L433">		Ag_subnode_id_disc.comparf = node__c.agsubnodeidcmpf;</span>
-<span class="fc" id="L434">		Ag_subnode_id_disc.hashf = null;</span>
-<span class="fc" id="L435">		Ag_subnode_id_disc.memoryf = utils__c.agdictobjmem;</span>
-<span class="fc" id="L436">		Ag_subnode_id_disc.eventf = null;</span>
+<span class="fc" id="L442">		Ag_subnode_id_disc.makef = null;</span>
+<span class="fc" id="L443">		Ag_subnode_id_disc.freef = null;</span>
+<span class="fc" id="L444">		Ag_subnode_id_disc.comparf = node__c.agsubnodeidcmpf;</span>
+<span class="fc" id="L445">		Ag_subnode_id_disc.hashf = null;</span>
+<span class="fc" id="L446">		Ag_subnode_id_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L447">		Ag_subnode_id_disc.eventf = null;</span>
 
-<span class="fc" id="L438">		Ag_subnode_seq_disc.key = FieldOffset.zero;</span>
-<span class="fc" id="L439">		Ag_subnode_seq_disc.size = 0;</span>
-<span class="fc" id="L440">		Ag_subnode_seq_disc.link = FieldOffset.seq_link; // link is the first</span>
+<span class="fc" id="L449">		Ag_subnode_seq_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L450">		Ag_subnode_seq_disc.size = 0;</span>
+<span class="fc" id="L451">		Ag_subnode_seq_disc.link = FieldOffset.seq_link; // link is the first</span>
 															// field in
 															// Agsubnode_t
-<span class="fc" id="L443">		Ag_subnode_seq_disc.makef = null;</span>
-<span class="fc" id="L444">		Ag_subnode_seq_disc.freef = node__c.free_subnode;</span>
-<span class="fc" id="L445">		Ag_subnode_seq_disc.comparf = node__c.agsubnodeseqcmpf;</span>
-<span class="fc" id="L446">		Ag_subnode_seq_disc.hashf = null;</span>
-<span class="fc" id="L447">		Ag_subnode_seq_disc.memoryf = utils__c.agdictobjmem;</span>
-<span class="fc" id="L448">		Ag_subnode_seq_disc.eventf = null;</span>
+<span class="fc" id="L454">		Ag_subnode_seq_disc.makef = null;</span>
+<span class="fc" id="L455">		Ag_subnode_seq_disc.freef = node__c.free_subnode;</span>
+<span class="fc" id="L456">		Ag_subnode_seq_disc.comparf = node__c.agsubnodeseqcmpf;</span>
+<span class="fc" id="L457">		Ag_subnode_seq_disc.hashf = null;</span>
+<span class="fc" id="L458">		Ag_subnode_seq_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L459">		Ag_subnode_seq_disc.eventf = null;</span>
 
-<span class="fc" id="L450">		Refstrdisc.key = FieldOffset.s; // *s is the third field in refstr_t</span>
-<span class="fc" id="L451">		Refstrdisc.size = -1;</span>
-<span class="fc" id="L452">		Refstrdisc.link = FieldOffset.zero;</span>
-<span class="fc" id="L453">		Refstrdisc.makef = null;</span>
-<span class="fc" id="L454">		Refstrdisc.freef = utils__c.agdictobjfree;</span>
-<span class="fc" id="L455">		Refstrdisc.comparf = null;</span>
-<span class="fc" id="L456">		Refstrdisc.hashf = null;</span>
-<span class="fc" id="L457">		Refstrdisc.memoryf = utils__c.agdictobjmem;</span>
-<span class="fc" id="L458">		Refstrdisc.eventf = null;</span>
+<span class="fc" id="L461">		Refstrdisc.key = FieldOffset.s; // *s is the third field in refstr_t</span>
+<span class="fc" id="L462">		Refstrdisc.size = -1;</span>
+<span class="fc" id="L463">		Refstrdisc.link = FieldOffset.zero;</span>
+<span class="fc" id="L464">		Refstrdisc.makef = null;</span>
+<span class="fc" id="L465">		Refstrdisc.freef = utils__c.agdictobjfree;</span>
+<span class="fc" id="L466">		Refstrdisc.comparf = null;</span>
+<span class="fc" id="L467">		Refstrdisc.hashf = null;</span>
+<span class="fc" id="L468">		Refstrdisc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L469">		Refstrdisc.eventf = null;</span>
 
-<span class="fc" id="L460">		Hdisc.key = FieldOffset.key;</span>
-<span class="fc" id="L461">		Hdisc.size = 4;</span>
-<span class="fc" id="L462">		Hdisc.link = FieldOffset.externalHolder;</span>
-<span class="fc" id="L463">		Hdisc.makef = null;</span>
-<span class="fc" id="L464">		Hdisc.freef = null;</span>
-<span class="fc" id="L465">		Hdisc.comparf = xlabels__c.icompare;</span>
-<span class="fc" id="L466">		Hdisc.hashf = null;</span>
-<span class="fc" id="L467">		Hdisc.memoryf = null;</span>
-<span class="fc" id="L468">		Hdisc.eventf = null;</span>
+<span class="fc" id="L471">		Hdisc.key = FieldOffset.key;</span>
+<span class="fc" id="L472">		Hdisc.size = 4;</span>
+<span class="fc" id="L473">		Hdisc.link = FieldOffset.externalHolder;</span>
+<span class="fc" id="L474">		Hdisc.makef = null;</span>
+<span class="fc" id="L475">		Hdisc.freef = null;</span>
+<span class="fc" id="L476">		Hdisc.comparf = xlabels__c.icompare;</span>
+<span class="fc" id="L477">		Hdisc.hashf = null;</span>
+<span class="fc" id="L478">		Hdisc.memoryf = null;</span>
+<span class="fc" id="L479">		Hdisc.eventf = null;</span>
 
-<span class="fc" id="L470">		Center.p.x = 0;</span>
-<span class="fc" id="L471">		Center.p.y = 0;</span>
-<span class="fc" id="L472">		Center.theta = -1;</span>
-<span class="fc" id="L473">		Center.bp = null;</span>
-<span class="fc" id="L474">		Center.defined = false;</span>
-<span class="fc" id="L475">		Center.constrained = false;</span>
-<span class="fc" id="L476">		Center.clip = true;</span>
-<span class="fc" id="L477">		Center.dyna = false;</span>
-<span class="fc" id="L478">		Center.order = 0;</span>
-<span class="fc" id="L479">		Center.side = 0;</span>
+<span class="fc" id="L481">		Center.p.x = 0;</span>
+<span class="fc" id="L482">		Center.p.y = 0;</span>
+<span class="fc" id="L483">		Center.theta = -1;</span>
+<span class="fc" id="L484">		Center.bp = null;</span>
+<span class="fc" id="L485">		Center.defined = false;</span>
+<span class="fc" id="L486">		Center.constrained = false;</span>
+<span class="fc" id="L487">		Center.clip = true;</span>
+<span class="fc" id="L488">		Center.dyna = false;</span>
+<span class="fc" id="L489">		Center.order = 0;</span>
+<span class="fc" id="L490">		Center.side = 0;</span>
 
-<span class="fc" id="L481">		p_ellipse.regular = false;</span>
-<span class="fc" id="L482">		p_ellipse.peripheries = 1;</span>
-<span class="fc" id="L483">		p_ellipse.sides = 1;</span>
-<span class="fc" id="L484">		p_ellipse.orientation = 0.;</span>
-<span class="fc" id="L485">		p_ellipse.distortion = 0.;</span>
-<span class="fc" id="L486">		p_ellipse.skew = 0.;</span>
+<span class="fc" id="L492">		p_ellipse.regular = false;</span>
+<span class="fc" id="L493">		p_ellipse.peripheries = 1;</span>
+<span class="fc" id="L494">		p_ellipse.sides = 1;</span>
+<span class="fc" id="L495">		p_ellipse.orientation = 0.;</span>
+<span class="fc" id="L496">		p_ellipse.distortion = 0.;</span>
+<span class="fc" id="L497">		p_ellipse.skew = 0.;</span>
 
-<span class="fc" id="L488">		p_box.regular = false;</span>
-<span class="fc" id="L489">		p_box.peripheries = 1;</span>
-<span class="fc" id="L490">		p_box.sides = 4;</span>
-<span class="fc" id="L491">		p_box.orientation = 0.;</span>
-<span class="fc" id="L492">		p_box.distortion = 0.;</span>
-<span class="fc" id="L493">		p_box.skew = 0.;</span>
+<span class="fc" id="L499">		p_box.regular = false;</span>
+<span class="fc" id="L500">		p_box.peripheries = 1;</span>
+<span class="fc" id="L501">		p_box.sides = 4;</span>
+<span class="fc" id="L502">		p_box.orientation = 0.;</span>
+<span class="fc" id="L503">		p_box.distortion = 0.;</span>
+<span class="fc" id="L504">		p_box.skew = 0.;</span>
 
-<span class="fc" id="L495">		poly_fns.initfn = shapes__c.poly_init;</span>
-<span class="fc" id="L496">		poly_fns.freefn = shapes__c.poly_free;</span>
-<span class="fc" id="L497">		poly_fns.portfn = shapes__c.poly_port;</span>
-<span class="fc" id="L498">		poly_fns.insidefn = shapes__c.poly_inside;</span>
-<span class="fc" id="L499">		poly_fns.pboxfn = shapes__c.poly_path;</span>
-<span class="fc" id="L500">		poly_fns.codefn = shapes__c.poly_gencode;</span>
+<span class="fc" id="L506">		poly_fns.initfn = shapes__c.poly_init;</span>
+<span class="fc" id="L507">		poly_fns.freefn = shapes__c.poly_free;</span>
+<span class="fc" id="L508">		poly_fns.portfn = shapes__c.poly_port;</span>
+<span class="fc" id="L509">		poly_fns.insidefn = shapes__c.poly_inside;</span>
+<span class="fc" id="L510">		poly_fns.pboxfn = shapes__c.poly_path;</span>
+<span class="fc" id="L511">		poly_fns.codefn = shapes__c.poly_gencode;</span>
 
-<span class="fc" id="L502">		record_fns.initfn = shapes__c.record_init;</span>
-<span class="fc" id="L503">		record_fns.freefn = shapes__c.record_free;</span>
-<span class="fc" id="L504">		record_fns.portfn = shapes__c.record_port;</span>
-<span class="fc" id="L505">		record_fns.insidefn = shapes__c.record_inside;</span>
-<span class="fc" id="L506">		record_fns.pboxfn = shapes__c.record_path;</span>
-<span class="fc" id="L507">		record_fns.codefn = shapes__c.record_gencode;</span>
+<span class="fc" id="L513">		record_fns.initfn = shapes__c.record_init;</span>
+<span class="fc" id="L514">		record_fns.freefn = shapes__c.record_free;</span>
+<span class="fc" id="L515">		record_fns.portfn = shapes__c.record_port;</span>
+<span class="fc" id="L516">		record_fns.insidefn = shapes__c.record_inside;</span>
+<span class="fc" id="L517">		record_fns.pboxfn = shapes__c.record_path;</span>
+<span class="fc" id="L518">		record_fns.codefn = shapes__c.record_gencode;</span>
 
-<span class="fc" id="L509">		Ag_mainedge_id_disc.key = FieldOffset.zero;</span>
-<span class="fc" id="L510">		Ag_mainedge_id_disc.size = 0;</span>
-<span class="fc" id="L511">		Ag_mainedge_id_disc.link = FieldOffset.id_link; // id_link is the second</span>
+<span class="fc" id="L520">		Ag_mainedge_id_disc.key = FieldOffset.zero;</span>
+<span class="fc" id="L521">		Ag_mainedge_id_disc.size = 0;</span>
+<span class="fc" id="L522">		Ag_mainedge_id_disc.link = FieldOffset.id_link; // id_link is the second</span>
 															// field in Agedge_t
-<span class="fc" id="L513">		Ag_mainedge_id_disc.makef = null;</span>
-<span class="fc" id="L514">		Ag_mainedge_id_disc.freef = null;</span>
-<span class="fc" id="L515">		Ag_mainedge_id_disc.comparf = edge__c.agedgeidcmpf;</span>
-<span class="fc" id="L516">		Ag_mainedge_id_disc.hashf = null;</span>
-<span class="fc" id="L517">		Ag_mainedge_id_disc.memoryf = utils__c.agdictobjmem;</span>
-<span class="fc" id="L518">		Ag_mainedge_id_disc.eventf = null;</span>
+<span class="fc" id="L524">		Ag_mainedge_id_disc.makef = null;</span>
+<span class="fc" id="L525">		Ag_mainedge_id_disc.freef = null;</span>
+<span class="fc" id="L526">		Ag_mainedge_id_disc.comparf = edge__c.agedgeidcmpf;</span>
+<span class="fc" id="L527">		Ag_mainedge_id_disc.hashf = null;</span>
+<span class="fc" id="L528">		Ag_mainedge_id_disc.memoryf = utils__c.agdictobjmem;</span>
+<span class="fc" id="L529">		Ag_mainedge_id_disc.eventf = null;</span>
 
-<span class="fc" id="L520">		Agdirected.directed = 1;</span>
-<span class="fc" id="L521">		Agdirected.strict = 0;</span>
-<span class="fc" id="L522">		Agdirected.no_loop = 0;</span>
-<span class="fc" id="L523">		Agdirected.maingraph = 1;</span>
+<span class="fc" id="L531">		Agdirected.directed = 1;</span>
+<span class="fc" id="L532">		Agdirected.strict = 0;</span>
+<span class="fc" id="L533">		Agdirected.no_loop = 0;</span>
+<span class="fc" id="L534">		Agdirected.maingraph = 1;</span>
 
-<span class="fc" id="L525">		sinfo.swapEnds = dotsplines__c.swap_ends_p;</span>
-<span class="fc" id="L526">		sinfo.splineMerge = dotsplines__c.spline_merge;</span>
+<span class="fc" id="L536">		sinfo.swapEnds = dotsplines__c.swap_ends_p;</span>
+<span class="fc" id="L537">		sinfo.splineMerge = dotsplines__c.spline_merge;</span>
 
-<span class="fc" id="L528">		ispline = null;</span>
-<span class="fc" id="L529">		isz = 0;</span>
+<span class="fc" id="L539">		ispline = null;</span>
+<span class="fc" id="L540">		isz = 0;</span>
 
-<span class="fc" id="L531">	}</span>
+<span class="fc" id="L542">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

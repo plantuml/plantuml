@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
@@ -68,171 +69,176 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandCreateState extends SingleLineCommand2&lt;StateDiagram&gt; {
 
 	public CommandCreateState() {
-<span class="fc" id="L71">		super(getRegexConcat());</span>
-<span class="fc" id="L72">	}</span>
+<span class="fc" id="L72">		super(getRegexConcat());</span>
+<span class="fc" id="L73">	}</span>
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-<span class="pc bpc" id="L76" title="1 of 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
+<span class="pc bpc" id="L77" title="1 of 6 branches missed.">		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;</span>
 	}
 
 	private static IRegex getRegexConcat() {
-<span class="fc" id="L80">		return RegexConcat.build(CommandCreateState.class.getName(), RegexLeaf.start(), //</span>
+<span class="fc" id="L81">		return RegexConcat.build(CommandCreateState.class.getName(), RegexLeaf.start(), //</span>
 				new RegexLeaf(&quot;state&quot;), //
-<span class="fc" id="L82">				RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L83">				RegexLeaf.spaceOneOrMore(), //</span>
 
 				new RegexOr(//
 						new RegexConcat(//
 								new RegexLeaf(1, &quot;CODE1&quot;, &quot;([%pLN_.]+)&quot;), //
-<span class="fc" id="L87">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L88">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L89">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L90">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;DISPLAY1&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
 						new RegexConcat(//
 								new RegexLeaf(1, &quot;DISPLAY2&quot;, &quot;[%g]([^%g]+)[%g]&quot;), //
-<span class="fc" id="L93">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L94">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(&quot;as&quot;), //
-<span class="fc" id="L95">								RegexLeaf.spaceOneOrMore(), //</span>
+<span class="fc" id="L96">								RegexLeaf.spaceOneOrMore(), //</span>
 								new RegexLeaf(1, &quot;CODE2&quot;, &quot;([%pLN_.]+)&quot;)), //
 						new RegexLeaf(1, &quot;CODE3&quot;, &quot;([%pLN_.]+)&quot;), //
 						new RegexLeaf(1, &quot;CODE4&quot;, &quot;[%g]([^%g]+)[%g]&quot;)), //
-<span class="fc" id="L99">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L100">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L101">				Stereogroup.optionalStereogroup(), //</span>
-<span class="fc" id="L102">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
-<span class="fc" id="L103">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L100">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L101">				new RegexLeaf(4, &quot;TAGS1&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L102">				Stereogroup.optionalStereogroup(), //</span>
+<span class="fc" id="L103">				new RegexLeaf(4, &quot;TAGS2&quot;, Stereotag.pattern() + &quot;?&quot;), //</span>
+<span class="fc" id="L104">				RegexLeaf.spaceZeroOrMore(), //</span>
 				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L105">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L106">				color().getRegex(), //</span>
-<span class="fc" id="L107">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L106">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L107">				color().getRegex(), //</span>
+<span class="fc" id="L108">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional(new RegexLeaf(2, &quot;LINECOLOR&quot;, &quot;##(?:\\[(dotted|dashed|bold)\\])?(\\w+)?&quot;)), //
-<span class="fc" id="L109">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L110">				RegexLeaf.spaceZeroOrMore(), //</span>
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf(&quot;:&quot;), //
-<span class="fc" id="L113">								RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L114">								RegexLeaf.spaceZeroOrMore(), //</span>
 								new RegexLeaf(1, &quot;ADDFIELD&quot;, &quot;(.*)&quot;) //
-<span class="fc" id="L115">						)), RegexLeaf.end());</span>
+<span class="fc" id="L116">						)), RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L119">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="fc" id="L120">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	@Override
-	@Explain
+	@Explain(comment = &quot;outdated&quot;)
 	protected String explainArg(LineLocation location, RegexResult arg) {
-<span class="nc" id="L125">		final StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L126">		final StringBuilder sb = new StringBuilder();</span>
 
 		// 'state Name' declares (or reuses) a state. The code and the display
 		// may be written in both orders or alone, hence the lazzy lookups,
 		// like in executeArg. Some stereotypes, like &lt;&lt;choice&gt;&gt; or &lt;&lt;fork&gt;&gt;,
 		// turn the state into the corresponding pseudo-state (see
 		// Stereogroup.getLeafType).
-<span class="nc" id="L132">		sb.append(&quot;Declaring the state '&quot;).append(arg.getLazzy(&quot;CODE&quot;, 0)).append(&quot;'&quot;);</span>
+<span class="nc" id="L133">		sb.append(&quot;Declaring the state '&quot;).append(arg.getLazzy(&quot;CODE&quot;, 0)).append(&quot;'&quot;);</span>
 
-<span class="nc" id="L134">		final String display = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
-<span class="nc bnc" id="L135" title="All 2 branches missed.">		if (display != null)</span>
-<span class="nc" id="L136">			sb.append(&quot; displayed as \&quot;&quot;).append(display).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L135">		final String display = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		if (display != null)</span>
+<span class="nc" id="L137">			sb.append(&quot; displayed as \&quot;&quot;).append(display).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L138">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false) {</span>
-<span class="nc" id="L140">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
-<span class="nc" id="L141">			final LeafType type = stereogroup.getLeafType();</span>
-<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (type != null)</span>
-<span class="nc" id="L143">				sb.append(&quot; (pseudo-state type: &quot;).append(StringUtils.goLowerCase(type.name()).replace('_', ' '))</span>
-<span class="nc" id="L144">						.append(&quot;)&quot;);</span>
+<span class="nc" id="L139">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">		if (stereogroup.isEmpty() == false) {</span>
+<span class="nc" id="L141">			sb.append(&quot;, stereotyped &quot;).append(arg.get(&quot;STEREOGROUP&quot;, 0));</span>
+<span class="nc" id="L142">			final LeafType type = stereogroup.getLeafType();</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (type != null)</span>
+<span class="nc" id="L144">				sb.append(&quot; (pseudo-state type: &quot;).append(StringUtils.goLowerCase(type.name()).replace('_', ' '))</span>
+<span class="nc" id="L145">						.append(&quot;)&quot;);</span>
 		}
 
 		// The stereotag may be written before or after the stereotypes
 		// (TAGS1/TAGS2), hence the lazzy lookup, like in executeArg.
-<span class="nc" id="L149">		final String tags = arg.getLazzy(&quot;TAGS&quot;, 0);</span>
-<span class="nc bnc" id="L150" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
-<span class="nc" id="L151">			sb.append(&quot;, tagged &quot;).append(tags);</span>
+<span class="nc" id="L150">		final String tags = arg.getLazzy(&quot;TAGS&quot;, 0);</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">		if (tags != null &amp;&amp; tags.isEmpty() == false)</span>
+<span class="nc" id="L152">			sb.append(&quot;, tagged &quot;).append(tags);</span>
 
-<span class="nc bnc" id="L153" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
-<span class="nc" id="L154">			sb.append(&quot;, with a URL link&quot;);</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">		if (arg.get(UrlBuilder.URL_KEY, 0) != null)</span>
+<span class="nc" id="L155">			sb.append(&quot;, with a URL link&quot;);</span>
 
-<span class="nc bnc" id="L156" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
-<span class="nc" id="L157">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		if (arg.get(&quot;COLOR&quot;, 0) != null)</span>
+<span class="nc" id="L158">			sb.append(&quot;, background color &quot;).append(arg.get(&quot;COLOR&quot;, 0));</span>
 
 		// '##[style]color' sets the border style and color.
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 1) != null)</span>
-<span class="nc" id="L161">			sb.append(&quot;, line color &quot;).append(arg.get(&quot;LINECOLOR&quot;, 1));</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 1) != null)</span>
+<span class="nc" id="L162">			sb.append(&quot;, line color &quot;).append(arg.get(&quot;LINECOLOR&quot;, 1));</span>
 
-<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
-<span class="nc" id="L164">			sb.append(&quot;, line style &quot;).append(arg.get(&quot;LINECOLOR&quot;, 0));</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">		if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
+<span class="nc" id="L165">			sb.append(&quot;, line style &quot;).append(arg.get(&quot;LINECOLOR&quot;, 0));</span>
 
-<span class="nc" id="L166">		final String addField = arg.get(&quot;ADDFIELD&quot;, 0);</span>
-<span class="nc bnc" id="L167" title="All 4 branches missed.">		if (addField != null &amp;&amp; addField.isEmpty() == false)</span>
-<span class="nc" id="L168">			sb.append(&quot;, with the description line \&quot;&quot;).append(addField).append(&quot;\&quot;&quot;);</span>
+<span class="nc" id="L167">		final String addField = arg.get(&quot;ADDFIELD&quot;, 0);</span>
+<span class="nc bnc" id="L168" title="All 4 branches missed.">		if (addField != null &amp;&amp; addField.isEmpty() == false)</span>
+<span class="nc" id="L169">			sb.append(&quot;, with the description line \&quot;&quot;).append(addField).append(&quot;\&quot;&quot;);</span>
 
-<span class="nc" id="L170">		return sb.toString();</span>
+<span class="nc" id="L171">		return sb.toString();</span>
 	}
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-<span class="fc" id="L176">		final String idShort = arg.getLazzy(&quot;CODE&quot;, 0);</span>
+<span class="fc" id="L177">		final String idShort = arg.getLazzy(&quot;CODE&quot;, 0);</span>
 
-<span class="fc" id="L178">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
+<span class="fc" id="L179">		final Quark&lt;Entity&gt; quark = diagram.quarkInContext(true, diagram.cleanId(idShort));</span>
 
-<span class="fc" id="L180">		String display = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
-<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (display == null)</span>
-<span class="fc" id="L182">			display = quark.getName();</span>
+<span class="fc" id="L181">		String display = arg.getLazzy(&quot;DISPLAY&quot;, 0);</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (display == null)</span>
+<span class="fc" id="L183">			display = quark.getName();</span>
 
-<span class="fc" id="L184">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
-<span class="fc" id="L185">		LeafType type = stereogroup.getLeafType();</span>
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (type == null)</span>
-<span class="fc" id="L187">			type = LeafType.STATE;</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">		if (diagram.checkConcurrentStateOk(quark) == false)</span>
-<span class="nc" id="L189">			return CommandExecutionResult.error(&quot;The state &quot; + quark.getName()</span>
+<span class="fc" id="L185">		final Stereogroup stereogroup = Stereogroup.build(arg);</span>
+<span class="fc" id="L186">		LeafType type = stereogroup.getLeafType();</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (type == null)</span>
+<span class="fc" id="L188">			type = LeafType.STATE;</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (diagram.checkConcurrentStateOk(quark) == false)</span>
+<span class="nc" id="L190">			return CommandExecutionResult.error(&quot;The state &quot; + quark.getName()</span>
 					+ &quot; has been created in a concurrent state : it cannot be used here.&quot;);
 
-<span class="fc" id="L192">		Entity ent = quark.getData();</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (ent == null)</span>
-<span class="fc" id="L194">			ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type,</span>
+<span class="fc" id="L193">		Entity ent = quark.getData();</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (ent == null)</span>
+<span class="fc" id="L195">			ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type,</span>
 					null);
 		else
-<span class="fc" id="L197">			diagram.setLastEntity(ent);</span>
+<span class="fc" id="L198">			diagram.setLastEntity(ent);</span>
 
-<span class="fc" id="L199">		diagram.ensureParentState(location, quark);</span>
+<span class="fc" id="L200">		diagram.ensureParentState(location, quark);</span>
 
-<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (currentPass == ParserPass.ONE) {</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">		if (currentPass == ParserPass.ONE) {</span>
 
-<span class="fc" id="L203">			ent.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
-<span class="fc" id="L204">			ent.setStereotype(stereogroup.buildStereotype());</span>
+<span class="fc" id="L204">			ent.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));</span>
+<span class="fc" id="L205">			ent.setStereotype(stereogroup.buildStereotype());</span>
 
-<span class="fc" id="L206">			final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
-<span class="pc bpc" id="L207" title="1 of 2 branches missed.">			if (urlString != null) {</span>
-<span class="nc" id="L208">				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
-<span class="nc" id="L209">				final Url url = urlBuilder.getUrl(urlString);</span>
-<span class="nc" id="L210">				ent.addUrl(url);</span>
+<span class="fc" id="L207">			final String urlString = arg.get(UrlBuilder.URL_KEY, 0);</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">			if (urlString != null) {</span>
+<span class="nc" id="L209">				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue(&quot;topurl&quot;), UrlMode.STRICT);</span>
+<span class="nc" id="L210">				final Url url = urlBuilder.getUrl(urlString);</span>
+<span class="nc" id="L211">				ent.addUrl(url);</span>
 			}
 
-<span class="fc" id="L213">			final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();</span>
-			
-<span class="fc" id="L215">			Colors colors = color().getColor(arg, colorSet);</span>
-<span class="fc" id="L216">			final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
+<span class="fc" id="L214">			final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();</span>
 
-<span class="pc bpc" id="L218" title="1 of 2 branches missed.">			final HColor lineColor = s == null ? null : colorSet.getColor(s);</span>
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">			if (lineColor != null)</span>
-<span class="nc" id="L220">				colors = colors.add(ColorType.LINE, lineColor);</span>
+<span class="fc" id="L216">			Colors colors = color().getColor(arg, colorSet);</span>
+<span class="fc" id="L217">			final String s = arg.get(&quot;LINECOLOR&quot;, 1);</span>
 
-<span class="pc bpc" id="L222" title="1 of 2 branches missed.">			if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
-<span class="nc" id="L223">				colors = colors.addLegacyStroke(arg.get(&quot;LINECOLOR&quot;, 0));</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">			final HColor lineColor = s == null ? null : colorSet.getColor(s);</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">			if (lineColor != null)</span>
+<span class="nc" id="L221">				colors = colors.add(ColorType.LINE, lineColor);</span>
 
-<span class="fc" id="L225">			colors = colors.mergeWith(stereogroup.getInnerColors(colorSet));</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">			if (arg.get(&quot;LINECOLOR&quot;, 0) != null)</span>
+<span class="nc" id="L224">				colors = colors.addLegacyStroke(arg.get(&quot;LINECOLOR&quot;, 0));</span>
 
-<span class="fc" id="L227">			ent.setColors(colors);</span>
+<span class="fc" id="L226">			colors = colors.mergeWith(stereogroup.getInnerColors(colorSet));</span>
 
-<span class="fc" id="L229">			final String addFields = arg.get(&quot;ADDFIELD&quot;, 0);</span>
-<span class="fc bfc" id="L230" title="All 2 branches covered.">			if (addFields != null)</span>
-<span class="fc" id="L231">				ent.getBodier().addFieldOrMethod(addFields);</span>
+<span class="fc" id="L228">			ent.setColors(colors);</span>
 
-<span class="fc" id="L233">			CommandCreateClassMultilines.addTags(ent, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
+<span class="fc" id="L230">			final String addFields = arg.get(&quot;ADDFIELD&quot;, 0);</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">			if (addFields != null)</span>
+<span class="fc" id="L232">				ent.getBodier().addFieldOrMethod(addFields);</span>
+
+<span class="fc" id="L234">			CommandCreateClassMultilines.addTags(ent, arg.getLazzy(&quot;TAGS&quot;, 0));</span>
+
+<span class="pc bpc" id="L236" title="1 of 4 branches missed.">			if (ent.getParentContainer().isRoot() &amp;&amp; ent.getEntityPosition().isNormal() == false) {</span>
+<span class="nc" id="L237">				return CommandExecutionResult.error(&quot;You cannot use this stereotype here&quot;);</span>
+			}
+
 		}
-<span class="fc" id="L235">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L241">		return CommandExecutionResult.ok();</span>
 	}
 
 }

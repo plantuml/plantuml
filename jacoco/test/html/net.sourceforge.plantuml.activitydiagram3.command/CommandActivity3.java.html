@@ -65,23 +65,23 @@ public class CommandActivity3 extends SingleLineCommand2&lt;ActivityDiagram3&gt;
 
 	static IRegex getRegexConcat() {
 <span class="fc" id="L67">		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //</span>
-				UrlBuilder.OPTIONAL, //
-<span class="fc" id="L69">				color().getRegex(), //</span>
-<span class="fc" id="L70">				StereotypePattern.optionalIGNORED(), //</span>
+<span class="fc" id="L68">				StereotypePattern.optionalIGNORED(), //</span>
 				new RegexLeaf(&quot;:&quot;), //
 				new RegexLeaf(1, &quot;LABEL&quot;, &quot;(.*?)&quot;), //
 				new RegexLeaf(&quot;;&quot;), //
+<span class="fc" id="L72">				RegexLeaf.spaceZeroOrMore(), //</span>
+<span class="fc" id="L73">				Stereogroup.optionalStereogroup(), //</span>
 <span class="fc" id="L74">				RegexLeaf.spaceZeroOrMore(), //</span>
-<span class="fc" id="L75">				Stereogroup.optionalStereogroup(), //</span>
+				UrlBuilder.OPTIONAL, //
 <span class="fc" id="L76">				RegexLeaf.end());</span>
 	}
 
 	private static ColorParser color() {
-<span class="fc" id="L80">		return ColorParser.simpleColor(ColorType.BACK);</span>
+<span class="nc" id="L80">		return ColorParser.simpleColor(ColorType.BACK);</span>
 	}
 
 	@Override
-	@Explain
+	@Explain(comment = &quot;outdated&quot;)
 	protected String explainArg(LineLocation location, RegexResult arg) {
 <span class="nc" id="L86">		final StringBuilder sb = new StringBuilder();</span>
 

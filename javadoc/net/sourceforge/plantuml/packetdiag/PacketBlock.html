@@ -95,15 +95,17 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">A single drawable field (block) in a <code>packetdiag</code> diagram.
  <p>
- A <a href="PacketBlock.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketBlock</code></a> represents a rectangular region spanning a given number of bit columns
- (<code>width</code>) and a given vertical size (<code>height</code>), with an optional label rendered inside.
- The block can be marked as "open" on the left and/or right side to indicate that it is a continuation
- of the same logical field split across multiple rows.
+ A <a href="PacketBlock.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketBlock</code></a> represents a rectangular region spanning a given number
+ of bit columns (<code>width</code>) and a given vertical size (<code>height</code>),
+ with an optional label rendered inside. The block can be marked as "open" on
+ the left and/or right side to indicate that it is a continuation of the same
+ logical field split across multiple rows.
  </p>
  <p>
- This is a low-level rendering model used by <a href="PacketDiagram.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketDiagram</code></a> when laying out <code>PacketItem</code>s
- into a row grid. Actual pixel dimensions are obtained by multiplying bit units by the current scale
- (bit width/height) and adding margins/padding during shape creation.
+ This is a low-level rendering model used by <a href="PacketDiagram.html" title="class in net.sourceforge.plantuml.packetdiag"><code>PacketDiagram</code></a> when laying
+ out <code>PacketItem</code>s into a row grid. Actual pixel dimensions are obtained
+ by multiplying bit units by the current scale (bit width/height) and adding
+ margins/padding during shape creation.
  </p></div>
 </section>
 <section class="summary">
@@ -130,7 +132,8 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;leftOpen,
  boolean&nbsp;rightOpen)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates a block with optional open edges to represent a field continued across rows.</div>
+<div class="block">Creates a block with optional open edges to represent a field continued
+ across rows.</div>
 </div>
 </div>
 </section>
@@ -174,12 +177,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openLeft(boolean)" class="member-name-link">openLeft</a><wbr>(boolean&nbsp;leftOpen)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Marks whether the left edge should be rendered as open (continuation indicator).</div>
+<div class="block">Marks whether the left edge should be rendered as open (continuation
+ indicator).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openRight(boolean)" class="member-name-link">openRight</a><wbr>(boolean&nbsp;rightOpen)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Marks whether the right edge should be rendered as open (continuation indicator).</div>
+<div class="block">Marks whether the right edge should be rendered as open (continuation
+ indicator).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHeight(int)" class="member-name-link">setHeight</a><wbr>(int&nbsp;height)</code></div>
@@ -215,7 +220,8 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>width</code> - block width in bit units (columns)</dd>
 <dd><code>height</code> - block height in bit units (rows)</dd>
-<dd><code>label</code> - label to display inside the block (may be <code>null</code> depending on caller conventions)</dd>
+<dd><code>label</code> - label to display inside the block (may be <code>null</code>
+                  depending on caller conventions)</dd>
 <dd><code>skinParam</code> - skin parameters used to resolve styles, fonts and colors</dd>
 </dl>
 </section>
@@ -229,15 +235,18 @@ loadScripts(document, 'script');</script>
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  boolean&nbsp;leftOpen,
  boolean&nbsp;rightOpen)</span></div>
-<div class="block">Creates a block with optional open edges to represent a field continued across rows.</div>
+<div class="block">Creates a block with optional open edges to represent a field continued
+ across rows.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>width</code> - block width in bit units (columns)</dd>
 <dd><code>height</code> - block height in bit units (rows)</dd>
 <dd><code>label</code> - label to display inside the block</dd>
 <dd><code>skinParam</code> - skin parameters used to resolve styles, fonts and colors</dd>
-<dd><code>leftOpen</code> - <code>true</code> if the left border is "open" (continuation from a previous row)</dd>
-<dd><code>rightOpen</code> - <code>true</code> if the right border is "open" (continues on the next row)</dd>
+<dd><code>leftOpen</code> - <code>true</code> if the left border is "open" (continuation from
+                  a previous row)</dd>
+<dd><code>rightOpen</code> - <code>true</code> if the right border is "open" (continues on the
+                  next row)</dd>
 </dl>
 </section>
 </li>
@@ -253,7 +262,8 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="openLeft(boolean)">
 <h3>openLeft</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">openLeft</span><wbr><span class="parameters">(boolean&nbsp;leftOpen)</span></div>
-<div class="block">Marks whether the left edge should be rendered as open (continuation indicator).</div>
+<div class="block">Marks whether the left edge should be rendered as open (continuation
+ indicator).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>leftOpen</code> - <code>true</code> to open the left edge, <code>false</code> to close it</dd>
@@ -264,10 +274,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="openRight(boolean)">
 <h3>openRight</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">openRight</span><wbr><span class="parameters">(boolean&nbsp;rightOpen)</span></div>
-<div class="block">Marks whether the right edge should be rendered as open (continuation indicator).</div>
+<div class="block">Marks whether the right edge should be rendered as open (continuation
+ indicator).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>rightOpen</code> - <code>true</code> to open the right edge, <code>false</code> to close it</dd>
+<dd><code>rightOpen</code> - <code>true</code> to open the right edge, <code>false</code> to close
+                  it</dd>
 </dl>
 </section>
 </li>
@@ -337,8 +349,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the label text displayed inside this block.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the block label (as provided at construction time)
- (And may be empty depending on caller conventions)</dd>
+<dd>the block label (as provided at construction time) (And may be empty
+         depending on caller conventions)</dd>
 </dl>
 </section>
 </li>
