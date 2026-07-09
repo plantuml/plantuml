@@ -1,6 +1,5 @@
 package test.vega;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -72,6 +71,8 @@ public class VegaInputFile {
 		CHECKERS.put(FileFormat.XMI_ARGO, new VegaCheckerXmi());
 		CHECKERS.put(FileFormat.XMI_CUSTOM, new VegaCheckerXmi());
 		CHECKERS.put(FileFormat.XMI_SCRIPT, new VegaCheckerXmi());
+		CHECKERS.put(FileFormat.ATXT, new VegaCheckerAtxt());
+		CHECKERS.put(FileFormat.UTXT, new VegaCheckerUtxt());
 	}
 
 	private final Path path;
@@ -238,6 +239,10 @@ public class VegaInputFile {
 				result.add(FileFormat.SVG_DETERMINISTIC);
 			else if (trimmed.equals("LATEX"))
 				result.add(FileFormat.LATEX_DETERMINISTIC);
+			else if (trimmed.equals("UTXT"))
+				result.add(FileFormat.UTXT);
+			else if (trimmed.equals("ATXT"))
+				result.add(FileFormat.ATXT);
 			else
 				result.add(FileFormat.valueOf(trimmed));
 		}
