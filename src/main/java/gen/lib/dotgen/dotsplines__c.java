@@ -613,7 +613,7 @@ UNSUPPORTED("46btiag50nczzur103eqhjcup"); // 	goto finish;
 		break;
 	}
 	
-	// [DEBUG-flat-label] Temporary trace, Test_5 (SMETANA.md): dispatch decision
+	// [DEBUG-flat-label] Enabled (SMETANA.md, zdev.Test_15 investigation)
 	if (false) SMETANA_TRACE("dotsplines__c", "_dot_splines dispatch: ind=" + ind + " cnt=" + cnt
 		+ " e0=" + System.identityHashCode(e0) + " le0=" + System.identityHashCode(le0)
 		+ " tailRank=" + ND_rank(agtail(e0)) + " headRank=" + ND_rank(aghead(e0))
@@ -1366,7 +1366,7 @@ try {
 	for (f = ED_to_virt(e); ED_to_virt(f)!=null; f = ED_to_virt(f));
 	ln = agtail(f);
     }
-    // [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+    // [DEBUG-flat-label] Enabled (SMETANA.md, zdev.Test_15 investigation)
     if (false) SMETANA_TRACE("dotsplines__c", "make_flat_labeled_edge: e identityHash=" + System.identityHashCode(e)
 	    + " label vnode ln identityHash=" + System.identityHashCode(ln)
 	    + " ln coord=(" + ND_coord(ln).x + "," + ND_coord(ln).y + ") -> setting ED_label(e).pos");
@@ -1415,6 +1415,16 @@ UNSUPPORTED("1uunj4jbr2uhiqxwor6rzmr3j"); // 	pn = 7;
 	for (i = hend.boxn[0] - 1; i >= 0; i--) add_box(P, hend.boxes[i]);
 	if (et == (5 << 1)) ps = routesplines(zz, P, pn);
 	else ps = routepolylines(zz, P, pn);
+	// [DEBUG-flat-label] New (SMETANA.md, zdev.Test_15 investigation): this is
+	// the point where make_flat_labeled_edge gives up routing for a labeled
+	// flat edge (pn[0]==0), leaving ED_spl(e) permanently null -- the root
+	// cause of SmetanaEdge.getDotPathInternal's NPE. Dump ln/tn/hn geometry so
+	// we can see whether ln sits outside the tn/hn span (the Test_3 symptom:
+	// a SKIPPED label-position aux edge left ln unconstrained in X).
+	if (false) SMETANA_TRACE("dotsplines__c", "make_flat_labeled_edge: e identityHash=" + System.identityHashCode(e)
+		+ " tn=(" + ND_coord(tn).x + "," + ND_coord(tn).y + ") hn=(" + ND_coord(hn).x + "," + ND_coord(hn).y + ")"
+		+ " ln=(" + ND_coord(ln).x + "," + ND_coord(ln).y + ")"
+		+ " pn[0]=" + pn[0] + (pn[0] == 0 ? " -> ABOUT TO RETURN WITHOUT clip_and_install (ED_spl stays null)" : " -> ok"));
 	if (pn[0] == 0) return;
     }
     clip_and_install(zz, e, aghead(e), ps, pn[0], zz.sinfo);
@@ -1539,7 +1549,7 @@ try {
 	    break;
 	}
     }
-    // [DEBUG-flat-label] Temporary trace, Test_5 missing flat-edge label (SMETANA.md)
+    // [DEBUG-flat-label] Enabled (SMETANA.md, zdev.Test_15 investigation)
     for (i = 0; i < cnt; i++) {
 	if (false) SMETANA_TRACE("dotsplines__c", "make_flat_edge: class ind=" + ind + " cnt=" + cnt
 		+ " isAdjacent=" + isAdjacent + " member[" + i + "] identityHash="

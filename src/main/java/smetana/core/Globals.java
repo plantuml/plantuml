@@ -322,6 +322,17 @@ final public class Globals {
 	public int isz;
 	public CArray<ST_pointf> ispline;
 
+	// [FIX-Test_15] Not part of upstream Graphviz. Populated by
+	// position__c.make_LR_constraints()'s deferred label-position pass when its
+	// cycle guard (canReachInAuxGraph) skips one of a flat-edge label vnode's
+	// two real-endpoint anchor constraints (see SMETANA.md, zdev.Test_15
+	// investigation). Consumed by position__c.dot_position() right after
+	// set_xcoords() to clamp such a label's final X coordinate back within its
+	// own edge's endpoint span -- an unclamped label can otherwise end up
+	// entirely outside that span, which makes make_flat_labeled_edge()'s box
+	// path degenerate and leaves the edge unrouted (ED_spl stays null).
+	public final java.util.Map<ST_Agnode_s, Boolean> skippedConstraintLabelVnodes = new java.util.IdentityHashMap<ST_Agnode_s, Boolean>();
+
 	private ST_shape_desc __Shapes__(String s, ST_shape_functions shape_functions, ST_polygon_t polygon) {
 		ST_shape_desc result = new ST_shape_desc();
 		result.name = s == null ? null : new CString(s);

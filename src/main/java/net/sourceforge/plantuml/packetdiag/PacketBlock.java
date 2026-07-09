@@ -60,15 +60,17 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 /**
  * A single drawable field (block) in a {@code packetdiag} diagram.
  * <p>
- * A {@link PacketBlock} represents a rectangular region spanning a given number of bit columns
- * ({@code width}) and a given vertical size ({@code height}), with an optional label rendered inside.
- * The block can be marked as "open" on the left and/or right side to indicate that it is a continuation
- * of the same logical field split across multiple rows.
+ * A {@link PacketBlock} represents a rectangular region spanning a given number
+ * of bit columns ({@code width}) and a given vertical size ({@code height}),
+ * with an optional label rendered inside. The block can be marked as "open" on
+ * the left and/or right side to indicate that it is a continuation of the same
+ * logical field split across multiple rows.
  * </p>
  * <p>
- * This is a low-level rendering model used by {@link PacketDiagram} when laying out {@code PacketItem}s
- * into a row grid. Actual pixel dimensions are obtained by multiplying bit units by the current scale
- * (bit width/height) and adding margins/padding during shape creation.
+ * This is a low-level rendering model used by {@link PacketDiagram} when laying
+ * out {@code PacketItem}s into a row grid. Actual pixel dimensions are obtained
+ * by multiplying bit units by the current scale (bit width/height) and adding
+ * margins/padding during shape creation.
  * </p>
  */
 public class PacketBlock {
@@ -100,14 +102,11 @@ public class PacketBlock {
 	/**
 	 * Creates a closed block with the given bit-size and label.
 	 *
-	 * @param width
-	 *            block width in bit units (columns)
-	 * @param height
-	 *            block height in bit units (rows)
-	 * @param label
-	 *            label to display inside the block (may be {@code null} depending on caller conventions)
-	 * @param skinParam
-	 *            skin parameters used to resolve styles, fonts and colors
+	 * @param width     block width in bit units (columns)
+	 * @param height    block height in bit units (rows)
+	 * @param label     label to display inside the block (may be {@code null}
+	 *                  depending on caller conventions)
+	 * @param skinParam skin parameters used to resolve styles, fonts and colors
 	 */
 	public PacketBlock(int width, int height, String label, ISkinParam skinParam) {
 		this.width = width;
@@ -117,20 +116,17 @@ public class PacketBlock {
 	}
 
 	/**
-	 * Creates a block with optional open edges to represent a field continued across rows.
+	 * Creates a block with optional open edges to represent a field continued
+	 * across rows.
 	 *
-	 * @param width
-	 *            block width in bit units (columns)
-	 * @param height
-	 *            block height in bit units (rows)
-	 * @param label
-	 *            label to display inside the block
-	 * @param skinParam
-	 *            skin parameters used to resolve styles, fonts and colors
-	 * @param leftOpen
-	 *            {@code true} if the left border is "open" (continuation from a previous row)
-	 * @param rightOpen
-	 *            {@code true} if the right border is "open" (continues on the next row)
+	 * @param width     block width in bit units (columns)
+	 * @param height    block height in bit units (rows)
+	 * @param label     label to display inside the block
+	 * @param skinParam skin parameters used to resolve styles, fonts and colors
+	 * @param leftOpen  {@code true} if the left border is "open" (continuation from
+	 *                  a previous row)
+	 * @param rightOpen {@code true} if the right border is "open" (continues on the
+	 *                  next row)
 	 */
 	public PacketBlock(int width, int height, String label, ISkinParam skinParam, boolean leftOpen, boolean rightOpen) {
 		this.width = width;
@@ -142,7 +138,8 @@ public class PacketBlock {
 	}
 
 	/**
-	 * Marks whether the left edge should be rendered as open (continuation indicator).
+	 * Marks whether the left edge should be rendered as open (continuation
+	 * indicator).
 	 *
 	 * @param leftOpen {@code true} to open the left edge, {@code false} to close it
 	 */
@@ -151,9 +148,11 @@ public class PacketBlock {
 	}
 
 	/**
-	 * Marks whether the right edge should be rendered as open (continuation indicator).
+	 * Marks whether the right edge should be rendered as open (continuation
+	 * indicator).
 	 *
-	 * @param rightOpen {@code true} to open the right edge, {@code false} to close it
+	 * @param rightOpen {@code true} to open the right edge, {@code false} to close
+	 *                  it
 	 */
 	public void openRight(boolean rightOpen) {
 		this.rightOpen = rightOpen;
@@ -209,8 +208,8 @@ public class PacketBlock {
 	/**
 	 * Returns the label text displayed inside this block.
 	 *
-	 * @return the block label (as provided at construction time)
-	 * (And may be empty depending on caller conventions)
+	 * @return the block label (as provided at construction time) (And may be empty
+	 *         depending on caller conventions)
 	 */
 	public String getLabel() {
 		return label;
@@ -277,6 +276,8 @@ public class PacketBlock {
 			@Override
 			public void drawU(UGraphic ug) {
 				final XDimension2D dim = calculateDimension(ug.getStringBounder());
+				if (dim.getWidth() == 0 || dim.getHeight() == 0)
+					return;
 				ug = UGraphicStencil.create(ug, dim);
 				ug = fashion.apply(ug);
 				final URectangle rect = URectangle.build(dim.getWidth(), dim.getHeight());

@@ -42,6 +42,7 @@ import static gen.lib.cgraph.node__c.agnode;
 import static gen.lib.cgraph.subg__c.agsubg;
 import static gen.lib.gvc.gvc__c.gvContext;
 import static gen.lib.gvc.gvlayout__c.gvLayoutJobs;
+import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -459,6 +460,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			return;
 		}
 		final ST_Agnode_s agnode = agnode(zz, cluster, new CString(node.getUid()), true);
+		// [DEBUG-Test_15] zdev.Test_15 investigation (SMETANA.md): map each real
+		// Smetana node (whose safeName() shows as "CString:shNNNN" everywhere
+		// else in the traces) back to its actual PlantUML entity name, so the
+		// GD_nlist/ND_flat_out/ND_other traversal-order traces in flat__c can be
+		// read directly without guessing which shNNNN is which A-node.
+		if (false) SMETANA_TRACE("CucaDiagramFileMakerSmetana",
+				"exportEntity: entity=" + leaf.getName() + " nodeUid=" + node.getUid());
 		agsafeset(zz, agnode, new CString("shape"), new CString("box"), new CString(""));
 		final XDimension2D dim = getDim(node);
 		final String width = "" + dim.getWidth();
@@ -818,6 +826,17 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		// throw new IllegalStateException();
 
 		final ST_Agedge_s e = agedge(zz, g, node1, node2, null, true);
+		// [DEBUG-flat-label] Cross-reference key for flat__c.flat_node's
+		// "origEdgeIdentityHash" trace: this is the edge object SmetanaEdge
+		// ultimately holds, so any identityHash seen further down the
+		// pipeline (dotsplines__c, flat__c, position__c) can be traced back
+		// here to the real PlantUML entity names/label. See SMETANA.md,
+		// zdev.Test_15 investigation.
+		if (false) SMETANA_TRACE("CucaDiagramFileMakerSmetana",
+				"createEdge: edgeIdentityHash=" + System.identityHashCode(e)
+				+ " entity1=" + link.getEntity1().getName() + " entity2=" + link.getEntity2().getName()
+				+ " isSelfLoop=" + link.getEntity1().equals(link.getEntity2())
+				+ " label=" + link.getLabel());
 		agsafeset(zz, e, new CString("arrowtail"), new CString("none"), new CString(""));
 		agsafeset(zz, e, new CString("arrowhead"), new CString("none"), new CString(""));
 

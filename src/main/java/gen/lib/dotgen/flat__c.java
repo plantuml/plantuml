@@ -86,6 +86,7 @@ import static smetana.core.Macro.VIRTUAL;
 import static smetana.core.debug.SmetanaDebug.ENTERING;
 import static smetana.core.debug.SmetanaDebug.LEAVING;
 import static smetana.core.debug.SmetanaDebug.SMETANA_TRACE;
+import static smetana.core.debug.SmetanaDebug.safeName;
 
 import gen.annotation.Difficult;
 import gen.annotation.HasND_Rank;
@@ -200,9 +201,7 @@ try {
 		// new label consistently with v in this case, it just picks a
 		// best-effort side. This is the exact mechanism behind the Test_1
 		// infeasible X-position cycle -- see SMETANA.md "Root cause CONFIRMED".
-	    	// [DEBUG-Test_8-flatedge] Enabled (SMETANA.md): investigating a
-	    	// non-labeled-duplicate flat-edge routing failure; checking whether it
-	    	// hits the same soft-bounds-only "genuine crossing" case as Test_1.
+	    	// [DEBUG-Test_15-flatedge] Enabled (SMETANA.md, zdev.Test_15 investigation).
 	    	if (false) SMETANA_TRACE("flat__c", "setbounds: CROSSING existingLabelNodeIdentityHash=" + System.identityHashCode(v)
 				+ " existingLabelOrder=" + ord + " existingRange=[" + l[0] + "," + r[0] + "]"
 				+ " newEdgeRange=[" + lpos[0] + "," + rpos[0] + "] -> soft bound(s) only");
@@ -554,6 +553,35 @@ try {
     
     rec_save_vlists(g);
     for (n = GD_nlist(g); n!=null; n = ND_next(n)) {
+	// [DEBUG-Test_15] zdev.Test_15 investigation (SMETANA.md): dump the
+	// GD_nlist traversal order and, for this node, the order of its
+	// ND_flat_out/ND_other flat-edge lists, before anything below acts on
+	// them. This determines the call order of flat_node() (already traced),
+	// and thus the insertion order into the rank -1 label array -- the goal
+	// is to see directly whether Smetana visits/groups L4 and L5's flat
+	// edges in an order (or with tail/head roles) that differs from what a
+	// correct layout (native dot renders Test_15 fine) would need, rather
+	// than continuing to infer this by hand from flat_limits' bounds output.
+	if (false) SMETANA_TRACE("flat__c", "flat_edges main loop: node=" + safeName(zz, n)
+		+ " ND_flat_out=" + (ND_flat_out(n).list == null ? "null" : String.valueOf(ND_flat_out(n).size))
+		+ " ND_other.size=" + ND_other(n).size);
+	if (ND_flat_out(n).list != null) {
+	    for (int dbg = 0; ND_flat_out(n).list.get_(dbg) != null; dbg++) {
+		final ST_Agedge_s dbgE = ND_flat_out(n).list.get_(dbg);
+		if (false) SMETANA_TRACE("flat__c", "  flat_out[" + dbg + "] edgeIdentityHash=" + System.identityHashCode(dbgE)
+			+ " tail=" + safeName(zz, agtail(dbgE)) + " head=" + safeName(zz, aghead(dbgE))
+			+ " label=" + (ED_label(dbgE) == null ? "null" : "PRESENT")
+			+ " adjacent=" + ED_adjacent(dbgE));
+	    }
+	}
+	for (int dbg = 0; dbg < ND_other(n).size; dbg++) {
+	    final ST_Agedge_s dbgE = ND_other(n).list.get_(dbg);
+	    if (false) SMETANA_TRACE("flat__c", "  other[" + dbg + "] edgeIdentityHash=" + System.identityHashCode(dbgE)
+		    + " tail=" + safeName(zz, agtail(dbgE)) + " head=" + safeName(zz, aghead(dbgE))
+		    + " label=" + (ED_label(dbgE) == null ? "null" : "PRESENT")
+		    + " sameRank=" + (ND_rank(agtail(dbgE)) == ND_rank(aghead(dbgE)))
+		    + " isSelfLoop=" + (agtail(dbgE) == aghead(dbgE)));
+	}
           /* if n is the tail of any flat edge, one will be in flat_out */
 	if (ND_flat_out(n).list!=null) {
 	    for (i = 0; (e = ND_flat_out(n).list.get_(i))!=null; i++) {

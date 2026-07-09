@@ -152,6 +152,7 @@ import h.ST_pointf;
 import h.ST_rank_t;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
 import smetana.core.CArray;
@@ -688,6 +689,7 @@ try {
     	if (false) SMETANA_TRACE("position__c", "dot_position: WARNING negative-slack edges remain after rank() -- X-position aux graph is infeasible, layout may show overlapping nodes. See SMETANA.md.");
     }
     set_xcoords(g);
+    clampSkippedLabelVnodes(zz, g);
     set_aspect(g, asp);
     remove_aux_edges(g);	/* must come after set_aspect since we now
 				 * use GD_ln and GD_rn for bbox width.
@@ -955,18 +957,25 @@ try {
 	m1 = m0 + ((int)(ND_rw(aghead(e0)) + ND_lw(agtail(e0))));
 	/* these guards are needed because the flat edges
 	 * work very poorly with cluster layout */
-	if (canReachInAuxGraph(agtail(e0), aghead(e0)) == false)
+	// [DEBUG-Test_15] zdev.Test_15 investigation (SMETANA.md): pass zz/context so
+	// a SKIP can log the exact path found, to confirm/refute by trace (not by
+	// hand-reconstruction) whether the reachability comes from a genuine node
+	// adjacency cycle or merely from the same-rank ordering edge between two
+	// label vnodes on rank -1.
+	if (canReachInAuxGraph(zz, agtail(e0), aghead(e0), "guard1 label=" + safeName(zz, lu)) == false)
 	    make_aux_edge(aghead(e0), agtail(e0), m1,
 		ED_weight(e));
 	else {
+	zz.skippedConstraintLabelVnodes.put(lu, Boolean.TRUE);
 	if (false) SMETANA_TRACE("position__c", "make_LR_constraints: SKIPPED label-position aux edge " + safeName(zz, aghead(e0))
 		    + " -> " + safeName(zz, agtail(e0)) + " (would close a cycle in the X aux graph)");
 	}
 	m1 = m0 + ((int)(ND_rw(agtail(e1)) + ND_lw(aghead(e1))));
-	if (canReachInAuxGraph(aghead(e1), agtail(e1)) == false)
+	if (canReachInAuxGraph(zz, aghead(e1), agtail(e1), "guard2 label=" + safeName(zz, lu)) == false)
 	    make_aux_edge(agtail(e1), aghead(e1), m1,
 		ED_weight(e));
 	else {
+		zz.skippedConstraintLabelVnodes.put(lu, Boolean.TRUE);
 		if (false) SMETANA_TRACE("position__c", "make_LR_constraints: SKIPPED label-position aux edge " + safeName(zz, agtail(e1))
 		    + " -> " + safeName(zz, aghead(e1)) + " (would close a cycle in the X aux graph)");
 	}
@@ -987,27 +996,86 @@ LEAVING("ah28nr6mxpjeosr85bhmzd3si","make_LR_constraints");
  * DFS, which is potentially exponential on the denser DAG this pass sees
  * (upstream only ever ran it on the sparse, partially-built graph) and would
  * not terminate at all if a cycle ever slipped in.
+ *
+ * [DEBUG-Test_15] zdev.Test_15 investigation (SMETANA.md): now takes zz + a
+ * short trace label, and when a path IS found, reconstructs and logs it
+ * (via parent pointers) instead of just returning true -- this is meant to
+ * confirm or refute, by direct trace, whether a SKIPPED guard fires because
+ * of a genuine node-adjacency cycle or because of some other, less obviously
+ * intentional edge (e.g. the plain same-rank ordering edge between two label
+ * vnodes on rank -1, which is not a real topological constraint of the
+ * original graph). No change to the guard's boolean semantics -- purely
+ * additive logging on the already-existing BFS.
  */
-private static boolean canReachInAuxGraph(ST_Agnode_s from, ST_Agnode_s to) {
+private static boolean canReachInAuxGraph(Globals zz, ST_Agnode_s from, ST_Agnode_s to, String traceLabel) {
     if (from == to)
 	return true;
     final IdentityHashMap<ST_Agnode_s, Boolean> visited = new IdentityHashMap<ST_Agnode_s, Boolean>();
+    final IdentityHashMap<ST_Agnode_s, ST_Agnode_s> parent = new IdentityHashMap<ST_Agnode_s, ST_Agnode_s>();
     final ArrayDeque<ST_Agnode_s> stack = new ArrayDeque<ST_Agnode_s>();
     visited.put(from, Boolean.TRUE);
     stack.push(from);
     while (stack.isEmpty() == false) {
 	final ST_Agnode_s cur = stack.pop();
 	for (int i = 0; ND_out(cur).list.get_(i) != null; i++) {
-	    final ST_Agnode_s head = aghead((ST_Agedge_s) ND_out(cur).list.get_(i));
-	    if (head == to)
+	    final ST_Agedge_s outEdge = (ST_Agedge_s) ND_out(cur).list.get_(i);
+	    final ST_Agnode_s head = aghead(outEdge);
+	    if (head == to) {
+		parent.put(head, cur);
+		// logReachPath(zz, from, to, parent, traceLabel);
 		return true;
+	    }
 	    if (visited.containsKey(head) == false) {
 		visited.put(head, Boolean.TRUE);
+		parent.put(head, cur);
 		stack.push(head);
 	    }
 	}
     }
     return false;
+}
+
+/*
+ * [DEBUG-Test_15] zdev.Test_15 investigation (SMETANA.md): reconstructs and
+ * logs the from->to path found by canReachInAuxGraph's BFS, via its parent
+ * map. For every hop, also logs the ND_out edge's minlen/weight, so it's
+ * directly visible (without cross-referencing dumpAuxEdges by hand) which
+ * edges make up the reachability chain, and in particular whether any of
+ * them is a weight-0 same-rank ordering edge between two label vnodes
+ * (rather than a real node-adjacency/containment constraint).
+ */
+private static void logReachPath(Globals zz, ST_Agnode_s from, ST_Agnode_s to,
+	IdentityHashMap<ST_Agnode_s, ST_Agnode_s> parent, String traceLabel) {
+    final List<ST_Agnode_s> path = new ArrayList<ST_Agnode_s>();
+    ST_Agnode_s cur = to;
+    path.add(cur);
+    while (cur != from) {
+	cur = parent.get(cur);
+	path.add(cur);
+    }
+    Collections.reverse(path);
+    final StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < path.size(); i++) {
+	if (i > 0)
+	    sb.append(" -> ");
+	sb.append(safeName(zz, path.get(i)));
+    }
+    if (false) SMETANA_TRACE("position__c", "canReachInAuxGraph: " + traceLabel + " PATH FOUND: " + sb.toString());
+    for (int i = 0; i + 1 < path.size(); i++) {
+	final ST_Agnode_s a = path.get(i);
+	final ST_Agnode_s b = path.get(i + 1);
+	int minlen = -1, weight = -1;
+	for (int k = 0; ND_out(a).list.get_(k) != null; k++) {
+	    final ST_Agedge_s e = (ST_Agedge_s) ND_out(a).list.get_(k);
+	    if (aghead(e) == b) {
+		minlen = ED_minlen(e);
+		weight = ED_weight(e);
+		break;
+	    }
+	}
+	if (false) SMETANA_TRACE("position__c", "  hop " + i + ": " + safeName(zz, a) + " -> " + safeName(zz, b)
+		+ " minlen=" + minlen + " weight=" + weight);
+    }
 }
 
 
@@ -1368,6 +1436,54 @@ try {
 } finally {
 LEAVING("1oobmglea9t819y95xeel37h8","set_xcoords");
 }
+}
+
+/*
+ * [FIX-Test_15] Not part of upstream Graphviz. See SMETANA.md, zdev.Test_15
+ * investigation: when make_LR_constraints()'s deferred label-position pass
+ * skips one (or both) of a flat-edge label vnode's two real-endpoint anchor
+ * constraints (because creating it would close a cycle in the X-position aux
+ * graph -- a legitimate, necessary skip, same mechanism as zdev.Test_1), that
+ * label's final X coordinate is otherwise left unconstrained on the skipped
+ * side and can end up entirely outside the span of its own edge's two real
+ * endpoints. When that happens, make_flat_labeled_edge() (dotsplines__c.java)
+ * builds a geometrically degenerate box path around the label, and
+ * routesplines/routepolylines gives up (pn[0]==0), leaving that edge
+ * permanently unrouted (ED_spl stays null) -- the root cause of the
+ * SmetanaEdge.getDotPathInternal() NPE fixed at its source here instead of by
+ * a downstream rendering fallback.
+ *
+ * This clamps such labels' X coordinate back into [min(a.x,b.x),
+ * max(a.x,b.x)] where a/b are the two real nodes the label's edge connects
+ * (found via ND_save_out(lu), the label vnode's original two FLATORDER
+ * anchor edges -- the same edges make_LR_constraints() itself reads,
+ * still valid at this point since remove_aux_edges() hasn't run yet).
+ * Purely additive: only labels actually recorded in
+ * zz.skippedConstraintLabelVnodes are touched, and only when their X
+ * coordinate is already outside the span -- a label that happens to still
+ * fall within its endpoints' span despite the skipped constraint (or a label
+ * that had no constraint skipped at all) is left untouched.
+ */
+private static void clampSkippedLabelVnodes(Globals zz, ST_Agraph_s g) {
+    for (ST_Agnode_s lu : zz.skippedConstraintLabelVnodes.keySet()) {
+	final ST_Agedge_s e0 = (ST_Agedge_s) ND_save_out(lu).list.get_(0);
+	final ST_Agedge_s e1 = (ST_Agedge_s) ND_save_out(lu).list.get_(1);
+	if (e0 == null || e1 == null)
+	    continue;
+	final ST_Agnode_s a = aghead(e0);
+	final ST_Agnode_s b = aghead(e1);
+	final double lo = Math.min(ND_coord(a).x, ND_coord(b).x);
+	final double hi = Math.max(ND_coord(a).x, ND_coord(b).x);
+	final double x = ND_coord(lu).x;
+	if (x < lo || x > hi) {
+	    final double clamped = Math.max(lo, Math.min(hi, x));
+	    if (false) SMETANA_TRACE("position__c", "clampSkippedLabelVnodes: " + safeName(zz, lu)
+		    + " x=" + x + " outside endpoint span [" + lo + "," + hi + "] (endpoints "
+		    + safeName(zz, a) + "=" + ND_coord(a).x + ", " + safeName(zz, b) + "=" + ND_coord(b).x
+		    + ") -> clamped to " + clamped);
+	    ND_coord(lu).x = clamped;
+	}
+    }
 }
 
 
