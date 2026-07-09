@@ -91,12 +91,12 @@ abstract class Step1Abstract {
 <span class="fc" id="L91">	}</span>
 
 	protected final List&lt;Component&gt; getNotes() {
-<span class="nc" id="L94">		return notes;</span>
+<span class="fc" id="L94">		return notes;</span>
 	}
 
 	protected final void addNote(Component note) {
-<span class="nc" id="L98">		this.notes.add(note);</span>
-<span class="nc" id="L99">	}</span>
+<span class="fc" id="L98">		this.notes.add(note);</span>
+<span class="fc" id="L99">	}</span>
 
 	protected final StringBounder getStringBounder() {
 <span class="fc" id="L102">		return stringBounder;</span>
@@ -120,11 +120,11 @@ abstract class Step1Abstract {
 
 	protected final NoteBox createNoteBox(StringBounder stringBounder, Arrow arrow, Component noteComp,
 			Note noteOnMessage) {
-<span class="nc" id="L123">		final LivingParticipantBox p = arrow.getParticipantAt(stringBounder, noteOnMessage.getPosition());</span>
-<span class="nc" id="L124">		final NoteBox noteBox = new NoteBox(arrow.getStartingY(), noteComp, p, null, noteOnMessage.getPosition(),</span>
-<span class="nc" id="L125">				noteOnMessage.getUrl());</span>
+<span class="fc" id="L123">		final LivingParticipantBox p = arrow.getParticipantAt(stringBounder, noteOnMessage.getPosition());</span>
+<span class="fc" id="L124">		final NoteBox noteBox = new NoteBox(arrow.getStartingY(), noteComp, p, null, noteOnMessage.getPosition(),</span>
+<span class="fc" id="L125">				noteOnMessage.getUrl());</span>
 
-<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (arrow instanceof MessageSelfArrow) {</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (arrow instanceof MessageSelfArrow) {</span>
 <span class="nc" id="L128">			boolean isReverseSelfArrow = ((MessageSelfArrow) arrow).isReverse();</span>
 <span class="nc bnc" id="L129" title="All 4 branches missed.">			if (!isReverseSelfArrow &amp;&amp; noteOnMessage.getPosition() == NotePosition.RIGHT) {</span>
 <span class="nc" id="L130">				noteBox.pushToRight(arrow.getPreferredWidth(stringBounder));</span>
@@ -141,7 +141,7 @@ abstract class Step1Abstract {
 		// }
 		// }
 
-<span class="nc" id="L144">		return noteBox;</span>
+<span class="fc" id="L144">		return noteBox;</span>
 	}
 
 }

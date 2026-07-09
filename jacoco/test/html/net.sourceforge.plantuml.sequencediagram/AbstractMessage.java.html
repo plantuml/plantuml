@@ -123,8 +123,8 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	final public Url getUrl() {
 <span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (url == null)</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">			for (Note n : noteOnMessages)</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">				if (n.getUrl() != null)</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">			for (Note n : noteOnMessages)</span>
+<span class="pc bpc" id="L127" title="1 of 2 branches missed.">				if (n.getUrl() != null)</span>
 <span class="nc" id="L128">					return n.getUrl();</span>
 
 <span class="fc" id="L130">		return url;</span>

@@ -118,16 +118,16 @@ public class ComponentTextArrow extends AbstractComponentText implements ArrowCo
 
 <span class="fc" id="L119">		final int yarrow = height - 2;</span>
 <span class="fc bfc" id="L120" title="All 2 branches covered.">		charArea.drawHLine(fileFormat == FileFormat.UTXT ? '\u2500' : '-', yarrow, 1, width);</span>
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (config.isDotted()) {</span>
-<span class="nc bnc" id="L122" title="All 2 branches missed.">			for (int i = 1; i &lt; width; i += 2) {</span>
-<span class="nc" id="L123">				charArea.drawChar(' ', i, yarrow);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (config.isDotted()) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			for (int i = 1; i &lt; width; i += 2) {</span>
+<span class="fc" id="L123">				charArea.drawChar(' ', i, yarrow);</span>
 			}
 		}
 
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL) {</span>
 <span class="fc" id="L128">			charArea.drawChar('&gt;', width - 1, yarrow);</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {</span>
-<span class="nc" id="L130">			charArea.drawChar('&lt;', 1, yarrow);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		} else if (config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE) {</span>
+<span class="fc" id="L130">			charArea.drawChar('&lt;', 1, yarrow);</span>
 <span class="nc bnc" id="L131" title="All 2 branches missed.">		} else if (config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION) {</span>
 <span class="nc" id="L132">			charArea.drawChar('&gt;', width - 1, yarrow);</span>
 <span class="nc" id="L133">			charArea.drawChar('&lt;', 1, yarrow);</span>

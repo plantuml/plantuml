@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 
-<span class="nc" id="L52">final class NoteBox extends GraphicalElement implements InGroupable {</span>
+<span class="fc" id="L52">final class NoteBox extends GraphicalElement implements InGroupable {</span>
 
 	private final NotePosition position;
 	private final Url url;
@@ -59,32 +59,32 @@ import net.sourceforge.plantuml.url.Url;
 
 	private final Component comp;
 
-<span class="nc" id="L62">	private double delta = 0;</span>
+<span class="fc" id="L62">	private double delta = 0;</span>
 
 	public NoteBox(double startingY, Component comp, LivingParticipantBox p1, LivingParticipantBox p2,
 			NotePosition position, Url url) {
-<span class="nc" id="L66">		super(startingY);</span>
-<span class="nc bnc" id="L67" title="All 6 branches missed.">		if (p2 != null ^ position == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L66">		super(startingY);</span>
+<span class="pc bpc" id="L67" title="3 of 6 branches missed.">		if (p2 != null ^ position == NotePosition.OVER_SEVERAL) {</span>
 <span class="nc" id="L68">			throw new IllegalArgumentException();</span>
 		}
-<span class="nc" id="L70">		this.p1 = Objects.requireNonNull(p1);</span>
-<span class="nc" id="L71">		this.p2 = p2;</span>
-<span class="nc" id="L72">		this.position = position;</span>
-<span class="nc" id="L73">		this.url = url;</span>
-<span class="nc" id="L74">		this.comp = comp;</span>
-<span class="nc" id="L75">	}</span>
+<span class="fc" id="L70">		this.p1 = Objects.requireNonNull(p1);</span>
+<span class="fc" id="L71">		this.p2 = p2;</span>
+<span class="fc" id="L72">		this.position = position;</span>
+<span class="fc" id="L73">		this.url = url;</span>
+<span class="fc" id="L74">		this.comp = comp;</span>
+<span class="fc" id="L75">	}</span>
 
 	public double getRightShift(double y) {
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (p1 == null) {</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">		if (p1 == null) {</span>
 <span class="nc" id="L79">			return 0;</span>
 		}
-<span class="nc" id="L81">		return p1.getLifeLine().getRightShift(y) + 5;</span>
+<span class="fc" id="L81">		return p1.getLifeLine().getRightShift(y) + 5;</span>
 	}
 
 	@Override
 	final public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L86">		final double preferredWidth = comp.getPreferredWidth(stringBounder);</span>
-<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (position == NotePosition.OVER_SEVERAL) {</span>
+<span class="fc" id="L86">		final double preferredWidth = comp.getPreferredWidth(stringBounder);</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (position == NotePosition.OVER_SEVERAL) {</span>
 <span class="nc bnc" id="L88" title="All 4 branches missed.">			if (TeaVM.a()) assert p1 != p2;</span>
 <span class="nc" id="L89">			final double diff1 = p2.getParticipantBox().getMaxX(stringBounder) - p1.getParticipantBox().getMinX();</span>
 <span class="nc bnc" id="L90" title="All 2 branches missed.">			if (diff1 &gt; preferredWidth) {</span>
@@ -92,38 +92,38 @@ import net.sourceforge.plantuml.url.Url;
 			}
 
 		}
-<span class="nc" id="L95">		return preferredWidth;</span>
+<span class="fc" id="L95">		return preferredWidth;</span>
 	}
 
 	@Override
 	final public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L100">		return comp.getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L100">		return comp.getPreferredHeight(stringBounder);</span>
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
-<span class="nc" id="L105">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L106">		final double xStart = getStartingX(stringBounder);</span>
-<span class="nc" id="L107">		ug = ug.apply(new UTranslate(xStart, getStartingY()));</span>
-<span class="nc" id="L108">		final XDimension2D dimensionToUse = new XDimension2D(getPreferredWidth(stringBounder),</span>
-<span class="nc" id="L109">				comp.getPreferredHeight(stringBounder));</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="fc" id="L105">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L106">		final double xStart = getStartingX(stringBounder);</span>
+<span class="fc" id="L107">		ug = ug.apply(new UTranslate(xStart, getStartingY()));</span>
+<span class="fc" id="L108">		final XDimension2D dimensionToUse = new XDimension2D(getPreferredWidth(stringBounder),</span>
+<span class="fc" id="L109">				comp.getPreferredHeight(stringBounder));</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">		if (url != null) {</span>
 <span class="nc" id="L111">			ug.startUrl(url);</span>
 		}
-<span class="nc" id="L113">		comp.drawU(ug, new Area(dimensionToUse), context);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (url != null) {</span>
+<span class="fc" id="L113">		comp.drawU(ug, new Area(dimensionToUse), context);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (url != null) {</span>
 <span class="nc" id="L115">			ug.closeUrl();</span>
 		}
-<span class="nc" id="L117">	}</span>
+<span class="fc" id="L117">	}</span>
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
-<span class="nc" id="L121">		final SegmentColored segment = getSegment(stringBounder);</span>
+<span class="fc" id="L121">		final SegmentColored segment = getSegment(stringBounder);</span>
 		final int xStart;
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (position == NotePosition.LEFT) {</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (position == NotePosition.LEFT) {</span>
 <span class="nc" id="L124">			xStart = (int) (segment.getSegment().getPos1() - getPreferredWidth(stringBounder));</span>
-<span class="nc bnc" id="L125" title="All 2 branches missed.">		} else if (position == NotePosition.RIGHT) {</span>
-<span class="nc" id="L126">			xStart = (int) (segment.getSegment().getPos2());</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		} else if (position == NotePosition.RIGHT) {</span>
+<span class="fc" id="L126">			xStart = (int) (segment.getSegment().getPos2());</span>
 <span class="nc bnc" id="L127" title="All 2 branches missed.">		} else if (position == NotePosition.OVER) {</span>
 <span class="nc" id="L128">			xStart = (int) (p1.getParticipantBox().getCenterX(stringBounder) - getPreferredWidth(stringBounder) / 2);</span>
 <span class="nc bnc" id="L129" title="All 2 branches missed.">		} else if (position == NotePosition.OVER_SEVERAL) {</span>
@@ -133,14 +133,14 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc" id="L133">		} else {</span>
 <span class="nc" id="L134">			throw new IllegalStateException();</span>
 		}
-<span class="nc" id="L136">		return xStart + delta;</span>
+<span class="fc" id="L136">		return xStart + delta;</span>
 	}
 
 	private SegmentColored getSegment(StringBounder stringBounder) {
-<span class="nc" id="L140">		final SegmentColored segment = p1.getLiveThicknessAt(stringBounder, getStartingY());</span>
-<span class="nc" id="L141">		final SegmentColored segment2 = p1.getLiveThicknessAt(stringBounder,</span>
-<span class="nc" id="L142">				getStartingY() + comp.getPreferredHeight(stringBounder));</span>
-<span class="nc" id="L143">		return segment.merge(segment2);</span>
+<span class="fc" id="L140">		final SegmentColored segment = p1.getLiveThicknessAt(stringBounder, getStartingY());</span>
+<span class="fc" id="L141">		final SegmentColored segment2 = p1.getLiveThicknessAt(stringBounder,</span>
+<span class="fc" id="L142">				getStartingY() + comp.getPreferredHeight(stringBounder));</span>
+<span class="fc" id="L143">		return segment.merge(segment2);</span>
 	}
 
 	public void pushToRight(double x) {
@@ -164,7 +164,7 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	public NotePosition getNotePosition() {
-<span class="nc" id="L167">		return position;</span>
+<span class="fc" id="L167">		return position;</span>
 	}
 
 }

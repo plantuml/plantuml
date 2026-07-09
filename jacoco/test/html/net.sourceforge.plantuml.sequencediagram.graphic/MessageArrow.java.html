@@ -109,25 +109,25 @@ import net.sourceforge.plantuml.utils.LineLocation;
 	public int getDirection(StringBounder stringBounder) {
 <span class="fc" id="L110">		final double x1 = p1.getParticipantBox().getCenterX(stringBounder);</span>
 <span class="fc" id="L111">		final double x2 = p2.getParticipantBox().getCenterX(stringBounder);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (x1 &lt; x2) {</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		if (x1 &lt; x2) {</span>
 <span class="fc" id="L113">			return 1;</span>
 		}
-<span class="nc" id="L115">		return -1;</span>
+<span class="fc" id="L115">		return -1;</span>
 	}
 
 	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
 <span class="fc" id="L119">		final int direction = getDirection(stringBounder);</span>
-<span class="pc bpc" id="L120" title="1 of 4 branches missed.">		if (direction == 1 &amp;&amp; position == NotePosition.RIGHT) {</span>
+<span class="fc bfc" id="L120" title="All 4 branches covered.">		if (direction == 1 &amp;&amp; position == NotePosition.RIGHT) {</span>
 <span class="fc" id="L121">			return p2;</span>
 		}
-<span class="pc bpc" id="L123" title="2 of 4 branches missed.">		if (direction == 1 &amp;&amp; position == NotePosition.LEFT) {</span>
+<span class="pc bpc" id="L123" title="1 of 4 branches missed.">		if (direction == 1 &amp;&amp; position == NotePosition.LEFT) {</span>
 <span class="fc" id="L124">			return p1;</span>
 		}
-<span class="nc bnc" id="L126" title="All 4 branches missed.">		if (direction == -1 &amp;&amp; position == NotePosition.RIGHT) {</span>
-<span class="nc" id="L127">			return p1;</span>
+<span class="pc bpc" id="L126" title="1 of 4 branches missed.">		if (direction == -1 &amp;&amp; position == NotePosition.RIGHT) {</span>
+<span class="fc" id="L127">			return p1;</span>
 		}
-<span class="nc bnc" id="L129" title="All 4 branches missed.">		if (direction == -1 &amp;&amp; position == NotePosition.LEFT) {</span>
-<span class="nc" id="L130">			return p2;</span>
+<span class="pc bpc" id="L129" title="2 of 4 branches missed.">		if (direction == -1 &amp;&amp; position == NotePosition.LEFT) {</span>
+<span class="fc" id="L130">			return p2;</span>
 		}
 <span class="nc" id="L132">		throw new IllegalArgumentException();</span>
 	}

@@ -56,10 +56,10 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	private/* final */NotePosition position;
 
 	public void temporaryProtectedUntilTeozIsStandard() {
-<span class="nc bnc" id="L59" title="All 4 branches missed.">		if (position == NotePosition.BOTTOM || position == NotePosition.TOP)</span>
+<span class="pc bpc" id="L59" title="2 of 4 branches missed.">		if (position == NotePosition.BOTTOM || position == NotePosition.TOP)</span>
 <span class="nc" id="L60">			position = NotePosition.LEFT;</span>
 
-<span class="nc" id="L62">	}</span>
+<span class="fc" id="L62">	}</span>
 
 	private final StyleBuilder styleBuilder;
 <span class="fc" id="L65">	private NoteStyle noteStyle = NoteStyle.NORMAL;</span>
@@ -147,7 +147,7 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	}
 
 	public Url getUrl() {
-<span class="nc" id="L150">		return url;</span>
+<span class="fc" id="L150">		return url;</span>
 	}
 
 	public boolean hasUrl() {

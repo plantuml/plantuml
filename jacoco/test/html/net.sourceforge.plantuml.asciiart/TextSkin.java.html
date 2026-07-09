@@ -62,7 +62,7 @@ public class TextSkin extends Rose {
 	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param,
 			Display stringsToDisplay) {
 <span class="fc bfc" id="L64" title="All 2 branches covered.">		if (config.getArrowDirection() == ArrowDirection.LEFT_TO_RIGHT_NORMAL</span>
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">				|| config.getArrowDirection() == ArrowDirection.RIGHT_TO_LEFT_REVERSE</span>
 <span class="pc bpc" id="L66" title="1 of 2 branches missed.">				|| config.getArrowDirection() == ArrowDirection.BOTH_DIRECTION)</span>
 <span class="fc" id="L67">			return new ComponentTextArrow(ComponentType.ARROW, config, stringsToDisplay, fileFormat,</span>
 <span class="fc" id="L68">					param.maxAsciiMessageLength());</span>
@@ -76,8 +76,8 @@ public class TextSkin extends Rose {
 	@Override
 	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param, Display stringsToDisplay,
 			Colors colors, NotePosition notePosition) {
-<span class="nc bnc" id="L79" title="All 6 branches missed.">		if (type == ComponentType.NOTE || type == ComponentType.NOTE_BOX || type == ComponentType.NOTE_HEXAGONAL)</span>
-<span class="nc" id="L80">			return new ComponentTextNote(type, stringsToDisplay, fileFormat);</span>
+<span class="pc bpc" id="L79" title="5 of 6 branches missed.">		if (type == ComponentType.NOTE || type == ComponentType.NOTE_BOX || type == ComponentType.NOTE_HEXAGONAL)</span>
+<span class="fc" id="L80">			return new ComponentTextNote(type, stringsToDisplay, fileFormat);</span>
 
 <span class="nc" id="L82">		throw new UnsupportedOperationException(type.toString());</span>
 	}
@@ -85,7 +85,7 @@ public class TextSkin extends Rose {
 	@Override
 	public Component createComponentNote(Style[] styles, ComponentType type, ISkinParam param, Display stringsToDisplay,
 			Colors colors) {
-<span class="nc" id="L88">		return createComponentNote(styles, type, param, stringsToDisplay, colors, null);</span>
+<span class="fc" id="L88">		return createComponentNote(styles, type, param, stringsToDisplay, colors, null);</span>
 	}
 	
 	@Override

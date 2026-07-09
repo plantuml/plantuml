@@ -170,15 +170,15 @@ public class BasicCharAreaImpl implements BasicCharArea {
 <span class="fc" id="L170">	}</span>
 
 	public void drawHLine(char c, int line, int col1, int col2, char ifFound, char thenUse) {
-<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (int x = col1; x &lt; col2; x++) {</span>
-<span class="nc" id="L174">			ensurePossible(x, line);</span>
-<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (this.chars[x][line] == ifFound) {</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">		for (int x = col1; x &lt; col2; x++) {</span>
+<span class="fc" id="L174">			ensurePossible(x, line);</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">			if (this.chars[x][line] == ifFound) {</span>
 <span class="nc" id="L176">				this.drawChar(thenUse, x, line);</span>
 			} else {
-<span class="nc" id="L178">				this.drawChar(c, x, line);</span>
+<span class="fc" id="L178">				this.drawChar(c, x, line);</span>
 			}
 		}
-<span class="nc" id="L181">	}</span>
+<span class="fc" id="L181">	}</span>
 
 	public void drawVLine(char c, int col, int line1, int line2) {
 <span class="fc bfc" id="L184" title="All 2 branches covered.">		for (int y = line1; y &lt; line2; y++) {</span>
