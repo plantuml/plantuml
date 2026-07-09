@@ -65,14 +65,14 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //
-				UrlBuilder.OPTIONAL, //
-				color().getRegex(), //
 				StereotypePattern.optionalIGNORED(), //
 				new RegexLeaf(":"), //
 				new RegexLeaf(1, "LABEL", "(.*?)"), //
 				new RegexLeaf(";"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				Stereogroup.optionalStereogroup(), //
+				RegexLeaf.spaceZeroOrMore(), //
+				UrlBuilder.OPTIONAL, //
 				RegexLeaf.end());
 	}
 
@@ -81,7 +81,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	@Explain
+	@Explain(comment = "outdated")
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 

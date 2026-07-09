@@ -50,6 +50,9 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereogroup;
+import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.url.UrlBuilder;
+import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.warning.Warning;
 
@@ -60,6 +63,8 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 			new RegexLeaf(";"), //
 			RegexLeaf.spaceZeroOrMore(), //
 			Stereogroup.optionalStereogroup(), //
+			RegexLeaf.spaceZeroOrMore(), //
+			UrlBuilder.OPTIONAL, //
 			RegexLeaf.end());
 
 	public CommandActivityLong3() {
@@ -79,7 +84,7 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 	}
 
 	@Override
-	@Explain
+	@Explain(comment = "outdated")
 	protected String explainNow(BlocLines lines) {
 		// Mirror executeNow.
 		lines = lines.removeEmptyColumns();
@@ -121,10 +126,18 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 			diagram.addWarning(new Warning("This syntax is deprecated, you must add <<" + line0.get("COLOR", 0)
 					+ ">> at the end of the line, after the ';'"));
 
+		final Url url;
+		if (lineLast.get(UrlBuilder.URL_KEY, 0) == null) {
+			url = null;
+		} else {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
+			url = urlBuilder.getUrl(lineLast.get(UrlBuilder.URL_KEY, 0));
+		}
+
 		final Stereogroup stereogroup = Stereogroup.build(lineLast);
 		final BoxStyle style = stereogroup.getBoxStyle();
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 0);
 		lines = lines.overrideLastLine(lineLast.get("TEXT", 0));
-		return diagram.addActivity(lines.toDisplay(), style, null, stereogroup);
+		return diagram.addActivity(lines.toDisplay(), style, url, stereogroup);
 	}
 }
