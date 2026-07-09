@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
@@ -120,7 +121,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	@Explain
+	@Explain(comment = "outdated")
 	protected String explainArg(LineLocation location, RegexResult arg) {
 		final StringBuilder sb = new StringBuilder();
 
@@ -211,7 +212,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			}
 
 			final HColorSet colorSet = diagram.getSkinParam().getIHtmlColorSet();
-			
+
 			Colors colors = color().getColor(arg, colorSet);
 			final String s = arg.get("LINECOLOR", 1);
 
@@ -231,6 +232,11 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 				ent.getBodier().addFieldOrMethod(addFields);
 
 			CommandCreateClassMultilines.addTags(ent, arg.getLazzy("TAGS", 0));
+
+			if (ent.getParentContainer().isRoot() && ent.getEntityPosition().isNormal() == false) {
+				return CommandExecutionResult.error("You cannot use this stereotype here");
+			}
+
 		}
 		return CommandExecutionResult.ok();
 	}
