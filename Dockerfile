@@ -59,5 +59,11 @@ COPY --from=loader /opt/plantuml.jar /opt/plantuml.jar
 
 WORKDIR /data
 
+# Create a non-root group and user so files output do not require sudo to interact with
+RUN addgroup --gid 1000 appuser && \
+    adduser --system --uid 1000 --group appuser && \
+    chown appuser:appuser /data
+USER appuser
+
 ENTRYPOINT ["java", "-jar", "/opt/plantuml.jar"]
 CMD ["-version"]
