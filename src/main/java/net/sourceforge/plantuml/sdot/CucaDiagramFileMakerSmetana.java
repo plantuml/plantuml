@@ -571,6 +571,9 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		exportGroups(zz, g, root);
 
 		for (Link link : getLocalLinks()) {
+			if (link.isRemoved())
+				continue;
+
 			final ST_Agedge_s e = createEdge(stringBounder, zz, g, link);
 			if (e != null)
 				edges.put(link, e);
