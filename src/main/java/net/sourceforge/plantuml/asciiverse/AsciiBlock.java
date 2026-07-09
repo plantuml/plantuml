@@ -35,14 +35,18 @@
  */
 package net.sourceforge.plantuml.asciiverse;
 
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-
 public interface AsciiBlock {
 
-	public default XDimension2D asciiDimension() {
-		throw new UnsupportedOperationException();
+	public default ADimension2D asciiDimension() {
+		throw new UnsupportedOperationException(getClass().getName());
 	}
 
-	public void asciiDraw(InfinitePlan plan);
+	public default void asciiDraw(InfinitePlan plan) {
+		throw new UnsupportedOperationException(getClass().getName());
+	}
+
+	public default AsciiBlock marginLR(int marginLeft, int marginRight) {
+		return new AsciiBlockMarginLR(this, marginLeft, marginRight);
+	}
 
 }

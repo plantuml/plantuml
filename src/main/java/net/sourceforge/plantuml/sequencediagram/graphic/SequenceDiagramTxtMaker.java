@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiart.TextSkin;
 import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.asciiart.UmlCharArea;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -147,6 +148,11 @@ public class SequenceDiagramTxtMaker implements FileMaker {
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public AsciiBlock getAsciiBlock(int num, FileFormatOption fileFormat) {
 		throw new UnsupportedOperationException();
 	}
 

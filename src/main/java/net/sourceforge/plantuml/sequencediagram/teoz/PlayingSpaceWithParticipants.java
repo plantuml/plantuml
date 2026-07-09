@@ -35,9 +35,13 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -45,14 +49,15 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealOrigin;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 
-public class PlayingSpaceWithParticipants extends TextBlockMemoized {
+public class PlayingSpaceWithParticipants extends TextBlockMemoized implements AsciiBlock {
 
 	private final PlayingSpace playingSpace;
 
@@ -101,6 +106,82 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized {
 		return Math.min(newpage.getTimeHook().getValue() + newpage.getPreferredHeight(), fullHeight);
 	}
 
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		// Minimal ASCII rendering, in the spirit of drawU(): the participant
+		// heads, then the lifelines, then the messages drawn by their own tiles
+		// (CommunicationTile.asciiDraw), reusing the Teoz tile tree as topology.
+		final LivingSpaces livingSpaces = playingSpace.getLivingSpaces();
+		final List<Participant> participants = new ArrayList<>(livingSpaces.participants());
+		if (participants.size() == 0)
+			return;
+
+		// --- X layout: a dedicated ASCII Real graph, convention 1.0 = 1 char,
+		// on its own RealLine, separate from the pixel xorigin. Chain each
+		// participant's asciiPosB off a shared origin (exactly like the pixel
+		// createMainTile() chains posB off xorigin), let the participants and
+		// the tiles declare their ASCII constraints, then compile once. Every
+		// injected delta is an integer, so the resolved columns are exact
+		// integers (no quantization, see ASCIIVERSE.md).
+		final RealOrigin asciiXOrigin = RealUtils.createOrigin();
+		Real asciiCurrent = asciiXOrigin.addAtLeast(0);
+		for (Participant p : participants) {
+			final LivingSpace ls = livingSpaces.get(p);
+			ls.setAsciiPosB(asciiCurrent);
+			asciiCurrent = ls.getAsciiPosD().addAtLeast(0);
+		}
+		livingSpaces.asciiAddConstraints();
+		for (Tile tile : playingSpace.getTiles())
+			tile.asciiAddConstraints();
+		asciiXOrigin.compileNow();
+
+		// Heads (top boxes), drawn by the participants themselves at their
+		// resolved left column.
+		for (Participant p : participants)
+			p.asciiDraw(plan.move((int) livingSpaces.get(p).getAsciiLeftColumn().getCurrentValue(), 0));
+
+		final int headBottom = 2;
+		int y = headBottom + 1;
+
+		// Messages, drawn by their own tiles (row 0 = label start, arrow row
+		// right after — see CommunicationTile.asciiDraw()/asciiDimension()).
+		// Y advances by each tile's own asciiDimension().getHeight() rather than
+		// a flat per-message constant, so a multi-line label (ASCIIVERSE.md §18)
+		// gets the extra rows it needs instead of the next tile overwriting it.
+		// Every top-level tile must have a real asciiDraw()/asciiDimension()
+		// override to reach this loop — there is no catch (UnsupportedOperationException)
+		// here (anymore): a tile that hasn't been migrated to ASCII yet crashes
+		// loudly instead of being silently skipped, which is the point (see
+		// EmptyTile for the fix this policy forced: it needed a real, if trivial,
+		// override rather than falling through to the AsciiBlock "not migrated"
+		// default).
+		int bottomY = y;
+		for (Tile tile : playingSpace.getTiles()) {
+			tile.asciiDraw(plan.move(0, y));
+			final int height = tile.asciiDimension().getHeight();
+			y += height;
+			bottomY = y;
+		}
+
+		// Lifelines from the heads down to the last message, at each
+		// participant's resolved lifeline column, only into empty cells so the
+		// arrows already drawn are never overwritten.
+		final char vLine = plan.getVLineChar();
+		for (Participant p : participants) {
+			final int lx = (int) livingSpaces.get(p).getAsciiLifeColumn().getCurrentValue();
+			for (int yy = headBottom; yy < bottomY; yy++)
+				if (plan.getCharAt(lx, yy) == ' ')
+					plan.move(lx, yy).drawChar(vLine);
+		}
+
+		// Footer boxes, mirroring drawU()'s playingSpace.isShowFootbox() branch:
+		// each participant draws itself a second time, right below the lifelines.
+		if (playingSpace.isShowFootbox())
+			for (Participant p : participants)
+				p.asciiDraw(plan.move((int) livingSpaces.get(p).getAsciiLeftColumn().getCurrentValue(), bottomY));
+	}
+
+	@Override
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
 

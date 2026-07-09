@@ -1,0 +1,18 @@
+---
+output: atxt, utxt, svg
+expected-description: (3 participants)
+---
+@startuml
+participant a
+
+partition p1
+b -> c: msg
+c --> b: OK
+note right: Some right note
+end
+
+partition p2
+a -> b: msg
+note left: Some left note
+end
+@enduml

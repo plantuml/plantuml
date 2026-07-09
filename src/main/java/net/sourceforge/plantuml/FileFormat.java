@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.asciiart.TextStringBounder;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.cli.GlobalConfigKey;
 import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
@@ -210,6 +211,10 @@ public enum FileFormat {
 		case LATEX_DETERMINISTIC:
 		case SVG_DETERMINISTIC:
 			return new StringBounderFromWidthTable(this);
+			
+		case ATXT:
+		case UTXT:
+			return new TextStringBounder(this);
 
 		// ::comment when JAVA8
 		case PDF:

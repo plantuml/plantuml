@@ -59,9 +59,11 @@ public class PlayingSpace implements Bordered {
 	private final LivingSpaces livingSpaces;
 	private final List<LinkAnchor> linkAnchors;
 	private final ISkinParam skinParam;
+	private final SequenceDiagram diagram;
 
 	public PlayingSpace(SequenceDiagram diagram, Dolls dolls, TileArguments tileArguments) {
 
+		this.diagram = diagram;
 		this.livingSpaces = tileArguments.getLivingSpaces();
 		this.linkAnchors = diagram.getLinkAnchors();
 		this.skinParam = diagram.getSkinParam();
@@ -168,6 +170,14 @@ public class PlayingSpace implements Bordered {
 
 	public LivingSpaces getLivingSpaces() {
 		return livingSpaces;
+	}
+
+	public List<Tile> getTiles() {
+		return tiles;
+	}
+
+	public SequenceDiagram getDiagram() {
+		return diagram;
 	}
 
 	public double getBorder1() {

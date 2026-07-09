@@ -54,6 +54,9 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.abel.EntityPortion;
+import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
@@ -66,8 +69,6 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
-import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma2;
-import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
 import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.PragmaKey;
@@ -285,17 +286,17 @@ public class SequenceDiagram extends TitledDiagram {
 
 		if (!TeaVM.isTeaVM()) {
 			final FileFormat fileFormat = fileFormatOption.getFileFormat();
-			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
-				return new SequenceDiagramTxtMaker(this, fileFormat);
+//			if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
+//				return new SequenceDiagramTxtMaker(this, fileFormat);
 
 			if (fileFormat.name().startsWith("XMI"))
 				return new SequenceDiagramXmiMaker(this, fileFormat);
 
 		}
-		if (modeTeoz())
-			return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);
+		// if (modeTeoz())
+		return new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption, index);
 
-		return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);
+		// return new SequenceDiagramFileMakerPuma2(this, skin2, fileFormatOption);
 	}
 
 	private boolean modeTeoz() {
@@ -310,8 +311,19 @@ public class SequenceDiagram extends TitledDiagram {
 
 	@Override
 	protected ImageData exportTxt(OutputStream os, int index, FileFormat fileFormat) throws IOException {
-		final SequenceDiagramTxtMaker maker = new SequenceDiagramTxtMaker(this, fileFormat);
-		return maker.createOne(os, index, false);
+		final FileFormatOption fileFormatOption = new FileFormatOption(fileFormat);
+		final SequenceDiagramFileMakerTeoz maker = new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption,
+				index);
+		final AsciiBlock block = maker.getAsciiBlock(index, fileFormatOption);
+
+		final InfinitePlan plan = new InfinitePlan(fileFormat);
+		block.asciiDraw(plan);
+		plan.exportTxt(os);
+
+//		final SequenceDiagramTxtMaker maker = new SequenceDiagramTxtMaker(this, fileFormat);
+//		return maker.createOne(os, index, false);
+
+		return ImageDataSimple.ok();
 	}
 
 	@Override

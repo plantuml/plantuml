@@ -297,4 +297,80 @@ public class LivingSpace {
 		return getPosD(stringBounder).addFixed(marginAfter);
 	}
 
+	// ---------------------------------------------------------------------
+	// ASCII rendering positions.
+	//
+	// Exact character-grid counterparts of posB/C/D/A/E above, expressed as
+	// Real on a dedicated ASCII RealLine (created in
+	// SequenceDiagramFileMakerTeoz.getAsciiBlock(), separate from the pixel
+	// xorigin) with the convention 1.0 = 1 character. The derivation formulas
+	// mirror the pixel ones, but every delta is an integer number of cells,
+	// so the values resolved by asciiXOrigin.compileNow() are exact integers
+	// (no quantization, see ASCIIVERSE.md).
+	//
+	// asciiPosB is the box's left column; the box width is code.length()+2
+	// (see Participant.asciiDimension()); the lifeline runs through the
+	// middle. Widths come from the participant, never from a Rose Component.
+	// ---------------------------------------------------------------------
+	private Real asciiPosB;
+	private Real asciiPosC;
+	private Real asciiPosD;
+
+	private int asciiWidth() {
+		return p.asciiDimension().getWidth();
+	}
+
+	public void setAsciiPosB(Real asciiPosB) {
+		this.asciiPosB = asciiPosB;
+	}
+
+	public Real getAsciiPosB() {
+		return asciiPosB;
+	}
+
+	public Real getAsciiPosC() {
+		if (asciiPosC == null)
+			this.asciiPosC = asciiPosB.addFixed(asciiWidth() / 2);
+
+		return asciiPosC;
+	}
+
+	public Real getAsciiPosD() {
+		if (asciiPosD == null)
+			this.asciiPosD = asciiPosB.addFixed(asciiWidth());
+
+		return asciiPosD;
+	}
+
+	private int asciiMarginBefore;
+	private int asciiMarginAfter;
+
+	public void ensureAsciiMarginBefore(int margin) {
+		if (margin < 0)
+			throw new IllegalArgumentException();
+		this.asciiMarginBefore = Math.max(asciiMarginBefore, margin);
+	}
+
+	public void ensureAsciiMarginAfter(int margin) {
+		if (margin < 0)
+			throw new IllegalArgumentException();
+		this.asciiMarginAfter = Math.max(asciiMarginAfter, margin);
+	}
+
+	public Real getAsciiPosA() {
+		return getAsciiPosB().addFixed(-asciiMarginBefore);
+	}
+
+	public Real getAsciiPosE() {
+		return getAsciiPosD().addFixed(asciiMarginAfter);
+	}
+
+	public Real getAsciiLifeColumn() {
+		return getAsciiPosC();
+	}
+
+	public Real getAsciiLeftColumn() {
+		return getAsciiPosB();
+	}
+
 }

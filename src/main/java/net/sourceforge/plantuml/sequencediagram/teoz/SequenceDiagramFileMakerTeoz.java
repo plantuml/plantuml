@@ -37,6 +37,9 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.annotation.Fast;
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -157,6 +160,22 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 				return null;
 			}
 
+		};
+	}
+
+	@Override
+	public AsciiBlock getAsciiBlock(int num, FileFormatOption fileFormat) {
+		return new AsciiBlock() {
+
+			@Override
+			public ADimension2D asciiDimension() {
+				return new ADimension2D(20, 20);
+			}
+
+			@Override
+			public void asciiDraw(InfinitePlan plan) {
+				body.asciiDraw(plan);
+			}
 		};
 	}
 

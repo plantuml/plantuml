@@ -40,6 +40,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.AElseSeparator;
+import net.sourceforge.plantuml.asciiverse.AGroupFrame;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -311,6 +315,212 @@ public class GroupingTile extends AbstractTile {
 		for (Tile tile : tiles)
 			tile.addConstraints();
 
+	}
+
+	// ===================== ASCII (ASCIIVERSE.md) =====================
+	//
+	// A group (frame, alt, opt, loop, partition, ...) draws itself as a frame
+	// box enclosing its stacked children, with its title on the top border
+	// row — the same object-oriented "each object draws itself" pattern as
+	// every other tile (§9), and structurally the ASCII counterpart of the
+	// pixel drawU() above (frame component + children stacked below the
+	// header). PartitionTile inherits all of this unchanged.
+	//
+	// One margin constant, the ASCII analogue of the pixel MARGINX: how many
+	// cells the frame border sits outside the leftmost/rightmost column its
+	// children actually touch, so arrows and lifelines run inside the frame,
+	// not on its border.
+	private static final int ASCII_FRAME_MARGIN = 2;
+
+	// The header is the frame's top border, plus (when the title fits) its
+	// pentagon-style tab — delegated entirely to AGroupFrame.getBodyRowOffset()
+	// (§28), since it alone decides whether the tab is drawn; the footer is a
+	// single row (the tilde bottom border). The body in between is the children
+	// stacked, each at its own asciiDimension() height.
+	private static final int ASCII_FOOTER_ROWS = 1;
+
+	// Builds a throwaway AGroupFrame (same pattern as ANote's size, read back
+	// rather than recomputed elsewhere, §18/§20) purely to ask how many rows its
+	// header occupies — needed by both asciiDimension() (to size the frame
+	// before it's ever drawn) and asciiDraw()'s child-stacking loop. The height
+	// passed to ADimension2D here is irrelevant (getBodyRowOffset() only reads
+	// the width), so 0 is fine.
+	private int asciiHeaderRows() {
+		final int[] cols = asciiFrameColumns();
+		final int width = cols[1] - cols[0] + 1;
+		return new AGroupFrame(new ADimension2D(width, 0), asciiTitle()).getBodyRowOffset();
+	}
+
+	@Override
+	public void asciiAddConstraints() {
+		// Exactly like addConstraints() above: recurse into the children so a
+		// message nested inside the group still pushes its two participants
+		// apart. The frame's own title width is not (yet) reserved on the
+		// ASCII column solver (§14) — a very long group title could overflow
+		// the frame past the participants; same class of known gap as notes.
+		for (Tile tile : tiles)
+			tile.asciiAddConstraints();
+	}
+
+	// The union of the children's own ascii ranges, expressed as composable
+	// Real (not yet resolved columns) — exactly the same shape as the pixel
+	// min/max computed from tile.getMinX()/getMaxX() in the constructor above
+	// (RealUtils.min(min2)/RealUtils.max(max2)). Unlike the pixel version this
+	// can't be precomputed in the constructor: the ASCII Real graph
+	// (asciiPosB...) doesn't exist yet at construction time, only once
+	// PlayingSpaceWithParticipants.asciiDraw() wires it up — so it's computed
+	// lazily, on demand, each time it's asked. Children with no range of their
+	// own (null, e.g. EmptyTile) are skipped; if none has any, null is
+	// returned, same contract as the Tile default.
+	private Real asciiChildrenMin() {
+		final List<Real> mins = new ArrayList<>();
+		for (Tile tile : tiles) {
+			final Real m = tile.getAsciiMinX();
+			if (m != null)
+				mins.add(m);
+		}
+		if (mins.isEmpty())
+			return null;
+
+		return RealUtils.min(mins);
+	}
+
+	private Real asciiChildrenMax() {
+		final List<Real> maxs = new ArrayList<>();
+		for (Tile tile : tiles) {
+			final Real m = tile.getAsciiMaxX();
+			if (m != null)
+				maxs.add(m);
+		}
+		if (maxs.isEmpty())
+			return null;
+
+		return RealUtils.max(maxs);
+	}
+
+	@Override
+	public Real getAsciiMinX() {
+		final Real childMin = asciiChildrenMin();
+		if (childMin == null)
+			return null;
+
+		return childMin.addFixed(-ASCII_FRAME_MARGIN);
+	}
+
+	@Override
+	public Real getAsciiMaxX() {
+		final Real childMax = asciiChildrenMax();
+		if (childMax == null)
+			return null;
+
+		return childMax.addFixed(ASCII_FRAME_MARGIN);
+	}
+
+	// The [left, right] resolved ASCII columns of the frame border itself,
+	// read from getAsciiMinX()/getAsciiMaxX() once the ASCII RealLine has
+	// compiled — the one place in this class where a Real is finally cast to
+	// an int, since InfinitePlan only understands character columns. Falls
+	// back to spanning every participant of the diagram when the group has no
+	// child with any columns (e.g. an empty group), so it still draws a
+	// sensible frame instead of crashing on a null range.
+	private int[] asciiFrameColumns() {
+		final Real min = getAsciiMinX();
+		final Real max = getAsciiMaxX();
+		if (min != null && max != null)
+			return new int[] { (int) min.getCurrentValue(), (int) max.getCurrentValue() };
+
+		int lo = Integer.MAX_VALUE;
+		int hi = Integer.MIN_VALUE;
+		for (LivingSpace ls : getTileArguments().getLivingSpaces().values()) {
+			final int c = (int) ls.getAsciiLifeColumn().getCurrentValue();
+			if (c < lo)
+				lo = c;
+			if (c > hi)
+				hi = c;
+		}
+		if (lo == Integer.MAX_VALUE)
+			return new int[] { 0, 0 };
+
+		return new int[] { lo - ASCII_FRAME_MARGIN, hi + ASCII_FRAME_MARGIN };
+	}
+
+	// Sum of the children's own ASCII heights — the body height, between the
+	// header (top border) and footer (bottom border) rows. Reads each height
+	// back off asciiDimension() rather than hardcoding it (the same rule as
+	// PlayingSpaceWithParticipants' top-level loop, §19), and does NOT catch
+	// UnsupportedOperationException: a child with no ASCII support crashes
+	// here, naming itself, exactly like the orchestrator's own policy (§21).
+	private int asciiBodyHeight() {
+		int h = 0;
+		for (Tile tile : tiles)
+			h += tile.asciiDimension().getHeight();
+		return h;
+	}
+
+	@Override
+	public ADimension2D asciiDimension() {
+		final int[] cols = asciiFrameColumns();
+		final int width = cols[1] - cols[0] + 1;
+		final int height = asciiHeaderRows() + asciiBodyHeight() + ASCII_FOOTER_ROWS;
+		return new ADimension2D(width, height);
+	}
+
+	// ASCII counterpart of drawU(): delegate the frame box + title to an
+	// AGroupFrame — the AsciiBlock counterpart of the pixel GROUPING_HEADER_TEOZ
+	// Component that drawU() obtains from the skin and delegates to (see
+	// ASCIIVERSE.md §26) — positioned at the frame's absolute left column, then
+	// draw each child inside, stacked, exactly like drawU() translates each
+	// child by the running height below the header. Children compute their own
+	// absolute columns from getAsciiLifeColumn() (they ignore the plan's
+	// horizontal translation for their arrows — see CommunicationTile.asciiDraw()),
+	// so they are drawn with dx = 0 and only their row advanced; the frame, by
+	// contrast, is drawn at the absolute columns asciiFrameColumns() resolved
+	// to. The child-stacking stays here, in the tile, not in the frame block:
+	// the pixel drawU() likewise stacks children itself below the header
+	// Component rather than nesting them inside it.
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		final int[] cols = asciiFrameColumns();
+		final int left = cols[0];
+		final int width = cols[1] - cols[0] + 1;
+
+		// The frame draws itself (border, sides, footer, and title tab) at its
+		// absolute left column; the same instance is reused just below to know
+		// where the body starts, rather than re-deriving that separately.
+		final AGroupFrame frame = new AGroupFrame(asciiDimension(), asciiTitle());
+		frame.asciiDraw(plan.move(left, 0));
+
+		// Children stacked in the body, below the header. A normal child is
+		// drawn at dx = 0 (it re-derives its own absolute columns, only the row
+		// matters here); an ElseTile is the exception — its divider spans the
+		// whole frame, whose columns only this parent knows, so the parent draws
+		// it via an AElseSeparator (the counterpart of drawAllElses(), §26) at the
+		// frame's absolute left column and full width. The ElseTile still owns its
+		// own row height via asciiDimension().
+		int y = frame.getBodyRowOffset();
+		for (Tile tile : tiles) {
+			if (tile instanceof ElseTile)
+				new AElseSeparator(width, ((ElseTile) tile).asciiLabel()).asciiDraw(plan.move(left, y));
+			else
+				tile.asciiDraw(plan.move(0, y));
+			y += tile.asciiDimension().getHeight();
+		}
+	}
+
+	// The group's title as a single flat line: for a plain "group"/partition
+	// it is just the comment, otherwise "title comment" — mirroring how the
+	// pixel `display` field is built in the constructor. Multi-line titles are
+	// flattened for now, the same simplification message labels used before
+	// Display became an AsciiBlock (§18); good enough for the single-word
+	// partition/group titles the current tests use.
+	private String asciiTitle() {
+		final StringBuilder sb = new StringBuilder();
+		for (CharSequence cs : display) {
+			if (sb.length() > 0)
+				sb.append(' ');
+			sb.append(cs);
+		}
+		return sb.toString();
 	}
 
 	public Real getMinX() {

@@ -42,6 +42,9 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.SpecificBackcolorable;
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
@@ -60,7 +63,7 @@ import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class Participant implements SpecificBackcolorable, WithStyle {
+public class Participant implements SpecificBackcolorable, WithStyle, AsciiBlock {
 
 	private final String code;
 	private Display display;
@@ -229,6 +232,21 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 
 	public String getUid() {
 		return uid;
+	}
+
+	// ASCII rendering: the participant draws its own head (the top box).
+	// Drawn relative to the plan (the caller translates the plan's column
+	// origin to this participant's box position before calling): the box
+	// occupies rows 0-2, columns 0..asciiDimension().getWidth()-1.
+	@Override
+	public ADimension2D asciiDimension() {
+		return new ADimension2D(code.length() + 2, 3);
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		plan.drawBox(code.length() + 2, 3);
+		plan.move(1, 1).drawString(code);
 	}
 
 }

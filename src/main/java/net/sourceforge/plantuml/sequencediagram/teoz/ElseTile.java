@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -145,6 +147,39 @@ public class ElseTile extends AbstractTile {
 		final Component comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		return getMinX().addFixed(dim.getWidth());
+	}
+
+	// ===================== ASCII (ASCIIVERSE.md §26) =====================
+	//
+	// An else/section boundary occupies a single divider row in the group's
+	// stacked body. Its full-width dashed separator is drawn by the parent
+	// GroupingTile (only the parent knows the frame's column span), via an
+	// AElseSeparator — exactly like the pixel drawAllElses() draws the
+	// GROUPING_ELSE_TEOZ component while ElseTile.drawU() itself is a no-op on
+	// the live path. This tile owns only its row height (below) and its label.
+
+	@Override
+	public ADimension2D asciiDimension() {
+		return new ADimension2D(asciiLabel().length(), 1);
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		// Deliberately empty: the parent GroupingTile draws the full-width
+		// separator (it alone knows the frame columns), the same way the pixel
+		// ElseTile.drawU() draws nothing on the live path and drawAllElses()
+		// does the work. Never reached today — the parent special-cases ElseTile
+		// in its stacking loop — but kept as an explicit no-op mirroring drawU()
+		// rather than inheriting the AsciiBlock "not migrated" throw (§21).
+	}
+
+	// The else guard/comment as a single flat line — the content the parent's
+	// AElseSeparator stamps onto the divider row. Built from getComment() the
+	// same way the pixel getComponent() wraps Display.create(anElse.getComment()),
+	// flattened to one line like every other ASCII label (§18).
+	public String asciiLabel() {
+		final String comment = anElse.getComment();
+		return comment == null ? "" : comment;
 	}
 
 }

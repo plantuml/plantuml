@@ -47,6 +47,9 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.jaws.JawsStrange;
@@ -85,7 +88,7 @@ import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.warning.JawsWarning;
 import net.sourceforge.plantuml.warning.Warning;
 
-public class Display implements Iterable<CharSequence> {
+public class Display implements Iterable<CharSequence>, AsciiBlock {
 
 	private final List<CharSequence> displayData;
 	private final HorizontalAlignment naturalHorizontalAlignment;
@@ -771,6 +774,23 @@ public class Display implements Iterable<CharSequence> {
 				width = len;
 		}
 		return width;
+	}
+
+	// AsciiBlock: a Display prints as its own lines, one CharSequence per row,
+	// left-aligned from whatever column the caller's InfinitePlan is
+	// positioned at. This replaces the flattening-to-one-line simplification
+	// noted throughout ASCIIVERSE.md (CommunicationTile.asciiLabel(), the
+	// note-drawing tiles): callers that switch to this asciiDraw() get real
+	// multi-line notes/messages instead of every line concatenated together.
+	@Override
+	public ADimension2D asciiDimension() {
+		return new ADimension2D(contentWidth(), size());
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		for (int i = 0; i < size(); i++)
+			plan.move(0, i).drawString(get(i).toString());
 	}
 
 }

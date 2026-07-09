@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.AbstractEvent;
@@ -62,6 +64,21 @@ public class EmptyTile extends AbstractTile implements Tile {
 	}
 
 	public void drawU(UGraphic ug) {
+	}
+
+	// ASCII counterpart of drawU(): EmptyTile is a pure spacer (used to pad
+	// out YGauge/height bookkeeping, see the constructor's height field), so
+	// there's nothing to draw and no room to reserve — unlike a tile that
+	// simply hasn't been migrated yet (the AsciiBlock default this used to
+	// fall through to), this one is intentionally empty, so it gets a real
+	// override rather than relying on the "not migrated" sentinel.
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+	}
+
+	@Override
+	public ADimension2D asciiDimension() {
+		return new ADimension2D(0, 0);
 	}
 
 	@Override

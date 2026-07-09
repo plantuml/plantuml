@@ -35,10 +35,11 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 
-public interface Tile {
+public interface Tile extends AsciiBlock {
 
 	public double getPreferredHeight();
 
@@ -47,6 +48,22 @@ public interface Tile {
 	public YGauge getYGauge();
 
 	public void addConstraints();
+
+	// ASCII counterpart of addConstraints(): declares this tile's constraints
+	// on the dedicated ASCII Real graph (getAsciiPosB/C/D... on LivingSpace),
+	// convention 1.0 = 1 char. Default no-op so the ~30 existing Tile
+	// implementations compile unchanged; each is migrated incrementally,
+	// exactly like asciiDraw()/asciiDimension().
+	public default void asciiAddConstraints() {
+	}
+
+	public default Real getAsciiMinX() {
+		return null;
+	}
+
+	public default Real getAsciiMaxX() {
+		return null;
+	}
 
 	public Real getMinX();
 
