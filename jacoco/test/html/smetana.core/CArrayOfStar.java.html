@@ -91,13 +91,23 @@ final public class CArrayOfStar&lt;O&gt; extends UnsupportedC {
 	}
 
 	public void _swap(int i, int j) {
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (offset != 0)</span>
-<span class="nc" id="L95">			throw new IllegalStateException();</span>
-
-<span class="fc" id="L97">		final Object tmp = data[i];</span>
-<span class="fc" id="L98">		data[i] = data[j];</span>
-<span class="fc" id="L99">		data[j] = tmp;</span>
-<span class="fc" id="L100">	}</span>
+		// Arnaud/Claude 2026-07-08 (SMETANA.md, zdev.Test_12 root cause): this used
+		// to swap data[i]/data[j] directly (ignoring `offset`) and defensively throw
+		// for any non-zero-offset array, since swapping unshifted indices on such an
+		// array would silently corrupt the WRONG physical slots. But get_(i)/set_(i)
+		// right above already correctly use data[i + offset] -- _swap just never got
+		// the same treatment. This was dormant for years because no caller ever
+		// exercised an actual swap (i.e. a real out-of-order adjacent pair) on a
+		// non-zero-offset array -- e.g. mincross__c.restore_best()'s qsort() call on
+		// an expanded cluster's GD_rank(g)[r].v (which aliases GD_rank(root)[r].v at
+		// a non-zero offset via merge_ranks) only started actually needing to swap
+		// once restore_best's ND_order-restore loop was fixed (Test_7 case study) to
+		// stop being a no-op. The correct fix is to make _swap offset-aware, exactly
+		// like get_/set_, not to forbid non-zero offsets.
+<span class="fc" id="L107">		final Object tmp = data[i + offset];</span>
+<span class="fc" id="L108">		data[i + offset] = data[j + offset];</span>
+<span class="fc" id="L109">		data[j + offset] = tmp;</span>
+<span class="fc" id="L110">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
