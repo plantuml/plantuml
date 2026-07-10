@@ -51,6 +51,7 @@ public class NewpageTile extends AbstractTile {
 
 	private final Newpage newpage;
 	private final TileArguments tileArguments;
+	private final YGauge yGauge;
 
 	@Override
 	public double getContactPointRelative() {
@@ -61,6 +62,12 @@ public class NewpageTile extends AbstractTile {
 		super(tileArguments.getStringBounder(), currentY);
 		this.newpage = newpage;
 		this.tileArguments = tileArguments;
+		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+	}
+
+	@Override
+	public YGauge getYGauge() {
+		return yGauge;
 	}
 
 	private Component getComponent() {

@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.real.Real;
 
 public final class YGauge {
 
-	public static final boolean USE_ME = false;
+	public static final boolean USE_ME = true;
 
 	private final Real min;
 	private final Real max;

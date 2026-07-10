@@ -77,7 +77,10 @@ public class PlayingSpace implements Bordered {
 			max2.add(dolls.getMaxX(tileArguments.getStringBounder()));
 		}
 
-		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addAtLeast(0), 0);
+		// The gauge chain starts at startingY so that gauge coordinates and
+		// legacy TimeHook coordinates (fillPositionelTiles starts its
+		// accumulation at startingY too) live in the same drawing space
+		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addFixed(startingY), 0);
 
 		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null, ycurrent));
 

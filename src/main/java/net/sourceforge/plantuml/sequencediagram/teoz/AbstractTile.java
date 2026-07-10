@@ -44,8 +44,6 @@ public abstract class AbstractTile extends CommonTile implements Tile {
 
 	public AbstractTile(StringBounder stringBounder, YGauge currentY) {
 		super(stringBounder);
-		if (YGauge.USE_ME)
-			System.err.println("CREATING " + getClass());
 	}
 
 	public AbstractTile(StringBounder stringBounder) {
