@@ -330,7 +330,7 @@ public class GroupingTile extends AbstractTile {
 	// cells the frame border sits outside the leftmost/rightmost column its
 	// children actually touch, so arrows and lifelines run inside the frame,
 	// not on its border.
-	private static final int ASCII_FRAME_MARGIN = 2;
+	protected static final int ASCII_FRAME_MARGIN = 2;
 
 	// The header is the frame's top border, plus (when the title fits) its
 	// pentagon-style tab — delegated entirely to AGroupFrame.getBodyRowOffset()
@@ -348,7 +348,17 @@ public class GroupingTile extends AbstractTile {
 	private int asciiHeaderRows() {
 		final int[] cols = asciiFrameColumns();
 		final int width = cols[1] - cols[0] + 1;
-		return new AGroupFrame(new ADimension2D(width, 0), asciiTitle()).getBodyRowOffset();
+		return new AGroupFrame(new ADimension2D(width, 0), asciiTitle(), asciiFrameHasTab()).getBodyRowOffset();
+	}
+
+	// Whether this group's ASCII frame uses the pentagon-style cut-corner tab
+	// (true, every plain group/alt/loop/... kind) or stamps its title centered
+	// directly on the top border instead (false). Overridden by PartitionTile:
+	// a partition's pixel rendering (PartitionTile.getComponent()) never draws
+	// a tab, only a plain rectangle with a centered title — see AGroupFrame's
+	// useTab field for the actual shape difference.
+	protected boolean asciiFrameHasTab() {
+		return true;
 	}
 
 	@Override
@@ -423,7 +433,7 @@ public class GroupingTile extends AbstractTile {
 	// back to spanning every participant of the diagram when the group has no
 	// child with any columns (e.g. an empty group), so it still draws a
 	// sensible frame instead of crashing on a null range.
-	private int[] asciiFrameColumns() {
+	protected int[] asciiFrameColumns() {
 		final Real min = getAsciiMinX();
 		final Real max = getAsciiMaxX();
 		if (min != null && max != null)
@@ -487,7 +497,7 @@ public class GroupingTile extends AbstractTile {
 		// The frame draws itself (border, sides, footer, and title tab) at its
 		// absolute left column; the same instance is reused just below to know
 		// where the body starts, rather than re-deriving that separately.
-		final AGroupFrame frame = new AGroupFrame(asciiDimension(), asciiTitle());
+		final AGroupFrame frame = new AGroupFrame(asciiDimension(), asciiTitle(), asciiFrameHasTab());
 		frame.asciiDraw(plan.move(left, 0));
 
 		// Children stacked in the body, below the header. A normal child is
@@ -513,7 +523,7 @@ public class GroupingTile extends AbstractTile {
 	// flattened for now, the same simplification message labels used before
 	// Display became an AsciiBlock (§18); good enough for the single-word
 	// partition/group titles the current tests use.
-	private String asciiTitle() {
+	protected String asciiTitle() {
 		final StringBuilder sb = new StringBuilder();
 		for (CharSequence cs : display) {
 			if (sb.length() > 0)

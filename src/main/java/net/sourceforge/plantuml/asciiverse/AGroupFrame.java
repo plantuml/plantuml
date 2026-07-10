@@ -58,10 +58,25 @@ public final class AGroupFrame implements AsciiBlock {
 
 	private final ADimension2D dimension;
 	private final String title;
+	// True for a plain "frame"/"alt"/"loop"/... group: the pentagon-style
+	// cut-corner tab (§28/§29/§30 below). False for a partition (ASCIIVERSE.md
+	// §31 follow-up): a partition's pixel rendering (PartitionTile.getComponent())
+	// never draws a tab at all — it stamps the title centered directly on the
+	// frame's own top border, the plain box shape this class's very first cut
+	// (§26) used before the tab was introduced. Rather than duplicating
+	// AGroupFrame (border, sides, corners are identical either way) this one
+	// class now supports both shapes, switched on this flag, exactly like
+	// asciiDraw() already dispatches on isUnicode() for ATXT vs UTXT.
+	private final boolean useTab;
 
 	public AGroupFrame(ADimension2D dimension, String title) {
+		this(dimension, title, true);
+	}
+
+	public AGroupFrame(ADimension2D dimension, String title, boolean useTab) {
 		this.dimension = dimension;
 		this.title = title == null ? "" : title;
+		this.useTab = useTab;
 	}
 
 	@Override
@@ -84,7 +99,17 @@ public final class AGroupFrame implements AsciiBlock {
 	}
 
 	private boolean hasTab() {
-		return title.isEmpty() == false && dimension.getWidth() > tabWidth() + 2;
+		return useTab && title.isEmpty() == false && dimension.getWidth() > tabWidth() + 2;
+	}
+
+	// The plain-frame counterpart of hasTab(): whether the title is stamped
+	// centered on the top border itself (useTab == false, a partition) rather
+	// than in a tab. Same "skip if it doesn't fit" policy as hasTab() — a
+	// title longer than the frame simply doesn't get drawn, rather than
+	// truncated or overflowing past the corners.
+	private boolean hasTitleOnBorder() {
+		return useTab == false && title.isEmpty() == false
+				&& dimension.getWidth() >= title.length() + 2 + 2;
 	}
 
 	// Width of the tab's own text block: " " + title + " ", one padding
@@ -141,16 +166,28 @@ public final class AGroupFrame implements AsciiBlock {
 				plan.move(width - 1, y).drawChar('!');
 		}
 
-		// Bottom border: tildes across the full width, no distinct corner
-		// characters — a deliberately different shape from the top border, so
-		// the frame's footer reads as visually distinct from its header at a
-		// glance. A confirmed stylistic choice (per the mockup), not a
-		// plain box edge with a character swapped in. UTXT does not repeat
-		// this choice (§30): its bottom border is a plain double line,
-		// matching its top.
-		if (height >= 2)
-			for (int x = 0; x < width; x++)
-				plan.move(x, height - 1).drawChar('~');
+		// Bottom border: tildes across the full width for a tab-style frame, no
+		// distinct corner characters — a deliberately different shape from the
+		// top border, so the frame's footer reads as visually distinct from its
+		// header at a glance. A confirmed stylistic choice (per the mockup), not
+		// a plain box edge with a character swapped in. UTXT does not repeat
+		// this choice (§30): its bottom border is a plain double line, matching
+		// its top. A plain (useTab == false) frame — a partition — has no such
+		// header/footer asymmetry to signal in the first place (its title sits
+		// on the top border itself, not in a tab), so its bottom mirrors its top
+		// exactly: same corners, same dash run, via drawBox()'s own convention.
+		if (height >= 2) {
+			if (useTab) {
+				for (int x = 0; x < width; x++)
+					plan.move(x, height - 1).drawChar('~');
+			} else {
+				plan.move(0, height - 1).drawChar(plan.getBottomLeftChar());
+				if (width > 2)
+					plan.drawHLine(1, width - 2, height - 1);
+				if (width > 1)
+					plan.move(width - 1, height - 1).drawChar(plan.getBottomRightChar());
+			}
+		}
 
 		// The title's small pentagon-style tab, attached to the top-left
 		// inside the frame — one column/row padding from the border, the same
@@ -179,6 +216,26 @@ public final class AGroupFrame implements AsciiBlock {
 				plan.move(1 + x, 2).drawChar('_');
 			plan.move(1 + tabWidth - 1, 2).drawChar('/');
 		}
+
+		drawTitleOnBorderIfNeeded(plan, width);
+	}
+
+	// A partition's title (useTab == false): stamped centered directly on the
+	// top border row, overwriting the dashes there — the plain "stamp the
+	// title on the top border" treatment this class's first cut (§26) used
+	// before the tab was introduced for other group kinds (§28), and exactly
+	// what PartitionTile.getComponent() does in pixel: draw the title, then
+	// the rectangle border, centered over the same top edge. Shared verbatim
+	// between ATXT and UTXT (only the border characters around it differ,
+	// already drawn by the caller before this runs) so it lives once, outside
+	// either asciiDrawAscii()/asciiDrawUnicode().
+	private void drawTitleOnBorderIfNeeded(InfinitePlan plan, int width) {
+		if (hasTitleOnBorder() == false)
+			return;
+
+		final String labeled = " " + title + " ";
+		final int start = (width - labeled.length()) / 2;
+		plan.move(start, 0).drawString(labeled);
 	}
 
 	// UTXT: a double-line frame (╔═╗/║/╚═╝ — the same double-line convention
@@ -229,7 +286,8 @@ public final class AGroupFrame implements AsciiBlock {
 		// UTXT does not switch to a different character for the footer; a
 		// junction ('╧', UP SINGLE AND HORIZONTAL DOUBLE) closes off the
 		// divider where it meets this border, the mirror image of the '╤'
-		// junction at the top.
+		// junction at the top. (A plain, useTab == false frame has no divider at
+		// all, so `tab` is already false here and every column is a plain '═'.)
 		if (height >= 2) {
 			plan.move(0, height - 1).drawChar('╚');
 			for (int x = 1; x <= width - 2; x++)
@@ -264,6 +322,8 @@ public final class AGroupFrame implements AsciiBlock {
 			for (int y = 3; y <= height - 2; y++)
 				plan.move(dividerColumn, y).drawChar('│');
 		}
+
+		drawTitleOnBorderIfNeeded(plan, width);
 	}
 
 }

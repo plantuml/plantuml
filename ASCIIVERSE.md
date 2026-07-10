@@ -1710,4 +1710,82 @@ eyeballing against this shape — it has never had a correct reference to begin
 with, unlike `group.atxt` which at least matched the pre-§28 uniform-box
 rendering at some point.
 
+## 31. `PartitionTile`: full-width frame and comment-only title (`partition.puml`)
+
+`partition.puml` (two `partition` blocks — `p1` around a `b -> c`/`c --> b`
+exchange with a right-attached note, `p2` around an `a -> b` with a
+left-attached note) rendered with two visible defects the pixel output does
+not have: **no title** on either frame, and a **frame too small** — it wrapped
+only the columns the inner messages touched (`b..c` for `p1`, `a..b` for `p2`)
+instead of spanning the whole diagram the way a partition does in pixel.
+
+**Root cause — a partition is not a plain group, and `GroupingTile`'s ASCII
+path treated it as one.** In the pixel world `PartitionTile` already overrides
+three `GroupingTile` methods precisely because a partition lays out
+differently: `getComponent()` draws only the comment (`"p1"`, never the
+`"partition"` keyword), and `getArea()`/`getWidth()` make the frame span
+`getBorder2() - getBorder1()` (the whole diagram, drawn at `getBorder1()`),
+not the children's span. The ASCII path (§24/§26/§28) had no such overrides,
+so `PartitionTile` inherited `GroupingTile`'s two ASCII layout decisions
+wholesale, both wrong for a partition:
+
+- **Title.** `GroupingTile.asciiTitle()` flattens the `display` field, which
+  for a non-`group` keyword is `Display.create(start.getTitle(),
+  start.getComment())` — i.e. `"partition" + "p1"` → `"partition p1"` (12
+  chars). That is both the wrong text (pixel shows only `"p1"`) *and* long
+  enough that `AGroupFrame.hasTab()` (`width > title.length() + 2`, §28)
+  refused to draw the tab at all for the narrow children-based frame — so the
+  title vanished entirely rather than merely reading wrong.
+- **Width.** `GroupingTile.asciiFrameColumns()` derives the frame span from
+  the children's `getAsciiMinX()`/`getAsciiMaxX()` (± `ASCII_FRAME_MARGIN`),
+  which for `p1` is just `b..c`.
+
+**Fix — the two ASCII overrides are the exact counterparts of the pixel ones
+above**, the same object-oriented principle as everywhere else in this log
+(each tile owns the way it lays itself out; a partition overrides only what
+differs from a plain group, in ASCII exactly as in pixel):
+
+- `PartitionTile.asciiTitle()` → `getGroupingStart().getComment()` only,
+  mirroring the pixel `getComponent()`'s `Display.create(getGroupingStart()
+  .getComment())`. With the frame now full-width (below), `"p1"` easily
+  clears the `hasTab()` threshold, so the title tab draws.
+- `PartitionTile.asciiFrameColumns()` → the min `getAsciiPosB()` and max
+  `getAsciiPosD() - 1` across *every* living space (± `ASCII_FRAME_MARGIN`),
+  the ASCII analogue of the pixel `getBorder1()`/`getBorder2()` full-diagram
+  span. Computed by iterating all living spaces (like `GroupingTile`'s own
+  fallback branch) rather than assuming `getFirstLivingSpace()`/
+  `getLastLivingSpace()` are the geometric extremes.
+
+To let `PartitionTile` override them, `GroupingTile.asciiTitle()`,
+`asciiFrameColumns()` and the `ASCII_FRAME_MARGIN` constant dropped their
+`private`/`private static` modifiers to `protected`. Nothing else in
+`GroupingTile` changed, and no pixel-path method was touched — the SVG
+output (and its reference) is unaffected; only the two ASCII methods a
+partition overrides are new.
+
+**Notes fall just outside the widened frame, by construction — not by luck.**
+The right note is drawn at `targetColumn + 2` past the last participant's
+lifeline (`CommunicationTileNoteRight.asciiDraw()`); the left note ends just
+before the first participant's lifeline (`CommunicationTileNoteLeft`). The
+full-width frame's borders land at `firstPosB - 2` / `lastPosD - 1 + 2`, i.e.
+inside the participant boxes' own margin — so both notes sit immediately
+outside the frame, exactly as they stick out past the partition frame in the
+pixel rendering (both images Arnaud provided). The note decorators already
+delegate `getAsciiMinX()`/`getAsciiMaxX()` to their wrapped message and do
+**not** reserve the note's own width (the standing §14/§15 column-solver gap),
+so the notes never pushed the frame wider to begin with — consistent here
+rather than a new problem.
+
+**Known gaps, unchanged from §24/§26/§28:** the frame's own width (now the
+full-diagram span plus the title tab) is still not reserved on the ASCII
+column solver (§14) — moot for a partition, which spans participants that
+already exist rather than needing extra room; and group-level end-notes
+(`drawNotes()`'s pixel counterpart) are still not rendered — `partition.puml`'s
+notes are message-attached, so this isn't exercised.
+
+**Reference files.** `partition.atxt`/`partition.utxt` on disk predate this fix
+(they carry the missing-title, too-narrow output) and must be regenerated
+(`VEGA_FORCE_WRITE`) and eyeballed against the pixel image before they can be
+trusted as a baseline.
+
 

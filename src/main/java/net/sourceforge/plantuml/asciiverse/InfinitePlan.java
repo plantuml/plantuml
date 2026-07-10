@@ -197,11 +197,16 @@ public final class InfinitePlan {
 		return isUnicode() ? '\u2510' : '.'; // ┐ or .
 	}
 
-	private char getBottomLeftChar() {
+	// Package-private, not private: AGroupFrame's plain (non-tab) frame shape
+	// — the one a partition uses (see ASCIIVERSE.md) — needs a bottom border
+	// that matches its top (plain box corners), unlike the tab-style frame's
+	// tilde bottom, so it draws its bottom border itself instead of going
+	// through drawBox(). Same relaxation as getTopLeftChar()/getTopRightChar().
+	char getBottomLeftChar() {
 		return isUnicode() ? '\u2514' : '`'; // └ or `
 	}
 
-	private char getBottomRightChar() {
+	char getBottomRightChar() {
 		return isUnicode() ? '\u2518' : '\''; // ┘ or '
 	}
 

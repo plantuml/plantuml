@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Note;
@@ -161,9 +162,25 @@ public class CommunicationTileNoteRight extends AbstractTile {
 		return tile.getAsciiMinX();
 	}
 
+	// Unlike getAsciiMinX() above, this one no longer just forwards to the
+	// wrapped message: a partition's frame needs to widen to fit an attached
+	// right note (ASCIIVERSE.md §31 follow-up — "notes fall inside the frame",
+	// not past it, matching the pixel rendering), and the frame only ever asks
+	// its children's own getAsciiMinX()/getAsciiMaxX() to know how far they
+	// reach (GroupingTile.asciiChildrenMax()). The note box's own width still
+	// isn't reserved on the ASCII column solver itself (§14) — it can still
+	// overlap a participant further right — only this tile's own reported
+	// extent grows, the same column arithmetic asciiDraw() below already uses
+	// to place the box (targetColumn + 2, then the box's own width).
 	@Override
 	public Real getAsciiMaxX() {
-		return tile.getAsciiMaxX();
+		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();
+		final Real noteMax = livingSpace.getAsciiLifeColumn().addFixed(boxWidth + 1);
+		final Real tileMax = tile.getAsciiMaxX();
+		if (tileMax == null)
+			return noteMax;
+
+		return RealUtils.max(java.util.Arrays.asList(tileMax, noteMax));
 	}
 
 	// ASCII counterpart of getPreferredHeight()/asciiDraw(): the Y footprint

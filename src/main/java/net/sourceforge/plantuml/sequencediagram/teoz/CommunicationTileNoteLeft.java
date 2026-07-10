@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Note;
@@ -139,13 +140,25 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 		tile.asciiAddConstraints();
 	}
 
-	// Delegate the range to the wrapped message, exactly like
-	// asciiAddConstraints() delegates its constraint. The note box's own extra
-	// width left of the source column is not reflected here — same known gap as
-	// everywhere else in this family (ASCIIVERSE.md).
+	// Unlike getAsciiMaxX() below, this one no longer just forwards to the
+	// wrapped message: a partition's frame needs to widen to fit an attached
+	// left note (ASCIIVERSE.md §31 follow-up — "notes fall inside the frame",
+	// not past it, matching the pixel rendering), and the frame only ever asks
+	// its children's own getAsciiMinX()/getAsciiMaxX() to know how far they
+	// reach (GroupingTile.asciiChildrenMin()). The note box's own width still
+	// isn't reserved on the ASCII column solver itself (§14) — it can still
+	// overlap a participant further left — only this tile's own reported
+	// extent grows, the same column arithmetic asciiDraw() below already uses
+	// to place the box (sourceColumn - width - 1).
 	@Override
 	public Real getAsciiMinX() {
-		return tile.getAsciiMinX();
+		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();
+		final Real noteMin = livingSpace.getAsciiLifeColumn().addFixed(-(boxWidth + 1));
+		final Real tileMin = tile.getAsciiMinX();
+		if (tileMin == null)
+			return noteMin;
+
+		return RealUtils.min(java.util.Arrays.asList(tileMin, noteMin));
 	}
 
 	@Override
