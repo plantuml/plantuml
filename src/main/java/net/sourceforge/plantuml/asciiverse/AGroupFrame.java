@@ -141,9 +141,18 @@ public final class AGroupFrame implements AsciiBlock {
 		// (falls back to the top border alone, getBodyRowOffset() == 1) when
 		// there's no title or it wouldn't fit — the same "skip if it doesn't
 		// fit" policy the title stamp it replaces already had.
+		//
+		// The text row's trailing padding column is a '|', not a plain space
+		// (§29): the tab needs its own right edge closed off, the same way its
+		// left edge is implicitly closed by the frame's own '!' at column 0.
+		// Without it the tab reads as an open-ended text stamp, not an enclosed
+		// shape. That '|' lands in the exact same column as the fold row's '/'
+		// directly beneath it (both are the tabWidth-th column, 1-indexed from
+		// the tab's own left) — a straight edge for one row, cut diagonally on
+		// the next, the standard "box with one corner sliced off" look.
 		if (hasTab()) {
 			final int tabWidth = tabWidth();
-			plan.move(1, 1).drawString(" " + title + " ");
+			plan.move(1, 1).drawString(" " + title + " /");
 			for (int x = 0; x < tabWidth - 1; x++)
 				plan.move(1 + x, 2).drawChar('_');
 			plan.move(1 + tabWidth - 1, 2).drawChar('/');
