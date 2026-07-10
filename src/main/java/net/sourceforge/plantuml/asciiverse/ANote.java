@@ -122,26 +122,26 @@ public final class ANote implements AsciiBlock {
 
 	private void asciiDrawUnicode(InfinitePlan plan) {
 		if (width > 2)
-			plan.fillHLine('\u2550', 1, width - 2, 0);
+			plan.fillHLine('═', 1, width - 2, 0);
 		if (height > 2 && width > 2)
-			plan.fillHLine('\u2550', 1, width - 2, height - 1);
+			plan.fillHLine('═', 1, width - 2, height - 1);
 		if (height > 2)
-			plan.fillVLine('\u2551', 1, height - 2, 0);
+			plan.fillVLine('║', 1, height - 2, 0);
 		if (height > 2 && width > 1)
-			plan.fillVLine('\u2551', 1, height - 2, width - 1);
+			plan.fillVLine('║', 1, height - 2, width - 1);
 
-		plan.drawChar('\u2554');
+		plan.drawChar('╔');
 		if (width > 1)
-			plan.move(width - 1, 0).drawChar('\u2557');
+			plan.move(width - 1, 0).drawChar('╗');
 		if (height > 1)
-			plan.move(0, height - 1).drawChar('\u255a');
+			plan.move(0, height - 1).drawChar('╚');
 		if (height > 1 && width > 1)
-			plan.move(width - 1, height - 1).drawChar('\u255d');
+			plan.move(width - 1, height - 1).drawChar('╝');
 
 		// Shaded block simulating the folded corner, one row below the top
 		// border, one column left of the right border.
 		if (width >= 2 && height >= 2)
-			plan.move(width - 2, 1).drawChar('\u2591');
+			plan.move(width - 2, 1).drawChar('░');
 	}
 
 }

@@ -204,65 +204,65 @@ public final class AGroupFrame implements AsciiBlock {
 		// bottom-right corner, and the full-height divider underneath it all.
 		final int dividerColumn = 1 + tabWidth();
 
-		// Top border: double line, with a junction ('\u2564', DOWN SINGLE AND
+		// Top border: double line, with a junction ('╤', DOWN SINGLE AND
 		// HORIZONTAL DOUBLE) where the tab's divider begins, instead of a
-		// plain '\u2550' at that one column.
+		// plain '═' at that one column.
 		if (width >= 1) {
-			plan.move(0, 0).drawChar('\u2554');
+			plan.move(0, 0).drawChar('╔');
 			if (width > 2)
 				for (int x = 1; x <= width - 2; x++)
-					plan.move(x, 0).drawChar(x == dividerColumn && tab ? '\u2564' : '\u2550');
+					plan.move(x, 0).drawChar(x == dividerColumn && tab ? '╤' : '═');
 			if (width > 1)
-				plan.move(width - 1, 0).drawChar('\u2557');
+				plan.move(width - 1, 0).drawChar('╗');
 		}
 
 		// Sides: double line, for every row between the top and bottom
 		// borders — the frame's own outer edge, distinct from the tab's
 		// single-line divider drawn separately below.
 		for (int y = 1; y <= height - 2; y++) {
-			plan.move(0, y).drawChar('\u2551');
+			plan.move(0, y).drawChar('║');
 			if (width > 1)
-				plan.move(width - 1, y).drawChar('\u2551');
+				plan.move(width - 1, y).drawChar('║');
 		}
 
 		// Bottom border: double line, plain — unlike ATXT (§ asciiDrawAscii()),
 		// UTXT does not switch to a different character for the footer; a
-		// junction ('\u2567', UP SINGLE AND HORIZONTAL DOUBLE) closes off the
-		// divider where it meets this border, the mirror image of the '\u2564'
+		// junction ('╧', UP SINGLE AND HORIZONTAL DOUBLE) closes off the
+		// divider where it meets this border, the mirror image of the '╤'
 		// junction at the top.
 		if (height >= 2) {
-			plan.move(0, height - 1).drawChar('\u255a');
+			plan.move(0, height - 1).drawChar('╚');
 			for (int x = 1; x <= width - 2; x++)
-				plan.move(x, height - 1).drawChar(x == dividerColumn && tab ? '\u2567' : '\u2550');
+				plan.move(x, height - 1).drawChar(x == dividerColumn && tab ? '╧' : '═');
 			if (width > 1)
-				plan.move(width - 1, height - 1).drawChar('\u255d');
+				plan.move(width - 1, height - 1).drawChar('╝');
 		}
 
 		// The tab itself: no border of its own on the top or left — it shares
-		// the frame's own '\u2554'/'\u2550' top border and '\u2551' left side,
+		// the frame's own '╔'/'═' top border and '║' left side,
 		// drawn above. It only owns its right edge (a single-line '\u2502' on
 		// the text row, continuing as the full-height divider below) and its
-		// bottom edge (a single-line '\u2500' run, with a '\u255f' junction on
+		// bottom edge (a single-line '─' run, with a '╟' junction on
 		// the left where it meets the frame's own double-line side, and a
-		// '\u2518' corner on the right where it meets the divider) — the same
+		// '┘' corner on the right where it meets the divider) — the same
 		// "text row, then a closing row" shape as the ASCII tab, just with box
 		// characters instead of underscores and a diagonal.
 		if (tab) {
 			final int tabWidth = tabWidth();
 			plan.move(1, 1).drawString(" " + title + " ");
-			plan.move(dividerColumn, 1).drawChar('\u2502');
+			plan.move(dividerColumn, 1).drawChar('│');
 
-			plan.move(0, 2).drawChar('\u255f');
+			plan.move(0, 2).drawChar('╟');
 			for (int x = 1; x < tabWidth + 1; x++)
-				plan.move(x, 2).drawChar('\u2500');
-			plan.move(dividerColumn, 2).drawChar('\u2518');
+				plan.move(x, 2).drawChar('─');
+			plan.move(dividerColumn, 2).drawChar('┘');
 
-			// The divider: a plain single-line '\u2502', continuing from the
+			// The divider: a plain single-line '│', continuing from the
 			// tab's own closing row down through the rest of the body, to
 			// (not including) the bottom border — which closes it off with
-			// its own '\u2567' junction, drawn above.
+			// its own '╧' junction, drawn above.
 			for (int y = 3; y <= height - 2; y++)
-				plan.move(dividerColumn, y).drawChar('\u2502');
+				plan.move(dividerColumn, y).drawChar('│');
 		}
 	}
 
