@@ -78,7 +78,11 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 		this.skinParam = skinParam;
 		this.noteOnMessage = noteOnMessage;
 		this.livingSpace = livingSpace;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+		// See CommunicationTileNoteRight for why contact/origin are propagated
+		// and max is built with addAtLeast rather than YGauge.create()
+		final YGauge innerGauge = tile.getYGauge();
+		this.yGauge = new YGauge(innerGauge.getMin(), innerGauge.getMin().addAtLeast(getPreferredHeight()),
+				innerGauge.getContact(), innerGauge.getOrigin());
 	}
 
 	@Override
@@ -112,6 +116,8 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 		final Area area = Area.create(dim.getWidth(), dim.getHeight());
 		((UDrawable) tile).drawU(ug);
 		final Real p = getNotePosition(stringBounder);
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
 		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);
 	}

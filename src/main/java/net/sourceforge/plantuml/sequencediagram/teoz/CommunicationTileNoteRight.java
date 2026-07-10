@@ -82,7 +82,14 @@ public class CommunicationTileNoteRight extends AbstractTile {
 		this.skinParam = skinParam;
 		this.noteOnMessage = noteOnMessage;
 		this.livingSpace = livingSpace;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+		// Propagate contact/origin from the wrapped tile so a following &
+		// message can still find and align with the SAME contact line through
+		// the note wrapper (min unchanged: the note doesn't move the arrow;
+		// max anchored via addAtLeast per the CHAIN ANCHORING invariant in
+		// YGauge, so this wrapper is itself safe to chain onto)
+		final YGauge innerGauge = tile.getYGauge();
+		this.yGauge = new YGauge(innerGauge.getMin(), innerGauge.getMin().addAtLeast(getPreferredHeight()),
+				innerGauge.getContact(), innerGauge.getOrigin());
 	}
 
 	@Override
