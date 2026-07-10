@@ -81,6 +81,9 @@ public class NewpageTile extends AbstractTile {
 		if (((Context2D) ug).isBackground())
 			return;
 
+		if (YGauge.USE_ME)
+			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+
 		final Component comp = getComponent();
 		final Area area = Area.create(tileArguments.getBorder2() - tileArguments.getBorder1()
 				- tileArguments.getXOrigin().getCurrentValue(), comp.getPreferredHeight(getStringBounder()));

@@ -188,6 +188,38 @@ across the `teoz` package.
 
 ## Session log
 
+### 2026-07-11 — Fix: missing self-translate prologue (pdiff report #1)
+
+**Symptom (reported by pdiff, `...delay...` test case):** with USE_ME=true,
+delay texts were all drawn at the top of the diagram, overlapping the first
+message, while the vertical space was correctly reserved (arrows at the
+right Y).
+
+**Root cause:** under USE_ME each tile must translate itself to its
+absolute gauge position (`ug.apply(UTranslate.dy(gauge.min))`), since
+`PlayingSpace`/`GroupingTile` no longer apply the external `dy(posy)`.
+`DelayTile.drawU` computed `ypos` from the gauge for `delayOn(...)` but
+never applied it to the `ug` used to draw the component — the tile had
+never been ported to absolute self-drawing. Systematic review found the
+same missing prologue in six more `drawU` implementations.
+
+**Fixed (prologue added):** `DelayTile`, `DividerTile`, `ReferenceTile`,
+`NewpageTile`, `CommunicationTileNoteLeft`, `CommunicationTileSelfNoteLeft`
+(for the two wrappers: prologue applied after the inner tile draws itself,
+only for the note — same pattern as `CommunicationTileNoteRight`), and
+`ElseTile` (label strip now at the right Y; height stretching still
+Phase 3).
+
+**Verified as already correct:** `CommunicationTile`, `Self`, `Exo`,
+`NoteTile`, `NotesTile`, `LifeEventTile`, `NoteRight`, `SelfNoteRight`,
+`NoteTop`, `NoteBottom` — note that for `NoteTop` the composition of the
+wrapper's extra `dy(noteHeight + spacey)` with the inner tile's absolute
+self-translate is correct only because inner gauge min == wrapper gauge min
+(both created from the same `currentY.getMax()`); this invariant matters.
+
+**Lesson:** "reserves space correctly but drawn at the top" is the
+signature of a missing self-translate prologue in that tile's `drawU`.
+
 ### 2026-07-11 — Phase 2: liveboxes fed from gauges
 
 **Design decision.** Instead of a new dedicated pass duplicating the livebox

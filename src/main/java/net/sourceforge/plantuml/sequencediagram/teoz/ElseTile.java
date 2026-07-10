@@ -102,6 +102,10 @@ public class ElseTile extends AbstractTile {
 		if (YGauge.USE_ME == false)
 			return;
 
+		// Height stretching down to the next else / the group bottom is not
+		// ported yet (Phase 3): only the label strip is drawn here
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
