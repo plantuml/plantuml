@@ -1594,4 +1594,41 @@ and must be regenerated (`VEGA_FORCE_WRITE`) and eyeballed against the new
 shape before they can be trusted as a baseline — same caveat §24 already
 recorded for §24's own change, now doubly true.
 
+## 29. Closing the tab's right edge
+
+Arnaud renamed the test to `group.puml` (checked in at
+`src/test/resources/vega/asciiverse/group.puml`) and, comparing the generated
+`group.atxt` against the mockup, spotted the one piece §28 left incomplete: the
+title tab's text row (`! p1` ) had no right edge of its own — the text simply
+trailed off into a padding space, with nothing marking where the tab actually
+ends. The mockup shows a character there, closing it off.
+
+**Fix:** the text row's trailing padding space becomes `" /"` instead
+(`" " + title + " /"`, was `" " + title + " "`) — a first attempt used a bare
+`|` there, but Arnaud settled on `" /"` instead. That trailing `/` does **not**
+land in the same column as the fold row's own `/` beneath it: the text row is
+now one column wider than `tabWidth()` (the width the fold row and the
+`hasTab()` fit guard still use), so the text row's `/` sits one column to the
+right of, and one row above, the fold row's `/`. The two slashes form a
+genuine 45-degree diagonal running across both rows — the ordinary UML frame
+cut-corner pentagon look, just traced over two character rows instead of one
+continuous line — rather than the straight-edge-then-cut shape a same-column
+`|` would have given.
+
+**Why this was easy to miss by eyeballing the pre-fix `group.atxt` alone:**
+participant `c`'s lifeline happens to run through the frame at a column close
+to the tab (the frame spans `b..c`, and `c`'s lifeline sits near the frame's
+right side), so the orchestrator's lifeline-fill pass (§9.2) was already
+filling a `|` into the empty cell it found at the tab's text row — at *its own*
+column (`c`'s lifeline column), not the tab's. That incidental `|`, sitting a
+few columns further right than the tab, could look at a glance like the tab was
+already closed; only comparing against the mockup made clear the two `|`
+characters are unrelated (one was meant to be the tab's own edge; the other is
+participant `c`'s lifeline crossing the header, unaffected either way) and that
+the tab's own edge was genuinely missing.
+
+**Reference files.** `group.atxt`/`group.utxt` (the renamed former
+`hello4.atxt`/`.utxt`) still need regenerating (`VEGA_FORCE_WRITE`) and
+eyeballing against this fix, same outstanding step §28 already flagged.
+
 

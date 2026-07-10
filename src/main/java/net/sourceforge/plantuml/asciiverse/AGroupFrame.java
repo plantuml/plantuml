@@ -82,8 +82,12 @@ public final class AGroupFrame implements AsciiBlock {
 		return title.isEmpty() == false && dimension.getWidth() > tabWidth() + 2;
 	}
 
-	// " " + title + " ": one padding column each side, the same tab-text
+	// Width reserved for the tab's fold row (and used by hasTab()'s fit guard):
+	// " " + title + " ", one padding column each side, the same tab-text
 	// convention the first cut of this class used for its title stamp (§26).
+	// The text row itself now renders one column wider than this (§29: it ends
+	// in " /" rather than a single padding column), so tabWidth() is no longer
+	// the text row's own rendered width — only the fold row's.
 	private int tabWidth() {
 		return title.length() + 2;
 	}
@@ -142,14 +146,15 @@ public final class AGroupFrame implements AsciiBlock {
 		// there's no title or it wouldn't fit — the same "skip if it doesn't
 		// fit" policy the title stamp it replaces already had.
 		//
-		// The text row's trailing padding column is a '|', not a plain space
-		// (§29): the tab needs its own right edge closed off, the same way its
-		// left edge is implicitly closed by the frame's own '!' at column 0.
-		// Without it the tab reads as an open-ended text stamp, not an enclosed
-		// shape. That '|' lands in the exact same column as the fold row's '/'
-		// directly beneath it (both are the tabWidth-th column, 1-indexed from
-		// the tab's own left) — a straight edge for one row, cut diagonally on
-		// the next, the standard "box with one corner sliced off" look.
+		// The text row ends in " /" rather than a plain padding space (§29): the
+		// tab needs its own right edge closed off, the same way its left edge is
+		// implicitly closed by the frame's own '!' at column 0. That trailing '/'
+		// lands one column to the right of, and one row above, the fold row's own
+		// '/' directly beneath it — so the two slashes form a genuine 45-degree
+		// diagonal cut running across both rows, rather than a straight edge on
+		// one row with a separate cut below it: the standard UML frame
+		// cut-corner pentagon look, just traced over two character rows instead
+		// of one continuous line.
 		if (hasTab()) {
 			final int tabWidth = tabWidth();
 			plan.move(1, 1).drawString(" " + title + " /");
