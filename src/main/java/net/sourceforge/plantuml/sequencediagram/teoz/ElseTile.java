@@ -104,11 +104,19 @@ public class ElseTile extends AbstractTile {
 		if (YGauge.USE_ME == false)
 			return;
 
+		// Height stretching down to the next else / the group bottom is not
+		// ported yet (Phase 3): only the label strip is drawn here
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
-		final Real min = parent.getMinX().addFixed(GroupingTile.EXTERNAL_MARGINX1);
-		final Real max = parent.getMaxX().addFixed(-GroupingTile.EXTERNAL_MARGINX2);
+		// Use the group's own frame extents, not parent.getMinX()/getMaxX():
+		// the latter also reserve space for notes attached to the group's
+		// "end" (drawn OUTSIDE the frame), which would make the else divider
+		// line overflow past the visible border by the note's width
+		final Real min = ((GroupingTile) parent).getFrameMinX();
+		final Real max = ((GroupingTile) parent).getFrameMaxX();
 		final Context2D context = (Context2D) ug;
 		double height = dim.getHeight();
 		// if (context.isBackground() && parent instanceof GroupingTile) {

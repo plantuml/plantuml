@@ -82,7 +82,16 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 		this.skin = skin;
 		this.skinParam = skinParam;
 		this.noteOnMessage = noteOnMessage;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+		// See CommunicationTileNoteRight for why contact/origin are propagated
+		// and max is built with addAtLeast rather than YGauge.create(). Note
+		// that for Top/Bottom, getPreferredHeight() ADDS the note's height to
+		// the tile's own (the note stacks above/below, not beside), so this
+		// wrapper's max legitimately extends further past the inner tile's own
+		// max than for Left/Right -- min (and thus the arrow's own contact
+		// anchoring) is still untouched.
+		final YGauge innerGauge = tile.getYGauge();
+		this.yGauge = new YGauge(innerGauge.getMin(), innerGauge.getMin().addAtLeast(getPreferredHeight()),
+				innerGauge.getContact(), innerGauge.getOrigin());
 	}
 
 	@Override
