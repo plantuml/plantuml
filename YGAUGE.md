@@ -116,12 +116,21 @@ setting `USE_ME = false` again.
    the legacy traversal and substituting the gauge min inside
    `CommonTile.callbackY` (see session log).
 
-2. **Group margins.** The two ghost `EmptyTile(4, ...)` provided 8px of
-   breathing room around each group frame. Under USE_ME nothing replaces
-   them yet: the `GroupingTile` gauge is
-   `YGauge.create(firstY, getPreferredHeight())` and `getPreferredHeight`
-   includes `MARGINY_MAGIC`, but the equivalence with the legacy layout
-   (4 above + 4 below + MARGINY_MAGIC split) must be verified pixel-wise.
+2. **Group margins — PARTIALLY DONE (2026-07-11, see session log).** The two
+   ghost `EmptyTile(4, ...)` provided 8px of breathing room around each
+   group frame: 4px BEFORE the header and 4px AFTER the frame, consumed as
+   separate entries in the outer tile stream. Under USE_ME nothing replaced
+   them at first; `GroupingTile.getPreferredHeight()` now adds the missing
+   8px back (see session log) so the NEXT sibling — or a parent's own
+   `bodyHeight` sum over this group — reserves the same total vertical span
+   as legacy did. This closes the "next tile starts too early" / page-split
+   symptom. STILL OPEN: the split itself (4 before the header vs 4 after the
+   frame, rather than 8 all after) was not reproduced — the fix adds the
+   whole 8px after the frame instead, which is invisible in practice since
+   the frame's own drawn border (`getTotalHeight`/`getArea`, untouched) still
+   renders at exactly the same position and size as before. If a future
+   report shows a group's header sitting flush against the tile above it
+   (missing the 4px gap BEFORE), that's this remaining half.
 
 3. **ElseTile geometry.** Under USE_ME, `ElseTile.drawU`:
    - does NOT apply the `UTranslate.dy(gauge.min)` prologue (probable
@@ -204,6 +213,64 @@ setting `USE_ME = false` again.
   builds with `gradle build` and runs the visual comparisons.
 
 ## Session log
+
+### 2026-07-11 — Fix: sliver of next page bleeding through at a newpage right after a group (known gap #2, partial)
+
+**Report (with screenshot, subtle):** `group PURGE RX ... end` immediately
+followed by `newpage` then a second `group RECEPTION DONNEES` — at the very
+bottom of page 1, just above the footer participant boxes, a faint sliver
+of the second group was visible bleeding through the page-1 clip.
+
+**Root cause:** exactly known gap #2, triggered for the first time in a way
+that's externally visible. Legacy reserved 4px before AND 4px after every
+group via two ghost `EmptyTile(4, ...)` spacers in `TileBuilder.buildOne`,
+entirely skipped under `USE_ME` with nothing replacing them —
+`GroupingTile.getPreferredHeight()` returned only the frame's own height
+(header + body + `MARGINY_MAGIC`), 8px short of what legacy reserved for
+the SAME group in the outer flow. Most of the time this 8px shortfall is
+invisible (just slightly tighter spacing between a group and the next
+tile). But `PlayingSpaceWithParticipants.getYMax()` — which decides where
+to CLIP page 1 — reads `newpage.getTimeHook().getValue()`, and the
+`NewpageTile` right after the group chains from the group's own
+`currentY.getMax()` (i.e. `GroupingTile`'s `this.yGauge`, built from
+`getPreferredHeight()`). The missing 8px shifted that boundary 8px too
+high, so the clip cut 8px earlier than it should have — not enough to
+noticeably truncate page 1's own content (the group's frame border itself
+is drawn from `getTotalHeight()`, a SEPARATE, unaffected computation), but
+enough that content asynchronously drawn using the FULL, unclipped
+coordinate space (`livingSpaces.drawLifeLines(ugBody, fullHeight, ...)` in
+`PlayingSpaceWithParticipants.drawU`, deliberately unclipped-in-extent
+since lifelines span every page) put a sliver of page 2 material within
+the 8px band that should have stayed hidden.
+
+**Fix:** `GroupingTile.getPreferredHeight()` now adds `+8` under `USE_ME`,
+matching the combined 4+4px legacy reserved. Left the group's own `min`
+(`firstY`, used for the frame's actual drawn Y position) untouched, and
+added the full 8px on the OUTER-reservation side only (`getPreferredHeight`
+feeds both `this.yGauge`'s max, consumed by the next sibling, and any
+PARENT's `bodyHeight` sum over its children) — this keeps the two
+independent "how much space does this group take" computations (the gauge
+chain's positional deltas, and the parent's additive `bodyHeight` sum) in
+sync with each other, which splitting the 8px as 4-before/4-after would not
+have (shifting `firstY` down by 4 would desync `bodyHeight` unless every
+caller of `getPreferredHeight()` also accounted for it — see the reasoning
+trail in this session for why the simpler split was rejected). The visible
+frame itself (`getTotalHeight`/`getArea`) is a completely separate
+computation and is untouched, so no already-verified group-height
+measurement from earlier sessions should move.
+
+**Not fully closed:** this fixes the RESERVATION (next sibling / parent sum
+no longer under-counts), not necessarily a pixel-exact reproduction of
+legacy's 4-before/4-after split. If a group's header is ever reported
+sitting flush with no gap against whatever precedes it, that's the
+remaining half of gap #2.
+
+**To verify (Arnaud, after `gradle build`):** the reported diagram
+(`group ... end` / `newpage` / `group ...`) should no longer show any
+sliver of page 2 at the bottom of page 1. Also worth a quick check on a
+diagram with NO newpage at all, group followed directly by more messages,
+to confirm the extra 8px doesn't introduce a now-too-generous gap there
+(should be imperceptible, but worth a glance).
 
 ### 2026-07-11 — Fix: standalone `& note ...` ignored parallel chaining (same bug class as GroupingTile)
 

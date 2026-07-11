@@ -355,7 +355,28 @@ public class GroupingTile extends AbstractTile {
 	@Override
 	public double getPreferredHeight() {
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(getStringBounder());
-		return dim1.getHeight() + bodyHeight + MARGINY_MAGIC;
+		double result = dim1.getHeight() + bodyHeight + MARGINY_MAGIC;
+		if (YGauge.USE_ME)
+			// Legacy reserved 4px BEFORE and 4px AFTER every group via the two
+			// ghost EmptyTile(4, ...) spacers in TileBuilder.buildOne -- entirely
+			// skipped under USE_ME (see YGAUGE.md known gap #2, never verified
+			// pixel-wise until now). This method is the single source both the
+			// outer chain (this.yGauge, above) and a PARENT's own bodyHeight sum
+			// (over its children's getPreferredHeight(), see the constructor)
+			// read to know how much vertical span this group actually consumes,
+			// so adding the missing 8px back HERE keeps both consistent with
+			// each other, unlike shifting the group's own min/firstY (which
+			// would desync the two). Net effect: the same 8px total reservation
+			// as legacy, just entirely after the frame instead of split 4
+			// before / 4 after -- the frame itself (getTotalHeight, drawn
+			// border) is untouched, only the gap before the NEXT sibling grows.
+			// Without this, a newpage (or any tile) immediately following a
+			// group starts a few pixels too early, so the page-split boundary
+			// computed from it (PlayingSpaceWithParticipants.getYMax) sits
+			// slightly too high too, letting a sliver of the next page's
+			// content bleed into the current page's clipped view.
+			result += 8;
+		return result;
 	}
 
 	public void addConstraints() {
