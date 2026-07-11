@@ -1807,4 +1807,286 @@ notes are message-attached, so this isn't exercised.
 (`VEGA_FORCE_WRITE`) and eyeballed against the pixel image before they can be
 trusted as a baseline.
 
+## 32. YGAUGE landed: Teoz's Y axis is a `Real` solve too — and it is ASCIIVERSE's prototype
+
+**Status of this section.** Design discussion, no code written. It records what
+the YGAUGE migration (see `YGAUGE.md`) changed underneath this project, why
+sections 3 / 5.4 / 6 / 7 of this very document are now factually wrong, and what
+the Y axis of the ASCII renderer should become as a result. Everything below is
+a proposal to be argued with, not a decision already taken — except the two bugs
+in "What this predicts", which are real and present in the tree today.
+
+### 32.1 What changed in `teoz` (2026-07-11)
+
+`YGauge.USE_ME` and `YGauge.TRACE` are **gone** — the flags were inlined and
+every legacy branch they guarded was deleted. Concretely:
+
+- **Y is a constraint solve.** Every tile builds a `YGauge` (`[min, max]`, plus
+  optional `contact`/`origin`, all `Real`s on a dedicated Y `RealLine`) in its
+  constructor, chaining onto the previous tile's gauge. One
+  `yorigin.compileNow()` in `SequenceDiagramFileMakerTeoz.createMainTile()`
+  resolves the whole column.
+- **Each tile draws itself, in absolute coordinates.** Every `drawU()` opens
+  with a self-translate prologue, `ug.apply(UTranslate.dy(gauge.min))`. No
+  caller applies a `dy()` on a tile's behalf anymore.
+- **`TimeHook` no longer positions anything.** `CommonTile.callbackY()` ignores
+  the `TimeHook` it is handed and substitutes its own gauge min. The traversal
+  (`fillPositionelTiles`) survives ONLY for its side effects: livebox steps,
+  `goCreate`/`goDestroy`, and building the tile lists `LinkAnchor` searches.
+- **`TileParallel` no longer positions or draws.** `&` alignment now lives in
+  the gauge itself (a shared `contact` Real — see `YGauge.createParallel`).
+  `TileParallel` survives only as a throwaway height accumulator inside
+  `mergeParallelCore()`, answering one question: how tall is this `&` cluster
+  *taken together*? (Its members overlap, so summing their heights
+  double-counts.)
+- **`EmptyTile` is dead code.** The ghost 4px spacers that used to bracket every
+  group are gone: `GroupingTile` reserves both margins in its own
+  `getPreferredHeight()` and offsets the drawn frame at draw time
+  (`getFrameY()`). `removeEmptyCloseToParallel()` went with them.
+
+### 32.2 The deeper point: YGAUGE and ASCIIVERSE are the same idea
+
+The real content of YGAUGE is not "Y gets a solver". It is a **transfer of
+responsibility**: a tile went from *"I am told where I am"* to *"I know where I
+am"*. Everything else — the death of the ghost spacers, of `TileParallel` as a
+positioner, of the two-pass `callbackY` — follows mechanically from that single
+flip.
+
+That is **precisely this project's thesis** (§9, §18: "each object draws
+itself", `AsciiBlock`). The two efforts converged without coordinating. YGAUGE
+is the pixel-space instance of what ASCIIVERSE does in character space. They are
+not merely *compatible*: they are **the same gesture applied to two axes**.
+
+Which suggests the frame this document should have been using all along:
+
+|            | X | Y |
+|---|---|---|
+| **pixel** | `Real` on `xorigin` (always was) | `Real` on `yorigin` (**YGAUGE, now**) |
+| **ASCII** | `Real` on its own line, 1.0 = 1 col (§14) | *the hole* |
+
+Three of four cells are filled, and filled **with the same tool**. The fourth
+cell is the subject of this section.
+
+### 32.3 Why the ASCII Y gauge should be markedly EASIER than the pixel one
+
+Three of YGAUGE's main sources of pain simply do not exist in character space:
+
+- **No magic constants to reverse-engineer.** `MARGINY_MAGIC = 20`,
+  `EXTERNAL_MARGINY = 4`, the `+16` in `ComponentRoseGroupingElse` — each one an
+  inherited value that had to be reconstituted and justified. In ASCII you
+  *choose* the margins (0 or 1 row); you do not reconstruct them.
+- **No floating point.** The absorption bug in `PositiveForce`, the ULP-scaled
+  tolerance, the worry that `getCurrentValue()` might return `18.0000001` — all
+  of it is `double` pathology. Every delta on the ASCII line is an integer, the
+  sum stays exact, the `(int)` cast is lossless. §14 established this for X; it
+  holds identically for Y.
+- **No pixel-exact baseline to match.** YGAUGE had an adversary: the legacy
+  rendering, to be reproduced to the pixel. The ASCII Y axis has no baseline to
+  respect — it does not exist yet. **We are building, not migrating.**
+
+**Practical consequence.** The YGAUGE migration cost roughly fifteen debugging
+sessions. Nearly all of them were spent on the three items above, not on the
+model. The model itself is now *validated*. An ASCII Y gauge should cost a
+fraction of that.
+
+### 32.4 Contact-line sharing IS the answer to the `&` problem in ASCII
+
+This is the most satisfying consequence, and it closes two questions this
+document left open for months.
+
+§5.4 asked:
+
+> *"Parallel tiles share the same vertical band in pixels; in ASCII, 'same row'
+> is literal — need to make sure they don't silently overwrite each other in
+> `InfinitePlan` (`drawChar` overwrites without warning)."*
+
+§7 asked:
+
+> *"Rounding rule for contact points on tiles whose contact point is not at a
+> natural line boundary."*
+
+**Both dissolve.** In pixel space, `contact` is a floating `Real`: two "aligned"
+arrows are aligned to within 0.01px, and it took real work (`createWithContact`,
+`createParallel`, propagation through `LifeEventTile`, then through all five note
+wrappers) to make that hold. In ASCII, `contact` is an **integer — a row
+number**. "Sharing a contact line" and "being on the same row" are *the same
+sentence*. `&` alignment is not computed, it is **declared**; and the
+`InfinitePlan` overwrite hazard cannot arise by accident, because the two members
+deliberately target the same row at disjoint columns.
+
+Put differently: what is a *carefully maintained approximation* in pixel space
+becomes an *exact identity* in character space. **The model is more at home in
+the discrete world than in the continuous one it came from.**
+
+### 32.5 The three invariants transpose verbatim — and that is an asset
+
+YGAUGE paid dearly for three invariants. None of them is pixel-specific.
+
+1. **`gaugeSpan == getPreferredHeight()`** → in ASCII:
+   `gaugeSpan == asciiDimension().getHeight()`.
+   Same trap exactly: two independent computations of "how tall am I" drifting
+   apart. The `create`-message bug was this. The group-margin bug was this.
+
+2. **The gauge `min` is the CHAINING POINT, never the drawn top.**
+   In ASCII: a group's frame row is `min + margin`, applied *at draw time*. If
+   you offset the `min` instead, an `&` sibling chains onto the offset min,
+   inherits it, and adds its own — drifting one margin per pair. The "`&` groups
+   drift 4px lower per pair" bug was exactly this.
+
+3. **CHAIN ANCHORING.** Links carried from one gauge to the next must be
+   anchored moveables (`RealImpl`, via `addAtLeast`), never `RealDelta` (via
+   `addFixed`). `RealDelta.addAtLeast()` delegates downward, rebuilding one
+   layer per level: O(n²) objects, O(n) recursion depth.
+
+These are already written, already justified by real bugs, already documented in
+`YGAUGE.md`. This is **negative technical debt**: work already paid for, reusable
+at zero cost. The ASCII Y gauge should adopt all three from its first line.
+
+### 32.6 What the ASCII Y gauge would DELETE
+
+Symmetrically to what YGAUGE removed on the pixel side, an ASCII Y gauge should
+remove:
+
+- **`GroupingTile.asciiDraw()`'s child-stacking loop** (`y += tile.asciiDimension().getHeight()`)
+  — each child would know its own absolute row.
+- **`GroupingTile.asciiBodyHeight()`** — a group's height would be its gauge
+  span, full stop.
+- **The flat `y` counter in `PlayingSpaceWithParticipants.asciiDraw()`** — same
+  reason.
+- **And crucially, the two latent bugs in §32.7** — which would not be *fixed*
+  so much as rendered **structurally inexpressible**, exactly as happened on the
+  pixel side.
+
+That last point is the acid test of a good abstraction: it does not fix bugs, it
+makes their whole class unsayable.
+
+### 32.7 What this predicts: two latent bugs, present in the tree TODAY
+
+Both are ASCII transpositions of bugs YGAUGE *already hit and fixed* in pixel
+space. They are latent only because no ASCII test case uses `&` yet. **These two
+are not speculation — they are in the code right now.**
+
+**(1) `&` clusters are double-counted vertically.**
+`GroupingTile.asciiBodyHeight()` and the top-level loop in
+`PlayingSpaceWithParticipants.asciiDraw()` both do a FLAT sum:
+`h += tile.asciiDimension().getHeight()`. The pixel side routes the identical
+computation through `mergeParallelCore()` *precisely because* a flat sum is wrong
+for `&` (see `YGAUGE.md`, "groups with & messages were too tall": 116px of
+spurious height across two groups). It is **worse** in ASCII than in pixel:
+"same row" is literal, so two `&` members landing on one row will silently
+overwrite each other through `InfinitePlan.drawChar()` — the exact hazard §5.4
+flagged and never resolved, and which the gauge's shared `contact` answers
+directly (§32.4).
+
+**(2) The ASCII X chain already has the CHAIN ANCHORING flaw.**
+In `PlayingSpaceWithParticipants.asciiDraw()`, the participant chain does:
+
+```
+asciiCurrent = ls.getAsciiPosD().addAtLeast(0);
+```
+
+and `getAsciiPosD()` is `asciiPosB.addFixed(width)` — i.e. a **`RealDelta`**. So
+`addAtLeast` on it delegates downward and rebuilds one layer per level. This is
+precisely the construct that produced the `OutOfMemoryError` on large diagrams on
+the pixel Y chain (`YGAUGE.md`, "OOM / O(n^2)": quadratic → near-linear once
+fixed). It is harmless *today* only because the ASCII X chain runs over
+PARTICIPANTS (a few dozen — O(P²) with P small), not over tiles.
+
+**But an ASCII Y gauge chain would run over TILES — thousands of them.** That is
+exactly the configuration that OOM'd in pixel space. The invariant must therefore
+be respected **from the first line of the Y work, not retrofitted after the first
+OOM report.** Worth fixing the X chain independently, right now, while it is a
+one-line change.
+
+### 32.8 Open design question A: one `YGauge` on two `RealLine`s, or two types?
+
+This is the decision to settle **before** any code. Genuinely unresolved.
+
+**Option A — reuse `YGauge` as-is, on an ASCII `RealLine`.**
+`Real` is unit-agnostic: it is a *position on an axis*, nothing more. Nothing
+forbids a `RealLine` where `1.0 = 1 character row`.
+`createWithContact`/`createParallel`/`createPropagating` would work unchanged, and
+the `(min, max, contact, origin)` tuple is the right one whatever the unit.
+*Zero duplication.* But: a tile would then carry **two** gauges (pixel
+`getYGauge()` + an ASCII one), and nothing in the type system stops them being
+confused. The guard exists (`Real.ensureBiggerThan()` throws if operands live on
+different `RealLine`s — §14 already relies on this for X), but it is a *runtime*
+guard, not a *type* guard.
+
+**Option B — a distinct `AsciiYGauge`, in `int`.**
+Superficially consistent with the `ADimension2D` decision (§8: "ASCII sizes are
+plain integers, with their own type, never `XDimension2D`"). **But §8, read
+carefully, actually forbids this**: it concludes that *sizes* are plain integers
+while **positions must be `Real` on a dedicated ASCII line**. A gauge is a pair
+of *positions*. An `int`-based `AsciiYGauge` would throw away the solver — and
+with it the entire point, since `&` alignment would go back to being hand-computed
+(§32.4).
+
+**Leaning (to be argued):** Option A, but with some **lightweight type
+distinction** — not two implementations, just enough to make it impossible to
+read the wrong gauge by accident. The real risk here is not code duplication; it
+is a tile silently reading its pixel gauge in the ASCII path six months from now.
+
+### 32.9 Open design question B: when is the ASCII Y chain wired?
+
+The pixel gauge is built **in each tile's constructor** — chaining happens for
+free during `TileBuilder.buildOne`, because `yorigin` already exists in
+`TileArguments`.
+
+The ASCII gauge **cannot** do that today: the ASCII `RealLine` only comes into
+existence inside `asciiDraw()`. That is already why `getAsciiMinX()` /
+`getAsciiMaxX()` are computed lazily on demand rather than in the constructor
+(see the comment on `GroupingTile.asciiChildrenMin()`, §14).
+
+So the Y chaining would need either:
+
+- **B1 — an explicit wiring pass** (`asciiWireY(currentY)`), recursing through the
+  tile tree in document order, mirroring `TileBuilder.buildSeveral`. Clean, and
+  keeps §14's promise that *"PNG/SVG exports pay nothing for the ASCII path"* —
+  but it duplicates the traversal order, which is exactly the kind of
+  second-source-of-truth that YGAUGE spent sessions eliminating.
+- **B2 — make the ASCII origin available early**, in `TileArguments` alongside
+  `getYOrigin()`. Then the ASCII gauge is built in the constructor exactly like
+  its pixel twin, and the last asymmetry between the two worlds disappears. Cost:
+  a few `Real`s per tile, paid even on PNG/SVG renders.
+
+**Leaning (to be argued):** B2. The cost is a handful of `Real` objects per tile,
+against the thousands already created for pixel X and pixel Y; and it buys exact
+structural symmetry — one traversal, one chaining rule, both axes, both worlds.
+B1's "the pixel path pays nothing" principle was written when the ASCII gauge did
+not exist and the cost was unknown; it deserves re-examination rather than
+automatic deference.
+
+### 32.10 Sketch (NOT a decision)
+
+If Option A + B2 were chosen, the shape would be:
+
+- an ASCII Y `RealOrigin` in `TileArguments`, convention **1.0 = 1 row**, on a
+  `RealLine` distinct from the pixel Y line and from the ASCII X line;
+- each tile builds its ASCII gauge in its constructor, chaining on the previous
+  tile's, via the **same three factories**: plain sequential chaining;
+  `createWithContact` (a message publishes the row its arrow sits on);
+  `createParallel` (an `&` member `ensureBiggerThan`s the shared contact row) —
+  which makes *"two `&` messages draw their arrows on the SAME ROW"* fall out of
+  the solver instead of being special-cased;
+- `createPropagating` for zero-height tiles (life events, `|||`) so an
+  activate/deactivate between two `&` members does not break contact sharing;
+- the same three invariants of §32.5, restated in rows;
+- `compileNow()` on the ASCII Y origin, once, inside the `getAsciiBlock()` path
+  only;
+- each `asciiDraw()` then reads its own absolute row, and
+  `GroupingTile.asciiDraw()`'s stacking loop and `asciiBodyHeight()` **both
+  disappear** (§32.6).
+
+### 32.11 Immediate next steps (in order)
+
+1. **Fix the ASCII X chain's CHAIN ANCHORING** (§32.7 bug 2). Independent of
+   everything else, one-line-ish, and mandatory before any Y chain over tiles.
+2. **Settle open questions A and B** (§32.8, §32.9). No code until then.
+3. Then, and only then, transpose the gauge.
+
+Sections 3, 5.4, 6 and 7 of this document are superseded by this one and have
+been marked as such in place.
+
+
 
