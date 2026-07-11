@@ -139,8 +139,23 @@ public class GroupingTile extends AbstractTile {
 
 		tiles = mergeParallel(getStringBounder(), tiles);
 
-		for (Tile tile : tiles) {
+		// bodyHeight drives both the frame's own drawn height (getTotalHeight)
+		// and the space this GroupingTile reserves in the OUTER Y chain
+		// (getPreferredHeight() -> this.yGauge below): it must count each
+		// parallel (&) cluster ONCE (tallest-before-contact + tallest-after-
+		// contact, like legacy TileParallel.getPreferredHeight()), not sum
+		// every member's own height, or the group ends up taller than needed
+		// whenever it contains a & message (see YGAUGE.md). Under legacy,
+		// `tiles` (just reassigned above) is already merged into TileParallel
+		// clusters. Under USE_ME, mergeParallel() is a no-op (Y positioning is
+		// handled by the gauge chain instead), so a SEPARATE, unconditional
+		// merge is used here purely to get correct height clustering, without
+		// touching the flat `tiles` field used for drawing.
+		final List<Tile> heightTiles = YGauge.USE_ME ? mergeParallelCore(getStringBounder(), tiles) : tiles;
+		for (Tile tile : heightTiles)
 			bodyHeight += tile.getPreferredHeight();
+
+		for (Tile tile : tiles) {
 			final Event ev = tile.getEvent();
 			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.ELSE) {
 				allElses.add(tile);
@@ -440,6 +455,14 @@ public class GroupingTile extends AbstractTile {
 		if (YGauge.USE_ME)
 			return tiles;
 
+		return mergeParallelCore(stringBounder, tiles);
+	}
+
+	// The actual clustering logic, unconditional. Used directly (not through
+	// mergeParallel) wherever a legacy-shaped, & -aware view of the tiles is
+	// needed purely for computation (e.g. bodyHeight) even under USE_ME, where
+	// Y positioning itself no longer goes through this merge.
+	private static List<Tile> mergeParallelCore(StringBounder stringBounder, List<Tile> tiles) {
 		TileParallel pending = null;
 		tiles = removeEmptyCloseToParallel(tiles);
 		final List<Tile> result = new ArrayList<>();

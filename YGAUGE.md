@@ -187,6 +187,54 @@ across the `teoz` package.
 
 ## Session log
 
+### 2026-07-11 — Fix: groups with & messages were too tall (known gap #7, closed)
+
+**Symptom:** a `group`/`alt`/etc. containing a `&` message rendered with
+extra vertical whitespace inside the frame, pushing everything after the
+group further down than necessary.
+
+**Root cause:** `GroupingTile`'s constructor sums
+`bodyHeight += tile.getPreferredHeight()` over `tiles` to size both the
+frame's own drawn rectangle (`getTotalHeight`, used by
+`ComponentRoseGroupingHeader.drawInternalU`, which draws the border
+rectangle at exactly that height) and the group's contribution to the
+outer Y chain (`getPreferredHeight()` -> `this.yGauge`). Legacy relied on
+`tiles = mergeParallel(...)` actually merging each `&` run into a single
+`TileParallel` (whose `getPreferredHeight() = getContactPointRelative() +
+getZZZ()`, i.e. tallest-before-contact + tallest-after-contact — counting
+the cluster ONCE). Under USE_ME, `mergeParallel` is a no-op (Y positioning
+now goes through the gauge chain instead), so `tiles` stays flat and every
+`&` member's height is summed SEPARATELY — double-counting overlapping
+rows.
+
+**Fix:** extracted the unconditional clustering logic into
+`mergeParallelCore` (same body `mergeParallel` used to have, minus the
+USE_ME early-return guard). `mergeParallel` itself is unchanged (still a
+no-op under USE_ME, still used for Y positioning-adjacent legacy code
+paths). `bodyHeight` is now computed from a LOCAL, height-only clustered
+view (`mergeParallelCore` applied unconditionally when USE_ME), while the
+`tiles` field used for drawing stays flat — no interference with the
+correctly-working gauge-based absolute self-positioning.
+
+**Verified (instrumented A/B in the same build, env-flag toggle, not a
+file swap — a first attempt via swapping files gave a false negative,
+likely a stale compiled directory; worth remembering when comparing
+builds by hand):**
+
+| | bodyHeight (per group) | full diagram (2 groups) |
+|---|---|---|
+| before (flat sum) | 116.53 | 191×407 |
+| after (clustered) | 58.27 | 191×291 |
+
+116px saved across the two groups, matching (116.53-58.27)×2 exactly.
+Reported diagram now renders tight (harness PNG, visual check). Full
+regression corpus re-run clean; parallel contact-line Y values unchanged
+(d2: 85.56; d4: 115.83/144.96).
+
+**Remaining Phase 3 gaps (unchanged):** group background (Blotter) still
+never drawn under USE_ME; group margins (legacy 4px ghost EmptyTiles)
+still unverified pixel-wise.
+
 ### 2026-07-11 — Phase 3 start: group-end notes + else-line width overflow
 
 **Report:** nested `alt`/`else` with `note right:` attached right after each
