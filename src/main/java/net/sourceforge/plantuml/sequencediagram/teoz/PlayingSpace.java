@@ -115,6 +115,19 @@ public class PlayingSpace implements Bordered {
 		final List<CommonTile> local = new ArrayList<>();
 		final List<CommonTile> full = new ArrayList<>();
 		final TimeHook y = GroupingTile.fillPositionelTiles(stringBounder, new TimeHook(startingY), tiles, local, full);
+		// TEMPORARY TRACE (YGAUGE debugging -- remove before commit)
+		if (YGauge.TRACE)
+			for (CommonTile tile : local)
+				System.err.println("YGAUGE-TRACE USE_ME=" + YGauge.USE_ME + " tile="
+						+ tile.getClass().getSimpleName() + " timeHook=" + tile.getTimeHook().getValue()
+						+ " prefHeight=" + tile.getPreferredHeight() + " contactRel="
+						+ tile.getContactPointRelative()
+						+ (YGauge.USE_ME ? " gauge=[" + tile.getYGauge().getMin().getCurrentValue() + ","
+								+ tile.getYGauge().getMax().getCurrentValue() + "] gaugeSpan="
+								+ (tile.getYGauge().getMax().getCurrentValue()
+										- tile.getYGauge().getMin().getCurrentValue())
+								: "")
+						+ " event=" + tile.getEvent());
 		for (CommonTile tile : local) {
 			if (YGauge.USE_ME) {
 				((CommonTile) tile).drawU(ug);

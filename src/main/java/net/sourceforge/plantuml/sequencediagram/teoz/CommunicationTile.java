@@ -91,16 +91,26 @@ public class CommunicationTile extends AbstractCommunicationTile {
 			livingSpace2.goCreate();
 
 		final ArrowComponent comp = getComponent(getStringBounder());
-		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double contactRelative = comp.getYPoint(getStringBounder());
+		// Use getPreferredHeight(), NOT comp.getPreferredDimension().getHeight():
+		// for a `create` message the tile is as tall as the CREATED PARTICIPANT'S
+		// HEAD (the box drawn at the arrow's end), which is taller than the arrow
+		// component itself -- see getPreferredHeight() below. Feeding the gauge
+		// the bare arrow height instead made it reserve ~18px less than the tile
+		// actually occupies, so every following tile chained too high (the whole
+		// diagram after a `create` was shifted up -- see YGAUGE.md). The gauge and
+		// getPreferredHeight() must always agree on the tile's extent.
+		// All the fields getPreferredHeight() reads (message, livingSpace2, skin,
+		// skinParam) are assigned above, so calling it here is safe.
+		final double height = getPreferredHeight();
 
 		// The contact line (arrow line) is published in the gauge; parallel (&)
 		// messages share it so that their arrows stay aligned like in the
 		// legacy TileParallel, whatever the label heights
 		if (message.isParallel())
-			this.yGauge = YGauge.createParallel(currentY, contactRelative, dim.getHeight());
+			this.yGauge = YGauge.createParallel(currentY, contactRelative, height);
 		else
-			this.yGauge = YGauge.createWithContact(currentY, contactRelative, dim.getHeight());
+			this.yGauge = YGauge.createWithContact(currentY, contactRelative, height);
 	}
 
 	@Override
