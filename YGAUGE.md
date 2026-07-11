@@ -187,6 +187,38 @@ across the `teoz` package.
 
 ## Session log
 
+### 2026-07-11 — Crash fix: RealMax must never enter the gauge chain (pdiff report #3)
+
+**Symptom:** `UnsupportedOperationException` at `RealMax.addAtLeast` ←
+`YGauge.createWithContact` ← `CommunicationTile.<init>`, on a group
+containing `&` messages: the tile FOLLOWING a parallel member chains from
+`currentY.getMax()`, which was a `RealMax` (built by `createParallel` via
+`RealUtils.max`).
+
+**Root cause (two-fold, the second one is the nasty one):**
+1. `RealMax` implements neither `addAtLeast` nor `ensureBiggerThan` —
+   immediate crash when chained.
+2. Even if it did, `RealMax.getCurrentValueInternal` CACHES its value on
+   first read. `PositiveForce.apply()` re-reads its fixed point at every
+   iteration of `RealLine.compile()`: a `RealMax` used as a force source
+   would freeze a stale value mid-solve → silently wrong layout. `RealMax`
+   / `RealMin` are post-compile, read-only combinators by design (the X
+   engine only reads them after `compileNow`).
+
+**Fix:** in `createParallel`, the group max is now a proper moveable Real:
+`max = min.addAtLeast(height)` + `max.ensureBiggerThan(currentY.getMax())`.
+Solver minimization computes the same maximum as `RealUtils.max`, while
+staying chainable and cache-free. Verified through the `RealDelta`
+delegation chain: `addAtLeast` preserves the offset and creates an
+independent moveable (pushing the group max does not move the contact
+line), `ensureBiggerThan`/`move` delegate down to the underlying
+`RealImpl`. All forces point forward: no cycle, `compile()` terminates.
+
+**Lesson (real package):** in a chained/constrained context, only use
+`addFixed` / `addAtLeast` / `ensureBiggerThan` on moveables.
+`RealUtils.max()/min()` are for post-compile reads only. A `RealMax`
+reaching a force is a silent-corruption hazard, not just a crash hazard.
+
 ### 2026-07-11 — Fix: parallel (&) contact-line alignment (pdiff report #2)
 
 **Symptom:** `A->B: <2-line label>` / `& B->C: <1-line label>` — under

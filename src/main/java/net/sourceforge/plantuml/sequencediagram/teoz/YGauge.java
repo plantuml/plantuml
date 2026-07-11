@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.real.Real;
-import net.sourceforge.plantuml.real.RealUtils;
 
 public final class YGauge {
 
@@ -106,7 +105,15 @@ public final class YGauge {
 
 		contact.ensureBiggerThan(origin.addFixed(contactRelative));
 		final Real min = contact.addFixed(-contactRelative);
-		final Real max = RealUtils.max(currentY.getMax(), min.addFixed(height));
+		// CAUTION: do NOT use RealUtils.max() here. RealMax is a post-compile,
+		// read-only combinator: addAtLeast/ensureBiggerThan are unsupported
+		// (would crash on the next chained tile) and its getCurrentValue is
+		// cached on first read, so using it as a PositiveForce source would
+		// freeze a stale value in the middle of RealLine.compile(). The group
+		// max is expressed instead as a moveable Real with two constraints:
+		// the solver minimization computes the same maximum.
+		final Real max = min.addAtLeast(height);
+		max.ensureBiggerThan(currentY.getMax());
 		return new YGauge(min, max, contact, origin);
 	}
 
