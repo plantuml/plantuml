@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="232px" preserveAspectRatio="none" style="width:445px;height:232px;background:#FFFFFF;" version="1.1" viewBox="0 0 445 232" width="445px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="117" style="stroke:#000;stroke-width:1.5;" width="412.075" x="13" y="51"/>
     <g>
       <title>Test</title>
       <rect fill="#000" fill-opacity="0" height="153" width="8" x="235.15" y="39"/>

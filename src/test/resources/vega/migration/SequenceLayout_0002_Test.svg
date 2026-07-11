@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="263px" preserveAspectRatio="none" style="width:262px;height:263px;background:#FFFFFF;" version="1.1" viewBox="0 0 262 263" width="262px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="65" style="stroke:#000;stroke-width:1.5;" width="125.544" x="116.619" y="51"/>
+    <rect fill="none" height="65" style="stroke:#000;stroke-width:1.5;" width="135.619" x="13" y="134"/>
     <g>
       <title>a</title>
       <rect fill="#000" fill-opacity="0" height="184" width="8" x="129.119" y="39"/>

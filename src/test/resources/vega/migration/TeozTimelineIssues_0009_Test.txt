@@ -17,6 +17,16 @@ RECTANGLE:
   backcolor: ffffffaa
 
 RECTANGLE:
+  pt1: [ 109.4110 ; 51.0000 ]
+  pt2: [ 397.2289 ; 104.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+RECTANGLE:
   pt1: [ 114.4110 ; 122.0000 ]
   pt2: [ 402.2289 ; 175.0000 ]
   xCorner: 0
@@ -25,6 +35,16 @@ RECTANGLE:
   shadow: 0
   color: ffffffaa
   backcolor: ffffffaa
+
+RECTANGLE:
+  pt1: [ 114.4110 ; 122.0000 ]
+  pt2: [ 402.2289 ; 175.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 109.4110 ; 193.0000 ]
@@ -37,6 +57,16 @@ RECTANGLE:
   backcolor: ffffffaa
 
 RECTANGLE:
+  pt1: [ 109.4110 ; 193.0000 ]
+  pt2: [ 402.2289 ; 246.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+RECTANGLE:
   pt1: [ 109.4110 ; 264.0000 ]
   pt2: [ 417.2289 ; 401.0000 ]
   xCorner: 0
@@ -45,6 +75,16 @@ RECTANGLE:
   shadow: 0
   color: ffffffaa
   backcolor: ffffffaa
+
+RECTANGLE:
+  pt1: [ 109.4110 ; 264.0000 ]
+  pt2: [ 417.2289 ; 401.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 109.4110 ; 419.0000 ]
@@ -57,6 +97,16 @@ RECTANGLE:
   backcolor: ffffffaa
 
 RECTANGLE:
+  pt1: [ 109.4110 ; 419.0000 ]
+  pt2: [ 402.2289 ; 486.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+RECTANGLE:
   pt1: [ 109.4110 ; 504.0000 ]
   pt2: [ 402.2289 ; 557.0000 ]
   xCorner: 0
@@ -65,6 +115,16 @@ RECTANGLE:
   shadow: 0
   color: ffffffaa
   backcolor: ffffffaa
+
+RECTANGLE:
+  pt1: [ 109.4110 ; 504.0000 ]
+  pt2: [ 402.2289 ; 557.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 109.4110 ; 575.0000 ]
@@ -77,6 +137,16 @@ RECTANGLE:
   backcolor: ffffffaa
 
 RECTANGLE:
+  pt1: [ 109.4110 ; 575.0000 ]
+  pt2: [ 402.2289 ; 712.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+RECTANGLE:
   pt1: [ 114.4110 ; 730.0000 ]
   pt2: [ 397.2289 ; 783.0000 ]
   xCorner: 0
@@ -85,6 +155,16 @@ RECTANGLE:
   shadow: 0
   color: ffffffaa
   backcolor: ffffffaa
+
+RECTANGLE:
+  pt1: [ 114.4110 ; 730.0000 ]
+  pt2: [ 397.2289 ; 783.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 126.9110 ; 39.0000 ]

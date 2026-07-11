@@ -2,7 +2,11 @@
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <rect fill="none" height="80" style="stroke:none;" width="364.113" x="10" y="51"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="184.825" y="61.111">p1</text>
+    <rect fill="none" height="80" style="stroke:#000;stroke-width:1.5;" width="364.113" x="10" y="51"/>
     <rect fill="none" height="53" style="stroke:none;" width="364.113" x="10" y="149"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="14.463" x="184.825" y="159.111">p2</text>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="364.113" x="10" y="149"/>
     <g>
       <title>a</title>
       <rect fill="#000" fill-opacity="0" height="187" width="8" x="133.038" y="39"/>

@@ -7,6 +7,26 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 RECTANGLE:
+  pt1: [ 236.9320 ; 51.0000 ]
+  pt2: [ 515.0504 ; 116.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 13.0000 ; 134.0000 ]
+  pt2: [ 268.9320 ; 199.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+RECTANGLE:
   pt1: [ 249.4320 ; 39.0000 ]
   pt2: [ 257.4320 ; 223.0000 ]
   xCorner: 0

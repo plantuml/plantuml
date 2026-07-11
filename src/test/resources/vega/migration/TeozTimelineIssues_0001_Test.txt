@@ -99,7 +99,7 @@ RECTANGLE:
 
 RECTANGLE:
   pt1: [ 418.4766 ; 165.0000 ]
-  pt2: [ 428.4766 ; 173.0000 ]
+  pt2: [ 428.4766 ; 178.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.0

@@ -2,13 +2,21 @@
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="144.3" x="37.65" y="51"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="144.3" x="37.65" y="51"/>
     <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="144.3" x="42.65" y="122"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="144.3" x="42.65" y="122"/>
     <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="149.3" x="37.65" y="193"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="193"/>
     <rect fill="#FFA" height="137" style="stroke:#FFA;stroke-width:1;" width="164.3" x="37.65" y="264"/>
+    <rect fill="none" height="137" style="stroke:#000;stroke-width:1.5;" width="164.3" x="37.65" y="264"/>
     <rect fill="#FFA" height="67" style="stroke:#FFA;stroke-width:1;" width="149.3" x="37.65" y="419"/>
+    <rect fill="none" height="67" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="419"/>
     <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="149.3" x="37.65" y="504"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="504"/>
     <rect fill="#FFA" height="137" style="stroke:#FFA;stroke-width:1;" width="149.3" x="37.65" y="575"/>
+    <rect fill="none" height="137" style="stroke:#000;stroke-width:1.5;" width="149.3" x="37.65" y="575"/>
     <rect fill="#FFA" height="53" style="stroke:#FFA;stroke-width:1;" width="139.3" x="42.65" y="730"/>
+    <rect fill="none" height="53" style="stroke:#000;stroke-width:1.5;" width="139.3" x="42.65" y="730"/>
     <g>
       <title>Participant_A</title>
       <rect fill="#000" fill-opacity="0" height="518" width="8" x="55.15" y="39"/>
