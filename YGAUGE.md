@@ -187,6 +187,18 @@ setting `USE_ME = false` again.
    the legacy traversal and substituting the gauge min inside
    `CommonTile.callbackY` (see session log).
 
+1b. **Group background (Blotter) — DONE (2026-07-11, see session log).**
+   `drawCompBackground`/the `Blotter` were only ever invoked from the
+   legacy (`USE_ME == false`) branch of `drawU`; under USE_ME the
+   `isBackground()` pass was silently ignored, so `#color` on `opt`/`alt`
+   and colored `else` sections never painted anything — only the header
+   tab kept its color (drawn unconditionally by `comp.drawU`, unrelated to
+   this path). Fixed by adding a USE_ME-aware branch in both
+   `drawBackground` and `drawCompBackground`, expressed in ABSOLUTE
+   coordinates (via `getFrameY()`) since `ug` arrives untranslated under
+   USE_ME, unlike legacy where the caller pre-translates to the frame's
+   TimeHook position.
+
 2. **Group margins — DONE (2026-07-11, see session log).** The two ghost
    `EmptyTile(4, ...)` provided 4px BEFORE the group frame and 4px AFTER it.
    Under USE_ME they are skipped (`TileBuilder.buildOne`), so BOTH halves had
@@ -284,6 +296,60 @@ setting `USE_ME = false` again.
   builds with `gradle build` and runs the visual comparisons.
 
 ## Session log
+
+### 2026-07-11 — Fix: group background colors (`#color`, colored `else` sections) never painted under USE_ME (known gap, now closed)
+
+**Report:** `opt#red #blue this is a test` / `else #olive sinon` / `else
+#green` — the `opt` header tab stayed red (correct), but the blue/olive/green
+body backgrounds were gone entirely, replaced by a plain white body with just
+a black border.
+
+**Root cause:** exactly the long-documented "Group background (Blotter)"
+gap. `GroupingTile.drawU`'s USE_ME branch never checked `isBackground()` at
+all — it unconditionally ran the same "draw header + notes" code on both the
+background pass and the foreground pass, and `drawBackground()` /
+`drawCompBackground()` (which build the `Blotter` from each else section's
+color and paint the body) were only ever called from the legacy `else`
+branch. So under USE_ME the Blotter simply never ran. The header tab's own
+color survived because `comp.drawU(...)` (drawing the `opt`/`alt` label
+itself, styled from `start.getUsedStyles()`) is unconditional in both
+branches and unrelated to the Blotter path.
+
+**Fix:**
+- `drawU`: when `isBackground()` is true under USE_ME, now also calls
+  `drawBackground(ug, area)` (previously unreachable from that branch).
+- `drawBackground`/`drawCompBackground`: given a USE_ME-aware branch. Under
+  USE_ME, `ug` arrives at `drawU` UNTRANSLATED — every tile self-translates
+  via its own absolute gauge (the "self-translate prologue" pattern) —
+  unlike legacy, where the OUTER caller pre-translates `ug` to the tile's
+  TimeHook position before calling `drawU`. So the Blotter (which paints its
+  bands from a LOCAL y=0) must be handed a `ug` explicitly translated to
+  `(frame left, getFrameY())`, not just the x-only offset the legacy branch
+  uses. Each else section's `ypos` is computed with the same frame-relative
+  formula already used by `drawAllElses` (`elseTile.getYGauge().getMin() -
+  getFrameY()`), NOT the legacy `getTimeHook()`-difference formula —
+  `getTimeHook()` under USE_ME is the CHAINING point (see the `&`-groups
+  session, above), not the frame top; only `getFrameY()` is.
+- The child-drawing loop previously duplicated inside the legacy branch of
+  `drawBackground` (with its own USE_ME/legacy split) is now legacy-only and
+  simplified: under USE_ME, `drawBackground` returns immediately after
+  painting the Blotter, and the ALREADY-EXISTING unconditional child loop at
+  the end of the outer `drawU` (which runs on every call regardless of pass,
+  same redundant-but-harmless double-draw as legacy always had for messages
+  and arrows) takes care of drawing children in both passes.
+
+**Not touched:** the frame's own dimensions (`getArea`/`getTotalHeight`) are
+unchanged — only what gets PAINTED inside that already-correct rectangle.
+
+**To verify (Arnaud, after `gradle build`):** the reported diagram should
+show the same three colored bands (blue / olive / green) as legacy. Also
+worth checking: a nested group with its own background color (background
+propagation through `ug` untouched, but never explicitly tested at 2+ levels
+of nesting), and a group with NO explicit color (should still show the
+style's default `sequenceGroupBodyBackground`, inherited via
+`getSkinParam().getHtmlColor(...)` upstream in `PlayingSpace.grouping`
+— unrelated to this fix but worth a glance since it shares the same code
+path).
 
 ### 2026-07-11 — Fix: `&` parallel groups drifted 4px lower per pair (regression from the group-margin fix)
 

@@ -259,6 +259,8 @@ public class GroupingTile extends AbstractTile {
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 
 		if (YGauge.USE_ME) {
+			if (((Context2D) ug).isBackground())
+				drawBackground(ug, area);
 			// The frame is drawn EXTERNAL_MARGINY below the gauge min (which is
 			// the chaining point, not the frame top -- see getFrameY)
 			comp.drawU(ug.apply(new UTranslate(minCurrentValueForDrawing(), getFrameY())), area, (Context2D) ug);
@@ -312,6 +314,18 @@ public class GroupingTile extends AbstractTile {
 		final Style style = start.getUsedStyles()[0];
 		final HColor back = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final double round = style.value(PName.RoundCorner).asDouble();
+		if (YGauge.USE_ME) {
+			// Under USE_ME, `ug` arrives UNTRANSLATED (each tile self-translates
+			// via its own absolute gauge, unlike legacy where the caller
+			// pre-translates to the group's TimeHook / frame top). So the
+			// Blotter -- which draws its bands from a LOCAL y=0 -- must be fed a
+			// `ug` explicitly translated to (frame left, frame top), not just an
+			// x offset like the legacy branch below. drawCompBackground's ypos
+			// formula mirrors drawAllElses's (frame-relative, via getFrameY()),
+			// not the legacy getTimeHook()-relative one.
+			drawCompBackground(ug.apply(UTranslate.dy(getFrameY())), area, back, round);
+			return;
+		}
 		drawCompBackground(ug, area, back, round);
 
 		final StringBounder stringBounder = ug.getStringBounder();
@@ -319,10 +333,7 @@ public class GroupingTile extends AbstractTile {
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 		double h = dim1.getHeight() + MARGINY_MAGIC / 2;
 		for (Tile tile : tiles) {
-			if (YGauge.USE_ME)
-				((UDrawable) tile).drawU(ug);
-			else
-				((UDrawable) tile).drawU(ug.apply(UTranslate.dy(h)));
+			((UDrawable) tile).drawU(ug.apply(UTranslate.dy(h)));
 			final double preferredHeight = tile.getPreferredHeight();
 			h += preferredHeight;
 		}
@@ -336,7 +347,14 @@ public class GroupingTile extends AbstractTile {
 		for (Tile tile : tiles)
 			if (tile instanceof ElseTile) {
 				final ElseTile elseTile = (ElseTile) tile;
-				final double ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
+				final double ypos;
+				if (YGauge.USE_ME)
+					// Same frame-relative formula as drawAllElses, NOT the legacy
+					// getTimeHook()-difference one (getTimeHook() under USE_ME is
+					// the CHAINING point, not the frame top -- see getFrameY).
+					ypos = elseTile.getYGauge().getMin().getCurrentValue() - getFrameY() + MARGINY_MAGIC / 2;
+				else
+					ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
 				HColor backElse = elseTile.getBackColorGeneral();
 				// An else section without its own color inherits the group
 				// background: it may come from the style, not only from the
@@ -348,6 +366,10 @@ public class GroupingTile extends AbstractTile {
 			}
 
 		blotter.closeChanges();
+		// Under USE_ME, `ug` was already translated to (frame left, frame top)
+		// by the caller (see drawBackground above); under legacy it arrives
+		// pre-translated to the frame top by the OUTER caller of drawU itself.
+		// Either way only the X offset is needed here.
 		blotter.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())));
 	}
 
