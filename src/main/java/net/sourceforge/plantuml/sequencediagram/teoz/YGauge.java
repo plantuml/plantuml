@@ -71,8 +71,29 @@ public final class YGauge {
 	public static YGauge create(Real min, double height) {
 		if (height < 0)
 			throw new IllegalArgumentException();
-		return new YGauge(min, min.addFixed(height));
+		// addAtLeast (not addFixed): see the note on chain anchoring below
+		return new YGauge(min, min.addAtLeast(height));
 	}
+
+	// CHAIN ANCHORING (performance-critical, do not "simplify" back to
+	// addFixed):
+	//
+	// RealDelta.addAtLeast() delegates DOWNWARD --
+	// `new RealDelta(delegated.addAtLeast(delta), diff)` -- so calling
+	// addAtLeast on a RealDelta recurses through every layer below it and
+	// rebuilds one RealDelta per layer. RealImpl.addAtLeast(), in contrast,
+	// creates a single new RealImpl in O(1).
+	//
+	// The Y gauge chain links each tile to the previous one, so the link
+	// carried from gauge to gauge (the `max`, which becomes the next tile's
+	// `origin`) must ALWAYS be an anchored moveable (RealImpl), never a
+	// RealDelta. Otherwise every tile stacks one more RealDelta layer and
+	// tile n pays O(n) to chain: O(n^2) objects, O(n) recursion depth, and
+	// the OutOfMemoryError / deep `RealDelta.addAtLeast` stack seen on large
+	// diagrams (see YGAUGE.md).
+	//
+	// addFixed remains fine for LEAF values that nothing chains onto (e.g.
+	// the `min` below, read only for drawing).
 
 	// For tiles owning a contact line (message arrows). The min FLOATS below
 	// the chaining origin: contact = origin.addAtLeast(contactRelative), so
@@ -86,8 +107,14 @@ public final class YGauge {
 			throw new IllegalArgumentException();
 		final Real origin = currentY.getMax();
 		final Real contact = origin.addAtLeast(contactRelative);
+		// min is a leaf (drawing only): addFixed is safe and keeps it exactly
+		// contactRelative above the contact line
 		final Real min = contact.addFixed(-contactRelative);
-		return new YGauge(min, min.addFixed(height), contact, origin);
+		// max is the chain link: it MUST be an anchored moveable, so it is
+		// built with addAtLeast on the contact (a RealImpl), not with addFixed
+		// on min (a RealDelta)
+		final Real max = contact.addAtLeast(height - contactRelative);
+		return new YGauge(min, max, contact, origin);
 	}
 
 	// For a parallel (&) tile: aligns its contact line with the shared
@@ -112,7 +139,9 @@ public final class YGauge {
 		// freeze a stale value in the middle of RealLine.compile(). The group
 		// max is expressed instead as a moveable Real with two constraints:
 		// the solver minimization computes the same maximum.
-		final Real max = min.addAtLeast(height);
+		// It is built from the contact (a RealImpl) so that the chain link
+		// stays anchored -- see the CHAIN ANCHORING note above.
+		final Real max = contact.addAtLeast(height - contactRelative);
 		max.ensureBiggerThan(currentY.getMax());
 		return new YGauge(min, max, contact, origin);
 	}
@@ -125,7 +154,8 @@ public final class YGauge {
 		if (height < 0)
 			throw new IllegalArgumentException();
 		final Real min = currentY.getMax();
-		return new YGauge(min, min.addFixed(height), currentY.getContact(), currentY.getOrigin());
+		// addAtLeast: the max is a chain link (see CHAIN ANCHORING above)
+		return new YGauge(min, min.addAtLeast(height), currentY.getContact(), currentY.getOrigin());
 	}
 
 	public final Real getMin() {

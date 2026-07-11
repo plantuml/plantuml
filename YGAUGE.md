@@ -187,6 +187,175 @@ across the `teoz` package.
 
 ## Session log
 
+### 2026-07-11 — OOM / O(n^2): chain links must be anchored moveables (pdiff report #6)
+
+**Symptom:** `OutOfMemoryError: Java heap space` on a large diagram (45k
+lines), with a stack trace made almost entirely of repeated
+`RealDelta.addAtLeast(RealDelta.java:55)` frames.
+
+**First hypothesis (WRONG, but partially useful):** debug-name
+concatenation. `RealDelta`'s ctor built its name as
+`"[Delegated {" + delegated.getName() + "} ...]"` and
+`RealImpl.addAtLeast` as `getName() + ".addAtLeast" + delta`, so each name
+embedded its whole ancestry: O(n^2) retained characters along a long
+chain. Fixed (names are now O(1); identity for debugging still comes from
+`RealMoveable`'s atomic counter `#123_...`). This alone did NOT fix the
+OOM — good hygiene, wrong root cause.
+
+**Second hypothesis (WRONG, worth recording):** too many forces / a
+degenerate `RealLine.compile()`, hence the idea of deduplicating forces or
+replacing `List<PositiveForce>`. MEASURED AND DISPROVED: instrumenting
+`compile()` gives, for n=400 messages, `forces=404 passes=2 ms=2`. The
+force list is linear in n and the relaxation converges in two passes. The
+solver is NOT the bottleneck; no dedup / no new data structure is needed.
+(Keeping this negative result so the idea is not re-attempted.)
+
+**Actual root cause (found by stack sampling):** the hot spot is
+`RealDelta.addAtLeast`, called from `YGauge.createWithContact`. Look at
+the two implementations:
+
+```java
+// RealImpl: O(1), creates one anchored moveable
+public Real addAtLeast(double delta) {
+    final RealImpl result = new RealImpl(..., this.currentValue + delta);
+    getLine().addForce(new PositiveForce(this, result, delta));
+    return result;
+}
+
+// RealDelta: delegates DOWNWARD, rebuilding one RealDelta per layer
+public Real addAtLeast(double delta) {
+    return new RealDelta(delegated.addAtLeast(delta), diff);
+}
+```
+
+The gauges chained tile n onto tile n-1 through a `max` built with
+`min.addFixed(height)` — i.e. a `RealDelta`. So every tile added one more
+`RealDelta` layer, and the `origin.addAtLeast(...)` of tile n recursed
+through all n layers below, allocating n new RealDeltas on the way:
+**O(n^2) objects and O(n) recursion depth**, which is exactly the observed
+OOM and the repeated-frame stack.
+
+**Fix — CHAIN ANCHORING invariant (documented in YGauge):** anything
+carried from one gauge to the next (the `max`, which becomes the next
+tile's `origin`) MUST be an anchored moveable (`RealImpl`), never a
+`RealDelta`. Concretely, in `create`, `createWithContact`,
+`createParallel` and `createPropagating`, the `max` is now built with
+`addAtLeast` (on the contact, itself a `RealImpl`) instead of `addFixed`.
+`addFixed` remains fine for LEAF values nothing chains onto (the `min`,
+read only for drawing).
+
+Note `addAtLeast(height - contactRelative)` from the contact is
+semantically the same lower bound as `addFixed(height)` from the min
+(min = contact - contactRelative), and solver minimization makes it an
+equality in the absence of other constraints.
+
+**Measured (harness, -Xmx512m):**
+
+| n messages | before | after |
+|---|---|---|
+| 100 | 1666 ms | 1484 ms |
+| 400 | 9725 ms | 2031 ms |
+| 1600 | OOM / timeout | 3821 ms |
+| 6000 | OOM | 10.7 s (2.3 MB SVG) |
+| 20000 | OOM | 50.8 s (7.6 MB SVG) |
+
+Quadratic → near-linear. Full regression corpus re-run: all pass, and the
+parallel arrow-line Y values are bit-identical to before the fix (d2:
+85.56; d4: 115.83 / 144.96), so contact-alignment semantics are preserved.
+
+**Lesson:** in the `real` package, `addFixed` produces a `RealDelta`
+(a lazy view, cheap to make but expensive to build ON), while `addAtLeast`
+produces a `RealImpl` (an anchored moveable, O(1) to build on). Never grow
+a long chain through `RealDelta`.
+
+### 2026-07-11 — Hardening: ULP-scaled tolerance + stale-build suspicion (pdiff report #5)
+
+**Report:** same `Infinite Loop?` signature on a sprite-heavy diagram
+(`<$circle,scale=2>`, `<:rocket:scale=2>`, `<&box,scale=2>`), with Arnaud
+reporting the previous epsilon fix "changes nothing".
+
+**Local repro:** rebuilt the harness (clone + branch teoz files + fix),
+this exact diagram renders cleanly with the 1e-6 fix already in place —
+no second bug found. The magnitudes in the reported force dump (66.0,
+48.25, 29.83…) have an absorption threshold many orders of magnitude
+below 1e-6, so the fix should categorically prevent this trace.
+
+**Suspicion raised:** the crash report header reads literally
+`PlantUML ($version$) has crashed` (unsubstituted placeholder) and the
+stack traces through `zdev.Test_0.testExecute` via a raw JUnit
+launcher — consistent with a test run against stale/uncompiled classes
+rather than a full Gradle build+jar. Asked Arnaud to confirm a clean
+rebuild picked up the `PositiveForce.java` change before investigating
+further as a distinct bug.
+
+**Hardening applied regardless:** the fixed 1e-6 tolerance is fine for
+ordinary diagrams but has no formal guarantee of dominating the
+accumulated absorption error on very large ones (many chained forces
+compounding rounding). Replaced with a magnitude-scaled tolerance:
+
+```java
+final double epsilon = Math.max(0.000001,
+        1000 * Math.ulp(Math.max(Math.abs(movingPointValue), Math.abs(fixedPointValue))));
+if (diff >= -epsilon) { ... }
+```
+
+1000 ULPs of the larger operand is far above any single-addition rounding
+error yet still many orders of magnitude below one pixel at any diagram
+size. Falls back to the flat 1e-6 for values near zero (where ULP is
+tiny) so tiny diagrams keep the same guarantee as before.
+
+**Re-validated full regression corpus** (diag/cog+wifi+newpage, delay,
+parallel contact, group+parallel, inverse-parallel+activate, this sprite
+case): all six render cleanly with the hardened epsilon.
+
+### 2026-07-11 — Crash fix: floating-point absorption in PositiveForce (pdiff report #4)
+
+**Symptom:** `IllegalStateException: Infinite Loop?` in `RealLine.compile`
+(yorigin) on a plain sequential diagram (`<&cog>` labels + `newpage`, no
+parallel at all) — theoretically impossible, the Y chain is strictly
+forward (`addAtLeast` forces only, no cycle).
+
+**Investigation:** reproduced locally (harness: GitHub master clone + the
+branch's modified teoz files + snapshot jar on the classpath, compiled
+with javac; the crashing force dump from `RealLine.printCounter` +
+instrumented `PositiveForce.apply`). The smoking gun:
+
+```
+moving val=78.06510416666666  fixed fval=56.932291666666664  min=21.1328125
+-> move 7.105427357601002E-15    (forever)
+```
+
+**Root cause: floating-point absorption in the fixed-point iteration.**
+Floating addition is not associative: a chained value initialized as
+`((x+a)+b)` can differ by a few ULPs from the later constraint check
+`(x') + b`. Here the violation was 7.1e-15, but the ULP of 78.06 is
+~1.4e-14: `currentValue += 7.1e-15` does not change a single bit. The
+force detects `diff < 0`, moves, nothing changes, fires forever. This is
+a LATENT ENGINE BUG (strict `diff >= 0` comparison) that the X engine
+never happened to trigger in years; the Y contact chains (long addAtLeast
+sequences whose initial values are computed before upstream moves) expose
+it deterministically.
+
+**Fix:** tolerance in `PositiveForce.apply`: `if (diff >= -0.000001)`.
+One microdot of slack, invisible at any zoom, guarantees convergence.
+NOTE: this touches the SHARED real engine (X constraints too) — pdiff
+must re-verify legacy USE_ME=false full-corpus iso (expected strictly
+identical: a force satisfied within 1e-6 was producing sub-ULP moves
+anyway).
+
+**Validated in the local harness:** the crashing diagram renders; delay
+case (report #1), parallel contact case (report #2, single shared arrow
+line y=85.56), group+parallel case (report #3), and the inverse-parallel
+case (& message with the TALLER 4-line label + activate + following
+message: both arrows share y=115.83, next message at y=144.96 below the
+whole group) all pass.
+
+**Tooling note:** a local repro rig now exists (clone master, drop in the
+branch's teoz files, compile teoz+real with javac against
+plantuml-SNAPSHOT.jar, shadow via classpath order) — rebuildable in
+minutes, very effective for force-level debugging with
+`RealLine.printCounter`.
+
 ### 2026-07-11 — Crash fix: RealMax must never enter the gauge chain (pdiff report #3)
 
 **Symptom:** `UnsupportedOperationException` at `RealMax.addAtLeast` ←
