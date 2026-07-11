@@ -205,6 +205,52 @@ setting `USE_ME = false` again.
 
 ## Session log
 
+### 2026-07-11 — Fix: standalone `& note ...` ignored parallel chaining (same bug class as GroupingTile)
+
+**Report (with screenshot):** `{start} Alice -> Bob: start` / `& note right
+of Bob: starting` / `{end} Bob -> Alice: finish` / `{start} <-> {end}: some
+time` — with the note attached via a separate `& note ...` line (as opposed
+to the `note right:` suffix form fixed in the previous session), the
+`finish` message was pushed well below `start` — not just the `some time`
+anchor, the whole diagram's vertical layout was stretched, with the note
+sitting between the two arrows instead of beside the first one.
+
+**Root cause: exactly the same bug class as the `GroupingTile` fix, above,
+just in a different class.** A standalone note (`Note` event, built into a
+plain `NoteTile` — as opposed to a `note right:`/`note left:` suffix on a
+message, which builds a `CommunicationTileNoteRight/Left` WRAPPING the
+message tile) can also carry `&` (`note.goParallel()`, parsed correctly in
+`FactorySequenceNoteCommand`, confirmed). But `NoteTile`'s constructor
+never checked `note.isParallel()`: it unconditionally built its gauge as
+`YGauge.create(currentY.getMax(), getPreferredHeight())` — sequential
+chaining only, same oversight as `GroupingTile` had. So `& note right of
+Bob: ...` chained BELOW the `start` message instead of beside it, pushing
+every subsequent tile (`finish`, and the `{start}<->{end}` anchor which
+reads both tiles' now-inflated gauges) down by the note's height.
+
+**Fix (`NoteTile` constructor):** mirrors `CommunicationTile` exactly —
+`getContactPointRelative()` (already defined: the note's own vertical
+center) is used as the contact offset, and the gauge is built with
+`YGauge.createParallel(currentY, contactRelative, height)` when
+`note.isParallel()`, `YGauge.createWithContact(currentY, contactRelative,
+height)` otherwise (numerically identical to the old `YGauge.create(...)`
+in the non-parallel case — verified `min` lands on the same value via
+solver minimization, so plain untouched notes are unaffected).
+
+**Not yet touched:** `NotesTile` (the OVER_SEVERAL / multi-line `Notes`
+container, a distinct class from `NoteTile`) was not audited — no
+`& notes ...` report so far, but worth checking given the pattern is now
+three-for-three (`CommunicationTile*` was ported, `GroupingTile` and
+`NoteTile` were not). A quick grep of every `TileBuilder.buildOne` branch
+for `currentY.getMax()` used unconditionally (ignoring the event's own
+`isParallel()`) would probably find any remaining instances at once,
+rather than waiting for each one to be reported individually.
+
+**To verify (Arnaud, after `gradle build`):** the reported diagram should
+now render with `start`/`finish` at their original spacing and the note
+beside the first arrow, regardless of whether the note is written as a
+`note right:` suffix or a separate `& note right of ...` line.
+
 ### 2026-07-11 — Fix: LinkAnchor ({start}/{end} <->) misaligned when either end has a note
 
 **Report (with screenshot):** `{start} Alice -> Bob: start` / `note right:
