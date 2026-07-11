@@ -117,7 +117,7 @@ public class PlayingSpace implements Bordered {
 		final TimeHook y = GroupingTile.fillPositionelTiles(stringBounder, new TimeHook(startingY), tiles, local, full);
 		// TEMPORARY TRACE (YGAUGE debugging -- remove before commit)
 		if (YGauge.TRACE)
-			for (CommonTile tile : local)
+			for (CommonTile tile : full)
 				System.err.println("YGAUGE-TRACE USE_ME=" + YGauge.USE_ME + " tile="
 						+ tile.getClass().getSimpleName() + " timeHook=" + tile.getTimeHook().getValue()
 						+ " prefHeight=" + tile.getPreferredHeight() + " contactRel="

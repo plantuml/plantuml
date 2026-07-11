@@ -2,6 +2,31 @@
 
 Living engineering log. Branch dedicated to the `YGauge` experiment.
 
+## Context: Teoz is the ONLY sequence engine now
+
+`GlobalConfig.FORCE_TEOZ = true`, and `SequenceDiagram.modeTeoz()` returns
+`GlobalConfig.FORCE_TEOZ || pragma`, so it is ALWAYS true.
+`SequenceDiagramFileMakerPuma2` (the legacy "Puma" engine) is therefore dead
+code and can never be reached for sequence diagrams. This matters when
+reading the codebase:
+
+- Any `boolean teoz` flag threaded through the skin components is always
+  `true` in practice. In particular `ComponentRoseGroupingElse` and
+  `ComponentRoseGroupingHeader` take such a flag, and their `teoz == false`
+  branches are dead.
+- Correspondingly, `ComponentType.GROUPING_ELSE_LEGACY` and
+  `GROUPING_HEADER_LEGACY` are never requested (only the `..._TEOZ` variants
+  are, from `ElseTile` / `GroupingTile`).
+- So a behaviour that looks like "the legacy engine did X" may in fact be
+  unreachable. Do NOT reason about a difference by comparing against Puma —
+  the only meaningful comparison is `YGauge.USE_ME = true` vs `false`, which
+  are two Y-positioning strategies WITHIN Teoz, both using the same teoz skin
+  components.
+
+Beware of the vocabulary clash: in this document "legacy" almost always means
+**`USE_ME = false`** (the old TimeHook-based Y positioning inside Teoz), NOT
+the Puma engine.
+
 ## Goal
 
 Make Y symmetric with X in the Teoz sequence diagram engine: replace the
@@ -15,6 +40,46 @@ The switch is `YGauge.USE_ME` (currently `true` — flipped in the Phase 5
 session below; several mentions further down in this doc still say
 "currently false" and are stale, kept for historical trace of when each
 section was written), guarding ~29 references across the `teoz` package.
+
+## Invariants
+
+Three rules that every tile must satisfy. Each was learned the hard way —
+see the session log for the bug that taught it.
+
+1. **GAUGE SPAN == PREFERRED HEIGHT.** A tile's gauge span
+   (`getYGauge().getMax() - getYGauge().getMin()`) MUST equal its
+   `getPreferredHeight()`. These are two independent computations of "how
+   tall is this tile" — the first drives POSITIONING (where the next tile
+   chains), the second drives RESERVATION (what a parent's `bodyHeight` sum
+   and the total-height computation see). Whenever they drift apart, every
+   tile after the culprit is mispositioned. In practice: build the gauge
+   with `getPreferredHeight()`, never with a locally recomputed dimension
+   (`comp.getPreferredDimension(...).getHeight()`), because
+   `getPreferredHeight()` often applies extra rules the local dimension
+   misses (e.g. `Math.max` with the created participant's head for a
+   `create` message). Enable `YGauge.TRACE` to print `gaugeSpan` next to
+   `prefHeight` for every top-level tile.
+
+2. **RESERVING SPACE AND POSITIONING CONTENT ARE SEPARATE OBLIGATIONS.**
+   Restoring a legacy spacer (the ghost `EmptyTile`s) requires BOTH: adding
+   the space to `getPreferredHeight()` (so the chain reserves it) AND
+   offsetting the gauge's `min` (so the drawn content actually moves). Doing
+   only the first leaves the content flush against whatever precedes it —
+   invisible in most diagrams, lethal at a `newpage` clip boundary. When the
+   `min` is offset, the `max` must stay anchored on the ORIGINAL chaining
+   point, not on the offset `min`, or the leading margin is counted twice.
+
+3. **CHAIN ANCHORING** (performance). Anything carried from one gauge to the
+   next (the `max`, which becomes the next tile's `origin`) MUST be an
+   anchored moveable (`RealImpl`, built with `addAtLeast`), never a
+   `RealDelta` (built with `addFixed`). `RealDelta.addAtLeast` delegates
+   downward and rebuilds one layer per level, so chaining through it is
+   O(n^2) in objects and O(n) in recursion depth — OOM on large diagrams.
+   `addFixed` is fine for LEAF values nothing chains onto (typically the
+   `min`, read only for drawing). `RealUtils.max()/min()` produce
+   `RealMax`/`RealMin`, which are post-compile read-only combinators: they
+   must NEVER enter the chain (they cache their value and reject
+   `addAtLeast`/`ensureBiggerThan`).
 
 ## The problem being solved (why USE_ME exists)
 
@@ -195,6 +260,10 @@ setting `USE_ME = false` again.
   called unconditionally from a few call sites, see `GroupingTile`). Do not
   delete until every "Known gaps" item above is closed and a full pdiff
   pass confirms no remaining call site depends on the legacy path.
+  While cleaning, note that the `teoz == false` branches of the skin
+  components (`ComponentRoseGroupingElse`, `ComponentRoseGroupingHeader`) and
+  the `..._LEGACY` `ComponentType`s are dead too (see "Context" at the top),
+  though they belong to the separate Puma-removal cleanup, not to this one.
 
 ## Rules of engagement
 
@@ -209,6 +278,177 @@ setting `USE_ME = false` again.
   builds with `gradle build` and runs the visual comparisons.
 
 ## Session log
+
+### 2026-07-11 — Investigation (no code change): extra space between `[else]` and the next message is EXPECTED
+
+**Report:** in `opt / ok0 / ok1 / else toto / ok2 / end`, the gap between the
+`[toto]` else label and the `ok2` arrow looked larger than before.
+
+**Measured, both modes — IDENTICAL:**
+
+| tile | USE_ME=true | USE_ME=false |
+|---|---|---|
+| coucou2 | 8.0 | 8.0 |
+| GroupingTile | 42.3515625 | 42.3515625 |
+| ok0 | 70.703125 | 70.703125 |
+| ok1 | 101.0546875 | 101.0546875 |
+| ElseTile | **131.40625** | **131.40625** |
+| ok2 | **163.2421875** | **163.2421875** |
+
+The else→ok2 delta is 31.8359375 in BOTH modes (= `ElseTile`'s own
+`getPreferredHeight()`). Same position, same spacing. Confirmed the drawing
+is identical too: `ComponentRoseGroupingElse.drawInternalU()` reads only the
+Area's WIDTH, never its height (dashed line at `dy(1)`, label at
+`getOldPaddingY() + 2`), so the fact that the legacy path stretches the Area
+down to the next else (`drawAllElses`) while `ElseTile.drawU` sizes it to the
+component's own height changes nothing visually.
+
+**So the else spacing did NOT regress.** What DID change is the group frame:
+`GroupingTile.getPreferredHeight()` is now 169.24 vs 161.24 (the +8px of
+restored margins) and the gauge min is offset +4px — exactly the ghost
+`EmptyTile(4)` spacers legacy materialized (visible in the USE_ME=false trace
+at y=38.35 and y=203.59). The frame now correctly encloses its 4px top and
+bottom margins, which shifts the frame border relative to its contents and
+makes the layout LOOK different even though every tile is at the same Y. The
+reported screenshot's "before" was almost certainly taken before those fixes.
+
+**Verdict: working as intended, no change made.**
+
+**Adjacent observation, worth recording:** `ElseTile.getPreferredHeight()` is
+31.84px for what is drawn as just a dashed line plus a small `[toto]` label.
+16 of those pixels come from a hardcoded `+16` in
+`ComponentRoseGroupingElse.getPreferredHeight()` (the `teoz` branch — i.e.
+the only live one, see "Context" at the top of this doc). That is a lot of
+dead air under the label, and it is PRE-EXISTING (identical in both USE_ME
+modes, unrelated to the gauge migration). If the spacing is ever judged too
+generous aesthetically, that `+16` is the knob — not anything in YGauge. Left
+untouched: it is a rendering choice, not a bug, and changing it would shift
+every `else` in every diagram.
+
+### 2026-07-11 — Systematic audit: gauge span vs getPreferredHeight() across every tile class
+
+Following the `create` bug (below), a full pass over every tile class to check
+the invariant **a tile's gauge span (`max - min`) MUST equal its
+`getPreferredHeight()`**. Method: read every constructor that builds a
+`yGauge` and compare the height it feeds the gauge against what
+`getPreferredHeight()` returns.
+
+**Conformant (14 classes)** — all build their gauge from `getPreferredHeight()`
+or an exact equivalent: `CommunicationTileSelf`, `CommunicationExoTile`,
+`NotesTile`, `DividerTile`, `DelayTile`, `HSpaceTile`, `ReferenceTile`,
+`LifeEventTile`, `ElseTile`, `NewpageTile`, `EmptyTile`, the five note
+wrappers (`NoteLeft`/`NoteRight`/`SelfNoteLeft`/`SelfNoteRight`/
+`NoteBottomTopAbstract`), plus `GroupingTile` and `CommunicationTile` after
+their respective fixes. Notably `CommunicationTileSelf` and
+`CommunicationExoTile` ALREADY called `getPreferredHeight()` — the omission
+was isolated to `CommunicationTile`, which is why only `create` broke.
+
+**`PartitionTile`** — conformant by inheritance. It extends `GroupingTile`
+and overrides neither `getPreferredHeight()` nor the gauge, so it picked up
+the group-margin fix for free. It DOES override `getComponent()` with a
+stub whose `getPreferredDimension()` is a hardcoded `(10, 10)`, so its
+header is 10px rather than the real title height — but `getTotalHeight()`
+and `getPreferredHeight()` both read that same `getComponent()`, so they
+agree and the invariant holds. This also resolves the "PartitionTile not
+audited" caveat left in the `&`-parallel-group session: the
+`start.isParallel()` branch is inherited too, so `partition ... & partition
+...` works without further change.
+
+**`TileMarged` — dead code, left alone deliberately.** It has NO `yGauge` at
+all (its ctor calls the `super(stringBounder)` overload without `currentY`),
+so `getYGauge()` hits `AbstractTile`'s `UnsupportedOperationException`
+guard. Its `getPreferredHeight()` is `tile.getPreferredHeight() + y1 + y2`,
+i.e. it adds vertical margins — so if it were ever revived it would need
+BOTH halves of the group-margin treatment (reserve `y1 + y2`, AND offset the
+gauge min by `y1`). Verified it is instantiated NOWHERE (not in
+`TileBuilder`, not anywhere else). Adding an untested gauge to dead code
+would be worse than the current fail-fast guard, so it stays as is — flagged
+here in case it is ever brought back.
+
+**`AbstractTile.getZZZ()` — the invariant, restated.**
+
+```java
+final public double getZZZ() {
+    final double result = getPreferredHeight() - getContactPointRelative();
+    if (TeaVM.a()) assert result >= 0;
+    return result;
+}
+```
+
+This asserts the contact point falls WITHIN the tile's height — the same
+invariant from the other side. It is only reachable through
+`TileParallel.getPreferredHeight()`, a dead path under USE_ME
+(`mergeParallel` is a no-op), so it cannot fire today. Worth knowing it
+exists: `AbstractTile.getContactPointRelative()` defaults to `-1`, which
+would make `getZZZ()` return `height + 1` for any tile that forgot to
+override it.
+
+**Net result of the audit: no new bugs found beyond the two already fixed.**
+The invariant now holds across every live tile class. Worth re-running this
+check (the `YGauge.TRACE` flag prints `gaugeSpan` next to `prefHeight`
+precisely for this) after any new tile class is added.
+
+### 2026-07-11 — Fix: `create` messages under-reserved their gauge height (everything after a `create` shifted up)
+
+**Report (with screenshot):** `create toto` / `Bob -> toto` / `toto -> v1 :
+meesage` + a 3-line `note right` — the `meesage` arrow and its note were
+visibly higher / offset compared to legacy.
+
+**Method:** added a `YGauge.TRACE` flag (kept, defaulting to `false`) that
+makes `PlayingSpace.drawUInternal` dump every top-level tile's `timeHook`,
+`getPreferredHeight()`, `getContactPointRelative()` and gauge `[min,max]`
+plus the derived `gaugeSpan` (= `max - min`). One run was enough:
+
+```
+tile=CommunicationTile prefHeight=32.609375 gauge=[8.0,22.0] gaugeSpan=14.0   Bob->toto   <-- MISMATCH
+tile=CommunicationTileNoteRight prefHeight=69.0546875 gauge=[22.0,91.05] gaugeSpan=69.05   toto->v1
+tile=CommunicationTile prefHeight=30.3515625 gauge=[91.05,121.40] gaugeSpan=30.35          toto->azer
+```
+
+Every tile has `gaugeSpan == prefHeight` — EXCEPT the `create` message, which
+reserves **14.0** in its gauge while declaring **32.609375**. An 18.6px
+deficit, which every following tile inherits by chaining on the too-small
+`max` (22.0 instead of 40.6).
+
+**Root cause:** `CommunicationTile.getPreferredHeight()` accounts for the
+CREATED participant's head (the box drawn at the arrow's end, taller than the
+arrow component itself):
+
+```java
+double height = dim.getHeight();                    // 14.0, the arrow alone
+if (isCreate())
+    height = Math.max(height,
+            livingSpace2.getHeadPreferredDimension(...).getHeight());  // 32.609375
+```
+
+but the constructor built the gauge from the bare arrow dimension
+(`comp.getPreferredDimension(...).getHeight()`), bypassing that `Math.max`.
+So the gauge and `getPreferredHeight()` disagreed on the tile's extent — the
+same failure mode as the group-margin bug, once again caused by two
+independent computations of "how tall is this tile" drifting apart in one
+specific case (here: `create`).
+
+**Fix (`CommunicationTile` ctor):** the gauge is now built with
+`getPreferredHeight()` instead of `dim.getHeight()`. All the fields that
+method reads (`message`, `livingSpace2`, `skin`, `skinParam`) are assigned
+before the call, so it is safe from the constructor. The contact line is
+unaffected (`contactRelative` still comes from `comp.getYPoint(...)`), so the
+arrow itself does not move: `createWithContact` keeps `min = contact -
+contactRelative` and simply extends `max` to `contact + (height -
+contactRelative)`, growing the reservation BELOW the arrow to cover the
+created participant's box. Exactly the intent.
+
+**Invariant worth stating explicitly (recurring theme in this migration):**
+*a tile's gauge span MUST equal its `getPreferredHeight()`.* Three separate
+bugs so far (group margins, and now `create`) were instances of these two
+drifting apart. The `TRACE` flag prints `gaugeSpan` next to `prefHeight`
+precisely so the mismatch is greppable at a glance — worth a systematic pass
+over every tile class rather than waiting for each case to be reported.
+
+**To verify (Arnaud, after `gradle build`):** the reported diagram should
+now match legacy. Worth also checking `create` combined with: a reverse
+create (`toto <- Bob`), a create with a note, and a create inside a group —
+none were covered by the reported case.
 
 ### 2026-07-11 — Fix: black bar under the newpage separator — group frames were flush against the page clip boundary (gap #2, now fully closed)
 
