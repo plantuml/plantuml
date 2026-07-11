@@ -205,6 +205,54 @@ setting `USE_ME = false` again.
 
 ## Session log
 
+### 2026-07-11 — Fix: LinkAnchor ({start}/{end} <->) misaligned when either end has a note
+
+**Report (with screenshot):** `{start} Alice -> Bob: start` / `note right:
+starting` / `{end} Bob -> Alice: finish` / `{start} <-> {end}: some time` —
+the `some time` double-arrow (and the note itself) sat lower than expected
+as soon as a note was attached to one of the anchored messages.
+
+**Root cause:** `LinkAnchor.drawAnchor`'s USE_ME branch computed each
+anchor's Y as the MIDPOINT of the tile's `[min, max]` gauge interval, plus
+`getContactPointRelative()`:
+
+```java
+y1 = (tile1.getYGauge().getMin().getCurrentValue()
+        + tile1.getYGauge().getMax().getCurrentValue()) / 2
+        + tile1.getContactPointRelative();
+```
+
+But the legacy formula this was meant to reproduce is
+`getTimeHook().getValue() + getContactPointRelative()`, and
+`getTimeHook()` under USE_ME returns the gauge's `min` (substituted in
+`CommonTile.callbackY`, see the Phase 2 session) — not the midpoint. For a
+plain, note-less message the midpoint happens to sit close to the real
+arrow line purely by coincidence (`contactPointRelative` is roughly half
+the tile's own preferred height for an unadorned message), which is why
+this went unnoticed until a `note right:`/`note left:` on an anchored
+message grows the tile's `max` (note height) without moving the arrow
+itself — exposing the gap between the midpoint and the true contact line.
+Same class of bug as the earlier note-wrapper contact-propagation fix
+(pdiff-adjacent session, above): note wrappers keep `min` identical to the
+wrapped message's own `min` specifically so formulas like this stay valid,
+but this call site was reading `max` too and averaging, which defeats that
+invariant.
+
+**Fix:** `y1`/`y2` are now `tile.getYGauge().getMin().getCurrentValue() +
+tile.getContactPointRelative()` — the direct, non-averaged translation of
+the legacy formula. Verified the delegation chain for a noted message:
+`CommunicationTileNoteRight.getContactPointRelative()` delegates to the
+wrapped tile, and its `yGauge.getMin()` is IDENTICAL to the wrapped tile's
+own `min` (set in that class's constructor), so the formula lands on the
+same Y whether or not a note is attached.
+
+**To verify (Arnaud, after `gradle build`):** the reported diagram should
+now render the `some time` anchor arrow at the same Y as before adding the
+note (i.e. right at the `start`/`finish` arrows' own height), regardless of
+the `note right:` on the first message. Also worth a quick check with a
+note on the SECOND ({end}) message instead, and with both ends noted, to
+confirm the fix isn't one-sided.
+
 ### 2026-07-11 — Fix: whole groups (opt/alt/...) ignored `&` parallel chaining
 
 **Correction to this doc:** `YGauge.USE_ME` is actually `true` in the current

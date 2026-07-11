@@ -85,10 +85,17 @@ public class LinkAnchor {
 		final double y1;
 		final double y2;
 		if (YGauge.USE_ME) {
-			y1 = (tile1.getYGauge().getMin().getCurrentValue() + tile1.getYGauge().getMax().getCurrentValue()) / 2
-					+ tile1.getContactPointRelative();
-			y2 = (tile2.getYGauge().getMin().getCurrentValue() + tile2.getYGauge().getMax().getCurrentValue()) / 2
-					+ tile2.getContactPointRelative();
+			// getTimeHook() under USE_ME returns the gauge min (substituted by
+			// CommonTile.callbackY), so the direct gauge-based equivalent of the
+			// legacy `getTimeHook().getValue() + getContactPointRelative()` is
+			// the gauge's OWN min plus the contact offset -- NOT the midpoint of
+			// [min, max]. The midpoint only happens to sit near the real arrow
+			// line for a plain, note-less message (where contactPointRelative is
+			// roughly half the tile's height by coincidence); a note wrapper
+			// grows max without moving the arrow, which exposes the difference
+			// (see YGAUGE.md session log).
+			y1 = tile1.getYGauge().getMin().getCurrentValue() + tile1.getContactPointRelative();
+			y2 = tile2.getYGauge().getMin().getCurrentValue() + tile2.getContactPointRelative();
 		} else {
 			y1 = tile1.getTimeHook().getValue() + tile1.getContactPointRelative();
 			y2 = tile2.getTimeHook().getValue() + tile2.getContactPointRelative();
