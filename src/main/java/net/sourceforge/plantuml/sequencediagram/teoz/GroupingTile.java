@@ -104,7 +104,6 @@ public class GroupingTile extends AbstractTile {
 			TileArguments tileArgumentsOriginal, YGauge currentY) {
 		super(tileArgumentsBackColorChanged.getStringBounder(), currentY);
 		this.tileArguments = tileArgumentsOriginal;
-		final Real firstY = currentY.getMax();
 		final StringBounder stringBounder = tileArgumentsOriginal.getStringBounder();
 		this.start = start;
 		this.display = start.getTitle().equals("group") ? Display.create(start.getComment())
@@ -119,8 +118,19 @@ public class GroupingTile extends AbstractTile {
 		final List<Tile> allElses = new ArrayList<>();
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 
+		// Chain anchoring for a whole & -parallel group (see YGAUGE.md /
+		// CHAIN ANCHORING): a group following "& opt"/"& alt" must start at
+		// the PREVIOUS tile's min (top-aligned, like CommunicationTile does
+		// for a plain parallel message), not its max (which would stack it
+		// below, sequentially). previousMax is kept aside so the outer chain's
+		// max can still be pushed past whichever of the two members is taller.
+		final Real previousMax = currentY.getMax();
+		final boolean parallel = start.isParallel();
+		final Real groupTop = parallel ? currentY.getMin() : previousMax;
+		final Real firstY = groupTop;
+
 		final double h = dim1.getHeight() + MARGINY_MAGIC / 2;
-		currentY = YGauge.create(currentY.getMax().addAtLeast(h), 0);
+		currentY = YGauge.create(groupTop.addAtLeast(h), 0);
 
 		while (it.hasNext()) {
 			final Event ev = it.next();
@@ -182,7 +192,17 @@ public class GroupingTile extends AbstractTile {
 
 		max2.add(this.min.addFixed(width + 16));
 		this.max = RealUtils.max(max2);
-		this.yGauge = YGauge.create(firstY, getPreferredHeight());
+		if (parallel) {
+			// Like YGauge.createParallel: the group's own max must still
+			// dominate the PREVIOUS sibling's max, so that whichever of the
+			// two parallel groups is taller correctly pushes the next
+			// sequential tile below the whole pair, not just below this one.
+			final Real parallelMax = firstY.addAtLeast(getPreferredHeight());
+			parallelMax.ensureBiggerThan(previousMax);
+			this.yGauge = new YGauge(firstY, parallelMax);
+		} else {
+			this.yGauge = YGauge.create(firstY, getPreferredHeight());
+		}
 
 	}
 
@@ -405,6 +425,7 @@ public class GroupingTile extends AbstractTile {
 
 	public static TimeHook fillPositionelTiles(StringBounder stringBounder, TimeHook y, List<Tile> tiles,
 			final List<CommonTile> local, List<CommonTile> full) {
+		final double startY = y.getValue();
 		for (Tile tile : mergeParallel(stringBounder, tiles)) {
 			tile.callbackY(y);
 			local.add((CommonTile) tile);
@@ -418,6 +439,24 @@ public class GroupingTile extends AbstractTile {
 				fillPositionalParallelTiles(stringBounder, y, full, tileParallel);
 			}
 			y = new TimeHook(y.getValue() + tile.getPreferredHeight());
+		}
+		if (YGauge.USE_ME) {
+			// callbackY() above ignores the accumulated `y` entirely under
+			// USE_ME (substitutes each tile's own gauge min instead -- see
+			// CommonTile.callbackY), so the summation loop's ONLY remaining
+			// purpose is computing the returned finalY (total document/group
+			// height). But mergeParallel() is a no-op under USE_ME, so that
+			// summation still double-counts every & member's height, exactly
+			// like the bodyHeight bug (see YGAUGE.md) -- just at whatever
+			// level calls this method (PlayingSpace at the top, or a
+			// GroupingTile's own body). Recompute it correctly here with the
+			// same clustering used for bodyHeight, without touching the loop
+			// above (its side effects -- callbackY, local/full population,
+			// recursion -- must run per INDIVIDUAL flat tile regardless).
+			double clusteredHeight = 0;
+			for (Tile tile : mergeParallelCore(stringBounder, tiles))
+				clusteredHeight += tile.getPreferredHeight();
+			return new TimeHook(startY + clusteredHeight);
 		}
 		return y;
 
