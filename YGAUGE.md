@@ -187,6 +187,66 @@ across the `teoz` package.
 
 ## Session log
 
+### 2026-07-11 — Phase 3 start: group-end notes + else-line width overflow
+
+**Report:** nested `alt`/`else` with `note right:` attached right after each
+`end` — the notes vanish, and the else divider lines overflow past the
+visible group frame (to the right, where the note would have been).
+
+**Root cause 1 (notes lost):** `GroupingTile.drawU`'s USE_ME branch drew
+the header and children but never called `drawNotes(ug)` — unlike the
+legacy branch. Trivial: `drawNotes` needs no TimeHook/callback state (uses
+the frame's own `min`/`max` fields, absolute X), so it only needed to be
+called with `ug` translated to the frame's Y origin.
+
+**Root cause 2 (else line overflow) — more interesting:**
+`ComponentRoseGroupingElse.drawInternalU` draws the else separator as
+`ULine.hline(area.width)` — the line IS exactly the Area's width, so any
+width error shows up directly as a visible overflow. `ElseTile.drawU`
+(written in an earlier YGauge session) sized that Area from
+`parent.getMinX()/getMaxX()`. But `GroupingTile.getMinX()/getMaxX()`
+deliberately reserve extra room for notes attached to the group's `end`
+(`+ getNotesWidth(..., RIGHT/LEFT)`) so that the PARENT lays out enough
+space around the frame — they are the group's OUTER footprint, not its
+visible border. The legacy `drawAllElses` never used them; it drew
+strictly from the group's raw `min`/`max` fields (the actual frame
+border). `ElseTile.drawU` used `getMinX()/getMaxX()` instead (offset by
+±`EXTERNAL_MARGINX1/2`, which cancels the margin term but not the notes-
+width term), so whenever a note was attached to `end`, the else line
+extended past the frame by exactly that note's width — matching the
+reported overflow being on the side with the note.
+
+**Fix:**
+- `GroupingTile`: added package-private `getFrameMinX()`/`getFrameMaxX()`
+  returning the raw `min`/`max` fields (the actual border), distinct from
+  the public `getMinX()/getMaxX()` (outer footprint incl. notes reservation
+  — used by the PARENT's own layout, unchanged).
+  `drawU`'s USE_ME branch now also calls `drawNotes(...)`.
+- `ElseTile.drawU`: sizes its Area from `((GroupingTile) parent)
+  .getFrameMinX()/getFrameMaxX()` directly (no more ±EXTERNAL_MARGINX
+  arithmetic on the wrong base).
+
+**Verified:** the reported diagram (nested alt/else with end-notes) now
+shows both notes and correctly bounded else separators (harness PNG
+render, visual check). Full regression corpus re-run clean; parallel
+contact-line Y values unchanged (d2: 85.56; d4: 115.83/144.96).
+
+**Remaining Phase 3 gaps (still open, not touched this session):**
+- Group background (`Blotter` / `drawCompBackground`) is still never
+  called under USE_ME — colored `alt`/`else` sections show no background
+  fill yet. Needs the same `getFrameMinX/MaxX` treatment plus a
+  gauge-based per-else ypos (mirrors `drawAllElses`'s ys-list logic,
+  already gauge-based since the earlier prologue fix).
+- Else height stretching down to the next else / group bottom: the
+  `ComponentRoseGroupingElse` only draws a thin separator strip
+  (`getPreferredHeight` = text height + 16), so this turned out to be
+  LESS urgent than first assumed in the Phase 0 write-up — there is no
+  visible "section body" to stretch, just the dividers, which are now
+  correctly positioned and bounded. Revisit only if a colored else
+  background is added (Blotter needs the full section height to fill).
+- Group margins (the legacy 4px ghost EmptyTiles) still unverified
+  pixel-wise against this fix.
+
 ### 2026-07-11 — OOM / O(n^2): chain links must be anchored moveables (pdiff report #6)
 
 **Symptom:** `OutOfMemoryError: Java heap space` on a large diagram (45k

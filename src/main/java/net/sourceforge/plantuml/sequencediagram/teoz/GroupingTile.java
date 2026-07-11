@@ -193,6 +193,7 @@ public class GroupingTile extends AbstractTile {
 		if (YGauge.USE_ME) {
 			comp.drawU(ug.apply(new UTranslate(minCurrentValueForDrawing(), getYGauge().getMin().getCurrentValue())),
 					area, (Context2D) ug);
+			drawNotes(ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue())));
 		} else {
 			if (((Context2D) ug).isBackground()) {
 				drawBackground(ug, area);
@@ -221,6 +222,21 @@ public class GroupingTile extends AbstractTile {
 
 	protected double minCurrentValueForDrawing() {
 		return min.getCurrentValue();
+	}
+
+	// Frame extents (the group's own border), as opposed to getMinX()/getMaxX()
+	// which additionally reserve EXTERNAL_MARGINX1/2 and the width of notes
+	// attached to the group's "end" ("note left"/"note right" after `end`) --
+	// that reservation is for the PARENT's layout only. Children that draw
+	// something spanning the frame itself (the else divider line, the
+	// background Blotter) must use these, not getMinX()/getMaxX(), or they
+	// draw wider than the visible frame whenever a group-end note is present.
+	final Real getFrameMinX() {
+		return min;
+	}
+
+	final Real getFrameMaxX() {
+		return max;
 	}
 
 	private void drawBackground(UGraphic ug, Area area) {
