@@ -60,14 +60,20 @@ see the session log for the bug that taught it.
    `create` message). Enable `YGauge.TRACE` to print `gaugeSpan` next to
    `prefHeight` for every top-level tile.
 
-2. **RESERVING SPACE AND POSITIONING CONTENT ARE SEPARATE OBLIGATIONS.**
-   Restoring a legacy spacer (the ghost `EmptyTile`s) requires BOTH: adding
-   the space to `getPreferredHeight()` (so the chain reserves it) AND
-   offsetting the gauge's `min` (so the drawn content actually moves). Doing
-   only the first leaves the content flush against whatever precedes it —
-   invisible in most diagrams, lethal at a `newpage` clip boundary. When the
-   `min` is offset, the `max` must stay anchored on the ORIGINAL chaining
-   point, not on the offset `min`, or the leading margin is counted twice.
+2. **THE GAUGE MIN IS THE CHAINING POINT, NOT THE DRAWN TOP.** Reserving
+   space and positioning content are separate obligations, but they must be
+   discharged in the right places. Restoring a legacy spacer (the ghost
+   `EmptyTile`s around groups) means: add the space to
+   `getPreferredHeight()` (so the chain reserves it), and apply the offset at
+   **DRAW time** (so the border actually moves). Do NOT offset the gauge's
+   `min` to move the drawing: the `min` is what a parallel (`&`) sibling
+   chains onto, so an offset min gets inherited by the sibling, which then
+   adds its own — the two drift apart by one margin per pair. See
+   `GroupingTile.getFrameY()`: the frame is drawn at `gauge.min +
+   EXTERNAL_MARGINY`, while `gauge.min` itself stays a clean chaining point.
+   Corollary: anything positioning itself relative to the frame (else
+   dividers, notes, the background Blotter) must go through `getFrameY()`,
+   never through the raw `gauge.min`.
 
 3. **CHAIN ANCHORING** (performance). Anything carried from one gauge to the
    next (the `max`, which becomes the next tile's `origin`) MUST be an
@@ -278,6 +284,59 @@ setting `USE_ME = false` again.
   builds with `gradle build` and runs the visual comparisons.
 
 ## Session log
+
+### 2026-07-11 — Fix: `&` parallel groups drifted 4px lower per pair (regression from the group-margin fix)
+
+**Report:** `opt & opt` / `alt & alt` / `alt-else & alt-else` — the right-hand
+group of each pair sat lower than its left-hand partner, and the drift grew
+with each successive pair. Did not exist before this session's group-margin
+fix.
+
+**Root cause — a bad interaction between two fixes from THIS session.** The
+group-margin fix moved the drawn frame down by offsetting the gauge's `min`:
+`firstY = chainTop.addFixed(EXTERNAL_MARGINY)`. But the `&`-parallel fix
+chains a parallel group on the PREVIOUS group's `min`
+(`chainTop = currentY.getMin()`, the top-alignment rule). So for the second
+group of a pair, `chainTop` was the first group's `min` — **already offset by
++4** — and then `+4` was added again. Frame 2 landed 8px below frame 1's
+chain point, i.e. 4px below frame 1 itself, compounding pair after pair.
+
+The deeper error: I had made the gauge `min` carry two incompatible roles —
+CHAINING POINT (what siblings align on) and DRAWN FRAME TOP. For groups those
+differ by exactly `EXTERNAL_MARGINY`, so conflating them was guaranteed to
+break the moment a sibling chained on the min.
+
+**Fix:** the `min` goes back to being purely the chaining point
+(`firstY = parallel ? currentY.getMin() : previousMax`, no offset), and the
+top margin is applied at DRAW time instead, via a new `getFrameY()`:
+
+```java
+private double getFrameY() {
+    return getYGauge().getMin().getCurrentValue() + getExternalMarginY();
+}
+```
+
+`drawU` draws the frame and the group notes at `getFrameY()`; the body's
+starting offset `h` gains `+ getExternalMarginY()` so children still land
+inside the frame; `drawAllElses` measures else positions relative to
+`getFrameY()` rather than the raw min (inert today — legacy-only path — but
+kept consistent). `getPreferredHeight()` still reserves `2 *
+EXTERNAL_MARGINY`, unchanged: the RESERVATION was never the problem.
+
+Both earlier fixes survive: the frame is still drawn 4px below its chain
+point (so a group after a `newpage` still clears the page clip boundary — the
+black-bar fix), and parallel siblings now share an un-offset chain point (so
+they align — the `&` fix).
+
+**Invariant #2 in this document has been rewritten accordingly** — its
+previous wording actively prescribed the offending approach ("offset the
+gauge's min so the drawn content moves"). It now says: the min is the
+chaining point, never the drawn top; move the drawing at draw time.
+
+**To verify (Arnaud, after `gradle build`):** the three `&` pairs should be
+vertically aligned again, with no cumulative drift; the `newpage`-after-group
+case (black bar) must stay fixed; and a plain sequential group should be
+unchanged from the current build.
 
 ### 2026-07-11 — Investigation (no code change): extra space between `[else]` and the next message is EXPECTED
 

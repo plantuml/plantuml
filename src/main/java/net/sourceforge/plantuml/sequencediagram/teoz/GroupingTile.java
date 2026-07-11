@@ -71,8 +71,10 @@ public class GroupingTile extends AbstractTile {
 	public static final int EXTERNAL_MARGINX2 = 9;
 	// Vertical breathing room around a group frame, on each side. Legacy
 	// materialized it as two ghost EmptyTile(4, ...) around every GroupingTile
-	// (see TileBuilder.buildOne); under USE_ME the same 4px are folded into the
-	// gauge instead (min offset + getPreferredHeight, see below).
+	// (see TileBuilder.buildOne). Under USE_ME it is reserved in
+	// getPreferredHeight() (both sides) and the TOP one is applied at draw time
+	// via getFrameY() -- deliberately NOT by offsetting the gauge min, which
+	// must stay a clean chaining point for parallel (&) siblings.
 	public static final int EXTERNAL_MARGINY = 4;
 	private static final int MARGINX = 16;
 	// private static final int MARGINY = 10;
@@ -131,17 +133,18 @@ public class GroupingTile extends AbstractTile {
 		// max can still be pushed past whichever of the two members is taller.
 		final Real previousMax = currentY.getMax();
 		final boolean parallel = start.isParallel();
-		final Real chainTop = parallel ? currentY.getMin() : previousMax;
-		// The drawn frame starts EXTERNAL_MARGINY below the chaining point:
-		// this reproduces the leading ghost EmptyTile(4, ...) of the legacy
-		// engine (the trailing one is accounted for in getPreferredHeight).
-		// Without this offset the frame sits flush against the previous tile,
-		// and a group right after a `newpage` lands exactly ON the page clip
-		// boundary -- its top border then bleeds through into the previous
-		// page (see YGAUGE.md).
-		final Real firstY = YGauge.USE_ME ? chainTop.addFixed(EXTERNAL_MARGINY) : chainTop;
+		// INVARIANT: the gauge's min is the CHAINING POINT, never the drawn
+		// frame's top. Those two differ by EXTERNAL_MARGINY for a group (the
+		// legacy leading EmptyTile(4)), and conflating them broke `&` groups:
+		// a parallel sibling chains on the previous group's min, so if that min
+		// were already margin-offset the sibling would inherit the offset AND
+		// add its own -- drifting 4px lower per pair. The margin is applied at
+		// DRAW time instead (see getFrameY() / drawU), so the min stays a clean
+		// chaining point that parallel siblings can align on.
+		final Real firstY = parallel ? currentY.getMin() : previousMax;
 
-		final double h = dim1.getHeight() + MARGINY_MAGIC / 2;
+		// The body starts below the frame's top margin AND the header
+		final double h = dim1.getHeight() + MARGINY_MAGIC / 2 + getExternalMarginY();
 		currentY = YGauge.create(firstY.addAtLeast(h), 0);
 
 		while (it.hasNext()) {
@@ -204,23 +207,36 @@ public class GroupingTile extends AbstractTile {
 
 		max2.add(this.min.addFixed(width + 16));
 		this.max = RealUtils.max(max2);
-		// The gauge's min is the DRAWN frame's top (chainTop + EXTERNAL_MARGINY,
-		// see firstY above), but the total room reserved in the outer chain is
-		// counted from chainTop -- getPreferredHeight() already includes BOTH
-		// margins (leading + trailing), so the max must be anchored on chainTop,
-		// not on firstY, or the leading margin would be counted twice.
+		// min == chaining point (NOT the frame top -- see firstY above).
+		// getPreferredHeight() covers the frame plus BOTH margins, so the max is
+		// simply min + getPreferredHeight().
 		if (parallel) {
 			// Like YGauge.createParallel: the group's own max must still
 			// dominate the PREVIOUS sibling's max, so that whichever of the
 			// two parallel groups is taller correctly pushes the next
 			// sequential tile below the whole pair, not just below this one.
-			final Real parallelMax = chainTop.addAtLeast(getPreferredHeight());
+			final Real parallelMax = firstY.addAtLeast(getPreferredHeight());
 			parallelMax.ensureBiggerThan(previousMax);
 			this.yGauge = new YGauge(firstY, parallelMax);
 		} else {
-			this.yGauge = new YGauge(firstY, chainTop.addAtLeast(getPreferredHeight()));
+			this.yGauge = new YGauge(firstY, firstY.addAtLeast(getPreferredHeight()));
 		}
 
+	}
+
+	// The 4px of breathing room above the drawn frame (legacy's leading ghost
+	// EmptyTile). Zero under the legacy path, where the real EmptyTiles still
+	// exist and do the job.
+	private static double getExternalMarginY() {
+		return YGauge.USE_ME ? EXTERNAL_MARGINY : 0;
+	}
+
+	// Absolute Y of the DRAWN frame's top edge: the gauge min (the chaining
+	// point) plus the top margin. Everything that draws the frame or positions
+	// something relative to it must go through this, never through the raw
+	// gauge min.
+	private double getFrameY() {
+		return getYGauge().getMin().getCurrentValue() + getExternalMarginY();
 	}
 
 	protected Component getComponent(StringBounder stringBounder) {
@@ -243,9 +259,10 @@ public class GroupingTile extends AbstractTile {
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 
 		if (YGauge.USE_ME) {
-			comp.drawU(ug.apply(new UTranslate(minCurrentValueForDrawing(), getYGauge().getMin().getCurrentValue())),
-					area, (Context2D) ug);
-			drawNotes(ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue())));
+			// The frame is drawn EXTERNAL_MARGINY below the gauge min (which is
+			// the chaining point, not the frame top -- see getFrameY)
+			comp.drawU(ug.apply(new UTranslate(minCurrentValueForDrawing(), getFrameY())), area, (Context2D) ug);
+			drawNotes(ug.apply(UTranslate.dy(getFrameY())));
 		} else {
 			if (((Context2D) ug).isBackground()) {
 				drawBackground(ug, area);
@@ -348,8 +365,8 @@ public class GroupingTile extends AbstractTile {
 				final ElseTile elseTile = (ElseTile) tile;
 				final double ypos;
 				if (YGauge.USE_ME)
-					ypos = elseTile.getYGauge().getMin().getCurrentValue() - getYGauge().getMin().getCurrentValue()
-							+ MARGINY_MAGIC / 2;
+					// Relative to the FRAME's top, not the gauge min
+					ypos = elseTile.getYGauge().getMin().getCurrentValue() - getFrameY() + MARGINY_MAGIC / 2;
 				else
 					ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
 				ys.add(ypos);
@@ -376,16 +393,14 @@ public class GroupingTile extends AbstractTile {
 		if (YGauge.USE_ME)
 			// Legacy wrapped every group with two ghost EmptyTile(4, ...) spacers
 			// (TileBuilder.buildOne, skipped under USE_ME): 4px BEFORE the frame
-			// and 4px AFTER it. getPreferredHeight() is what the OUTER chain (and
-			// any parent's bodyHeight sum) uses to know how much vertical room
-			// this group consumes, so it must account for BOTH spacers -- the 4px
-			// before is materialized separately, by offsetting the gauge's own min
-			// (see EXTERNAL_MARGINY / the constructor), which is what actually
-			// moves the drawn frame down. Both halves are needed: reserving the
-			// 8px here WITHOUT the min offset leaves the frame flush against
-			// whatever precedes it -- and, right after a newpage, flush against
-			// the page clip boundary, so the frame's top border bleeds into the
-			// previous page (see YGAUGE.md).
+			// and 4px AFTER it. Both are reserved here, so the gauge spans the
+			// frame plus its two margins and the next tile chains clear of it.
+			// The TOP margin is additionally materialized at draw time (the frame
+			// is drawn at getFrameY() == gauge min + EXTERNAL_MARGINY), which is
+			// what actually moves the border down. Reserving without drawing the
+			// offset leaves the frame flush against the previous tile -- and, right
+			// after a `newpage`, flush against the page clip boundary, so the top
+			// border bleeds into the previous page (see YGAUGE.md).
 			result += 2 * EXTERNAL_MARGINY;
 		return result;
 	}
