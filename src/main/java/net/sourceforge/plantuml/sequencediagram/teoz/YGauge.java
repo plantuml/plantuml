@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 
 public final class YGauge {
 
@@ -43,10 +44,24 @@ public final class YGauge {
 
 	private final Real min;
 	private final Real max;
+	// Contact line shared by the members of a parallel (&) group: the
+	// absolute Y of the arrow line. Null for tiles without a contact line.
+	private final Real contact;
+	// Chaining origin of the parallel group (the max of the gauge preceding
+	// the group head): no member of the group may start above it. It mirrors
+	// the legacy TileParallel behavior where the whole group is anchored at
+	// the group top and members are shifted DOWN to align contact points.
+	private final Real origin;
 
 	public YGauge(Real min, Real max) {
+		this(min, max, null, null);
+	}
+
+	public YGauge(Real min, Real max, Real contact, Real origin) {
 		this.min = min;
 		this.max = max;
+		this.contact = contact;
+		this.origin = origin;
 	}
 
 	@Override
@@ -60,12 +75,66 @@ public final class YGauge {
 		return new YGauge(min, min.addFixed(height));
 	}
 
+	// For tiles owning a contact line (message arrows). The min FLOATS below
+	// the chaining origin: contact = origin.addAtLeast(contactRelative), so
+	// that a later parallel (&) member with a taller label can push this tile
+	// down through an ensureBiggerThan on the shared contact line. When no
+	// parallel member follows, the solver minimization gives
+	// contact = origin + contactRelative, that is min = origin: exactly the
+	// plain sequential chaining.
+	public static YGauge createWithContact(YGauge currentY, double contactRelative, double height) {
+		if (height < 0 || contactRelative < 0)
+			throw new IllegalArgumentException();
+		final Real origin = currentY.getMax();
+		final Real contact = origin.addAtLeast(contactRelative);
+		final Real min = contact.addFixed(-contactRelative);
+		return new YGauge(min, min.addFixed(height), contact, origin);
+	}
+
+	// For a parallel (&) tile: aligns its contact line with the shared
+	// contact line of the group, and pushes that line down if this member's
+	// label is taller (contact >= groupTop + contactRelative). The max
+	// accumulates over the members so that the next sequential tile chains
+	// below the WHOLE group, like the legacy
+	// TileParallel.getPreferredHeight().
+	public static YGauge createParallel(YGauge currentY, double contactRelative, double height) {
+		final Real contact = currentY.getContact();
+		final Real origin = currentY.getOrigin();
+		if (contact == null || origin == null)
+			// The previous tile has no contact line: fall back to top alignment
+			return create(currentY.getMin(), height);
+
+		contact.ensureBiggerThan(origin.addFixed(contactRelative));
+		final Real min = contact.addFixed(-contactRelative);
+		final Real max = RealUtils.max(currentY.getMax(), min.addFixed(height));
+		return new YGauge(min, max, contact, origin);
+	}
+
+	// For zero-side tiles (life events, ...) placed between the members of a
+	// parallel group: the contact line and origin are propagated so that a
+	// following & tile still finds them, mirroring the legacy
+	// moveRecentParallelTilesToPending which skips through LifeEventTiles.
+	public static YGauge createPropagating(YGauge currentY, double height) {
+		if (height < 0)
+			throw new IllegalArgumentException();
+		final Real min = currentY.getMax();
+		return new YGauge(min, min.addFixed(height), currentY.getContact(), currentY.getOrigin());
+	}
+
 	public final Real getMin() {
 		return min;
 	}
 
 	public final Real getMax() {
 		return max;
+	}
+
+	public final Real getContact() {
+		return contact;
+	}
+
+	public final Real getOrigin() {
+		return origin;
 	}
 
 }

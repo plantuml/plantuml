@@ -92,11 +92,15 @@ public class CommunicationTile extends AbstractCommunicationTile {
 
 		final ArrowComponent comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
+		final double contactRelative = comp.getYPoint(getStringBounder());
 
+		// The contact line (arrow line) is published in the gauge; parallel (&)
+		// messages share it so that their arrows stay aligned like in the
+		// legacy TileParallel, whatever the label heights
 		if (message.isParallel())
-			this.yGauge = YGauge.create(currentY.getMin(), dim.getHeight());
+			this.yGauge = YGauge.createParallel(currentY, contactRelative, dim.getHeight());
 		else
-			this.yGauge = YGauge.create(currentY.getMax(), dim.getHeight());
+			this.yGauge = YGauge.createWithContact(currentY, contactRelative, dim.getHeight());
 	}
 
 	@Override

@@ -86,7 +86,11 @@ public class LifeEventTile extends AbstractTile {
 		this.livingSpace = livingSpace;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+		// The contact line is propagated through life events so that an
+		// activate/deactivate between two parallel (&) messages does not break
+		// the contact sharing (the legacy moveRecentParallelTilesToPending
+		// skips through LifeEventTiles the same way)
+		this.yGauge = YGauge.createPropagating(currentY, getPreferredHeight());
 	}
 
 	@Override

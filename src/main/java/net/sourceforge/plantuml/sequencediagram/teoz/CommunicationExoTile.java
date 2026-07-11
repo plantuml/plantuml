@@ -74,7 +74,10 @@ public class CommunicationExoTile extends AbstractTile {
 		this.message = message;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+		if (message.isParallel())
+			this.yGauge = YGauge.createParallel(currentY, getContactPointRelative(), getPreferredHeight());
+		else
+			this.yGauge = YGauge.createWithContact(currentY, getContactPointRelative(), getPreferredHeight());
 	}
 
 	@Override

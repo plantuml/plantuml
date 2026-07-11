@@ -145,11 +145,10 @@ across the `teoz` package.
    `full` list used by `LinkAnchor` lookups; under USE_ME that pass should
    be replaced by a simple recursive collection of tiles (no Y math).
 
-8. **`message.isParallel()` semantics.** Legacy `mergeParallel` aligns
-   contact points (`getContactPointRelative`), not gauge minima. Sharing
-   `currentY.getMin()` aligns tile tops; arrows of different label heights
-   will not align their arrow lines exactly as before. Acceptable
-   difference or needs a `YGauge` offset? To be decided with visual tests.
+8. **`message.isParallel()` semantics — DONE (pdiff report #2, 2026-07-11).**
+   Contact-line sharing implemented in the gauge itself (see session log):
+   `YGauge` carries `contact`/`origin` Reals, message tiles use
+   `createWithContact`/`createParallel`, life events propagate.
 
 9. **Newpage / PlayingSpaceWithParticipants.** Page splitting translates
    pages by `-yNewPage`; with absolute-Y tiles the translate composition
@@ -187,6 +186,62 @@ across the `teoz` package.
   builds with `gradle build` and runs the visual comparisons.
 
 ## Session log
+
+### 2026-07-11 — Fix: parallel (&) contact-line alignment (pdiff report #2)
+
+**Symptom:** `A->B: <2-line label>` / `& B->C: <1-line label>` — under
+USE_ME the two arrows were not on the same line. Known gap #8: chaining
+parallel tiles on `currentY.getMin()` aligns tile TOPS, while the legacy
+`TileParallel` aligns CONTACT POINTS (the arrow line,
+`getContactPointRelative()`), shifting each member down by
+`maxContact - ownContact`.
+
+**Fix (solver-based, reproduces legacy semantics exactly):** the YGauge now
+optionally carries two more Reals:
+- `contact`: the absolute Y of the arrow line, shared by all members of a
+  parallel group;
+- `origin`: the chaining origin of the group (max of the gauge preceding
+  the group head) — the group top, above which no member may start.
+
+Three new factories in `YGauge`:
+- `createWithContact(currentY, contactRelative, height)` — used by every
+  message tile (Communication, Self, Exo). The min FLOATS:
+  `contact = origin.addAtLeast(contactRelative)`, `min = contact - c`.
+  Without any & follower, solver minimization gives `min = origin`:
+  strictly equivalent to the old sequential `create(currentY.getMax(), h)`.
+  With a & follower having a taller label, the shared contact line is
+  pushed down and this tile follows — exactly the legacy behavior where
+  the group head itself gets shifted down.
+- `createParallel(currentY, contactRelative, height)` — used by & tiles:
+  `contact.ensureBiggerThan(origin + c)` then `min = contact - c`. The max
+  accumulates (`RealUtils.max(currentY.getMax(), min + h)`) so the next
+  sequential tile chains below the WHOLE group, like
+  `TileParallel.getPreferredHeight()`. Falls back to top alignment when
+  the previous gauge has no contact line.
+- `createPropagating(currentY, height)` — used by `LifeEventTile`:
+  forwards contact/origin so an activate/deactivate between two & messages
+  does not break the sharing (legacy `moveRecentParallelTilesToPending`
+  skips LifeEventTiles the same way).
+
+The solver minimization plays the role of the legacy
+`yPointAll = max(c_i)` computation — constraints are DAG-forward, no
+cycle, so `RealLine.compile()` terminates.
+
+**Touched:** `YGauge`, `CommunicationTile`, `CommunicationTileSelf`,
+`CommunicationExoTile`, `LifeEventTile`.
+
+**Legacy (USE_ME=false) impact to re-verify with pdiff:** the Y RealLine
+now contains a few more Reals and `ensureBiggerThan` constraints even in
+legacy mode (values still unread there). Must stay pixel-identical; only
+compile cost changes marginally.
+
+**Remaining parallel gaps (logged, not fixed):**
+- note wrappers around a & message still chain on `currentY.getMax()`
+  without contact sharing (note on parallel message → misalignment);
+- `GroupingTile.bodyHeight` and `PlayingSpace.drawUInternal` finalY sum
+  `getPreferredHeight()` over ALL tiles, so parallel members inside a
+  group are double-counted (frame too tall / extra bottom space). To be
+  reworked in Phase 3/4 with gauge-based heights.
 
 ### 2026-07-11 — Fix: missing self-translate prologue (pdiff report #1)
 
