@@ -54,7 +54,10 @@ class RealImpl extends RealMoveable implements RealOrigin {
 	}
 
 	public Real addAtLeast(double delta) {
-		final RealImpl result = new RealImpl(getName() + ".addAtLeast" + delta, getLine(), this.currentValue + delta);
+		// See RealDelta's constructor comment: the name is kept O(1) (no
+		// getName() ancestry embedding) to avoid O(n^2) retained string data
+		// on long Real chains (Y gauge chain across a whole document).
+		final RealImpl result = new RealImpl("addAtLeast" + delta, getLine(), this.currentValue + delta);
 		getLine().addForce(new PositiveForce(this, result, delta));
 		return result;
 	}

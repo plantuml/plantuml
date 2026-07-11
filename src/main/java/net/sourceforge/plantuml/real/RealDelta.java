@@ -41,7 +41,18 @@ class RealDelta extends RealMoveable {
 	private final double diff;
 
 	RealDelta(Real delegated, double diff) {
-		super(((AbstractReal) delegated).getLine(), "[Delegated {" + delegated.getName() + "} d=" + diff + "]");
+		// The debug name is intentionally NOT built from delegated.getName():
+		// concatenating the full ancestor name at every wrap makes the name
+		// length grow O(depth), and since addFixed()/addAtLeast() are called
+		// once per tile along the Y gauge chain (now spanning the whole
+		// document, not just a handful of participant columns like the X
+		// chain), that is O(n) wraps each paying O(depth) for the string copy:
+		// O(n^2) characters retained forever by RealLine's `all` set. This is
+		// what caused the OutOfMemoryError on large diagrams (see YGAUGE.md).
+		// The identity/uniqueness of a Real for debugging comes from
+		// RealMoveable's own atomic counter ("#123_..."), not from this name,
+		// so dropping the ancestry from the string is purely cosmetic.
+		super(((AbstractReal) delegated).getLine(), "[Delegated d=" + diff + "]");
 		this.delegated = delegated;
 		this.diff = diff;
 	}
