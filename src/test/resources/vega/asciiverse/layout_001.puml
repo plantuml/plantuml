@@ -1,0 +1,16 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (5 participants)
+---
+@startuml
+!pragma teoz true
+participant A
+participant B
+participant C
+participant D
+participant E
+group
+A->? : M1
+?->E : M2 [Grouped]
+end
+@enduml

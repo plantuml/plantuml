@@ -1,0 +1,33 @@
+                                                                                             ┌───────┐
+                                                                                             │Testing│
+                                                                                             └───┬───┘
+                       ╔══════════════════════════════╗                                     ┌────│
+                       ║ A note on the self message  ░║    1st self message, no activation  │    │
+                       ╚══════════════════════════════╝                                     └───>│
+                                                                                            ┌────│
+                                                     2nd self message, starting activation  │    │
+                                                                                            └───>│
+                                                                                            ┌────│   ╔══════════════════════════════╗
+                                                             2.5th self message, no change  │    │   ║ A note on the self message  ░║
+                                                                                            └───>│   ╚══════════════════════════════╝
+                                                                                            ┌─ ─ │
+                                              3rd self message, staring another activation  │    │
+                                                                                            └─ ─>│
+╔══════════════════════════════╗                                                            ┌────│
+║ A note on the self message  ░║    4th self message, continuing in the current activation  │    │
+╚══════════════════════════════╝                                                            └───>│
+                                                                                            ┌────│
+                                                       5th self message, deactivating once  │    │
+                                                                                            └───>│
+                                                                                            ┌────│
+                                               6th self message, continuing the activation  │    │
+                                                                                            └───>│
+                                                                                            ┌────│
+                                                  7th self message, exiting the activation  │    │
+                                                                                            └───>│
+                                                                                            ┌────│
+                                                           8th self message, no activation  │    │
+                                                                                            └───>│
+                                                                                             ┌───┴───┐
+                                                                                             │Testing│
+                                                                                             └───────┘

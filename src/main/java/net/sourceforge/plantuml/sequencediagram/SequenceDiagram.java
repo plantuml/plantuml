@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.asciiverse.AsciiBlock;
 import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.cli.GlobalConfig;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.DiagramChromeFactory;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.ImageData;
@@ -314,7 +315,8 @@ public class SequenceDiagram extends TitledDiagram {
 		final FileFormatOption fileFormatOption = new FileFormatOption(fileFormat);
 		final SequenceDiagramFileMakerTeoz maker = new SequenceDiagramFileMakerTeoz(this, skin2, fileFormatOption,
 				index);
-		final AsciiBlock block = maker.getAsciiBlock(index, fileFormatOption);
+		final AsciiBlock rawBlock = maker.getAsciiBlock(index, fileFormatOption);
+		final AsciiBlock block = DiagramChromeFactory.createAscii(rawBlock, this);
 
 		final InfinitePlan plan = new InfinitePlan(fileFormat);
 		block.asciiDraw(plan);

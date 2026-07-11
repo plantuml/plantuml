@@ -1,0 +1,533 @@
+DPI: 96
+dimension: [ 537.3776 ; 448.0000 ]
+scaleFactor: 1.0000
+seed: 3022695913593359202
+svgLinkTarget: _top
+hoverPathColorRGB: null
+preserveAspectRatio: none
+
+RECTANGLE:
+  pt1: [ 13.0000 ; 78.0000 ]
+  pt2: [ 518.3776 ; 385.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 32.0000 ; 178.0000 ]
+  pt2: [ 493.3776 ; 327.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 51.0000 ; 234.0000 ]
+  pt2: [ 433.5116 ; 286.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 63.5000 ; 39.0000 ]
+  pt2: [ 71.5000 ; 409.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
+LINE:
+  pt1: [ 67.0000 ; 39.0000 ]
+  pt2: [ 67.0000 ; 409.0000 ]
+  stroke: 5.0-5.0-0.5
+  shadow: 0
+  color: ff181818
+
+RECTANGLE:
+  pt1: [ 414.0116 ; 39.0000 ]
+  pt2: [ 422.0116 ; 409.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
+LINE:
+  pt1: [ 417.5116 ; 39.0000 ]
+  pt2: [ 417.5116 ; 409.0000 ]
+  stroke: 5.0-5.0-0.5
+  shadow: 0
+  color: ff181818
+
+RECTANGLE:
+  pt1: [ 473.8776 ; 39.0000 ]
+  pt2: [ 481.8776 ; 409.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
+LINE:
+  pt1: [ 477.3776 ; 39.0000 ]
+  pt2: [ 477.3776 ; 409.0000 ]
+  stroke: 5.0-5.0-0.5
+  shadow: 0
+  color: ff181818
+
+RECTANGLE:
+  pt1: [ 23.0214 ; 10.0000 ]
+  pt2: [ 110.9786 ; 38.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Alice
+  position: [ 30.0214 ; 27.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 392.6591 ; 10.0000 ]
+  pt2: [ 442.3641 ; 38.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Bob
+  position: [ 399.6591 ; 27.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 452.3641 ; 10.0000 ]
+  pt2: [ 502.3910 ; 38.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Log
+  position: [ 459.3641 ; 27.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 23.0214 ; 409.0000 ]
+  pt2: [ 110.9786 ; 437.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Alice
+  position: [ 30.0214 ; 426.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 392.6591 ; 409.0000 ]
+  pt2: [ 442.3641 ; 437.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Bob
+  position: [ 399.6591 ; 426.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+RECTANGLE:
+  pt1: [ 452.3641 ; 409.0000 ]
+  pt2: [ 502.3910 ; 437.0000 ]
+  xCorner: 5
+  yCorner: 5
+  stroke: 0.0-0.0-0.5
+  shadow: 0
+  color: ff181818
+  backcolor: ffe2e2f0
+
+TEXT:
+  text: Log
+  position: [ 459.3641 ; 426.8889 ]
+  orientation: 0
+  font: SansSerif.plain/14 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+POLYGON:
+  points:
+   - [ 405.5116 ; 62.0000 ]
+   - [ 415.5116 ; 66.0000 ]
+   - [ 405.5116 ; 70.0000 ]
+   - [ 409.5116 ; 66.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+LINE:
+  pt1: [ 67.0000 ; 66.0000 ]
+  pt2: [ 411.5116 ; 66.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+
+TEXT:
+  text: Authentication Request
+  position: [ 74.0000 ; 61.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 91.9961 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 91.9961 ; 5.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 81.9961 ; 15.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 15.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: ffeeeeee
+
+RECTANGLE:
+  pt1: [ 13.0000 ; 78.0000 ]
+  pt2: [ 518.3776 ; 385.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+TEXT:
+  text: alt
+  position: [ 28.0000 ; 89.1111 ]
+  orientation: 0
+  font: SansSerif.bold/13 [BOLD]
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: [successful case]
+  position: [ 119.9961 ; 88.5556 ]
+  orientation: 0
+  font: SansSerif.bold/11 [BOLD]
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+POLYGON:
+  points:
+   - [ 78.0000 ; 118.0000 ]
+   - [ 68.0000 ; 122.0000 ]
+   - [ 78.0000 ; 126.0000 ]
+   - [ 74.0000 ; 122.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+LINE:
+  pt1: [ 72.0000 ; 122.0000 ]
+  pt2: [ 416.5116 ; 122.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+
+TEXT:
+  text: Authentication Accepted
+  position: [ 84.0000 ; 117.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+LINE:
+  pt1: [ 13.0000 ; 131.0000 ]
+  pt2: [ 518.3776 ; 131.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff000000
+
+TEXT:
+  text: [some kind of failure]
+  position: [ 18.0000 ; 141.5556 ]
+  orientation: 0
+  font: SansSerif.bold/11 [BOLD]
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+POLYGON:
+  points:
+   - [ 78.0000 ; 162.0000 ]
+   - [ 68.0000 ; 166.0000 ]
+   - [ 78.0000 ; 170.0000 ]
+   - [ 74.0000 ; 166.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+LINE:
+  pt1: [ 72.0000 ; 166.0000 ]
+  pt2: [ 416.5116 ; 166.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+
+TEXT:
+  text: Authentication Failure
+  position: [ 84.0000 ; 161.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 239.4713 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 239.4713 ; 5.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 229.4713 ; 15.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 15.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: ffeeeeee
+
+RECTANGLE:
+  pt1: [ 32.0000 ; 178.0000 ]
+  pt2: [ 493.3776 ; 327.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+TEXT:
+  text: My own label
+  position: [ 47.0000 ; 189.1111 ]
+  orientation: 0
+  font: SansSerif.bold/13 [BOLD]
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+POLYGON:
+  points:
+   - [ 465.3776 ; 218.0000 ]
+   - [ 475.3776 ; 222.0000 ]
+   - [ 465.3776 ; 226.0000 ]
+   - [ 469.3776 ; 222.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+LINE:
+  pt1: [ 67.0000 ; 222.0000 ]
+  pt2: [ 471.3776 ; 222.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+
+TEXT:
+  text: Log attack start
+  position: [ 74.0000 ; 217.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 99.3830 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 99.3830 ; 5.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 89.3830 ; 15.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 15.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 0.0000 ]
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: ffeeeeee
+
+RECTANGLE:
+  pt1: [ 51.0000 ; 234.0000 ]
+  pt2: [ 433.5116 ; 286.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.5
+  shadow: 0
+  color: ff000000
+  backcolor: NULL_COLOR
+
+TEXT:
+  text: loop
+  position: [ 66.0000 ; 245.1111 ]
+  orientation: 0
+  font: SansSerif.bold/13 [BOLD]
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+TEXT:
+  text: [1000 times]
+  position: [ 165.3830 ; 244.5556 ]
+  orientation: 0
+  font: SansSerif.bold/11 [BOLD]
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+POLYGON:
+  points:
+   - [ 405.5116 ; 274.0000 ]
+   - [ 415.5116 ; 278.0000 ]
+   - [ 405.5116 ; 282.0000 ]
+   - [ 409.5116 ; 278.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+LINE:
+  pt1: [ 67.0000 ; 278.0000 ]
+  pt2: [ 411.5116 ; 278.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+
+TEXT:
+  text: DNS Attack
+  position: [ 74.0000 ; 273.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+POLYGON:
+  points:
+   - [ 465.3776 ; 315.0000 ]
+   - [ 475.3776 ; 319.0000 ]
+   - [ 465.3776 ; 323.0000 ]
+   - [ 469.3776 ; 319.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+LINE:
+  pt1: [ 67.0000 ; 319.0000 ]
+  pt2: [ 471.3776 ; 319.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+
+TEXT:
+  text: Log attack end
+  position: [ 74.0000 ; 314.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+LINE:
+  pt1: [ 13.0000 ; 342.0000 ]
+  pt2: [ 518.3776 ; 342.0000 ]
+  stroke: 2.0-2.0-1.0
+  shadow: 0
+  color: ff000000
+
+TEXT:
+  text: [Another type of failure]
+  position: [ 18.0000 ; 352.5556 ]
+  orientation: 0
+  font: SansSerif.bold/11 [BOLD]
+  color: ff000000
+  extendedColor: NULL_COLOR
+
+POLYGON:
+  points:
+   - [ 78.0000 ; 373.0000 ]
+   - [ 68.0000 ; 377.0000 ]
+   - [ 78.0000 ; 381.0000 ]
+   - [ 74.0000 ; 377.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ff181818
+
+LINE:
+  pt1: [ 72.0000 ; 377.0000 ]
+  pt2: [ 416.5116 ; 377.0000 ]
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+
+TEXT:
+  text: Please repeat
+  position: [ 84.0000 ; 372.1111 ]
+  orientation: 0
+  font: SansSerif.plain/13 []
+  color: ff000000
+  extendedColor: NULL_COLOR
+

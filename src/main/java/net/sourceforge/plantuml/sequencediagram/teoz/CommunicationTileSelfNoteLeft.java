@@ -35,11 +35,16 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.ANote;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Note;
@@ -139,6 +144,71 @@ public class CommunicationTileSelfNoteLeft extends AbstractTile {
 
 	public Real getMaxX() {
 		return tile.getMaxX();
+	}
+
+	// ASCII counterpart: delegate the message's own constraint to the inner
+	// tile, exactly like addConstraints() above delegates to
+	// tile.addConstraints(). Same shape as CommunicationTileNoteLeft's
+	// override, just wrapping a CommunicationTileSelf instead of a plain
+	// CommunicationTile.
+	@Override
+	public void asciiAddConstraints() {
+		tile.asciiAddConstraints();
+	}
+
+	// Unlike CommunicationTileNoteLeft, there is no separate LivingSpace field
+	// here to anchor the note on: tile.getAsciiMinX() already IS the right
+	// anchor, exactly mirroring how the pixel getNotePosition() above uses
+	// tile.getMinX() directly rather than a livingSpace lookup (for the
+	// common, non-reverse-defined case this is simply the lifeline column,
+	// same as CommunicationTileSelf.getAsciiMinX()). The note box's own width
+	// still isn't reserved on the ASCII column solver (ASCIIVERSE.md §14) --
+	// same known gap as every other note decorator.
+	@Override
+	public Real getAsciiMinX() {
+		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();
+		final Real tileMin = tile.getAsciiMinX();
+		final Real noteMin = tileMin.addFixed(-(boxWidth + 1));
+		return RealUtils.min(java.util.Arrays.asList(tileMin, noteMin));
+	}
+
+	@Override
+	public Real getAsciiMaxX() {
+		return tile.getAsciiMaxX();
+	}
+
+	// ASCII counterpart of getPreferredHeight()/asciiDraw(): same reasoning as
+	// CommunicationTileNoteLeft.asciiDimension() (ASCIIVERSE.md §19–§21) -- the
+	// Y footprint is Math.max(inner self-message's height, note box's
+	// height). No try/catch around tile.asciiDimension(): the inner
+	// CommunicationTileSelf now has real ASCII support (§33), so this simply
+	// reads its height back rather than guarding against a still-missing one.
+	@Override
+	public ADimension2D asciiDimension() {
+		final ADimension2D tileDim = tile.asciiDimension();
+		final int noteHeight = new ANote(asciiNoteText()).asciiDimension().getHeight();
+		return new ADimension2D(tileDim.getWidth(), Math.max(tileDim.getHeight(), noteHeight));
+	}
+
+	// ASCII counterpart of drawU(): draw the self-message loop first, then the
+	// note itself as a proper folded-corner box (InfinitePlan.createNoteBox(),
+	// ASCIIVERSE.md §16/§18), ending just before the anchor column -- the same
+	// "draw the inner tile, then the note" order as CommunicationTileNoteLeft,
+	// anchored on tile.getAsciiMinX() rather than a separate LivingSpace.
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		tile.asciiDraw(plan);
+
+		final AsciiBlock noteText = asciiNoteText();
+		final AsciiBlock noteBox = plan.createNoteBox(noteText).marginLR(2, 2);
+		final int anchorColumn = (int) tile.getAsciiMinX().getCurrentValue();
+		final int width = noteBox.asciiDimension().getWidth();
+		final int left = anchorColumn - width - 1;
+		noteBox.asciiDraw(plan.move(left, 0));
+	}
+
+	private AsciiBlock asciiNoteText() {
+		return noteOnMessage.getDisplay().marginLR(1, 3);
 	}
 
 }

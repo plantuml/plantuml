@@ -1,7 +1,0 @@
----
-output: svg, debug
-expected-description: (2 participants)
----
-@startuml
-Alice -> Bob : Hello
-@enduml

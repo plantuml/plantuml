@@ -71,6 +71,19 @@ public final class InfinitePlan {
 		plan.get(dy).setCharAt(dx, c);
 	}
 
+	public void muteChar(char... values) {
+		if (values.length % 2 != 0)
+			throw new IllegalArgumentException();
+		ensureSize(dy);
+		final char existing = plan.get(dy).getCharAt(dx);
+		for (int i = 0; i < values.length; i += 2)
+			if (existing == values[i]) {
+				plan.get(dy).setCharAt(dx, values[i + 1]);
+				return;
+			}
+
+	}
+
 	public void drawString(String s) {
 		ensureSize(dy);
 		plan.get(dy).setStringAt(dx, s);
@@ -136,6 +149,38 @@ public final class InfinitePlan {
 		return isUnicode() ? '\u2502' : '|'; // │ or |
 	}
 
+	// The two lifeline/box-border junction characters: a T pointing down
+	// (horizontal bar above, vertical stub below — a box's bottom border with
+	// a lifeline continuing under it) and a T pointing up (the symmetric
+	// case, a lifeline arriving into a box's top border, or into nothing if
+	// there is no footbox). ASCII has no distinct up/down T, hence the same
+	// '+' for both; Unicode does, hence the two different code points below,
+	// copied for the same reason as every other Unicode glyph in this class
+	// (§12/§28): read for the character, not reused as code, since the source
+	// (legacy asciiart) is slated for removal.
+	private char getTDownChar() {
+		return isUnicode() ? '┬' : '+';
+	}
+
+	private char getTUpChar() {
+		return isUnicode() ? '┴' : '+';
+	}
+
+	// Mutes the cell at the current position into the correct lifeline
+	// crossing, format-aware: a box border character (getHLineChar()) becomes
+	// a T pointing away from the box, a blank cell becomes a plain lifeline
+	// segment (getVLineChar()). Centralizes the ASCII '+' vs Unicode '┬'/'┴'
+	// choice the same way getHLineChar()/getVLineChar() already centralize
+	// plain borders and lines, so callers (PlayingSpaceWithParticipants's
+	// lifeline-fill pass) never hardcode a junction character themselves.
+	public void muteLifelineBelowBox() {
+		muteChar(getHLineChar(), getTDownChar(), ' ', getVLineChar());
+	}
+
+	public void muteLifelineAboveBox() {
+		muteChar(getHLineChar(), getTUpChar(), ' ', getVLineChar());
+	}
+
 	// Straight, unconditional fills over an inclusive range — the ASCII
 	// counterpart of a UGraphic hline/vline. Callers that need to preserve
 	// existing content (e.g. not overwrite an arrowhead) should keep checking
@@ -184,29 +229,33 @@ public final class InfinitePlan {
 			move(x, j).drawChar(c);
 	}
 
-	// Package-private (not private): AGroupFrame needs the Unicode-aware top
-	// corners for its own custom-drawn top border (its bottom border and sides
+	// Public (not package-private): originally relaxed from `private` only for
+	// AGroupFrame's own custom-drawn top border (its bottom border and sides
 	// use different characters entirely — tildes and '!' — so it cannot reuse
-	// drawBox() wholesale, see ASCIIVERSE.md §28), same relaxation already made
-	// for fillHLine/fillVLine when ANote needed them (§18).
-	char getTopLeftChar() {
+	// drawBox() wholesale, see ASCIIVERSE.md §28). Widened further, from
+	// package-private to public, for CommunicationTileSelf (package
+	// sequencediagram.teoz, not asciiverse): a self-message's little loop is a
+	// small box with only two corners on the lifeline side, and needs the same
+	// Unicode-aware corner choice drawBox() already centralizes here — same
+	// principle as getHLineChar()/getVLineChar() (§12): InfinitePlan owns every
+	// format-dependent character choice, callers never hardcode one.
+	public char getTopLeftChar() {
 		return isUnicode() ? '\u250c' : ','; // ┌ or ,
 	}
 
-	char getTopRightChar() {
+	public char getTopRightChar() {
 		return isUnicode() ? '\u2510' : '.'; // ┐ or .
 	}
 
-	// Package-private, not private: AGroupFrame's plain (non-tab) frame shape
-	// — the one a partition uses (see ASCIIVERSE.md) — needs a bottom border
-	// that matches its top (plain box corners), unlike the tab-style frame's
-	// tilde bottom, so it draws its bottom border itself instead of going
-	// through drawBox(). Same relaxation as getTopLeftChar()/getTopRightChar().
-	char getBottomLeftChar() {
+	// Public, not package-private, for the same reason as
+	// getTopLeftChar()/getTopRightChar() above: originally relaxed for
+	// AGroupFrame's plain (non-tab) frame shape (the one a partition uses),
+	// widened for CommunicationTileSelf's loop-box corners.
+	public char getBottomLeftChar() {
 		return isUnicode() ? '\u2514' : '`'; // └ or `
 	}
 
-	char getBottomRightChar() {
+	public char getBottomRightChar() {
 		return isUnicode() ? '\u2518' : '\''; // ┘ or '
 	}
 

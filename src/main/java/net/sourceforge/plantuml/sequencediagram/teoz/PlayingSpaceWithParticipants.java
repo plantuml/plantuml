@@ -149,7 +149,8 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 		// a flat per-message constant, so a multi-line label (ASCIIVERSE.md §18)
 		// gets the extra rows it needs instead of the next tile overwriting it.
 		// Every top-level tile must have a real asciiDraw()/asciiDimension()
-		// override to reach this loop — there is no catch (UnsupportedOperationException)
+		// override to reach this loop — there is no catch
+		// (UnsupportedOperationException)
 		// here (anymore): a tile that hasn't been migrated to ASCII yet crashes
 		// loudly instead of being silently skipped, which is the point (see
 		// EmptyTile for the fix this policy forced: it needed a real, if trivial,
@@ -163,22 +164,25 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 			bottomY = y;
 		}
 
+		// Footer boxes, mirroring drawU()'s playingSpace.isShowFootbox() branch:
+		// each participant draws itself a second time, right below the lifelines.
+		if (playingSpace.isShowFootbox())
+			for (Participant p : participants)
+				p.asciiDraw(plan.move((int) livingSpaces.get(p).getAsciiLeftColumn().getCurrentValue(), bottomY));
+
 		// Lifelines from the heads down to the last message, at each
 		// participant's resolved lifeline column, only into empty cells so the
 		// arrows already drawn are never overwritten.
 		final char vLine = plan.getVLineChar();
 		for (Participant p : participants) {
 			final int lx = (int) livingSpaces.get(p).getAsciiLifeColumn().getCurrentValue();
-			for (int yy = headBottom; yy < bottomY; yy++)
+			for (int yy = headBottom + 1; yy < bottomY; yy++)
 				if (plan.getCharAt(lx, yy) == ' ')
 					plan.move(lx, yy).drawChar(vLine);
+			plan.move(lx, headBottom).muteLifelineBelowBox();
+			plan.move(lx, bottomY).muteLifelineAboveBox();
 		}
 
-		// Footer boxes, mirroring drawU()'s playingSpace.isShowFootbox() branch:
-		// each participant draws itself a second time, right below the lifelines.
-		if (playingSpace.isShowFootbox())
-			for (Participant p : participants)
-				p.asciiDraw(plan.move((int) livingSpaces.get(p).getAsciiLeftColumn().getCurrentValue(), bottomY));
 	}
 
 	@Override

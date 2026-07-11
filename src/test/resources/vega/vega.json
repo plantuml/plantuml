@@ -1,52 +1,213 @@
 {
   "tests": [
     {
-      "file": "asciiverse/group.puml",
-      "folder": "asciiverse",
-      "status": "pass",
-      "description": "(3 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "asciiverse/hello1.puml",
+      "file": "asciiverse/altpar_001.puml",
       "folder": "asciiverse",
       "status": "pass",
       "description": "(2 participants)",
       "diagram_class": "SequenceDiagram"
     },
     {
-      "file": "asciiverse/hello2.puml",
+      "file": "asciiverse/altpar_002.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/altpar_003.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/altpar_004.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(4 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/altpar_005.puml",
       "folder": "asciiverse",
       "status": "pass",
       "description": "(2 participants)",
       "diagram_class": "SequenceDiagram"
     },
     {
-      "file": "asciiverse/hello3.puml",
+      "file": "asciiverse/altpar_006.puml",
       "folder": "asciiverse",
       "status": "pass",
-      "description": "(3 participants)",
+      "description": "(4 participants)",
       "diagram_class": "SequenceDiagram"
     },
     {
-      "file": "asciiverse/partition.puml",
-      "folder": "asciiverse",
-      "status": "pass",
-      "description": "(3 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "asciiverse/zz-test1.puml",
+      "file": "asciiverse/basic_001.puml",
       "folder": "asciiverse",
       "status": "pass",
       "description": "(2 participants)",
       "diagram_class": "SequenceDiagram"
     },
     {
-      "file": "asciiverse/zz-test2.puml",
+      "file": "asciiverse/basic_002.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/basic_003.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/group_001.puml",
       "folder": "asciiverse",
       "status": "pass",
       "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/hello_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/hello_002.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/layout_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/layout_002.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/layout_002b.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/layout_003.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/leftmsg_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/leftmsg_002.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/leftmsg_003.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/multiline_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/nested_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/partition_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/self_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/selfnote_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/selfnote_001b.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/selfnote_001c.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/selfnote_002.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/selfnote_003.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(1 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/timeline_001.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(3 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/timeline_002.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
       "diagram_class": "SequenceDiagram"
     },
     {
@@ -133,27 +294,6 @@
       "diagram_class": "DescriptionDiagram"
     },
     {
-      "file": "migration/A0000_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(2 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/A0001_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(2 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/A0006_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(2 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
       "file": "migration/ChenMovieAlias_Test.puml",
       "folder": "migration",
       "status": "pass",
@@ -212,83 +352,6 @@
       "status": "pass",
       "description": "(4 entities)",
       "diagram_class": "ClassDiagram"
-    },
-    {
-      "file": "migration/SequenceLayout_0001_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(1 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/SequenceLayout_0001b_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(1 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/SequenceLayout_0001c_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(1 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/SequenceLayout_0002_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(1 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/SequenceLayout_0003_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(1 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/SequenceLayout_0006_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(2 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/SequenceLeftMessageAndActiveLifeLines_0001_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(1 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/SequenceLeftMessageAndActiveLifeLines_0002_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(2 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/SequenceLeftMessageAndActiveLifeLines_0003_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(1 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/TeozTimelineIssues_0001_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(3 participants)",
-      "diagram_class": "SequenceDiagram"
-    },
-    {
-      "file": "migration/TeozTimelineIssues_0009_Test.puml",
-      "folder": "migration",
-      "status": "pass",
-      "description": "(2 participants)",
-      "diagram_class": "SequenceDiagram"
     },
     {
       "file": "mvp/hello-both.puml",
@@ -1616,8 +1679,8 @@
     }
   ],
   "summary": {
-    "total": 194,
-    "passed": 190,
+    "total": 203,
+    "passed": 199,
     "failed": 0,
     "skipped": 4
   }

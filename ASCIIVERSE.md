@@ -2088,5 +2088,146 @@ If Option A + B2 were chosen, the shape would be:
 Sections 3, 5.4, 6 and 7 of this document are superseded by this one and have
 been marked as such in place.
 
+## 33. Self-messages: `CommunicationTileSelf.asciiDraw()` (the §9.5 to-do item)
+
+The next item on §9.5's list -- self-message ASCII rendering -- came up not
+as a planned migration step but as a crash: `EaterTest` feeds several
+`a -> a` diagrams through `-tutxt`, and the §21 crash policy (unmigrated
+top-level tiles crash instead of being silently skipped) surfaced
+`CommunicationTileSelf` as the exact class with no ASCII support yet.
+
+**Idea copied from `asciiart.ComponentTextSelfArrow`, never its code** (the
+standing rule, §1/§9.1/§12/§16/etc.): a self-message draws a small loop box
+to one side of the lifeline --
+```
+,----.
+|    |    label
+<---'
+```
+-- with the arrowhead pointing back into the lifeline and the label starting
+one gap column after the box's far edge. `CommunicationTileSelf` now has the
+same four ASCII methods every other migrated tile has grown
+(`asciiDraw()`/`asciiDimension()`/`asciiAddConstraints()`/`getAsciiMinX()`/
+`getAsciiMaxX()`), following `CommunicationTile`'s established shape
+one-for-one:
+
+- **Which side the loop opens on** mirrors the pixel `isReverseDefine()`
+  branch already used by `getMinX()`/`getMaxX()`/`addConstraints()` above:
+  normally to the right (the common `a -> a` case), to the left when the
+  arrow was defined reversed (`a <- a`).
+- **The box's corners and lines are read off `InfinitePlan`**, exactly like
+  `CommunicationTile` reads `getHLineChar()`/`getVLineChar()`: this is the
+  first caller outside the `asciiverse` package to need the box corners
+  (`getTopLeftChar()`/`getTopRightChar()`/`getBottomLeftChar()`/
+  `getBottomRightChar()`), so those four accessors widened from
+  package-private to public on `InfinitePlan` -- the same kind of visibility
+  relaxation already made twice before for `fillHLine`/`fillVLine` (§18) and
+  for the top corners alone (§28), now extended one step further for a
+  caller in `sequencediagram.teoz` rather than `asciiverse` itself.
+- **Dotted arrows** (`return` from inside a self-message, or any
+  `isDotted()` configuration) reuse `InfinitePlan.drawHLine(..., dotted)`
+  as-is -- no self-message-specific dotted logic needed.
+- **The label is *not* wrapped in `AsciiBlockMarginLR`.** Unlike
+  `CommunicationTile`'s centered label (§25), the self-message's label is
+  drawn flush after the box, never on a lifeline column, so there is no
+  margin-cell/lifeline-pipe collision to guard against -- the failure mode
+  §25 fixed with a margin decorator doesn't arise here.
+- **Multi-line labels** grow the loop's height the same way
+  `CommunicationTile.asciiLabelRows()` does (`Math.max(1, label height)`),
+  and the vertical connector on the box's far column is redrawn for every
+  label row rather than just one, so the box visually stretches with the
+  label instead of the label overflowing past a fixed 3-row box.
+- **`asciiAddConstraints()`** reserves the loop's width against whichever
+  neighbour it could otherwise overlap (`getNext()` if the loop opens right,
+  `getPrevious()` if it opens left) -- both helpers were already private
+  methods on the class for the pixel `addConstraints()` above, reused
+  as-is, since they only walk the `LivingSpaces` map and know nothing about
+  pixels vs. cells.
+
+**Known gaps, consistent with the rest of this log:**
+- ~~`CommunicationTileSelfNoteLeft`/`CommunicationTileSelfNoteRight` (the two
+  decorators wrapping this tile for a message-attached note) still inherit
+  the `AsciiBlock` default and crash if exercised~~ **Fixed, see the addendum
+  below.**
+- The loop shape has not yet been eyeballed against a rendered screenshot the
+  way every other shape in this log was before being trusted (§9.4, §24,
+  §28, §29 all record that step explicitly) -- `EaterTest` only asserts the
+  label text is present in the output, not the surrounding box shape. Worth
+  generating and eyeballing a small `a -> a` / `a <- a` Vega case
+  (`VEGA_FORCE_WRITE`) before trusting the exact column arithmetic above.
+- The loop's own width is, like every other shape in this package, not yet
+  reserved on anything beyond its immediate neighbour -- a self-message
+  followed two participants later by something that also needs the gap
+  isn't a scenario this section considered.
+
+**Addendum (same session as §34): `CommunicationTileSelfNoteLeft`/`Right` done
+too.** A Vega migration case (`SequenceLayout_0005b_Test.puml`, a self-message
+with `note left`) crashed on exactly the gap flagged above. Both decorators
+now have the same four ASCII methods as `CommunicationTileNoteLeft`/`Right`
+(§18–§20), with one simplification: unlike those two, there is no separate
+`LivingSpace` field to anchor the note on here -- `tile.getAsciiMinX()`/
+`getAsciiMaxX()` (the wrapped `CommunicationTileSelf`'s own ASCII range, §33)
+are already the right anchor, exactly mirroring how the pixel
+`getNotePosition()` on both classes uses `tile.getMinX()`/`getMaxX()`
+directly rather than a `LivingSpace` lookup. Same known gaps as the plain
+message note decorators: the note box's own width still isn't reserved on
+the ASCII column solver (§14), and the shape hasn't been eyeballed against a
+rendered screenshot yet.
+
+## 34. Exo messages: `CommunicationExoTile.asciiDraw()` ("A->?" / "?->E")
+
+Another crash surfaced by the §21 policy, this time from a Vega migration
+case (`SequenceLayout_0004_Test.puml`, a `group` containing `A->? : M1` /
+`?->E : M2`): `CommunicationExoTile` -- the tile for a message whose other
+end is off-diagram (`->?`/`?->`, or the compact short-arrow forms) -- had no
+ASCII support either, so `GroupingTile.asciiBodyHeight()` crashed on it the
+moment a group contained one.
+
+**The pixel shape this mirrors:** an exo message is NOT local to its
+neighbour -- it draws from the participant's own lifeline all the way to the
+DIAGRAM's outer edge (`tileArguments.getBorder1()`/`getBorder2()`), crossing
+over every other participant's lifeline in between, unless it is a *short*
+arrow (`message.isShortArrow()`, the compact syntax), which instead stays
+local to the participant (mirrored by the pixel `isFromLeftBorderMessage()`/
+`isFromRightBorderMessage()` methods above, which are exactly "not a short
+arrow"). The ASCII version keeps the same two-case split:
+
+- **Non-short (the common case):** the far end is a fixed `ASCII_EXO_MARGIN`
+  (2 cells) outside the OUTERMOST participant's own box --
+  `tileArguments.getFirstLivingSpace()`/`getLastLivingSpace()`, the same
+  "outermost participant" accessors `PartitionTile`'s full-width frame
+  already relies on (§31) -- not the message's own neighbour. No
+  `asciiAddConstraints()` reservation is needed for this case: the arrow
+  simply draws over whichever other lifelines happen to sit between the
+  participant and the edge, the same way the pixel arrow visually crosses
+  them without displacing anything.
+- **Short arrow:** the far end is a small local offset from the message's
+  own participant instead (just enough to fit the label, `ASCII_EXO_SHORT_MIN_WIDTH`
+  as a floor), and *does* reserve room from whichever neighbour it could
+  otherwise overlap -- the same `ensureBiggerThan` pattern
+  `CommunicationTileSelf.asciiAddConstraints()` already uses for its loop
+  (§33), reused here via `LivingSpaces.previous()`/`next()` (already public,
+  no need to duplicate private helpers).
+
+**The arrow-drawing logic is a generalization of `CommunicationTile`'s**
+(never its code, no shared superclass method to call into): the
+participant's own lifeline column is always left untouched by the tile
+(filled in afterwards by the lifeline-fill pass), with the arrowhead landing
+one column short of it when the participant is the message's target
+(`MessageExoType.FROM_LEFT`/`FROM_RIGHT`). The diagram edge, unlike a
+lifeline, is never filled in by anything else, so when the EDGE is the
+target (`TO_LEFT`/`TO_RIGHT`) the arrowhead is simply drawn flush onto it --
+no reserved column needed on that side.
+
+**Known gaps, consistent with the rest of this log:**
+- Not yet eyeballed against a rendered screenshot (same caveat as §33) --
+  only exercised so far by a Vega case whose `.atxt`/`.utxt` were auto-written
+  on first run and haven't been hand-verified.
+- The fixed `ASCII_EXO_MARGIN` for the non-short case doesn't grow with the
+  label width the way `CommunicationTile`'s `+2` runway does -- a very wide
+  label on a border-spanning exo message could overflow past where the
+  arrow's own dashes are drawn. Same class of gap as a group's title or a
+  note's width not being reserved on the column solver (§14/§15/§26).
+
 
 

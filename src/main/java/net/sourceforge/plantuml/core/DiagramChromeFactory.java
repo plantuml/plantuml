@@ -40,6 +40,8 @@ import java.util.Collections;
 
 import net.sourceforge.plantuml.Annotated;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.AsciiBlockStackTB;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
@@ -146,6 +148,41 @@ public final class DiagramChromeFactory {
 		result = addCaption(result, annotated, skinParam);
 		result = addHeaderAndFooter(result, annotated, skinParam);
 		return result;
+	}
+
+	// -----------------------------------------------------------------------
+	// ASCII chrome (text-only output: -ttxt / -tutxt)
+	// -----------------------------------------------------------------------
+
+	/**
+	 * ASCII counterpart of {@link #create(TextBlock, Annotated, ISkinParam, Collection)}.
+	 * SequenceDiagram.exportTxt() draws its {@link AsciiBlock} straight to the
+	 * InfinitePlan, bypassing this class entirely, so none of the chrome
+	 * elements below ever reached -ttxt/-tutxt output (see ASCIIVERSE.md). For
+	 * now this only reattaches the title, the one element callers actually
+	 * relied on; caption/header/footer/legend/warnings are not (yet) supported
+	 * for ASCII output.
+	 *
+	 * @param raw       the bare diagram content, without any decoration
+	 * @param annotated provides the title (and, unused for now, caption/header/
+	 *                  footer/legend/mainframe)
+	 * @return           an AsciiBlock that draws the raw content with its title
+	 *                   centered above it, or {@code raw} unchanged if there is
+	 *                   no title
+	 */
+	public static AsciiBlock createAscii(AsciiBlock raw, Annotated annotated) {
+		return addAsciiTitle(raw, annotated);
+	}
+
+	private static AsciiBlock addAsciiTitle(AsciiBlock original, Annotated annotated) {
+		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();
+		if (title.isNull())
+			return original;
+
+		// Display already implements AsciiBlock (see Display.asciiDraw()), so no
+		// separate ASCII title TextBlock/Style plumbing is needed here, unlike
+		// addTitle() above which has to go through Style.createTextBlockBordered().
+		return new AsciiBlockStackTB(title.getDisplay(), original);
 	}
 
 	// -----------------------------------------------------------------------

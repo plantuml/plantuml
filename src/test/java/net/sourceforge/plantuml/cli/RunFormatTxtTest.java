@@ -26,14 +26,15 @@ class RunFormatTxtTest extends AbstractCliTest {
 		final String content = new String(Files.readAllBytes(textFile), java.nio.charset.StandardCharsets.UTF_8);
 
 		final String expected = String.join("\n", //
-				"     ┌─────┐          ┌───┐", //
-				"     │alice│          │bob│", //
-				"     └──┬──┘          └─┬─┘", //
-				"        │    hello      │  ", //
-				"        │──────────────>│  ", //
-				"     ┌──┴──┐          ┌─┴─┐", //
-				"     │alice│          │bob│", //
-				"     └─────┘          └───┘", //
+				"┌─────┐   ┌───┐", //
+				"│alice│   │bob│", //
+				"└──┬──┘   └─┬─┘", //
+				"   │ hello  │", //
+				"   │───────>│", //
+				"   │        │", //
+				"┌──┴──┐   ┌─┴─┐", //
+				"│alice│   │bob│", //
+				"└─────┘   └───┘", //
 				"");
 
 		assertEqualsButControlChars(expected, content);
@@ -54,14 +55,15 @@ class RunFormatTxtTest extends AbstractCliTest {
 		final String content = new String(Files.readAllBytes(textFile), java.nio.charset.StandardCharsets.UTF_8);
 
 		final String expected = String.join("\n", //
-				"     ,-----.          ,---.", //
-				"     |alice|          |bob|", //
-				"     `--+--'          `-+-'", //
-				"        |    hello      |  ", //
-				"        |-------------->|  ", //
-				"     ,--+--.          ,-+-.", //
-				"     |alice|          |bob|", //
-				"     `-----'          `---'", //
+				",-----.   ,---.", //
+				"|alice|   |bob|", //
+				"`--+--'   `-+-'", //
+				"   | hello  |", //
+				"   |------->|", //
+				"   |        |", //
+				",--+--.   ,-+-.", //
+				"|alice|   |bob|", //
+				"`-----'   `---'", //
 				"");
 
 		assertEqualsButControlChars(expected, content);

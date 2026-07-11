@@ -1,0 +1,23 @@
+,---.                 ,-----.
+|Bob|                 |Alice|
+`-+-'                 `--+--'
+  |----.                 |
+  |    | hello1          |
+  |<---'                 |
+  |----.                 |
+  |    | hello2          |
+  |<---'                 |
+  X                      |
+  |----.                 |
+  |    | this is an      |
+  |    | example of long |
+  |    | message         |
+  |<---'                 |
+  |   And this           |
+  |   is an other on     |
+  |   very long too      |
+  |--------------------->|
+  |                      |
+,-+-.                 ,--+--.
+|Bob|                 |Alice|
+`---'                 `-----'

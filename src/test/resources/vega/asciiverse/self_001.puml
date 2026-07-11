@@ -1,0 +1,9 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (2 participants)
+---
+@startuml
+alice -> bob: this is a test
+return ok
+alice -> alice : this is a self message
+@enduml

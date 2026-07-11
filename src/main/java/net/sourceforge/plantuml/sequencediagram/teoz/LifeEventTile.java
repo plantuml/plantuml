@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -153,6 +155,68 @@ public class LifeEventTile extends AbstractTile {
 				: 0;
 
 		return livingSpace.getPosC(getStringBounder()).addFixed(liveDeltaWidthAdjustment);
+	}
+
+	// ---------------------------------------------------------------------
+	// ASCII rendering (ASCIIVERSE.md §35).
+	//
+	// activate/deactivate are deliberately ignored for now (no livebox
+	// indentation in ASCII yet, ASCIIVERSE.md §32/§9.5 territory): a
+	// LifeEventTile that is not a destroy is a pure spacer, mirroring
+	// EmptyTile (ASCIIVERSE.md §21) -- zero footprint, draws nothing.
+	//
+	// A destroy gets a single-row "X" marker, planted at the participant's own
+	// absolute lifeline column (getAsciiPosC()) -- the plan's horizontal
+	// translation is ignored, only its row matters, same convention as
+	// CommunicationTile/CommunicationTileSelf reading their own home column
+	// directly rather than depending on the caller's dx. The 'X' is drawn
+	// before the orchestrator's lifeline-fill pass, which only ever writes
+	// into still-empty cells (ASCIIVERSE.md §9.2), so it is never overwritten.
+	// No Unicode variant: like arrowheads (§12), this character doesn't vary
+	// between ATXT and UTXT.
+	//
+	// Deliberately NOT gated on isDestroyWithoutMessage(): that flag only
+	// controls the rare pixel-only branch in drawU()/getPreferredHeight()
+	// above. In the common case -- "destroy X" right after a message dealing
+	// with X -- the LifeEvent gets attached to that message
+	// (SequenceDiagram.activate(): lifeEvent.setMessage(lastMessage)), so
+	// getMessage() != null and isDestroyWithoutMessage() is false; yet the
+	// pixel cross still gets drawn there, just by a completely different,
+	// tile-independent pass (LiveBoxesDrawer.drawDestroyIfNeeded(), driven by
+	// the Step history LivingSpace.addStepForLivebox()/goDestroy() already
+	// record above in callbackY_internal). ASCII has no such second pass (no
+	// livebox rendering at all yet, §32), so the tile itself must draw the X
+	// for every destroy, attached or not -- hence testing the LifeEventType
+	// directly rather than reusing the pixel-specific gate.
+	private boolean isDestroy() {
+		return lifeEvent.getType() == LifeEventType.DESTROY;
+	}
+
+	@Override
+	public ADimension2D asciiDimension() {
+		if (isDestroy())
+			return new ADimension2D(0, 1);
+
+		return new ADimension2D(0, 0);
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		if (isDestroy() == false)
+			return;
+
+		final int x = (int) livingSpace.getAsciiPosC().getCurrentValue();
+		plan.move(x, 0).drawString("X");
+	}
+
+	@Override
+	public Real getAsciiMinX() {
+		return livingSpace.getAsciiPosC();
+	}
+
+	@Override
+	public Real getAsciiMaxX() {
+		return livingSpace.getAsciiPosC();
 	}
 
 }

@@ -24,14 +24,15 @@ class ExportOnATextTest extends AbstractCliTest {
 				"a -> b", //
 				"@enduml");
 		final String expected = String.join("\n", //
-				"     ,-.          ,-.", //
-				"     |a|          |b|", //
-				"     `+'          `+'", //
-				"      |            | ", //
-				"      |----------->| ", //
-				"     ,+.          ,+.", //
-				"     |a|          |b|", //
-				"     `-'          `-'", //
+				",-. ,-.", //
+				"|a| |b|", //
+				"`+' `+'", //
+				" |   |", //
+				" |-->|", //
+				" |   |", //
+				",+. ,+.", //
+				"|a| |b|", //
+				"`-' `-'", //
 				"");
 
 		final String rendered = renderViaPipe(input);

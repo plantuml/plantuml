@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="329px" preserveAspectRatio="none" style="width:337px;height:329px;background:#FFFFFF;" version="1.1" viewBox="0 0 337 329" width="337px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="222" style="stroke:#000;stroke-width:1.5;" width="193.063" x="124.694" y="51"/>
+    <rect fill="none" height="179" style="stroke:#000;stroke-width:1.5;" width="149.063" x="143.694" y="80"/>
+    <g>
+      <title>Random Name</title>
+      <rect fill="#000" fill-opacity="0" height="279.5" width="8" x="58.65" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="62.15" x2="62.15" y1="39" y2="318.5"/>
+    </g>
+    <g>
+      <title>bossrpcp</title>
+      <rect fill="#000" fill-opacity="0" height="279.5" width="8" x="156.194" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="159.694" x2="159.694" y1="39" y2="318.5"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="104.3" x="10" y="10"/>
+    <text fill="#000" font-size="14" textLength="90.3" x="17" y="27.889">Random Name</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="70.788" x="124.3" y="10"/>
+    <text fill="#000" font-size="14" textLength="56.787" x="131.3" y="27.889">bossrpcp</text>
+    <path d="M124.694,51 L187.731,51 L187.731,56 L177.731,66 L124.694,66 L124.694,51" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="222" style="stroke:#000;stroke-width:1.5;" width="193.063" x="124.694" y="51"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="18.038" x="139.694" y="62.111">opt</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="92.263" x="202.731" y="61.556">[message received]</text>
+    <path d="M143.694,80 L202.425,80 L202.425,85 L192.425,95 L143.694,95 L143.694,80" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="179" style="stroke:#000;stroke-width:1.5;" width="149.063" x="143.694" y="80"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="13.731" x="158.694" y="91.111">alt</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="59.331" x="217.425" y="90.556">[REQUEST]</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="159.694" x2="201.694" y1="124" y2="124"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="201.694" x2="201.694" y1="124" y2="137"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="160.694" x2="201.694" y1="137" y2="137"/>
+    <polygon fill="#181818" points="170.694,133,160.694,137,170.694,141,166.694,137" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="43.306" x="166.694" y="119.111">request</text>
+    <line style="stroke:#000;stroke-width:1;stroke-dasharray:2,2;" x1="143.694" x2="292.756" y1="146" y2="146"/>
+    <text fill="#000" font-size="11" font-weight="700" textLength="67.306" x="148.694" y="156.556">[RESPONSE]</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="159.694" x2="201.694" y1="181" y2="181"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="201.694" x2="201.694" y1="181" y2="194"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="160.694" x2="201.694" y1="194" y2="194"/>
+    <polygon fill="#181818" points="170.694,190,160.694,194,170.694,198,166.694,194" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="166.694" y="176.111">respond</text>
+    <line style="stroke:#000;stroke-width:1;stroke-dasharray:2,2;" x1="143.694" x2="292.756" y1="203" y2="203"/>
+    <text fill="#000" font-size="11" font-weight="700" textLength="40.288" x="148.694" y="213.556">[AGAIN]</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="159.694" x2="201.694" y1="238" y2="238"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="201.694" x2="201.694" y1="238" y2="251"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="160.694" x2="201.694" y1="251" y2="251"/>
+    <polygon fill="#181818" points="170.694,247,160.694,251,170.694,255,166.694,251" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="43.306" x="166.694" y="233.111">request</text>
+    <line style="stroke:#181818;stroke-width:1;" x1="62.15" x2="104.15" y1="66" y2="66"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="104.15" x2="104.15" y1="66" y2="79"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="63.15" x2="104.15" y1="79" y2="79"/>
+    <polygon fill="#181818" points="73.15,75,63.15,79,73.15,83,69.15,79" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <text fill="#000" font-size="13" textLength="20.881" x="69.15" y="61.111">test</text>
+  </g>
+</svg>
