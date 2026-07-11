@@ -69,6 +69,11 @@ public class GroupingTile extends AbstractTile {
 
 	public static final int EXTERNAL_MARGINX1 = 3;
 	public static final int EXTERNAL_MARGINX2 = 9;
+	// Vertical breathing room around a group frame, on each side. Legacy
+	// materialized it as two ghost EmptyTile(4, ...) around every GroupingTile
+	// (see TileBuilder.buildOne); under USE_ME the same 4px are folded into the
+	// gauge instead (min offset + getPreferredHeight, see below).
+	public static final int EXTERNAL_MARGINY = 4;
 	private static final int MARGINX = 16;
 	// private static final int MARGINY = 10;
 	private static final int MARGINY_MAGIC = 20;
@@ -126,11 +131,18 @@ public class GroupingTile extends AbstractTile {
 		// max can still be pushed past whichever of the two members is taller.
 		final Real previousMax = currentY.getMax();
 		final boolean parallel = start.isParallel();
-		final Real groupTop = parallel ? currentY.getMin() : previousMax;
-		final Real firstY = groupTop;
+		final Real chainTop = parallel ? currentY.getMin() : previousMax;
+		// The drawn frame starts EXTERNAL_MARGINY below the chaining point:
+		// this reproduces the leading ghost EmptyTile(4, ...) of the legacy
+		// engine (the trailing one is accounted for in getPreferredHeight).
+		// Without this offset the frame sits flush against the previous tile,
+		// and a group right after a `newpage` lands exactly ON the page clip
+		// boundary -- its top border then bleeds through into the previous
+		// page (see YGAUGE.md).
+		final Real firstY = YGauge.USE_ME ? chainTop.addFixed(EXTERNAL_MARGINY) : chainTop;
 
 		final double h = dim1.getHeight() + MARGINY_MAGIC / 2;
-		currentY = YGauge.create(groupTop.addAtLeast(h), 0);
+		currentY = YGauge.create(firstY.addAtLeast(h), 0);
 
 		while (it.hasNext()) {
 			final Event ev = it.next();
@@ -192,16 +204,21 @@ public class GroupingTile extends AbstractTile {
 
 		max2.add(this.min.addFixed(width + 16));
 		this.max = RealUtils.max(max2);
+		// The gauge's min is the DRAWN frame's top (chainTop + EXTERNAL_MARGINY,
+		// see firstY above), but the total room reserved in the outer chain is
+		// counted from chainTop -- getPreferredHeight() already includes BOTH
+		// margins (leading + trailing), so the max must be anchored on chainTop,
+		// not on firstY, or the leading margin would be counted twice.
 		if (parallel) {
 			// Like YGauge.createParallel: the group's own max must still
 			// dominate the PREVIOUS sibling's max, so that whichever of the
 			// two parallel groups is taller correctly pushes the next
 			// sequential tile below the whole pair, not just below this one.
-			final Real parallelMax = firstY.addAtLeast(getPreferredHeight());
+			final Real parallelMax = chainTop.addAtLeast(getPreferredHeight());
 			parallelMax.ensureBiggerThan(previousMax);
 			this.yGauge = new YGauge(firstY, parallelMax);
 		} else {
-			this.yGauge = YGauge.create(firstY, getPreferredHeight());
+			this.yGauge = new YGauge(firstY, chainTop.addAtLeast(getPreferredHeight()));
 		}
 
 	}
@@ -357,25 +374,19 @@ public class GroupingTile extends AbstractTile {
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(getStringBounder());
 		double result = dim1.getHeight() + bodyHeight + MARGINY_MAGIC;
 		if (YGauge.USE_ME)
-			// Legacy reserved 4px BEFORE and 4px AFTER every group via the two
-			// ghost EmptyTile(4, ...) spacers in TileBuilder.buildOne -- entirely
-			// skipped under USE_ME (see YGAUGE.md known gap #2, never verified
-			// pixel-wise until now). This method is the single source both the
-			// outer chain (this.yGauge, above) and a PARENT's own bodyHeight sum
-			// (over its children's getPreferredHeight(), see the constructor)
-			// read to know how much vertical span this group actually consumes,
-			// so adding the missing 8px back HERE keeps both consistent with
-			// each other, unlike shifting the group's own min/firstY (which
-			// would desync the two). Net effect: the same 8px total reservation
-			// as legacy, just entirely after the frame instead of split 4
-			// before / 4 after -- the frame itself (getTotalHeight, drawn
-			// border) is untouched, only the gap before the NEXT sibling grows.
-			// Without this, a newpage (or any tile) immediately following a
-			// group starts a few pixels too early, so the page-split boundary
-			// computed from it (PlayingSpaceWithParticipants.getYMax) sits
-			// slightly too high too, letting a sliver of the next page's
-			// content bleed into the current page's clipped view.
-			result += 8;
+			// Legacy wrapped every group with two ghost EmptyTile(4, ...) spacers
+			// (TileBuilder.buildOne, skipped under USE_ME): 4px BEFORE the frame
+			// and 4px AFTER it. getPreferredHeight() is what the OUTER chain (and
+			// any parent's bodyHeight sum) uses to know how much vertical room
+			// this group consumes, so it must account for BOTH spacers -- the 4px
+			// before is materialized separately, by offsetting the gauge's own min
+			// (see EXTERNAL_MARGINY / the constructor), which is what actually
+			// moves the drawn frame down. Both halves are needed: reserving the
+			// 8px here WITHOUT the min offset leaves the frame flush against
+			// whatever precedes it -- and, right after a newpage, flush against
+			// the page clip boundary, so the frame's top border bleeds into the
+			// previous page (see YGAUGE.md).
+			result += 2 * EXTERNAL_MARGINY;
 		return result;
 	}
 
