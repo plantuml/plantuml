@@ -39,13 +39,6 @@ import net.sourceforge.plantuml.real.Real;
 
 public final class YGauge {
 
-	public static final boolean USE_ME = true;
-
-	// Debug switch: when true, PlayingSpace dumps each top-level tile's gauge,
-	// TimeHook, preferred height and contact point to stderr. Temporary, for
-	// YGAUGE investigations only -- flip to true when needed.
-	public static final boolean TRACE = false;
-
 	private final Real min;
 	private final Real max;
 	// Contact line shared by the members of a parallel (&) group: the

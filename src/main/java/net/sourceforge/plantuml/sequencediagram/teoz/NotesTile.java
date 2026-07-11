@@ -68,6 +68,14 @@ public class NotesTile extends AbstractTile implements Tile {
 		return notes;
 	}
 
+	@Override
+	public double getContactPointRelative() {
+		// Same rule as NoteTile: a note has no arrow line of its own, so its
+		// contact point is its vertical center -- which is what a parallel (&)
+		// message's arrow aligns against
+		return getPreferredHeight() / 2;
+	}
+
 	public NotesTile(StringBounder stringBounder, LivingSpaces livingSpaces, Notes notes, Rose skin,
 			ISkinParam skinParam, YGauge currentY) {
 		super(stringBounder, currentY);
@@ -75,7 +83,21 @@ public class NotesTile extends AbstractTile implements Tile {
 		this.notes = notes;
 		this.skin = skin;
 		this.skinParam = skinParam;
-		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());
+
+		// createWithContact, not the bare create(currentY.getMax(), ...): this tile
+		// PUBLISHES a contact line, so that a parallel (&) message FOLLOWING it can
+		// still find one and align its arrow against this block's vertical center.
+		// With a plain create() the contact would be null and the follower would
+		// silently fall back to top alignment (the same latent gap the note wrappers
+		// had -- see YGAUGE.md).
+		//
+		// Note there is deliberately NO createParallel branch here, unlike NoteTile:
+		// `Notes` (the OVER_SEVERAL multi-note container) inherits AbstractEvent's
+		// isParallel(), hardcoded to false, and never calls goParallel() -- unlike
+		// `Note`. So a `notes` block can never itself be the & member, and such a
+		// branch would be dead code. If `notes` ever gains goParallel(), mirror
+		// NoteTile's constructor exactly.
+		this.yGauge = YGauge.createWithContact(currentY, getContactPointRelative(), getPreferredHeight());
 	}
 
 	@Override
@@ -100,8 +122,8 @@ public class NotesTile extends AbstractTile implements Tile {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+		// Self-translate prologue: absolute gauge position
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		for (Note note : notes) {

@@ -52,6 +52,15 @@ what made a naive "reuse Teoz's pixel output for ASCII" approach fail.
 
 ## 3. Key finding: the Y axis is not actually a `Real` problem
 
+> **SUPERSEDED (2026-07-11) -- see section 32.** This section, and the Y half
+> of sections 5/6/7, were written when `YGauge.USE_ME` was `false`. That flag
+> is now GONE: the YGauge migration landed, Y in Teoz *is* a `Real` constraint
+> solve, and `TimeHook` / `fillPositionelTiles`'s stacking loop no longer
+> position anything. The premise below ("Y is already additive stacking, so the
+> ASCII path can reuse the stacking loop almost verbatim") is therefore FALSE
+> as of today. Kept for the reasoning trail; read section 32 for what replaces
+> it.
+
 Unlike X, Teoz's vertical placement is **not** driven by the `Real` solver.
 `YGauge.USE_ME` is `false`: the `YGauge`/`Real`-based vertical machinery is
 present in the code but dead. In practice:
@@ -141,6 +150,12 @@ The plan is:
 
 4. **Y axis: reuse the existing sequential stacking, fed with cell-based
    heights.**
+   > **SUPERSEDED -- see section 32.** `YGauge.USE_ME` is gone and Y is now a
+   > `Real` solve; there is no `TimeHook` stacking loop left to reuse. The two
+   > "details to watch" below turned out to be exactly what the gauge model
+   > already solves (contact-point rounding, `&` tiles sharing a row) -- which
+   > is the argument for mirroring it rather than rebuilding it.
+
    Because `YGauge.USE_ME == false` already made Y a simple running
    `TimeHook` accumulation (§3), the same `fillPositionelTiles`-style loop can
    drive the ASCII layout, provided the heights it accumulates are already in
@@ -164,11 +179,15 @@ The plan is:
 
 ## 6. Summary of responsibilities
 
+> **The Y row of this table is SUPERSEDED -- see section 32.** Y is no longer
+> "plain sequential TimeHook stacking": it is a `Real` constraint solve, on its
+> own line, exactly like X.
+
 | Axis | Source of truth today | What ASCII reuses | What ASCII must rebuild |
 |------|------------------------|--------------------|--------------------------|
 | Topology (who/what/order) | Teoz tile tree (`TileBuilder`) | Reused as-is | — |
 | X (columns) | `Real` constraint solver, pixel-based | Nothing (must not quantize `Real` output) | A native integer column solver, fed by `asciiDimension()` |
-| Y (rows) | Plain sequential `TimeHook` stacking (`YGauge.USE_ME == false`) | The stacking loop itself | Only the height *values* — must come from `TextStringBounder` (cell units), not graphical metrics |
+| Y (rows) | ~~Plain sequential `TimeHook` stacking~~ **`Real` solve (YGauge)** | ~~The stacking loop itself~~ **Nothing -- but the MODEL transposes directly** | **An ASCII gauge chain on its own `RealLine`, 1.0 = 1 row (section 32)** |
 
 ## 7. Open questions
 

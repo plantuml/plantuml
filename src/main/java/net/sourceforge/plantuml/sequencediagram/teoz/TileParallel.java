@@ -38,14 +38,21 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.real.Real;
-import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 
+// A throwaway CLUSTER of parallel (&) tiles, built only to answer one question:
+// how tall is this run of & tiles TAKEN TOGETHER? (Its members overlap: they
+// share one contact line, so their combined extent is tallest-before-contact +
+// tallest-after-contact, not the sum of their heights.)
+//
+// It no longer POSITIONS or DRAWS anything -- the YGauge chain does that, at
+// construction time, and the tile lists used for drawing stay flat. So this is
+// never a member of any drawn tile list; it exists only inside
+// GroupingTile.mergeParallelCore()'s height-only projection, where the sole
+// method called on it is getPreferredHeight().
 public class TileParallel extends CommonTile {
 
 	public TileParallel(StringBounder stringBounder, Real currentY) {
@@ -56,19 +63,8 @@ public class TileParallel extends CommonTile {
 
 	@Override
 	public YGauge getYGauge() {
-		final List<Real> mins = new ArrayList<>();
-		final List<Real> maxs = new ArrayList<>();
-		for (Tile tile : tiles) {
-			final YGauge yGauge = tile.getYGauge();
-			mins.add(yGauge.getMin());
-			maxs.add(yGauge.getMax());
-		}
-		return new YGauge(RealUtils.min(mins), RealUtils.max(maxs));
-	}
-
-	@Override
-	final protected void callbackY_internal(TimeHook y) {
-		super.callbackY_internal(y);
+		// Never called: a TileParallel is never drawn and never chained onto
+		throw new UnsupportedOperationException();
 	}
 
 	public void add(Tile tile) {
@@ -76,11 +72,8 @@ public class TileParallel extends CommonTile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final double yPointAll = getContactPointRelative();
-		for (Tile tile : tiles) {
-			final double yPoint = tile.getContactPointRelative();
-			((UDrawable) tile).drawU(ug.apply(UTranslate.dy(yPointAll - yPoint)));
-		}
+		// Never called: the members draw themselves, from their own gauges
+		throw new UnsupportedOperationException();
 	}
 
 	public double getContactPointRelative() {
@@ -99,54 +92,28 @@ public class TileParallel extends CommonTile {
 		return result;
 	}
 
+	// The ONLY method this class exists for: the cluster's real vertical extent.
+	// Its members share a contact line, so they overlap -- summing their heights
+	// would count the overlap twice (see YGAUGE.md, the "groups with & messages
+	// were too tall" session).
 	public double getPreferredHeight() {
 		return getContactPointRelative() + getZZZ();
 	}
 
-	public void addConstraints() {
-		for (Tile tile : tiles)
-			tile.addConstraints();
+	// Everything below is unreachable: a TileParallel never reaches a tile list
+	// that gets drawn, constrained, or anchored. Kept only to satisfy the Tile
+	// contract inherited from CommonTile.
 
+	public void addConstraints() {
+		throw new UnsupportedOperationException();
 	}
 
 	public Real getMinX() {
-		// The min X of an ElseTile is the min X of its parent GroupingTile, which
-		// may still be under construction: else tiles are skipped here and
-		// processed later by the GroupingTile constructor (see allElses)
-		final List<Real> result = new ArrayList<>();
-		for (Tile tile : tiles) {
-			if (tile instanceof ElseTile)
-				continue;
-
-			result.add(tile.getMinX());
-		}
-		if (result.size() == 0)
-			return tiles.get(0).getMinX();
-
-		return RealUtils.min(result);
+		throw new UnsupportedOperationException();
 	}
 
 	public Real getMaxX() {
-		final List<Real> result = new ArrayList<>();
-		for (Tile tile : tiles) {
-			if (tile instanceof ElseTile)
-				continue;
-
-			result.add(tile.getMaxX());
-		}
-		if (result.size() == 0)
-			return tiles.get(0).getMaxX();
-
-		return RealUtils.max(result);
-	}
-
-	public List<Tile> getElseTiles() {
-		final List<Tile> result = new ArrayList<>();
-		for (Tile tile : tiles)
-			if (tile instanceof ElseTile)
-				result.add(tile);
-
-		return result;
+		throw new UnsupportedOperationException();
 	}
 
 	public Event getEvent() {
@@ -154,15 +121,7 @@ public class TileParallel extends CommonTile {
 	}
 
 	public boolean matchAnchor(String anchor) {
-		for (Tile tile : tiles)
-			if (tile.matchAnchor(anchor))
-				return true;
-
 		return false;
-	}
-
-	protected List<Tile> getTiles() {
-		return tiles;
 	}
 
 }

@@ -73,17 +73,15 @@ public class GroupingTile extends AbstractTile {
 
 	public static final int EXTERNAL_MARGINX1 = 3;
 	public static final int EXTERNAL_MARGINX2 = 9;
-	// Vertical breathing room around a group frame, on each side. Legacy
-	// materialized it as two ghost EmptyTile(4, ...) around every GroupingTile
-	// (see TileBuilder.buildOne). Under USE_ME it is reserved in
-	// getPreferredHeight() (both sides) and the TOP one is applied at draw time
-	// via getFrameY() -- deliberately NOT by offsetting the gauge min, which
-	// must stay a clean chaining point for parallel (&) siblings.
+	// Vertical breathing room around a group frame, on each side. It is reserved
+	// in getPreferredHeight() (both sides) and the TOP one is applied at draw time
+	// via getFrameY() -- deliberately NOT by offsetting the gauge min, which must
+	// stay a clean chaining point for parallel (&) siblings.
 	public static final int EXTERNAL_MARGINY = 4;
 	private static final int MARGINX = 16;
 	// private static final int MARGINY = 10;
 	private static final int MARGINY_MAGIC = 20;
-	private List<Tile> tiles = new ArrayList<>();
+	private final List<Tile> tiles = new ArrayList<>();
 	private final Real min;
 	private final Real max;
 	private final GroupingStart start;
@@ -138,17 +136,16 @@ public class GroupingTile extends AbstractTile {
 		final Real previousMax = currentY.getMax();
 		final boolean parallel = start.isParallel();
 		// INVARIANT: the gauge's min is the CHAINING POINT, never the drawn
-		// frame's top. Those two differ by EXTERNAL_MARGINY for a group (the
-		// legacy leading EmptyTile(4)), and conflating them broke `&` groups:
-		// a parallel sibling chains on the previous group's min, so if that min
-		// were already margin-offset the sibling would inherit the offset AND
-		// add its own -- drifting 4px lower per pair. The margin is applied at
-		// DRAW time instead (see getFrameY() / drawU), so the min stays a clean
-		// chaining point that parallel siblings can align on.
+		// frame's top. Those two differ by EXTERNAL_MARGINY for a group, and
+		// conflating them broke `&` groups: a parallel sibling chains on the
+		// previous group's min, so if that min were already margin-offset the
+		// sibling would inherit the offset AND add its own -- drifting 4px lower
+		// per pair. The margin is applied at DRAW time instead (see getFrameY() /
+		// drawU), so the min stays a clean chaining point siblings can align on.
 		final Real firstY = parallel ? currentY.getMin() : previousMax;
 
 		// The body starts below the frame's top margin AND the header
-		final double h = dim1.getHeight() + MARGINY_MAGIC / 2 + getExternalMarginY();
+		final double h = dim1.getHeight() + MARGINY_MAGIC / 2 + EXTERNAL_MARGINY;
 		currentY = YGauge.create(firstY.addAtLeast(h), 0);
 
 		while (it.hasNext()) {
@@ -160,41 +157,35 @@ public class GroupingTile extends AbstractTile {
 
 			for (Tile tile : TileBuilder.buildOne(it, tileArgumentsOriginal, ev, this, currentY)) {
 				tiles.add(tile);
-				if (YGauge.USE_ME)
-					currentY = tile.getYGauge();
+				currentY = tile.getYGauge();
 			}
 
 		}
-
-		tiles = mergeParallel(getStringBounder(), tiles);
 
 		// bodyHeight drives both the frame's own drawn height (getTotalHeight)
 		// and the space this GroupingTile reserves in the OUTER Y chain
 		// (getPreferredHeight() -> this.yGauge below): it must count each
 		// parallel (&) cluster ONCE (tallest-before-contact + tallest-after-
-		// contact, like legacy TileParallel.getPreferredHeight()), not sum
-		// every member's own height, or the group ends up taller than needed
-		// whenever it contains a & message (see YGAUGE.md). Under legacy,
-		// `tiles` (just reassigned above) is already merged into TileParallel
-		// clusters. Under USE_ME, mergeParallel() is a no-op (Y positioning is
-		// handled by the gauge chain instead), so a SEPARATE, unconditional
-		// merge is used here purely to get correct height clustering, without
-		// touching the flat `tiles` field used for drawing.
-		final List<Tile> heightTiles = YGauge.USE_ME ? mergeParallelCore(getStringBounder(), tiles) : tiles;
-		for (Tile tile : heightTiles)
+		// contact, like TileParallel.getPreferredHeight()), not sum every member's
+		// own height, or the group ends up taller than needed whenever it contains
+		// a & message (see YGAUGE.md).
+		//
+		// Y POSITIONING itself no longer goes through this clustering (the gauge
+		// chain does it, at construction time), so `tiles` stays FLAT for drawing
+		// and the clustered view below is a throwaway, height-only projection.
+		// TileParallel now survives for this single purpose: to be asked its
+		// getPreferredHeight().
+		for (Tile tile : mergeParallelCore(getStringBounder(), tiles))
 			bodyHeight += tile.getPreferredHeight();
 
+		// `tiles` is FLAT (no TileParallel clustering -- see bodyHeight above), so
+		// every else tile is reached directly here
 		for (Tile tile : tiles) {
 			final Event ev = tile.getEvent();
 			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.ELSE) {
 				allElses.add(tile);
 				continue;
 			}
-			// Else tiles merged inside a TileParallel (par2) must also be processed
-			// later, like plain else tiles: their min X is the min X of this very
-			// GroupingTile, which is not computed yet
-			if (tile instanceof TileParallel)
-				allElses.addAll(((TileParallel) tile).getElseTiles());
 
 			min2.add(tile.getMinX().addFixed(-MARGINX));
 			final Real m = tile.getMaxX();
@@ -228,19 +219,12 @@ public class GroupingTile extends AbstractTile {
 
 	}
 
-	// The 4px of breathing room above the drawn frame (legacy's leading ghost
-	// EmptyTile). Zero under the legacy path, where the real EmptyTiles still
-	// exist and do the job.
-	private static double getExternalMarginY() {
-		return YGauge.USE_ME ? EXTERNAL_MARGINY : 0;
-	}
-
 	// Absolute Y of the DRAWN frame's top edge: the gauge min (the chaining
 	// point) plus the top margin. Everything that draws the frame or positions
 	// something relative to it must go through this, never through the raw
 	// gauge min.
 	private double getFrameY() {
-		return getYGauge().getMin().getCurrentValue() + getExternalMarginY();
+		return getYGauge().getMin().getCurrentValue() + EXTERNAL_MARGINY;
 	}
 
 	protected Component getComponent(StringBounder stringBounder) {
@@ -260,34 +244,20 @@ public class GroupingTile extends AbstractTile {
 		final Area area = getArea(stringBounder);
 
 		final Component comp = getComponent(stringBounder);
-		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
 
-		if (YGauge.USE_ME) {
-			if (((Context2D) ug).isBackground())
-				drawBackground(ug, area);
-			// The frame is drawn EXTERNAL_MARGINY below the gauge min (which is
-			// the chaining point, not the frame top -- see getFrameY)
-			comp.drawU(ug.apply(new UTranslate(minCurrentValueForDrawing(), getFrameY())), area, (Context2D) ug);
-			drawNotes(ug.apply(UTranslate.dy(getFrameY())));
-		} else {
-			if (((Context2D) ug).isBackground()) {
-				drawBackground(ug, area);
-				return;
-			}
-			comp.drawU(ug.apply(UTranslate.dx(minCurrentValueForDrawing())), area, (Context2D) ug);
-			drawAllElses(ug);
-			drawNotes(ug);
-		}
+		if (((Context2D) ug).isBackground())
+			drawBackground(ug, area);
 
-		double h = dim1.getHeight() + MARGINY_MAGIC / 2;
-		for (Tile tile : tiles) {
-			if (YGauge.USE_ME)
-				((UDrawable) tile).drawU(ug);
-			else
-				((UDrawable) tile).drawU(ug.apply(UTranslate.dy(h)));
-			final double preferredHeight = tile.getPreferredHeight();
-			h += preferredHeight;
-		}
+		// The frame is drawn EXTERNAL_MARGINY below the gauge min (which is the
+		// chaining point, not the frame top -- see getFrameY)
+		comp.drawU(ug.apply(new UTranslate(minCurrentValueForDrawing(), getFrameY())), area, (Context2D) ug);
+		drawNotes(ug.apply(UTranslate.dy(getFrameY())));
+
+		// Children draw themselves in ABSOLUTE coordinates (each applies its own
+		// gauge min as a self-translate prologue), so no running dy() is accumulated
+		// here. The else dividers are drawn by the ElseTiles themselves, likewise.
+		for (Tile tile : tiles)
+			((UDrawable) tile).drawU(ug);
 	}
 
 	protected Area getArea(final StringBounder stringBounder) {
@@ -318,30 +288,10 @@ public class GroupingTile extends AbstractTile {
 		final Style style = start.getUsedStyles()[0];
 		final HColor back = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final double round = style.value(PName.RoundCorner).asDouble();
-		if (YGauge.USE_ME) {
-			// Under USE_ME, `ug` arrives UNTRANSLATED (each tile self-translates
-			// via its own absolute gauge, unlike legacy where the caller
-			// pre-translates to the group's TimeHook / frame top). So the
-			// Blotter -- which draws its bands from a LOCAL y=0 -- must be fed a
-			// `ug` explicitly translated to (frame left, frame top), not just an
-			// x offset like the legacy branch below. drawCompBackground's ypos
-			// formula mirrors drawAllElses's (frame-relative, via getFrameY()),
-			// not the legacy getTimeHook()-relative one.
-			drawCompBackground(ug.apply(UTranslate.dy(getFrameY())), area, back, round);
-			return;
-		}
-		drawCompBackground(ug, area, back, round);
-
-		final StringBounder stringBounder = ug.getStringBounder();
-
-		final XDimension2D dim1 = getPreferredDimensionIfEmpty(stringBounder);
-		double h = dim1.getHeight() + MARGINY_MAGIC / 2;
-		for (Tile tile : tiles) {
-			((UDrawable) tile).drawU(ug.apply(UTranslate.dy(h)));
-			final double preferredHeight = tile.getPreferredHeight();
-			h += preferredHeight;
-		}
-
+		// `ug` arrives UNTRANSLATED: every tile self-translates via its own absolute
+		// gauge. So the Blotter -- which draws its bands from a LOCAL y=0 -- must be
+		// fed a `ug` explicitly translated to the frame top, not just an x offset.
+		drawCompBackground(ug.apply(UTranslate.dy(getFrameY())), area, back, round);
 	}
 
 	protected void drawCompBackground(UGraphic ug, Area area, final HColor back, final double round) {
@@ -351,19 +301,14 @@ public class GroupingTile extends AbstractTile {
 		for (Tile tile : tiles)
 			if (tile instanceof ElseTile) {
 				final ElseTile elseTile = (ElseTile) tile;
-				final double ypos;
-				if (YGauge.USE_ME)
-					// NOT the same formula as legacy's `+ MARGINY_MAGIC / 2`: that
-					// term only stays consistent in legacy because drawAllElses
-					// (which draws the ACTUAL divider line there) uses the exact
-					// same "+10" itself, so the two cancel out. Under USE_ME the
-					// divider is drawn independently by ElseTile.drawU(), exactly
-					// at `gauge.min` with NO offset -- so the color boundary here
-					// must match that exactly, or the band sits 10px away from
-					// the actual dashed separator (see YGAUGE.md).
-					ypos = elseTile.getYGauge().getMin().getCurrentValue() - getFrameY();
-				else
-					ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
+				// The color boundary must land EXACTLY where ElseTile.drawU() draws
+				// its dashed divider, i.e. at the else's gauge min with NO extra
+				// offset. (The pre-YGauge code carried a `+ MARGINY_MAGIC / 2` here,
+				// but that was only harmless because the divider line was drawn by
+				// the same method using the identical "+10", so the two cancelled out.
+				// Now the divider is drawn independently by the ElseTile itself, so
+				// carrying that term over would sit the band 10px off -- see YGAUGE.md.)
+				final double ypos = elseTile.getYGauge().getMin().getCurrentValue() - getFrameY();
 				HColor backElse = elseTile.getBackColorGeneral();
 				// An else section without its own color inherits the group
 				// background: it may come from the style, not only from the
@@ -375,10 +320,8 @@ public class GroupingTile extends AbstractTile {
 			}
 
 		blotter.closeChanges();
-		// Under USE_ME, `ug` was already translated to (frame left, frame top)
-		// by the caller (see drawBackground above); under legacy it arrives
-		// pre-translated to the frame top by the OUTER caller of drawU itself.
-		// Either way only the X offset is needed here.
+		// `ug` was already translated to the frame top by the caller (see
+		// drawBackground above), so only the X offset is needed here.
 		blotter.drawU(ug.apply(UTranslate.dx(min.getCurrentValue())));
 	}
 
@@ -387,53 +330,17 @@ public class GroupingTile extends AbstractTile {
 		return bodyHeight + dimIfEmpty.getHeight() + MARGINY_MAGIC / 2;
 	}
 
-	private void drawAllElses(UGraphic ug) {
-		final StringBounder stringBounder = ug.getStringBounder();
-
-		final List<Double> ys = new ArrayList<>();
-		for (Tile tile : tiles) {
-			if (tile instanceof ElseTile) {
-				final ElseTile elseTile = (ElseTile) tile;
-				final double ypos;
-				if (YGauge.USE_ME)
-					// Relative to the FRAME's top, not the gauge min
-					ypos = elseTile.getYGauge().getMin().getCurrentValue() - getFrameY() + MARGINY_MAGIC / 2;
-				else
-					ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
-				ys.add(ypos);
-			}
-		}
-		final double totalHeight = getTotalHeight(stringBounder);
-		ys.add(totalHeight);
-		int i = 0;
-		for (Tile tile : tiles) {
-			if (tile instanceof ElseTile) {
-				final ElseTile elseTile = (ElseTile) tile;
-				final Component comp = elseTile.getComponent(stringBounder);
-				final Area area = Area.create(max.getCurrentValue() - min.getCurrentValue(), ys.get(i + 1) - ys.get(i));
-				comp.drawU(ug.apply(new UTranslate(min.getCurrentValue(), ys.get(i))), area, (Context2D) ug);
-				i++;
-			}
-		}
-	}
-
 	@Override
 	public double getPreferredHeight() {
 		final XDimension2D dim1 = getPreferredDimensionIfEmpty(getStringBounder());
-		double result = dim1.getHeight() + bodyHeight + MARGINY_MAGIC;
-		if (YGauge.USE_ME)
-			// Legacy wrapped every group with two ghost EmptyTile(4, ...) spacers
-			// (TileBuilder.buildOne, skipped under USE_ME): 4px BEFORE the frame
-			// and 4px AFTER it. Both are reserved here, so the gauge spans the
-			// frame plus its two margins and the next tile chains clear of it.
-			// The TOP margin is additionally materialized at draw time (the frame
-			// is drawn at getFrameY() == gauge min + EXTERNAL_MARGINY), which is
-			// what actually moves the border down. Reserving without drawing the
-			// offset leaves the frame flush against the previous tile -- and, right
-			// after a `newpage`, flush against the page clip boundary, so the top
-			// border bleeds into the previous page (see YGAUGE.md).
-			result += 2 * EXTERNAL_MARGINY;
-		return result;
+		// Both vertical margins are RESERVED here, so the gauge spans the frame plus
+		// its two margins and the next tile chains clear of it. The TOP margin is
+		// additionally materialized at draw time (the frame is drawn at getFrameY()
+		// == gauge min + EXTERNAL_MARGINY), which is what actually moves the border
+		// down. Reserving without drawing the offset leaves the frame flush against
+		// the previous tile -- and, right after a `newpage`, flush against the page
+		// clip boundary, so the top border bleeds into the previous page (YGAUGE.md).
+		return dim1.getHeight() + bodyHeight + MARGINY_MAGIC + 2 * EXTERNAL_MARGINY;
 	}
 
 	public void addConstraints() {
@@ -564,14 +471,17 @@ public class GroupingTile extends AbstractTile {
 		if (min != null && max != null)
 			return new int[] { (int) min.getCurrentValue(), (int) max.getCurrentValue() };
 
+		// Spans the participant BOXES (posB .. posD - 1), not their lifeline centres:
+		// same convention as PartitionTile.asciiFrameColumns(), so an empty group and
+		// a partition frame agree on where the diagram's edges are. (Using the life
+		// columns here would draw an empty group's frame narrower than the heads it
+		// is supposed to enclose.)
 		int lo = Integer.MAX_VALUE;
 		int hi = Integer.MIN_VALUE;
 		for (LivingSpace ls : getTileArguments().getLivingSpaces().values()) {
-			final int c = (int) ls.getAsciiLifeColumn().getCurrentValue();
-			if (c < lo)
-				lo = c;
-			if (c > hi)
-				hi = c;
+			// posB is the box's left column, posD its EXCLUSIVE right edge
+			lo = Math.min(lo, (int) ls.getAsciiPosB().getCurrentValue());
+			hi = Math.max(hi, (int) ls.getAsciiPosD().getCurrentValue() - 1);
 		}
 		if (lo == Integer.MAX_VALUE)
 			return new int[] { 0, 0 };
@@ -717,87 +627,47 @@ public class GroupingTile extends AbstractTile {
 		return result;
 	}
 
+	// Walks the tile tree to run each tile's callbackY() -- which no longer
+	// POSITIONS anything (every tile reads its own solved gauge, see
+	// CommonTile.callbackY) but still drives the livebox steps, goCreate/goDestroy
+	// and the local/full tile lists used for LinkAnchor lookups. The `y` TimeHook
+	// is threaded through only because callbackY still takes one; its value is
+	// ignored by every tile.
+	//
+	// The RETURN value (total height of this level) is a separate matter: it must
+	// count each parallel (&) cluster ONCE, so it is computed from the same
+	// height-only clustering used for bodyHeight, not by summing the flat list.
 	public static TimeHook fillPositionelTiles(StringBounder stringBounder, TimeHook y, List<Tile> tiles,
 			final List<CommonTile> local, List<CommonTile> full) {
 		final double startY = y.getValue();
-		for (Tile tile : mergeParallel(stringBounder, tiles)) {
+		for (Tile tile : tiles) {
 			tile.callbackY(y);
 			local.add((CommonTile) tile);
 			full.add((CommonTile) tile);
-			if (tile instanceof GroupingTile) {
-				final GroupingTile groupingTile = (GroupingTile) tile;
-				fillPositionalSubGroupTiles(stringBounder, y, full, groupingTile);
-			}
-			if (tile instanceof TileParallel) {
-				final TileParallel tileParallel = (TileParallel) tile;
-				fillPositionalParallelTiles(stringBounder, y, full, tileParallel);
-			}
-			y = new TimeHook(y.getValue() + tile.getPreferredHeight());
+			if (tile instanceof GroupingTile)
+				fillPositionalSubGroupTiles(stringBounder, y, full, (GroupingTile) tile);
 		}
-		if (YGauge.USE_ME) {
-			// callbackY() above ignores the accumulated `y` entirely under
-			// USE_ME (substitutes each tile's own gauge min instead -- see
-			// CommonTile.callbackY), so the summation loop's ONLY remaining
-			// purpose is computing the returned finalY (total document/group
-			// height). But mergeParallel() is a no-op under USE_ME, so that
-			// summation still double-counts every & member's height, exactly
-			// like the bodyHeight bug (see YGAUGE.md) -- just at whatever
-			// level calls this method (PlayingSpace at the top, or a
-			// GroupingTile's own body). Recompute it correctly here with the
-			// same clustering used for bodyHeight, without touching the loop
-			// above (its side effects -- callbackY, local/full population,
-			// recursion -- must run per INDIVIDUAL flat tile regardless).
-			double clusteredHeight = 0;
-			for (Tile tile : mergeParallelCore(stringBounder, tiles))
-				clusteredHeight += tile.getPreferredHeight();
-			return new TimeHook(startY + clusteredHeight);
-		}
-		return y;
 
+		double clusteredHeight = 0;
+		for (Tile tile : mergeParallelCore(stringBounder, tiles))
+			clusteredHeight += tile.getPreferredHeight();
+		return new TimeHook(startY + clusteredHeight);
 	}
 
 	private static void fillPositionalSubGroupTiles(StringBounder stringBounder, TimeHook y, List<CommonTile> full,
 			GroupingTile groupingTile) {
-		final double headerHeight = groupingTile.getHeaderHeight(stringBounder);
 		final ArrayList<CommonTile> local2 = new ArrayList<>();
-		fillPositionelTiles(stringBounder, new TimeHook(y.getValue() + headerHeight), groupingTile.tiles, local2, full);
+		fillPositionelTiles(stringBounder, y, groupingTile.tiles, local2, full);
 	}
 
-	private static void fillPositionalParallelTiles(StringBounder stringBounder, TimeHook yArg, List<CommonTile> full,
-			TileParallel tileParallel) {
-		final double yPointAll = tileParallel.getContactPointRelative();
-		for (Tile tile : tileParallel.getTiles()) {
-
-			final double yPoint = tile.getContactPointRelative();
-			final double adjustment = yPointAll - yPoint;
-			TimeHook yAdjusted = new TimeHook(yArg.getValue() + adjustment);
-
-			tile.callbackY(yAdjusted);
-			full.add((CommonTile) tile);
-
-			if (tile instanceof GroupingTile)
-				fillPositionalSubGroupTiles(stringBounder, yAdjusted, full, (GroupingTile) tile);
-		}
-	}
-
-	private double getHeaderHeight(StringBounder stringBounder) {
-		return getPreferredDimensionIfEmpty(stringBounder).getHeight() + 10;
-	}
-
-	private static List<Tile> mergeParallel(StringBounder stringBounder, List<Tile> tiles) {
-		if (YGauge.USE_ME)
-			return tiles;
-
-		return mergeParallelCore(stringBounder, tiles);
-	}
-
-	// The actual clustering logic, unconditional. Used directly (not through
-	// mergeParallel) wherever a legacy-shaped, & -aware view of the tiles is
-	// needed purely for computation (e.g. bodyHeight) even under USE_ME, where
-	// Y positioning itself no longer goes through this merge.
+	// Clusters each run of parallel (&) tiles into one TileParallel, whose height
+	// is the cluster's real vertical extent (tallest-before-contact + tallest-
+	// after-contact) rather than the sum of its members'. This is now used ONLY to
+	// compute heights (bodyHeight, and fillPositionelTiles' return value): Y
+	// POSITIONING goes through the gauge chain, built at construction time, and
+	// the tile lists used for drawing stay flat.
 	private static List<Tile> mergeParallelCore(StringBounder stringBounder, List<Tile> tiles) {
 		TileParallel pending = null;
-		tiles = removeEmptyCloseToParallel(tiles);
 		final List<Tile> result = new ArrayList<>();
 		for (Tile tile : tiles) {
 			if (!isParallel(tile) || result.size() == 0) {
@@ -833,24 +703,6 @@ public class GroupingTile extends AbstractTile {
 
 		for (int i = 1; i <= capture; i++)
 			result.remove(result.size() - 1);
-	}
-
-	private static List<Tile> removeEmptyCloseToParallel(List<Tile> tiles) {
-		final List<Tile> result = new ArrayList<>();
-		for (Tile tile : tiles) {
-			if (isParallel(tile))
-				removeHeadEmpty(result);
-
-			result.add(tile);
-		}
-		return result;
-
-	}
-
-	private static void removeHeadEmpty(List<Tile> tiles) {
-		while (tiles.size() > 0 && tiles.get(tiles.size() - 1) instanceof EmptyTile)
-			tiles.remove(tiles.size() - 1);
-
 	}
 
 	public static boolean isParallel(Tile tile) {

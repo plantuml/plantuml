@@ -101,11 +101,14 @@ public class ElseTile extends AbstractTile {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (YGauge.USE_ME == false)
-			return;
-
-		// Height stretching down to the next else / the group bottom is not
-		// ported yet (Phase 3): only the label strip is drawn here
+		// The else tile draws its OWN divider (dashed line + label strip), at its own
+		// absolute gauge position -- the parent GroupingTile no longer does it.
+		// The strip is sized to the component's own height rather than stretched down
+		// to the next else: ComponentRoseGroupingElse.drawInternalU() only reads the
+		// Area's WIDTH (the line spans it; the label sits at a fixed offset), never
+		// its height, so stretching would make no visible difference. The group's
+		// background bands ARE full-height, but those are painted by the parent's
+		// Blotter, which derives each section's extent from the else gauges directly.
 		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
 		final StringBounder stringBounder = ug.getStringBounder();

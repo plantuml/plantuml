@@ -312,8 +312,9 @@ public class CommunicationTile extends AbstractCommunicationTile {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+		// Self-translate prologue: every tile draws itself at its own absolute gauge
+		// position (the caller applies no dy())
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		final String anchor1 = message.getPart1Anchor();
 		final String anchor2 = message.getPart2Anchor();
 		if (anchor1 != null || anchor2 != null)

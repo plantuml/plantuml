@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -117,27 +116,11 @@ public class PlayingSpace implements Bordered {
 		final List<CommonTile> local = new ArrayList<>();
 		final List<CommonTile> full = new ArrayList<>();
 		final TimeHook y = GroupingTile.fillPositionelTiles(stringBounder, new TimeHook(startingY), tiles, local, full);
-		// TEMPORARY TRACE (YGAUGE debugging -- remove before commit)
-		if (YGauge.TRACE)
-			for (CommonTile tile : full)
-				System.err.println("YGAUGE-TRACE USE_ME=" + YGauge.USE_ME + " tile="
-						+ tile.getClass().getSimpleName() + " timeHook=" + tile.getTimeHook().getValue()
-						+ " prefHeight=" + tile.getPreferredHeight() + " contactRel="
-						+ tile.getContactPointRelative()
-						+ (YGauge.USE_ME ? " gauge=[" + tile.getYGauge().getMin().getCurrentValue() + ","
-								+ tile.getYGauge().getMax().getCurrentValue() + "] gaugeSpan="
-								+ (tile.getYGauge().getMax().getCurrentValue()
-										- tile.getYGauge().getMin().getCurrentValue())
-								: "")
-						+ " event=" + tile.getEvent());
-		for (CommonTile tile : local) {
-			if (YGauge.USE_ME) {
-				((CommonTile) tile).drawU(ug);
-			} else {
-				final double posy = ((CommonTile) tile).getTimeHook().getValue();
-				((CommonTile) tile).drawU(ug.apply(UTranslate.dy(posy)));
-			}
-		}
+		// Each tile draws itself in ABSOLUTE coordinates, translating itself by its
+		// own gauge min (the "self-translate prologue" every drawU() starts with),
+		// so no external dy() translation is applied here
+		for (CommonTile tile : local)
+			tile.drawU(ug);
 		for (LinkAnchor linkAnchor : linkAnchors) {
 			final CommonTile ytile1 = getFromAnchor(full, linkAnchor.getAnchor1());
 			final CommonTile ytile2 = getFromAnchor(full, linkAnchor.getAnchor2());

@@ -63,8 +63,7 @@ public class CommunicationTileNoteBottom extends CommunicationTileNoteBottomTopA
 		final Area area = Area.create(dim.getWidth(), dim.getHeight());
 		((UDrawable) tile).drawU(ug);
 
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
 		final double middleMsg = getMiddleMsg();
 		final double xNote = getNotePosition(stringBounder).getCurrentValue();

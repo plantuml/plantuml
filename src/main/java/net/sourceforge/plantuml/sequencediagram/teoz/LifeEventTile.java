@@ -108,8 +108,8 @@ public class LifeEventTile extends AbstractTile {
     }	
 
 	public void drawU(UGraphic ug) {
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+		// Self-translate prologue: absolute gauge position
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		if (isDestroyWithoutMessage()) {
 			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam,
 					null);

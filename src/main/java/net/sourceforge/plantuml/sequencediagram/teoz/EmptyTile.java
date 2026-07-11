@@ -43,6 +43,18 @@ import net.sourceforge.plantuml.sequencediagram.AbstractEvent;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 
+// DEAD CODE -- no longer instantiated anywhere.
+//
+// EmptyTile was a ghost spacer: TileBuilder used to wrap every GroupingTile in
+// two EmptyTile(4, ...) to fake the group's vertical margins, because a tile
+// could not then express "I occupy more room than I draw". With YGauge it can:
+// GroupingTile reserves both margins in its own getPreferredHeight() and offsets
+// the drawn frame at draw time (getFrameY()), so the spacers are gone -- along
+// with removeEmptyCloseToParallel(), which existed only to strip them back out
+// when they landed next to a parallel (&) run.
+//
+// Kept only so the deletion is a separate, reviewable step. Nothing references
+// this class: it can be removed outright.
 public class EmptyTile extends AbstractTile implements Tile {
 
 	private final double height;
@@ -51,8 +63,6 @@ public class EmptyTile extends AbstractTile implements Tile {
 
 	public EmptyTile(double height, Tile position, YGauge currentY) {
 		super(((AbstractTile) position).getStringBounder(), currentY);
-		if (YGauge.USE_ME)
-			throw new UnsupportedOperationException();
 		this.height = height;
 		this.position = position;
 		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());

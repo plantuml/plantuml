@@ -121,10 +121,12 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		final Area area = Area.create(dim.getWidth(), dim.getHeight());
+		// The wrapped tile self-translates to its own gauge; the note's prologue is
+		// applied AFTERWARDS, to the note only (the wrapper's min is identical to the
+		// inner tile's, so both land on the same row -- the note never moves the arrow)
 		((UDrawable) tile).drawU(ug);
 		final Real p = getNotePosition(stringBounder);
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 
 		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);
 	}

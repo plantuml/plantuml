@@ -108,8 +108,9 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		this.livingSpaces.addConstraints(stringBounder);
 		mainTile.addConstraints();
 		xorigin.compileNow();
-		if (YGauge.USE_ME)
-			System.err.println("COMPILING Y");
+		// The Y line is solved here, ONCE, before anything reads a gauge: every tile
+		// built above chained its YGauge onto yorigin, and getCurrentValue() is only
+		// meaningful after this call
 		yorigin.compileNow();
 		tileArguments.setBordered(mainTile);
 		return mainTile;
