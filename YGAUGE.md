@@ -11,12 +11,20 @@ constraint system as X. Each tile then knows its own absolute Y and draws
 itself — same philosophy as the ASCIIVERSE initiative ("each object draws
 itself").
 
-The switch is `YGauge.USE_ME` (currently `false`), guarding ~29 references
-across the `teoz` package.
+The switch is `YGauge.USE_ME` (currently `true` — flipped in the Phase 5
+session below; several mentions further down in this doc still say
+"currently false" and are stale, kept for historical trace of when each
+section was written), guarding ~29 references across the `teoz` package.
 
 ## The problem being solved (why USE_ME exists)
 
-### Current architecture (USE_ME = false, the active path)
+### Legacy architecture (USE_ME = false, INACTIVE since Phase 5)
+
+This is what the engine did before the flip. The code paths described here
+(`TimeHook`, `TileParallel`/`mergeParallel`, ghost `EmptyTile`s) are still
+PRESENT in the tree — Phase 5's cleanup deletion step has not run yet —
+but they no longer execute by default; they're reachable only by manually
+setting `USE_ME = false` again.
 
 - X coordinates are solved lazily by the `Real` constraint system
   (`addConstraints()`, `ensureBiggerThan`, `compileNow`).
@@ -37,7 +45,7 @@ across the `teoz` package.
   - `LinkAnchor`, `yNewPages()`, livebox steps all depend on the mutable
     `TimeHook` state.
 
-### Target architecture (USE_ME = true)
+### Current architecture (USE_ME = true, the active path since Phase 5)
 
 - Every tile constructor receives `currentY` (the gauge of the previous
   tile) and creates its own gauge, chaining Y at build time:
@@ -100,7 +108,7 @@ across the `teoz` package.
 - Guards (`getTimeHook` throw, `EmptyTile` throw, `getYGauge` default
   throw) to fail fast on unported code paths.
 
-## Known gaps / hard points (why USE_ME is still false)
+## Known gaps / hard points (open issues now that USE_ME = true)
 
 1. **Liveboxes — DONE (Phase 2, 2026-07-11).** `LivingSpace.addStepForLivebox`
    and `goCreate(y)` / `goDestroy(y)` were fed exclusively from
@@ -172,20 +180,192 @@ across the `teoz` package.
 - **Phase 3 — Groups.** Blotter, drawAllElses, notes, margins, from gauges.
 - **Phase 4 — Pagination & height.** yNewPages, getPreferredHeight without
   LimitFinder, PlayingSpaceWithParticipants translation.
-- **Phase 5 — Flip & clean.** USE_ME=true, run corpus, fix diffs. Then
-  delete: TimeHook plumbing in CommonTile, TileParallel + mergeParallel,
-  EmptyTile spacers, fillPositionelTiles Y math, the flag itself.
+- **Phase 5 — Flip & clean.** `USE_ME=true` — DONE, the flag is flipped and
+  is the active default (see session log below). The "clean" half of this
+  phase — deleting TimeHook plumbing in `CommonTile`, `TileParallel` +
+  `mergeParallel`, `EmptyTile` spacers, `fillPositionelTiles` Y math, and
+  the flag itself — has NOT run yet: these all still exist, now as dead
+  legacy branches kept only for a manual `USE_ME=false` fallback and for
+  computing `bodyHeight`/height clustering via `mergeParallelCore` (still
+  called unconditionally from a few call sites, see `GroupingTile`). Do not
+  delete until every "Known gaps" item above is closed and a full pdiff
+  pass confirms no remaining call site depends on the legacy path.
 
 ## Rules of engagement
 
 - Same discipline as SMETANA.md: no downstream workaround without
   understanding the root cause of a diff.
-- One phase per commit series; the build must stay green with USE_ME=false
-  at every step (the flag protects master-bound merges).
+- One phase per commit series; since the Phase 5 flip, the build must stay
+  green with USE_ME=true (now the shipped default) at every step. The old
+  rule ("stay green with USE_ME=false") applied while the flag was still
+  off during Phases 0–4 and is kept here only for historical context —
+  don't follow it literally anymore.
 - Claude edits sources via Filesystem at `C:\github\plantuml`; Arnaud
   builds with `gradle build` and runs the visual comparisons.
 
 ## Session log
+
+### 2026-07-11 — Fix: whole groups (opt/alt/...) ignored `&` parallel chaining
+
+**Correction to this doc:** `YGauge.USE_ME` is actually `true` in the current
+tree (the "currently `false`" line above is stale — left as-is elsewhere in
+this doc since it predates several sessions, but flagging it here since it's
+directly relevant to this bug).
+
+**Report (with screenshot):** `opt ... end & opt ... end` (whole group
+parallel, not a single message) rendered the two `opt` frames stacked
+vertically instead of side by side; same for `alt ... end & alt ... end`.
+A third case, two sequential `alt/else` blocks with no `&` between them,
+rendered correctly (stacked, as expected) in both the reported (buggy) and
+reference screenshots — isolating the bug to group-level `&`, not to
+`alt/else` rendering in general.
+
+**Root cause:** every message-level tile (`CommunicationTile`,
+`CommunicationTileSelf`, `CommunicationExoTile`, via
+`YGauge.create`/`createWithContact`/`createParallel`) was ported to chain
+from the PREVIOUS gauge's `min` when `isParallel()` is true (top alignment)
+and from its `max` otherwise (sequential stacking) — this is the whole
+point of the gauge system (see "Goal" and "Target architecture" above).
+`GroupingTile` — the tile for a whole `opt`/`alt`/`loop`/... block — was
+never ported to make this same distinction: its constructor unconditionally
+used `currentY.getMax()` for its own top (`firstY`), regardless of
+`start.isParallel()`. So a group following `& opt`/`& alt` always chained
+sequentially below the previous group, exactly like a non-parallel one —
+indistinguishable in the gauge chain from a plain stacked group. Since
+`mergeParallel()` is a no-op under `USE_ME` (Y positioning goes through the
+gauge chain instead, not through `TileParallel` clustering — see the
+Phase-2 session), nothing else in the pipeline compensates for this.
+
+**Fix (`GroupingTile` constructor):** `firstY` (the group's own top) is now
+`currentY.getMin()` when `start.isParallel()`, `currentY.getMax()`
+otherwise — mirroring the message-tile tiles exactly, but WITHOUT the
+contact-line machinery (`createWithContact`/`createParallel`): a
+`GroupingTile`'s `getContactPointRelative()` is hardcoded to `0` (no arrow
+line to share), so plain top alignment is the correct and sufficient
+semantics here, unlike messages. The group's own `max` still needs to
+dominate the PREVIOUS sibling's `max` so a later sequential tile chains
+below the WHOLE pair, not just below whichever group happened to be built
+second: built as `firstY.addAtLeast(getPreferredHeight())` with an extra
+`ensureBiggerThan(previousMax)`, the same two-constraint pattern used by
+`YGauge.createParallel` for the same reason (see pdiff report #3 session,
+above — `RealMax` must never enter the chain, so this is NOT expressed via
+`RealUtils.max`).
+
+**Not yet touched:** `PartitionTile` (the `partition` block, handled by a
+separate class from `GroupingTile`) was not audited for the same gap — no
+`partition ... & partition ...` case was reported, and I did not want to
+change untested code paths in the same pass. Worth checking if a similar
+report comes in for partitions.
+
+**To verify (Arnaud, after `gradle build`):** the reported diagram
+(`opt & opt`, `alt & alt`, then two independent sequential `alt/else`
+blocks) should now render the two `&`-joined pairs side by side, with the
+two trailing independent `alt/else` blocks unaffected (they never went
+through the parallel branch). Also worth a quick pdiff pass on the existing
+parallel-message regression cases (d2, d4) to confirm this change — additive,
+only touches `GroupingTile`, gated on `start.isParallel()` — didn't disturb
+them.
+
+### 2026-07-11 — Fix: extra space at the bottom of flat (groupless) diagrams with &
+
+**Report:** after confirming the previous alignment fix worked (rebuild
+confirmed the earlier misalignment report was indeed a stale build, as
+suspected), a new symptom on the SAME diagram: extra blank space between
+the last message and the footer participant boxes.
+
+**Root cause: the exact same bug class as the group-height fix (two
+sessions ago), but at the level ABOVE `GroupingTile` — in
+`fillPositionelTiles` itself.** This method is used by BOTH
+`PlayingSpace.drawUInternal` (top-level, returns the value used for the
+diagram's total declared height) and, recursively, by every
+`GroupingTile`'s own body. Its loop does
+`y = new TimeHook(y.getValue() + tile.getPreferredHeight())` over
+`mergeParallel(stringBounder, tiles)` — a no-op under USE_ME, so every `&`
+member's height is summed separately instead of once per cluster,
+inflating the returned `finalY` (hence `PlayingSpace.getPreferredHeight()`
+= `max(inkExtent, finalY) + 10`, taller than the actual ink whenever `&` is
+used anywhere in the diagram, groups or not).
+
+The loop's OTHER side effects (`callbackY`, `local`/`full` population,
+sub-group/sub-parallel recursion) still need to run per INDIVIDUAL flat
+tile — and `callbackY` itself, under USE_ME, ignores the accumulated `y`
+value entirely already (substitutes the tile's own gauge min — see the
+Phase 2 session), so the flat loop's height bookkeeping serves NO purpose
+other than producing this one return value.
+
+**Fix:** left the existing loop untouched; added a USE_ME branch that
+recomputes the return value from the SAME `mergeParallelCore` clustering
+used for `bodyHeight`, applied to the same `tiles` list, added to the
+starting Y. No change to per-tile drawing/positioning, no change to
+recursive calls (their return value was already discarded by callers).
+
+**Verified:** the reported diagram (5 flat messages, two `&` pairs, no
+group) shrank from 739×258 to 739×199 (59px — consistent with two
+clusters no longer double-counted). Full regression corpus re-run clean;
+all previously-verified arrow alignments unchanged (unaffected by this
+fix, which only touches the returned total-height value); the group-height
+fix from two sessions ago (d7, groups with `&`) still measures exactly
+191×291 — this session's fix is complementary to it (different call site:
+`PlayingSpace`'s own top-level call vs `GroupingTile.bodyHeight`), not a
+duplicate.
+
+### 2026-07-11 — Investigation: reported misalignment not reproduced; fixed a real (adjacent) gap anyway
+
+**Report:** `&`-parallel pair with `deactivate`/`activate` between the
+members and a `note right:` on the second member; screenshot showed
+Message1/Message2 and Message3/Message4 not on the same row.
+
+**Could not reproduce.** Cross-checked participant X positions against
+arrow Y coordinates in the harness's SVG output for the exact reported
+diagram: both pairs land on the exact same Y (99.56 and — after the fix
+below — 134.69, previously 163.83). This diagram has no `group`/`alt`, so
+the two most recent fixes (group height, group notes) are irrelevant to
+it; the relevant fixes are the earlier contact-sharing and OOM-anchoring
+ones, both already in place in the harness. Flagged the possibility of a
+stale build on Arnaud's side (same class of issue as pdiff report #5) and
+asked for confirmation after a clean rebuild.
+
+**Found and fixed a real, related gap anyway:** all note wrapper tiles
+(`CommunicationTileNoteRight/Left`, `CommunicationTileSelfNoteRight/Left`,
+`CommunicationTileNoteBottomTopAbstract`) built their own `yGauge` via
+plain `YGauge.create(currentY.getMax(), getPreferredHeight())` — discarding
+contact/origin entirely. Harmless when nothing chains off the wrapper via
+`&`, but if a `&` message follows a NOTE-WRAPPED member (note on the FIRST
+of a pair, not the second as in the reported diagram), the second member's
+`createParallel` finds `contact == null` and falls back to top-alignment,
+silently losing contact-line sharing. A same-height coincidence can mask
+it entirely (my first attempt at a regression test had this coincidence
+and wrongly "passed" even on the unfixed code — worth remembering: a
+parallel-alignment test needs DIFFERING label heights between members to
+be discriminating at all).
+
+**Fix:** all five wrappers now build their gauge as
+`new YGauge(innerGauge.getMin(), innerGauge.getMin().addAtLeast(getPreferredHeight()), innerGauge.getContact(), innerGauge.getOrigin())`
+instead of `YGauge.create(...)`: `min` is IDENTICAL to the wrapped tile's
+own min (the note never moves the arrow), `max` is anchored via
+`addAtLeast` per the CHAIN ANCHORING invariant, and contact/origin pass
+through unchanged so a later `&` member still finds and can push the
+shared contact line. For `NoteTop`/`NoteBottom`, `getPreferredHeight()`
+ADDS the note height rather than taking a max (note stacks above/below
+rather than beside) — the min-identity invariant still holds and is what
+makes their unusual draw-order composition (documented in an earlier
+session) correct.
+
+**Verified with a genuinely discriminating case** (`msg1` + note, `&
+msg2` with a 3x taller multi-line label): WITHOUT the fix, arrows land at
+y=70.43 and y=115.83 (misaligned, msg1 stuck at its own height, unaware
+msg2 needs more room); WITH the fix, both at y=115.83 (msg1 correctly
+pushed down to match). Confirmed by literally reverting the fix in the
+harness and re-rendering side by side — do this kind of A/B check with an
+env-flag or a clean revert-then-rebuild-then-restore sequence, not by
+eyeballing; a botched manual revert/restore (a stray failed `cp`) produced
+a false result earlier in this same investigation.
+
+Full regression corpus re-run clean; all previously-verified alignments
+unchanged, notably d8 (the reported diagram) improved slightly (its second
+pair's Y moved from 163.83 to 134.69 — the previously-missing contact
+propagation was adding unnecessary padding before the second pair even
+though the pair itself was already internally aligned).
 
 ### 2026-07-11 — Fix: groups with & messages were too tall (known gap #7, closed)
 
