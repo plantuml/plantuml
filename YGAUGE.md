@@ -116,21 +116,17 @@ setting `USE_ME = false` again.
    the legacy traversal and substituting the gauge min inside
    `CommonTile.callbackY` (see session log).
 
-2. **Group margins — PARTIALLY DONE (2026-07-11, see session log).** The two
-   ghost `EmptyTile(4, ...)` provided 8px of breathing room around each
-   group frame: 4px BEFORE the header and 4px AFTER the frame, consumed as
-   separate entries in the outer tile stream. Under USE_ME nothing replaced
-   them at first; `GroupingTile.getPreferredHeight()` now adds the missing
-   8px back (see session log) so the NEXT sibling — or a parent's own
-   `bodyHeight` sum over this group — reserves the same total vertical span
-   as legacy did. This closes the "next tile starts too early" / page-split
-   symptom. STILL OPEN: the split itself (4 before the header vs 4 after the
-   frame, rather than 8 all after) was not reproduced — the fix adds the
-   whole 8px after the frame instead, which is invisible in practice since
-   the frame's own drawn border (`getTotalHeight`/`getArea`, untouched) still
-   renders at exactly the same position and size as before. If a future
-   report shows a group's header sitting flush against the tile above it
-   (missing the 4px gap BEFORE), that's this remaining half.
+2. **Group margins — DONE (2026-07-11, see session log).** The two ghost
+   `EmptyTile(4, ...)` provided 4px BEFORE the group frame and 4px AFTER it.
+   Under USE_ME they are skipped (`TileBuilder.buildOne`), so BOTH halves had
+   to be folded into the gauge: `getPreferredHeight()` adds
+   `2 * EXTERNAL_MARGINY` (the total room reserved in the outer chain / a
+   parent's `bodyHeight` sum), AND the gauge's `min` is offset by
+   `+EXTERNAL_MARGINY` from the chaining point (which is what actually moves
+   the DRAWN frame down). The gauge `max` stays anchored on the chaining
+   point, not on the offset `min`, so the leading margin is not counted
+   twice. Reserving the height without offsetting the min (a first attempt)
+   is NOT enough — see the session log for the page-clip bleed it caused.
 
 3. **ElseTile geometry.** Under USE_ME, `ElseTile.drawU`:
    - does NOT apply the `UTranslate.dy(gauge.min)` prologue (probable
@@ -214,7 +210,93 @@ setting `USE_ME = false` again.
 
 ## Session log
 
+### 2026-07-11 — Fix: black bar under the newpage separator — group frames were flush against the page clip boundary (gap #2, now fully closed)
+
+**Report:** `group ... end` / `newpage` / `group ...` — a black horizontal
+bar visible just under the dashed newpage separator at the bottom of page 1.
+Did NOT appear with `USE_ME=false`. Did NOT appear without the `newpage`.
+
+**Method — measure, don't guess.** My first two hypotheses were both wrong
+and worth recording: (a) "the `UClip` is applied after the translate, so it
+lives in the wrong coordinate space" — wrong, the composition is consistent;
+(b) "the clip's `pageHeight + 1` slack plus the `NewpageTile`'s 10px bottom
+margin opens a window the liveboxes bleed through" — plausible, but it would
+have affected legacy identically. Rather than keep theorising I added a
+temporary trace of `ymin`/`ymax`/`fullHeight`/`pageHeight` plus a per-tile
+dump (`timeHook`, `getPreferredHeight()`, gauge `[min,max]`,
+`getTotalHeight()` for groups) and ran BOTH modes. That settled it in one
+shot. Trace since removed.
+
+**The numbers (top-level tiles):**
+
+| | legacy | USE_ME (before fix) |
+|---|---|---|
+| `EmptyTile(4)` | 8.0 | *(skipped)* |
+| group 1 frame starts | **12.0** | **8.0** |
+| group 1 `getPreferredHeight()` | 171.40625 | 179.40625 (= +8) |
+| `EmptyTile(4)` | 183.40625 | *(skipped)* |
+| newpage | 187.40625 | 187.40625 |
+| `EmptyTile(4)` | 208.40625 | *(skipped)* |
+| group 2 frame starts | **212.40625** | **208.40625** |
+
+`ymin`, `ymax` (208.40625), `pageHeight` and `fullHeight` were **bit-identical
+in both modes** — so the clip, the page geometry and the newpage position
+were all correct and NOT the bug. The bug is the last row: page 1's clip ends
+at `ymax = 208.40625` (`+1` of slack), and under USE_ME group 2's frame
+starts at **exactly 208.40625** — right ON the boundary. Its top border is
+drawn inside the 1px of slack: that is the black bar. Legacy's leading ghost
+`EmptyTile(4, ...)` pushed the frame to 212.40625, a comfortable 4px clear of
+the boundary.
+
+**Root cause:** the previous session's fix for gap #2 was HALF a fix. Legacy
+wraps every group in two ghost `EmptyTile(4, ...)` (4px before the frame,
+4px after), skipped under USE_ME. I had added the missing 8px to
+`GroupingTile.getPreferredHeight()` — which correctly restores the total
+vertical span the group consumes in the outer chain (hence the newpage
+landing at exactly the legacy 187.40625), but does **nothing** to move the
+drawn frame: the gauge's `min` was still the raw chaining point. So the
+frame stayed flush against whatever precedes it. Harmless-looking in most
+diagrams (a 4px-tighter gap), lethal right after a `newpage`, where "flush
+against the previous tile" means "flush against the page clip boundary". I
+had even written in that session's log that the split "is invisible in
+practice" — wrong, and this is the counter-example. **Lesson: reserving
+space and positioning content are two separate obligations under the gauge
+model; restoring a legacy spacer requires doing both.**
+
+**Fix (`GroupingTile`):**
+- new constant `EXTERNAL_MARGINY = 4` (documents the legacy spacer value,
+  replaces the bare `8`);
+- `getPreferredHeight()` adds `2 * EXTERNAL_MARGINY` — the total reservation
+  (unchanged in effect from the previous session);
+- the gauge's `min` (`firstY`) is now `chainTop.addFixed(EXTERNAL_MARGINY)`:
+  the DRAWN frame moves down by 4px, reproducing the leading spacer;
+- the gauge's `max` is anchored on `chainTop`, NOT on the offset `firstY`
+  (`chainTop.addAtLeast(getPreferredHeight())`) — otherwise the leading
+  margin would be counted twice and the group would reserve `frame + 12`.
+
+Expected chain after the fix, from the same trace: group 1 frame at 12.0
+(8 + 4), max at 187.40625 (8 + 179.40625) → newpage unchanged at 187.40625;
+group 2 frame at 212.40625 (208.40625 + 4) — exactly the legacy value, 4px
+clear of the clip boundary.
+
+**CHAIN ANCHORING note:** `firstY` is a `RealDelta` (built with `addFixed`),
+which is fine — it is a LEAF, used only as the gauge `min` (read for
+drawing). The chain link (`max`) is still built with `addAtLeast` on
+`chainTop`, a moveable. No O(n^2) regression.
+
+**To verify (Arnaud, after `gradle build`):** the black bar should be gone;
+group 1's frame should sit 4px lower than before (matching legacy exactly);
+and the two-group `&` cases plus the parallel-message regression cases (d2,
+d4) should be unchanged — the `parallel` branch got the same `chainTop`
+anchoring treatment, so its reservation semantics are preserved.
+
 ### 2026-07-11 — Fix: sliver of next page bleeding through at a newpage right after a group (known gap #2, partial)
+
+> **SUPERSEDED by the session above (same day).** This fix was only half
+> right: it restored the RESERVED height but never moved the drawn frame, so
+> the group frame stayed flush against the clip boundary and the bleed came
+> back as a black bar. The claim below that the 4-before/4-after split "is
+> invisible in practice" is FALSE. Kept for the reasoning trail.
 
 **Report (with screenshot, subtle):** `group PURGE RX ... end` immediately
 followed by `newpage` then a second `group RECEPTION DONNEES` — at the very
