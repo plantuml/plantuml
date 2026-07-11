@@ -349,10 +349,15 @@ public class GroupingTile extends AbstractTile {
 				final ElseTile elseTile = (ElseTile) tile;
 				final double ypos;
 				if (YGauge.USE_ME)
-					// Same frame-relative formula as drawAllElses, NOT the legacy
-					// getTimeHook()-difference one (getTimeHook() under USE_ME is
-					// the CHAINING point, not the frame top -- see getFrameY).
-					ypos = elseTile.getYGauge().getMin().getCurrentValue() - getFrameY() + MARGINY_MAGIC / 2;
+					// NOT the same formula as legacy's `+ MARGINY_MAGIC / 2`: that
+					// term only stays consistent in legacy because drawAllElses
+					// (which draws the ACTUAL divider line there) uses the exact
+					// same "+10" itself, so the two cancel out. Under USE_ME the
+					// divider is drawn independently by ElseTile.drawU(), exactly
+					// at `gauge.min` with NO offset -- so the color boundary here
+					// must match that exactly, or the band sits 10px away from
+					// the actual dashed separator (see YGAUGE.md).
+					ypos = elseTile.getYGauge().getMin().getCurrentValue() - getFrameY();
 				else
 					ypos = elseTile.getTimeHook().getValue() - getTimeHook().getValue() + MARGINY_MAGIC / 2;
 				HColor backElse = elseTile.getBackColorGeneral();

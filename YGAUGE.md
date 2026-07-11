@@ -297,6 +297,48 @@ setting `USE_ME = false` again.
 
 ## Session log
 
+### 2026-07-11 — Fix: colored else sections offset 10px from their actual divider (regression from the Blotter fix, same day)
+
+**Report (with screenshot):** immediately after the group-background fix
+above, `opt#red #blue ... else #olive sinon ... else #green ... end` showed
+the right colors, but the boundary between bands sat visibly below the
+actual dashed separator / `[sinon]` label instead of right at it.
+
+**Root cause:** I had copied the legacy ypos formula verbatim into the
+USE_ME branch, `+ MARGINY_MAGIC / 2` included:
+
+```java
+ypos = elseTile.getYGauge().getMin().getCurrentValue() - getFrameY() + MARGINY_MAGIC / 2;
+```
+
+But that `+10` is only harmless in LEGACY because the divider line itself is
+ALSO drawn by `drawAllElses` (not by `ElseTile`, whose `drawU` is a no-op
+under legacy) using the EXACT SAME `+ MARGINY_MAGIC / 2` formula — so the
+Blotter boundary and the divider line move together and stay aligned, both
+offset by the same irrelevant constant. Under USE_ME, `drawAllElses` is
+never called (see `drawU`'s branching); the divider is drawn independently
+by `ElseTile.drawU()`, at exactly `getYGauge().getMin()` with NO extra
+offset. So carrying the `+10` into the Blotter-only formula broke the pairing
+that made it invisible in legacy: the color boundary landed 10px below the
+actual divider, with nothing on the other side to cancel it out.
+
+**Fix:** drop the `+ MARGINY_MAGIC / 2` from the USE_ME branch entirely —
+`ypos = elseTile.getYGauge().getMin().getCurrentValue() - getFrameY();`,
+matching `ElseTile.drawU()`'s own positioning exactly. The `+1` in
+`blotter.addChange(ypos + 1, ...)` is untouched (a deliberate, separate
+1px nudge, present in legacy too, unrelated to this bug).
+
+**Lesson, worth generalizing:** when porting a legacy formula that contains
+an otherwise-unexplained constant, don't assume the constant is load-bearing
+on its own — check whether it's only correct BECAUSE something else in the
+legacy code path uses the identical constant and the two cancel out. Under
+USE_ME the "something else" is very often a different code path entirely
+(here, `ElseTile.drawU()` instead of `drawAllElses()`), so the pairing that
+made the constant safe in legacy doesn't automatically carry over.
+
+**To verify (Arnaud, after `gradle build`):** the color band boundaries
+should now land exactly on the dashed divider lines, matching legacy.
+
 ### 2026-07-11 — Fix: group background colors (`#color`, colored `else` sections) never painted under USE_ME (known gap, now closed)
 
 **Report:** `opt#red #blue this is a test` / `else #olive sinon` / `else
