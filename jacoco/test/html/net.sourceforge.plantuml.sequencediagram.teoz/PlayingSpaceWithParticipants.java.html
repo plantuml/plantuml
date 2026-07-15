@@ -128,7 +128,7 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 <span class="fc bfc" id="L128" title="All 2 branches covered.">		for (Participant p : participants) {</span>
 <span class="fc" id="L129">			final LivingSpace ls = livingSpaces.get(p);</span>
 <span class="fc" id="L130">			ls.setAsciiPosB(asciiCurrent);</span>
-<span class="fc" id="L131">			asciiCurrent = ls.getAsciiPosD().addAtLeast(0);</span>
+<span class="fc" id="L131">			asciiCurrent = asciiCurrent.addAtLeast(p.asciiDimension().getWidth());</span>
 <span class="fc" id="L132">		}</span>
 <span class="fc" id="L133">		livingSpaces.asciiAddConstraints();</span>
 <span class="fc bfc" id="L134" title="All 2 branches covered.">		for (Tile tile : playingSpace.getTiles())</span>
