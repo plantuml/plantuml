@@ -43,7 +43,7 @@ public interface Tile extends AsciiBlock {
 
 	public double getPreferredHeight();
 
-	public void callbackY(TimeHook y);
+	public void onGaugeResolved();
 
 	public YGauge getYGauge();
 

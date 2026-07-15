@@ -62,13 +62,13 @@ public class LifeEventTile extends AbstractTile {
 	private final YGauge yGauge;
 
 	@Override
-	final protected void callbackY_internal(TimeHook y) {
-<span class="fc" id="L66">		super.callbackY_internal(y);</span>
+	final public void onGaugeResolved() {
+<span class="fc" id="L66">		final double y = getYGauge().getMin().getCurrentValue();</span>
 		// System.err.println(&quot;LifeEventTile::updateStairs &quot; + lifeEvent + &quot; &quot; +
 		// livingSpace.getParticipant() + &quot; y=&quot; + y);
-<span class="fc" id="L69">		livingSpace.addStepForLivebox(getEvent(), y.getValue());</span>
+<span class="fc" id="L69">		livingSpace.addStepForLivebox(getEvent(), y);</span>
 <span class="fc bfc" id="L70" title="All 2 branches covered.">		if (lifeEvent.getType() == LifeEventType.DESTROY)</span>
-<span class="fc" id="L71">			livingSpace.goDestroy(y.getValue());</span>
+<span class="fc" id="L71">			livingSpace.goDestroy(y);</span>
 <span class="fc" id="L72">	}</span>
 
 	public Event getEvent() {
@@ -77,7 +77,7 @@ public class LifeEventTile extends AbstractTile {
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L80">		return 0;</span>
+<span class="nc" id="L80">		return 0;</span>
 	}
 
 	public LifeEventTile(LifeEvent lifeEvent, TileArguments tileArguments, LivingSpace livingSpace, Rose skin,

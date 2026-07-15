@@ -83,7 +83,7 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 <span class="fc" id="L83">		return new XDimension2D(width, height);</span>
 	}
 
-	// Warning: both methods below rely on the tiles TimeHook: they are
+	// Warning: both methods below rely on the tiles' YGauge being solved: they are
 	// meaningful only after a layout pass, that is after
 	// playingSpace.getPreferredHeight() has been called at least once.
 	// Like in Puma (see PageSplitter), consecutive pages slightly overlap on the
@@ -94,7 +94,7 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 <span class="fc bfc" id="L94" title="All 2 branches covered.">		if (pageIndex == 0)</span>
 <span class="fc" id="L95">			return 0;</span>
 
-<span class="fc" id="L97">		return playingSpace.getNewpageTiles().get(pageIndex - 1).getTimeHook().getValue();</span>
+<span class="fc" id="L97">		return playingSpace.getNewpageTiles().get(pageIndex - 1).getYGauge().getMin().getCurrentValue();</span>
 	}
 
 	private double getYMax(double fullHeight) {
@@ -103,7 +103,7 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 <span class="fc" id="L103">			return fullHeight;</span>
 
 <span class="fc" id="L105">		final NewpageTile newpage = newpages.get(pageIndex);</span>
-<span class="fc" id="L106">		return Math.min(newpage.getTimeHook().getValue() + newpage.getPreferredHeight(), fullHeight);</span>
+<span class="fc" id="L106">		return Math.min(newpage.getYGauge().getMin().getCurrentValue() + newpage.getPreferredHeight(), fullHeight);</span>
 	}
 
 	@Override

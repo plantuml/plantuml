@@ -56,10 +56,10 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 public class TileParallel extends CommonTile {
 
 	public TileParallel(StringBounder stringBounder, Real currentY) {
-<span class="fc" id="L59">		super(stringBounder);</span>
-<span class="fc" id="L60">	}</span>
+<span class="nc" id="L59">		super(stringBounder);</span>
+<span class="nc" id="L60">	}</span>
 
-<span class="fc" id="L62">	private final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L62">	private final List&lt;Tile&gt; tiles = new ArrayList&lt;&gt;();</span>
 
 	@Override
 	public YGauge getYGauge() {
@@ -68,8 +68,8 @@ public class TileParallel extends CommonTile {
 	}
 
 	public void add(Tile tile) {
-<span class="fc" id="L71">		this.tiles.add(tile);</span>
-<span class="fc" id="L72">	}</span>
+<span class="nc" id="L71">		this.tiles.add(tile);</span>
+<span class="nc" id="L72">	}</span>
 
 	public void drawU(UGraphic ug) {
 		// Never called: the members draw themselves, from their own gauges
@@ -77,19 +77,19 @@ public class TileParallel extends CommonTile {
 	}
 
 	public double getContactPointRelative() {
-<span class="fc" id="L80">		double result = 0;</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
-<span class="fc" id="L82">			result = Math.max(result, tile.getContactPointRelative());</span>
+<span class="nc" id="L80">		double result = 0;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (Tile tile : tiles)</span>
+<span class="nc" id="L82">			result = Math.max(result, tile.getContactPointRelative());</span>
 
-<span class="fc" id="L84">		return result;</span>
+<span class="nc" id="L84">		return result;</span>
 	}
 
 	public double getZZZ() {
-<span class="fc" id="L88">		double result = 0;</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
-<span class="fc" id="L90">			result = Math.max(result, tile.getZZZ());</span>
+<span class="nc" id="L88">		double result = 0;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">		for (Tile tile : tiles)</span>
+<span class="nc" id="L90">			result = Math.max(result, tile.getZZZ());</span>
 
-<span class="fc" id="L92">		return result;</span>
+<span class="nc" id="L92">		return result;</span>
 	}
 
 	// The ONLY method this class exists for: the cluster's real vertical extent.
@@ -97,7 +97,7 @@ public class TileParallel extends CommonTile {
 	// would count the overlap twice (this used to make groups with &amp; messages
 	// too tall).
 	public double getPreferredHeight() {
-<span class="fc" id="L100">		return getContactPointRelative() + getZZZ();</span>
+<span class="nc" id="L100">		return getContactPointRelative() + getZZZ();</span>
 	}
 
 	// Everything below is unreachable: a TileParallel never reaches a tile list

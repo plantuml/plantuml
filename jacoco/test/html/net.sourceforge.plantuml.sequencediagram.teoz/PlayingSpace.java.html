@@ -78,9 +78,9 @@ public class PlayingSpace implements Bordered {
 <span class="nc" id="L78">			max2.add(dolls.getMaxX(tileArguments.getStringBounder()));</span>
 		}
 
-		// The gauge chain starts at startingY so that gauge coordinates and
-		// legacy TimeHook coordinates (fillPositionelTiles starts its
-		// accumulation at startingY too) live in the same drawing space
+		// Gauge chain origin: everything chains off this so gauge coordinates line
+		// up with the diagram's own drawing space (startingY of headroom above
+		// the first tile).
 <span class="fc" id="L84">		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addFixed(startingY), 0);</span>
 
 <span class="fc" id="L86">		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null, ycurrent));</span>
@@ -115,7 +115,7 @@ public class PlayingSpace implements Bordered {
 <span class="fc" id="L115">		final StringBounder stringBounder = ug.getStringBounder();</span>
 <span class="fc" id="L116">		final List&lt;CommonTile&gt; local = new ArrayList&lt;&gt;();</span>
 <span class="fc" id="L117">		final List&lt;CommonTile&gt; full = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L118">		final TimeHook y = GroupingTile.fillPositionelTiles(stringBounder, new TimeHook(startingY), tiles, local, full);</span>
+<span class="fc" id="L118">		GroupingTile.fillPositionelTiles(stringBounder, tiles, local, full);</span>
 		// Each tile draws itself in ABSOLUTE coordinates, translating itself by its
 		// own gauge min (the &quot;self-translate prologue&quot; every drawU() starts with),
 		// so no external dy() translation is applied here
@@ -128,89 +128,95 @@ public class PlayingSpace implements Bordered {
 <span class="nc" id="L128">				linkAnchor.drawAnchor(ug, ytile1, ytile2, skinParam);</span>
 
 <span class="nc" id="L130">		}</span>
-		// System.err.println(&quot;MainTile::drawUInternal finalY=&quot; + y);
-<span class="fc" id="L132">		return y.getValue();</span>
+		// Final height of this level: the last top-level tile's gauge already
+		// dominates everything before it (see YGauge.createParallel's
+		// max.ensureBiggerThan(currentY.getMax())), so its max IS the total height.
+		// Falls back to startingY for an empty diagram.
+<span class="fc bfc" id="L135" title="All 2 branches covered.">		if (tiles.isEmpty())</span>
+<span class="fc" id="L136">			return startingY;</span>
+
+<span class="fc" id="L138">		return tiles.get(tiles.size() - 1).getYGauge().getMax().getCurrentValue();</span>
 	}
 
 	private CommonTile getFromAnchor(List&lt;CommonTile&gt; positionedTiles, String anchor) {
-<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (CommonTile ytile : positionedTiles)</span>
-<span class="nc bnc" id="L137" title="All 2 branches missed.">			if (ytile.matchAnchor(anchor))</span>
-<span class="nc" id="L138">				return ytile;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		for (CommonTile ytile : positionedTiles)</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">			if (ytile.matchAnchor(anchor))</span>
+<span class="nc" id="L144">				return ytile;</span>
 
-<span class="nc" id="L140">		return null;</span>
+<span class="nc" id="L146">		return null;</span>
 	}
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L144">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);</span>
-<span class="fc" id="L145">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(limitFinder, false);</span>
-<span class="fc" id="L146">		final double finalY = drawUInternal(interceptor, false);</span>
-<span class="fc" id="L147">		final double result = Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;</span>
+<span class="fc" id="L150">		final LimitFinder limitFinder = LimitFinder.create(stringBounder, true);</span>
+<span class="fc" id="L151">		final UGraphicInterceptorTile interceptor = new UGraphicInterceptorTile(limitFinder, false);</span>
+<span class="fc" id="L152">		final double finalY = drawUInternal(interceptor, false);</span>
+<span class="fc" id="L153">		final double result = Math.max(limitFinder.getMinMax().getDimension().getHeight(), finalY) + 10;</span>
 		// System.err.println(&quot;MainTile::getPreferredHeight=&quot; + result);
-<span class="fc" id="L149">		return result;</span>
+<span class="fc" id="L155">		return result;</span>
 	}
 
 	public void addConstraints() {
-<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
-<span class="fc" id="L154">			tile.addConstraints();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (Tile tile : tiles)</span>
+<span class="fc" id="L160">			tile.addConstraints();</span>
 
-<span class="fc" id="L156">	}</span>
+<span class="fc" id="L162">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="fc" id="L159">		return min;</span>
+<span class="fc" id="L165">		return min;</span>
 	}
 
 	public Real getMaxX(StringBounder stringBounder) {
-<span class="fc" id="L163">		return max;</span>
+<span class="fc" id="L169">		return max;</span>
 	}
 
 	public boolean isShowFootbox() {
-<span class="fc" id="L167">		return isShowFootbox;</span>
+<span class="fc" id="L173">		return isShowFootbox;</span>
 	}
 
 	public LivingSpaces getLivingSpaces() {
-<span class="fc" id="L171">		return livingSpaces;</span>
+<span class="fc" id="L177">		return livingSpaces;</span>
 	}
 
 	public List&lt;Tile&gt; getTiles() {
-<span class="fc" id="L175">		return tiles;</span>
+<span class="fc" id="L181">		return tiles;</span>
 	}
 
 	public SequenceDiagram getDiagram() {
-<span class="nc" id="L179">		return diagram;</span>
+<span class="nc" id="L185">		return diagram;</span>
 	}
 
 	public double getBorder1() {
-<span class="fc" id="L183">		return min.getCurrentValue();</span>
+<span class="fc" id="L189">		return min.getCurrentValue();</span>
 	}
 
 	public double getBorder2() {
-<span class="fc" id="L187">		return max.getCurrentValue();</span>
+<span class="fc" id="L193">		return max.getCurrentValue();</span>
 	}
 
 	public List&lt;NewpageTile&gt; getNewpageTiles() {
-<span class="fc" id="L191">		final List&lt;NewpageTile&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L192" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
-<span class="fc" id="L194">				((GroupingTile) tile).addNewpageTiles(result);</span>
+<span class="fc" id="L197">		final List&lt;NewpageTile&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		for (Tile tile : tiles) {</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">			if (tile instanceof GroupingTile)</span>
+<span class="fc" id="L200">				((GroupingTile) tile).addNewpageTiles(result);</span>
 
-<span class="fc bfc" id="L196" title="All 2 branches covered.">			if (tile instanceof NewpageTile)</span>
-<span class="fc" id="L197">				result.add((NewpageTile) tile);</span>
-<span class="fc" id="L198">		}</span>
-<span class="fc" id="L199">		return result;</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">			if (tile instanceof NewpageTile)</span>
+<span class="fc" id="L203">				result.add((NewpageTile) tile);</span>
+<span class="fc" id="L204">		}</span>
+<span class="fc" id="L205">		return result;</span>
 	}
 
 	public List&lt;Double&gt; yNewPages() {
-<span class="fc" id="L203">		final List&lt;Double&gt; yNewPages = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L204">		yNewPages.add(0.0);</span>
-<span class="fc bfc" id="L205" title="All 2 branches covered.">		for (NewpageTile newpageTile : getNewpageTiles())</span>
-<span class="fc" id="L206">			yNewPages.add(newpageTile.getTimeHook().getValue());</span>
+<span class="fc" id="L209">		final List&lt;Double&gt; yNewPages = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L210">		yNewPages.add(0.0);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		for (NewpageTile newpageTile : getNewpageTiles())</span>
+<span class="fc" id="L212">			yNewPages.add(newpageTile.getYGauge().getMin().getCurrentValue());</span>
 
-<span class="fc" id="L208">		yNewPages.add(Double.MAX_VALUE);</span>
-<span class="fc" id="L209">		return yNewPages;</span>
+<span class="fc" id="L214">		yNewPages.add(Double.MAX_VALUE);</span>
+<span class="fc" id="L215">		return yNewPages;</span>
 	}
 
 	public int getNbPages() {
-<span class="fc" id="L213">		return yNewPages().size() - 1;</span>
+<span class="fc" id="L219">		return yNewPages().size() - 1;</span>
 	}
 
 }

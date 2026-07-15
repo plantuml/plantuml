@@ -103,19 +103,19 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	}
 
 	@Override
-	final protected void callbackY_internal(TimeHook y) {
-<span class="fc" id="L107">		super.callbackY_internal(y);</span>
-<span class="fc" id="L108">		final ArrowComponent comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L109">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L110">		final XPoint2D p1 = comp.getStartPoint(getStringBounder(), dim);</span>
-<span class="fc" id="L111">		final XPoint2D p2 = comp.getEndPoint(getStringBounder(), dim);</span>
+	final public void onGaugeResolved() {
+<span class="fc" id="L107">		final ArrowComponent comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L108">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L109">		final XPoint2D p1 = comp.getStartPoint(getStringBounder(), dim);</span>
+<span class="fc" id="L110">		final XPoint2D p2 = comp.getEndPoint(getStringBounder(), dim);</span>
+<span class="fc" id="L111">		final double y = getYGauge().getMin().getCurrentValue();</span>
 
 <span class="fc bfc" id="L113" title="All 2 branches covered.">		if (message.isActivate())</span>
-<span class="fc" id="L114">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
+<span class="fc" id="L114">			livingSpace1.addStepForLivebox(getEvent(), y + p2.getY());</span>
 <span class="fc bfc" id="L115" title="All 2 branches covered.">		else if (message.isDeactivate())</span>
-<span class="fc" id="L116">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p1.getY());</span>
+<span class="fc" id="L116">			livingSpace1.addStepForLivebox(getEvent(), y + p1.getY());</span>
 <span class="fc bfc" id="L117" title="All 2 branches covered.">		else if (message.isDestroy())</span>
-<span class="fc" id="L118">			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());</span>
+<span class="fc" id="L118">			livingSpace1.addStepForLivebox(getEvent(), y + p2.getY());</span>
 
 <span class="fc" id="L120">	}</span>
 

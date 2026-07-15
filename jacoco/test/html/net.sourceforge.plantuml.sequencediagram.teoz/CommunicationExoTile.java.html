@@ -188,71 +188,70 @@ public class CommunicationExoTile extends AbstractTile {
 <span class="fc" id="L188">	}</span>
 
 	@Override
-	final protected void callbackY_internal(TimeHook y) {
-<span class="fc" id="L192">		super.callbackY_internal(y);</span>
-<span class="fc" id="L193">		final ArrowComponent comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L194">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L195">		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();</span>
+	final public void onGaugeResolved() {
+<span class="fc" id="L192">		final ArrowComponent comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L193">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L194">		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();</span>
 
-<span class="fc" id="L197">		livingSpace.addStepForLivebox(getEvent(), y.getValue() + arrowY);</span>
+<span class="fc" id="L196">		livingSpace.addStepForLivebox(getEvent(), getYGauge().getMin().getCurrentValue() + arrowY);</span>
 
-<span class="fc" id="L199">	}</span>
+<span class="fc" id="L198">	}</span>
 
 	private Real getPoint1(final StringBounder stringBounder) {
-<span class="fc bfc" id="L202" title="All 2 branches covered.">		if (message.getType().isRightBorder())</span>
-<span class="fc" id="L203">			return livingSpace.getPosC(stringBounder);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (message.getType().isRightBorder())</span>
+<span class="fc" id="L202">			return livingSpace.getPosC(stringBounder);</span>
 
-<span class="fc" id="L205">		return livingSpace.getPosC(stringBounder).addFixed(-getPreferredWidth(stringBounder));</span>
+<span class="fc" id="L204">		return livingSpace.getPosC(stringBounder).addFixed(-getPreferredWidth(stringBounder));</span>
 	}
 
 	private Real getPoint2(final StringBounder stringBounder) {
-<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (message.getType().isLeftBorder())</span>
-<span class="fc" id="L210">			return livingSpace.getPosC(stringBounder);</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (message.getType().isLeftBorder())</span>
+<span class="fc" id="L209">			return livingSpace.getPosC(stringBounder);</span>
 
-<span class="fc" id="L212">		return getPoint1(stringBounder).addFixed(getPreferredWidth(stringBounder));</span>
+<span class="fc" id="L211">		return getPoint1(stringBounder).addFixed(getPreferredWidth(stringBounder));</span>
 	}
 
 	private double getPoint1Value(final StringBounder stringBounder) {
-<span class="fc bfc" id="L216" title="All 2 branches covered.">		if (isFromLeftBorderMessage())</span>
-<span class="fc" id="L217">			return tileArguments.getBorder1();</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (isFromLeftBorderMessage())</span>
+<span class="fc" id="L216">			return tileArguments.getBorder1();</span>
 
-<span class="fc" id="L219">		return getPoint1(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L218">		return getPoint1(stringBounder).getCurrentValue();</span>
 	}
 
 	private double getPoint2Value(final StringBounder stringBounder) {
-<span class="fc bfc" id="L223" title="All 2 branches covered.">		if (isFromRightBorderMessage())</span>
-<span class="fc" id="L224">			return tileArguments.getBorder2();</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">		if (isFromRightBorderMessage())</span>
+<span class="fc" id="L223">			return tileArguments.getBorder2();</span>
 
-<span class="fc" id="L226">		return getPoint2(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L225">		return getPoint2(stringBounder).getCurrentValue();</span>
 	}
 
 	public Real getMinX() {
-<span class="fc" id="L230">		return getPoint1(getStringBounder());</span>
+<span class="fc" id="L229">		return getPoint1(getStringBounder());</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L234">		return getPoint2(getStringBounder());</span>
+<span class="fc" id="L233">		return getPoint2(getStringBounder());</span>
 	}
 
 	final public double getMiddleX() {
-<span class="nc bnc" id="L238" title="All 2 branches missed.">		if (!isFromLeftBorderMessage())</span>
-<span class="nc" id="L239">			return super.getMiddleX();</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		if (!isFromLeftBorderMessage())</span>
+<span class="nc" id="L238">			return super.getMiddleX();</span>
 
-<span class="nc" id="L241">		final double min = getPoint1Value(getStringBounder());</span>
+<span class="nc" id="L240">		final double min = getPoint1Value(getStringBounder());</span>
 
-<span class="nc bnc" id="L243" title="All 2 branches missed.">		final double max = isFromLeftBorderMessage()</span>
-<span class="nc" id="L244">												? min + getPreferredWidth(getStringBounder())</span>
-<span class="nc" id="L245">												: getPoint2Value(getStringBounder());</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">		final double max = isFromLeftBorderMessage()</span>
+<span class="nc" id="L243">												? min + getPreferredWidth(getStringBounder())</span>
+<span class="nc" id="L244">												: getPoint2Value(getStringBounder());</span>
 
-<span class="nc" id="L247">		return (min + max) / 2;</span>
+<span class="nc" id="L246">		return (min + max) / 2;</span>
 	}
 
 	public boolean isFromRightBorderMessage() {
-<span class="fc bfc" id="L251" title="All 4 branches covered.">		return message.getType().isRightBorder() &amp;&amp; !isShortArrow();</span>
+<span class="fc bfc" id="L250" title="All 4 branches covered.">		return message.getType().isRightBorder() &amp;&amp; !isShortArrow();</span>
 	}
 
 	public boolean isFromLeftBorderMessage() {
-<span class="fc bfc" id="L255" title="All 4 branches covered.">		return message.getType().isLeftBorder() &amp;&amp; !isShortArrow();</span>
+<span class="fc bfc" id="L254" title="All 4 branches covered.">		return message.getType().isLeftBorder() &amp;&amp; !isShortArrow();</span>
 	}
 
 	// ---------------------------------------------------------------------
@@ -291,11 +290,11 @@ public class CommunicationExoTile extends AbstractTile {
 	// centering it flush against a lifeline/edge column would let a
 	// lifeline-fill pass or the arrow's own dashes swallow the margin.
 	private AsciiBlock asciiLabel() {
-<span class="fc" id="L294">		return message.getLabel().marginLR(1, 1);</span>
+<span class="fc" id="L293">		return message.getLabel().marginLR(1, 1);</span>
 	}
 
 	private int asciiLabelRows() {
-<span class="fc" id="L298">		return Math.max(1, asciiLabel().asciiDimension().getHeight());</span>
+<span class="fc" id="L297">		return Math.max(1, asciiLabel().asciiDimension().getHeight());</span>
 	}
 
 	// A short arrow's local stub width: just enough to fit the padded label,
@@ -305,7 +304,7 @@ public class CommunicationExoTile extends AbstractTile {
 	private static final int ASCII_EXO_SHORT_MIN_WIDTH = 3;
 
 	private int asciiShortWidth() {
-<span class="fc" id="L308">		return Math.max(ASCII_EXO_SHORT_MIN_WIDTH, asciiLabel().asciiDimension().getWidth());</span>
+<span class="fc" id="L307">		return Math.max(ASCII_EXO_SHORT_MIN_WIDTH, asciiLabel().asciiDimension().getWidth());</span>
 	}
 
 	// The column the arrow reaches away from the participant: either the
@@ -318,79 +317,79 @@ public class CommunicationExoTile extends AbstractTile {
 	// at draw time / by getAsciiMinX()/getAsciiMaxX() callers, exactly like
 	// every other ASCII position in this codebase.
 	private Real asciiEdge() {
-<span class="fc" id="L321">		final boolean leftBorder = message.getType().isLeftBorder();</span>
-<span class="fc bfc" id="L322" title="All 2 branches covered.">		if (isShortArrow()) {</span>
-<span class="fc" id="L323">			final int width = asciiShortWidth();</span>
-<span class="fc bfc" id="L324" title="All 2 branches covered.">			return leftBorder ? livingSpace.getAsciiPosC().addFixed(-width)</span>
-<span class="fc" id="L325">					: livingSpace.getAsciiPosC().addFixed(width);</span>
+<span class="fc" id="L320">		final boolean leftBorder = message.getType().isLeftBorder();</span>
+<span class="fc bfc" id="L321" title="All 2 branches covered.">		if (isShortArrow()) {</span>
+<span class="fc" id="L322">			final int width = asciiShortWidth();</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">			return leftBorder ? livingSpace.getAsciiPosC().addFixed(-width)</span>
+<span class="fc" id="L324">					: livingSpace.getAsciiPosC().addFixed(width);</span>
 		}
 
-<span class="pc bpc" id="L328" title="1 of 2 branches missed.">		if (leftBorder)</span>
-<span class="fc" id="L329">			return tileArguments.getFirstLivingSpace().getAsciiPosB().addFixed(-ASCII_EXO_MARGIN);</span>
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">		if (leftBorder)</span>
+<span class="fc" id="L328">			return tileArguments.getFirstLivingSpace().getAsciiPosB().addFixed(-ASCII_EXO_MARGIN);</span>
 
-<span class="nc" id="L331">		return tileArguments.getLastLivingSpace().getAsciiPosD().addFixed(ASCII_EXO_MARGIN - 1);</span>
+<span class="nc" id="L330">		return tileArguments.getLastLivingSpace().getAsciiPosD().addFixed(ASCII_EXO_MARGIN - 1);</span>
 	}
 
 	@Override
 	public void asciiDraw(InfinitePlan plan) {
-<span class="fc" id="L336">		final int p = (int) livingSpace.getAsciiLifeColumn().getCurrentValue();</span>
-<span class="fc" id="L337">		final int edge = (int) asciiEdge().getCurrentValue();</span>
-<span class="fc" id="L338">		final boolean dotted = message.getArrowConfiguration().isDotted();</span>
-<span class="fc bfc" id="L339" title="All 2 branches covered.">		final boolean targetIsParticipant = message.getType() == MessageExoType.FROM_LEFT</span>
-<span class="pc bpc" id="L340" title="1 of 2 branches missed.">				|| message.getType() == MessageExoType.FROM_RIGHT;</span>
-<span class="fc" id="L341">		final int rows = asciiLabelRows();</span>
-<span class="fc" id="L342">		final int arrowRow = rows;</span>
+<span class="fc" id="L335">		final int p = (int) livingSpace.getAsciiLifeColumn().getCurrentValue();</span>
+<span class="fc" id="L336">		final int edge = (int) asciiEdge().getCurrentValue();</span>
+<span class="fc" id="L337">		final boolean dotted = message.getArrowConfiguration().isDotted();</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">		final boolean targetIsParticipant = message.getType() == MessageExoType.FROM_LEFT</span>
+<span class="pc bpc" id="L339" title="1 of 2 branches missed.">				|| message.getType() == MessageExoType.FROM_RIGHT;</span>
+<span class="fc" id="L340">		final int rows = asciiLabelRows();</span>
+<span class="fc" id="L341">		final int arrowRow = rows;</span>
 
 		int dashFrom;
 		int dashTo;
 		final int arrowCol;
 		final char arrowChar;
-<span class="fc bfc" id="L348" title="All 2 branches covered.">		if (edge &lt; p) {</span>
-<span class="pc bpc" id="L349" title="1 of 2 branches missed.">			if (targetIsParticipant) {</span>
-<span class="fc" id="L350">				dashFrom = edge;</span>
-<span class="fc" id="L351">				dashTo = p - 2;</span>
-<span class="fc" id="L352">				arrowCol = p - 1;</span>
-<span class="fc" id="L353">				arrowChar = '&gt;';</span>
+<span class="fc bfc" id="L347" title="All 2 branches covered.">		if (edge &lt; p) {</span>
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">			if (targetIsParticipant) {</span>
+<span class="fc" id="L349">				dashFrom = edge;</span>
+<span class="fc" id="L350">				dashTo = p - 2;</span>
+<span class="fc" id="L351">				arrowCol = p - 1;</span>
+<span class="fc" id="L352">				arrowChar = '&gt;';</span>
 			} else {
-<span class="nc" id="L355">				dashFrom = edge + 1;</span>
-<span class="nc" id="L356">				dashTo = p - 1;</span>
-<span class="nc" id="L357">				arrowCol = edge;</span>
-<span class="nc" id="L358">				arrowChar = '&lt;';</span>
+<span class="nc" id="L354">				dashFrom = edge + 1;</span>
+<span class="nc" id="L355">				dashTo = p - 1;</span>
+<span class="nc" id="L356">				arrowCol = edge;</span>
+<span class="nc" id="L357">				arrowChar = '&lt;';</span>
 			}
 		} else {
-<span class="pc bpc" id="L361" title="1 of 2 branches missed.">			if (targetIsParticipant) {</span>
-<span class="nc" id="L362">				dashFrom = p + 2;</span>
-<span class="nc" id="L363">				dashTo = edge;</span>
-<span class="nc" id="L364">				arrowCol = p + 1;</span>
-<span class="nc" id="L365">				arrowChar = '&lt;';</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">			if (targetIsParticipant) {</span>
+<span class="nc" id="L361">				dashFrom = p + 2;</span>
+<span class="nc" id="L362">				dashTo = edge;</span>
+<span class="nc" id="L363">				arrowCol = p + 1;</span>
+<span class="nc" id="L364">				arrowChar = '&lt;';</span>
 			} else {
-<span class="fc" id="L367">				dashFrom = p + 1;</span>
-<span class="fc" id="L368">				dashTo = edge - 1;</span>
-<span class="fc" id="L369">				arrowCol = edge;</span>
-<span class="fc" id="L370">				arrowChar = '&gt;';</span>
+<span class="fc" id="L366">				dashFrom = p + 1;</span>
+<span class="fc" id="L367">				dashTo = edge - 1;</span>
+<span class="fc" id="L368">				arrowCol = edge;</span>
+<span class="fc" id="L369">				arrowChar = '&gt;';</span>
 			}
 		}
-<span class="pc bpc" id="L373" title="1 of 2 branches missed.">		if (dashFrom &lt;= dashTo)</span>
-<span class="fc" id="L374">			plan.drawHLine(dashFrom, dashTo, arrowRow, dotted);</span>
-<span class="fc" id="L375">		plan.move(arrowCol, arrowRow).drawChar(arrowChar);</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">		if (dashFrom &lt;= dashTo)</span>
+<span class="fc" id="L373">			plan.drawHLine(dashFrom, dashTo, arrowRow, dotted);</span>
+<span class="fc" id="L374">		plan.move(arrowCol, arrowRow).drawChar(arrowChar);</span>
 
-<span class="fc" id="L377">		final AsciiBlock label = asciiLabel();</span>
-<span class="fc" id="L378">		final int labelWidth = label.asciiDimension().getWidth();</span>
-<span class="pc bpc" id="L379" title="1 of 2 branches missed.">		if (labelWidth &gt; 0) {</span>
-<span class="fc" id="L380">			final int a = Math.min(edge, p);</span>
-<span class="fc" id="L381">			final int b = Math.max(edge, p);</span>
-<span class="fc" id="L382">			final int mid = (a + b) / 2;</span>
-<span class="fc" id="L383">			label.asciiDraw(plan.move(mid - labelWidth / 2, 0));</span>
+<span class="fc" id="L376">		final AsciiBlock label = asciiLabel();</span>
+<span class="fc" id="L377">		final int labelWidth = label.asciiDimension().getWidth();</span>
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">		if (labelWidth &gt; 0) {</span>
+<span class="fc" id="L379">			final int a = Math.min(edge, p);</span>
+<span class="fc" id="L380">			final int b = Math.max(edge, p);</span>
+<span class="fc" id="L381">			final int mid = (a + b) / 2;</span>
+<span class="fc" id="L382">			label.asciiDraw(plan.move(mid - labelWidth / 2, 0));</span>
 		}
-<span class="fc" id="L385">	}</span>
+<span class="fc" id="L384">	}</span>
 
 	// Same formula as CommunicationTile.asciiDimension(): label rows, plus the
 	// arrow row, plus one trailing blank row.
 	@Override
 	public ADimension2D asciiDimension() {
-<span class="fc" id="L391">		final int p = (int) livingSpace.getAsciiLifeColumn().getCurrentValue();</span>
-<span class="fc" id="L392">		final int edge = (int) asciiEdge().getCurrentValue();</span>
-<span class="fc" id="L393">		return new ADimension2D(Math.abs(edge - p), asciiLabelRows() + 2);</span>
+<span class="fc" id="L390">		final int p = (int) livingSpace.getAsciiLifeColumn().getCurrentValue();</span>
+<span class="fc" id="L391">		final int edge = (int) asciiEdge().getCurrentValue();</span>
+<span class="fc" id="L392">		return new ADimension2D(Math.abs(edge - p), asciiLabelRows() + 2);</span>
 	}
 
 	// ASCII counterpart of addConstraints() above -- but only for a short
@@ -404,20 +403,20 @@ public class CommunicationExoTile extends AbstractTile {
 	// private helpers, since those are already public on LivingSpaces.
 	@Override
 	public void asciiAddConstraints() {
-<span class="fc bfc" id="L407" title="All 2 branches covered.">		if (!isShortArrow())</span>
-<span class="fc" id="L408">			return;</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">		if (!isShortArrow())</span>
+<span class="fc" id="L407">			return;</span>
 
-<span class="fc" id="L410">		final int width = asciiShortWidth();</span>
-<span class="fc bfc" id="L411" title="All 2 branches covered.">		if (message.getType().isLeftBorder()) {</span>
-<span class="fc" id="L412">			final LivingSpace previous = tileArguments.getLivingSpaces().previous(livingSpace);</span>
-<span class="pc bpc" id="L413" title="1 of 2 branches missed.">			if (previous != null)</span>
-<span class="fc" id="L414">				livingSpace.getAsciiPosC().ensureBiggerThan(previous.getAsciiPosC().addFixed(width));</span>
-<span class="fc" id="L415">		} else {</span>
-<span class="fc" id="L416">			final LivingSpace next = tileArguments.getLivingSpaces().next(livingSpace);</span>
-<span class="pc bpc" id="L417" title="1 of 2 branches missed.">			if (next != null)</span>
-<span class="fc" id="L418">				next.getAsciiPosC().ensureBiggerThan(livingSpace.getAsciiPosC().addFixed(width));</span>
+<span class="fc" id="L409">		final int width = asciiShortWidth();</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">		if (message.getType().isLeftBorder()) {</span>
+<span class="fc" id="L411">			final LivingSpace previous = tileArguments.getLivingSpaces().previous(livingSpace);</span>
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">			if (previous != null)</span>
+<span class="fc" id="L413">				livingSpace.getAsciiPosC().ensureBiggerThan(previous.getAsciiPosC().addFixed(width));</span>
+<span class="fc" id="L414">		} else {</span>
+<span class="fc" id="L415">			final LivingSpace next = tileArguments.getLivingSpaces().next(livingSpace);</span>
+<span class="pc bpc" id="L416" title="1 of 2 branches missed.">			if (next != null)</span>
+<span class="fc" id="L417">				next.getAsciiPosC().ensureBiggerThan(livingSpace.getAsciiPosC().addFixed(width));</span>
 		}
-<span class="fc" id="L420">	}</span>
+<span class="fc" id="L419">	}</span>
 
 	// ASCII counterpart of getMinX()/getMaxX(): composable Real spanning
 	// whichever of {participant lifeline, edge} is smaller/bigger, so an
@@ -426,12 +425,12 @@ public class CommunicationExoTile extends AbstractTile {
 	// migrated tile's getAsciiMinX()/getAsciiMaxX().
 	@Override
 	public Real getAsciiMinX() {
-<span class="fc" id="L429">		return RealUtils.min(asciiEdge(), livingSpace.getAsciiLifeColumn());</span>
+<span class="fc" id="L428">		return RealUtils.min(asciiEdge(), livingSpace.getAsciiLifeColumn());</span>
 	}
 
 	@Override
 	public Real getAsciiMaxX() {
-<span class="fc" id="L434">		return RealUtils.max(asciiEdge(), livingSpace.getAsciiLifeColumn());</span>
+<span class="fc" id="L433">		return RealUtils.max(asciiEdge(), livingSpace.getAsciiLifeColumn());</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

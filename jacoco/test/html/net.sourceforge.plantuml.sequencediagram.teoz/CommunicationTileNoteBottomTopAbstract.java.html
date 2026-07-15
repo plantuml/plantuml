@@ -100,64 +100,63 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 	}
 
 	@Override
-	final protected void callbackY_internal(TimeHook y) {
-<span class="nc" id="L104">		super.callbackY_internal(y);</span>
-<span class="nc" id="L105">		tile.callbackY(y);</span>
-<span class="nc" id="L106">	}</span>
+	final public void onGaugeResolved() {
+<span class="nc" id="L104">		tile.onGaugeResolved();</span>
+<span class="nc" id="L105">	}</span>
 
 	final protected Component getComponent(StringBounder stringBounder) {
-<span class="nc" id="L109">		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE,</span>
-<span class="nc" id="L110">				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),</span>
-<span class="nc" id="L111">				noteOnMessage.getColors());</span>
-<span class="nc" id="L112">		return comp;</span>
+<span class="nc" id="L108">		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE,</span>
+<span class="nc" id="L109">				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),</span>
+<span class="nc" id="L110">				noteOnMessage.getColors());</span>
+<span class="nc" id="L111">		return comp;</span>
 	}
 
 	final protected Real getNotePosition(StringBounder stringBounder) {
-<span class="nc" id="L116">		final Real minX = tile.getMinX();</span>
-<span class="nc" id="L117">		return minX;</span>
+<span class="nc" id="L115">		final Real minX = tile.getMinX();</span>
+<span class="nc" id="L116">		return minX;</span>
 	}
 
-<span class="nc" id="L120">	protected final double spacey = 10;</span>
+<span class="nc" id="L119">	protected final double spacey = 10;</span>
 
 	protected final void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
 
-<span class="nc" id="L124">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram)</span>
-<span class="nc" id="L125">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
-<span class="nc" id="L126">		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
+<span class="nc" id="L123">		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram)</span>
+<span class="nc" id="L124">				.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="nc" id="L125">		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());</span>
 
-<span class="nc" id="L128">		final double dx = x2 - x1;</span>
-<span class="nc" id="L129">		final double dy = y2 - y1;</span>
+<span class="nc" id="L127">		final double dx = x2 - x1;</span>
+<span class="nc" id="L128">		final double dy = y2 - y1;</span>
 
-<span class="nc" id="L131">		ug.apply(new UTranslate(x1, y1)).apply(color).apply(new UStroke(2, 2, 1)).draw(new ULine(dx, dy));</span>
+<span class="nc" id="L130">		ug.apply(new UTranslate(x1, y1)).apply(color).apply(new UStroke(2, 2, 1)).draw(new ULine(dx, dy));</span>
 
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L132">	}</span>
 
 	public double getPreferredHeight() {
-<span class="nc" id="L136">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L137">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L138">		return tile.getPreferredHeight() + dim.getHeight() + spacey;</span>
+<span class="nc" id="L135">		final Component comp = getComponent(getStringBounder());</span>
+<span class="nc" id="L136">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="nc" id="L137">		return tile.getPreferredHeight() + dim.getHeight() + spacey;</span>
 	}
 
 	public void addConstraints() {
-<span class="nc" id="L142">		tile.addConstraints();</span>
-<span class="nc" id="L143">	}</span>
+<span class="nc" id="L141">		tile.addConstraints();</span>
+<span class="nc" id="L142">	}</span>
 
 	public Real getMinX() {
-<span class="nc" id="L146">		return tile.getMinX();</span>
+<span class="nc" id="L145">		return tile.getMinX();</span>
 	}
 
 	public Real getMaxX() {
-<span class="nc" id="L150">		final Real maxMessage = tile.getMaxX();</span>
-<span class="nc" id="L151">		final Component comp = getComponent(getStringBounder());</span>
-<span class="nc" id="L152">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="nc" id="L153">		final Real maxNote = tile.getMinX().addFixed(dim.getWidth());</span>
+<span class="nc" id="L149">		final Real maxMessage = tile.getMaxX();</span>
+<span class="nc" id="L150">		final Component comp = getComponent(getStringBounder());</span>
+<span class="nc" id="L151">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="nc" id="L152">		final Real maxNote = tile.getMinX().addFixed(dim.getWidth());</span>
 
-<span class="nc" id="L155">		return RealUtils.max(maxMessage, maxNote);</span>
+<span class="nc" id="L154">		return RealUtils.max(maxMessage, maxNote);</span>
 	}
 
 	protected final double getMiddleMsg() {
-<span class="nc" id="L159">		final double middleMsg = (tile.getMinX().getCurrentValue() + tile.getMaxX().getCurrentValue()) / 2;</span>
-<span class="nc" id="L160">		return middleMsg;</span>
+<span class="nc" id="L158">		final double middleMsg = (tile.getMinX().getCurrentValue() + tile.getMaxX().getCurrentValue()) / 2;</span>
+<span class="nc" id="L159">		return middleMsg;</span>
 	}
 
 }
