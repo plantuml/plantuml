@@ -432,11 +432,11 @@ public class CommandArrow extends SingleLineCommand2&lt;SequenceDiagram&gt; {
 <span class="fc bfc" id="L432" title="All 2 branches covered.">		if (activationSpec != null)</span>
 <span class="fc" id="L433">			return manageActivations(activationSpec, diagram, p1, p2, activationColor);</span>
 
-<span class="pc bpc" id="L435" title="5 of 6 branches missed.">		if (diagram.isAutoactivate() &amp;&amp; (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC))</span>
-<span class="nc bnc" id="L436" title="All 2 branches missed.">			if (config.isDotted())</span>
+<span class="pc bpc" id="L435" title="3 of 6 branches missed.">		if (diagram.isAutoactivate() &amp;&amp; (config.getHead() == ArrowHead.NORMAL || config.getHead() == ArrowHead.ASYNC))</span>
+<span class="pc bpc" id="L436" title="1 of 2 branches missed.">			if (config.isDotted())</span>
 <span class="nc" id="L437">				diagram.activate(p1, LifeEventType.DEACTIVATE, null);</span>
 			else
-<span class="nc" id="L439">				diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
+<span class="fc" id="L439">				diagram.activate(p2, LifeEventType.ACTIVATE, activationColor);</span>
 
 <span class="fc" id="L441">		return CommandExecutionResult.ok();</span>
 	}

@@ -74,8 +74,8 @@ public class CommandAutoactivate extends SingleLineCommand2&lt;SequenceDiagram&g
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-<span class="nc" id="L77">		sequenceDiagram.setAutoactivate(&quot;on&quot;.equalsIgnoreCase(arg.get(&quot;ON&quot;, 0)));</span>
-<span class="nc" id="L78">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L77">		sequenceDiagram.setAutoactivate(&quot;on&quot;.equalsIgnoreCase(arg.get(&quot;ON&quot;, 0)));</span>
+<span class="fc" id="L78">		return CommandExecutionResult.ok();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

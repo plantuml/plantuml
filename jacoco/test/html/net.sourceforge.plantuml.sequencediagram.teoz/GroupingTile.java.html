@@ -848,12 +848,22 @@ public class GroupingTile extends AbstractTile {
 <span class="fc" id="L848">		return start;</span>
 	}
 
+	// Package-private child-list accessor for PlayingSpace's parallel-sibling
+	// disjointness pass (see PlayingSpace.findAnchorLivingSpace()): it needs to
+	// walk into a group to find ANY leaf message/participant to safely compare
+	// declaration order against, without ever reading this tile's own cached
+	// min/max (see the ASCII_FRAME_MARGIN / MARGINX comments on why that's
+	// unsafe pre-compile).
+	List&lt;Tile&gt; getChildTilesForAnchor() {
+<span class="fc" id="L858">		return tiles;</span>
+	}
+
 	public TileArguments getTileArguments() {
-<span class="fc" id="L852">		return tileArguments;</span>
+<span class="fc" id="L862">		return tileArguments;</span>
 	}
 
 	public ISkinParam getSkinParam() {
-<span class="fc" id="L856">		return skinParam;</span>
+<span class="fc" id="L866">		return skinParam;</span>
 	}
 
 
