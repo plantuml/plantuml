@@ -128,7 +128,7 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 		for (Participant p : participants) {
 			final LivingSpace ls = livingSpaces.get(p);
 			ls.setAsciiPosB(asciiCurrent);
-			asciiCurrent = ls.getAsciiPosD().addAtLeast(0);
+			asciiCurrent = asciiCurrent.addAtLeast(p.asciiDimension().getWidth());
 		}
 		livingSpaces.asciiAddConstraints();
 		for (Tile tile : playingSpace.getTiles())
@@ -145,9 +145,13 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 
 		// Messages, drawn by their own tiles (row 0 = label start, arrow row
 		// right after — see CommunicationTile.asciiDraw()/asciiDimension()).
-		// Y advances by each tile's own asciiDimension().getHeight() rather than
-		// a flat per-message constant, so a multi-line label
-		// gets the extra rows it needs instead of the next tile overwriting it.
+		// Row assignment goes through GroupingTile.computeAsciiLayout() (shared
+		// with GroupingTile's own body-stacking loop, not duplicated here): a
+		// flat per-tile sum wastes space on a `&` run, since two parallel
+		// messages would stack sequentially instead of sharing a row span — the
+		// same double-counting bug computeBodyHeight() fixed on the pixel side
+		// (see ASCIIVERSE.md §32.7 bug 1, and GroupingTile.computeAsciiLayout()'s
+		// own comment for exactly what this fix does and does not claim to fix).
 		// Every top-level tile must have a real asciiDraw()/asciiDimension()
 		// override to reach this loop — there is no catch
 		// (UnsupportedOperationException)
@@ -156,13 +160,12 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 		// EmptyTile for the fix this policy forced: it needed a real, if trivial,
 		// override rather than falling through to the AsciiBlock "not migrated"
 		// default).
-		int bottomY = y;
-		for (Tile tile : playingSpace.getTiles()) {
-			tile.asciiDraw(plan.move(0, y));
-			final int height = tile.asciiDimension().getHeight();
-			y += height;
-			bottomY = y;
-		}
+		final List<Tile> topTiles = playingSpace.getTiles();
+		final GroupingTile.AsciiLayout layout = GroupingTile.computeAsciiLayout(topTiles);
+		for (int i = 0; i < topTiles.size(); i++)
+			topTiles.get(i).asciiDraw(plan.move(0, y + layout.rowOf[i]));
+		y += layout.totalHeight;
+		final int bottomY = y;
 
 		// Footer boxes, mirroring drawU()'s playingSpace.isShowFootbox() branch:
 		// each participant draws itself a second time, right below the lifelines.

@@ -485,17 +485,15 @@ public class GroupingTile extends AbstractTile {
 		return new int[] { lo - ASCII_FRAME_MARGIN, hi + ASCII_FRAME_MARGIN };
 	}
 
-	// Sum of the children's own ASCII heights — the body height, between the
-	// header (top border) and footer (bottom border) rows. Reads each height
-	// back off asciiDimension() rather than hardcoding it (the same rule as
-	// PlayingSpaceWithParticipants' top-level loop), and does NOT catch
+	// Body height, between the header (top border) and footer (bottom border)
+	// rows: the last row occupied by any child, per computeAsciiLayout()'s
+	// clustering -- a `&` run inside the group is counted ONCE (its tallest
+	// member), not summed member by member, matching computeBodyHeight()'s
+	// pixel-side fix for the exact same bug. Does NOT catch
 	// UnsupportedOperationException: a child with no ASCII support crashes
 	// here, naming itself, exactly like the orchestrator's own policy.
 	private int asciiBodyHeight() {
-		int h = 0;
-		for (Tile tile : tiles)
-			h += tile.asciiDimension().getHeight();
-		return h;
+		return computeAsciiLayout(tiles).totalHeight;
 	}
 
 	@Override
@@ -531,20 +529,25 @@ public class GroupingTile extends AbstractTile {
 		final AGroupFrame frame = new AGroupFrame(asciiDimension(), asciiTitle(), asciiFrameHasTab());
 		frame.asciiDraw(plan.move(left, 0));
 
-		// Children stacked in the body, below the header. A normal child is
-		// drawn at dx = 0 (it re-derives its own absolute columns, only the row
-		// matters here); an ElseTile is the exception — its divider spans the
+		// Children stacked in the body, below the header, using the SAME cluster
+		// layout as asciiBodyHeight() (via computeAsciiLayout()) so the declared
+		// height and the actual drawn rows agree -- a `&` run's members all start
+		// at the SAME row instead of stacking sequentially, and the row after the
+		// run advances by only the tallest member's height, not by every member's
+		// height added up. An ElseTile is the exception -- its divider spans the
 		// whole frame, whose columns only this parent knows, so the parent draws
 		// it via an AElseSeparator (the counterpart of drawAllElses()) at the
 		// frame's absolute left column and full width. The ElseTile still owns its
-		// own row height via asciiDimension().
-		int y = frame.getBodyRowOffset();
-		for (Tile tile : tiles) {
+		// own row height via asciiDimension() (and is never itself a `&` member).
+		final AsciiLayout layout = computeAsciiLayout(tiles);
+		final int bodyStart = frame.getBodyRowOffset();
+		for (int i = 0; i < tiles.size(); i++) {
+			final Tile tile = tiles.get(i);
+			final int y = bodyStart + layout.rowOf[i];
 			if (tile instanceof ElseTile)
 				new AElseSeparator(width, ((ElseTile) tile).asciiLabel()).asciiDraw(plan.move(left, y));
 			else
 				tile.asciiDraw(plan.move(0, y));
-			y += tile.asciiDimension().getHeight();
 		}
 	}
 
@@ -732,6 +735,103 @@ public class GroupingTile extends AbstractTile {
 
 	public static boolean isParallel(Tile tile) {
 		return tile.getEvent().isParallel();
+	}
+
+	// ===================== ASCII height-only clustering =====================
+	//
+	// ASCII counterpart of computeBodyHeight()/flushPending() above -- same
+	// clustering rule (pending list, retroactive capture of a run's first
+	// member, LifeEventTiles held in pending rather than acting as separators),
+	// reused verbatim, because a `&` run is still a run whether measured in
+	// pixels or rows.
+	//
+	// ONE deliberate difference from the pixel version: a cluster's height here
+	// is the MAX of its members' own asciiDimension() heights, not
+	// max(contactPointRelative) + max(zzz). There is no ASCII Y gauge yet (see
+	// ASCIIVERSE.md §32.7-§32.11): no ASCII tile publishes a "contact row"
+	// distinct from its own height, so "tallest-before/after-contact" has no
+	// ASCII equivalent to read. All this can honestly claim is: the members of
+	// a `&` run SHARE a row span (so the group/document reserves only the
+	// tallest member's height instead of summing them all -- the wasted-space
+	// half of the bug), each drawn starting at the SAME row. It does NOT align
+	// their own arrows/labels on a shared internal row the way pixel's
+	// contact-line sharing does -- that is exactly the still-open Y-gauge work,
+	// not this fix. See ASCIIVERSE.md §32.7 (bug 1) for the full picture.
+	//
+	// Used by both asciiBodyHeight()/asciiDraw() here (a `&` run inside a
+	// group) and PlayingSpaceWithParticipants.asciiDraw() (a `&` run at the
+	// top level) -- one shared implementation, not two copies, per the lesson
+	// already recorded in YGAUGE.md: the day a second caller needs this exact
+	// computation, share it rather than duplicate it.
+	static final class AsciiLayout {
+		// rowOf[i]: the row (relative to this block's own top, 0-based) at which
+		// tiles.get(i) should be drawn. Every member of a `&` cluster gets the
+		// SAME row.
+		final int[] rowOf;
+		final int totalHeight;
+
+		AsciiLayout(int[] rowOf, int totalHeight) {
+			this.rowOf = rowOf;
+			this.totalHeight = totalHeight;
+		}
+	}
+
+	static AsciiLayout computeAsciiLayout(List<Tile> tiles) {
+		final int[] rowOf = new int[tiles.size()];
+		int y = 0;
+		// Indices into `tiles`, mirroring computeBodyHeight()'s `pending` list of
+		// Tile references -- kept as indices here since we must also WRITE each
+		// member's row, not just read its height.
+		final List<Integer> pending = new ArrayList<>();
+		boolean clusterOpen = false;
+
+		for (int i = 0; i < tiles.size(); i++) {
+			final Tile tile = tiles.get(i);
+			if (isParallel(tile)) {
+				clusterOpen = true;
+				pending.add(i);
+			} else if (tile instanceof LifeEventTile) {
+				pending.add(i);
+			} else {
+				y += flushAsciiPending(tiles, pending, clusterOpen, rowOf, y);
+				clusterOpen = false;
+				pending.add(i);
+			}
+		}
+		y += flushAsciiPending(tiles, pending, clusterOpen, rowOf, y);
+
+		return new AsciiLayout(rowOf, y);
+	}
+
+	// Consumes `pending` (clearing it), writes each member's row into `rowOf`,
+	// and returns the run's total row count. A `&` cluster: every member
+	// starts at row `y` (the SAME row -- see AsciiLayout's own comment on why
+	// this is a wasted-space fix, not a contact-alignment one), height = the
+	// max of their own asciiDimension() heights. A plain sequential run:
+	// members stack one after another starting at `y`, height = their sum.
+	private static int flushAsciiPending(List<Tile> tiles, List<Integer> pending, boolean wasCluster, int[] rowOf,
+			int y) {
+		if (pending.isEmpty())
+			return 0;
+
+		int height;
+		if (wasCluster) {
+			int max = 0;
+			for (int idx : pending)
+				max = Math.max(max, tiles.get(idx).asciiDimension().getHeight());
+			for (int idx : pending)
+				rowOf[idx] = y;
+			height = max;
+		} else {
+			int localY = y;
+			for (int idx : pending) {
+				rowOf[idx] = localY;
+				localY += tiles.get(idx).asciiDimension().getHeight();
+			}
+			height = localY - y;
+		}
+		pending.clear();
+		return height;
 	}
 
 	void addNewpageTiles(List<NewpageTile> newpages) {
