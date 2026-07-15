@@ -1,5 +1,5 @@
 DPI: 96
-dimension: [ 491.5513 ; 185.0000 ]
+dimension: [ 491.5513 ; 164.0000 ]
 scaleFactor: 1.0000
 seed: -7487098569879573351
 svgLinkTarget: _top
@@ -18,7 +18,7 @@ RECTANGLE:
 
 RECTANGLE:
   pt1: [ 80.4653 ; 39.0000 ]
-  pt2: [ 88.4653 ; 146.0000 ]
+  pt2: [ 88.4653 ; 125.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -28,14 +28,14 @@ RECTANGLE:
 
 LINE:
   pt1: [ 83.9653 ; 39.0000 ]
-  pt2: [ 83.9653 ; 146.0000 ]
+  pt2: [ 83.9653 ; 125.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
   pt1: [ 145.3340 ; 39.0000 ]
-  pt2: [ 153.3340 ; 146.0000 ]
+  pt2: [ 153.3340 ; 125.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -45,14 +45,14 @@ RECTANGLE:
 
 LINE:
   pt1: [ 148.8340 ; 39.0000 ]
-  pt2: [ 148.8340 ; 146.0000 ]
+  pt2: [ 148.8340 ; 125.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
   pt1: [ 234.9131 ; 39.0000 ]
-  pt2: [ 242.9131 ; 146.0000 ]
+  pt2: [ 242.9131 ; 125.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -62,14 +62,14 @@ RECTANGLE:
 
 LINE:
   pt1: [ 238.4131 ; 39.0000 ]
-  pt2: [ 238.4131 ; 146.0000 ]
+  pt2: [ 238.4131 ; 125.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
   pt1: [ 434.0727 ; 39.0000 ]
-  pt2: [ 442.0727 ; 146.0000 ]
+  pt2: [ 442.0727 ; 125.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -79,7 +79,7 @@ RECTANGLE:
 
 LINE:
   pt1: [ 437.5727 ; 39.0000 ]
-  pt2: [ 437.5727 ; 146.0000 ]
+  pt2: [ 437.5727 ; 125.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
@@ -157,8 +157,8 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 53.9491 ; 146.0000 ]
-  pt2: [ 113.9815 ; 174.0000 ]
+  pt1: [ 53.9491 ; 125.0000 ]
+  pt2: [ 113.9815 ; 153.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -168,15 +168,15 @@ RECTANGLE:
 
 TEXT:
   text: foo
-  position: [ 60.9491 ; 163.8889 ]
+  position: [ 60.9491 ; 142.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 123.9815 ; 146.0000 ]
-  pt2: [ 173.6865 ; 174.0000 ]
+  pt1: [ 123.9815 ; 125.0000 ]
+  pt2: [ 173.6865 ; 153.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -186,15 +186,15 @@ RECTANGLE:
 
 TEXT:
   text: Bob
-  position: [ 130.9815 ; 163.8889 ]
+  position: [ 130.9815 ; 142.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 183.6865 ; 146.0000 ]
-  pt2: [ 293.1396 ; 174.0000 ]
+  pt1: [ 183.6865 ; 125.0000 ]
+  pt2: [ 293.1396 ; 153.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -204,15 +204,15 @@ RECTANGLE:
 
 TEXT:
   text: Charlie
-  position: [ 190.6865 ; 163.8889 ]
+  position: [ 190.6865 ; 142.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 393.5941 ; 146.0000 ]
-  pt2: [ 481.5513 ; 174.0000 ]
+  pt1: [ 393.5941 ; 125.0000 ]
+  pt2: [ 481.5513 ; 153.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -222,7 +222,7 @@ RECTANGLE:
 
 TEXT:
   text: Alice
-  position: [ 400.5941 ; 163.8889 ]
+  position: [ 400.5941 ; 142.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000

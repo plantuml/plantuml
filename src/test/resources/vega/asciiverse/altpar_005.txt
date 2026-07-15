@@ -1,5 +1,5 @@
 DPI: 96
-dimension: [ 513.8647 ; 271.5000 ]
+dimension: [ 513.8647 ; 250.0000 ]
 scaleFactor: 1.0000
 seed: 3567933313825537923
 svgLinkTarget: _top
@@ -28,7 +28,7 @@ RECTANGLE:
 
 RECTANGLE:
   pt1: [ 75.5241 ; 39.0000 ]
-  pt2: [ 83.5241 ; 261.5000 ]
+  pt2: [ 83.5241 ; 240.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -38,14 +38,14 @@ RECTANGLE:
 
 LINE:
   pt1: [ 79.0241 ; 39.0000 ]
-  pt2: [ 79.0241 ; 261.5000 ]
+  pt2: [ 79.0241 ; 240.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
   pt1: [ 225.3979 ; 39.0000 ]
-  pt2: [ 233.3979 ; 261.5000 ]
+  pt2: [ 233.3979 ; 240.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -55,7 +55,7 @@ RECTANGLE:
 
 LINE:
   pt1: [ 228.8979 ; 39.0000 ]
-  pt2: [ 228.8979 ; 261.5000 ]
+  pt2: [ 228.8979 ; 240.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818

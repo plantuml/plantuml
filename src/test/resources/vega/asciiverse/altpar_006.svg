@@ -1,26 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="186px" preserveAspectRatio="none" style="width:291px;height:186px;background:#FFFFFF;" version="1.1" viewBox="0 0 291 186" width="291px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="165px" preserveAspectRatio="none" style="width:291px;height:165px;background:#FFFFFF;" version="1.1" viewBox="0 0 291 165" width="291px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="186.813" x="85.063" y="64"/>
     <g>
       <title>foo</title>
-      <rect fill="#000" fill-opacity="0" height="107" width="8" x="51.381" y="39"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="54.881" x2="54.881" y1="39" y2="146"/>
+      <rect fill="#000" fill-opacity="0" height="86" width="8" x="51.381" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="54.881" x2="54.881" y1="39" y2="125"/>
     </g>
     <g>
       <title>Bob</title>
-      <rect fill="#000" fill-opacity="0" height="107" width="8" x="97.563" y="39"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="101.063" x2="101.063" y1="39" y2="146"/>
+      <rect fill="#000" fill-opacity="0" height="86" width="8" x="97.563" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="101.063" x2="101.063" y1="39" y2="125"/>
     </g>
     <g>
       <title>Charlie</title>
-      <rect fill="#000" fill-opacity="0" height="107" width="8" x="156.256" y="39"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="159.756" x2="159.756" y1="39" y2="146"/>
+      <rect fill="#000" fill-opacity="0" height="86" width="8" x="156.256" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="159.756" x2="159.756" y1="39" y2="125"/>
     </g>
     <g>
       <title>Alice</title>
-      <rect fill="#000" fill-opacity="0" height="107" width="8" x="252.375" y="39"/>
-      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="255.875" x2="255.875" y1="39" y2="146"/>
+      <rect fill="#000" fill-opacity="0" height="86" width="8" x="252.375" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="255.875" x2="255.875" y1="39" y2="125"/>
     </g>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="33.425" x="38.169" y="10"/>
     <text fill="#000" font-size="14" textLength="19.425" x="45.169" y="27.889">foo</text>
@@ -30,14 +30,14 @@
     <text fill="#000" font-size="14" textLength="44.45" x="137.531" y="27.889">Charlie</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="233.65" y="10"/>
     <text fill="#000" font-size="14" textLength="30.45" x="240.65" y="27.889">Alice</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="33.425" x="38.169" y="146"/>
-    <text fill="#000" font-size="14" textLength="19.425" x="45.169" y="163.889">foo</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="81.594" y="146"/>
-    <text fill="#000" font-size="14" textLength="24.938" x="88.594" y="163.889">Bob</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.45" x="130.531" y="146"/>
-    <text fill="#000" font-size="14" textLength="44.45" x="137.531" y="163.889">Charlie</text>
-    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="233.65" y="146"/>
-    <text fill="#000" font-size="14" textLength="30.45" x="240.65" y="163.889">Alice</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="33.425" x="38.169" y="125"/>
+    <text fill="#000" font-size="14" textLength="19.425" x="45.169" y="142.889">foo</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="38.938" x="81.594" y="125"/>
+    <text fill="#000" font-size="14" textLength="24.938" x="88.594" y="142.889">Bob</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58.45" x="130.531" y="125"/>
+    <text fill="#000" font-size="14" textLength="44.45" x="137.531" y="142.889">Charlie</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="44.45" x="233.65" y="125"/>
+    <text fill="#000" font-size="14" textLength="30.45" x="240.65" y="142.889">Alice</text>
     <polygon fill="#181818" points="42.881,62,52.881,66,42.881,70,46.881,66" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
     <line style="stroke:#181818;stroke-width:1;" x1="10" x2="48.881" y1="66" y2="66"/>
     <text fill="#000" font-size="13" textLength="20.881" x="17" y="61.111">test</text>
