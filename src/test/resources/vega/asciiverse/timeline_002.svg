@@ -42,8 +42,6 @@
       <title/>
       <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="53.65" y="535"/>
     </g>
-    <line style="stroke:#A80036;stroke-width:2;" x1="49.65" x2="67.65" y1="540" y2="558"/>
-    <line style="stroke:#A80036;stroke-width:2;" x1="49.65" x2="67.65" y1="558" y2="540"/>
     <g>
       <title/>
       <rect fill="#FFF" height="98" style="stroke:#181818;stroke-width:1;" width="10" x="53.65" y="606"/>
@@ -60,6 +58,8 @@
       <title/>
       <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="68.65" y="648"/>
     </g>
+    <line style="stroke:#A80036;stroke-width:2;" x1="49.65" x2="67.65" y1="540" y2="558"/>
+    <line style="stroke:#A80036;stroke-width:2;" x1="49.65" x2="67.65" y1="558" y2="540"/>
     <g>
       <title>Participant_B</title>
       <rect fill="#000" fill-opacity="0" height="447" width="8" x="162.45" y="39"/>
@@ -81,8 +81,6 @@
       <title/>
       <rect fill="#FFF" height="28" style="stroke:#181818;stroke-width:1;" width="10" x="160.95" y="450"/>
     </g>
-    <line style="stroke:#A80036;stroke-width:2;" x1="156.95" x2="174.95" y1="469" y2="487"/>
-    <line style="stroke:#A80036;stroke-width:2;" x1="156.95" x2="174.95" y1="487" y2="469"/>
     <g>
       <title/>
       <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="160.95" y="535"/>
@@ -103,6 +101,8 @@
       <title/>
       <rect fill="#FFF" height="14" style="stroke:#181818;stroke-width:1;" width="10" x="175.95" y="337"/>
     </g>
+    <line style="stroke:#A80036;stroke-width:2;" x1="156.95" x2="174.95" y1="469" y2="487"/>
+    <line style="stroke:#A80036;stroke-width:2;" x1="156.95" x2="174.95" y1="487" y2="469"/>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.3" x="10" y="10"/>
     <text fill="#000" font-size="14" textLength="83.3" x="17" y="27.889">Participant_A</text>
     <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="97.3" x="117.3" y="10"/>
