@@ -166,20 +166,16 @@ public class GroupingTile extends AbstractTile {
 		// and the space this GroupingTile reserves in the OUTER Y chain
 		// (getPreferredHeight() -> this.yGauge below): it must count each
 		// parallel (&) cluster ONCE (tallest-before-contact + tallest-after-
-		// contact, like TileParallel.getPreferredHeight()), not sum every member's
-		// own height, or the group ends up taller than needed whenever it contains
-		// a & message.
+		// contact), not sum every member's own height, or the group ends up
+		// taller than needed whenever it contains a & message.
 		//
 		// Y POSITIONING itself no longer goes through this clustering (the gauge
-		// chain does it, at construction time), so `tiles` stays FLAT for drawing
-		// and the clustered view below is a throwaway, height-only projection.
-		// TileParallel now survives for this single purpose: to be asked its
-		// getPreferredHeight().
-		for (Tile tile : mergeParallelCore(getStringBounder(), tiles))
-			bodyHeight += tile.getPreferredHeight();
+		// chain does it, at construction time), so `tiles` stays FLAT for drawing;
+		// this is a throwaway, height-only pass over the same list.
+		bodyHeight = computeBodyHeight(tiles);
 
-		// `tiles` is FLAT (no TileParallel clustering -- see bodyHeight above), so
-		// every else tile is reached directly here
+		// `tiles` is FLAT (the & clustering is height-only, see bodyHeight above),
+		// so every else tile is reached directly here
 		for (Tile tile : tiles) {
 			final Event ev = tile.getEvent();
 			if (ev instanceof GroupingLeaf && ((Grouping) ev).getType() == GroupingType.ELSE) {
@@ -648,53 +644,94 @@ public class GroupingTile extends AbstractTile {
 		fillPositionelTiles(stringBounder, groupingTile.tiles, local2, full);
 	}
 
-	// Clusters each run of parallel (&) tiles into one TileParallel, whose height
-	// is the cluster's real vertical extent (tallest-before-contact + tallest-
-	// after-contact) rather than the sum of its members'. This is now used ONLY to
-	// compute heights (bodyHeight, and fillPositionelTiles' return value): Y
-	// POSITIONING goes through the gauge chain, built at construction time, and
-	// the tile lists used for drawing stay flat.
-	private static List<Tile> mergeParallelCore(StringBounder stringBounder, List<Tile> tiles) {
-		TileParallel pending = null;
-		final List<Tile> result = new ArrayList<>();
+	// Sum of the tiles' heights, counting each run of parallel (&) tiles ONCE:
+	// the members of a & cluster share a contact line, so they overlap, and the
+	// cluster's real vertical extent is tallest-before-contact +
+	// tallest-after-contact -- NOT the sum of their heights (which would
+	// double-count the overlap and make a group with a & message too tall).
+	//
+	// This is a throwaway, height-only pass: Y POSITIONING goes through the gauge
+	// chain, built at construction time, and `tiles` stays flat for drawing. It
+	// reproduces exactly what the former mergeParallelCore /
+	// moveRecentParallelTilesToPending produced -- the SAME grouping of tiles
+	// into clusters -- but sums the cluster extents directly instead of building
+	// throwaway TileParallel objects to hold them.
+	//
+	// Grouping rule (a faithful restatement of the former mergeParallelCore /
+	// moveRecentParallelTilesToPending): a `pending` list collects the tiles that
+	// could still be pulled into a cluster. A parallel tile joins (or opens) the
+	// cluster, pulling the WHOLE pending list in with it -- this is how the run's
+	// true first member, sitting just before the first `&`, plus any
+	// LifeEventTiles between them, end up in the cluster. A LifeEventTile is
+	// NEVER a separator: it too is merely held in pending (it can be pulled into
+	// a cluster, but can never start one on its own). Only a non-parallel,
+	// non-LifeEvent tile flushes the pending run and starts a fresh one with
+	// itself.
+	//
+	// Crucially, a tile's height is added to the total ONLY when the run it
+	// belongs to is flushed -- never eagerly -- so a tile already "placed" can
+	// still be retroactively pulled into a following cluster without any height
+	// having to be subtracted back (exactly what the former code achieved by
+	// moving tiles out of `result` and into the TileParallel).
+	private static double computeBodyHeight(List<Tile> tiles) {
+		double total = 0;
+		// Tiles held back, still eligible to be pulled into a cluster by a
+		// following `&`: a lone seed possibly trailed by life events, or (once a
+		// `&` has been seen) the growing cluster itself.
+		final List<Tile> pending = new ArrayList<>();
+		boolean clusterOpen = false;
+
 		for (Tile tile : tiles) {
-			if (!isParallel(tile) || result.size() == 0) {
-				result.add(tile);
-				if (tile instanceof LifeEventTile == false)
-					pending = null;
-			} else if (pending == null) {
-				pending = new TileParallel(stringBounder, null);
-				moveRecentParallelTilesToPending(result, pending);
+			if (isParallel(tile)) {
+				// Joins/opens the cluster, pulling in whatever is pending.
+				clusterOpen = true;
 				pending.add(tile);
-				result.add(pending);
+			} else if (tile instanceof LifeEventTile) {
+				// Never a separator: held in pending so a later `&` can still
+				// pull it (and everything before it in the run) into a cluster.
+				pending.add(tile);
 			} else {
-				moveRecentParallelTilesToPending(result, pending);
+				// A real separator: flush the pending run, then start a fresh
+				// one seeded with this tile.
+				total += flushPending(pending, clusterOpen);
+				clusterOpen = false;
 				pending.add(tile);
 			}
 		}
+		total += flushPending(pending, clusterOpen);
+
+		return total;
+	}
+
+	// Consumes `pending` (clearing it) and returns its total height. When the run
+	// held a `&` cluster, that is the cluster's real extent -- tallest-before-
+	// contact + tallest-after-contact over ALL its members (they overlap on the
+	// shared contact line, so their heights are NOT summed). Otherwise it is the
+	// plain sum of the members' preferred heights (a lone seed, possibly trailed
+	// by life events that were never pulled into a cluster).
+	private static double flushPending(List<Tile> pending, boolean wasCluster) {
+		if (pending.isEmpty())
+			return 0;
+
+		double result = 0;
+		if (wasCluster) {
+			double contact = 0;
+			double after = 0;
+			for (Tile tile : pending) {
+				contact = Math.max(contact, tile.getContactPointRelative());
+				after = Math.max(after, tile.getZZZ());
+			}
+			result = contact + after;
+		} else {
+			for (Tile tile : pending)
+				result += tile.getPreferredHeight();
+		}
+		pending.clear();
 		return result;
 	}
 
-	private static void moveRecentParallelTilesToPending(List<Tile> result, TileParallel pending) {
-		if (result.size() == 0)
-			return;
-
-		int capture = 1;
-		while (result.get(result.size() - capture) instanceof LifeEventTile)
-			capture++;
-
-		if (result.get(result.size() - capture) == pending)
-			capture--;
-
-		for (int i = result.size() - capture; i < result.size(); i++)
-			pending.add(result.get(i));
-
-		for (int i = 1; i <= capture; i++)
-			result.remove(result.size() - 1);
-	}
-
 	public static boolean isParallel(Tile tile) {
-		return tile instanceof TileParallel == false && tile.getEvent().isParallel();
+		return tile.getEvent().isParallel();
 	}
 
 	void addNewpageTiles(List<NewpageTile> newpages) {
