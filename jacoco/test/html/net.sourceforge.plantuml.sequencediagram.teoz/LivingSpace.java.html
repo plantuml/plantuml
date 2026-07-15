@@ -297,5 +297,81 @@ public class LivingSpace {
 <span class="fc" id="L297">		return getPosD(stringBounder).addFixed(marginAfter);</span>
 	}
 
+	// ---------------------------------------------------------------------
+	// ASCII rendering positions.
+	//
+	// Exact character-grid counterparts of posB/C/D/A/E above, expressed as
+	// Real on a dedicated ASCII RealLine (created in
+	// SequenceDiagramFileMakerTeoz.getAsciiBlock(), separate from the pixel
+	// xorigin) with the convention 1.0 = 1 character. The derivation formulas
+	// mirror the pixel ones, but every delta is an integer number of cells,
+	// so the values resolved by asciiXOrigin.compileNow() are exact integers
+	// (no quantization).
+	//
+	// asciiPosB is the box's left column; the box width is code.length()+2
+	// (see Participant.asciiDimension()); the lifeline runs through the
+	// middle. Widths come from the participant, never from a Rose Component.
+	// ---------------------------------------------------------------------
+	private Real asciiPosB;
+	private Real asciiPosC;
+	private Real asciiPosD;
+
+	private int asciiWidth() {
+<span class="fc" id="L320">		return p.asciiDimension().getWidth();</span>
+	}
+
+	public void setAsciiPosB(Real asciiPosB) {
+<span class="fc" id="L324">		this.asciiPosB = asciiPosB;</span>
+<span class="fc" id="L325">	}</span>
+
+	public Real getAsciiPosB() {
+<span class="fc" id="L328">		return asciiPosB;</span>
+	}
+
+	public Real getAsciiPosC() {
+<span class="fc bfc" id="L332" title="All 2 branches covered.">		if (asciiPosC == null)</span>
+<span class="fc" id="L333">			this.asciiPosC = asciiPosB.addFixed(asciiWidth() / 2);</span>
+
+<span class="fc" id="L335">		return asciiPosC;</span>
+	}
+
+	public Real getAsciiPosD() {
+<span class="fc bfc" id="L339" title="All 2 branches covered.">		if (asciiPosD == null)</span>
+<span class="fc" id="L340">			this.asciiPosD = asciiPosB.addFixed(asciiWidth());</span>
+
+<span class="fc" id="L342">		return asciiPosD;</span>
+	}
+
+	private int asciiMarginBefore;
+	private int asciiMarginAfter;
+
+	public void ensureAsciiMarginBefore(int margin) {
+<span class="nc bnc" id="L349" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L350">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L351">		this.asciiMarginBefore = Math.max(asciiMarginBefore, margin);</span>
+<span class="nc" id="L352">	}</span>
+
+	public void ensureAsciiMarginAfter(int margin) {
+<span class="nc bnc" id="L355" title="All 2 branches missed.">		if (margin &lt; 0)</span>
+<span class="nc" id="L356">			throw new IllegalArgumentException();</span>
+<span class="nc" id="L357">		this.asciiMarginAfter = Math.max(asciiMarginAfter, margin);</span>
+<span class="nc" id="L358">	}</span>
+
+	public Real getAsciiPosA() {
+<span class="fc" id="L361">		return getAsciiPosB().addFixed(-asciiMarginBefore);</span>
+	}
+
+	public Real getAsciiPosE() {
+<span class="fc" id="L365">		return getAsciiPosD().addFixed(asciiMarginAfter);</span>
+	}
+
+	public Real getAsciiLifeColumn() {
+<span class="fc" id="L369">		return getAsciiPosC();</span>
+	}
+
+	public Real getAsciiLeftColumn() {
+<span class="fc" id="L373">		return getAsciiPosB();</span>
+	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,9 +35,13 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -45,37 +49,38 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockMemoized;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealOrigin;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 
-public class PlayingSpaceWithParticipants extends TextBlockMemoized {
+public class PlayingSpaceWithParticipants extends TextBlockMemoized implements AsciiBlock {
 
 	private final PlayingSpace playingSpace;
 
 	private int pageIndex;
 
-<span class="fc" id="L61">	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {</span>
-<span class="fc" id="L62">		this.playingSpace = Objects.requireNonNull(playingSpace);</span>
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L66">	public PlayingSpaceWithParticipants(PlayingSpace playingSpace) {</span>
+<span class="fc" id="L67">		this.playingSpace = Objects.requireNonNull(playingSpace);</span>
+<span class="fc" id="L68">	}</span>
 
 	@Override
 	public XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
-<span class="fc" id="L67">		final double width = playingSpace.getMaxX(stringBounder).getCurrentValue()</span>
-<span class="fc" id="L68">				- playingSpace.getMinX(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L72">		final double width = playingSpace.getMaxX(stringBounder).getCurrentValue()</span>
+<span class="fc" id="L73">				- playingSpace.getMinX(stringBounder).getCurrentValue();</span>
 
 		// getPreferredHeight() triggers the layout pass that positions the tiles,
 		// so it must be called before getYMin()/getYMax()
-<span class="fc" id="L72">		final double fullHeight = playingSpace.getPreferredHeight(stringBounder);</span>
-<span class="fc" id="L73">		final double pageHeight = getYMax(fullHeight) - getYMin();</span>
+<span class="fc" id="L77">		final double fullHeight = playingSpace.getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L78">		final double pageHeight = getYMax(fullHeight) - getYMin();</span>
 
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		final int factor = playingSpace.isShowFootbox() ? 2 : 1;</span>
-<span class="fc" id="L76">		final double height = pageHeight + factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">		final int factor = playingSpace.isShowFootbox() ? 2 : 1;</span>
+<span class="fc" id="L81">		final double height = pageHeight + factor * playingSpace.getLivingSpaces().getHeadHeight(stringBounder);</span>
 
-<span class="fc" id="L78">		return new XDimension2D(width, height);</span>
+<span class="fc" id="L83">		return new XDimension2D(width, height);</span>
 	}
 
 	// Warning: both methods below rely on the tiles TimeHook: they are
@@ -86,84 +91,164 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized {
 	// page ending there and at the top of the page starting there.
 
 	private double getYMin() {
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (pageIndex == 0)</span>
-<span class="fc" id="L90">			return 0;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (pageIndex == 0)</span>
+<span class="fc" id="L95">			return 0;</span>
 
-<span class="fc" id="L92">		return playingSpace.getNewpageTiles().get(pageIndex - 1).getTimeHook().getValue();</span>
+<span class="fc" id="L97">		return playingSpace.getNewpageTiles().get(pageIndex - 1).getTimeHook().getValue();</span>
 	}
 
 	private double getYMax(double fullHeight) {
-<span class="fc" id="L96">		final List&lt;NewpageTile&gt; newpages = playingSpace.getNewpageTiles();</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (pageIndex &gt;= newpages.size())</span>
-<span class="fc" id="L98">			return fullHeight;</span>
+<span class="fc" id="L101">		final List&lt;NewpageTile&gt; newpages = playingSpace.getNewpageTiles();</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">		if (pageIndex &gt;= newpages.size())</span>
+<span class="fc" id="L103">			return fullHeight;</span>
 
-<span class="fc" id="L100">		final NewpageTile newpage = newpages.get(pageIndex);</span>
-<span class="fc" id="L101">		return Math.min(newpage.getTimeHook().getValue() + newpage.getPreferredHeight(), fullHeight);</span>
+<span class="fc" id="L105">		final NewpageTile newpage = newpages.get(pageIndex);</span>
+<span class="fc" id="L106">		return Math.min(newpage.getTimeHook().getValue() + newpage.getPreferredHeight(), fullHeight);</span>
 	}
 
-	public void drawU(UGraphic ug) {
-<span class="fc" id="L105">		final StringBounder stringBounder = ug.getStringBounder();</span>
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		// Minimal ASCII rendering, in the spirit of drawU(): the participant
+		// heads, then the lifelines, then the messages drawn by their own tiles
+		// (CommunicationTile.asciiDraw), reusing the Teoz tile tree as topology.
+<span class="fc" id="L114">		final LivingSpaces livingSpaces = playingSpace.getLivingSpaces();</span>
+<span class="fc" id="L115">		final List&lt;Participant&gt; participants = new ArrayList&lt;&gt;(livingSpaces.participants());</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">		if (participants.size() == 0)</span>
+<span class="nc" id="L117">			return;</span>
 
-<span class="fc" id="L107">		final Context2D context = new SimpleContext2D(false);</span>
-<span class="fc" id="L108">		final LivingSpaces livingSpaces = playingSpace.getLivingSpaces();</span>
-<span class="fc" id="L109">		final double headHeight = livingSpaces.getHeadHeight(stringBounder);</span>
+		// --- X layout: a dedicated ASCII Real graph, convention 1.0 = 1 char,
+		// on its own RealLine, separate from the pixel xorigin. Chain each
+		// participant's asciiPosB off a shared origin (exactly like the pixel
+		// createMainTile() chains posB off xorigin), let the participants and
+		// the tiles declare their ASCII constraints, then compile once. Every
+		// injected delta is an integer, so the resolved columns are exact
+		// integers (no quantization).
+<span class="fc" id="L126">		final RealOrigin asciiXOrigin = RealUtils.createOrigin();</span>
+<span class="fc" id="L127">		Real asciiCurrent = asciiXOrigin.addAtLeast(0);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		for (Participant p : participants) {</span>
+<span class="fc" id="L129">			final LivingSpace ls = livingSpaces.get(p);</span>
+<span class="fc" id="L130">			ls.setAsciiPosB(asciiCurrent);</span>
+<span class="fc" id="L131">			asciiCurrent = ls.getAsciiPosD().addAtLeast(0);</span>
+<span class="fc" id="L132">		}</span>
+<span class="fc" id="L133">		livingSpaces.asciiAddConstraints();</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		for (Tile tile : playingSpace.getTiles())</span>
+<span class="fc" id="L135">			tile.asciiAddConstraints();</span>
+<span class="fc" id="L136">		asciiXOrigin.compileNow();</span>
+
+		// Heads (top boxes), drawn by the participants themselves at their
+		// resolved left column.
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		for (Participant p : participants)</span>
+<span class="fc" id="L141">			p.asciiDraw(plan.move((int) livingSpaces.get(p).getAsciiLeftColumn().getCurrentValue(), 0));</span>
+
+<span class="fc" id="L143">		final int headBottom = 2;</span>
+<span class="fc" id="L144">		int y = headBottom + 1;</span>
+
+		// Messages, drawn by their own tiles (row 0 = label start, arrow row
+		// right after — see CommunicationTile.asciiDraw()/asciiDimension()).
+		// Y advances by each tile's own asciiDimension().getHeight() rather than
+		// a flat per-message constant, so a multi-line label
+		// gets the extra rows it needs instead of the next tile overwriting it.
+		// Every top-level tile must have a real asciiDraw()/asciiDimension()
+		// override to reach this loop — there is no catch
+		// (UnsupportedOperationException)
+		// here (anymore): a tile that hasn't been migrated to ASCII yet crashes
+		// loudly instead of being silently skipped, which is the point (see
+		// EmptyTile for the fix this policy forced: it needed a real, if trivial,
+		// override rather than falling through to the AsciiBlock &quot;not migrated&quot;
+		// default).
+<span class="fc" id="L159">		int bottomY = y;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (Tile tile : playingSpace.getTiles()) {</span>
+<span class="fc" id="L161">			tile.asciiDraw(plan.move(0, y));</span>
+<span class="fc" id="L162">			final int height = tile.asciiDimension().getHeight();</span>
+<span class="fc" id="L163">			y += height;</span>
+<span class="fc" id="L164">			bottomY = y;</span>
+<span class="fc" id="L165">		}</span>
+
+		// Footer boxes, mirroring drawU()'s playingSpace.isShowFootbox() branch:
+		// each participant draws itself a second time, right below the lifelines.
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		if (playingSpace.isShowFootbox())</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">			for (Participant p : participants)</span>
+<span class="fc" id="L171">				p.asciiDraw(plan.move((int) livingSpaces.get(p).getAsciiLeftColumn().getCurrentValue(), bottomY));</span>
+
+		// Lifelines from the heads down to the last message, at each
+		// participant's resolved lifeline column, only into empty cells so the
+		// arrows already drawn are never overwritten.
+<span class="fc" id="L176">		final char vLine = plan.getVLineChar();</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">		for (Participant p : participants) {</span>
+<span class="fc" id="L178">			final int lx = (int) livingSpaces.get(p).getAsciiLifeColumn().getCurrentValue();</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">			for (int yy = headBottom + 1; yy &lt; bottomY; yy++)</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">				if (plan.getCharAt(lx, yy) == ' ')</span>
+<span class="fc" id="L181">					plan.move(lx, yy).drawChar(vLine);</span>
+<span class="fc" id="L182">			plan.move(lx, headBottom).muteLifelineBelowBox();</span>
+<span class="fc" id="L183">			plan.move(lx, bottomY).muteLifelineAboveBox();</span>
+<span class="fc" id="L184">		}</span>
+
+<span class="fc" id="L186">	}</span>
+
+	@Override
+	public void drawU(UGraphic ug) {
+<span class="fc" id="L190">		final StringBounder stringBounder = ug.getStringBounder();</span>
+
+<span class="fc" id="L192">		final Context2D context = new SimpleContext2D(false);</span>
+<span class="fc" id="L193">		final LivingSpaces livingSpaces = playingSpace.getLivingSpaces();</span>
+<span class="fc" id="L194">		final double headHeight = livingSpaces.getHeadHeight(stringBounder);</span>
 
 		// getPreferredHeight() triggers the layout pass that positions the tiles,
 		// so it must be called before getYMin()/getYMax()
-<span class="fc" id="L113">		final double fullHeight = playingSpace.getPreferredHeight(stringBounder);</span>
-<span class="fc" id="L114">		final double ymin = getYMin();</span>
-<span class="fc" id="L115">		final double ymax = getYMax(fullHeight);</span>
-<span class="fc" id="L116">		final double pageHeight = ymax - ymin;</span>
+<span class="fc" id="L198">		final double fullHeight = playingSpace.getPreferredHeight(stringBounder);</span>
+<span class="fc" id="L199">		final double ymin = getYMin();</span>
+<span class="fc" id="L200">		final double ymax = getYMax(fullHeight);</span>
+<span class="fc" id="L201">		final double pageHeight = ymax - ymin;</span>
 
 		// The body is translated so that the current page starts right below the
 		// heads, and clipped so that the content of the other pages stays hidden.
-<span class="fc" id="L120">		UGraphic ugBody = ug.apply(UTranslate.dy(headHeight - ymin));</span>
-<span class="fc bfc" id="L121" title="All 2 branches covered.">		if (playingSpace.getNbPages() &gt; 1) {</span>
-<span class="fc" id="L122">			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, pageHeight + 1);</span>
-<span class="fc" id="L123">			ugBody = ugBody.apply(clip);</span>
+<span class="fc" id="L205">		UGraphic ugBody = ug.apply(UTranslate.dy(headHeight - ymin));</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		if (playingSpace.getNbPages() &gt; 1) {</span>
+<span class="fc" id="L207">			final UClip clip = new UClip(-1000, ymin, Double.MAX_VALUE, pageHeight + 1);</span>
+<span class="fc" id="L208">			ugBody = ugBody.apply(clip);</span>
 		}
 
-<span class="fc" id="L126">		playingSpace.drawBackground(ugBody);</span>
+<span class="fc" id="L211">		playingSpace.drawBackground(ugBody);</span>
 		// Lifelines and liveboxes use absolute positions over the whole diagram:
 		// they must be drawn with the full height, the clip trims them to the page
-<span class="fc" id="L129">		livingSpaces.drawLifeLines(ugBody, fullHeight, context);</span>
+<span class="fc" id="L214">		livingSpaces.drawLifeLines(ugBody, fullHeight, context);</span>
 
-<span class="fc" id="L131">		livingSpaces.drawHeads(ug, context, VerticalAlignment.BOTTOM);</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		if (playingSpace.isShowFootbox())</span>
-<span class="fc" id="L133">			livingSpaces.drawHeads(ug.apply(UTranslate.dy(pageHeight + headHeight)), context, VerticalAlignment.TOP);</span>
+<span class="fc" id="L216">		livingSpaces.drawHeads(ug, context, VerticalAlignment.BOTTOM);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (playingSpace.isShowFootbox())</span>
+<span class="fc" id="L218">			livingSpaces.drawHeads(ug.apply(UTranslate.dy(pageHeight + headHeight)), context, VerticalAlignment.TOP);</span>
 
-<span class="fc" id="L135">		playingSpace.drawForeground(ugBody);</span>
+<span class="fc" id="L220">		playingSpace.drawForeground(ugBody);</span>
 		// drawNewPages(ug.apply(UTranslate.dy(headHeight)));
-<span class="fc" id="L137">	}</span>
+<span class="fc" id="L222">	}</span>
 
 	public Real getMinX(StringBounder stringBounder) {
-<span class="fc" id="L140">		return playingSpace.getMinX(stringBounder);</span>
+<span class="fc" id="L225">		return playingSpace.getMinX(stringBounder);</span>
 	}
 
 	public int getNbPages() {
-<span class="nc" id="L144">		return playingSpace.getNbPages();</span>
+<span class="nc" id="L229">		return playingSpace.getNbPages();</span>
 	}
 
 	public void setIndex(int index) {
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (index != this.pageIndex) {</span>
-<span class="fc" id="L149">			this.pageIndex = index;</span>
-<span class="fc" id="L150">			invalidateDimensionCache();</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">		if (index != this.pageIndex) {</span>
+<span class="fc" id="L234">			this.pageIndex = index;</span>
+<span class="fc" id="L235">			invalidateDimensionCache();</span>
 		}
-<span class="fc" id="L152">	}</span>
+<span class="fc" id="L237">	}</span>
 
 	private List&lt;Double&gt; yNewPages() {
-<span class="nc" id="L155">		return playingSpace.yNewPages();</span>
+<span class="nc" id="L240">		return playingSpace.yNewPages();</span>
 	}
 
 	private void drawNewPages(UGraphic ug) {
-<span class="nc" id="L159">		ug = ug.apply(HColors.BLUE);</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">		for (Double change : yNewPages()) {</span>
-<span class="nc bnc" id="L161" title="All 4 branches missed.">			if (change == 0 || change == Double.MAX_VALUE) {</span>
-<span class="nc" id="L162">				continue;</span>
+<span class="nc" id="L244">		ug = ug.apply(HColors.BLUE);</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">		for (Double change : yNewPages()) {</span>
+<span class="nc bnc" id="L246" title="All 4 branches missed.">			if (change == 0 || change == Double.MAX_VALUE) {</span>
+<span class="nc" id="L247">				continue;</span>
 			}
-<span class="nc" id="L164">			ug.apply(UTranslate.dy(change)).draw(ULine.hline(100));</span>
-<span class="nc" id="L165">		}</span>
-<span class="nc" id="L166">	}</span>
+<span class="nc" id="L249">			ug.apply(UTranslate.dy(change)).draw(ULine.hline(100));</span>
+<span class="nc" id="L250">		}</span>
+<span class="nc" id="L251">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -35,15 +35,19 @@
  */
 package net.sourceforge.plantuml.asciiverse;
 
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-
 public interface AsciiBlock {
 
-	public default XDimension2D asciiDimension() {
-<span class="nc" id="L43">		throw new UnsupportedOperationException();</span>
+	public default ADimension2D asciiDimension() {
+<span class="nc" id="L41">		throw new UnsupportedOperationException(getClass().getName());</span>
 	}
 
-	public void asciiDraw(InfinitePlan plan);
+	public default void asciiDraw(InfinitePlan plan) {
+<span class="nc" id="L45">		throw new UnsupportedOperationException(getClass().getName());</span>
+	}
+
+	public default AsciiBlock marginLR(int marginLeft, int marginRight) {
+<span class="fc" id="L49">		return new AsciiBlockMarginLR(this, marginLeft, marginRight);</span>
+	}
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

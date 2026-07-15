@@ -714,7 +714,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.argon2.model" --> "java.util"
 "net.sourceforge.plantuml.argon2.model" --> "net.sourceforge.plantuml.argon2"
 
-class "net.sourceforge.plantuml.asciiart" %lighten("red", 95) {
+class "net.sourceforge.plantuml.asciiart" %lighten("red", 91) {
 Total Classes: 23
 }
 "net.sourceforge.plantuml.asciiart" --> "java.io"
@@ -732,17 +732,18 @@ Total Classes: 23
 "net.sourceforge.plantuml.asciiart" --> "net.sourceforge.plantuml.skin.rose"
 "net.sourceforge.plantuml.asciiart" --> "net.sourceforge.plantuml.style"
 
-class "net.sourceforge.plantuml.asciiverse" %lighten("red", 94) {
-Total Classes: 8
+class "net.sourceforge.plantuml.asciiverse" %lighten("red", 76) {
+Total Classes: 11
 }
 "net.sourceforge.plantuml.asciiverse" --> "java.io"
 "net.sourceforge.plantuml.asciiverse" --> "java.lang"
 "net.sourceforge.plantuml.asciiverse" --> "java.util"
+"net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.asciiart"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt.creole"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt.drawing"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt.font"
-"net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.asciiverse" --> "net.sourceforge.plantuml.security"
 
 class "net.sourceforge.plantuml.board" %lighten("red", 100) {
@@ -2889,6 +2890,7 @@ Total Classes: 51
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.api"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.asciiart"
+"net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.asciiverse"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.cli"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.klimt"
@@ -2917,11 +2919,12 @@ Total Classes: 6
 "net.sourceforge.plantuml.sequencediagram.puma" --> "net.sourceforge.plantuml.teavm"
 
 class "net.sourceforge.plantuml.sequencediagram.teoz" %lighten("red", 87) {
-Total Classes: 46
+Total Classes: 47
 }
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "java.lang"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "java.util"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.asciiverse"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "net.sourceforge.plantuml.klimt.creole"
@@ -3546,6 +3549,7 @@ Total Classes: 16
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.api"
+"net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.asciiverse"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.classdiagram"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.xmi" --> "net.sourceforge.plantuml.cucadiagram"

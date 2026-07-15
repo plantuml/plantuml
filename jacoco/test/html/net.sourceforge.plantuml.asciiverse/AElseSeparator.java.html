@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AElseSeparator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.asciiverse</a> &gt; <span class="el_source">AElseSeparator.java</span></div><h1>AElseSeparator.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.asciiverse;
+
+// The dashed divider drawn across a group frame at each `else`/section
+// boundary (alt/else, ...), as an AsciiBlock: the ASCII counterpart of the
+// pixel GROUPING_ELSE_TEOZ Component that GroupingTile.drawAllElses() draws
+// spanning the frame's full width. Like AGroupFrame,
+// its width is imposed from the outside — only the parent GroupingTile knows
+// the frame's column span — so it takes an explicit width rather than
+// computing one; the ElseTile itself owns only the divider's row height (its
+// asciiDimension()) and the label text (ElseTile.asciiLabel()).
+public final class AElseSeparator implements AsciiBlock {
+
+	private final int width;
+	private final String label;
+
+<span class="fc" id="L51">	public AElseSeparator(int width, String label) {</span>
+<span class="fc" id="L52">		this.width = width;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">		this.label = label == null ? &quot;&quot; : label;</span>
+<span class="fc" id="L54">	}</span>
+
+	@Override
+	public ADimension2D asciiDimension() {
+<span class="nc" id="L58">		return new ADimension2D(width, 1);</span>
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		// Dashed line across the frame interior only (columns 1..width-2),
+		// leaving the frame's own side borders — drawn by AGroupFrame at
+		// columns 0 and width-1 — untouched. Dotted, so it reads as a divider
+		// rather than a second solid border; the dash character (ASCII '-' vs
+		// Unicode '─') is chosen by the plan itself, so this stays
+		// correct for both ATXT and UTXT with no branch here. The dashes are
+		// drawn over the lifelines that cross this row (the later lifeline-fill
+		// pass only writes into empty cells), which is the correct &quot;divider
+		// crosses the lifelines&quot; look, for free.
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (width &gt; 2)</span>
+<span class="fc" id="L73">			plan.drawHLine(1, width - 2, 0, true);</span>
+
+		// Label near the left corner, wrapped in spaces so it reads cleanly
+		// against the dashes — same minimal tab treatment as AGroupFrame's
+		// title. Skipped when it would not fit inside the interior (same width
+		// guard shape as AGroupFrame); its own width is not reserved on the
+		// ASCII column solver yet, the same known gap as the frame title.
+<span class="pc bpc" id="L80" title="2 of 4 branches missed.">		if (label.isEmpty() == false &amp;&amp; width &gt; label.length() + 4)</span>
+<span class="fc" id="L81">			plan.move(2, 0).drawString(&quot; &quot; + label + &quot; &quot;);</span>
+<span class="fc" id="L82">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

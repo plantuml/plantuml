@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class ATable implements AsciiBlock {
 
@@ -47,255 +46,255 @@ public class ATable implements AsciiBlock {
 	private DataTable&lt;CellSpan&gt; mergedCells;
 	private List&lt;Integer&gt; columnMinWidths;
 	private List&lt;Integer&gt; rowMinHeights;
-<span class="fc" id="L50">	private int leftPadding = 0;</span>
-<span class="fc" id="L51">	private int rightPadding = 0;</span>
+<span class="fc" id="L49">	private int leftPadding = 0;</span>
+<span class="fc" id="L50">	private int rightPadding = 0;</span>
 
 	private static class CellSpan {
 		int startRow, startCol;
 		int rowSpan, colSpan;
 
-<span class="nc" id="L57">		CellSpan(int startRow, int startCol, int rowSpan, int colSpan) {</span>
-<span class="nc" id="L58">			this.startRow = startRow;</span>
-<span class="nc" id="L59">			this.startCol = startCol;</span>
-<span class="nc" id="L60">			this.rowSpan = rowSpan;</span>
-<span class="nc" id="L61">			this.colSpan = colSpan;</span>
-<span class="nc" id="L62">		}</span>
+<span class="nc" id="L56">		CellSpan(int startRow, int startCol, int rowSpan, int colSpan) {</span>
+<span class="nc" id="L57">			this.startRow = startRow;</span>
+<span class="nc" id="L58">			this.startCol = startCol;</span>
+<span class="nc" id="L59">			this.rowSpan = rowSpan;</span>
+<span class="nc" id="L60">			this.colSpan = colSpan;</span>
+<span class="nc" id="L61">		}</span>
 	}
 
-<span class="fc" id="L65">	public ATable(int minRows, int minCols) {</span>
+<span class="fc" id="L64">	public ATable(int minRows, int minCols) {</span>
 
-<span class="fc" id="L67">		this.cells = new DataTable&lt;Display&gt;(Display.NULL);</span>
-<span class="fc" id="L68">		this.columnMinWidths = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L69">		this.rowMinHeights = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L70">		this.mergedCells = new DataTable&lt;CellSpan&gt;(null);</span>
+<span class="fc" id="L66">		this.cells = new DataTable&lt;Display&gt;(Display.NULL);</span>
+<span class="fc" id="L67">		this.columnMinWidths = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L68">		this.rowMinHeights = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L69">		this.mergedCells = new DataTable&lt;CellSpan&gt;(null);</span>
 
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		for (int j = 0; j &lt; minCols; j++)</span>
-<span class="fc" id="L73">			this.columnMinWidths.add(1);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (int j = 0; j &lt; minCols; j++)</span>
+<span class="fc" id="L72">			this.columnMinWidths.add(1);</span>
 
-<span class="fc bfc" id="L75" title="All 2 branches covered.">		for (int i = 0; i &lt; minRows; i++)</span>
-<span class="fc" id="L76">			this.rowMinHeights.add(1);</span>
-<span class="fc" id="L77">	}</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		for (int i = 0; i &lt; minRows; i++)</span>
+<span class="fc" id="L75">			this.rowMinHeights.add(1);</span>
+<span class="fc" id="L76">	}</span>
 
 	public ATable withLeftPadding(int leftPadding) {
-<span class="fc" id="L80">		this.leftPadding = Math.max(leftPadding, 0);</span>
-<span class="fc" id="L81">		return this;</span>
+<span class="fc" id="L79">		this.leftPadding = Math.max(leftPadding, 0);</span>
+<span class="fc" id="L80">		return this;</span>
 	}
 
 	public ATable withRightPadding(int rightPadding) {
-<span class="fc" id="L85">		this.rightPadding = Math.max(rightPadding, 0);</span>
-<span class="fc" id="L86">		return this;</span>
+<span class="fc" id="L84">		this.rightPadding = Math.max(rightPadding, 0);</span>
+<span class="fc" id="L85">		return this;</span>
 	}
 
 	public ATable withColumnMinWidth(int col, int width) {
-<span class="fc" id="L90">		columnMinWidths.set(col, Math.max(width, 1));</span>
-<span class="fc" id="L91">		return this;</span>
+<span class="fc" id="L89">		columnMinWidths.set(col, Math.max(width, 1));</span>
+<span class="fc" id="L90">		return this;</span>
 	}
 
 	public ATable withRowMinHeight(int row, int height) {
-<span class="fc" id="L95">		rowMinHeights.set(row, Math.max(height, 1));</span>
-<span class="fc" id="L96">		return this;</span>
+<span class="fc" id="L94">		rowMinHeights.set(row, Math.max(height, 1));</span>
+<span class="fc" id="L95">		return this;</span>
 	}
 
 	public ATable addRow() {
-<span class="nc" id="L100">		rowMinHeights.add(1);</span>
-<span class="nc" id="L101">		return this;</span>
+<span class="nc" id="L99">		rowMinHeights.add(1);</span>
+<span class="nc" id="L100">		return this;</span>
 	}
 
 	public ATable addColumn() {
-<span class="nc" id="L105">		columnMinWidths.add(1);</span>
-<span class="nc" id="L106">		return this;</span>
+<span class="nc" id="L104">		columnMinWidths.add(1);</span>
+<span class="nc" id="L105">		return this;</span>
 	}
 
 	public void setCellContent(int row, int col, Display content) {
-<span class="fc" id="L110">		cells.set(row, col, content);</span>
+<span class="fc" id="L109">		cells.set(row, col, content);</span>
 
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		while (col &gt;= columnMinWidths.size())</span>
-<span class="nc" id="L113">			columnMinWidths.add(1);</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">		while (col &gt;= columnMinWidths.size())</span>
+<span class="nc" id="L112">			columnMinWidths.add(1);</span>
 
-<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		while (row &gt;= rowMinHeights.size())</span>
-<span class="nc" id="L116">			rowMinHeights.add(1);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		while (row &gt;= rowMinHeights.size())</span>
+<span class="nc" id="L115">			rowMinHeights.add(1);</span>
 
-<span class="fc" id="L118">		withColumnMinWidth(col, Math.max(columnMinWidths.get(col), content.contentWidth()));</span>
-<span class="fc" id="L119">		withRowMinHeight(row, Math.max(rowMinHeights.get(row), content.size()));</span>
-<span class="fc" id="L120">	}</span>
+<span class="fc" id="L117">		withColumnMinWidth(col, Math.max(columnMinWidths.get(col), content.contentWidth()));</span>
+<span class="fc" id="L118">		withRowMinHeight(row, Math.max(rowMinHeights.get(row), content.size()));</span>
+<span class="fc" id="L119">	}</span>
 
 	public Display getCellContent(int row, int col) {
-<span class="nc" id="L123">		return cells.get(row, col);</span>
+<span class="nc" id="L122">		return cells.get(row, col);</span>
 	}
 
 	public void mergeCells(int startRow, int startCol, int rowSpan, int colSpan) {
-<span class="nc" id="L127">		final CellSpan span = new CellSpan(startRow, startCol, rowSpan, colSpan);</span>
+<span class="nc" id="L126">		final CellSpan span = new CellSpan(startRow, startCol, rowSpan, colSpan);</span>
 
-<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (int i = startRow; i &lt; startRow + rowSpan; i++)</span>
-<span class="nc bnc" id="L130" title="All 2 branches missed.">			for (int j = startCol; j &lt; startCol + colSpan; j++)</span>
-<span class="nc" id="L131">				mergedCells.set(i, j, span);</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		for (int i = startRow; i &lt; startRow + rowSpan; i++)</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">			for (int j = startCol; j &lt; startCol + colSpan; j++)</span>
+<span class="nc" id="L130">				mergedCells.set(i, j, span);</span>
 
-<span class="nc" id="L133">	}</span>
+<span class="nc" id="L132">	}</span>
 
 	private int columnRenderWidth(int col) {
-<span class="fc" id="L136">		return columnMinWidths.get(col) + leftPadding + rightPadding;</span>
+<span class="fc" id="L135">		return columnMinWidths.get(col) + leftPadding + rightPadding;</span>
 	}
 
 	// X offsets (relative to startX) of every vertical border: the left border,
 	// each inter-column separator, and the right border.
 	private int[] verticalBorderOffsets() {
-<span class="fc" id="L142">		final int[] result = new int[columnMinWidths.size() + 1];</span>
-<span class="fc" id="L143">		int x = 0;</span>
-<span class="fc" id="L144">		result[0] = x;</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">		for (int col = 0; col &lt; columnMinWidths.size(); col++) {</span>
-<span class="fc" id="L146">			x += columnRenderWidth(col) + 1;</span>
-<span class="fc" id="L147">			result[col + 1] = x;</span>
+<span class="fc" id="L141">		final int[] result = new int[columnMinWidths.size() + 1];</span>
+<span class="fc" id="L142">		int x = 0;</span>
+<span class="fc" id="L143">		result[0] = x;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		for (int col = 0; col &lt; columnMinWidths.size(); col++) {</span>
+<span class="fc" id="L145">			x += columnRenderWidth(col) + 1;</span>
+<span class="fc" id="L146">			result[col + 1] = x;</span>
 		}
-<span class="fc" id="L149">		return result;</span>
+<span class="fc" id="L148">		return result;</span>
 	}
 
 	// Draws a horizontal border at row currentY, spanning the whole table width,
 	// using rounded corners and proper junctions where vertical borders cross it.
 	// position: -1 = top edge, 0 = inner separator, +1 = bottom edge.
 	private void drawHorizontalBorder(InfinitePlan plan, int startX, int currentY, int position) {
-<span class="fc" id="L156">		final int[] borders = verticalBorderOffsets();</span>
-<span class="fc" id="L157">		final int right = borders[borders.length - 1];</span>
+<span class="fc" id="L155">		final int[] borders = verticalBorderOffsets();</span>
+<span class="fc" id="L156">		final int right = borders[borders.length - 1];</span>
 
-<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (int x = 0; x &lt;= right; x++)</span>
-<span class="fc" id="L160">			plan.drawChar('-', startX + x, currentY);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		for (int x = 0; x &lt;= right; x++)</span>
+<span class="fc" id="L159">			plan.move(startX + x, currentY).drawChar('-');</span>
 
-<span class="fc bfc" id="L162" title="All 2 branches covered.">		for (int b = 0; b &lt; borders.length; b++) {</span>
-<span class="fc bfc" id="L163" title="All 2 branches covered.">			final boolean isLeft = b == 0;</span>
-<span class="fc bfc" id="L164" title="All 2 branches covered.">			final boolean isRight = b == borders.length - 1;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (int b = 0; b &lt; borders.length; b++) {</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">			final boolean isLeft = b == 0;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">			final boolean isRight = b == borders.length - 1;</span>
 			final char junction;
-<span class="fc bfc" id="L166" title="All 2 branches covered.">			if (position &lt; 0)</span>
-<span class="fc bfc" id="L167" title="All 4 branches covered.">				junction = isLeft ? ',' : isRight ? '.' : '+';</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">			else if (position &gt; 0)</span>
-<span class="fc bfc" id="L169" title="All 4 branches covered.">				junction = isLeft ? '`' : isRight ? '\'' : '+';</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">			if (position &lt; 0)</span>
+<span class="fc bfc" id="L166" title="All 4 branches covered.">				junction = isLeft ? ',' : isRight ? '.' : '+';</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">			else if (position &gt; 0)</span>
+<span class="fc bfc" id="L168" title="All 4 branches covered.">				junction = isLeft ? '`' : isRight ? '\'' : '+';</span>
 			else
-<span class="fc" id="L171">				junction = '+';</span>
-<span class="fc" id="L172">			plan.drawChar(junction, startX + borders[b], currentY);</span>
+<span class="fc" id="L170">				junction = '+';</span>
+<span class="fc" id="L171">			plan.move(startX + borders[b], currentY).drawChar(junction);</span>
 		}
-<span class="fc" id="L174">	}</span>
+<span class="fc" id="L173">	}</span>
 
 	public int getTotalWidth() {
-<span class="nc" id="L177">		int totalWidth = 0;</span>
-<span class="nc bnc" id="L178" title="All 2 branches missed.">		for (int col = 0; col &lt; columnMinWidths.size(); col++)</span>
-<span class="nc" id="L179">			totalWidth += columnRenderWidth(col);</span>
+<span class="nc" id="L176">		int totalWidth = 0;</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">		for (int col = 0; col &lt; columnMinWidths.size(); col++)</span>
+<span class="nc" id="L178">			totalWidth += columnRenderWidth(col);</span>
 
-<span class="nc" id="L181">		totalWidth += columnMinWidths.size() + 1;</span>
-<span class="nc" id="L182">		return totalWidth;</span>
+<span class="nc" id="L180">		totalWidth += columnMinWidths.size() + 1;</span>
+<span class="nc" id="L181">		return totalWidth;</span>
 	}
 
 	public int getTotalHeight() {
-<span class="nc" id="L186">		int totalHeight = 0;</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">		for (int height : rowMinHeights)</span>
-<span class="nc" id="L188">			totalHeight += height;</span>
+<span class="nc" id="L185">		int totalHeight = 0;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">		for (int height : rowMinHeights)</span>
+<span class="nc" id="L187">			totalHeight += height;</span>
 
-<span class="nc" id="L190">		return totalHeight;</span>
+<span class="nc" id="L189">		return totalHeight;</span>
 	}
 
 	@Override
-	public XDimension2D asciiDimension() {
-<span class="nc" id="L195">		final int width = getTotalWidth();</span>
-<span class="nc" id="L196">		final int height = getTotalHeight() + 2 + rowMinHeights.size() - 1;</span>
+	public ADimension2D asciiDimension() {
+<span class="nc" id="L194">		final int width = getTotalWidth();</span>
+<span class="nc" id="L195">		final int height = getTotalHeight() + 2 + rowMinHeights.size() - 1;</span>
 
-<span class="nc" id="L198">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L197">		return new ADimension2D(width, height);</span>
 	}
 
 	@Override
 	public void asciiDraw(InfinitePlan plan) {
-<span class="fc" id="L203">		int currentY = 0;</span>
+<span class="fc" id="L202">		int currentY = 0;</span>
 
-<span class="fc" id="L205">		drawHorizontalBorder(plan, 0, currentY, -1);</span>
+<span class="fc" id="L204">		drawHorizontalBorder(plan, 0, currentY, -1);</span>
 
-<span class="fc" id="L207">		currentY++;</span>
+<span class="fc" id="L206">		currentY++;</span>
 
-<span class="fc bfc" id="L209" title="All 2 branches covered.">		for (int row = 0; row &lt; rowMinHeights.size(); row++) {</span>
-<span class="fc" id="L210">			int currentX = 0;</span>
-<span class="fc" id="L211">			int rowHeight = rowMinHeights.get(row);</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">		for (int row = 0; row &lt; rowMinHeights.size(); row++) {</span>
+<span class="fc" id="L209">			int currentX = 0;</span>
+<span class="fc" id="L210">			int rowHeight = rowMinHeights.get(row);</span>
 
-<span class="fc bfc" id="L213" title="All 2 branches covered.">			for (int col = 0; col &lt; columnMinWidths.size(); col++) {</span>
-<span class="fc" id="L214">				final CellSpan span = mergedCells.get(row, col);</span>
-<span class="pc bpc" id="L215" title="5 of 6 branches missed.">				if (span != null &amp;&amp; span.startRow == row &amp;&amp; span.startCol == col) {</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">			for (int col = 0; col &lt; columnMinWidths.size(); col++) {</span>
+<span class="fc" id="L213">				final CellSpan span = mergedCells.get(row, col);</span>
+<span class="pc bpc" id="L214" title="5 of 6 branches missed.">				if (span != null &amp;&amp; span.startRow == row &amp;&amp; span.startCol == col) {</span>
 
-<span class="nc" id="L217">					final Display content = cells.get(row, col);</span>
-<span class="nc" id="L218">					int cellWidth = 0;</span>
-<span class="nc bnc" id="L219" title="All 2 branches missed.">					for (int c = col; c &lt; col + span.colSpan; c++)</span>
-<span class="nc" id="L220">						cellWidth += columnRenderWidth(c);</span>
+<span class="nc" id="L216">					final Display content = cells.get(row, col);</span>
+<span class="nc" id="L217">					int cellWidth = 0;</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">					for (int c = col; c &lt; col + span.colSpan; c++)</span>
+<span class="nc" id="L219">						cellWidth += columnRenderWidth(c);</span>
 
-<span class="nc" id="L222">					cellWidth += span.colSpan - 1;</span>
+<span class="nc" id="L221">					cellWidth += span.colSpan - 1;</span>
 
-<span class="nc" id="L224">					plan.drawChar('|', currentX, currentY);</span>
-<span class="nc" id="L225">					currentX++;</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">					for (int i = 0; i &lt; cellWidth; i++) {</span>
-<span class="nc" id="L227">						final char c = charAt(content, i - leftPadding);</span>
-<span class="nc" id="L228">						plan.drawChar(c, currentX + i, currentY);</span>
+<span class="nc" id="L223">					plan.move(currentX, currentY).drawChar('|');</span>
+<span class="nc" id="L224">					currentX++;</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">					for (int i = 0; i &lt; cellWidth; i++) {</span>
+<span class="nc" id="L226">						final char c = charAt(content, i - leftPadding);</span>
+<span class="nc" id="L227">						plan.move(currentX + i, currentY).drawChar(c);</span>
 					}
-<span class="nc" id="L230">					currentX += cellWidth;</span>
+<span class="nc" id="L229">					currentX += cellWidth;</span>
 
-<span class="nc" id="L232">					col += span.colSpan - 1;</span>
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">				} else if (span == null) {</span>
-<span class="fc" id="L234">					final Display content = cells.get(row, col);</span>
-<span class="fc" id="L235">					int cellWidth = columnRenderWidth(col);</span>
+<span class="nc" id="L231">					col += span.colSpan - 1;</span>
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">				} else if (span == null) {</span>
+<span class="fc" id="L233">					final Display content = cells.get(row, col);</span>
+<span class="fc" id="L234">					int cellWidth = columnRenderWidth(col);</span>
 
-<span class="fc" id="L237">					plan.drawChar('|', currentX, currentY);</span>
-<span class="fc" id="L238">					currentX++;</span>
-<span class="fc bfc" id="L239" title="All 2 branches covered.">					for (int i = 0; i &lt; cellWidth; i++) {</span>
-<span class="fc" id="L240">						final char c = charAt(content, i - leftPadding);</span>
-<span class="fc" id="L241">						plan.drawChar(c, currentX + i, currentY);</span>
+<span class="fc" id="L236">					plan.move(currentX, currentY).drawChar('|');</span>
+<span class="fc" id="L237">					currentX++;</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">					for (int i = 0; i &lt; cellWidth; i++) {</span>
+<span class="fc" id="L239">						final char c = charAt(content, i - leftPadding);</span>
+<span class="fc" id="L240">						plan.move(currentX + i, currentY).drawChar(c);</span>
 					}
-<span class="fc" id="L243">					currentX += cellWidth;</span>
+<span class="fc" id="L242">					currentX += cellWidth;</span>
 				}
 			}
 
-<span class="fc" id="L247">			plan.drawChar('|', currentX, currentY);</span>
+<span class="fc" id="L246">			plan.move(currentX, currentY).drawChar('|');</span>
 
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">			for (int h = 1; h &lt; rowHeight; h++) {</span>
-<span class="nc" id="L250">				currentY++;</span>
-<span class="nc" id="L251">				currentX = 0;</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">				for (int col = 0; col &lt; columnMinWidths.size(); col++) {</span>
-<span class="nc" id="L253">					final CellSpan span = mergedCells.get(row, col);</span>
-<span class="nc bnc" id="L254" title="All 6 branches missed.">					if (span != null &amp;&amp; span.startRow == row &amp;&amp; span.startCol == col) {</span>
-<span class="nc" id="L255">						int cellWidth = 0;</span>
-<span class="nc bnc" id="L256" title="All 2 branches missed.">						for (int c = col; c &lt; col + span.colSpan; c++)</span>
-<span class="nc" id="L257">							cellWidth += columnRenderWidth(c);</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">			for (int h = 1; h &lt; rowHeight; h++) {</span>
+<span class="nc" id="L249">				currentY++;</span>
+<span class="nc" id="L250">				currentX = 0;</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">				for (int col = 0; col &lt; columnMinWidths.size(); col++) {</span>
+<span class="nc" id="L252">					final CellSpan span = mergedCells.get(row, col);</span>
+<span class="nc bnc" id="L253" title="All 6 branches missed.">					if (span != null &amp;&amp; span.startRow == row &amp;&amp; span.startCol == col) {</span>
+<span class="nc" id="L254">						int cellWidth = 0;</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">						for (int c = col; c &lt; col + span.colSpan; c++)</span>
+<span class="nc" id="L256">							cellWidth += columnRenderWidth(c);</span>
 
-<span class="nc" id="L259">						cellWidth += span.colSpan - 1;</span>
+<span class="nc" id="L258">						cellWidth += span.colSpan - 1;</span>
 
-<span class="nc" id="L261">						plan.drawChar('|', currentX, currentY);</span>
-<span class="nc" id="L262">						currentX++;</span>
-<span class="nc bnc" id="L263" title="All 2 branches missed.">						for (int i = 0; i &lt; cellWidth; i++)</span>
-<span class="nc" id="L264">							plan.drawChar(' ', currentX + i, currentY);</span>
+<span class="nc" id="L260">						plan.move(currentX, currentY).drawChar('|');</span>
+<span class="nc" id="L261">						currentX++;</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">						for (int i = 0; i &lt; cellWidth; i++)</span>
+<span class="nc" id="L263">							plan.move(currentX + i, currentY).drawChar(' ');</span>
 
-<span class="nc" id="L266">						currentX += cellWidth;</span>
-<span class="nc" id="L267">						col += span.colSpan - 1;</span>
-<span class="nc bnc" id="L268" title="All 2 branches missed.">					} else if (span == null) {</span>
+<span class="nc" id="L265">						currentX += cellWidth;</span>
+<span class="nc" id="L266">						col += span.colSpan - 1;</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">					} else if (span == null) {</span>
 
-<span class="nc" id="L270">						final int cellWidth = columnRenderWidth(col);</span>
-<span class="nc" id="L271">						plan.drawChar('|', currentX, currentY);</span>
-<span class="nc" id="L272">						currentX++;</span>
-<span class="nc bnc" id="L273" title="All 2 branches missed.">						for (int i = 0; i &lt; cellWidth; i++) {</span>
-<span class="nc" id="L274">							plan.drawChar(' ', currentX + i, currentY);</span>
+<span class="nc" id="L269">						final int cellWidth = columnRenderWidth(col);</span>
+<span class="nc" id="L270">						plan.move(currentX, currentY).drawChar('|');</span>
+<span class="nc" id="L271">						currentX++;</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">						for (int i = 0; i &lt; cellWidth; i++) {</span>
+<span class="nc" id="L273">							plan.move(currentX + i, currentY).drawChar(' ');</span>
 						}
-<span class="nc" id="L276">						currentX += cellWidth;</span>
+<span class="nc" id="L275">						currentX += cellWidth;</span>
 					}
 				}
-<span class="nc" id="L279">				plan.drawChar('|', currentX, currentY);</span>
+<span class="nc" id="L278">				plan.move(currentX, currentY).drawChar('|');</span>
 			}
-<span class="fc" id="L281">			currentY++;</span>
+<span class="fc" id="L280">			currentY++;</span>
 
-<span class="fc bfc" id="L283" title="All 2 branches covered.">			final int position = row == rowMinHeights.size() - 1 ? 1 : 0;</span>
-<span class="fc" id="L284">			drawHorizontalBorder(plan, 0, currentY, position);</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">			final int position = row == rowMinHeights.size() - 1 ? 1 : 0;</span>
+<span class="fc" id="L283">			drawHorizontalBorder(plan, 0, currentY, position);</span>
 
-<span class="fc" id="L286">			currentY++;</span>
+<span class="fc" id="L285">			currentY++;</span>
 		}
-<span class="fc" id="L288">	}</span>
+<span class="fc" id="L287">	}</span>
 
 	private char charAt(Display content2, int i) {
-<span class="fc bfc" id="L291" title="All 2 branches covered.">		if (i &lt; 0)</span>
-<span class="fc" id="L292">			return ' ';</span>
-<span class="pc bpc" id="L293" title="1 of 2 branches missed.">		if (content2.size() == 0)</span>
-<span class="nc" id="L294">			return ' ';</span>
-<span class="fc" id="L295">		final CharSequence line0 = content2.get(0);</span>
-<span class="fc bfc" id="L296" title="All 2 branches covered.">		if (i &lt; line0.length())</span>
-<span class="fc" id="L297">			return line0.charAt(i);</span>
-<span class="fc" id="L298">		return ' ';</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">		if (i &lt; 0)</span>
+<span class="fc" id="L291">			return ' ';</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">		if (content2.size() == 0)</span>
+<span class="nc" id="L293">			return ' ';</span>
+<span class="fc" id="L294">		final CharSequence line0 = content2.get(0);</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">		if (i &lt; line0.length())</span>
+<span class="fc" id="L296">			return line0.charAt(i);</span>
+<span class="fc" id="L297">		return ' ';</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

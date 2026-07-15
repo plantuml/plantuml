@@ -40,20 +40,20 @@ class ParticipantRange {
 	private final int start;
 	private final int end;
 
-<span class="fc" id="L43">	public ParticipantRange(int start, int end) {</span>
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if (start &gt; end) {</span>
+<span class="nc" id="L43">	public ParticipantRange(int start, int end) {</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">		if (start &gt; end) {</span>
 <span class="nc" id="L45">			throw new IllegalArgumentException();</span>
 		}
-<span class="fc" id="L47">		this.start = start;</span>
-<span class="fc" id="L48">		this.end = end;</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L47">		this.start = start;</span>
+<span class="nc" id="L48">		this.end = end;</span>
+<span class="nc" id="L49">	}</span>
 
 	public int start() {
-<span class="fc" id="L52">		return start;</span>
+<span class="nc" id="L52">		return start;</span>
 	}
 
 	public int end() {
-<span class="fc" id="L56">		return end;</span>
+<span class="nc" id="L56">		return end;</span>
 	}
 
 	public ParticipantRange merge(ParticipantRange other) {

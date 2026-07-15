@@ -49,32 +49,32 @@ public class ComponentTextLine extends AbstractComponentText {
 	private static final int MAGIC_NUMBER = -3;
 	private char using;
 
-<span class="fc" id="L52">	public ComponentTextLine(ComponentType type, FileFormat fileFormat) {</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (fileFormat == FileFormat.UTXT) {</span>
-<span class="fc" id="L54">			using = '\u2502';</span>
+<span class="nc" id="L52">	public ComponentTextLine(ComponentType type, FileFormat fileFormat) {</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">		if (fileFormat == FileFormat.UTXT) {</span>
+<span class="nc" id="L54">			using = '\u2502';</span>
 		} else {
-<span class="fc" id="L56">			using = '|';</span>
+<span class="nc" id="L56">			using = '|';</span>
 		}
-<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (type == ComponentType.DELAY_LINE) {</span>
-<span class="fc" id="L59">			using = '.';</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (type == ComponentType.DELAY_LINE) {</span>
+<span class="nc" id="L59">			using = '.';</span>
 		}
-<span class="fc" id="L61">	}</span>
+<span class="nc" id="L61">	}</span>
 
 	public void drawU(UGraphic ug, Area area, Context2D context) {
-<span class="fc" id="L64">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
-<span class="fc" id="L65">		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();</span>
-<span class="fc" id="L66">		final int width = (int) dimensionToUse.getWidth();</span>
-<span class="fc" id="L67">		final int height = (int) dimensionToUse.getHeight();</span>
-<span class="fc" id="L68">		charArea.drawVLine(using, (width - 1) / 2, MAGIC_NUMBER, height);</span>
+<span class="nc" id="L64">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
+<span class="nc" id="L65">		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();</span>
+<span class="nc" id="L66">		final int width = (int) dimensionToUse.getWidth();</span>
+<span class="nc" id="L67">		final int height = (int) dimensionToUse.getHeight();</span>
+<span class="nc" id="L68">		charArea.drawVLine(using, (width - 1) / 2, MAGIC_NUMBER, height);</span>
 //		if (using == '.') {
 //			charArea.drawVLine(using, (width - 1) / 2, -3, height);
 //		} else {
 //			charArea.drawVLine(using, (width - 1) / 2, 0, height);
 //		}
-<span class="fc" id="L74">	}</span>
+<span class="nc" id="L74">	}</span>
 
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L77">		return 0;</span>
+<span class="nc" id="L77">		return 0;</span>
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {

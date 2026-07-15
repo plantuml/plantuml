@@ -35,6 +35,10 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.AsciiBlockMarginLR;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -69,240 +73,378 @@ public class CommunicationTile extends AbstractCommunicationTile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="fc" id="L72">		return message;</span>
+<span class="fc" id="L76">		return message;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L77">		return super.toString() + &quot; &quot; + message;</span>
+<span class="nc" id="L81">		return super.toString() + &quot; &quot; + message;</span>
 	}
 
 	public CommunicationTile(StringBounder stringBounder, LivingSpaces livingSpaces, Message message, Rose skin,
 			ISkinParam skinParam, YGauge currentY) {
-<span class="fc" id="L82">		super(stringBounder, skinParam, currentY);</span>
-<span class="fc" id="L83">		this.livingSpace1 = livingSpaces.get(message.getParticipant1());</span>
-<span class="fc" id="L84">		this.livingSpace2 = livingSpaces.get(message.getParticipant2());</span>
-<span class="fc" id="L85">		this.livingSpaces = livingSpaces;</span>
-<span class="fc" id="L86">		this.message = message;</span>
-<span class="fc" id="L87">		this.skin = skin;</span>
-<span class="fc" id="L88">		this.skinParam = skinParam;</span>
+<span class="fc" id="L86">		super(stringBounder, skinParam, currentY);</span>
+<span class="fc" id="L87">		this.livingSpace1 = livingSpaces.get(message.getParticipant1());</span>
+<span class="fc" id="L88">		this.livingSpace2 = livingSpaces.get(message.getParticipant2());</span>
+<span class="fc" id="L89">		this.livingSpaces = livingSpaces;</span>
+<span class="fc" id="L90">		this.message = message;</span>
+<span class="fc" id="L91">		this.skin = skin;</span>
+<span class="fc" id="L92">		this.skinParam = skinParam;</span>
 
-<span class="pc bpc" id="L90" title="1 of 2 branches missed.">		if (message.isCreate())</span>
-<span class="nc" id="L91">			livingSpace2.goCreate();</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (message.isCreate())</span>
+<span class="nc" id="L95">			livingSpace2.goCreate();</span>
 
-<span class="fc" id="L93">		final ArrowComponent comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L94">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L97">		final ArrowComponent comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L98">		final double contactRelative = comp.getYPoint(getStringBounder());</span>
+		// Use getPreferredHeight(), NOT comp.getPreferredDimension().getHeight():
+		// for a `create` message the tile is as tall as the CREATED PARTICIPANT'S
+		// HEAD (the box drawn at the arrow's end), which is taller than the arrow
+		// component itself -- see getPreferredHeight() below. Feeding the gauge
+		// the bare arrow height instead made it reserve ~18px less than the tile
+		// actually occupies, so every following tile chained too high (the whole
+		// diagram after a `create` was shifted up. The gauge and
+		// getPreferredHeight() must always agree on the tile's extent.
+		// All the fields getPreferredHeight() reads (message, livingSpace2, skin,
+		// skinParam) are assigned above, so calling it here is safe.
+<span class="fc" id="L109">		final double height = getPreferredHeight();</span>
 
-<span class="fc bfc" id="L96" title="All 2 branches covered.">		if (message.isParallel())</span>
-<span class="fc" id="L97">			this.yGauge = YGauge.create(currentY.getMin(), dim.getHeight());</span>
+		// The contact line (arrow line) is published in the gauge; parallel (&amp;)
+		// messages share it so that their arrows stay aligned like in the
+		// legacy TileParallel, whatever the label heights
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		if (message.isParallel())</span>
+<span class="fc" id="L115">			this.yGauge = YGauge.createParallel(currentY, contactRelative, height);</span>
 		else
-<span class="fc" id="L99">			this.yGauge = YGauge.create(currentY.getMax(), dim.getHeight());</span>
-<span class="fc" id="L100">	}</span>
+<span class="fc" id="L117">			this.yGauge = YGauge.createWithContact(currentY, contactRelative, height);</span>
+<span class="fc" id="L118">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
-<span class="nc" id="L104">		return yGauge;</span>
+<span class="fc" id="L122">		return yGauge;</span>
 	}
 
 	public boolean isReverse(StringBounder stringBounder) {
-<span class="fc" id="L108">		final Real point1 = livingSpace1.getPosC(stringBounder);</span>
-<span class="fc" id="L109">		final Real point2 = livingSpace2.getPosC(stringBounder);</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		if (point1.getCurrentValue() &gt; point2.getCurrentValue())</span>
-<span class="fc" id="L111">			return true;</span>
+<span class="fc" id="L126">		final Real point1 = livingSpace1.getPosC(stringBounder);</span>
+<span class="fc" id="L127">		final Real point2 = livingSpace2.getPosC(stringBounder);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		if (point1.getCurrentValue() &gt; point2.getCurrentValue())</span>
+<span class="fc" id="L129">			return true;</span>
 
-<span class="fc" id="L113">		return false;</span>
+<span class="fc" id="L131">		return false;</span>
 	}
 
 	private boolean isCreate() {
-<span class="fc" id="L117">		return message.isCreate();</span>
+<span class="fc" id="L135">		return message.isCreate();</span>
 	}
 
 	private double getArrowThickness() {
-<span class="fc" id="L121">		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="fc" id="L123">			return 1;</span>
+<span class="fc" id="L139">		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">		if (result == null)</span>
+<span class="fc" id="L141">			return 1;</span>
 
-<span class="nc" id="L125">		return result.getThickness();</span>
+<span class="nc" id="L143">		return result.getThickness();</span>
 	}
 
 	private ArrowComponent getComponent(StringBounder stringBounder) {
-<span class="fc" id="L129">		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (isReverse(stringBounder))</span>
-<span class="fc" id="L131">			arrowConfiguration = arrowConfiguration.reverse();</span>
+<span class="fc" id="L147">		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (isReverse(stringBounder))</span>
+<span class="fc" id="L149">			arrowConfiguration = arrowConfiguration.reverse();</span>
 
-<span class="fc" id="L133">		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());</span>
+<span class="fc" id="L151">		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());</span>
 
-<span class="fc" id="L135">		return skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,</span>
-<span class="fc" id="L136">				message.getLabelNumbered());</span>
+<span class="fc" id="L153">		return skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam,</span>
+<span class="fc" id="L154">				message.getLabelNumbered());</span>
 	}
 
 	private ArrowComponent getComponentMulticast(StringBounder stringBounder, boolean reverse) {
-<span class="nc" id="L140">		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">		if (reverse)</span>
-<span class="nc" id="L142">			arrowConfiguration = arrowConfiguration.reverse();</span>
+<span class="nc" id="L158">		ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		if (reverse)</span>
+<span class="nc" id="L160">			arrowConfiguration = arrowConfiguration.reverse();</span>
 
-<span class="nc" id="L144">		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());</span>
+<span class="nc" id="L162">		arrowConfiguration = arrowConfiguration.withThickness(getArrowThickness());</span>
 
-<span class="nc" id="L146">		return skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam, Display.NULL);</span>
+<span class="nc" id="L164">		return skin.createComponentArrow(message.getUsedStyles(), arrowConfiguration, skinParam, Display.NULL);</span>
 	}
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L151">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
+<span class="fc" id="L169">		return getComponent(getStringBounder()).getYPoint(getStringBounder());</span>
 	}
 
 	public static final double LIVE_DELTA_SIZE = 5;
 
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
-<span class="fc" id="L158">		super.callbackY_internal(y);</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (message.isCreate())</span>
-<span class="nc" id="L160">			livingSpace2.goCreate(y.getValue());</span>
+<span class="fc" id="L176">		super.callbackY_internal(y);</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">		if (message.isCreate())</span>
+<span class="nc" id="L178">			livingSpace2.goCreate(y.getValue());</span>
 
-<span class="fc" id="L162">		final AbstractComponentRoseArrow comp = (AbstractComponentRoseArrow) getComponent(getStringBounder());</span>
-<span class="fc" id="L163">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L180">		final AbstractComponentRoseArrow comp = (AbstractComponentRoseArrow) getComponent(getStringBounder());</span>
+<span class="fc" id="L181">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
 
-<span class="fc" id="L165">		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();</span>
+<span class="fc" id="L183">		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();</span>
 
-<span class="fc" id="L167">		livingSpace1.addStepForLivebox(getEvent(), y.getValue() + arrowY);</span>
-<span class="fc" id="L168">		livingSpace2.addStepForLivebox(getEvent(), y.getValue() + arrowY);</span>
-<span class="fc" id="L169">	}</span>
+<span class="fc" id="L185">		livingSpace1.addStepForLivebox(getEvent(), y.getValue() + arrowY);</span>
+<span class="fc" id="L186">		livingSpace2.addStepForLivebox(getEvent(), y.getValue() + arrowY);</span>
+<span class="fc" id="L187">	}</span>
+
+	// ASCII rendering. The message is drawn relative to the plan (already
+	// translated to this tile's row by the caller): row 0 is where the label
+	// starts, the arrow row comes right after it (see asciiDimension() below
+	// for how many rows the label actually takes). Columns come from the
+	// ASCII layout pass (LivingSpace.getAsciiLifeColumn()), never from the
+	// pixel Real solver.
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+<span class="fc" id="L197">		final int xa = (int) livingSpace1.getAsciiLifeColumn().getCurrentValue();</span>
+<span class="fc" id="L198">		final int xb = (int) livingSpace2.getAsciiLifeColumn().getCurrentValue();</span>
+
+		// message.getLabel() is itself an AsciiBlock (Display), wrapped in a 1-column left/right margin
+		// (AsciiBlockMarginLR) so the label reads &quot; this is a test &quot; instead of
+		// sitting flush against the lifelines it's centered between. Centering
+		// reads the padded width back from asciiDimension() instead of
+		// flattening the label to a String first, and the actual draw is
+		// delegated to the label's own asciiDraw() rather than a hand-rolled
+		// drawString(). A multi-line label draws one row per line starting at
+		// row 0 — the arrow row is pushed down to asciiLabelRows() accordingly
+		// (see below), so it no longer collides with a label that has more
+		// than one line.
+<span class="fc" id="L210">		final AsciiBlock label = asciiLabel();</span>
+<span class="fc" id="L211">		final ADimension2D labelDim = label.asciiDimension();</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		if (labelDim.getWidth() &gt; 0) {</span>
+<span class="fc" id="L213">			final int mid = (xa + xb) / 2;</span>
+<span class="fc" id="L214">			label.asciiDraw(plan.move(mid - labelDim.getWidth() / 2, 0));</span>
+		}
+
+<span class="fc" id="L217">		final int arrowRow = asciiLabelRows();</span>
+<span class="fc" id="L218">		final int from = Math.min(xa, xb);</span>
+<span class="fc" id="L219">		final int to = Math.max(xa, xb);</span>
+		// Fill only the inside of the span: the source keeps its lifeline '|',
+		// the target receives the arrowhead. This way the arrow starts on the
+		// source lifeline and ends on the target lifeline without overrunning.
+		// Dotted arrows (return messages, async replies...) get a dashed line,
+		// mirroring the pixel ArrowConfiguration.isDotted() behavior.
+<span class="fc" id="L225">		plan.drawHLine(from + 1, to - 1, arrowRow, message.getArrowConfiguration().isDotted());</span>
+
+		// The arrowhead stays plain ASCII even in Unicode mode, matching the
+		// legacy asciiart.ComponentTextArrow behavior (only the line character
+		// switches to box-drawing Unicode, never the arrowhead itself).
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (xb &gt;= xa)</span>
+<span class="fc" id="L231">			plan.move(xb - 1, arrowRow).drawChar('&gt;');</span>
+		else
+<span class="fc" id="L233">			plan.move(xb + 1, arrowRow).drawChar('&lt;');</span>
+<span class="fc" id="L234">	}</span>
+
+	// The message's label, padded with a 1-column margin on each side
+	// (AsciiBlockMarginLR): a plain, reusable decorator rather than ad hoc
+	// column arithmetic at each call site (asciiDraw(), asciiLabelRows(),
+	// asciiMessageWidth() all read the same padded block). An empty label
+	// stays empty — the decorator only pads a block that actually has
+	// content (width &gt; 0), so an unlabeled message reserves no extra space.
+	private AsciiBlock asciiLabel() {
+<span class="fc" id="L243">		return message.getLabel().marginLR(1, 1);</span>
+	}
+
+	// How many rows the label needs, at least 1: even an empty label keeps a
+	// blank row above the arrow, matching the vertical spacing a plain
+	// unlabeled message has always had. A multi-line Display
+	// simply pushes this past 1, which is what moves the arrow row and
+	// grows asciiDimension() below — no other change needed on either end.
+	private int asciiLabelRows() {
+<span class="fc" id="L252">		return Math.max(1, asciiLabel().asciiDimension().getHeight());</span>
+	}
+
+	// Total ASCII footprint of this tile: label rows + the arrow row itself
+	// + one blank trailing row (the historical fixed &quot;3 rows&quot;, generalized from a constant into
+	// asciiLabelRows() + 2). PlayingSpaceWithParticipants.asciiDraw() reads
+	// this back to know how far to advance its Y counter for this tile,
+	// instead of a hardcoded per-tile increment — the same &quot;read the size
+	// back off asciiDimension(), don't hardcode it at the call site&quot; rule as
+	// InfinitePlan.createNoteBox().
+	@Override
+	public ADimension2D asciiDimension() {
+<span class="fc" id="L264">		return new ADimension2D(asciiMessageWidth(), asciiLabelRows() + 2);</span>
+	}
+
+	// ASCII counterpart of addConstraints(): the two lifeline columns must be
+	// far enough apart to fit the message. Two parts, not one: the padded
+	// label's own width (asciiLabel(), margin included), plus a flat +2 —
+	// one &quot;runway&quot; column immediately next to each lifeline that must stay
+	// free of the label block entirely. Without that +2, the centered block
+	// lands flush with the lifeline columns themselves, so its own margin
+	// cell coincides with the pipe character and gets overwritten by it —
+	// the margin becomes invisible even though it's still being reserved and
+	// drawn (learned the hard way: removing this +2 as &quot;redundant with the
+	// margin&quot; silently cancelled the margin's visual effect, since both the
+	// centering and the reservation shrank by the same amount). The two are
+	// independent concerns: this +2 is pipe/lifeline clearance, the margin
+	// is text-from-block-edge spacing.
+	private int asciiMessageWidth() {
+<span class="fc" id="L281">		return asciiLabel().asciiDimension().getWidth() + 2;</span>
+	}
+
+	@Override
+	public void asciiAddConstraints() {
+<span class="fc" id="L286">		final int width = asciiMessageWidth();</span>
+<span class="fc" id="L287">		final Real point1 = livingSpace1.getAsciiPosC();</span>
+<span class="fc" id="L288">		final Real point2 = livingSpace2.getAsciiPosC();</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">		if (point1.getCurrentValue() &gt; point2.getCurrentValue())</span>
+<span class="fc" id="L290">			point1.ensureBiggerThan(point2.addFixed(width));</span>
+		else
+<span class="fc" id="L292">			point2.ensureBiggerThan(point1.addFixed(width));</span>
+<span class="fc" id="L293">	}</span>
+
+	// ASCII counterpart of getMinX()/getMaxX(): the two lifeline positions
+	// this message touches, as composable Real — not yet resolved to columns
+	// — exactly like the pixel getMinX()/getMaxX() compose Real via
+	// RealUtils.min/max below. This lets an enclosing GroupingTile fold a
+	// child's range into its own min/max *before* the ASCII RealLine compiles,
+	// the same way the pixel constructor composes min/max
+	// from each child's getMinX()/getMaxX() right after construction.
+	@Override
+	public Real getAsciiMinX() {
+<span class="fc" id="L304">		return RealUtils.min(livingSpace1.getAsciiLifeColumn(), livingSpace2.getAsciiLifeColumn());</span>
+	}
+
+	@Override
+	public Real getAsciiMaxX() {
+<span class="fc" id="L309">		return RealUtils.max(livingSpace1.getAsciiLifeColumn(), livingSpace2.getAsciiLifeColumn());</span>
+	}
 
 	public void drawU(UGraphic ug) {
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
-<span class="fc" id="L174">		final String anchor1 = message.getPart1Anchor();</span>
-<span class="fc" id="L175">		final String anchor2 = message.getPart2Anchor();</span>
-<span class="pc bpc" id="L176" title="2 of 4 branches missed.">		if (anchor1 != null || anchor2 != null)</span>
-<span class="nc" id="L177">			return;</span>
+		// Self-translate prologue: every tile draws itself at its own absolute gauge
+		// position (the caller applies no dy())
+<span class="fc" id="L315">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
+<span class="fc" id="L316">		final String anchor1 = message.getPart1Anchor();</span>
+<span class="fc" id="L317">		final String anchor2 = message.getPart2Anchor();</span>
+<span class="pc bpc" id="L318" title="2 of 4 branches missed.">		if (anchor1 != null || anchor2 != null)</span>
+<span class="nc" id="L319">			return;</span>
 
-<span class="fc" id="L179">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L180">		final ArrowComponent comp = getComponent(stringBounder);</span>
-<span class="fc" id="L181">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L182">		double x1 = getPoint1(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L183">		double x2 = getPoint2(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L184">		drawMulticast(ug.apply(UTranslate.dy(comp.getPosArrow(stringBounder))));</span>
+<span class="fc" id="L321">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L322">		final ArrowComponent comp = getComponent(stringBounder);</span>
+<span class="fc" id="L323">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L324">		double x1 = getPoint1(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L325">		double x2 = getPoint2(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L326">		drawMulticast(ug.apply(UTranslate.dy(comp.getPosArrow(stringBounder))));</span>
 
 		final Area area;
-<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (isReverse(stringBounder)) {</span>
-<span class="fc" id="L188">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc" id="L189">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">			if (level1 == 1)</span>
-<span class="fc" id="L191">				x1 -= LIVE_DELTA_SIZE;</span>
-<span class="fc bfc" id="L192" title="All 2 branches covered.">			else if (level1 &gt; 2)</span>
-<span class="fc" id="L193">				x1 += LIVE_DELTA_SIZE * (level1 - 2);</span>
+<span class="fc bfc" id="L329" title="All 2 branches covered.">		if (isReverse(stringBounder)) {</span>
+<span class="fc" id="L330">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L331">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">			if (level1 == 1)</span>
+<span class="fc" id="L333">				x1 -= LIVE_DELTA_SIZE;</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">			else if (level1 &gt; 2)</span>
+<span class="fc" id="L335">				x1 += LIVE_DELTA_SIZE * (level1 - 2);</span>
 
-<span class="fc" id="L195">			x2 += LIVE_DELTA_SIZE * level2;</span>
-<span class="fc" id="L196">			area = Area.create(x1 - x2, dim.getHeight());</span>
-<span class="fc" id="L197">			ug = ug.apply(UTranslate.dx(x2));</span>
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">			if (isCreate())</span>
-<span class="nc" id="L199">				livingSpace2.drawHead(ug, (Context2D) ug, VerticalAlignment.TOP, HorizontalAlignment.RIGHT);</span>
+<span class="fc" id="L337">			x2 += LIVE_DELTA_SIZE * level2;</span>
+<span class="fc" id="L338">			area = Area.create(x1 - x2, dim.getHeight());</span>
+<span class="fc" id="L339">			ug = ug.apply(UTranslate.dx(x2));</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">			if (isCreate())</span>
+<span class="nc" id="L341">				livingSpace2.drawHead(ug, (Context2D) ug, VerticalAlignment.TOP, HorizontalAlignment.RIGHT);</span>
 
-<span class="fc" id="L201">		} else {</span>
-<span class="fc" id="L202">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc" id="L203">			int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">			if (level2 &gt; 0)</span>
-<span class="fc" id="L205">				level2 = level2 - 2;</span>
+<span class="fc" id="L343">		} else {</span>
+<span class="fc" id="L344">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L345">			int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc bfc" id="L346" title="All 2 branches covered.">			if (level2 &gt; 0)</span>
+<span class="fc" id="L347">				level2 = level2 - 2;</span>
 
-<span class="fc" id="L207">			x1 += LIVE_DELTA_SIZE * level1;</span>
-<span class="fc" id="L208">			x2 += LIVE_DELTA_SIZE * level2;</span>
-<span class="fc" id="L209">			area = Area.create(x2 - x1, dim.getHeight());</span>
-<span class="fc" id="L210">			ug = ug.apply(UTranslate.dx(x1));</span>
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">			if (isCreate())</span>
-<span class="nc" id="L212">				livingSpace2.drawHead(ug.apply(UTranslate.dx(area.getDimensionToUse().getWidth())), (Context2D) ug,</span>
+<span class="fc" id="L349">			x1 += LIVE_DELTA_SIZE * level1;</span>
+<span class="fc" id="L350">			x2 += LIVE_DELTA_SIZE * level2;</span>
+<span class="fc" id="L351">			area = Area.create(x2 - x1, dim.getHeight());</span>
+<span class="fc" id="L352">			ug = ug.apply(UTranslate.dx(x1));</span>
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">			if (isCreate())</span>
+<span class="nc" id="L354">				livingSpace2.drawHead(ug.apply(UTranslate.dx(area.getDimensionToUse().getWidth())), (Context2D) ug,</span>
 						VerticalAlignment.TOP, HorizontalAlignment.LEFT);
 
 		}
-<span class="fc" id="L216">		comp.drawU(ug, area, (Context2D) ug);</span>
-<span class="fc" id="L217">	}</span>
+<span class="fc" id="L358">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L359">	}</span>
 
 	private void drawMulticast(final UGraphic ug) {
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">		if (message.getMulticast().size() == 0)</span>
-<span class="fc" id="L221">			return;</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">		if (message.getMulticast().size() == 0)</span>
+<span class="fc" id="L363">			return;</span>
 
-<span class="nc" id="L223">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L365">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="nc" id="L225">		final double x1 = getPoint1(stringBounder).getCurrentValue();</span>
-<span class="nc" id="L226">		double dy = 2;</span>
-<span class="nc bnc" id="L227" title="All 2 branches missed.">		for (Participant participant : message.getMulticast()) {</span>
-<span class="nc" id="L228">			final double x2 = livingSpaces.get(participant).getPosC(stringBounder).getCurrentValue();</span>
-<span class="nc bnc" id="L229" title="All 2 branches missed.">			final boolean reverse = x2 &lt; x1;</span>
-<span class="nc" id="L230">			final ArrowComponent comp = getComponentMulticast(stringBounder, reverse);</span>
-<span class="nc" id="L231">			final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="nc" id="L232">			final Area area = Area.create(Math.abs(x2 - x1), dim.getHeight());</span>
-<span class="nc" id="L233">			final UGraphic ug2 = ug.apply(UTranslate.dx(Math.min(x1, x2))).apply(UTranslate.dy(dy));</span>
-<span class="nc" id="L234">			dy += 2;</span>
-<span class="nc" id="L235">			comp.drawU(ug2, area, (Context2D) ug2);</span>
-<span class="nc" id="L236">		}</span>
+<span class="nc" id="L367">		final double x1 = getPoint1(stringBounder).getCurrentValue();</span>
+<span class="nc" id="L368">		double dy = 2;</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">		for (Participant participant : message.getMulticast()) {</span>
+<span class="nc" id="L370">			final double x2 = livingSpaces.get(participant).getPosC(stringBounder).getCurrentValue();</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">			final boolean reverse = x2 &lt; x1;</span>
+<span class="nc" id="L372">			final ArrowComponent comp = getComponentMulticast(stringBounder, reverse);</span>
+<span class="nc" id="L373">			final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="nc" id="L374">			final Area area = Area.create(Math.abs(x2 - x1), dim.getHeight());</span>
+<span class="nc" id="L375">			final UGraphic ug2 = ug.apply(UTranslate.dx(Math.min(x1, x2))).apply(UTranslate.dy(dy));</span>
+<span class="nc" id="L376">			dy += 2;</span>
+<span class="nc" id="L377">			comp.drawU(ug2, area, (Context2D) ug2);</span>
+<span class="nc" id="L378">		}</span>
 
-<span class="nc" id="L238">	}</span>
+<span class="nc" id="L380">	}</span>
 
 	public double getPreferredHeight() {
-<span class="fc" id="L241">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L242">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L243">		double height = dim.getHeight();</span>
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">		if (isCreate())</span>
-<span class="nc" id="L245">			height = Math.max(height, livingSpace2.getHeadPreferredDimension(getStringBounder()).getHeight());</span>
+<span class="fc" id="L383">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L384">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L385">		double height = dim.getHeight();</span>
+<span class="pc bpc" id="L386" title="1 of 2 branches missed.">		if (isCreate())</span>
+<span class="nc" id="L387">			height = Math.max(height, livingSpace2.getHeadPreferredDimension(getStringBounder()).getHeight());</span>
 
-<span class="fc" id="L247">		return height;</span>
+<span class="fc" id="L389">		return height;</span>
 	}
 
 	public void addConstraints() {
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">		if (sequenceMessageSpan())</span>
-<span class="nc" id="L252">			return;</span>
+<span class="pc bpc" id="L393" title="1 of 2 branches missed.">		if (sequenceMessageSpan())</span>
+<span class="nc" id="L394">			return;</span>
 
-<span class="fc" id="L254">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L255">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L256">		final double width = dim.getWidth();</span>
+<span class="fc" id="L396">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L397">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L398">		final double width = dim.getWidth();</span>
 
-<span class="fc" id="L258">		Real point1 = getPoint1(getStringBounder());</span>
-<span class="fc" id="L259">		Real point2 = getPoint2(getStringBounder());</span>
-<span class="fc bfc" id="L260" title="All 2 branches covered.">		if (isReverse(getStringBounder())) {</span>
-<span class="fc" id="L261">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc" id="L262">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc bfc" id="L263" title="All 2 branches covered.">			if (level1 &gt; 0)</span>
-<span class="fc" id="L264">				point1 = point1.addFixed(-LIVE_DELTA_SIZE);</span>
+<span class="fc" id="L400">		Real point1 = getPoint1(getStringBounder());</span>
+<span class="fc" id="L401">		Real point2 = getPoint2(getStringBounder());</span>
+<span class="fc bfc" id="L402" title="All 2 branches covered.">		if (isReverse(getStringBounder())) {</span>
+<span class="fc" id="L403">			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L404">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">			if (level1 &gt; 0)</span>
+<span class="fc" id="L406">				point1 = point1.addFixed(-LIVE_DELTA_SIZE);</span>
 
-<span class="fc" id="L266">			point2 = point2.addFixed(level2 * LIVE_DELTA_SIZE);</span>
-<span class="fc" id="L267">			point1.ensureBiggerThan(point2.addFixed(width));</span>
-<span class="fc" id="L268">		} else {</span>
-<span class="fc" id="L269">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc bfc" id="L270" title="All 2 branches covered.">			if (level2 &gt; 0)</span>
-<span class="fc" id="L271">				point2 = point2.addFixed(-LIVE_DELTA_SIZE);</span>
+<span class="fc" id="L408">			point2 = point2.addFixed(level2 * LIVE_DELTA_SIZE);</span>
+<span class="fc" id="L409">			point1.ensureBiggerThan(point2.addFixed(width));</span>
+<span class="fc" id="L410">		} else {</span>
+<span class="fc" id="L411">			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">			if (level2 &gt; 0)</span>
+<span class="fc" id="L413">				point2 = point2.addFixed(-LIVE_DELTA_SIZE);</span>
 
-<span class="fc" id="L273">			point2.ensureBiggerThan(point1.addFixed(width));</span>
+<span class="fc" id="L415">			point2.ensureBiggerThan(point1.addFixed(width));</span>
 		}
-<span class="fc" id="L275">	}</span>
+<span class="fc" id="L417">	}</span>
 
 	private Real getPoint1(final StringBounder stringBounder) {
-<span class="fc" id="L278">		return livingSpace1.getPosC(stringBounder);</span>
+<span class="fc" id="L420">		return livingSpace1.getPosC(stringBounder);</span>
 	}
 
 	private Real getPoint2(final StringBounder stringBounder) {
-<span class="pc bpc" id="L282" title="1 of 2 branches missed.">		if (message.isCreate()) {</span>
-<span class="nc bnc" id="L283" title="All 2 branches missed.">			if (isReverse(stringBounder))</span>
-<span class="nc" id="L284">				return livingSpace2.getPosD(stringBounder);</span>
+<span class="pc bpc" id="L424" title="1 of 2 branches missed.">		if (message.isCreate()) {</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">			if (isReverse(stringBounder))</span>
+<span class="nc" id="L426">				return livingSpace2.getPosD(stringBounder);</span>
 
-<span class="nc" id="L286">			return livingSpace2.getPosB(stringBounder);</span>
+<span class="nc" id="L428">			return livingSpace2.getPosB(stringBounder);</span>
 		}
-<span class="fc" id="L288">		return livingSpace2.getPosC(stringBounder);</span>
+<span class="fc" id="L430">		return livingSpace2.getPosC(stringBounder);</span>
 	}
 
 	public Real getMinX() {
-<span class="fc" id="L292">		final StringBounder stringBounder = getStringBounder();</span>
-<span class="fc bfc" id="L293" title="All 2 branches covered.">		if (isReverse(stringBounder))</span>
-<span class="fc" id="L294">			return getPoint2(stringBounder);</span>
+<span class="fc" id="L434">		final StringBounder stringBounder = getStringBounder();</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">		if (isReverse(stringBounder))</span>
+<span class="fc" id="L436">			return getPoint2(stringBounder);</span>
 
-<span class="fc" id="L296">		return getPoint1(stringBounder);</span>
+<span class="fc" id="L438">		return getPoint1(stringBounder);</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L300">		final StringBounder stringBounder = getStringBounder();</span>
-<span class="fc" id="L301">		final double width = getComponent(stringBounder).getPreferredDimension(stringBounder).getWidth();</span>
-<span class="fc bfc" id="L302" title="All 2 branches covered.">		final Real leftPoint = isReverse(stringBounder) ? getPoint2(stringBounder) : getPoint1(stringBounder);</span>
-<span class="fc bfc" id="L303" title="All 2 branches covered.">		final Real rightPoint = isReverse(stringBounder) ? getPoint1(stringBounder) : getPoint2(stringBounder);</span>
+<span class="fc" id="L442">		final StringBounder stringBounder = getStringBounder();</span>
+<span class="fc" id="L443">		final double width = getComponent(stringBounder).getPreferredDimension(stringBounder).getWidth();</span>
+<span class="fc bfc" id="L444" title="All 2 branches covered.">		final Real leftPoint = isReverse(stringBounder) ? getPoint2(stringBounder) : getPoint1(stringBounder);</span>
+<span class="fc bfc" id="L445" title="All 2 branches covered.">		final Real rightPoint = isReverse(stringBounder) ? getPoint1(stringBounder) : getPoint2(stringBounder);</span>
 
-<span class="fc" id="L305">		return RealUtils.max(rightPoint, leftPoint.addFixed(width));</span>
+<span class="fc" id="L447">		return RealUtils.max(rightPoint, leftPoint.addFixed(width));</span>
 	}
 
 }

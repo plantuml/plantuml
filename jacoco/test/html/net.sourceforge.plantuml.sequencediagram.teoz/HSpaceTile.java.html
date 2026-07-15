@@ -54,30 +54,35 @@ public class HSpaceTile extends AbstractTile implements Tile {
 <span class="nc" id="L54">		super(tileArguments.getStringBounder(), currentY);</span>
 <span class="nc" id="L55">		this.hspace = hspace;</span>
 <span class="nc" id="L56">		this.xorigin = tileArguments.getXOrigin();</span>
-<span class="nc" id="L57">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="nc" id="L58">	}</span>
+		// A `|||` is a pure vertical spacer: it draws nothing and has no arrow, so
+		// it owns no contact line of its own and createWithContact/createParallel
+		// would be meaningless here. But it must still PROPAGATE the contact line
+		// (like LifeEventTile does), so that an hspace sitting between two parallel
+		// (&amp;) messages does not break their contact sharing.
+<span class="nc" id="L62">		this.yGauge = YGauge.createPropagating(currentY, getPreferredHeight());</span>
+<span class="nc" id="L63">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
-<span class="nc" id="L62">		return yGauge;</span>
+<span class="nc" id="L67">		return yGauge;</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="nc" id="L66">	}</span>
+<span class="nc" id="L71">	}</span>
 
 	public double getPreferredHeight() {
-<span class="nc" id="L69">		return hspace.getPixel();</span>
+<span class="nc" id="L74">		return hspace.getPixel();</span>
 	}
 
 	public void addConstraints() {
-<span class="nc" id="L73">	}</span>
+<span class="nc" id="L78">	}</span>
 
 	public Real getMinX() {
-<span class="nc" id="L76">		return xorigin;</span>
+<span class="nc" id="L81">		return xorigin;</span>
 	}
 
 	public Real getMaxX() {
-<span class="nc" id="L80">		return xorigin.addFixed(10);</span>
+<span class="nc" id="L85">		return xorigin.addFixed(10);</span>
 	}
 
 }

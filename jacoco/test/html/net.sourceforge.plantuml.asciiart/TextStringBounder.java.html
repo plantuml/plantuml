@@ -50,15 +50,15 @@ public class TextStringBounder implements StringBounder {
 
 	@Override
 	public FileFormat getFileFormat() {
-<span class="nc" id="L53">		return fileFormat;</span>
+<span class="fc" id="L53">		return fileFormat;</span>
 	}
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
-<span class="nc" id="L58">		final int length1 = text.codePointCount(0, text.length());</span>
-<span class="nc" id="L59">		final int length2 = text.length();</span>
-<span class="nc" id="L60">		final int length3 = Wcwidth.length(text);</span>
-<span class="nc" id="L61">		return new XDimension2D(length2, 1);</span>
+<span class="fc" id="L58">		final int length1 = text.codePointCount(0, text.length());</span>
+<span class="fc" id="L59">		final int length2 = text.length();</span>
+<span class="fc" id="L60">		final int length3 = Wcwidth.length(text);</span>
+<span class="fc" id="L61">		return new XDimension2D(length2, 1);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

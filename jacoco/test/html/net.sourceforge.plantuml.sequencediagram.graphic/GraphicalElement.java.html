@@ -43,22 +43,22 @@ abstract class GraphicalElement {
 
 	private double startingY;
 
-<span class="fc" id="L46">	GraphicalElement(double startingY) {</span>
-<span class="fc" id="L47">		this.startingY = startingY;</span>
-<span class="fc" id="L48">	}</span>
+<span class="nc" id="L46">	GraphicalElement(double startingY) {</span>
+<span class="nc" id="L47">		this.startingY = startingY;</span>
+<span class="nc" id="L48">	}</span>
 
 	void pushToDown(double delta) {
 <span class="nc" id="L51">		startingY += delta;</span>
 <span class="nc" id="L52">	}</span>
 
 	protected final double getStartingY() {
-<span class="fc" id="L55">		return startingY;</span>
+<span class="nc" id="L55">		return startingY;</span>
 	}
 
 	public final void drawU(UGraphic ug, double maxX, Context2D context) {
 		// bugnewway
-<span class="fc" id="L60">		drawInternalU(ug, maxX, context);</span>
-<span class="fc" id="L61">	}</span>
+<span class="nc" id="L60">		drawInternalU(ug, maxX, context);</span>
+<span class="nc" id="L61">	}</span>
 
 	protected abstract void drawInternalU(UGraphic ug, double maxX, Context2D context);
 

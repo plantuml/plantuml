@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="fc" id="L62">public class LifeLine {</span>
+<span class="nc" id="L62">public class LifeLine {</span>
 
 	static class Variation {
 		final private LifeSegmentVariation type;
@@ -83,18 +83,18 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	private final Pushable participant;
 	private final double nominalPreferredWidth;
 
-<span class="fc" id="L86">	private final List&lt;Variation&gt; events = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L87">	private final Stairs stairs = new Stairs();</span>
-<span class="fc" id="L88">	private int maxLevel = 0;</span>
+<span class="nc" id="L86">	private final List&lt;Variation&gt; events = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L87">	private final Stairs stairs = new Stairs();</span>
+<span class="nc" id="L88">	private int maxLevel = 0;</span>
 	private final boolean shadowing;
 	private final Display participantDisplay;
 
-<span class="fc" id="L92">	public LifeLine(Pushable participant, double nominalPreferredWidth, boolean shadowing, Display participantDisplay) {</span>
-<span class="fc" id="L93">		this.participant = participant;</span>
-<span class="fc" id="L94">		this.nominalPreferredWidth = nominalPreferredWidth;</span>
-<span class="fc" id="L95">		this.shadowing = shadowing;</span>
-<span class="fc" id="L96">		this.participantDisplay = participantDisplay;</span>
-<span class="fc" id="L97">	}</span>
+<span class="nc" id="L92">	public LifeLine(Pushable participant, double nominalPreferredWidth, boolean shadowing, Display participantDisplay) {</span>
+<span class="nc" id="L93">		this.participant = participant;</span>
+<span class="nc" id="L94">		this.nominalPreferredWidth = nominalPreferredWidth;</span>
+<span class="nc" id="L95">		this.shadowing = shadowing;</span>
+<span class="nc" id="L96">		this.participantDisplay = participantDisplay;</span>
+<span class="nc" id="L97">	}</span>
 
 	public void addSegmentVariation(LifeSegmentVariation type, double y, Fashion colors, StyleBuilder styleBuilder) {
 <span class="nc bnc" id="L100" title="All 2 branches missed.">		if (events.size() &gt; 0) {</span>
@@ -118,25 +118,25 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L118">	}</span>
 
 	public void finish(double y) {
-<span class="fc" id="L121">		final int missingClose = getMissingClose();</span>
-<span class="pc bpc" id="L122" title="1 of 2 branches missed.">		for (int i = 0; i &lt; missingClose; i++)</span>
+<span class="nc" id="L121">		final int missingClose = getMissingClose();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		for (int i = 0; i &lt; missingClose; i++)</span>
 <span class="nc" id="L123">			addSegmentVariation(LifeSegmentVariation.SMALLER, y, null, null);</span>
 
-<span class="fc" id="L125">	}</span>
+<span class="nc" id="L125">	}</span>
 
 	int getMissingClose() {
-<span class="fc" id="L128">		int level = 0;</span>
-<span class="pc bpc" id="L129" title="1 of 2 branches missed.">		for (Variation ev : events)</span>
+<span class="nc" id="L128">		int level = 0;</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		for (Variation ev : events)</span>
 <span class="nc bnc" id="L130" title="All 2 branches missed.">			if (ev.type == LifeSegmentVariation.LARGER)</span>
 <span class="nc" id="L131">				level++;</span>
 			else
 <span class="nc" id="L133">				level--;</span>
 
-<span class="fc" id="L135">		return level;</span>
+<span class="nc" id="L135">		return level;</span>
 	}
 
 	int getLevel(double y) {
-<span class="fc" id="L139">		return stairs.getValue(y);</span>
+<span class="nc" id="L139">		return stairs.getValue(y);</span>
 	}
 
 	public int getMaxLevel() {
@@ -144,11 +144,11 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public double getRightShift(double y) {
-<span class="fc" id="L147">		return getRightShiftAtLevel(getLevel(y));</span>
+<span class="nc" id="L147">		return getRightShiftAtLevel(getLevel(y));</span>
 	}
 
 	public double getLeftShift(double y) {
-<span class="fc" id="L151">		return getLeftShiftAtLevel(getLevel(y));</span>
+<span class="nc" id="L151">		return getLeftShiftAtLevel(getLevel(y));</span>
 	}
 
 	public double getMaxRightShift() {
@@ -160,22 +160,22 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	private double getRightShiftAtLevel(int level) {
-<span class="pc bpc" id="L163" title="1 of 2 branches missed.">		if (level == 0) {</span>
-<span class="fc" id="L164">			return 0;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (level == 0) {</span>
+<span class="nc" id="L164">			return 0;</span>
 		}
 <span class="nc" id="L166">		return level * (nominalPreferredWidth / 2.0);</span>
 	}
 
 	private double getLeftShiftAtLevel(int level) {
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (level == 0)</span>
-<span class="fc" id="L171">			return 0;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (level == 0)</span>
+<span class="nc" id="L171">			return 0;</span>
 
 <span class="nc" id="L173">		return nominalPreferredWidth / 2.0;</span>
 	}
 
 	private double getStartingX(StringBounder stringBounder) {
-<span class="fc" id="L177">		final double delta = participant.getCenterX(stringBounder) - nominalPreferredWidth / 2.0;</span>
-<span class="fc" id="L178">		return delta;</span>
+<span class="nc" id="L177">		final double delta = participant.getCenterX(stringBounder) - nominalPreferredWidth / 2.0;</span>
+<span class="nc" id="L178">		return delta;</span>
 	}
 
 	private SegmentColored getSegment(int i) {
@@ -207,12 +207,12 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public void drawU(UGraphic ug, Rose skin, ISkinParam skinParam) {
-<span class="fc" id="L210">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L210">		final StringBounder stringBounder = ug.getStringBounder();</span>
 
-<span class="fc" id="L212">		ug = ug.apply(UTranslate.dx(getStartingX(stringBounder)));</span>
+<span class="nc" id="L212">		ug = ug.apply(UTranslate.dx(getStartingX(stringBounder)));</span>
 
-<span class="fc" id="L214">		int eventLevel = 0;</span>
-<span class="pc bpc" id="L215" title="1 of 2 branches missed.">		for (int i = 0; i &lt; events.size(); i++) {</span>
+<span class="nc" id="L214">		int eventLevel = 0;</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		for (int i = 0; i &lt; events.size(); i++) {</span>
 <span class="nc" id="L216">			ComponentType type = ComponentType.ACTIVATION_BOX_CLOSE_OPEN;</span>
 <span class="nc" id="L217">			Collection&lt;SegmentColored&gt; segmentsCutted = getSegmentsCutted(stringBounder, i);</span>
 <span class="nc bnc" id="L218" title="All 2 branches missed.">			if (events.get(i).type == LifeSegmentVariation.LARGER)</span>
@@ -251,9 +251,9 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L251">				seg.drawU(ug, compAliveBox, currentLevel);</span>
 <span class="nc" id="L252">			}</span>
 		}
-<span class="fc" id="L254">	}</span>
+<span class="nc" id="L254">	}</span>
 
-<span class="fc" id="L256">	private double create = 0;</span>
+<span class="nc" id="L256">	private double create = 0;</span>
 
 	// private double destroy = 0;
 
@@ -262,11 +262,11 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 <span class="nc" id="L262">	}</span>
 
 	public final double getCreate() {
-<span class="fc" id="L265">		return create;</span>
+<span class="nc" id="L265">		return create;</span>
 	}
 
 	public final double getDestroy() {
-<span class="fc" id="L269">		return 0;</span>
+<span class="nc" id="L269">		return 0;</span>
 	}
 
 	// public final void setDestroy(double destroy) {
@@ -274,12 +274,12 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	// }
 
 	public final boolean shadowing() {
-<span class="fc" id="L277">		return shadowing;</span>
+<span class="nc" id="L277">		return shadowing;</span>
 	}
 
 	public Fashion getColors() {
-<span class="pc bpc" id="L281" title="1 of 2 branches missed.">		if (events.size() == 0)</span>
-<span class="fc" id="L282">			return null;</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">		if (events.size() == 0)</span>
+<span class="nc" id="L282">			return null;</span>
 
 <span class="nc" id="L284">		return events.get(events.size() - 1).colors;</span>
 	}

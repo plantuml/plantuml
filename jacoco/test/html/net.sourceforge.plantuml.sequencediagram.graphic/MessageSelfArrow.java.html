@@ -63,42 +63,42 @@ class MessageSelfArrow extends Arrow {
 	public MessageSelfArrow(AtomicInteger counter, Pragma pragma, double startingY, Rose skin, ArrowComponent arrow,
 			LivingParticipantBox p1, double deltaY, Url url, double deltaX, boolean isReverse, int currentLevel,
 			double halfLifeWidth, LineLocation location) {
-<span class="fc" id="L66">		super(counter, pragma, startingY, skin, arrow, url, location);</span>
-<span class="fc" id="L67">		this.p1 = p1;</span>
-<span class="fc" id="L68">		this.deltaY = deltaY;</span>
-<span class="fc" id="L69">		this.deltaX = deltaX;</span>
-<span class="fc" id="L70">		this.isReverse = isReverse;</span>
-<span class="fc" id="L71">		this.currentLevel = currentLevel;</span>
-<span class="fc" id="L72">		this.halfLifeWidth = halfLifeWidth;</span>
-<span class="fc" id="L73">	}</span>
+<span class="nc" id="L66">		super(counter, pragma, startingY, skin, arrow, url, location);</span>
+<span class="nc" id="L67">		this.p1 = p1;</span>
+<span class="nc" id="L68">		this.deltaY = deltaY;</span>
+<span class="nc" id="L69">		this.deltaX = deltaX;</span>
+<span class="nc" id="L70">		this.isReverse = isReverse;</span>
+<span class="nc" id="L71">		this.currentLevel = currentLevel;</span>
+<span class="nc" id="L72">		this.halfLifeWidth = halfLifeWidth;</span>
+<span class="nc" id="L73">	}</span>
 
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
-<span class="fc" id="L77">		return getArrowComponent().getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L77">		return getArrowComponent().getPreferredHeight(stringBounder);</span>
 	}
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-<span class="fc" id="L82">		double length = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()</span>
-<span class="fc" id="L83">				.getLength();</span>
-<span class="fc" id="L84">		return getArrowComponent().getPreferredWidth(stringBounder) + length;</span>
+<span class="nc" id="L82">		double length = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()</span>
+<span class="nc" id="L83">				.getLength();</span>
+<span class="nc" id="L84">		return getArrowComponent().getPreferredWidth(stringBounder) + length;</span>
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
-<span class="fc" id="L89">		startGroup(ug);</span>
-<span class="fc" id="L90">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L91">		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY() + deltaY));</span>
-<span class="fc" id="L92">		final Area area = new Area(</span>
-<span class="fc" id="L93">				new XDimension2D(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder)));</span>
-<span class="fc" id="L94">		area.setDeltaX1(deltaY);</span>
-<span class="fc" id="L95">		area.setLevel(currentLevel);</span>
-<span class="fc" id="L96">		area.setLiveDeltaSize(halfLifeWidth);</span>
-<span class="fc" id="L97">		startUrl(ug);</span>
-<span class="fc" id="L98">		getArrowComponent().drawU(ug, area, context);</span>
-<span class="fc" id="L99">		endUrl(ug);</span>
-<span class="fc" id="L100">		endGroup(ug);</span>
-<span class="fc" id="L101">	}</span>
+<span class="nc" id="L89">		startGroup(ug);</span>
+<span class="nc" id="L90">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L91">		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY() + deltaY));</span>
+<span class="nc" id="L92">		final Area area = new Area(</span>
+<span class="nc" id="L93">				new XDimension2D(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder)));</span>
+<span class="nc" id="L94">		area.setDeltaX1(deltaY);</span>
+<span class="nc" id="L95">		area.setLevel(currentLevel);</span>
+<span class="nc" id="L96">		area.setLiveDeltaSize(halfLifeWidth);</span>
+<span class="nc" id="L97">		startUrl(ug);</span>
+<span class="nc" id="L98">		getArrowComponent().drawU(ug, area, context);</span>
+<span class="nc" id="L99">		endUrl(ug);</span>
+<span class="nc" id="L100">		endGroup(ug);</span>
+<span class="nc" id="L101">	}</span>
 
 	@Override
 	public double getStartingX(StringBounder stringBounder) {
@@ -108,13 +108,13 @@ class MessageSelfArrow extends Arrow {
 		// .getPos2();
 		// return pos1;
 		// }
-<span class="fc" id="L111">		final double pos2 = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()</span>
-<span class="fc" id="L112">				.getPos2();</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">		if (isReverse) {</span>
+<span class="nc" id="L111">		final double pos2 = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()</span>
+<span class="nc" id="L112">				.getPos2();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (isReverse) {</span>
 
 <span class="nc" id="L115">			return pos2 - getPreferredWidth(stringBounder);</span>
 		} else
-<span class="fc" id="L117">			return pos2 + deltaX;</span>
+<span class="nc" id="L117">			return pos2 + deltaX;</span>
 	}
 
 	@Override
@@ -124,22 +124,22 @@ class MessageSelfArrow extends Arrow {
 
 	@Override
 	public double getArrowYStartLevel(StringBounder stringBounder) {
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">		if (getArrowComponent() instanceof ArrowComponent) {</span>
-<span class="fc" id="L128">			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();</span>
-<span class="fc" id="L129">			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),</span>
-<span class="fc" id="L130">					arrowComponent.getPreferredHeight(stringBounder));</span>
-<span class="fc" id="L131">			return getStartingY() + arrowComponent.getStartPoint(stringBounder, dim).getY();</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		if (getArrowComponent() instanceof ArrowComponent) {</span>
+<span class="nc" id="L128">			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();</span>
+<span class="nc" id="L129">			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),</span>
+<span class="nc" id="L130">					arrowComponent.getPreferredHeight(stringBounder));</span>
+<span class="nc" id="L131">			return getStartingY() + arrowComponent.getStartPoint(stringBounder, dim).getY();</span>
 		}
 <span class="nc" id="L133">		return getStartingY();</span>
 	}
 
 	@Override
 	public double getArrowYEndLevel(StringBounder stringBounder) {
-<span class="pc bpc" id="L138" title="1 of 2 branches missed.">		if (getArrowComponent() instanceof ArrowComponent) {</span>
-<span class="fc" id="L139">			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();</span>
-<span class="fc" id="L140">			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),</span>
-<span class="fc" id="L141">					arrowComponent.getPreferredHeight(stringBounder));</span>
-<span class="fc" id="L142">			return getStartingY() + arrowComponent.getEndPoint(stringBounder, dim).getY();</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">		if (getArrowComponent() instanceof ArrowComponent) {</span>
+<span class="nc" id="L139">			final ArrowComponent arrowComponent = (ArrowComponent) getArrowComponent();</span>
+<span class="nc" id="L140">			final XDimension2D dim = new XDimension2D(arrowComponent.getPreferredWidth(stringBounder),</span>
+<span class="nc" id="L141">					arrowComponent.getPreferredHeight(stringBounder));</span>
+<span class="nc" id="L142">			return getStartingY() + arrowComponent.getEndPoint(stringBounder, dim).getY();</span>
 		}
 <span class="nc" id="L144">		return getStartingY() + getArrowComponent().getPreferredHeight(stringBounder);</span>
 	}
@@ -163,17 +163,17 @@ class MessageSelfArrow extends Arrow {
 
 	@Override
 	protected Participant getParticipant1() {
-<span class="fc" id="L166">		return p1.getParticipant();</span>
+<span class="nc" id="L166">		return p1.getParticipant();</span>
 	}
 
 	@Override
 	protected Participant getParticipant2() {
-<span class="fc" id="L171">		return p1.getParticipant();</span>
+<span class="nc" id="L171">		return p1.getParticipant();</span>
 	}
 
 	@Override
 	public double getActualWidth(StringBounder stringBounder) {
-<span class="fc" id="L176">		return getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L176">		return getPreferredWidth(stringBounder);</span>
 	}
 
 	public boolean isReverse() {

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ANote.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.asciiverse</a> &gt; <span class="el_source">ANote.java</span></div><h1>ANote.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.asciiverse;
+
+// The folded-corner (&quot;dog-ear&quot;) note box, as an AsciiBlock: created by
+// InfinitePlan.createNoteBox() and drawn later via asciiDraw(plan), against
+// whatever InfinitePlan the caller has positioned at the box's top-left
+// corner. Idea copied, not code, from the legacy
+// asciiart.UmlCharAreaImpl.drawNoteSimple()/drawNoteSimpleUnicode() (that
+// package is slated for removal): ASCII cuts a &quot;!.&quot;/&quot;|_\&quot;
+// dog-ear into the top-right corner instead of a plain corner character;
+// Unicode draws a double-line box (deliberately different from the
+// single-line participant box) plus a shaded block simulating the fold.
+public final class ANote implements AsciiBlock {
+
+	private final int width;
+	private final int height;
+	private final AsciiBlock text;
+
+	// Size is derived from the content alone, once, at construction time —
+	// never passed in and never recomputed elsewhere (the exact bug we hit
+	// once already: a caller-side copy of this formula that forgot the `+2`).
+	// `width = max(5, textWidth + 2)`, `height =
+	// max(3, textHeight + 2)`: the `+2` on each axis is the border, the floors
+	// are what the ASCII dog-ear (5-column minimum) and the 3-row border (top
+	// + content + bottom) need. Notably this doesn't need to know
+	// ASCII-vs-Unicode at all: both variants share the same width/height,
+	// only the border *characters* differ (asciiDrawAscii()/asciiDrawUnicode()
+	// below) — which is also why isUnicode isn't a constructor argument
+	// either (see asciiDraw() below).
+<span class="fc" id="L64">	public ANote(AsciiBlock text) {</span>
+<span class="fc" id="L65">		this.text = text;</span>
+<span class="fc" id="L66">		final ADimension2D textDim = text.asciiDimension();</span>
+<span class="fc" id="L67">		this.width = Math.max(5, textDim.getWidth() + 2);</span>
+<span class="fc" id="L68">		this.height = Math.max(3, textDim.getHeight() + 2);</span>
+<span class="fc" id="L69">	}</span>
+
+	@Override
+	public ADimension2D asciiDimension() {
+<span class="fc" id="L73">		return new ADimension2D(width, height);</span>
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+		// isUnicode isn't stored on the object: like every other draw decision
+		// (column, row), it's read off whatever `plan` this block is
+		// asked to draw against, rather than fixed at construction. A caller
+		// that only needs the box's size (e.g. CommunicationTileNoteRight/Left's
+		// asciiDimension()) can build an ANote with nothing but the
+		// text and never touch a plan at all.
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		if (plan.isUnicode())</span>
+<span class="fc" id="L85">			asciiDrawUnicode(plan);</span>
+		else
+<span class="fc" id="L87">			asciiDrawAscii(plan);</span>
+
+		// The text sits one column/row inside the border on every side (top
+		// border row + left border column), exactly where the old
+		// caller-side `plan.move(left + 1, 1).drawString(noteText)` used to
+		// place it — now delegated to `text` itself, which may draw several
+		// rows (see Display.asciiDraw()) instead of a single flattened line.
+<span class="fc" id="L94">		text.asciiDraw(plan.move(1, 1));</span>
+<span class="fc" id="L95">	}</span>
+
+	private void asciiDrawAscii(InfinitePlan plan) {
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		if (width &gt; 2)</span>
+<span class="fc" id="L99">			plan.drawHLine(1, width - 2, 0);</span>
+<span class="pc bpc" id="L100" title="2 of 4 branches missed.">		if (height &gt; 2 &amp;&amp; width &gt; 2)</span>
+<span class="fc" id="L101">			plan.drawHLine(1, width - 2, height - 1);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (height &gt; 2)</span>
+<span class="fc" id="L103">			plan.fillVLine('|', 1, height - 2, 0);</span>
+<span class="pc bpc" id="L104" title="2 of 4 branches missed.">		if (height &gt; 2 &amp;&amp; width &gt; 1)</span>
+<span class="fc" id="L105">			plan.fillVLine('|', 1, height - 2, width - 1);</span>
+
+<span class="fc" id="L107">		plan.drawChar(',');</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (height &gt; 1)</span>
+<span class="fc" id="L109">			plan.move(0, height - 1).drawChar('`');</span>
+<span class="pc bpc" id="L110" title="2 of 4 branches missed.">		if (height &gt; 1 &amp;&amp; width &gt; 1)</span>
+<span class="fc" id="L111">			plan.move(width - 1, height - 1).drawChar('\'');</span>
+
+		// The dog-ear cut, overwriting the top-right corner: needs at least 4
+		// columns (left corner + 2-char fold + at least one border column).
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">		if (width &gt;= 4) {</span>
+<span class="fc" id="L116">			plan.move(width - 3, 0).drawString(&quot;!.&quot;);</span>
+<span class="fc" id="L117">			plan.move(width - 1, 0).drawChar(' ');</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (height &gt; 1)</span>
+<span class="fc" id="L119">				plan.move(width - 3, 1).drawString(&quot;|_\\&quot;);</span>
+		}
+<span class="fc" id="L121">	}</span>
+
+	private void asciiDrawUnicode(InfinitePlan plan) {
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (width &gt; 2)</span>
+<span class="fc" id="L125">			plan.fillHLine('═', 1, width - 2, 0);</span>
+<span class="pc bpc" id="L126" title="2 of 4 branches missed.">		if (height &gt; 2 &amp;&amp; width &gt; 2)</span>
+<span class="fc" id="L127">			plan.fillHLine('═', 1, width - 2, height - 1);</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">		if (height &gt; 2)</span>
+<span class="fc" id="L129">			plan.fillVLine('║', 1, height - 2, 0);</span>
+<span class="pc bpc" id="L130" title="2 of 4 branches missed.">		if (height &gt; 2 &amp;&amp; width &gt; 1)</span>
+<span class="fc" id="L131">			plan.fillVLine('║', 1, height - 2, width - 1);</span>
+
+<span class="fc" id="L133">		plan.drawChar('╔');</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if (width &gt; 1)</span>
+<span class="fc" id="L135">			plan.move(width - 1, 0).drawChar('╗');</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">		if (height &gt; 1)</span>
+<span class="fc" id="L137">			plan.move(0, height - 1).drawChar('╚');</span>
+<span class="pc bpc" id="L138" title="2 of 4 branches missed.">		if (height &gt; 1 &amp;&amp; width &gt; 1)</span>
+<span class="fc" id="L139">			plan.move(width - 1, height - 1).drawChar('╝');</span>
+
+		// Shaded block simulating the folded corner, one row below the top
+		// border, one column left of the right border.
+<span class="pc bpc" id="L143" title="2 of 4 branches missed.">		if (width &gt;= 2 &amp;&amp; height &gt;= 2)</span>
+<span class="fc" id="L144">			plan.move(width - 2, 1).drawChar('░');</span>
+<span class="fc" id="L145">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

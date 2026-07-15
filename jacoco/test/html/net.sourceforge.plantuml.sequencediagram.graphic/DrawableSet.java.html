@@ -74,13 +74,13 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.teavm.TeaVM;
 import net.sourceforge.plantuml.url.Url;
 
-<span class="fc" id="L77">public class DrawableSet {</span>
+<span class="nc" id="L77">public class DrawableSet {</span>
 
-<span class="fc" id="L79">	private final Map&lt;Participant, LivingParticipantBox&gt; participants = new LinkedHashMap&lt;Participant, LivingParticipantBox&gt;();</span>
-<span class="fc" id="L80">	private final Map&lt;Event, GraphicalElement&gt; events = new HashMap&lt;Event, GraphicalElement&gt;();</span>
-<span class="fc" id="L81">	private final Map&lt;Participant, ParticipantEnglober&gt; participantEnglobers2 = new LinkedHashMap&lt;Participant, ParticipantEnglober&gt;();</span>
+<span class="nc" id="L79">	private final Map&lt;Participant, LivingParticipantBox&gt; participants = new LinkedHashMap&lt;Participant, LivingParticipantBox&gt;();</span>
+<span class="nc" id="L80">	private final Map&lt;Event, GraphicalElement&gt; events = new HashMap&lt;Event, GraphicalElement&gt;();</span>
+<span class="nc" id="L81">	private final Map&lt;Participant, ParticipantEnglober&gt; participantEnglobers2 = new LinkedHashMap&lt;Participant, ParticipantEnglober&gt;();</span>
 
-<span class="fc" id="L83">	private final List&lt;Event&gt; eventsList = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L83">	private final List&lt;Event&gt; eventsList = new ArrayList&lt;&gt;();</span>
 	private final Rose skin;
 	private final ISkinParam skinParam;
 	private XDimension2D dimension;
@@ -88,37 +88,37 @@ import net.sourceforge.plantuml.url.Url;
 	private final AtomicInteger counter;
 
 	public AtomicInteger getCounter() {
-<span class="fc" id="L91">		return counter;</span>
+<span class="nc" id="L91">		return counter;</span>
 	}
 
-<span class="fc" id="L94">	DrawableSet(Rose skin, ISkinParam skinParam, AtomicInteger counter) {</span>
-<span class="fc" id="L95">		this.skin = Objects.requireNonNull(skin);</span>
-<span class="fc" id="L96">		this.skinParam = Objects.requireNonNull(skinParam);</span>
-<span class="fc" id="L97">		this.counter = counter;</span>
-<span class="fc" id="L98">	}</span>
+<span class="nc" id="L94">	DrawableSet(Rose skin, ISkinParam skinParam, AtomicInteger counter) {</span>
+<span class="nc" id="L95">		this.skin = Objects.requireNonNull(skin);</span>
+<span class="nc" id="L96">		this.skinParam = Objects.requireNonNull(skinParam);</span>
+<span class="nc" id="L97">		this.counter = counter;</span>
+<span class="nc" id="L98">	}</span>
 
 	public ParticipantBox getVeryfirst() {
-<span class="fc" id="L101">		return participants.values().iterator().next().getParticipantBox();</span>
+<span class="nc" id="L101">		return participants.values().iterator().next().getParticipantBox();</span>
 	}
 
 	public final Rose getSkin() {
-<span class="fc" id="L105">		return skin;</span>
+<span class="nc" id="L105">		return skin;</span>
 	}
 
 	public final ISkinParam getSkinParam() {
-<span class="fc" id="L109">		return skinParam;</span>
+<span class="nc" id="L109">		return skinParam;</span>
 	}
 
 	public Collection&lt;Event&gt; getAllEvents() {
-<span class="fc" id="L113">		return Collections.unmodifiableCollection(eventsList);</span>
+<span class="nc" id="L113">		return Collections.unmodifiableCollection(eventsList);</span>
 	}
 
 	public Set&lt;Participant&gt; getAllParticipants() {
-<span class="fc" id="L117">		return Collections.unmodifiableSet(participants.keySet());</span>
+<span class="nc" id="L117">		return Collections.unmodifiableSet(participants.keySet());</span>
 	}
 
 	public Collection&lt;LivingParticipantBox&gt; getAllLivingParticipantBox() {
-<span class="fc" id="L121">		return Collections.unmodifiableCollection(participants.values());</span>
+<span class="nc" id="L121">		return Collections.unmodifiableCollection(participants.values());</span>
 	}
 
 //	public Collection&lt;GraphicalElement&gt; getAllGraphicalElements() {
@@ -130,20 +130,20 @@ import net.sourceforge.plantuml.url.Url;
 //	}
 
 	public Collection&lt;GraphicalElement&gt; getAllGraphicalElements() {
-<span class="fc" id="L133">		return new AbstractCollection&lt;GraphicalElement&gt;() {</span>
+<span class="nc" id="L133">		return new AbstractCollection&lt;GraphicalElement&gt;() {</span>
 			@Override
 			public Iterator&lt;GraphicalElement&gt; iterator() {
-<span class="fc" id="L136">				return new Iterator&lt;GraphicalElement&gt;() {</span>
-<span class="fc" id="L137">					private final Iterator&lt;Event&gt; eventIterator = eventsList.iterator();</span>
+<span class="nc" id="L136">				return new Iterator&lt;GraphicalElement&gt;() {</span>
+<span class="nc" id="L137">					private final Iterator&lt;Event&gt; eventIterator = eventsList.iterator();</span>
 
 					@Override
 					public boolean hasNext() {
-<span class="fc" id="L141">						return eventIterator.hasNext();</span>
+<span class="nc" id="L141">						return eventIterator.hasNext();</span>
 					}
 
 					@Override
 					public GraphicalElement next() {
-<span class="fc" id="L146">						return events.get(eventIterator.next());</span>
+<span class="nc" id="L146">						return events.get(eventIterator.next());</span>
 					}
 				};
 			}
@@ -156,28 +156,28 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	public LivingParticipantBox getLivingParticipantBox(Participant p) {
-<span class="fc" id="L159">		return participants.get(p);</span>
+<span class="nc" id="L159">		return participants.get(p);</span>
 	}
 
 	public GraphicalElement getEvent(Event ev) {
-<span class="fc" id="L163">		return events.get(ev);</span>
+<span class="nc" id="L163">		return events.get(ev);</span>
 	}
 
 	public double getHeadHeight(StringBounder stringBounder) {
-<span class="fc" id="L167">		double r = 0;</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">		for (Participant p : participants.keySet()) {</span>
-<span class="fc" id="L169">			final double y = getHeadAndEngloberHeight(p, stringBounder);</span>
-<span class="fc" id="L170">			r = Math.max(r, y);</span>
-<span class="fc" id="L171">		}</span>
-<span class="fc" id="L172">		return r;</span>
+<span class="nc" id="L167">		double r = 0;</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">		for (Participant p : participants.keySet()) {</span>
+<span class="nc" id="L169">			final double y = getHeadAndEngloberHeight(p, stringBounder);</span>
+<span class="nc" id="L170">			r = Math.max(r, y);</span>
+<span class="nc" id="L171">		}</span>
+<span class="nc" id="L172">		return r;</span>
 	}
 
 	public double getHeadAndEngloberHeight(Participant p, StringBounder stringBounder) {
-<span class="fc" id="L176">		final LivingParticipantBox box = participants.get(p);</span>
-<span class="fc" id="L177">		final double height = box.getParticipantBox().getHeadHeight(stringBounder);</span>
-<span class="fc" id="L178">		final Doll doll = getParticipantEnglober(p, stringBounder);</span>
-<span class="pc bpc" id="L179" title="1 of 2 branches missed.">		if (doll == null)</span>
-<span class="fc" id="L180">			return height;</span>
+<span class="nc" id="L176">		final LivingParticipantBox box = participants.get(p);</span>
+<span class="nc" id="L177">		final double height = box.getParticipantBox().getHeadHeight(stringBounder);</span>
+<span class="nc" id="L178">		final Doll doll = getParticipantEnglober(p, stringBounder);</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		if (doll == null)</span>
+<span class="nc" id="L180">			return height;</span>
 
 <span class="nc" id="L182">		final Component comp = skin.createComponent(doll.getUsedStyles(), ComponentType.ENGLOBER, null, skinParam,</span>
 <span class="nc" id="L183">				doll.getParticipantEnglober().getTitle());</span>
@@ -186,13 +186,13 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	public List&lt;Doll&gt; getExistingParticipantEnglober(StringBounder stringBounder) {
-<span class="fc" id="L189">		final List&lt;Doll&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L190">		Doll pending = null;</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">		for (Map.Entry&lt;Participant, ParticipantEnglober&gt; ent : participantEnglobers2.entrySet()) {</span>
-<span class="fc" id="L192">			final ParticipantEnglober englober = ent.getValue();</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">			if (englober == null) {</span>
-<span class="fc" id="L194">				pending = null;</span>
-<span class="fc" id="L195">				continue;</span>
+<span class="nc" id="L189">		final List&lt;Doll&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L190">		Doll pending = null;</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">		for (Map.Entry&lt;Participant, ParticipantEnglober&gt; ent : participantEnglobers2.entrySet()) {</span>
+<span class="nc" id="L192">			final ParticipantEnglober englober = ent.getValue();</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">			if (englober == null) {</span>
+<span class="nc" id="L194">				pending = null;</span>
+<span class="nc" id="L195">				continue;</span>
 			}
 <span class="nc bnc" id="L197" title="All 2 branches missed.">			if (TeaVM.a())</span>
 <span class="nc bnc" id="L198" title="All 2 branches missed.">				assert englober != null;</span>
@@ -204,7 +204,7 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc" id="L204">					skinParam.getCurrentStyleBuilder());</span>
 <span class="nc" id="L205">			result.add(pending);</span>
 <span class="nc" id="L206">		}</span>
-<span class="fc" id="L207">		return Collections.unmodifiableList(result);</span>
+<span class="nc" id="L207">		return Collections.unmodifiableList(result);</span>
 	}
 
 	public double getOffsetForEnglobers(StringBounder stringBounder) {
@@ -224,39 +224,39 @@ import net.sourceforge.plantuml.url.Url;
 	static private final int MARGIN_FOR_ENGLOBERS1 = 2;
 
 	public double getTailHeight(StringBounder stringBounder, boolean showTail) {
-<span class="pc bpc" id="L227" title="1 of 2 branches missed.">		final double marginForEnglobers = getExistingParticipantEnglober(stringBounder).size() &gt; 0</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">		final double marginForEnglobers = getExistingParticipantEnglober(stringBounder).size() &gt; 0</span>
 <span class="nc" id="L228">				? MARGIN_FOR_ENGLOBERS</span>
-<span class="fc" id="L229">				: 0;</span>
+<span class="nc" id="L229">				: 0;</span>
 
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (showTail == false)</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">		if (showTail == false)</span>
 <span class="nc" id="L232">			return 1 + marginForEnglobers;</span>
 
-<span class="fc" id="L234">		double r = 0;</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">		for (LivingParticipantBox livingParticipantBox : participants.values()) {</span>
-<span class="fc" id="L236">			final double y = livingParticipantBox.getParticipantBox().getTailHeight(stringBounder);</span>
-<span class="fc" id="L237">			r = Math.max(r, y);</span>
-<span class="fc" id="L238">		}</span>
-<span class="fc" id="L239">		return r + marginForEnglobers;</span>
+<span class="nc" id="L234">		double r = 0;</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">		for (LivingParticipantBox livingParticipantBox : participants.values()) {</span>
+<span class="nc" id="L236">			final double y = livingParticipantBox.getParticipantBox().getTailHeight(stringBounder);</span>
+<span class="nc" id="L237">			r = Math.max(r, y);</span>
+<span class="nc" id="L238">		}</span>
+<span class="nc" id="L239">		return r + marginForEnglobers;</span>
 	}
 
 	public void addParticipant(Participant p, ParticipantEnglober participantEnglober) {
-<span class="fc" id="L243">		participants.put(p, null);</span>
-<span class="fc" id="L244">		participantEnglobers2.put(p, participantEnglober);</span>
-<span class="fc" id="L245">	}</span>
+<span class="nc" id="L243">		participants.put(p, null);</span>
+<span class="nc" id="L244">		participantEnglobers2.put(p, participantEnglober);</span>
+<span class="nc" id="L245">	}</span>
 
 	public void setLivingParticipantBox(Participant p, LivingParticipantBox box) {
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">		if (participants.containsKey(p) == false)</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">		if (participants.containsKey(p) == false)</span>
 <span class="nc" id="L249">			throw new IllegalArgumentException();</span>
 
-<span class="fc" id="L251">		participants.put(p, box);</span>
-<span class="fc" id="L252">	}</span>
+<span class="nc" id="L251">		participants.put(p, box);</span>
+<span class="nc" id="L252">	}</span>
 
 	public void addEvent(Event event, GraphicalElement object) {
-<span class="fc bfc" id="L255" title="All 2 branches covered.">		if (events.keySet().contains(event) == false)</span>
-<span class="fc" id="L256">			eventsList.add(event);</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">		if (events.keySet().contains(event) == false)</span>
+<span class="nc" id="L256">			eventsList.add(event);</span>
 
-<span class="fc" id="L258">		events.put(event, object);</span>
-<span class="fc" id="L259">	}</span>
+<span class="nc" id="L258">		events.put(event, object);</span>
+<span class="nc" id="L259">	}</span>
 
 	public void addEvent(Newpage newpage, GraphicalNewpage object, Event justBefore) {
 <span class="nc" id="L262">		final int idx = eventsList.indexOf(justBefore);</span>
@@ -270,14 +270,14 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc" id="L270">	}</span>
 
 	void setDimension(XDimension2D dim) {
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">		if (dimension != null)</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">		if (dimension != null)</span>
 <span class="nc" id="L274">			throw new IllegalStateException();</span>
 
-<span class="fc" id="L276">		this.dimension = dim;</span>
-<span class="fc" id="L277">	}</span>
+<span class="nc" id="L276">		this.dimension = dim;</span>
+<span class="nc" id="L277">	}</span>
 
 	public XDimension2D getDimension() {
-<span class="fc" id="L280">		return dimension;</span>
+<span class="nc" id="L280">		return dimension;</span>
 	}
 
 	TextBlock asTextBlock(final double delta, final double width, final Page page, final boolean showTail) {
@@ -300,41 +300,41 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	void drawU22(final UGraphic ug, final double delta, double width, Page page, boolean showTail) {
-<span class="fc" id="L303">		final double height = page.getHeight();</span>
+<span class="nc" id="L303">		final double height = page.getHeight();</span>
 
-<span class="fc" id="L305">		final UGraphic ugTranslated = clipAndTranslate2(delta, width, page, ug);</span>
-<span class="fc" id="L306">		final SimpleContext2D context = new SimpleContext2D(true);</span>
-<span class="fc" id="L307">		this.drawDolls(ug, height - MARGIN_FOR_ENGLOBERS1, context);</span>
-<span class="fc" id="L308">		this.drawPlaygroundU(ugTranslated, context);</span>
+<span class="nc" id="L305">		final UGraphic ugTranslated = clipAndTranslate2(delta, width, page, ug);</span>
+<span class="nc" id="L306">		final SimpleContext2D context = new SimpleContext2D(true);</span>
+<span class="nc" id="L307">		this.drawDolls(ug, height - MARGIN_FOR_ENGLOBERS1, context);</span>
+<span class="nc" id="L308">		this.drawPlaygroundU(ugTranslated, context);</span>
 
-<span class="fc" id="L310">		this.drawLineU22(ug, showTail, page);</span>
-<span class="pc bpc" id="L311" title="1 of 2 branches missed.">		this.drawHeadTailU(ug, page, showTail ? height - getTailHeight(ug.getStringBounder(), true) : 0);</span>
+<span class="nc" id="L310">		this.drawLineU22(ug, showTail, page);</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">		this.drawHeadTailU(ug, page, showTail ? height - getTailHeight(ug.getStringBounder(), true) : 0);</span>
 
-<span class="fc" id="L313">		this.drawPlaygroundU(ugTranslated, new SimpleContext2D(false));</span>
-<span class="fc" id="L314">	}</span>
+<span class="nc" id="L313">		this.drawPlaygroundU(ugTranslated, new SimpleContext2D(false));</span>
+<span class="nc" id="L314">	}</span>
 
 	private UGraphic clipAndTranslate2(final double delta, double width, Page p, UGraphic ug) {
-<span class="fc" id="L317">		ug = ug.apply(new UClip(0, p.getBodyRelativePosition(), width, p.getBodyHeight() + 1));</span>
-<span class="fc" id="L318">		ug = ug.apply(getTranslate4(delta));</span>
-<span class="fc" id="L319">		return ug;</span>
+<span class="nc" id="L317">		ug = ug.apply(new UClip(0, p.getBodyRelativePosition(), width, p.getBodyHeight() + 1));</span>
+<span class="nc" id="L318">		ug = ug.apply(getTranslate4(delta));</span>
+<span class="nc" id="L319">		return ug;</span>
 	}
 
 	private UTranslate getTranslate4(final double delta) {
-<span class="pc bpc" id="L323" title="1 of 2 branches missed.">		if (delta &gt; 0)</span>
+<span class="nc bnc" id="L323" title="All 2 branches missed.">		if (delta &gt; 0)</span>
 <span class="nc" id="L324">			return UTranslate.dy(-delta);</span>
 
-<span class="fc" id="L326">		return UTranslate.none();</span>
+<span class="nc" id="L326">		return UTranslate.none();</span>
 	}
 
 	private void drawLineU22(UGraphic ug, boolean showTail, Page page) {
 		// http://plantuml.sourceforge.net/qa/?qa=4826/lifelines-broken-for-txt-seq-diagrams-when-create-is-used
-<span class="pc bpc" id="L331" title="1 of 2 branches missed.">		final boolean isTxt = TeaVM.isTeaVM() ? false : ug instanceof UGraphicTxt;</span>
-<span class="fc bfc" id="L332" title="All 2 branches covered.">		for (LivingParticipantBox box : getAllLivingParticipantBox()) {</span>
-<span class="fc" id="L333">			final double create = box.getCreate();</span>
-<span class="fc" id="L334">			final double startMin = page.getBodyRelativePosition() - box.magicMargin(ug.getStringBounder());</span>
-<span class="fc" id="L335">			final double endMax = startMin + page.getBodyHeight() + 2 * box.magicMargin(ug.getStringBounder());</span>
-<span class="fc" id="L336">			double start = startMin;</span>
-<span class="pc bpc" id="L337" title="1 of 2 branches missed.">			if (create &gt; 0) {</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">		final boolean isTxt = TeaVM.isTeaVM() ? false : ug instanceof UGraphicTxt;</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">		for (LivingParticipantBox box : getAllLivingParticipantBox()) {</span>
+<span class="nc" id="L333">			final double create = box.getCreate();</span>
+<span class="nc" id="L334">			final double startMin = page.getBodyRelativePosition() - box.magicMargin(ug.getStringBounder());</span>
+<span class="nc" id="L335">			final double endMax = startMin + page.getBodyHeight() + 2 * box.magicMargin(ug.getStringBounder());</span>
+<span class="nc" id="L336">			double start = startMin;</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">			if (create &gt; 0) {</span>
 <span class="nc bnc" id="L338" title="All 2 branches missed.">				if (create &gt; page.getNewpage2())</span>
 <span class="nc" id="L339">					continue;</span>
 
@@ -345,26 +345,26 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc" id="L345">						start += create - page.getNewpage1() + 2 * box.magicMargin(ug.getStringBounder());</span>
 				}
 			}
-<span class="fc" id="L348">			final double myDelta = page.getNewpage1() - page.getHeaderHeight();</span>
+<span class="nc" id="L348">			final double myDelta = page.getNewpage1() - page.getHeaderHeight();</span>
 
-<span class="fc" id="L350">			final Participant p = box.getParticipant();</span>
+<span class="nc" id="L350">			final Participant p = box.getParticipant();</span>
 
-<span class="fc" id="L352">			ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));</span>
+<span class="nc" id="L352">			ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));</span>
 
-<span class="fc" id="L354">			box.drawLineU22(ug, start, endMax, showTail, myDelta);</span>
+<span class="nc" id="L354">			box.drawLineU22(ug, start, endMax, showTail, myDelta);</span>
 
-<span class="fc" id="L356">			ug.closeGroup();</span>
+<span class="nc" id="L356">			ug.closeGroup();</span>
 
-<span class="fc" id="L358">		}</span>
-<span class="fc" id="L359">	}</span>
+<span class="nc" id="L358">		}</span>
+<span class="nc" id="L359">	}</span>
 
 	private void drawHeadTailU(UGraphic ug, Page page, double positionTail) {
-<span class="fc bfc" id="L362" title="All 2 branches covered.">		for (Map.Entry&lt;Participant, LivingParticipantBox&gt; ent : participants.entrySet()) {</span>
-<span class="fc" id="L363">			final Participant p = ent.getKey();</span>
-<span class="fc" id="L364">			final LivingParticipantBox box = ent.getValue();</span>
-<span class="fc" id="L365">			final double create = box.getCreate();</span>
-<span class="fc" id="L366">			boolean showHead = true;</span>
-<span class="pc bpc" id="L367" title="1 of 2 branches missed.">			if (create &gt; 0) {</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">		for (Map.Entry&lt;Participant, LivingParticipantBox&gt; ent : participants.entrySet()) {</span>
+<span class="nc" id="L363">			final Participant p = ent.getKey();</span>
+<span class="nc" id="L364">			final LivingParticipantBox box = ent.getValue();</span>
+<span class="nc" id="L365">			final double create = box.getCreate();</span>
+<span class="nc" id="L366">			boolean showHead = true;</span>
+<span class="nc bnc" id="L367" title="All 2 branches missed.">			if (create &gt; 0) {</span>
 <span class="nc bnc" id="L368" title="All 2 branches missed.">				if (create &gt; page.getNewpage2())</span>
 <span class="nc" id="L369">					continue;</span>
 
@@ -372,36 +372,36 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc" id="L372">					showHead = false;</span>
 
 			}
-<span class="fc" id="L375">			final Url url = p.getUrl();</span>
-<span class="pc bpc" id="L376" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L375">			final Url url = p.getUrl();</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">			if (url != null)</span>
 <span class="nc" id="L377">				ug.startUrl(url);</span>
 
-<span class="fc" id="L379">			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);</span>
-<span class="pc bpc" id="L380" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L379">			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">			if (url != null)</span>
 <span class="nc" id="L381">				ug.closeUrl();</span>
 
-<span class="fc" id="L383">		}</span>
-<span class="fc" id="L384">	}</span>
+<span class="nc" id="L383">		}</span>
+<span class="nc" id="L384">	}</span>
 
 	private double getMaxX() {
-<span class="fc" id="L387">		return dimension.getWidth();</span>
+<span class="nc" id="L387">		return dimension.getWidth();</span>
 	}
 
 	private double getMaxY() {
-<span class="fc" id="L391">		return dimension.getHeight();</span>
+<span class="nc" id="L391">		return dimension.getHeight();</span>
 	}
 
 	private void drawPlaygroundU(UGraphic ug, Context2D context) {
-<span class="fc bfc" id="L395" title="All 2 branches covered.">		for (Participant p : getAllParticipants())</span>
-<span class="fc" id="L396">			drawLifeLineU(ug, p);</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">		for (Participant p : getAllParticipants())</span>
+<span class="nc" id="L396">			drawLifeLineU(ug, p);</span>
 
-<span class="fc bfc" id="L398" title="All 2 branches covered.">		for (GraphicalElement element : getAllGraphicalElements())</span>
-<span class="fc" id="L399">			element.drawU(ug, getMaxX(), context);</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">		for (GraphicalElement element : getAllGraphicalElements())</span>
+<span class="nc" id="L399">			element.drawU(ug, getMaxX(), context);</span>
 
-<span class="fc" id="L401">	}</span>
+<span class="nc" id="L401">	}</span>
 
 	private void drawDolls(UGraphic ug, double height, Context2D context) {
-<span class="pc bpc" id="L404" title="1 of 2 branches missed.">		for (Doll doll : getExistingParticipantEnglober(ug.getStringBounder())) {</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">		for (Doll doll : getExistingParticipantEnglober(ug.getStringBounder())) {</span>
 <span class="nc" id="L405">			double x1 = getX1(doll);</span>
 <span class="nc" id="L406">			final double x2 = getX2(ug.getStringBounder(), doll);</span>
 
@@ -420,7 +420,7 @@ import net.sourceforge.plantuml.url.Url;
 <span class="nc" id="L420">				comp.drawU(ug.apply(new UTranslate(x1, 1)), new Area(dim), context);</span>
 			}
 <span class="nc" id="L422">		}</span>
-<span class="fc" id="L423">	}</span>
+<span class="nc" id="L423">	}</span>
 
 	public double getEngloberPreferedWidth(StringBounder stringBounder, Doll doll) {
 <span class="nc" id="L426">		return getEngloberComponent(doll).getPreferredWidth(stringBounder);</span>
@@ -447,23 +447,23 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	private void drawLifeLineU(UGraphic ug, Participant p) {
-<span class="fc" id="L450">		final LifeLine line = getLivingParticipantBox(p).getLifeLine();</span>
+<span class="nc" id="L450">		final LifeLine line = getLivingParticipantBox(p).getLifeLine();</span>
 
-<span class="fc" id="L452">		line.finish(getMaxY());</span>
-<span class="fc" id="L453">		line.drawU(ug, getSkin(), skinParam);</span>
-<span class="fc" id="L454">	}</span>
+<span class="nc" id="L452">		line.finish(getMaxY());</span>
+<span class="nc" id="L453">		line.drawU(ug, getSkin(), skinParam);</span>
+<span class="nc" id="L454">	}</span>
 
 	private Doll getParticipantEnglober(Participant p, StringBounder stringBounder) {
-<span class="pc bpc" id="L457" title="1 of 2 branches missed.">		for (Doll pe : getExistingParticipantEnglober(stringBounder))</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">		for (Doll pe : getExistingParticipantEnglober(stringBounder))</span>
 <span class="nc bnc" id="L458" title="All 2 branches missed.">			if (pe.contains(p))</span>
 <span class="nc" id="L459">				return pe;</span>
 
-<span class="fc" id="L461">		return null;</span>
+<span class="nc" id="L461">		return null;</span>
 	}
 
 	public void setTopStartingY(double topStartingY) {
-<span class="fc" id="L465">		this.topStartingY = topStartingY;</span>
-<span class="fc" id="L466">	}</span>
+<span class="nc" id="L465">		this.topStartingY = topStartingY;</span>
+<span class="nc" id="L466">	}</span>
 
 	Participant getFirst(Collection&lt;Participant&gt; someParticipants) {
 <span class="nc" id="L469">		final List&lt;Participant&gt; list = new ArrayList&lt;&gt;(participants.keySet());</span>
@@ -494,9 +494,9 @@ import net.sourceforge.plantuml.url.Url;
 	}
 
 	public double getArrowThickness() {
-<span class="fc" id="L497">		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);</span>
-<span class="pc bpc" id="L498" title="1 of 2 branches missed.">		if (result == null)</span>
-<span class="fc" id="L499">			return 1;</span>
+<span class="nc" id="L497">		final UStroke result = skinParam.getThickness(LineParam.sequenceArrow, null);</span>
+<span class="nc bnc" id="L498" title="All 2 branches missed.">		if (result == null)</span>
+<span class="nc" id="L499">			return 1;</span>
 
 <span class="nc" id="L501">		return result.getThickness();</span>
 	}

@@ -70,93 +70,111 @@ import net.sourceforge.plantuml.skin.Context2D;
 <span class="fc" id="L70">		}</span>
 <span class="fc" id="L71">	}</span>
 
-	public LivingSpace previous(LivingSpace element) {
-<span class="nc" id="L74">		LivingSpace previous = null;</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">		for (LivingSpace current : all.values()) {</span>
-<span class="nc bnc" id="L76" title="All 2 branches missed.">			if (current == element) {</span>
-<span class="nc" id="L77">				return previous;</span>
+	// ASCII counterpart of addConstraints(): keeps neighbouring participants at
+	// least ASCII_GAP cells apart, using the dedicated ASCII Real positions
+	// (getAsciiPosE()/getAsciiPosA()) instead of the pixel ones. The gap is a
+	// dedicated ASCII constant (1 cell), not the pixel 10 divided by anything.
+	private static final int ASCII_GAP = 1;
+
+	public void asciiAddConstraints() {
+<span class="fc" id="L80">		LivingSpace previous = null;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		for (LivingSpace current : all.values()) {</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">			if (previous != null) {</span>
+<span class="fc" id="L83">				final Real point1 = previous.getAsciiPosE();</span>
+<span class="fc" id="L84">				final Real point2 = current.getAsciiPosA();</span>
+<span class="fc" id="L85">				point2.ensureBiggerThan(point1.addFixed(ASCII_GAP));</span>
 			}
-<span class="nc" id="L79">			previous = current;</span>
-<span class="nc" id="L80">		}</span>
-<span class="nc" id="L81">		return null;</span>
+<span class="fc" id="L87">			previous = current;</span>
+<span class="fc" id="L88">		}</span>
+<span class="fc" id="L89">	}</span>
+
+	public LivingSpace previous(LivingSpace element) {
+<span class="fc" id="L92">		LivingSpace previous = null;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">		for (LivingSpace current : all.values()) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			if (current == element) {</span>
+<span class="fc" id="L95">				return previous;</span>
+			}
+<span class="fc" id="L97">			previous = current;</span>
+<span class="fc" id="L98">		}</span>
+<span class="nc" id="L99">		return null;</span>
 	}
 
 	public LivingSpace next(LivingSpace element) {
-<span class="nc bnc" id="L85" title="All 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = all.values().iterator(); it.hasNext();) {</span>
-<span class="nc" id="L86">			final LivingSpace current = it.next();</span>
-<span class="nc bnc" id="L87" title="All 4 branches missed.">			if (current == element &amp;&amp; it.hasNext()) {</span>
-<span class="nc" id="L88">				return it.next();</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">		for (Iterator&lt;LivingSpace&gt; it = all.values().iterator(); it.hasNext();) {</span>
+<span class="fc" id="L104">			final LivingSpace current = it.next();</span>
+<span class="pc bpc" id="L105" title="2 of 4 branches missed.">			if (current == element &amp;&amp; it.hasNext()) {</span>
+<span class="fc" id="L106">				return it.next();</span>
 			}
-<span class="nc" id="L90">		}</span>
-<span class="nc" id="L91">		return null;</span>
+<span class="nc" id="L108">		}</span>
+<span class="nc" id="L109">		return null;</span>
 
 	}
 
 	public Collection&lt;Participant&gt; participants() {
-<span class="fc" id="L96">		return all.keySet();</span>
+<span class="fc" id="L114">		return all.keySet();</span>
 	}
 
 	public void put(Participant participant, LivingSpace livingSpace) {
-<span class="fc" id="L100">		all.put(participant, livingSpace);</span>
-<span class="fc" id="L101">	}</span>
+<span class="fc" id="L118">		all.put(participant, livingSpace);</span>
+<span class="fc" id="L119">	}</span>
 
 	public LivingSpace get(Participant participant) {
-<span class="fc" id="L104">		return all.get(participant);</span>
+<span class="fc" id="L122">		return all.get(participant);</span>
 	}
 
 	public void drawHeads(final UGraphic ug, Context2D context, VerticalAlignment verticalAlignment) {
-<span class="fc" id="L108">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L109">		final double headHeight = getHeadHeight(stringBounder);</span>
-<span class="fc bfc" id="L110" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
-<span class="fc" id="L111">			final double x = livingSpace.getPosB(stringBounder).getCurrentValue();</span>
-<span class="fc" id="L112">			double y = 0;</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">			if (verticalAlignment == VerticalAlignment.BOTTOM) {</span>
-<span class="fc" id="L114">				final XDimension2D dimHead = livingSpace.getHeadPreferredDimension(stringBounder);</span>
-<span class="fc" id="L115">				y = headHeight - dimHead.getHeight();</span>
+<span class="fc" id="L126">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L127">		final double headHeight = getHeadHeight(stringBounder);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
+<span class="fc" id="L129">			final double x = livingSpace.getPosB(stringBounder).getCurrentValue();</span>
+<span class="fc" id="L130">			double y = 0;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">			if (verticalAlignment == VerticalAlignment.BOTTOM) {</span>
+<span class="fc" id="L132">				final XDimension2D dimHead = livingSpace.getHeadPreferredDimension(stringBounder);</span>
+<span class="fc" id="L133">				y = headHeight - dimHead.getHeight();</span>
 			}
 			// TOP means that we are drawing the footboxes at the bottom of the
 			// diagram (the real heads are aligned on BOTTOM): the tail component
 			// is used there, like in Puma (for an actor, the label is displayed
 			// above the stickman)
-<span class="fc bfc" id="L121" title="All 2 branches covered.">			if (verticalAlignment == VerticalAlignment.TOP)</span>
-<span class="fc" id="L122">				livingSpace.drawTail(ug.apply(new UTranslate(x, y)), context, verticalAlignment,</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">			if (verticalAlignment == VerticalAlignment.TOP)</span>
+<span class="fc" id="L140">				livingSpace.drawTail(ug.apply(new UTranslate(x, y)), context, verticalAlignment,</span>
 						HorizontalAlignment.LEFT);
 			else
-<span class="fc" id="L125">				livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context, verticalAlignment,</span>
+<span class="fc" id="L143">				livingSpace.drawHead(ug.apply(new UTranslate(x, y)), context, verticalAlignment,</span>
 						HorizontalAlignment.LEFT);
-<span class="fc" id="L127">		}</span>
-<span class="fc" id="L128">	}</span>
+<span class="fc" id="L145">		}</span>
+<span class="fc" id="L146">	}</span>
 
 	public double getHeadHeight(StringBounder stringBounder) {
-<span class="fc" id="L131">		double headHeight = 0;</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
-<span class="fc" id="L133">			final XDimension2D headDim = livingSpace.getHeadPreferredDimension(stringBounder);</span>
-<span class="fc" id="L134">			headHeight = Math.max(headHeight, headDim.getHeight());</span>
-<span class="fc" id="L135">		}</span>
-<span class="fc" id="L136">		return headHeight;</span>
+<span class="fc" id="L149">		double headHeight = 0;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
+<span class="fc" id="L151">			final XDimension2D headDim = livingSpace.getHeadPreferredDimension(stringBounder);</span>
+<span class="fc" id="L152">			headHeight = Math.max(headHeight, headDim.getHeight());</span>
+<span class="fc" id="L153">		}</span>
+<span class="fc" id="L154">		return headHeight;</span>
 	}
 
 	public void drawLifeLines(final UGraphic ug, double height, Context2D context) {
-<span class="fc" id="L140">		int i = 0;</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
+<span class="fc" id="L158">		int i = 0;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">		for (LivingSpace livingSpace : values()) {</span>
 			// if (i++ == 0) {
 			// System.err.println(&quot;TEMPORARY SKIPPING OTHERS&quot;);
 			// continue;
 			// }
 			// System.err.println(&quot;drawing lines &quot; + livingSpace);
-<span class="fc" id="L147">			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();</span>
-<span class="fc" id="L148">			livingSpace.drawLineAndLiveboxes(ug.apply(UTranslate.dx(x)), height, context);</span>
-<span class="fc" id="L149">		}</span>
-<span class="fc" id="L150">	}</span>
+<span class="fc" id="L165">			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();</span>
+<span class="fc" id="L166">			livingSpace.drawLineAndLiveboxes(ug.apply(UTranslate.dx(x)), height, context);</span>
+<span class="fc" id="L167">		}</span>
+<span class="fc" id="L168">	}</span>
 
 	public void delayOn(double y, double height) {
-<span class="nc bnc" id="L153" title="All 2 branches missed.">		for (LivingSpace livingSpace : values())</span>
-<span class="nc" id="L154">			livingSpace.delayOn(y, height);</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">		for (LivingSpace livingSpace : values())</span>
+<span class="nc" id="L172">			livingSpace.delayOn(y, height);</span>
 
-<span class="nc" id="L156">	}</span>
+<span class="nc" id="L174">	}</span>
 
 	public int size() {
-<span class="nc" id="L159">		return all.size();</span>
+<span class="nc" id="L177">		return all.size();</span>
 	}
 
 }

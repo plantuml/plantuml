@@ -41,27 +41,38 @@ class RealDelta extends RealMoveable {
 	private final double diff;
 
 	RealDelta(Real delegated, double diff) {
-<span class="fc" id="L44">		super(((AbstractReal) delegated).getLine(), &quot;[Delegated {&quot; + delegated.getName() + &quot;} d=&quot; + diff + &quot;]&quot;);</span>
-<span class="fc" id="L45">		this.delegated = delegated;</span>
-<span class="fc" id="L46">		this.diff = diff;</span>
-<span class="fc" id="L47">	}</span>
+		// The debug name is intentionally NOT built from delegated.getName():
+		// concatenating the full ancestor name at every wrap makes the name
+		// length grow O(depth), and since addFixed()/addAtLeast() are called
+		// once per tile along the Y gauge chain (now spanning the whole
+		// document, not just a handful of participant columns like the X
+		// chain), that is O(n) wraps each paying O(depth) for the string copy:
+		// O(n^2) characters retained forever by RealLine's `all` set. This is
+		// what caused the OutOfMemoryError on large diagrams.
+		// The identity/uniqueness of a Real for debugging comes from
+		// RealMoveable's own atomic counter (&quot;#123_...&quot;), not from this name,
+		// so dropping the ancestry from the string is purely cosmetic.
+<span class="fc" id="L55">		super(((AbstractReal) delegated).getLine(), &quot;[Delegated d=&quot; + diff + &quot;]&quot;);</span>
+<span class="fc" id="L56">		this.delegated = delegated;</span>
+<span class="fc" id="L57">		this.diff = diff;</span>
+<span class="fc" id="L58">	}</span>
 
 	@Override
 	double getCurrentValueInternal() {
-<span class="fc" id="L51">		return delegated.getCurrentValue() + diff;</span>
+<span class="fc" id="L62">		return delegated.getCurrentValue() + diff;</span>
 	}
 
 	public Real addAtLeast(double delta) {
-<span class="fc" id="L55">		return new RealDelta(delegated.addAtLeast(delta), diff);</span>
+<span class="fc" id="L66">		return new RealDelta(delegated.addAtLeast(delta), diff);</span>
 	}
 
 	public void ensureBiggerThan(Real other) {
-<span class="fc" id="L59">		delegated.ensureBiggerThan(new RealDelta(other, -diff));</span>
-<span class="fc" id="L60">	}</span>
+<span class="fc" id="L70">		delegated.ensureBiggerThan(new RealDelta(other, -diff));</span>
+<span class="fc" id="L71">	}</span>
 
 	void move(double delta) {
-<span class="nc" id="L63">		((RealMoveable) delegated).move(delta);</span>
-<span class="nc" id="L64">	}</span>
+<span class="nc" id="L74">		((RealMoveable) delegated).move(delta);</span>
+<span class="nc" id="L75">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

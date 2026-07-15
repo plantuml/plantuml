@@ -37,6 +37,9 @@ package net.sourceforge.plantuml.sequencediagram.teoz;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.annotation.Fast;
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -65,98 +68,115 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 
 	private final Real min1;
 
-<span class="fc" id="L68">	private final LivingSpaces livingSpaces = new LivingSpaces();</span>
+<span class="fc" id="L71">	private final LivingSpaces livingSpaces = new LivingSpaces();</span>
 	private final double heightEnglober1;
 	private final double heightEnglober2;
 
 	public SequenceDiagramFileMakerTeoz(SequenceDiagram diagram, Rose skin, FileFormatOption fileFormatOption,
-<span class="fc" id="L73">			int index) {</span>
-<span class="fc" id="L74">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(), diagram.getPragma());</span>
-<span class="fc" id="L75">		this.diagram = diagram;</span>
-<span class="fc" id="L76">		this.skin = skin;</span>
-<span class="fc" id="L77">		this.body = new PlayingSpaceWithParticipants(createMainTile());</span>
+<span class="fc" id="L76">			int index) {</span>
+<span class="fc" id="L77">		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(), diagram.getPragma());</span>
+<span class="fc" id="L78">		this.diagram = diagram;</span>
+<span class="fc" id="L79">		this.skin = skin;</span>
+<span class="fc" id="L80">		this.body = new PlayingSpaceWithParticipants(createMainTile());</span>
 
-<span class="fc" id="L79">		this.min1 = body.getMinX(stringBounder);</span>
+<span class="fc" id="L82">		this.min1 = body.getMinX(stringBounder);</span>
 
-<span class="fc" id="L81">		this.heightEnglober1 = dolls.getOffsetForEnglobers(stringBounder);</span>
-<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;</span>
-<span class="fc" id="L83">	}</span>
+<span class="fc" id="L84">		this.heightEnglober1 = dolls.getOffsetForEnglobers(stringBounder);</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		this.heightEnglober2 = heightEnglober1 == 0 ? 0 : 10;</span>
+<span class="fc" id="L86">	}</span>
 
 	private PlayingSpace createMainTile() {
-<span class="fc" id="L86">		final RealOrigin xorigin = RealUtils.createOrigin();</span>
-<span class="fc" id="L87">		Real xcurrent = xorigin.addAtLeast(0);</span>
-<span class="fc" id="L88">		final RealOrigin yorigin = RealUtils.createOrigin();</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		for (Participant p : diagram.participants()) {</span>
-<span class="fc" id="L90">			final LivingSpace livingSpace = new LivingSpace(p, diagram.getEnglober(p), skin, getSkinParam(), xcurrent,</span>
-<span class="fc" id="L91">					diagram.events());</span>
-<span class="fc" id="L92">			livingSpaces.put(p, livingSpace);</span>
-<span class="fc" id="L93">			xcurrent = livingSpace.getPosD(stringBounder).addAtLeast(0);</span>
-<span class="fc" id="L94">		}</span>
+<span class="fc" id="L89">		final RealOrigin xorigin = RealUtils.createOrigin();</span>
+<span class="fc" id="L90">		Real xcurrent = xorigin.addAtLeast(0);</span>
+<span class="fc" id="L91">		final RealOrigin yorigin = RealUtils.createOrigin();</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (Participant p : diagram.participants()) {</span>
+<span class="fc" id="L93">			final LivingSpace livingSpace = new LivingSpace(p, diagram.getEnglober(p), skin, getSkinParam(), xcurrent,</span>
+<span class="fc" id="L94">					diagram.events());</span>
+<span class="fc" id="L95">			livingSpaces.put(p, livingSpace);</span>
+<span class="fc" id="L96">			xcurrent = livingSpace.getPosD(stringBounder).addAtLeast(0);</span>
+<span class="fc" id="L97">		}</span>
 
-<span class="fc" id="L96">		final TileArguments tileArguments = new TileArguments(stringBounder, livingSpaces, skin, diagram.getSkinParam(),</span>
+<span class="fc" id="L99">		final TileArguments tileArguments = new TileArguments(stringBounder, livingSpaces, skin, diagram.getSkinParam(),</span>
 				xorigin, yorigin);
 
-<span class="fc" id="L99">		this.dolls = new Dolls(tileArguments);</span>
+<span class="fc" id="L102">		this.dolls = new Dolls(tileArguments);</span>
 		// The dolls constraints must be set before the PlayingSpace is built:
 		// PlayingSpace captures dolls.getMinX()/getMaxX(), which freeze the
 		// margins (see LivingSpace.getPosA/getPosE) needed for the box titles
-<span class="fc" id="L103">		this.dolls.addConstraints(stringBounder);</span>
-<span class="fc" id="L104">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
-<span class="fc" id="L105">		this.livingSpaces.addConstraints(stringBounder);</span>
-<span class="fc" id="L106">		mainTile.addConstraints();</span>
-<span class="fc" id="L107">		xorigin.compileNow();</span>
-		if (YGauge.USE_ME)
-			System.err.println(&quot;COMPILING Y&quot;);
-<span class="fc" id="L110">		yorigin.compileNow();</span>
-<span class="fc" id="L111">		tileArguments.setBordered(mainTile);</span>
-<span class="fc" id="L112">		return mainTile;</span>
+<span class="fc" id="L106">		this.dolls.addConstraints(stringBounder);</span>
+<span class="fc" id="L107">		final PlayingSpace mainTile = new PlayingSpace(diagram, dolls, tileArguments);</span>
+<span class="fc" id="L108">		this.livingSpaces.addConstraints(stringBounder);</span>
+<span class="fc" id="L109">		mainTile.addConstraints();</span>
+<span class="fc" id="L110">		xorigin.compileNow();</span>
+		// The Y line is solved here, ONCE, before anything reads a gauge: every tile
+		// built above chained its YGauge onto yorigin, and getCurrentValue() is only
+		// meaningful after this call
+<span class="fc" id="L114">		yorigin.compileNow();</span>
+<span class="fc" id="L115">		tileArguments.setBordered(mainTile);</span>
+<span class="fc" id="L116">		return mainTile;</span>
 	}
 
 	public ISkinParam getSkinParam() {
-<span class="fc" id="L116">		return diagram.getSkinParam();</span>
+<span class="fc" id="L120">		return diagram.getSkinParam();</span>
 	}
 
 	public int getNbPages() {
-<span class="nc" id="L120">		return body.getNbPages();</span>
+<span class="nc" id="L124">		return body.getNbPages();</span>
 	}
 
 	@Override
 	public TextBlock getTextBlock(int num, FileFormatOption fileFormat) {
-<span class="fc" id="L125">		return new TextBlock() {</span>
+<span class="fc" id="L129">		return new TextBlock() {</span>
 
 			public void drawU(UGraphic ug) {
-<span class="fc" id="L128">				ug = ug.apply(new UTranslate(5, 5));</span>
+<span class="fc" id="L132">				ug = ug.apply(new UTranslate(5, 5));</span>
 
-<span class="fc" id="L130">				body.setIndex(num);</span>
-<span class="fc" id="L131">				final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
-<span class="fc" id="L132">				ug = ug.apply(min1translate);</span>
+<span class="fc" id="L134">				body.setIndex(num);</span>
+<span class="fc" id="L135">				final UTranslate min1translate = UTranslate.dx(-min1.getCurrentValue());</span>
+<span class="fc" id="L136">				ug = ug.apply(min1translate);</span>
 
-<span class="fc" id="L134">				dolls.drawEnglobers(ug,</span>
-<span class="fc" id="L135">						body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
+<span class="fc" id="L138">				dolls.drawEnglobers(ug,</span>
+<span class="fc" id="L139">						body.calculateDimension(stringBounder).getHeight() + heightEnglober1 + heightEnglober2 / 2,</span>
 						new SimpleContext2D(true));
 
-<span class="fc" id="L138">				ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
-<span class="fc" id="L139">				body.drawU(ug);</span>
-<span class="fc" id="L140">				ug = ug.apply(UTranslate.dy(body.calculateDimension(stringBounder).getHeight()));</span>
-<span class="fc" id="L141">				ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
-<span class="fc" id="L142">			}</span>
+<span class="fc" id="L142">				ug = ug.apply(UTranslate.dy(heightEnglober1));</span>
+<span class="fc" id="L143">				body.drawU(ug);</span>
+<span class="fc" id="L144">				ug = ug.apply(UTranslate.dy(body.calculateDimension(stringBounder).getHeight()));</span>
+<span class="fc" id="L145">				ug = ug.apply(UTranslate.dy(heightEnglober2));</span>
+<span class="fc" id="L146">			}</span>
 
 			@Fast
 			@Override
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				// The exporter calculates the dimension before calling drawU(),
 				// so the page index must be set here too
-<span class="fc" id="L149">				body.setIndex(num);</span>
-<span class="fc" id="L150">				final double totalWidth = body.calculateDimension(stringBounder).getWidth();</span>
-<span class="fc" id="L151">				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
+<span class="fc" id="L153">				body.setIndex(num);</span>
+<span class="fc" id="L154">				final double totalWidth = body.calculateDimension(stringBounder).getWidth();</span>
+<span class="fc" id="L155">				final double totalHeight = body.calculateDimension(stringBounder).getHeight() + heightEnglober1</span>
 						+ heightEnglober2;
-<span class="fc" id="L153">				return new XDimension2D(totalWidth + 10, totalHeight + 10);</span>
+<span class="fc" id="L157">				return new XDimension2D(totalWidth + 10, totalHeight + 10);</span>
 			}
 
 			public HColor getBackcolor() {
-<span class="nc" id="L157">				return null;</span>
+<span class="nc" id="L161">				return null;</span>
 			}
 
+		};
+	}
+
+	@Override
+	public AsciiBlock getAsciiBlock(int num, FileFormatOption fileFormat) {
+<span class="fc" id="L169">		return new AsciiBlock() {</span>
+
+			@Override
+			public ADimension2D asciiDimension() {
+<span class="fc" id="L173">				return new ADimension2D(20, 20);</span>
+			}
+
+			@Override
+			public void asciiDraw(InfinitePlan plan) {
+<span class="fc" id="L178">				body.asciiDraw(plan);</span>
+<span class="fc" id="L179">			}</span>
 		};
 	}
 

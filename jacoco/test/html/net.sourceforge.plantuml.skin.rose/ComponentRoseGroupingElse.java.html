@@ -73,8 +73,8 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 
 	@Override
 	protected void drawBackgroundInternalU(UGraphic ug, Area area) {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">		if (backgroundColor.isTransparent())</span>
-<span class="nc" id="L77">			return;</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		if (backgroundColor.isTransparent())</span>
+<span class="fc" id="L77">			return;</span>
 
 <span class="nc" id="L79">		final XDimension2D dimensionToUse = area.getDimensionToUse();</span>
 <span class="nc" id="L80">		ug = ug.apply(HColors.none()).apply(backgroundColor.bg());</span>
@@ -115,7 +115,7 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	@Override
 	public double getPreferredHeight(StringBounder stringBounder) {
 <span class="pc bpc" id="L117" title="1 of 2 branches missed.">		if (teoz)</span>
-<span class="fc" id="L118">			return getTextHeight(stringBounder) + 16;</span>
+<span class="fc" id="L118">			return getTextHeight(stringBounder) + 4;</span>
 		else
 <span class="nc" id="L120">			return getTextHeight(stringBounder);</span>
 	}

@@ -35,40 +35,106 @@
  */
 package net.sourceforge.plantuml.asciiverse;
 
-<span class="fc" id="L38">public class InfiniteString {</span>
+// A single &quot;infinite&quot; line of characters, extending both to the right
+// (position &gt;= 0, backed by positiveChars) and to the left (position &lt; 0,
+// backed by negativeChars). This mirrors InfinitePlan itself, whose move()
+// can shift dx/dy negative (e.g. a note box drawn to the left of the
+// leftmost participant): a single line must be able
+// to grow in either direction from an arbitrary starting position, not just
+// rightward from 0.
+//
+// negativeChars stores position -1 at index 0, position -2 at index 1, and
+// so on (index = -position - 1): appending to this StringBuilder always
+// extends further left, away from zero, exactly the way appending to
+// positiveChars always extends further right. The two halves never need to
+// &quot;meet in the middle&quot; or resize each other; position 0 itself always lives
+// in positiveChars.
+<span class="fc" id="L52">public class InfiniteString {</span>
 
-<span class="fc" id="L40">	private final StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L54">	private final StringBuilder positiveChars = new StringBuilder();</span>
+<span class="fc" id="L55">	private final StringBuilder negativeChars = new StringBuilder();</span>
 
 	private void ensureLength(int length) {
-<span class="fc bfc" id="L43" title="All 2 branches covered.">		while (sb.length() &lt; length)</span>
-<span class="fc" id="L44">			sb.append(' ');</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		while (positiveChars.length() &lt; length)</span>
+<span class="fc" id="L59">			positiveChars.append(' ');</span>
 
-<span class="fc" id="L46">	}</span>
+<span class="fc" id="L61">	}</span>
+
+	private void ensureNegativeLength(int length) {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		while (negativeChars.length() &lt; length)</span>
+<span class="fc" id="L65">			negativeChars.append(' ');</span>
+
+<span class="fc" id="L67">	}</span>
 
 	public void setCharAt(int position, char ch) {
-<span class="fc" id="L49">		ensureLength(position + 1);</span>
-<span class="fc" id="L50">		sb.setCharAt(position, ch);</span>
-<span class="fc" id="L51">	}</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if (position &gt;= 0) {</span>
+<span class="fc" id="L71">			ensureLength(position + 1);</span>
+<span class="fc" id="L72">			positiveChars.setCharAt(position, ch);</span>
+		} else {
+<span class="fc" id="L74">			final int negIndex = -position - 1;</span>
+<span class="fc" id="L75">			ensureNegativeLength(negIndex + 1);</span>
+<span class="fc" id="L76">			negativeChars.setCharAt(negIndex, ch);</span>
+		}
+<span class="fc" id="L78">	}</span>
 
 	public void setStringAt(int position, String s) {
-<span class="nc" id="L54">		final int endPosition = position + s.length();</span>
-<span class="nc" id="L55">		ensureLength(endPosition);</span>
-
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (int i = 0; i &lt; s.length(); i++)</span>
-<span class="nc" id="L58">			sb.setCharAt(position + i, s.charAt(i));</span>
-
-<span class="nc" id="L60">	}</span>
+		// Delegates to setCharAt() one character at a time rather than
+		// pre-sizing positiveChars/negativeChars in bulk: a string can start
+		// negative and cross into positive territory (or vice versa) in a
+		// single call, and reusing setCharAt() keeps that split in exactly
+		// one place instead of duplicating the position &gt;= 0 test here.
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		for (int i = 0; i &lt; s.length(); i++)</span>
+<span class="fc" id="L87">			setCharAt(position + i, s.charAt(i));</span>
+<span class="fc" id="L88">	}</span>
 
 	public char getCharAt(int position) {
-<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (position &gt;= sb.length())</span>
-<span class="nc" id="L64">			return ' ';</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (position &gt;= 0) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (position &gt;= positiveChars.length())</span>
+<span class="fc" id="L93">				return ' ';</span>
 
-<span class="nc" id="L66">		return sb.charAt(position);</span>
+<span class="fc" id="L95">			return positiveChars.charAt(position);</span>
+		}
+
+<span class="fc" id="L98">		final int negIndex = -position - 1;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if (negIndex &gt;= negativeChars.length())</span>
+<span class="fc" id="L100">			return ' ';</span>
+
+<span class="fc" id="L102">		return negativeChars.charAt(negIndex);</span>
 	}
 
-	@Override
-	public String toString() {
-<span class="fc" id="L71">		return sb.toString();</span>
+	// The leftmost position ever written to on this line, as a value &lt;= 0:
+	// -negativeChars.length() (0 if setCharAt()/setStringAt() never touched a
+	// negative position). Lets a caller that renders many lines together
+	// (InfinitePlan.exportTxt()) find the leftmost column across *all* of them
+	// before picking a single common startingPosition to pass to getString()
+	// — needed because each InfiniteString only knows its own extent, not its
+	// neighbors', and every line must be rendered from the same column for the
+	// output to stay aligned.
+	public int getLeftmostPosition() {
+<span class="fc" id="L114">		return -negativeChars.length();</span>
+	}
+
+	// Renders the line from startingPosition (inclusive) to the end of
+	// positiveChars. startingPosition may be negative: the caller (typically
+	// InfinitePlan.exportTxt(), once it tracks the leftmost column used
+	// across every line) decides how far left the export should reach, and
+	// any position not actually written to (either because this particular
+	// line never drew that far left, or because startingPosition reaches
+	// further left than any line did) reads back as a space, same as
+	// getCharAt() does.
+	public String getString(int startingPosition) {
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		if (startingPosition &gt;= 0)</span>
+<span class="fc" id="L127">			return positiveChars.substring(startingPosition);</span>
+
+<span class="fc" id="L129">		final int negLength = -startingPosition;</span>
+<span class="fc" id="L130">		final StringBuilder result = new StringBuilder(negLength + positiveChars.length());</span>
+		// Walk from the leftmost requested position (highest negIndex) up to
+		// -1 (negIndex 0), i.e. left to right, matching reading order.
+<span class="fc bfc" id="L133" title="All 2 branches covered.">		for (int negIndex = negLength - 1; negIndex &gt;= 0; negIndex--)</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			result.append(negIndex &lt; negativeChars.length() ? negativeChars.charAt(negIndex) : ' ');</span>
+
+<span class="fc" id="L136">		result.append(positiveChars);</span>
+<span class="fc" id="L137">		return result.toString();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

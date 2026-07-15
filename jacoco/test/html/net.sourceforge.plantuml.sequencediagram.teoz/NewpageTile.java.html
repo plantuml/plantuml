@@ -51,53 +51,63 @@ public class NewpageTile extends AbstractTile {
 
 	private final Newpage newpage;
 	private final TileArguments tileArguments;
+	private final YGauge yGauge;
 
 	@Override
 	public double getContactPointRelative() {
-<span class="nc" id="L57">		return 0;</span>
+<span class="nc" id="L58">		return 0;</span>
 	}
 
 	public NewpageTile(Newpage newpage, TileArguments tileArguments, YGauge currentY) {
-<span class="fc" id="L61">		super(tileArguments.getStringBounder(), currentY);</span>
-<span class="fc" id="L62">		this.newpage = newpage;</span>
-<span class="fc" id="L63">		this.tileArguments = tileArguments;</span>
-<span class="fc" id="L64">	}</span>
+<span class="fc" id="L62">		super(tileArguments.getStringBounder(), currentY);</span>
+<span class="fc" id="L63">		this.newpage = newpage;</span>
+<span class="fc" id="L64">		this.tileArguments = tileArguments;</span>
+<span class="fc" id="L65">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
+<span class="fc" id="L66">	}</span>
+
+	@Override
+	public YGauge getYGauge() {
+<span class="fc" id="L70">		return yGauge;</span>
+	}
 
 	private Component getComponent() {
-<span class="fc" id="L67">		return tileArguments.getSkin().createComponentNewPage(newpage.getUsedStyles(), tileArguments.getSkinParam());</span>
+<span class="fc" id="L74">		return tileArguments.getSkin().createComponentNewPage(newpage.getUsedStyles(), tileArguments.getSkinParam());</span>
 	}
 
 	public void drawU(UGraphic ug) {
 		// Like in Puma, the dashed separator is displayed at the bottom of the
 		// page ending here and at the top of the page starting here: the pages
 		// slightly overlap in PlayingSpaceWithParticipants
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		if (((Context2D) ug).isBackground())</span>
-<span class="fc" id="L75">			return;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">		if (((Context2D) ug).isBackground())</span>
+<span class="fc" id="L82">			return;</span>
 
-<span class="fc" id="L77">		final Component comp = getComponent();</span>
-<span class="fc" id="L78">		final Area area = Area.create(tileArguments.getBorder2() - tileArguments.getBorder1()</span>
-<span class="fc" id="L79">				- tileArguments.getXOrigin().getCurrentValue(), comp.getPreferredHeight(getStringBounder()));</span>
-<span class="fc" id="L80">		ug = ug.apply(new UTranslate(tileArguments.getBorder1(), MARGINY));</span>
-<span class="fc" id="L81">		comp.drawU(ug, area, (Context2D) ug);</span>
-<span class="fc" id="L82">	}</span>
+		// Self-translate prologue: absolute gauge position
+<span class="fc" id="L85">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
+
+<span class="fc" id="L87">		final Component comp = getComponent();</span>
+<span class="fc" id="L88">		final Area area = Area.create(tileArguments.getBorder2() - tileArguments.getBorder1()</span>
+<span class="fc" id="L89">				- tileArguments.getXOrigin().getCurrentValue(), comp.getPreferredHeight(getStringBounder()));</span>
+<span class="fc" id="L90">		ug = ug.apply(new UTranslate(tileArguments.getBorder1(), MARGINY));</span>
+<span class="fc" id="L91">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L92">	}</span>
 
 	public double getPreferredHeight() {
-<span class="fc" id="L85">		return getComponent().getPreferredHeight(getStringBounder()) + 2 * MARGINY;</span>
+<span class="fc" id="L95">		return getComponent().getPreferredHeight(getStringBounder()) + 2 * MARGINY;</span>
 	}
 
 	public void addConstraints() {
-<span class="fc" id="L89">	}</span>
+<span class="fc" id="L99">	}</span>
 
 	public Real getMinX() {
-<span class="fc" id="L92">		return tileArguments.getXOrigin();</span>
+<span class="fc" id="L102">		return tileArguments.getXOrigin();</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L96">		return tileArguments.getXOrigin();</span>
+<span class="fc" id="L106">		return tileArguments.getXOrigin();</span>
 	}
 
 	public Event getEvent() {
-<span class="fc" id="L100">		return newpage;</span>
+<span class="fc" id="L110">		return newpage;</span>
 	}
 
 }

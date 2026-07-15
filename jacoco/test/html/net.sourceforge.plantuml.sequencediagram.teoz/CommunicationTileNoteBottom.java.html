@@ -63,19 +63,18 @@ public class CommunicationTileNoteBottom extends CommunicationTileNoteBottomTopA
 <span class="nc" id="L63">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
 <span class="nc" id="L64">		((UDrawable) tile).drawU(ug);</span>
 
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+<span class="nc" id="L66">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
 
-<span class="nc" id="L69">		final double middleMsg = getMiddleMsg();</span>
-<span class="nc" id="L70">		final double xNote = getNotePosition(stringBounder).getCurrentValue();</span>
-<span class="nc" id="L71">		final double yNote = tile.getPreferredHeight();</span>
+<span class="nc" id="L68">		final double middleMsg = getMiddleMsg();</span>
+<span class="nc" id="L69">		final double xNote = getNotePosition(stringBounder).getCurrentValue();</span>
+<span class="nc" id="L70">		final double yNote = tile.getPreferredHeight();</span>
 
-<span class="nc" id="L73">		comp.drawU(ug.apply(new UTranslate(xNote, yNote + spacey)), area, (Context2D) ug);</span>
+<span class="nc" id="L72">		comp.drawU(ug.apply(new UTranslate(xNote, yNote + spacey)), area, (Context2D) ug);</span>
 
-<span class="nc" id="L75">		drawLine(ug, middleMsg, tile.getContactPointRelative(), xNote + dim.getWidth() / 2,</span>
+<span class="nc" id="L74">		drawLine(ug, middleMsg, tile.getContactPointRelative(), xNote + dim.getWidth() / 2,</span>
 				yNote + spacey + Rose.paddingY);
 
-<span class="nc" id="L78">	}</span>
+<span class="nc" id="L77">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

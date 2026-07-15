@@ -100,34 +100,34 @@ import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 <span class="fc" id="L100">	}</span>
 
 	public void drawNoteSimple(int x, int y, int width, int height) {
-<span class="fc" id="L103">		this.drawHLine('-', y, x + 1, x + width - 1);</span>
-<span class="fc" id="L104">		this.drawHLine('-', y + height - 1, x + 1, x + width - 1);</span>
+<span class="nc" id="L103">		this.drawHLine('-', y, x + 1, x + width - 1);</span>
+<span class="nc" id="L104">		this.drawHLine('-', y + height - 1, x + 1, x + width - 1);</span>
 
-<span class="fc" id="L106">		this.drawVLine('|', x, y + 1, y + height - 1);</span>
-<span class="fc" id="L107">		this.drawVLine('|', x + width - 1, y + 1, y + height - 1);</span>
+<span class="nc" id="L106">		this.drawVLine('|', x, y + 1, y + height - 1);</span>
+<span class="nc" id="L107">		this.drawVLine('|', x + width - 1, y + 1, y + height - 1);</span>
 
-<span class="fc" id="L109">		this.drawChar(',', x, y);</span>
+<span class="nc" id="L109">		this.drawChar(',', x, y);</span>
 
-<span class="fc" id="L111">		this.drawStringLR(&quot;!. &quot;, x + width - 3, y);</span>
-<span class="fc" id="L112">		this.drawStringLR(&quot;|_\\&quot;, x + width - 3, y + 1);</span>
+<span class="nc" id="L111">		this.drawStringLR(&quot;!. &quot;, x + width - 3, y);</span>
+<span class="nc" id="L112">		this.drawStringLR(&quot;|_\\&quot;, x + width - 3, y + 1);</span>
 
-<span class="fc" id="L114">		this.drawChar('`', x, y + height - 1);</span>
-<span class="fc" id="L115">		this.drawChar('\'', x + width - 1, y + height - 1);</span>
-<span class="fc" id="L116">	}</span>
+<span class="nc" id="L114">		this.drawChar('`', x, y + height - 1);</span>
+<span class="nc" id="L115">		this.drawChar('\'', x + width - 1, y + height - 1);</span>
+<span class="nc" id="L116">	}</span>
 
 	public void drawNoteSimpleUnicode(int x, int y, int width, int height) {
-<span class="fc" id="L119">		this.drawChar('\u2591', x + width - 2, y + 1);</span>
+<span class="nc" id="L119">		this.drawChar('\u2591', x + width - 2, y + 1);</span>
 
-<span class="fc" id="L121">		this.drawHLine('\u2550', y, x + 1, x + width - 1, '\u2502', '\u2567');</span>
-<span class="fc" id="L122">		this.drawHLine('\u2550', y + height - 1, x + 1, x + width - 1, '\u2502', '\u2564');</span>
+<span class="nc" id="L121">		this.drawHLine('\u2550', y, x + 1, x + width - 1, '\u2502', '\u2567');</span>
+<span class="nc" id="L122">		this.drawHLine('\u2550', y + height - 1, x + 1, x + width - 1, '\u2502', '\u2564');</span>
 
-<span class="fc" id="L124">		this.drawVLine('\u2551', x, y + 1, y + height - 1);</span>
-<span class="fc" id="L125">		this.drawVLine('\u2551', x + width - 1, y + 1, y + height - 1);</span>
+<span class="nc" id="L124">		this.drawVLine('\u2551', x, y + 1, y + height - 1);</span>
+<span class="nc" id="L125">		this.drawVLine('\u2551', x + width - 1, y + 1, y + height - 1);</span>
 
-<span class="fc" id="L127">		this.drawChar('\u2554', x, y);</span>
-<span class="fc" id="L128">		this.drawChar('\u2557', x + width - 1, y);</span>
-<span class="fc" id="L129">		this.drawChar('\u255a', x, y + height - 1);</span>
-<span class="fc" id="L130">		this.drawChar('\u255d', x + width - 1, y + height - 1);</span>
-<span class="fc" id="L131">	}</span>
+<span class="nc" id="L127">		this.drawChar('\u2554', x, y);</span>
+<span class="nc" id="L128">		this.drawChar('\u2557', x + width - 1, y);</span>
+<span class="nc" id="L129">		this.drawChar('\u255a', x, y + height - 1);</span>
+<span class="nc" id="L130">		this.drawChar('\u255d', x + width - 1, y + height - 1);</span>
+<span class="nc" id="L131">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

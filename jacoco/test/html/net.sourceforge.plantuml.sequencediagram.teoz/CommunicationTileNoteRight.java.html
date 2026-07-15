@@ -35,12 +35,18 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.asciiverse.ADimension2D;
+import net.sourceforge.plantuml.asciiverse.ANote;
+import net.sourceforge.plantuml.asciiverse.AsciiBlock;
+import net.sourceforge.plantuml.asciiverse.AsciiBlockMarginLR;
+import net.sourceforge.plantuml.asciiverse.InfinitePlan;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.Note;
@@ -61,89 +67,187 @@ public class CommunicationTileNoteRight extends AbstractTile {
 	private final YGauge yGauge;
 
 	public Event getEvent() {
-<span class="fc" id="L64">		return message;</span>
+<span class="fc" id="L70">		return message;</span>
 	}
 
 	private boolean isCreate() {
-<span class="fc" id="L68">		return message.isCreate();</span>
+<span class="fc" id="L74">		return message.isCreate();</span>
 	}
 
 	@Override
 	public double getContactPointRelative() {
-<span class="fc" id="L73">		return tile.getContactPointRelative();</span>
+<span class="fc" id="L79">		return tile.getContactPointRelative();</span>
 	}
 
 	public CommunicationTileNoteRight(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
 			LivingSpace livingSpace, Note noteOnMessage, YGauge currentY) {
-<span class="fc" id="L78">		super(((AbstractTile) tile).getStringBounder(), currentY);</span>
-<span class="fc" id="L79">		this.tile = tile;</span>
-<span class="fc" id="L80">		this.message = message;</span>
-<span class="fc" id="L81">		this.skin = skin;</span>
-<span class="fc" id="L82">		this.skinParam = skinParam;</span>
-<span class="fc" id="L83">		this.noteOnMessage = noteOnMessage;</span>
-<span class="fc" id="L84">		this.livingSpace = livingSpace;</span>
-<span class="fc" id="L85">		this.yGauge = YGauge.create(currentY.getMax(), getPreferredHeight());</span>
-<span class="fc" id="L86">	}</span>
+<span class="fc" id="L84">		super(((AbstractTile) tile).getStringBounder(), currentY);</span>
+<span class="fc" id="L85">		this.tile = tile;</span>
+<span class="fc" id="L86">		this.message = message;</span>
+<span class="fc" id="L87">		this.skin = skin;</span>
+<span class="fc" id="L88">		this.skinParam = skinParam;</span>
+<span class="fc" id="L89">		this.noteOnMessage = noteOnMessage;</span>
+<span class="fc" id="L90">		this.livingSpace = livingSpace;</span>
+		// Propagate contact/origin from the wrapped tile so a following &amp;
+		// message can still find and align with the SAME contact line through
+		// the note wrapper (min unchanged: the note doesn't move the arrow;
+		// max anchored via addAtLeast per the CHAIN ANCHORING invariant in
+		// YGauge, so this wrapper is itself safe to chain onto)
+<span class="fc" id="L96">		final YGauge innerGauge = tile.getYGauge();</span>
+<span class="fc" id="L97">		this.yGauge = new YGauge(innerGauge.getMin(), innerGauge.getMin().addAtLeast(getPreferredHeight()),</span>
+<span class="fc" id="L98">				innerGauge.getContact(), innerGauge.getOrigin());</span>
+<span class="fc" id="L99">	}</span>
 
 	@Override
 	public YGauge getYGauge() {
-<span class="nc" id="L90">		return yGauge;</span>
+<span class="fc" id="L103">		return yGauge;</span>
 	}
 
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
-<span class="fc" id="L95">		super.callbackY_internal(y);</span>
-<span class="fc" id="L96">		tile.callbackY(y);</span>
-<span class="fc" id="L97">	}</span>
+<span class="fc" id="L108">		super.callbackY_internal(y);</span>
+<span class="fc" id="L109">		tile.callbackY(y);</span>
+<span class="fc" id="L110">	}</span>
 
 	private Component getComponent(StringBounder stringBounder) {
-<span class="fc" id="L100">		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), NoteTile.getNoteComponentType(noteOnMessage.getNoteStyle()),</span>
-<span class="fc" id="L101">				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),</span>
-<span class="fc" id="L102">				noteOnMessage.getColors());</span>
-<span class="fc" id="L103">		return comp;</span>
+<span class="fc" id="L113">		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(),</span>
+<span class="fc" id="L114">				NoteTile.getNoteComponentType(noteOnMessage.getNoteStyle()),</span>
+<span class="fc" id="L115">				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),</span>
+<span class="fc" id="L116">				noteOnMessage.getColors());</span>
+<span class="fc" id="L117">		return comp;</span>
 	}
 
 	private Real getNotePosition(StringBounder stringBounder) {
 		// final Component comp = getComponent(stringBounder);
 		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		if (isCreate()) {</span>
-<span class="nc" id="L110">			return livingSpace.getPosD(stringBounder);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">		if (isCreate()) {</span>
+<span class="nc" id="L124">			return livingSpace.getPosD(stringBounder);</span>
 		}
-<span class="fc" id="L112">		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
-<span class="fc" id="L113">		return livingSpace.getPosC(stringBounder).addFixed(level * CommunicationTile.LIVE_DELTA_SIZE);</span>
+<span class="fc" id="L126">		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);</span>
+<span class="fc" id="L127">		return livingSpace.getPosC(stringBounder).addFixed(level * CommunicationTile.LIVE_DELTA_SIZE);</span>
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L117">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L118">		final Component comp = getComponent(stringBounder);</span>
-<span class="fc" id="L119">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L120">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
-<span class="fc" id="L121">		((UDrawable) tile).drawU(ug);</span>
-<span class="fc" id="L122">		final Real p = getNotePosition(stringBounder);</span>
-		if (YGauge.USE_ME)
-			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
+<span class="fc" id="L131">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L132">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L133">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L134">		final Area area = Area.create(dim.getWidth(), dim.getHeight());</span>
+		// The wrapped tile self-translates to its own gauge; the note's prologue is
+		// applied AFTERWARDS, to the note only (the wrapper's min is identical to the
+		// inner tile's, so both land on the same row -- the note never moves the arrow)
+<span class="fc" id="L138">		((UDrawable) tile).drawU(ug);</span>
+<span class="fc" id="L139">		final Real p = getNotePosition(stringBounder);</span>
+<span class="fc" id="L140">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
 
-<span class="fc" id="L126">		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);</span>
-<span class="fc" id="L127">	}</span>
+<span class="fc" id="L142">		comp.drawU(ug.apply(UTranslate.dx(p.getCurrentValue())), area, (Context2D) ug);</span>
+<span class="fc" id="L143">	}</span>
 
 	public double getPreferredHeight() {
-<span class="fc" id="L130">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L131">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L132">		return Math.max(tile.getPreferredHeight(), dim.getHeight());</span>
+<span class="fc" id="L146">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L147">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L148">		return Math.max(tile.getPreferredHeight(), dim.getHeight());</span>
 	}
 
 	public void addConstraints() {
-<span class="fc" id="L136">		tile.addConstraints();</span>
-<span class="fc" id="L137">	}</span>
+<span class="fc" id="L152">		tile.addConstraints();</span>
+<span class="fc" id="L153">	}</span>
+
+	// ASCII counterpart: delegate the message's own constraint to the inner
+	// tile, exactly like addConstraints() above delegates to tile.addConstraints().
+	// The note's own width is not yet reserved on the ASCII column graph
+	// -- it can overlap a participant further right.
+	@Override
+	public void asciiAddConstraints() {
+<span class="fc" id="L161">		tile.asciiAddConstraints();</span>
+<span class="fc" id="L162">	}</span>
+
+	// Delegate the range to the wrapped message, exactly like
+	// asciiAddConstraints() delegates its constraint. The note box's own extra
+	// width past the target column is not reflected here -- same known gap as
+	// everywhere else in this family: the note is not yet
+	// reserved on the ASCII column solver.
+	@Override
+	public Real getAsciiMinX() {
+<span class="fc" id="L171">		return tile.getAsciiMinX();</span>
+	}
+
+	// Unlike getAsciiMinX() above, this one no longer just forwards to the
+	// wrapped message: a partition's frame needs to widen to fit an attached
+	// right note (&quot;notes fall inside the frame&quot;,
+	// not past it, matching the pixel rendering), and the frame only ever asks
+	// its children's own getAsciiMinX()/getAsciiMaxX() to know how far they
+	// reach (GroupingTile.asciiChildrenMax()). The note box's own width still
+	// isn't reserved on the ASCII column solver itself — it can still
+	// overlap a participant further right — only this tile's own reported
+	// extent grows, the same column arithmetic asciiDraw() below already uses
+	// to place the box (targetColumn + 2, then the box's own width).
+	@Override
+	public Real getAsciiMaxX() {
+<span class="fc" id="L186">		final int boxWidth = new ANote(asciiNoteText()).marginLR(2, 2).asciiDimension().getWidth();</span>
+<span class="fc" id="L187">		final Real noteMax = livingSpace.getAsciiLifeColumn().addFixed(boxWidth + 1);</span>
+<span class="fc" id="L188">		final Real tileMax = tile.getAsciiMaxX();</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">		if (tileMax == null)</span>
+<span class="nc" id="L190">			return noteMax;</span>
+
+<span class="fc" id="L192">		return RealUtils.max(java.util.Arrays.asList(tileMax, noteMax));</span>
+	}
+
+	// ASCII counterpart of getPreferredHeight()/asciiDraw(): the Y footprint
+	// this decorator needs is whichever is taller, the inner message (label
+	// rows + arrow + blank, see CommunicationTile.asciiDimension())
+	// or the note box itself (a throwaway `new
+	// ANote(text).asciiDimension()`: ANote computes its own size from
+	// the text alone, no plan needed just to ask) — mirroring how
+	// getPreferredHeight() above takes Math.max(tile's height, the pixel
+	// note's height). No try/catch around tile.asciiDimension(): an inner
+	// tile with no ASCII support crashes here rather than silently reporting
+	// a made-up height (the same &quot;crash, don't mask it&quot;
+	// policy the orchestrator's asciiDraw() loop follows). Width is inherited
+	// straight from the inner tile: unlike height, the note box's own width
+	// still isn't reserved anywhere on the ASCII column solver, so
+	// reporting it here wouldn't yet be acted upon — same known gap as
+	// before, not fixed by this change.
+	@Override
+	public ADimension2D asciiDimension() {
+<span class="fc" id="L212">		final ADimension2D tileDim = tile.asciiDimension();</span>
+<span class="fc" id="L213">		final int tileWidth = tileDim.getWidth();</span>
+<span class="fc" id="L214">		final int tileHeight = tileDim.getHeight();</span>
+
+<span class="fc" id="L216">		final int noteHeight = new ANote(asciiNoteText()).asciiDimension().getHeight();</span>
+<span class="fc" id="L217">		return new ADimension2D(tileWidth, Math.max(tileHeight, noteHeight));</span>
+	}
+
+	// ASCII counterpart of drawU(): draw the inner message first (exactly
+	// like drawU()'s ((UDrawable) tile).drawU(ug)), then the note itself as a
+	// proper folded-corner box (InfinitePlan.createNoteBox()),
+	// placed right after the target's lifeline column. Real
+	// multi-line notes now draw correctly top-to-bottom, and the row
+	// this decorator needs is correctly reported by asciiDimension() above
+	// -- but see that method's note: only the note box's height feeds
+	// back into the Y-axis, not its width.
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+<span class="fc" id="L230">		tile.asciiDraw(plan);</span>
+
+<span class="fc" id="L232">		final AsciiBlock noteText = asciiNoteText();</span>
+<span class="fc" id="L233">		final AsciiBlock noteBox = plan.createNoteBox(noteText).marginLR(2, 2);</span>
+<span class="fc" id="L234">		final int targetColumn = (int) livingSpace.getAsciiLifeColumn().getCurrentValue();</span>
+<span class="fc" id="L235">		final int left = targetColumn + 2;</span>
+<span class="fc" id="L236">		noteBox.asciiDraw(plan.move(left, 0));</span>
+<span class="fc" id="L237">	}</span>
+
+	private AsciiBlock asciiNoteText() {
+<span class="fc" id="L240">		return noteOnMessage.getDisplay().marginLR(1, 3);</span>
+	}
 
 	public Real getMinX() {
-<span class="fc" id="L140">		return tile.getMinX();</span>
+<span class="fc" id="L244">		return tile.getMinX();</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L144">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L145">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L146">		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());</span>
+<span class="fc" id="L248">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L249">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L250">		return getNotePosition(getStringBounder()).addFixed(dim.getWidth());</span>
 	}
 
 }

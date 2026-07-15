@@ -39,33 +39,137 @@ import net.sourceforge.plantuml.real.Real;
 
 public final class YGauge {
 
-	public static final boolean USE_ME = false;
-
 	private final Real min;
 	private final Real max;
+	// Contact line shared by the members of a parallel (&amp;) group: the
+	// absolute Y of the arrow line. Null for tiles without a contact line.
+	private final Real contact;
+	// Chaining origin of the parallel group (the max of the gauge preceding
+	// the group head): no member of the group may start above it. It mirrors
+	// the legacy TileParallel behavior where the whole group is anchored at
+	// the group top and members are shifted DOWN to align contact points.
+	private final Real origin;
 
-<span class="fc" id="L47">	public YGauge(Real min, Real max) {</span>
-<span class="fc" id="L48">		this.min = min;</span>
-<span class="fc" id="L49">		this.max = max;</span>
-<span class="fc" id="L50">	}</span>
+	public YGauge(Real min, Real max) {
+<span class="fc" id="L54">		this(min, max, null, null);</span>
+<span class="fc" id="L55">	}</span>
+
+<span class="fc" id="L57">	public YGauge(Real min, Real max, Real contact, Real origin) {</span>
+<span class="fc" id="L58">		this.min = min;</span>
+<span class="fc" id="L59">		this.max = max;</span>
+<span class="fc" id="L60">		this.contact = contact;</span>
+<span class="fc" id="L61">		this.origin = origin;</span>
+<span class="fc" id="L62">	}</span>
 
 	@Override
 	public String toString() {
-<span class="nc" id="L54">		return min.getCurrentValue() + &quot; &quot; + max.getCurrentValue();</span>
+<span class="nc" id="L66">		return min.getCurrentValue() + &quot; &quot; + max.getCurrentValue();</span>
 	}
 
 	public static YGauge create(Real min, double height) {
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">		if (height &lt; 0)</span>
-<span class="nc" id="L59">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L60">		return new YGauge(min, min.addFixed(height));</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (height &lt; 0)</span>
+<span class="nc" id="L71">			throw new IllegalArgumentException();</span>
+		// addAtLeast (not addFixed): see the note on chain anchoring below
+<span class="fc" id="L73">		return new YGauge(min, min.addAtLeast(height));</span>
+	}
+
+	// CHAIN ANCHORING (performance-critical, do not &quot;simplify&quot; back to
+	// addFixed):
+	//
+	// RealDelta.addAtLeast() delegates DOWNWARD --
+	// `new RealDelta(delegated.addAtLeast(delta), diff)` -- so calling
+	// addAtLeast on a RealDelta recurses through every layer below it and
+	// rebuilds one RealDelta per layer. RealImpl.addAtLeast(), in contrast,
+	// creates a single new RealImpl in O(1).
+	//
+	// The Y gauge chain links each tile to the previous one, so the link
+	// carried from gauge to gauge (the `max`, which becomes the next tile's
+	// `origin`) must ALWAYS be an anchored moveable (RealImpl), never a
+	// RealDelta. Otherwise every tile stacks one more RealDelta layer and
+	// tile n pays O(n) to chain: O(n^2) objects, O(n) recursion depth, and
+	// the OutOfMemoryError / deep `RealDelta.addAtLeast` stack seen on large
+	// diagrams.
+	//
+	// addFixed remains fine for LEAF values that nothing chains onto (e.g.
+	// the `min` below, read only for drawing).
+
+	// For tiles owning a contact line (message arrows). The min FLOATS below
+	// the chaining origin: contact = origin.addAtLeast(contactRelative), so
+	// that a later parallel (&amp;) member with a taller label can push this tile
+	// down through an ensureBiggerThan on the shared contact line. When no
+	// parallel member follows, the solver minimization gives
+	// contact = origin + contactRelative, that is min = origin: exactly the
+	// plain sequential chaining.
+	public static YGauge createWithContact(YGauge currentY, double contactRelative, double height) {
+<span class="pc bpc" id="L104" title="2 of 4 branches missed.">		if (height &lt; 0 || contactRelative &lt; 0)</span>
+<span class="nc" id="L105">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L106">		final Real origin = currentY.getMax();</span>
+<span class="fc" id="L107">		final Real contact = origin.addAtLeast(contactRelative);</span>
+		// min is a leaf (drawing only): addFixed is safe and keeps it exactly
+		// contactRelative above the contact line
+<span class="fc" id="L110">		final Real min = contact.addFixed(-contactRelative);</span>
+		// max is the chain link: it MUST be an anchored moveable, so it is
+		// built with addAtLeast on the contact (a RealImpl), not with addFixed
+		// on min (a RealDelta)
+<span class="fc" id="L114">		final Real max = contact.addAtLeast(height - contactRelative);</span>
+<span class="fc" id="L115">		return new YGauge(min, max, contact, origin);</span>
+	}
+
+	// For a parallel (&amp;) tile: aligns its contact line with the shared
+	// contact line of the group, and pushes that line down if this member's
+	// label is taller (contact &gt;= groupTop + contactRelative). The max
+	// accumulates over the members so that the next sequential tile chains
+	// below the WHOLE group, like the legacy
+	// TileParallel.getPreferredHeight().
+	public static YGauge createParallel(YGauge currentY, double contactRelative, double height) {
+<span class="fc" id="L125">		final Real contact = currentY.getContact();</span>
+<span class="fc" id="L126">		final Real origin = currentY.getOrigin();</span>
+<span class="pc bpc" id="L127" title="1 of 4 branches missed.">		if (contact == null || origin == null)</span>
+			// The previous tile has no contact line: fall back to top alignment
+<span class="fc" id="L129">			return create(currentY.getMin(), height);</span>
+
+<span class="fc" id="L131">		contact.ensureBiggerThan(origin.addFixed(contactRelative));</span>
+<span class="fc" id="L132">		final Real min = contact.addFixed(-contactRelative);</span>
+		// CAUTION: do NOT use RealUtils.max() here. RealMax is a post-compile,
+		// read-only combinator: addAtLeast/ensureBiggerThan are unsupported
+		// (would crash on the next chained tile) and its getCurrentValue is
+		// cached on first read, so using it as a PositiveForce source would
+		// freeze a stale value in the middle of RealLine.compile(). The group
+		// max is expressed instead as a moveable Real with two constraints:
+		// the solver minimization computes the same maximum.
+		// It is built from the contact (a RealImpl) so that the chain link
+		// stays anchored -- see the CHAIN ANCHORING note above.
+<span class="fc" id="L142">		final Real max = contact.addAtLeast(height - contactRelative);</span>
+<span class="fc" id="L143">		max.ensureBiggerThan(currentY.getMax());</span>
+<span class="fc" id="L144">		return new YGauge(min, max, contact, origin);</span>
+	}
+
+	// For zero-side tiles (life events, ...) placed between the members of a
+	// parallel group: the contact line and origin are propagated so that a
+	// following &amp; tile still finds them, mirroring the legacy
+	// moveRecentParallelTilesToPending which skips through LifeEventTiles.
+	public static YGauge createPropagating(YGauge currentY, double height) {
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">		if (height &lt; 0)</span>
+<span class="nc" id="L153">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L154">		final Real min = currentY.getMax();</span>
+		// addAtLeast: the max is a chain link (see CHAIN ANCHORING above)
+<span class="fc" id="L156">		return new YGauge(min, min.addAtLeast(height), currentY.getContact(), currentY.getOrigin());</span>
 	}
 
 	public final Real getMin() {
-<span class="fc" id="L64">		return min;</span>
+<span class="fc" id="L160">		return min;</span>
 	}
 
 	public final Real getMax() {
-<span class="fc" id="L68">		return max;</span>
+<span class="fc" id="L164">		return max;</span>
+	}
+
+	public final Real getContact() {
+<span class="fc" id="L168">		return contact;</span>
+	}
+
+	public final Real getOrigin() {
+<span class="fc" id="L172">		return origin;</span>
 	}
 
 }

@@ -43,25 +43,25 @@ class FrontierComplex implements Frontier {
 	private final double freeY[];
 
 	public static FrontierComplex create(double freeY, int rangeEnd) {
-<span class="fc" id="L46">		final FrontierComplex result = new FrontierComplex(new double[rangeEnd + 1]);</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">		for (int i = 0; i &lt;= rangeEnd; i++)</span>
-<span class="fc" id="L48">			result.freeY[i] = freeY;</span>
+<span class="nc" id="L46">		final FrontierComplex result = new FrontierComplex(new double[rangeEnd + 1]);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		for (int i = 0; i &lt;= rangeEnd; i++)</span>
+<span class="nc" id="L48">			result.freeY[i] = freeY;</span>
 
-<span class="fc" id="L50">		return result;</span>
+<span class="nc" id="L50">		return result;</span>
 	}
 
-<span class="fc" id="L53">	private FrontierComplex(double freeY[]) {</span>
-<span class="fc" id="L54">		this.freeY = freeY;</span>
-<span class="fc" id="L55">	}</span>
+<span class="nc" id="L53">	private FrontierComplex(double freeY[]) {</span>
+<span class="nc" id="L54">		this.freeY = freeY;</span>
+<span class="nc" id="L55">	}</span>
 
 	public double getFreeY(ParticipantRange range) {
-<span class="fc" id="L58">		Objects.requireNonNull(range);</span>
-<span class="fc" id="L59">		double result = freeY[range.start()];</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">		for (int i = range.start(); i &lt;= range.end(); i++)</span>
-<span class="pc bpc" id="L61" title="1 of 2 branches missed.">			if (freeY[i] &gt; result)</span>
+<span class="nc" id="L58">		Objects.requireNonNull(range);</span>
+<span class="nc" id="L59">		double result = freeY[range.start()];</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">		for (int i = range.start(); i &lt;= range.end(); i++)</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">			if (freeY[i] &gt; result)</span>
 <span class="nc" id="L62">				result = freeY[i];</span>
 
-<span class="fc" id="L64">		return result;</span>
+<span class="nc" id="L64">		return result;</span>
 	}
 
 	@Override
@@ -70,12 +70,12 @@ class FrontierComplex implements Frontier {
 	}
 
 	public FrontierComplex add(double delta, ParticipantRange range) {
-<span class="fc" id="L73">		Objects.requireNonNull(range);</span>
-<span class="fc" id="L74">		final FrontierComplex result = new FrontierComplex(freeY.clone());</span>
-<span class="fc" id="L75">		final double newV = result.getFreeY(range) + delta;</span>
-<span class="fc bfc" id="L76" title="All 2 branches covered.">		for (int i = range.start(); i &lt;= range.end(); i++)</span>
-<span class="fc" id="L77">			result.freeY[i] = newV;</span>
-<span class="fc" id="L78">		return result;</span>
+<span class="nc" id="L73">		Objects.requireNonNull(range);</span>
+<span class="nc" id="L74">		final FrontierComplex result = new FrontierComplex(freeY.clone());</span>
+<span class="nc" id="L75">		final double newV = result.getFreeY(range) + delta;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (int i = range.start(); i &lt;= range.end(); i++)</span>
+<span class="nc" id="L77">			result.freeY[i] = newV;</span>
+<span class="nc" id="L78">		return result;</span>
 	}
 
 	FrontierComplex copy() {

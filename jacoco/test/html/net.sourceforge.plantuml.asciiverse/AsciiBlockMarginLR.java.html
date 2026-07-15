@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AsciiBlockMarginLR.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.asciiverse</a> &gt; <span class="el_source">AsciiBlockMarginLR.java</span></div><h1>AsciiBlockMarginLR.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.asciiverse;
+
+// A generic AsciiBlock decorator: wraps another AsciiBlock and pads it with a
+// fixed number of blank columns on the left and/or right. The inner block
+// never knows it's been padded — asciiDraw() just moves it right by
+// marginLeft, and asciiDimension() grows to include both margins — so any
+// AsciiBlock (a Display, an ANote, another decorator, ...) can gain a margin
+// without changing its own drawing logic. Same composition principle as
+// every other AsciiBlock in this package: the caller
+// asks the wrapper for its size, never recomputes the padding by hand.
+public final class AsciiBlockMarginLR implements AsciiBlock {
+
+	private final AsciiBlock inner;
+	private final int marginLeft;
+	private final int marginRight;
+
+<span class="fc" id="L52">	AsciiBlockMarginLR(AsciiBlock inner, int marginLeft, int marginRight) {</span>
+<span class="pc bpc" id="L53" title="2 of 4 branches missed.">		if (marginLeft &lt; 0 || marginRight &lt; 0)</span>
+<span class="nc" id="L54">			throw new IllegalArgumentException();</span>
+
+<span class="fc" id="L56">		this.inner = inner;</span>
+<span class="fc" id="L57">		this.marginLeft = marginLeft;</span>
+<span class="fc" id="L58">		this.marginRight = marginRight;</span>
+<span class="fc" id="L59">	}</span>
+
+	@Override
+	public ADimension2D asciiDimension() {
+<span class="fc" id="L63">		final ADimension2D dim = inner.asciiDimension();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (dim.getWidth() == 0)</span>
+			// An empty inner block (e.g. an unlabeled message) stays empty:
+			// there's no text to pad around, so no margin is reserved either.
+<span class="fc" id="L67">			return dim;</span>
+
+<span class="fc" id="L69">		return dim.delta(marginLeft + marginRight, 0);</span>
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+<span class="fc" id="L74">		inner.asciiDraw(plan.move(marginLeft, 0));</span>
+<span class="fc" id="L75">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

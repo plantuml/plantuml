@@ -46,13 +46,13 @@ class FrontierStackImpl implements FrontierStack {
 		final private FrontierComplex envelop;
 
 		Stack(FrontierComplex current) {
-<span class="fc" id="L49">			this(current, null);</span>
-<span class="fc" id="L50">		}</span>
+<span class="nc" id="L49">			this(current, null);</span>
+<span class="nc" id="L50">		}</span>
 
-<span class="fc" id="L52">		private Stack(FrontierComplex current, FrontierComplex envelop) {</span>
-<span class="fc" id="L53">			this.current = current;</span>
-<span class="fc" id="L54">			this.envelop = envelop;</span>
-<span class="fc" id="L55">		}</span>
+<span class="nc" id="L52">		private Stack(FrontierComplex current, FrontierComplex envelop) {</span>
+<span class="nc" id="L53">			this.current = current;</span>
+<span class="nc" id="L54">			this.envelop = envelop;</span>
+<span class="nc" id="L55">		}</span>
 
 		Stack addEnvelop(FrontierComplex env) {
 <span class="nc bnc" id="L58" title="All 2 branches missed.">			if (this.envelop == null) {</span>
@@ -64,28 +64,28 @@ class FrontierStackImpl implements FrontierStack {
 
 	final private List&lt;Stack&gt; all;
 
-<span class="fc" id="L67">	public FrontierStackImpl(double freeY, int rangeEnd) {</span>
-<span class="fc" id="L68">		final Stack s = new Stack(FrontierComplex.create(freeY, rangeEnd));</span>
-<span class="fc" id="L69">		all = Collections.singletonList(s);</span>
-<span class="fc" id="L70">	}</span>
+<span class="nc" id="L67">	public FrontierStackImpl(double freeY, int rangeEnd) {</span>
+<span class="nc" id="L68">		final Stack s = new Stack(FrontierComplex.create(freeY, rangeEnd));</span>
+<span class="nc" id="L69">		all = Collections.singletonList(s);</span>
+<span class="nc" id="L70">	}</span>
 
-<span class="fc" id="L72">	private FrontierStackImpl(List&lt;Stack&gt; all) {</span>
-<span class="fc" id="L73">		this.all = Collections.unmodifiableList(all);</span>
-<span class="fc" id="L74">	}</span>
+<span class="nc" id="L72">	private FrontierStackImpl(List&lt;Stack&gt; all) {</span>
+<span class="nc" id="L73">		this.all = Collections.unmodifiableList(all);</span>
+<span class="nc" id="L74">	}</span>
 
 	private FrontierComplex getLast() {
-<span class="fc" id="L77">		return all.get(all.size() - 1).current;</span>
+<span class="nc" id="L77">		return all.get(all.size() - 1).current;</span>
 	}
 
 	public double getFreeY(ParticipantRange range) {
-<span class="fc" id="L81">		return getLast().getFreeY(range);</span>
+<span class="nc" id="L81">		return getLast().getFreeY(range);</span>
 	}
 
 	public FrontierStackImpl add(double delta, ParticipantRange range) {
-<span class="fc" id="L85">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
-<span class="fc" id="L86">		final Stack s = new Stack(getLast().add(delta, range));</span>
-<span class="fc" id="L87">		result.set(result.size() - 1, s);</span>
-<span class="fc" id="L88">		return new FrontierStackImpl(result);</span>
+<span class="nc" id="L85">		final List&lt;Stack&gt; result = new ArrayList&lt;&gt;(all);</span>
+<span class="nc" id="L86">		final Stack s = new Stack(getLast().add(delta, range));</span>
+<span class="nc" id="L87">		result.set(result.size() - 1, s);</span>
+<span class="nc" id="L88">		return new FrontierStackImpl(result);</span>
 	}
 
 	public FrontierStack openBar() {

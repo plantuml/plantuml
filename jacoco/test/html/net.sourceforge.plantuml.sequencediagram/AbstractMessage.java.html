@@ -122,12 +122,12 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	final public Url getUrl() {
-<span class="pc bpc" id="L125" title="1 of 2 branches missed.">		if (url == null)</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">			for (Note n : noteOnMessages)</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">				if (n.getUrl() != null)</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (url == null)</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			for (Note n : noteOnMessages)</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">				if (n.getUrl() != null)</span>
 <span class="nc" id="L128">					return n.getUrl();</span>
 
-<span class="fc" id="L130">		return url;</span>
+<span class="nc" id="L130">		return url;</span>
 	}
 
 	public boolean hasUrl() {
@@ -190,7 +190,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	public final boolean isActivateAndDeactive() {
-<span class="pc bpc" id="L193" title="3 of 4 branches missed.">		return firstIsActivate &amp;&amp; isDeactivateOrDestroy();</span>
+<span class="nc bnc" id="L193" title="All 4 branches missed.">		return firstIsActivate &amp;&amp; isDeactivateOrDestroy();</span>
 	}
 
 	public final Display getLabel() {
@@ -246,12 +246,12 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	public void setPosYstartLevel(double posYstartLevel) {
-<span class="fc" id="L249">		this.posYstartLevel = posYstartLevel;</span>
-<span class="fc" id="L250">	}</span>
+<span class="nc" id="L249">		this.posYstartLevel = posYstartLevel;</span>
+<span class="nc" id="L250">	}</span>
 
 	public void setPosYendLevel(double posYendLevel) {
-<span class="fc" id="L253">		this.posYendLevel = posYendLevel;</span>
-<span class="fc" id="L254">	}</span>
+<span class="nc" id="L253">		this.posYendLevel = posYendLevel;</span>
+<span class="nc" id="L254">	}</span>
 
 	public double getPosYendLevel() {
 <span class="nc" id="L257">		return posYendLevel;</span>
@@ -297,7 +297,7 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 	}
 
 	public LineLocation getLineLocation() {
-<span class="fc" id="L300">		return location;</span>
+<span class="nc" id="L300">		return location;</span>
 	}
 
 }

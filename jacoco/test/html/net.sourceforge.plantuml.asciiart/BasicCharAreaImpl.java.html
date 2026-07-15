@@ -133,10 +133,10 @@ public class BasicCharAreaImpl implements BasicCharArea {
 <span class="fc" id="L133">	}</span>
 
 	public void drawStringTB(String string, int x, int y) {
-<span class="fc bfc" id="L136" title="All 2 branches covered.">		for (int i = 0; i &lt; string.length(); i++) {</span>
-<span class="fc" id="L137">			drawChar(string.charAt(i), x, y + i);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">		for (int i = 0; i &lt; string.length(); i++) {</span>
+<span class="nc" id="L137">			drawChar(string.charAt(i), x, y + i);</span>
 		}
-<span class="fc" id="L139">	}</span>
+<span class="nc" id="L139">	}</span>
 
 	public String getLine(int line) {
 <span class="fc" id="L142">		final StringBuilder sb = new StringBuilder(charSize1);</span>
@@ -170,15 +170,15 @@ public class BasicCharAreaImpl implements BasicCharArea {
 <span class="fc" id="L170">	}</span>
 
 	public void drawHLine(char c, int line, int col1, int col2, char ifFound, char thenUse) {
-<span class="fc bfc" id="L173" title="All 2 branches covered.">		for (int x = col1; x &lt; col2; x++) {</span>
-<span class="fc" id="L174">			ensurePossible(x, line);</span>
-<span class="fc bfc" id="L175" title="All 2 branches covered.">			if (this.chars[x][line] == ifFound) {</span>
-<span class="fc" id="L176">				this.drawChar(thenUse, x, line);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">		for (int x = col1; x &lt; col2; x++) {</span>
+<span class="nc" id="L174">			ensurePossible(x, line);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">			if (this.chars[x][line] == ifFound) {</span>
+<span class="nc" id="L176">				this.drawChar(thenUse, x, line);</span>
 			} else {
-<span class="fc" id="L178">				this.drawChar(c, x, line);</span>
+<span class="nc" id="L178">				this.drawChar(c, x, line);</span>
 			}
 		}
-<span class="fc" id="L181">	}</span>
+<span class="nc" id="L181">	}</span>
 
 	public void drawVLine(char c, int col, int line1, int line2) {
 <span class="fc bfc" id="L184" title="All 2 branches covered.">		for (int y = line1; y &lt; line2; y++) {</span>
@@ -192,12 +192,12 @@ public class BasicCharAreaImpl implements BasicCharArea {
 	}
 
 	public void fillRect(char c, int x, int y, int width, int height) {
-<span class="fc bfc" id="L195" title="All 2 branches covered.">		for (int i = 0; i &lt; width; i++) {</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">			for (int j = 0; j &lt; height; j++) {</span>
-<span class="fc" id="L197">				drawChar(c, x + i, y + j);</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		for (int i = 0; i &lt; width; i++) {</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">			for (int j = 0; j &lt; height; j++) {</span>
+<span class="nc" id="L197">				drawChar(c, x + i, y + j);</span>
 			}
 		}
-<span class="fc" id="L200">	}</span>
+<span class="nc" id="L200">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

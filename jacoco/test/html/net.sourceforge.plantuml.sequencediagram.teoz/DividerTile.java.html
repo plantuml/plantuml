@@ -74,7 +74,7 @@ public class DividerTile extends AbstractTile implements Tile {
 
 	@Override
 	public YGauge getYGauge() {
-<span class="nc" id="L77">		return yGauge;</span>
+<span class="fc" id="L77">		return yGauge;</span>
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
@@ -84,36 +84,38 @@ public class DividerTile extends AbstractTile implements Tile {
 	}
 
 	public void drawU(UGraphic ug) {
-<span class="fc" id="L87">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="fc" id="L88">		final Component comp = getComponent(stringBounder);</span>
-<span class="fc" id="L89">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
-<span class="fc" id="L90">		final Area area = Area.create(</span>
-<span class="fc" id="L91">				tileArguments.getBorder2() - tileArguments.getBorder1() - xorigin.getCurrentValue(), dim.getHeight());</span>
+		// Self-translate prologue: absolute gauge position
+<span class="fc" id="L88">		ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));</span>
+<span class="fc" id="L89">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="fc" id="L90">		final Component comp = getComponent(stringBounder);</span>
+<span class="fc" id="L91">		final XDimension2D dim = comp.getPreferredDimension(stringBounder);</span>
+<span class="fc" id="L92">		final Area area = Area.create(</span>
+<span class="fc" id="L93">				tileArguments.getBorder2() - tileArguments.getBorder1() - xorigin.getCurrentValue(), dim.getHeight());</span>
 
-<span class="fc" id="L93">		ug = ug.apply(UTranslate.dx(tileArguments.getBorder1()));</span>
-<span class="fc" id="L94">		comp.drawU(ug, area, (Context2D) ug);</span>
-<span class="fc" id="L95">	}</span>
+<span class="fc" id="L95">		ug = ug.apply(UTranslate.dx(tileArguments.getBorder1()));</span>
+<span class="fc" id="L96">		comp.drawU(ug, area, (Context2D) ug);</span>
+<span class="fc" id="L97">	}</span>
 
 	public double getPreferredHeight() {
-<span class="fc" id="L98">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L99">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L100">		return dim.getHeight();</span>
+<span class="fc" id="L100">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L101">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L102">		return dim.getHeight();</span>
 	}
 
 	public void addConstraints() {
 		// final Component comp = getComponent(stringBounder);
 		// final Dimension2D dim = comp.getPreferredDimension(stringBounder);
 		// final double width = dim.getWidth();
-<span class="fc" id="L107">	}</span>
+<span class="fc" id="L109">	}</span>
 
 	public Real getMinX() {
-<span class="fc" id="L110">		return xorigin;</span>
+<span class="fc" id="L112">		return xorigin;</span>
 	}
 
 	public Real getMaxX() {
-<span class="fc" id="L114">		final Component comp = getComponent(getStringBounder());</span>
-<span class="fc" id="L115">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
-<span class="fc" id="L116">		return xorigin.addFixed(dim.getWidth());</span>
+<span class="fc" id="L116">		final Component comp = getComponent(getStringBounder());</span>
+<span class="fc" id="L117">		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());</span>
+<span class="fc" id="L118">		return xorigin.addFixed(dim.getWidth());</span>
 	}
 
 }

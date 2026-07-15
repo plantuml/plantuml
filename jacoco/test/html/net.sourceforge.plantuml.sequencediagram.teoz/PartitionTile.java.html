@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.skin.Area;
@@ -59,86 +60,153 @@ public class PartitionTile extends GroupingTile {
 	public PartitionTile(Iterator&lt;Event&gt; it, GroupingStart start, TileArguments tileArgumentsBackColorChanged,
 			TileArguments tileArgumentsOriginal, YGauge currentY) {
 
-<span class="nc" id="L62">		super(it, start, tileArgumentsBackColorChanged, tileArgumentsOriginal, currentY);</span>
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L63">		super(it, start, tileArgumentsBackColorChanged, tileArgumentsOriginal, currentY);</span>
+<span class="fc" id="L64">	}</span>
 
 	@Override
 	protected Component getComponent(StringBounder stringBounder) {
 
-<span class="nc" id="L68">		return new Component() {</span>
+<span class="fc" id="L69">		return new Component() {</span>
 
 			@Override
 			public StyleSignature getStyleSignature() {
-<span class="nc" id="L72">				throw new UnsupportedOperationException();</span>
+<span class="nc" id="L73">				throw new UnsupportedOperationException();</span>
 			}
 
 			@Override
 			public Style[] getUsedStyles() {
-<span class="nc" id="L77">				throw new UnsupportedOperationException();</span>
+<span class="nc" id="L78">				throw new UnsupportedOperationException();</span>
 			}
 
 			@Override
 			public double getPreferredWidth(StringBounder stringBounder) {
-<span class="nc" id="L82">				throw new UnsupportedOperationException();</span>
+<span class="nc" id="L83">				throw new UnsupportedOperationException();</span>
 			}
 
 			@Override
 			public double getPreferredHeight(StringBounder stringBounder) {
-<span class="nc" id="L87">				throw new UnsupportedOperationException();</span>
+<span class="nc" id="L88">				throw new UnsupportedOperationException();</span>
 			}
 
 			@Override
 			public XDimension2D getPreferredDimension(StringBounder stringBounder) {
-<span class="nc" id="L92">				return new XDimension2D(10, 10);</span>
+<span class="fc" id="L93">				return new XDimension2D(10, 10);</span>
 			}
 
 			@Override
 			public void drawU(UGraphic ug, Area area, Context2D context) {
-<span class="nc" id="L97">				final Style style = getGroupingStart().getUsedStyles()[1];</span>
-<span class="nc" id="L98">				final Display display = Display.create(getGroupingStart().getComment());</span>
-<span class="nc" id="L99">				final TextBlock title = display.create(style.getFontConfiguration(getSkinParam().getIHtmlColorSet()),</span>
-<span class="nc" id="L100">						HorizontalAlignment.LEFT, getSkinParam());</span>
-<span class="nc" id="L101">				final double border1 = getBorder1();</span>
-<span class="nc" id="L102">				final double delta = (getWidth() - title.calculateDimension(stringBounder).getWidth()) / 2;</span>
+<span class="fc" id="L98">				final Style style = getGroupingStart().getUsedStyles()[1];</span>
+<span class="fc" id="L99">				final Display display = Display.create(getGroupingStart().getComment());</span>
+<span class="fc" id="L100">				final TextBlock title = display.create(style.getFontConfiguration(getSkinParam().getIHtmlColorSet()),</span>
+<span class="fc" id="L101">						HorizontalAlignment.LEFT, getSkinParam());</span>
+<span class="fc" id="L102">				final double border1 = getBorder1();</span>
+<span class="fc" id="L103">				final double delta = (getWidth() - title.calculateDimension(stringBounder).getWidth()) / 2;</span>
 
-<span class="nc" id="L104">				title.drawU(ug.apply(UTranslate.dx(border1 + delta)));</span>
+<span class="fc" id="L105">				title.drawU(ug.apply(UTranslate.dx(border1 + delta)));</span>
 
-<span class="nc" id="L106">				final URectangle rect = URectangle.build(area.getDimensionToUse());</span>
+<span class="fc" id="L107">				final URectangle rect = URectangle.build(area.getDimensionToUse());</span>
 
-<span class="nc" id="L108">				ug = style.applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());</span>
-<span class="nc" id="L109">				ug.apply(UTranslate.dx(border1)).draw(rect);</span>
+<span class="fc" id="L109">				ug = style.applyStrokeAndLineColor(ug, getSkinParam().getIHtmlColorSet());</span>
+<span class="fc" id="L110">				ug.apply(UTranslate.dx(border1)).draw(rect);</span>
 
-<span class="nc" id="L111">			}</span>
+<span class="fc" id="L112">			}</span>
 		};
 	}
 
 	@Override
 	protected Area getArea(final StringBounder stringBounder) {
-<span class="nc" id="L117">		return Area.create(getWidth(), getTotalHeight(stringBounder));</span>
+<span class="fc" id="L118">		return Area.create(getWidth(), getTotalHeight(stringBounder));</span>
+	}
+
+	// ===================== ASCII =====================
+	//
+	// A partition is not laid out like a plain group in ASCII, exactly as it
+	// is not in pixel: the two overrides below are the ASCII counterparts of
+	// the getComponent()/getArea()/getWidth() overrides above.
+
+	// Pixel getComponent() draws only the comment (&quot;p1&quot;), never the &quot;partition&quot;
+	// keyword — unlike GroupingTile, whose `display` field prepends the title.
+	// Mirror that here so asciiTitle() returns just &quot;p1&quot;: otherwise the tab
+	// would carry &quot;partition p1&quot;, which is both wrong (the pixel frame shows
+	// &quot;p1&quot;) and long enough that AGroupFrame.hasTab() would refuse to draw it
+	// at all for a narrow frame — which is why the title was missing entirely.
+	@Override
+	protected String asciiTitle() {
+<span class="fc" id="L135">		return getGroupingStart().getComment();</span>
+	}
+
+	// A partition's frame is a plain rectangle with its title centered on the
+	// top border (see AGroupFrame's useTab), never the pentagon-style tab every
+	// other group kind draws — the ASCII counterpart of getComponent() above,
+	// which draws only the title text and the rectangle, no tab shape at all.
+	@Override
+	protected boolean asciiFrameHasTab() {
+<span class="fc" id="L144">		return false;</span>
+	}
+
+	// Pixel getWidth()/getArea() make a partition span the whole diagram
+	// (getBorder2() - getBorder1(), drawn at getBorder1()), not just the
+	// columns its children touch — the visible difference between a partition
+	// and a plain group frame. Mirror that in ASCII: span from the first
+	// participant's left column to the last participant's right column, plus
+	// the usual frame margin, instead of GroupingTile's children-based span.
+	// The attached notes (a &quot;note right&quot; past the last participant, a &quot;note
+	// left&quot; before the first) fall just outside these borders, exactly as they
+	// sit outside the frame in the pixel rendering.
+	@Override
+	protected int[] asciiFrameColumns() {
+<span class="fc" id="L158">		int left = Integer.MAX_VALUE;</span>
+<span class="fc" id="L159">		int right = Integer.MIN_VALUE;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">		for (LivingSpace ls : getTileArguments().getLivingSpaces().values()) {</span>
+			// posB is the box's left column, posD its exclusive right edge, so
+			// posD - 1 is the box's last visible column.
+<span class="fc" id="L163">			left = Math.min(left, (int) ls.getAsciiPosB().getCurrentValue());</span>
+<span class="fc" id="L164">			right = Math.max(right, (int) ls.getAsciiPosD().getCurrentValue() - 1);</span>
+<span class="fc" id="L165">		}</span>
+<span class="fc" id="L166">		left -= ASCII_FRAME_MARGIN;</span>
+<span class="fc" id="L167">		right += ASCII_FRAME_MARGIN;</span>
+
+		// A &quot;note left&quot;/&quot;note right&quot; attached to a message inside the partition
+		// must land *inside* the frame, matching the pixel rendering (both images
+		// Arnaud provided) — unlike a plain group, where notes fall just outside
+		// (GroupingTile's own header/footer notes, drawNotes()). getAsciiMinX()/
+		// getAsciiMaxX() (inherited from GroupingTile) already fold in any attached
+		// note's width via CommunicationTileNoteLeft/Right's own overrides, so
+		// merging them in here widens the full-diagram span above whenever a note
+		// reaches further than the participants alone do.
+<span class="fc" id="L177">		final Real childMin = getAsciiMinX();</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (childMin != null)</span>
+<span class="fc" id="L179">			left = Math.min(left, (int) childMin.getCurrentValue());</span>
+
+<span class="fc" id="L181">		final Real childMax = getAsciiMaxX();</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (childMax != null)</span>
+<span class="fc" id="L183">			right = Math.max(right, (int) childMax.getCurrentValue());</span>
+
+<span class="fc" id="L185">		return new int[] { left, right };</span>
 	}
 
 	private double getWidth() {
-<span class="nc" id="L121">		return getBorder2() - getBorder1();</span>
+<span class="fc" id="L189">		return getBorder2() - getBorder1();</span>
 	}
 
 	private double getBorder2() {
-<span class="nc" id="L125">		return getTileArguments().getBorder2();</span>
+<span class="fc" id="L193">		return getTileArguments().getBorder2();</span>
 	}
 
 	private double getBorder1() {
-<span class="nc" id="L129">		return getTileArguments().getBorder1();</span>
+<span class="fc" id="L197">		return getTileArguments().getBorder1();</span>
 	}
 
 	@Override
 	protected double minCurrentValueForDrawing() {
-<span class="nc" id="L134">		return 0;</span>
+<span class="fc" id="L202">		return 0;</span>
 	}
 
 	@Override
 	protected void drawCompBackground(UGraphic ug, Area area, final HColor back, final double round) {
-<span class="nc" id="L139">		final URectangle rect = URectangle.build(area.getDimensionToUse());</span>
-<span class="nc" id="L140">		ug.apply(UTranslate.dx(getBorder1())).apply(back.bg()).draw(rect);</span>
-<span class="nc" id="L141">	}</span>
+<span class="fc" id="L207">		final URectangle rect = URectangle.build(area.getDimensionToUse());</span>
+<span class="fc" id="L208">		ug.apply(UTranslate.dx(getBorder1())).apply(back.bg()).draw(rect);</span>
+<span class="fc" id="L209">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -43,11 +43,11 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.teavm.TeaVM;
 
-<span class="fc" id="L46">public class Stairs {</span>
+<span class="nc" id="L46">public class Stairs {</span>
 
-<span class="fc" id="L48">	private final List&lt;Double&gt; ys = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L49">	private final List&lt;Integer&gt; values = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L50">	private final Map&lt;Double, Integer&gt; cache = new HashMap&lt;Double, Integer&gt;();</span>
+<span class="nc" id="L48">	private final List&lt;Double&gt; ys = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L49">	private final List&lt;Integer&gt; values = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L50">	private final Map&lt;Double, Integer&gt; cache = new HashMap&lt;Double, Integer&gt;();</span>
 
 	@Override
 	public String toString() {
@@ -101,22 +101,22 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	}
 
 	public int getValue(double y) {
-<span class="fc" id="L104">		Integer result = cache.get(y);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (result == null) {</span>
-<span class="fc" id="L106">			result = getValueSlow(y);</span>
-<span class="fc" id="L107">			cache.put(y, result);</span>
+<span class="nc" id="L104">		Integer result = cache.get(y);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (result == null) {</span>
+<span class="nc" id="L106">			result = getValueSlow(y);</span>
+<span class="nc" id="L107">			cache.put(y, result);</span>
 		}
-<span class="fc" id="L109">		return result;</span>
+<span class="nc" id="L109">		return result;</span>
 	}
 
 	private int getValueSlow(double y) {
-<span class="fc" id="L113">		final int idx = Collections.binarySearch(ys, y);</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">		if (idx &gt;= 0) {</span>
+<span class="nc" id="L113">		final int idx = Collections.binarySearch(ys, y);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (idx &gt;= 0) {</span>
 <span class="nc" id="L115">			return values.get(idx);</span>
 		}
-<span class="fc" id="L117">		final int insertPoint = -idx - 1;</span>
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">		if (insertPoint == 0) {</span>
-<span class="fc" id="L119">			return 0;</span>
+<span class="nc" id="L117">		final int insertPoint = -idx - 1;</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (insertPoint == 0) {</span>
+<span class="nc" id="L119">			return 0;</span>
 		}
 <span class="nc" id="L121">		return values.get(insertPoint - 1);</span>
 	}

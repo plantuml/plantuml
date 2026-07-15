@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -43,32 +44,30 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 
-import net.sourceforge.plantuml.annotation.Fast;
-
 public class ComponentAdapter implements TextBlock {
 
 	private final Component component;
 
-<span class="nc" id="L52">	public ComponentAdapter(Component component) {</span>
-<span class="nc" id="L53">		this.component = component;</span>
-<span class="nc" id="L54">	}</span>
+<span class="nc" id="L51">	public ComponentAdapter(Component component) {</span>
+<span class="nc" id="L52">		this.component = component;</span>
+<span class="nc" id="L53">	}</span>
 
 	public void drawU(UGraphic ug) {
-<span class="nc bnc" id="L57" title="All 2 branches missed.">		if (component == null) {</span>
-<span class="nc" id="L58">			return;</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">		if (component == null) {</span>
+<span class="nc" id="L57">			return;</span>
 		}
-<span class="nc" id="L60">		component.drawU(ug, new Area(calculateDimension(ug.getStringBounder())), new SimpleContext2D(false));</span>
+<span class="nc" id="L59">		component.drawU(ug, new Area(calculateDimension(ug.getStringBounder())), new SimpleContext2D(false));</span>
 
-<span class="nc" id="L62">	}</span>
+<span class="nc" id="L61">	}</span>
 
 	@Fast
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (component == null) {</span>
-<span class="nc" id="L67">			return new XDimension2D(0, 0);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (component == null) {</span>
+<span class="nc" id="L66">			return new XDimension2D(0, 0);</span>
 		}
-<span class="nc" id="L69">		final double width = component.getPreferredWidth(stringBounder);</span>
-<span class="nc" id="L70">		final double height = component.getPreferredHeight(stringBounder);</span>
-<span class="nc" id="L71">		return new XDimension2D(width, height);</span>
+<span class="nc" id="L68">		final double width = component.getPreferredWidth(stringBounder);</span>
+<span class="nc" id="L69">		final double height = component.getPreferredHeight(stringBounder);</span>
+<span class="nc" id="L70">		return new XDimension2D(width, height);</span>
 	}
 
 }

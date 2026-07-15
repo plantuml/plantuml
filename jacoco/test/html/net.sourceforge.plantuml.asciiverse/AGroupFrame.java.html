@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AGroupFrame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">plantuml</a> &gt; <a href="index.source.html" class="el_package">net.sourceforge.plantuml.asciiverse</a> &gt; <span class="el_source">AGroupFrame.java</span></div><h1>AGroupFrame.java</h1><pre class="source lang-java linenums">/* ========================================================================
+ * PlantUML : a free UML diagram generator
+ * ========================================================================
+ *
+ * (C) Copyright 2009-2024, Arnaud Roques
+ *
+ * Project Info:  https://plantuml.com
+ * 
+ * If you like this project or if you find it useful, you can support us at:
+ * 
+ * https://plantuml.com/patreon (only 1$ per month!)
+ * https://plantuml.com/paypal
+ * 
+ * This file is part of PlantUML.
+ *
+ * PlantUML is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PlantUML distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
+ * USA.
+ *
+ *
+ * Original Author:  Arnaud Roques
+ *
+ *
+ */
+package net.sourceforge.plantuml.asciiverse;
+
+// The frame box that encloses a group (frame, alt, opt, loop, partition, ...)
+// as an AsciiBlock: the ASCII counterpart of the pixel GROUPING_HEADER_TEOZ
+// Component that GroupingTile.drawU() obtains from the skin and delegates to
+// (see the design notes below). Third cut of this class: ATXT and UTXT are
+// now genuinely different shapes (not a character-substitution of the same
+// layout, the way ANote's two variants are) — ATXT keeps the pentagon-style
+// cut-corner tab; UTXT draws a small single-line rectangular
+// tab sharing the frame's own top/left double-line border, with its right
+// edge continuing as a single-line divider for the frame's full height. Split
+// into asciiDrawAscii()/asciiDrawUnicode(), the same dispatch shape ANote
+// already uses, rather than one method with isUnicode() branches
+// threaded through shared geometry — the two shapes don't actually share
+// enough geometry to make that worthwhile.
+//
+// This is a *container* whose size is
+// dictated from the outside (the span of the group's children and its
+// stacked body height) — so it takes an explicit ADimension2D rather than
+// computing one, the same distinction as ANote's self-sized text vs. a
+// pixel Component drawn into an Area handed to it.
+public final class AGroupFrame implements AsciiBlock {
+
+	private final ADimension2D dimension;
+	private final String title;
+	// True for a plain &quot;frame&quot;/&quot;alt&quot;/&quot;loop&quot;/... group: the pentagon-style
+	// cut-corner tab. False for a partition: a partition's pixel rendering (PartitionTile.getComponent())
+	// never draws a tab at all — it stamps the title centered directly on the
+	// frame's own top border, the plain box shape this class's very first cut used before the tab was introduced. Rather than duplicating
+	// AGroupFrame (border, sides, corners are identical either way) this one
+	// class now supports both shapes, switched on this flag, exactly like
+	// asciiDraw() already dispatches on isUnicode() for ATXT vs UTXT.
+	private final boolean useTab;
+
+	public AGroupFrame(ADimension2D dimension, String title) {
+<span class="nc" id="L71">		this(dimension, title, true);</span>
+<span class="nc" id="L72">	}</span>
+
+<span class="fc" id="L74">	public AGroupFrame(ADimension2D dimension, String title, boolean useTab) {</span>
+<span class="fc" id="L75">		this.dimension = dimension;</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">		this.title = title == null ? &quot;&quot; : title;</span>
+<span class="fc" id="L77">		this.useTab = useTab;</span>
+<span class="fc" id="L78">	}</span>
+
+	@Override
+	public ADimension2D asciiDimension() {
+<span class="nc" id="L82">		return dimension;</span>
+	}
+
+	// How many rows, counted from this frame's own top, are consumed by the
+	// header — the top border alone (1) when there's no title or it wouldn't
+	// fit, or the top border plus the title tab's two rows (3: text/tab row,
+	// then the tab's own closing row) otherwise. Same row count in both ATXT
+	// and UTXT — only the characters differ, not the geometry — so this stays
+	// a single, format-agnostic method. GroupingTile needs it to know where
+	// its own child-stacking loop should start; rather than duplicating the
+	// &quot;does the tab fit&quot; guard in GroupingTile, it builds a throwaway
+	// AGroupFrame and reads this back — the same &quot;one place owns the size
+	// rule, callers read it back&quot; discipline as ANote.
+	public int getBodyRowOffset() {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">		return hasTab() ? 3 : 1;</span>
+	}
+
+	private boolean hasTab() {
+<span class="pc bpc" id="L100" title="1 of 6 branches missed.">		return useTab &amp;&amp; title.isEmpty() == false &amp;&amp; dimension.getWidth() &gt; tabWidth() + 2;</span>
+	}
+
+	// The plain-frame counterpart of hasTab(): whether the title is stamped
+	// centered on the top border itself (useTab == false, a partition) rather
+	// than in a tab. Same &quot;skip if it doesn't fit&quot; policy as hasTab() — a
+	// title longer than the frame simply doesn't get drawn, rather than
+	// truncated or overflowing past the corners.
+	private boolean hasTitleOnBorder() {
+<span class="pc bpc" id="L109" title="1 of 4 branches missed.">		return useTab == false &amp;&amp; title.isEmpty() == false</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">				&amp;&amp; dimension.getWidth() &gt;= title.length() + 2 + 2;</span>
+	}
+
+	// Width of the tab's own text block: &quot; &quot; + title + &quot; &quot;, one padding
+	// column each side, the same tab-text convention the first cut of this
+	// class used for its title stamp. Both asciiDrawAscii() and
+	// asciiDrawUnicode() start their own closing character(s) right after
+	// this block, at column tabWidth() + 1 (1-indexed from the tab's own
+	// left, i.e. column 1 relative to this frame).
+	private int tabWidth() {
+<span class="fc" id="L120">		return title.length() + 2;</span>
+	}
+
+	@Override
+	public void asciiDraw(InfinitePlan plan) {
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (plan.isUnicode())</span>
+<span class="fc" id="L126">			asciiDrawUnicode(plan);</span>
+		else
+<span class="fc" id="L128">			asciiDrawAscii(plan);</span>
+<span class="fc" id="L129">	}</span>
+
+	// ATXT: dashed top border, '!' sides, tildes across the bottom, and a
+	// pentagon-style cut-corner tab — see those sections for the
+	// full rationale of each choice; unchanged by this section's UTXT work.
+	private void asciiDrawAscii(InfinitePlan plan) {
+<span class="fc" id="L135">		final int width = dimension.getWidth();</span>
+<span class="fc" id="L136">		final int height = dimension.getHeight();</span>
+
+		// Top border: a plain dashed line with corners — an ordinary box edge,
+		// so its corners stay Unicode-aware (getTopLeftChar()/getTopRightChar(),
+		// opened up for this) and its dash run reuses drawHLine(), which
+		// already picks '-' vs '─' internally — moot here since this
+		// method is only ever reached in ASCII mode, but kept for symmetry with
+		// asciiDrawUnicode() reading the same plan. Not drawn via drawBox():
+		// that would also draw a matching bottom border and '|' sides, both
+		// wrong here (see below).
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">		if (width &gt;= 1) {</span>
+<span class="fc" id="L147">			plan.move(0, 0).drawChar(plan.getTopLeftChar());</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">			if (width &gt; 2)</span>
+<span class="fc" id="L149">				plan.drawHLine(1, width - 2, 0);</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (width &gt; 1)</span>
+<span class="fc" id="L151">				plan.move(width - 1, 0).drawChar(plan.getTopRightChar());</span>
+		}
+
+		// Sides: '!', deliberately not '|'. A frame border must stay visually
+		// distinct from a participant's lifeline running through it, which a
+		// shared '|' cannot do — this is exactly the ambiguity the first cut
+		// of this class had (its drawBox()-based '|' sides collided with
+		// crossing lifelines, e.g. the hello4 reference output reads
+		// &quot;-|p1&quot;, the frame's own corner and a lifeline character
+		// indistinguishable from one another).
+<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (int y = 1; y &lt;= height - 2; y++) {</span>
+<span class="fc" id="L162">			plan.move(0, y).drawChar('!');</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">			if (width &gt; 1)</span>
+<span class="fc" id="L164">				plan.move(width - 1, y).drawChar('!');</span>
+		}
+
+		// Bottom border: tildes across the full width for a tab-style frame, no
+		// distinct corner characters — a deliberately different shape from the
+		// top border, so the frame's footer reads as visually distinct from its
+		// header at a glance. A confirmed stylistic choice (per the mockup), not
+		// a plain box edge with a character swapped in. UTXT does not repeat this choice: its bottom border is a plain double line, matching
+		// its top. A plain (useTab == false) frame — a partition — has no such
+		// header/footer asymmetry to signal in the first place (its title sits
+		// on the top border itself, not in a tab), so its bottom mirrors its top
+		// exactly: same corners, same dash run, via drawBox()'s own convention.
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">		if (height &gt;= 2) {</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">			if (useTab) {</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">				for (int x = 0; x &lt; width; x++)</span>
+<span class="fc" id="L179">					plan.move(x, height - 1).drawChar('~');</span>
+			} else {
+<span class="fc" id="L181">				plan.move(0, height - 1).drawChar(plan.getBottomLeftChar());</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">				if (width &gt; 2)</span>
+<span class="fc" id="L183">					plan.drawHLine(1, width - 2, height - 1);</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">				if (width &gt; 1)</span>
+<span class="fc" id="L185">					plan.move(width - 1, height - 1).drawChar(plan.getBottomRightChar());</span>
+			}
+		}
+
+		// The title's small pentagon-style tab, attached to the top-left
+		// inside the frame — one column/row padding from the border, the same
+		// convention ANote's text uses — text row, then a diagonal fold
+		// row (underscores + a trailing '/'). This is the ASCII transposition
+		// of the small cut-corner tab the pixel GROUPING_HEADER_TEOZ component
+		// actually draws, rather than the plain &quot;stamp the title on the top
+		// border&quot; treatment the first cut of this class used. Skipped
+		// (falls back to the top border alone, getBodyRowOffset() == 1) when
+		// there's no title or it wouldn't fit — the same &quot;skip if it doesn't
+		// fit&quot; policy the title stamp it replaces already had.
+		//
+		// The text row ends in &quot; /&quot; rather than a plain padding space: the
+		// tab needs its own right edge closed off, the same way its left edge is
+		// implicitly closed by the frame's own '!' at column 0. That trailing '/'
+		// lands one column to the right of, and one row above, the fold row's own
+		// '/' directly beneath it — so the two slashes form a genuine 45-degree
+		// diagonal cut running across both rows, rather than a straight edge on
+		// one row with a separate cut below it: the standard UML frame
+		// cut-corner pentagon look, just traced over two character rows instead
+		// of one continuous line.
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		if (hasTab()) {</span>
+<span class="fc" id="L210">			final int tabWidth = tabWidth();</span>
+<span class="fc" id="L211">			plan.move(1, 1).drawString(&quot; &quot; + title + &quot; /&quot;);</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">			for (int x = 0; x &lt; tabWidth - 1; x++)</span>
+<span class="fc" id="L213">				plan.move(1 + x, 2).drawChar('_');</span>
+<span class="fc" id="L214">			plan.move(1 + tabWidth - 1, 2).drawChar('/');</span>
+		}
+
+<span class="fc" id="L217">		drawTitleOnBorderIfNeeded(plan, width);</span>
+<span class="fc" id="L218">	}</span>
+
+	// A partition's title (useTab == false): stamped centered directly on the
+	// top border row, overwriting the dashes there — the plain &quot;stamp the
+	// title on the top border&quot; treatment this class's first cut used
+	// before the tab was introduced for other group kinds, and exactly
+	// what PartitionTile.getComponent() does in pixel: draw the title, then
+	// the rectangle border, centered over the same top edge. Shared verbatim
+	// between ATXT and UTXT (only the border characters around it differ,
+	// already drawn by the caller before this runs) so it lives once, outside
+	// either asciiDrawAscii()/asciiDrawUnicode().
+	private void drawTitleOnBorderIfNeeded(InfinitePlan plan, int width) {
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		if (hasTitleOnBorder() == false)</span>
+<span class="fc" id="L231">			return;</span>
+
+<span class="fc" id="L233">		final String labeled = &quot; &quot; + title + &quot; &quot;;</span>
+<span class="fc" id="L234">		final int start = (width - labeled.length()) / 2;</span>
+<span class="fc" id="L235">		plan.move(start, 0).drawString(labeled);</span>
+<span class="fc" id="L236">	}</span>
+
+	// UTXT: a double-line frame (╔═╗/║/╚═╝ — the same double-line convention
+	// ANote already uses for its own Unicode box, keeping frames and
+	// notes visually matched and both distinct from participants' single-line
+	// boxes and lifelines), with a small single-line tab in the top-left that
+	// shares the frame's own top and left border rather than drawing its own
+	// (mirroring the legacy asciiart.ComponentTextGroupingHeader's UTXT
+	// branch — copied for the idea and the junction characters, not the code,
+	// per the standing rule). One deliberate departure from
+	// that legacy rendering: here the tab's right edge continues as a plain
+	// single-line divider for the frame's *entire* height, down to a junction
+	// with the bottom border — confirmed with Arnaud, who wanted the full
+	// height rather than the legacy rendering's divider stopping at the tab's
+	// own three rows.
+	private void asciiDrawUnicode(InfinitePlan plan) {
+<span class="fc" id="L252">		final int width = dimension.getWidth();</span>
+<span class="fc" id="L253">		final int height = dimension.getHeight();</span>
+<span class="fc" id="L254">		final boolean tab = hasTab();</span>
+		// One column past the tab's own text block (tabWidth()) — the
+		// column every one of the tab's own characters below is drawn at:
+		// the top-border junction, the text row's closing '│', the tab's own
+		// bottom-right corner, and the full-height divider underneath it all.
+<span class="fc" id="L259">		final int dividerColumn = 1 + tabWidth();</span>
+
+		// Top border: double line, with a junction ('╤', DOWN SINGLE AND
+		// HORIZONTAL DOUBLE) where the tab's divider begins, instead of a
+		// plain '═' at that one column.
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">		if (width &gt;= 1) {</span>
+<span class="fc" id="L265">			plan.move(0, 0).drawChar('╔');</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">			if (width &gt; 2)</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">				for (int x = 1; x &lt;= width - 2; x++)</span>
+<span class="fc bfc" id="L268" title="All 4 branches covered.">					plan.move(x, 0).drawChar(x == dividerColumn &amp;&amp; tab ? '╤' : '═');</span>
+<span class="pc bpc" id="L269" title="1 of 2 branches missed.">			if (width &gt; 1)</span>
+<span class="fc" id="L270">				plan.move(width - 1, 0).drawChar('╗');</span>
+		}
+
+		// Sides: double line, for every row between the top and bottom
+		// borders — the frame's own outer edge, distinct from the tab's
+		// single-line divider drawn separately below.
+<span class="fc bfc" id="L276" title="All 2 branches covered.">		for (int y = 1; y &lt;= height - 2; y++) {</span>
+<span class="fc" id="L277">			plan.move(0, y).drawChar('║');</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">			if (width &gt; 1)</span>
+<span class="fc" id="L279">				plan.move(width - 1, y).drawChar('║');</span>
+		}
+
+		// Bottom border: double line, plain — unlike ATXT (asciiDrawAscii()),
+		// UTXT does not switch to a different character for the footer; a
+		// junction ('╧', UP SINGLE AND HORIZONTAL DOUBLE) closes off the
+		// divider where it meets this border, the mirror image of the '╤'
+		// junction at the top. (A plain, useTab == false frame has no divider at
+		// all, so `tab` is already false here and every column is a plain '═'.)
+<span class="pc bpc" id="L288" title="1 of 2 branches missed.">		if (height &gt;= 2) {</span>
+<span class="fc" id="L289">			plan.move(0, height - 1).drawChar('╚');</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">			for (int x = 1; x &lt;= width - 2; x++)</span>
+<span class="fc bfc" id="L291" title="All 4 branches covered.">				plan.move(x, height - 1).drawChar(x == dividerColumn &amp;&amp; tab ? '╧' : '═');</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">			if (width &gt; 1)</span>
+<span class="fc" id="L293">				plan.move(width - 1, height - 1).drawChar('╝');</span>
+		}
+
+		// The tab itself: no border of its own on the top or left — it shares
+		// the frame's own '╔'/'═' top border and '║' left side,
+		// drawn above. It only owns its right edge (a single-line '\u2502' on
+		// the text row, continuing as the full-height divider below) and its
+		// bottom edge (a single-line '─' run, with a '╟' junction on
+		// the left where it meets the frame's own double-line side, and a
+		// '┘' corner on the right where it meets the divider) — the same
+		// &quot;text row, then a closing row&quot; shape as the ASCII tab, just with box
+		// characters instead of underscores and a diagonal.
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		if (tab) {</span>
+<span class="fc" id="L306">			final int tabWidth = tabWidth();</span>
+<span class="fc" id="L307">			plan.move(1, 1).drawString(&quot; &quot; + title + &quot; &quot;);</span>
+<span class="fc" id="L308">			plan.move(dividerColumn, 1).drawChar('│');</span>
+
+<span class="fc" id="L310">			plan.move(0, 2).drawChar('╟');</span>
+<span class="fc bfc" id="L311" title="All 2 branches covered.">			for (int x = 1; x &lt; tabWidth + 1; x++)</span>
+<span class="fc" id="L312">				plan.move(x, 2).drawChar('─');</span>
+<span class="fc" id="L313">			plan.move(dividerColumn, 2).drawChar('┘');</span>
+
+			// The divider: a plain single-line '│', continuing from the
+			// tab's own closing row down through the rest of the body, to
+			// (not including) the bottom border — which closes it off with
+			// its own '╧' junction, drawn above.
+<span class="fc bfc" id="L319" title="All 2 branches covered.">			for (int y = 3; y &lt;= height - 2; y++)</span>
+<span class="fc" id="L320">				plan.move(dividerColumn, y).drawChar('│');</span>
+		}
+
+<span class="fc" id="L323">		drawTitleOnBorderIfNeeded(plan, width);</span>
+<span class="fc" id="L324">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

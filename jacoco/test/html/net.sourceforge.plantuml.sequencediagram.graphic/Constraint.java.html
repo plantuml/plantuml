@@ -43,10 +43,10 @@ public class Constraint {
 	private final Pushable p2;
 	private double value;
 
-<span class="fc" id="L46">	public Constraint(Pushable p1, Pushable p2) {</span>
-<span class="fc" id="L47">		this.p1 = Objects.requireNonNull(p1);</span>
-<span class="fc" id="L48">		this.p2 = Objects.requireNonNull(p2);</span>
-<span class="fc" id="L49">	}</span>
+<span class="nc" id="L46">	public Constraint(Pushable p1, Pushable p2) {</span>
+<span class="nc" id="L47">		this.p1 = Objects.requireNonNull(p1);</span>
+<span class="nc" id="L48">		this.p2 = Objects.requireNonNull(p2);</span>
+<span class="nc" id="L49">	}</span>
 
 	public final Pushable getParticipant1() {
 <span class="nc" id="L52">		return p1;</span>
@@ -57,14 +57,14 @@ public class Constraint {
 	}
 
 	public final double getValue() {
-<span class="fc" id="L60">		return value;</span>
+<span class="nc" id="L60">		return value;</span>
 	}
 
 	public final void ensureValue(double newValue) {
-<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (newValue &gt; value) {</span>
-<span class="fc" id="L65">			this.value = newValue;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		if (newValue &gt; value) {</span>
+<span class="nc" id="L65">			this.value = newValue;</span>
 		}
-<span class="fc" id="L67">	}</span>
+<span class="nc" id="L67">	}</span>
 
 	public void push(double delta) {
 <span class="nc" id="L70">		value += delta;</span>

@@ -57,15 +57,15 @@ class SegmentColored {
 	final private double pos1Initial;
 
 	public static SegmentColored create(double pos1, double pos2, Fashion colors, boolean shadowing) {
-<span class="fc" id="L60">		return new SegmentColored(new Segment(pos1, pos2), colors, shadowing, pos1);</span>
+<span class="nc" id="L60">		return new SegmentColored(new Segment(pos1, pos2), colors, shadowing, pos1);</span>
 	}
 
-<span class="fc" id="L63">	private SegmentColored(Segment segment, Fashion colors, boolean shadowing, double pos1Initial) {</span>
-<span class="fc" id="L64">		this.segment = segment;</span>
-<span class="fc" id="L65">		this.colors = colors;</span>
-<span class="fc" id="L66">		this.shadowing = shadowing;</span>
-<span class="fc" id="L67">		this.pos1Initial = pos1Initial;</span>
-<span class="fc" id="L68">	}</span>
+<span class="nc" id="L63">	private SegmentColored(Segment segment, Fashion colors, boolean shadowing, double pos1Initial) {</span>
+<span class="nc" id="L64">		this.segment = segment;</span>
+<span class="nc" id="L65">		this.colors = colors;</span>
+<span class="nc" id="L66">		this.shadowing = shadowing;</span>
+<span class="nc" id="L67">		this.pos1Initial = pos1Initial;</span>
+<span class="nc" id="L68">	}</span>
 
 	public HColor getSpecificBackColor() {
 <span class="nc bnc" id="L71" title="All 2 branches missed.">		if (colors == null) {</span>
@@ -115,12 +115,12 @@ class SegmentColored {
 	}
 
 	public SegmentColored merge(SegmentColored this2) {
-<span class="fc" id="L118">		final Segment merge = this.segment.merge(this2.segment);</span>
-<span class="fc" id="L119">		return new SegmentColored(merge, colors, shadowing, merge.getPos1());</span>
+<span class="nc" id="L118">		final Segment merge = this.segment.merge(this2.segment);</span>
+<span class="nc" id="L119">		return new SegmentColored(merge, colors, shadowing, merge.getPos1());</span>
 	}
 
 	public final Segment getSegment() {
-<span class="fc" id="L123">		return segment;</span>
+<span class="nc" id="L123">		return segment;</span>
 	}
 
 	class Iterator2 implements Iterator&lt;SegmentColored&gt; {

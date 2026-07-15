@@ -98,8 +98,8 @@ public class ArrowConfiguration {
 	}
 
 	public static ArrowConfiguration withDirectionSelf(boolean reverseDefine) {
-<span class="fc" id="L101">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(),</span>
-<span class="fc" id="L102">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
+<span class="nc" id="L101">		return new ArrowConfiguration(ArrowBody.NORMAL, ArrowDressing.create(),</span>
+<span class="nc" id="L102">				ArrowDressing.create().withHead(ArrowHead.NORMAL), ArrowDecoration.NONE, ArrowDecoration.NONE, null,</span>
 				true, 1, reverseDefine, 0);
 	}
 
@@ -192,7 +192,7 @@ public class ArrowConfiguration {
 	}
 
 	public boolean isSelfArrow() {
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		return getArrowDirection() == ArrowDirection.SELF;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		return getArrowDirection() == ArrowDirection.SELF;</span>
 	}
 
 	public boolean isDotted() {
