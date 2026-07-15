@@ -2918,8 +2918,8 @@ Total Classes: 6
 "net.sourceforge.plantuml.sequencediagram.puma" --> "java.util"
 "net.sourceforge.plantuml.sequencediagram.puma" --> "net.sourceforge.plantuml.teavm"
 
-class "net.sourceforge.plantuml.sequencediagram.teoz" %lighten("red", 87) {
-Total Classes: 47
+class "net.sourceforge.plantuml.sequencediagram.teoz" %lighten("red", 86) {
+Total Classes: 42
 }
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "java.lang"
 "net.sourceforge.plantuml.sequencediagram.teoz" --> "java.util"
