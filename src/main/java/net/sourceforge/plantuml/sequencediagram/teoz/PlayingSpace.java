@@ -43,7 +43,10 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
+import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LinkAnchor;
+import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.style.ISkinParam;
 
@@ -59,6 +62,7 @@ public class PlayingSpace implements Bordered {
 	private final List<LinkAnchor> linkAnchors;
 	private final ISkinParam skinParam;
 	private final SequenceDiagram diagram;
+	private final StringBounder stringBounder;
 
 	public PlayingSpace(SequenceDiagram diagram, Dolls dolls, TileArguments tileArguments) {
 
@@ -66,6 +70,7 @@ public class PlayingSpace implements Bordered {
 		this.livingSpaces = tileArguments.getLivingSpaces();
 		this.linkAnchors = diagram.getLinkAnchors();
 		this.skinParam = diagram.getSkinParam();
+		this.stringBounder = tileArguments.getStringBounder();
 
 		final List<Real> min2 = new ArrayList<>();
 		final List<Real> max2 = new ArrayList<>();
@@ -159,6 +164,131 @@ public class PlayingSpace implements Bordered {
 		for (Tile tile : tiles)
 			tile.addConstraints();
 
+		addParallelSiblingDisjointConstraints();
+	}
+
+	// A `&`-parallel sibling shares its YGauge with whichever top-level tile(s)
+	// precede it (see YGauge.createParallel()), so the two can be visible on
+	// the very same rows. Nothing else keeps their FOOTPRINTS
+	// (getMinX()/getMaxX() -- for a GroupingTile this already includes its own
+	// frame margin) from overlapping in X: addConstraints() above only makes
+	// each tile internally consistent with its own participants. A
+	// *sequential* pair never needs this (different Y rows, never both
+	// visible at once), but a parallel pair can end up drawn on top of one
+	// another -- exactly what happened with a self-message's loop/label
+	// running into a `&`-parallel group's frame margin (see the `altpar_001`/
+	// `altpar_007` investigation): the self-message correctly reserved room
+	// against its own neighbour's lifeline, but had no way to know the
+	// group's frame would additionally claim its own margin further left, and
+	// no one else was reserving THAT space either.
+	//
+	// Clustering rule mirrors GroupingTile.computeBodyHeight()'s pending-list
+	// grouping (a `&` pulls the whole preceding run into its own cluster) --
+	// same shape, applied to X disjointness instead of Y height.
+	private void addParallelSiblingDisjointConstraints() {
+		final List<Tile> cluster = new ArrayList<>();
+		for (Tile tile : tiles) {
+			if (GroupingTile.isParallel(tile)) {
+				for (Tile other : cluster)
+					ensureDisjoint(other, tile);
+
+				cluster.add(tile);
+			} else {
+				cluster.clear();
+				cluster.add(tile);
+			}
+		}
+	}
+
+	// Pushes whichever footprint starts further right so it clears the other
+	// entirely.
+	//
+	// CRITICAL: the direction check below must NEVER call getCurrentValue()
+	// on a.getMinX()/getMaxX()/b.getMinX()/getMaxX() themselves when either
+	// side is (or contains) a GroupingTile. Reason: GroupingTile.getMinX()/
+	// getMaxX() are addFixed() wrappers around two PERSISTENT fields (`min`,
+	// `max`, built once in the constructor via RealUtils.min()/max()), and
+	// RealMin/RealMax cache their resolved value the FIRST time
+	// getCurrentValue() is read -- permanently, with no invalidation (see
+	// RealMin/RealMax's own `cache` field). Reading either one before compile
+	// freezes it at its pre-push snapshot forever, silently discarding every
+	// later ensureBiggerThan() -- and since GroupingTile.max's own formula
+	// folds in `this.min.addFixed(...)` as one of its candidates, reading max
+	// alone poisons BOTH fields at once. (The ASCII counterpart in
+	// GroupingTile.getAsciiMinX()/getAsciiMaxX() doesn't have this problem: it
+	// builds a brand new RealMin/RealMax on every call instead of caching one
+	// in a field, so an early read there is harmless.) This is exactly what
+	// broke the first cut of this fix: comparing getCurrentValue() the way
+	// CommunicationTile.isReverse() safely does for two plain LivingSpace
+	// posC's silently froze the enclosing group's frame in place when one
+	// side of the pair was a GroupingTile.
+	//
+	// The safe alternative, mirrored from isReverse(): walk down to an actual
+	// LivingSpace and compare its posB -- a genuine chained RealImpl/RealDelta,
+	// never backed by a cached RealMin/RealMax, so always safe to read.
+	// ensureBiggerThan() itself (called below, on aMin/bMin) is always safe
+	// too, on any Real: it only registers a PositiveForce, it never triggers a
+	// getCurrentValue() read.
+	private void ensureDisjoint(Tile a, Tile b) {
+		final Real aMin = a.getMinX();
+		final Real aMax = a.getMaxX();
+		final Real bMin = b.getMinX();
+		final Real bMax = b.getMaxX();
+		if (aMin == null || aMax == null || bMin == null || bMax == null)
+			return;
+
+		final LivingSpace aAnchor = findAnchorLivingSpace(a);
+		final LivingSpace bAnchor = findAnchorLivingSpace(b);
+		if (aAnchor == null || bAnchor == null)
+			return;
+
+		// Two "&"-parallel tiles that share a participant (e.g. `alice->alice`
+		// & `alice->bob`, both anchored on alice) are NOT two independent
+		// footprints that need pushing apart: they share the very point the
+		// comparison would be based on, so "push whichever starts further
+		// right" is meaningless here -- worse, since one side's bounds are
+		// themselves DERIVED from that shared living space (e.g. a self-message
+		// loop's own getMaxX() already includes alice's posC), asking for
+		// disjointness can demand alice.posC >= alice.posC + something, a
+		// self-contradictory constraint the solver can never satisfy
+		// (RealLine.compile()'s fixed-point loop pushes forever and eventually
+		// throws "Infinite Loop?"). Skip whenever the two sides share an
+		// anchor; nothing needs reserving against itself.
+		if (aAnchor == bAnchor)
+			return;
+
+		// Declaration order gives every participant's posB a monotonic initial
+		// value (the same property isReverse() relies on), so this reliably
+		// tells which side starts further left even before the RealLine solves.
+		if (aAnchor.getPosB(stringBounder).getCurrentValue() <= bAnchor.getPosB(stringBounder).getCurrentValue())
+			bMin.ensureBiggerThan(aMax);
+		else
+			aMin.ensureBiggerThan(bMax);
+	}
+
+	// Finds ANY LivingSpace this tile (or, for a GroupingTile, one of its
+	// descendants) touches -- just needs to be SOME participant referenced by
+	// the tile, since it's only used as a safe stand-in for "where is this
+	// tile, roughly" (see the caching-safety comment on ensureDisjoint()
+	// above). Returns null for tile kinds that don't carry a directly
+	// resolvable participant (notes, dividers, references, ...) or an empty
+	// group -- callers must treat null as "can't safely tell, skip".
+	private LivingSpace findAnchorLivingSpace(Tile tile) {
+		final Event event = tile.getEvent();
+		if (event instanceof Message)
+			return livingSpaces.get(((Message) event).getParticipant1());
+
+		if (event instanceof MessageExo)
+			return livingSpaces.get(((MessageExo) event).getParticipant());
+
+		if (tile instanceof GroupingTile)
+			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor()) {
+				final LivingSpace found = findAnchorLivingSpace(child);
+				if (found != null)
+					return found;
+			}
+
+		return null;
 	}
 
 	public Real getMinX(StringBounder stringBounder) {

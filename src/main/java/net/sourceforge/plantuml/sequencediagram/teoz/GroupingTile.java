@@ -848,6 +848,16 @@ public class GroupingTile extends AbstractTile {
 		return start;
 	}
 
+	// Package-private child-list accessor for PlayingSpace's parallel-sibling
+	// disjointness pass (see PlayingSpace.findAnchorLivingSpace()): it needs to
+	// walk into a group to find ANY leaf message/participant to safely compare
+	// declaration order against, without ever reading this tile's own cached
+	// min/max (see the ASCII_FRAME_MARGIN / MARGINX comments on why that's
+	// unsafe pre-compile).
+	List<Tile> getChildTilesForAnchor() {
+		return tiles;
+	}
+
 	public TileArguments getTileArguments() {
 		return tileArguments;
 	}

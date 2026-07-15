@@ -1,0 +1,21 @@
+---
+output: svg, debug, atxt, utxt
+expected-description: (5 participants)
+---
+@startuml
+!pragma teoz true
+autoactivate on
+
+
+loop 1 to n
+a-> b: hi
+end
+
+loop 1 to n
+b->c : broken1
+end
+
+& loop 1 to n
+e->f : broken2
+end
+@enduml

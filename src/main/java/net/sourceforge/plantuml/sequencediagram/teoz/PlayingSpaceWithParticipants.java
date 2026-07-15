@@ -41,6 +41,9 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.asciiverse.AsciiBlock;
 import net.sourceforge.plantuml.asciiverse.InfinitePlan;
+import net.sourceforge.plantuml.sequencediagram.Event;
+import net.sourceforge.plantuml.sequencediagram.Message;
+import net.sourceforge.plantuml.sequencediagram.MessageExo;
 import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -133,6 +136,7 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 		livingSpaces.asciiAddConstraints();
 		for (Tile tile : playingSpace.getTiles())
 			tile.asciiAddConstraints();
+		addAsciiParallelSiblingDisjointConstraints();
 		asciiXOrigin.compileNow();
 
 		// Heads (top boxes), drawn by the participants themselves at their
@@ -241,6 +245,81 @@ public class PlayingSpaceWithParticipants extends TextBlockMemoized implements A
 
 	private List<Double> yNewPages() {
 		return playingSpace.yNewPages();
+	}
+
+	// ASCII counterpart of PlayingSpace.addParallelSiblingDisjointConstraints()
+	// -- same reasoning, same clustering rule, mirrored on the ASCII Real
+	// graph via getAsciiMinX()/getAsciiMaxX() instead of getMinX()/getMaxX().
+	// A GroupingTile's ASCII footprint already includes its own
+	// ASCII_FRAME_MARGIN, so this closes the ASCII half of the same bug (see
+	// GroupingTile.getAsciiMinX()/getAsciiMaxX() and the `altpar_001`/
+	// `altpar_007` investigation): without it, a `&`-parallel self-message's
+	// loop/label and a sibling group's frame margin can each be individually
+	// correct yet still overlap, because neither one knows about the other.
+	private void addAsciiParallelSiblingDisjointConstraints() {
+		final List<Tile> cluster = new ArrayList<>();
+		for (Tile tile : playingSpace.getTiles()) {
+			if (GroupingTile.isParallel(tile)) {
+				for (Tile other : cluster)
+					ensureAsciiDisjoint(other, tile);
+
+				cluster.add(tile);
+			} else {
+				cluster.clear();
+				cluster.add(tile);
+			}
+		}
+	}
+
+	private void ensureAsciiDisjoint(Tile a, Tile b) {
+		final Real aMin = a.getAsciiMinX();
+		final Real aMax = a.getAsciiMaxX();
+		final Real bMin = b.getAsciiMinX();
+		final Real bMax = b.getAsciiMaxX();
+		if (aMin == null || aMax == null || bMin == null || bMax == null)
+			return;
+
+		// Mirrors PlayingSpace.ensureDisjoint()'s pixel-side reasoning exactly
+		// (see its extensive comment): direction must be decided from a safe,
+		// non-aggregated Real (a LivingSpace's own getAsciiPosB(), never a
+		// GroupingTile's getAsciiMinX()/getAsciiMaxX()), and two tiles sharing a
+		// participant anchor must be skipped entirely -- forcing disjointness
+		// between two footprints that share their own anchor point can demand
+		// anchor.posB >= anchor.posB + something, which the ASCII RealLine can
+		// no more satisfy than the pixel one (same "Infinite Loop?" failure mode
+		// reproduced with `alice->alice:A` & `alice->bob:B`).
+		final LivingSpace aAnchor = findAnchorLivingSpace(a);
+		final LivingSpace bAnchor = findAnchorLivingSpace(b);
+		if (aAnchor == null || bAnchor == null || aAnchor == bAnchor)
+			return;
+
+		if (aAnchor.getAsciiPosB().getCurrentValue() <= bAnchor.getAsciiPosB().getCurrentValue())
+			bMin.ensureBiggerThan(aMax);
+		else
+			aMin.ensureBiggerThan(bMax);
+	}
+
+	// ASCII counterpart of PlayingSpace.findAnchorLivingSpace() -- identical
+	// logic, kept as a separate copy rather than shared/static since it reads
+	// playingSpace.getLivingSpaces() (an instance, not a static context) and
+	// GroupingTile's child list the same way the pixel version does.
+	private LivingSpace findAnchorLivingSpace(Tile tile) {
+		final Event event = tile.getEvent();
+		final LivingSpaces livingSpaces = playingSpace.getLivingSpaces();
+		if (event instanceof Message)
+			return livingSpaces.get(((Message) event).getParticipant1());
+
+		if (event instanceof MessageExo)
+			return livingSpaces.get(((MessageExo) event).getParticipant());
+
+		if (tile instanceof GroupingTile)
+			for (Tile child : ((GroupingTile) tile).getChildTilesForAnchor()) {
+				final LivingSpace found = findAnchorLivingSpace(child);
+				if (found != null)
+					return found;
+			}
+
+		return null;
 	}
 
 	private void drawNewPages(UGraphic ug) {

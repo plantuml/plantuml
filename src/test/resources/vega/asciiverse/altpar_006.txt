@@ -1,5 +1,5 @@
 DPI: 96
-dimension: [ 491.5513 ; 164.0000 ]
+dimension: [ 755.3409 ; 164.0000 ]
 scaleFactor: 1.0000
 seed: -7487098569879573351
 svgLinkTarget: _top
@@ -7,8 +7,8 @@ hoverPathColorRGB: null
 preserveAspectRatio: none
 
 RECTANGLE:
-  pt1: [ 132.8340 ; 64.0000 ]
-  pt2: [ 453.5727 ; 116.0000 ]
+  pt1: [ 396.6235 ; 64.0000 ]
+  pt2: [ 717.3622 ; 116.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
@@ -34,8 +34,8 @@ LINE:
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 145.3340 ; 39.0000 ]
-  pt2: [ 153.3340 ; 125.0000 ]
+  pt1: [ 409.1235 ; 39.0000 ]
+  pt2: [ 417.1235 ; 125.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -44,15 +44,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 148.8340 ; 39.0000 ]
-  pt2: [ 148.8340 ; 125.0000 ]
+  pt1: [ 412.6235 ; 39.0000 ]
+  pt2: [ 412.6235 ; 125.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 234.9131 ; 39.0000 ]
-  pt2: [ 242.9131 ; 125.0000 ]
+  pt1: [ 498.7026 ; 39.0000 ]
+  pt2: [ 506.7026 ; 125.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -61,15 +61,15 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 238.4131 ; 39.0000 ]
-  pt2: [ 238.4131 ; 125.0000 ]
+  pt1: [ 502.2026 ; 39.0000 ]
+  pt2: [ 502.2026 ; 125.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
 
 RECTANGLE:
-  pt1: [ 434.0727 ; 39.0000 ]
-  pt2: [ 442.0727 ; 125.0000 ]
+  pt1: [ 697.8622 ; 39.0000 ]
+  pt2: [ 705.8622 ; 125.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.0
@@ -78,8 +78,8 @@ RECTANGLE:
   backcolor: NULL_COLOR
 
 LINE:
-  pt1: [ 437.5727 ; 39.0000 ]
-  pt2: [ 437.5727 ; 125.0000 ]
+  pt1: [ 701.3622 ; 39.0000 ]
+  pt2: [ 701.3622 ; 125.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
@@ -103,8 +103,8 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 123.9815 ; 10.0000 ]
-  pt2: [ 173.6865 ; 38.0000 ]
+  pt1: [ 387.7710 ; 10.0000 ]
+  pt2: [ 437.4761 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -114,15 +114,15 @@ RECTANGLE:
 
 TEXT:
   text: Bob
-  position: [ 130.9815 ; 27.8889 ]
+  position: [ 394.7710 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 183.6865 ; 10.0000 ]
-  pt2: [ 293.1396 ; 38.0000 ]
+  pt1: [ 447.4761 ; 10.0000 ]
+  pt2: [ 556.9292 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -132,15 +132,15 @@ RECTANGLE:
 
 TEXT:
   text: Charlie
-  position: [ 190.6865 ; 27.8889 ]
+  position: [ 454.4761 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 393.5941 ; 10.0000 ]
-  pt2: [ 481.5513 ; 38.0000 ]
+  pt1: [ 657.3836 ; 10.0000 ]
+  pt2: [ 745.3409 ; 38.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -150,7 +150,7 @@ RECTANGLE:
 
 TEXT:
   text: Alice
-  position: [ 400.5941 ; 27.8889 ]
+  position: [ 664.3836 ; 27.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -175,8 +175,8 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 123.9815 ; 125.0000 ]
-  pt2: [ 173.6865 ; 153.0000 ]
+  pt1: [ 387.7710 ; 125.0000 ]
+  pt2: [ 437.4761 ; 153.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -186,15 +186,15 @@ RECTANGLE:
 
 TEXT:
   text: Bob
-  position: [ 130.9815 ; 142.8889 ]
+  position: [ 394.7710 ; 142.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 183.6865 ; 125.0000 ]
-  pt2: [ 293.1396 ; 153.0000 ]
+  pt1: [ 447.4761 ; 125.0000 ]
+  pt2: [ 556.9292 ; 153.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -204,15 +204,15 @@ RECTANGLE:
 
 TEXT:
   text: Charlie
-  position: [ 190.6865 ; 142.8889 ]
+  position: [ 454.4761 ; 142.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 393.5941 ; 125.0000 ]
-  pt2: [ 481.5513 ; 153.0000 ]
+  pt1: [ 657.3836 ; 125.0000 ]
+  pt2: [ 745.3409 ; 153.0000 ]
   xCorner: 5
   yCorner: 5
   stroke: 0.0-0.0-0.5
@@ -222,7 +222,7 @@ RECTANGLE:
 
 TEXT:
   text: Alice
-  position: [ 400.5941 ; 142.8889 ]
+  position: [ 664.3836 ; 142.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -256,18 +256,18 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 226.4131 ; 62.0000 ]
-   - [ 236.4131 ; 66.0000 ]
-   - [ 226.4131 ; 70.0000 ]
-   - [ 230.4131 ; 66.0000 ]
+   - [ 490.2026 ; 62.0000 ]
+   - [ 500.2026 ; 66.0000 ]
+   - [ 490.2026 ; 70.0000 ]
+   - [ 494.2026 ; 66.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 148.8340 ; 66.0000 ]
-  pt2: [ 232.4131 ; 66.0000 ]
+  pt1: [ 412.6235 ; 66.0000 ]
+  pt2: [ 496.2026 ; 66.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -291,8 +291,8 @@ PATH:
   backcolor: ffeeeeee
 
 RECTANGLE:
-  pt1: [ 132.8340 ; 64.0000 ]
-  pt2: [ 453.5727 ; 116.0000 ]
+  pt1: [ 396.6235 ; 64.0000 ]
+  pt2: [ 717.3622 ; 116.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-1.5
@@ -302,7 +302,7 @@ RECTANGLE:
 
 TEXT:
   text: par
-  position: [ 147.8340 ; 75.1111 ]
+  position: [ 411.6235 ; 75.1111 ]
   orientation: 0
   font: SansSerif.bold/13 [BOLD]
   color: ff000000
@@ -310,25 +310,25 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 159.8340 ; 104.0000 ]
-   - [ 149.8340 ; 108.0000 ]
-   - [ 159.8340 ; 112.0000 ]
-   - [ 155.8340 ; 108.0000 ]
+   - [ 423.6235 ; 104.0000 ]
+   - [ 413.6235 ; 108.0000 ]
+   - [ 423.6235 ; 112.0000 ]
+   - [ 419.6235 ; 108.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: ff181818
 
 LINE:
-  pt1: [ 153.8340 ; 108.0000 ]
-  pt2: [ 436.5727 ; 108.0000 ]
+  pt1: [ 417.6235 ; 108.0000 ]
+  pt2: [ 700.3622 ; 108.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
 
 TEXT:
   text: Authentication Request
-  position: [ 165.8340 ; 103.1111 ]
+  position: [ 429.6235 ; 103.1111 ]
   orientation: 0
   font: SansSerif.plain/13 []
   color: ff000000
@@ -336,10 +336,10 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 425.5727 ; 75.0000 ]
-   - [ 435.5727 ; 79.0000 ]
-   - [ 425.5727 ; 83.0000 ]
-   - [ 429.5727 ; 79.0000 ]
+   - [ 689.3622 ; 75.0000 ]
+   - [ 699.3622 ; 79.0000 ]
+   - [ 689.3622 ; 83.0000 ]
+   - [ 693.3622 ; 79.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -347,7 +347,7 @@ POLYGON:
 
 LINE:
   pt1: [ 83.9653 ; 79.0000 ]
-  pt2: [ 431.5727 ; 79.0000 ]
+  pt2: [ 695.3622 ; 79.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818

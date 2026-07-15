@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" height="237px" preserveAspectRatio="none" style="width:340px;height:237px;background:#FFFFFF;" version="1.1" viewBox="0 0 340 237" width="340px" zoomAndPan="magnify">
+  <defs/>
+  <g font-family="sans-serif" lengthAdjust="spacing">
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="128.05" x="13" y="51"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="128.05" x="52.156" y="121"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="128.05" x="192.206" y="121"/>
+    <g>
+      <title>a</title>
+      <rect fill="#000" fill-opacity="0" height="158" width="8" x="25.5" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="29" x2="29" y1="39" y2="197"/>
+    </g>
+    <g>
+      <title>b</title>
+      <rect fill="#000" fill-opacity="0" height="158" width="8" x="64.656" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="68.156" x2="68.156" y1="39" y2="197"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="102" style="stroke:#181818;stroke-width:1;" width="10" x="63.156" y="95"/>
+    </g>
+    <g>
+      <title>c</title>
+      <rect fill="#000" fill-opacity="0" height="158" width="8" x="140.619" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="144.119" x2="144.119" y1="39" y2="197"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="32" style="stroke:#181818;stroke-width:1;" width="10" x="139.119" y="165"/>
+    </g>
+    <g>
+      <title>e</title>
+      <rect fill="#000" fill-opacity="0" height="158" width="8" x="204.706" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="208.206" x2="208.206" y1="39" y2="197"/>
+    </g>
+    <g>
+      <title>f</title>
+      <rect fill="#000" fill-opacity="0" height="158" width="8" x="280.669" y="39"/>
+      <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5,5;" x1="284.169" x2="284.169" y1="39" y2="197"/>
+    </g>
+    <g>
+      <title/>
+      <rect fill="#FFF" height="32" style="stroke:#181818;stroke-width:1;" width="10" x="279.169" y="165"/>
+    </g>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="18.106" y="10"/>
+    <text fill="#000" font-size="14" x="25.106" y="27.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="57.263" y="10"/>
+    <text fill="#000" font-size="14" x="64.263" y="27.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="133.619" y="10"/>
+    <text fill="#000" font-size="14" x="140.619" y="27.889">c</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="197.313" y="10"/>
+    <text fill="#000" font-size="14" x="204.313" y="27.889">e</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="17.85" x="275.244" y="10"/>
+    <text fill="#000" font-size="14" x="282.244" y="27.889">f</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="18.106" y="197"/>
+    <text fill="#000" font-size="14" x="25.106" y="214.889">a</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="57.263" y="197"/>
+    <text fill="#000" font-size="14" x="64.263" y="214.889">b</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21" x="133.619" y="197"/>
+    <text fill="#000" font-size="14" x="140.619" y="214.889">c</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="21.788" x="197.313" y="197"/>
+    <text fill="#000" font-size="14" x="204.313" y="214.889">e</text>
+    <rect fill="#E2E2F0" height="28" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="17.85" x="275.244" y="197"/>
+    <text fill="#000" font-size="14" x="282.244" y="214.889">f</text>
+    <path d="M13,51 L82.619,51 L82.619,56 L72.619,66 L13,66 L13,51" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="128.05" x="13" y="51"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="28" y="62.111">loop</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="27.431" x="97.619" y="61.556">[1 to n]</text>
+    <polygon fill="#181818" points="51.156,91,61.156,95,51.156,99,55.156,95" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="29" x2="57.156" y1="95" y2="95"/>
+    <text fill="#000" font-size="13" textLength="10.156" x="36" y="90.111">hi</text>
+    <path d="M52.156,121 L121.775,121 L121.775,126 L111.775,136 L52.156,136 L52.156,121" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="128.05" x="52.156" y="121"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="67.156" y="132.111">loop</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="27.431" x="136.775" y="131.556">[1 to n]</text>
+    <polygon fill="#181818" points="127.119,161,137.119,165,127.119,169,131.119,165" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="73.156" x2="133.119" y1="165" y2="165"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="80.156" y="160.111">broken1</text>
+    <path d="M192.206,121 L261.825,121 L261.825,126 L251.825,136 L192.206,136 L192.206,121" fill="#EEE" style="stroke:#000;stroke-width:1.5;"/>
+    <rect fill="none" height="52" style="stroke:#000;stroke-width:1.5;" width="128.05" x="192.206" y="121"/>
+    <text fill="#000" font-size="13" font-weight="700" textLength="24.619" x="207.206" y="132.111">loop</text>
+    <text fill="#000" font-size="11" font-weight="700" textLength="27.431" x="276.825" y="131.556">[1 to n]</text>
+    <polygon fill="#181818" points="267.169,161,277.169,165,267.169,169,271.169,165" style="stroke:#181818;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:10;"/>
+    <line style="stroke:#181818;stroke-width:1;" x1="208.206" x2="273.169" y1="165" y2="165"/>
+    <text fill="#000" font-size="13" textLength="46.963" x="215.206" y="160.111">broken2</text>
+  </g>
+</svg>
