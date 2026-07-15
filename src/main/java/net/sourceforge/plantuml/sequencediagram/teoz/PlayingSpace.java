@@ -78,9 +78,9 @@ public class PlayingSpace implements Bordered {
 			max2.add(dolls.getMaxX(tileArguments.getStringBounder()));
 		}
 
-		// The gauge chain starts at startingY so that gauge coordinates and
-		// legacy TimeHook coordinates (fillPositionelTiles starts its
-		// accumulation at startingY too) live in the same drawing space
+		// Gauge chain origin: everything chains off this so gauge coordinates line
+		// up with the diagram's own drawing space (startingY of headroom above
+		// the first tile).
 		final YGauge ycurrent = YGauge.create(tileArguments.getYOrigin().addFixed(startingY), 0);
 
 		tiles.addAll(TileBuilder.buildSeveral(diagram.events().iterator(), tileArguments, null, ycurrent));
@@ -115,7 +115,7 @@ public class PlayingSpace implements Bordered {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final List<CommonTile> local = new ArrayList<>();
 		final List<CommonTile> full = new ArrayList<>();
-		final TimeHook y = GroupingTile.fillPositionelTiles(stringBounder, new TimeHook(startingY), tiles, local, full);
+		GroupingTile.fillPositionelTiles(stringBounder, tiles, local, full);
 		// Each tile draws itself in ABSOLUTE coordinates, translating itself by its
 		// own gauge min (the "self-translate prologue" every drawU() starts with),
 		// so no external dy() translation is applied here
@@ -128,8 +128,14 @@ public class PlayingSpace implements Bordered {
 				linkAnchor.drawAnchor(ug, ytile1, ytile2, skinParam);
 
 		}
-		// System.err.println("MainTile::drawUInternal finalY=" + y);
-		return y.getValue();
+		// Final height of this level: the last top-level tile's gauge already
+		// dominates everything before it (see YGauge.createParallel's
+		// max.ensureBiggerThan(currentY.getMax())), so its max IS the total height.
+		// Falls back to startingY for an empty diagram.
+		if (tiles.isEmpty())
+			return startingY;
+
+		return tiles.get(tiles.size() - 1).getYGauge().getMax().getCurrentValue();
 	}
 
 	private CommonTile getFromAnchor(List<CommonTile> positionedTiles, String anchor) {
@@ -203,7 +209,7 @@ public class PlayingSpace implements Bordered {
 		final List<Double> yNewPages = new ArrayList<>();
 		yNewPages.add(0.0);
 		for (NewpageTile newpageTile : getNewpageTiles())
-			yNewPages.add(newpageTile.getTimeHook().getValue());
+			yNewPages.add(newpageTile.getYGauge().getMin().getCurrentValue());
 
 		yNewPages.add(Double.MAX_VALUE);
 		return yNewPages;

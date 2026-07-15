@@ -172,18 +172,18 @@ public class CommunicationTile extends AbstractCommunicationTile {
 	public static final double LIVE_DELTA_SIZE = 5;
 
 	@Override
-	final protected void callbackY_internal(TimeHook y) {
-		super.callbackY_internal(y);
+	final public void onGaugeResolved() {
+		final double y = getYGauge().getMin().getCurrentValue();
 		if (message.isCreate())
-			livingSpace2.goCreate(y.getValue());
+			livingSpace2.goCreate(y);
 
 		final AbstractComponentRoseArrow comp = (AbstractComponentRoseArrow) getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 
 		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();
 
-		livingSpace1.addStepForLivebox(getEvent(), y.getValue() + arrowY);
-		livingSpace2.addStepForLivebox(getEvent(), y.getValue() + arrowY);
+		livingSpace1.addStepForLivebox(getEvent(), y + arrowY);
+		livingSpace2.addStepForLivebox(getEvent(), y + arrowY);
 	}
 
 	// ASCII rendering. The message is drawn relative to the plan (already

@@ -62,13 +62,13 @@ public class LifeEventTile extends AbstractTile {
 	private final YGauge yGauge;
 
 	@Override
-	final protected void callbackY_internal(TimeHook y) {
-		super.callbackY_internal(y);
+	final public void onGaugeResolved() {
+		final double y = getYGauge().getMin().getCurrentValue();
 		// System.err.println("LifeEventTile::updateStairs " + lifeEvent + " " +
 		// livingSpace.getParticipant() + " y=" + y);
-		livingSpace.addStepForLivebox(getEvent(), y.getValue());
+		livingSpace.addStepForLivebox(getEvent(), y);
 		if (lifeEvent.getType() == LifeEventType.DESTROY)
-			livingSpace.goDestroy(y.getValue());
+			livingSpace.goDestroy(y);
 	}
 
 	public Event getEvent() {

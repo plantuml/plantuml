@@ -104,9 +104,8 @@ public class CommunicationTileNoteRight extends AbstractTile {
 	}
 
 	@Override
-	final protected void callbackY_internal(TimeHook y) {
-		super.callbackY_internal(y);
-		tile.callbackY(y);
+	final public void onGaugeResolved() {
+		tile.onGaugeResolved();
 	}
 
 	private Component getComponent(StringBounder stringBounder) {

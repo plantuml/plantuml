@@ -188,13 +188,12 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	@Override
-	final protected void callbackY_internal(TimeHook y) {
-		super.callbackY_internal(y);
+	final public void onGaugeResolved() {
 		final ArrowComponent comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final double arrowY = comp.getStartPoint(getStringBounder(), dim).getY();
 
-		livingSpace.addStepForLivebox(getEvent(), y.getValue() + arrowY);
+		livingSpace.addStepForLivebox(getEvent(), getYGauge().getMin().getCurrentValue() + arrowY);
 
 	}
 

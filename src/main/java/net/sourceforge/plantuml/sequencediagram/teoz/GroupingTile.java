@@ -627,37 +627,25 @@ public class GroupingTile extends AbstractTile {
 		return result;
 	}
 
-	// Walks the tile tree to run each tile's callbackY() -- which no longer
-	// POSITIONS anything (every tile reads its own solved gauge, see
-	// CommonTile.callbackY) but still drives the livebox steps, goCreate/goDestroy
-	// and the local/full tile lists used for LinkAnchor lookups. The `y` TimeHook
-	// is threaded through only because callbackY still takes one; its value is
-	// ignored by every tile.
-	//
-	// The RETURN value (total height of this level) is a separate matter: it must
-	// count each parallel (&) cluster ONCE, so it is computed from the same
-	// height-only clustering used for bodyHeight, not by summing the flat list.
-	public static TimeHook fillPositionelTiles(StringBounder stringBounder, TimeHook y, List<Tile> tiles,
+	// Walks the tile tree to run each tile's notifyPositioned() -- which no longer
+	// POSITIONS anything (every tile reads its own solved gauge) but still drives
+	// the livebox steps, goCreate/goDestroy and the local/full tile lists used
+	// for LinkAnchor lookups.
+	public static void fillPositionelTiles(StringBounder stringBounder, List<Tile> tiles,
 			final List<CommonTile> local, List<CommonTile> full) {
-		final double startY = y.getValue();
 		for (Tile tile : tiles) {
-			tile.callbackY(y);
+			tile.onGaugeResolved();
 			local.add((CommonTile) tile);
 			full.add((CommonTile) tile);
 			if (tile instanceof GroupingTile)
-				fillPositionalSubGroupTiles(stringBounder, y, full, (GroupingTile) tile);
+				fillPositionalSubGroupTiles(stringBounder, full, (GroupingTile) tile);
 		}
-
-		double clusteredHeight = 0;
-		for (Tile tile : mergeParallelCore(stringBounder, tiles))
-			clusteredHeight += tile.getPreferredHeight();
-		return new TimeHook(startY + clusteredHeight);
 	}
 
-	private static void fillPositionalSubGroupTiles(StringBounder stringBounder, TimeHook y, List<CommonTile> full,
+	private static void fillPositionalSubGroupTiles(StringBounder stringBounder, List<CommonTile> full,
 			GroupingTile groupingTile) {
 		final ArrayList<CommonTile> local2 = new ArrayList<>();
-		fillPositionelTiles(stringBounder, y, groupingTile.tiles, local2, full);
+		fillPositionelTiles(stringBounder, groupingTile.tiles, local2, full);
 	}
 
 	// Clusters each run of parallel (&) tiles into one TileParallel, whose height

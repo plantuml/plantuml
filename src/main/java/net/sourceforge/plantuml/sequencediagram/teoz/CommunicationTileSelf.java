@@ -103,19 +103,19 @@ public class CommunicationTileSelf extends AbstractCommunicationTile {
 	}
 
 	@Override
-	final protected void callbackY_internal(TimeHook y) {
-		super.callbackY_internal(y);
+	final public void onGaugeResolved() {
 		final ArrowComponent comp = getComponent(getStringBounder());
 		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
 		final XPoint2D p1 = comp.getStartPoint(getStringBounder(), dim);
 		final XPoint2D p2 = comp.getEndPoint(getStringBounder(), dim);
+		final double y = getYGauge().getMin().getCurrentValue();
 
 		if (message.isActivate())
-			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());
+			livingSpace1.addStepForLivebox(getEvent(), y + p2.getY());
 		else if (message.isDeactivate())
-			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p1.getY());
+			livingSpace1.addStepForLivebox(getEvent(), y + p1.getY());
 		else if (message.isDestroy())
-			livingSpace1.addStepForLivebox(getEvent(), y.getValue() + p2.getY());
+			livingSpace1.addStepForLivebox(getEvent(), y + p2.getY());
 
 	}
 
