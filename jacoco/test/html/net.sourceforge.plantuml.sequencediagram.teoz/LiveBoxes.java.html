@@ -342,43 +342,54 @@ import net.sourceforge.plantuml.teavm.TeaVM;
 	public void drawBoxes(UGraphic ug, Context2D context, double createY, double endY) {
 <span class="fc" id="L343">		final Stairs stairs = getStairs(createY, endY);</span>
 <span class="fc" id="L344">		final int max = stairs.getMaxIndent();</span>
-<span class="fc bfc" id="L345" title="All 2 branches covered.">		if (max == 0)</span>
-<span class="fc" id="L346">			drawDestroys(ug, stairs, context);</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">		for (int i = 1; i &lt;= max; i++)</span>
+<span class="fc" id="L346">			drawOneLevel(ug, i, stairs, context);</span>
 
-<span class="fc bfc" id="L348" title="All 2 branches covered.">		for (int i = 1; i &lt;= max; i++)</span>
-<span class="fc" id="L349">			drawOneLevel(ug, i, stairs, context);</span>
-
-<span class="fc" id="L351">	}</span>
+		// Destroys at indent 0 are always handled here, regardless of the
+		// participant's global max indent: a destroy occurring after a past
+		// deactivation (max &gt; 0) still lands at indent 0 and would otherwise
+		// never be visited by drawOneLevel, whose pending/closing logic only
+		// fires when a box is currently open at that level. Drawn last (on top
+		// of the z-order) so the cross is never painted over by an activation
+		// box drawn afterwards.
+<span class="fc" id="L355">		drawDestroys(ug, stairs, context);</span>
+<span class="fc" id="L356">	}</span>
 
 	private void drawDestroys(UGraphic ug, Stairs stairs, Context2D context) {
-<span class="fc" id="L354">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays, p.getStereotype());</span>
-<span class="fc bfc" id="L355" title="All 2 branches covered.">		for (Step yposition : stairs.getSteps())</span>
-<span class="fc" id="L356">			drawer.drawDestroyIfNeeded(ug, yposition);</span>
+<span class="fc" id="L359">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays, p.getStereotype());</span>
+<span class="fc bfc" id="L360" title="All 2 branches covered.">		for (Step yposition : stairs.getSteps())</span>
+<span class="fc bfc" id="L361" title="All 2 branches covered.">			if (yposition.getIndent() == 0)</span>
+<span class="fc" id="L362">				drawer.drawDestroyIfNeeded(ug, yposition);</span>
 
-<span class="fc" id="L358">	}</span>
+<span class="fc" id="L364">	}</span>
 
 	private void drawOneLevel(UGraphic ug, int levelToDraw, Stairs stairs, Context2D context) {
-<span class="fc" id="L361">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays, p.getStereotype());</span>
-<span class="fc" id="L362">		ug = ug.apply(UTranslate.dx((levelToDraw - 1) * drawer.getWidth(ug.getStringBounder()) / 2.0));</span>
+<span class="fc" id="L367">		final LiveBoxesDrawer drawer = new LiveBoxesDrawer(context, skin, skinParam, delays, p.getStereotype());</span>
+<span class="fc" id="L368">		ug = ug.apply(UTranslate.dx((levelToDraw - 1) * drawer.getWidth(ug.getStringBounder()) / 2.0));</span>
 
-<span class="fc" id="L364">		boolean pending = true;</span>
-<span class="fc bfc" id="L365" title="All 2 branches covered.">		for (Iterator&lt;Step&gt; it = stairs.getSteps().iterator(); it.hasNext();) {</span>
-<span class="fc" id="L366">			final Step yposition = it.next();</span>
-<span class="fc" id="L367">			final int indent = yposition.getIndent();</span>
-<span class="fc bfc" id="L368" title="All 4 branches covered.">			if (pending &amp;&amp; indent == levelToDraw) {</span>
-<span class="fc" id="L369">				drawer.addStart(yposition.getValue(), yposition.getColors(), yposition.getStyleBuilder());</span>
-<span class="fc" id="L370">				pending = false;</span>
-<span class="fc bfc" id="L371" title="All 6 branches covered.">			} else if (pending == false &amp;&amp; (it.hasNext() == false || indent &lt; levelToDraw)) {</span>
-<span class="fc" id="L372">				drawer.doDrawing(ug, yposition.getValue());</span>
-<span class="fc" id="L373">				drawer.drawDestroyIfNeeded(ug, yposition);</span>
-<span class="fc" id="L374">				pending = true;</span>
+<span class="fc" id="L370">		boolean pending = true;</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">		for (Iterator&lt;Step&gt; it = stairs.getSteps().iterator(); it.hasNext();) {</span>
+<span class="fc" id="L372">			final Step yposition = it.next();</span>
+<span class="fc" id="L373">			final int indent = yposition.getIndent();</span>
+<span class="fc bfc" id="L374" title="All 4 branches covered.">			if (pending &amp;&amp; indent == levelToDraw) {</span>
+<span class="fc" id="L375">				drawer.addStart(yposition.getValue(), yposition.getColors(), yposition.getStyleBuilder());</span>
+<span class="fc" id="L376">				pending = false;</span>
+<span class="fc bfc" id="L377" title="All 6 branches covered.">			} else if (pending == false &amp;&amp; (it.hasNext() == false || indent &lt; levelToDraw)) {</span>
+<span class="fc" id="L378">				drawer.doDrawing(ug, yposition.getValue());</span>
+				// Indent-0 destroys are handled exclusively by drawDestroys() (called
+				// unconditionally from drawBoxes) to avoid drawing the cross twice;
+				// only nested-activation closings (indent &gt; 0) are drawn here, since
+				// drawDestroys() does not know about the per-level x offset.
+<span class="fc bfc" id="L383" title="All 2 branches covered.">				if (indent &gt; 0)</span>
+<span class="fc" id="L384">					drawer.drawDestroyIfNeeded(ug, yposition);</span>
+<span class="fc" id="L385">				pending = true;</span>
 			}
-<span class="fc" id="L376">		}</span>
-<span class="fc" id="L377">	}</span>
+<span class="fc" id="L387">		}</span>
+<span class="fc" id="L388">	}</span>
 
 	public void delayOn(double y, double height) {
-<span class="nc" id="L380">		delays.put(y, height);</span>
-<span class="nc" id="L381">	}</span>
+<span class="nc" id="L391">		delays.put(y, height);</span>
+<span class="nc" id="L392">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
