@@ -42,13 +42,13 @@ public class EntityPort {
 	private final String entityUid;
 	private final String portId;
 
-<span class="fc" id="L45">	private EntityPort(String entityUid, String portId) {</span>
-<span class="fc" id="L46">		this.entityUid = entityUid;</span>
-<span class="fc" id="L47">		this.portId = portId;</span>
-<span class="fc" id="L48">	}</span>
+<span class="nc" id="L45">	private EntityPort(String entityUid, String portId) {</span>
+<span class="nc" id="L46">		this.entityUid = entityUid;</span>
+<span class="nc" id="L47">		this.portId = portId;</span>
+<span class="nc" id="L48">	}</span>
 
 	public static EntityPort create(String entityUid, String portName) {
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		return new EntityPort(entityUid, portName == null ? null : Ports.encodePortNameToId(portName));</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">		return new EntityPort(entityUid, portName == null ? null : Ports.encodePortNameToId(portName));</span>
 	}
 
 	public static EntityPort forPort(String entityUid) {
@@ -74,7 +74,7 @@ public class EntityPort {
 	}
 
 	public boolean startsWith(String centerId) {
-<span class="fc" id="L77">		return entityUid.startsWith(centerId);</span>
+<span class="nc" id="L77">		return entityUid.startsWith(centerId);</span>
 	}
 
 	public boolean equalsId(EntityPort other) {

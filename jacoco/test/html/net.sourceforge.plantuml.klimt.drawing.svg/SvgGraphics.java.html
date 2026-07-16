@@ -894,24 +894,24 @@ import net.sourceforge.plantuml.version.Version;
 <span class="fc" id="L894">	private StringBuilder currentPath = null;</span>
 
 	public void newpath() {
-<span class="nc" id="L897">		currentPath = new StringBuilder();</span>
+<span class="fc" id="L897">		currentPath = new StringBuilder();</span>
 
-<span class="nc" id="L899">	}</span>
+<span class="fc" id="L899">	}</span>
 
 	public void moveto(double x, double y) {
-<span class="nc" id="L902">		currentPath.append(&quot;M&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
-<span class="nc" id="L903">		ensureVisible(x, y);</span>
-<span class="nc" id="L904">	}</span>
+<span class="fc" id="L902">		currentPath.append(&quot;M&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
+<span class="fc" id="L903">		ensureVisible(x, y);</span>
+<span class="fc" id="L904">	}</span>
 
 	public void lineto(double x, double y) {
-<span class="nc" id="L907">		currentPath.append(&quot;L&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
-<span class="nc" id="L908">		ensureVisible(x, y);</span>
-<span class="nc" id="L909">	}</span>
+<span class="fc" id="L907">		currentPath.append(&quot;L&quot; + format(x) + &quot;,&quot; + format(y) + &quot; &quot;);</span>
+<span class="fc" id="L908">		ensureVisible(x, y);</span>
+<span class="fc" id="L909">	}</span>
 
 	public void closepath() {
-<span class="nc" id="L912">		currentPath.append(&quot;Z &quot;);</span>
+<span class="fc" id="L912">		currentPath.append(&quot;Z &quot;);</span>
 
-<span class="nc" id="L914">	}</span>
+<span class="fc" id="L914">	}</span>
 
 	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
 <span class="nc" id="L917">		currentPath.append(&quot;C&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot; + format(x3)</span>
@@ -923,47 +923,47 @@ import net.sourceforge.plantuml.version.Version;
 <span class="nc" id="L923">	}</span>
 
 	public void quadto(double x1, double y1, double x2, double y2) {
-<span class="nc" id="L926">		currentPath.append(&quot;Q&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot;);</span>
-<span class="nc" id="L927">		ensureVisible(x1, y1);</span>
-<span class="nc" id="L928">		ensureVisible(x2, y2);</span>
-<span class="nc" id="L929">	}</span>
+<span class="fc" id="L926">		currentPath.append(&quot;Q&quot; + format(x1) + &quot;,&quot; + format(y1) + &quot; &quot; + format(x2) + &quot;,&quot; + format(y2) + &quot; &quot;);</span>
+<span class="fc" id="L927">		ensureVisible(x1, y1);</span>
+<span class="fc" id="L928">		ensureVisible(x2, y2);</span>
+<span class="fc" id="L929">	}</span>
 
 	public void fill(int windingRule) {
-<span class="nc bnc" id="L932" title="All 2 branches missed.">		if (hidden == false) {</span>
-<span class="nc" id="L933">			final XmlNode elt = document.createElement(&quot;path&quot;);</span>
-<span class="nc" id="L934">			elt.setAttribute(&quot;d&quot;, currentPath.toString());</span>
-<span class="nc" id="L935">			fillMe(elt);</span>
-<span class="nc" id="L936">			getG().appendChild(elt);</span>
+<span class="pc bpc" id="L932" title="1 of 2 branches missed.">		if (hidden == false) {</span>
+<span class="fc" id="L933">			final XmlNode elt = document.createElement(&quot;path&quot;);</span>
+<span class="fc" id="L934">			elt.setAttribute(&quot;d&quot;, currentPath.toString());</span>
+<span class="fc" id="L935">			fillMe(elt);</span>
+<span class="fc" id="L936">			getG().appendChild(elt);</span>
 		}
-<span class="nc" id="L938">		currentPath = null;</span>
+<span class="fc" id="L938">		currentPath = null;</span>
 
-<span class="nc" id="L940">	}</span>
+<span class="fc" id="L940">	}</span>
 
 	public void drawPathIterator(double x, double y, PathIterator path) {
 
-<span class="nc" id="L944">		this.newpath();</span>
-<span class="nc" id="L945">		final double coord[] = new double[6];</span>
-<span class="nc bnc" id="L946" title="All 2 branches missed.">		while (path.isDone() == false) {</span>
-<span class="nc" id="L947">			final int code = path.currentSegment(coord);</span>
-<span class="nc bnc" id="L948" title="All 2 branches missed.">			if (code == PathIterator.SEG_MOVETO)</span>
-<span class="nc" id="L949">				this.moveto(coord[0] + x, coord[1] + y);</span>
-<span class="nc bnc" id="L950" title="All 2 branches missed.">			else if (code == PathIterator.SEG_LINETO)</span>
-<span class="nc" id="L951">				this.lineto(coord[0] + x, coord[1] + y);</span>
-<span class="nc bnc" id="L952" title="All 2 branches missed.">			else if (code == PathIterator.SEG_CLOSE)</span>
-<span class="nc" id="L953">				this.closepath();</span>
-<span class="nc bnc" id="L954" title="All 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
+<span class="fc" id="L944">		this.newpath();</span>
+<span class="fc" id="L945">		final double coord[] = new double[6];</span>
+<span class="fc bfc" id="L946" title="All 2 branches covered.">		while (path.isDone() == false) {</span>
+<span class="fc" id="L947">			final int code = path.currentSegment(coord);</span>
+<span class="fc bfc" id="L948" title="All 2 branches covered.">			if (code == PathIterator.SEG_MOVETO)</span>
+<span class="fc" id="L949">				this.moveto(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L950" title="All 2 branches covered.">			else if (code == PathIterator.SEG_LINETO)</span>
+<span class="fc" id="L951">				this.lineto(coord[0] + x, coord[1] + y);</span>
+<span class="fc bfc" id="L952" title="All 2 branches covered.">			else if (code == PathIterator.SEG_CLOSE)</span>
+<span class="fc" id="L953">				this.closepath();</span>
+<span class="pc bpc" id="L954" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_CUBICTO)</span>
 <span class="nc" id="L955">				this.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);</span>
-<span class="nc bnc" id="L956" title="All 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
-<span class="nc" id="L957">				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
+<span class="pc bpc" id="L956" title="1 of 2 branches missed.">			else if (code == PathIterator.SEG_QUADTO)</span>
+<span class="fc" id="L957">				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);</span>
 			else
 <span class="nc" id="L959">				throw new UnsupportedOperationException(&quot;code=&quot; + code);</span>
 
-<span class="nc" id="L961">			path.next();</span>
-<span class="nc" id="L962">		}</span>
+<span class="fc" id="L961">			path.next();</span>
+<span class="fc" id="L962">		}</span>
 
-<span class="nc" id="L964">		this.fill(path.getWindingRule());</span>
+<span class="fc" id="L964">		this.fill(path.getWindingRule());</span>
 
-<span class="nc" id="L966">	}</span>
+<span class="fc" id="L966">	}</span>
 
 	public void svgImage(PortableImage image, double x, double y) throws IOException {
 <span class="pc bpc" id="L969" title="1 of 2 branches missed.">		if (hidden == false) {</span>

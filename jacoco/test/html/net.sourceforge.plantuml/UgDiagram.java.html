@@ -154,8 +154,8 @@ public abstract class UgDiagram extends AbstractDiagram {
 <span class="fc" id="L154">			return FileImageData.ERROR;</span>
 <span class="pc bpc" id="L155" title="1 of 2 branches missed.">		if (textBlock instanceof GraphvizCrash)</span>
 <span class="nc" id="L156">			return FileImageData.CRASH;</span>
-<span class="fc bfc" id="L157" title="All 4 branches covered.">		if (textBlock instanceof IEntityImage &amp;&amp; ((IEntityImage) textBlock).isCrash())</span>
-<span class="fc" id="L158">			return FileImageData.CRASH;</span>
+<span class="pc bpc" id="L157" title="1 of 4 branches missed.">		if (textBlock instanceof IEntityImage &amp;&amp; ((IEntityImage) textBlock).isCrash())</span>
+<span class="nc" id="L158">			return FileImageData.CRASH;</span>
 <span class="fc" id="L159">		return 0;</span>
 	}
 

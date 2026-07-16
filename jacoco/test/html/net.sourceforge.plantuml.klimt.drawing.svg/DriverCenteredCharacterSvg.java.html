@@ -62,23 +62,23 @@ public class DriverCenteredCharacterSvg implements UDriver&lt;UCenteredCharacter
 		// For deterministic SVG output (used by tests), avoid rendering the glyph as a
 		// vector path derived from the system font (which differs across OS/JVM).
 		// Instead, emit a simple &lt;text&gt; element with a fixed font-family.
-<span class="pc bpc" id="L65" title="1 of 2 branches missed.">		if (fileFormat == FileFormat.SVG_DETERMINISTIC) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (fileFormat == FileFormat.SVG_DETERMINISTIC) {</span>
 <span class="fc" id="L66">			svg.setFillColor(textColor.toSvg(mapper));</span>
 <span class="fc" id="L67">			svg.text(String.valueOf(c), x - 5, y + 5, &quot;monospace&quot;, 14, null, null, null, 0,</span>
 					new HashMap&lt;String, String&gt;(), null);
 <span class="fc" id="L69">			return;</span>
 		}
 
-<span class="nc" id="L72">		final UFont font = characterCircled.getFont();</span>
-<span class="nc" id="L73">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
+<span class="fc" id="L72">		final UFont font = characterCircled.getFont();</span>
+<span class="fc" id="L73">		final UnusedSpace unusedSpace = UnusedSpace.getUnusedSpace(font, c);</span>
 
-<span class="nc" id="L75">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
-<span class="nc" id="L76">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
+<span class="fc" id="L75">		final double xpos = x - unusedSpace.getCenterX() - 0.5;</span>
+<span class="fc" id="L76">		final double ypos = y - unusedSpace.getCenterY() - 0.5;</span>
 
-<span class="nc" id="L78">		final TextLayout t = font.createTextLayout(&quot;&quot; + c);</span>
-<span class="nc" id="L79">		svg.setFillColor(textColor.toSvg(mapper));</span>
+<span class="fc" id="L78">		final TextLayout t = font.createTextLayout(&quot;&quot; + c);</span>
+<span class="fc" id="L79">		svg.setFillColor(textColor.toSvg(mapper));</span>
 
-<span class="nc" id="L81">		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
-<span class="nc" id="L82">	}</span>
+<span class="fc" id="L81">		svg.drawPathIterator(xpos, ypos, t.getOutline(null).getPathIterator(null));</span>
+<span class="fc" id="L82">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

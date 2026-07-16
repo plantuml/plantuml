@@ -82,13 +82,13 @@ abstract class AbstractGraphviz implements Graphviz {
 
 	final protected File searchDotExe() {
 <span class="fc" id="L84">		String getenv = GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot();</span>
-<span class="pc bpc" id="L85" title="1 of 4 branches missed.">		if (findExecutableOnPath() &amp;&amp; getenv == null)</span>
+<span class="pc bpc" id="L85" title="2 of 4 branches missed.">		if (findExecutableOnPath() &amp;&amp; getenv == null)</span>
 <span class="fc" id="L86">			getenv = findExecutableOnPath(getExeName());</span>
 
-<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (getenv == null)</span>
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">		if (getenv == null)</span>
 <span class="fc" id="L89">			return specificDotExe();</span>
 
-<span class="fc" id="L91">		return new File(getenv);</span>
+<span class="nc" id="L91">		return new File(getenv);</span>
 	}
 
 	abstract protected File specificDotExe();

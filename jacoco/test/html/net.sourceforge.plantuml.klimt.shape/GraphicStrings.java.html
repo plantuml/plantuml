@@ -79,22 +79,22 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 	private final FontConfiguration fontConfiguration;
 
 	public static IEntityImage createForError(List&lt;String&gt; strings, boolean useRed) {
-<span class="fc" id="L82">		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,</span>
+<span class="nc" id="L82">		return new GraphicStrings(strings, sansSerif14(getForeColor(useRed)).bold(), getBackColor(useRed), null, null,</span>
 				CreoleMode.NO_CREOLE, true);
 	}
 
 	private static HColor getForeColor(boolean useRed) {
-<span class="pc bpc" id="L87" title="1 of 2 branches missed.">		if (useRed)</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		if (useRed)</span>
 <span class="nc" id="L88">			return HColors.BLACK;</span>
 
-<span class="fc" id="L90">		return HColors.MY_GREEN;</span>
+<span class="nc" id="L90">		return HColors.MY_GREEN;</span>
 	}
 
 	private static HColor getBackColor(boolean useRed) {
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (useRed)</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (useRed)</span>
 <span class="nc" id="L95">			return HColors.RED_LIGHT;</span>
 
-<span class="fc" id="L97">		return HColors.BLACK;</span>
+<span class="nc" id="L97">		return HColors.BLACK;</span>
 	}
 
 	public static TextBlock createGreenOnBlackMonospaced(List&lt;String&gt; strings) {
@@ -145,8 +145,8 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 
 	private TextBlock getTextBlock() {
 <span class="fc" id="L147">		final Display display = Display.create(strings);</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">		if (mode == CreoleMode.NO_CREOLE)</span>
-<span class="fc" id="L149">			return new TextBlockRaw(strings, fontConfiguration);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">		if (mode == CreoleMode.NO_CREOLE)</span>
+<span class="nc" id="L149">			return new TextBlockRaw(strings, fontConfiguration);</span>
 
 <span class="fc" id="L151">		return display.create7(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty(), mode);</span>
 
@@ -157,7 +157,7 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 <span class="fc" id="L157">		final XDimension2D size = calculateDimension(ug.getStringBounder()).delta(-2 * margin);</span>
 <span class="fc" id="L158">		getTextBlock().drawU(ug.apply(fontConfiguration.getColor()));</span>
 
-<span class="fc bfc" id="L160" title="All 2 branches covered.">		if (image != null) {</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">		if (image != null) {</span>
 <span class="pc bpc" id="L161" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM)</span>
 <span class="nc" id="L162">				ug.apply(new UTranslate((size.getWidth() - image.getWidth()) / 2, size.getHeight() - image.getHeight()))</span>
 <span class="nc" id="L163">						.draw(new UImage(new PixelImage(image, AffineTransformType.TYPE_BILINEAR)));</span>
@@ -178,7 +178,7 @@ public class GraphicStrings extends TextBlockMemoized implements IEntityImage {
 
 	private XDimension2D calculateDimensionInternal22(StringBounder stringBounder) {
 <span class="fc" id="L180">		XDimension2D dim = getTextBlock().calculateDimension(stringBounder);</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">		if (image != null) {</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">		if (image != null) {</span>
 <span class="pc bpc" id="L182" title="1 of 2 branches missed.">			if (position == GraphicPosition.BOTTOM)</span>
 <span class="nc" id="L183">				dim = new XDimension2D(dim.getWidth(), dim.getHeight() + image.getHeight());</span>
 <span class="fc bfc" id="L184" title="All 2 branches covered.">			else if (position == GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT)</span>

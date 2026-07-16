@@ -52,53 +52,53 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 
 	public CucaDiagramFileMakerSvek(CucaDiagram diagram) throws IOException {
-<span class="fc" id="L55">		super(diagram);</span>
+<span class="nc" id="L55">		super(diagram);</span>
 
-<span class="fc" id="L57">	}</span>
+<span class="nc" id="L57">	}</span>
 
 	@Override
 	public TextBlock getTextBlock(List&lt;String&gt; dotStrings, FileFormatOption fileFormatOption)
 			throws IOException, InterruptedException {
 
-<span class="fc" id="L63">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),</span>
-<span class="fc" id="L64">				diagram.getPragma());</span>
+<span class="nc" id="L63">		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam(),</span>
+<span class="nc" id="L64">				diagram.getPragma());</span>
 
-<span class="pc bpc" id="L66" title="1 of 2 branches missed.">		if (diagram.getDiagramType() == DiagramType.ACTIVITY)</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">		if (diagram.getDiagramType() == DiagramType.ACTIVITY)</span>
 <span class="nc" id="L67">			new CucaDiagramSimplifierActivity().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">		else if (diagram.getDiagramType() == DiagramType.STATE)</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		else if (diagram.getDiagramType() == DiagramType.STATE)</span>
 <span class="nc" id="L69">			new CucaDiagramSimplifierState().simplify(diagram, stringBounder, DotMode.NORMAL);</span>
 
-<span class="fc" id="L71">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),</span>
-<span class="fc" id="L72">				diagram.getDiagramType(), diagram.getSkinParam());</span>
+<span class="nc" id="L71">		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),</span>
+<span class="nc" id="L72">				diagram.getDiagramType(), diagram.getSkinParam());</span>
 
-<span class="fc" id="L74">		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),</span>
+<span class="nc" id="L74">		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),</span>
 				diagram, diagram);
 
-<span class="fc" id="L77">		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
-<span class="fc" id="L78">				diagram.getDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);</span>
-<span class="fc" id="L79">		BaseFile basefile = null;</span>
+<span class="nc" id="L77">		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),</span>
+<span class="nc" id="L78">				diagram.getDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);</span>
+<span class="nc" id="L79">		BaseFile basefile = null;</span>
 //		if (fileFormatOption.isDebugSvek() &amp;&amp; os instanceof NamedOutputStream)
 //			basefile = ((NamedOutputStream) os).getBasefile();
 
-<span class="fc" id="L83">		TextBlock result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),</span>
-<span class="fc" id="L84">				fileFormatOption.isDebugSvek());</span>
+<span class="nc" id="L83">		TextBlock result = imageBuilder.buildImage(stringBounder, basefile, diagram.getDotStringSkek(),</span>
+<span class="nc" id="L84">				fileFormatOption.isDebugSvek());</span>
 
-<span class="fc" id="L86">		return result;</span>
+<span class="nc" id="L86">		return result;</span>
 
 	}
 
 	private List&lt;Link&gt; getOrderedLinks() {
-<span class="fc" id="L91">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">		for (Link l : diagram.getLinks())</span>
-<span class="fc" id="L93">			addLinkNew(result, l);</span>
+<span class="nc" id="L91">		final List&lt;Link&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		for (Link l : diagram.getLinks())</span>
+<span class="nc" id="L93">			addLinkNew(result, l);</span>
 
-<span class="fc" id="L95">		return result;</span>
+<span class="nc" id="L95">		return result;</span>
 	}
 
 	private void addLinkNew(List&lt;Link&gt; result, Link link) {
-<span class="fc bfc" id="L99" title="All 2 branches covered.">		for (int i = 0; i &lt; result.size(); i++) {</span>
-<span class="fc" id="L100">			final Link other = result.get(i);</span>
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">			if (other.sameConnections(link)) {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L100">			final Link other = result.get(i);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			if (other.sameConnections(link)) {</span>
 <span class="nc bnc" id="L102" title="All 4 branches missed.">				while (i &lt; result.size() &amp;&amp; result.get(i).sameConnections(link))</span>
 <span class="nc" id="L103">					i++;</span>
 
@@ -110,8 +110,8 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 <span class="nc" id="L110">				return;</span>
 			}
 		}
-<span class="fc" id="L113">		result.add(link);</span>
-<span class="fc" id="L114">	}</span>
+<span class="nc" id="L113">		result.add(link);</span>
+<span class="nc" id="L114">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

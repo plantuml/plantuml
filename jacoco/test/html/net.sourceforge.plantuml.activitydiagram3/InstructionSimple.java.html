@@ -105,13 +105,13 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
 <span class="fc" id="L107">		Ftile result = factory.activity(label, getSwimlaneIn(), boxStyle, colors, stereotype, styleBuilder);</span>
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (url != null) {</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">		if (url != null)</span>
 <span class="nc" id="L109">			result = factory.addUrl(result, url);</span>
-		}
+
 <span class="fc" id="L111">		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);</span>
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (killed) {</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">		if (killed)</span>
 <span class="nc" id="L113">			return new FtileKilled(result);</span>
-		}
+
 <span class="fc" id="L115">		return result;</span>
 	}
 
@@ -129,6 +129,10 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	@Override
 	public LinkRendering getInLinkRendering() {
 <span class="fc" id="L131">		return inlinkRendering;</span>
+	}
+
+	public boolean isKilled() {
+<span class="nc" id="L135">		return killed;</span>
 	}
 
 }

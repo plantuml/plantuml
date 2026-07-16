@@ -145,7 +145,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 		// Get the current (x, y) coordinates of the path
 <span class="fc" id="L146">		final double x0 = cx;</span>
 <span class="fc" id="L147">		final double y0 = cy;</span>
-<span class="pc bpc" id="L148" title="3 of 4 branches missed.">		if (x0 == x &amp;&amp; y0 == y) {</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">		if (x0 == x &amp;&amp; y0 == y) {</span>
 			// If the endpoints (x, y) and (x0, y0) are identical, then this
 			// is equivalent to omitting the elliptical arc segment entirely.
 <span class="nc" id="L151">			return;</span>
@@ -251,8 +251,8 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 <span class="fc" id="L251">		p = ux * vx + uy * vy;</span>
 <span class="fc bfc" id="L252" title="All 2 branches covered.">		sign = (ux * vy - uy * vx &lt; 0) ? -1.0 : 1.0;</span>
 <span class="fc" id="L253">		double angleExtent = Math.toDegrees(sign * Math.acos(p / n));</span>
-<span class="pc bpc" id="L254" title="1 of 4 branches missed.">		if (!sweepFlag &amp;&amp; angleExtent &gt; 0) {</span>
-<span class="nc" id="L255">			angleExtent -= 360f;</span>
+<span class="fc bfc" id="L254" title="All 4 branches covered.">		if (!sweepFlag &amp;&amp; angleExtent &gt; 0) {</span>
+<span class="fc" id="L255">			angleExtent -= 360f;</span>
 <span class="fc bfc" id="L256" title="All 4 branches covered.">		} else if (sweepFlag &amp;&amp; angleExtent &lt; 0) {</span>
 <span class="fc" id="L257">			angleExtent += 360f;</span>
 		}

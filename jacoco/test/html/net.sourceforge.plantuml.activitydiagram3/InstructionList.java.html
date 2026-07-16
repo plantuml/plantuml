@@ -91,139 +91,145 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 <span class="nc bnc" id="L91" title="All 2 branches missed.">		if (all.size() != 1)</span>
 <span class="nc" id="L92">			return false;</span>
 
-<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (getLast() instanceof InstructionSpot)</span>
-<span class="nc" id="L95">			return true;</span>
+<span class="nc" id="L94">		final Instruction last = getLast();</span>
 
-<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (getLast() instanceof InstructionStop)</span>
-<span class="nc bnc" id="L98" title="All 2 branches missed.">			return ((InstructionStop) getLast()).hasNotes() == false;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">		if (last instanceof InstructionSimple)</span>
+<span class="nc" id="L97">			return ((InstructionSimple) last).isKilled();</span>
 
-<span class="nc bnc" id="L100" title="All 2 branches missed.">		if (getLast() instanceof InstructionEnd)</span>
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			return ((InstructionEnd) getLast()).hasNotes() == false;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">		if (last instanceof InstructionSpot)</span>
+<span class="nc" id="L100">			return true;</span>
 
-<span class="nc" id="L103">		return false;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		if (last instanceof InstructionStop)</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">			return ((InstructionStop) last).hasNotes() == false;</span>
+
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if (last instanceof InstructionEnd)</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">			return ((InstructionEnd) last).hasNotes() == false;</span>
+
+<span class="nc" id="L108">		return false;</span>
 	}
 
 	@Override
 	public CommandExecutionResult add(Instruction ins) {
-<span class="fc" id="L108">		all.add(ins);</span>
-<span class="fc" id="L109">		return CommandExecutionResult.ok();</span>
+<span class="fc" id="L113">		all.add(ins);</span>
+<span class="fc" id="L114">		return CommandExecutionResult.ok();</span>
 	}
 
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (all.size() == 0)</span>
-<span class="nc" id="L115">			return new GtileEmpty(stringBounder, skinParam, defaultSwimlane);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		if (all.size() == 0)</span>
+<span class="nc" id="L120">			return new GtileEmpty(stringBounder, skinParam, defaultSwimlane);</span>
 
-<span class="nc" id="L117">		Gtile result = null;</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">		for (Instruction ins : all) {</span>
-<span class="nc" id="L119">			final Gtile cur = ins.createGtile(skinParam, stringBounder);</span>
+<span class="nc" id="L122">		Gtile result = null;</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		for (Instruction ins : all) {</span>
+<span class="nc" id="L124">			final Gtile cur = ins.createGtile(skinParam, stringBounder);</span>
 
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (result == null)</span>
-<span class="nc" id="L122">				result = cur;</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">			if (result == null)</span>
+<span class="nc" id="L127">				result = cur;</span>
 			else
-<span class="nc" id="L124">				result = new GtileAssembly(result, cur, ins.getInLinkRendering());</span>
+<span class="nc" id="L129">				result = new GtileAssembly(result, cur, ins.getInLinkRendering());</span>
 
-<span class="nc" id="L126">		}</span>
-<span class="nc" id="L127">		return result;</span>
+<span class="nc" id="L131">		}</span>
+<span class="nc" id="L132">		return result;</span>
 	}
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) throws NoSuchColorException {
-<span class="pc bpc" id="L132" title="1 of 2 branches missed.">		if (all.size() == 0) {</span>
-<span class="nc" id="L133">			Ftile result = new FtileEmpty(factory.skinParam(), defaultSwimlane);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">		if (all.size() == 0) {</span>
+<span class="nc" id="L138">			Ftile result = new FtileEmpty(factory.skinParam(), defaultSwimlane);</span>
 			// Not a typo, in that case, we decide to decorate the entry link.
-<span class="nc bnc" id="L135" title="All 2 branches missed.">			if (outlinkRendering != null)</span>
-<span class="nc" id="L136">				result = factory.decorateIn(result, outlinkRendering);</span>
-<span class="nc" id="L137">			return result;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">			if (outlinkRendering != null)</span>
+<span class="nc" id="L141">				result = factory.decorateIn(result, outlinkRendering);</span>
+<span class="nc" id="L142">			return result;</span>
 		}
 
-<span class="fc" id="L140">		final List&lt;WeldingPoint&gt; breaks = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L141">		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn(), VerticalAlignment.CENTER);</span>
-<span class="fc bfc" id="L142" title="All 2 branches covered.">		for (Instruction ins : all) {</span>
-<span class="fc" id="L143">			Ftile cur = ins.createFtile(factory);</span>
-<span class="fc" id="L144">			breaks.addAll(cur.getWeldingPoints());</span>
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">			if (ins.getInLinkRendering().isNone() == false)</span>
-<span class="nc" id="L146">				cur = factory.decorateIn(cur, ins.getInLinkRendering());</span>
+<span class="fc" id="L145">		final List&lt;WeldingPoint&gt; breaks = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L146">		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn(), VerticalAlignment.CENTER);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		for (Instruction ins : all) {</span>
+<span class="fc" id="L148">			Ftile cur = ins.createFtile(factory);</span>
+<span class="fc" id="L149">			breaks.addAll(cur.getWeldingPoints());</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			if (ins.getInLinkRendering().isNone() == false)</span>
+<span class="nc" id="L151">				cur = factory.decorateIn(cur, ins.getInLinkRendering());</span>
 
-<span class="fc bfc" id="L148" title="All 2 branches covered.">			if (result == null)</span>
-<span class="fc" id="L149">				result = cur;</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">			if (result == null)</span>
+<span class="fc" id="L154">				result = cur;</span>
 			else
-<span class="fc" id="L151">				result = factory.assembly(result, cur);</span>
-<span class="fc" id="L152">		}</span>
+<span class="fc" id="L156">				result = factory.assembly(result, cur);</span>
+<span class="fc" id="L157">		}</span>
 
-<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (outlinkRendering != null)</span>
-<span class="nc" id="L155">			result = factory.decorateOut(result, outlinkRendering);</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (outlinkRendering != null)</span>
+<span class="nc" id="L160">			result = factory.decorateOut(result, outlinkRendering);</span>
 
-<span class="pc bpc" id="L157" title="1 of 2 branches missed.">		if (breaks.size() &gt; 0)</span>
-<span class="nc" id="L158">			result = new FtileDecorateWelding(result, breaks);</span>
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">		if (breaks.size() &gt; 0)</span>
+<span class="nc" id="L163">			result = new FtileDecorateWelding(result, breaks);</span>
 
-<span class="fc" id="L160">		return result;</span>
+<span class="fc" id="L165">		return result;</span>
 	}
 
 	@Override
 	final public boolean kill() {
-<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (all.size() == 0)</span>
-<span class="nc" id="L166">			return false;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (all.size() == 0)</span>
+<span class="nc" id="L171">			return false;</span>
 
-<span class="nc" id="L168">		return getLast().kill();</span>
+<span class="nc" id="L173">		return getLast().kill();</span>
 	}
 
 	@Override
 	public LinkRendering getInLinkRendering() {
-<span class="nc" id="L173">		return all.iterator().next().getInLinkRendering();</span>
+<span class="nc" id="L178">		return all.iterator().next().getInLinkRendering();</span>
 	}
 
 	@Override
 	public Instruction getLast() {
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">		if (all.size() == 0)</span>
-<span class="nc" id="L179">			return null;</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">		if (all.size() == 0)</span>
+<span class="nc" id="L184">			return null;</span>
 
-<span class="fc" id="L181">		return all.get(all.size() - 1);</span>
+<span class="fc" id="L186">		return all.get(all.size() - 1);</span>
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">		if (getLast() == null)</span>
-<span class="nc" id="L187">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (getLast() == null)</span>
+<span class="nc" id="L193">			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 
-<span class="fc" id="L189">		return getLast().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
+<span class="fc" id="L195">		return getLast().addNote(note, position, type, colors, swimlaneNote, stereotype);</span>
 	}
 
 	@Override
 	public Set&lt;Swimlane&gt; getSwimlanes() {
-<span class="nc" id="L194">		return getSwimlanes2(all);</span>
+<span class="nc" id="L200">		return getSwimlanes2(all);</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneIn() {
-<span class="fc" id="L199">		return defaultSwimlane;</span>
+<span class="fc" id="L205">		return defaultSwimlane;</span>
 	}
 
 	@Override
 	public Swimlane getSwimlaneOut() {
-<span class="nc" id="L204">		final Set&lt;Swimlane&gt; swimlanes = getSwimlanes();</span>
-<span class="nc bnc" id="L205" title="All 2 branches missed.">		if (swimlanes.size() == 0)</span>
-<span class="nc" id="L206">			return null;</span>
+<span class="nc" id="L210">		final Set&lt;Swimlane&gt; swimlanes = getSwimlanes();</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">		if (swimlanes.size() == 0)</span>
+<span class="nc" id="L212">			return null;</span>
 
-<span class="nc bnc" id="L208" title="All 2 branches missed.">		if (swimlanes.size() == 1)</span>
-<span class="nc" id="L209">			return swimlanes.iterator().next();</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">		if (swimlanes.size() == 1)</span>
+<span class="nc" id="L215">			return swimlanes.iterator().next();</span>
 
-<span class="nc" id="L211">		return getLast().getSwimlaneOut();</span>
+<span class="nc" id="L217">		return getLast().getSwimlaneOut();</span>
 	}
 
 	public static Set&lt;Swimlane&gt; getSwimlanes2(List&lt;? extends Instruction&gt; list) {
-<span class="nc" id="L215">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L216" title="All 2 branches missed.">		for (Instruction ins : list)</span>
-<span class="nc" id="L217">			result.addAll(ins.getSwimlanes());</span>
+<span class="nc" id="L221">		final Set&lt;Swimlane&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">		for (Instruction ins : list)</span>
+<span class="nc" id="L223">			result.addAll(ins.getSwimlanes());</span>
 
-<span class="nc" id="L219">		return Collections.unmodifiableSet(result);</span>
+<span class="nc" id="L225">		return Collections.unmodifiableSet(result);</span>
 	}
 
 	private LinkRendering outlinkRendering;
 
 	public void setOutRendering(LinkRendering outlinkRendering) {
-<span class="nc" id="L225">		this.outlinkRendering = outlinkRendering;</span>
-<span class="nc" id="L226">	}</span>
+<span class="nc" id="L231">		this.outlinkRendering = outlinkRendering;</span>
+<span class="nc" id="L232">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

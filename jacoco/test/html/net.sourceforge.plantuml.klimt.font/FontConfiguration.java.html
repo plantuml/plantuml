@@ -193,9 +193,9 @@ public class FontConfiguration {
 	}
 
 	public FontConfiguration mute(Colors colors) {
-<span class="fc" id="L196">		final HColor color = Objects.requireNonNull(colors).getColor(ColorType.TEXT);</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">		if (color == null)</span>
-<span class="fc" id="L198">			return this;</span>
+<span class="nc" id="L196">		final HColor color = Objects.requireNonNull(colors).getColor(ColorType.TEXT);</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">		if (color == null)</span>
+<span class="nc" id="L198">			return this;</span>
 
 <span class="nc" id="L200">		return changeColor(color);</span>
 	}
