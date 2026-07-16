@@ -218,7 +218,7 @@ class PicowebTest {
 	void get_png_bad_graphviz(StdErr err) throws Exception {
 		final String ok = getDefaultTranscoder().encode("class 1\nclass B");
 		final HttpResponse<byte[]> resp = http_get("/png/" + ok);
-		assertStatus(resp, 503);
+		assertStatus(resp, 200);
 		assertContentType(resp.headers(), "image/png");
 		assertHeader(resp.headers(), "access-control-allow-origin");
 		assertHeader(resp.headers(), "server");
@@ -234,7 +234,7 @@ class PicowebTest {
 	void get_png_svg_graphviz(StdErr err) throws Exception {
 		final String ok = getDefaultTranscoder().encode("class 1\nclass B");
 		final HttpResponse<byte[]> resp = http_get("/svg/" + ok);
-		assertStatus(resp, 503);
+		assertStatus(resp, 200);
 		assertContentType(resp.headers(), "image/svg+xml");
 		assertHeader(resp.headers(), "access-control-allow-origin");
 		assertHeader(resp.headers(), "server");

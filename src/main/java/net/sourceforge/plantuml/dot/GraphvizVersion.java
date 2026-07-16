@@ -36,7 +36,7 @@
 package net.sourceforge.plantuml.dot;
 
 public interface GraphvizVersion {
-	// ::comment when __TEAVM__
+
 	public boolean useShieldForQuantifier();
 
 	public boolean useProtectionWhenThereALinkFromOrToGroup();
@@ -46,6 +46,5 @@ public interface GraphvizVersion {
 	public boolean isVizjs();
 
 	public boolean ignoreHorizontalLinks();
-	// ::done
 
 }

@@ -80,11 +80,13 @@ import net.sourceforge.plantuml.cucadiagram.MagmaList;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.dot.CucaDiagramTxtMaker;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.elk.CucaDiagramFileMakerElk;
 import net.sourceforge.plantuml.gantt.Failable;
 import net.sourceforge.plantuml.graphml.CucaDiagramGraphmlMaker;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.plasma.Plasma;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -412,7 +414,6 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		return result.toArray(new String[result.size()]);
 	}
 
-	// ::comment when __TEAVM__
 	private void createFilesGraphml(OutputStream suggestedFile) throws IOException {
 		final CucaDiagramGraphmlMaker maker = new CucaDiagramGraphmlMaker(this);
 		maker.createFiles(suggestedFile);
@@ -456,11 +457,9 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		final CucaDiagramTxtMaker maker = new CucaDiagramTxtMaker(this, fileFormat);
 		maker.createFiles(os, index);
 	}
-	// ::done
 
 	@Override
-	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption)
-			throws IOException, InterruptedException {
+	public TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws IOException, InterruptedException {
 
 		this.eventuallyBuildPhantomGroups(null);
 		final CucaDiagramFileMaker maker;
@@ -472,7 +471,7 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		// ::done
 		else if (this.isUseElk())
 			maker = new CucaDiagramFileMakerElk(this);
-		else if (this.isUseSmetana())
+		else if (this.isUseSmetana() || this.dotIsAvailable() == false)
 			maker = new CucaDiagramFileMakerSmetana(this);
 		else
 			maker = new CucaDiagramFileMakerSvek(this);
@@ -480,6 +479,23 @@ public abstract class CucaDiagram extends TitledDiagram implements GroupHierarch
 		return maker.getTextBlock(getDotStrings(), fileFormatOption);
 	}
 
+	private boolean dotIsAvailable() {
+		final GraphvizRuntimeEnvironment gre = GraphvizRuntimeEnvironment.getInstance();
+
+		// An explicit request for VizJs (skinparam or GRAPHVIZ_DOT=vizjs) must be honored
+		// even though Smetana is otherwise preferred over an implicit VizJs fallback.
+		if (gre.useVizJs(getSkinParam()))
+			return true;
+
+		try {
+			final int dotVersion = gre.getDotVersion();
+			return dotVersion != -1;
+		} catch (Exception e) {
+			Logme.error(e);
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	@Override
 	public String getWarningOrError() {
