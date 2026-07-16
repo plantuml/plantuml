@@ -105,13 +105,13 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		Ftile result = factory.activity(label, getSwimlaneIn(), boxStyle, colors, stereotype, styleBuilder);
-		if (url != null) {
+		if (url != null)
 			result = factory.addUrl(result, url);
-		}
+
 		result = eventuallyAddNote(factory, result, result.getSwimlaneIn(), VerticalAlignment.CENTER);
-		if (killed) {
+		if (killed)
 			return new FtileKilled(result);
-		}
+
 		return result;
 	}
 
@@ -129,6 +129,10 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	@Override
 	public LinkRendering getInLinkRendering() {
 		return inlinkRendering;
+	}
+
+	public boolean isKilled() {
+		return killed;
 	}
 
 }

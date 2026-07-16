@@ -91,14 +91,19 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 		if (all.size() != 1)
 			return false;
 
-		if (getLast() instanceof InstructionSpot)
+		final Instruction last = getLast();
+
+		if (last instanceof InstructionSimple)
+			return ((InstructionSimple) last).isKilled();
+
+		if (last instanceof InstructionSpot)
 			return true;
 
-		if (getLast() instanceof InstructionStop)
-			return ((InstructionStop) getLast()).hasNotes() == false;
+		if (last instanceof InstructionStop)
+			return ((InstructionStop) last).hasNotes() == false;
 
-		if (getLast() instanceof InstructionEnd)
-			return ((InstructionEnd) getLast()).hasNotes() == false;
+		if (last instanceof InstructionEnd)
+			return ((InstructionEnd) last).hasNotes() == false;
 
 		return false;
 	}
@@ -182,7 +187,8 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote,
+			Stereotype stereotype) {
 		if (getLast() == null)
 			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);
 
