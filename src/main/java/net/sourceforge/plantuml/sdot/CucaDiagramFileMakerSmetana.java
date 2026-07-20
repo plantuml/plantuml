@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.annotation.Fast;
 import net.sourceforge.plantuml.core.DiagramType;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -641,6 +642,16 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			final double height = cluster.getTitleAndAttributeHeight() - 5 + 8;
 			agsafeset(zz, cluster1, new CString("label"), createLabelDim(width, height), new CString(""));
 		}
+		// Artificial extra containment margin for the Smetana pipeline only, for
+		// shapes that need extra room for their own decoration (e.g. USymbolNode's
+		// diagonal 3D corner cut) so nested content doesn't visually overlap it.
+		// The default containment margin used by Smetana around a cluster's
+		// content is 8 (see gen.lib.dotgen.position__c, contain_nodes/
+		// keepout_othernodes); bump it a bit when the shape says it needs more.
+		final USymbol uSymbol = group.getUSymbol();
+		if (uSymbol != null && uSymbol.suppWidthBecauseOfShape() > 0)
+			agsafeset(zz, cluster1, new CString("margin"), new CString("20"), new CString(""));
+
 		this.exportEntities(zz, cluster1, group.leafs());
 		this.clusters.put(group, cluster1);
 		this.exportGroups(zz, cluster1, group);
