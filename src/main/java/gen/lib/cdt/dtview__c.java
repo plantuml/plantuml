@@ -129,11 +129,16 @@ try {
 			if(n!=null) /* get the right one among all dictionaries */
 			{	cmp = _DTCMP(zz, d, ok, nk, d.disc, cmpf, sz);
 				if(((type & (DT_NEXT|DT_FIRST))!=0 && cmp < 0) ||
-				   ((type & (DT_PREV|DT_LAST))!=0 && cmp > 0) )
-UNSUPPORTED("5o3u9aaanyd9yh74sjfkkofmo"); // 					goto a_dj;
+				   ((type & (DT_PREV|DT_LAST))!=0 && cmp > 0) ) {
+					/* was: goto a_dj; -- inlined here since the label just marks the
+					 * start of the else-block below (5o3u9aaanyd9yh74sjfkkofmo) */
+					p  = d;
+					n  = o;
+					nk = ok;
+				}
 			}
 			else /* looks good for now */
-			{ a_dj: p  = d;
+			{	p  = d;
 				n  = o;
 				nk = ok;
 			}

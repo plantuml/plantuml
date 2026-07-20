@@ -576,6 +576,15 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 		final ST_Agraph_s g = agopen(zz, new CString("g"), zz.Agdirected, null);
 
+		// Horizontal breathing room between the top-level clusters (e.g. a / a1 / c).
+		// Their gap is NOT governed by each cluster's own margin but by the 'margin'
+		// attribute of their container - here the root graph - since separate_subclust/
+		// keepout_othernodes/contain_subclust all read late_int(g, G_margin, 8) on the
+		// graph that owns the clusters (see gen.lib.dotgen.position__c). Note this only
+		// affects horizontal separation: the vertical gap between stacked top-level
+		// clusters is driven by ranksep, because clust_ht forces CL_OFFSET at the root.
+		agsafeset(zz, g, new CString("margin"), new CString("16"), new CString(""));
+
 		exportEntities(zz, g, getUnpackagedEntities());
 		exportGroups(zz, g, root);
 
@@ -642,15 +651,24 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			final double height = cluster.getTitleAndAttributeHeight() - 5 + 8;
 			agsafeset(zz, cluster1, new CString("label"), createLabelDim(width, height), new CString(""));
 		}
-		// Artificial extra containment margin for the Smetana pipeline only, for
-		// shapes that need extra room for their own decoration (e.g. USymbolNode's
-		// diagonal 3D corner cut) so nested content doesn't visually overlap it.
-		// The default containment margin used by Smetana around a cluster's
-		// content is 8 (see gen.lib.dotgen.position__c, contain_nodes/
-		// keepout_othernodes); bump it a bit when the shape says it needs more.
+		// Base containment margin applied to EVERY cluster. Smetana's default is
+		// CL_OFFSET = 8 (see gen.lib.dotgen.position__c: clust_ht for the vertical
+		// padding, separate_subclust for the horizontal gap between two sibling
+		// sub-clusters, contain_subclust/keepout_othernodes for neighbours). Each of
+		// them reads the 'margin' attribute of the graph it processes, so the gap
+		// between two nested packages (e.g. d and d2 inside c) is driven by the
+		// margin set on their PARENT cluster. The default 8 packs packages quite
+		// tightly, so bump it a little to give nested clusters some breathing room.
+		// --> single knob to tune the overall spacing between clusters.
+		int clusterMargin = 16;
+
+		// Shapes that need extra room for their own decoration (e.g. USymbolNode's
+		// diagonal 3D corner cut) need even more, so nested content doesn't overlap.
 		final USymbol uSymbol = group.getUSymbol();
 		if (uSymbol != null && uSymbol.suppWidthBecauseOfShape() > 0)
-			agsafeset(zz, cluster1, new CString("margin"), new CString("20"), new CString(""));
+			clusterMargin = Math.max(clusterMargin, 20);
+
+		agsafeset(zz, cluster1, new CString("margin"), new CString("" + clusterMargin), new CString(""));
 
 		this.exportEntities(zz, cluster1, group.leafs());
 		this.clusters.put(group, cluster1);

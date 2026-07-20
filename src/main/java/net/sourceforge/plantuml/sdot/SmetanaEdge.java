@@ -141,6 +141,29 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 			dotPath = dotPath.simulateCompound(rectangleArea2, rectangleArea1);
 
+			// simulateCompound only clips to the plain bounding rectangle. For a cluster
+			// drawn as a shaped symbol (e.g. a package rendered as a folder, see
+			// USymbolFolder) the visible border is NOT that rectangle: the body top edge
+			// sits htitle below the bounding box because of the title tab. Without the
+			// step below, an arrow pointing at such a cluster stops at the bounding box
+			// and floats above the drawn border (arrows too short towards packages).
+			// Mirror SvekEdge.drawU, which applies Cluster.getMagneticBorder()
+			// (delegating to USymbolFolder) for the very same reason on the dot pipeline.
+			// Moving the path endpoints here also relocates the arrowheads, since
+			// printExtremityAtStart/End read them straight from dotPath below.
+			if (rectangleArea1 != null) {
+				final Cluster cluster1 = bibliotekon.getCluster(link.getEntity1());
+				final UTranslate force = cluster1.getMagneticBorder().getForceAt(ug.getStringBounder(),
+						dotPath.getStartPoint());
+				dotPath.moveStartPoint(force);
+			}
+			if (rectangleArea2 != null) {
+				final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());
+				final UTranslate force = cluster2.getMagneticBorder().getForceAt(ug.getStringBounder(),
+						dotPath.getEndPoint());
+				dotPath.moveEndPoint(force);
+			}
+
 			final Style styleLine = getStyle();
 
 			final Rainbow rainbow = Rainbow.build(styleLine, skinParam.getIHtmlColorSet());
