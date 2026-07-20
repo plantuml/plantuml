@@ -78,7 +78,7 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 <span class="fc" id="L78">			return false;</span>
 <span class="fc" id="L79">		final XPoint2D clusterCenter = parent.getRectangleArea().getPointCenter();</span>
 <span class="fc" id="L80">		final SvekNode node = bibliotekon.getNode(getEntity());</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		return node.getMinY() &lt; clusterCenter.getY();</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">		return node.getMinY() &lt; clusterCenter.getY();</span>
 	}
 
 	@Override
@@ -104,8 +104,8 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 <span class="fc" id="L104">		final XDimension2D dimDesc = desc.calculateDimension(ug.getStringBounder());</span>
 <span class="fc" id="L105">		final double x = 0 - (dimDesc.getWidth() - 2 * EntityPosition.RADIUS) / 2;</span>
 
-<span class="fc bfc" id="L107" title="All 2 branches covered.">		if (upPosition())</span>
-<span class="fc" id="L108">			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();</span>
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">		if (upPosition())</span>
+<span class="nc" id="L108">			y -= 2 * EntityPosition.RADIUS + dimDesc.getHeight();</span>
 		else
 <span class="fc" id="L110">			y += 2 * EntityPosition.RADIUS;</span>
 
