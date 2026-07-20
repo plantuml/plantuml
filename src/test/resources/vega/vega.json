@@ -43,6 +43,20 @@
       "diagram_class": "SequenceDiagram"
     },
     {
+      "file": "asciiverse/altpar_007.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(2 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
+      "file": "asciiverse/altpar_008.puml",
+      "folder": "asciiverse",
+      "status": "pass",
+      "description": "(5 participants)",
+      "diagram_class": "SequenceDiagram"
+    },
+    {
       "file": "asciiverse/basic_001.puml",
       "folder": "asciiverse",
       "status": "pass",
@@ -1679,8 +1693,8 @@
     }
   ],
   "summary": {
-    "total": 203,
-    "passed": 199,
+    "total": 205,
+    "passed": 201,
     "failed": 0,
     "skipped": 4
   }

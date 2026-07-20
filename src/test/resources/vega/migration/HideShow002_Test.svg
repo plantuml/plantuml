@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="253px" preserveAspectRatio="none" style="width:808px;height:253px;background:#FFFFFF;" version="1.1" viewBox="0 0 808 253" width="808px" zoomAndPan="magnify">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="CLASS" height="261px" preserveAspectRatio="none" style="width:808px;height:261px;background:#FFFFFF;" version="1.1" viewBox="0 0 808 261" width="808px" zoomAndPan="magnify">
   <defs/>
   <g font-family="sans-serif" lengthAdjust="spacing">
     <!--cluster System in focus-->
     <g class="cluster" data-qualified-name="System in focus" data-source-line="11" id="ent0001">
-      <rect fill="#D3D3D3" height="203" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="374" x="14" y="26"/>
+      <rect fill="#D3D3D3" height="211" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1;" width="374" x="14" y="26"/>
       <text fill="#000" font-size="14" font-style="italic" textLength="61.512" x="170.244" y="38.889">«Module»</text>
       <text fill="#000" font-size="14" font-weight="700" textLength="91" x="155.5" y="52.889">System in focus</text>
     </g>
     <!--cluster other-->
     <g class="cluster" data-qualified-name="other" data-source-line="18" id="ent0006">
-      <path d="M398.5,4 L431.35,4 A3.75,3.75 0 0 1 433.85,6.5 L440.85,24 L797.5,24 A2.5,2.5 0 0 1 800,26.5 L800,126.5 A2.5,2.5 0 0 1 797.5,129 L398.5,129 A2.5,2.5 0 0 1 396,126.5 L396,6.5 A2.5,2.5 0 0 1 398.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
+      <path d="M398.5,4 L431.35,4 A3.75,3.75 0 0 1 433.85,6.5 L440.85,24 L797.5,24 A2.5,2.5 0 0 1 800,26.5 L800,134.5 A2.5,2.5 0 0 1 797.5,137 L398.5,137 A2.5,2.5 0 0 1 396,134.5 L396,6.5 A2.5,2.5 0 0 1 398.5,4" fill="none" style="stroke:#000;stroke-width:1.5;"/>
       <line style="stroke:#000;stroke-width:1.5;" x1="396" x2="440.85" y1="24" y2="24"/>
       <text fill="#000" font-size="14" font-weight="700" textLength="31.85" x="400" y="16.889">other</text>
       <text fill="#000" font-size="14" font-style="italic" textLength="92.575" x="555.713" y="36.889">«Stereotype A»</text>
@@ -17,63 +17,63 @@
     </g>
     <!--class Class-->
     <g class="entity" data-qualified-name="System in focus.Class" data-source-line="12" id="ent0002">
-      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.088" x="58.5" y="65"/>
-      <ellipse cx="73.5" cy="81" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" x="68.5" y="86">C</text>
-      <text fill="#000" font-size="14" textLength="35.088" x="87.5" y="84.889">Class</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="59.5" x2="124.588" y1="97" y2="97"/>
+      <rect fill="#F1F1F1" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="67.088" x="58.5" y="73"/>
+      <ellipse cx="73.5" cy="89" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="68.5" y="94">C</text>
+      <text fill="#000" font-size="14" textLength="35.088" x="87.5" y="92.889">Class</text>
       <line style="stroke:#181818;stroke-width:0.5;" x1="59.5" x2="124.588" y1="105" y2="105"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="59.5" x2="124.588" y1="113" y2="113"/>
     </g>
     <!--class ImportantClass-->
     <g class="entity" data-qualified-name="System in focus.ImportantClass" data-source-line="13" id="ent0003">
-      <rect fill="#D3D3D3" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.062" x="144" y="65"/>
-      <ellipse cx="159" cy="81" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" x="154" y="86">C</text>
-      <text fill="#000" font-size="14" textLength="94.062" x="173" y="84.889">ImportantClass</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="145" x2="269.063" y1="97" y2="97"/>
+      <rect fill="#D3D3D3" height="48" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="126.062" x="144" y="73"/>
+      <ellipse cx="159" cy="89" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="154" y="94">C</text>
+      <text fill="#000" font-size="14" textLength="94.062" x="173" y="92.889">ImportantClass</text>
       <line style="stroke:#181818;stroke-width:0.5;" x1="145" x2="269.063" y1="105" y2="105"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="145" x2="269.063" y1="113" y2="113"/>
     </g>
     <!--class ClassThreadSafe-->
     <g class="entity" data-qualified-name="System in focus.ClassThreadSafe" data-source-line="14" id="ent0004">
-      <rect fill="#F1F1F1" height="64" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140.238" x="22" y="157"/>
-      <ellipse cx="37" cy="181" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" x="32" y="186">C</text>
-      <text fill="#000" font-size="12" font-style="italic" textLength="73.95" x="68.144" y="171.333">«thread-safe»</text>
-      <text fill="#000" font-size="12" font-style="italic" textLength="63.45" x="73.394" y="183.333">«Singleton»</text>
-      <text fill="#000" font-size="14" textLength="108.238" x="51" y="196.889">ClassThreadSafe</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="161.238" y1="205" y2="205"/>
+      <rect fill="#F1F1F1" height="64" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="140.238" x="22" y="165"/>
+      <ellipse cx="37" cy="189" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="32" y="194">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="73.95" x="68.144" y="179.333">«thread-safe»</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="63.45" x="73.394" y="191.333">«Singleton»</text>
+      <text fill="#000" font-size="14" textLength="108.238" x="51" y="204.889">ClassThreadSafe</text>
       <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="161.238" y1="213" y2="213"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="23" x2="161.238" y1="221" y2="221"/>
     </g>
     <!--class ImportantClassThreadSafe-->
     <g class="entity" data-qualified-name="System in focus.ImportantClassThreadSafe" data-source-line="15" id="ent0005">
-      <rect fill="#D3D3D3" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="199.213" x="180.5" y="163"/>
-      <ellipse cx="195.5" cy="181" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" x="190.5" y="186">C</text>
-      <text fill="#000" font-size="12" font-style="italic" textLength="73.95" x="256.131" y="177.333">«thread-safe»</text>
-      <text fill="#000" font-size="14" textLength="167.213" x="209.5" y="190.889">ImportantClassThreadSafe</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="181.5" x2="378.713" y1="199" y2="199"/>
+      <rect fill="#D3D3D3" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="199.213" x="180.5" y="171"/>
+      <ellipse cx="195.5" cy="189" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="190.5" y="194">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="73.95" x="256.131" y="185.333">«thread-safe»</text>
+      <text fill="#000" font-size="14" textLength="167.213" x="209.5" y="198.889">ImportantClassThreadSafe</text>
       <line style="stroke:#181818;stroke-width:0.5;" x1="181.5" x2="378.713" y1="207" y2="207"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="181.5" x2="378.713" y1="215" y2="215"/>
     </g>
     <!--class ExternalClassThreadSafe-->
     <g class="entity" data-qualified-name="other.ExternalClassThreadSafe" data-source-line="19" id="ent0007">
-      <rect fill="#F1F1F1" height="64" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="191.6" x="600" y="57"/>
-      <ellipse cx="615" cy="81" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" x="610" y="86">C</text>
-      <text fill="#000" font-size="12" font-style="italic" textLength="73.95" x="671.825" y="71.333">«thread-safe»</text>
-      <text fill="#000" font-size="12" font-style="italic" textLength="56.025" x="680.788" y="83.333">«external»</text>
-      <text fill="#000" font-size="14" textLength="159.6" x="629" y="96.889">ExternalClassThreadSafe</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="601" x2="790.6" y1="105" y2="105"/>
+      <rect fill="#F1F1F1" height="64" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="191.6" x="600" y="65"/>
+      <ellipse cx="615" cy="89" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="610" y="94">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="73.95" x="671.825" y="79.333">«thread-safe»</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="56.025" x="680.788" y="91.333">«external»</text>
+      <text fill="#000" font-size="14" textLength="159.6" x="629" y="104.889">ExternalClassThreadSafe</text>
       <line style="stroke:#181818;stroke-width:0.5;" x1="601" x2="790.6" y1="113" y2="113"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="601" x2="790.6" y1="121" y2="121"/>
     </g>
     <!--class ExternalImportantClass-->
     <g class="entity" data-qualified-name="other.ExternalImportantClass" data-source-line="20" id="ent0008">
-      <rect fill="#D3D3D3" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="177.425" x="404.5" y="63"/>
-      <ellipse cx="419.5" cy="81" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
-      <text fill="#000" font-family="monospace" font-size="14" x="414.5" y="86">C</text>
-      <text fill="#000" font-size="12" font-style="italic" textLength="56.025" x="478.2" y="77.333">«external»</text>
-      <text fill="#000" font-size="14" textLength="145.425" x="433.5" y="90.889">ExternalImportantClass</text>
-      <line style="stroke:#181818;stroke-width:0.5;" x1="405.5" x2="580.925" y1="99" y2="99"/>
+      <rect fill="#D3D3D3" height="52" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="177.425" x="404.5" y="71"/>
+      <ellipse cx="419.5" cy="89" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000" font-family="monospace" font-size="14" x="414.5" y="94">C</text>
+      <text fill="#000" font-size="12" font-style="italic" textLength="56.025" x="478.2" y="85.333">«external»</text>
+      <text fill="#000" font-size="14" textLength="145.425" x="433.5" y="98.889">ExternalImportantClass</text>
       <line style="stroke:#181818;stroke-width:0.5;" x1="405.5" x2="580.925" y1="107" y2="107"/>
+      <line style="stroke:#181818;stroke-width:0.5;" x1="405.5" x2="580.925" y1="115" y2="115"/>
     </g>
   </g>
 </svg>

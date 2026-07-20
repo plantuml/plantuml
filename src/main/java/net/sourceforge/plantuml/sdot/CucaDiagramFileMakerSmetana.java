@@ -635,7 +635,10 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final ST_Agraph_s cluster1 = agsubg(zz, graph, new CString(cluster.getClusterId()), true);
 		if (cluster.isLabel()) {
 			final double width = cluster.getTitleAndAttributeWidth();
-			final double height = cluster.getTitleAndAttributeHeight() - 5;
+			// +8: artificial extra margin for the Smetana pipeline only (issue #1638 -
+			// Smetana does not reserve enough vertical space between a cluster's title
+			// and its nested components, unlike the external dot pipeline).
+			final double height = cluster.getTitleAndAttributeHeight() - 5 + 8;
 			agsafeset(zz, cluster1, new CString("label"), createLabelDim(width, height), new CString(""));
 		}
 		this.exportEntities(zz, cluster1, group.leafs());
