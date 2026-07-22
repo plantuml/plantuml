@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.sequencediagram.Grouping;
 import net.sourceforge.plantuml.sequencediagram.GroupingLeaf;
 import net.sourceforge.plantuml.sequencediagram.GroupingStart;
 import net.sourceforge.plantuml.sequencediagram.GroupingType;
+import net.sourceforge.plantuml.sequencediagram.HSpace;
 import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.Area;
@@ -182,6 +183,16 @@ public class GroupingTile extends AbstractTile {
 				allElses.add(tile);
 				continue;
 			}
+
+			// A `|||` (HSpace) is a pure vertical spacer with no horizontal position of
+			// its own: HSpaceTile.getMinX()/getMaxX() just return the diagram's global
+			// X origin (TileArguments.getXOrigin()), unrelated to the participants used
+			// inside this group. Folding that value into min2/max2 dragged the group's
+			// frame all the way to the left edge of the diagram whenever a `|||`
+			// appeared inside a group (issue #2789), so exclude it from the bounding
+			// box computation, exactly like an else section is excluded above.
+			if (ev instanceof HSpace)
+				continue;
 
 			min2.add(tile.getMinX().addFixed(-MARGINX));
 			final Real m = tile.getMaxX();
