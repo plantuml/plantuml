@@ -73,6 +73,12 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/object-diagram" target="_top">
  Object (object, map, json) Diagram</a>.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.sequencediagram">net.sourceforge.plantuml.sequencediagram</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/sequence-diagram" target="_top">
+ Sequence Diagram</a>.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -207,6 +213,23 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractDiagram.</span><code><a href="../../core/AbstractDiagram.html#getTitle()" class="member-name-link">getTitle</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
+<div class="caption"><span>Methods in <a href="../../core/package-summary.html">net.sourceforge.plantuml.core</a> with parameters of type <a href="../DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DiagramChromeFactory.</span><code><a href="../../core/DiagramChromeFactory.html#create(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.Annotated,net.sourceforge.plantuml.style.ISkinParam,java.util.Collection,net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">create</a><wbr>(<a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;raw,
+ <a href="../../Annotated.html" title="interface in net.sourceforge.plantuml">Annotated</a>&nbsp;annotated,
+ <a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&gt;&nbsp;warnings,
+ <a href="../DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;title)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Takes a raw diagram <a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> and wraps it with all the chrome
+ elements found in the given <code>annotated</code> source (warnings, mainframe,
+ legend, title, caption, header, footer).</div>
+</div>
+</div>
 </section>
 </li>
 <li>
@@ -236,6 +259,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractClassOrObjectDiagram.</span><code><a href="../../objectdiagram/AbstractClassOrObjectDiagram.html#setLegend(net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">setLegend</a><wbr>(<a href="../DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;legend)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.sequencediagram">
+<h2>Uses of <a href="../DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a> in <a href="../../sequencediagram/package-summary.html">net.sourceforge.plantuml.sequencediagram</a></h2>
+<div class="caption"><span>Methods in <a href="../../sequencediagram/package-summary.html">net.sourceforge.plantuml.sequencediagram</a> that return <a href="../DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SequenceDiagram.</span><code><a href="../../sequencediagram/SequenceDiagram.html#getTitle(int)" class="member-name-link">getTitle</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../sequencediagram/package-summary.html">net.sourceforge.plantuml.sequencediagram</a> with parameters of type <a href="../DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SequenceDiagram.</span><code><a href="../../sequencediagram/SequenceDiagram.html#newpage(net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">newpage</a><wbr>(<a href="../DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;title)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

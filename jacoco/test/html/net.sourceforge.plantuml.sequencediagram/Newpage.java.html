@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -44,29 +43,22 @@ import net.sourceforge.plantuml.style.WithStyle;
 
 public class Newpage extends AbstractEvent implements Event, WithStyle {
 
-	private final Display title;
-
 	final private Style style;
 
 	public StyleSignature getStyleSignature() {
-<span class="fc" id="L52">		return ComponentType.NEWPAGE.getStyleSignature();</span>
+<span class="fc" id="L49">		return ComponentType.NEWPAGE.getStyleSignature();</span>
 	}
 
 	public Style[] getUsedStyles() {
-<span class="fc" id="L56">		return new Style[] { style };</span>
+<span class="fc" id="L53">		return new Style[] { style };</span>
 	}
 
-<span class="fc" id="L59">	public Newpage(Display strings, StyleBuilder styleBuilder) {</span>
-<span class="fc" id="L60">		this.title = strings;</span>
-<span class="fc" id="L61">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
-<span class="fc" id="L62">	}</span>
-
-	public final Display getTitle() {
-<span class="nc" id="L65">		return title;</span>
-	}
+<span class="fc" id="L56">	public Newpage(StyleBuilder styleBuilder) {</span>
+<span class="fc" id="L57">		this.style = getStyleSignature().getMergedStyle(styleBuilder);</span>
+<span class="fc" id="L58">	}</span>
 
 	public boolean dealWith(Participant someone) {
-<span class="nc" id="L69">		return false;</span>
+<span class="nc" id="L61">		return false;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

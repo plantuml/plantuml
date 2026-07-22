@@ -111,7 +111,7 @@ public static boolean check_control_points(CArray&lt;ST_pointf&gt; cp) {
 try {
 <span class="fc" id="L112">    double dis1 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(1));</span>
 <span class="fc" id="L113">    double dis2 = ptToLine2 (cp.get__(0), cp.get__(3), cp.get__(2));</span>
-<span class="pc bpc" id="L114" title="1 of 4 branches missed.">    if (dis1 &lt; 2.0*2.0 &amp;&amp; dis2 &lt; 2.0*2.0)</span>
+<span class="fc bfc" id="L114" title="All 4 branches covered.">    if (dis1 &lt; 2.0*2.0 &amp;&amp; dis2 &lt; 2.0*2.0)</span>
 <span class="fc" id="L115">        return true;</span>
     else
 <span class="fc" id="L117">        return false;</span>

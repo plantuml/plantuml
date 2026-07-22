@@ -131,7 +131,7 @@ import net.sourceforge.plantuml.log.Logme;
 
 <span class="nc bnc" id="L132" title="All 2 branches missed.">		if (diagram instanceof TitledDiagram)</span>
 <span class="nc" id="L133">			tb = DiagramChromeFactory.create(tb, (TitledDiagram) diagram, ((TitledDiagram) diagram).getSkinParam(),</span>
-<span class="nc" id="L134">					diagram.getWarnings());</span>
+<span class="nc" id="L134">					diagram.getWarnings(), ((TitledDiagram) diagram).getTitle());</span>
 
 <span class="nc" id="L136">		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);</span>
 <span class="nc" id="L137">		final Scale scale = ((AbstractDiagram) diagram).getScale();</span>

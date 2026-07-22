@@ -2303,7 +2303,7 @@
                 <Package>net.sourceforge.plantuml.objectdiagram</Package>
                 <Package>net.sourceforge.plantuml.posimo</Package>
                 <Package>net.sourceforge.plantuml.sdot</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
+                <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
                 <Package>net.sourceforge.plantuml.stereo</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
@@ -3683,11 +3683,11 @@
                 <TotalClasses>10</TotalClasses>
                 <ConcreteClasses>5</ConcreteClasses>
                 <AbstractClasses>5</AbstractClasses>
-                <Ca>11</Ca>
+                <Ca>10</Ca>
                 <Ce>7</Ce>
                 <A>0.5</A>
-                <I>0.39</I>
-                <D>0.11</D>
+                <I>0.41</I>
+                <D>0.09</D>
                 <V>1</V>
             </Stats>
 
@@ -3746,7 +3746,6 @@
                 <Package>net.sourceforge.plantuml.eggs</Package>
                 <Package>net.sourceforge.plantuml.gantt</Package>
                 <Package>net.sourceforge.plantuml.jcckit</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.stats</Package>
                 <Package>net.sourceforge.plantuml.xmi</Package>
             </UsedBy>
@@ -4130,11 +4129,11 @@
                 <TotalClasses>23</TotalClasses>
                 <ConcreteClasses>20</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>4</Ca>
+                <Ca>3</Ca>
                 <Ce>14</Ce>
                 <A>0.13</A>
-                <I>0.78</I>
-                <D>0.09</D>
+                <I>0.82</I>
+                <D>0.05</D>
                 <V>1</V>
             </Stats>
 
@@ -4234,7 +4233,6 @@
                 <Package>net.sourceforge.plantuml.asciiverse</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing.txt</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
             </UsedBy>
         </Package>
 
@@ -5016,11 +5014,11 @@
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>9</ConcreteClasses>
                 <AbstractClasses>3</AbstractClasses>
-                <Ca>7</Ca>
+                <Ca>6</Ca>
                 <Ce>5</Ce>
                 <A>0.25</A>
-                <I>0.42</I>
-                <D>0.33</D>
+                <I>0.45</I>
+                <D>0.3</D>
                 <V>1</V>
             </Stats>
 
@@ -5078,7 +5076,6 @@
                 <Package>net.sourceforge.plantuml</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.svek.extremity</Package>
                 <Package>net.sourceforge.plantuml.swing</Package>
@@ -5568,7 +5565,7 @@
                 <TotalClasses>12</TotalClasses>
                 <ConcreteClasses>10</ConcreteClasses>
                 <AbstractClasses>2</AbstractClasses>
-                <Ca>80</Ca>
+                <Ca>79</Ca>
                 <Ce>41</Ce>
                 <A>0.17</A>
                 <I>0.34</I>
@@ -5727,7 +5724,6 @@
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.statediagram</Package>
                 <Package>net.sourceforge.plantuml.statediagram.command</Package>
@@ -11225,11 +11221,11 @@
                 <TotalClasses>1</TotalClasses>
                 <ConcreteClasses>1</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>4</Ca>
+                <Ca>3</Ca>
                 <Ce>13</Ce>
                 <A>0</A>
-                <I>0.76</I>
-                <D>0.24</D>
+                <I>0.81</I>
+                <D>0.19</D>
                 <V>1</V>
             </Stats>
 
@@ -11262,7 +11258,6 @@
                 <Package>net.sourceforge.plantuml.asciiart</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.dot</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
             </UsedBy>
         </Package>
 
@@ -11486,7 +11481,7 @@
                 <TotalClasses>34</TotalClasses>
                 <ConcreteClasses>28</ConcreteClasses>
                 <AbstractClasses>6</AbstractClasses>
-                <Ca>91</Ca>
+                <Ca>92</Ca>
                 <Ce>9</Ce>
                 <A>0.18</A>
                 <I>0.09</I>
@@ -11687,6 +11682,7 @@
                 <Package>net.sourceforge.plantuml.salt</Package>
                 <Package>net.sourceforge.plantuml.salt.element</Package>
                 <Package>net.sourceforge.plantuml.sdot</Package>
+                <Package>net.sourceforge.plantuml.sequencediagram.command</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram.teoz</Package>
                 <Package>net.sourceforge.plantuml.skin</Package>
@@ -14060,11 +14056,11 @@
                 <TotalClasses>7</TotalClasses>
                 <ConcreteClasses>7</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
-                <Ca>19</Ca>
+                <Ca>18</Ca>
                 <Ce>19</Ce>
                 <A>0</A>
-                <I>0.5</I>
-                <D>0.5</D>
+                <I>0.51</I>
+                <D>0.49</D>
                 <V>1</V>
             </Stats>
 
@@ -14133,7 +14129,6 @@
                 <Package>net.sourceforge.plantuml.png</Package>
                 <Package>net.sourceforge.plantuml.preproc</Package>
                 <Package>net.sourceforge.plantuml.security.authentication.oauth</Package>
-                <Package>net.sourceforge.plantuml.sequencediagram.graphic</Package>
                 <Package>net.sourceforge.plantuml.svek</Package>
                 <Package>net.sourceforge.plantuml.tim.builtin</Package>
                 <Package>net.sourceforge.plantuml.utils</Package>
@@ -14443,10 +14438,10 @@
                 <ConcreteClasses>27</ConcreteClasses>
                 <AbstractClasses>1</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>16</Ce>
+                <Ce>18</Ce>
                 <A>0.04</A>
-                <I>0.84</I>
-                <D>0.12</D>
+                <I>0.86</I>
+                <D>0.11</D>
                 <V>1</V>
             </Stats>
 
@@ -14545,11 +14540,13 @@
                 <Package>java.util</Package>
                 <Package>java.util.regex</Package>
                 <Package>net.sourceforge.plantuml</Package>
+                <Package>net.sourceforge.plantuml.abel</Package>
                 <Package>net.sourceforge.plantuml.command</Package>
                 <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
+                <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.regex</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.skin</Package>
@@ -14568,14 +14565,14 @@
 
         <Package name="net.sourceforge.plantuml.sequencediagram.graphic">
             <Stats>
-                <TotalClasses>51</TotalClasses>
-                <ConcreteClasses>42</ConcreteClasses>
-                <AbstractClasses>9</AbstractClasses>
+                <TotalClasses>39</TotalClasses>
+                <ConcreteClasses>31</ConcreteClasses>
+                <AbstractClasses>8</AbstractClasses>
                 <Ca>3</Ca>
-                <Ce>29</Ce>
-                <A>0.18</A>
-                <I>0.91</I>
-                <D>0.08</D>
+                <Ce>20</Ce>
+                <A>0.21</A>
+                <I>0.87</I>
+                <D>0.07</D>
                 <V>1</V>
             </Stats>
 
@@ -14604,9 +14601,6 @@
                 <Class sourceFile="Pushable.java">
                     net.sourceforge.plantuml.sequencediagram.graphic.Pushable
                 </Class>
-                <Class sourceFile="Step1Abstract.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.Step1Abstract
-                </Class>
             </AbstractClasses>
 
             <ConcreteClasses>
@@ -14618,24 +14612,6 @@
                 </Class>
                 <Class sourceFile="ConstraintSet.java">
                     net.sourceforge.plantuml.sequencediagram.graphic.ConstraintSet
-                </Class>
-                <Class sourceFile="DrawableSet.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet
-                </Class>
-                <Class sourceFile="DrawableSet.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet$1
-                </Class>
-                <Class sourceFile="DrawableSet.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet$1$1
-                </Class>
-                <Class sourceFile="DrawableSet.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.DrawableSet$2
-                </Class>
-                <Class sourceFile="DrawableSetInitializer.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.DrawableSetInitializer
-                </Class>
-                <Class sourceFile="DrawableSetInitializer.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.DrawableSetInitializer$1
                 </Class>
                 <Class sourceFile="FreeYStrategyBasic.java">
                     net.sourceforge.plantuml.sequencediagram.graphic.FreeYStrategyBasic
@@ -14694,9 +14670,6 @@
                 <Class sourceFile="NotesBoxes.java">
                     net.sourceforge.plantuml.sequencediagram.graphic.NotesBoxes
                 </Class>
-                <Class sourceFile="PageSplitter.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.PageSplitter
-                </Class>
                 <Class sourceFile="ParticipantBox.java">
                     net.sourceforge.plantuml.sequencediagram.graphic.ParticipantBox$1
                 </Class>
@@ -14724,42 +14697,21 @@
                 <Class sourceFile="SequenceDiagramArea.java">
                     net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramArea
                 </Class>
-                <Class sourceFile="SequenceDiagramFileMakerPuma2.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma2
-                </Class>
-                <Class sourceFile="SequenceDiagramTxtMaker.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker
-                </Class>
-                <Class sourceFile="Step1Message.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.Step1Message
-                </Class>
-                <Class sourceFile="Step1MessageExo.java">
-                    net.sourceforge.plantuml.sequencediagram.graphic.Step1MessageExo
-                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.io</Package>
                 <Package>java.lang</Package>
-                <Package>java.nio.charset</Package>
                 <Package>java.util</Package>
                 <Package>java.util.concurrent.atomic</Package>
                 <Package>net.sourceforge.plantuml</Package>
-                <Package>net.sourceforge.plantuml.abel</Package>
-                <Package>net.sourceforge.plantuml.api</Package>
-                <Package>net.sourceforge.plantuml.asciiart</Package>
                 <Package>net.sourceforge.plantuml.asciiverse</Package>
-                <Package>net.sourceforge.plantuml.cli</Package>
-                <Package>net.sourceforge.plantuml.core</Package>
                 <Package>net.sourceforge.plantuml.klimt</Package>
                 <Package>net.sourceforge.plantuml.klimt.color</Package>
                 <Package>net.sourceforge.plantuml.klimt.creole</Package>
                 <Package>net.sourceforge.plantuml.klimt.drawing</Package>
-                <Package>net.sourceforge.plantuml.klimt.drawing.txt</Package>
                 <Package>net.sourceforge.plantuml.klimt.font</Package>
                 <Package>net.sourceforge.plantuml.klimt.geom</Package>
                 <Package>net.sourceforge.plantuml.klimt.shape</Package>
-                <Package>net.sourceforge.plantuml.security</Package>
                 <Package>net.sourceforge.plantuml.sequencediagram</Package>
                 <Package>net.sourceforge.plantuml.skin</Package>
                 <Package>net.sourceforge.plantuml.skin.rose</Package>

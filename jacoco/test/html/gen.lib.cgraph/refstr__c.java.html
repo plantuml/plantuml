@@ -204,8 +204,8 @@ try {
 <span class="fc" id="L204">    r = (ST_refstr_t) refsymbind(zz, strdict, s);</span>
 <span class="pc bpc" id="L205" title="2 of 4 branches missed.">    if (r!=null &amp;&amp; (EQ_CSTRING(r.s, s))) {</span>
 <span class="fc" id="L206">	r.refcnt--;</span>
-<span class="pc bpc" id="L207" title="3 of 6 branches missed.">	if ((r.refcnt!=0 &amp;&amp; zz.CNT_BITS!=0) == false) {</span>
-<span class="nc" id="L208">	    agdtdelete(zz, g, strdict, r);</span>
+<span class="pc bpc" id="L207" title="1 of 6 branches missed.">	if ((r.refcnt!=0 &amp;&amp; zz.CNT_BITS!=0) == false) {</span>
+<span class="fc" id="L208">	    agdtdelete(zz, g, strdict, r);</span>
 	    /*
 	       if (g) agfree(g,r);
 	       else free(r);

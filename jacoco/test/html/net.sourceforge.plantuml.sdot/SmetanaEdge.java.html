@@ -141,157 +141,180 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 <span class="fc" id="L142">			dotPath = dotPath.simulateCompound(rectangleArea2, rectangleArea1);</span>
 
-<span class="fc" id="L144">			final Style styleLine = getStyle();</span>
+			// simulateCompound only clips to the plain bounding rectangle. For a cluster
+			// drawn as a shaped symbol (e.g. a package rendered as a folder, see
+			// USymbolFolder) the visible border is NOT that rectangle: the body top edge
+			// sits htitle below the bounding box because of the title tab. Without the
+			// step below, an arrow pointing at such a cluster stops at the bounding box
+			// and floats above the drawn border (arrows too short towards packages).
+			// Mirror SvekEdge.drawU, which applies Cluster.getMagneticBorder()
+			// (delegating to USymbolFolder) for the very same reason on the dot pipeline.
+			// Moving the path endpoints here also relocates the arrowheads, since
+			// printExtremityAtStart/End read them straight from dotPath below.
+<span class="fc bfc" id="L154" title="All 2 branches covered.">			if (rectangleArea1 != null) {</span>
+<span class="fc" id="L155">				final Cluster cluster1 = bibliotekon.getCluster(link.getEntity1());</span>
+<span class="fc" id="L156">				final UTranslate force = cluster1.getMagneticBorder().getForceAt(ug.getStringBounder(),</span>
+<span class="fc" id="L157">						dotPath.getStartPoint());</span>
+<span class="fc" id="L158">				dotPath.moveStartPoint(force);</span>
+			}
+<span class="fc bfc" id="L160" title="All 2 branches covered.">			if (rectangleArea2 != null) {</span>
+<span class="fc" id="L161">				final Cluster cluster2 = bibliotekon.getCluster(link.getEntity2());</span>
+<span class="fc" id="L162">				final UTranslate force = cluster2.getMagneticBorder().getForceAt(ug.getStringBounder(),</span>
+<span class="fc" id="L163">						dotPath.getEndPoint());</span>
+<span class="fc" id="L164">				dotPath.moveEndPoint(force);</span>
+			}
 
-<span class="fc" id="L146">			final Rainbow rainbow = Rainbow.build(styleLine, skinParam.getIHtmlColorSet());</span>
+<span class="fc" id="L167">			final Style styleLine = getStyle();</span>
+
+<span class="fc" id="L169">			final Rainbow rainbow = Rainbow.build(styleLine, skinParam.getIHtmlColorSet());</span>
 
 			// Warning: duplicated from SmetanaPath and SvekEdge
-<span class="fc" id="L149">			HColor arrowHeadColor = rainbow.getArrowHeadColor();</span>
-<span class="fc" id="L150">			HColor color = rainbow.getColor();</span>
+<span class="fc" id="L172">			HColor arrowHeadColor = rainbow.getArrowHeadColor();</span>
+<span class="fc" id="L173">			HColor color = rainbow.getColor();</span>
 
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">			if (this.link.getColors() != null) {</span>
-<span class="fc" id="L153">				final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);</span>
-<span class="fc bfc" id="L154" title="All 2 branches covered.">				if (newColor != null) {</span>
-<span class="fc" id="L155">					color = newColor;</span>
-<span class="fc" id="L156">					arrowHeadColor = color;</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">			if (this.link.getColors() != null) {</span>
+<span class="fc" id="L176">				final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">				if (newColor != null) {</span>
+<span class="fc" id="L178">					color = newColor;</span>
+<span class="fc" id="L179">					arrowHeadColor = color;</span>
 				}
-<span class="pc bnc" id="L158" title="All 2 branches missed.">			} else if (this.link.getSpecificColor() != null) {</span>
-<span class="nc" id="L159">				color = this.link.getSpecificColor();</span>
-<span class="nc" id="L160">				arrowHeadColor = color;</span>
+<span class="pc bnc" id="L181" title="All 2 branches missed.">			} else if (this.link.getSpecificColor() != null) {</span>
+<span class="nc" id="L182">				color = this.link.getSpecificColor();</span>
+<span class="nc" id="L183">				arrowHeadColor = color;</span>
 			}
 
-<span class="fc" id="L163">			ug = ug.apply(HColors.none().bg()).apply(color);</span>
-<span class="fc" id="L164">			final LinkType linkType = link.getType();</span>
-<span class="fc" id="L165">			final UStroke suggestedStroke = styleLine.getStroke();</span>
-<span class="fc" id="L166">			final UStroke defaultThickness = skinParam.getThickness(LineParam.arrow, null);</span>
+<span class="fc" id="L186">			ug = ug.apply(HColors.none().bg()).apply(color);</span>
+<span class="fc" id="L187">			final LinkType linkType = link.getType();</span>
+<span class="fc" id="L188">			final UStroke suggestedStroke = styleLine.getStroke();</span>
+<span class="fc" id="L189">			final UStroke defaultThickness = skinParam.getThickness(LineParam.arrow, null);</span>
 
 			UStroke stroke;
-<span class="pc bpc" id="L169" title="1 of 4 branches missed.">			if (suggestedStroke == null || linkType.getStyle().isNormal() == false)</span>
-<span class="fc" id="L170">				stroke = linkType.getStroke3(defaultThickness);</span>
+<span class="pc bpc" id="L192" title="1 of 4 branches missed.">			if (suggestedStroke == null || linkType.getStyle().isNormal() == false)</span>
+<span class="fc" id="L193">				stroke = linkType.getStroke3(defaultThickness);</span>
 			else
-<span class="fc" id="L172">				stroke = linkType.getStroke3(suggestedStroke);</span>
+<span class="fc" id="L195">				stroke = linkType.getStroke3(suggestedStroke);</span>
 
-<span class="pc bpc" id="L174" title="2 of 4 branches missed.">			if (link.getColors() != null &amp;&amp; link.getColors().getSpecificLineStroke() != null)</span>
-<span class="nc" id="L175">				stroke = link.getColors().getSpecificLineStroke();</span>
+<span class="pc bpc" id="L197" title="2 of 4 branches missed.">			if (link.getColors() != null &amp;&amp; link.getColors().getSpecificLineStroke() != null)</span>
+<span class="nc" id="L198">				stroke = link.getColors().getSpecificLineStroke();</span>
 
-<span class="fc" id="L177">			final Url url = link.getUrl();</span>
-<span class="pc bpc" id="L178" title="1 of 2 branches missed.">			if (url != null)</span>
-<span class="nc" id="L179">				ug.startUrl(url);</span>
+<span class="fc" id="L200">			final Url url = link.getUrl();</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L202">				ug.startUrl(url);</span>
 
-<span class="fc" id="L181">			printExtremityAtStart(dotPath, ug.apply(color));</span>
-<span class="fc" id="L182">			printExtremityAtEnd(dotPath, ug.apply(color));</span>
-<span class="fc" id="L183">			ug.apply(stroke).apply(color).draw(dotPath);</span>
+<span class="fc" id="L204">			printExtremityAtStart(dotPath, ug.apply(color));</span>
+<span class="fc" id="L205">			printExtremityAtEnd(dotPath, ug.apply(color));</span>
+<span class="fc" id="L206">			ug.apply(stroke).apply(color).draw(dotPath);</span>
 
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">			if (url != null)</span>
-<span class="nc" id="L186">				ug.closeUrl();</span>
+<span class="pc bpc" id="L208" title="1 of 2 branches missed.">			if (url != null)</span>
+<span class="nc" id="L209">				ug.closeUrl();</span>
 
 		}
-<span class="fc bfc" id="L189" title="All 2 branches covered.">		if (getLabelRectangleTranslate(&quot;label&quot;) != null)</span>
-<span class="fc" id="L190">			label.drawU(ug.apply(getLabelRectangleTranslate(&quot;label&quot;)));</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		if (getLabelRectangleTranslate(&quot;label&quot;) != null)</span>
+<span class="fc" id="L213">			label.drawU(ug.apply(getLabelRectangleTranslate(&quot;label&quot;)));</span>
 
-<span class="fc bfc" id="L192" title="All 2 branches covered.">		if (getLabelRectangleTranslate(&quot;head_label&quot;) != null)</span>
-<span class="fc" id="L193">			headLabel.drawU(ug.apply(getLabelRectangleTranslate(&quot;head_label&quot;)));</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		if (getLabelRectangleTranslate(&quot;head_label&quot;) != null)</span>
+<span class="fc" id="L216">			headLabel.drawU(ug.apply(getLabelRectangleTranslate(&quot;head_label&quot;)));</span>
 
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		if (getLabelRectangleTranslate(&quot;tail_label&quot;) != null)</span>
-<span class="nc" id="L196">			tailLabel.drawU(ug.apply(getLabelRectangleTranslate(&quot;tail_label&quot;)));</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">		if (getLabelRectangleTranslate(&quot;tail_label&quot;) != null)</span>
+<span class="nc" id="L219">			tailLabel.drawU(ug.apply(getLabelRectangleTranslate(&quot;tail_label&quot;)));</span>
 
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if (dotPath != null) {</span>
-<span class="fc" id="L199">			DotPath pathForRoles = dotPath;</span>
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">			if (ymirror != null)</span>
-<span class="fc" id="L201">				pathForRoles = ymirror.getMirrored(pathForRoles);</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">		if (dotPath != null) {</span>
+<span class="fc" id="L222">			DotPath pathForRoles = dotPath;</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">			if (ymirror != null)</span>
+<span class="fc" id="L224">				pathForRoles = ymirror.getMirrored(pathForRoles);</span>
 
-<span class="pc bpc" id="L203" title="3 of 4 branches missed.">			if (tailRole != null &amp;&amp; getLabelRectangleTranslate(&quot;tail_label&quot;) != null) {</span>
-<span class="nc" id="L204">				final UTranslate tailTr = getLabelRectangleTranslate(&quot;tail_label&quot;);</span>
-<span class="nc" id="L205">				final XPoint2D tailLabelPos = new XPoint2D(tailTr.getDx(), tailTr.getDy());</span>
-<span class="nc" id="L206">				drawRoleLabel(ug, tailRole, tailLabel, tailLabelPos,</span>
-<span class="nc" id="L207">						pathForRoles.getStartPoint(), pathForRoles.getEndPoint());</span>
+<span class="pc bpc" id="L226" title="3 of 4 branches missed.">			if (tailRole != null &amp;&amp; getLabelRectangleTranslate(&quot;tail_label&quot;) != null) {</span>
+<span class="nc" id="L227">				final UTranslate tailTr = getLabelRectangleTranslate(&quot;tail_label&quot;);</span>
+<span class="nc" id="L228">				final XPoint2D tailLabelPos = new XPoint2D(tailTr.getDx(), tailTr.getDy());</span>
+<span class="nc" id="L229">				drawRoleLabel(ug, tailRole, tailLabel, tailLabelPos,</span>
+<span class="nc" id="L230">						pathForRoles.getStartPoint(), pathForRoles.getEndPoint());</span>
 			}
-<span class="pc bpc" id="L209" title="3 of 4 branches missed.">			if (headRole != null &amp;&amp; getLabelRectangleTranslate(&quot;head_label&quot;) != null) {</span>
-<span class="nc" id="L210">				final UTranslate headTr = getLabelRectangleTranslate(&quot;head_label&quot;);</span>
-<span class="nc" id="L211">				final XPoint2D headLabelPos = new XPoint2D(headTr.getDx(), headTr.getDy());</span>
-<span class="nc" id="L212">				drawRoleLabel(ug, headRole, headLabel, headLabelPos,</span>
-<span class="nc" id="L213">						pathForRoles.getEndPoint(), pathForRoles.getStartPoint());</span>
+<span class="pc bpc" id="L232" title="3 of 4 branches missed.">			if (headRole != null &amp;&amp; getLabelRectangleTranslate(&quot;head_label&quot;) != null) {</span>
+<span class="nc" id="L233">				final UTranslate headTr = getLabelRectangleTranslate(&quot;head_label&quot;);</span>
+<span class="nc" id="L234">				final XPoint2D headLabelPos = new XPoint2D(headTr.getDx(), headTr.getDy());</span>
+<span class="nc" id="L235">				drawRoleLabel(ug, headRole, headLabel, headLabelPos,</span>
+<span class="nc" id="L236">						pathForRoles.getEndPoint(), pathForRoles.getStartPoint());</span>
 			}
 		}
 
-<span class="fc" id="L217">		ug.closeGroup();</span>
+<span class="fc" id="L240">		ug.closeGroup();</span>
 		// printDebug(ug);
-<span class="fc" id="L219">	}</span>
+<span class="fc" id="L242">	}</span>
 
 	private Style getStyle() {
-<span class="fc" id="L222">		final StyleSignature result = StyleSignatureBasic</span>
-<span class="fc" id="L223">				.of(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)</span>
-<span class="fc" id="L224">				.withTOBECHANGED(link.getStereotype());</span>
-<span class="fc" id="L225">		return result.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
+<span class="fc" id="L245">		final StyleSignature result = StyleSignatureBasic</span>
+<span class="fc" id="L246">				.of(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)</span>
+<span class="fc" id="L247">				.withTOBECHANGED(link.getStereotype());</span>
+<span class="fc" id="L248">		return result.getMergedStyle(skinParam.getCurrentStyleBuilder());</span>
 	}
 
 	public XPoint2D getStartPoint() {
-<span class="fc" id="L229">		final DotPath dotPath = getDotPathInternal();</span>
-<span class="fc" id="L230">		XPoint2D pt = dotPath.getStartPoint();</span>
-<span class="pc bpc" id="L231" title="1 of 2 branches missed.">		if (ymirror != null)</span>
-<span class="fc" id="L232">			pt = ymirror.getMirrored(pt);</span>
+<span class="fc" id="L252">		final DotPath dotPath = getDotPathInternal();</span>
+<span class="fc" id="L253">		XPoint2D pt = dotPath.getStartPoint();</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">		if (ymirror != null)</span>
+<span class="fc" id="L255">			pt = ymirror.getMirrored(pt);</span>
 
-<span class="fc" id="L234">		return pt;</span>
+<span class="fc" id="L257">		return pt;</span>
 	}
 
 	public XPoint2D getEndPoint() {
-<span class="fc" id="L238">		final DotPath dotPath = getDotPathInternal();</span>
-<span class="fc" id="L239">		XPoint2D pt = dotPath.getEndPoint();</span>
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		if (ymirror != null)</span>
-<span class="fc" id="L241">			pt = ymirror.getMirrored(pt);</span>
+<span class="fc" id="L261">		final DotPath dotPath = getDotPathInternal();</span>
+<span class="fc" id="L262">		XPoint2D pt = dotPath.getEndPoint();</span>
+<span class="pc bpc" id="L263" title="1 of 2 branches missed.">		if (ymirror != null)</span>
+<span class="fc" id="L264">			pt = ymirror.getMirrored(pt);</span>
 
-<span class="fc" id="L243">		return pt;</span>
+<span class="fc" id="L266">		return pt;</span>
 	}
 
 	private void printExtremityAtStart(DotPath dotPath, UGraphic ug) {
-<span class="fc" id="L247">		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()</span>
-<span class="fc" id="L248">				.getExtremityFactoryComplete(skinParam.getBackgroundColor());</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">		if (extremityFactory2 == null)</span>
-<span class="fc" id="L250">			return;</span>
+<span class="fc" id="L270">		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()</span>
+<span class="fc" id="L271">				.getExtremityFactoryComplete(skinParam.getBackgroundColor());</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">		if (extremityFactory2 == null)</span>
+<span class="fc" id="L273">			return;</span>
 
-<span class="fc" id="L252">		final XPoint2D p0 = dotPath.getStartPoint();</span>
-<span class="fc" id="L253">		final double startAngle = dotPath.getStartAngle() + Math.PI;</span>
+<span class="fc" id="L275">		final XPoint2D p0 = dotPath.getStartPoint();</span>
+<span class="fc" id="L276">		final double startAngle = dotPath.getStartAngle() + Math.PI;</span>
 
 		try {
-<span class="fc" id="L256">			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);</span>
-<span class="pc bpc" id="L257" title="1 of 2 branches missed.">			if (extremity2 != null) {</span>
-<span class="pc bpc" id="L258" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {</span>
-<span class="fc" id="L259">					final double decorationLength = extremity2.getDecorationLength();</span>
-<span class="fc" id="L260">					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));</span>
+<span class="fc" id="L279">			final Extremity extremity2 = (Extremity) extremityFactory2.createUDrawable(p0, startAngle, null);</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">			if (extremity2 != null) {</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {</span>
+<span class="fc" id="L282">					final double decorationLength = extremity2.getDecorationLength();</span>
+<span class="fc" id="L283">					dotPath.moveStartPoint(new UTranslate(decorationLength, 0).rotate(startAngle - Math.PI));</span>
 				}
-<span class="fc" id="L262">				extremity2.drawU(ug);</span>
+<span class="fc" id="L285">				extremity2.drawU(ug);</span>
 			}
 
-<span class="nc" id="L265">		} catch (UnsupportedOperationException e) {</span>
-<span class="nc" id="L266">			e.printStackTrace();</span>
-<span class="nc" id="L267">			System.err.println(&quot;CANNOT DRAW printExtremityAtStart&quot;);</span>
-<span class="fc" id="L268">		}</span>
-<span class="fc" id="L269">	}</span>
+<span class="nc" id="L288">		} catch (UnsupportedOperationException e) {</span>
+<span class="nc" id="L289">			e.printStackTrace();</span>
+<span class="nc" id="L290">			System.err.println(&quot;CANNOT DRAW printExtremityAtStart&quot;);</span>
+<span class="fc" id="L291">		}</span>
+<span class="fc" id="L292">	}</span>
 
 	private void printExtremityAtEnd(DotPath dotPath, UGraphic ug) {
-<span class="fc" id="L272">		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()</span>
-<span class="fc" id="L273">				.getExtremityFactoryComplete(skinParam.getBackgroundColor());</span>
-<span class="fc bfc" id="L274" title="All 2 branches covered.">		if (extremityFactory1 == null)</span>
-<span class="fc" id="L275">			return;</span>
+<span class="fc" id="L295">		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()</span>
+<span class="fc" id="L296">				.getExtremityFactoryComplete(skinParam.getBackgroundColor());</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">		if (extremityFactory1 == null)</span>
+<span class="fc" id="L298">			return;</span>
 
-<span class="fc" id="L277">		final XPoint2D p0 = dotPath.getEndPoint();</span>
-<span class="fc" id="L278">		final double endAngle = dotPath.getEndAngle();</span>
+<span class="fc" id="L300">		final XPoint2D p0 = dotPath.getEndPoint();</span>
+<span class="fc" id="L301">		final double endAngle = dotPath.getEndAngle();</span>
 
 		try {
-<span class="fc" id="L281">			final Extremity extremity1 = (Extremity) extremityFactory1.createUDrawable(p0, endAngle, null);</span>
-<span class="pc bpc" id="L282" title="1 of 2 branches missed.">			if (extremity1 != null) {</span>
-<span class="pc bpc" id="L283" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {</span>
-<span class="fc" id="L284">					final double decorationLength = extremity1.getDecorationLength();</span>
-<span class="fc" id="L285">					dotPath.moveEndPoint(new UTranslate(decorationLength, 0).rotate(endAngle - Math.PI));</span>
+<span class="fc" id="L304">			final Extremity extremity1 = (Extremity) extremityFactory1.createUDrawable(p0, endAngle, null);</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">			if (extremity1 != null) {</span>
+<span class="pc bpc" id="L306" title="1 of 2 branches missed.">				if (getLinkStrategy() == LinkStrategy.SIMPLEST) {</span>
+<span class="fc" id="L307">					final double decorationLength = extremity1.getDecorationLength();</span>
+<span class="fc" id="L308">					dotPath.moveEndPoint(new UTranslate(decorationLength, 0).rotate(endAngle - Math.PI));</span>
 				}
-<span class="fc" id="L287">				extremity1.drawU(ug);</span>
+<span class="fc" id="L310">				extremity1.drawU(ug);</span>
 			}
 
-<span class="nc" id="L290">		} catch (UnsupportedOperationException e) {</span>
-<span class="nc" id="L291">			e.printStackTrace();</span>
-<span class="nc" id="L292">			System.err.println(&quot;CANNOT DRAW printExtremityAtEnd&quot;);</span>
-<span class="fc" id="L293">		}</span>
-<span class="fc" id="L294">	}</span>
+<span class="nc" id="L313">		} catch (UnsupportedOperationException e) {</span>
+<span class="nc" id="L314">			e.printStackTrace();</span>
+<span class="nc" id="L315">			System.err.println(&quot;CANNOT DRAW printExtremityAtEnd&quot;);</span>
+<span class="fc" id="L316">		}</span>
+<span class="fc" id="L317">	}</span>
 
 //	private void printDebug(UGraphic ug) {
 //		ug = ug.apply(HColors.BLUE).apply(HColors.BLUE.bg());
@@ -312,35 +335,35 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 //	}
 
 	private URectangle getLabelURectangle() {
-<span class="nc" id="L315">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data.castTo(ST_Agedgeinfo_t.class);</span>
-<span class="nc" id="L316">		ST_textlabel_t label = (ST_textlabel_t) data.label;</span>
-<span class="nc bnc" id="L317" title="All 2 branches missed.">		if (label == null)</span>
-<span class="nc" id="L318">			return null;</span>
+<span class="nc" id="L338">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data.castTo(ST_Agedgeinfo_t.class);</span>
+<span class="nc" id="L339">		ST_textlabel_t label = (ST_textlabel_t) data.label;</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">		if (label == null)</span>
+<span class="nc" id="L341">			return null;</span>
 
-<span class="nc" id="L320">		final BoxInfo boxInfo = BoxInfo.fromTextlabel(label);</span>
-<span class="nc" id="L321">		return URectangle.build(boxInfo.getDimension());</span>
+<span class="nc" id="L343">		final BoxInfo boxInfo = BoxInfo.fromTextlabel(label);</span>
+<span class="nc" id="L344">		return URectangle.build(boxInfo.getDimension());</span>
 	}
 
 	private UTranslate getLabelRectangleTranslate(String fieldName) {
 		// final String fieldName = &quot;label&quot;;
-<span class="fc" id="L326">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data;</span>
-<span class="fc" id="L327">		ST_textlabel_t label = null;</span>
-<span class="fc bfc" id="L328" title="All 2 branches covered.">		if (fieldName.equals(&quot;label&quot;))</span>
-<span class="fc" id="L329">			label = data.label;</span>
-<span class="fc bfc" id="L330" title="All 2 branches covered.">		else if (fieldName.equals(&quot;head_label&quot;))</span>
-<span class="fc" id="L331">			label = data.head_label;</span>
-<span class="pc bpc" id="L332" title="1 of 2 branches missed.">		else if (fieldName.equals(&quot;tail_label&quot;))</span>
-<span class="fc" id="L333">			label = data.tail_label;</span>
+<span class="fc" id="L349">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data;</span>
+<span class="fc" id="L350">		ST_textlabel_t label = null;</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">		if (fieldName.equals(&quot;label&quot;))</span>
+<span class="fc" id="L352">			label = data.label;</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">		else if (fieldName.equals(&quot;head_label&quot;))</span>
+<span class="fc" id="L354">			label = data.head_label;</span>
+<span class="pc bpc" id="L355" title="1 of 2 branches missed.">		else if (fieldName.equals(&quot;tail_label&quot;))</span>
+<span class="fc" id="L356">			label = data.tail_label;</span>
 
-<span class="fc bfc" id="L335" title="All 2 branches covered.">		if (label == null)</span>
-<span class="fc" id="L336">			return null;</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">		if (label == null)</span>
+<span class="fc" id="L359">			return null;</span>
 
-<span class="fc" id="L338">		final BoxInfo boxInfo = BoxInfo.fromTextlabel(label);</span>
+<span class="fc" id="L361">		final BoxInfo boxInfo = BoxInfo.fromTextlabel(label);</span>
 
-<span class="pc bpc" id="L340" title="1 of 2 branches missed.">		if (ymirror == null)</span>
-<span class="nc" id="L341">			return new UTranslate(boxInfo.getLowerLeft().getX(), boxInfo.getUpperRight().getY());</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">		if (ymirror == null)</span>
+<span class="nc" id="L364">			return new UTranslate(boxInfo.getLowerLeft().getX(), boxInfo.getUpperRight().getY());</span>
 
-<span class="fc" id="L343">		return ymirror.getMirrored(UTranslate.point(boxInfo.getLowerLeft()));</span>
+<span class="fc" id="L366">		return ymirror.getMirrored(UTranslate.point(boxInfo.getLowerLeft()));</span>
 	}
 
 	// private DotPath dotPath;
@@ -349,92 +372,92 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 //		if (dotPath != null)
 //			return dotPath;
 
-<span class="fc" id="L352">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data;</span>
-<span class="fc" id="L353">		final ST_splines splines = data.spl;</span>
+<span class="fc" id="L375">		final ST_Agedgeinfo_t data = (ST_Agedgeinfo_t) edge.data;</span>
+<span class="fc" id="L376">		final ST_splines splines = data.spl;</span>
 
-<span class="fc" id="L355">		DotPath dotPath = new DotPath();</span>
-<span class="fc" id="L356">		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);</span>
-<span class="fc" id="L357">		final XPoint2D pt1 = getPoint(splines, 0);</span>
-<span class="fc" id="L358">		final XPoint2D pt2 = getPoint(splines, 1);</span>
-<span class="fc" id="L359">		final XPoint2D pt3 = getPoint(splines, 2);</span>
-<span class="fc" id="L360">		final XPoint2D pt4 = getPoint(splines, 3);</span>
-<span class="fc" id="L361">		dotPath = dotPath.addCurve(pt1, pt2, pt3, pt4);</span>
-<span class="fc" id="L362">		final int n = beziers.size;</span>
-<span class="fc bfc" id="L363" title="All 2 branches covered.">		for (int i = 4; i &lt; n; i += 3) {</span>
-<span class="fc" id="L364">			final XPoint2D ppt2 = getPoint(splines, i);</span>
-<span class="fc" id="L365">			final XPoint2D ppt3 = getPoint(splines, i + 1);</span>
-<span class="fc" id="L366">			final XPoint2D ppt4 = getPoint(splines, i + 2);</span>
-<span class="fc" id="L367">			dotPath = dotPath.addCurve(ppt2, ppt3, ppt4);</span>
+<span class="fc" id="L378">		DotPath dotPath = new DotPath();</span>
+<span class="fc" id="L379">		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);</span>
+<span class="fc" id="L380">		final XPoint2D pt1 = getPoint(splines, 0);</span>
+<span class="fc" id="L381">		final XPoint2D pt2 = getPoint(splines, 1);</span>
+<span class="fc" id="L382">		final XPoint2D pt3 = getPoint(splines, 2);</span>
+<span class="fc" id="L383">		final XPoint2D pt4 = getPoint(splines, 3);</span>
+<span class="fc" id="L384">		dotPath = dotPath.addCurve(pt1, pt2, pt3, pt4);</span>
+<span class="fc" id="L385">		final int n = beziers.size;</span>
+<span class="fc bfc" id="L386" title="All 2 branches covered.">		for (int i = 4; i &lt; n; i += 3) {</span>
+<span class="fc" id="L387">			final XPoint2D ppt2 = getPoint(splines, i);</span>
+<span class="fc" id="L388">			final XPoint2D ppt3 = getPoint(splines, i + 1);</span>
+<span class="fc" id="L389">			final XPoint2D ppt4 = getPoint(splines, i + 2);</span>
+<span class="fc" id="L390">			dotPath = dotPath.addCurve(ppt2, ppt3, ppt4);</span>
 		}
 
-<span class="fc" id="L370">		return dotPath;</span>
+<span class="fc" id="L393">		return dotPath;</span>
 	}
 
 	private XPoint2D getPoint(ST_splines splines, int i) {
-<span class="fc" id="L374">		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);</span>
-<span class="fc" id="L375">		final ST_pointf pt = beziers.list.get__(i);</span>
-<span class="fc" id="L376">		return new XPoint2D(pt.x, pt.y);</span>
+<span class="fc" id="L397">		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);</span>
+<span class="fc" id="L398">		final ST_pointf pt = beziers.list.get__(i);</span>
+<span class="fc" id="L399">		return new XPoint2D(pt.x, pt.y);</span>
 	}
 
 	private void drawRoleLabel(UGraphic ug, TextBlock role, TextBlock quantifier,
 			XPoint2D quantifierPos, XPoint2D thisEndpoint, XPoint2D otherEndpoint) {
-<span class="nc" id="L381">		final StringBounder stringBounder = ug.getStringBounder();</span>
-<span class="nc" id="L382">		final XDimension2D qDim = quantifier.calculateDimension(stringBounder);</span>
-<span class="nc" id="L383">		final XDimension2D rDim = role.calculateDimension(stringBounder);</span>
+<span class="nc" id="L404">		final StringBounder stringBounder = ug.getStringBounder();</span>
+<span class="nc" id="L405">		final XDimension2D qDim = quantifier.calculateDimension(stringBounder);</span>
+<span class="nc" id="L406">		final XDimension2D rDim = role.calculateDimension(stringBounder);</span>
 
-<span class="nc" id="L385">		final double dirX = otherEndpoint.getX() - thisEndpoint.getX();</span>
-<span class="nc" id="L386">		final double dirY = otherEndpoint.getY() - thisEndpoint.getY();</span>
+<span class="nc" id="L408">		final double dirX = otherEndpoint.getX() - thisEndpoint.getX();</span>
+<span class="nc" id="L409">		final double dirY = otherEndpoint.getY() - thisEndpoint.getY();</span>
 
-<span class="nc bnc" id="L388" title="All 2 branches missed.">		if (Math.abs(dirX) + Math.abs(dirY) &lt; 0.001) {</span>
-<span class="nc" id="L389">			role.drawU(ug.apply(new UTranslate(quantifierPos.getX(),</span>
-<span class="nc" id="L390">					quantifierPos.getY() + qDim.getHeight())));</span>
-<span class="nc" id="L391">			return;</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">		if (Math.abs(dirX) + Math.abs(dirY) &lt; 0.001) {</span>
+<span class="nc" id="L412">			role.drawU(ug.apply(new UTranslate(quantifierPos.getX(),</span>
+<span class="nc" id="L413">					quantifierPos.getY() + qDim.getHeight())));</span>
+<span class="nc" id="L414">			return;</span>
 		}
 
-<span class="nc" id="L394">		final double gap = 2;</span>
+<span class="nc" id="L417">		final double gap = 2;</span>
 		final double roleX;
 		final double roleY;
 
-<span class="nc bnc" id="L398" title="All 2 branches missed.">		if (Math.abs(dirY) &gt;= Math.abs(dirX)) {</span>
-<span class="nc" id="L399">			final double qCenterX = quantifierPos.getX() + qDim.getWidth() / 2;</span>
-<span class="nc" id="L400">			final double lineX = thisEndpoint.getX();</span>
-<span class="nc bnc" id="L401" title="All 2 branches missed.">			if (qCenterX &lt; lineX)</span>
-<span class="nc" id="L402">				roleX = lineX + gap;</span>
+<span class="nc bnc" id="L421" title="All 2 branches missed.">		if (Math.abs(dirY) &gt;= Math.abs(dirX)) {</span>
+<span class="nc" id="L422">			final double qCenterX = quantifierPos.getX() + qDim.getWidth() / 2;</span>
+<span class="nc" id="L423">			final double lineX = thisEndpoint.getX();</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">			if (qCenterX &lt; lineX)</span>
+<span class="nc" id="L425">				roleX = lineX + gap;</span>
 			else
-<span class="nc" id="L404">				roleX = lineX - rDim.getWidth() - gap;</span>
-<span class="nc" id="L405">			roleY = quantifierPos.getY();</span>
-<span class="nc" id="L406">		} else {</span>
-<span class="nc" id="L407">			final double qCenterY = quantifierPos.getY() + qDim.getHeight() / 2;</span>
-<span class="nc" id="L408">			final double lineY = thisEndpoint.getY();</span>
-<span class="nc bnc" id="L409" title="All 2 branches missed.">			if (qCenterY &lt; lineY)</span>
-<span class="nc" id="L410">				roleY = lineY + gap;</span>
+<span class="nc" id="L427">				roleX = lineX - rDim.getWidth() - gap;</span>
+<span class="nc" id="L428">			roleY = quantifierPos.getY();</span>
+<span class="nc" id="L429">		} else {</span>
+<span class="nc" id="L430">			final double qCenterY = quantifierPos.getY() + qDim.getHeight() / 2;</span>
+<span class="nc" id="L431">			final double lineY = thisEndpoint.getY();</span>
+<span class="nc bnc" id="L432" title="All 2 branches missed.">			if (qCenterY &lt; lineY)</span>
+<span class="nc" id="L433">				roleY = lineY + gap;</span>
 			else
-<span class="nc" id="L412">				roleY = lineY - rDim.getHeight() - gap;</span>
-<span class="nc" id="L413">			roleX = quantifierPos.getX();</span>
+<span class="nc" id="L435">				roleY = lineY - rDim.getHeight() - gap;</span>
+<span class="nc" id="L436">			roleX = quantifierPos.getX();</span>
 		}
 
-<span class="nc" id="L416">		role.drawU(ug.apply(new UTranslate(roleX, roleY)));</span>
-<span class="nc" id="L417">	}</span>
+<span class="nc" id="L439">		role.drawU(ug.apply(new UTranslate(roleX, roleY)));</span>
+<span class="nc" id="L440">	}</span>
 
 	@Override
 	public void moveDelta(double deltaX, double deltaY) {
-<span class="nc" id="L421">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
+<span class="nc" id="L444">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
 		
 	}
 
 	@Override
 	public boolean isHidden() {
-<span class="nc" id="L427">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
+<span class="nc" id="L450">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
 	}
 
 	@Override
 	public Direction getArrowDirection() {
-<span class="nc" id="L432">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
+<span class="nc" id="L455">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
 	}
 
 	@Override
 	public double getArrowDirectionInRadian() {
-<span class="nc" id="L437">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
+<span class="nc" id="L460">		throw new UnsupportedOperationException(&quot;refactor in progress&quot;);</span>
 	}
 
 }

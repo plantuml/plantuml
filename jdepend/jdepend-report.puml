@@ -638,7 +638,7 @@ Total Classes: 1
 "net.sourceforge.plantuml.ant" --> "java.util.concurrent"
 "net.sourceforge.plantuml.ant" --> "net.sourceforge.plantuml"
 
-class "net.sourceforge.plantuml.api" %lighten("red", 89) {
+class "net.sourceforge.plantuml.api" %lighten("red", 91) {
 Total Classes: 10
 }
 "net.sourceforge.plantuml.api" --> "java.lang"
@@ -714,7 +714,7 @@ Total Classes: 4
 "net.sourceforge.plantuml.argon2.model" --> "java.util"
 "net.sourceforge.plantuml.argon2.model" --> "net.sourceforge.plantuml.argon2"
 
-class "net.sourceforge.plantuml.asciiart" %lighten("red", 91) {
+class "net.sourceforge.plantuml.asciiart" %lighten("red", 95) {
 Total Classes: 23
 }
 "net.sourceforge.plantuml.asciiart" --> "java.io"
@@ -913,7 +913,7 @@ Total Classes: 10
 "net.sourceforge.plantuml.classdiagram.command" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.classdiagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.cli" %lighten("red", 67) {
+class "net.sourceforge.plantuml.cli" %lighten("red", 70) {
 Total Classes: 12
 }
 "net.sourceforge.plantuml.cli" --> "java.io"
@@ -2240,7 +2240,7 @@ Total Classes: 11
 "net.sourceforge.plantuml.klimt.drawing.tikz" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.klimt.drawing.tikz" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.klimt.drawing.txt" %lighten("red", 76) {
+class "net.sourceforge.plantuml.klimt.drawing.txt" %lighten("red", 81) {
 Total Classes: 1
 }
 "net.sourceforge.plantuml.klimt.drawing.txt" --> "java.io"
@@ -2775,7 +2775,7 @@ Total Classes: 6
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek"
 "net.sourceforge.plantuml.sdot" --> "net.sourceforge.plantuml.svek.image"
 
-class "net.sourceforge.plantuml.security" %lighten("red", 50) {
+class "net.sourceforge.plantuml.security" %lighten("red", 51) {
 Total Classes: 7
 }
 "net.sourceforge.plantuml.security" --> "java.awt.image"
@@ -2858,18 +2858,20 @@ Total Classes: 24
 "net.sourceforge.plantuml.sequencediagram" --> "net.sourceforge.plantuml.utils"
 "net.sourceforge.plantuml.sequencediagram" --> "net.sourceforge.plantuml.warning"
 
-class "net.sourceforge.plantuml.sequencediagram.command" %lighten("red", 88) {
+class "net.sourceforge.plantuml.sequencediagram.command" %lighten("red", 89) {
 Total Classes: 28
 }
 "net.sourceforge.plantuml.sequencediagram.command" --> "java.lang"
 "net.sourceforge.plantuml.sequencediagram.command" --> "java.util"
 "net.sourceforge.plantuml.sequencediagram.command" --> "java.util.regex"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml"
+"net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.abel"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.command"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.klimt.creole"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.klimt.font"
+"net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.regex"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.sequencediagram"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.skin"
@@ -2878,30 +2880,21 @@ Total Classes: 28
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.url"
 "net.sourceforge.plantuml.sequencediagram.command" --> "net.sourceforge.plantuml.utils"
 
-class "net.sourceforge.plantuml.sequencediagram.graphic" %lighten("red", 92) {
-Total Classes: 51
+class "net.sourceforge.plantuml.sequencediagram.graphic" %lighten("red", 93) {
+Total Classes: 39
 }
-"net.sourceforge.plantuml.sequencediagram.graphic" --> "java.io"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "java.lang"
-"net.sourceforge.plantuml.sequencediagram.graphic" --> "java.nio.charset"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "java.util"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "java.util.concurrent.atomic"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml"
-"net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.abel"
-"net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.api"
-"net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.asciiart"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.asciiverse"
-"net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.cli"
-"net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.core"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.klimt"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.klimt.color"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.klimt.creole"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.klimt.drawing"
-"net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.klimt.drawing.txt"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.klimt.font"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.klimt.geom"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.klimt.shape"
-"net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.security"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.sequencediagram"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.skin"
 "net.sourceforge.plantuml.sequencediagram.graphic" --> "net.sourceforge.plantuml.skin.rose"

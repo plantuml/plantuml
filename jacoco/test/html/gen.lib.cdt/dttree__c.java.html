@@ -322,7 +322,7 @@ try {
 		{ /*has_root:*/
 <span class="fc" id="L323">		throw new has_root();</span>
 		}
-<span class="pc bpc" id="L325" title="1 of 2 branches missed.">		else if((type&amp;DT_NEXT)!=0)</span>
+<span class="fc bfc" id="L325" title="All 2 branches covered.">		else if((type&amp;DT_NEXT)!=0)</span>
 <span class="fc" id="L326">		{	root._left = link.right;</span>
 <span class="fc" id="L327">			root.right = null;</span>
 <span class="fc" id="L328">			link.right = root;</span>
@@ -337,7 +337,7 @@ try {
 			}
 <span class="fc" id="L338">			else	throw new no_root();</span>
 		}
-<span class="nc bnc" id="L340" title="All 2 branches missed.">		else if((type&amp;DT_PREV)!=0) {</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">		else if((type&amp;DT_PREV)!=0) {</span>
 <span class="nc" id="L341">		throw new UnsupportedOperationException();</span>
 //		{	root-&gt;right = link.hl._left;
 //			root-&gt;hl._left = ((Dtlink_t*)0);
@@ -351,17 +351,17 @@ try {
 //			}
 //			else	goto no_root;
 		}
-<span class="nc bnc" id="L354" title="All 2 branches missed.">		else if((type&amp;(DT_DELETE|DT_DETACH))!=0) {</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		else if((type&amp;(DT_DELETE|DT_DETACH))!=0) {</span>
 //		{	/* taking an object out of the dictionary */
 //		dt_delete:
-<span class="nc" id="L357">			obj = (__ptr__) _DTOBJ(root,lk);</span>
+<span class="fc" id="L357">			obj = (__ptr__) _DTOBJ(root,lk);</span>
 			//if(disc.freef!=null &amp;&amp; (type&amp;DT_DELETE)!=0)
 			//UNSUPPORTED(&quot;(*disc-&gt;freef)(dt,obj,disc);&quot;);
 			//if(disc.link.getSign() &lt; 0);
 			//dt.memoryf.exe(dt, root, null, disc);
-<span class="nc bnc" id="L362" title="All 2 branches missed.">			if((dt.data.size -= 1) &lt; 0)</span>
+<span class="pc bpc" id="L362" title="1 of 2 branches missed.">			if((dt.data.size -= 1) &lt; 0)</span>
 <span class="nc" id="L363">			UNSUPPORTED(&quot;//				dt-&gt;data-&gt;size = -1;&quot;);</span>
-<span class="nc" id="L364">			throw new no_root();</span>
+<span class="fc" id="L364">			throw new no_root();</span>
 		}
 <span class="nc bnc" id="L366" title="All 2 branches missed.">		else if((type&amp;(DT_INSERT|DT_ATTACH))!=0)</span>
 <span class="nc bnc" id="L367" title="All 2 branches missed.">		{	if((dt.meth.type&amp;DT_OSET)!=0)</span>
@@ -498,11 +498,11 @@ try {
 <span class="fc" id="L498">		dt.data.here = root;</span>
 <span class="fc" id="L499">		return _DTOBJ(root, lk);</span>
 <span class="fc" id="L500">	} catch (no_root no_root) {</span>
-<span class="pc bpc" id="L501" title="1 of 2 branches missed.">			while((t = r._left)!=null)</span>
-<span class="nc" id="L502">				r = t;</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">			while((t = r._left)!=null)</span>
+<span class="fc" id="L502">				r = t;</span>
 <span class="fc" id="L503">			r._left = link.right;</span>
 <span class="fc" id="L504">			dt.data.here = link._left;</span>
-<span class="pc bpc" id="L505" title="1 of 2 branches missed.">			return (type&amp;DT_DELETE)!=0 ? obj : null;</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">			return (type&amp;DT_DELETE)!=0 ? obj : null;</span>
 <span class="nc" id="L506">	}</span>
 <span class="nc" id="L507">throw new UnsupportedOperationException();</span>
 } finally {

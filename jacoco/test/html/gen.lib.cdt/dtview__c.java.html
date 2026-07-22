@@ -129,50 +129,55 @@ try {
 <span class="fc bfc" id="L129" title="All 2 branches covered.">			if(n!=null) /* get the right one among all dictionaries */</span>
 <span class="fc" id="L130">			{	cmp = _DTCMP(zz, d, ok, nk, d.disc, cmpf, sz);</span>
 <span class="pc bpc" id="L131" title="5 of 8 branches missed.">				if(((type &amp; (DT_NEXT|DT_FIRST))!=0 &amp;&amp; cmp &lt; 0) ||</span>
-				   ((type &amp; (DT_PREV|DT_LAST))!=0 &amp;&amp; cmp &gt; 0) )
-<span class="nc" id="L133">UNSUPPORTED(&quot;5o3u9aaanyd9yh74sjfkkofmo&quot;); // 					goto a_dj;</span>
+				   ((type &amp; (DT_PREV|DT_LAST))!=0 &amp;&amp; cmp &gt; 0) ) {
+					/* was: goto a_dj; -- inlined here since the label just marks the
+					 * start of the else-block below (5o3u9aaanyd9yh74sjfkkofmo) */
+<span class="nc" id="L135">					p  = d;</span>
+<span class="nc" id="L136">					n  = o;</span>
+<span class="nc" id="L137">					nk = ok;</span>
+				}
 			}
 			else /* looks good for now */
-<span class="fc" id="L136">			{ a_dj: p  = d;</span>
-<span class="fc" id="L137">				n  = o;</span>
-<span class="fc" id="L138">				nk = ok;</span>
+<span class="fc" id="L141">			{	p  = d;</span>
+<span class="fc" id="L142">				n  = o;</span>
+<span class="fc" id="L143">				nk = ok;</span>
 			}
 		}
-<span class="fc" id="L141">		dt.walk = p;</span>
-<span class="fc" id="L142">		return n;</span>
+<span class="fc" id="L146">		dt.walk = p;</span>
+<span class="fc" id="L147">		return n;</span>
 	}
 	/* non-ordered methods */
-<span class="nc" id="L145">UNSUPPORTED(&quot;36qdhpbcwst6tc1gvwcyvg91u&quot;); // 	if(!(type &amp; (0000010|0000020)) )</span>
-<span class="nc" id="L146">UNSUPPORTED(&quot;5p6q7ip4om6y4nrsjz07ua456&quot;); // 		return ((void*)0);</span>
-<span class="nc" id="L147">UNSUPPORTED(&quot;bx84jj9durkqzcrq4l9h1b0za&quot;); // 	if(!dt-&gt;walk || obj != (dt-&gt;walk-&gt;disc-&gt;link &lt; 0 ? ((Dthold_t*)(dt-&gt;walk-&gt;data-&gt;here))-&gt;obj : (void*)((char*)(dt-&gt;walk-&gt;data-&gt;here) - dt-&gt;walk-&gt;disc-&gt;link) ) )</span>
-<span class="nc" id="L148">UNSUPPORTED(&quot;eh58afn12udc5q8yzr25advls&quot;); // 	{	for(d = dt; d; d = d-&gt;view)</span>
-<span class="nc" id="L149">UNSUPPORTED(&quot;de5yx4s0nsbgshd9seabcy2g9&quot;); // 			if((o = (*(d-&gt;meth-&gt;searchf))(d, obj, 0000004)) )</span>
-<span class="nc" id="L150">UNSUPPORTED(&quot;1dhrv6aj5eq8ntuvb7qbs8aot&quot;); // 				break;</span>
-<span class="nc" id="L151">UNSUPPORTED(&quot;66mzv36wy2mflr2u2a5pwa2vg&quot;); // 		dt-&gt;walk = d;</span>
-<span class="nc" id="L152">UNSUPPORTED(&quot;d4pllgr7b2ohssrhtxxtd1fbb&quot;); // 		if(!(obj = o) )</span>
-<span class="nc" id="L153">UNSUPPORTED(&quot;aihzmr4oo3tuh6kkxwtn9tlbd&quot;); // 			return ((void*)0);</span>
-<span class="nc" id="L154">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L155">UNSUPPORTED(&quot;6he3c07r1xjfepuku37yav920&quot;); // 	for(d = dt-&gt;walk, obj = (*d-&gt;meth-&gt;searchf)(d, obj, type);; )</span>
-<span class="nc" id="L156">UNSUPPORTED(&quot;d7hiatjof3gfyx3ab27oq4d74&quot;); // 	{	while(obj) /* keep moving until finding an uncovered object */</span>
-<span class="nc" id="L157">UNSUPPORTED(&quot;44tdztkynd140cqbaafbbxvqn&quot;); // 		{	for(p = dt; ; p = p-&gt;view)</span>
-<span class="nc" id="L158">UNSUPPORTED(&quot;72t51pabtpfsnn4qrcjvd6gkb&quot;); // 			{	if(p == d) /* adjacent object is uncovered */	</span>
-<span class="nc" id="L159">UNSUPPORTED(&quot;4an2jpd7xs9lm1jlfrbualsrv&quot;); // 					return obj;</span>
-<span class="nc" id="L160">UNSUPPORTED(&quot;bndt77eukkw8dnhl8sce4ts3d&quot;); // 				if((*(p-&gt;meth-&gt;searchf))(p, obj, 0000004) )</span>
-<span class="nc" id="L161">UNSUPPORTED(&quot;6ioth986rfbv208dp59shjy15&quot;); // 					break;</span>
-<span class="nc" id="L162">UNSUPPORTED(&quot;3to5h0rvqxdeqs38mhv47mm3o&quot;); // 			}</span>
-<span class="nc" id="L163">UNSUPPORTED(&quot;5bx9ax8tembk4pweu41m5yw43&quot;); // 			obj = (*d-&gt;meth-&gt;searchf)(d, obj, type);</span>
-<span class="nc" id="L164">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
-<span class="nc" id="L165">UNSUPPORTED(&quot;3diupilxwbi5nroolxiy7e8b0&quot;); // 		if(!(d = dt-&gt;walk = d-&gt;view) ) /* move on to next dictionary */</span>
-<span class="nc" id="L166">UNSUPPORTED(&quot;aihzmr4oo3tuh6kkxwtn9tlbd&quot;); // 			return ((void*)0);</span>
-<span class="nc" id="L167">UNSUPPORTED(&quot;esje2igec9cwwteta36lbrdvc&quot;); // 		else if(type&amp;0000010)</span>
-<span class="nc" id="L168">UNSUPPORTED(&quot;aeh2pn8gp2xj4lehv52n4hp6b&quot;); // 			obj = (*(d-&gt;meth-&gt;searchf))(d,((void*)0),0000200);</span>
-<span class="nc" id="L169">UNSUPPORTED(&quot;1lfqka4p8e7w15b16wquy0vjx&quot;); // 		else	obj = (*(d-&gt;meth-&gt;searchf))(d,((void*)0),0000400);</span>
-<span class="nc" id="L170">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
-<span class="nc" id="L171">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
+<span class="nc" id="L150">UNSUPPORTED(&quot;36qdhpbcwst6tc1gvwcyvg91u&quot;); // 	if(!(type &amp; (0000010|0000020)) )</span>
+<span class="nc" id="L151">UNSUPPORTED(&quot;5p6q7ip4om6y4nrsjz07ua456&quot;); // 		return ((void*)0);</span>
+<span class="nc" id="L152">UNSUPPORTED(&quot;bx84jj9durkqzcrq4l9h1b0za&quot;); // 	if(!dt-&gt;walk || obj != (dt-&gt;walk-&gt;disc-&gt;link &lt; 0 ? ((Dthold_t*)(dt-&gt;walk-&gt;data-&gt;here))-&gt;obj : (void*)((char*)(dt-&gt;walk-&gt;data-&gt;here) - dt-&gt;walk-&gt;disc-&gt;link) ) )</span>
+<span class="nc" id="L153">UNSUPPORTED(&quot;eh58afn12udc5q8yzr25advls&quot;); // 	{	for(d = dt; d; d = d-&gt;view)</span>
+<span class="nc" id="L154">UNSUPPORTED(&quot;de5yx4s0nsbgshd9seabcy2g9&quot;); // 			if((o = (*(d-&gt;meth-&gt;searchf))(d, obj, 0000004)) )</span>
+<span class="nc" id="L155">UNSUPPORTED(&quot;1dhrv6aj5eq8ntuvb7qbs8aot&quot;); // 				break;</span>
+<span class="nc" id="L156">UNSUPPORTED(&quot;66mzv36wy2mflr2u2a5pwa2vg&quot;); // 		dt-&gt;walk = d;</span>
+<span class="nc" id="L157">UNSUPPORTED(&quot;d4pllgr7b2ohssrhtxxtd1fbb&quot;); // 		if(!(obj = o) )</span>
+<span class="nc" id="L158">UNSUPPORTED(&quot;aihzmr4oo3tuh6kkxwtn9tlbd&quot;); // 			return ((void*)0);</span>
+<span class="nc" id="L159">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L160">UNSUPPORTED(&quot;6he3c07r1xjfepuku37yav920&quot;); // 	for(d = dt-&gt;walk, obj = (*d-&gt;meth-&gt;searchf)(d, obj, type);; )</span>
+<span class="nc" id="L161">UNSUPPORTED(&quot;d7hiatjof3gfyx3ab27oq4d74&quot;); // 	{	while(obj) /* keep moving until finding an uncovered object */</span>
+<span class="nc" id="L162">UNSUPPORTED(&quot;44tdztkynd140cqbaafbbxvqn&quot;); // 		{	for(p = dt; ; p = p-&gt;view)</span>
+<span class="nc" id="L163">UNSUPPORTED(&quot;72t51pabtpfsnn4qrcjvd6gkb&quot;); // 			{	if(p == d) /* adjacent object is uncovered */	</span>
+<span class="nc" id="L164">UNSUPPORTED(&quot;4an2jpd7xs9lm1jlfrbualsrv&quot;); // 					return obj;</span>
+<span class="nc" id="L165">UNSUPPORTED(&quot;bndt77eukkw8dnhl8sce4ts3d&quot;); // 				if((*(p-&gt;meth-&gt;searchf))(p, obj, 0000004) )</span>
+<span class="nc" id="L166">UNSUPPORTED(&quot;6ioth986rfbv208dp59shjy15&quot;); // 					break;</span>
+<span class="nc" id="L167">UNSUPPORTED(&quot;3to5h0rvqxdeqs38mhv47mm3o&quot;); // 			}</span>
+<span class="nc" id="L168">UNSUPPORTED(&quot;5bx9ax8tembk4pweu41m5yw43&quot;); // 			obj = (*d-&gt;meth-&gt;searchf)(d, obj, type);</span>
+<span class="nc" id="L169">UNSUPPORTED(&quot;6eq5kf0bj692bokt0bixy1ixh&quot;); // 		}</span>
+<span class="nc" id="L170">UNSUPPORTED(&quot;3diupilxwbi5nroolxiy7e8b0&quot;); // 		if(!(d = dt-&gt;walk = d-&gt;view) ) /* move on to next dictionary */</span>
+<span class="nc" id="L171">UNSUPPORTED(&quot;aihzmr4oo3tuh6kkxwtn9tlbd&quot;); // 			return ((void*)0);</span>
+<span class="nc" id="L172">UNSUPPORTED(&quot;esje2igec9cwwteta36lbrdvc&quot;); // 		else if(type&amp;0000010)</span>
+<span class="nc" id="L173">UNSUPPORTED(&quot;aeh2pn8gp2xj4lehv52n4hp6b&quot;); // 			obj = (*(d-&gt;meth-&gt;searchf))(d,((void*)0),0000200);</span>
+<span class="nc" id="L174">UNSUPPORTED(&quot;1lfqka4p8e7w15b16wquy0vjx&quot;); // 		else	obj = (*(d-&gt;meth-&gt;searchf))(d,((void*)0),0000400);</span>
+<span class="nc" id="L175">UNSUPPORTED(&quot;flupwh3kosf3fkhkxllllt1&quot;); // 	}</span>
+<span class="nc" id="L176">UNSUPPORTED(&quot;c24nfmv9i7o5eoqaymbibp7m7&quot;); // }</span>
 
-<span class="nc" id="L173">throw new UnsupportedOperationException();</span>
+<span class="nc" id="L178">throw new UnsupportedOperationException();</span>
 } finally {
-<span class="fc" id="L175">LEAVING(&quot;6spidg45w8teb64726drdswaa&quot;,&quot;dtvsearch&quot;);</span>
+<span class="fc" id="L180">LEAVING(&quot;6spidg45w8teb64726drdswaa&quot;,&quot;dtvsearch&quot;);</span>
 }
 }
 
@@ -183,43 +188,43 @@ try {
 @Reviewed(when = &quot;12/11/2020&quot;)
 @Original(version=&quot;2.38.0&quot;, path=&quot;lib/cdt/dtview.c&quot;, name=&quot;dtview&quot;, key=&quot;dfryioch2xz35w8nq6lxbk5kh&quot;, definition=&quot;Dt_t* dtview(register Dt_t* dt, register Dt_t* view)&quot;)
 public static ST_dt_s dtview(ST_dt_s dt, ST_dt_s view) {
-<span class="fc" id="L186">ENTERING(&quot;dfryioch2xz35w8nq6lxbk5kh&quot;,&quot;dtview&quot;);</span>
+<span class="fc" id="L191">ENTERING(&quot;dfryioch2xz35w8nq6lxbk5kh&quot;,&quot;dtview&quot;);</span>
 try {
 	ST_dt_s	d;
 	
-<span class="fc" id="L190">	UNFLATTEN(dt);</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">	if(view!=null)</span>
-<span class="fc" id="L192">	{	UNFLATTEN(view);</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">		if(view.meth != dt.meth) /* must use the same method */</span>
-<span class="nc" id="L194">			UNSUPPORTED(&quot;return null;&quot;);</span>
+<span class="fc" id="L195">	UNFLATTEN(dt);</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">	if(view!=null)</span>
+<span class="fc" id="L197">	{	UNFLATTEN(view);</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">		if(view.meth != dt.meth) /* must use the same method */</span>
+<span class="nc" id="L199">			UNSUPPORTED(&quot;return null;&quot;);</span>
 	}
 	
 	
 	/* make sure there won't be a cycle */
-<span class="fc bfc" id="L199" title="All 2 branches covered.">	for(d = view; d!=null; d = (ST_dt_s)d.view)</span>
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if(d == dt)</span>
-<span class="nc" id="L201">			return null;</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">	for(d = view; d!=null; d = (ST_dt_s)d.view)</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">		if(d == dt)</span>
+<span class="nc" id="L206">			return null;</span>
 	
 	
 	/* no more viewing lower dictionary */
-<span class="fc bfc" id="L205" title="All 2 branches covered.">	if((d = dt.view)!=null )</span>
-<span class="fc" id="L206">		d.nview -= 1;</span>
-<span class="fc" id="L207">	dt.view = dt.walk = null;</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">	if((d = dt.view)!=null )</span>
+<span class="fc" id="L211">		d.nview -= 1;</span>
+<span class="fc" id="L212">	dt.view = dt.walk = null;</span>
 
-<span class="fc bfc" id="L209" title="All 2 branches covered.">	if((view) == null)</span>
-<span class="fc" id="L210">	{	dt.searchf = dt.meth.searchf;</span>
-<span class="fc" id="L211">		return d;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">	if((view) == null)</span>
+<span class="fc" id="L215">	{	dt.searchf = dt.meth.searchf;</span>
+<span class="fc" id="L216">		return d;</span>
 	}
 	
 	/* ok */
-<span class="fc" id="L215">	dt.view = view;</span>
-<span class="fc" id="L216">	dt.searchf = dtview__c.dtvsearch;</span>
-<span class="fc" id="L217">	view.nview += 1;</span>
+<span class="fc" id="L220">	dt.view = view;</span>
+<span class="fc" id="L221">	dt.searchf = dtview__c.dtvsearch;</span>
+<span class="fc" id="L222">	view.nview += 1;</span>
 	
 	
-<span class="fc" id="L220">	return view;</span>
+<span class="fc" id="L225">	return view;</span>
 } finally {
-<span class="fc" id="L222">LEAVING(&quot;dfryioch2xz35w8nq6lxbk5kh&quot;,&quot;dtview&quot;);</span>
+<span class="fc" id="L227">LEAVING(&quot;dfryioch2xz35w8nq6lxbk5kh&quot;,&quot;dtview&quot;);</span>
 }
 }
 

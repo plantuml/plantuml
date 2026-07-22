@@ -1091,27 +1091,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DiagramChromeFactory.</span><code><a href="../../core/DiagramChromeFactory.html#create(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.Annotated,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">create</a><wbr>(<a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;raw,
- <a href="../../Annotated.html" title="interface in net.sourceforge.plantuml">Annotated</a>&nbsp;annotated,
- <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Takes a raw diagram <a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> and wraps it with all the chrome
- elements found in the given <code>annotated</code> source (mainframe, legend,
- title, caption, header, footer), without any warnings.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DiagramChromeFactory.</span><code><a href="../../core/DiagramChromeFactory.html#create(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.Annotated,net.sourceforge.plantuml.style.ISkinParam,java.util.Collection)" class="member-name-link">create</a><wbr>(<a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;raw,
+<div class="col-second even-row-color"><span class="type-name-label">DiagramChromeFactory.</span><code><a href="../../core/DiagramChromeFactory.html#create(net.sourceforge.plantuml.klimt.shape.TextBlock,net.sourceforge.plantuml.Annotated,net.sourceforge.plantuml.style.ISkinParam,java.util.Collection,net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">create</a><wbr>(<a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape">TextBlock</a>&nbsp;raw,
  <a href="../../Annotated.html" title="interface in net.sourceforge.plantuml">Annotated</a>&nbsp;annotated,
  <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&gt;&nbsp;warnings)</code></div>
-<div class="col-last odd-row-color">
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&gt;&nbsp;warnings,
+ <a href="../../abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;title)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Takes a raw diagram <a href="../../klimt/shape/TextBlock.html" title="interface in net.sourceforge.plantuml.klimt.shape"><code>TextBlock</code></a> and wraps it with all the chrome
  elements found in the given <code>annotated</code> source (warnings, mainframe,
  legend, title, caption, header, footer).</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../../core/TextBlockExporter.Builder.html" title="class in net.sourceforge.plantuml.core">TextBlockExporter.Builder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TextBlockExporter.Builder.</span><code><a href="../../core/TextBlockExporter.Builder.html#skinParam(net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">skinParam</a><wbr>(<a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../core/TextBlockExporter.Builder.html" title="class in net.sourceforge.plantuml.core">TextBlockExporter.Builder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TextBlockExporter.Builder.</span><code><a href="../../core/TextBlockExporter.Builder.html#skinParam(net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">skinParam</a><wbr>(<a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -1924,15 +1916,6 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="net.sourceforge.plantuml.sequencediagram.graphic">
 <h2>Uses of <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a> in <a href="../../sequencediagram/graphic/package-summary.html">net.sourceforge.plantuml.sequencediagram.graphic</a></h2>
-<div class="caption"><span>Methods in <a href="../../sequencediagram/graphic/package-summary.html">net.sourceforge.plantuml.sequencediagram.graphic</a> that return <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DrawableSet.</span><code><a href="../../sequencediagram/graphic/DrawableSet.html#getSkinParam()" class="member-name-link">getSkinParam</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
 <div class="caption"><span>Methods in <a href="../../sequencediagram/graphic/package-summary.html">net.sourceforge.plantuml.sequencediagram.graphic</a> with parameters of type <a href="../ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>

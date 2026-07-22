@@ -120,7 +120,7 @@ public class NewpagedDiagram extends UgDiagram {
 <span class="nc" id="L120">		final TitledDiagram titledDiagram = (TitledDiagram) diagrams.get(num);</span>
 <span class="nc" id="L121">		TextBlock result = titledDiagram.getTextBlock(num, fileFormatOption);</span>
 <span class="nc" id="L122">		result = DiagramChromeFactory.create(result, titledDiagram, titledDiagram.getSkinParam(),</span>
-<span class="nc" id="L123">				titledDiagram.getWarnings());</span>
+<span class="nc" id="L123">				titledDiagram.getWarnings(), titledDiagram.getTitle());</span>
 
 <span class="nc" id="L125">		return result;</span>
 	}
