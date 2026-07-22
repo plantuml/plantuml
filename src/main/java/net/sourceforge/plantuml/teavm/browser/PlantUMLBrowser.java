@@ -409,7 +409,7 @@ public class PlantUMLBrowser {
 
 		if (diagram instanceof TitledDiagram)
 			tb = DiagramChromeFactory.create(tb, (TitledDiagram) ugDiagram,
-					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings());
+					((TitledDiagram) ugDiagram).getSkinParam(), ugDiagram.getWarnings(), ((TitledDiagram) diagram).getTitle());
 
 		if (ugDiagram.isHandwritten())
 			ug = new UGraphicHandwritten(ug);

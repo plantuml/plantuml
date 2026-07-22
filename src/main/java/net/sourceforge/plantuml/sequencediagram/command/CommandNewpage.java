@@ -35,11 +35,14 @@
  */
 package net.sourceforge.plantuml.sequencediagram.command;
 
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.annotation.Explain;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -87,7 +90,7 @@ public class CommandNewpage extends SingleLineCommand2<SequenceDiagram> {
 			ParserPass currentPass) {
 		final String label = arg.get("LABEL", 0);
 		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(diagram.getPragma(), label);
-		diagram.newpage(strings);
+		diagram.newpage(DisplayPositioned.single(location, strings, HorizontalAlignment.CENTER, VerticalAlignment.TOP));
 		return CommandExecutionResult.ok();
 	}
 }

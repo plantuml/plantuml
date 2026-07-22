@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -452,9 +453,12 @@ public abstract class TitledDiagram extends UgDiagram implements Annotated, With
 	}
 
 	@Override
-	public TextBlock addChrome(TextBlock result) {
-		final TitledDiagram titledDiagram = (TitledDiagram) this;
-		result = DiagramChromeFactory.create(result, titledDiagram, titledDiagram.getSkinParam(), getWarnings());
+	public TextBlock addChrome(int index, TextBlock result) {
+		DisplayPositioned title = getTitle();
+		if (index > 0 && this instanceof SequenceDiagram)
+			title = ((SequenceDiagram) this).getTitle(index);
+
+		result = DiagramChromeFactory.create(result, this, this.getSkinParam(), getWarnings(), title);
 		return result;
 	}
 

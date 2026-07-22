@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.asciiverse.AsciiBlock;
@@ -95,6 +96,7 @@ public class SequenceDiagram extends TitledDiagram {
 	private final List<Participant> participantsList = new ArrayList<>();
 
 	private final List<Event> events = new ArrayList<>();
+	private final List<DisplayPositioned> titles = new ArrayList<>();
 
 	private final Map<Participant, ParticipantEnglober> participantEnglobers2 = new HashMap<Participant, ParticipantEnglober>();
 
@@ -104,6 +106,12 @@ public class SequenceDiagram extends TitledDiagram {
 
 	public AtomicInteger getCounter() {
 		return cpt;
+	}
+
+	public DisplayPositioned getTitle(int index) {
+		if (index > 0)
+			return titles.get(index - 1);
+		return getTitle();
 	}
 
 	public SequenceDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
@@ -232,11 +240,12 @@ public class SequenceDiagram extends TitledDiagram {
 		events.add(n);
 	}
 
-	public void newpage(Display strings) {
+	public void newpage(DisplayPositioned title) {
 		if (ignoreNewpage)
 			return;
 
-		events.add(new Newpage(strings, getSkinParam().getCurrentStyleBuilder()));
+		titles.add(title);
+		events.add(new Newpage(getSkinParam().getCurrentStyleBuilder()));
 		countNewpage++;
 	}
 
@@ -617,4 +626,5 @@ public class SequenceDiagram extends TitledDiagram {
 				? ClockwiseTopRightBottomLeft.same(5)
 				: ClockwiseTopRightBottomLeft.topRightBottomLeft(5, 5, 5, 0);
 	}
+
 }

@@ -67,7 +67,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 
 	public abstract TextBlock getTextBlock(int num, FileFormatOption fileFormatOption) throws Exception;
 
-	public TextBlock addChrome(TextBlock result) {
+	public TextBlock addChrome(int index, TextBlock result) {
 		return result;
 	}
 
@@ -122,7 +122,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 
 		final int status = computeStatus(result);
 
-		result = addChrome(result);
+		result = addChrome(index, result);
 
 		final HColor backColor = calculateBackColor();
 		if (backColor != null)
@@ -131,8 +131,7 @@ public abstract class UgDiagram extends AbstractDiagram {
 		final ColorMapper mutedMapper = muteColorMapper(fileFormatOption.getColorMapper());
 		final FileFormatOption effectiveFormat = fileFormatOption.withColorMapper(mutedMapper);
 
-		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat,
-				isHandwritten());
+		final TextBlockExporter.Builder builder = TextBlockExporter.builder(result, effectiveFormat, isHandwritten());
 		if (this instanceof TitledDiagram)
 			builder.styled((TitledDiagram) this);
 		else

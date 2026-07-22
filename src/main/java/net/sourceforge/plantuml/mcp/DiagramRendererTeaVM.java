@@ -131,7 +131,7 @@ public class DiagramRendererTeaVM {
 
 		if (diagram instanceof TitledDiagram)
 			tb = DiagramChromeFactory.create(tb, (TitledDiagram) diagram, ((TitledDiagram) diagram).getSkinParam(),
-					diagram.getWarnings());
+					diagram.getWarnings(), ((TitledDiagram) diagram).getTitle());
 
 		final XDimension2D dim = tb.calculateDimension(STRING_BOUNDER);
 		final Scale scale = ((AbstractDiagram) diagram).getScale();

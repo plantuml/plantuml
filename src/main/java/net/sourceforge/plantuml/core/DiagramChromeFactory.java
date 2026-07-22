@@ -108,43 +108,27 @@ public final class DiagramChromeFactory {
 
 	/**
 	 * Takes a raw diagram {@link TextBlock} and wraps it with all the chrome
-	 * elements found in the given {@code annotated} source (mainframe, legend,
-	 * title, caption, header, footer), without any warnings.
-	 *
-	 * @param raw           the bare diagram content, without any decoration
-	 * @param annotated     provides title, caption, legend, header, footer and
-	 *                      mainframe
-	 * @param skinParam     skin parameters used for styling
-	 * @return a new {@link TextBlock} that draws the raw content surrounded by all
-	 *         its chrome elements
-	 */
-	public static TextBlock create(TextBlock raw, Annotated annotated, ISkinParam skinParam) {
-		return create(raw, annotated, skinParam, Collections.emptyList());
-	}
-
-	/**
-	 * Takes a raw diagram {@link TextBlock} and wraps it with all the chrome
 	 * elements found in the given {@code annotated} source (warnings, mainframe,
 	 * legend, title, caption, header, footer).
 	 *
-	 * @param raw           the bare diagram content, without any decoration
-	 * @param annotated     provides title, caption, legend, header, footer and
-	 *                      mainframe
-	 * @param skinParam     skin parameters used for styling
-	 * @param warnings      collection of warnings to display as a banner above the
-	 *                      diagram; may be empty
+	 * @param raw       the bare diagram content, without any decoration
+	 * @param annotated provides title, caption, legend, header, footer and
+	 *                  mainframe
+	 * @param skinParam skin parameters used for styling
+	 * @param warnings  collection of warnings to display as a banner above the
+	 *                  diagram; may be empty
 	 * @return a new {@link TextBlock} that draws the raw content surrounded by all
 	 *         its chrome elements
 	 */
 	public static TextBlock create(TextBlock raw, Annotated annotated, ISkinParam skinParam,
-			Collection<Warning> warnings) {
+			Collection<Warning> warnings, DisplayPositioned title) {
 
 		TextBlock result = raw;
 		BrowserLog.consoleLog(DiagramChromeFactory.class, "create " + warnings);
 		result = addWarnings(result, warnings);
 		result = decorateWithFrame(result, annotated, skinParam);
 		result = addLegend(result, annotated, skinParam);
-		result = addTitle(result, annotated, skinParam);
+		result = addTitle(result, title, skinParam);
 		result = addCaption(result, annotated, skinParam);
 		result = addHeaderAndFooter(result, annotated, skinParam);
 		return result;
@@ -155,20 +139,20 @@ public final class DiagramChromeFactory {
 	// -----------------------------------------------------------------------
 
 	/**
-	 * ASCII counterpart of {@link #create(TextBlock, Annotated, ISkinParam, Collection)}.
+	 * ASCII counterpart of
+	 * {@link #create(TextBlock, Annotated, ISkinParam, Collection)}.
 	 * SequenceDiagram.exportTxt() draws its {@link AsciiBlock} straight to the
-	 * InfinitePlan, bypassing this class entirely, so none of the chrome
-	 * elements below ever reached -ttxt/-tutxt output. For
-	 * now this only reattaches the title, the one element callers actually
-	 * relied on; caption/header/footer/legend/warnings are not (yet) supported
-	 * for ASCII output.
+	 * InfinitePlan, bypassing this class entirely, so none of the chrome elements
+	 * below ever reached -ttxt/-tutxt output. For now this only reattaches the
+	 * title, the one element callers actually relied on;
+	 * caption/header/footer/legend/warnings are not (yet) supported for ASCII
+	 * output.
 	 *
 	 * @param raw       the bare diagram content, without any decoration
 	 * @param annotated provides the title (and, unused for now, caption/header/
 	 *                  footer/legend/mainframe)
-	 * @return           an AsciiBlock that draws the raw content with its title
-	 *                   centered above it, or {@code raw} unchanged if there is
-	 *                   no title
+	 * @return an AsciiBlock that draws the raw content with its title centered
+	 *         above it, or {@code raw} unchanged if there is no title
 	 */
 	public static AsciiBlock createAscii(AsciiBlock raw, Annotated annotated) {
 		return addAsciiTitle(raw, annotated);
@@ -376,9 +360,8 @@ public final class DiagramChromeFactory {
 	// Title
 	// -----------------------------------------------------------------------
 
-	private static TextBlock addTitle(TextBlock original, Annotated annotated, ISkinParam skinParam) {
+	private static TextBlock addTitle(TextBlock original, DisplayPositioned title, ISkinParam skinParam) {
 
-		final DisplayPositioned title = (DisplayPositioned) annotated.getTitle();
 		if (title.isNull())
 			return original;
 
